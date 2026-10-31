@@ -15998,7 +15998,7 @@ loc_4848BD49:
     extbu   d2
     mov     a2, a0
     mov     d2, d0
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x10, a2)
     bra     loc_4848BDE5
@@ -16108,7 +16108,7 @@ loc_4848BEA2:
     movbu   d3, (0x3a, sp)
     movbu   d2, (0x3d, sp)
     mov     (0x20, sp), a0
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x38, sp), d0
     cmp     0x10, d0
     beq     loc_4848BF07
@@ -16117,7 +16117,7 @@ loc_4848BEA2:
     mov     0xf, d0
     extbu   d2
     mov     d2, d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     movbu   (0x39, sp), d1
     extbu   d0
     add     -1, d0
@@ -16127,14 +16127,14 @@ loc_4848BEA2:
     add     2, d0
     movbu   d0, (0x3d, sp)
     mov     (0x20, sp), a0
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     bra     loc_4848BF07
 loc_4848BEF6:
     movbu   (0x3d, sp), d0
     add     2, d0
     movbu   d0, (0x3d, sp)
     mov     (0x20, sp), a0
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 loc_4848BF07:
     movbu   (0x38, sp), d0
     mov     d0, a2
@@ -16163,7 +16163,7 @@ loc_4848BF34:
     mov     a2, d0
     extbu   d0
     extbu   d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     movbu   (0x2d, sp), d2
     mov     d0, d1
     extbu   d1
@@ -16203,7 +16203,7 @@ loc_4848BF76:
     extbu   d0
     mov     d2, d1
     extbu   d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     movbu   (0x2d, sp), d1
     extbu   d0
     add     -1, d0
@@ -16222,7 +16222,7 @@ loc_4848BFA5:
     mov     0xf, d0
     extbu   d2
     mov     d2, d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     add     -1, d0
     movbu   d0, (0x2d, sp)
@@ -16266,7 +16266,7 @@ loc_4848BFF9:
     movbu   (0x2c, sp), d0
     movbu   d0, (0x3d, sp)
     mov     (0x20, sp), a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x3c, sp), d2
     movbu   (0x3a, sp), d0
     movbu   (0x3b, sp), d1
@@ -16414,7 +16414,7 @@ loc_4848C12B:
     mov     0x10, a2
     extbu   d1
     mov     0x10, d0
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     add     -1, d0
     movbu   d0, (0x2d, sp)
@@ -16447,7 +16447,7 @@ loc_4848C170:
     extbu   d1
     mov     d0, a2
     extbu   d0
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     add     -1, d0
     movbu   d0, (0x2d, sp)
@@ -16456,7 +16456,7 @@ loc_4848C170:
     movbu   d0, (0x39, sp)
     movbu   d2, (0x3d, sp)
     mov     (0x20, sp), a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x3c, sp), d2
     movbu   (0x3a, sp), d0
     movbu   (0x3b, sp), d1
@@ -16543,7 +16543,7 @@ loc_4848C230:
     movhu   (0x30, sp), d0
     movbu   d0, (0x3d, sp)
     mov     (0x20, sp), a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x3a, sp), d2
     movbu   (0x3b, sp), d3
     movbu   (0x3c, sp), d0
@@ -22359,7 +22359,7 @@ loc_4848FB76:
     extbu   d2
     mov     d3, a0
     mov     d2, d0
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x58, sp)
     mov     (0x30, sp), a0
@@ -35647,7 +35647,7 @@ loc_4849808B:
     movbu   (a0), d0
     mov     a1, a0
     movbu   d0, (0x1c, sp)
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1d, sp), d0
     cmp     4, d0
     bge     loc_484980AF
@@ -35686,7 +35686,7 @@ func_484980B3_entry:
     movbu   d0, (0x15, sp)
 loc_484980E7:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     mov     0x11, d0
     movbu   d0, (0x18, sp)
     movbu   (0x12, sp), d1
@@ -35750,7 +35750,7 @@ loc_4849816D:
     clr     d0
     movbu   d0, (0x21, sp)
     mov     (0x18, sp), a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x24, sp), d2
     movbu   (0x22, sp), d0
     movbu   (0x23, sp), d1
@@ -35815,7 +35815,7 @@ func_484981D3_entry:
     movbu   d0, (0x15, sp)
 loc_484981FB:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     mov     8, d0
     movbu   d0, (0x18, sp)
     movbu   (0x12, sp), d1
@@ -35862,7 +35862,7 @@ loc_4849825D:
     movbu   d1, (0x18, sp)
     clr     d0
     movbu   d0, (0x19, sp)
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1c, sp), d2
     movbu   (0x1a, sp), d0
     movbu   (0x1b, sp), d1
@@ -36139,7 +36139,7 @@ loc_484984C2:
     movbu   d0, (0x1e, sp)
     movhu   (0x5006b800), d0
     movbu   d0, (0x21, sp)
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     mov     (0x18, sp), d0
     mov     d0, (0x5006b7f8)
     movbu   (0x1c, sp), d0
@@ -36152,7 +36152,7 @@ loc_484984C2:
     movbu   (0x1e, sp), d0
     movbu   (0x1f, sp), d1
     mov     d2, (0x10, sp)
-    call    func_48448E3A_entry, [d2], 0x20
+    call    SoundIconFetch_entry, [d2], 0x20
     extbu   d0
     movhu   d0, (0x5006b80a)
     mov     (0x5006b804), d0
@@ -36188,7 +36188,7 @@ loc_48498590:
     mov     0xf, d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     movhu   (0x5006b7ee), d1
     extbu   d0
     exth    d1
@@ -36221,7 +36221,7 @@ loc_484985CF:
     bra     loc_48498606
 loc_484985FE:
     mov     a2, a0
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 loc_48498606:
     movbu   (0x21, sp), d0
     mov     2, d1
@@ -36266,7 +36266,7 @@ loc_48498684:
     movhu   d0, (0x5006b800)
     movhu   (0x5006b800), d0
     movbu   d0, (0x21, sp)
-    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x21, sp), d0
     mov     2, d1
     extbu   d0
@@ -36322,7 +36322,7 @@ loc_48498755:
     movbu   (0x14, sp), d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     movhu   d0, (0x5006b7f0)
 loc_4849877B:
@@ -36409,7 +36409,7 @@ loc_48498829:
     bra     loc_4849885A
 loc_48498851:
     mov     (0x14, sp), a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 loc_4849885A:
     movbu   (0x1c, sp), d2
     movbu   (0x1a, sp), d0
@@ -37093,7 +37093,7 @@ loc_48498F07:
     bra     loc_48498F5F
 loc_48498F57:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 loc_48498F5F:
     movbu   (0x1e, sp), d0
     movbu   (0x1f, sp), d1
@@ -37182,7 +37182,7 @@ loc_48499008:
     bra     loc_48499058
 loc_48499050:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 loc_48499058:
     movbu   (0x1f, sp), d2
     movbu   (0x20, sp), d1
@@ -37191,7 +37191,7 @@ loc_48499058:
     mov     (0x44, sp), a2
     mov     d2, d1
     mov     a2, a0
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x10, a2)
     bra     loc_484990C0
@@ -38082,7 +38082,7 @@ loc_48499963:
     movhu   (0x5006b802), d0
     add     0x38, a0
     movbu   d0, (0x3d, sp)
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x3a, sp), d0
     movbu   (0x3b, sp), d3
     movbu   (0x3c, sp), d2
@@ -39549,7 +39549,7 @@ loc_4849A82A:
     movbu   d0, (0x19, sp)
 loc_4849A82F:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1a, sp), d0
     movbu   (0x1b, sp), d3
     movbu   (0x1c, sp), d2
@@ -39631,7 +39631,7 @@ loc_4849A8E1:
     movhu   (0x5006b802), d0
     add     0x18, a0
     movbu   d0, (0x1d, sp)
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1b, sp), d2
     movbu   (0x1c, sp), d1
     movbu   (0x1a, sp), d0
@@ -39639,7 +39639,7 @@ loc_4849A8E1:
     mov     (0x40, sp), a2
     mov     d2, d1
     mov     a2, a0
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x10, a2)
     bra     loc_4849A937
@@ -39963,7 +39963,7 @@ loc_4849AC71:
     movhu   (0x5006b802), d1
     movbu   (0x1c, sp), d0
     extbu   d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     movhu   d0, (0x5006b7f0)
 loc_4849AC92:
@@ -40076,7 +40076,7 @@ loc_4849ADD5:
     extbu   d0
     movbu   d1, (0x1c, sp)
     movbu   (0x1c, sp), d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     movhu   d0, (0x5006b7f0)
 loc_4849ADF6:
@@ -40224,7 +40224,7 @@ loc_4849AF05:
     bra     loc_4849AF53
 loc_4849AF4B:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 loc_4849AF53:
     mov     (0x44, sp), a1
     mov     Str_d_d_d, d0
@@ -40281,7 +40281,7 @@ loc_4849AF94:
     bra     loc_4849AFEC
 loc_4849AFE4:
     mov     a2, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 loc_4849AFEC:
     movbu   (0x1e, sp), d1
     movbu   (0x1f, sp), d0
@@ -40477,7 +40477,7 @@ loc_4849B1B5:
     movbu   (0x14, sp), d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
-    call    func_48448C24_entry, [d2], 0x1c
+    call    SoundGroupSizeFetch_entry, [d2], 0x1c
     extbu   d0
     movhu   d0, (0x5006b7f0)
     movhu   (0x5006b7f0), d0
@@ -41232,7 +41232,7 @@ func_4849B9B2_entry:
     mov     sp, a0
     movbu   d0, (0x15, sp)
     add     0x10, a0
-    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x12, sp), d1
     movbu   (0x13, sp), d2
     movbu   (0x14, sp), d3
@@ -41551,7 +41551,7 @@ loc_4849BCC9:
     extbu   d1
     mov     a2, a0
     mov     d2, d0
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x10, a2)
     bra     loc_4849BD20
@@ -44137,7 +44137,7 @@ loc_4849D744:
     extbu   d0
     mov     a2, a0
     mov     d2, d1
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x40, sp)
     mov     (0x60, sp), a0
@@ -44175,7 +44175,7 @@ loc_4849D7F5:
     mov     d1, d0
     mov     a2, a0
     mov     d2, d1
-    call    func_48448CD3_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x40, sp)
     mov     (0x60, sp), a1

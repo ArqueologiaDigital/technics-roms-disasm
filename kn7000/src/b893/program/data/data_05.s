@@ -31916,66 +31916,66 @@ func_48408926_Table:
 	.long	0
 
 func_4840B696_Records_2:	# 27 x REC_func_4840B696_Records_2 (8 bytes each); read by func_4840B696 0x4840B696 `call LibF64Add_entry, [d2,d3,a2,a3], 0x18`; func_4840B696 0x4840B696 `call LibF64Div_entry, [d2,d3,a2,a3], 0x18`; func_4840B696 0x4840B696 `call LibI32ToF64, 0, 0` (+2)
-	REC_func_4840B696_Records_2	f4=0x40440000	# [0]
-	REC_func_4840B696_Records_2	f4=0x40490000
-	REC_func_4840B696_Records_2	f4=0x404F8000
-	REC_func_4840B696_Records_2	f4=0x40540000
-	REC_func_4840B696_Records_2	f4=0x40590000
-	REC_func_4840B696_Records_2	f4=0x405F4000
-	REC_func_4840B696_Records_2	f4=0x40640000
-	REC_func_4840B696_Records_2	f4=0x40690000
-	REC_func_4840B696_Records_2	f4=0x406F4000	# [8]
-	REC_func_4840B696_Records_2	f4=0x4073B000
-	REC_func_4840B696_Records_2	f4=0x40790000
-	REC_func_4840B696_Records_2	f4=0x407F4000
-	REC_func_4840B696_Records_2	f4=0x4083B000
-	REC_func_4840B696_Records_2	f4=0x40890000
-	REC_func_4840B696_Records_2	f4=0x408F4000
-	REC_func_4840B696_Records_2	f4=0x40938800
-	REC_func_4840B696_Records_2	f4=0x40990000	# [16]
-	REC_func_4840B696_Records_2	f4=0x409F4000
-	REC_func_4840B696_Records_2	f4=0x40A38800
-	REC_func_4840B696_Records_2	f4=0x40A89C00
-	REC_func_4840B696_Records_2	f4=0x40AF4000
-	REC_func_4840B696_Records_2	f4=0x40B38800
-	REC_func_4840B696_Records_2	f4=0x40B89C00
-	REC_func_4840B696_Records_2	f4=0x40BF4000
-	REC_func_4840B696_Records_2	f4=0x40C38800	# [24]
-	REC_func_4840B696_Records_2	f4=0x40C86A00
-	REC_func_4840B696_Records_2	f4=0x40CF4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40440000	# [0]
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40490000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x404F8000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40540000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40590000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x405F4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40640000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40690000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x406F4000	# [8]
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x4073B000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40790000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x407F4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x4083B000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40890000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x408F4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40938800
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40990000	# [16]
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x409F4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40A38800
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40A89C00
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40AF4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40B38800
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40B89C00
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40BF4000
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40C38800	# [24]
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40C86A00
+	REC_func_4840B696_Records_2	LibF64Div_d1=0x40CF4000
 func_4840B696_Records_3:	# 32 x REC_func_4840B696_Records_3 (8 bytes each); read by func_4840B696 0x4840B696 `call LibI32ToF64, 0, 0`; func_4840B696 0x4840B696 `mov (4, a1), d2`; func_4840B696 0x4840B696 `mov (a1), d1`
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x9999999A, f4=0x3FB99999	# [0]
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x9999999A, f4=0x3FC99999
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x33333333, f4=0x3FD33333
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x9999999A, f4=0x3FD99999
-	REC_func_4840B696_Records_3	f4=0x3FE00000
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x33333333, f4=0x3FE33333
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x66666666, f4=0x3FE66666
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0x9999999A, f4=0x3FE99999
-	REC_func_4840B696_Records_3	LibI32ToF64_d1=0xCCCCCCCD, f4=0x3FECCCCC	# [8]
-	REC_func_4840B696_Records_3	f4=0x3FF00000
-	REC_func_4840B696_Records_3	f4=0x3FF80000
-	REC_func_4840B696_Records_3	f4=0x40000000
-	REC_func_4840B696_Records_3	f4=0x40040000
-	REC_func_4840B696_Records_3	f4=0x40080000
-	REC_func_4840B696_Records_3	f4=0x400C0000
-	REC_func_4840B696_Records_3	f4=0x40100000
-	REC_func_4840B696_Records_3	f4=0x40140000	# [16]
-	REC_func_4840B696_Records_3	f4=0x40180000
-	REC_func_4840B696_Records_3	f4=0x401C0000
-	REC_func_4840B696_Records_3	f4=0x40200000
-	REC_func_4840B696_Records_3	f4=0x40220000
-	REC_func_4840B696_Records_3	f4=0x40240000
-	REC_func_4840B696_Records_3	f4=0x40260000
-	REC_func_4840B696_Records_3	f4=0x40280000
-	REC_func_4840B696_Records_3	f4=0x402A0000	# [24]
-	REC_func_4840B696_Records_3	f4=0x402C0000
-	REC_func_4840B696_Records_3	f4=0x402E0000
-	REC_func_4840B696_Records_3	f4=0x40300000
-	REC_func_4840B696_Records_3	f4=0x40310000
-	REC_func_4840B696_Records_3	f4=0x40320000
-	REC_func_4840B696_Records_3	f4=0x40330000
-	REC_func_4840B696_Records_3	f4=0x40340000
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FB99999	# [0]
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FC99999
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x33333333, LibF64Mul_d1=0x3FD33333
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FD99999
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x3FE00000
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x33333333, LibF64Mul_d1=0x3FE33333
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x66666666, LibF64Mul_d1=0x3FE66666
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FE99999
+	REC_func_4840B696_Records_3	LibF64Mul_d0=0xCCCCCCCD, LibF64Mul_d1=0x3FECCCCC	# [8]
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x3FF00000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x3FF80000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40000000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40040000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40080000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x400C0000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40100000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40140000	# [16]
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40180000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x401C0000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40200000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40220000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40240000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40260000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40280000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x402A0000	# [24]
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x402C0000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x402E0000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40300000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40310000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40320000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40330000
+	REC_func_4840B696_Records_3	LibF64Mul_d1=0x40340000
 
 func_4840B696_Table:	# 132 x u32, 1635..1580427; read by func_4840B696 0x4840B696: `mov   (d0, a0), d1`
 	tab_u32	1635, 1635, 1635, 1635, 1635, 1635, 1635, 1635	# [0]
@@ -32071,10 +32071,10 @@ GetLcdMode_Var:	# u16, initial value of a RAM variable; read / written by GetLcd
 	.word	0
 
 func_4842886A_Table:	# 4 x REC_func_4842886A_Table (56 bytes each); read by func_484143A9 0x484143A9 `movhu (6, a0), d0`; func_484144B6 0x484144B6 `call set_flg, 0, 0`; func_484144B6 0x484144B6 `movhu (6, a0), d0` (+175)
-	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, f44=0x5002C040, f48=-1, f50=1, f52=0x5002FC58
-	REC_func_4842886A_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, f44=0x5002C04C, f48=-1, f50=128, f52=0x5002FC70
-	REC_func_4842886A_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, f44=0x5002CC4C, f48=-1, f50=128, f52=0x50030870
-	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, f44=0x5002FC4C, f48=-1, f50=1, f52=0x50031470
+	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C040, key___=-1, count=1, index_=0x5002FC58
+	REC_func_4842886A_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C04C, key___=-1, count=128, index_=0x5002FC70
+	REC_func_4842886A_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002CC4C, key___=-1, count=128, index_=0x50030870
+	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002FC4C, key___=-1, count=1, index_=0x50031470
 
 names_50007658:
 	.long	Str_CHARA1, Str_CHARA2
@@ -32484,9 +32484,9 @@ AcNoteEditBoxProc_Table_5:	# 7 x u16, 0..65535; read by AcNoteEditBoxProc 0x4853
 	tab_u16	1, 65535, 2, 1, 65, 0, 65280
 
 SdCommandSend_Var:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	f0=2, SdResponseScan_d0=1, f4=66, x5="\x00\x00\x00\x00", f9=149
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=1, f4=66, x5="\x00\x00\x00\x00", f9=149
 SdReadBlockCmd_Var_2:	# REC_SdCardRegRead_ArgA1_s9 (9 bytes): the layout SdCardRegRead 0x4854AF0E reads through its argument a1 (passed by DiskDriveCtrlHandler 0x4854AC56 `call SdCardRegRead_entry, [d2,d3,a2,a3], 0x24`); the layout SdReadBlockCmd 0x4854BCD3 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c`, +1 more calls)
-	REC_SdCardRegRead_ArgA1_s9	f0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00"
+	REC_SdCardRegRead_ArgA1_s9	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00"
 
 SdReadBlockCmd_Table:	# 41 x u8, 0..255; read by SdReadBlockCmd 0x4854BCD3: `movbu d0, (5, a2)`
 	tab_u8	255, 2, 0, 2, 0, 69, 0, 0, 0, 0, 255, 2, 0, 2, 0, 67	# [0]
@@ -32494,11 +32494,11 @@ SdReadBlockCmd_Table:	# 41 x u8, 0..255; read by SdReadBlockCmd 0x4854BCD3: `mov
 	tab_u8	0, 2, 0, 71, 0, 0, 0, 0, 255	# [32]
 
 SdCommandSend_Var_4:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	f0=3, SdResponseScan_d0=1, f4=64, x5="\x00\x00\x00\x00", f9=149
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=64, x5="\x00\x00\x00\x00", f9=149
 SdCommandSend_Var_7:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	f0=3, SdResponseScan_d0=1, f4=123, x5="\x00\x00\x00\x01", f9=255
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=123, x5="\x00\x00\x00\x01", f9=255
 SdCommandSend_Var_10:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	f0=3, SdResponseScan_d0=1, f4=65, x5="\x00\x00\x00\x00", f9=255
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=65, x5="\x00\x00\x00\x00", f9=255
 
 SdReadBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movhu (a3), d0`
 	.word	3
@@ -32541,17 +32541,17 @@ Str_MILK_MN10300_Ver1_0R1:	.asciz "MILK MN10300 Ver1.0R1"
 
 KernelServiceHash:	# 16 x REC_KernelServiceHash (8 bytes each); read by KernelWaitRelease 0x487B750F `mov (a0), d0`
 	REC_KernelServiceHash	proc=loc_487B7643	# [0]
-	REC_KernelServiceHash	f0=24321, proc=loc_487B7570
-	REC_KernelServiceHash	f0=7937, proc=loc_487B7573
-	REC_KernelServiceHash	f0=16129, proc=loc_487B758D
-	REC_KernelServiceHash	f0=3841, proc=loc_487B75A7
-	REC_KernelServiceHash	f0=12033, proc=loc_487B75C1
-	REC_KernelServiceHash	f0=513, proc=loc_487B75DD
-	REC_KernelServiceHash	f0=1, proc=loc_487B75F6
-	REC_KernelServiceHash	f0=1025, proc=loc_487B760F	# [8]
-	REC_KernelServiceHash	f0=1793, proc=loc_487B7611
-	REC_KernelServiceHash	f0=5889, proc=loc_487B762A
-	REC_KernelServiceHash	f0=30465, proc=loc_487B7641
+	REC_KernelServiceHash	key=24321, proc=loc_487B7570
+	REC_KernelServiceHash	key=7937, proc=loc_487B7573
+	REC_KernelServiceHash	key=16129, proc=loc_487B758D
+	REC_KernelServiceHash	key=3841, proc=loc_487B75A7
+	REC_KernelServiceHash	key=12033, proc=loc_487B75C1
+	REC_KernelServiceHash	key=513, proc=loc_487B75DD
+	REC_KernelServiceHash	key=1, proc=loc_487B75F6
+	REC_KernelServiceHash	key=1025, proc=loc_487B760F	# [8]
+	REC_KernelServiceHash	key=1793, proc=loc_487B7611
+	REC_KernelServiceHash	key=5889, proc=loc_487B762A
+	REC_KernelServiceHash	key=30465, proc=loc_487B7641
 	REC_KernelServiceHash	proc=loc_487B7643
 	REC_KernelServiceHash	proc=loc_487B7643
 	REC_KernelServiceHash	proc=loc_487B7643

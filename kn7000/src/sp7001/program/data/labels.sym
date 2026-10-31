@@ -2546,7 +2546,7 @@
 0x485A1126  Str_Spanish  8
 0x485A112E  Str_Italian_8  8
 0x485A1136  Str_Indonesian_3  11
-0x485A1141  data_485A1141  0
+0x485A1141  StrJa_485A1141  38
 0x485A1168  ptrs_485A1168  28
 0x485A1184  Str_empty_1233  6
 0x485A118C  Str_empty_1232  6
@@ -7006,7 +7006,7 @@
 0x485D8603  Str_Spanish_Header  15
 0x485D8612  Str_Italian_Header  15
 0x485D8621  Str_Indonesian_Header  18
-0x485D8633  data_485D8633  0
+0x485D8633  StrJa_485D8633  18
 0x485D8648  ptrs_485D8648  28
 0x485D8664  Str_English_Text  13
 0x485D8671  Str_German_Text  12
@@ -7014,7 +7014,7 @@
 0x485D8689  Str_Spanish_Text  13
 0x485D8696  Str_Italian_Text  13
 0x485D86A3  Str_Indonesian_Text  16
-0x485D86B3  data_485D86B3  0
+0x485D86B3  StrJa_485D86B3  18
 0x485D86C8  ptrs_485D86C8  28
 0x485D86E4  Str_ERROR_18  6
 0x485D86EA  Str_ERROR_17  6
@@ -7022,7 +7022,7 @@
 0x485D86F7  Str_ERROR_16  6
 0x485D86FD  Str_ERROR_15  6
 0x485D8703  Str_ERROR_14  6
-0x485D8709  data_485D8709  0
+0x485D8709  StrJa_485D8709  7
 0x485D8710  ptrs_485D8710  28
 0x485D872C  Str_ATTENTION_19  11
 0x485D8737  Str_ATTENTION_18  11
@@ -7030,7 +7030,7 @@
 0x485D874D  Str_ATTENTION_16  11
 0x485D8758  Str_ATTENTION_15  11
 0x485D8763  Str_ATTENTION_14  11
-0x485D876E  data_485D876E  0
+0x485D876E  StrJa_485D876E  7
 0x485D8778  ptrs_485D8778  28
 0x485D8794  Str_REMINDER_8  10
 0x485D879E  Str_HINWEIS  10
@@ -7038,7 +7038,7 @@
 0x485D87B0  Str_RECUERDE  11
 0x485D87BB  Str_REMINDER_7  10
 0x485D87C5  Str_REMINDER_6  11
-0x485D87D0  data_485D87D0  0
+0x485D87D0  StrJa_485D87D0  9
 0x485D87DC  ptrs_485D87DC  28
 0x485D87F8  Str_COMPLETED_2  11
 0x485D8803  Str_Vorgang_beendet  17
@@ -7046,7 +7046,7 @@
 0x485D881D  Str_FINALIZADO  13
 0x485D882A  Str_COMPLETED  11
 0x485D8835  data_485D8835  0
-0x485D8842  data_485D8842  0
+0x485D8842  StrJa_485D8842  21
 0x485D8858  ptrs_485D8858  28
 0x485D8874  Str_PLEASE_WAIT_6  13
 0x485D8881  Str_BITTE_WARTEN_3  14
@@ -7054,7 +7054,7 @@
 0x485D88A3  Str_POR_FAVOR_ESPERE_3  20
 0x485D88B7  Str_PLEASE_WAIT_5  13
 0x485D88C4  Str_SILAHKAN_TUNGGU_3  17
-0x485D88D5  data_485D88D5  0
+0x485D88D5  StrJa_485D88D5  25
 0x485D88F0  ptrs_485D88F0  28
 0x485D890C  Str_ERROR_ABORTED  15
 0x485D891B  Str_ERROR_ABORTED_2  15
@@ -7070,7 +7070,7 @@
 0x485D8B3E  Str_La_memoria_interna_es_retenida_alrededor  130
 0x485D8BC0  Str_REMINDER_5  9
 0x485D8BC9  Str_Memori_internal_diterima_untuk_selama_80  122
-0x485D8C43  data_485D8C43  0
+0x485D8C43  StrJa_485D8C43  104
 0x485D8CAC  ptrs_485D8CAC  28
 0x485D8CC8  Str_The_settings_have_been_canceled_because  168
 0x485D8D70  Str_Die_Einstellungen_wurden_nicht_gespeiche  165
@@ -7078,7 +7078,7 @@
 0x485D8EB3  Str_Las_configuraciones_fueron_canceladas_po  210
 0x485D8F85  Str_REMINDER_4  9
 0x485D8F8E  Str_Aturan_sudah_dibatalkan_karena_prosedur  145
-0x485D901F  data_485D901F  0
+0x485D901F  StrJa_485D901F  114
 0x485D9094  ptrs_485D9094  28
 0x485D90B0  Str_The_setting_procedure_is_incomplete_To_s  120
 0x485D9128  Str_Die_Registrierung_ist_unvollst_ndig_Um_e  132
@@ -7086,7 +7086,7 @@
 0x485D9216  Str_El_procedimiento_de_configuraci_n_est_in  200
 0x485D92DE  Str_REMINDER_3  9
 0x485D92E7  Str_REMINDER_2  9
-0x485D92F0  data_485D92F0  0
+0x485D92F0  StrJa_485D92F0  96
 0x485D9350  ptrs_485D9350  28
 0x485D936C  Str_Please_select_a_preset_Rhythm_pattern  39
 0x485D9393  Str_Bitte_w_hlen_Sie_einen_Rhythmus_aus  37
@@ -7094,7 +7094,7 @@
 0x485D93E8  Str_Seleccione_un_patr_n_de_ritmo_Rhythm_pre  55
 0x485D941F  Str_REMINDER  9
 0x485D9428  Str_Silahkan_pilih_satu_contoh_preset_Preset  52
-0x485D945C  data_485D945C  0
+0x485D945C  StrJa_485D945C  37
 0x485D9484  ptrs_485D9484  28
 0x485D94A0  Str_RCM_Trans_Load_Error_4  22
 0x485D94B6  Str_RCM_Trans_Load_Error_3  22
@@ -7102,7 +7102,7 @@
 0x485D94E2  Str_RCM_Trans_Load_Error  22
 0x485D94F8  Str_ERROR_xx_4  9
 0x485D9501  Str_ERROR_xx_3  9
-0x485D950A  data_485D950A  0
+0x485D950A  StrJa_485D950A  101
 0x485D9570  ptrs_485D9570  28
 0x485D958C  Str_NO_WAVE_EXPANSION_BOARD_4  24
 0x485D95A4  Str_NO_WAVE_EXPANSION_BOARD_3  24
@@ -7110,7 +7110,7 @@
 0x485D95D4  Str_NO_WAVE_EXPANSION_BOARD  24
 0x485D95EC  Str_ERROR_xx_2  9
 0x485D95F5  Str_ERROR_xx  9
-0x485D95FE  data_485D95FE  0
+0x485D95FE  StrJa_485D95FE  43
 0x485D962C  ptrs_485D962C  28
 0x485D9648  Str_PUSH_EXIT_BUTTON  17
 0x485D9659  Str_PUSH_EXIT_BUTTON_2  17
@@ -7126,7 +7126,7 @@
 0x485D96EE  Str_ERROR_4  7
 0x485D96F5  Str_ERROR_3  7
 0x485D96FC  Str_ERROR_2  7
-0x485D9703  data_485D9703  0
+0x485D9703  StrJa_485D9703  8
 0x485D970C  ptrs_485D970C  28
 0x485D9728  Str_The_data_on_the_disk_that_you_are_using  68
 0x485D976C  Str_Die_Daten_auf_dieser_Diskette_stammen_vo  63
@@ -7134,7 +7134,7 @@
 0x485D97FE  Str_Los_datos_del_disco_que_usted_est_utiliz  77
 0x485D984B  Str_ERROR_00_2  9
 0x485D9854  Str_Data_pada_disk_yang_Anda_pergunakan_untu  77
-0x485D98A1  data_485D98A1  0
+0x485D98A1  StrJa_485D98A1  62
 0x485D98E0  ptrs_485D98E0  28
 0x485D98FC  Str_An_error_has_occurred_while_the_disk_was_3  68
 0x485D9940  Str_Beim_Laden_von_der_Diskette_ist_ein_Fehl  85
@@ -7142,7 +7142,7 @@
 0x485D99E3  Str_Se_ha_producido_un_error_mientras_se_car_2  72
 0x485D9A2B  Str_ERROR_01_2  9
 0x485D9A34  Str_Kesalahan_sudah_terjadi_ketika_disket_se_2  75
-0x485D9A7F  data_485D9A7F  0
+0x485D9A7F  StrJa_485D9A7F  88
 0x485D9AD8  ptrs_485D9AD8  28
 0x485D9AF4  Str_There_is_no_disk_in_the_disk_drive  36
 0x485D9B18  Str_Keine_Diskette_im_Laufwerk  28
@@ -7150,7 +7150,7 @@
 0x485D9B5F  Str_No_hay_disco_en_Disk_Drive  28
 0x485D9B7B  Str_ERROR_02_2  9
 0x485D9B84  Str_Tidak_ada_disket_dalam_disk_drive  35
-0x485D9BA7  data_485D9BA7  0
+0x485D9BA7  StrJa_485D9BA7  59
 0x485D9BE4  ptrs_485D9BE4  28
 0x485D9C00  Str_The_file_that_you_tried_to_load_is_empty_2  42
 0x485D9C2A  Str_Die_Diskettenbank_die_Sie_gerade_laden_w  58
@@ -7158,7 +7158,7 @@
 0x485D9C99  Str_El_disco_que_trat_de_cargar_estaba_vac_o  43
 0x485D9CC4  Str_ERROR_03_2  9
 0x485D9CCD  Str_File_yang_dicoba_untuk_dikeluarkan_ditam  86
-0x485D9D23  data_485D9D23  0
+0x485D9D23  StrJa_485D9D23  41
 0x485D9D4C  ptrs_485D9D4C  28
 0x485D9D68  Str_An_error_has_occurred_while_the_disk_was_2  67
 0x485D9DAB  Str_Beim_Speichern_auf_die_Diskette_ist_ein  89
@@ -7166,7 +7166,7 @@
 0x485D9E52  Str_Se_ha_producido_un_error_mientras_se_alm_2  85
 0x485D9EA7  Str_ERROR_05_2  9
 0x485D9EB0  Str_Kesalahan_terjadi_ketika_disket_sedang_d  65
-0x485D9EF1  data_485D9EF1  0
+0x485D9EF1  StrJa_485D9EF1  82
 0x485D9F44  ptrs_485D9F44  28
 0x485D9F60  Str_The_disk_that_you_are_using_is_write_pro  98
 0x485D9FC2  Str_Ihre_Diskette_ist_schreibgesch_tzt_Schie  101
@@ -7174,7 +7174,7 @@
 0x485DA098  Str_El_disco_que_est_utilizando_est_protegid  119
 0x485DA10F  Str_ERROR_06_2  9
 0x485DA118  Str_Disket_yang_Anda_pergunakan_sedang_dikun  98
-0x485DA17A  data_485DA17A  0
+0x485DA17A  StrJa_485DA17A  134
 0x485DA200  ptrs_485DA200  28
 0x485DA21C  Str_The_disk_that_you_are_using_is_full_Plea  62
 0x485DA25A  Str_Ihre_Diskette_ist_voll_Benutzen_Sie_bett  56
@@ -7182,7 +7182,7 @@
 0x485DA2DC  Str_El_disco_que_est_utilizando_est_lleno_Ut  61
 0x485DA319  Str_ERROR_07_2  9
 0x485DA322  Str_Disket_yang_Anda_dipergunakan_sudah_penu  73
-0x485DA36B  data_485DA36B  0
+0x485DA36B  StrJa_485DA36B  68
 0x485DA3B0  ptrs_485DA3B0  28
 0x485DA3CC  Str_An_error_has_occurred_while_the_disk_was  132
 0x485DA450  Str_Beim_Formatieren_ist_ein_Fehler_aufgetre_2  77
@@ -7190,7 +7190,7 @@
 0x485DA53C  Str_Se_ha_producido_un_error_mientras_se_hac_2  158
 0x485DA5DA  Str_ERROR_08_2  9
 0x485DA5E3  Str_Kesalahan_sudah_terjadi_ketika_disket_se  126
-0x485DA661  data_485DA661  0
+0x485DA661  StrJa_485DA661  106
 0x485DA6CC  ptrs_485DA6CC  28
 0x485DA6E8  Str_The_data_on_the_disk_is_copy_protected_P  67
 0x485DA72B  Str_Die_Daten_auf_dieser_Diskette_sind_schre  87
@@ -7198,7 +7198,7 @@
 0x485DA7C4  Str_Los_datos_del_disco_est_n_protegidos_con  85
 0x485DA819  Str_ERROR_09_cp_prtct  19
 0x485DA82C  Str_Data_didalam_disk_diprotek_tidak_bisa_di  71
-0x485DA873  data_485DA873  0
+0x485DA873  StrJa_485DA873  76
 0x485DA8C0  ptrs_485DA8C0  28
 0x485DA8DC  Str_The_data_is_already_copy_protected_5  36
 0x485DA900  Str_Diese_Daten_sind_bereits_kopiergesch_tzt_2  42
@@ -7206,7 +7206,7 @@
 0x485DA956  Str_Los_datos_ya_est_n_protegidos_contra_la  47
 0x485DA985  Str_ERROR_10  9
 0x485DA98E  Str_Data_sudah_diprotek  22
-0x485DA9A4  data_485DA9A4  0
+0x485DA9A4  StrJa_485DA9A4  51
 0x485DA9D8  ptrs_485DA9D8  28
 0x485DA9F4  Str_The_password_that_you_entered_is_incorre  44
 0x485DAA20  Str_Das_eingegebene_Password_ist_falsch  37
@@ -7214,7 +7214,7 @@
 0x485DAA66  Str_La_contrase_a_ingresada_es_incorrecta  39
 0x485DAA8D  Str_ERROR_11  9
 0x485DAA96  Str_Password_yang_anda_masukkan_salah  35
-0x485DAAB9  data_485DAAB9  0
+0x485DAAB9  StrJa_485DAAB9  68
 0x485DAB00  ptrs_485DAB00  28
 0x485DAB1C  Str_The_remaining_battery_power_is_very_low  94
 0x485DAB7A  Str_Die_verbleibende_Kapazit_t_der_Batterien  108
@@ -7222,7 +7222,7 @@
 0x485DAC40  Str_La_carga_de_las_bater_as_es_muy_baja_Ree  103
 0x485DACA7  Str_ERROR_12  9
 0x485DACB0  Str_Batu_Baterei_sudah_lemah_Ganti_segera_se  76
-0x485DACFC  data_485DACFC  0
+0x485DACFC  StrJa_485DACFC  100
 0x485DAD60  ptrs_485DAD60  28
 0x485DAD7C  Str_The_song_you_are_trying_to_save_is_empty  42
 0x485DADA6  Str_Der_Song_den_Sie_speichern_m_chten_ist_l  45
@@ -7230,7 +7230,7 @@
 0x485DAE08  Str_La_canci_n_que_intenta_grabar_est_vac_a  42
 0x485DAE32  Str_ERROR_15_err_seq  18
 0x485DAE44  Str_Lagu_yang_anda_sedang_coba_untuk_disimpa  60
-0x485DAE80  data_485DAE80  0
+0x485DAE80  StrJa_485DAE80  41
 0x485DAEAC  ptrs_485DAEAC  28
 0x485DAEC8  Str_This_Standard_MIDI_File_is_incompatible  78
 0x485DAF16  Str_Dieses_STANDARD_MIDI_FILE_ist_nicht_komp  84
@@ -7238,7 +7238,7 @@
 0x485DAFB6  Str_Este_archivo_MIDI_est_ndar_es_incompatib  67
 0x485DAFF9  Str_ERROR_16_err_cnv  18
 0x485DB00B  Str_Standard_MIDI_File_tidak_kompatibel_deng  75
-0x485DB056  data_485DB056  0
+0x485DB056  StrJa_485DB056  89
 0x485DB0B0  ptrs_485DB0B0  28
 0x485DB0CC  Str_This_is_not_a_STANDARD_MIDI_FILE  34
 0x485DB0EE  Str_Dies_ist_kein_STANDARD_MIDI_FILE  34
@@ -7246,7 +7246,7 @@
 0x485DB140  Str_Este_no_es_un_archivo_MIDI_est_ndar  37
 0x485DB165  Str_ERROR_17_err_no_midi  22
 0x485DB17B  Str_Ini_tidak_STANDARD_MIDI_FILE  30
-0x485DB199  data_485DB199  0
+0x485DB199  StrJa_485DB199  60
 0x485DB1D8  ptrs_485DB1D8  28
 0x485DB1F4  Str_The_timebase_PPQ_resolution_that_you_tri  86
 0x485DB24A  Str_Die_Zeiteinheit_PPQ_Aufl_sung_die_Sie_zu  103
@@ -7254,7 +7254,7 @@
 0x485DB309  Str_La_base_de_tiempo_resoluci_n_de_PPQ_que  89
 0x485DB362  Str_ERROR_18_err_timebase  23
 0x485DB379  Str_Timebase_resolusi_PPQ_yang_anda_coba_unt  84
-0x485DB3CD  data_485DB3CD  0
+0x485DB3CD  StrJa_485DB3CD  85
 0x485DB424  ptrs_485DB424  28
 0x485DB440  Str_This_is_a_FORMAT_1_MIDI_FILE_disk_and_ca  61
 0x485DB47D  Str_Dies_ist_ein_FORMAT_1_MIDI_FILE_und_kann  121
@@ -7262,7 +7262,7 @@
 0x485DB558  Str_Este_es_un_archivo_MIDI_de_FORMATO_1_y_n  65
 0x485DB599  Str_ERROR_19_dctp  15
 0x485DB5A8  Str_Disket_ini_adalah_satu_FORMAT_1_MIDI_FIL  88
-0x485DB600  data_485DB600  0
+0x485DB600  StrJa_485DB600  84
 0x485DB654  ptrs_485DB654  28
 0x485DB670  Str_A_problem_has_occurred_with_your_Sequenc_2  96
 0x485DB6D0  Str_Die_Sequenzerdaten_sind_nicht_in_Ordnung_2  108
@@ -7270,7 +7270,7 @@
 0x485DB7CE  Str_Se_ha_producido_un_problema_con_sus_dato_2  104
 0x485DB836  Str_ERROR_20_2  9
 0x485DB83F  Str_Satu_masalah_terjadi_terhadap_data_Seque_2  108
-0x485DB8AB  data_485DB8AB  0
+0x485DB8AB  StrJa_485DB8AB  82
 0x485DB900  ptrs_485DB900  28
 0x485DB91C  Str_Memory_full_2  25
 0x485DB935  Str_Speicher_voll_2  27
@@ -7278,7 +7278,7 @@
 0x485DB96B  Str_Memoria_llena_2  26
 0x485DB985  Str_ERROR_21  9
 0x485DB98E  Str_Kapasitas_penyimpanan_penuh_Memory_penuh  45
-0x485DB9BB  data_485DB9BB  0
+0x485DB9BB  StrJa_485DB9BB  25
 0x485DB9D4  ptrs_485DB9D4  28
 0x485DB9F0  Str_It_is_necessary_to_press_REC_STOP_to_com  62
 0x485DBA2E  Str_Um_diesen_Vorgang_abzuschli_en_m_ssen_Si  68
@@ -7286,7 +7286,7 @@
 0x485DBAAD  Str_Es_necesario_pulsar_REC_STOP_para_comple  64
 0x485DBAED  Str_ERROR_22  9
 0x485DBAF6  Str_Perlu_tekan_REC_STOP_untuk_melengkapi_pr  48
-0x485DBB26  data_485DBB26  0
+0x485DBB26  StrJa_485DBB26  52
 0x485DBB5C  ptrs_485DBB5C  28
 0x485DBB78  Str_It_is_impossible_to_change_the_Time_Sign  102
 0x485DBBDE  Str_Es_ist_jetzt_nicht_mehr_m_glich_das_Takt  98
@@ -7294,7 +7294,7 @@
 0x485DBCB0  Str_No_es_posible_cambiar_la_signatura_de_ti  103
 0x485DBD17  Str_ERROR_23  9
 0x485DBD20  Str_Tidak_mungkin_diubah_ke_Time_Signature_t  103
-0x485DBD87  data_485DBD87  0
+0x485DBD87  StrJa_485DBD87  64
 0x485DBDC8  ptrs_485DBDC8  28
 0x485DBDE4  Str_A_Rhythm_Track_already_exists_It_is_impo  80
 0x485DBE34  Str_Es_ist_nicht_m_glich_zwei_RHYTHM_Spuren  92
@@ -7302,7 +7302,7 @@
 0x485DBEF4  Str_Ya_existe_una_pista_de_ritmo_No_es_posib_4  73
 0x485DBF3D  Str_ERROR_24_4  9
 0x485DBF46  Str_Satu_Rhythm_Track_sudah_ada_Tidak_mungki  79
-0x485DBF95  data_485DBF95  0
+0x485DBF95  StrJa_485DBF95  92
 0x485DBFF4  ptrs_485DBFF4  28
 0x485DC010  Str_A_Chord_Track_already_exists_It_is_impos  78
 0x485DC05E  Str_Es_ist_nicht_m_glich_zwei_CHORD_Spuren_d  91
@@ -7310,7 +7310,7 @@
 0x485DC11C  Str_Ya_existe_una_pista_de_ritmo_No_es_posib_3  75
 0x485DC167  Str_ERROR_24_3  9
 0x485DC170  Str_Satu_Chord_Track_sudah_ada_tidak_mungkin  77
-0x485DC1BD  data_485DC1BD  0
+0x485DC1BD  StrJa_485DC1BD  92
 0x485DC21C  ptrs_485DC21C  28
 0x485DC238  Str_A_Control_Track_already_exists_It_is_imp  82
 0x485DC28A  Str_Es_ist_nicht_m_glich_zwei_CONTROL_Spuren  93
@@ -7318,7 +7318,7 @@
 0x485DC34C  Str_Ya_existe_una_pista_de_ritmo_No_es_posib_2  79
 0x485DC39B  Str_ERROR_24_2  9
 0x485DC3A4  Str_Satu_Control_Track_sudah_ada_Tidak_mungk  81
-0x485DC3F5  data_485DC3F5  0
+0x485DC3F5  StrJa_485DC3F5  104
 0x485DC460  ptrs_485DC460  28
 0x485DC47C  Str_A_APC_Track_already_exists_It_is_impossi  74
 0x485DC4C6  Str_Es_ist_nicht_m_glich_zwei_APC_Spuren_die  89
@@ -7326,7 +7326,7 @@
 0x485DC580  Str_Ya_existe_una_pista_de_ritmo_No_es_posib  75
 0x485DC5CB  Str_ERROR_24  9
 0x485DC5D4  Str_Satu_APC_Track_sudah_ada_Tidak_mungkin_m  73
-0x485DC61D  data_485DC61D  0
+0x485DC61D  StrJa_485DC61D  86
 0x485DC674  ptrs_485DC674  28
 0x485DC690  Str_It_is_only_possible_to_change_the_veloci  62
 0x485DC6CE  Str_Es_ist_nicht_m_glich_die_VELOCITY_in_ein  86
@@ -7334,7 +7334,7 @@
 0x485DC76A  Str_S_lo_es_posible_cambiar_la_velocidad_en  62
 0x485DC7A8  Str_ERROR_25  9
 0x485DC7B1  Str_Ini_hanya_mungkin_untuk_mengubah_kecepat  62
-0x485DC7EF  data_485DC7EF  0
+0x485DC7EF  StrJa_485DC7EF  53
 0x485DC824  ptrs_485DC824  28
 0x485DC840  Str_It_is_only_possible_to_merge_Melody_Trac  103
 0x485DC8A7  Str_Spuren_wie_RHYTHM_CHORD_und_CONTROL_k_nn  103
@@ -7342,7 +7342,7 @@
 0x485DC99A  Str_S_lo_es_posible_mezclar_pistas_de_melod  103
 0x485DCA01  Str_ERROR_26  9
 0x485DCA0A  Str_Ini_hanya_mungkin_untuk_menggabungkan_Me  118
-0x485DCA80  data_485DCA80  0
+0x485DCA80  StrJa_485DCA80  118
 0x485DCAF8  ptrs_485DCAF8  28
 0x485DCB14  Str_It_is_only_possible_to_copy_Melody_Track  102
 0x485DCB7A  Str_Es_ist_nur_m_glich_die_Melodie_Spuren_zu  119
@@ -7350,7 +7350,7 @@
 0x485DCC7B  Str_S_lo_es_posible_copiar_pistas_de_melod_a  102
 0x485DCCE1  Str_ERROR_27  9
 0x485DCCEA  Str_Ini_hanya_mungkin_untuk_menggandakan_Mel  117
-0x485DCD5F  data_485DCD5F  0
+0x485DCD5F  StrJa_485DCD5F  118
 0x485DCDD8  ptrs_485DCDD8  28
 0x485DCDF4  Str_This_song_is_too_long_to_be_saved_as_a_M  50
 0x485DCE26  Str_Dieser_Titel_ist_zu_lang_um_als_MIDI_Fil  66
@@ -7358,7 +7358,7 @@
 0x485DCEBF  Str_Esta_canci_n_dura_demasiado_para_poder_s  74
 0x485DCF09  Str_ERROR_28  9
 0x485DCF12  Str_Lagu_ini_terlalu_panjang_untuk_disimpan  57
-0x485DCF4B  data_485DCF4B  0
+0x485DCF4B  StrJa_485DCF4B  100
 0x485DCFB0  ptrs_485DCFB0  28
 0x485DCFCC  Str_The_MIDI_FILE_that_you_have_tried_to_loa  145
 0x485DD05D  Str_Der_zu_ladende_MIDI_File_Song_berschreit  152
@@ -7366,7 +7366,7 @@
 0x485DD1AA  Str_El_fichero_MIDI_que_usted_ha_tratado_de  144
 0x485DD23A  Str_ERROR_29  9
 0x485DD243  Str_MIDI_FILE_yang_anda_coba_untuk_dimuat_me  133
-0x485DD2C8  data_485DD2C8  0
+0x485DD2C8  StrJa_485DD2C8  143
 0x485DD358  ptrs_485DD358  28
 0x485DD374  Str_It_is_not_possible_to_change_the_Time_Si_2  172
 0x485DD420  Str_Es_ist_nicht_m_glich_das_Taktma_eines_Co  147
@@ -7374,7 +7374,7 @@
 0x485DD56C  Str_No_es_posible_cambiar_la_m_trica_de_una_2  160
 0x485DD60C  Str_ERROR_30  9
 0x485DD615  Str_Ini_tidak_mungkin_untuk_mengubah_Time_Si  201
-0x485DD6DE  data_485DD6DE  0
+0x485DD6DE  StrJa_485DD6DE  126
 0x485DD75C  ptrs_485DD75C  28
 0x485DD778  Str_The_Time_Signature_of_the_Pattern_from_w  234
 0x485DD862  Str_Das_gerade_kopierte_Pattern_hat_ein_ande  172
@@ -7382,7 +7382,7 @@
 0x485DD9ED  Str_La_signatura_de_tiempo_del_patr_n_del_qu  244
 0x485DDAE1  Str_ERROR_31  9
 0x485DDAEA  Str_Time_Signature_daripada_Pattern_yang_and  239
-0x485DDBD9  data_485DDBD9  0
+0x485DDBD9  StrJa_485DDBD9  160
 0x485DDC7C  ptrs_485DDC7C  28
 0x485DDC98  Str_Memory_full  25
 0x485DDCB1  Str_Speicher_voll  27
@@ -7390,7 +7390,7 @@
 0x485DDCE7  Str_Memoria_llena  26
 0x485DDD01  Str_ERROR_32  9
 0x485DDD0A  Str_Memory_penuh  14
-0x485DDD18  data_485DDD18  0
+0x485DDD18  StrJa_485DDD18  25
 0x485DDD34  ptrs_485DDD34  28
 0x485DDD50  Str_Select_a_Track_before_setting_parameters  64
 0x485DDD90  Str_W_hlen_Sie_eine_Spur_aus_bevor_Sie_Einst  83
@@ -7398,7 +7398,7 @@
 0x485DDE45  Str_Seleccione_una_pista_Track_antes_de_esta  126
 0x485DDEC3  Str_ERROR_33_2  9
 0x485DDECC  Str_ERROR_33  9
-0x485DDED5  data_485DDED5  0
+0x485DDED5  StrJa_485DDED5  65
 0x485DDF18  ptrs_485DDF18  28
 0x485DDF34  Str_The_Identification_ID_code_of_the_System  103
 0x485DDF9B  Str_Der_Identifikations_ID_Code_der_zu_empfa  111
@@ -7406,7 +7406,7 @@
 0x485DE062  Str_El_c_digo_de_identificaci_n_ID_de_los_da  110
 0x485DE0D0  Str_ERROR_40  9
 0x485DE0D9  Str_Kode_identifikasi_ID_dari_data_System_Ex  88
-0x485DE131  data_485DE131  0
+0x485DE131  StrJa_485DE131  98
 0x485DE194  ptrs_485DE194  28
 0x485DE1B0  Str_An_error_has_occurred_during_System_Excl_2  137
 0x485DE239  Str_Beim_Empfang_der_System_Exclusive_Daten  147
@@ -7414,7 +7414,7 @@
 0x485DE374  Str_Se_ha_producido_un_error_durante_la_rece  163
 0x485DE417  Str_ERROR_41  9
 0x485DE420  Str_Satu_kesalahan_sudah_terjadi_sejak_pener  153
-0x485DE4B9  data_485DE4B9  0
+0x485DE4B9  StrJa_485DE4B9  106
 0x485DE524  ptrs_485DE524  28
 0x485DE540  Str_An_error_has_occurred_during_System_Excl  120
 0x485DE5B8  Str_Bei_der_bertragung_der_System_Exclusive  141
@@ -7422,7 +7422,7 @@
 0x485DE6E5  Str_Se_ha_producido_un_error_durante_la_tran  132
 0x485DE769  Str_ERROR_42  9
 0x485DE772  Str_Satu_kesalahan_sudah_terjadi_sejak_Syste  126
-0x485DE7F0  data_485DE7F0  0
+0x485DE7F0  StrJa_485DE7F0  96
 0x485DE850  ptrs_485DE850  28
 0x485DE86C  Str_The_file_that_you_are_trying_to_load_was  140
 0x485DE8F8  Str_Der_Datensatz_File_den_Sie_gerade_laden  180
@@ -7430,7 +7430,7 @@
 0x485DEA48  Str_El_fichero_que_trata_de_cargar_fue_almac  130
 0x485DEACA  Str_ERROR_43  9
 0x485DEAD3  Str_File_yang_sedang_anda_coba_untuk_dimuat  161
-0x485DEB74  data_485DEB74  0
+0x485DEB74  StrJa_485DEB74  119
 0x485DEBEC  ptrs_485DEBEC  28
 0x485DEC08  Str_It_is_impossible_to_edit_a_Drum_Kit_Plea  112
 0x485DEC78  Str_Es_ist_nicht_m_glich_ein_Drum_Kit_zu_edi  130
@@ -7438,7 +7438,7 @@
 0x485DED80  Str_No_es_posible_editar_un_juego_de_bater_a  133
 0x485DEE05  Str_ERROR_44  9
 0x485DEE0E  Str_Tidak_mungkin_untuk_meng_edit_satu_Drum  129
-0x485DEE8F  data_485DEE8F  0
+0x485DEE8F  StrJa_485DEE8F  94
 0x485DEEF0  ptrs_485DEEF0  28
 0x485DEF0C  Str_It_is_only_possible_to_insert_Melody_Tra  106
 0x485DEF76  Str_Es_k_nnen_nur_Melodie_Spuren_eingef_gt_w  115
@@ -7446,7 +7446,7 @@
 0x485DF07B  Str_S_lo_es_posible_insertar_pistas_de_melod  117
 0x485DF0F0  Str_ERROR_46  9
 0x485DF0F9  Str_Hanya_mungkin_dimasukkan_Melody_Tracks_T  105
-0x485DF162  data_485DF162  0
+0x485DF162  StrJa_485DF162  126
 0x485DF1E0  ptrs_485DF1E0  28
 0x485DF1FC  Str_This_procedure_is_not_possible_with_a_co  95
 0x485DF25B  Str_Diese_Prozedur_ist_f_r_ein_Composer_Patt  96
@@ -7454,7 +7454,7 @@
 0x485DF320  Str_No_es_posible_realizar_este_procedimient  126
 0x485DF39E  Str_ERROR_47  9
 0x485DF3A7  Str_Tidak_mungkin_untuk_menggunakan_Sound_Ar  124
-0x485DF423  data_485DF423  0
+0x485DF423  StrJa_485DF423  95
 0x485DF484  ptrs_485DF484  28
 0x485DF4A0  Str_The_type_of_inserted_DISK_is_2HD_It_can  83
 0x485DF4F3  Str_Die_eingelegte_Diskette_ist_ein_2HD_Typ  104
@@ -7462,7 +7462,7 @@
 0x485DF5C5  Str_El_disquete_insertado_es_de_tipo_2HD_En  101
 0x485DF62A  Str_ERR0R_48  9
 0x485DF633  Str_Tipe_disket_yang_digunakan_2HD_Model_ini  95
-0x485DF692  data_485DF692  0
+0x485DF692  StrJa_485DF692  74
 0x485DF6DC  ptrs_485DF6DC  28
 0x485DF6F8  Str_The_quantity_of_this_song_is_over_the_ca  140
 0x485DF784  Str_Die_Gr_e_dieses_Songs_bersteigt_die_Kapa  179
@@ -7470,7 +7470,7 @@
 0x485DF8E2  Str_La_longitud_de_esta_canci_n_supera_la_ca  154
 0x485DF97C  Str_ERROR_49  9
 0x485DF985  Str_Jumlah_lagu_melebihi_kapasitas_KN_7000_C  120
-0x485DF9FD  data_485DF9FD  0
+0x485DF9FD  StrJa_485DF9FD  116
 0x485DFA74  ptrs_485DFA74  28
 0x485DFA90  Str_It_is_not_possible_to_record_using_prese  120
 0x485DFB08  Str_Es_ist_nicht_m_glich_auf_Preset_Re_Group  118
@@ -7478,7 +7478,7 @@
 0x485DFC3A  Str_No_es_posible_grabar_sobre_los_bancos_pr  157
 0x485DFCD7  Str_ERROR_54  9
 0x485DFCE0  Str_Tidak_mungkin_merekam_dengan_menggunakan  136
-0x485DFD68  data_485DFD68  0
+0x485DFD68  StrJa_485DFD68  122
 0x485DFDE4  ptrs_485DFDE4  28
 0x485DFE00  Str_Special_Tracks_such_as_Chord_APC_Rhythm  172
 0x485DFEAC  Str_In_dem_Song_den_Sie_kopieren_m_chten_bef  186
@@ -7486,7 +7486,7 @@
 0x485E000E  Str_En_la_canci_n_que_usted_est_tratando_de  221
 0x485E00EB  Str_ERROR_55  9
 0x485E00F4  Str_Special_Tracks_seperti_Chord_APC_Rhythm  174
-0x485E01A2  data_485E01A2  0
+0x485E01A2  StrJa_485E01A2  135
 0x485E022C  ptrs_485E022C  28
 0x485E0248  Str_AUTO_PUNCH_recording_has_been_unsuccessf  129
 0x485E02C9  Str_Der_AUTO_PUNCH_Aufnahmevorgang_konnte_ni  161
@@ -7494,7 +7494,7 @@
 0x485E03F3  Str_No_ha_tenido_xito_la_grabaci_n_GOLPE_AUT  138
 0x485E047D  Str_ERROR_56  9
 0x485E0486  Str_Rekaman_AUTO_PUNCH_belum_berhasil_karena  113
-0x485E04F7  data_485E04F7  0
+0x485E04F7  StrJa_485E04F7  79
 0x485E0548  ptrs_485E0548  28
 0x485E0564  Str_The_COMPOSER_pattern_you_have_chosen_has  142
 0x485E05F2  Str_Das_gew_hlte_COMPOSER_Muster_weist_ein_u  173
@@ -7502,7 +7502,7 @@
 0x485E072D  Str_El_patr_n_del_Composer_seleccionado_tien  169
 0x485E07D6  Str_ERROR_57  9
 0x485E07DF  Str_Contoh_contoh_Composer_yang_sudah_dipili  174
-0x485E088D  data_485E088D  0
+0x485E088D  StrJa_485E088D  111
 0x485E08FC  ptrs_485E08FC  28
 0x485E0918  Str_The_song_that_you_have_tried_to_load_exc  131
 0x485E099B  Str_Die_Melodie_die_Sie_zu_laden_versuchten  182
@@ -7510,7 +7510,7 @@
 0x485E0AEE  Str_La_canci_n_que_ha_tratado_de_cargar_supe  267
 0x485E0BF9  Str_ERROR_58  9
 0x485E0C02  Str_Lagu_yang_anda_coba_panggil_melebihi_kem  126
-0x485E0C80  data_485E0C80  0
+0x485E0C80  StrJa_485E0C80  116
 0x485E0CF4  ptrs_485E0CF4  28
 0x485E0D10  Str_RKB_and_LKB_are_special_tracks_for_compa  134
 0x485E0D96  Str_RKB_und_LKB_sind_spezielle_Spuren_f_r_di  172
@@ -7518,7 +7518,7 @@
 0x485E0EE9  Str_RKB_y_LKB_son_pistas_especiales_que_mant  171
 0x485E0F94  Str_ERROR_59  9
 0x485E0F9D  data_485E0F9D  0
-0x485E0FA2  data_485E0FA2  0
+0x485E0FA2  StrJa_485E0FA2  108
 0x485E1010  ptrs_485E1010  28
 0x485E102C  Str_RKB_and_LKB_are_special_tracks_which_can  169
 0x485E10D5  Str_RKB_und_LKB_sind_spezielle_Spuren_die_ni  227
@@ -7526,7 +7526,7 @@
 0x485E1289  Str_RKB_y_LKB_son_pistas_especiales_que_no_p  222
 0x485E1367  Str_ERROR_60  9
 0x485E1370  data_485E1370  0
-0x485E1375  data_485E1375  0
+0x485E1375  StrJa_485E1375  143
 0x485E1404  ptrs_485E1404  28
 0x485E1420  Str_It_is_impossible_to_edit_the_Orchestral  103
 0x485E1487  Str_Das_Orchestral_Kit_und_das_Sound_Effect  117
@@ -7534,7 +7534,7 @@
 0x485E1576  Str_No_es_posible_editar_ni_el_conjunto_de_o  141
 0x485E1603  Str_ERROR_61_dkit  15
 0x485E1612  Str_Tidak_mungkin_untuk_meng_edit_Orchestral  110
-0x485E1680  data_485E1680  0
+0x485E1680  StrJa_485E1680  108
 0x485E16EC  ptrs_485E16EC  28
 0x485E1708  Str_The_computer_connection_is_not_active_be  180
 0x485E17BC  Str_Die_Computerverbindung_ist_nicht_aktiv_d  199
@@ -7542,7 +7542,7 @@
 0x485E1952  Str_La_conexi_n_con_la_computadora_no_est_ac  227
 0x485E1A35  Str_ERROR_62  9
 0x485E1A3E  Str_Hubungan_komputer_tidak_aktif_karena_pin  188
-0x485E1AFA  data_485E1AFA  0
+0x485E1AFA  StrJa_485E1AFA  172
 0x485E1BA8  ptrs_485E1BA8  28
 0x485E1BC4  Str_This_Bitmap_JPEG_is_in_the_wrong_format  114
 0x485E1C36  Str_Das_Format_dieses_Bitmaps_JPEG_kann_vom  126
@@ -7550,7 +7550,7 @@
 0x485E1D4A  Str_Este_mapa_de_bits_tiene_en_un_formato_in  142
 0x485E1DD8  Str_ERROR_63  9
 0x485E1DE1  Str_Bitmap_JPEG_adalah_salah_format_dari_KN  130
-0x485E1E63  data_485E1E63  0
+0x485E1E63  StrJa_485E1E63  53
 0x485E1E98  ptrs_485E1E98  28
 0x485E1EB4  Str_Please_select_the_Panel_Memory_that_you  54
 0x485E1EEA  Str_Bitte_w_hlen_Sie_den_Panel_Memory_Platz  84
@@ -7558,7 +7558,7 @@
 0x485E1F8D  Str_Por_favor_seleccione_el_Panel_Memory_al  62
 0x485E1FCB  Str_ERROR_64  9
 0x485E1FD4  Str_Pilihlah_Panel_Memory_yang_ingin_anda_be  52
-0x485E2008  data_485E2008  0
+0x485E2008  StrJa_485E2008  51
 0x485E203C  ptrs_485E203C  28
 0x485E2058  Str_It_is_not_possible_to_use_the_Chord_Find  126
 0x485E20D6  Str_In_diesem_Modus_ist_die_Verwendung_von_C  152
@@ -7566,7 +7566,7 @@
 0x485E2211  Str_No_es_posible_utilizar_la_b_squeda_de_ac  232
 0x485E22F9  Str_ERROR_65_2  9
 0x485E2302  Str_ERROR_65  9
-0x485E230B  data_485E230B  0
+0x485E230B  StrJa_485E230B  55
 0x485E2344  ptrs_485E2344  28
 0x485E2360  Str_Solo_pads_are_special_pads_which_include  127
 0x485E23DF  Str_Die_Solo_Pads_sind_spezielle_Pads_die_Ak  160
@@ -7574,7 +7574,7 @@
 0x485E251E  Str_Las_teclas_para_solos_son_teclas_especia  185
 0x485E25D7  Str_ERROR_66_2  9
 0x485E25E0  Str_ERROR_66  9
-0x485E25E9  data_485E25E9  0
+0x485E25E9  StrJa_485E25E9  92
 0x485E2648  ptrs_485E2648  28
 0x485E2664  Str_There_are_no_APC_or_Chord_tracks_Select  86
 0x485E26BA  Str_Es_ist_keine_APC_oder_CHORD_Spur_vorhand  109
@@ -7582,7 +7582,7 @@
 0x485E279A  Str_No_hay_pistas_de_ejecuci_n_autom_tica_de  138
 0x485E2824  Str_ERROR_67_2  9
 0x485E282D  Str_ERROR_67  9
-0x485E2836  data_485E2836  0
+0x485E2836  StrJa_485E2836  108
 0x485E28A4  ptrs_485E28A4  28
 0x485E28C0  Str_It_is_not_possible_to_record_directly_in  142
 0x485E294E  Str_Es_ist_nicht_m_glich_die_Solo_Pads_direk  151
@@ -7590,7 +7590,7 @@
 0x485E2AB3  Str_No_es_posible_grabar_directamente_en_las  156
 0x485E2B4F  Str_ERROR_68_2  9
 0x485E2B58  Str_ERROR_68  9
-0x485E2B61  data_485E2B61  0
+0x485E2B61  StrJa_485E2B61  128
 0x485E2BE4  ptrs_485E2BE4  28
 0x485E2C00  Str_It_is_not_possible_to_delete_all_measure  43
 0x485E2C2B  Str_Sie_k_nnen_nicht_alle_Takte_l_schen  37
@@ -7662,7 +7662,7 @@
 0x485E406B  Str_Los_datos_del_SD_que_usted_est_utilizand  74
 0x485E40B5  Str_ERROR_00  9
 0x485E40BE  Str_Data_pada_SD_yang_Anda_pergunakan_untuk  75
-0x485E4109  data_485E4109  0
+0x485E4109  StrJa_485E4109  58
 0x485E4144  ptrs_485E4144  28
 0x485E4160  Str_An_error_has_occurred_while_the_SD_was_l  66
 0x485E41A2  Str_Beim_Laden_von_der_SD_ist_ein_Fehler_auf  79
@@ -7670,7 +7670,7 @@
 0x485E423F  Str_Se_ha_producido_un_error_mientras_se_car  69
 0x485E4284  Str_ERROR_01  9
 0x485E428D  Str_Kesalahan_sudah_terjadi_ketika_SD_sedang_2  71
-0x485E42D4  data_485E42D4  0
+0x485E42D4  StrJa_485E42D4  84
 0x485E4328  ptrs_485E4328  28
 0x485E4344  Str_There_is_no_SD_in_the_SD_drive  32
 0x485E4364  Str_Keine_SD_im_Laufwerk  22
@@ -7678,7 +7678,7 @@
 0x485E439E  Str_No_hay_SD_en_SD_Drive  23
 0x485E43B5  Str_ERROR_02  9
 0x485E43BE  Str_Tidak_ada_SD_dalam_SD_drive  29
-0x485E43DB  data_485E43DB  0
+0x485E43DB  StrJa_485E43DB  41
 0x485E4404  ptrs_485E4404  28
 0x485E4420  Str_The_file_that_you_tried_to_load_is_empty  42
 0x485E444A  Str_Die_Bank_die_Sie_gerade_laden_wollen_ist  49
@@ -7686,7 +7686,7 @@
 0x485E44B0  Str_El_SD_que_trat_de_cargar_estaba_vac_o  40
 0x485E44D8  Str_ERROR_03  9
 0x485E44E1  Str_File_yang_SD_untuk_dikeluarkan_ditampilk  78
-0x485E452F  data_485E452F  0
+0x485E452F  StrJa_485E452F  41
 0x485E4558  ptrs_485E4558  28
 0x485E4574  Str_An_error_has_occurred_while_the_SD_was_s  65
 0x485E45B5  Str_Beim_Speichern_auf_die_SD_ist_ein_Fehler  83
@@ -7694,7 +7694,7 @@
 0x485E4656  Str_Se_ha_producido_un_error_mientras_se_alm  82
 0x485E46A8  Str_ERROR_05  9
 0x485E46B1  Str_Kesalahan_terjadi_ketika_SD_sedang_diisi  61
-0x485E46EE  data_485E46EE  0
+0x485E46EE  StrJa_485E46EE  82
 0x485E4740  ptrs_485E4740  28
 0x485E475C  Str_The_SD_that_you_are_using_is_write_prote  96
 0x485E47BC  Str_Ihre_SD_ist_schreibgesch_tzt_Schieben_Si  95
@@ -7702,7 +7702,7 @@
 0x485E487E  Str_El_SD_que_est_utilizando_est_protegido_c  116
 0x485E48F2  Str_ERROR_06  9
 0x485E48FB  Str_SD_yang_Anda_pergunakan_sedang_dikunci_d  94
-0x485E4959  data_485E4959  0
+0x485E4959  StrJa_485E4959  126
 0x485E49D8  ptrs_485E49D8  28
 0x485E49F4  Str_The_SD_that_you_are_using_is_full_Please  58
 0x485E4A2E  Str_Ihre_SD_ist_voll_Benutzen_Sie_bette_eine  50
@@ -7710,7 +7710,7 @@
 0x485E4A9C  Str_El_SD_que_est_utilizando_est_lleno_Utili  55
 0x485E4AD3  Str_ERROR_07  9
 0x485E4ADC  Str_SD_yang_Anda_dipergunakan_sudah_penuh_Ha  65
-0x485E4B1D  data_485E4B1D  0
+0x485E4B1D  StrJa_485E4B1D  60
 0x485E4B5C  ptrs_485E4B5C  28
 0x485E4B78  Str_An_error_has_occurred_while_the_SD_was_f  126
 0x485E4BF6  Str_Beim_Formatieren_ist_ein_Fehler_aufgetre  77
@@ -7718,7 +7718,7 @@
 0x485E4CD4  Str_Se_ha_producido_un_error_mientras_se_hac  149
 0x485E4D69  Str_ERROR_08  9
 0x485E4D72  Str_Kesalahan_sudah_terjadi_ketika_SD_sedang  114
-0x485E4DE4  data_485E4DE4  0
+0x485E4DE4  StrJa_485E4DE4  98
 0x485E4E48  ptrs_485E4E48  28
 0x485E4E64  Str_A_problem_has_occurred_with_your_Sequenc  94
 0x485E4EC2  Str_Die_Sequenzerdaten_sind_nicht_in_Ordnung  102
@@ -7726,7 +7726,7 @@
 0x485E4FB3  Str_Se_ha_producido_un_problema_con_sus_dato  101
 0x485E5018  Str_ERROR_20  9
 0x485E5021  Str_Satu_masalah_terjadi_terhadap_data_Seque  108
-0x485E508D  data_485E508D  0
+0x485E508D  StrJa_485E508D  82
 0x485E50E0  ptrs_485E50E0  28
 0x485E50FC  Str_The_number_of_songs_you_are_copying_to_t_6  217
 0x485E51D5  Str_Mit_den_Songs_die_Sie_auf_die_SD_Karte_k_2  278
@@ -7734,7 +7734,7 @@
 0x485E53D2  Str_El_n_mero_de_canciones_que_se_est_n_copi_2  236
 0x485E54BE  Str_The_number_of_songs_you_are_copying_to_t_5  217
 0x485E5597  Str_The_number_of_songs_you_are_copying_to_t_4  217
-0x485E5670  data_485E5670  0
+0x485E5670  StrJa_485E5670  202
 0x485E573C  ptrs_485E573C  28
 0x485E5758  Str_The_number_of_songs_you_are_copying_to_t_3  176
 0x485E5808  Str_Mit_den_Songs_die_Sie_auf_die_SD_Karte_k  228
@@ -7742,7 +7742,7 @@
 0x485E59A5  Str_El_n_mero_de_canciones_que_se_est_n_copi  191
 0x485E5A64  Str_The_number_of_songs_you_are_copying_to_t_2  176
 0x485E5B14  Str_The_number_of_songs_you_are_copying_to_t  176
-0x485E5BC4  data_485E5BC4  0
+0x485E5BC4  StrJa_485E5BC4  220
 0x485E5CA0  ptrs_485E5CA0  28
 0x485E5CBC  Str_This_data_is_security_protected_0dSorry_3  77
 0x485E5D09  Str_Diese_Daten_sind_sicherheitsgesch_tzt_0d  89
@@ -7750,7 +7750,7 @@
 0x485E5DC4  Str_Estos_datos_est_n_bien_protegidos_0d_Lo  95
 0x485E5E23  Str_This_data_is_security_protected_0dSorry_2  77
 0x485E5E70  Str_This_data_is_security_protected_0dSorry  77
-0x485E5EBD  data_485E5EBD  0
+0x485E5EBD  StrJa_485E5EBD  67
 0x485E5F00  ptrs_485E5F00  28
 0x485E5F1C  Str_SD_lid_is_open_Please_close_the_lid_to_a_3  60
 0x485E5F58  Str_Der_SD_Deckel_ist_offen_Bitte_schlie_en  90
@@ -7758,7 +7758,7 @@
 0x485E6001  Str_La_tapa_SD_est_abierta_Cierre_la_tapa_pa  69
 0x485E6046  Str_SD_lid_is_open_Please_close_the_lid_to_a_2  60
 0x485E6082  Str_SD_lid_is_open_Please_close_the_lid_to_a  60
-0x485E60BE  data_485E60BE  0
+0x485E60BE  StrJa_485E60BE  56
 0x485E60F8  ptrs_485E60F8  28
 0x485E6114  Str_SD_access_is_canceled_Please_try_again_a_3  66
 0x485E6156  Str_Der_SD_Zugriff_ist_unterbrochen_Bitte_sc  101
@@ -7766,7 +7766,7 @@
 0x485E6207  Str_Se_cancela_el_acceso_a_SD_Trate_nuevamen  74
 0x485E6251  Str_SD_access_is_canceled_Please_try_again_a_2  66
 0x485E6293  Str_SD_access_is_canceled_Please_try_again_a  66
-0x485E62D5  data_485E62D5  0
+0x485E62D5  StrJa_485E62D5  58
 0x485E6310  ptrs_485E6310  28
 0x485E632C  TtMessage_Table  1808
 0x485E6A3C  IvMessageProc_Table  28
@@ -7777,7 +7777,7 @@
 0x485E6A8B  Str_POR_FAVOR_ESPERE_2  20
 0x485E6A9F  Str_PLEASE_WAIT_3  13
 0x485E6AAC  Str_SILAHKAN_TUNGGU_2  17
-0x485E6ABD  func_4848A014_Table_p0_0  4
+0x485E6ABD  StrJa_485E6ABD  23
 0x485E6AD4  func_4848A014_Table  28
 0x485E6AF0  Str_English  8
 0x485E6AF8  Str_German_2  7
@@ -12773,7 +12773,7 @@
 0x486076C1  Str_Coloque_el_disco_de_conversi_n_de_estilo  43
 0x486076EC  Str_Please_Insert_the_Style_Convert_Disk  38
 0x48607712  Str_Masukkanlah_Disket_Style_Convert  34
-0x48607734  data_48607734  0
+0x48607734  StrJa_48607734  47
 0x48607764  ptrs_48607764  28
 0x48607780  Str_MEMORY_A_3  12
 0x4860778C  Text_MEMORY_B  264
@@ -14694,7 +14694,7 @@
 0x48611E35  Str_Resets_the_PERFORMANCE_or_individual_sec_3  80
 0x48611E85  Str_Resets_the_PERFORMANCE_or_individual_sec_2  80
 0x48611ED5  Str_Resets_the_PERFORMANCE_or_individual_sec  80
-0x48611F25  data_48611F25  0
+0x48611F25  StrJa_48611F25  63
 0x48611F64  ptrs_48611F64  24
 0x48611F7C  Str_ATTENTION_13  11
 0x48611F87  Str_ACHTUNG_5  9
@@ -14702,7 +14702,7 @@
 0x48611F9B  Str_ATTENCI0N  11
 0x48611FA6  Str_Italian_6  8
 0x48611FAE  Str_PERHATIAN  11
-0x48611FB9  data_48611FB9  0
+0x48611FB9  StrJa_48611FB9  6
 0x48611FC0  ptrs_48611FC0  28
 0x48611FDC  Str_Using_Initial_Setting_will_replace_any_c  88
 0x48612034  Str_Durch_das_Initialisieren_werden_alle_akt  104
@@ -14710,7 +14710,7 @@
 0x48612101  Str_El_uso_del_ajuste_inicial_har_que_se_ree  108
 0x4861216D  Str_Italian_5  8
 0x48612175  Str_Menggunakan_Initial_Setting_akan_menghap  109
-0x486121E2  data_486121E2  0
+0x486121E2  StrJa_486121E2  65
 0x48612224  ptrs_48612224  28
 0x48612240  Str_Are_You_Sure_8  14
 0x4861224E  Str_SIND_SIE_SICHER  17
@@ -14718,7 +14718,7 @@
 0x4861226E  Str_Est_seguro_5  14
 0x4861227C  Str_Italian_4  8
 0x48612284  Str_Apakah_Anda_sudah_yakin  26
-0x4861229E  data_4861229E  0
+0x4861229E  StrJa_4861229E  14
 0x486122AC  Str_aHN_aH_aHn_aH_aH_aH_aH_0  28
 0x486122C8  Str_0_16  4
 0x486122CC  Str_1_28  4
@@ -14772,7 +14772,7 @@
 0x48612B30  Str_Stores_to_total_setting_including_Rhythm_3  61
 0x48612B6D  Str_Stores_to_total_setting_including_Rhythm_2  61
 0x48612BAA  Str_Stores_to_total_setting_including_Rhythm  61
-0x48612BE7  data_48612BE7  0
+0x48612BE7  StrJa_48612BE7  67
 0x48612C2C  ptrs_48612C2C  28
 0x48612C48  AcPmExpFilterGridBoxProc_Table  256
 0x48612D48  PmemModeBoxProc_Table  8
@@ -16244,7 +16244,7 @@
 0x48627BCC  Str_ATENCI_N_4  11
 0x48627BD7  Str_ATTENTION_9  11
 0x48627BE2  Str_Perhatian_3  12
-0x48627BEE  data_48627BEE  0
+0x48627BEE  StrJa_48627BEE  7
 0x48627BF8  ptrs_48627BF8  28
 0x48627C14  Str_Turning_on_GENERAL_MIDI_2_MODE_will_repl_2  96
 0x48627C74  Str_Durch_das_Einschalten_des_GENERAL_MIDI_2  114
@@ -16266,7 +16266,7 @@
 0x486280F3  Str_Est_seguro_4  14
 0x48628101  Str_Are_You_Sure_6  14
 0x4862810F  Str_Apakah_yakin_akan_dihapus_3  28
-0x4862812B  data_4862812B  0
+0x4862812B  StrJa_4862812B  15
 0x4862813C  ptrs_4862813C  28
 0x48628158  DrawString_ArgA0_1  2
 0x4862815A  DrawString_Impl_Var_8  2
@@ -31940,7 +31940,7 @@
 0x48678638  Str_Al_cambiar_la_asignaci_n_de_pistas_2d_de  88
 0x48678690  Str_Changing_the_assignment_of_Track_2d_from  84
 0x486786E4  Str_Ubahlah_assignment_dari_Tracks_2d_dari_s  90
-0x4867873E  data_4867873E  0
+0x4867873E  StrJa_4867873E  101
 0x486787A4  TrAsSureLangCheck_Table_2  28
 0x486787C0  Str_Any_existing_song_will_be_cleared_Press  56
 0x486787F8  Str_Jeder_Song_im_Arbeitsspeicher_wird_gel_s  77
@@ -32488,7 +32488,7 @@
 0x4867FFC1  Str_Presione_el_bot_n_de_escritura_para_memo  70
 0x48680007  Str_Italian_3  8
 0x4868000F  Str_Indonesian_2  11
-0x4868001A  data_4868001A  0
+0x4868001A  StrJa_4868001A  77
 0x48680068  ptrs_48680068  28
 0x48680084  Str_3d_187  4
 0x48680088  Field_PsFolderFileListBox_font  5
@@ -41124,7 +41124,7 @@
 0x486B19A7  Str_Transmisi_n_de_datos_0dNo_apague_el_inte  138
 0x486B1A31  Str_Italian_2  8
 0x486B1A39  Str_Indonesian  11
-0x486B1A44  data_486B1A44  0
+0x486B1A44  StrJa_486B1A44  38
 0x486B1A6C  ptrs_486B1A6C  28
 0x486B1A88  Str_rb  3
 0x486B1A8C  func_4858390D_Table  52
@@ -43557,15 +43557,7 @@
 0x4872A94C  Str_clear_2  17
 0x4872A960  func_48437F49_Table_2  0
 0x4872A9AC  TechnicsRhythmsResource  25796
-0x48730E70  Str_Technics_Pads  17
-0x48730E88  LoadU24BE_ArgA0_0  3
-0x48730E8B  LoadU24BE_ArgA0_1  3
-0x48730E8E  LoadU24BE_Var  1
-0x48730E8F  LoadU24BE_Var_2  1
-0x48730E90  LoadU24BE_Table  2966
-0x48731A26  Str_O_F  6
-0x48731A2D  Str_P_7_E  6
-0x48731AD1  Str_I_J  6
+0x48730E70  TechnicsPadsResourceBuiltin  5276
 0x4873230C  Str_TCMP  5
 0x4873231C  MemStyleAreaHeaderRestamp_Block  3
 0x48732322  MemStyleAreaHeaderRestamp_Block_2  26

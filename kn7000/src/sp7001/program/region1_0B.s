@@ -22343,11 +22343,11 @@ func_4856FC35:
     add     -8, sp
     call    func_4856FBCE_entry, 0, 0x1c
     ret     0, 8
-
-func_4856FC40:
+# ToneKeyFind  (CPU 0x4856fc40)
+ToneKeyFind:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4856FC40_entry:
+ToneKeyFind_entry:
     mov     a0, a2
     mov     d1, d3
     movbu   d0, (0x2c, sp)
@@ -22365,7 +22365,7 @@ func_4856FC40_entry:
     movbu   (0x34, sp), d0
     add     d0, d1
     mov     d1, d0
-    call    func_485700D8_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookupSrc1_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FC79
     mov     1, d0
@@ -22387,7 +22387,7 @@ loc_4856FC79:
     add     d0, d1
     add     d1, a0
     mov     a0, d0
-    call    func_48570149_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookupSrc2_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FCAC
     mov     2, d0
@@ -22408,7 +22408,7 @@ loc_4856FCAC:
     movbu   (0x34, sp), d0
     add     d0, d1
     mov     d1, d0
-    call    func_485701BA_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookupSrc3_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FCDB
     mov     3, d0
@@ -22430,7 +22430,7 @@ loc_4856FCDB:
     add     d0, d1
     add     d1, a0
     mov     a0, d0
-    call    func_4857022B_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookupSrc4_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FD0E
     mov     4, d0
@@ -22455,7 +22455,7 @@ loc_4856FD0E:
     add     d0, d3
     add     d3, d1
     mov     d1, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FD3B
     ret     [d2,d3,a2,a3], 0x24
@@ -22524,7 +22524,7 @@ loc_4856FD9E:
     add     a3, d3
     add     d3, a0
     mov     a0, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     bne     loc_4856FDBC
     jmp     loc_4856FE4A
@@ -22534,7 +22534,7 @@ loc_4856FDBF:
     cmp     0x4d, d2
     bne     loc_4856FDD1
     mov     0x00207f7f, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     ret     [d2,d3,a2,a3], 0x24
 loc_4856FDD1:
     cmp     0x4e, d2
@@ -22561,7 +22561,7 @@ loc_4856FDD9:
     add     d0, d3
     add     d3, a0
     mov     a0, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FE4A
     ret     [d2,d3,a2,a3], 0x24
@@ -22589,7 +22589,7 @@ loc_4856FE10:
     add     d0, d3
     add     d3, d1
     mov     d1, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FE4A
     ret     [d2,d3,a2,a3], 0x24
@@ -22621,7 +22621,7 @@ loc_4856FE68:
     add     a3, d3
     add     d3, a0
     mov     a0, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FE86
     ret     [d2,d3,a2,a3], 0x24
@@ -22632,19 +22632,19 @@ loc_4856FE86:
     and     0xfffffff8, d0
     extbu   d0
     add     d3, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FEA0
     ret     [d2,d3,a2,a3], 0x24
 loc_4856FEA0:
     mov     d3, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FEAD
     ret     [d2,d3,a2,a3], 0x24
 loc_4856FEAD:
     mov     a2, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     bne     loc_4856FEBB
     jmp     loc_4856FF56
@@ -22659,7 +22659,7 @@ loc_4856FEBE:
     bne     loc_4856FED8
 loc_4856FECA:
     mov     0x00207f7f, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     ret     [d2,d3,a2,a3], 0x24
 loc_4856FED8:
     cmp     0x68, d2
@@ -22667,7 +22667,7 @@ loc_4856FED8:
     mov     (0x10, sp), d0
     add     d0, a2
     mov     a2, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FF56
     ret     [d2,d3,a2,a3], 0x24
@@ -22678,7 +22678,7 @@ loc_4856FEEE:
     cmp     0x78, d0
     blt     loc_4856FF06
     mov     0x00207f7f, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     ret     [d2,d3,a2,a3], 0x24
 loc_4856FF06:
     mov     (0xc, sp), d0
@@ -22688,7 +22688,7 @@ loc_4856FF06:
     asl     8, d0
     add     a2, d0
     add     d1, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FF22
     bra     loc_4856FF61
@@ -22697,7 +22697,7 @@ loc_4856FF22:
     mov     a2, d2
     add     d2, d1
     mov     d1, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FF33
     bra     loc_4856FF61
@@ -22708,26 +22708,26 @@ loc_4856FF33:
     extbu   d0
     add     d0, d1
     mov     d1, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FF4A
     bra     loc_4856FF61
 loc_4856FF4A:
     mov     d2, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
     cmp     0, a0
     beq     loc_4856FF56
     bra     loc_4856FF61
 loc_4856FF56:
     mov     0x00207f7f, d0
-    call    func_48570067_entry, [d2,d3,a2], 0x20
+    call    ToneKeyLookup_entry, [d2,d3,a2], 0x20
 loc_4856FF61:
     ret     [d2,d3,a2,a3], 0x24
-
-func_4856FF64:
+# SoundSwNoGet  (CPU 0x4856ff64)
+SoundSwNoGet:
     movm    [d2,a2,a3], (sp)
     add     -0x1c, sp
-func_4856FF64_entry:
+SoundSwNoGet_entry:
     mov     a0, (0x30, sp)
     mov     a1, a3
     mov     d0, d2
@@ -22738,7 +22738,7 @@ func_4856FF64_entry:
     mov     sp, a0
     add     0x18, a0
     mov     d2, d0
-    call    func_4856FC40_entry, [d2,d3,a2,a3], 0x24
+    call    ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
     mov     a0, a2
     cmp     0, a2
     bne     loc_4856FF86
@@ -22818,11 +22818,11 @@ loc_48570012:
     clr     d0
 loc_48570013:
     ret     [d2,a2,a3], 0x28
-
-func_48570016:
+# SoundIconGet  (CPU 0x48570016)
+SoundIconGet:
     movm    [d2,a2], (sp)
     add     -0x1c, sp
-func_48570016_entry:
+SoundIconGet_entry:
     mov     a0, a2
     mov     d1, d2
     mov     d0, d1
@@ -22834,7 +22834,7 @@ func_48570016_entry:
     mov     sp, a0
     add     0x18, a0
     mov     d2, d1
-    call    func_4856FC40_entry, [d2,d3,a2,a3], 0x24
+    call    ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
     cmp     0, a0
     bne     loc_48570036
     clr     d0
@@ -22845,11 +22845,11 @@ loc_48570036:
     mov     1, d0
 loc_4857003D:
     ret     [d2,a2], 0x24
-
-func_48570040:
+# SoundToneIndexGet  (CPU 0x48570040)
+SoundToneIndexGet:
     movm    [d2,a2], (sp)
     add     -0x18, sp
-func_48570040_entry:
+SoundToneIndexGet_entry:
     mov     a0, a2
     mov     d1, d2
     mov     d0, d1
@@ -22860,7 +22860,7 @@ func_48570040_entry:
     extbu   d2
     mov     a1, a0
     mov     d2, d1
-    call    func_4856FC40_entry, [d2,d3,a2,a3], 0x24
+    call    ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
     cmp     0, a0
     bne     loc_4857005E
     clr     d0
@@ -22871,11 +22871,11 @@ loc_4857005E:
     mov     1, d0
 loc_48570064:
     ret     [d2,a2], 0x20
-
-func_48570067:
+# ToneKeyLookup  (CPU 0x48570067)
+ToneKeyLookup:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_48570067_entry:
+ToneKeyLookup_entry:
     mov     d0, (0x28, sp)
     mov     (0x48000018), d1
     mov     0x18, a2
@@ -22899,7 +22899,7 @@ func_48570067_entry:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    call    func_485702A7_entry, [d2], 4
+    call    ToneKeyHashIndex_entry, [d2], 4
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -22915,7 +22915,7 @@ func_48570067_entry:
 loc_485700B6:
     mov     (4, a2), d1
     mov     (0x28, sp), d0
-    call    func_4857029C, 0, 0
+    call    ToneKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_485700CA
     mov     8, a0
@@ -22932,11 +22932,11 @@ loc_485700D3:
     mov     0, a0
 loc_485700D5:
     ret     [d2,d3,a2], 0x20
-
-func_485700D8:
+# ToneKeyLookupSrc1  (CPU 0x485700d8)
+ToneKeyLookupSrc1:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_485700D8_entry:
+ToneKeyLookupSrc1_entry:
     mov     d0, (0x28, sp)
     mov     (0x5700000c), d1
     mov     0x18, a2
@@ -22960,7 +22960,7 @@ func_485700D8_entry:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    call    func_485702A7_entry, [d2], 4
+    call    ToneKeyHashIndex_entry, [d2], 4
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -22976,7 +22976,7 @@ func_485700D8_entry:
 loc_48570127:
     mov     (4, a2), d1
     mov     (0x28, sp), d0
-    call    func_4857029C, 0, 0
+    call    ToneKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_4857013B
     mov     8, a0
@@ -22993,11 +22993,11 @@ loc_48570144:
     mov     0, a0
 loc_48570146:
     ret     [d2,d3,a2], 0x20
-
-func_48570149:
+# ToneKeyLookupSrc2  (CPU 0x48570149)
+ToneKeyLookupSrc2:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_48570149_entry:
+ToneKeyLookupSrc2_entry:
     mov     d0, (0x28, sp)
     mov     (0x5600000c), d1
     mov     0x18, a2
@@ -23021,7 +23021,7 @@ func_48570149_entry:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    call    func_485702A7_entry, [d2], 4
+    call    ToneKeyHashIndex_entry, [d2], 4
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23037,7 +23037,7 @@ func_48570149_entry:
 loc_48570198:
     mov     (4, a2), d1
     mov     (0x28, sp), d0
-    call    func_4857029C, 0, 0
+    call    ToneKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_485701AC
     mov     8, a0
@@ -23054,11 +23054,11 @@ loc_485701B5:
     mov     0, a0
 loc_485701B7:
     ret     [d2,d3,a2], 0x20
-
-func_485701BA:
+# ToneKeyLookupSrc3  (CPU 0x485701ba)
+ToneKeyLookupSrc3:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_485701BA_entry:
+ToneKeyLookupSrc3_entry:
     mov     d0, (0x28, sp)
     mov     (0x4100000c), d1
     mov     0x18, a2
@@ -23082,7 +23082,7 @@ func_485701BA_entry:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    call    func_485702A7_entry, [d2], 4
+    call    ToneKeyHashIndex_entry, [d2], 4
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23098,7 +23098,7 @@ func_485701BA_entry:
 loc_48570209:
     mov     (4, a2), d1
     mov     (0x28, sp), d0
-    call    func_4857029C, 0, 0
+    call    ToneKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_4857021D
     mov     8, a0
@@ -23115,11 +23115,11 @@ loc_48570226:
     mov     0, a0
 loc_48570228:
     ret     [d2,d3,a2], 0x20
-
-func_4857022B:
+# ToneKeyLookupSrc4  (CPU 0x4857022b)
+ToneKeyLookupSrc4:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_4857022B_entry:
+ToneKeyLookupSrc4_entry:
     mov     d0, (0x28, sp)
     mov     (0x4180000c), d1
     mov     0x18, a2
@@ -23143,7 +23143,7 @@ func_4857022B_entry:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
-    call    func_485702A7_entry, [d2], 4
+    call    ToneKeyHashIndex_entry, [d2], 4
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23159,7 +23159,7 @@ func_4857022B_entry:
 loc_4857027A:
     mov     (4, a2), d1
     mov     (0x28, sp), d0
-    call    func_4857029C, 0, 0
+    call    ToneKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_4857028E
     mov     8, a0
@@ -23176,8 +23176,8 @@ loc_48570297:
     mov     0, a0
 loc_48570299:
     ret     [d2,d3,a2], 0x20
-
-func_4857029C:
+# ToneKeyEqual  (CPU 0x4857029c)
+ToneKeyEqual:
     cmp     d1, d0
     bne     loc_485702A3
     mov     1, d0
@@ -23186,10 +23186,10 @@ loc_485702A3:
     clr     d0
 loc_485702A4:
     retf    0, 0
-
-func_485702A7:
+# ToneKeyHashIndex  (CPU 0x485702a7)
+ToneKeyHashIndex:
     movm    [d2], (sp)
-func_485702A7_entry:
+ToneKeyHashIndex_entry:
     exthu   d1
     nop
     nop
@@ -23200,11 +23200,11 @@ func_485702A7_entry:
     divu    d2, d0
     mov     mdr, d0
     ret     [d2], 4
-
-func_485702BB:
+# SoundSwNoBankGet  (CPU 0x485702bb)
+SoundSwNoBankGet:
     movm    [d2,a2,a3], (sp)
     add     -0xc, sp
-func_485702BB_entry:
+SoundSwNoBankGet_entry:
     mov     a1, a2
     mov     a0, a3
     extbu   d0
@@ -23303,23 +23303,23 @@ loc_48570333:
     bra     loc_48570378
 loc_48570352:
     exthu   d0
-    call    func_48570394_entry, [d2,d3,a2,a3], 0x24
+    call    ShortKeyLookup_entry, [d2,d3,a2,a3], 0x24
     bra     loc_48570378
 loc_4857035A:
     exthu   d0
-    call    func_4857040A_entry, [d2,d3,a2,a3], 0x24
+    call    ShortKeyLookupSrc1_entry, [d2,d3,a2,a3], 0x24
     bra     loc_48570378
 loc_48570362:
     exthu   d0
-    call    func_48570480_entry, [d2,d3,a2,a3], 0x24
+    call    ShortKeyLookupSrc2_entry, [d2,d3,a2,a3], 0x24
     bra     loc_48570378
 loc_4857036A:
     exthu   d0
-    call    func_485704F6_entry, [d2,d3,a2,a3], 0x24
+    call    ShortKeyLookupSrc3_entry, [d2,d3,a2,a3], 0x24
     bra     loc_48570378
 loc_48570372:
     exthu   d0
-    call    func_4857056C_entry, [d2,d3,a2,a3], 0x24
+    call    ShortKeyLookupSrc4_entry, [d2,d3,a2,a3], 0x24
 loc_48570378:
     cmp     0, a0
     bne     loc_4857037F
@@ -23336,11 +23336,11 @@ loc_4857037F:
     mov     1, d0
 loc_48570391:
     ret     [d2,a2,a3], 0x18
-
-func_48570394:
+# ShortKeyLookup  (CPU 0x48570394)
+ShortKeyLookup:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_48570394_entry:
+ShortKeyLookup_entry:
     mov     (0x48000018), d1
     mov     0x18, a2
     add     TableRomDirectory, d1
@@ -23366,7 +23366,7 @@ func_48570394_entry:
     exthu   d2
     mov     d2, (0x10, sp)
     mov     d0, a3
-    call    func_485705EF, 0, 0
+    call    ShortKeyHashIndex, 0, 0
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23382,7 +23382,7 @@ func_48570394_entry:
 loc_485703E8:
     movhu   (4, a2), d1
     mov     a3, d0
-    call    func_485705E2, 0, 0
+    call    ShortKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_485703FC
     mov     6, a0
@@ -23399,11 +23399,11 @@ loc_48570405:
     mov     0, a0
 loc_48570407:
     ret     [d2,d3,a2,a3], 0x24
-
-func_4857040A:
+# ShortKeyLookupSrc1  (CPU 0x4857040a)
+ShortKeyLookupSrc1:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4857040A_entry:
+ShortKeyLookupSrc1_entry:
     mov     (0x5700000c), d1
     mov     0x18, a2
     add     FACTORY_DATA_FLASH, d1
@@ -23429,7 +23429,7 @@ func_4857040A_entry:
     exthu   d2
     mov     d2, (0x10, sp)
     mov     d0, a3
-    call    func_485705EF, 0, 0
+    call    ShortKeyHashIndex, 0, 0
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23445,7 +23445,7 @@ func_4857040A_entry:
 loc_4857045E:
     movhu   (4, a2), d1
     mov     a3, d0
-    call    func_485705E2, 0, 0
+    call    ShortKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_48570472
     mov     6, a0
@@ -23462,11 +23462,11 @@ loc_4857047B:
     mov     0, a0
 loc_4857047D:
     ret     [d2,d3,a2,a3], 0x24
-
-func_48570480:
+# ShortKeyLookupSrc2  (CPU 0x48570480)
+ShortKeyLookupSrc2:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_48570480_entry:
+ShortKeyLookupSrc2_entry:
     mov     (0x5600000c), d1
     mov     0x18, a2
     add     CUSTOM_FLASH_READ, d1
@@ -23492,7 +23492,7 @@ func_48570480_entry:
     exthu   d2
     mov     d2, (0x10, sp)
     mov     d0, a3
-    call    func_485705EF, 0, 0
+    call    ShortKeyHashIndex, 0, 0
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23508,7 +23508,7 @@ func_48570480_entry:
 loc_485704D4:
     movhu   (4, a2), d1
     mov     a3, d0
-    call    func_485705E2, 0, 0
+    call    ShortKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_485704E8
     mov     6, a0
@@ -23525,11 +23525,11 @@ loc_485704F1:
     mov     0, a0
 loc_485704F3:
     ret     [d2,d3,a2,a3], 0x24
-
-func_485704F6:
+# ShortKeyLookupSrc3  (CPU 0x485704f6)
+ShortKeyLookupSrc3:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_485704F6_entry:
+ShortKeyLookupSrc3_entry:
     mov     (0x4100000c), d1
     mov     0x18, a2
     add     0x41000000, d1
@@ -23555,7 +23555,7 @@ func_485704F6_entry:
     exthu   d2
     mov     d2, (0x10, sp)
     mov     d0, a3
-    call    func_485705EF, 0, 0
+    call    ShortKeyHashIndex, 0, 0
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23571,7 +23571,7 @@ func_485704F6_entry:
 loc_4857054A:
     movhu   (4, a2), d1
     mov     a3, d0
-    call    func_485705E2, 0, 0
+    call    ShortKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_4857055E
     mov     6, a0
@@ -23588,11 +23588,11 @@ loc_48570567:
     mov     0, a0
 loc_48570569:
     ret     [d2,d3,a2,a3], 0x24
-
-func_4857056C:
+# ShortKeyLookupSrc4  (CPU 0x4857056c)
+ShortKeyLookupSrc4:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4857056C_entry:
+ShortKeyLookupSrc4_entry:
     mov     (0x4180000c), d1
     mov     0x18, a2
     add     0x41800000, d1
@@ -23618,7 +23618,7 @@ func_4857056C_entry:
     exthu   d2
     mov     d2, (0x10, sp)
     mov     d0, a3
-    call    func_485705EF, 0, 0
+    call    ShortKeyHashIndex, 0, 0
     mov     (a2), a0
     asl2    d0
     add     d3, a0
@@ -23634,7 +23634,7 @@ func_4857056C_entry:
 loc_485705C0:
     movhu   (4, a2), d1
     mov     a3, d0
-    call    func_485705E2, 0, 0
+    call    ShortKeyEqual, 0, 0
     cmp     0, d0
     beq     loc_485705D4
     mov     6, a0
@@ -23651,8 +23651,8 @@ loc_485705DD:
     mov     0, a0
 loc_485705DF:
     ret     [d2,d3,a2,a3], 0x24
-
-func_485705E2:
+# ShortKeyEqual  (CPU 0x485705e2)
+ShortKeyEqual:
     exthu   d0
     exthu   d1
     cmp     d1, d0
@@ -23663,8 +23663,8 @@ loc_485705EB:
     clr     d0
 loc_485705EC:
     retf    0, 0
-
-func_485705EF:
+# ShortKeyHashIndex  (CPU 0x485705ef)
+ShortKeyHashIndex:
     exthu   d0
     exthu   d1
     nop
@@ -23675,11 +23675,11 @@ func_485705EF:
     div     d1, d0
     mov     mdr, d0
     rets
-
-func_48570600:
+# SoundGroupNameGet  (CPU 0x48570600)
+SoundGroupNameGet:
     movm    [d2,a2], (sp)
     add     -0xc, sp
-func_48570600_entry:
+SoundGroupNameGet_entry:
     mov     a0, a2
     mov     d1, d2
     extbu   d0
@@ -23879,11 +23879,11 @@ loc_4857077E:
     mov     d1, (a2)
 loc_48570791:
     ret     [d2,a2], 0x14
-
-func_48570794:
+# SoundGroupSizeGet  (CPU 0x48570794)
+SoundGroupSizeGet:
     movm    [d2,a2], (sp)
     add     -0xc, sp
-func_48570794_entry:
+SoundGroupSizeGet_entry:
     mov     a0, a2
     mov     d1, d2
     extbu   d0

@@ -11324,215 +11324,1963 @@ TechnicsRhythmsResource_Style_8Beat1_Ending2B:	# 6 bars of 4 beats
 	end
 	var_end	TechnicsRhythmsResource_Style_8Beat1_Ending2B
 
-Str_Technics_Pads:	.asciz "Technics Pads   "
-	.space	7, 0x00
+TechnicsPadsResourceBuiltin:	# the built-in "Technics Pads" bank, 6 pads (the table flash's segment 4 format)
+    .ascii	"Technics Pads   "	# strncmp with Str_Technics_Pads_2 (TechnicsPadsResourceParse)
+    .space	8, 0x00		# zero (IC18's style resource keeps its checksum here)
+    .be24	PadCountBlock - TechnicsPadsResourceBuiltin
+    .be24	PadIndex - TechnicsPadsResourceBuiltin
+    .be24	PadTable - TechnicsPadsResourceBuiltin	# -> 0x50034C30
+PadCountBlock:
+    .be16	0
+    .be16	6		# the pad count; the index's limit
+    .be16	96		# [INFERENCE] ticks a beat, as in the style format
+    .byte	16, 2, 1, 0	# [INFERENCE] dimensions (name length 16 ...); nothing reads them
 
-LoadU24BE_ArgA0_0:	# REC_LoadU24BE_ArgA0 (3 bytes): the layout LoadU24BE 0x48440363 reads through its argument a0 (passed by StyleBuiltinNameTableInit 0x484332F9 `call LoadU24BE, 0, 0`, +3 more calls)
-	REC_LoadU24BE_ArgA0	index__=33
-LoadU24BE_ArgA0_1:	# REC_LoadU24BE_ArgA0 (3 bytes): the layout LoadU24BE 0x48440363 reads through its argument a0 (passed by StyleBuiltinNameTableInit 0x484332F9 `call LoadU24BE, 0, 0`, +3 more calls)
-	REC_LoadU24BE_ArgA0	index__=43
+# The pad-ID index: 1024 entries, entry ((id & 0x0700) >> 1) | (id & 0x7F) (the KN7000's func_48434591; [INFERENCE] the same fold here)
+# serves pad-ID id; an entry below the count is pad n, 0x8000 + n sends the ID to entry n.
+PadIndex:
+    sidx_style	0		# Pad_PopGuitar1
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_style	1		# Pad_PopGuitar2
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_style	2		# Pad_PopSynthBrass
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_style	3		# Pad_PopSynth
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_style	4		# Pad_PopSynthHarp
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_style	5		# Pad_PopSynth_2
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
+    sidx_alias	0x000
 
-LoadU24BE_Var:	# u8, a constant; read / written by LoadU24BE 0x48440363: `movbu (a0), d1`
-	.byte	0
-LoadU24BE_Var_2:	# u8, a constant; read / written by LoadU24BE 0x48440363: `movbu (a0), d0`
-	.byte	8
+PadTable:
+    .be24	Pad_PopGuitar1 - TechnicsPadsResourceBuiltin	# pad 0
+    .be24	Pad_PopGuitar2 - TechnicsPadsResourceBuiltin	# pad 1
+    .be24	Pad_PopSynthBrass - TechnicsPadsResourceBuiltin	# pad 2
+    .be24	Pad_PopSynth - TechnicsPadsResourceBuiltin	# pad 3
+    .be24	Pad_PopSynthHarp - TechnicsPadsResourceBuiltin	# pad 4
+    .be24	Pad_PopSynth_2 - TechnicsPadsResourceBuiltin	# pad 5
 
-LoadU24BE_Table:	# 2966 x u8, 0..255; read by LoadU24BE 0x48440363: `movbu (a0), d0`
-	tab_u8	43, 0, 0, 0, 6, 0, 96, 16, 2, 1, 0, 0, 0, 128, 0, 128	# [0]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [16]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [32]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [48]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [64]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [80]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [96]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [112]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [128]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [144]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [160]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [176]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [192]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [208]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [224]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [240]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 0, 1, 128, 0, 128	# [256]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [272]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [288]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [304]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [320]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [336]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [352]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [368]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [384]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [400]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [416]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [432]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [448]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [464]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [480]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [496]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 0, 2, 128, 0, 128	# [512]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [528]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [544]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [560]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [576]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [592]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [608]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [624]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [640]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [656]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [672]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [688]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [704]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [720]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [736]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [752]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 0, 3, 128, 0, 128	# [768]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [784]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [800]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [816]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [832]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [848]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [864]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [880]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [896]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [912]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [928]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [944]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [960]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [976]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [992]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1008]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 0, 4, 128, 0, 128	# [1024]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1040]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1056]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1072]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1088]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1104]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1120]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1136]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1152]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1168]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1184]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1200]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1216]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1232]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1248]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1264]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 0, 5, 128, 0, 128	# [1280]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1296]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1312]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1328]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1344]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1360]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1376]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1392]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1408]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1424]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1440]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1456]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1472]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1488]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1504]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1520]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1536]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1552]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1568]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1584]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1600]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1616]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1632]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1648]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1664]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1680]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1696]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1712]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1728]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1744]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1760]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1776]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1792]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1808]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1824]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1840]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1856]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1872]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1888]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1904]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1920]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1936]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1952]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1968]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [1984]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [2000]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [2016]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 128	# [2032]
-	tab_u8	0, 128, 0, 128, 0, 128, 0, 128, 0, 128, 0, 0, 8, 61, 0, 11	# [2048]
-	tab_u8	86, 0, 14, 232, 0, 16, 224, 0, 17, 204, 0, 19, 3, 32, 32, 80	# [2064]
-	tab_u8	111, 112, 32, 71, 117, 105, 116, 97, 114, 32, 49, 32, 32, 3, 3, 3	# [2080]
-	tab_u8	0, 0, 255, 8, 127, 22, 0, 48, 64, 0, 0, 64, 12, 0, 0, 0	# [2096]
-	tab_u8	0, 0, 8, 72, 0, 0, 0, 64, 0, 0, 64, 12, 0, 0, 0, 0	# [2112]
-	tab_u8	0, 0, 2, 226, 244, 192, 22, 0, 48, 176, 10, 64, 3, 144, 52, 39	# [2128]
-	tab_u8	98, 0, 0, 5, 144, 55, 70, 48, 0, 0, 8, 144, 60, 35, 43, 0	# [2144]
-	tab_u8	0, 45, 144, 64, 22, 58, 0, 0, 51, 144, 60, 84, 51, 0, 0, 53	# [2160]
-	tab_u8	144, 55, 96, 48, 0, 0, 244, 5, 144, 52, 96, 58, 1, 0, 6, 144	# [2176]
-	tab_u8	55, 96, 46, 0, 0, 7, 144, 60, 51, 43, 0, 0, 8, 144, 64, 45	# [2192]
-	tab_u8	40, 0, 0, 48, 144, 64, 86, 92, 0, 0, 50, 144, 60, 96, 93, 0	# [2208]
-	tab_u8	0, 51, 144, 55, 96, 13, 1, 0, 244, 44, 144, 64, 96, 54, 0, 0	# [2224]
-	tab_u8	47, 144, 60, 49, 50, 0, 0, 95, 144, 52, 48, 97, 0, 0, 244, 144	# [2240]
-	tab_u8	55, 88, 50, 0, 0, 1, 144, 60, 87, 48, 0, 0, 2, 144, 64, 96	# [2256]
-	tab_u8	45, 0, 0, 47, 144, 64, 86, 53, 0, 0, 49, 144, 60, 92, 50, 0	# [2272]
-	tab_u8	0, 50, 144, 55, 92, 47, 0, 0, 244, 144, 52, 96, 97, 0, 0, 1	# [2288]
-	tab_u8	144, 55, 95, 50, 0, 0, 3, 144, 60, 96, 96, 0, 0, 4, 144, 64	# [2304]
-	tab_u8	90, 96, 0, 0, 51, 144, 55, 79, 46, 0, 0, 244, 1, 144, 52, 72	# [2320]
-	tab_u8	54, 0, 0, 2, 144, 55, 86, 51, 0, 0, 3, 144, 60, 86, 49, 0	# [2336]
-	tab_u8	0, 144, 64, 96, 46, 0, 0, 50, 144, 64, 96, 52, 0, 0, 52, 144	# [2352]
-	tab_u8	60, 96, 49, 0, 0, 53, 144, 55, 96, 46, 0, 0, 54, 144, 52, 96	# [2368]
-	tab_u8	43, 0, 0, 244, 1, 144, 52, 38, 98, 0, 0, 3, 144, 55, 45, 52	# [2384]
-	tab_u8	0, 0, 5, 144, 60, 47, 49, 0, 0, 6, 144, 64, 74, 44, 0, 0	# [2400]
-	tab_u8	50, 144, 64, 96, 52, 0, 0, 53, 144, 60, 92, 48, 0, 0, 55, 144	# [2416]
-	tab_u8	55, 96, 45, 0, 0, 244, 3, 144, 52, 96, 52, 0, 0, 4, 144, 55	# [2432]
-	tab_u8	96, 50, 0, 0, 5, 144, 60, 96, 47, 0, 0, 6, 144, 64, 96, 44	# [2448]
-	tab_u8	0, 0, 50, 144, 64, 86, 97, 0, 0, 52, 144, 60, 84, 50, 0, 0	# [2464]
-	tab_u8	54, 144, 55, 92, 47, 0, 0, 55, 144, 52, 50, 44, 0, 0, 244, 3	# [2480]
-	tab_u8	144, 52, 81, 96, 0, 0, 5, 144, 55, 96, 50, 0, 0, 6, 144, 60	# [2496]
-	tab_u8	96, 47, 0, 0, 52, 144, 64, 41, 51, 0, 0, 53, 144, 60, 87, 48	# [2512]
-	tab_u8	0, 0, 55, 144, 55, 84, 45, 0, 0, 244, 3, 144, 52, 45, 53, 0	# [2528]
-	tab_u8	0, 4, 144, 55, 92, 50, 0, 0, 6, 144, 60, 96, 48, 0, 0, 7	# [2544]
-	tab_u8	144, 64, 96, 44, 0, 0, 51, 144, 64, 96, 91, 0, 0, 54, 144, 60	# [2560]
-	tab_u8	96, 91, 0, 0, 55, 144, 55, 96, 92, 0, 0, 56, 144, 52, 96, 44	# [2576]
-	tab_u8	0, 0, 244, 4, 144, 52, 22, 49, 0, 0, 45, 144, 64, 96, 52, 0	# [2592]
-	tab_u8	0, 49, 144, 60, 96, 48, 0, 0, 51, 144, 55, 96, 45, 0, 0, 53	# [2608]
-	tab_u8	144, 52, 66, 43, 0, 0, 95, 144, 52, 96, 53, 0, 0, 144, 55, 96	# [2624]
-	tab_u8	50, 0, 0, 244, 1, 144, 60, 90, 47, 0, 0, 2, 144, 64, 96, 42	# [2640]
-	tab_u8	0, 0, 44, 144, 64, 93, 97, 0, 0, 48, 144, 60, 96, 50, 0, 0	# [2656]
-	tab_u8	50, 144, 55, 88, 46, 0, 0, 52, 144, 52, 52, 43, 0, 0, 95, 144	# [2672]
-	tab_u8	52, 91, 55, 0, 0, 244, 144, 55, 96, 51, 0, 0, 2, 144, 60, 41	# [2688]
-	tab_u8	47, 0, 0, 45, 144, 64, 76, 53, 0, 0, 49, 144, 60, 72, 48, 0	# [2704]
-	tab_u8	0, 51, 144, 55, 77, 44, 0, 0, 54, 144, 52, 47, 40, 0, 0, 94	# [2720]
-	tab_u8	144, 52, 50, 55, 0, 0, 95, 144, 55, 96, 52, 0, 0, 244, 144, 60	# [2736]
-	tab_u8	96, 50, 0, 0, 2, 144, 64, 96, 46, 0, 0, 47, 144, 64, 96, 95	# [2752]
-	tab_u8	0, 0, 50, 144, 60, 96, 95, 0, 0, 51, 144, 55, 96, 96, 0, 0	# [2768]
-	tab_u8	53, 144, 52, 79, 96, 0, 0, 244, 46, 144, 64, 84, 52, 0, 0, 49	# [2784]
-	tab_u8	144, 60, 83, 48, 0, 0, 51, 144, 55, 76, 44, 0, 0, 53, 144, 52	# [2800]
-	tab_u8	53, 42, 0, 0, 95, 144, 52, 75, 92, 0, 0, 144, 55, 96, 52, 0	# [2816]
-	tab_u8	0, 244, 1, 144, 60, 96, 49, 0, 0, 2, 144, 64, 96, 45, 0, 0	# [2832]
-	tab_u8	47, 144, 64, 96, 33, 0, 0, 50, 144, 60, 96, 44, 0, 0, 52, 144	# [2848]
-	tab_u8	55, 91, 38, 0, 0, 245, 32, 32, 80, 111, 112, 32, 71, 117, 105, 116	# [2864]
-	tab_u8	97, 114, 32, 50, 32, 32, 3, 3, 3, 0, 0, 255, 8, 127, 22, 0	# [2880]
-	tab_u8	48, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0, 8, 72, 0, 0, 0	# [2896]
-	tab_u8	64, 0, 0, 64, 12, 0, 0, 0, 0, 0, 0, 3, 91, 244, 192, 22	# [2912]
-	tab_u8	0, 48, 176, 10, 64, 144, 52, 71, 36, 1, 0, 144, 55, 77, 97, 0	# [2928]
-	tab_u8	0, 1, 144, 60, 92, 78, 0, 0, 2, 144, 64, 92, 75, 0, 0, 78	# [2944]
-	tab_u8	144, 64, 92, 46, 0, 0	# [2960]
+# "Technics Pads" pad 0: "Pop Guitar 1" (TechnicsPadsResource, pad table entry 0).
+Pad_PopGuitar1:
+	.ascii	"  Pop Guitar 1  "
+	pad_head	4, 4, 3, 0, 0, 0xff
+	style_part	0x08, 127, 0x16, 0x00, 0x30, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 0
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 1
+	pad_events	Pad_PopGuitar1
+Pad_PopGuitar1_Events:		# 4 bars of 4 beats, 738 bytes
+	ev_beat
+	ev_pc	0, 0x16, 0x00, 0x30
+	ev_cc	0, 10, 64
+	ev_at	3
+	ev_note	0, 52, 39, 98, 0, 0
+	ev_at	5
+	ev_note	0, 55, 70, 48, 0, 0
+	ev_at	8
+	ev_note	0, 60, 35, 43, 0, 0
+	ev_at	45
+	ev_note	0, 64, 22, 58, 0, 0
+	ev_at	51
+	ev_note	0, 60, 84, 51, 0, 0
+	ev_at	53
+	ev_note	0, 55, 96, 48, 0, 0
+	ev_beat
+	ev_at	5
+	ev_note	0, 52, 96, 58, 1, 0
+	ev_at	6
+	ev_note	0, 55, 96, 46, 0, 0
+	ev_at	7
+	ev_note	0, 60, 51, 43, 0, 0
+	ev_at	8
+	ev_note	0, 64, 45, 40, 0, 0
+	ev_at	48
+	ev_note	0, 64, 86, 92, 0, 0
+	ev_at	50
+	ev_note	0, 60, 96, 93, 0, 0
+	ev_at	51
+	ev_note	0, 55, 96, 13, 1, 0
+	ev_beat
+	ev_at	44
+	ev_note	0, 64, 96, 54, 0, 0
+	ev_at	47
+	ev_note	0, 60, 49, 50, 0, 0
+	ev_at	95
+	ev_note	0, 52, 48, 97, 0, 0
+	ev_beat
+	ev_note	0, 55, 88, 50, 0, 0
+	ev_at	1
+	ev_note	0, 60, 87, 48, 0, 0
+	ev_at	2
+	ev_note	0, 64, 96, 45, 0, 0
+	ev_at	47
+	ev_note	0, 64, 86, 53, 0, 0
+	ev_at	49
+	ev_note	0, 60, 92, 50, 0, 0
+	ev_at	50
+	ev_note	0, 55, 92, 47, 0, 0
+	ev_beat
+	ev_note	0, 52, 96, 97, 0, 0
+	ev_at	1
+	ev_note	0, 55, 95, 50, 0, 0
+	ev_at	3
+	ev_note	0, 60, 96, 96, 0, 0
+	ev_at	4
+	ev_note	0, 64, 90, 96, 0, 0
+	ev_at	51
+	ev_note	0, 55, 79, 46, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 52, 72, 54, 0, 0
+	ev_at	2
+	ev_note	0, 55, 86, 51, 0, 0
+	ev_at	3
+	ev_note	0, 60, 86, 49, 0, 0
+	ev_note	0, 64, 96, 46, 0, 0
+	ev_at	50
+	ev_note	0, 64, 96, 52, 0, 0
+	ev_at	52
+	ev_note	0, 60, 96, 49, 0, 0
+	ev_at	53
+	ev_note	0, 55, 96, 46, 0, 0
+	ev_at	54
+	ev_note	0, 52, 96, 43, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 52, 38, 98, 0, 0
+	ev_at	3
+	ev_note	0, 55, 45, 52, 0, 0
+	ev_at	5
+	ev_note	0, 60, 47, 49, 0, 0
+	ev_at	6
+	ev_note	0, 64, 74, 44, 0, 0
+	ev_at	50
+	ev_note	0, 64, 96, 52, 0, 0
+	ev_at	53
+	ev_note	0, 60, 92, 48, 0, 0
+	ev_at	55
+	ev_note	0, 55, 96, 45, 0, 0
+	ev_beat
+	ev_at	3
+	ev_note	0, 52, 96, 52, 0, 0
+	ev_at	4
+	ev_note	0, 55, 96, 50, 0, 0
+	ev_at	5
+	ev_note	0, 60, 96, 47, 0, 0
+	ev_at	6
+	ev_note	0, 64, 96, 44, 0, 0
+	ev_at	50
+	ev_note	0, 64, 86, 97, 0, 0
+	ev_at	52
+	ev_note	0, 60, 84, 50, 0, 0
+	ev_at	54
+	ev_note	0, 55, 92, 47, 0, 0
+	ev_at	55
+	ev_note	0, 52, 50, 44, 0, 0
+	ev_beat
+	ev_at	3
+	ev_note	0, 52, 81, 96, 0, 0
+	ev_at	5
+	ev_note	0, 55, 96, 50, 0, 0
+	ev_at	6
+	ev_note	0, 60, 96, 47, 0, 0
+	ev_at	52
+	ev_note	0, 64, 41, 51, 0, 0
+	ev_at	53
+	ev_note	0, 60, 87, 48, 0, 0
+	ev_at	55
+	ev_note	0, 55, 84, 45, 0, 0
+	ev_beat
+	ev_at	3
+	ev_note	0, 52, 45, 53, 0, 0
+	ev_at	4
+	ev_note	0, 55, 92, 50, 0, 0
+	ev_at	6
+	ev_note	0, 60, 96, 48, 0, 0
+	ev_at	7
+	ev_note	0, 64, 96, 44, 0, 0
+	ev_at	51
+	ev_note	0, 64, 96, 91, 0, 0
+	ev_at	54
+	ev_note	0, 60, 96, 91, 0, 0
+	ev_at	55
+	ev_note	0, 55, 96, 92, 0, 0
+	ev_at	56
+	ev_note	0, 52, 96, 44, 0, 0
+	ev_beat
+	ev_at	4
+	ev_note	0, 52, 22, 49, 0, 0
+	ev_at	45
+	ev_note	0, 64, 96, 52, 0, 0
+	ev_at	49
+	ev_note	0, 60, 96, 48, 0, 0
+	ev_at	51
+	ev_note	0, 55, 96, 45, 0, 0
+	ev_at	53
+	ev_note	0, 52, 66, 43, 0, 0
+	ev_at	95
+	ev_note	0, 52, 96, 53, 0, 0
+	ev_note	0, 55, 96, 50, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 60, 90, 47, 0, 0
+	ev_at	2
+	ev_note	0, 64, 96, 42, 0, 0
+	ev_at	44
+	ev_note	0, 64, 93, 97, 0, 0
+	ev_at	48
+	ev_note	0, 60, 96, 50, 0, 0
+	ev_at	50
+	ev_note	0, 55, 88, 46, 0, 0
+	ev_at	52
+	ev_note	0, 52, 52, 43, 0, 0
+	ev_at	95
+	ev_note	0, 52, 91, 55, 0, 0
+	ev_beat
+	ev_note	0, 55, 96, 51, 0, 0
+	ev_at	2
+	ev_note	0, 60, 41, 47, 0, 0
+	ev_at	45
+	ev_note	0, 64, 76, 53, 0, 0
+	ev_at	49
+	ev_note	0, 60, 72, 48, 0, 0
+	ev_at	51
+	ev_note	0, 55, 77, 44, 0, 0
+	ev_at	54
+	ev_note	0, 52, 47, 40, 0, 0
+	ev_at	94
+	ev_note	0, 52, 50, 55, 0, 0
+	ev_at	95
+	ev_note	0, 55, 96, 52, 0, 0
+	ev_beat
+	ev_note	0, 60, 96, 50, 0, 0
+	ev_at	2
+	ev_note	0, 64, 96, 46, 0, 0
+	ev_at	47
+	ev_note	0, 64, 96, 95, 0, 0
+	ev_at	50
+	ev_note	0, 60, 96, 95, 0, 0
+	ev_at	51
+	ev_note	0, 55, 96, 96, 0, 0
+	ev_at	53
+	ev_note	0, 52, 79, 96, 0, 0
+	ev_beat
+	ev_at	46
+	ev_note	0, 64, 84, 52, 0, 0
+	ev_at	49
+	ev_note	0, 60, 83, 48, 0, 0
+	ev_at	51
+	ev_note	0, 55, 76, 44, 0, 0
+	ev_at	53
+	ev_note	0, 52, 53, 42, 0, 0
+	ev_at	95
+	ev_note	0, 52, 75, 92, 0, 0
+	ev_note	0, 55, 96, 52, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 60, 96, 49, 0, 0
+	ev_at	2
+	ev_note	0, 64, 96, 45, 0, 0
+	ev_at	47
+	ev_note	0, 64, 96, 33, 0, 0
+	ev_at	50
+	ev_note	0, 60, 96, 44, 0, 0
+	ev_at	52
+	ev_note	0, 55, 91, 38, 0, 0
+	ev_end
+	var_end	Pad_PopGuitar1
 
-Str_O_F:	.asciz "O\x90<\\F"
-	.space	1, 0x00
-Str_P_7_E:	.asciz "P\x907\\E"
-# census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x330A0F, 0x330AAD
-Str_I_J:	.asciz "I\x90@\\J"
-# census: opaque -- unknown-dump: 2101 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x330AB3, 0x3312E8
+# "Technics Pads" pad 1: "Pop Guitar 2" (TechnicsPadsResource, pad table entry 1).
+Pad_PopGuitar2:
+	.ascii	"  Pop Guitar 2  "
+	pad_head	4, 4, 3, 0, 0, 0xff
+	style_part	0x08, 127, 0x16, 0x00, 0x30, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 0
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 1
+	pad_events	Pad_PopGuitar2
+Pad_PopGuitar2_Events:		# 4 bars of 4 beats, 859 bytes
+	ev_beat
+	ev_pc	0, 0x16, 0x00, 0x30
+	ev_cc	0, 10, 64
+	ev_note	0, 52, 71, 36, 1, 0
+	ev_note	0, 55, 77, 97, 0, 0
+	ev_at	1
+	ev_note	0, 60, 92, 78, 0, 0
+	ev_at	2
+	ev_note	0, 64, 92, 75, 0, 0
+	ev_at	78
+	ev_note	0, 64, 92, 46, 0, 0
+	ev_at	79
+	ev_note	0, 60, 92, 70, 0, 0
+	ev_at	80
+	ev_note	0, 55, 92, 69, 0, 0
+	ev_beat
+	ev_at	28
+	ev_note	0, 64, 72, 26, 0, 0
+	ev_at	51
+	ev_note	0, 52, 68, 79, 0, 0
+	ev_at	52
+	ev_note	0, 55, 92, 18, 1, 0
+	ev_at	53
+	ev_note	0, 60, 92, 75, 0, 0
+	ev_at	54
+	ev_note	0, 64, 92, 73, 0, 0
+	ev_beat
+	ev_at	30
+	ev_note	0, 64, 92, 73, 0, 0
+	ev_at	32
+	ev_note	0, 60, 92, 71, 0, 0
+	ev_at	34
+	ev_note	0, 52, 73, 67, 0, 0
+	ev_beat
+	ev_at	5
+	ev_note	0, 52, 92, 44, 0, 0
+	ev_at	6
+	ev_note	0, 55, 89, 44, 0, 0
+	ev_at	7
+	ev_note	0, 60, 92, 45, 0, 0
+	ev_note	0, 64, 92, 46, 0, 0
+	ev_at	49
+	ev_note	0, 52, 43, 26, 0, 0
+	ev_at	50
+	ev_note	0, 55, 92, 23, 0, 0
+	ev_at	52
+	ev_note	0, 60, 86, 48, 0, 0
+	ev_at	53
+	ev_note	0, 64, 37, 47, 0, 0
+	ev_at	73
+	ev_note	0, 55, 66, 25, 0, 0
+	ev_at	75
+	ev_note	0, 52, 64, 22, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 52, 68, 98, 0, 0
+	ev_at	3
+	ev_note	0, 55, 88, 74, 0, 0
+	ev_at	4
+	ev_note	0, 60, 92, 72, 0, 0
+	ev_at	5
+	ev_note	0, 64, 92, 68, 0, 0
+	ev_at	73
+	ev_note	0, 64, 92, 74, 0, 0
+	ev_at	76
+	ev_note	0, 60, 87, 26, 0, 0
+	ev_at	77
+	ev_note	0, 55, 92, 23, 0, 0
+	ev_beat
+	ev_at	3
+	ev_note	0, 52, 34, 45, 0, 0
+	ev_at	4
+	ev_note	0, 55, 82, 45, 0, 0
+	ev_at	6
+	ev_note	0, 60, 49, 20, 0, 0
+	ev_at	26
+	ev_note	0, 60, 43, 24, 0, 0
+	ev_at	48
+	ev_note	0, 52, 76, 47, 0, 0
+	ev_at	49
+	ev_note	0, 55, 92, 96, 0, 0
+	ev_at	50
+	ev_note	0, 60, 92, 72, 0, 0
+	ev_at	51
+	ev_note	0, 64, 92, 116, 0, 0
+	ev_at	95
+	ev_note	0, 52, 41, 96, 0, 0
+	ev_beat
+	ev_at	26
+	ev_note	0, 60, 92, 47, 0, 0
+	ev_at	49
+	ev_note	0, 55, 34, 26, 0, 0
+	ev_at	71
+	ev_note	0, 64, 77, 28, 0, 0
+	ev_at	73
+	ev_note	0, 60, 92, 25, 0, 0
+	ev_at	75
+	ev_note	0, 55, 83, 22, 0, 0
+	ev_beat
+	ev_note	0, 55, 75, 49, 0, 0
+	ev_note	0, 52, 49, 47, 0, 0
+	ev_at	3
+	ev_note	0, 60, 92, 48, 0, 0
+	ev_note	0, 64, 92, 49, 0, 0
+	ev_at	48
+	ev_note	0, 52, 49, 49, 0, 0
+	ev_at	49
+	ev_note	0, 55, 92, 24, 0, 0
+	ev_at	50
+	ev_note	0, 60, 73, 21, 0, 0
+	ev_at	52
+	ev_note	0, 64, 77, 18, 0, 0
+	ev_at	70
+	ev_note	0, 64, 73, 31, 0, 0
+	ev_at	72
+	ev_note	0, 60, 86, 26, 0, 0
+	ev_at	73
+	ev_note	0, 55, 66, 25, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 52, 65, 48, 0, 0
+	ev_at	2
+	ev_note	0, 60, 92, 74, 0, 0
+	ev_note	0, 55, 92, 75, 0, 0
+	ev_at	4
+	ev_note	0, 64, 89, 70, 0, 0
+	ev_at	50
+	ev_note	0, 52, 58, 50, 0, 0
+	ev_at	74
+	ev_note	0, 64, 62, 76, 0, 0
+	ev_at	76
+	ev_note	0, 60, 64, 27, 0, 0
+	ev_at	77
+	ev_note	0, 55, 68, 25, 0, 0
+	ev_beat
+	ev_at	4
+	ev_note	0, 52, 62, 47, 0, 0
+	ev_at	5
+	ev_note	0, 55, 92, 47, 0, 0
+	ev_at	7
+	ev_note	0, 60, 43, 20, 0, 0
+	ev_at	27
+	ev_note	0, 60, 79, 26, 0, 0
+	ev_at	52
+	ev_note	0, 52, 92, 46, 0, 0
+	ev_note	0, 55, 92, 15, 1, 0
+	ev_at	53
+	ev_note	0, 60, 92, 72, 0, 0
+	ev_at	54
+	ev_note	0, 64, 92, 69, 0, 0
+	ev_beat
+	ev_at	2
+	ev_note	0, 52, 33, 96, 0, 0
+	ev_at	27
+	ev_note	0, 64, 92, 73, 0, 0
+	ev_at	29
+	ev_note	0, 60, 92, 44, 0, 0
+	ev_at	73
+	ev_note	0, 60, 92, 26, 0, 0
+	ev_beat
+	ev_at	2
+	ev_note	0, 52, 72, 45, 0, 0
+	ev_at	3
+	ev_note	0, 55, 92, 46, 0, 0
+	ev_note	0, 60, 92, 47, 0, 0
+	ev_at	5
+	ev_note	0, 64, 92, 47, 0, 0
+	ev_at	48
+	ev_note	0, 52, 79, 50, 0, 0
+	ev_at	49
+	ev_note	0, 55, 92, 24, 0, 0
+	ev_at	50
+	ev_note	0, 60, 91, 21, 0, 0
+	ev_at	51
+	ev_note	0, 64, 92, 18, 0, 0
+	ev_at	70
+	ev_note	0, 64, 92, 31, 0, 0
+	ev_at	72
+	ev_note	0, 60, 72, 28, 0, 0
+	ev_at	73
+	ev_note	0, 55, 75, 26, 0, 0
+	ev_beat
+	ev_at	2
+	ev_note	0, 52, 77, 14, 1, 0
+	ev_at	3
+	ev_note	0, 55, 92, 44, 0, 0
+	ev_at	4
+	ev_note	0, 60, 92, 72, 0, 0
+	ev_at	5
+	ev_note	0, 64, 92, 69, 0, 0
+	ev_at	47
+	ev_note	0, 55, 39, 30, 0, 0
+	ev_at	74
+	ev_note	0, 64, 92, 43, 0, 0
+	ev_at	76
+	ev_note	0, 60, 92, 44, 0, 0
+	ev_at	77
+	ev_note	0, 55, 92, 44, 0, 0
+	ev_beat
+	ev_at	21
+	ev_note	0, 64, 92, 30, 0, 0
+	ev_at	23
+	ev_note	0, 60, 88, 27, 0, 0
+	ev_at	25
+	ev_note	0, 55, 92, 24, 0, 0
+	ev_at	48
+	ev_note	0, 52, 92, 45, 0, 0
+	ev_at	50
+	ev_note	0, 55, 55, 45, 0, 0
+	ev_note	0, 60, 92, 46, 0, 0
+	ev_at	51
+	ev_note	0, 64, 92, 46, 0, 0
+	ev_at	93
+	ev_note	0, 52, 62, 98, 0, 0
+	ev_at	95
+	ev_note	0, 55, 92, 28, 0, 0
+	ev_note	0, 60, 77, 25, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 64, 80, 21, 0, 0
+	ev_at	23
+	ev_note	0, 64, 92, 75, 0, 0
+	ev_at	25
+	ev_note	0, 60, 92, 44, 0, 0
+	ev_at	26
+	ev_note	0, 55, 92, 70, 0, 0
+	ev_at	69
+	ev_note	0, 60, 41, 28, 0, 0
+	ev_at	95
+	ev_note	0, 52, 92, 48, 0, 0
+	ev_beat
+	ev_note	0, 55, 92, 48, 0, 0
+	ev_at	1
+	ev_note	0, 60, 92, 49, 0, 0
+	ev_at	2
+	ev_note	0, 64, 92, 49, 0, 0
+	ev_at	48
+	ev_note	0, 52, 92, 46, 0, 0
+	ev_at	49
+	ev_note	0, 55, 92, 23, 0, 0
+	ev_at	50
+	ev_note	0, 60, 89, 20, 0, 0
+	ev_at	51
+	ev_note	0, 64, 82, 42, 0, 0
+	ev_at	70
+	ev_note	0, 60, 92, 24, 0, 0
+	ev_at	72
+	ev_note	0, 55, 77, 20, 0, 0
+	ev_end
+	var_end	Pad_PopGuitar2
+
+# "Technics Pads" pad 2: "Pop Synth Brass" (TechnicsPadsResource, pad table entry 2).
+Pad_PopSynthBrass:
+	.ascii	"Pop Synth Brass "
+	pad_head	4, 4, 3, 0, 0, 0xff
+	style_part	0x08, 127, 0x3c, 0x00, 0x30, 64, 0, 0, 13, 12, 0, 0, 0, 0, 0	# set-up 0
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 1
+	pad_events	Pad_PopSynthBrass
+Pad_PopSynthBrass_Events:		# 4 bars of 4 beats, 449 bytes
+	ev_beat
+	ev_pc	0, 0x3c, 0x00, 0x30
+	ev_cc	0, 10, 13
+	ev_at	2
+	ev_cc	0, 10, 13
+	ev_at	47
+	ev_note	0, 55, 95, 12, 0, 0
+	ev_note	0, 52, 95, 9, 0, 0
+	ev_note	0, 60, 95, 14, 0, 0
+	ev_beat
+	ev_at	52
+	ev_note	0, 52, 39, 7, 0, 0
+	ev_at	86
+	ev_cc	0, 10, 96
+	ev_beat
+	ev_at	1
+	ev_note	0, 55, 99, 37, 0, 0
+	ev_note	0, 52, 99, 31, 0, 0
+	ev_note	0, 60, 104, 37, 0, 0
+	ev_at	47
+	ev_note	0, 52, 38, 7, 0, 0
+	ev_at	49
+	ev_note	0, 55, 56, 7, 0, 0
+	ev_beat
+	ev_at	48
+	ev_note	0, 55, 91, 8, 0, 0
+	ev_note	0, 52, 95, 9, 0, 0
+	ev_note	0, 60, 104, 13, 0, 0
+	ev_beat
+	ev_at	38
+	ev_cc	0, 10, 13
+	ev_at	48
+	ev_note	0, 55, 95, 10, 0, 0
+	ev_note	0, 52, 99, 10, 0, 0
+	ev_note	0, 60, 99, 13, 0, 0
+	ev_beat
+	ev_at	47
+	ev_note	0, 52, 69, 6, 0, 0
+	ev_at	94
+	ev_cc	0, 10, 112
+	ev_at	95
+	ev_note	0, 52, 104, 30, 0, 0
+	ev_note	0, 55, 95, 36, 0, 0
+	ev_note	0, 60, 99, 34, 0, 0
+	ev_beat
+	ev_at	45
+	ev_note	0, 60, 59, 10, 0, 0
+	ev_at	46
+	ev_note	0, 52, 38, 8, 0, 0
+	ev_at	48
+	ev_note	0, 55, 42, 7, 0, 0
+	ev_at	92
+	ev_cc	0, 10, 21
+	ev_at	94
+	ev_note	0, 55, 87, 58, 0, 0
+	ev_note	0, 64, 95, 59, 0, 0
+	ev_at	95
+	ev_note	0, 60, 87, 59, 0, 0
+	ev_beat
+	ev_at	47
+	ev_note	0, 52, 53, 9, 0, 0
+	ev_beat
+	ev_at	40
+	ev_cc	0, 10, 117
+	ev_at	49
+	ev_note	0, 52, 99, 10, 0, 0
+	ev_note	0, 55, 91, 9, 0, 0
+	ev_note	0, 60, 87, 8, 0, 0
+	ev_beat
+	ev_at	50
+	ev_note	0, 60, 34, 7, 0, 0
+	ev_at	92
+	ev_cc	0, 10, 16
+	ev_beat
+	ev_note	0, 55, 99, 35, 0, 0
+	ev_note	0, 60, 108, 37, 0, 0
+	ev_at	1
+	ev_note	0, 52, 99, 30, 0, 0
+	ev_at	46
+	ev_note	0, 52, 62, 8, 0, 0
+	ev_note	0, 55, 72, 7, 0, 0
+	ev_at	48
+	ev_note	0, 60, 80, 6, 0, 0
+	ev_beat
+	ev_at	46
+	ev_cc	0, 10, 118
+	ev_at	47
+	ev_note	0, 55, 99, 11, 0, 0
+	ev_note	0, 52, 95, 10, 0, 0
+	ev_note	0, 60, 104, 13, 0, 0
+	ev_beat
+	ev_at	44
+	ev_cc	0, 10, 24
+	ev_at	47
+	ev_note	0, 60, 104, 14, 0, 0
+	ev_note	0, 55, 95, 10, 0, 0
+	ev_at	48
+	ev_note	0, 52, 95, 9, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 60, 37, 8, 0, 0
+	ev_at	47
+	ev_note	0, 52, 87, 10, 0, 0
+	ev_at	48
+	ev_note	0, 60, 76, 8, 0, 0
+	ev_note	0, 55, 69, 7, 0, 0
+	ev_at	84
+	ev_cc	0, 10, 120
+	ev_at	95
+	ev_note	0, 55, 95, 33, 0, 0
+	ev_note	0, 60, 91, 38, 0, 0
+	ev_note	0, 64, 99, 35, 0, 0
+	ev_beat
+	ev_at	45
+	ev_note	0, 55, 56, 8, 0, 0
+	ev_at	47
+	ev_note	0, 60, 72, 6, 0, 0
+	ev_at	48
+	ev_note	0, 64, 36, 7, 0, 0
+	ev_at	90
+	ev_cc	0, 10, 61
+	ev_at	93
+	ev_note	0, 60, 91, 38, 0, 0
+	ev_note	0, 52, 91, 34, 0, 0
+	ev_note	0, 55, 95, 40, 0, 0
+	ev_beat
+	ev_at	45
+	ev_note	0, 52, 50, 8, 0, 0
+	ev_at	46
+	ev_note	0, 55, 50, 7, 0, 0
+	ev_note	0, 60, 66, 7, 0, 0
+	ev_end
+	var_end	Pad_PopSynthBrass
+
+# "Technics Pads" pad 3: "Pop Synth" (TechnicsPadsResource, pad table entry 3).
+Pad_PopSynth:
+	.ascii	"   Pop Synth    "
+	pad_head	4, 4, 3, 0, 0, 0xff
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 0
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 1
+	pad_events	Pad_PopSynth
+Pad_PopSynth_Events:		# 4 bars of 4 beats, 181 bytes
+	ev_beat
+	ev_note	0, 48, 35, 33, 0, 0
+	ev_at	47
+	ev_note	0, 72, 122, 35, 0, 0
+	ev_note	0, 84, 117, 35, 0, 0
+	ev_beat
+	ev_at	94
+	ev_note	0, 60, 108, 18, 0, 0
+	ev_note	0, 72, 108, 24, 0, 0
+	ev_beat
+	ev_at	92
+	ev_note	0, 48, 99, 80, 0, 0
+	ev_beat
+	ev_at	92
+	ev_note	0, 48, 66, 31, 0, 0
+	ev_beat
+	ev_at	44
+	ev_note	0, 48, 80, 6, 0, 0
+	ev_at	93
+	ev_note	0, 48, 91, 5, 0, 0
+	ev_beat
+	ev_at	92
+	ev_note	0, 60, 108, 45, 0, 0
+	ev_beat
+	ev_at	44
+	ev_note	0, 48, 99, 40, 0, 0
+	ev_at	92
+	ev_note	0, 48, 95, 22, 0, 0
+	ev_beat
+	ev_beat
+	ev_at	48
+	ev_note	0, 72, 122, 37, 0, 0
+	ev_at	49
+	ev_note	0, 84, 117, 36, 0, 0
+	ev_beat
+	ev_at	94
+	ev_note	0, 72, 108, 28, 0, 0
+	ev_at	95
+	ev_note	0, 60, 117, 25, 0, 0
+	ev_beat
+	ev_at	47
+	ev_note	0, 48, 32, 6, 0, 0
+	ev_at	93
+	ev_note	0, 48, 108, 86, 0, 0
+	ev_beat
+	ev_at	92
+	ev_note	0, 48, 104, 12, 0, 0
+	ev_beat
+	ev_at	93
+	ev_note	0, 48, 104, 32, 1, 0
+	ev_beat
+	ev_at	44
+	ev_note	0, 60, 95, 81, 0, 0
+	ev_at	93
+	ev_note	0, 72, 99, 41, 0, 0
+	ev_beat
+	ev_at	45
+	ev_note	0, 60, 80, 42, 0, 0
+	ev_at	94
+	ev_note	0, 48, 83, 5, 0, 0
+	ev_end
+	var_end	Pad_PopSynth
+
+# "Technics Pads" pad 4: "Pop Synth Harp" (TechnicsPadsResource, pad table entry 4).
+Pad_PopSynthHarp:
+	.ascii	" Pop Synth Harp "
+	pad_head	4, 4, 6, 0, 0, 0xff
+	style_part	0x08, 127, 0x20, 0x40, 0x30, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 0
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 1
+	pad_events	Pad_PopSynthHarp
+Pad_PopSynthHarp_Events:		# 4 bars of 4 beats, 256 bytes
+	ev_beat
+	ev_pc	0, 0x20, 0x40, 0x30
+	ev_cc	0, 10, 64
+	ev_note	0, 76, 117, 59, 0, 2
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_at	48
+	ev_note	0, 64, 76, 26, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 74, 104, 39, 0, 2
+	ev_at	50
+	ev_note	0, 76, 95, 23, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 72, 108, 30, 0, 2
+	ev_at	49
+	ev_note	0, 60, 80, 41, 0, 2
+	ev_beat
+	ev_note	0, 71, 108, 33, 0, 2
+	ev_at	48
+	ev_sysex	4
+	.byte	0x02, 0x0a, 0x05, 0x0a
+	ev_at	50
+	ev_note	0, 72, 108, 79, 0, 2
+	ev_beat
+	ev_at	49
+	ev_note	0, 57, 80, 43, 0, 2
+	ev_at	95
+	ev_note	0, 71, 95, 41, 0, 2
+	ev_beat
+	ev_at	48
+	ev_note	0, 72, 99, 28, 0, 2
+	ev_at	95
+	ev_note	0, 67, 99, 29, 0, 2
+	ev_beat
+	ev_at	47
+	ev_note	0, 64, 69, 30, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 67, 99, 34, 0, 2
+	ev_at	48
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x01, 0x06
+	ev_at	50
+	ev_note	0, 69, 108, 83, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 53, 83, 41, 0, 2
+	ev_at	50
+	ev_note	0, 60, 72, 27, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 67, 95, 35, 0, 2
+	ev_at	50
+	ev_note	0, 69, 80, 23, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 65, 104, 30, 0, 2
+	ev_at	49
+	ev_note	0, 57, 91, 46, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 60, 83, 33, 0, 2
+	ev_at	49
+	ev_note	0, 64, 108, 4, 1, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_at	48
+	ev_note	0, 55, 76, 6, 0, 2
+	ev_at	95
+	ev_note	0, 65, 99, 32, 0, 2
+	ev_beat
+	ev_at	48
+	ev_note	0, 62, 108, 14, 1, 2
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x01, 0x08
+	ev_beat
+	ev_at	49
+	ev_note	0, 43, 56, 7, 0, 2
+	ev_beat
+	ev_note	0, 60, 99, 36, 0, 2
+	ev_at	50
+	ev_note	0, 60, 50, 11, 0, 2
+	ev_end
+	var_end	Pad_PopSynthHarp
+
+# "Technics Pads" pad 5: "Pop Synth" (TechnicsPadsResource, pad table entry 5).
+Pad_PopSynth_2:
+	.ascii	"   Pop Synth    "
+	pad_head	4, 4, 14, 0, 0, 0xff
+	style_part	0x08, 127, 0x74, 0x30, 0x30, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 0
+	style_part	0x08, 72, 0x00, 0x00, 0x00, 64, 0, 0, 64, 12, 0, 0, 0, 0, 0	# set-up 1
+	pad_events	Pad_PopSynth_2
+Pad_PopSynth_2_Events:		# 4 bars of 4 beats, 354 bytes
+	ev_beat
+	ev_pc	0, 0x74, 0x30, 0x30
+	ev_cc	0, 10, 64
+	ev_note	0, 79, 83, 32, 0, 2
+	ev_note	0, 75, 87, 31, 0, 2
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_at	95
+	ev_note	0, 75, 83, 15, 0, 2
+	ev_beat
+	ev_note	0, 79, 87, 16, 0, 2
+	ev_at	49
+	ev_note	0, 75, 76, 15, 0, 2
+	ev_note	0, 79, 69, 11, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 75, 91, 21, 0, 2
+	ev_note	0, 79, 95, 21, 0, 2
+	ev_at	47
+	ev_note	0, 75, 62, 17, 0, 2
+	ev_at	48
+	ev_note	0, 79, 69, 11, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 80, 80, 17, 0, 2
+	ev_note	0, 77, 69, 16, 0, 2
+	ev_at	48
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	49
+	ev_note	0, 74, 72, 11, 0, 2
+	ev_note	0, 77, 83, 14, 0, 2
+	ev_beat
+	ev_at	47
+	ev_note	0, 74, 87, 24, 0, 2
+	ev_at	48
+	ev_note	0, 65, 80, 17, 0, 2
+	ev_beat
+	ev_at	45
+	ev_note	0, 74, 80, 32, 0, 2
+	ev_at	46
+	ev_note	0, 65, 66, 25, 0, 2
+	ev_at	95
+	ev_note	0, 77, 87, 23, 0, 2
+	ev_note	0, 68, 80, 18, 0, 2
+	ev_beat
+	ev_at	47
+	ev_note	0, 77, 72, 21, 0, 2
+	ev_at	48
+	ev_note	0, 68, 62, 14, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 75, 80, 19, 0, 2
+	ev_note	0, 67, 76, 14, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	1
+	ev_note	0, 74, 83, 59, 0, 2
+	ev_note	0, 65, 87, 55, 0, 2
+	ev_beat
+	ev_at	48
+	ev_note	0, 74, 80, 17, 0, 2
+	ev_note	0, 65, 76, 14, 0, 2
+	ev_at	95
+	ev_note	0, 65, 91, 20, 0, 2
+	ev_beat
+	ev_note	0, 74, 95, 29, 0, 2
+	ev_at	47
+	ev_note	0, 74, 30, 21, 0, 2
+	ev_at	48
+	ev_note	0, 65, 45, 12, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 75, 80, 22, 0, 2
+	ev_at	2
+	ev_note	0, 67, 76, 14, 0, 2
+	ev_at	48
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_at	50
+	ev_note	0, 74, 87, 29, 0, 2
+	ev_note	0, 65, 80, 16, 0, 2
+	ev_beat
+	ev_at	47
+	ev_note	0, 72, 91, 50, 0, 2
+	ev_note	0, 63, 80, 43, 0, 2
+	ev_beat
+	ev_at	47
+	ev_note	0, 72, 80, 36, 0, 2
+	ev_note	0, 63, 69, 25, 0, 2
+	ev_at	95
+	ev_note	0, 65, 83, 31, 0, 2
+	ev_note	0, 74, 76, 37, 0, 2
+	ev_beat
+	ev_at	47
+	ev_note	0, 65, 36, 19, 0, 2
+	ev_note	0, 74, 50, 25, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 75, 76, 19, 0, 2
+	ev_note	0, 67, 72, 15, 0, 2
+	ev_end
+	var_end	Pad_PopSynth_2
+
 Str_TCMP:	.asciz "TCMP"
 	.space	11, 0x00
 
@@ -11565,9 +13313,9 @@ func_4843CAF9_Block_2:	# 2 bytes, copied whole by func_4843CAF9 0x4843CAF9: memc
 .incbin_range "baserom/kn7000_program.rom", 0x3313F2, 0x3314B8
 
 MemStyleAreaVarStreamsInit_Selected_0:	# REC_MemStyleAreaVarStreamsInit_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
 MemStyleAreaVarStreamsInit_Selected_1:	# REC_MemStyleAreaVarStreamsInit_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", index__=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
 	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_Selected_1
 
 ptrs_487314D4:
@@ -11664,7 +13412,7 @@ func_48449462_Records_p0_10:	# REC_func_48449462_Records_p0 (128 bytes)
 func_48449462_Records_p0_11:	# REC_func_48449462_Records_p0 (128 bytes)
 	REC_func_48449462_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
 
-func_48449462_Table:	# 128 x u8, 0..112; read by func_48449462_entry 0x48448C45: `movbu  (d0, a0), d0`
+func_48449462_Table:	# 128 x u8, 0..112; read by func_48449462_entry 0x48449396: `movbu  (d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0	# [16]
 	tab_u8	18, 0, 52, 36, 24, 53, 38, 49, 38, 36, 37, 24, 11, 38, 44, 38	# [32]
@@ -13793,34 +15541,34 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2		# [16]
-	REC_ChordRecogTable2	f0=21, f1=145
+	REC_ChordRecogTable2	f0=21, index=145
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=6, f1=144
-	REC_ChordRecogTable2	f0=35, f1=1
-	REC_ChordRecogTable2	f0=28, f1=1
+	REC_ChordRecogTable2	f0=6, index=144
+	REC_ChordRecogTable2	f0=35, index=1
+	REC_ChordRecogTable2	f0=28, index=1
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=3, f1=128	# [24]
-	REC_ChordRecogTable2	f0=36, f1=1
-	REC_ChordRecogTable2	f0=32, f1=1
+	REC_ChordRecogTable2	f0=3, index=128	# [24]
+	REC_ChordRecogTable2	f0=36, index=1
+	REC_ChordRecogTable2	f0=32, index=1
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2		# [32]
-	REC_ChordRecogTable2	f0=28, f1=33
-	REC_ChordRecogTable2	f0=15, f1=129
+	REC_ChordRecogTable2	f0=28, index=33
+	REC_ChordRecogTable2	f0=15, index=129
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=2, f1=33
-	REC_ChordRecogTable2	f0=22, f1=144
+	REC_ChordRecogTable2	f0=2, index=33
+	REC_ChordRecogTable2	f0=22, index=144
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=2, f1=128	# [40]
-	REC_ChordRecogTable2	f0=24, f1=128
+	REC_ChordRecogTable2	f0=2, index=128	# [40]
+	REC_ChordRecogTable2	f0=24, index=128
 	REC_ChordRecogTable2	f0=39
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=16, f1=128
+	REC_ChordRecogTable2	f0=16, index=128
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -13842,17 +15590,17 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2		# [64]
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=18, f1=129
+	REC_ChordRecogTable2	f0=18, index=129
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=1, f1=80
+	REC_ChordRecogTable2	f0=1, index=80
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=5, f1=80	# [72]
+	REC_ChordRecogTable2	f0=5, index=80	# [72]
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=18, f1=128
+	REC_ChordRecogTable2	f0=18, index=128
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=24, f1=80
+	REC_ChordRecogTable2	f0=24, index=80
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -13860,31 +15608,31 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	f0=10
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=40, f1=80
+	REC_ChordRecogTable2	f0=40, index=80
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=41, f1=80	# [88]
+	REC_ChordRecogTable2	f0=41, index=80	# [88]
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=35, f1=128
-	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	
+	REC_ChordRecogTable2	f0=35, index=128
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=28, f1=128	# [96]
-	REC_ChordRecogTable2	f0=31, f1=128
-	REC_ChordRecogTable2	f0=25, f1=96
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=27, f1=96
-	REC_ChordRecogTable2	f0=31, f1=32
-	REC_ChordRecogTable2	f0=34, f1=32
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=28, f1=128	# [104]
-	REC_ChordRecogTable2	f0=31, f1=128
-	REC_ChordRecogTable2	f0=28, f1=128
+	REC_ChordRecogTable2	f0=28, index=128	# [96]
+	REC_ChordRecogTable2	f0=31, index=128
+	REC_ChordRecogTable2	f0=25, index=96
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=30, f1=128
+	REC_ChordRecogTable2	f0=27, index=96
+	REC_ChordRecogTable2	f0=31, index=32
+	REC_ChordRecogTable2	f0=34, index=32
+	REC_ChordRecogTable2	
+	REC_ChordRecogTable2	f0=28, index=128	# [104]
+	REC_ChordRecogTable2	f0=31, index=128
+	REC_ChordRecogTable2	f0=28, index=128
+	REC_ChordRecogTable2	
+	REC_ChordRecogTable2	f0=30, index=128
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -13908,15 +15656,15 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	f0=3
 	REC_ChordRecogTable2	f0=2
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=5, f1=144
+	REC_ChordRecogTable2	f0=5, index=144
 	REC_ChordRecogTable2	f0=35
-	REC_ChordRecogTable2	f0=28, f1=1
+	REC_ChordRecogTable2	f0=28, index=1
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	f0=4	# [136]
 	REC_ChordRecogTable2	f0=26
 	REC_ChordRecogTable2	f0=12
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=9, f1=144
+	REC_ChordRecogTable2	f0=9, index=144
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -13924,31 +15672,31 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	f0=3
 	REC_ChordRecogTable2	f0=2
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=11, f1=1
-	REC_ChordRecogTable2	f0=35, f1=1
-	REC_ChordRecogTable2	f0=28, f1=1
+	REC_ChordRecogTable2	f0=11, index=1
+	REC_ChordRecogTable2	f0=35, index=1
+	REC_ChordRecogTable2	f0=28, index=1
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=26, f1=128	# [152]
-	REC_ChordRecogTable2	f0=36, f1=1
-	REC_ChordRecogTable2	f0=32, f1=1
+	REC_ChordRecogTable2	f0=26, index=128	# [152]
+	REC_ChordRecogTable2	f0=36, index=1
+	REC_ChordRecogTable2	f0=32, index=1
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	f0=13	# [160]
-	REC_ChordRecogTable2	f0=28, f1=33
+	REC_ChordRecogTable2	f0=28, index=33
 	REC_ChordRecogTable2	f0=14
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=8, f1=96
-	REC_ChordRecogTable2	f0=22, f1=144
-	REC_ChordRecogTable2	f0=32, f1=32
+	REC_ChordRecogTable2	f0=8, index=96
+	REC_ChordRecogTable2	f0=22, index=144
+	REC_ChordRecogTable2	f0=32, index=32
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=12, f1=128	# [168]
-	REC_ChordRecogTable2	f0=34, f1=128
+	REC_ChordRecogTable2	f0=12, index=128	# [168]
+	REC_ChordRecogTable2	f0=34, index=128
 	REC_ChordRecogTable2	f0=39
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=33, f1=128
+	REC_ChordRecogTable2	f0=33, index=128
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -13972,11 +15720,11 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=3, f1=80
+	REC_ChordRecogTable2	f0=3, index=80
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=9, f1=80	# [200]
+	REC_ChordRecogTable2	f0=9, index=80	# [200]
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -13988,7 +15736,7 @@ ChordRecogTable2:	# 256 x REC_ChordRecogTable2 (2 bytes each); read by func_4844
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
-	REC_ChordRecogTable2	f0=17, f1=80
+	REC_ChordRecogTable2	f0=17, index=80
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
 	REC_ChordRecogTable2	
@@ -16096,39 +17844,39 @@ StyleAlphabetTable_p4_28:	# REC_StyleAlphabetTable_p4 (2 bytes), then 2 x u16 th
 	tab_u16	65535, 65535	# [0]
 
 StyleAlphabetTable:	# 34 x REC_StyleAlphabetTable (8 bytes each); read by func_4847C9A7 0x4847C9A7 `call func_4847C977, 0, 0`; func_4847C9A7 0x4847C9A7 `mov (4, a0), a0`; func_4847C9A7 0x4847C9A7 `mov (d2, a2), a1` (+6)
-	REC_StyleAlphabetTable	text=Str_1_38, p4=StyleAlphabetTable_p4_0	# [0]
-	REC_StyleAlphabetTable	text=Str_2_42, p4=StyleAlphabetTable_p4_1
-	REC_StyleAlphabetTable	text=Str_3_32, p4=StyleAlphabetTable_p4_2
-	REC_StyleAlphabetTable	text=Str_5_29, p4=StyleAlphabetTable_p4_3
-	REC_StyleAlphabetTable	text=Str_6_26, p4=StyleAlphabetTable_p4_4
-	REC_StyleAlphabetTable	text=Str_7_16, p4=StyleAlphabetTable_p4_5
-	REC_StyleAlphabetTable	text=Str_8_17, p4=Str_9_6
-	REC_StyleAlphabetTable	text=Str_9_16, p4=StyleAlphabetTable_p4_6
-	REC_StyleAlphabetTable	text=Str_A_30, p4=StyleAlphabetTable_p4_7	# [8]
-	REC_StyleAlphabetTable	text=Str_B_18, p4=Str_empty_273
-	REC_StyleAlphabetTable	text=Str_C_27, p4=StyleAlphabetTable_p4_8
-	REC_StyleAlphabetTable	text=Str_D_15, p4=StyleAlphabetTable_p4_9
-	REC_StyleAlphabetTable	text=Str_E_14, p4=StyleAlphabetTable_p4_10
-	REC_StyleAlphabetTable	text=Str_F_18, p4=StyleAlphabetTable_p4_11
-	REC_StyleAlphabetTable	text=Str_G_14, p4=StyleAlphabetTable_p4_12
-	REC_StyleAlphabetTable	text=Str_H_6, p4=StyleAlphabetTable_p4_13
-	REC_StyleAlphabetTable	text=Str_I_6, p4=Str_t	# [16]
-	REC_StyleAlphabetTable	text=Str_J_5, p4=StyleAlphabetTable_p4_14
-	REC_StyleAlphabetTable	text=Str_K_5, p4=StyleAlphabetTable_p4_15
-	REC_StyleAlphabetTable	text=Str_L_6, p4=StyleAlphabetTable_p4_16
-	REC_StyleAlphabetTable	text=Str_M_5, p4=StyleAlphabetTable_p4_17
-	REC_StyleAlphabetTable	text=Str_N_6, p4=Str_6_15
-	REC_StyleAlphabetTable	text=Str_O_5, p4=StyleAlphabetTable_p4_18
-	REC_StyleAlphabetTable	text=Str_P_14, p4=StyleAlphabetTable_p4_19
-	REC_StyleAlphabetTable	text=Str_Q_8, p4=StyleAlphabetTable_p4_20	# [24]
-	REC_StyleAlphabetTable	text=Str_R_5, p4=StyleAlphabetTable_p4_21
-	REC_StyleAlphabetTable	text=Str_S_6, p4=StyleAlphabetTable_p4_22
-	REC_StyleAlphabetTable	text=Str_T_7, p4=StyleAlphabetTable_p4_23
-	REC_StyleAlphabetTable	text=Str_U_5, p4=StyleAlphabetTable_p4_24
-	REC_StyleAlphabetTable	text=Str_V_5, p4=StyleAlphabetTable_p4_25
-	REC_StyleAlphabetTable	text=Str_W_5, p4=StyleAlphabetTable_p4_26
-	REC_StyleAlphabetTable	text=Str_Y_6, p4=StyleAlphabetTable_p4_27
-	REC_StyleAlphabetTable	text=Str_Z_5, p4=StyleAlphabetTable_p4_28	# [32]
+	REC_StyleAlphabetTable	text=Str_1_38, index=StyleAlphabetTable_p4_0	# [0]
+	REC_StyleAlphabetTable	text=Str_2_42, index=StyleAlphabetTable_p4_1
+	REC_StyleAlphabetTable	text=Str_3_32, index=StyleAlphabetTable_p4_2
+	REC_StyleAlphabetTable	text=Str_5_29, index=StyleAlphabetTable_p4_3
+	REC_StyleAlphabetTable	text=Str_6_26, index=StyleAlphabetTable_p4_4
+	REC_StyleAlphabetTable	text=Str_7_16, index=StyleAlphabetTable_p4_5
+	REC_StyleAlphabetTable	text=Str_8_17, index=Str_9_6
+	REC_StyleAlphabetTable	text=Str_9_16, index=StyleAlphabetTable_p4_6
+	REC_StyleAlphabetTable	text=Str_A_30, index=StyleAlphabetTable_p4_7	# [8]
+	REC_StyleAlphabetTable	text=Str_B_18, index=Str_empty_273
+	REC_StyleAlphabetTable	text=Str_C_27, index=StyleAlphabetTable_p4_8
+	REC_StyleAlphabetTable	text=Str_D_15, index=StyleAlphabetTable_p4_9
+	REC_StyleAlphabetTable	text=Str_E_14, index=StyleAlphabetTable_p4_10
+	REC_StyleAlphabetTable	text=Str_F_18, index=StyleAlphabetTable_p4_11
+	REC_StyleAlphabetTable	text=Str_G_14, index=StyleAlphabetTable_p4_12
+	REC_StyleAlphabetTable	text=Str_H_6, index=StyleAlphabetTable_p4_13
+	REC_StyleAlphabetTable	text=Str_I_6, index=Str_t	# [16]
+	REC_StyleAlphabetTable	text=Str_J_5, index=StyleAlphabetTable_p4_14
+	REC_StyleAlphabetTable	text=Str_K_5, index=StyleAlphabetTable_p4_15
+	REC_StyleAlphabetTable	text=Str_L_6, index=StyleAlphabetTable_p4_16
+	REC_StyleAlphabetTable	text=Str_M_5, index=StyleAlphabetTable_p4_17
+	REC_StyleAlphabetTable	text=Str_N_6, index=Str_6_15
+	REC_StyleAlphabetTable	text=Str_O_5, index=StyleAlphabetTable_p4_18
+	REC_StyleAlphabetTable	text=Str_P_14, index=StyleAlphabetTable_p4_19
+	REC_StyleAlphabetTable	text=Str_Q_8, index=StyleAlphabetTable_p4_20	# [24]
+	REC_StyleAlphabetTable	text=Str_R_5, index=StyleAlphabetTable_p4_21
+	REC_StyleAlphabetTable	text=Str_S_6, index=StyleAlphabetTable_p4_22
+	REC_StyleAlphabetTable	text=Str_T_7, index=StyleAlphabetTable_p4_23
+	REC_StyleAlphabetTable	text=Str_U_5, index=StyleAlphabetTable_p4_24
+	REC_StyleAlphabetTable	text=Str_V_5, index=StyleAlphabetTable_p4_25
+	REC_StyleAlphabetTable	text=Str_W_5, index=StyleAlphabetTable_p4_26
+	REC_StyleAlphabetTable	text=Str_Y_6, index=StyleAlphabetTable_p4_27
+	REC_StyleAlphabetTable	text=Str_Z_5, index=StyleAlphabetTable_p4_28	# [32]
 	REC_StyleAlphabetTable	
 
 PostEvent_Records_p4_0:	# REC_PostEvent_Records_p4 (410 bytes)
@@ -17235,15 +18983,15 @@ StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedP
 	MusicStylistSetup	panel=StyleRecordTable_p0_326, name=Text_Disco_Hustling+18326, genre=10, style=26, setup=2, era=4, era_pos=55, letter=15, letter_pos=2, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_327, name=Text_Disco_Hustling+18343, genre=10, style=26, setup=3, era=4, era_pos=12, letter=9, letter_pos=6, x22="\x00\x00"
 PostEvent_Records:	# 10 x REC_PostEvent_Records (12 bytes each); read by PostEvent 0x484293AD `call func_48414A4D_entry, [a2], 4`; func_4847D644 0x4847D644 `mov (4, a0), a0`; func_4847D644 0x4847D644 `mov (d1, a2), d1` (+16)
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, p4=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, p4=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, p4=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, p4=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, p4=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, p4=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, p4=PostEvent_Records_p4_0, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, p4=Str_N, key=3, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, p4=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, index=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, index=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, index=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, index=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, index=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, index=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, index=PostEvent_Records_p4_0, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, index=Str_N, key=3, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, index=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
 	REC_PostEvent_Records	x10="\x00\x00"
 
 # 13 classes; a class id is (0x14 << 16) | its index here (ClassProc 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -28629,17 +30377,17 @@ CMP_ResNames:
 
 CmpPrtCpyEditFunc_Table:	# 12 x REC_CmpPrtCpyEditFunc_Table (2 bytes each); read by CmpPrtCpyEditFunc 0x4850A3C9 `movbu (1, a2), d0`; CmpPrtCpyEditFunc 0x4850A3C9 `movbu (d0, a2), d1`; FE_CompPartCopyMem 0x4850A437 `movbu (1, a2), d0` (+16)
 	REC_CmpPrtCpyEditFunc_Table		# [0]
-	REC_CmpPrtCpyEditFunc_Table	f1=3
-	REC_CmpPrtCpyEditFunc_Table	f1=6
-	REC_CmpPrtCpyEditFunc_Table	f1=9
-	REC_CmpPrtCpyEditFunc_Table	f0=1
-	REC_CmpPrtCpyEditFunc_Table	f0=1, f1=3
-	REC_CmpPrtCpyEditFunc_Table	f0=1, f1=6
-	REC_CmpPrtCpyEditFunc_Table	f0=1, f1=9
-	REC_CmpPrtCpyEditFunc_Table	f0=2	# [8]
-	REC_CmpPrtCpyEditFunc_Table	f0=2, f1=3
-	REC_CmpPrtCpyEditFunc_Table	f0=2, f1=6
-	REC_CmpPrtCpyEditFunc_Table	f0=2, f1=9
+	REC_CmpPrtCpyEditFunc_Table	key=3
+	REC_CmpPrtCpyEditFunc_Table	key=6
+	REC_CmpPrtCpyEditFunc_Table	key=9
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1, key=3
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1, key=6
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1, key=9
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2	# [8]
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2, key=3
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2, key=6
+	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2, key=9
 
 # 7 classes; a class id is (0xa4 << 16) | its index here (ClassProc 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)
 .equ MSP_Classes_SLOT, 0xa4
@@ -38288,2301 +40036,3 @@ func_4856DBDB_Table_2:
 	.long	loc_4856FC40
 	.long	loc_4856FC43
 	.long	func_4856FC46
-
-VoiceDirRemapFind_Var:	# u16, a constant; read / written by VoiceDirRemapFind 0x4857267B: `movhu (VoiceDirRemapFind_Var), d1`
-	.word	1
-VoiceDirRemapFind_Var_2:	# u16, a constant; read / written by VoiceDirRemapFind 0x4857267B: `movhu (VoiceDirRemapFind_Var_2), d0`
-	.word	371
-
-VoiceDirRemapFind_Table:
-	.long	VoiceDirRemapFind_Table_p0_975
-	.long	VoiceDirRemapFind_Table_p0_501
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_380
-	.long	VoiceDirRemapFind_Table_p0_62
-	.long	VoiceDirRemapFind_Table_p0_714
-	.long	VoiceDirRemapFind_Table_p0_715
-	.long	VoiceDirRemapFind_Table_p0_716
-	.long	VoiceDirRemapFind_Table_p0_717
-	.long	VoiceDirRemapFind_Table_p0_966
-	.long	VoiceDirRemapFind_Table_p0_935
-	.long	VoiceDirRemapFind_Table_p0_558
-	.long	VoiceDirRemapFind_Table_p0_559
-	.long	VoiceDirRemapFind_Table_p0_560
-	.long	VoiceDirRemapFind_Table_p0_437
-	.long	VoiceDirRemapFind_Table_p0_438
-	.long	VoiceDirRemapFind_Table_p0_551
-	.long	VoiceDirRemapFind_Table_p0_864
-	.long	VoiceDirRemapFind_Table_p0_865
-	.long	VoiceDirRemapFind_Table_p0_866
-	.long	VoiceDirRemapFind_Table_p0_867
-	.long	VoiceDirRemapFind_Table_p0_909
-	.long	VoiceDirRemapFind_Table_p0_869
-	.long	VoiceDirRemapFind_Table_p0_870
-	.long	VoiceDirRemapFind_Table_p0_948
-	.long	VoiceDirRemapFind_Table_p0_943
-	.long	VoiceDirRemapFind_Table_p0_5
-	.long	VoiceDirRemapFind_Table_p0_504
-	.long	VoiceDirRemapFind_Table_p0_681
-	.long	VoiceDirRemapFind_Table_p0_391
-	.long	VoiceDirRemapFind_Table_p0_76
-	.long	VoiceDirRemapFind_Table_p0_590
-	.long	VoiceDirRemapFind_Table_p0_566
-	.long	VoiceDirRemapFind_Table_p0_582
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_931
-	.long	VoiceDirRemapFind_Table_p0_949
-	.long	VoiceDirRemapFind_Table_p0_933
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_293
-	.long	VoiceDirRemapFind_Table_p0_427
-	.long	VoiceDirRemapFind_Table_p0_428
-	.long	VoiceDirRemapFind_Table_p0_913
-	.long	VoiceDirRemapFind_Table_p0_982
-	.long	VoiceDirRemapFind_Table_p0_907
-	.long	VoiceDirRemapFind_Table_p0_768
-	.long	VoiceDirRemapFind_Table_p0_769
-	.long	VoiceDirRemapFind_Table_p0_770
-	.long	VoiceDirRemapFind_Table_p0_771
-	.long	VoiceDirRemapFind_Table_p0_772
-	.long	VoiceDirRemapFind_Table_p0_955
-	.long	VoiceDirRemapFind_Table_p0_939
-	.long	VoiceDirRemapFind_Table_p0_910
-	.long	VoiceDirRemapFind_Table_p0_956
-	.long	VoiceDirRemapFind_Table_p0_916
-	.long	VoiceDirRemapFind_Table_p0_974
-	.long	VoiceDirRemapFind_Table_p0_317
-	.long	VoiceDirRemapFind_Table_p0_577
-	.long	VoiceDirRemapFind_Table_p0_396
-	.long	VoiceDirRemapFind_Table_p0_534
-	.long	VoiceDirRemapFind_Table_p0_535
-	.long	VoiceDirRemapFind_Table_p0_895
-	.long	VoiceDirRemapFind_Table_p0_925
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_963
-	.long	VoiceDirRemapFind_Table_p0_307
-	.long	VoiceDirRemapFind_Table_p0_733
-	.long	VoiceDirRemapFind_Table_p0_324
-	.long	VoiceDirRemapFind_Table_p0_607
-	.long	VoiceDirRemapFind_Table_p0_702
-	.long	VoiceDirRemapFind_Table_p0_706
-	.long	VoiceDirRemapFind_Table_p0_327
-	.long	VoiceDirRemapFind_Table_p0_652
-	.long	VoiceDirRemapFind_Table_p0_811
-	.long	VoiceDirRemapFind_Table_p0_823
-	.long	VoiceDirRemapFind_Table_p0_979
-	.long	VoiceDirRemapFind_Table_p0_301
-	.long	VoiceDirRemapFind_Table_p0_923
-	.long	VoiceDirRemapFind_Table_p0_824
-	.long	VoiceDirRemapFind_Table_p0_836
-	.long	VoiceDirRemapFind_Table_p0_906
-	.long	VoiceDirRemapFind_Table_p0_742
-	.long	VoiceDirRemapFind_Table_p0_743
-	.long	VoiceDirRemapFind_Table_p0_744
-	.long	VoiceDirRemapFind_Table_p0_957
-	.long	VoiceDirRemapFind_Table_p0_746
-	.long	VoiceDirRemapFind_Table_p0_747
-	.long	VoiceDirRemapFind_Table_p0_920
-	.long	VoiceDirRemapFind_Table_p0_918
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_497
-	.long	VoiceDirRemapFind_Table_p0_108
-	.long	VoiceDirRemapFind_Table_p0_813
-	.long	VoiceDirRemapFind_Table_p0_814
-	.long	VoiceDirRemapFind_Table_p0_815
-	.long	VoiceDirRemapFind_Table_p0_816
-	.long	VoiceDirRemapFind_Table_p0_817
-	.long	VoiceDirRemapFind_Table_p0_818
-	.long	VoiceDirRemapFind_Table_p0_819
-	.long	VoiceDirRemapFind_Table_p0_934
-	.long	VoiceDirRemapFind_Table_p0_526
-	.long	VoiceDirRemapFind_Table_p0_527
-	.long	VoiceDirRemapFind_Table_p0_529
-	.long	VoiceDirRemapFind_Table_p0_684
-	.long	VoiceDirRemapFind_Table_p0_364
-	.long	VoiceDirRemapFind_Table_p0_967
-	.long	VoiceDirRemapFind_Table_p0_781
-	.long	VoiceDirRemapFind_Table_p0_782
-	.long	VoiceDirRemapFind_Table_p0_783
-	.long	VoiceDirRemapFind_Table_p0_784
-	.long	VoiceDirRemapFind_Table_p0_619
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_233
-	.long	VoiceDirRemapFind_Table_p0_924
-	.long	VoiceDirRemapFind_Table_p0_898
-	.long	VoiceDirRemapFind_Table_p0_616
-	.long	VoiceDirRemapFind_Table_p0_500
-	.long	VoiceDirRemapFind_Table_p0_350
-	.long	VoiceDirRemapFind_Table_p0_825
-	.long	VoiceDirRemapFind_Table_p0_826
-	.long	VoiceDirRemapFind_Table_p0_827
-	.long	VoiceDirRemapFind_Table_p0_828
-	.long	VoiceDirRemapFind_Table_p0_829
-	.long	VoiceDirRemapFind_Table_p0_830
-	.long	VoiceDirRemapFind_Table_p0_968
-	.long	VoiceDirRemapFind_Table_p0_965
-	.long	VoiceDirRemapFind_Table_p0_583
-	.long	VoiceDirRemapFind_Table_p0_570
-	.long	VoiceDirRemapFind_Table_p0_404
-	.long	VoiceDirRemapFind_Table_p0_388
-	.long	VoiceDirRemapFind_Table_p0_30
-	.long	VoiceDirRemapFind_Table_p0_549
-	.long	VoiceDirRemapFind_Table_p0_852
-	.long	VoiceDirRemapFind_Table_p0_853
-	.long	VoiceDirRemapFind_Table_p0_854
-	.long	VoiceDirRemapFind_Table_p0_855
-	.long	VoiceDirRemapFind_Table_p0_856
-	.long	VoiceDirRemapFind_Table_p0_857
-	.long	VoiceDirRemapFind_Table_p0_858
-	.long	VoiceDirRemapFind_Table_p0_915
-	.long	VoiceDirRemapFind_Table_p0_944
-	.long	VoiceDirRemapFind_Table_p0_658
-	.long	VoiceDirRemapFind_Table_p0_665
-	.long	VoiceDirRemapFind_Table_p0_958
-	.long	VoiceDirRemapFind_Table_p0_383
-	.long	VoiceDirRemapFind_Table_p0_72
-	.long	VoiceDirRemapFind_Table_p0_575
-	.long	VoiceDirRemapFind_Table_p0_564
-	.long	VoiceDirRemapFind_Table_p0_675
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_980
-	.long	VoiceDirRemapFind_Table_p0_892
-	.long	VoiceDirRemapFind_Table_p0_177
-	.long	VoiceDirRemapFind_Table_p0_127
-	.long	VoiceDirRemapFind_Table_p0_964
-	.long	VoiceDirRemapFind_Table_p0_850
-	.long	VoiceDirRemapFind_Table_p0_420
-	.long	VoiceDirRemapFind_Table_p0_542
-	.long	VoiceDirRemapFind_Table_p0_872
-	.long	VoiceDirRemapFind_Table_p0_873
-	.long	VoiceDirRemapFind_Table_p0_874
-	.long	VoiceDirRemapFind_Table_p0_914
-	.long	VoiceDirRemapFind_Table_p0_884
-	.long	VoiceDirRemapFind_Table_p0_885
-	.long	VoiceDirRemapFind_Table_p0_886
-	.long	VoiceDirRemapFind_Table_p0_954
-	.long	VoiceDirRemapFind_Table_p0_729
-	.long	VoiceDirRemapFind_Table_p0_7
-	.long	VoiceDirRemapFind_Table_p0_912
-	.long	VoiceDirRemapFind_Table_p0_741
-	.long	VoiceDirRemapFind_Table_p0_930
-	.long	VoiceDirRemapFind_Table_p0_8
-	.long	VoiceDirRemapFind_Table_p0_973
-	.long	VoiceDirRemapFind_Table_p0_672
-	.long	VoiceDirRemapFind_Table_p0_972
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_80
-	.long	VoiceDirRemapFind_Table_p0_950
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_132
-	.long	VoiceDirRemapFind_Table_p0_55
-	.long	VoiceDirRemapFind_Table_p0_888
-	.long	VoiceDirRemapFind_Table_p0_889
-	.long	VoiceDirRemapFind_Table_p0_890
-	.long	VoiceDirRemapFind_Table_p0_485
-	.long	VoiceDirRemapFind_Table_p0_703
-	.long	VoiceDirRemapFind_Table_p0_163
-	.long	VoiceDirRemapFind_Table_p0_653
-	.long	VoiceDirRemapFind_Table_p0_809
-	.long	VoiceDirRemapFind_Table_p0_821
-	.long	VoiceDirRemapFind_Table_p0_833
-	.long	VoiceDirRemapFind_Table_p0_694
-	.long	VoiceDirRemapFind_Table_p0_947
-	.long	VoiceDirRemapFind_Table_p0_822
-	.long	VoiceDirRemapFind_Table_p0_834
-	.long	VoiceDirRemapFind_Table_p0_545
-	.long	VoiceDirRemapFind_Table_p0_456
-	.long	VoiceDirRemapFind_Table_p0_457
-	.long	VoiceDirRemapFind_Table_p0_683
-	.long	VoiceDirRemapFind_Table_p0_595
-	.long	VoiceDirRemapFind_Table_p0_591
-	.long	VoiceDirRemapFind_Table_p0_981
-	.long	VoiceDirRemapFind_Table_p0_904
-	.long	VoiceDirRemapFind_Table_p0_919
-	.long	VoiceDirRemapFind_Table_p0_594
-	.long	VoiceDirRemapFind_Table_p0_495
-	.long	VoiceDirRemapFind_Table_p0_674
-	.long	VoiceDirRemapFind_Table_p0_801
-	.long	VoiceDirRemapFind_Table_p0_802
-	.long	VoiceDirRemapFind_Table_p0_803
-	.long	VoiceDirRemapFind_Table_p0_804
-	.long	VoiceDirRemapFind_Table_p0_908
-	.long	VoiceDirRemapFind_Table_p0_806
-	.long	VoiceDirRemapFind_Table_p0_807
-	.long	VoiceDirRemapFind_Table_p0_808
-	.long	VoiceDirRemapFind_Table_p0_763
-	.long	VoiceDirRemapFind_Table_p0_764
-	.long	VoiceDirRemapFind_Table_p0_765
-	.long	VoiceDirRemapFind_Table_p0_363
-	.long	VoiceDirRemapFind_Table_p0_361
-	.long	VoiceDirRemapFind_Table_p0_548
-	.long	VoiceDirRemapFind_Table_p0_471
-	.long	VoiceDirRemapFind_Table_p0_472
-	.long	VoiceDirRemapFind_Table_p0_473
-	.long	VoiceDirRemapFind_Table_p0_682
-	.long	VoiceDirRemapFind_Table_p0_336
-	.long	VoiceDirRemapFind_Table_p0_671
-	.long	VoiceDirRemapFind_Table_p0_678
-	.long	VoiceDirRemapFind_Table_p0_922
-	.long	VoiceDirRemapFind_Table_p0_728
-	.long	VoiceDirRemapFind_Table_p0_612
-	.long	VoiceDirRemapFind_Table_p0_613
-	.long	VoiceDirRemapFind_Table_p0_614
-	.long	VoiceDirRemapFind_Table_p0_686
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_573
-	.long	VoiceDirRemapFind_Table_p0_519
-	.long	VoiceDirRemapFind_Table_p0_711
-	.long	VoiceDirRemapFind_Table_p0_713
-	.long	VoiceDirRemapFind_Table_p0_945
-	.long	VoiceDirRemapFind_Table_p0_946
-	.long	VoiceDirRemapFind_Table_p0_585
-	.long	VoiceDirRemapFind_Table_p0_586
-	.long	VoiceDirRemapFind_Table_p0_402
-	.long	VoiceDirRemapFind_Table_p0_929
-	.long	VoiceDirRemapFind_Table_p0_32
-	.long	VoiceDirRemapFind_Table_p0_553
-	.long	VoiceDirRemapFind_Table_p0_840
-	.long	VoiceDirRemapFind_Table_p0_841
-	.long	VoiceDirRemapFind_Table_p0_842
-	.long	VoiceDirRemapFind_Table_p0_843
-	.long	VoiceDirRemapFind_Table_p0_844
-	.long	VoiceDirRemapFind_Table_p0_845
-	.long	VoiceDirRemapFind_Table_p0_846
-	.long	VoiceDirRemapFind_Table_p0_941
-	.long	VoiceDirRemapFind_Table_p0_942
-	.long	VoiceDirRemapFind_Table_p0_894
-	.long	VoiceDirRemapFind_Table_p0_502
-	.long	VoiceDirRemapFind_Table_p0_309
-	.long	VoiceDirRemapFind_Table_p0_389
-	.long	VoiceDirRemapFind_Table_p0_390
-	.long	VoiceDirRemapFind_Table_p0_718
-	.long	VoiceDirRemapFind_Table_p0_719
-	.long	VoiceDirRemapFind_Table_p0_700
-	.long	VoiceDirRemapFind_Table_p0_154
-	.long	VoiceDirRemapFind_Table_p0_787
-	.long	VoiceDirRemapFind_Table_p0_936
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_785
-	.long	VoiceDirRemapFind_Table_p0_969
-	.long	VoiceDirRemapFind_Table_p0_415
-	.long	VoiceDirRemapFind_Table_p0_418
-	.long	VoiceDirRemapFind_Table_p0_696
-	.long	VoiceDirRemapFind_Table_p0_876
-	.long	VoiceDirRemapFind_Table_p0_877
-	.long	VoiceDirRemapFind_Table_p0_878
-	.long	VoiceDirRemapFind_Table_p0_983
-	.long	VoiceDirRemapFind_Table_p0_880
-	.long	VoiceDirRemapFind_Table_p0_881
-	.long	VoiceDirRemapFind_Table_p0_882
-	.long	VoiceDirRemapFind_Table_p0_953
-	.long	VoiceDirRemapFind_Table_p0_727
-	.long	VoiceDirRemapFind_Table_p0_636
-	.long	VoiceDirRemapFind_Table_p0_505
-	.long	VoiceDirRemapFind_Table_p0_961
-	.long	VoiceDirRemapFind_Table_p0_962
-	.long	VoiceDirRemapFind_Table_p0_376
-	.long	VoiceDirRemapFind_Table_p0_576
-	.long	VoiceDirRemapFind_Table_p0_687
-	.long	VoiceDirRemapFind_Table_p0_971
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_303
-	.long	VoiceDirRemapFind_Table_p0_951
-	.long	VoiceDirRemapFind_Table_p0_860
-	.long	VoiceDirRemapFind_Table_p0_848
-	.long	VoiceDirRemapFind_Table_p0_861
-	.long	VoiceDirRemapFind_Table_p0_862
-	.long	VoiceDirRemapFind_Table_p0_851
-	.long	VoiceDirRemapFind_Table_p0_863
-	.long	ptrs_486A4680
-	.long	VoiceDirRemapFind_Table_p0_774
-	.long	VoiceDirRemapFind_Table_p0_775
-	.long	VoiceDirRemapFind_Table_p0_776
-	.long	VoiceDirRemapFind_Table_p0_777
-	.long	VoiceDirRemapFind_Table_p0_778
-	.long	VoiceDirRemapFind_Table_p0_779
-	.long	VoiceDirRemapFind_Table_p0_926
-	.long	VoiceDirRemapFind_Table_p0_952
-	.long	VoiceDirRemapFind_Table_p0_81
-	.long	VoiceDirRemapFind_Table_p0_541
-	.long	VoiceDirRemapFind_Table_p0_447
-	.long	VoiceDirRemapFind_Table_p0_448
-	.long	VoiceDirRemapFind_Table_p0_449
-	.long	VoiceDirRemapFind_Table_p0_629
-	.long	VoiceDirRemapFind_Table_p0_451
-	.long	VoiceDirRemapFind_Table_p0_621
-	.long	VoiceDirRemapFind_Table_p0_622
-	.long	VoiceDirRemapFind_Table_p0_899
-	.long	VoiceDirRemapFind_Table_p0_901
-	.long	VoiceDirRemapFind_Table_p0_902
-	.long	VoiceDirRemapFind_Table_p0_491
-	.long	VoiceDirRemapFind_Table_p0_695
-	.long	VoiceDirRemapFind_Table_p0_903
-	.long	VoiceDirRemapFind_Table_p0_790
-	.long	VoiceDirRemapFind_Table_p0_791
-	.long	VoiceDirRemapFind_Table_p0_792
-	.long	VoiceDirRemapFind_Table_p0_793
-	.long	VoiceDirRemapFind_Table_p0_794
-	.long	VoiceDirRemapFind_Table_p0_795
-	.long	VoiceDirRemapFind_Table_p0_797
-	.long	VoiceDirRemapFind_Table_p0_798
-	.long	VoiceDirRemapFind_Table_p0_799
-	.long	VoiceDirRemapFind_Table_p0_800
-	.long	VoiceDirRemapFind_Table_p0_837
-	.long	VoiceDirRemapFind_Table_p0_970
-	.long	VoiceDirRemapFind_Table_p0_839
-	.long	VoiceDirRemapFind_Table_p0_463
-	.long	VoiceDirRemapFind_Table_p0_911
-	.long	VoiceDirRemapFind_Table_p0_751
-	.long	VoiceDirRemapFind_Table_p0_752
-	.long	VoiceDirRemapFind_Table_p0_753
-	.long	VoiceDirRemapFind_Table_p0_754
-	.long	VoiceDirRemapFind_Table_p0_755
-	.long	VoiceDirRemapFind_Table_p0_921
-	.long	VoiceDirRemapFind_Table_p0_917
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_498
-	.long	VoiceDirRemapFind_Table_p0_109
-	.long	VoiceDirRemapFind_Table_p0_384
-	.long	VoiceDirRemapFind_Table_p0_978
-	.long	VoiceDirRemapFind_Table_p0_604
-	.long	VoiceDirRemapFind_Table_p0_676
-	.long	VoiceDirRemapFind_Table_p0_518
-	.long	VoiceDirRemapFind_Table_p0_677
-	.long	VoiceDirRemapFind_Table_p0_738
-	.long	VoiceDirRemapFind_Table_p0_927
-	.long	VoiceDirRemapFind_Table_p0_740
-	.long	VoiceDirRemapFind_Table_p0_709
-	.long	VoiceDirRemapFind_Table_p0_403
-	.long	VoiceDirRemapFind_Table_p0_734
-	.long	VoiceDirRemapFind_Table_p0_33
-	.long	VoiceDirRemapFind_Table_p0_554
-	.long	VoiceDirRemapFind_Table_p0_406
-	.long	VoiceDirRemapFind_Table_p0_959
-	.long	VoiceDirRemapFind_Table_p0_960
-	.long	VoiceDirRemapFind_Table_p0_720
-	.long	VoiceDirRemapFind_Table_p0_721
-	.long	VoiceDirRemapFind_Table_p0_758
-	.long	VoiceDirRemapFind_Table_p0_759
-	.long	VoiceDirRemapFind_Table_p0_976
-	.long	VoiceDirRemapFind_Table_p0_938
-
-VoiceDirClassFind_Var:	# u16, a constant; read / written by VoiceDirClassFind 0x4857272A: `movhu (VoiceDirClassFind_Var), d1`
-	.word	1
-VoiceDirClassFind_Var_2:	# u16, a constant; read / written by VoiceDirClassFind 0x4857272A: `movhu (VoiceDirClassFind_Var_2), d0`
-	.word	633
-
-VoiceDirClassFind_Table:
-	.long	VoiceDirClassFind_Table_p0_338
-	.long	VoiceDirClassFind_Table_p0_1
-	.long	VoiceDirClassFind_Table_p0_339
-	.long	VoiceDirClassFind_Table_p0_3
-	.long	VoiceDirClassFind_Table_p0_4
-	.long	VoiceDirClassFind_Table_p0_159
-	.long	VoiceDirClassFind_Table_p0_6
-	.long	VoiceDirClassFind_Table_p0_160
-	.long	VoiceDirClassFind_Table_p0_161
-	.long	VoiceDirClassFind_Table_p0_162
-	.long	VoiceDirClassFind_Table_p0_355
-	.long	VoiceDirClassFind_Table_p0_356
-	.long	VoiceDirClassFind_Table_p0_165
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_24
-	.long	VoiceDirClassFind_Table_p0_357
-	.long	VoiceDirClassFind_Table_p0_25
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_26
-	.long	VoiceDirClassFind_Table_p0_178
-	.long	VoiceDirClassFind_Table_p0_28
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_179
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_371
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_372
-	.long	VoiceDirClassFind_Table_p0_373
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_198
-	.long	VoiceDirClassFind_Table_p0_199
-	.long	VoiceDirClassFind_Table_p0_200
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_201
-	.long	VoiceDirClassFind_Table_p0_403
-	.long	VoiceDirClassFind_Table_p0_203
-	.long	VoiceDirClassFind_Table_p0_404
-	.long	VoiceDirClassFind_Table_p0_405
-	.long	VoiceDirClassFind_Table_p0_406
-	.long	VoiceDirClassFind_Table_p0_407
-	.long	VoiceDirClassFind_Table_p0_408
-	.long	VoiceDirClassFind_Table_p0_409
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_227
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_228
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_229
-	.long	VoiceDirClassFind_Table_p0_440
-	.long	VoiceDirClassFind_Table_p0_231
-	.long	VoiceDirClassFind_Table_p0_441
-	.long	VoiceDirClassFind_Table_p0_442
-	.long	VoiceDirClassFind_Table_p0_443
-	.long	VoiceDirClassFind_Table_p0_444
-	.long	VoiceDirClassFind_Table_p0_445
-	.long	VoiceDirClassFind_Table_p0_446
-	.long	VoiceDirClassFind_Table_p0_77
-	.long	VoiceDirClassFind_Table_p0_248
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_475
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_476
-	.long	VoiceDirClassFind_Table_p0_477
-	.long	VoiceDirClassFind_Table_p0_478
-	.long	VoiceDirClassFind_Table_p0_479
-	.long	VoiceDirClassFind_Table_p0_480
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_258
-	.long	VoiceDirClassFind_Table_p0_259
-	.long	VoiceDirClassFind_Table_p0_260
-	.long	VoiceDirClassFind_Table_p0_261
-	.long	VoiceDirClassFind_Table_p0_262
-	.long	VoiceDirClassFind_Table_p0_502
-	.long	VoiceDirClassFind_Table_p0_503
-	.long	VoiceDirClassFind_Table_p0_504
-	.long	VoiceDirClassFind_Table_p0_505
-	.long	VoiceDirClassFind_Table_p0_506
-	.long	VoiceDirClassFind_Table_p0_507
-	.long	VoiceDirClassFind_Table_p0_508
-	.long	VoiceDirClassFind_Table_p0_509
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_276
-	.long	VoiceDirClassFind_Table_p0_277
-	.long	VoiceDirClassFind_Table_p0_278
-	.long	VoiceDirClassFind_Table_p0_279
-	.long	VoiceDirClassFind_Table_p0_280
-	.long	VoiceDirClassFind_Table_p0_540
-	.long	VoiceDirClassFind_Table_p0_541
-	.long	VoiceDirClassFind_Table_p0_542
-	.long	VoiceDirClassFind_Table_p0_543
-	.long	VoiceDirClassFind_Table_p0_544
-	.long	VoiceDirClassFind_Table_p0_545
-	.long	VoiceDirClassFind_Table_p0_546
-	.long	VoiceDirClassFind_Table_p0_547
-	.long	VoiceDirClassFind_Table_p0_114
-	.long	VoiceDirClassFind_Table_p0_309
-	.long	VoiceDirClassFind_Table_p0_310
-	.long	VoiceDirClassFind_Table_p0_311
-	.long	VoiceDirClassFind_Table_p0_312
-	.long	VoiceDirClassFind_Table_p0_313
-	.long	VoiceDirClassFind_Table_p0_314
-	.long	VoiceDirClassFind_Table_p0_315
-	.long	VoiceDirClassFind_Table_p0_316
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_124
-	.long	VoiceDirClassFind_Table_p0_125
-	.long	VoiceDirClassFind_Table_p0_126
-	.long	VoiceDirClassFind_Table_p0_127
-	.long	VoiceDirClassFind_Table_p0_128
-	.long	VoiceDirClassFind_Table_p0_329
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_330
-	.long	VoiceDirClassFind_Table_p0_331
-	.long	VoiceDirClassFind_Table_p0_332
-	.long	VoiceDirClassFind_Table_p0_333
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_147
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_148
-	.long	VoiceDirClassFind_Table_p0_149
-	.long	VoiceDirClassFind_Table_p0_347
-	.long	VoiceDirClassFind_Table_p0_151
-	.long	VoiceDirClassFind_Table_p0_348
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_349
-	.long	VoiceDirClassFind_Table_p0_350
-	.long	VoiceDirClassFind_Table_p0_351
-	.long	VoiceDirClassFind_Table_p0_352
-	.long	VoiceDirClassFind_Table_p0_17
-	.long	VoiceDirClassFind_Table_p0_175
-	.long	VoiceDirClassFind_Table_p0_176
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_363
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_364
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_38
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_39
-	.long	VoiceDirClassFind_Table_p0_187
-	.long	VoiceDirClassFind_Table_p0_188
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_389
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_390
-	.long	VoiceDirClassFind_Table_p0_391
-	.long	VoiceDirClassFind_Table_p0_392
-	.long	VoiceDirClassFind_Table_p0_393
-	.long	VoiceDirClassFind_Table_p0_394
-	.long	VoiceDirClassFind_Table_p0_395
-	.long	VoiceDirClassFind_Table_p0_50
-	.long	VoiceDirClassFind_Table_p0_217
-	.long	VoiceDirClassFind_Table_p0_52
-	.long	VoiceDirClassFind_Table_p0_53
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_218
-	.long	VoiceDirClassFind_Table_p0_426
-	.long	VoiceDirClassFind_Table_p0_427
-	.long	VoiceDirClassFind_Table_p0_428
-	.long	VoiceDirClassFind_Table_p0_429
-	.long	VoiceDirClassFind_Table_p0_430
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_431
-	.long	VoiceDirClassFind_Table_p0_432
-	.long	VoiceDirClassFind_Table_p0_72
-	.long	VoiceDirClassFind_Table_p0_241
-	.long	VoiceDirClassFind_Table_p0_242
-	.long	VoiceDirClassFind_Table_p0_243
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_244
-	.long	VoiceDirClassFind_Table_p0_460
-	.long	VoiceDirClassFind_Table_p0_246
-	.long	VoiceDirClassFind_Table_p0_461
-	.long	VoiceDirClassFind_Table_p0_462
-	.long	VoiceDirClassFind_Table_p0_463
-	.long	VoiceDirClassFind_Table_p0_464
-	.long	VoiceDirClassFind_Table_p0_465
-	.long	VoiceDirClassFind_Table_p0_466
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_256
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_490
-	.long	VoiceDirClassFind_Table_p0_491
-	.long	VoiceDirClassFind_Table_p0_492
-	.long	VoiceDirClassFind_Table_p0_493
-	.long	VoiceDirClassFind_Table_p0_494
-	.long	VoiceDirClassFind_Table_p0_495
-	.long	VoiceDirClassFind_Table_p0_99
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_271
-	.long	VoiceDirClassFind_Table_p0_272
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_273
-	.long	VoiceDirClassFind_Table_p0_524
-	.long	VoiceDirClassFind_Table_p0_525
-	.long	VoiceDirClassFind_Table_p0_526
-	.long	VoiceDirClassFind_Table_p0_527
-	.long	VoiceDirClassFind_Table_p0_528
-	.long	VoiceDirClassFind_Table_p0_529
-	.long	VoiceDirClassFind_Table_p0_530
-	.long	VoiceDirClassFind_Table_p0_531
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_296
-	.long	VoiceDirClassFind_Table_p0_297
-	.long	VoiceDirClassFind_Table_p0_298
-	.long	VoiceDirClassFind_Table_p0_299
-	.long	VoiceDirClassFind_Table_p0_300
-	.long	VoiceDirClassFind_Table_p0_562
-	.long	VoiceDirClassFind_Table_p0_563
-	.long	VoiceDirClassFind_Table_p0_564
-	.long	VoiceDirClassFind_Table_p0_565
-	.long	VoiceDirClassFind_Table_p0_566
-	.long	VoiceDirClassFind_Table_p0_567
-	.long	VoiceDirClassFind_Table_p0_568
-	.long	VoiceDirClassFind_Table_p0_569
-	.long	VoiceDirClassFind_Table_p0_121
-	.long	VoiceDirClassFind_Table_p0_324
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_135
-	.long	VoiceDirClassFind_Table_p0_136
-	.long	VoiceDirClassFind_Table_p0_137
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_340
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_138
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_341
-	.long	VoiceDirClassFind_Table_p0_9
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_10
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_166
-	.long	VoiceDirClassFind_Table_p0_11
-	.long	VoiceDirClassFind_Table_p0_167
-	.long	VoiceDirClassFind_Table_p0_168
-	.long	VoiceDirClassFind_Table_p0_169
-	.long	VoiceDirClassFind_Table_p0_358
-	.long	VoiceDirClassFind_Table_p0_171
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_29
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_30
-	.long	VoiceDirClassFind_Table_p0_31
-	.long	VoiceDirClassFind_Table_p0_180
-	.long	VoiceDirClassFind_Table_p0_181
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_374
-	.long	VoiceDirClassFind_Table_p0_375
-	.long	VoiceDirClassFind_Table_p0_376
-	.long	VoiceDirClassFind_Table_p0_377
-	.long	VoiceDirClassFind_Table_p0_378
-	.long	VoiceDirClassFind_Table_p0_379
-	.long	VoiceDirClassFind_Table_p0_380
-	.long	VoiceDirClassFind_Table_p0_381
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_205
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_206
-	.long	VoiceDirClassFind_Table_p0_207
-	.long	VoiceDirClassFind_Table_p0_410
-	.long	VoiceDirClassFind_Table_p0_411
-	.long	VoiceDirClassFind_Table_p0_412
-	.long	VoiceDirClassFind_Table_p0_413
-	.long	VoiceDirClassFind_Table_p0_414
-	.long	VoiceDirClassFind_Table_p0_415
-	.long	VoiceDirClassFind_Table_p0_416
-	.long	VoiceDirClassFind_Table_p0_417
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_233
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_234
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_447
-	.long	VoiceDirClassFind_Table_p0_448
-	.long	VoiceDirClassFind_Table_p0_449
-	.long	VoiceDirClassFind_Table_p0_450
-	.long	VoiceDirClassFind_Table_p0_451
-	.long	VoiceDirClassFind_Table_p0_452
-	.long	VoiceDirClassFind_Table_p0_453
-	.long	VoiceDirClassFind_Table_p0_454
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_249
-	.long	VoiceDirClassFind_Table_p0_250
-	.long	VoiceDirClassFind_Table_p0_251
-	.long	VoiceDirClassFind_Table_p0_252
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_481
-	.long	VoiceDirClassFind_Table_p0_253
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_482
-	.long	VoiceDirClassFind_Table_p0_483
-	.long	VoiceDirClassFind_Table_p0_89
-	.long	VoiceDirClassFind_Table_p0_484
-	.long	VoiceDirClassFind_Table_p0_90
-	.long	VoiceDirClassFind_Table_p0_91
-	.long	VoiceDirClassFind_Table_p0_265
-	.long	VoiceDirClassFind_Table_p0_266
-	.long	VoiceDirClassFind_Table_p0_267
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_510
-	.long	VoiceDirClassFind_Table_p0_511
-	.long	VoiceDirClassFind_Table_p0_512
-	.long	VoiceDirClassFind_Table_p0_513
-	.long	VoiceDirClassFind_Table_p0_514
-	.long	VoiceDirClassFind_Table_p0_515
-	.long	VoiceDirClassFind_Table_p0_516
-	.long	VoiceDirClassFind_Table_p0_517
-	.long	VoiceDirClassFind_Table_p0_107
-	.long	VoiceDirClassFind_Table_p0_283
-	.long	VoiceDirClassFind_Table_p0_284
-	.long	VoiceDirClassFind_Table_p0_285
-	.long	VoiceDirClassFind_Table_p0_286
-	.long	VoiceDirClassFind_Table_p0_287
-	.long	VoiceDirClassFind_Table_p0_548
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_549
-	.long	VoiceDirClassFind_Table_p0_550
-	.long	VoiceDirClassFind_Table_p0_551
-	.long	VoiceDirClassFind_Table_p0_552
-	.long	VoiceDirClassFind_Table_p0_553
-	.long	VoiceDirClassFind_Table_p0_554
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_317
-	.long	VoiceDirClassFind_Table_p0_318
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_319
-	.long	VoiceDirClassFind_Table_p0_320
-	.long	VoiceDirClassFind_Table_p0_321
-	.long	VoiceDirClassFind_Table_p0_322
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_129
-	.long	VoiceDirClassFind_Table_p0_130
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_131
-	.long	VoiceDirClassFind_Table_p0_334
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_335
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_153
-	.long	VoiceDirClassFind_Table_p0_154
-	.long	VoiceDirClassFind_Table_p0_155
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_156
-	.long	VoiceDirClassFind_Table_p0_353
-	.long	VoiceDirClassFind_Table_p0_158
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_354
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_20
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_21
-	.long	VoiceDirClassFind_Table_p0_177
-	.long	VoiceDirClassFind_Table_p0_23
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_365
-	.long	VoiceDirClassFind_Table_p0_366
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_367
-	.long	VoiceDirClassFind_Table_p0_41
-	.long	VoiceDirClassFind_Table_p0_368
-	.long	VoiceDirClassFind_Table_p0_369
-	.long	VoiceDirClassFind_Table_p0_370
-	.long	VoiceDirClassFind_Table_p0_43
-	.long	VoiceDirClassFind_Table_p0_190
-	.long	VoiceDirClassFind_Table_p0_191
-	.long	VoiceDirClassFind_Table_p0_192
-	.long	VoiceDirClassFind_Table_p0_193
-	.long	VoiceDirClassFind_Table_p0_194
-	.long	VoiceDirClassFind_Table_p0_396
-	.long	VoiceDirClassFind_Table_p0_397
-	.long	VoiceDirClassFind_Table_p0_398
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_399
-	.long	VoiceDirClassFind_Table_p0_400
-	.long	VoiceDirClassFind_Table_p0_401
-	.long	VoiceDirClassFind_Table_p0_402
-	.long	VoiceDirClassFind_Table_p0_58
-	.long	VoiceDirClassFind_Table_p0_222
-	.long	VoiceDirClassFind_Table_p0_59
-	.long	VoiceDirClassFind_Table_p0_60
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_223
-	.long	VoiceDirClassFind_Table_p0_433
-	.long	VoiceDirClassFind_Table_p0_225
-	.long	VoiceDirClassFind_Table_p0_434
-	.long	VoiceDirClassFind_Table_p0_435
-	.long	VoiceDirClassFind_Table_p0_436
-	.long	VoiceDirClassFind_Table_p0_437
-	.long	VoiceDirClassFind_Table_p0_438
-	.long	VoiceDirClassFind_Table_p0_439
-	.long	VoiceDirClassFind_Table_p0_74
-	.long	VoiceDirClassFind_Table_p0_247
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_467
-	.long	VoiceDirClassFind_Table_p0_468
-	.long	VoiceDirClassFind_Table_p0_469
-	.long	VoiceDirClassFind_Table_p0_470
-	.long	VoiceDirClassFind_Table_p0_471
-	.long	VoiceDirClassFind_Table_p0_472
-	.long	VoiceDirClassFind_Table_p0_473
-	.long	VoiceDirClassFind_Table_p0_474
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_257
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_496
-	.long	VoiceDirClassFind_Table_p0_497
-	.long	VoiceDirClassFind_Table_p0_498
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_100
-	.long	VoiceDirClassFind_Table_p0_499
-	.long	VoiceDirClassFind_Table_p0_500
-	.long	VoiceDirClassFind_Table_p0_501
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_275
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_532
-	.long	VoiceDirClassFind_Table_p0_533
-	.long	VoiceDirClassFind_Table_p0_534
-	.long	VoiceDirClassFind_Table_p0_535
-	.long	VoiceDirClassFind_Table_p0_536
-	.long	VoiceDirClassFind_Table_p0_537
-	.long	VoiceDirClassFind_Table_p0_538
-	.long	VoiceDirClassFind_Table_p0_539
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_304
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_305
-	.long	VoiceDirClassFind_Table_p0_306
-	.long	VoiceDirClassFind_Table_p0_307
-	.long	VoiceDirClassFind_Table_p0_308
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_122
-	.long	VoiceDirClassFind_Table_p0_123
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_325
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_326
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_327
-	.long	VoiceDirClassFind_Table_p0_328
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_139
-	.long	VoiceDirClassFind_Table_p0_140
-	.long	VoiceDirClassFind_Table_p0_141
-	.long	VoiceDirClassFind_Table_p0_142
-	.long	VoiceDirClassFind_Table_p0_143
-	.long	VoiceDirClassFind_Table_p0_342
-	.long	VoiceDirClassFind_Table_p0_145
-	.long	VoiceDirClassFind_Table_p0_343
-	.long	VoiceDirClassFind_Table_p0_344
-	.long	VoiceDirClassFind_Table_p0_345
-	.long	VoiceDirClassFind_Table_p0_13
-	.long	VoiceDirClassFind_Table_p0_346
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_172
-	.long	VoiceDirClassFind_Table_p0_173
-	.long	VoiceDirClassFind_Table_p0_174
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_359
-	.long	VoiceDirClassFind_Table_p0_360
-	.long	VoiceDirClassFind_Table_p0_361
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_362
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_35
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_36
-	.long	VoiceDirClassFind_Table_p0_182
-	.long	VoiceDirClassFind_Table_p0_183
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_184
-	.long	VoiceDirClassFind_Table_p0_382
-	.long	VoiceDirClassFind_Table_p0_186
-	.long	VoiceDirClassFind_Table_p0_383
-	.long	VoiceDirClassFind_Table_p0_384
-	.long	VoiceDirClassFind_Table_p0_385
-	.long	VoiceDirClassFind_Table_p0_386
-	.long	VoiceDirClassFind_Table_p0_387
-	.long	VoiceDirClassFind_Table_p0_388
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_211
-	.long	VoiceDirClassFind_Table_p0_212
-	.long	VoiceDirClassFind_Table_p0_213
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_214
-	.long	VoiceDirClassFind_Table_p0_418
-	.long	VoiceDirClassFind_Table_p0_419
-	.long	VoiceDirClassFind_Table_p0_420
-	.long	VoiceDirClassFind_Table_p0_421
-	.long	VoiceDirClassFind_Table_p0_422
-	.long	VoiceDirClassFind_Table_p0_423
-	.long	VoiceDirClassFind_Table_p0_424
-	.long	VoiceDirClassFind_Table_p0_425
-	.long	VoiceDirClassFind_Table_p0_69
-	.long	VoiceDirClassFind_Table_p0_238
-	.long	VoiceDirClassFind_Table_p0_239
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_240
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_455
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_456
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_457
-	.long	VoiceDirClassFind_Table_p0_458
-	.long	VoiceDirClassFind_Table_p0_459
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_254
-	.long	VoiceDirClassFind_Table_p0_255
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_485
-	.long	VoiceDirClassFind_Table_p0_486
-	.long	VoiceDirClassFind_Table_p0_487
-	.long	VoiceDirClassFind_Table_p0_488
-	.long	VoiceDirClassFind_Table_p0_93
-	.long	VoiceDirClassFind_Table_p0_94
-	.long	VoiceDirClassFind_Table_p0_489
-	.long	VoiceDirClassFind_Table_p0_96
-	.long	VoiceDirClassFind_Table_p0_97
-	.long	VoiceDirClassFind_Table_p0_268
-	.long	VoiceDirClassFind_Table_p0_269
-	.long	VoiceDirClassFind_Table_p0_270
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_518
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_519
-	.long	VoiceDirClassFind_Table_p0_520
-	.long	VoiceDirClassFind_Table_p0_521
-	.long	VoiceDirClassFind_Table_p0_522
-	.long	VoiceDirClassFind_Table_p0_523
-	.long	VoiceDirClassFind_Table_p0_110
-	.long	VoiceDirClassFind_Table_p0_289
-	.long	VoiceDirClassFind_Table_p0_290
-	.long	VoiceDirClassFind_Table_p0_291
-	.long	VoiceDirClassFind_Table_p0_292
-	.long	VoiceDirClassFind_Table_p0_293
-	.long	VoiceDirClassFind_Table_p0_555
-	.long	VoiceDirClassFind_Table_p0_556
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_557
-	.long	VoiceDirClassFind_Table_p0_558
-	.long	VoiceDirClassFind_Table_p0_559
-	.long	VoiceDirClassFind_Table_p0_560
-	.long	VoiceDirClassFind_Table_p0_561
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_323
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_132
-	.long	VoiceDirClassFind_Table_p0_133
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_336
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_337
-	.long	0
-
-VoiceDirIndexFind_Var:	# u16, a constant; read / written by VoiceDirIndexFind 0x48572812: `movhu (VoiceDirIndexFind_Var), d1`
-	.word	1
-VoiceDirIndexFind_Var_2:	# u16, a constant; read / written by VoiceDirIndexFind 0x48572812: `movhu (VoiceDirIndexFind_Var_2), d0`
-	.word	633
-
-VoiceDirIndexFind_Table:
-	.long	VoiceDirIndexFind_Table_p0_338
-	.long	VoiceDirIndexFind_Table_p0_1
-	.long	VoiceDirIndexFind_Table_p0_339
-	.long	VoiceDirIndexFind_Table_p0_3
-	.long	VoiceDirIndexFind_Table_p0_4
-	.long	VoiceDirIndexFind_Table_p0_159
-	.long	VoiceDirIndexFind_Table_p0_6
-	.long	VoiceDirIndexFind_Table_p0_160
-	.long	VoiceDirIndexFind_Table_p0_161
-	.long	VoiceDirIndexFind_Table_p0_162
-	.long	VoiceDirIndexFind_Table_p0_355
-	.long	VoiceDirIndexFind_Table_p0_356
-	.long	VoiceDirIndexFind_Table_p0_165
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_24
-	.long	VoiceDirIndexFind_Table_p0_357
-	.long	VoiceDirIndexFind_Table_p0_25
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_26
-	.long	VoiceDirIndexFind_Table_p0_178
-	.long	VoiceDirIndexFind_Table_p0_28
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_179
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_371
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_372
-	.long	VoiceDirIndexFind_Table_p0_373
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_198
-	.long	VoiceDirIndexFind_Table_p0_199
-	.long	VoiceDirIndexFind_Table_p0_200
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_201
-	.long	VoiceDirIndexFind_Table_p0_403
-	.long	VoiceDirIndexFind_Table_p0_203
-	.long	VoiceDirIndexFind_Table_p0_404
-	.long	VoiceDirIndexFind_Table_p0_405
-	.long	VoiceDirIndexFind_Table_p0_406
-	.long	VoiceDirIndexFind_Table_p0_407
-	.long	VoiceDirIndexFind_Table_p0_408
-	.long	VoiceDirIndexFind_Table_p0_409
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_227
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_228
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_229
-	.long	VoiceDirIndexFind_Table_p0_440
-	.long	VoiceDirIndexFind_Table_p0_231
-	.long	VoiceDirIndexFind_Table_p0_441
-	.long	VoiceDirIndexFind_Table_p0_442
-	.long	VoiceDirIndexFind_Table_p0_443
-	.long	VoiceDirIndexFind_Table_p0_444
-	.long	VoiceDirIndexFind_Table_p0_445
-	.long	VoiceDirIndexFind_Table_p0_446
-	.long	VoiceDirIndexFind_Table_p0_77
-	.long	VoiceDirIndexFind_Table_p0_248
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_475
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_476
-	.long	VoiceDirIndexFind_Table_p0_477
-	.long	VoiceDirIndexFind_Table_p0_478
-	.long	VoiceDirIndexFind_Table_p0_479
-	.long	VoiceDirIndexFind_Table_p0_480
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_258
-	.long	VoiceDirIndexFind_Table_p0_259
-	.long	VoiceDirIndexFind_Table_p0_260
-	.long	VoiceDirIndexFind_Table_p0_261
-	.long	VoiceDirIndexFind_Table_p0_262
-	.long	VoiceDirIndexFind_Table_p0_502
-	.long	VoiceDirIndexFind_Table_p0_503
-	.long	VoiceDirIndexFind_Table_p0_504
-	.long	VoiceDirIndexFind_Table_p0_505
-	.long	VoiceDirIndexFind_Table_p0_506
-	.long	VoiceDirIndexFind_Table_p0_507
-	.long	VoiceDirIndexFind_Table_p0_508
-	.long	VoiceDirIndexFind_Table_p0_509
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_276
-	.long	VoiceDirIndexFind_Table_p0_277
-	.long	VoiceDirIndexFind_Table_p0_278
-	.long	VoiceDirIndexFind_Table_p0_279
-	.long	VoiceDirIndexFind_Table_p0_280
-	.long	VoiceDirIndexFind_Table_p0_540
-	.long	VoiceDirIndexFind_Table_p0_541
-	.long	VoiceDirIndexFind_Table_p0_542
-	.long	VoiceDirIndexFind_Table_p0_543
-	.long	VoiceDirIndexFind_Table_p0_544
-	.long	VoiceDirIndexFind_Table_p0_545
-	.long	VoiceDirIndexFind_Table_p0_546
-	.long	VoiceDirIndexFind_Table_p0_547
-	.long	VoiceDirIndexFind_Table_p0_114
-	.long	VoiceDirIndexFind_Table_p0_309
-	.long	VoiceDirIndexFind_Table_p0_310
-	.long	VoiceDirIndexFind_Table_p0_311
-	.long	VoiceDirIndexFind_Table_p0_312
-	.long	VoiceDirIndexFind_Table_p0_313
-	.long	VoiceDirIndexFind_Table_p0_314
-	.long	VoiceDirIndexFind_Table_p0_315
-	.long	VoiceDirIndexFind_Table_p0_316
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_124
-	.long	VoiceDirIndexFind_Table_p0_125
-	.long	VoiceDirIndexFind_Table_p0_126
-	.long	VoiceDirIndexFind_Table_p0_127
-	.long	VoiceDirIndexFind_Table_p0_128
-	.long	VoiceDirIndexFind_Table_p0_329
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_330
-	.long	VoiceDirIndexFind_Table_p0_331
-	.long	VoiceDirIndexFind_Table_p0_332
-	.long	VoiceDirIndexFind_Table_p0_333
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_147
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_148
-	.long	VoiceDirIndexFind_Table_p0_149
-	.long	VoiceDirIndexFind_Table_p0_347
-	.long	VoiceDirIndexFind_Table_p0_151
-	.long	VoiceDirIndexFind_Table_p0_348
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_349
-	.long	VoiceDirIndexFind_Table_p0_350
-	.long	VoiceDirIndexFind_Table_p0_351
-	.long	VoiceDirIndexFind_Table_p0_352
-	.long	VoiceDirIndexFind_Table_p0_17
-	.long	VoiceDirIndexFind_Table_p0_175
-	.long	VoiceDirIndexFind_Table_p0_176
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_363
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_364
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_38
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_39
-	.long	VoiceDirIndexFind_Table_p0_187
-	.long	VoiceDirIndexFind_Table_p0_188
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_389
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_390
-	.long	VoiceDirIndexFind_Table_p0_391
-	.long	VoiceDirIndexFind_Table_p0_392
-	.long	VoiceDirIndexFind_Table_p0_393
-	.long	VoiceDirIndexFind_Table_p0_394
-	.long	VoiceDirIndexFind_Table_p0_395
-	.long	VoiceDirIndexFind_Table_p0_50
-	.long	VoiceDirIndexFind_Table_p0_217
-	.long	VoiceDirIndexFind_Table_p0_52
-	.long	VoiceDirIndexFind_Table_p0_53
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_218
-	.long	VoiceDirIndexFind_Table_p0_426
-	.long	VoiceDirIndexFind_Table_p0_427
-	.long	VoiceDirIndexFind_Table_p0_428
-	.long	VoiceDirIndexFind_Table_p0_429
-	.long	VoiceDirIndexFind_Table_p0_430
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_431
-	.long	VoiceDirIndexFind_Table_p0_432
-	.long	VoiceDirIndexFind_Table_p0_72
-	.long	VoiceDirIndexFind_Table_p0_241
-	.long	VoiceDirIndexFind_Table_p0_242
-	.long	VoiceDirIndexFind_Table_p0_243
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_244
-	.long	VoiceDirIndexFind_Table_p0_460
-	.long	VoiceDirIndexFind_Table_p0_246
-	.long	VoiceDirIndexFind_Table_p0_461
-	.long	VoiceDirIndexFind_Table_p0_462
-	.long	VoiceDirIndexFind_Table_p0_463
-	.long	VoiceDirIndexFind_Table_p0_464
-	.long	VoiceDirIndexFind_Table_p0_465
-	.long	VoiceDirIndexFind_Table_p0_466
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_256
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_490
-	.long	VoiceDirIndexFind_Table_p0_491
-	.long	VoiceDirIndexFind_Table_p0_492
-	.long	VoiceDirIndexFind_Table_p0_493
-	.long	VoiceDirIndexFind_Table_p0_494
-	.long	VoiceDirIndexFind_Table_p0_495
-	.long	VoiceDirIndexFind_Table_p0_99
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_271
-	.long	VoiceDirIndexFind_Table_p0_272
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_273
-	.long	VoiceDirIndexFind_Table_p0_524
-	.long	VoiceDirIndexFind_Table_p0_525
-	.long	VoiceDirIndexFind_Table_p0_526
-	.long	VoiceDirIndexFind_Table_p0_527
-	.long	VoiceDirIndexFind_Table_p0_528
-	.long	VoiceDirIndexFind_Table_p0_529
-	.long	VoiceDirIndexFind_Table_p0_530
-	.long	VoiceDirIndexFind_Table_p0_531
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_296
-	.long	VoiceDirIndexFind_Table_p0_297
-	.long	VoiceDirIndexFind_Table_p0_298
-	.long	VoiceDirIndexFind_Table_p0_299
-	.long	VoiceDirIndexFind_Table_p0_300
-	.long	VoiceDirIndexFind_Table_p0_562
-	.long	VoiceDirIndexFind_Table_p0_563
-	.long	VoiceDirIndexFind_Table_p0_564
-	.long	VoiceDirIndexFind_Table_p0_565
-	.long	VoiceDirIndexFind_Table_p0_566
-	.long	VoiceDirIndexFind_Table_p0_567
-	.long	VoiceDirIndexFind_Table_p0_568
-	.long	VoiceDirIndexFind_Table_p0_569
-	.long	VoiceDirIndexFind_Table_p0_121
-	.long	VoiceDirIndexFind_Table_p0_324
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_135
-	.long	VoiceDirIndexFind_Table_p0_136
-	.long	VoiceDirIndexFind_Table_p0_137
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_340
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_138
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_341
-	.long	VoiceDirIndexFind_Table_p0_9
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_10
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_166
-	.long	VoiceDirIndexFind_Table_p0_11
-	.long	VoiceDirIndexFind_Table_p0_167
-	.long	VoiceDirIndexFind_Table_p0_168
-	.long	VoiceDirIndexFind_Table_p0_169
-	.long	VoiceDirIndexFind_Table_p0_358
-	.long	VoiceDirIndexFind_Table_p0_171
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_29
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_30
-	.long	VoiceDirIndexFind_Table_p0_31
-	.long	VoiceDirIndexFind_Table_p0_180
-	.long	VoiceDirIndexFind_Table_p0_181
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_374
-	.long	VoiceDirIndexFind_Table_p0_375
-	.long	VoiceDirIndexFind_Table_p0_376
-	.long	VoiceDirIndexFind_Table_p0_377
-	.long	VoiceDirIndexFind_Table_p0_378
-	.long	VoiceDirIndexFind_Table_p0_379
-	.long	VoiceDirIndexFind_Table_p0_380
-	.long	VoiceDirIndexFind_Table_p0_381
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_205
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_206
-	.long	VoiceDirIndexFind_Table_p0_207
-	.long	VoiceDirIndexFind_Table_p0_410
-	.long	VoiceDirIndexFind_Table_p0_411
-	.long	VoiceDirIndexFind_Table_p0_412
-	.long	VoiceDirIndexFind_Table_p0_413
-	.long	VoiceDirIndexFind_Table_p0_414
-	.long	VoiceDirIndexFind_Table_p0_415
-	.long	VoiceDirIndexFind_Table_p0_416
-	.long	VoiceDirIndexFind_Table_p0_417
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_233
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_234
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_447
-	.long	VoiceDirIndexFind_Table_p0_448
-	.long	VoiceDirIndexFind_Table_p0_449
-	.long	VoiceDirIndexFind_Table_p0_450
-	.long	VoiceDirIndexFind_Table_p0_451
-	.long	VoiceDirIndexFind_Table_p0_452
-	.long	VoiceDirIndexFind_Table_p0_453
-	.long	VoiceDirIndexFind_Table_p0_454
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_249
-	.long	VoiceDirIndexFind_Table_p0_250
-	.long	VoiceDirIndexFind_Table_p0_251
-	.long	VoiceDirIndexFind_Table_p0_252
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_481
-	.long	VoiceDirIndexFind_Table_p0_253
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_482
-	.long	VoiceDirIndexFind_Table_p0_483
-	.long	VoiceDirIndexFind_Table_p0_89
-	.long	VoiceDirIndexFind_Table_p0_484
-	.long	VoiceDirIndexFind_Table_p0_90
-	.long	VoiceDirIndexFind_Table_p0_91
-	.long	VoiceDirIndexFind_Table_p0_265
-	.long	VoiceDirIndexFind_Table_p0_266
-	.long	VoiceDirIndexFind_Table_p0_267
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_510
-	.long	VoiceDirIndexFind_Table_p0_511
-	.long	VoiceDirIndexFind_Table_p0_512
-	.long	VoiceDirIndexFind_Table_p0_513
-	.long	VoiceDirIndexFind_Table_p0_514
-	.long	VoiceDirIndexFind_Table_p0_515
-	.long	VoiceDirIndexFind_Table_p0_516
-	.long	VoiceDirIndexFind_Table_p0_517
-	.long	VoiceDirIndexFind_Table_p0_107
-	.long	VoiceDirIndexFind_Table_p0_283
-	.long	VoiceDirIndexFind_Table_p0_284
-	.long	VoiceDirIndexFind_Table_p0_285
-	.long	VoiceDirIndexFind_Table_p0_286
-	.long	VoiceDirIndexFind_Table_p0_287
-	.long	VoiceDirIndexFind_Table_p0_548
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_549
-	.long	VoiceDirIndexFind_Table_p0_550
-	.long	VoiceDirIndexFind_Table_p0_551
-	.long	VoiceDirIndexFind_Table_p0_552
-	.long	VoiceDirIndexFind_Table_p0_553
-	.long	VoiceDirIndexFind_Table_p0_554
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_317
-	.long	VoiceDirIndexFind_Table_p0_318
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_319
-	.long	VoiceDirIndexFind_Table_p0_320
-	.long	VoiceDirIndexFind_Table_p0_321
-	.long	VoiceDirIndexFind_Table_p0_322
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_129
-	.long	VoiceDirIndexFind_Table_p0_130
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_131
-	.long	VoiceDirIndexFind_Table_p0_334
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_335
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_153
-	.long	VoiceDirIndexFind_Table_p0_154
-	.long	VoiceDirIndexFind_Table_p0_155
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_156
-	.long	VoiceDirIndexFind_Table_p0_353
-	.long	VoiceDirIndexFind_Table_p0_158
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_354
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_20
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_21
-	.long	VoiceDirIndexFind_Table_p0_177
-	.long	VoiceDirIndexFind_Table_p0_23
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_365
-	.long	VoiceDirIndexFind_Table_p0_366
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_367
-	.long	VoiceDirIndexFind_Table_p0_41
-	.long	VoiceDirIndexFind_Table_p0_368
-	.long	VoiceDirIndexFind_Table_p0_369
-	.long	VoiceDirIndexFind_Table_p0_370
-	.long	VoiceDirIndexFind_Table_p0_43
-	.long	VoiceDirIndexFind_Table_p0_190
-	.long	VoiceDirIndexFind_Table_p0_191
-	.long	VoiceDirIndexFind_Table_p0_192
-	.long	VoiceDirIndexFind_Table_p0_193
-	.long	VoiceDirIndexFind_Table_p0_194
-	.long	VoiceDirIndexFind_Table_p0_396
-	.long	VoiceDirIndexFind_Table_p0_397
-	.long	VoiceDirIndexFind_Table_p0_398
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_399
-	.long	VoiceDirIndexFind_Table_p0_400
-	.long	VoiceDirIndexFind_Table_p0_401
-	.long	VoiceDirIndexFind_Table_p0_402
-	.long	VoiceDirIndexFind_Table_p0_58
-	.long	VoiceDirIndexFind_Table_p0_222
-	.long	VoiceDirIndexFind_Table_p0_59
-	.long	VoiceDirIndexFind_Table_p0_60
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_223
-	.long	VoiceDirIndexFind_Table_p0_433
-	.long	VoiceDirIndexFind_Table_p0_225
-	.long	VoiceDirIndexFind_Table_p0_434
-	.long	VoiceDirIndexFind_Table_p0_435
-	.long	VoiceDirIndexFind_Table_p0_436
-	.long	VoiceDirIndexFind_Table_p0_437
-	.long	VoiceDirIndexFind_Table_p0_438
-	.long	VoiceDirIndexFind_Table_p0_439
-	.long	VoiceDirIndexFind_Table_p0_74
-	.long	VoiceDirIndexFind_Table_p0_247
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_467
-	.long	VoiceDirIndexFind_Table_p0_468
-	.long	VoiceDirIndexFind_Table_p0_469
-	.long	VoiceDirIndexFind_Table_p0_470
-	.long	VoiceDirIndexFind_Table_p0_471
-	.long	VoiceDirIndexFind_Table_p0_472
-	.long	VoiceDirIndexFind_Table_p0_473
-	.long	VoiceDirIndexFind_Table_p0_474
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_257
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_496
-	.long	VoiceDirIndexFind_Table_p0_497
-	.long	VoiceDirIndexFind_Table_p0_498
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_100
-	.long	VoiceDirIndexFind_Table_p0_499
-	.long	VoiceDirIndexFind_Table_p0_500
-	.long	VoiceDirIndexFind_Table_p0_501
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_275
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_532
-	.long	VoiceDirIndexFind_Table_p0_533
-	.long	VoiceDirIndexFind_Table_p0_534
-	.long	VoiceDirIndexFind_Table_p0_535
-	.long	VoiceDirIndexFind_Table_p0_536
-	.long	VoiceDirIndexFind_Table_p0_537
-	.long	VoiceDirIndexFind_Table_p0_538
-	.long	VoiceDirIndexFind_Table_p0_539
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_304
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_305
-	.long	VoiceDirIndexFind_Table_p0_306
-	.long	VoiceDirIndexFind_Table_p0_307
-	.long	VoiceDirIndexFind_Table_p0_308
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_122
-	.long	VoiceDirIndexFind_Table_p0_123
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_325
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_326
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_327
-	.long	VoiceDirIndexFind_Table_p0_328
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_139
-	.long	VoiceDirIndexFind_Table_p0_140
-	.long	VoiceDirIndexFind_Table_p0_141
-	.long	VoiceDirIndexFind_Table_p0_142
-	.long	VoiceDirIndexFind_Table_p0_143
-	.long	VoiceDirIndexFind_Table_p0_342
-	.long	VoiceDirIndexFind_Table_p0_145
-	.long	VoiceDirIndexFind_Table_p0_343
-	.long	VoiceDirIndexFind_Table_p0_344
-	.long	VoiceDirIndexFind_Table_p0_345
-	.long	VoiceDirIndexFind_Table_p0_13
-	.long	VoiceDirIndexFind_Table_p0_346
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_172
-	.long	VoiceDirIndexFind_Table_p0_173
-	.long	VoiceDirIndexFind_Table_p0_174
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_359
-	.long	VoiceDirIndexFind_Table_p0_360
-	.long	VoiceDirIndexFind_Table_p0_361
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_362
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_35
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_36
-	.long	VoiceDirIndexFind_Table_p0_182
-	.long	VoiceDirIndexFind_Table_p0_183
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_184
-	.long	VoiceDirIndexFind_Table_p0_382
-	.long	VoiceDirIndexFind_Table_p0_186
-	.long	VoiceDirIndexFind_Table_p0_383
-	.long	VoiceDirIndexFind_Table_p0_384
-	.long	VoiceDirIndexFind_Table_p0_385
-	.long	VoiceDirIndexFind_Table_p0_386
-	.long	VoiceDirIndexFind_Table_p0_387
-	.long	VoiceDirIndexFind_Table_p0_388
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_211
-	.long	VoiceDirIndexFind_Table_p0_212
-	.long	VoiceDirIndexFind_Table_p0_213
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_214
-	.long	VoiceDirIndexFind_Table_p0_418
-	.long	VoiceDirIndexFind_Table_p0_419
-	.long	VoiceDirIndexFind_Table_p0_420
-	.long	VoiceDirIndexFind_Table_p0_421
-	.long	VoiceDirIndexFind_Table_p0_422
-	.long	VoiceDirIndexFind_Table_p0_423
-	.long	VoiceDirIndexFind_Table_p0_424
-	.long	VoiceDirIndexFind_Table_p0_425
-	.long	VoiceDirIndexFind_Table_p0_69
-	.long	VoiceDirIndexFind_Table_p0_238
-	.long	VoiceDirIndexFind_Table_p0_239
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_240
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_455
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_456
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_457
-	.long	VoiceDirIndexFind_Table_p0_458
-	.long	VoiceDirIndexFind_Table_p0_459
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_254
-	.long	VoiceDirIndexFind_Table_p0_255
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_485
-	.long	VoiceDirIndexFind_Table_p0_486
-	.long	VoiceDirIndexFind_Table_p0_487
-	.long	VoiceDirIndexFind_Table_p0_488
-	.long	VoiceDirIndexFind_Table_p0_93
-	.long	VoiceDirIndexFind_Table_p0_94
-	.long	VoiceDirIndexFind_Table_p0_489
-	.long	VoiceDirIndexFind_Table_p0_96
-	.long	VoiceDirIndexFind_Table_p0_97
-	.long	VoiceDirIndexFind_Table_p0_268
-	.long	VoiceDirIndexFind_Table_p0_269
-	.long	VoiceDirIndexFind_Table_p0_270
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_518
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_519
-	.long	VoiceDirIndexFind_Table_p0_520
-	.long	VoiceDirIndexFind_Table_p0_521
-	.long	VoiceDirIndexFind_Table_p0_522
-	.long	VoiceDirIndexFind_Table_p0_523
-	.long	VoiceDirIndexFind_Table_p0_110
-	.long	VoiceDirIndexFind_Table_p0_289
-	.long	VoiceDirIndexFind_Table_p0_290
-	.long	VoiceDirIndexFind_Table_p0_291
-	.long	VoiceDirIndexFind_Table_p0_292
-	.long	VoiceDirIndexFind_Table_p0_293
-	.long	VoiceDirIndexFind_Table_p0_555
-	.long	VoiceDirIndexFind_Table_p0_556
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_557
-	.long	VoiceDirIndexFind_Table_p0_558
-	.long	VoiceDirIndexFind_Table_p0_559
-	.long	VoiceDirIndexFind_Table_p0_560
-	.long	VoiceDirIndexFind_Table_p0_561
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_323
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_132
-	.long	VoiceDirIndexFind_Table_p0_133
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_336
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_337
-	.long	0
-
-VoiceDirRefFind_Var:	# u16, a constant; read / written by VoiceDirRefFind 0x4857296A: `movhu (VoiceDirRefFind_Var), d1`
-	.word	1
-VoiceDirRefFind_Var_2:	# u16, a constant; read / written by VoiceDirRefFind 0x4857296A: `movhu (VoiceDirRefFind_Var_2), d0`
-	.word	633
-
-VoiceDirRefFind_Table:
-	.long	VoiceDirRefFind_Table_p0_181
-	.long	VoiceDirRefFind_Table_p0_604
-	.long	VoiceDirRefFind_Table_p0_191
-	.long	VoiceDirRefFind_Table_p0_5
-	.long	VoiceDirRefFind_Table_p0_26
-	.long	VoiceDirRefFind_Table_p0_418
-	.long	VoiceDirRefFind_Table_p0_420
-	.long	VoiceDirRefFind_Table_p0_419
-	.long	VoiceDirRefFind_Table_p0_371
-	.long	VoiceDirRefFind_Table_p0_380
-	.long	VoiceDirRefFind_Table_p0_473
-	.long	VoiceDirRefFind_Table_p0_391
-	.long	VoiceDirRefFind_Table_p0_389
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_10
-	.long	VoiceDirRefFind_Table_p0_609
-	.long	VoiceDirRefFind_Table_p0_11
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_426
-	.long	VoiceDirRefFind_Table_p0_425
-	.long	VoiceDirRefFind_Table_p0_424
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_254
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_143
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_409
-	.long	VoiceDirRefFind_Table_p0_400
-	.long	VoiceDirRefFind_Table_p0_614
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_262
-	.long	VoiceDirRefFind_Table_p0_268
-	.long	VoiceDirRefFind_Table_p0_443
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_261
-	.long	VoiceDirRefFind_Table_p0_277
-	.long	VoiceDirRefFind_Table_p0_570
-	.long	VoiceDirRefFind_Table_p0_636
-	.long	VoiceDirRefFind_Table_p0_148
-	.long	VoiceDirRefFind_Table_p0_151
-	.long	VoiceDirRefFind_Table_p0_619
-	.long	VoiceDirRefFind_Table_p0_154
-	.long	VoiceDirRefFind_Table_p0_595
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_284
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_455
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_285
-	.long	VoiceDirRefFind_Table_p0_441
-	.long	VoiceDirRefFind_Table_p0_581
-	.long	VoiceDirRefFind_Table_p0_641
-	.long	VoiceDirRefFind_Table_p0_583
-	.long	VoiceDirRefFind_Table_p0_166
-	.long	VoiceDirRefFind_Table_p0_624
-	.long	VoiceDirRefFind_Table_p0_169
-	.long	VoiceDirRefFind_Table_p0_170
-	.long	VoiceDirRefFind_Table_p0_60
-	.long	VoiceDirRefFind_Table_p0_324
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_37
-	.long	VoiceDirRefFind_Table_p0_585
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_532
-	.long	VoiceDirRefFind_Table_p0_512
-	.long	VoiceDirRefFind_Table_p0_629
-	.long	VoiceDirRefFind_Table_p0_453
-	.long	VoiceDirRefFind_Table_p0_462
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_342
-	.long	VoiceDirRefFind_Table_p0_343
-	.long	VoiceDirRefFind_Table_p0_349
-	.long	VoiceDirRefFind_Table_p0_499
-	.long	VoiceDirRefFind_Table_p0_344
-	.long	VoiceDirRefFind_Table_p0_515
-	.long	VoiceDirRefFind_Table_p0_588
-	.long	VoiceDirRefFind_Table_p0_518
-	.long	VoiceDirRefFind_Table_p0_467
-	.long	VoiceDirRefFind_Table_p0_482
-	.long	VoiceDirRefFind_Table_p0_634
-	.long	VoiceDirRefFind_Table_p0_470
-	.long	VoiceDirRefFind_Table_p0_561
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_298
-	.long	VoiceDirRefFind_Table_p0_299
-	.long	VoiceDirRefFind_Table_p0_297
-	.long	VoiceDirRefFind_Table_p0_300
-	.long	VoiceDirRefFind_Table_p0_302
-	.long	VoiceDirRefFind_Table_p0_296
-	.long	VoiceDirRefFind_Table_p0_562
-	.long	VoiceDirRefFind_Table_p0_563
-	.long	VoiceDirRefFind_Table_p0_564
-	.long	VoiceDirRefFind_Table_p0_551
-	.long	VoiceDirRefFind_Table_p0_433
-	.long	VoiceDirRefFind_Table_p0_495
-	.long	VoiceDirRefFind_Table_p0_457
-	.long	VoiceDirRefFind_Table_p0_90
-	.long	VoiceDirRefFind_Table_p0_213
-	.long	VoiceDirRefFind_Table_p0_216
-	.long	VoiceDirRefFind_Table_p0_217
-	.long	VoiceDirRefFind_Table_p0_218
-	.long	VoiceDirRefFind_Table_p0_215
-	.long	VoiceDirRefFind_Table_p0_597
-	.long	VoiceDirRefFind_Table_p0_220
-	.long	VoiceDirRefFind_Table_p0_221
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_358
-	.long	VoiceDirRefFind_Table_p0_361
-	.long	VoiceDirRefFind_Table_p0_364
-	.long	VoiceDirRefFind_Table_p0_594
-	.long	VoiceDirRefFind_Table_p0_362
-	.long	VoiceDirRefFind_Table_p0_205
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_204
-	.long	VoiceDirRefFind_Table_p0_206
-	.long	VoiceDirRefFind_Table_p0_208
-	.long	VoiceDirRefFind_Table_p0_602
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_373
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_392
-	.long	VoiceDirRefFind_Table_p0_372
-	.long	VoiceDirRefFind_Table_p0_387
-	.long	VoiceDirRefFind_Table_p0_388
-	.long	VoiceDirRefFind_Table_p0_379
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_196
-	.long	VoiceDirRefFind_Table_p0_607
-	.long	VoiceDirRefFind_Table_p0_198
-	.long	VoiceDirRefFind_Table_p0_194
-	.long	VoiceDirRefFind_Table_p0_423
-	.long	VoiceDirRefFind_Table_p0_245
-	.long	VoiceDirRefFind_Table_p0_246
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_127
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_126
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_43
-	.long	VoiceDirRefFind_Table_p0_612
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_45
-	.long	VoiceDirRefFind_Table_p0_259
-	.long	VoiceDirRefFind_Table_p0_258
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_140
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_510
-	.long	VoiceDirRefFind_Table_p0_397
-	.long	VoiceDirRefFind_Table_p0_133
-	.long	VoiceDirRefFind_Table_p0_617
-	.long	VoiceDirRefFind_Table_p0_135
-	.long	VoiceDirRefFind_Table_p0_136
-	.long	VoiceDirRefFind_Table_p0_103
-	.long	VoiceDirRefFind_Table_p0_282
-	.long	VoiceDirRefFind_Table_p0_106
-	.long	VoiceDirRefFind_Table_p0_108
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_498
-	.long	VoiceDirRefFind_Table_p0_503
-	.long	VoiceDirRefFind_Table_p0_574
-	.long	VoiceDirRefFind_Table_p0_639
-	.long	VoiceDirRefFind_Table_p0_571
-	.long	VoiceDirRefFind_Table_p0_163
-	.long	VoiceDirRefFind_Table_p0_622
-	.long	VoiceDirRefFind_Table_p0_401
-	.long	VoiceDirRefFind_Table_p0_289
-	.long	VoiceDirRefFind_Table_p0_402
-	.long	VoiceDirRefFind_Table_p0_333
-	.long	VoiceDirRefFind_Table_p0_335
-	.long	VoiceDirRefFind_Table_p0_334
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_336
-	.long	VoiceDirRefFind_Table_p0_502
-	.long	VoiceDirRefFind_Table_p0_577
-	.long	VoiceDirRefFind_Table_p0_644
-	.long	VoiceDirRefFind_Table_p0_500
-	.long	VoiceDirRefFind_Table_p0_489
-	.long	VoiceDirRefFind_Table_p0_627
-	.long	VoiceDirRefFind_Table_p0_446
-	.long	VoiceDirRefFind_Table_p0_436
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_325
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_463
-	.long	VoiceDirRefFind_Table_p0_592
-	.long	VoiceDirRefFind_Table_p0_501
-	.long	VoiceDirRefFind_Table_p0_481
-	.long	VoiceDirRefFind_Table_p0_476
-	.long	VoiceDirRefFind_Table_p0_632
-	.long	VoiceDirRefFind_Table_p0_76
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_353
-	.long	VoiceDirRefFind_Table_p0_354
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_340
-	.long	VoiceDirRefFind_Table_p0_339
-	.long	VoiceDirRefFind_Table_p0_114
-	.long	VoiceDirRefFind_Table_p0_116
-	.long	VoiceDirRefFind_Table_p0_118
-	.long	VoiceDirRefFind_Table_p0_488
-	.long	VoiceDirRefFind_Table_p0_538
-	.long	VoiceDirRefFind_Table_p0_524
-	.long	VoiceDirRefFind_Table_p0_477
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_211
-	.long	VoiceDirRefFind_Table_p0_214
-	.long	VoiceDirRefFind_Table_p0_226
-	.long	VoiceDirRefFind_Table_p0_227
-	.long	VoiceDirRefFind_Table_p0_228
-	.long	VoiceDirRefFind_Table_p0_229
-	.long	VoiceDirRefFind_Table_p0_230
-	.long	VoiceDirRefFind_Table_p0_231
-	.long	VoiceDirRefFind_Table_p0_540
-	.long	VoiceDirRefFind_Table_p0_550
-	.long	VoiceDirRefFind_Table_p0_549
-	.long	VoiceDirRefFind_Table_p0_176
-	.long	VoiceDirRefFind_Table_p0_541
-	.long	VoiceDirRefFind_Table_p0_97
-	.long	VoiceDirRefFind_Table_p0_201
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_600
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_356
-	.long	VoiceDirRefFind_Table_p0_357
-	.long	VoiceDirRefFind_Table_p0_386
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_188
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_381
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_189
-	.long	VoiceDirRefFind_Table_p0_605
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_8
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_238
-	.long	VoiceDirRefFind_Table_p0_27
-	.long	VoiceDirRefFind_Table_p0_241
-	.long	VoiceDirRefFind_Table_p0_237
-	.long	VoiceDirRefFind_Table_p0_239
-	.long	VoiceDirRefFind_Table_p0_474
-	.long	VoiceDirRefFind_Table_p0_240
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_15
-	.long	VoiceDirRefFind_Table_p0_610
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_18
-	.long	VoiceDirRefFind_Table_p0_22
-	.long	VoiceDirRefFind_Table_p0_252
-	.long	VoiceDirRefFind_Table_p0_253
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_131
-	.long	VoiceDirRefFind_Table_p0_138
-	.long	VoiceDirRefFind_Table_p0_142
-	.long	VoiceDirRefFind_Table_p0_129
-	.long	VoiceDirRefFind_Table_p0_132
-	.long	VoiceDirRefFind_Table_p0_615
-	.long	VoiceDirRefFind_Table_p0_398
-	.long	VoiceDirRefFind_Table_p0_412
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_546
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_244
-	.long	VoiceDirRefFind_Table_p0_274
-	.long	VoiceDirRefFind_Table_p0_276
-	.long	VoiceDirRefFind_Table_p0_580
-	.long	VoiceDirRefFind_Table_p0_637
-	.long	VoiceDirRefFind_Table_p0_590
-	.long	VoiceDirRefFind_Table_p0_438
-	.long	VoiceDirRefFind_Table_p0_620
-	.long	VoiceDirRefFind_Table_p0_160
-	.long	VoiceDirRefFind_Table_p0_158
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_281
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_280
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_290
-	.long	VoiceDirRefFind_Table_p0_579
-	.long	VoiceDirRefFind_Table_p0_642
-	.long	VoiceDirRefFind_Table_p0_589
-	.long	VoiceDirRefFind_Table_p0_173
-	.long	VoiceDirRefFind_Table_p0_625
-	.long	VoiceDirRefFind_Table_p0_175
-	.long	VoiceDirRefFind_Table_p0_492
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_316
-	.long	VoiceDirRefFind_Table_p0_320
-	.long	VoiceDirRefFind_Table_p0_318
-	.long	VoiceDirRefFind_Table_p0_319
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_36
-	.long	VoiceDirRefFind_Table_p0_586
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_528
-	.long	VoiceDirRefFind_Table_p0_520
-	.long	VoiceDirRefFind_Table_p0_630
-	.long	VoiceDirRefFind_Table_p0_522
-	.long	VoiceDirRefFind_Table_p0_72
-	.long	VoiceDirRefFind_Table_p0_75
-	.long	VoiceDirRefFind_Table_p0_328
-	.long	VoiceDirRefFind_Table_p0_511
-	.long	VoiceDirRefFind_Table_p0_355
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_450
-	.long	VoiceDirRefFind_Table_p0_461
-	.long	VoiceDirRefFind_Table_p0_529
-	.long	VoiceDirRefFind_Table_p0_516
-	.long	VoiceDirRefFind_Table_p0_530
-	.long	VoiceDirRefFind_Table_p0_635
-	.long	VoiceDirRefFind_Table_p0_483
-	.long	VoiceDirRefFind_Table_p0_469
-	.long	VoiceDirRefFind_Table_p0_87
-	.long	VoiceDirRefFind_Table_p0_308
-	.long	VoiceDirRefFind_Table_p0_307
-	.long	VoiceDirRefFind_Table_p0_313
-	.long	VoiceDirRefFind_Table_p0_304
-	.long	VoiceDirRefFind_Table_p0_306
-	.long	VoiceDirRefFind_Table_p0_303
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_565
-	.long	VoiceDirRefFind_Table_p0_568
-	.long	VoiceDirRefFind_Table_p0_559
-	.long	VoiceDirRefFind_Table_p0_525
-	.long	VoiceDirRefFind_Table_p0_480
-	.long	VoiceDirRefFind_Table_p0_486
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_326
-	.long	VoiceDirRefFind_Table_p0_327
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_232
-	.long	VoiceDirRefFind_Table_p0_598
-	.long	VoiceDirRefFind_Table_p0_222
-	.long	VoiceDirRefFind_Table_p0_223
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_367
-	.long	VoiceDirRefFind_Table_p0_368
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_396
-	.long	VoiceDirRefFind_Table_p0_178
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_179
-	.long	VoiceDirRefFind_Table_p0_603
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_377
-	.long	VoiceDirRefFind_Table_p0_369
-	.long	VoiceDirRefFind_Table_p0_519
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_378
-	.long	VoiceDirRefFind_Table_p0_375
-	.long	VoiceDirRefFind_Table_p0_376
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_183
-	.long	VoiceDirRefFind_Table_p0_608
-	.long	VoiceDirRefFind_Table_p0_12
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_13
-	.long	VoiceDirRefFind_Table_p0_250
-	.long	VoiceDirRefFind_Table_p0_24
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_128
-	.long	VoiceDirRefFind_Table_p0_141
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_447
-	.long	VoiceDirRefFind_Table_p0_41
-	.long	VoiceDirRefFind_Table_p0_613
-	.long	VoiceDirRefFind_Table_p0_533
-	.long	VoiceDirRefFind_Table_p0_415
-	.long	VoiceDirRefFind_Table_p0_535
-	.long	VoiceDirRefFind_Table_p0_260
-	.long	VoiceDirRefFind_Table_p0_264
-	.long	VoiceDirRefFind_Table_p0_265
-	.long	VoiceDirRefFind_Table_p0_279
-	.long	VoiceDirRefFind_Table_p0_263
-	.long	VoiceDirRefFind_Table_p0_271
-	.long	VoiceDirRefFind_Table_p0_270
-	.long	VoiceDirRefFind_Table_p0_272
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_406
-	.long	VoiceDirRefFind_Table_p0_618
-	.long	VoiceDirRefFind_Table_p0_439
-	.long	VoiceDirRefFind_Table_p0_410
-	.long	VoiceDirRefFind_Table_p0_53
-	.long	VoiceDirRefFind_Table_p0_283
-	.long	VoiceDirRefFind_Table_p0_534
-	.long	VoiceDirRefFind_Table_p0_105
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_527
-	.long	VoiceDirRefFind_Table_p0_431
-	.long	VoiceDirRefFind_Table_p0_587
-	.long	VoiceDirRefFind_Table_p0_640
-	.long	VoiceDirRefFind_Table_p0_582
-	.long	VoiceDirRefFind_Table_p0_408
-	.long	VoiceDirRefFind_Table_p0_623
-	.long	VoiceDirRefFind_Table_p0_445
-	.long	VoiceDirRefFind_Table_p0_460
-	.long	VoiceDirRefFind_Table_p0_536
-	.long	VoiceDirRefFind_Table_p0_323
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_49
-	.long	VoiceDirRefFind_Table_p0_584
-	.long	VoiceDirRefFind_Table_p0_542
-	.long	VoiceDirRefFind_Table_p0_543
-	.long	VoiceDirRefFind_Table_p0_539
-	.long	VoiceDirRefFind_Table_p0_628
-	.long	VoiceDirRefFind_Table_p0_471
-	.long	VoiceDirRefFind_Table_p0_509
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_317
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_479
-	.long	VoiceDirRefFind_Table_p0_575
-	.long	VoiceDirRefFind_Table_p0_505
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_77
-	.long	VoiceDirRefFind_Table_p0_633
-	.long	VoiceDirRefFind_Table_p0_472
-	.long	VoiceDirRefFind_Table_p0_484
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_295
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_566
-	.long	VoiceDirRefFind_Table_p0_567
-	.long	VoiceDirRefFind_Table_p0_569
-	.long	VoiceDirRefFind_Table_p0_115
-	.long	VoiceDirRefFind_Table_p0_109
-	.long	VoiceDirRefFind_Table_p0_496
-	.long	VoiceDirRefFind_Table_p0_497
-	.long	VoiceDirRefFind_Table_p0_523
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_212
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_234
-	.long	VoiceDirRefFind_Table_p0_596
-	.long	VoiceDirRefFind_Table_p0_224
-	.long	VoiceDirRefFind_Table_p0_225
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_99
-	.long	VoiceDirRefFind_Table_p0_100
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_593
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_210
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_209
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_203
-	.long	VoiceDirRefFind_Table_p0_601
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_359
-	.long	VoiceDirRefFind_Table_p0_390
-	.long	VoiceDirRefFind_Table_p0_393
-	.long	VoiceDirRefFind_Table_p0_394
-	.long	VoiceDirRefFind_Table_p0_385
-	.long	VoiceDirRefFind_Table_p0_383
-	.long	VoiceDirRefFind_Table_p0_395
-	.long	VoiceDirRefFind_Table_p0_382
-	.long	VoiceDirRefFind_Table_p0_195
-	.long	VoiceDirRefFind_Table_p0_185
-	.long	VoiceDirRefFind_Table_p0_606
-	.long	VoiceDirRefFind_Table_p0_187
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_249
-	.long	VoiceDirRefFind_Table_p0_427
-	.long	VoiceDirRefFind_Table_p0_247
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_123
-	.long	VoiceDirRefFind_Table_p0_124
-	.long	VoiceDirRefFind_Table_p0_125
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_122
-	.long	VoiceDirRefFind_Table_p0_611
-	.long	VoiceDirRefFind_Table_p0_20
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_422
-	.long	VoiceDirRefFind_Table_p0_421
-	.long	VoiceDirRefFind_Table_p0_256
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_257
-	.long	VoiceDirRefFind_Table_p0_405
-	.long	VoiceDirRefFind_Table_p0_416
-	.long	VoiceDirRefFind_Table_p0_139
-	.long	VoiceDirRefFind_Table_p0_437
-	.long	VoiceDirRefFind_Table_p0_130
-	.long	VoiceDirRefFind_Table_p0_616
-	.long	VoiceDirRefFind_Table_p0_411
-	.long	VoiceDirRefFind_Table_p0_444
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_266
-	.long	VoiceDirRefFind_Table_p0_267
-	.long	VoiceDirRefFind_Table_p0_273
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_269
-	.long	VoiceDirRefFind_Table_p0_554
-	.long	VoiceDirRefFind_Table_p0_578
-	.long	VoiceDirRefFind_Table_p0_638
-	.long	VoiceDirRefFind_Table_p0_572
-	.long	VoiceDirRefFind_Table_p0_555
-	.long	VoiceDirRefFind_Table_p0_621
-	.long	VoiceDirRefFind_Table_p0_442
-	.long	VoiceDirRefFind_Table_p0_162
-	.long	VoiceDirRefFind_Table_p0_35
-	.long	VoiceDirRefFind_Table_p0_330
-	.long	VoiceDirRefFind_Table_p0_337
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_338
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_350
-	.long	VoiceDirRefFind_Table_p0_576
-	.long	VoiceDirRefFind_Table_p0_643
-	.long	VoiceDirRefFind_Table_p0_573
-	.long	VoiceDirRefFind_Table_p0_352
-	.long	VoiceDirRefFind_Table_p0_626
-	.long	VoiceDirRefFind_Table_p0_451
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_321
-	.long	VoiceDirRefFind_Table_p0_322
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_21
-	.long	VoiceDirRefFind_Table_p0_591
-	.long	VoiceDirRefFind_Table_p0_432
-	.long	VoiceDirRefFind_Table_p0_428
-	.long	VoiceDirRefFind_Table_p0_83
-	.long	VoiceDirRefFind_Table_p0_631
-	.long	VoiceDirRefFind_Table_p0_526
-	.long	VoiceDirRefFind_Table_p0_507
-	.long	VoiceDirRefFind_Table_p0_61
-	.long	VoiceDirRefFind_Table_p0_346
-	.long	VoiceDirRefFind_Table_p0_348
-	.long	VoiceDirRefFind_Table_p0_347
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_464
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_552
-	.long	VoiceDirRefFind_Table_p0_494
-	.long	VoiceDirRefFind_Table_p0_517
-	.long	VoiceDirRefFind_Table_p0_560
-	.long	VoiceDirRefFind_Table_p0_487
-	.long	VoiceDirRefFind_Table_p0_545
-	.long	VoiceDirRefFind_Table_p0_309
-	.long	VoiceDirRefFind_Table_p0_312
-	.long	VoiceDirRefFind_Table_p0_314
-	.long	VoiceDirRefFind_Table_p0_305
-	.long	VoiceDirRefFind_Table_p0_315
-	.long	VoiceDirRefFind_Table_p0_311
-	.long	VoiceDirRefFind_Table_p0_310
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_547
-	.long	VoiceDirRefFind_Table_p0_548
-	.long	VoiceDirRefFind_Table_p0_531
-	.long	VoiceDirRefFind_Table_p0_508
-	.long	VoiceDirRefFind_Table_p0_521
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_202
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_599
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_365
-	.long	VoiceDirRefFind_Table_p0_374
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_180
-	.long	0
-	.long	VoiceDirRefFind_Table_p0_360
-	.long	0

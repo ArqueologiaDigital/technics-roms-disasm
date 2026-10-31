@@ -39674,7 +39674,7 @@ TechnicsPadsResourceInit_entry:
     exth    d0
     cmp     0, d0
     bge     loc_484342DF
-    mov     Str_Technics_Pads, a0
+    mov     TechnicsPadsResourceBuiltin, a0
     mov     a0, (TechnicsPadsResourceInit_Var)
     call    TechnicsPadsResourceParse_entry, [d2], 0x18
 loc_484342DF:

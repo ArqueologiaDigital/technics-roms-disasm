@@ -17,22 +17,22 @@ AcNoteEditBoxProc_Table_4:
 	.long	loc_4853CF90
 
 AcNoteEditBoxProc_Records:	# 16 x REC_AcNoteEditBoxProc_Records (8 bytes each); read by AcNoteEditBoxProc 0x4853C0FB `mov (a0), d0`
-	REC_AcNoteEditBoxProc_Records	f0=0xE10010, proc=loc_4853CCAD	# [0]
-	REC_AcNoteEditBoxProc_Records	f0=1, proc=loc_4853C18F
-	REC_AcNoteEditBoxProc_Records	f0=2, proc=loc_4853C248
-	REC_AcNoteEditBoxProc_Records	f0=0x100B2, proc=loc_4853C26A
-	REC_AcNoteEditBoxProc_Records	f0=17, proc=loc_4853CE55
-	REC_AcNoteEditBoxProc_Records	f0=15, proc=loc_4853CE55
-	REC_AcNoteEditBoxProc_Records	f0=18, proc=loc_4853CE57
-	REC_AcNoteEditBoxProc_Records	f0=16, proc=loc_4853CE57
+	REC_AcNoteEditBoxProc_Records	key=0xE10010, proc=loc_4853CCAD	# [0]
+	REC_AcNoteEditBoxProc_Records	key=1, proc=loc_4853C18F
+	REC_AcNoteEditBoxProc_Records	key=2, proc=loc_4853C248
+	REC_AcNoteEditBoxProc_Records	key=0x100B2, proc=loc_4853C26A
+	REC_AcNoteEditBoxProc_Records	key=17, proc=loc_4853CE55
+	REC_AcNoteEditBoxProc_Records	key=15, proc=loc_4853CE55
+	REC_AcNoteEditBoxProc_Records	key=18, proc=loc_4853CE57
+	REC_AcNoteEditBoxProc_Records	key=16, proc=loc_4853CE57
 	REC_AcNoteEditBoxProc_Records	proc=loc_4853CF93	# [8]
 	REC_AcNoteEditBoxProc_Records	proc=loc_4853CF93
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000A, proc=loc_4853C705
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000B, proc=loc_4853C681
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000C, proc=loc_4853C8DE
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000D, proc=loc_4853C8AA
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000E, proc=loc_4853C8B6
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000F, proc=loc_4853CAD1
+	REC_AcNoteEditBoxProc_Records	key=0xE1000A, proc=loc_4853C705
+	REC_AcNoteEditBoxProc_Records	key=0xE1000B, proc=loc_4853C681
+	REC_AcNoteEditBoxProc_Records	key=0xE1000C, proc=loc_4853C8DE
+	REC_AcNoteEditBoxProc_Records	key=0xE1000D, proc=loc_4853C8AA
+	REC_AcNoteEditBoxProc_Records	key=0xE1000E, proc=loc_4853C8B6
+	REC_AcNoteEditBoxProc_Records	key=0xE1000F, proc=loc_4853CAD1
 
 AcDrumEditBoxProc_Table:
 	.long	loc_4853DBE3
@@ -49,8 +49,8 @@ AcDrumEditBoxProc_Table:
 
 AcDrumEditBoxProc_Records:	# 32 x REC_AcDrumEditBoxProc_Records (8 bytes each); read by AcDrumEditBoxProc 0x4853D03A `mov (a0), d0`
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05	# [0]
-	REC_AcDrumEditBoxProc_Records	f0=1, proc=loc_4853D093
-	REC_AcDrumEditBoxProc_Records	f0=2, proc=loc_4853D14C
+	REC_AcDrumEditBoxProc_Records	key=1, proc=loc_4853D093
+	REC_AcDrumEditBoxProc_Records	key=2, proc=loc_4853D14C
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
@@ -58,20 +58,20 @@ AcDrumEditBoxProc_Records:	# 32 x REC_AcDrumEditBoxProc_Records (8 bytes each); 
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05	# [8]
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000A, proc=loc_4853D47C
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000B, proc=loc_4853D3FE
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000C, proc=loc_4853D640
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000D, proc=loc_4853D610
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000E, proc=loc_4853D61C
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000F, proc=loc_4853D783
-	REC_AcDrumEditBoxProc_Records	f0=0xE10010, proc=loc_4853D8B1	# [16]
-	REC_AcDrumEditBoxProc_Records	f0=0xE10011, proc=loc_4853DA38
-	REC_AcDrumEditBoxProc_Records	f0=0x100B2, proc=loc_4853D16E
-	REC_AcDrumEditBoxProc_Records	f0=0xE10012, proc=loc_4853DAF9
-	REC_AcDrumEditBoxProc_Records	f0=17, proc=loc_4853DB98
-	REC_AcDrumEditBoxProc_Records	f0=15, proc=loc_4853DB98
-	REC_AcDrumEditBoxProc_Records	f0=18, proc=loc_4853DB9A
-	REC_AcDrumEditBoxProc_Records	f0=16, proc=loc_4853DB9A
+	REC_AcDrumEditBoxProc_Records	key=0xE1000A, proc=loc_4853D47C
+	REC_AcDrumEditBoxProc_Records	key=0xE1000B, proc=loc_4853D3FE
+	REC_AcDrumEditBoxProc_Records	key=0xE1000C, proc=loc_4853D640
+	REC_AcDrumEditBoxProc_Records	key=0xE1000D, proc=loc_4853D610
+	REC_AcDrumEditBoxProc_Records	key=0xE1000E, proc=loc_4853D61C
+	REC_AcDrumEditBoxProc_Records	key=0xE1000F, proc=loc_4853D783
+	REC_AcDrumEditBoxProc_Records	key=0xE10010, proc=loc_4853D8B1	# [16]
+	REC_AcDrumEditBoxProc_Records	key=0xE10011, proc=loc_4853DA38
+	REC_AcDrumEditBoxProc_Records	key=0x100B2, proc=loc_4853D16E
+	REC_AcDrumEditBoxProc_Records	key=0xE10012, proc=loc_4853DAF9
+	REC_AcDrumEditBoxProc_Records	key=17, proc=loc_4853DB98
+	REC_AcDrumEditBoxProc_Records	key=15, proc=loc_4853DB98
+	REC_AcDrumEditBoxProc_Records	key=18, proc=loc_4853DB9A
+	REC_AcDrumEditBoxProc_Records	key=16, proc=loc_4853DB9A
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05	# [24]
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
 	REC_AcDrumEditBoxProc_Records	proc=loc_4853DD05
@@ -112,14 +112,14 @@ AcStepRecBoxProc_Table_2:
 	.long	loc_4853EB04
 
 MsgTable_4867B400:	# 32 x REC_MsgTable_4867B400 (8 bytes each); read by AcStepRecBoxProc 0x4853DD39 `mov (a0), d0`
-	REC_MsgTable_4867B400	f0=0x1710000, proc=loc_4853DF16	# [0]
-	REC_MsgTable_4867B400	f0=1, proc=loc_4853DD90
-	REC_MsgTable_4867B400	f0=2, proc=loc_4853DECC
-	REC_MsgTable_4867B400	f0=0x1710001, proc=loc_4853DF7E
-	REC_MsgTable_4867B400	f0=0x1700001, proc=loc_4853E6E6
-	REC_MsgTable_4867B400	f0=0x1700002, proc=loc_4853E6E8
-	REC_MsgTable_4867B400	f0=6, proc=loc_4853DF28
-	REC_MsgTable_4867B400	f0=7, proc=loc_4853DF28
+	REC_MsgTable_4867B400	key=0x1710000, proc=loc_4853DF16	# [0]
+	REC_MsgTable_4867B400	key=1, proc=loc_4853DD90
+	REC_MsgTable_4867B400	key=2, proc=loc_4853DECC
+	REC_MsgTable_4867B400	key=0x1710001, proc=loc_4853DF7E
+	REC_MsgTable_4867B400	key=0x1700001, proc=loc_4853E6E6
+	REC_MsgTable_4867B400	key=0x1700002, proc=loc_4853E6E8
+	REC_MsgTable_4867B400	key=6, proc=loc_4853DF28
+	REC_MsgTable_4867B400	key=7, proc=loc_4853DF28
 	REC_MsgTable_4867B400	proc=loc_4853EB1D	# [8]
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
@@ -127,53 +127,53 @@ MsgTable_4867B400:	# 32 x REC_MsgTable_4867B400 (8 bytes each); read by AcStepRe
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
-	REC_MsgTable_4867B400	f0=15, proc=loc_4853E6E6
-	REC_MsgTable_4867B400	f0=16, proc=loc_4853E6E8	# [16]
-	REC_MsgTable_4867B400	f0=17, proc=loc_4853E6E6
-	REC_MsgTable_4867B400	f0=0x100B2, proc=loc_4853DFBF
-	REC_MsgTable_4867B400	f0=0xE10013, proc=loc_4853E032
-	REC_MsgTable_4867B400	f0=0xE10014, proc=loc_4853E058
-	REC_MsgTable_4867B400	f0=0xE10015, proc=loc_4853E29E
-	REC_MsgTable_4867B400	f0=22, proc=loc_4853DF63
-	REC_MsgTable_4867B400	f0=0xE10016, proc=loc_4853E323
-	REC_MsgTable_4867B400	f0=0xE10017, proc=loc_4853E3C9	# [24]
-	REC_MsgTable_4867B400	f0=0xE10018, proc=loc_4853E478
-	REC_MsgTable_4867B400	f0=18, proc=loc_4853E6E8
+	REC_MsgTable_4867B400	key=15, proc=loc_4853E6E6
+	REC_MsgTable_4867B400	key=16, proc=loc_4853E6E8	# [16]
+	REC_MsgTable_4867B400	key=17, proc=loc_4853E6E6
+	REC_MsgTable_4867B400	key=0x100B2, proc=loc_4853DFBF
+	REC_MsgTable_4867B400	key=0xE10013, proc=loc_4853E032
+	REC_MsgTable_4867B400	key=0xE10014, proc=loc_4853E058
+	REC_MsgTable_4867B400	key=0xE10015, proc=loc_4853E29E
+	REC_MsgTable_4867B400	key=22, proc=loc_4853DF63
+	REC_MsgTable_4867B400	key=0xE10016, proc=loc_4853E323
+	REC_MsgTable_4867B400	key=0xE10017, proc=loc_4853E3C9	# [24]
+	REC_MsgTable_4867B400	key=0xE10018, proc=loc_4853E478
+	REC_MsgTable_4867B400	key=18, proc=loc_4853E6E8
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 	REC_MsgTable_4867B400	proc=loc_4853EB1D
 FE_SeqPlaylistSetting_Records:	# 16 x REC_FE_SeqPlaylistSetting_Records (8 bytes each); read by FE_SeqPlaylistSetting 0x4853F009 `mov (a0), d0`
-	REC_FE_SeqPlaylistSetting_Records	f0=16, proc=loc_4853F05E	# [0]
-	REC_FE_SeqPlaylistSetting_Records	f0=17, proc=loc_4853F07C
-	REC_FE_SeqPlaylistSetting_Records	f0=2, proc=loc_4853F05C
-	REC_FE_SeqPlaylistSetting_Records	f0=3, proc=loc_4853F05C
-	REC_FE_SeqPlaylistSetting_Records	f0=0x100B3, proc=loc_4853F05C
-	REC_FE_SeqPlaylistSetting_Records	f0=0x100B5, proc=loc_4853F05C
-	REC_FE_SeqPlaylistSetting_Records	f0=18, proc=loc_4853F05E
-	REC_FE_SeqPlaylistSetting_Records	f0=19, proc=loc_4853F07C
-	REC_FE_SeqPlaylistSetting_Records	f0=1, proc=loc_4853F0B3	# [8]
+	REC_FE_SeqPlaylistSetting_Records	key=16, proc=loc_4853F05E	# [0]
+	REC_FE_SeqPlaylistSetting_Records	key=17, proc=loc_4853F07C
+	REC_FE_SeqPlaylistSetting_Records	key=2, proc=loc_4853F05C
+	REC_FE_SeqPlaylistSetting_Records	key=3, proc=loc_4853F05C
+	REC_FE_SeqPlaylistSetting_Records	key=0x100B3, proc=loc_4853F05C
+	REC_FE_SeqPlaylistSetting_Records	key=0x100B5, proc=loc_4853F05C
+	REC_FE_SeqPlaylistSetting_Records	key=18, proc=loc_4853F05E
+	REC_FE_SeqPlaylistSetting_Records	key=19, proc=loc_4853F07C
+	REC_FE_SeqPlaylistSetting_Records	key=1, proc=loc_4853F0B3	# [8]
 	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0B5
 	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0B5
-	REC_FE_SeqPlaylistSetting_Records	f0=0x1003B, proc=loc_4853F09A
+	REC_FE_SeqPlaylistSetting_Records	key=0x1003B, proc=loc_4853F09A
 	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0B5
 	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0B5
 	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0B5
 	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0B5
 FE_SeqTempoAdjust_Records:	# 16 x REC_FE_SeqTempoAdjust_Records (8 bytes each); read by FE_SeqTempoAdjust 0x4853F0BA `mov (a0), d0`
-	REC_FE_SeqTempoAdjust_Records	f0=16, proc=loc_4853F10F	# [0]
-	REC_FE_SeqTempoAdjust_Records	f0=17, proc=loc_4853F12D
-	REC_FE_SeqTempoAdjust_Records	f0=2, proc=loc_4853F10D
-	REC_FE_SeqTempoAdjust_Records	f0=3, proc=loc_4853F10D
-	REC_FE_SeqTempoAdjust_Records	f0=0x100B3, proc=loc_4853F10D
-	REC_FE_SeqTempoAdjust_Records	f0=0x100B5, proc=loc_4853F10D
-	REC_FE_SeqTempoAdjust_Records	f0=18, proc=loc_4853F10F
-	REC_FE_SeqTempoAdjust_Records	f0=19, proc=loc_4853F12D
-	REC_FE_SeqTempoAdjust_Records	f0=1, proc=loc_4853F164	# [8]
+	REC_FE_SeqTempoAdjust_Records	key=16, proc=loc_4853F10F	# [0]
+	REC_FE_SeqTempoAdjust_Records	key=17, proc=loc_4853F12D
+	REC_FE_SeqTempoAdjust_Records	key=2, proc=loc_4853F10D
+	REC_FE_SeqTempoAdjust_Records	key=3, proc=loc_4853F10D
+	REC_FE_SeqTempoAdjust_Records	key=0x100B3, proc=loc_4853F10D
+	REC_FE_SeqTempoAdjust_Records	key=0x100B5, proc=loc_4853F10D
+	REC_FE_SeqTempoAdjust_Records	key=18, proc=loc_4853F10F
+	REC_FE_SeqTempoAdjust_Records	key=19, proc=loc_4853F12D
+	REC_FE_SeqTempoAdjust_Records	key=1, proc=loc_4853F164	# [8]
 	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F166
 	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F166
-	REC_FE_SeqTempoAdjust_Records	f0=0x1003B, proc=loc_4853F14B
+	REC_FE_SeqTempoAdjust_Records	key=0x1003B, proc=loc_4853F14B
 	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F166
 	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F166
 	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F166
@@ -283,17 +283,17 @@ Str_Artist_2:	.asciz "Artist : "
 
 SeqLyricsBoxProc_Records:	# 16 x REC_SeqLyricsBoxProc_Records (8 bytes each); read by SeqLyricsBoxProc 0x485449A0 `mov (a0), d0`
 	REC_SeqLyricsBoxProc_Records	proc=loc_48544F00	# [0]
-	REC_SeqLyricsBoxProc_Records	f0=1, proc=loc_485449F4
-	REC_SeqLyricsBoxProc_Records	f0=2, proc=loc_48544A0D
-	REC_SeqLyricsBoxProc_Records	f0=0x100B2, proc=loc_48544A24
+	REC_SeqLyricsBoxProc_Records	key=1, proc=loc_485449F4
+	REC_SeqLyricsBoxProc_Records	key=2, proc=loc_48544A0D
+	REC_SeqLyricsBoxProc_Records	key=0x100B2, proc=loc_48544A24
 	REC_SeqLyricsBoxProc_Records	proc=loc_48544F00
 	REC_SeqLyricsBoxProc_Records	proc=loc_48544F00
-	REC_SeqLyricsBoxProc_Records	f0=0xE00006, proc=loc_48544A8A
-	REC_SeqLyricsBoxProc_Records	f0=0xE00007, proc=loc_48544AC6
-	REC_SeqLyricsBoxProc_Records	f0=0xE00008, proc=loc_48544DAD	# [8]
-	REC_SeqLyricsBoxProc_Records	f0=0xE00009, proc=loc_48544DE9
-	REC_SeqLyricsBoxProc_Records	f0=0xE0000A, proc=loc_48544A74
-	REC_SeqLyricsBoxProc_Records	f0=0xE0000B, proc=loc_48544E25
+	REC_SeqLyricsBoxProc_Records	key=0xE00006, proc=loc_48544A8A
+	REC_SeqLyricsBoxProc_Records	key=0xE00007, proc=loc_48544AC6
+	REC_SeqLyricsBoxProc_Records	key=0xE00008, proc=loc_48544DAD	# [8]
+	REC_SeqLyricsBoxProc_Records	key=0xE00009, proc=loc_48544DE9
+	REC_SeqLyricsBoxProc_Records	key=0xE0000A, proc=loc_48544A74
+	REC_SeqLyricsBoxProc_Records	key=0xE0000B, proc=loc_48544E25
 	REC_SeqLyricsBoxProc_Records	proc=loc_48544F00
 	REC_SeqLyricsBoxProc_Records	proc=loc_48544F00
 	REC_SeqLyricsBoxProc_Records	proc=loc_48544F00
@@ -328,16 +328,16 @@ func_4854A283_Table_2:	# 8 x u8, 0..255; read by func_4854A283_entry 0x48549FD2:
 
 func_4854A283_Records:	# 16 x REC_func_4854A283_Records (8 bytes each); read by func_4854A283 0x4854A283 `mov (a0), d0`
 	REC_func_4854A283_Records	proc=loc_4854A402	# [0]
-	REC_func_4854A283_Records	f0=81, proc=loc_4854A3BF
-	REC_func_4854A283_Records	f0=2, proc=loc_4854A3AB
-	REC_func_4854A283_Records	f0=3, proc=loc_4854A387
-	REC_func_4854A283_Records	f0=82, proc=loc_4854A3C8
-	REC_func_4854A283_Records	f0=5, proc=loc_4854A399
-	REC_func_4854A283_Records	f0=83, proc=loc_4854A3D3
-	REC_func_4854A283_Records	f0=84, proc=loc_4854A3DC
-	REC_func_4854A283_Records	f0=1, proc=loc_4854A3E7	# [8]
-	REC_func_4854A283_Records	f0=6, proc=loc_4854A3F0
-	REC_func_4854A283_Records	f0=7, proc=loc_4854A3F9
+	REC_func_4854A283_Records	key=81, proc=loc_4854A3BF
+	REC_func_4854A283_Records	key=2, proc=loc_4854A3AB
+	REC_func_4854A283_Records	key=3, proc=loc_4854A387
+	REC_func_4854A283_Records	key=82, proc=loc_4854A3C8
+	REC_func_4854A283_Records	key=5, proc=loc_4854A399
+	REC_func_4854A283_Records	key=83, proc=loc_4854A3D3
+	REC_func_4854A283_Records	key=84, proc=loc_4854A3DC
+	REC_func_4854A283_Records	key=1, proc=loc_4854A3E7	# [8]
+	REC_func_4854A283_Records	key=6, proc=loc_4854A3F0
+	REC_func_4854A283_Records	key=7, proc=loc_4854A3F9
 	REC_func_4854A283_Records	proc=loc_4854A402
 	REC_func_4854A283_Records	proc=loc_4854A402
 	REC_func_4854A283_Records	proc=loc_4854A402
@@ -831,9 +831,8 @@ Str_Pressez_la_touche_d_criture_pour_m_moris:	.asciz "Pressez la touche d'\xE9cr
 Str_Presione_el_bot_n_de_escritura_para_memo:	.asciz "Presione el bot\xF3n de escritura para memorizar su ajuste de contraste."
 Str_Italian_3:	.asciz "Italian"
 Str_Indonesian_2:	.asciz "Indonesian"
-data_4867FB26:
-# census: opaque -- unknown-dump: 78 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x27FB26, 0x27FB74
+StrJa_4867FB26:	.asciz "\xC0\xDF\xC4\xEA\xA4\xF2\xB5\xAD\xB2\xB1\xA4\xB9\xA4\xEB\xA4\xCB\xA4\xCFWRITE\xA5\xDC\xA5\xBF\xA5\xF3\xA4\xF2\xB2\xA1\xA4\xB7\xA4\xC6\xA4\xAF\xA4\xC0\xA4\xB5\xA4\xA4\xA1\xA3~0d(\xB1\xE9\xC1\xD5\xC8\xAF\xB2\xBB\xA4\xAC\xB0\xEC\xBD\xD6\xBB\xDF\xA4\xDE\xA4\xEA\xA4\xDE\xA4\xB9)"	# EUC-JP
+	.align	4, 0xFF	# pad after StrJa_4867FB26
 
 ptrs_4867FB74:
 	.long	Str_Please_press_the_write_button_to_store_y
@@ -842,7 +841,7 @@ ptrs_4867FB74:
 	.long	Str_Presione_el_bot_n_de_escritura_para_memo
 	.long	Str_Italian_3
 	.long	Str_Indonesian_2
-	.long	data_4867FB26
+	.long	StrJa_4867FB26
 
 Str_3d_8:	.asciz "%3d"
 Field_PsFolderFileListBox_font:	.asciz "font"
@@ -4369,20 +4368,20 @@ SdcCusLoadSaveSrcDstFunc_Var_2:	# u32, a constant; read / written by SdcCusLoadS
 	.long	0x4868da6d
 
 func_4855113E_Records:	# 15 x REC_func_4855113E_Records (4 bytes each); read by func_4855113E 0x4855113E `movbu (2, a0), d0`; func_4855113E 0x4855113E `movbu (2, a1), d1`; func_4855113E 0x4855113E `movhu (d0, a0), d0`
-	REC_func_4855113E_Records	f0=-2, f2=93, x3="\x00"	# [0]
-	REC_func_4855113E_Records	f0=-3, f2=96, x3="\x00"
-	REC_func_4855113E_Records	f0=-4, f2=98, x3="\x00"
-	REC_func_4855113E_Records	f0=-6, f2=99, x3="\x00"
-	REC_func_4855113E_Records	f0=-7, f2=92, x3="\x00"
-	REC_func_4855113E_Records	f0=-8, f2=94, x3="\x00"
-	REC_func_4855113E_Records	f0=-11, f2=97, x3="\x00"
-	REC_func_4855113E_Records	f0=-101, f2=98, x3="\x00"
-	REC_func_4855113E_Records	f0=-102, f2=92, x3="\x00"	# [8]
-	REC_func_4855113E_Records	f0=-104, f2=95, x3="\x00"
-	REC_func_4855113E_Records	f0=-105, f2=61, x3="\x00"
-	REC_func_4855113E_Records	f0=-107, f2=15, x3="\x00"
-	REC_func_4855113E_Records	f0=-109, f2=71, x3="\x00"
-	REC_func_4855113E_Records	f0=-108, f2=82, x3="\x00"
+	REC_func_4855113E_Records	key=-2, f2=93, x3="\x00"	# [0]
+	REC_func_4855113E_Records	key=-3, f2=96, x3="\x00"
+	REC_func_4855113E_Records	key=-4, f2=98, x3="\x00"
+	REC_func_4855113E_Records	key=-6, f2=99, x3="\x00"
+	REC_func_4855113E_Records	key=-7, f2=92, x3="\x00"
+	REC_func_4855113E_Records	key=-8, f2=94, x3="\x00"
+	REC_func_4855113E_Records	key=-11, f2=97, x3="\x00"
+	REC_func_4855113E_Records	key=-101, f2=98, x3="\x00"
+	REC_func_4855113E_Records	key=-102, f2=92, x3="\x00"	# [8]
+	REC_func_4855113E_Records	key=-104, f2=95, x3="\x00"
+	REC_func_4855113E_Records	key=-105, f2=61, x3="\x00"
+	REC_func_4855113E_Records	key=-107, f2=15, x3="\x00"
+	REC_func_4855113E_Records	key=-109, f2=71, x3="\x00"
+	REC_func_4855113E_Records	key=-108, f2=82, x3="\x00"
 	REC_func_4855113E_Records	f2=255, x3="\x00"
 
 Str_empty_768:	.asciz "__"
@@ -4739,17 +4738,17 @@ Str_rb_13:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_13
 
 func_48562906_Table_2:	# 11 x REC_func_48562906_Table_2 (8 bytes each); read by func_48562906 0x48562906 `calls (a1)`; func_48562906 0x48562906 `mov (4, a0), a1`; func_48562906 0x48562906 `movbu (d0, a2), d0` (+1)
-	REC_func_48562906_Table_2	f0=6, x1="\x00\x00\x00", proc=SaveEfc_HD	# [0]
-	REC_func_48562906_Table_2	f0=4, x1="\x00\x00\x00", proc=SaveTm_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=6, x1="\x00\x00\x00", proc=SaveEfc_HD	# [0]
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=4, x1="\x00\x00\x00", proc=SaveTm_HD
 	REC_func_48562906_Table_2	x1="\x00\x00\x00", proc=SaveLsw_HD
-	REC_func_48562906_Table_2	f0=1, x1="\x00\x00\x00", proc=SavePmt_HD
-	REC_func_48562906_Table_2	f0=5, x1="\x00\x00\x00", proc=SaveMsp_HD
-	REC_func_48562906_Table_2	f0=3, x1="\x00\x00\x00", proc=SaveCmp_HD
-	REC_func_48562906_Table_2	f0=2, x1="\x00\x00\x00", proc=SaveSqt_HD
-	REC_func_48562906_Table_2	f0=7, x1="\x00\x00\x00", proc=SaveMd_HD
-	REC_func_48562906_Table_2	f0=8, x1="\x00\x00\x00", proc=SaveFav_HD	# [8]
-	REC_func_48562906_Table_2	f0=9, x1="\x00\x00\x00", proc=SaveHmp_HD
-	REC_func_48562906_Table_2	f0=10, x1="\x00\x00\x00", proc=SaveRcm_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=1, x1="\x00\x00\x00", proc=SavePmt_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=5, x1="\x00\x00\x00", proc=SaveMsp_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=3, x1="\x00\x00\x00", proc=SaveCmp_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=2, x1="\x00\x00\x00", proc=SaveSqt_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=7, x1="\x00\x00\x00", proc=SaveMd_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=8, x1="\x00\x00\x00", proc=SaveFav_HD	# [8]
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=9, x1="\x00\x00\x00", proc=SaveHmp_HD
+	REC_func_48562906_Table_2	CheckSdSavePM3Bank_d0=10, x1="\x00\x00\x00", proc=SaveRcm_HD
 
 Str_empty_711:	.asciz "\\"
 	.align	4, 0xFF	# pad after Str_empty_711
@@ -6709,30 +6708,30 @@ EffDispGrid_Table_8:
 	.long	loc_4856A3D9
 
 EffDispGrid_Records:	# 32 x REC_EffDispGrid_Records (8 bytes each); read by EffDispGrid 0x48569608 `mov (a0), d0`
-	REC_EffDispGrid_Records	f0=0x1F8040, proc=loc_4856A0C3	# [0]
-	REC_EffDispGrid_Records	f0=12257, proc=loc_48569E42
-	REC_EffDispGrid_Records	f0=12258, proc=loc_48569ED2
-	REC_EffDispGrid_Records	f0=12289, proc=loc_4856A040
-	REC_EffDispGrid_Records	f0=12321, proc=loc_4856A040
-	REC_EffDispGrid_Records	f0=12293, proc=loc_4856A12A
-	REC_EffDispGrid_Records	f0=12325, proc=loc_4856A12A
-	REC_EffDispGrid_Records	f0=8161, proc=loc_4856A1DD
-	REC_EffDispGrid_Records	f0=8417, proc=loc_4856A1DD	# [8]
-	REC_EffDispGrid_Records	f0=12329, proc=loc_48569F62
-	REC_EffDispGrid_Records	f0=8673, proc=loc_4856A1DD
-	REC_EffDispGrid_Records	f0=8929, proc=loc_4856A1DD
-	REC_EffDispGrid_Records	f0=9185, proc=loc_4856A1DD
-	REC_EffDispGrid_Records	f0=1, proc=loc_4856A258
-	REC_EffDispGrid_Records	f0=3, proc=loc_4856A2A7
+	REC_EffDispGrid_Records	key=0x1F8040, proc=loc_4856A0C3	# [0]
+	REC_EffDispGrid_Records	key=12257, proc=loc_48569E42
+	REC_EffDispGrid_Records	key=12258, proc=loc_48569ED2
+	REC_EffDispGrid_Records	key=12289, proc=loc_4856A040
+	REC_EffDispGrid_Records	key=12321, proc=loc_4856A040
+	REC_EffDispGrid_Records	key=12293, proc=loc_4856A12A
+	REC_EffDispGrid_Records	key=12325, proc=loc_4856A12A
+	REC_EffDispGrid_Records	key=8161, proc=loc_4856A1DD
+	REC_EffDispGrid_Records	key=8417, proc=loc_4856A1DD	# [8]
+	REC_EffDispGrid_Records	key=12329, proc=loc_48569F62
+	REC_EffDispGrid_Records	key=8673, proc=loc_4856A1DD
+	REC_EffDispGrid_Records	key=8929, proc=loc_4856A1DD
+	REC_EffDispGrid_Records	key=9185, proc=loc_4856A1DD
+	REC_EffDispGrid_Records	key=1, proc=loc_4856A258
+	REC_EffDispGrid_Records	key=3, proc=loc_4856A2A7
 	REC_EffDispGrid_Records	proc=loc_4856A2F6
 	REC_EffDispGrid_Records	proc=loc_4856A2F6	# [16]
-	REC_EffDispGrid_Records	f0=12273, proc=loc_4856A040
-	REC_EffDispGrid_Records	f0=12305, proc=loc_4856A040
-	REC_EffDispGrid_Records	f0=12337, proc=loc_4856A040
+	REC_EffDispGrid_Records	key=12273, proc=loc_4856A040
+	REC_EffDispGrid_Records	key=12305, proc=loc_4856A040
+	REC_EffDispGrid_Records	key=12337, proc=loc_4856A040
 	REC_EffDispGrid_Records	proc=loc_4856A2F6
-	REC_EffDispGrid_Records	f0=12277, proc=loc_4856A12A
-	REC_EffDispGrid_Records	f0=12309, proc=loc_4856A12A
-	REC_EffDispGrid_Records	f0=12341, proc=loc_4856A12A
+	REC_EffDispGrid_Records	key=12277, proc=loc_4856A12A
+	REC_EffDispGrid_Records	key=12309, proc=loc_4856A12A
+	REC_EffDispGrid_Records	key=12341, proc=loc_4856A12A
 	REC_EffDispGrid_Records	proc=loc_4856A2F6	# [24]
 	REC_EffDispGrid_Records	proc=loc_4856A2F6
 	REC_EffDispGrid_Records	proc=loc_4856A2F6
@@ -7539,59 +7538,59 @@ data_486A2650:
 .incbin_range "baserom/kn7000_program.rom", 0x2A2650, 0x2A265C
 
 func_4856E6D0_Records:	# 53 x REC_func_4856E6D0_Records (16 bytes each); read by func_4856E588 0x4856E588 `mov (4, a0), d0`; func_4856E588 0x4856E588 `mov (8, a0), d0`; func_4856E588 0x4856E588 `mov (8, a0), d1` (+5)
-	REC_func_4856E6D0_Records	x0="0\x00\x00\x00", f4=425, f8=160, f12=255, x14="\x00\x00"	# [0]
-	REC_func_4856E6D0_Records	x0="1\x00\x00\x00", f4=429, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="2\x00\x00\x00", f4=433, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="3\x00\x00\x00", f4=438, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="4\x00\x00\x00", f4=441, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="5\x00\x00\x00", f4=449, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="6\x00\x00\x00", f4=453, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="7\x00\x00\x00", f4=457, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="8\x00\x00\x00", f4=461, f8=140, x14="\x00\x00"	# [8]
-	REC_func_4856E6D0_Records	x0="9\x00\x00\x00", f4=465, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0=":\x00\x00\x00", f4=469, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0=";\x00\x00\x00", f4=473, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="<\x00\x00\x00", f4=481, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="=\x00\x00\x00", f4=485, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0=">\x00\x00\x00", f4=489, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="?\x00\x00\x00", f4=494, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="@\x00\x00\x00", f4=497, f8=160, f12=255, x14="\x00\x00"	# [16]
-	REC_func_4856E6D0_Records	x0="A\x00\x00\x00", f4=505, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="B\x00\x00\x00", f4=509, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="C\x00\x00\x00", f4=513, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="D\x00\x00\x00", f4=517, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="E\x00\x00\x00", f4=521, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="F\x00\x00\x00", f4=525, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="G\x00\x00\x00", f4=529, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="H\x00\x00\x00", f4=537, f8=160, f12=255, x14="\x00\x00"	# [24]
-	REC_func_4856E6D0_Records	x0="I\x00\x00\x00", f4=541, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="J\x00\x00\x00", f4=545, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="K\x00\x00\x00", f4=550, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="L\x00\x00\x00", f4=553, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="M\x00\x00\x00", f4=561, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="N\x00\x00\x00", f4=565, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="O\x00\x00\x00", f4=569, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="P\x00\x00\x00", f4=573, f8=140, x14="\x00\x00"	# [32]
-	REC_func_4856E6D0_Records	x0="Q\x00\x00\x00", f4=577, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="R\x00\x00\x00", f4=581, f8=140, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0="S\x00\x00\x00", f4=585, f8=160, f12=255, x14="\x00\x00"
-	REC_func_4856E6D0_Records	x0=" Maj", f4=0x6D200020, f8=0x206E69, f12=8224, x14="7 "
-	REC_func_4856E6D0_Records	x0=" \x00mi", f4=0x20376E, f8=0x617E376D, f12=13616, x14=" \x00"
-	REC_func_4856E6D0_Records	x0="  6 ", f4=0x6D200020, f8=0x202036, f12=24909, x14="j7"
-	REC_func_4856E6D0_Records	x0=" \x00su", f4=0x203473, f8=0x67756120, f12=32, x14=" m"
-	REC_func_4856E6D0_Records	x0="~a05", f4=0x73370020, f8=0x347375, f12=30049, x14="g7"	# [40]
-	REC_func_4856E6D0_Records	x0=" \x00 d", f4=0x206D69, f8=0x30617E20, f12=8245, x14=" \x00"
-	REC_func_4856E6D0_Records	x0=" 7~a", f4=0x203530, f8=0x374D6D20, f12=32, x14="M7"
-	REC_func_4856E6D0_Records	x0="~a05", f4=0x374D0020, f8=0x3565397E, f12=32, x14="mM"
-	REC_func_4856E6D0_Records	x0="7~a0", f4=0x64610035, f8=0x203964, f12=24941, x14="dd"
-	REC_func_4856E6D0_Records	x0="9\x00 6", f4=0x202039, f8=0x39366D20, f12=32, x14=" 7"
-	REC_func_4856E6D0_Records	x0="9  \x00", f4=0x617E3720, f8=0x203930, f12=14112, x14="~9"
-	REC_func_4856E6D0_Records	x0="e9 \x00", f4=0x39376D20, f8=0x4D200020, f12=14647, x14=" \x00"
-	REC_func_4856E6D0_Records	x0=" 9~9", f4=0x203565, f8=0x65397E37, f12=12593, x14=" \x00"	# [48]
-	REC_func_4856E6D0_Records	x0="m711", f4=0x372B0020, f8=0x3165397E, f12=49, x14=" 1"
-	REC_func_4856E6D0_Records	x0="3  \x00", f4=0x3930617E, f8=0x203331, f12=14718, x14="e9"
-	REC_func_4856E6D0_Records	x0="13 \x00", f4=0x30617E20, f8=0x203331, f12=24958, x14="09"
-	REC_func_4856E6D0_Records	x0="~a01", f4=0x397E0033, f8=0x617E3965, f12=12592, x14="3\x00"
+	REC_func_4856E6D0_Records	x0="0\x00\x00\x00", f4=425, DrawBox_d0=160, f12=255, x14="\x00\x00"	# [0]
+	REC_func_4856E6D0_Records	x0="1\x00\x00\x00", f4=429, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="2\x00\x00\x00", f4=433, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="3\x00\x00\x00", f4=438, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="4\x00\x00\x00", f4=441, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="5\x00\x00\x00", f4=449, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="6\x00\x00\x00", f4=453, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="7\x00\x00\x00", f4=457, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="8\x00\x00\x00", f4=461, DrawBox_d0=140, x14="\x00\x00"	# [8]
+	REC_func_4856E6D0_Records	x0="9\x00\x00\x00", f4=465, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0=":\x00\x00\x00", f4=469, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0=";\x00\x00\x00", f4=473, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="<\x00\x00\x00", f4=481, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="=\x00\x00\x00", f4=485, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0=">\x00\x00\x00", f4=489, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="?\x00\x00\x00", f4=494, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="@\x00\x00\x00", f4=497, DrawBox_d0=160, f12=255, x14="\x00\x00"	# [16]
+	REC_func_4856E6D0_Records	x0="A\x00\x00\x00", f4=505, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="B\x00\x00\x00", f4=509, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="C\x00\x00\x00", f4=513, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="D\x00\x00\x00", f4=517, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="E\x00\x00\x00", f4=521, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="F\x00\x00\x00", f4=525, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="G\x00\x00\x00", f4=529, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="H\x00\x00\x00", f4=537, DrawBox_d0=160, f12=255, x14="\x00\x00"	# [24]
+	REC_func_4856E6D0_Records	x0="I\x00\x00\x00", f4=541, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="J\x00\x00\x00", f4=545, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="K\x00\x00\x00", f4=550, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="L\x00\x00\x00", f4=553, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="M\x00\x00\x00", f4=561, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="N\x00\x00\x00", f4=565, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="O\x00\x00\x00", f4=569, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="P\x00\x00\x00", f4=573, DrawBox_d0=140, x14="\x00\x00"	# [32]
+	REC_func_4856E6D0_Records	x0="Q\x00\x00\x00", f4=577, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="R\x00\x00\x00", f4=581, DrawBox_d0=140, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0="S\x00\x00\x00", f4=585, DrawBox_d0=160, f12=255, x14="\x00\x00"
+	REC_func_4856E6D0_Records	x0=" Maj", f4=0x6D200020, DrawBox_d0=0x206E69, f12=8224, x14="7 "
+	REC_func_4856E6D0_Records	x0=" \x00mi", f4=0x20376E, DrawBox_d0=0x617E376D, f12=13616, x14=" \x00"
+	REC_func_4856E6D0_Records	x0="  6 ", f4=0x6D200020, DrawBox_d0=0x202036, f12=24909, x14="j7"
+	REC_func_4856E6D0_Records	x0=" \x00su", f4=0x203473, DrawBox_d0=0x67756120, f12=32, x14=" m"
+	REC_func_4856E6D0_Records	x0="~a05", f4=0x73370020, DrawBox_d0=0x347375, f12=30049, x14="g7"	# [40]
+	REC_func_4856E6D0_Records	x0=" \x00 d", f4=0x206D69, DrawBox_d0=0x30617E20, f12=8245, x14=" \x00"
+	REC_func_4856E6D0_Records	x0=" 7~a", f4=0x203530, DrawBox_d0=0x374D6D20, f12=32, x14="M7"
+	REC_func_4856E6D0_Records	x0="~a05", f4=0x374D0020, DrawBox_d0=0x3565397E, f12=32, x14="mM"
+	REC_func_4856E6D0_Records	x0="7~a0", f4=0x64610035, DrawBox_d0=0x203964, f12=24941, x14="dd"
+	REC_func_4856E6D0_Records	x0="9\x00 6", f4=0x202039, DrawBox_d0=0x39366D20, f12=32, x14=" 7"
+	REC_func_4856E6D0_Records	x0="9  \x00", f4=0x617E3720, DrawBox_d0=0x203930, f12=14112, x14="~9"
+	REC_func_4856E6D0_Records	x0="e9 \x00", f4=0x39376D20, DrawBox_d0=0x4D200020, f12=14647, x14=" \x00"
+	REC_func_4856E6D0_Records	x0=" 9~9", f4=0x203565, DrawBox_d0=0x65397E37, f12=12593, x14=" \x00"	# [48]
+	REC_func_4856E6D0_Records	x0="m711", f4=0x372B0020, DrawBox_d0=0x3165397E, f12=49, x14=" 1"
+	REC_func_4856E6D0_Records	x0="3  \x00", f4=0x3930617E, DrawBox_d0=0x203331, f12=14718, x14="e9"
+	REC_func_4856E6D0_Records	x0="13 \x00", f4=0x30617E20, DrawBox_d0=0x203331, f12=24958, x14="09"
+	REC_func_4856E6D0_Records	x0="~a01", f4=0x397E0033, DrawBox_d0=0x617E3965, f12=12592, x14="3\x00"
 
 ChordFinderROOT_Table:
 	.long	func_4856E6D0_Records+576
@@ -7710,11 +7709,11 @@ Str_3d_3:	.asciz "%3d"
 Str_3d_2:	.asciz "%3d"
 
 R12OctaveFunc_Records:	# 16 x REC_R12OctaveFunc_Records (8 bytes each); read by R12OctaveFunc 0x4856D47C `mov (a0), d0`
-	REC_R12OctaveFunc_Records	f0=128, proc=loc_4856D575	# [0]
-	REC_R12OctaveFunc_Records	f0=129, proc=loc_4856D58E
-	REC_R12OctaveFunc_Records	f0=1, proc=loc_4856D599
-	REC_R12OctaveFunc_Records	f0=2, proc=loc_4856D59D
-	REC_R12OctaveFunc_Records	f0=109, proc=loc_4856D5A5
+	REC_R12OctaveFunc_Records	key=128, proc=loc_4856D575	# [0]
+	REC_R12OctaveFunc_Records	key=129, proc=loc_4856D58E
+	REC_R12OctaveFunc_Records	key=1, proc=loc_4856D599
+	REC_R12OctaveFunc_Records	key=2, proc=loc_4856D59D
+	REC_R12OctaveFunc_Records	key=109, proc=loc_4856D5A5
 	REC_R12OctaveFunc_Records	proc=loc_4856D5A9
 	REC_R12OctaveFunc_Records	proc=loc_4856D5A9
 	REC_R12OctaveFunc_Records	proc=loc_4856D5A9
@@ -7722,61 +7721,61 @@ R12OctaveFunc_Records:	# 16 x REC_R12OctaveFunc_Records (8 bytes each); read by 
 	REC_R12OctaveFunc_Records	proc=loc_4856D5A9
 	REC_R12OctaveFunc_Records	proc=loc_4856D5A9
 	REC_R12OctaveFunc_Records	proc=loc_4856D5A9
-	REC_R12OctaveFunc_Records	f0=108, proc=loc_4856D5A1
-	REC_R12OctaveFunc_Records	f0=125, proc=loc_4856D578
-	REC_R12OctaveFunc_Records	f0=126, proc=loc_4856D4CE
-	REC_R12OctaveFunc_Records	f0=127, proc=loc_4856D56D
+	REC_R12OctaveFunc_Records	key=108, proc=loc_4856D5A1
+	REC_R12OctaveFunc_Records	key=125, proc=loc_4856D578
+	REC_R12OctaveFunc_Records	key=126, proc=loc_4856D4CE
+	REC_R12OctaveFunc_Records	key=127, proc=loc_4856D56D
 ChordFinderROOT_Records:	# 16 x REC_ChordFinderROOT_Records (8 bytes each); read by ChordFinderROOT 0x4856E303 `mov (a0), d0`
-	REC_ChordFinderROOT_Records	f0=0x10040, proc=loc_4856E385	# [0]
-	REC_ChordFinderROOT_Records	f0=1, proc=loc_4856E352
-	REC_ChordFinderROOT_Records	f0=0x10041, proc=loc_4856E389
-	REC_ChordFinderROOT_Records	f0=0x10042, proc=loc_4856E38C
-	REC_ChordFinderROOT_Records	f0=0x10044, proc=loc_4856E361
-	REC_ChordFinderROOT_Records	f0=0x10043, proc=loc_4856E394
+	REC_ChordFinderROOT_Records	key=0x10040, proc=loc_4856E385	# [0]
+	REC_ChordFinderROOT_Records	key=1, proc=loc_4856E352
+	REC_ChordFinderROOT_Records	key=0x10041, proc=loc_4856E389
+	REC_ChordFinderROOT_Records	key=0x10042, proc=loc_4856E38C
+	REC_ChordFinderROOT_Records	key=0x10044, proc=loc_4856E361
+	REC_ChordFinderROOT_Records	key=0x10043, proc=loc_4856E394
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
-	REC_ChordFinderROOT_Records	f0=0x10078, proc=loc_4856E398	# [8]
+	REC_ChordFinderROOT_Records	key=0x10078, proc=loc_4856E398	# [8]
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
 	REC_ChordFinderROOT_Records	proc=loc_4856E39B
-	REC_ChordFinderROOT_Records	f0=0x1003E, proc=loc_4856E37D
-	REC_ChordFinderROOT_Records	f0=0x1003F, proc=loc_4856E381
+	REC_ChordFinderROOT_Records	key=0x1003E, proc=loc_4856E37D
+	REC_ChordFinderROOT_Records	key=0x1003F, proc=loc_4856E381
 INVERSION_Records:	# 16 x REC_INVERSION_Records (8 bytes each); read by INVERSION 0x4856E894 `mov (a0), d0`
-	REC_INVERSION_Records	f0=0x10040, proc=loc_4856E94F	# [0]
-	REC_INVERSION_Records	f0=1, proc=loc_4856E8FA
-	REC_INVERSION_Records	f0=0x10041, proc=loc_4856E96A
-	REC_INVERSION_Records	f0=0x10042, proc=loc_4856E96D
-	REC_INVERSION_Records	f0=0x10044, proc=loc_4856E90A
-	REC_INVERSION_Records	f0=0x10043, proc=loc_4856E975
+	REC_INVERSION_Records	key=0x10040, proc=loc_4856E94F	# [0]
+	REC_INVERSION_Records	key=1, proc=loc_4856E8FA
+	REC_INVERSION_Records	key=0x10041, proc=loc_4856E96A
+	REC_INVERSION_Records	key=0x10042, proc=loc_4856E96D
+	REC_INVERSION_Records	key=0x10044, proc=loc_4856E90A
+	REC_INVERSION_Records	key=0x10043, proc=loc_4856E975
 	REC_INVERSION_Records	proc=loc_4856E97C
 	REC_INVERSION_Records	proc=loc_4856E97C
-	REC_INVERSION_Records	f0=0x10078, proc=loc_4856E979	# [8]
+	REC_INVERSION_Records	key=0x10078, proc=loc_4856E979	# [8]
 	REC_INVERSION_Records	proc=loc_4856E97C
 	REC_INVERSION_Records	proc=loc_4856E97C
 	REC_INVERSION_Records	proc=loc_4856E97C
 	REC_INVERSION_Records	proc=loc_4856E97C
 	REC_INVERSION_Records	proc=loc_4856E97C
-	REC_INVERSION_Records	f0=0x1003E, proc=loc_4856E947
-	REC_INVERSION_Records	f0=0x1003F, proc=loc_4856E94B
+	REC_INVERSION_Records	key=0x1003E, proc=loc_4856E947
+	REC_INVERSION_Records	key=0x1003F, proc=loc_4856E94B
 AcChordFinderBoxProc_Records:	# 16 x REC_AcChordFinderBoxProc_Records (8 bytes each); read by AcChordFinderBoxProc 0x4856E980 `mov (a0), d0`
-	REC_AcChordFinderBoxProc_Records	f0=16, proc=loc_4856ED02	# [0]
-	REC_AcChordFinderBoxProc_Records	f0=1, proc=loc_4856E9ED
-	REC_AcChordFinderBoxProc_Records	f0=2, proc=loc_4856EA3C
-	REC_AcChordFinderBoxProc_Records	f0=0x100B3, proc=loc_4856EA4F
-	REC_AcChordFinderBoxProc_Records	f0=0x100B4, proc=loc_4856EC06
-	REC_AcChordFinderBoxProc_Records	f0=17, proc=loc_4856ED02
-	REC_AcChordFinderBoxProc_Records	f0=18, proc=loc_4856ED02
-	REC_AcChordFinderBoxProc_Records	f0=0x10075, proc=loc_4856EE7B
+	REC_AcChordFinderBoxProc_Records	key=16, proc=loc_4856ED02	# [0]
+	REC_AcChordFinderBoxProc_Records	key=1, proc=loc_4856E9ED
+	REC_AcChordFinderBoxProc_Records	key=2, proc=loc_4856EA3C
+	REC_AcChordFinderBoxProc_Records	key=0x100B3, proc=loc_4856EA4F
+	REC_AcChordFinderBoxProc_Records	key=0x100B4, proc=loc_4856EC06
+	REC_AcChordFinderBoxProc_Records	key=17, proc=loc_4856ED02
+	REC_AcChordFinderBoxProc_Records	key=18, proc=loc_4856ED02
+	REC_AcChordFinderBoxProc_Records	key=0x10075, proc=loc_4856EE7B
 	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE9D	# [8]
-	REC_AcChordFinderBoxProc_Records	f0=9, proc=loc_4856EA00
+	REC_AcChordFinderBoxProc_Records	key=9, proc=loc_4856EA00
 	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE9D
 	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE9D
 	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE9D
 	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE9D
 	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE9D
-	REC_AcChordFinderBoxProc_Records	f0=15, proc=loc_4856ED02
+	REC_AcChordFinderBoxProc_Records	key=15, proc=loc_4856ED02
 
 func_485702CC_Table:
 	.long	loc_485702E7
@@ -15846,22 +15845,22 @@ Str_02d_s:	.asciz "%02d: %s"
 	.align	4, 0xFF	# pad after Str_02d_s
 
 func_4857DF85_Records:	# 16 x REC_func_4857DF85_Records (8 bytes each); read by func_4857DF85 0x4857DF85 `mov (a0), d1`
-	REC_func_4857DF85_Records	f0=207, proc=loc_4857E063	# [0]
-	REC_func_4857DF85_Records	f0=1, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=129, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=175, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=291, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=3, proc=loc_4857E065
-	REC_func_4857DF85_Records	f0=294, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=295, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=296, proc=loc_4857E063	# [8]
-	REC_func_4857DF85_Records	f0=297, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=207, proc=loc_4857E063	# [0]
+	REC_func_4857DF85_Records	key=1, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=129, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=175, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=291, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=3, proc=loc_4857E065
+	REC_func_4857DF85_Records	key=294, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=295, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=296, proc=loc_4857E063	# [8]
+	REC_func_4857DF85_Records	key=297, proc=loc_4857E063
 	REC_func_4857DF85_Records	proc=loc_4857E08B
 	REC_func_4857DF85_Records	proc=loc_4857E08B
 	REC_func_4857DF85_Records	proc=loc_4857E08B
 	REC_func_4857DF85_Records	proc=loc_4857E08B
-	REC_func_4857DF85_Records	f0=174, proc=loc_4857E063
-	REC_func_4857DF85_Records	f0=95, proc=loc_4857E04E
+	REC_func_4857DF85_Records	key=174, proc=loc_4857E063
+	REC_func_4857DF85_Records	key=95, proc=loc_4857E04E
 AcSswScreenProc_Records:	# 16 x REC_AcSswScreenProc_Records (8 bytes each); read by AcSswScreenProc 0x4857E0B5 `mov (a0), d0`
 	REC_AcSswScreenProc_Records	key=0x2300000, proc=loc_4857E3FE	# [0]
 	REC_AcSswScreenProc_Records	key=1, proc=loc_4857E10A
@@ -15880,25 +15879,25 @@ AcSswScreenProc_Records:	# 16 x REC_AcSswScreenProc_Records (8 bytes each); read
 	REC_AcSswScreenProc_Records	proc=loc_4857E42E
 	REC_AcSswScreenProc_Records	proc=loc_4857E42E
 AcSswImgListProc_Records:	# 19 x REC_AcSswImgListProc_Records (8 bytes each); read by AcSswImgListProc 0x4857E987 `mov (a0), d0`
-	REC_AcSswImgListProc_Records	f0=16, x4="\xC7\xECWH"	# [0]
-	REC_AcSswImgListProc_Records	f0=1, x4="\xDA\xE9WH"
-	REC_AcSswImgListProc_Records	f0=0x100B2, x4="@\xEAWH"
-	REC_AcSswImgListProc_Records	f0=0x100B3, x4="\xE7\xEAWH"
-	REC_AcSswImgListProc_Records	f0=0x100B4, x4="\xBB\xEAWH"
-	REC_AcSswImgListProc_Records	f0=17, x4="1\xECWH"
-	REC_AcSswImgListProc_Records	f0=18, x4="\xC7\xECWH"
-	REC_AcSswImgListProc_Records	f0=0x2300002, x4="[\xEDWH"
+	REC_AcSswImgListProc_Records	key=16, x4="\xC7\xECWH"	# [0]
+	REC_AcSswImgListProc_Records	key=1, x4="\xDA\xE9WH"
+	REC_AcSswImgListProc_Records	key=0x100B2, x4="@\xEAWH"
+	REC_AcSswImgListProc_Records	key=0x100B3, x4="\xE7\xEAWH"
+	REC_AcSswImgListProc_Records	key=0x100B4, x4="\xBB\xEAWH"
+	REC_AcSswImgListProc_Records	key=17, x4="1\xECWH"
+	REC_AcSswImgListProc_Records	key=18, x4="\xC7\xECWH"
+	REC_AcSswImgListProc_Records	key=0x2300002, x4="[\xEDWH"
 	REC_AcSswImgListProc_Records	x4="\x8C\xEDWH"	# [8]
-	REC_AcSswImgListProc_Records	f0=9, x4="\x18\xEAWH"
+	REC_AcSswImgListProc_Records	key=9, x4="\x18\xEAWH"
 	REC_AcSswImgListProc_Records	x4="\x8C\xEDWH"
 	REC_AcSswImgListProc_Records	x4="\x8C\xEDWH"
 	REC_AcSswImgListProc_Records	x4="\x8C\xEDWH"
 	REC_AcSswImgListProc_Records	x4="\x8C\xEDWH"
 	REC_AcSswImgListProc_Records	x4="\x8C\xEDWH"
-	REC_AcSswImgListProc_Records	f0=15, x4="1\xECWH"
-	REC_AcSswImgListProc_Records	f0=0x43005242, x4="ENTE"	# [16]
-	REC_AcSswImgListProc_Records	f0=0x432F0052, x4="ENTE"
-	REC_AcSswImgListProc_Records	f0=0x4F460052, x4="NT\x00/"
+	REC_AcSswImgListProc_Records	key=15, x4="1\xECWH"
+	REC_AcSswImgListProc_Records	key=0x43005242, x4="ENTE"	# [16]
+	REC_AcSswImgListProc_Records	key=0x432F0052, x4="ENTE"
+	REC_AcSswImgListProc_Records	key=0x4F460052, x4="NT\x00/"
 
 Str_FONT:	.asciz "FONT"
 Str_IMG:	.asciz "IMG"
@@ -15991,25 +15990,25 @@ func_4857F8B5_Table:	# 13 x u32, 0..11; read by func_4857F8B5 0x4857F8B5: `mov  
 Str_SRC:	.asciz "SRC"
 
 ptrs_486AF354_p0_0:	# REC_ptrs_486AF354_p0 (1 bytes)
-	REC_ptrs_486AF354_p0	f0=65
+	REC_ptrs_486AF354_p0	key=65
 
 Str_LT:	.asciz "LT"
 Str_ALIGN:	.asciz "ALIGN"
 
 ptrs_486AF354_p0_1:	# REC_ptrs_486AF354_p0 (1 bytes)
-	REC_ptrs_486AF354_p0	f0=86
+	REC_ptrs_486AF354_p0	key=86
 
 Str_SPACE:	.asciz "SPACE"
 Str_HSPACE:	.asciz "HSPACE"
 
 ptrs_486AF354_p0_2:	# REC_ptrs_486AF354_p0 (1 bytes)
-	REC_ptrs_486AF354_p0	f0=87
+	REC_ptrs_486AF354_p0	key=87
 
 Str_IDTH:	.asciz "IDTH"
 Str_HEIGHT:	.asciz "HEIGHT"
 
 ptrs_486AF354_p0_3:	# REC_ptrs_486AF354_p0 (1 bytes)
-	REC_ptrs_486AF354_p0	f0=76
+	REC_ptrs_486AF354_p0	key=76
 
 Str_OWSRC:	.asciz "OWSRC"
 Str_BORDER:	.asciz "BORDER"
@@ -16131,19 +16130,19 @@ func_4857FEA7_Table_2:	# 132 x u8, 0..255; read by func_4857FEA7 0x4857F174: `mo
 Str_SQT:	.asciz "SQT"
 
 ptrs_486AF69C_p0_0:	# REC_ptrs_486AF69C_p0 (1 bytes)
-	REC_ptrs_486AF69C_p0	f0=67
+	REC_ptrs_486AF69C_p0	key=67
 
 Str_LASS:	.asciz "LASS"
 Str_TITLE:	.asciz "TITLE"
 
 ptrs_486AF69C_p0_1:	# REC_ptrs_486AF69C_p0 (1 bytes)
-	REC_ptrs_486AF69C_p0	f0=80
+	REC_ptrs_486AF69C_p0	key=80
 
 Str_OINT:	.asciz "OINT"
 Str_TEMPO0:	.asciz "TEMPO0"
 
 ptrs_486AF69C_p0_2:	# REC_ptrs_486AF69C_p0 (1 bytes)
-	REC_ptrs_486AF69C_p0	f0=84
+	REC_ptrs_486AF69C_p0	key=84
 
 Str_EMPO1:	.asciz "EMPO1"
 Str_TEMPO2:	.asciz "TEMPO2"
@@ -16633,45 +16632,45 @@ func_48582CF0_Table:
 
 func_48582CF0_Records:	# 128 x REC_func_48582CF0_Records (8 bytes each); read by func_48582CF0 0x48582CF0 `mov (a0), d0`
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [0]
-	REC_func_48582CF0_Records	f0=4097, proc=loc_48582FC7
-	REC_func_48582CF0_Records	f0=4098, proc=loc_48582FD1
-	REC_func_48582CF0_Records	f0=4099, proc=loc_48582FDB
-	REC_func_48582CF0_Records	f0=4100, proc=loc_48582FE5
-	REC_func_48582CF0_Records	f0=4225, proc=loc_485830B2
-	REC_func_48582CF0_Records	f0=4226, proc=loc_485830BC
-	REC_func_48582CF0_Records	f0=4227, proc=loc_485830C6
-	REC_func_48582CF0_Records	f0=4228, proc=loc_485830D0	# [8]
-	REC_func_48582CF0_Records	f0=4233, proc=loc_48582EBE
-	REC_func_48582CF0_Records	f0=4229, proc=loc_485830DA
-	REC_func_48582CF0_Records	f0=4231, proc=loc_485830E4
-	REC_func_48582CF0_Records	f0=4232, proc=loc_485830EE
-	REC_func_48582CF0_Records	f0=4234, proc=loc_485830F8
-	REC_func_48582CF0_Records	f0=4235, proc=loc_48583102
-	REC_func_48582CF0_Records	f0=4236, proc=loc_4858310C
-	REC_func_48582CF0_Records	f0=4237, proc=loc_48583116	# [16]
-	REC_func_48582CF0_Records	f0=4113, proc=loc_48582FEF
-	REC_func_48582CF0_Records	f0=4114, proc=loc_48582FF9
-	REC_func_48582CF0_Records	f0=4115, proc=loc_48583003
-	REC_func_48582CF0_Records	f0=4116, proc=loc_4858300D
-	REC_func_48582CF0_Records	f0=4238, proc=loc_48583120
-	REC_func_48582CF0_Records	f0=4239, proc=loc_4858312A
-	REC_func_48582CF0_Records	f0=4240, proc=loc_48583133
-	REC_func_48582CF0_Records	f0=4241, proc=loc_48583138	# [24]
-	REC_func_48582CF0_Records	f0=4242, proc=loc_4858313D
-	REC_func_48582CF0_Records	f0=4243, proc=loc_48583142
-	REC_func_48582CF0_Records	f0=4244, proc=loc_48583147
-	REC_func_48582CF0_Records	f0=4245, proc=loc_4858314C
-	REC_func_48582CF0_Records	f0=4246, proc=loc_48583151
-	REC_func_48582CF0_Records	f0=4247, proc=loc_4858315A
-	REC_func_48582CF0_Records	f0=4248, proc=loc_48583163
-	REC_func_48582CF0_Records	f0=4249, proc=loc_4858316C	# [32]
-	REC_func_48582CF0_Records	f0=4129, proc=loc_48582E23
-	REC_func_48582CF0_Records	f0=4250, proc=loc_48583175
-	REC_func_48582CF0_Records	f0=4251, proc=loc_4858317E
-	REC_func_48582CF0_Records	f0=4252, proc=loc_48583187
-	REC_func_48582CF0_Records	f0=4253, proc=loc_4858318B
-	REC_func_48582CF0_Records	f0=4254, proc=loc_4858318F
-	REC_func_48582CF0_Records	f0=1, proc=loc_48583193
+	REC_func_48582CF0_Records	key=4097, proc=loc_48582FC7
+	REC_func_48582CF0_Records	key=4098, proc=loc_48582FD1
+	REC_func_48582CF0_Records	key=4099, proc=loc_48582FDB
+	REC_func_48582CF0_Records	key=4100, proc=loc_48582FE5
+	REC_func_48582CF0_Records	key=4225, proc=loc_485830B2
+	REC_func_48582CF0_Records	key=4226, proc=loc_485830BC
+	REC_func_48582CF0_Records	key=4227, proc=loc_485830C6
+	REC_func_48582CF0_Records	key=4228, proc=loc_485830D0	# [8]
+	REC_func_48582CF0_Records	key=4233, proc=loc_48582EBE
+	REC_func_48582CF0_Records	key=4229, proc=loc_485830DA
+	REC_func_48582CF0_Records	key=4231, proc=loc_485830E4
+	REC_func_48582CF0_Records	key=4232, proc=loc_485830EE
+	REC_func_48582CF0_Records	key=4234, proc=loc_485830F8
+	REC_func_48582CF0_Records	key=4235, proc=loc_48583102
+	REC_func_48582CF0_Records	key=4236, proc=loc_4858310C
+	REC_func_48582CF0_Records	key=4237, proc=loc_48583116	# [16]
+	REC_func_48582CF0_Records	key=4113, proc=loc_48582FEF
+	REC_func_48582CF0_Records	key=4114, proc=loc_48582FF9
+	REC_func_48582CF0_Records	key=4115, proc=loc_48583003
+	REC_func_48582CF0_Records	key=4116, proc=loc_4858300D
+	REC_func_48582CF0_Records	key=4238, proc=loc_48583120
+	REC_func_48582CF0_Records	key=4239, proc=loc_4858312A
+	REC_func_48582CF0_Records	key=4240, proc=loc_48583133
+	REC_func_48582CF0_Records	key=4241, proc=loc_48583138	# [24]
+	REC_func_48582CF0_Records	key=4242, proc=loc_4858313D
+	REC_func_48582CF0_Records	key=4243, proc=loc_48583142
+	REC_func_48582CF0_Records	key=4244, proc=loc_48583147
+	REC_func_48582CF0_Records	key=4245, proc=loc_4858314C
+	REC_func_48582CF0_Records	key=4246, proc=loc_48583151
+	REC_func_48582CF0_Records	key=4247, proc=loc_4858315A
+	REC_func_48582CF0_Records	key=4248, proc=loc_48583163
+	REC_func_48582CF0_Records	key=4249, proc=loc_4858316C	# [32]
+	REC_func_48582CF0_Records	key=4129, proc=loc_48582E23
+	REC_func_48582CF0_Records	key=4250, proc=loc_48583175
+	REC_func_48582CF0_Records	key=4251, proc=loc_4858317E
+	REC_func_48582CF0_Records	key=4252, proc=loc_48583187
+	REC_func_48582CF0_Records	key=4253, proc=loc_4858318B
+	REC_func_48582CF0_Records	key=4254, proc=loc_4858318F
+	REC_func_48582CF0_Records	key=1, proc=loc_48583193
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [40]
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
@@ -16697,21 +16696,21 @@ func_48582CF0_Records:	# 128 x REC_func_48582CF0_Records (8 bytes each); read by
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [64]
-	REC_func_48582CF0_Records	f0=4161, proc=loc_48583017
-	REC_func_48582CF0_Records	f0=4162, proc=loc_48583021
-	REC_func_48582CF0_Records	f0=4163, proc=loc_4858302B
-	REC_func_48582CF0_Records	f0=4164, proc=loc_48583035
-	REC_func_48582CF0_Records	f0=4165, proc=loc_4858303F
+	REC_func_48582CF0_Records	key=4161, proc=loc_48583017
+	REC_func_48582CF0_Records	key=4162, proc=loc_48583021
+	REC_func_48582CF0_Records	key=4163, proc=loc_4858302B
+	REC_func_48582CF0_Records	key=4164, proc=loc_48583035
+	REC_func_48582CF0_Records	key=4165, proc=loc_4858303F
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [72]
-	REC_func_48582CF0_Records	f0=4169, proc=loc_48583044
-	REC_func_48582CF0_Records	f0=4170, proc=loc_4858304E
-	REC_func_48582CF0_Records	f0=4171, proc=loc_48583058
-	REC_func_48582CF0_Records	f0=4172, proc=loc_4858305D
-	REC_func_48582CF0_Records	f0=4173, proc=loc_48583062
-	REC_func_48582CF0_Records	f0=4174, proc=loc_48583067
-	REC_func_48582CF0_Records	f0=4175, proc=loc_4858306C
+	REC_func_48582CF0_Records	key=4169, proc=loc_48583044
+	REC_func_48582CF0_Records	key=4170, proc=loc_4858304E
+	REC_func_48582CF0_Records	key=4171, proc=loc_48583058
+	REC_func_48582CF0_Records	key=4172, proc=loc_4858305D
+	REC_func_48582CF0_Records	key=4173, proc=loc_48583062
+	REC_func_48582CF0_Records	key=4174, proc=loc_48583067
+	REC_func_48582CF0_Records	key=4175, proc=loc_4858306C
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [80]
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
@@ -16729,29 +16728,29 @@ func_48582CF0_Records:	# 128 x REC_func_48582CF0_Records (8 bytes each); read by
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [96]
-	REC_func_48582CF0_Records	f0=4065, proc=loc_48582DDF
-	REC_func_48582CF0_Records	f0=4066, proc=loc_48582E08
-	REC_func_48582CF0_Records	f0=4193, proc=loc_48583071
-	REC_func_48582CF0_Records	f0=4194, proc=loc_48583076
-	REC_func_48582CF0_Records	f0=4069, proc=loc_48582EDB
-	REC_func_48582CF0_Records	f0=4070, proc=loc_48582F45
-	REC_func_48582CF0_Records	f0=4195, proc=loc_48583080
-	REC_func_48582CF0_Records	f0=4196, proc=loc_4858308A	# [104]
-	REC_func_48582CF0_Records	f0=4073, proc=loc_48582F77
-	REC_func_48582CF0_Records	f0=4074, proc=loc_48582F81
-	REC_func_48582CF0_Records	f0=4197, proc=loc_48583094
-	REC_func_48582CF0_Records	f0=4198, proc=loc_4858309E
-	REC_func_48582CF0_Records	f0=4199, proc=loc_485830A8
+	REC_func_48582CF0_Records	key=4065, proc=loc_48582DDF
+	REC_func_48582CF0_Records	key=4066, proc=loc_48582E08
+	REC_func_48582CF0_Records	key=4193, proc=loc_48583071
+	REC_func_48582CF0_Records	key=4194, proc=loc_48583076
+	REC_func_48582CF0_Records	key=4069, proc=loc_48582EDB
+	REC_func_48582CF0_Records	key=4070, proc=loc_48582F45
+	REC_func_48582CF0_Records	key=4195, proc=loc_48583080
+	REC_func_48582CF0_Records	key=4196, proc=loc_4858308A	# [104]
+	REC_func_48582CF0_Records	key=4073, proc=loc_48582F77
+	REC_func_48582CF0_Records	key=4074, proc=loc_48582F81
+	REC_func_48582CF0_Records	key=4197, proc=loc_48583094
+	REC_func_48582CF0_Records	key=4198, proc=loc_4858309E
+	REC_func_48582CF0_Records	key=4199, proc=loc_485830A8
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [112]
-	REC_func_48582CF0_Records	f0=4081, proc=loc_48582F8B
-	REC_func_48582CF0_Records	f0=4082, proc=loc_48582F95
-	REC_func_48582CF0_Records	f0=4083, proc=loc_48582F9F
-	REC_func_48582CF0_Records	f0=4084, proc=loc_48582FA9
-	REC_func_48582CF0_Records	f0=4085, proc=loc_48582FB3
-	REC_func_48582CF0_Records	f0=4086, proc=loc_48582FB8
-	REC_func_48582CF0_Records	f0=4087, proc=loc_48582FBD
+	REC_func_48582CF0_Records	key=4081, proc=loc_48582F8B
+	REC_func_48582CF0_Records	key=4082, proc=loc_48582F95
+	REC_func_48582CF0_Records	key=4083, proc=loc_48582F9F
+	REC_func_48582CF0_Records	key=4084, proc=loc_48582FA9
+	REC_func_48582CF0_Records	key=4085, proc=loc_48582FB3
+	REC_func_48582CF0_Records	key=4086, proc=loc_48582FB8
+	REC_func_48582CF0_Records	key=4087, proc=loc_48582FBD
 	REC_func_48582CF0_Records	proc=loc_4858319C	# [120]
 	REC_func_48582CF0_Records	proc=loc_4858319C
 	REC_func_48582CF0_Records	proc=loc_4858319C
@@ -16799,9 +16798,8 @@ Str_Transmission_des_donn_es_0dNe_pas_couper:	.asciz "Transmission des donn\xE9e
 Str_Transmisi_n_de_datos_0dNo_apague_el_inte:	.asciz "Transmisi\xF3n de datos~0dNo apague el interruptor o desconecte el cable USB~0ddurante este procedimiento, porque puede da\xF1ar su tarjeta SD."
 Str_Italian_2:	.asciz "Italian"
 Str_Indonesian:	.asciz "Indonesian"
-data_486B1550:
-# census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2B1550, 0x2B1578
+StrJa_486B1550:	.asciz "\xA4\xB8\xA4\xE3\xA4\xD1\xA4\xCB\xA1\xBC\xA4\xBA~0d\xA5\xCF\xA5\xF3\xA5\xAB\xA5\xAF\xA5\xAB\xA5\xCA\xA4\xE2\xA4\xAB\xA4\xB1\xA4\xEB\xA4\xE8"	# EUC-JP
+	.align	4, 0xFF	# pad after StrJa_486B1550
 
 ptrs_486B1578:
 	.long	Str_Data_transmission_0dPlease_don_t_turn_th
@@ -16810,7 +16808,7 @@ ptrs_486B1578:
 	.long	Str_Transmisi_n_de_datos_0dNo_apague_el_inte
 	.long	Str_Italian_2
 	.long	Str_Indonesian
-	.long	data_486B1550
+	.long	StrJa_486B1550
 
 Str_rb:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb
@@ -32861,7 +32859,7 @@ PfDoubleToDecimal_Table_3:	# 2 x u32, 1070810131..1352628735; read by PfDoubleTo
 	tab_u32	1352628735, 1070810131
 
 PfDoubleToDecimal_Table_4:	# 1 x REC_PfDoubleToDecimal_Table_4 (8 bytes each); read by PfDoubleToDecimal 0x4C002B70 `call LibF64Div_entry, [d2,d3,a2,a3], 0x18`; PfDoubleToDecimal 0x4C002B70 `call LibF64Mul_entry, [d2,d3,a2,a3], 0x18`; PfDoubleToDecimal 0x4C002B70 `mov (-4, a0), d1` (+3)
-	REC_PfDoubleToDecimal_Table_4	f4=0x3FF00000
+	REC_PfDoubleToDecimal_Table_4	LibF64Div_d1=0x3FF00000
 
 PfDoubleToDecimal_Table_5:	# 232 x u32, 0..4209432352; read by PfDoubleToDecimal_entry 0x4C002B70: `mov   (a0), d0`
 	tab_u32	0, 1076101120, 0, 1079574528, 0, 1083129856, 0, 1086556160	# [0]
@@ -33198,14 +33196,14 @@ func_4C0071EF_Table:	# 123 x u16, 65281..65534; read by func_4C0071EF 0x4C0071EF
 .incbin_range "baserom/kn7000_program.rom", 0x2D297C, 0x2D2986
 
 TgPartEgRampBuild_Records:	# 8 x REC_TgPartEgRampBuild_Records (6 bytes each); read by TgPartEgRampBuild 0x4C039D7E `movbu (1, a0), d3`; TgPartEgRampBuild 0x4C039D7E `movbu (4, a0), d1`; TgPartEgRampBuild 0x4C039D7E `movbu (5, a0), d2` (+1)
-	REC_TgPartEgRampBuild_Records	a0="\x01\x02\x00\x00", f4=255, index=255
-	REC_TgPartEgRampBuild_Records	a0="\x01\x03\x00\x00", f4=255, index=255
-	REC_TgPartEgRampBuild_Records	a0="\x01\x04\x00\x00", f4=255, index=255
-	REC_TgPartEgRampBuild_Records	a0="\x01\x03\x00\x01", f4=255, index=255
-	REC_TgPartEgRampBuild_Records	a0="\x00\x00\x00\x03", f4=255, index=255
-	REC_TgPartEgRampBuild_Records	a0="\x00\x00\x00\x03", f4=255, index=255
-	REC_TgPartEgRampBuild_Records	a0="\xFF\xFF\xFF\xFF", index=3
-	REC_TgPartEgRampBuild_Records	a0="\x00\x05\x00\x06", index=5
+	REC_TgPartEgRampBuild_Records	index="\x01\x02\x00\x00", f4=255, index_=255
+	REC_TgPartEgRampBuild_Records	index="\x01\x03\x00\x00", f4=255, index_=255
+	REC_TgPartEgRampBuild_Records	index="\x01\x04\x00\x00", f4=255, index_=255
+	REC_TgPartEgRampBuild_Records	index="\x01\x03\x00\x01", f4=255, index_=255
+	REC_TgPartEgRampBuild_Records	index="\x00\x00\x00\x03", f4=255, index_=255
+	REC_TgPartEgRampBuild_Records	index="\x00\x00\x00\x03", f4=255, index_=255
+	REC_TgPartEgRampBuild_Records	index="\xFF\xFF\xFF\xFF", index_=3
+	REC_TgPartEgRampBuild_Records	index="\x00\x05\x00\x06", index_=5
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2D29B6, 0x2D29DA
 
@@ -33280,134 +33278,134 @@ TgElemStageFresh_Table_3:	# 35 x u16, 0..65532; read by TgElemStageFresh 0x4C034
 	.align	4, 0xFF	# pad after TgElemStageFresh_Table_3
 
 TgPartGlidePlan_Records:	# 128 x REC_TgPartGlidePlan_Records (12 bytes each); read by TgPartGlidePlan 0x4C02D795 `call LibDiv32, 0, 0`; TgPartGlidePlan 0x4C02D795 `call LibF64CmpZero_entry, [d2,d3], 0x10`; TgPartGlidePlan 0x4C02D795 `call LibF64Cmp_entry, [d2,d3], 0x10` (+8)
-	REC_TgPartGlidePlan_Records	f0=0xC8E33341, f4=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
-	REC_TgPartGlidePlan_Records	f0=0x48A30701, f4=0x4078964D, f8=183, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x56F8345A, f4=0x406526FF, f8=79, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x66574CF, f4=0x405B10E0, f8=51, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xCC3CAF08, f4=0x40523287, f8=34, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x79C8180, f4=0x404BD6E2, f8=26, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x2A3E6CF8, f4=0x40462855, f8=21, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE752342A, f4=0x404317B8, f8=18, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x1B27CEA6, f4=0x404073A4, f8=16, x10="\x00\x00"	# [8]
-	REC_TgPartGlidePlan_Records	f0=0xB343B9BE, f4=0x403E1780, f8=14, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x2DB6F270, f4=0x403A3025, f8=13, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xDFB30378, f4=0x40373F66, f8=11, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x48205535, f4=0x40350D18, f8=10, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x51C39719, f4=0x4033A366, f8=10, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x970D2252, f4=0x40330FEA, f8=9, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x31B30073, f4=0x4031C865, f8=9, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x78C69048, f4=0x4030EBFF, f8=8, x10="\x00\x00"	# [16]
-	REC_TgPartGlidePlan_Records	f0=0x38DD4139, f4=0x40303010, f8=8, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x5AD69045, f4=0x402EF890, f8=8, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x93BA5C88, f4=0x402DA099, f8=7, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xDE7FA7AB, f4=0x402C578E, f8=7, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8198F1D4, f4=0x402B1CCA, f8=7, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xF398BE7D, f4=0x4029EFAD, f8=7, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8C015596, f4=0x4028CFA1, f8=6, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x37199CB4, f4=0x4027BC14, f8=6, x10="\x00\x00"	# [24]
-	REC_TgPartGlidePlan_Records	f0=0x2B19893E, f4=0x4026B47B, f8=6, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xA50E41E2, f4=0x4025B851, f8=6, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xA3BADAB2, f4=0x4024C718, f8=5, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xA860E551, f4=0x4023E056, f8=5, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x79BFF0AD, f4=0x40230397, f8=5, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE9548F46, f4=0x4022306B, f8=5, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x9B7A1977, f4=0x40216669, f8=5, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xD1A1032C, f4=0x4020A52A, f8=4, x10="\x00\x00"	# [32]
-	REC_TgPartGlidePlan_Records	f0=0x6E9C5115, f4=0x401FD89C, f8=4, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x61C2BDAA, f4=0x401E76ED, f8=4, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x59AF5A06, f4=0x401D2496, f8=4, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xEDCBED4B, f4=0x401BE0EC, f8=4, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x19FA8E37, f4=0x401AAB4E, f8=4, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xEC93D650, f4=0x4019831D, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x37E26F76, f4=0x401867C7, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x470ACDDC, f4=0x401758BB, f8=3, x10="\x00\x00"	# [40]
-	REC_TgPartGlidePlan_Records	f0=0x95E6D401, f4=0x40165571, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8CB4B760, f4=0x40155D67, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x3DC94A72, f4=0x40147020, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x2749118E, f4=0x40138D24, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xF638F0A6, f4=0x4012B400, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x4D8475CF, f4=0x4011E449, f8=3, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8EC2D0F5, f4=0x40111D94, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xA532BB24, f4=0x40105F7E, f8=2, x10="\x00\x00"	# [48]
-	REC_TgPartGlidePlan_Records	f0=0xA776EBB4, f4=0x400F534F, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8F1DAE8, f4=0x400DF769, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x35A962C3, f4=0x400CAA9A, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8E0F6694, f4=0x400B6C3B, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xB8741413, f4=0x400A3BAC, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x4FF49B2E, f4=0x40091854, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x974E5491, f4=0x4008019F, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x2EEA8A5E, f4=0x4006F702, f8=2, x10="\x00\x00"	# [56]
-	REC_TgPartGlidePlan_Records	f0=0xCE22E32F, f4=0x4005F7F5, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xFFBE6F45, f4=0x400503F9, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE0FB8B85, f4=0x40041A93, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE45BD70E, f4=0x40033B4D, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x953E515B, f4=0x400265B7, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x609323F0, f4=0x40019965, f8=2, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x5D8F6C08, f4=0x4000D5F0, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x1A67CF0B, f4=0x40001AF6, f8=1, x10="\x00\x00"	# [64]
-	REC_TgPartGlidePlan_Records	f0=0xD5D830A6, f4=0x3FFED030, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x713997EB, f4=0x3FFD79FA, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xAADFD6DA, f4=0x3FFC329C, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xA0A8CEE3, f4=0x3FFAF972, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x98C9876A, f4=0x3FF9CDDE, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xAFEEBD04, f4=0x3FF8AF49, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8EE195EE, f4=0x3FF79D23, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x220D5FD4, f4=0x3FF696E2, f8=1, x10="\x00\x00"	# [72]
-	REC_TgPartGlidePlan_Records	f0=0x52E656E2, f4=0x3FF59C01, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xC557379F, f4=0x3FF4AC02, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x99BF0BF8, f4=0x3FF3C66D, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x2DDC177F, f4=0x3FF2EACE, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE46CC061, f4=0x3FF218B5, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xEC4707F4, f4=0x3FF14FBA, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xBBB863A, f4=0x3FF08F78, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xD98D1BFF, f4=0x3FEFAF18, f8=1, x10="\x00\x00"	# [80]
-	REC_TgPartGlidePlan_Records	f0=0xDA903779, f4=0x3FEE4F36, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE09D4A64, f4=0x3FECFE98, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x5FD6B2DD, f4=0x3FEBBC95, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x2952F966, f4=0x3FEA888A, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x16D2E67E, f4=0x3FE961DC, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xBCE8DCAB, f4=0x3FE847F6, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x20E24526, f4=0x3FE73A4C, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x704D4D99, f4=0x3FE63854, f8=1, x10="\x00\x00"	# [88]
-	REC_TgPartGlidePlan_Records	f0=0xBDDD09A0, f4=0x3FE5418D, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xBED704A3, f4=0x3FE4557B, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8CCC56B0, f4=0x3FE373A7, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x6A01EB2B, f4=0x3FE29B9F, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x8887F95E, f4=0x3FE1CCF6, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xD0C80CA7, f4=0x3FE10744, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xB24663BD, f4=0x3FE04A26, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xD685B333, f4=0x3FDF2A79, f8=1, x10="\x00\x00"	# [96]
-	REC_TgPartGlidePlan_Records	f0=0xBC9E7032, f4=0x3FDDD058, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xC0C2CAB8, f4=0x3FDC853B, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x1DE64D85, f4=0x3FDB487C, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x4D56A88C, f4=0x3FDA197A, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xAEAFB3EB, f4=0x3FD8F79D, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x476EC346, f4=0x3FD7E254, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x6D0C6A3E, f4=0x3FD6D912, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x85A2B088, f4=0x3FD5DB52, f8=1, x10="\x00\x00"	# [104]
-	REC_TgPartGlidePlan_Records	f0=0xC447C30D, f4=0x3FD4E894, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE67B85C4, f4=0x3FD4005E, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xF8066A05, f4=0x3FD3223B, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x16D844E1, f4=0x3FD24DBC, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x3B32A86B, f4=0x3FD18274, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x41EC001, f4=0x3FD0BFFE, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x7E84C8DB, f4=0x3FD005F7, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xF24C270F, f4=0x3FCEA805, f8=1, x10="\x00\x00"	# [112]
-	REC_TgPartGlidePlan_Records	f0=0xC88E687D, f4=0x3FCCE251, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xDB10EE76, f4=0x3FCAADEA, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x7D5C439A, f4=0x3FC8A498, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xE3747B74, f4=0x3FC6C310, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x80F170E0, f4=0x3FC5064A, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x78D6AB73, f4=0x3FC2D99F, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x919A3590, f4=0x3FC0917E, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xBCEBE1C4, f4=0x3FBEE9A4, f8=1, x10="\x00\x00"	# [120]
-	REC_TgPartGlidePlan_Records	f0=0xF252CBDD, f4=0x3FBB2BB7, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x7BF8851E, f4=0x3FB81EBA, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x44088FE9, f4=0x3FB42C8A, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x7A6DC920, f4=0x3FB0DF9E, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xDD8F1A6D, f4=0x3FA7D7FB, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0x47A8FACF, f4=0x3FA35B99, f8=1, x10="\x00\x00"
-	REC_TgPartGlidePlan_Records	f0=0xCFD84D92, f4=0x3F95C579, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xC8E33341, LibF64Mul_d1=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x48A30701, LibF64Mul_d1=0x4078964D, f8=183, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x56F8345A, LibF64Mul_d1=0x406526FF, f8=79, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x66574CF, LibF64Mul_d1=0x405B10E0, f8=51, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xCC3CAF08, LibF64Mul_d1=0x40523287, f8=34, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x79C8180, LibF64Mul_d1=0x404BD6E2, f8=26, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2A3E6CF8, LibF64Mul_d1=0x40462855, f8=21, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE752342A, LibF64Mul_d1=0x404317B8, f8=18, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x1B27CEA6, LibF64Mul_d1=0x404073A4, f8=16, x10="\x00\x00"	# [8]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xB343B9BE, LibF64Mul_d1=0x403E1780, f8=14, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2DB6F270, LibF64Mul_d1=0x403A3025, f8=13, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xDFB30378, LibF64Mul_d1=0x40373F66, f8=11, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x48205535, LibF64Mul_d1=0x40350D18, f8=10, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x51C39719, LibF64Mul_d1=0x4033A366, f8=10, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x970D2252, LibF64Mul_d1=0x40330FEA, f8=9, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x31B30073, LibF64Mul_d1=0x4031C865, f8=9, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x78C69048, LibF64Mul_d1=0x4030EBFF, f8=8, x10="\x00\x00"	# [16]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x38DD4139, LibF64Mul_d1=0x40303010, f8=8, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x5AD69045, LibF64Mul_d1=0x402EF890, f8=8, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x93BA5C88, LibF64Mul_d1=0x402DA099, f8=7, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xDE7FA7AB, LibF64Mul_d1=0x402C578E, f8=7, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8198F1D4, LibF64Mul_d1=0x402B1CCA, f8=7, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xF398BE7D, LibF64Mul_d1=0x4029EFAD, f8=7, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8C015596, LibF64Mul_d1=0x4028CFA1, f8=6, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x37199CB4, LibF64Mul_d1=0x4027BC14, f8=6, x10="\x00\x00"	# [24]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2B19893E, LibF64Mul_d1=0x4026B47B, f8=6, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xA50E41E2, LibF64Mul_d1=0x4025B851, f8=6, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xA3BADAB2, LibF64Mul_d1=0x4024C718, f8=5, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xA860E551, LibF64Mul_d1=0x4023E056, f8=5, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x79BFF0AD, LibF64Mul_d1=0x40230397, f8=5, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE9548F46, LibF64Mul_d1=0x4022306B, f8=5, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x9B7A1977, LibF64Mul_d1=0x40216669, f8=5, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xD1A1032C, LibF64Mul_d1=0x4020A52A, f8=4, x10="\x00\x00"	# [32]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x6E9C5115, LibF64Mul_d1=0x401FD89C, f8=4, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x61C2BDAA, LibF64Mul_d1=0x401E76ED, f8=4, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x59AF5A06, LibF64Mul_d1=0x401D2496, f8=4, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xEDCBED4B, LibF64Mul_d1=0x401BE0EC, f8=4, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x19FA8E37, LibF64Mul_d1=0x401AAB4E, f8=4, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xEC93D650, LibF64Mul_d1=0x4019831D, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x37E26F76, LibF64Mul_d1=0x401867C7, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x470ACDDC, LibF64Mul_d1=0x401758BB, f8=3, x10="\x00\x00"	# [40]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x95E6D401, LibF64Mul_d1=0x40165571, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8CB4B760, LibF64Mul_d1=0x40155D67, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x3DC94A72, LibF64Mul_d1=0x40147020, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2749118E, LibF64Mul_d1=0x40138D24, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xF638F0A6, LibF64Mul_d1=0x4012B400, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x4D8475CF, LibF64Mul_d1=0x4011E449, f8=3, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8EC2D0F5, LibF64Mul_d1=0x40111D94, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xA532BB24, LibF64Mul_d1=0x40105F7E, f8=2, x10="\x00\x00"	# [48]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xA776EBB4, LibF64Mul_d1=0x400F534F, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8F1DAE8, LibF64Mul_d1=0x400DF769, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x35A962C3, LibF64Mul_d1=0x400CAA9A, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8E0F6694, LibF64Mul_d1=0x400B6C3B, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xB8741413, LibF64Mul_d1=0x400A3BAC, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x4FF49B2E, LibF64Mul_d1=0x40091854, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x974E5491, LibF64Mul_d1=0x4008019F, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2EEA8A5E, LibF64Mul_d1=0x4006F702, f8=2, x10="\x00\x00"	# [56]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xCE22E32F, LibF64Mul_d1=0x4005F7F5, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xFFBE6F45, LibF64Mul_d1=0x400503F9, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE0FB8B85, LibF64Mul_d1=0x40041A93, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE45BD70E, LibF64Mul_d1=0x40033B4D, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x953E515B, LibF64Mul_d1=0x400265B7, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x609323F0, LibF64Mul_d1=0x40019965, f8=2, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x5D8F6C08, LibF64Mul_d1=0x4000D5F0, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x1A67CF0B, LibF64Mul_d1=0x40001AF6, f8=1, x10="\x00\x00"	# [64]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xD5D830A6, LibF64Mul_d1=0x3FFED030, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x713997EB, LibF64Mul_d1=0x3FFD79FA, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xAADFD6DA, LibF64Mul_d1=0x3FFC329C, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xA0A8CEE3, LibF64Mul_d1=0x3FFAF972, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x98C9876A, LibF64Mul_d1=0x3FF9CDDE, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xAFEEBD04, LibF64Mul_d1=0x3FF8AF49, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8EE195EE, LibF64Mul_d1=0x3FF79D23, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x220D5FD4, LibF64Mul_d1=0x3FF696E2, f8=1, x10="\x00\x00"	# [72]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x52E656E2, LibF64Mul_d1=0x3FF59C01, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xC557379F, LibF64Mul_d1=0x3FF4AC02, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x99BF0BF8, LibF64Mul_d1=0x3FF3C66D, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2DDC177F, LibF64Mul_d1=0x3FF2EACE, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE46CC061, LibF64Mul_d1=0x3FF218B5, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xEC4707F4, LibF64Mul_d1=0x3FF14FBA, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xBBB863A, LibF64Mul_d1=0x3FF08F78, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xD98D1BFF, LibF64Mul_d1=0x3FEFAF18, f8=1, x10="\x00\x00"	# [80]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xDA903779, LibF64Mul_d1=0x3FEE4F36, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE09D4A64, LibF64Mul_d1=0x3FECFE98, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x5FD6B2DD, LibF64Mul_d1=0x3FEBBC95, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x2952F966, LibF64Mul_d1=0x3FEA888A, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x16D2E67E, LibF64Mul_d1=0x3FE961DC, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xBCE8DCAB, LibF64Mul_d1=0x3FE847F6, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x20E24526, LibF64Mul_d1=0x3FE73A4C, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x704D4D99, LibF64Mul_d1=0x3FE63854, f8=1, x10="\x00\x00"	# [88]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xBDDD09A0, LibF64Mul_d1=0x3FE5418D, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xBED704A3, LibF64Mul_d1=0x3FE4557B, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8CCC56B0, LibF64Mul_d1=0x3FE373A7, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x6A01EB2B, LibF64Mul_d1=0x3FE29B9F, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x8887F95E, LibF64Mul_d1=0x3FE1CCF6, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xD0C80CA7, LibF64Mul_d1=0x3FE10744, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xB24663BD, LibF64Mul_d1=0x3FE04A26, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xD685B333, LibF64Mul_d1=0x3FDF2A79, f8=1, x10="\x00\x00"	# [96]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xBC9E7032, LibF64Mul_d1=0x3FDDD058, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xC0C2CAB8, LibF64Mul_d1=0x3FDC853B, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x1DE64D85, LibF64Mul_d1=0x3FDB487C, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x4D56A88C, LibF64Mul_d1=0x3FDA197A, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xAEAFB3EB, LibF64Mul_d1=0x3FD8F79D, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x476EC346, LibF64Mul_d1=0x3FD7E254, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x6D0C6A3E, LibF64Mul_d1=0x3FD6D912, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x85A2B088, LibF64Mul_d1=0x3FD5DB52, f8=1, x10="\x00\x00"	# [104]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xC447C30D, LibF64Mul_d1=0x3FD4E894, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE67B85C4, LibF64Mul_d1=0x3FD4005E, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xF8066A05, LibF64Mul_d1=0x3FD3223B, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x16D844E1, LibF64Mul_d1=0x3FD24DBC, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x3B32A86B, LibF64Mul_d1=0x3FD18274, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x41EC001, LibF64Mul_d1=0x3FD0BFFE, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x7E84C8DB, LibF64Mul_d1=0x3FD005F7, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xF24C270F, LibF64Mul_d1=0x3FCEA805, f8=1, x10="\x00\x00"	# [112]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xC88E687D, LibF64Mul_d1=0x3FCCE251, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xDB10EE76, LibF64Mul_d1=0x3FCAADEA, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x7D5C439A, LibF64Mul_d1=0x3FC8A498, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xE3747B74, LibF64Mul_d1=0x3FC6C310, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x80F170E0, LibF64Mul_d1=0x3FC5064A, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x78D6AB73, LibF64Mul_d1=0x3FC2D99F, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x919A3590, LibF64Mul_d1=0x3FC0917E, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xBCEBE1C4, LibF64Mul_d1=0x3FBEE9A4, f8=1, x10="\x00\x00"	# [120]
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xF252CBDD, LibF64Mul_d1=0x3FBB2BB7, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x7BF8851E, LibF64Mul_d1=0x3FB81EBA, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x44088FE9, LibF64Mul_d1=0x3FB42C8A, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x7A6DC920, LibF64Mul_d1=0x3FB0DF9E, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xDD8F1A6D, LibF64Mul_d1=0x3FA7D7FB, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0x47A8FACF, LibF64Mul_d1=0x3FA35B99, f8=1, x10="\x00\x00"
+	REC_TgPartGlidePlan_Records	LibF64Mul_d0=0xCFD84D92, LibF64Mul_d1=0x3F95C579, f8=1, x10="\x00\x00"
 
 TgVoicePoolReset_Table:	# 20 x u8, 0..255; read by TgVoicePoolReset_entry 0x4C014803: `movbu  (d0, a0), d1`
 	tab_u8	16, 16, 8, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -33422,13 +33420,13 @@ TgVoiceMigrateFind_Var:	# 8 x u8, 0..255; read by TgVoiceMigrateFind_entry 0x4C0
 	tab_u8	6, 5, 2, 4, 3, 1, 0, 255
 
 TgSlotAllocate_Records_p0_0:	# REC_TgSlotAllocate_Records_p0 (15 bytes)
-	REC_TgSlotAllocate_Records_p0	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\x00\xFF"
+	REC_TgSlotAllocate_Records_p0	key=134, key_=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\x00\xFF"
 TgSlotAllocate_Records_p0_s14_0:	# REC_TgSlotAllocate_Records_p0_s14 (14 bytes)
-	REC_TgSlotAllocate_Records_p0_s14	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
+	REC_TgSlotAllocate_Records_p0_s14	key=134, key_=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
 TgSlotAllocate_Records_p0_s11_0:	# REC_TgSlotAllocate_Records_p0_s11 (11 bytes)
-	REC_TgSlotAllocate_Records_p0_s11	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\xFF"
+	REC_TgSlotAllocate_Records_p0_s11	key=134, key_=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\xFF"
 TgSlotAllocate_Records_p0_1:	# REC_TgSlotAllocate_Records_p0 (15 bytes)
-	REC_TgSlotAllocate_Records_p0	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\xFF\xFF\xFF\xFF\n\xD6\x01"
+	REC_TgSlotAllocate_Records_p0	key=134, key_=133, x2="\x06\x05\x84\x83\x82\x04\xFF\xFF\xFF\xFF\n\xD6\x01"
 # census: opaque -- unknown-dump: 13 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2D387B, 0x2D3888
 data_486D3888:
