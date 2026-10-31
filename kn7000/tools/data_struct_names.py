@@ -4,8 +4,9 @@
 
 Keyed by the array's label (the same in every program build: the labels port)
 and its stride.  Each entry: (kind name, {field offset: field name}), with the
-evidence for each name in the comment above it.  A field not named here keeps
-its offset name (f<off>, p<off>, s<off>, x<off>).
+evidence for each name in the comment above it.  A field not named here is named
+by auto_name() from what the code does with it (lane mn10300-formats, 2026-10-31), or keeps its
+offset name (f<off>, p<off>, s<off>, x<off>).
 """
 
 NAMES = {
@@ -109,13 +110,30 @@ _KN6000_STYLES = {
 # (the KN6500 v1.3 runs the same Music Stylist code 0x4C0..: StyleRecordTable 1080 records, read by
 # func_4C164..; the kinds and fields are the KN6000's -- lane notes, kn6000/notes/siblings-data-final/)
 MODEL_NAMES = {"kn6000": _KN6000_STYLES, "kn6500": _KN6000_STYLES}
-# The KN2400 v1.1: the same 24-byte setup, in two lists (func_48641CCD picks one by func_487055C4).
+# The KN2400 v1.1: the same 24-byte setup, in two sets of lists, one for the KN2600 / PR54 and one
+# for the KN2400 (lane mn10300-formats: MssSetupGet 0x48641CCD, MssGenreGet 0x48641D2F, MssLetterGet
+# 0x48641D5E and MssEraGet 0x48641D8D pick the KN2400's when KnprModelGet 0x487055C4, the board
+# strap 0x98070000, answers 1; kn2400_manual.sym).
 # Readers: +0 func_4863EA37, +4 MssNameFunc_Lcb 0x4863E96A, +8 AcCategoryListBoxProc_L59, +10
 # func_4863F175, +12 func_4863F565, +14 func_4864001D, +16 func_4864001D_entry_L33, +18 / +20
-# func_4863F880 (data_readers, through func_48641CCD's return value)
+# func_4863F880 (data_readers, through MssSetupGet's return value)
 _KN2400_SETUP = ("MusicStylistSetup", {0: "panel", 4: "name", 8: "genre", 10: "style", 12: "setup", 14: "era",
                                        16: "era_pos", 18: "letter", 20: "letter_pos"})
-MODEL_NAMES["kn2400"] = {"StyleRecordTable": _KN2400_SETUP, "StyleRecordTableAlt": _KN2400_SETUP,
+# the genre list (MssGenreGet's records): +0 the genre's name, read by func_4863ED40_entry_L6 0x4863ED4C
+# and func_4863EF80 (`mov (a0), d1`, passed on as the string); +4 its setup list, read by
+# func_4863EFAC_entry_Lf 0x4863EFBE and func_4863F175 (`mov (4, a0), a3`, indexed by the style)
+_KN2400_GENRE = ("StyleGenre", {0: "name", 4: "styles"})
+# the alphabet index (MssLetterGet's records): +0 the letter's string, read by func_4863F880 and
+# func_4863F92F_entry_L1 0x4863F935; +4 the list of its setups, read by func_4863F880 / func_4863F985
+_KN2400_LETTER = ("StyleLetter", {0: "letter", 4: "setups"})
+# the era list (MssEraGet's records): +0 the era's name (func_4864001D_entry_L33 0x48640055), +4 its
+# setups (func_4864000C, func_4864001D_entry_L4f), +8 the era number func_4864001D compares with
+# MusicStylistSetup.era (`movhu (8, a0), d0` at L4f 0x48640071)
+_KN2400_ERA = ("StyleEra", {0: "name", 4: "setups", 8: "era"})
+MODEL_NAMES["kn2400"] = {"StyleRecordTable": _KN2400_SETUP, "StyleRecordTableKN2400": _KN2400_SETUP,
+                         "StyleGenreTable": _KN2400_GENRE, "StyleGenreTableKN2400": _KN2400_GENRE,
+                         "StyleAlphabetTable": _KN2400_LETTER, "StyleAlphabetTableKN2400": _KN2400_LETTER,
+                         "StyleEraTable": _KN2400_ERA, "StyleEraTableKN2400": _KN2400_ERA,
                          # func_50173F49 (code linked for RAM 0x50120000), the KN7000's func_48436229: +4 loaded at
                          # func_50173F49_entry_L13 0x50173F61, read `movbu (d0, a0)` at L170 / L1b5; +1 / +2 / +3
                          # answered by func_50173EF8 / func_50173F13 / func_50173F2E
@@ -172,3 +190,82 @@ OPTIONS = {
     "NoteConvRules_p4": {"tail": (1, True, 4)},
 }
 
+
+
+# -- names from the field's use (lane mn10300-formats, 2026-10-31) -----------------------------------
+# A field the curated tables above do not name gets the name of what the code does with it, when
+# that is clear (tools/data_field_uses.py has the rules and the evidence each name stands for):
+#   proc        called through (`calls (aN)` / `jmp (aN)`), or a pointer every record points into code
+#   text        a pointer every record points at a NUL-terminated string
+#   key         compared with a value the reading routine was given, then beq / bne (a lookup key)
+#   count       compared with a register before a backward branch (a loop bound)
+#   index       scaled (asl / mulu) or used as an index register: an index into a table
+#   flags       bits tested or masked with constants
+#   kind        compared with several constants (a switch on it)
+#   <param>     handed to a routine whose parameter is known (data_field_uses.PARAMS: view, title,
+#               event, object, icon, size, flag, param_key ...)
+#   <F>_<reg>   handed to the named routine F in register reg (its own code says no more)
+#   <prefix>    compared with a symbolic constant: event (EV_*), message (MT_*), title (TT_*) ...
+AUTO_NAMES = True
+_CI = {}
+
+
+def _G():
+    """The configured gen_data_s module (it usually runs as __main__)."""
+    import sys
+    m = sys.modules.get("__main__")
+    if hasattr(m, "code_glob") and hasattr(m, "P"):
+        return m
+    import gen_data_s
+    return gen_data_s
+
+
+def _code_index(gen):
+    G = _G()
+    import data_field_uses as DFU
+    k = G.code_glob()
+    if k not in _CI:
+        _CI[k] = DFU.CodeIndex(k)
+    return _CI[k]
+
+
+def auto_name(g, f):
+    """A name for field f of record kind g from what the code does with it, or None."""
+    gen = getattr(g, "gen", None)
+    if not AUTO_NAMES or gen is None or f.kind in ("bytes", "text"):
+        return None
+    import data_field_uses as DFU
+    if f.kind == "ptr":
+        offs = getattr(g, "rec_offs", None) or []
+        vals = [int.from_bytes(gen.rom[o + f.off:o + f.off + 4], "little") for o in offs]
+        vals = [v for v in vals if v]
+        if vals:
+            if not hasattr(gen, "_code_addrs"):
+                gen._code_addrs = set(gen.code_labels.values())
+            if all(gen.in_code(v) or v in gen._code_addrs for v in vals):
+                return "proc"
+            if all(gen.in_data(v) and _is_str(gen, v) for v in vals):
+                return "text"
+    ci = _code_index(gen)
+    near = tuple(x for x in {getattr(g, "label", None)} if x)
+    occ = []
+    for a in f.accs:
+        if a.width and a.rw == "ld" and a.func and a.insn:
+            occ += ci.uses(a.func, a.insn, near=near)
+    return DFU.name_for_all(occ, f.kind)
+
+
+def _is_str(gen, v):
+    o = v - gen_base(gen)
+    rom = gen.rom
+    if not (0 <= o < len(rom)):
+        return False
+    e = rom.find(b"\0", o, o + 256)
+    if e <= o:
+        return False
+    bs = rom[o:e]
+    return sum(1 for c in bs if 0x20 <= c < 0x7F) >= max(1, int(len(bs) * 0.8)) and all(c >= 0x09 for c in bs)
+
+
+def gen_base(gen):
+    return _G().BASE
