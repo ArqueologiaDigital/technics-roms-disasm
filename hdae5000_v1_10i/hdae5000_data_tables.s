@@ -58,8 +58,8 @@ HDAE5000_RECORD_TABLE:
 ; RECORD LAYOUT (24 bytes), matching hdae5000_init_data.s:23-28:
 ;   +0x00  .long  ProcPtr        class procedure entry point (ROM); matches an
 ;                                already-named *Proc routine in this tree for all
-;                                13 records (e.g. record 7 -> HDAE5000_TtlScreenR3Proc
-;                                at 0x280645, byte-identical address)
+;                                10 records in v1.x (e.g. record 6 -> HDAE5000_TtlScreenR2Proc;
+;                                v2.x has 13: TtlScreenR3, LyricBox, FDFileSelect)
 ;   +0x04  .long  parent         the parent CLASS ID (0x0160_00xx: a class of the main
 ;                                CPU's root class table, NAKA_CLASS_*) -- the class
 ;                                definition layout of the main CPU's class system
@@ -83,8 +83,9 @@ HDAE5000_RECORD_TABLE:
 ;                                record 0's 0x23975A == the documented
 ;                                "0x2f96e2 -> 0x23975a, 13 lists" first entry
 ;
-; EVIDENCE.  Every claim above is checked by the committed probe
-; hdae5000/tools/verify_record_table.py, run from the repo root; it reads
+; EVIDENCE (of the v2.06i ROM, whose 13 records this block was written for; v1.x has 10 and
+; the gate's byte compare checks them).  The committed probe
+; hdae5000/tools/verify_record_table.py, run from the repo root, reads
 ; original_ROMs/hd-ae5000_v2_06i.ic4 at load base 0x280000 and nothing else:
 ;  * all 13 ProcPtr values land exactly on an already-named *Proc label's address
 ;  * the reserved gap (0x29C1E2-0x29D8A9) is 5,832 bytes of 0x00, no exception
@@ -324,7 +325,7 @@ HDAE5000_Str_SelectListProc:
 ;
 ; Layout rule, taken from the copy code inside HDAE5000_UiState_Reset and
 ; [the addresses below (0x2804BB..) are in the title-screen procedures
-;  HDAE5000_TtlScreenRProc / _TtlScreenR2Proc / _TtlScreenR3Proc, which sat in
+;  HDAE5000_TtlScreenRProc / _TtlScreenR2Proc (v1.x has no _TtlScreenR3Proc), which sat in
 ;  the conversion region once labelled Register_Frame -- now the small
 ;  HDAE5000_UiState_Reset]
 ; confirmed byte-wise over the whole region: every bitmap is immediately
@@ -3716,7 +3717,7 @@ HDAE5000_PartSignatureTable_Length:	.short	2
 	.short	0, 2
 ; The signature strings the table points at (offset and compare length in the table): CMP, MSP and RCM files start
 ;   with 'H', 0, 'K' (3 bytes); PMT and MD files with "HK", LSW files have "HK" at offset 4; SQT files the bytes 01 08
-;   at offset 5; TM files start with "KN5000 SOUND RAM" (16 bytes), TLX files with "TLhd".
+;   at offset 5; TM files start with "KN5000 SOUND RAM" (16 bytes).  (v2.x adds TLX, "TLhd".)
 HDAE5000_PartSig_MD:	.asciz "HK"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_PartSig_RCM:	.asciz "H"
