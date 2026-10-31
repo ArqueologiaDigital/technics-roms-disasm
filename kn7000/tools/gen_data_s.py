@@ -1565,7 +1565,7 @@ class Gen:
                     out.append(f"\tSOUND_ALPHA\t{ini}, {msb}, {lsb}, {pg}" + ("\t# end" if k == n else ""))
                 return out
             self.add(p, 4 * n + 4, lab, "sound list", render)
-        tl = self.rename_at(a, "SoundAlphaListTable")
+        tl = self.name_at(a, "SoundAlphaListTable")      # (the symbol files' name)
         self.add(a, 24, tl, "sound list",
                  lambda g, it, ptrs=ptrs: [f"{it.label}:\t# SoundAlphaListGet: [2 * kind + variant]"] +
                  [f"\t.long\t{g.ref(v)}\t# kind {i // 2}, variant {i % 2}" for i, v in enumerate(ptrs)])
