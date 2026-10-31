@@ -14,17 +14,17 @@ plan ask for is committed and the website text is drafted; the integrator's docs
 drafts into technics-docs and then closes the issues (repo-root CLAUDE.md "Issue Closure
 Requirements").
 
-| sub-lane | notes                                                  | issues                              |
-|----------|--------------------------------------------------------|-------------------------------------|
-| cpanel   | [cpanel/README.md](cpanel/README.md)                   | bq4, 9ye, 3c7, xhi, z9k             |
-| midi     | [midi/README.md](midi/README.md)                       | 81p, 5ck, ake, 8dy, cox             |
-| display  | [display/README.md](display/README.md)                 | ezo, rq0, 5dc, nmg, 8z5             |
-| hdae     | [hdae/README.md](hdae/README.md)                       | 44c, t8n, e7f, mzz, qnf             |
-| tools    | [tools/README.md](tools/README.md)                     | 0bq, waa, 87m, dkx, 3ei             |
-| engine   | [engine/README.md](engine/README.md)                   | rlb, wgc, 98j (chord recognition)   |
-| accvar   | [accvar/README.md](accvar/README.md)                   | 98j (section switching, transposition) |
-| hwaudio  | [hwaudio/README.md](hwaudio/README.md)                 | xel, jy9, mhj, 1oy                  |
-| naming   | [naming/README.md](naming/README.md)                   | nl6                                 |
+| sub-lane | notes                                  | issues                                 |
+|----------|----------------------------------------|----------------------------------------|
+| cpanel   | [cpanel/README.md](cpanel/README.md)   | bq4, 9ye, 3c7, xhi, z9k                |
+| midi     | [midi/README.md](midi/README.md)       | 81p, 5ck, ake, 8dy, cox                |
+| display  | [display/README.md](display/README.md) | ezo, rq0, 5dc, nmg, 8z5                |
+| hdae     | [hdae/README.md](hdae/README.md)       | 44c, t8n, e7f, mzz, qnf                |
+| tools    | [tools/README.md](tools/README.md)     | 0bq, waa, 87m, dkx, 3ei                |
+| engine   | [engine/README.md](engine/README.md)   | rlb, wgc, 98j (chord recognition)      |
+| accvar   | [accvar/README.md](accvar/README.md)   | 98j (section switching, transposition) |
+| hwaudio  | [hwaudio/README.md](hwaudio/README.md) | xel, jy9, mhj, 1oy                     |
+| naming   | [naming/README.md](naming/README.md)   | nl6                                    |
 
 nl6's leads were shared out: ENCODER_STATE_BASE (cpanel), SysEx_BytecodeDispatcher (midi),
 ChordDetect_* / RhythmVariation_InlineCode_Code / VoiceSlot_FinalRetZ / ToneGen_CompareVoiceBlocks
@@ -46,15 +46,15 @@ The rule for this wave: an epic, or a milestone issue whose children are separat
 CLOSED when every child is CLOSED (repo side) or BLOCKED; otherwise it is BLOCKED on the named open
 children.  Child states below are as of this lane's merge.
 
-| epic       | children                                                                                   | outcome |
-|------------|--------------------------------------------------------------------------------------------|---------|
-| kn5000-8z5 | ezo CLOSED here; 3c5, hy8 closed; gln resolved                                             | CLOSED  |
-| kn5000-z9k | xhi CLOSED here; bcn, jwk closed (analog pages: jy9, xel CLOSED here)                      | CLOSED  |
-| kn5000-ake | 81p, 5ck CLOSED here; 0vs resolved                                                         | CLOSED  |
-| kn5000-9m6 | 81p, 5ck, rlb, 44c, mhj CLOSED here; izk, 8ro, bqe resolved                                | CLOSED  |
-| kn5000-dnl | 5dc, 3c7 CLOSED here; kev resolved; ima, kuu closed; 1vz, a0k, qhm BLOCKED (MAME upstream) | CLOSED  |
-| kn5000-nca | waa, 87m CLOSED here; pkx, sf8, 5jy, 9zb resolved; 9jq, 4bt, aar, 9a0 closed; a8s BLOCKED (hardware baselines) | CLOSED |
-| kn5000-3go | dnl, 9m6, nca CLOSED here; dbi BLOCKED (undumped wave ROMs, MAME audio)                    | CLOSED  |
+| epic       | children                                                                                                       | outcome |
+|------------|----------------------------------------------------------------------------------------------------------------|---------|
+| kn5000-8z5 | ezo CLOSED here; 3c5, hy8 closed; gln resolved                                                                 | CLOSED  |
+| kn5000-z9k | xhi CLOSED here; bcn, jwk closed (analog pages: jy9, xel CLOSED here)                                          | CLOSED  |
+| kn5000-ake | 81p, 5ck CLOSED here; 0vs resolved                                                                             | CLOSED  |
+| kn5000-9m6 | 81p, 5ck, rlb, 44c, mhj CLOSED here; izk, 8ro, bqe resolved                                                    | CLOSED  |
+| kn5000-dnl | 5dc, 3c7 CLOSED here; kev resolved; ima, kuu closed; 1vz, a0k, qhm BLOCKED (MAME upstream)                     | CLOSED  |
+| kn5000-nca | waa, 87m CLOSED here; pkx, sf8, 5jy, 9zb resolved; 9jq, 4bt, aar, 9a0 closed; a8s BLOCKED (hardware baselines) | CLOSED  |
+| kn5000-3go | dnl, 9m6, nca CLOSED here; dbi BLOCKED (undumped wave ROMs, MAME audio)                                        | CLOSED  |
 
 What the epics still list that no child carries, and where it belongs:
 
