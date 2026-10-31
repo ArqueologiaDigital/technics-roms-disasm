@@ -1,12 +1,12 @@
 image bytes                 3675793
 code-range bytes            1546558
-entries                     13578 (2557 named, 689 derived <name>_entry, 10332 func_)
-bytes emitted as code       1533155 (41.71% of image, 99.13% of code ranges)
+entries                     13580 (2558 named, 689 derived <name>_entry, 10333 func_)
+bytes emitted as code       1533184 (41.71% of image, 99.14% of code ranges)
 instructions                580267 (+0 .byte escapes)
 nop padding bytes           5
-unreached code decoded       13382 (--decode-gaps; +16 bytes of 0xFF fill)
+unreached code decoded       13353 (--decode-gaps; +16 bytes of 0xFF fill)
 code-range bytes left binary 0 (in 0 .incbin_range pieces)
-local labels                49607
+local labels                49610
 movm pointer targets rejected (paths do not end) 0
 entries found right after reached code          1288 (0 rejected, with jmp targets)
 entries found as a jmp target                   29

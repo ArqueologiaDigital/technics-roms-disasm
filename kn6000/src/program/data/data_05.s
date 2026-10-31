@@ -36985,7 +36985,7 @@ Str_X:	.asciz "X"
 Str_empty_257:	.asciz "\\"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD90A, 0x3DD912
-Str_d:	.asciz "d"
+Str_d_3:	.asciz "d"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD914, 0x3DD91C
 Str_l:	.asciz "l"
@@ -37425,7 +37425,7 @@ ptrs_4C3DE244:
 	.long	Text_Italian_Pop+952
 	.long	Str_empty_257
 	.long	Text_Italian_Pop+969
-	.long	Str_d
+	.long	Str_d_3
 	.long	Text_Italian_Pop+986
 	.long	Str_l
 	.long	Text_Italian_Pop+1003
@@ -37837,7 +37837,7 @@ ptrs_4C3DE7C4:
 	.long	0
 	.space	4, 0x00
 
-StyleGenreTable:	# 11 x StyleGenre (8 bytes each); read by func_4C163D15_entry_Lf 0x4C163D27 `mov (4, a0), a0`; func_4C1640C8_entry_L3c 0x4C164109 `mov (4, a0), a3`; func_4C1640C8_entry_L11a 0x4C1641E7 `mov (4, a0), d0` (+7)
+StyleGenreTable:	# 11 x StyleGenre (8 bytes each); read by func_4C163CC7_entry_L7 0x4C163CD4 `mov (d0, a0), a1`; func_4C163D15_entry_Lf 0x4C163D27 `mov (4, a0), a0`; func_4C1640C8_entry_L3c 0x4C164109 `mov (4, a0), a3` (+8)
 	StyleGenre	name=Text_Rock_Pop, styles=ptrs_4C3DE09C	# [0]
 	StyleGenre	name=Text_Rock_Pop+17, styles=ptrs_4C3DE244
 	StyleGenre	name=Text_Rock_Pop+34, styles=ptrs_4C3DE32C
@@ -37979,7 +37979,7 @@ StyleAlphabetTable_p4_26:	# REC_StyleAlphabetTable_p4 (6 bytes)
 StyleAlphabetTable_p4_27:	# REC_StyleAlphabetTable_p4 (6 bytes)
 	REC_StyleAlphabetTable_p4	f0=573, x2="\xFF\xFF\xFF\xFF"
 
-StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4C164F3F 0x4C164F3F `mov (4, a0), a0`; func_4C164F3F 0x4C164F3F `mov (d2, a2), a1`; func_4C16506A 0x4C16506A `mov (4, a0), a0` (+6)
+StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4C164F3F 0x4C164F3F `mov (4, a0), a0`; func_4C164F3F 0x4C164F3F `mov (d2, a2), a1`; func_4C165012 0x4C165012 `mov (d1, a0), d1` (+7)
 	StyleLetter	letter=Str_1_17, setups=StyleAlphabetTable_p4_0	# [0]
 	StyleLetter	letter=Str_2_19, setups=StyleAlphabetTable_p4_1
 	StyleLetter	letter=Str_4_18, setups=StyleAlphabetTable_p4_2

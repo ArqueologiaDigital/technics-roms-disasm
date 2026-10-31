@@ -200,13 +200,25 @@ data_9783E56D:
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E56D, 0x03E570
 
-data_978AFD7C_p0_0:	# REC_data_978AFD7C_p0 (4 bytes)
-	REC_data_978AFD7C_p0	x0="\x00\x10\x10\x10"
-# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E574, 0x03E5F1
-	.space	128, 0x00
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E671, 0x03E674
+data_978AFD7C_p0_0:	# REC_data_978AFD7C_p0 (2 bytes), then 258 x u8 the code indexes from +1 (read by PfOutField_entry_L56 0x97808240 `movbu (d0, a0), d0`; PfParseWidthPrecSize_entry_L65 0x9780847E `movbu (d2, a1), d0` (+10))
+	REC_data_978AFD7C_p0	x0="\x00\x10"
+	tab_u8	16, 16, 16, 16, 16, 16, 16, 16, 48, 48, 48, 48, 48, 16, 16, 16	# [0]
+	tab_u8	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 160	# [16]
+	tab_u8	192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 140	# [32]
+	tab_u8	140, 140, 140, 140, 140, 140, 140, 140, 140, 192, 192, 192, 192, 192, 192, 192	# [48]
+	tab_u8	137, 137, 137, 137, 137, 137, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129	# [64]
+	tab_u8	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 192, 192, 192, 192, 192, 192	# [80]
+	tab_u8	138, 138, 138, 138, 138, 138, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130	# [96]
+	tab_u8	130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 192, 192, 192, 192, 16, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67	# [240]
+	tab_u8	0, 255	# [256]
 
 Str_Infinity_3:	.asciz "Infinity"
 	.align	4, 0xFF	# pad after Str_Infinity_3
@@ -8296,8 +8308,10 @@ Str_d2_Kopiere_FD_auf_HDD_Technics_Format:	.asciz "d2\x8A\x97Kopiere FD auf HDD:
 Str_2_COPY_FD_TO_HDD_TECH_FORMAT_2:	.asciz "\x842\x8A\x97COPY FD TO HDD: TECH-FORMAT"
 Str_2_COPY_FD_TO_HDD_TECH_FORMAT:	.asciz "\xAC2\x8A\x97COPY FD TO HDD: TECH-FORMAT"
 
-KssCopyFdToHD_DISPProc_L709_Table_p0_0:	# REC_KssCopyFdToHD_DISPProc_L709_Table_p0 (4 bytes)
-	REC_KssCopyFdToHD_DISPProc_L709_Table_p0	p0=Str_2_COPY_FD_TO_HDD_TECH_FORMAT+4
+KssCopyFdToHD_DISPProc_L709_Table_p0_0:	# REC_KssCopyFdToHD_DISPProc_L709_Table_p0 (1 bytes)
+	REC_KssCopyFdToHD_DISPProc_L709_Table_p0	x0="\xCC"
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A32E9, 0x0A32EC
 
 Str_SAVE_FSB_OK_3:	.asciz "SAVE FSB OK!"
 Str_SAVE_SONG_TO_HDD_OK_3:	.asciz "SAVE SONG TO HDD OK!"
@@ -8497,8 +8511,10 @@ Str_8_COPY_FD_TO_HDD_SMF_2:	.asciz "\x808\x8A\x97COPY FD TO HDD SMF"
 Str_8_COPY_FD_TO_HDD_SMF:	.asciz "\x988\x8A\x97COPY FD TO HDD SMF"
 	.align	4, 0xFF	# pad after Str_8_COPY_FD_TO_HDD_SMF
 
-KssCopySmfFdToHD_DISPProc_L47a_Table_p0_0:	# REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 (4 bytes)
-	REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0	p0=Str_8_COPY_FD_TO_HDD_SMF+4
+KssCopySmfFdToHD_DISPProc_L47a_Table_p0_0:	# REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 (1 bytes)
+	REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0	x0="\xB0"
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A38C5, 0x0A38C8
 
 Str_Save_FSB_OK_3:	.asciz "Save FSB = OK"
 Str_Save_Song_to_HD_OK_3:	.asciz "Save Song to HD = OK"

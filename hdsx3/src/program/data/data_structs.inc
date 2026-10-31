@@ -97,8 +97,8 @@
 	.long	\p8
 .endm
 
-# REC_data_978AFD7C_p0: 4-byte records (data_978AFD7C_p0, 1 records); fields, and what reads them:
-#   +0   x0           u8[4]          no reader seen
+# REC_data_978AFD7C_p0: 2-byte records (data_978AFD7C_p0, 1 records); fields, and what reads them:
+#   +0   x0           u8[2]          no reader seen
 .macro REC_data_978AFD7C_p0 x0
 	.ascii	\x0
 .endm
@@ -125,16 +125,16 @@
 	.long	\p0
 .endm
 
-# REC_KssCopyFdToHD_DISPProc_L709_Table_p0: 4-byte records (KssCopyFdToHD_DISPProc_L709_Table_p0, 1 records); fields, and what reads them:
-#   +0   p0           ptr            no reader seen
-.macro REC_KssCopyFdToHD_DISPProc_L709_Table_p0 p0=0
-	.long	\p0
+# REC_KssCopyFdToHD_DISPProc_L709_Table_p0: 1-byte records (KssCopyFdToHD_DISPProc_L709_Table_p0, 1 records); fields, and what reads them:
+#   +0   x0           u8[1]          no reader seen
+.macro REC_KssCopyFdToHD_DISPProc_L709_Table_p0 x0
+	.ascii	\x0
 .endm
 
-# REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0: 4-byte records (KssCopySmfFdToHD_DISPProc_L47a_Table_p0, 1 records); fields, and what reads them:
-#   +0   p0           ptr            no reader seen
-.macro REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 p0=0
-	.long	\p0
+# REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0: 1-byte records (KssCopySmfFdToHD_DISPProc_L47a_Table_p0, 1 records); fields, and what reads them:
+#   +0   x0           u8[1]          no reader seen
+.macro REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 x0
+	.ascii	\x0
 .endm
 
 # REC_func_97833B38_entry_L34_Records_p0: 6433-byte records (func_97833B38_entry_L34_Records_p0, 3 records); fields, and what reads them:
