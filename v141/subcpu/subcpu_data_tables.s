@@ -2698,19 +2698,21 @@ DSP2_InitTask_PtrTable:
 	.long DSP2_InitTask_NullStub
 	.long DSP2_InitTask_NullStub
 
-; --- 0x0121bd  15 x u16 dispatch offsets for sub-commands 0x17-0x25 of command 0x2C.
-; CmdHandler2C_JumpDispatch computes `jp (CmdHandler2C_TableData + offs[subcmd - 0x17])`.
+; --- 15 x u16 dispatch offsets for the global sub-commands of command 0x2C: entries 0-8 are
+; sub-commands 0x00-0x08 (index = sub-command), entries 9-14 are 0x20-0x25 (index = sub-command
+; - 0x17); 0x09-0x1F are rejected before the table.  CmdHandler2C_JumpDispatch computes
+; `jp (CmdHandler2C_TableData + offs[index])`.
 ; The two DSP_Process_ReadNext entries (0x1c, 0x20) are skip/ignore slots.
 CmdHandler2C_DispatchOffsets:
-	.short CmdHandler2C_TableData - CmdHandler2C_TableData           	; sub-cmd 0x17
-	.short CmdHandler2C_Global_MixParamA - CmdHandler2C_TableData    	; sub-cmd 0x18
-	.short CmdHandler2C_Global_MixParamB - CmdHandler2C_TableData    	; sub-cmd 0x19
-	.short CmdHandler2C_Global_MonoMode - CmdHandler2C_TableData     	; sub-cmd 0x1a
-	.short CmdHandler2C_Global_BendRange - CmdHandler2C_TableData    	; sub-cmd 0x1b
-	.short DSP_Process_ReadNext - CmdHandler2C_TableData             	; sub-cmd 0x1c
-	.short CmdHandler2C_Global_MixParamC - CmdHandler2C_TableData    	; sub-cmd 0x1d
-	.short CmdHandler2C_Global_SetValue45B8 - CmdHandler2C_TableData 	; sub-cmd 0x1e
-	.short CmdHandler2C_Global_SetEnable45BA - CmdHandler2C_TableData	; sub-cmd 0x1f
+	.short CmdHandler2C_TableData - CmdHandler2C_TableData           	; sub-cmd 0x00
+	.short CmdHandler2C_Global_MixParamA - CmdHandler2C_TableData    	; sub-cmd 0x01
+	.short CmdHandler2C_Global_MixParamB - CmdHandler2C_TableData    	; sub-cmd 0x02
+	.short CmdHandler2C_Global_MonoMode - CmdHandler2C_TableData     	; sub-cmd 0x03
+	.short CmdHandler2C_Global_BendRange - CmdHandler2C_TableData    	; sub-cmd 0x04
+	.short DSP_Process_ReadNext - CmdHandler2C_TableData             	; sub-cmd 0x05
+	.short CmdHandler2C_Global_MixParamC - CmdHandler2C_TableData    	; sub-cmd 0x06
+	.short CmdHandler2C_Global_SetValue45B8 - CmdHandler2C_TableData 	; sub-cmd 0x07
+	.short CmdHandler2C_Global_SetEnable45BA - CmdHandler2C_TableData	; sub-cmd 0x08
 	.short DSP_Process_ReadNext - CmdHandler2C_TableData             	; sub-cmd 0x20
 	.short CmdHandler2C_Global_SetValue4504 - CmdHandler2C_TableData 	; sub-cmd 0x21
 	.short CmdHandler2C_Global_SetValue453C - CmdHandler2C_TableData 	; sub-cmd 0x22
