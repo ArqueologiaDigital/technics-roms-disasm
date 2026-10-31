@@ -19315,7 +19315,7 @@ func_4C00805C_Table:	# 134 x u32, 0..4294967040; read by func_4C00805C 0x4C00805
 	tab_u32	2256310, 3197650, 4216746, 5329498, 6556983, 7927715, 9481217, 11273900	# [112]
 	tab_u32	13389162, 15955782, 19183815, 23441087, 29436404, 38735938, 55627445, 97599276	# [120]
 	tab_u32	4294967040, 4294967040, 4294967040, 0, 0, 4294901760	# [128]
-MainMmmControl_Table:	# 260 x u32, 0..4278190080; read by MainMmmControl 0x484162FA: `mov   (a1), d0`; MainMmmControl 0x484162FA: `mov   a0, (a1)` ...
+MainMmmControl_Table:	# 256 x u32, 0..4278190080; read by MainMmmControl 0x484162FA: `mov   (a1), d0`; MainMmmControl 0x484162FA: `mov   a0, (a1)` ...; ends at +1024, where MainMmmControl 0x484162FA's loop stops (`cmp func_484165A4_Var, a1`)
 	tab_u32	4278190080, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [8]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [16]
@@ -19348,8 +19348,15 @@ MainMmmControl_Table:	# 260 x u32, 0..4278190080; read by MainMmmControl 0x48416
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [232]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [240]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [248]
-	tab_u32	1342316544, 32768, 0, 0	# [256]
 
+func_484165A4_Var:	# u32, initial value of a RAM variable; read / written by func_484165A4 0x484165A4: `mov (func_484165A4_Var), a0`; func_484165A4 0x484165A4: `mov d0, (func_484165A4_Var)`
+	.long	0x50022000
+func_484165A4_Var_2:	# u32, initial value of a RAM variable; read / written by func_484165A4 0x484165A4: `mov (func_484165A4_Var_2), a0`; func_484165A4 0x484165A4: `mov (func_484165A4_Var_2), d0` ...
+	.long	32768
+Malloc_Var:	# u32, initial value of a RAM variable; read / written by Malloc 0x484165E3: `mov (Malloc_Var), a0`; Malloc 0x484165E3: `mov (Malloc_Var), a2` ...
+	.long	0
+GroupBoxProc_Var_8:	# u32, initial value of a RAM variable; read / written by GroupBoxProc 0x48416E8C: `mov (GroupBoxProc_Var_8), d0`; SetDialEnable 0x484175D0: `mov (GroupBoxProc_Var_8), d0` ...
+	.long	0
 GroupBoxProc_Var:	# u32, initial value of a RAM variable; read / written by GroupBoxProc 0x48416E8C: `mov (GroupBoxProc_Var), d0`; SetDialUp 0x48417693: `mov d0, (GroupBoxProc_Var)`
 	.long	0xffffffff
 GroupBoxProc_Var_2:	# u32, initial value of a RAM variable; read / written by GroupBoxProc 0x48416E8C: `mov (GroupBoxProc_Var_2), d0`; SetDialDown 0x484176B2: `mov d0, (GroupBoxProc_Var_2)`
@@ -19732,8 +19739,13 @@ func_484729E6_Table_3:	# 20 x u16, 0..0; read by func_484729E6 0x484729E6: `movh
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
 
-func_484729E6_Table_4:	# REC_func_48472BF8_ArgA0 (40 bytes): the layout func_48472BF8 0x48472BF8 reads through its argument a0 (passed by func_484729E6 0x484729E6 `call func_48472BF8_entry, [d2,d3,a2,a3], 0x10`)
-	REC_func_48472BF8_ArgA0	x2="\x00\x00", x6="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+func_484729E6_Table_4:	# REC_func_48472BF8_ArgA0 (8 bytes): the layout func_48472BF8 0x48472BF8 reads through its argument a0 (passed by func_484729E6 0x484729E6 `call func_48472BF8_entry, [d2,d3,a2,a3], 0x10`)
+	REC_func_48472BF8_ArgA0	x2="\x00\x00", x6="\x00\x00"
+	# then 15 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
+	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +8
+
+func_484729E6_Var_3:	# 2 x u8, 0..0; read by func_484729E6_entry 0x48471554: `movbu  (a0), d0`; func_484729E6_entry 0x48471554: `movbu  (a1), d0`
+	tab_u8	0, 0
 
 func_484738C3_Var:	# u32, initial value of a RAM variable; read / written by func_484738C3 0x484738C3: `mov (func_484738C3_Var), d0`; func_484738C3 0x484738C3: `mov d0, (func_484738C3_Var)` ...
 	.long	0
@@ -19975,7 +19987,7 @@ BitmapLoad_DbBitmapFile_BITMAP_FILE_selected:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x3B0534, 0x3B0538
 DbMemoryDumpProc_Table_2:	# 4 x u32, 1212153856..2214592512; read by DbMemoryDumpProc 0x4848769F: `mov   (d0, a0), d0`; DbMemoryDumpProc 0x4848769F: `mov   (d0, a0), d1` ...
 	tab_u32	2214592512, 1342177280, 1275068416, 1212153856
-DbMemoryDumpProc_Table_3:	# 3 x s16, 240..255; read by DbMemoryDumpProc 0x4848769F: `movhu  (a0), d0`; DbMemoryDumpProc 0x4848769F: `movhu  (d1, a0), d1` ...
+DbMemoryDumpProc_Table_3:	# 3 x s16, 240..255; read by DbMemoryDumpProc 0x4848769F: `movhu  (a0), d0`; DbMemoryDumpProc 0x4848769F: `movhu  (d0, a3), d0` ...
 	tab_s16	240, 247, 255
 	.align	4, 0xFF	# pad after DbMemoryDumpProc_Table_3
 
@@ -20650,13 +20662,19 @@ func_4848AE8F_Records_p4_25:	# REC_func_4848AE8F_Records_p4 (4 bytes)
 	REC_func_4848AE8F_Records_p4	index=func_4848AE8F_Records_p4_p0_8
 func_4848AE8F_Records_p4_26:	# REC_func_4848AE8F_Records_p4 (4 bytes)
 	REC_func_4848AE8F_Records_p4	index=func_4848AE8F_Records_p4_p0_9
-data_50001850_p0_1:	# REC_data_50001850_p0 (1 bytes), then 53 x u16 the code indexes from +0 (read by func_4848DD84 0x4848DD84 `movhu (d0, a0), d0`)
-	REC_data_50001850_p0	x0="\x00"
-	tab_u16	256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 6656	# [0]
-	tab_u16	6400, 5888, 5632, 5376, 5120, 4864, 6144, 7936, 7424, 7168, 6912, 8448, 4608, 4352, 4096, 65280	# [16]
-	tab_u16	65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 256	# [32]
-	tab_u16	65280, 2303, 24250, 15432, 24256	# [48]
-	.align	4, 0x48	# pad after data_50001850_p0_1
+
+TtSqmixer_Table:	# 49 x u16, 0..255; read by TtSqmixer 0x4848DC56: `movhu  d0, (-2, a0)`
+	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
+	tab_u16	12, 13, 14, 15, 26, 25, 23, 22, 21, 20, 19, 24	# [12]
+	tab_u16	31, 29, 28, 27, 33, 18, 17, 16, 255, 255, 255, 255	# [24]
+	tab_u16	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [36]
+	tab_u16	1	# [48]
+	.align	4, 0xFF	# pad after TtSqmixer_Table
+
+func_4848DD6C_Var:	# u32, initial value of a RAM variable; read / written by func_4848DD6C 0x4848DD6C: `mov (func_4848DD6C_Var), a0`; func_4848DD7B 0x4848DD7B: `mov a0, (func_4848DD6C_Var)`
+	.long	0x485eba08
+func_4848DD84_Var:	# u32, initial value of a RAM variable; read / written by func_4848DD84 0x4848DD84: `mov (func_4848DD84_Var), a0`; func_4848DD91 0x4848DD91: `mov a0, (func_4848DD84_Var)`
+	.long	0x485ec03c
 
 AcMixPartSoundProc_Table:
 	.long	Str_PART_1_2
@@ -22926,7 +22944,7 @@ TtNormal_Var:	# u32, initial value of a RAM variable; read / written by TtNormal
 AcHpBmpProc_Var:	# u32, initial value of a RAM variable; read / written by AcHpBmpProc 0x484956C8: `mov (AcHpBmpProc_Var), a0`; AcHpBmpProc 0x484956C8: `mov (AcHpBmpProc_Var), a1` ...
 	.long	0x48743e5c
 
-AcTrackVolProc_Table:	# 17 x u16, 0..15; read by AcTrackVolProc 0x484954D5: `movhu  (d0, a1), d0`; AcTrackVolProc 0x484954D5: `movhu  (d0, a1), d1`
+AcTrackVolProc_Table:	# 17 x u16, 0..15; read by TtNormal 0x484938C1: `movhu  d0, (-2, a0)`; AcTrackVolProc 0x484954D5: `movhu  (d0, a1), d0` ...
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
 	tab_u16	12, 13, 14, 15, 1	# [12]
 	.align	4, 0xFF	# pad after AcTrackVolProc_Table
@@ -26779,12 +26797,26 @@ FE_CmpMCopyDPart_Table:	# 4 x u8, 2..255; read by FE_CmpMCopyDPart 0x4850DAB6: `
 	tab_u8	2, 255, 255, 255
 FE_CmpMCopySrtMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMCopySrtMeas 0x4850DB8A: `movhu (FE_CmpMCopySrtMeas_Table), d0`; FE_CmpMCopySrtMeas 0x4850DB8A: `movhu (FE_CmpMCopySrtMeas_Table), d1` ...
 	tab_u16	1, 65535
-func_4850DCC4_Table:	# 7 x u32, 9437455..4294901761; read by func_4850DCC4 0x4850DCC4: `mov   (a2), d0`; func_4850DCC4 0x4850DCC4: `mov   (func_4850DCC4_Table), d0`
-	tab_u32	9437455, 9437456, 9437457, 9437470, 9437474, 4294901761, 4294901761
-func_4850E2C6_Table:	# 5 x u32, 9437485..4294967041; read by func_4850E2C6 0x4850E2C6: `mov   (a2), d0`; func_4850E2C6 0x4850E2C6: `mov   (func_4850E2C6_Table), d0`
-	tab_u32	9437485, 9437486, 4294967041, 4294901761, 4294901761
-func_4850E854_Table:	# 5 x u32, 9437500..4294901761; read by func_4850E854 0x4850E854: `mov   (a2), d0`; func_4850E854 0x4850E854: `mov   (func_4850E854_Table), d0`
-	tab_u32	9437500, 9437501, 9437502, 4294901761, 4294901761
+func_4850DCC4_Table:	# 5 x u32, 9437455..9437474; read by func_4850DCC4 0x4850DCC4: `mov   (a2), d0`; func_4850DCC4 0x4850DCC4: `mov   (func_4850DCC4_Table), d0`; ends at +20, where func_4850DCC4 0x4850DCC4's loop stops (`cmp FE_CmpMDelFstMeas_Table, a2`)
+	tab_u32	9437455, 9437456, 9437457, 9437470, 9437474
+FE_CmpMDelFstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMDelFstMeas 0x4850E0F5: `movhu (FE_CmpMDelFstMeas_Table), d0`; FE_CmpMDelFstMeas 0x4850E0F5: `movhu (FE_CmpMDelFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_CmpMDelLstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMDelLstMeas 0x4850E1C8: `movhu (FE_CmpMDelLstMeas_Table), d0`; FE_CmpMDelLstMeas 0x4850E1C8: `movhu (FE_CmpMDelLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+func_4850E2C6_Table:	# 2 x u32, 9437485..9437486; read by func_4850E2C6 0x4850E2C6: `mov   (a2), d0`; func_4850E2C6 0x4850E2C6: `mov   (func_4850E2C6_Table), d0`; ends at +8, where func_4850E2C6 0x4850E2C6's loop stops (`cmp FE_CmpMErsSPart_Table, a2`)
+	tab_u32	9437485, 9437486
+FE_CmpMErsSPart_Table:	# 4 x u8, 1..255; read by FE_CmpMErsSPart 0x4850E59E: `movbu (FE_CmpMErsSPart_Table), d0`; FE_CmpMErsSPart 0x4850E59E: `movbu (FE_CmpMErsSPart_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_CmpMErsFstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMErsFstMeas 0x4850E672: `movhu (FE_CmpMErsFstMeas_Table), d0`; FE_CmpMErsFstMeas 0x4850E672: `movhu (FE_CmpMErsFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_CmpMErsLstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMErsLstMeas 0x4850E745: `movhu (FE_CmpMErsLstMeas_Table), d0`; FE_CmpMErsLstMeas 0x4850E745: `movhu (FE_CmpMErsLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+func_4850E854_Table:	# 3 x u32, 9437500..9437502; read by func_4850E854 0x4850E854: `mov   (a2), d0`; func_4850E854 0x4850E854: `mov   (func_4850E854_Table), d0`; ends at +12, where func_4850E854 0x4850E854's loop stops (`cmp FE_CmpMInsFstMeas_Table, a2`)
+	tab_u32	9437500, 9437501, 9437502
+FE_CmpMInsFstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMInsFstMeas 0x4850E9C2: `movhu (FE_CmpMInsFstMeas_Table), d0`; FE_CmpMInsFstMeas 0x4850E9C2: `movhu (FE_CmpMInsFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_CmpMInsMeasNum_Table:	# 2 x u16, 1..65535; read by FE_CmpMInsMeasNum 0x4850EA95: `movhu (FE_CmpMInsMeasNum_Table), d0`; FE_CmpMInsMeasNum 0x4850EA95: `movhu (FE_CmpMInsMeasNum_Table), d1` ...
+	tab_u16	1, 65535
 func_4850EBCF_Table:	# 2 x u32, 9437520..9437521; read by func_4850EBCF 0x4850EBCF: `mov   (a2), d0`; func_4850EBCF 0x4850EBCF: `mov   (func_4850EBCF_Table), d0`
 	tab_u32	9437520, 9437521
 MspMenuScreen_window:
@@ -28904,26 +28936,80 @@ func_48534FE2_Records:	# 43 x REC_func_48534FE2_Records (8 bytes each); read by 
 Str_d_3:	.asciz "d"
 	.align	4, 0xFF	# pad after Str_d_3
 
-func_48536AD7_Table:	# 12 x u32, 14680524..4294967041; read by func_48536AD7 0x48536AD7: `mov   (a2), d0`; func_48536AD7 0x48536AD7: `mov   (func_48536AD7_Table), d0`
-	tab_u32	14680524, 14680525, 14680526, 14680527, 14680528, 14680529, 4294902015, 4294967041	# [0]
-	tab_u32	4294967041, 4294967041, 4294901761, 4294901761	# [8]
-func_48537F92_Table:	# 6 x u32, 14680178..4294901761; read by func_48537F92 0x48537F92: `mov   (a2), d0`; func_48537F92 0x48537F92: `mov   (func_48537F92_Table), d0`
-	tab_u32	14680179, 14680178, 14680184, 14680183, 4294901761, 4294901761
+func_48536AD7_Table:	# 6 x u32, 14680524..14680529; read by func_48536AD7 0x48536AD7: `mov   (a2), d0`; func_48536AD7 0x48536AD7: `mov   (func_48536AD7_Table), d0`; ends at +24, where func_48536AD7 0x48536AD7's loop stops (`cmp SeqTrAsGridCheck_Var_2, a2`)
+	tab_u32	14680524, 14680525, 14680526, 14680527, 14680528, 14680529
+
+SeqTrAsGridCheck_Var_2:	# u8, initial value of a RAM variable; read / written by SeqTrAsGridCheck 0x48536CAC: `movbu (SeqTrAsGridCheck_Var_2), d0`; SeqTrAsGridCheck 0x48536CAC: `movbu d0, (SeqTrAsGridCheck_Var_2)` ...
+	.byte	255
+
+SeqTrAsGridCheck_Table_3:	# 3 x u8, 0..255; read by SeqTrAsGridCheck 0x48536CAC: `movbu (SeqTrAsGridCheck_Table_3), d0`; SeqTrAsGridCheck 0x48536CAC: `movbu d0, (SeqTrAsGridCheck_Table_3)`
+	tab_u8	0, 255, 255
+FE_SeqTrAsPSongSel_Table:	# 4 x u8, 1..255; read by FE_SeqTrAsPSongSel 0x48537629: `movbu (FE_SeqTrAsPSongSel_Table), d0`; FE_SeqTrAsPSongSel 0x48537629: `movbu (FE_SeqTrAsPSongSel_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqTrackCopyFTrack_Table:	# 4 x u8, 1..255; read by FE_SeqTrackCopyFTrack 0x48537BDC: `movbu (FE_SeqTrackCopyFTrack_Table), d0`; FE_SeqTrackCopyFTrack 0x48537BDC: `movbu (FE_SeqTrackCopyFTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqTrackCopyTTrack_Table:	# 4 x u8, 1..255; read by FE_SeqTrackCopyTTrack 0x48537CC5: `movbu (FE_SeqTrackCopyTTrack_Table), d0`; FE_SeqTrackCopyTTrack 0x48537CC5: `movbu (FE_SeqTrackCopyTTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqTrackCopyFSong_Table:	# 2 x u16, 1..65535; read by FE_SeqTrackCopyFSong 0x48537DAE: `movhu (FE_SeqTrackCopyFSong_Table), d0`; FE_SeqTrackCopyFSong 0x48537DAE: `movhu (FE_SeqTrackCopyFSong_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqTrackCopyTSong_Table:	# 2 x u16, 1..65535; read by FE_SeqTrackCopyTSong 0x48537E82: `movhu (FE_SeqTrackCopyTSong_Table), d0`; FE_SeqTrackCopyTSong 0x48537E82: `movhu (FE_SeqTrackCopyTSong_Table), d1` ...
+	tab_u16	1, 65535
+func_48537F92_Table:	# 4 x u32, 14680178..14680184; read by func_48537F92 0x48537F92: `mov   (a2), d0`; func_48537F92 0x48537F92: `mov   (func_48537F92_Table), d0`; ends at +16, where func_48537F92 0x48537F92's loop stops (`cmp FE_SeqSongCopyFSong_Table, a2`)
+	tab_u32	14680179, 14680178, 14680184, 14680183
+FE_SeqSongCopyFSong_Table:	# 2 x u16, 1..65535; read by FE_SeqSongCopyFSong 0x4853814B: `movhu (FE_SeqSongCopyFSong_Table), d0`; FE_SeqSongCopyFSong 0x4853814B: `movhu (FE_SeqSongCopyFSong_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqSongCopyTSong_Table:	# 2 x u16, 1..65535; read by FE_SeqSongCopyTSong 0x4853821F: `movhu (FE_SeqSongCopyTSong_Table), d0`; FE_SeqSongCopyTSong 0x4853821F: `movhu (FE_SeqSongCopyTSong_Table), d1` ...
+	tab_u16	1, 65535
 func_4853832F_Table:	# 2 x u32, 14680356..14680359; read by func_4853832F 0x4853832F: `mov   (a2), d0`; func_4853832F 0x4853832F: `mov   (func_4853832F_Table), d0`
 	tab_u32	14680356, 14680359
 FE_SeqTrkMrgTrack_Table_2:	# 4 x u8, 1..255; read by FE_SeqTrkMrgTrack 0x485383F7: `movbu  (d1, a0), d0`; FE_SeqTrkMrgTrack 0x485383F7: `movbu  (d1, a0), d1`
 	tab_u8	1, 2, 3, 255
-func_4853855F_Table:	# 9 x u32, 14680480..4294967041; read by func_4853855F 0x4853855F: `mov   (a2), d0`; func_4853855F 0x4853855F: `mov   (func_4853855F_Table), d0`
-	tab_u32	14680492, 14680480, 14680486, 4294967041, 4294967041, 4294901761, 4294901761, 4294901761	# [0]
-	tab_u32	4294901760	# [8]
-func_48538BC6_Table:	# 10 x u32, 14680663..4294967041; read by func_48538BC6 0x48538BC6: `mov   (a2), d0`; func_48538BC6 0x48538BC6: `mov   (func_48538BC6_Table), d0`
-	tab_u32	14680665, 14680663, 14680664, 14680686, 14680687, 14680688, 4294967041, 4294901761	# [0]
-	tab_u32	4294901761, 4294901760	# [8]
-func_485391FB_Table:	# 7 x u32, 14680641..4294967041; read by func_485391FB 0x485391FB: `mov   (a2), d0`; func_485391FB 0x485391FB: `mov   (func_485391FB_Table), d0`
-	tab_u32	14680641, 14680642, 14680643, 14680644, 4294967041, 4294901761, 4294901761
-func_48539636_Table:	# 9 x u32, 14680698..4294967041; read by func_48539636 0x48539636: `mov   (a2), d0`; func_48539636 0x48539636: `mov   (func_48539636_Table), d0`
-	tab_u32	14680698, 14680699, 14680700, 4294967041, 4294967041, 4294901761, 4294901761, 4294901761	# [0]
-	tab_u32	4294901760	# [8]
+func_4853855F_Table:	# 3 x u32, 14680480..14680492; read by func_4853855F 0x4853855F: `mov   (a2), d0`; func_4853855F 0x4853855F: `mov   (func_4853855F_Table), d0`; ends at +12, where func_4853855F 0x4853855F's loop stops (`cmp FE_SeqMsCpFTrack_Table, a2`)
+	tab_u32	14680492, 14680480, 14680486
+FE_SeqMsCpFTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsCpFTrack 0x4853866C: `movbu (FE_SeqMsCpFTrack_Table), d0`; FE_SeqMsCpFTrack 0x4853866C: `movbu (FE_SeqMsCpFTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqMsCpTTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsCpTTrack 0x48538755: `movbu (FE_SeqMsCpTTrack_Table), d0`; FE_SeqMsCpTTrack 0x48538755: `movbu (FE_SeqMsCpTTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqMsCpFFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsCpFFstMeas 0x4853883E: `movhu (FE_SeqMsCpFFstMeas_Table), d0`; FE_SeqMsCpFFstMeas 0x4853883E: `movhu (FE_SeqMsCpFFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsCpFLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsCpFLstMeas 0x48538911: `movhu (FE_SeqMsCpFLstMeas_Table), d0`; FE_SeqMsCpFLstMeas 0x48538911: `movhu (FE_SeqMsCpFLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsCpTSrtMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsCpTSrtMeas 0x485389E4: `movhu (FE_SeqMsCpTSrtMeas_Table), d0`; FE_SeqMsCpTSrtMeas 0x485389E4: `movhu (FE_SeqMsCpTSrtMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsCpTRep_Table:	# 2 x u16, 0..65535; read by FE_SeqMsCpTRep 0x48538AB7: `movhu (FE_SeqMsCpTRep_Table), d0`; FE_SeqMsCpTRep 0x48538AB7: `movhu (FE_SeqMsCpTRep_Table), d1` ...
+	tab_u16	0, 65535
+func_48538BC6_Table:	# 6 x u32, 14680663..14680688; read by func_48538BC6 0x48538BC6: `mov   (a2), d0`; func_48538BC6 0x48538BC6: `mov   (func_48538BC6_Table), d0`; ends at +24, where func_48538BC6 0x48538BC6's loop stops (`cmp FE_SeqMsErsTrack_Table, a2`)
+	tab_u32	14680665, 14680663, 14680664, 14680686, 14680687, 14680688
+FE_SeqMsErsTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsErsTrack 0x48538E2E: `movbu (FE_SeqMsErsTrack_Table), d0`; FE_SeqMsErsTrack 0x48538E2E: `movbu (FE_SeqMsErsTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqMsErsFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsErsFstMeas 0x48538F17: `movhu (FE_SeqMsErsFstMeas_Table), d0`; FE_SeqMsErsFstMeas 0x48538F17: `movhu (FE_SeqMsErsFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsErsLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsErsLstMeas 0x48538FEA: `movhu (FE_SeqMsErsLstMeas_Table), d0`; FE_SeqMsErsLstMeas 0x48538FEA: `movhu (FE_SeqMsErsLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsErsData_Table:	# 2 x s16, -1..0; read by FE_SeqMsErsData 0x485390BD: `movhu (FE_SeqMsErsData_Table), d0`; FE_SeqMsErsData 0x485390BD: `movhu (FE_SeqMsErsData_Table), d1` ...
+	tab_s16	0, -1
+func_485391FB_Table:	# 4 x u32, 14680641..14680644; read by func_485391FB 0x485391FB: `mov   (a2), d0`; func_485391FB 0x485391FB: `mov   (func_485391FB_Table), d0`; ends at +16, where func_485391FB 0x485391FB's loop stops (`cmp FE_SeqMsDelTrack_Table, a2`)
+	tab_u32	14680641, 14680642, 14680643, 14680644
+FE_SeqMsDelTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsDelTrack 0x4853936B: `movbu (FE_SeqMsDelTrack_Table), d0`; FE_SeqMsDelTrack 0x4853936B: `movbu (FE_SeqMsDelTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqMsDelFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsDelFstMeas 0x48539454: `movhu (FE_SeqMsDelFstMeas_Table), d0`; FE_SeqMsDelFstMeas 0x48539454: `movhu (FE_SeqMsDelFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsDelLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsDelLstMeas 0x48539527: `movhu (FE_SeqMsDelLstMeas_Table), d0`; FE_SeqMsDelLstMeas 0x48539527: `movhu (FE_SeqMsDelLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+func_48539636_Table:	# 3 x u32, 14680698..14680700; read by func_48539636 0x48539636: `mov   (a2), d0`; func_48539636 0x48539636: `mov   (func_48539636_Table), d0`; ends at +12, where func_48539636 0x48539636's loop stops (`cmp FE_SeqMsInsFTrack_Table, a2`)
+	tab_u32	14680698, 14680699, 14680700
+FE_SeqMsInsFTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsInsFTrack 0x48539776: `movbu (FE_SeqMsInsFTrack_Table), d0`; FE_SeqMsInsFTrack 0x48539776: `movbu (FE_SeqMsInsFTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqMsInsTTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsInsTTrack 0x4853985F: `movbu (FE_SeqMsInsTTrack_Table), d0`; FE_SeqMsInsTTrack 0x4853985F: `movbu (FE_SeqMsInsTTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqMsInsFFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsInsFFstMeas 0x48539948: `movhu (FE_SeqMsInsFFstMeas_Table), d0`; FE_SeqMsInsFFstMeas 0x48539948: `movhu (FE_SeqMsInsFFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsInsFLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsInsFLstMeas 0x48539A1B: `movhu (FE_SeqMsInsFLstMeas_Table), d0`; FE_SeqMsInsFLstMeas 0x48539A1B: `movhu (FE_SeqMsInsFLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsInsTSrtMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsInsTSrtMeas 0x48539AEE: `movhu (FE_SeqMsInsTSrtMeas_Table), d0`; FE_SeqMsInsTSrtMeas 0x48539AEE: `movhu (FE_SeqMsInsTSrtMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqMsInsTRep_Table:	# 2 x u16, 0..65535; read by FE_SeqMsInsTRep 0x48539BC1: `movhu (FE_SeqMsInsTRep_Table), d0`; FE_SeqMsInsTRep 0x48539BC1: `movhu (FE_SeqMsInsTRep_Table), d1` ...
+	tab_u16	0, 65535
 func_48539CD0_Table:	# 6 x u32, 14680720..14680738; read by func_48539CD0 0x48539CD0: `mov   (a2), d0`; func_48539CD0 0x48539CD0: `mov   (func_48539CD0_Table), d0`
 	tab_u32	14680720, 14680721, 14680722, 14680736, 14680737, 14680738
 ApcToSMFConvGrid_Table_2:	# 16 x u8, 0..0; read by ApcToSMFConvGrid 0x48539F38: `movbu  (a1), d1`
@@ -28938,17 +29024,58 @@ FE_SeqNoteChangeSrcNt_Table:	# 4 x u8, 60..255; read by FE_SeqNoteChangeSrcNt 0x
 	tab_u8	60, 255, 255, 255
 FE_SeqNoteChangeDstNt_Table:	# 4 x u8, 61..255; read by FE_SeqNoteChangeDstNt 0x4853A7C3: `movbu (FE_SeqNoteChangeDstNt_Table), d0`; FE_SeqNoteChangeDstNt 0x4853A7C3: `movbu (FE_SeqNoteChangeDstNt_Table), d1` ...
 	tab_u8	61, 255, 255, 255
-func_4853A8E1_Table:	# 9 x u32, 14680584..4294967041; read by func_4853A8E1 0x4853A8E1: `mov   (a2), d0`; func_4853A8E1 0x4853A8E1: `mov   (func_4853A8E1_Table), d0`
-	tab_u32	14680584, 14680591, 14680592, 14680599, 14680605, 4294967041, 4294901761, 4294901761	# [0]
-	tab_u32	4294901760	# [8]
-func_4853AE3E_Table:	# 8 x u32, 14680562..4294967041; read by func_4853AE3E 0x4853AE3E: `mov   (a2), d0`; func_4853AE3E 0x4853AE3E: `mov   (func_4853AE3E_Table), d0`
-	tab_u32	14680562, 14680566, 14680567, 14680565, 4294967041, 4294901761, 4294901761, 4294901760
-func_4853B369_Table:	# 8 x u32, 14680538..4294967041; read by func_4853B369 0x4853B369: `mov   (a2), d0`; func_4853B369 0x4853B369: `mov   (func_4853B369_Table), d0`
-	tab_u32	14680538, 14680543, 14680544, 14680541, 4294967041, 4294901761, 4294901761, 4294901760
-func_4853B894_Table:	# 7 x u32, 14680615..4294967040; read by func_4853B894 0x4853B894: `mov   (a2), d0`; func_4853B894 0x4853B894: `mov   (func_4853B894_Table), d0`
-	tab_u32	14680615, 14680620, 14680621, 14680619, 4294967040, 4294967040, 716644352
-AcStepRecBoxProc_Table_2:	# 4 x u32, 0..4294901760; read by AcStepRecBoxProc 0x4853D664: `mov   (a2), a0`
-	tab_u32	0, 0, 0, 4294901760
+func_4853A8E1_Table:	# 5 x u32, 14680584..14680605; read by func_4853A8E1 0x4853A8E1: `mov   (a2), d0`; func_4853A8E1 0x4853A8E1: `mov   (func_4853A8E1_Table), d0`; ends at +20, where func_4853A8E1 0x4853A8E1's loop stops (`cmp FE_SeqVeloCngTrack_Table, a2`)
+	tab_u32	14680584, 14680591, 14680592, 14680599, 14680605
+FE_SeqVeloCngTrack_Table:	# 4 x u8, 1..255; read by FE_SeqVeloCngTrack 0x4853AA83: `movbu (FE_SeqVeloCngTrack_Table), d0`; FE_SeqVeloCngTrack 0x4853AA83: `movbu (FE_SeqVeloCngTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqVeloCngFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqVeloCngFstMeas 0x4853AB6C: `movhu (FE_SeqVeloCngFstMeas_Table), d0`; FE_SeqVeloCngFstMeas 0x4853AB6C: `movhu (FE_SeqVeloCngFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqVeloCngLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqVeloCngLstMeas 0x4853AC3F: `movhu (FE_SeqVeloCngLstMeas_Table), d0`; FE_SeqVeloCngLstMeas 0x4853AC3F: `movhu (FE_SeqVeloCngLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqVeloCngVelo_Table:	# 2 x s16, -1..0; read by FE_SeqVeloCngVelo 0x4853AD12: `movhu (FE_SeqVeloCngVelo_Table), d0`; FE_SeqVeloCngVelo 0x4853AD12: `movhu (FE_SeqVeloCngVelo_Table), d1` ...
+	tab_s16	0, -1
+func_4853AE3E_Table:	# 4 x u32, 14680562..14680567; read by func_4853AE3E 0x4853AE3E: `mov   (a2), d0`; func_4853AE3E 0x4853AE3E: `mov   (func_4853AE3E_Table), d0`; ends at +16, where func_4853AE3E 0x4853AE3E's loop stops (`cmp FE_SeqTransTrack_Table, a2`)
+	tab_u32	14680562, 14680566, 14680567, 14680565
+FE_SeqTransTrack_Table:	# 4 x u8, 1..255; read by FE_SeqTransTrack 0x4853AFAE: `movbu (FE_SeqTransTrack_Table), d0`; FE_SeqTransTrack 0x4853AFAE: `movbu (FE_SeqTransTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqTransFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqTransFstMeas 0x4853B097: `movhu (FE_SeqTransFstMeas_Table), d0`; FE_SeqTransFstMeas 0x4853B097: `movhu (FE_SeqTransFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqTransLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqTransLstMeas 0x4853B16A: `movhu (FE_SeqTransLstMeas_Table), d0`; FE_SeqTransLstMeas 0x4853B16A: `movhu (FE_SeqTransLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqTransTrans_Table:	# 2 x s16, -1..0; read by FE_SeqTransTrans 0x4853B23D: `movhu (FE_SeqTransTrans_Table), d0`; FE_SeqTransTrans 0x4853B23D: `movhu (FE_SeqTransTrans_Table), d1` ...
+	tab_s16	0, -1
+func_4853B369_Table:	# 4 x u32, 14680538..14680544; read by func_4853B369 0x4853B369: `mov   (a2), d0`; func_4853B369 0x4853B369: `mov   (func_4853B369_Table), d0`; ends at +16, where func_4853B369 0x4853B369's loop stops (`cmp FE_SeqAdvDlyTrack_Table, a2`)
+	tab_u32	14680538, 14680543, 14680544, 14680541
+FE_SeqAdvDlyTrack_Table:	# 4 x u8, 1..255; read by FE_SeqAdvDlyTrack 0x4853B4D9: `movbu (FE_SeqAdvDlyTrack_Table), d0`; FE_SeqAdvDlyTrack 0x4853B4D9: `movbu (FE_SeqAdvDlyTrack_Table), d1` ...
+	tab_u8	1, 255, 255, 255
+FE_SeqAdvDlyFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqAdvDlyFstMeas 0x4853B5C2: `movhu (FE_SeqAdvDlyFstMeas_Table), d0`; FE_SeqAdvDlyFstMeas 0x4853B5C2: `movhu (FE_SeqAdvDlyFstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqAdvDlyLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqAdvDlyLstMeas 0x4853B695: `movhu (FE_SeqAdvDlyLstMeas_Table), d0`; FE_SeqAdvDlyLstMeas 0x4853B695: `movhu (FE_SeqAdvDlyLstMeas_Table), d1` ...
+	tab_u16	1, 65535
+FE_SeqAdvDlyAdvDly_Table:	# 2 x s16, -1..0; read by FE_SeqAdvDlyAdvDly 0x4853B768: `movhu (FE_SeqAdvDlyAdvDly_Table), d0`; FE_SeqAdvDlyAdvDly 0x4853B768: `movhu (FE_SeqAdvDlyAdvDly_Table), d1` ...
+	tab_s16	0, -1
+func_4853B894_Table:	# 4 x u32, 14680615..14680621; read by func_4853B894 0x4853B894: `mov   (a2), d0`; func_4853B894 0x4853B894: `mov   (func_4853B894_Table), d0`; ends at +16, where func_4853B894 0x4853B894's loop stops (`cmp AcNoteEditBoxProc_Table_4, a2`)
+	tab_u32	14680615, 14680620, 14680621, 14680619
+AcNoteEditBoxProc_Table_4:	# 4 x u8, 0..255; read by AcNoteEditBoxProc 0x4853BA26: `movbu (AcNoteEditBoxProc_Table_4), d0`; AcNoteEditBoxProc 0x4853BA26: `movbu d0, (AcNoteEditBoxProc_Table_4)`
+	tab_u8	0, 255, 255, 255
+AcDrumEditBoxProc_Table_2:	# 4 x u8, 0..255; read by AcDrumEditBoxProc 0x4853C965: `movbu (AcDrumEditBoxProc_Table_2), d0`; AcDrumEditBoxProc 0x4853C965: `movbu d0, (AcDrumEditBoxProc_Table_2)`
+	tab_u8	0, 255, 255, 255
+
+AcStepRecBoxProc_Var:	# u8, initial value of a RAM variable; read / written by AcStepRecBoxProc 0x4853D664: `movbu (AcStepRecBoxProc_Var), d0`; AcStepRecBoxProc 0x4853D664: `movbu d0, (AcStepRecBoxProc_Var)`
+	.byte	0
+
+AcStepRecBoxProc_Table_3:	# 3 x u8, 32..183; read by AcStepRecBoxProc 0x4853D664: `movbu  (d0, a0), d1`
+	tab_u8	32, 183, 42
+AcStepRecBoxProc_Table_2:	# 3 x u32, 0..0; read by AcStepRecBoxProc 0x4853D664: `mov   (a0), a0`; AcStepRecBoxProc 0x4853D664: `mov   (a0), d0` ...; ends at +12, where AcStepRecBoxProc 0x4853D664's loop stops (`cmp MdSeq_Var, a2`)
+	tab_u32	0, 0, 0
+
+MdSeq_Var:	# u8, initial value of a RAM variable; read / written by MdSeq 0x4853EA96: `movbu d0, (MdSeq_Var)`; func_4853EBAF 0x4853EBAF: `movbu d1, (MdSeq_Var)` ...
+	.byte	0
+MainSEQ_SetLyricsFlag_Var:	# u8, initial value of a RAM variable; read / written by MainSEQ_SetLyricsFlag 0x4853F0A6: `movbu d0, (MainSEQ_SetLyricsFlag_Var)`; TtSeqPlay 0x4853F260: `movbu (MainSEQ_SetLyricsFlag_Var), d0` ...
+	.byte	0
+func_48540DEC_Var:	# s16, initial value of a RAM variable; read / written by func_48540DEC 0x48540DEC: `movhu (func_48540DEC_Var), d2`; func_48540DEC 0x48540DEC: `movhu d0, (func_48540DEC_Var)`
+	.word	-1
+
 func_4853EBCC_Table:	# 4 x u8, 255..255; read by func_4853EBCC 0x4853EBCC: `movbu d0, (func_4853EBCC_Table)`; func_4853FAF7 0x4853FAF7: `movbu (func_4853EBCC_Table), d0` ...
 	tab_u8	255, 255, 255, 255
 
@@ -28963,17 +29090,33 @@ MainSEQ_SeqCycPly_Reload_Records:	# 8 x REC_MainSEQ_SeqCycPly_Reload_Records (8 
 	REC_MainSEQ_SeqCycPly_Reload_Records	ApDeliveryEvent_d0=0x190000, ApDeliveryEvent_d0_=0x10000
 
 Str_empty_274:	.asciz "@"
-	# 18 bytes the code takes the address of: DiskDriveCtrlHandler 0x4854AC56 `call SdMediaStateGet, 0, 0` (+2, arg a0); byte rows (u8, pointers); the callee walk: SdMediaStateGet (a0) reads nothing through it the walk sees
-	tab_u8	0, 0	# +0
-	.long	MainSEQ_SeqCycPly_Reload_Records+56	# +2
-	tab_u8	4, 0, 0, 0, 164, 38, 8, 80, 0, 0, 0, 0	# +6
+	.align	4, 0x00	# pad after Str_empty_274
+
+DiskDriveCtrlHandler_ArgA0_0:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	SdMediaStateGet_d0=0x500051B0
+DiskDriveCtrlHandler_ArgA0_1:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	SdMediaStateGet_d0=4
+DiskDriveCtrlHandler_ArgA0_2:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	SdMediaStateGet_d0=0x500826A4
+DiskDriveCtrlHandler_ArgA0_3:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	
+
 Str_C_3:	.asciz "C"
 	.align	4, 0x00	# pad after Str_C_3
 Str_Q_3:	.asciz "\xB4Q"
 Str_P_15:	.asciz "P"
 	.space	11, 0x00
 Str_F_2:	.asciz "F"
-	.space	18, 0x00
+	.align	4, 0x00	# pad after Str_F_2
+
+DiskDriveCtrlHandler_ArgA0_4:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	
+DiskDriveCtrlHandler_ArgA0_5:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	
+DiskDriveCtrlHandler_ArgA0_6:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	
+DiskDriveCtrlHandler_ArgA0_7:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
+	REC_DiskDriveCtrlHandler_ArgA0	
 
 SdSpiClockSet_Var:	# u32, initial value of a RAM variable; read / written by SdSpiClockSet 0x4854B4AF: `mov d0, (SdSpiClockSet_Var)`
 	.long	2
@@ -32246,7 +32389,7 @@ func_4848025A_Var_2:	# u16, initial value of a RAM variable; read / written by f
 	.word	0
 func_4848111F_Var_2:	# u8, initial value of a RAM variable; read / written by func_4848111F 0x4848111F: `movbu (a2), d0`; func_48481174 0x48481174: `movbu (a2), d0` ...
 	.byte	0
-func_484816FA_Var:	# u8, initial value of a RAM variable; read / written by func_484816FA 0x484816FA: `movbu (func_484816FA_Var), d0`; func_484816FA 0x484816FA: `movbu d0, (d3, a2)`
+func_484816FA_Var:	# u8, initial value of a RAM variable; read / written by func_484816FA 0x484816FA: `movbu (func_484816FA_Var), d0`
 	.byte	0
 
 func_484816FA_Table:	# 8 x u8, 0..0; read by func_484816FA 0x484816FA: `movbu (func_484816FA_Table), d0`; func_484816FA 0x484816FA: `movbu d0, (func_484816FA_Table)`
@@ -32328,11 +32471,17 @@ PadRecPtChdGrid_Table_3:	# 8 x s8, -1..0; read by PadRecPtChdGrid 0x48513153: `m
 AcSeqPlayRecBoxProc_Table:	# 16 x u16, 0..0; read by AcSeqPlayRecBoxProc 0x48534587: `movhu  (d0, a0), d0`; AcSeqPlayRecBoxProc 0x48534587: `movhu  (d0, a1), d0` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0	# [12]
-AcSeqTrackNumBoxProc_Table:	# 19 x u16, 0..100; read by AcSeqTrackNumBoxProc 0x48534804: `movhu  (d0, a1), d0`; ApcToSMFConvGrid 0x48539F38: `movhu  (-2, a0), d0`
+AcSeqTrackNumBoxProc_Table:	# 16 x u16, 0..0; read by AcSeqTrackNumBoxProc 0x48534804: `movhu  (d0, a1), d0`; ApcToSMFConvGrid 0x48539F38: `movhu  (-2, a0), d0`; ends at +32, where func_4853EC7F 0x4853EC7F's loop stops (`cmp AcSeqMeasBoxProc_Var, a2`)
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
-	tab_u16	0, 0, 0, 0, 1, 100, 1	# [12]
-# census: opaque -- unknown-dump: 12 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3B70C6, 0x3B70D2
+	tab_u16	0, 0, 0, 0	# [12]
+
+AcSeqMeasBoxProc_Var:	# s16, initial value of a RAM variable; read / written by AcSeqMeasBoxProc 0x48534A9E: `movhu (AcSeqMeasBoxProc_Var), d0`; SeqMeasUpDown 0x48534B99: `movhu (AcSeqMeasBoxProc_Var), d0` ...
+	.word	1
+
+Str_d_2:	.asciz "d"
+
+AcNoteEditBoxProc_Table_5:	# 7 x u16, 0..65535; read by AcNoteEditBoxProc 0x4853BA26: `movhu (AcNoteEditBoxProc_Table_5), d0`; AcDrumEditBoxProc 0x4853C965: `movhu (AcNoteEditBoxProc_Table_5), d0` ...
+	tab_u16	1, 65535, 2, 1, 65, 0, 65280
 
 SdCommandSend_Var:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
 	REC_SdCommandSend_ArgA0	f0=2, SdResponseScan_d0=1, f4=66, x5="\x00\x00\x00\x00", f9=149

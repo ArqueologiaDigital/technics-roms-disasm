@@ -21661,7 +21661,7 @@ loc_4850DF33:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     func_4850DF23_Table+20, a2
+    cmp     FE_CmpMDelFstMeas_Table, a2
     bcs     loc_4850DF33
     cmp     1, d2
     beq     loc_4850DF88
@@ -22209,14 +22209,14 @@ loc_4850E481:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850E48D:
-    movhu   (func_4850DF23_Table+20), d1
+    movhu   (FE_CmpMDelFstMeas_Table), d1
     mov     1, d0
     inc     d1
     call    func_4850E606_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850E505
 loc_4850E49E:
-    movhu   (func_4850DF23_Table+20), d1
+    movhu   (FE_CmpMDelFstMeas_Table), d1
     mov     1, d0
     add     -1, d1
     call    func_4850E606_entry, [d2,d3,a2,a3], 0x28
@@ -22227,20 +22227,20 @@ loc_4850E4B0:
     mov     Str_2d_27, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_4850DF23_Table+20), d0
+    movhu   (FE_CmpMDelFstMeas_Table), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850E505
 loc_4850E4CE:
-    movhu   (func_4850DF23_Table+20), d0
+    movhu   (FE_CmpMDelFstMeas_Table), d0
     bra     loc_4850E505
 loc_4850E4D6:
     mov     (0x2c, sp), d1
-    movhu   (func_4850DF23_Table+20), d0
+    movhu   (FE_CmpMDelFstMeas_Table), d0
     cmp     d1, d0
     beq     loc_4850E4FE
-    movhu   d1, (func_4850DF23_Table+20)
+    movhu   d1, (FE_CmpMDelFstMeas_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22300,14 +22300,14 @@ loc_4850E55B:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850E55F:
-    movhu   (func_4850DF23_Table+24), d1
+    movhu   (FE_CmpMDelLstMeas_Table), d1
     mov     2, d0
     inc     d1
     call    func_4850E606_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850E571:
-    movhu   (func_4850DF23_Table+24), d1
+    movhu   (FE_CmpMDelLstMeas_Table), d1
     mov     2, d0
     add     -1, d1
     call    func_4850E606_entry, [d2,d3,a2,a3], 0x28
@@ -22318,20 +22318,20 @@ loc_4850E583:
     mov     Str_2d_26, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_4850DF23_Table+24), d0
+    movhu   (FE_CmpMDelLstMeas_Table), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850E5D8
 loc_4850E5A1:
-    movhu   (func_4850DF23_Table+24), d0
+    movhu   (FE_CmpMDelLstMeas_Table), d0
     bra     loc_4850E5D8
 loc_4850E5A9:
     mov     (0x2c, sp), d0
-    movhu   (func_4850DF23_Table+24), d1
+    movhu   (FE_CmpMDelLstMeas_Table), d1
     cmp     d0, d1
     beq     loc_4850E5D1
-    movhu   d0, (func_4850DF23_Table+24)
+    movhu   d0, (FE_CmpMDelLstMeas_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22389,7 +22389,7 @@ loc_4850E616:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     func_4850E606_Table+8, a2
+    cmp     FE_CmpMErsSPart_Table, a2
     bcs     loc_4850E616
     cmp     4, d2
     beq     loc_4850E656
@@ -22777,14 +22777,14 @@ loc_4850EA16:
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_4850EA1A:
-    movbu   (func_4850E606_Table+8), d1
+    movbu   (FE_CmpMErsSPart_Table), d1
     mov     1, d0
     inc     d1
     call    func_4850EC80_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_4850EA2C:
-    movbu   (func_4850E606_Table+8), d1
+    movbu   (FE_CmpMErsSPart_Table), d1
     mov     1, d0
     add     -1, d1
     call    func_4850EC80_entry, [d2,d3,a2,a3], 0x28
@@ -22792,7 +22792,7 @@ loc_4850EA2C:
     bra     loc_4850EA94
 loc_4850EA3E:
     mov     (0x30, sp), a2
-    movbu   (func_4850E606_Table+8), d0
+    movbu   (FE_CmpMErsSPart_Table), d0
     call    func_4850E3E9, 0, 0
     extbu   d0
     call    func_4850E3CE, 0, 0
@@ -22802,14 +22802,14 @@ loc_4850EA3E:
     clr     d0
     bra     loc_4850EA94
 loc_4850EA5D:
-    movbu   (func_4850E606_Table+8), d0
+    movbu   (FE_CmpMErsSPart_Table), d0
     bra     loc_4850EA94
 loc_4850EA65:
     mov     (0x30, sp), d0
-    movbu   (func_4850E606_Table+8), d1
+    movbu   (FE_CmpMErsSPart_Table), d1
     cmp     d0, d1
     beq     loc_4850EA8D
-    movbu   d0, (func_4850E606_Table+8)
+    movbu   d0, (FE_CmpMErsSPart_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22872,14 +22872,14 @@ loc_4850EAEA:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850EAF6:
-    movhu   (func_4850E606_Table+12), d1
+    movhu   (FE_CmpMErsFstMeas_Table), d1
     mov     2, d0
     inc     d1
     call    func_4850EC80_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EB6E
 loc_4850EB07:
-    movhu   (func_4850E606_Table+12), d1
+    movhu   (FE_CmpMErsFstMeas_Table), d1
     mov     2, d0
     add     -1, d1
     call    func_4850EC80_entry, [d2,d3,a2,a3], 0x28
@@ -22890,20 +22890,20 @@ loc_4850EB19:
     mov     Str_2d_25, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_4850E606_Table+12), d0
+    movhu   (FE_CmpMErsFstMeas_Table), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EB6E
 loc_4850EB37:
-    movhu   (func_4850E606_Table+12), d0
+    movhu   (FE_CmpMErsFstMeas_Table), d0
     bra     loc_4850EB6E
 loc_4850EB3F:
     mov     (0x2c, sp), d1
-    movhu   (func_4850E606_Table+12), d0
+    movhu   (FE_CmpMErsFstMeas_Table), d0
     cmp     d1, d0
     beq     loc_4850EB67
-    movhu   d1, (func_4850E606_Table+12)
+    movhu   d1, (FE_CmpMErsFstMeas_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -22963,14 +22963,14 @@ loc_4850EBC4:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850EBC8:
-    movhu   (func_4850E606_Table+16), d1
+    movhu   (FE_CmpMErsLstMeas_Table), d1
     mov     3, d0
     inc     d1
     call    func_4850EC80_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850EBDA:
-    movhu   (func_4850E606_Table+16), d1
+    movhu   (FE_CmpMErsLstMeas_Table), d1
     mov     3, d0
     add     -1, d1
     call    func_4850EC80_entry, [d2,d3,a2,a3], 0x28
@@ -22981,20 +22981,20 @@ loc_4850EBEC:
     mov     Str_2d_24, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_4850E606_Table+16), d0
+    movhu   (FE_CmpMErsLstMeas_Table), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EC41
 loc_4850EC0A:
-    movhu   (func_4850E606_Table+16), d0
+    movhu   (FE_CmpMErsLstMeas_Table), d0
     bra     loc_4850EC41
 loc_4850EC12:
     mov     (0x2c, sp), d0
-    movhu   (func_4850E606_Table+16), d1
+    movhu   (FE_CmpMErsLstMeas_Table), d1
     cmp     d0, d1
     beq     loc_4850EC3A
-    movhu   d0, (func_4850E606_Table+16)
+    movhu   d0, (FE_CmpMErsLstMeas_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -23057,7 +23057,7 @@ loc_4850EC90:
     movbu   d0, (a3)
     inc     a3
     inc4    a2
-    cmp     func_4850EC80_Table+12, a2
+    cmp     FE_CmpMInsFstMeas_Table, a2
     bcs     loc_4850EC90
     cmp     1, d2
     beq     loc_4850ECCD
@@ -23278,14 +23278,14 @@ loc_4850EED3:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850EEDF:
-    movhu   (func_4850EC80_Table+12), d1
+    movhu   (FE_CmpMInsFstMeas_Table), d1
     mov     1, d0
     inc     d1
     call    func_4850F094_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     bra     loc_4850EF57
 loc_4850EEF0:
-    movhu   (func_4850EC80_Table+12), d1
+    movhu   (FE_CmpMInsFstMeas_Table), d1
     mov     1, d0
     add     -1, d1
     call    func_4850F094_entry, [d2,d3,a2,a3], 0x28
@@ -23296,20 +23296,20 @@ loc_4850EF02:
     mov     Str_2d_23, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_4850EC80_Table+12), d0
+    movhu   (FE_CmpMInsFstMeas_Table), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850EF57
 loc_4850EF20:
-    movhu   (func_4850EC80_Table+12), d0
+    movhu   (FE_CmpMInsFstMeas_Table), d0
     bra     loc_4850EF57
 loc_4850EF28:
     mov     (0x2c, sp), d1
-    movhu   (func_4850EC80_Table+12), d0
+    movhu   (FE_CmpMInsFstMeas_Table), d0
     cmp     d1, d0
     beq     loc_4850EF50
-    movhu   d1, (func_4850EC80_Table+12)
+    movhu   d1, (FE_CmpMInsFstMeas_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -23369,14 +23369,14 @@ loc_4850EFAD:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850EFB1:
-    movhu   (func_4850EC80_Table+16), d1
+    movhu   (FE_CmpMInsMeasNum_Table), d1
     mov     2, d0
     inc     d1
     call    func_4850F094_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3], 0x1c
 loc_4850EFC3:
-    movhu   (func_4850EC80_Table+16), d1
+    movhu   (FE_CmpMInsMeasNum_Table), d1
     mov     2, d0
     add     -1, d1
     call    func_4850F094_entry, [d2,d3,a2,a3], 0x28
@@ -23387,20 +23387,20 @@ loc_4850EFD5:
     mov     Str_2d_22, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_4850EC80_Table+16), d0
+    movhu   (FE_CmpMInsMeasNum_Table), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4850F02A
 loc_4850EFF3:
-    movhu   (func_4850EC80_Table+16), d0
+    movhu   (FE_CmpMInsMeasNum_Table), d0
     bra     loc_4850F02A
 loc_4850EFFB:
     mov     (0x2c, sp), d0
-    movhu   (func_4850EC80_Table+16), d1
+    movhu   (FE_CmpMInsMeasNum_Table), d1
     cmp     d0, d1
     beq     loc_4850F023
-    movhu   d0, (func_4850EC80_Table+16)
+    movhu   d0, (FE_CmpMInsMeasNum_Table)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -39643,7 +39643,7 @@ loc_48519863:
     beq     loc_4851988D
     exthu   d1
     asl2    d1
-    mov     ptrs_486637F8, a0
+    mov     AcFileSfxBoxProc_Table, a0
     mov     (d1, a0), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
@@ -39655,7 +39655,7 @@ loc_48519863:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     loc_485198AA
 loc_4851988D:
-    mov     (ptrs_486637F8), a0
+    mov     (AcFileSfxBoxProc_Table), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
     mov     (0x18, a3), d0
@@ -39727,7 +39727,7 @@ loc_48519921:
     cmp     7, d2
     bne     loc_4851994C
 loc_48519929:
-    mov     (ptrs_486637F8), a0
+    mov     (AcFileSfxBoxProc_Table), a0
     mov     0xf5, d1
     mov     a0, (0x10, sp)
     mov     (0x24, sp), a0
@@ -39769,7 +39769,7 @@ loc_48519982:
     exthu   d2
     mov     d2, d0
     asl2    d0
-    mov     ptrs_486637F8, a0
+    mov     AcFileSfxBoxProc_Table, a0
     mov     (d0, a0), a0
     mov     0xf5, d1
     mov     a0, (0x10, sp)
@@ -39782,7 +39782,7 @@ loc_48519982:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     loc_485199D0
 loc_485199B0:
-    mov     (ptrs_486637F8), a0
+    mov     (AcFileSfxBoxProc_Table), a0
     mov     0xf5, d1
     mov     a0, (0x10, sp)
     mov     (0x24, sp), a0
@@ -46263,7 +46263,7 @@ loc_4851DC99:
 loc_4851DCA8:
     mov     d2, d0
     asl2    d0
-    mov     ptrs_48663DB4, a0
+    mov     func_4851DC8C_Table, a0
     mov     (d0, a0), a1
     mov     d2, d0
     asl     5, d0

@@ -3196,7 +3196,7 @@ loc_484A227C:
     asl2    d2
     mov     Str_s_57, d0
     mov     d0, (0xc, sp)
-    mov     ptrs_4860BC24, a0
+    mov     InOutTestWindowProc_Table_16, a0
     mov     (d2, a0), d0
     mov     d2, a2
     mov     d0, (0x10, sp)
@@ -3238,7 +3238,7 @@ loc_484A227C:
     mov     a2, (8, sp)
     mov     Str_s_56, d0
     mov     d0, (0xc, sp)
-    mov     (InOutTestWindowProc_Var), a0
+    mov     (InOutTestWindowProc_Table_16+56), a0
     extbu   d2
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -5392,7 +5392,7 @@ loc_484A3874:
     clr     d0
 loc_484A3876:
     asl2    d0
-    mov     Str_p_50, a0
+    mov     SdTestFilter_Table, a0
     mov     (d0, a0), d0
     call    SetMmmFilter_entry, [d2], 0x18
     inc     d2
@@ -14328,7 +14328,7 @@ loc_484A962A:
     clr     d0
 loc_484A962C:
     asl2    d0
-    mov     Str_empty_1176, a0
+    mov     TouchFilter_Table, a0
     mov     (d0, a0), d0
     call    SetMmmFilter_entry, [d2], 0x18
     inc     d2

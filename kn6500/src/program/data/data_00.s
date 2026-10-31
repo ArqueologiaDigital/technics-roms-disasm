@@ -21,13 +21,25 @@ data_4C17686C:
 func_4C001573_entry_Lae_Table:	# 2 x u32, 3188127660..3683553694; read by func_4C001573_entry : `mov	(a2), d0`
 	tab_u32	3683553694, 3188127660
 
-data_4C2B2700_p0_0:	# REC_data_4C2B2700_p0 (4 bytes)
-	REC_data_4C2B2700_p0	x0="\x00\x10\x10\x10"
-# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1768B0, 0x17692D
-	.space	128, 0x00
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1769AD, 0x1769B0
+data_4C2B2700_p0_0:	# REC_data_4C2B2700_p0 (2 bytes), then 258 x u8 the code indexes from +1 (read by func_4C001885 0x4C001885 `movbu (d2, a0), d1`; func_4C00191A_entry_L3d 0x4C00195C `movbu (d0, a1), d0` (+31))
+	REC_data_4C2B2700_p0	x0="\x00\x10"
+	tab_u8	16, 16, 16, 16, 16, 16, 16, 16, 48, 48, 48, 48, 48, 16, 16, 16	# [0]
+	tab_u8	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 160	# [16]
+	tab_u8	192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 140	# [32]
+	tab_u8	140, 140, 140, 140, 140, 140, 140, 140, 140, 192, 192, 192, 192, 192, 192, 192	# [48]
+	tab_u8	137, 137, 137, 137, 137, 137, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129	# [64]
+	tab_u8	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 192, 192, 192, 192, 192, 192	# [80]
+	tab_u8	138, 138, 138, 138, 138, 138, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130	# [96]
+	tab_u8	130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 192, 192, 192, 192, 16, 0	# [112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67	# [240]
+	tab_u8	0, 255	# [256]
 
 func_4C00191A_entry_L114_Table:
 	.long	loc_4C001C75
@@ -83,7 +95,7 @@ func_4C00191A_entry_L114_Table:
 	.long	func_4C00191A_entry_L45d
 	.long	loc_4C001C0C
 
-Str_C_21:	.asciz "C"
+Str_C_20:	.asciz "C"
 data_4C176A82:
 	.space	1, 0x00
 data_4C176A83:
@@ -99,7 +111,7 @@ data_4C176A87:
 data_4C176A88:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x176A88, 0x176A8C
-Str_C_20:	.asciz "C"
+Str_C_18:	.asciz "C"
 Str_empty_936:	.asciz "."
 data_4C176A90:
 	.space	1, 0x00
@@ -231,10 +243,17 @@ func_4C006B2A_Table:	# 15 x u32, 4294967289..4294967294; read by func_4C006B2A 0
 	tab_u32	0xFFFFFFFF, 0x0, 0x1, 0x2, 0x3, 0x4, 0x4, 0x5	# +0
 	tab_u32	0x5, 0x5, 0x6, 0x6, 0x6, 0x7, 0x7, 0x7	# +32
 	tab_u32	0x7, 0x7	# +64
-LcdOut_entry_L4_Table:	# 8 x u32, 0..1; read by LcdOut_entry : `mov	(d1, a0), d2`
-	tab_u32	0, 0, 1, 1, 1, 0, 0, 1
-func_4C006FBE_entry_L50_Table:	# 8 x u32, 0..1; read by func_4C006FBE_entry : `mov	(d1, a0), d2`
-	tab_u32	0, 1, 1, 0, 1, 1, 0, 0
+
+LcdOut_entry_L4_Table:	# 4 x REC_LcdOut_entry_L4_Table (8 bytes each); read by LcdOut_entry_L4 0x4C006EE6 `mov (4, a0), d2`; LcdOut_entry_L4 0x4C006EE6 `mov (d1, a0), d2`
+	REC_LcdOut_entry_L4_Table	
+	REC_LcdOut_entry_L4_Table	f0=1, f4=1
+	REC_LcdOut_entry_L4_Table	f0=1
+	REC_LcdOut_entry_L4_Table	f4=1
+func_4C006FBE_entry_L50_Table:	# 4 x REC_func_4C006FBE_entry_L50_Table (8 bytes each); read by func_4C006FBE_entry_L50 0x4C007013 `mov (4, a0), d2`; func_4C006FBE_entry_L50 0x4C007013 `mov (d1, a0), d2`
+	REC_func_4C006FBE_entry_L50_Table	f4=1
+	REC_func_4C006FBE_entry_L50_Table	f0=1
+	REC_func_4C006FBE_entry_L50_Table	f0=1, f4=1
+	REC_func_4C006FBE_entry_L50_Table	
 
 Str_IKLCD_03d_BMP:	.asciz "IKLCD%03d.BMP"
 	.align	4, 0xFF	# pad after Str_IKLCD_03d_BMP
@@ -249,17 +268,13 @@ Str_wb_19:	.asciz "wb"
 Str_BM_2:	.asciz "BM"
 # census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x176E3B, 0x176E44
-Str_P_25:	.asciz "P\xB0"
-	.align	4, 0x00	# pad after Str_P_25
 
-func_4C007A69_entry_L27_Table:	# 5 x u32, 45072..4294967295; read by func_4C007A69_entry_L27 0x4C007A95: `mov (d0, a2), d0`
-	tab_u32	45120, 45104, 45088, 45072, 4294967295
-
-Str_P_24:	.asciz "P\xB0"
-	.align	4, 0x00	# pad after Str_P_24
-
-MainGetEffName_L44_Table:	# 5 x u32, 45072..4294967295; read by MainGetEffName_L44 0x4C007BE2: `mov (d1, a2), d1`
-	tab_u32	45120, 45104, 45088, 45072, 4294967295
+func_4C007A69_entry_L14_Table:	# 5 x u32, 45072..45136; read by func_4C007A69_entry_L14 0x4C007A82: `mov	(d1, a2), d0`; func_4C007A69_entry_L27 0x4C007A95: `mov	(d0, a2), d0`
+	tab_u32	45136, 45120, 45104, 45088, 45072
+	.space	4, 0xFF
+MainGetEffName_L2d_Table:	# 5 x u32, 45072..45136; read by MainGetEffName_L2d 0x4C007BCB: `mov	(d0, a2), d0`; MainGetEffName_L44 0x4C007BE2: `mov	(d1, a2), d1`
+	tab_u32	45136, 45120, 45104, 45088, 45072
+	.space	4, 0xFF
 SetModeLed_entry_L14_Table:	# 16 x u8, a sparse map by index: 5 entries set, the rest 0xFF (none); read by SetModeLed_entry : `movbu	(d3, a0), d0`
 	map_none8	1	# [0..0]
 	map8	1, 7
@@ -576,7 +591,7 @@ Str_80_4:	.asciz "~80"
 Str_a_5:	.asciz "a"
 Str_b:	.asciz "b"
 Str_c:	.asciz "c"
-Str_d_4:	.asciz "d"
+Str_d_27:	.asciz "d"
 Str_e_3:	.asciz "e"
 Str_f:	.asciz "f"
 Str_g:	.asciz "g"
@@ -598,13 +613,13 @@ Str_v:	.asciz "v"
 Str_w_2:	.asciz "w"
 Str_x_5:	.asciz "x"
 Str_y_4:	.asciz "y"
-Str_z:	.asciz "z"
+Str_z_2:	.asciz "z"
 
 ptrs_4C177320:
 	.long	Str_a_5
 	.long	Str_b
 	.long	Str_c
-	.long	Str_d_4
+	.long	Str_d_27
 	.long	Str_e_3
 	.long	Str_f
 	.long	Str_g
@@ -626,16 +641,16 @@ ptrs_4C177320:
 	.long	Str_w_2
 	.long	Str_x_5
 	.long	Str_y_4
-	.long	Str_z
+	.long	Str_z_2
 
-Str_A_32:	.asciz "A"
-Str_B_18:	.asciz "B"
-Str_C_18:	.asciz "C"
-Str_D_14:	.asciz "D"
-Str_E_13:	.asciz "E"
-Str_F_16:	.asciz "F"
+Str_A_30:	.asciz "A"
+Str_B_17:	.asciz "B"
+Str_C_17:	.asciz "C"
+Str_D_13:	.asciz "D"
+Str_E_12:	.asciz "E"
+Str_F_15:	.asciz "F"
 Str_G_14:	.asciz "G"
-Str_H_5:	.asciz "H"
+Str_H_6:	.asciz "H"
 Str_I_4:	.asciz "I"
 Str_J_3:	.asciz "J"
 Str_K_3:	.asciz "K"
@@ -643,7 +658,7 @@ Str_L_4:	.asciz "L"
 Str_M_3:	.asciz "M"
 Str_N_3:	.asciz "N"
 Str_O_4:	.asciz "O"
-Str_P_12:	.asciz "P"
+Str_P_11:	.asciz "P"
 Str_Q_4:	.asciz "Q"
 Str_R_4:	.asciz "R"
 Str_S_4:	.asciz "S"
@@ -656,14 +671,14 @@ Str_Y_3:	.asciz "Y"
 Str_Z_3:	.asciz "Z"
 
 ptrs_4C1773BC:
-	.long	Str_A_32
-	.long	Str_B_18
-	.long	Str_C_18
-	.long	Str_D_14
-	.long	Str_E_13
-	.long	Str_F_16
+	.long	Str_A_30
+	.long	Str_B_17
+	.long	Str_C_17
+	.long	Str_D_13
+	.long	Str_E_12
+	.long	Str_F_15
 	.long	Str_G_14
-	.long	Str_H_5
+	.long	Str_H_6
 	.long	Str_I_4
 	.long	Str_J_3
 	.long	Str_K_3
@@ -671,7 +686,7 @@ ptrs_4C1773BC:
 	.long	Str_M_3
 	.long	Str_N_3
 	.long	Str_O_4
-	.long	Str_P_12
+	.long	Str_P_11
 	.long	Str_Q_4
 	.long	Str_R_4
 	.long	Str_S_4
@@ -683,14 +698,14 @@ ptrs_4C1773BC:
 	.long	Str_Y_3
 	.long	Str_Z_3
 
-Str_A_30:	.asciz "A"
-Str_B_17:	.asciz "B"
-Str_C_17:	.asciz "C"
-Str_D_13:	.asciz "D"
-Str_E_12:	.asciz "E"
-Str_F_15:	.asciz "F"
+Str_A_29:	.asciz "A"
+Str_B_16:	.asciz "B"
+Str_C_16:	.asciz "C"
+Str_D_12:	.asciz "D"
+Str_E_11:	.asciz "E"
+Str_F_14:	.asciz "F"
 Str_G_13:	.asciz "G"
-Str_H_3:	.asciz "H"
+Str_H_5:	.asciz "H"
 Str_I_3:	.asciz "I"
 Str_J_2:	.asciz "J"
 Str_K_2:	.asciz "K"
@@ -711,14 +726,14 @@ Str_Y_2:	.asciz "Y"
 Str_Z_2:	.asciz "Z"
 
 ptrs_4C177458:
-	.long	Str_A_30
-	.long	Str_B_17
-	.long	Str_C_17
-	.long	Str_D_13
-	.long	Str_E_12
-	.long	Str_F_15
+	.long	Str_A_29
+	.long	Str_B_16
+	.long	Str_C_16
+	.long	Str_D_12
+	.long	Str_E_11
+	.long	Str_F_14
 	.long	Str_G_13
-	.long	Str_H_3
+	.long	Str_H_5
 	.long	Str_I_3
 	.long	Str_J_2
 	.long	Str_K_2
@@ -1448,18 +1463,18 @@ Str_Caption:	.asciz "Caption:"
 	.align	4, 0xFF	# pad after Str_Caption
 data_4C179F50:
 	.space	1, 0x00
-Str_C_16:	.asciz "C"
+Str_C_15:	.asciz "C"
 Str_D_1_a0:	.asciz "D>1~a0"
-Str_D_12:	.asciz "D"
+Str_D_11:	.asciz "D"
 Str_E_1_a0:	.asciz "E>1~a0"
-Str_E_11:	.asciz "E"
-Str_F_14:	.asciz "F"
+Str_E_10:	.asciz "E"
+Str_F_12:	.asciz "F"
 Str_F_1_9e:	.asciz "F>1~9e"
 Str_G_11:	.asciz "G"
 Str_A_1_a0:	.asciz "A>1~a0"
-Str_A_29:	.asciz "A"
+Str_A_28:	.asciz "A"
 Str_B_1_a0:	.asciz "B>1~a0"
-Str_B_16:	.asciz "B"
+Str_B_14:	.asciz "B"
 data_4C179F82:
 	.space	1, 0x00
 data_4C179F83:
@@ -1470,18 +1485,18 @@ data_4C179F84:
 
 AcChordBoxProc_L13a_Table:
 	.long	data_4C179F50
-	.long	Str_C_16
+	.long	Str_C_15
 	.long	Str_D_1_a0
-	.long	Str_D_12
+	.long	Str_D_11
 	.long	Str_E_1_a0
-	.long	Str_E_11
-	.long	Str_F_14
+	.long	Str_E_10
+	.long	Str_F_12
 	.long	Str_F_1_9e
 	.long	Str_G_11
 	.long	Str_A_1_a0
-	.long	Str_A_29
+	.long	Str_A_28
 	.long	Str_B_1_a0
-	.long	Str_B_16
+	.long	Str_B_14
 	.long	data_4C179F82
 	.long	data_4C179F83
 	.long	data_4C179F84
@@ -2503,12 +2518,15 @@ func_4C01ACAE_entry_L97_Table:	# 256 x u16, 57568..61423; read by func_4C01ACAE_
 Str_BM:	.asciz "BM"
 	.align	4, 0xFF	# pad after Str_BM
 
-DrawJpegFileR_Impl_Var:	# s16, a constant; read / written by DrawJpegFileR_Impl 0x4C017DC8: `movhu (d0, a1), d0`; DrawJpegFileR_Impl 0x4C017DC8: `movhu (d0, a1), d1` ...
-	.word	0
-
-DrawJpegFileR_Impl_Table:	# 15 x s16, 0..3; read by DrawJpegFileR_Impl 0x4C017DC8: `movhu (2, a0), d0`; DrawJpegFileR_Impl 0x4C017DC8: `movhu (2, a0), d1` ...
-	tab_s16	0, 1, 0, 2, 0, 3, 0, 0, 1, 1, 1, 0	# [0]
-	tab_s16	2, 0, 3	# [12]
+DrawJpegFileR_Impl_Var:	# 8 x REC_DrawJpegFileR_Impl_Var (4 bytes each); read by DrawJpegFileR_Impl 0x4C017DC8 `movhu (2, a0), d0`; DrawJpegFileR_Impl 0x4C017DC8 `movhu (2, a0), d1`; DrawJpegFileR_Impl 0x4C017DC8 `movhu (2, a0), d2` (+4)
+	REC_DrawJpegFileR_Impl_Var	
+	REC_DrawJpegFileR_Impl_Var	f0=1
+	REC_DrawJpegFileR_Impl_Var	f0=2
+	REC_DrawJpegFileR_Impl_Var	f0=3
+	REC_DrawJpegFileR_Impl_Var	index=1
+	REC_DrawJpegFileR_Impl_Var	f0=1, index=1
+	REC_DrawJpegFileR_Impl_Var	index=2
+	REC_DrawJpegFileR_Impl_Var	index=3
 data_4C17BBC8:
 	# 32 bytes the code takes the address of: func_4C01824C_entry_L279 0x4C0184C7 `mov data_4C17BBC8, a2` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 127, 96, 80, 72, 68, 66, 65, 66, 68, 72, 80, 96, 127, 0, 0	# +0
@@ -9104,109 +9122,120 @@ func_4C02FD75_Var_4:	# u8, a constant; read / written by func_4C02FD75 0x4C02FD7
 
 func_4C02FD75_Table_4:	# 15 x u8, 0..255; read by func_4C02FD75 0x4C02FD75: `movbu (0x3b, a1), d0`; func_4C02FD75_entry_Lf2 0x4C02FE6C: `movbu (0x3b, a1), d0`
 	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 72
-data_4C19590E:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C19590E, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 2, 72	# +64
-data_4C195958:
-	# 148 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195958, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 3, 72, 0, 0, 32, 100, 53, 232	# +64
-	tab_u8	2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64	# +80
-	tab_u8	64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0	# +96
-	tab_u8	136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128	# +112
-	tab_u8	128, 128, 0, 0, 35, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +128
-	tab_u8	0, 0, 4, 72	# +144
-data_4C1959EC:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C1959EC, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 5, 72	# +64
-data_4C195A36:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195A36, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 72	# +64
-data_4C195A80:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195A80, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 7, 72	# +64
-data_4C195ACA:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195ACA, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 8, 72	# +64
-data_4C195B14:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195B14, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 9, 72	# +64
-data_4C195B5E:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195B5E, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 38, 100, 37, 200, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 10, 72	# +64
-data_4C195BA8:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195BA8, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 11, 72	# +64
-data_4C195BF2:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195BF2, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 12, 72	# +64
-data_4C195C3C:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195C3C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 13, 72	# +64
-data_4C195C86:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195C86, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 14, 72	# +64
-data_4C195CD0:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195CD0, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 15, 72	# +64
-data_4C195D1A:
-	# 74 bytes the code takes the address of: func_4C0321C2_L6 0x4C0321C8 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0321C2_L6 0x4C0321C8 `mov data_4C195D1A, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# +0
-	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# +16
-	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# +32
-	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0	# +48
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 67, 2	# +64
+
+func_4C0321C2_L6_Block:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195956, 0x195958
+func_4C0321C2_L6_Block_2:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 255, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 76 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1959A0, 0x1959EC
+func_4C0321C2_L6_Block_3:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 4, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195A34, 0x195A36
+func_4C0321C2_L6_Block_4:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 5, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195A7E, 0x195A80
+func_4C0321C2_L6_Block_5:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 6, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195AC8, 0x195ACA
+func_4C0321C2_L6_Block_6:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 7, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195B12, 0x195B14
+func_4C0321C2_L6_Block_7:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195B5C, 0x195B5E
+func_4C0321C2_L6_Block_8:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 38, 100, 37, 200, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 9, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195BA6, 0x195BA8
+func_4C0321C2_L6_Block_9:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195BF0, 0x195BF2
+func_4C0321C2_L6_Block_10:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195C3A, 0x195C3C
+func_4C0321C2_L6_Block_11:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 12, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195C84, 0x195C86
+func_4C0321C2_L6_Block_12:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 13, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195CCE, 0x195CD0
+func_4C0321C2_L6_Block_13:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 14, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195D18, 0x195D1A
+func_4C0321C2_L6_Block_14:	# 72 bytes, copied whole by func_4C0321C2_L6 0x4C0321C8: memcpy(.., 72)
+	tab_u8	0, 0, 32, 100, 53, 232, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128	# [0]
+	tab_u8	64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2	# [16]
+	tab_u8	64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128	# [32]
+	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 15, 0, 0, 0, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [64]
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195D62, 0x195D64
+
 func_4C02FD75_Table_5:	# 152 x u8, 0..255; read by func_4C02FD75 0x4C02FD75: `movbu (func_4C02FD75_Table_5), d0`; func_4C02FD75_entry_Lf2 0x4C02FE6C: `movbu (func_4C02FD75_Table_5), d0`
 	tab_u8	255, 0, 75, 8, 255, 0, 0, 0, 192, 0, 255, 255, 74, 4, 128, 99	# [0]
 	tab_u8	4, 100, 66, 14, 90, 0, 0, 16, 0, 0, 0, 0, 120, 0, 0, 0	# [16]
@@ -9218,19 +9247,12 @@ func_4C02FD75_Table_5:	# 152 x u8, 0..255; read by func_4C02FD75 0x4C02FD75: `mo
 	tab_u8	0, 0, 69, 2, 0, 0, 72, 30, 63, 16, 182, 0, 64, 150, 136, 144	# [112]
 	tab_u8	145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0	# [128]
 	tab_u8	0, 0, 0, 0, 63, 35, 71, 14	# [144]
-data_4C195DFC:
-	# 176 bytes the code takes the address of: func_4C02FD75 0x4C02FD75 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C02FD75 0x4C02FD75 `mov data_4C195DFC, a1` (+0, as a base); func_4C02FD75_entry_Lf2 0x4C02FE6C `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+3 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80, 255, 255	# +0
-	tab_u8	82, 46, 64, 0, 0, 32, 127, 0, 0, 223, 34, 142, 31, 0, 50, 3	# +16
-	tab_u8	0, 4, 16, 17, 18, 127, 19, 0, 3, 4, 20, 19, 0, 0, 0, 0	# +32
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +48
-	tab_u8	80, 8, 0, 0, 0, 0, 0, 0, 0, 0, 81, 14, 6, 6, 127, 127	# +64
-	tab_u8	0, 5, 148, 5, 148, 0, 0, 0, 0, 0, 96, 20, 0, 0, 0, 0	# +80
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32	# +96
-	tab_u8	97, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +112
-	tab_u8	0, 0, 0, 0, 0, 32, 98, 20, 0, 0, 0, 0, 0, 0, 0, 0	# +128
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 104, 16, 0, 0	# +144
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255	# +160
+
+func_4C02FD75_Block:	# 14 bytes, copied whole by func_4C02FD75 0x4C02FD75: memcpy(.., 14); func_4C02FD75_entry_Lf2 0x4C02FE6C: memcpy(.., 14); func_4C0321C2_L6 0x4C0321C8: memcpy(.., 14)
+	tab_u8	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80	# [0]
+# census: opaque -- unknown-dump: 162 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x195E0A, 0x195EAC
+
 func_4C03064A_entry_Le_Table:	# 76 x u8, 0..255; read by func_4C03064A_entry : `movbu	(a1), d0`
 	tab_u8	0, 72, 0, 0, 32, 127, 53, 201, 2, 0, 0, 0, 0, 0, 208, 208	# [0]
 	tab_u8	40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64	# [16]
@@ -9290,18 +9312,17 @@ func_4C032DD3_Table:	# 32 x u8, 0..255; read by func_4C032DD3_entry : `movbu	(a1
 func_4C0330FF_Table:	# 32 x u8, 0..255; read by func_4C0330FF_entry : `movbu	(a1), d0`
 	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-data_4C196160:
-	# 15 bytes the code takes the address of: func_4C03317C_entry_L36 0x4C0331B7 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03317C_entry_L36 0x4C0331B7 `mov data_4C196160, a1` (+0, as a base); func_4C03317C_entry_L76 0x4C0331F7 `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+9 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 0, 0, 16, 0, 53, 96, 15, 0, 0, 0, 0, 0, 247, 255	# +0
-data_4C19616F:
-	# 4 bytes the code takes the address of: func_4C03317C_entry_L11e 0x4C03329F `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03317C_entry_L11e 0x4C03329F `mov data_4C19616F, a1` (+0, as a base); func_4C03317C_entry_L16e 0x4C0332EF `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+1 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	176, 16, 0, 255	# +0
-data_4C196173:
-	# 5 bytes the code takes the address of: func_4C03317C_entry_Lce 0x4C03324F `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03317C_entry_Lce 0x4C03324F `mov data_4C196173, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	192, 0, 255, 255, 255	# +0
-data_4C196178:
-	# 16 bytes the code takes the address of: func_4C0334A9_entry_L4 0x4C0334B2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C0334A9_entry_L4 0x4C0334B2 `mov data_4C196178, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 0, 0, 16, 0, 53, 96, 15, 0, 0, 0, 0, 0, 247, 255, 255	# +0
+
+func_4C03317C_entry_L36_Block:	# 15 bytes, copied whole by func_4C03317C_entry_L36 0x4C0331B7: memcpy(.., 15); func_4C03317C_entry_L76 0x4C0331F7: memcpy(.., 15); func_4C03317C_entry_L1c0 0x4C033341: memcpy(.., 15)
+	tab_u8	240, 0, 0, 16, 0, 53, 96, 15, 0, 0, 0, 0, 0, 247, 255	# [0]
+func_4C03317C_entry_L11e_Block:	# 4 bytes, copied whole by func_4C03317C_entry_L11e 0x4C03329F: memcpy(.., 4); func_4C03317C_entry_L16e 0x4C0332EF: memcpy(.., 4)
+	tab_u8	176, 16, 0, 255	# [0]
+func_4C03317C_entry_Lce_Block:	# 3 bytes, copied whole by func_4C03317C_entry_Lce 0x4C03324F: memcpy(.., 3)
+	tab_u8	192, 0, 255	# [0]
+	.align	4, 0xFF	# pad after func_4C03317C_entry_Lce_Block
+func_4C0334A9_entry_L4_Block:	# 15 bytes, copied whole by func_4C0334A9_entry_L4 0x4C0334B2: memcpy(.., 15)
+	tab_u8	240, 0, 0, 16, 0, 53, 96, 15, 0, 0, 0, 0, 0, 247, 255	# [0]
+	.align	4, 0xFF	# pad after func_4C0334A9_entry_L4_Block
 
 Str_empty_1119:	.asciz "\xB0{"
 	.align	4, 0xFF	# pad after Str_empty_1119
@@ -9755,88 +9776,117 @@ func_4C036442_entry_L4f_Table:
 	.long	loc_4C0364E8
 	.long	loc_4C0364E8
 	.long	loc_4C0364E8
-data_4C196DD4:
-	# 8 bytes the code takes the address of: func_4C03B50C_entry_L66 0x4C03B577 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03B50C_entry_L66 0x4C03B577 `mov data_4C196DD4, a3` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 126, 127, 9, 0, 247, 255, 255	# +0
+
+func_4C037E2F_entry_L4b_Block:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 126, 127, 9, 0, 247, 255	# [0]
+	.align	4, 0xFF	# pad after func_4C037E2F_entry_L4b_Block
 
 func_4C03C303_Result_0:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=8, kind=1, f6=2, memcpy_a1=data_4C196DD4, flags=3, f16=2, x18="\x00\x00"
-data_4C196DF0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196DF0, 0x196DFC
+	REC_func_4C03C303_Result	f0=8, kind=1, f6=2, memcpy_a1=func_4C037E2F_entry_L4b_Block, flags=3, f16=2, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_2:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 4, 1, 0, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196DF7, 0x196DFC
+
 func_4C03C303_Result_1:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32769, kind=1, f6=3, memcpy_a1=data_4C196DF0, flags=3, f16=127, x18="\x00\x00"
-data_4C196E10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196E10, 0x196E1C
+	REC_func_4C03C303_Result	f0=32769, kind=1, f6=3, memcpy_a1=func_4C037E2F_entry_L4b_Block_2, flags=3, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_3:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 4, 3, 0, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196E17, 0x196E1C
+
 func_4C03C303_Result_2:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	kind=1, f6=4, memcpy_a1=data_4C196E10, flags=3, f16=255, x18="\x00\x00"
-data_4C196E30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196E30, 0x196E3C
+	REC_func_4C03C303_Result	kind=1, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_3, flags=3, f16=255, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_4:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 4, 4, 0, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196E37, 0x196E3C
+
 func_4C03C303_Result_3:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=3, kind=1, f6=5, memcpy_a1=data_4C196E30, flags=3, f14=52, f16=76, x18="\x00\x00"
-data_4C196E50:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196E50, 0x196E60
+	REC_func_4C03C303_Result	f0=3, kind=1, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_4, flags=3, f14=52, f16=76, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_5:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 4, 5, 1, 1, 1, 1, 1, 0, 0	# [0]
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196E5C, 0x196E60
+
 func_4C03C303_Result_4:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=7, memcpy_a1=data_4C196E50, flags=2, f16=127, x18="\x00\x00"
-data_4C196E74:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196E74, 0x196E84
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_5, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_6:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 4, 5, 1, 1, 1, 1, 2, 0, 0	# [0]
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196E80, 0x196E84
+
 func_4C03C303_Result_5:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=8, memcpy_a1=data_4C196E74, flags=2, f16=127, x18="\x00\x00"
-data_4C196E98:
-	# 24 bytes the code takes the address of: func_4C039ADF_L12a 0x4C039C09 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C039ADF_L12a 0x4C039C09 `mov data_4C196E98, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 126, 127, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
-	tab_u8	0, 0, 0, 0, 247, 255, 255, 255	# +16
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_6, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_7:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 126, 127, 8, 8, 0, 0, 0, 0, 0, 0, 0	# [0]
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196EA4, 0x196EB0
+
 func_4C03C303_Result_6:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C0, kind=1, f6=6, memcpy_a1=data_4C196E98, flags=2, f16=127, x18="\x00\x00"
-data_4C196EC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196EC4, 0x196ED0
+	REC_func_4C03C303_Result	f0=0x2000C0, kind=1, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_7, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_8:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 9, 1, 0, 0, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_7:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=9, memcpy_a1=data_4C196EC4, flags=2, f16=127, x18="\x00\x00"
-data_4C196EE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196EE4, 0x196EF0
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_8, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_9:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 9, 3, 0, 0, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_8:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=10, memcpy_a1=data_4C196EE4, flags=2, f16=127, x18="\x00\x00"
-data_4C196F04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196F04, 0x196F10
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_9, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_10:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 127, 127, 10, 1, 0, 0, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_9:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=11, memcpy_a1=data_4C196F04, flags=2, f16=127, x18="\x00\x00"
-data_4C196F24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196F24, 0x196F30
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=1, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_10, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_11:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x196F2B, 0x196F30
+
 func_4C03C303_Result_10:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32770, memcpy_a1=data_4C196F24, flags=3, f16=127, x18="\x01\x00"
-data_4C196F44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196F44, 0x196F50
+	REC_func_4C03C303_Result	f0=32770, memcpy_a1=func_4C037E2F_entry_L4b_Block_11, flags=3, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_12:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 0, 32, 0, 247, 255	# [0]
+
 func_4C03C303_Result_11:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=20512, memcpy_a1=data_4C196F44, flags=6, f16=1, x18="\x01\x00"
-data_4C196F64:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196F64, 0x196F70
+	REC_func_4C03C303_Result	f0=20512, memcpy_a1=func_4C037E2F_entry_L4b_Block_12, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_13:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 0, 33, 0, 247, 255	# [0]
+
 func_4C03C303_Result_12:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=20515, memcpy_a1=data_4C196F64, flags=6, f16=1, x18="\x01\x00"
-data_4C196F84:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196F84, 0x196F90
+	REC_func_4C03C303_Result	f0=20515, memcpy_a1=func_4C037E2F_entry_L4b_Block_13, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_14:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 0, 34, 0, 247, 255	# [0]
+
 func_4C03C303_Result_13:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=20513, memcpy_a1=data_4C196F84, flags=6, f16=1, x18="\x01\x00"
-data_4C196FA4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196FA4, 0x196FB0
+	REC_func_4C03C303_Result	f0=20513, memcpy_a1=func_4C037E2F_entry_L4b_Block_14, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_15:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 0, 35, 0, 247, 255	# [0]
+
 func_4C03C303_Result_14:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=20514, memcpy_a1=data_4C196FA4, flags=6, f16=1, x18="\x01\x00"
-data_4C196FC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x196FC4, 0x196FD0
+	REC_func_4C03C303_Result	f0=20514, memcpy_a1=func_4C037E2F_entry_L4b_Block_15, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_16:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 0, 36, 0, 247, 255	# [0]
+
 func_4C03C303_Result_15:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=20516, memcpy_a1=data_4C196FC4, flags=6, f16=1, x18="\x01\x00"
+	REC_func_4C03C303_Result	f0=20516, memcpy_a1=func_4C037E2F_entry_L4b_Block_16, flags=6, f16=1, x18="\x01\x00"
 
 Str_P_0:	.asciz "\xF0P, 0\x1F"
 # census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -9844,901 +9894,1128 @@ Str_P_0:	.asciz "\xF0P, 0\x1F"
 
 func_4C03C303_Result_16:	# REC_func_4C03C303_Result (20 bytes)
 	REC_func_4C03C303_Result	f0=8, f6=2, memcpy_a1=Str_P_0, flags=3, x18="\x01\x00"
-data_4C197004:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197004, 0x197010
+
+func_4C037E2F_entry_L4b_Block_17:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19700B, 0x197010
+
 func_4C03C303_Result_17:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32800, f6=3, memcpy_a1=data_4C197004, flags=7, f16=1, x18="\x01\x00"
-data_4C197024:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197024, 0x197030
+	REC_func_4C03C303_Result	f0=32800, f6=3, memcpy_a1=func_4C037E2F_entry_L4b_Block_17, flags=7, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_18:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19702B, 0x197030
+
 func_4C03C303_Result_18:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40960, f6=4, memcpy_a1=data_4C197024, flags=7, f16=127, x18="\x01\x00"
-data_4C197044:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197044, 0x197050
+	REC_func_4C03C303_Result	f0=40960, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_18, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_19:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 1, 2, 0, 247, 255	# [0]
+
 func_4C03C303_Result_19:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40960, f6=5, memcpy_a1=data_4C197044, flags=7, f16=127, x18="\x01\x00"
-data_4C197064:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197064, 0x197070
+	REC_func_4C03C303_Result	f0=40960, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_19, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_20:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19706B, 0x197070
+
 func_4C03C303_Result_20:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32784, memcpy_a1=data_4C197064, flags=7, f16=127, x18="\x01\x00"
-data_4C197084:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197084, 0x197090
+	REC_func_4C03C303_Result	f0=32784, memcpy_a1=func_4C037E2F_entry_L4b_Block_20, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_21:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19708B, 0x197090
+
 func_4C03C303_Result_21:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41216, f6=4, memcpy_a1=data_4C197084, flags=7, f16=127, x18="\x01\x00"
-data_4C1970A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1970A4, 0x1970B0
+	REC_func_4C03C303_Result	f0=41216, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_21, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_22:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 1, 18, 0, 247, 255	# [0]
+
 func_4C03C303_Result_22:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41216, f6=5, memcpy_a1=data_4C1970A4, flags=7, f16=127, x18="\x01\x00"
-data_4C1970C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1970C4, 0x1970D0
+	REC_func_4C03C303_Result	f0=41216, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_22, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_23:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1970CB, 0x1970D0
+
 func_4C03C303_Result_23:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41472, f6=4, memcpy_a1=data_4C1970C4, flags=7, f16=127, x18="\x01\x00"
-data_4C1970E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1970E4, 0x1970F0
+	REC_func_4C03C303_Result	f0=41472, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_23, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_24:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 1, 34, 0, 247, 255	# [0]
+
 func_4C03C303_Result_24:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41472, f6=5, memcpy_a1=data_4C1970E4, flags=7, f16=127, x18="\x01\x00"
-data_4C197104:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197104, 0x197110
+	REC_func_4C03C303_Result	f0=41472, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_24, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_25:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_25:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C197104, flags=6, f16=1, x18="\x01\x00"
-data_4C197124:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197124, 0x197130
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_25, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_26:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 1, 0, 247, 255	# [0]
+
 func_4C03C303_Result_26:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45076, f6=4, memcpy_a1=data_4C197124, flags=6, f16=127, x18="\x01\x00"
-data_4C197144:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197144, 0x197150
+	REC_func_4C03C303_Result	f0=45076, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_26, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_27:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 2, 0, 247, 255	# [0]
+
 func_4C03C303_Result_27:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45076, f6=5, memcpy_a1=data_4C197144, flags=6, f16=127, x18="\x01\x00"
-data_4C197164:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197164, 0x197170
+	REC_func_4C03C303_Result	f0=45076, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_27, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_28:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 3, 0, 247, 255	# [0]
+
 func_4C03C303_Result_28:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45077, memcpy_a1=data_4C197164, flags=6, f16=127, x18="\x01\x00"
-data_4C197184:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197184, 0x197190
+	REC_func_4C03C303_Result	f0=45077, memcpy_a1=func_4C037E2F_entry_L4b_Block_28, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_29:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 16, 0, 247, 255	# [0]
+
 func_4C03C303_Result_29:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C197184, flags=6, f16=1, x18="\x01\x00"
-data_4C1971A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1971A4, 0x1971B0
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_29, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_30:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 17, 0, 247, 255	# [0]
+
 func_4C03C303_Result_30:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45092, f6=4, memcpy_a1=data_4C1971A4, flags=6, f16=127, x18="\x01\x00"
-data_4C1971C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1971C4, 0x1971D0
+	REC_func_4C03C303_Result	f0=45092, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_30, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_31:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 18, 0, 247, 255	# [0]
+
 func_4C03C303_Result_31:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45092, f6=5, memcpy_a1=data_4C1971C4, flags=6, f16=127, x18="\x01\x00"
-data_4C1971E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1971E4, 0x1971F0
+	REC_func_4C03C303_Result	f0=45092, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_31, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_32:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 19, 0, 247, 255	# [0]
+
 func_4C03C303_Result_32:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45093, memcpy_a1=data_4C1971E4, flags=6, f16=127, x18="\x01\x00"
-data_4C197204:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197204, 0x197210
+	REC_func_4C03C303_Result	f0=45093, memcpy_a1=func_4C037E2F_entry_L4b_Block_32, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_33:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 32, 0, 247, 255	# [0]
+
 func_4C03C303_Result_33:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C197204, flags=6, f16=1, x18="\x01\x00"
-data_4C197224:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197224, 0x197230
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_33, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_34:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 33, 0, 247, 255	# [0]
+
 func_4C03C303_Result_34:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45108, f6=4, memcpy_a1=data_4C197224, flags=6, f16=127, x18="\x01\x00"
-data_4C197244:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197244, 0x197250
+	REC_func_4C03C303_Result	f0=45108, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_34, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_35:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 34, 0, 247, 255	# [0]
+
 func_4C03C303_Result_35:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45108, f6=5, memcpy_a1=data_4C197244, flags=6, f16=127, x18="\x01\x00"
-data_4C197264:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197264, 0x197270
+	REC_func_4C03C303_Result	f0=45108, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_35, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_36:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 35, 0, 247, 255	# [0]
+
 func_4C03C303_Result_36:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45109, memcpy_a1=data_4C197264, flags=6, f16=127, x18="\x01\x00"
-data_4C197284:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197284, 0x197290
+	REC_func_4C03C303_Result	f0=45109, memcpy_a1=func_4C037E2F_entry_L4b_Block_36, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_37:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 48, 0, 247, 255	# [0]
+
 func_4C03C303_Result_37:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C197284, flags=6, f16=1, x18="\x01\x00"
-data_4C1972A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1972A4, 0x1972B0
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_37, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_38:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 49, 0, 247, 255	# [0]
+
 func_4C03C303_Result_38:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45124, f6=4, memcpy_a1=data_4C1972A4, flags=6, f16=127, x18="\x01\x00"
-data_4C1972C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1972C4, 0x1972D0
+	REC_func_4C03C303_Result	f0=45124, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_38, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_39:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 50, 0, 247, 255	# [0]
+
 func_4C03C303_Result_39:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45124, f6=5, memcpy_a1=data_4C1972C4, flags=6, f16=127, x18="\x01\x00"
-data_4C1972E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1972E4, 0x1972F0
+	REC_func_4C03C303_Result	f0=45124, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_39, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_40:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 51, 0, 247, 255	# [0]
+
 func_4C03C303_Result_40:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45125, memcpy_a1=data_4C1972E4, flags=6, f16=127, x18="\x01\x00"
-data_4C197304:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197304, 0x197310
+	REC_func_4C03C303_Result	f0=45125, memcpy_a1=func_4C037E2F_entry_L4b_Block_40, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_41:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 64, 0, 247, 255	# [0]
+
 func_4C03C303_Result_41:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C197304, flags=6, f16=1, x18="\x01\x00"
-data_4C197324:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197324, 0x197330
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_41, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_42:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 65, 0, 247, 255	# [0]
+
 func_4C03C303_Result_42:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45140, f6=4, memcpy_a1=data_4C197324, flags=6, f16=127, x18="\x01\x00"
-data_4C197344:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197344, 0x197350
+	REC_func_4C03C303_Result	f0=45140, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_42, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_43:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 66, 0, 247, 255	# [0]
+
 func_4C03C303_Result_43:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45140, f6=5, memcpy_a1=data_4C197344, flags=6, f16=127, x18="\x01\x00"
-data_4C197364:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197364, 0x197370
+	REC_func_4C03C303_Result	f0=45140, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_43, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_44:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 2, 67, 0, 247, 255	# [0]
+
 func_4C03C303_Result_44:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45141, memcpy_a1=data_4C197364, flags=6, f16=127, x18="\x01\x00"
-data_4C197384:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197384, 0x197390
+	REC_func_4C03C303_Result	f0=45141, memcpy_a1=func_4C037E2F_entry_L4b_Block_44, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_45:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_45:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x204001, f6=8, memcpy_a1=data_4C197384, flags=6, f16=16, x18="\x01\x00"
-data_4C1973A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1973A4, 0x1973B0
+	REC_func_4C03C303_Result	f0=0x204001, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_45, flags=6, f16=16, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_46:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 16, 0, 247, 255	# [0]
+
 func_4C03C303_Result_46:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200090, f6=7, memcpy_a1=data_4C1973A4, flags=6, f16=8, x18="\x01\x00"
-data_4C1973C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1973C4, 0x1973D0
+	REC_func_4C03C303_Result	f0=0x200090, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_46, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_47:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 17, 0, 247, 255	# [0]
+
 func_4C03C303_Result_47:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200091, f6=7, memcpy_a1=data_4C1973C4, flags=6, f16=8, x18="\x01\x00"
-data_4C1973E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1973E4, 0x1973F0
+	REC_func_4C03C303_Result	f0=0x200091, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_47, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_48:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 18, 0, 247, 255	# [0]
+
 func_4C03C303_Result_48:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200092, f6=7, memcpy_a1=data_4C1973E4, flags=6, f16=8, x18="\x01\x00"
-data_4C197404:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197404, 0x197410
+	REC_func_4C03C303_Result	f0=0x200092, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_48, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_49:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 19, 0, 247, 255	# [0]
+
 func_4C03C303_Result_49:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200093, f6=7, memcpy_a1=data_4C197404, flags=6, f16=8, x18="\x01\x00"
-data_4C197424:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197424, 0x197430
+	REC_func_4C03C303_Result	f0=0x200093, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_49, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_50:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 20, 0, 247, 255	# [0]
+
 func_4C03C303_Result_50:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200094, f6=7, memcpy_a1=data_4C197424, flags=6, f16=8, x18="\x01\x00"
-data_4C197444:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197444, 0x197450
+	REC_func_4C03C303_Result	f0=0x200094, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_50, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_51:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 21, 0, 247, 255	# [0]
+
 func_4C03C303_Result_51:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200095, f6=7, memcpy_a1=data_4C197444, flags=6, f16=8, x18="\x01\x00"
-data_4C197464:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197464, 0x197470
+	REC_func_4C03C303_Result	f0=0x200095, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_51, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_52:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 22, 0, 247, 255	# [0]
+
 func_4C03C303_Result_52:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200096, f6=7, memcpy_a1=data_4C197464, flags=6, f16=8, x18="\x01\x00"
-data_4C197484:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197484, 0x197490
+	REC_func_4C03C303_Result	f0=0x200096, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_52, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_53:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 23, 0, 247, 255	# [0]
+
 func_4C03C303_Result_53:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200097, f6=7, memcpy_a1=data_4C197484, flags=6, f16=8, x18="\x01\x00"
-data_4C1974A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1974A4, 0x1974B0
+	REC_func_4C03C303_Result	f0=0x200097, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_53, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_54:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 24, 0, 247, 255	# [0]
+
 func_4C03C303_Result_54:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200098, f6=7, memcpy_a1=data_4C1974A4, flags=6, f16=8, x18="\x01\x00"
-data_4C1974C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1974C4, 0x1974D0
+	REC_func_4C03C303_Result	f0=0x200098, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_54, flags=6, f16=8, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_55:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 25, 0, 247, 255	# [0]
+
 func_4C03C303_Result_55:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200099, f6=7, memcpy_a1=data_4C1974C4, flags=6, f16=1, x18="\x01\x00"
-data_4C1974E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1974E4, 0x1974F0
+	REC_func_4C03C303_Result	f0=0x200099, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_55, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_56:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 26, 0, 247, 255	# [0]
+
 func_4C03C303_Result_56:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20009A, f6=7, memcpy_a1=data_4C1974E4, flags=6, f16=1, x18="\x01\x00"
-data_4C197504:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197504, 0x197510
+	REC_func_4C03C303_Result	f0=0x20009A, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_56, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_57:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 27, 0, 247, 255	# [0]
+
 func_4C03C303_Result_57:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20008A, f6=9, memcpy_a1=data_4C197504, flags=6, f16=10, x18="\x01\x00"
-data_4C197524:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197524, 0x197530
+	REC_func_4C03C303_Result	f0=0x20008A, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_57, flags=6, f16=10, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_58:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 28, 0, 247, 255	# [0]
+
 func_4C03C303_Result_58:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20008B, f6=9, memcpy_a1=data_4C197524, flags=6, f16=10, x18="\x01\x00"
-data_4C197544:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197544, 0x197550
+	REC_func_4C03C303_Result	f0=0x20008B, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_58, flags=6, f16=10, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_59:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 29, 0, 247, 255	# [0]
+
 func_4C03C303_Result_59:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200088, f6=9, memcpy_a1=data_4C197544, flags=6, f16=10, x18="\x01\x00"
-data_4C197564:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197564, 0x197570
+	REC_func_4C03C303_Result	f0=0x200088, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_59, flags=6, f16=10, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_60:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 0, 16, 30, 0, 247, 255	# [0]
+
 func_4C03C303_Result_60:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200089, f6=9, memcpy_a1=data_4C197564, flags=6, f16=10, x18="\x01\x00"
-data_4C197584:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197584, 0x197590
+	REC_func_4C03C303_Result	f0=0x200089, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_60, flags=6, f16=10, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_61:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_61:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, f6=10, memcpy_a1=data_4C197584, flags=4, x18="\x01\x00"
-data_4C1975A4:
-	# 12 bytes the code takes the address of: func_4C03B6DB_entry_L4b 0x4C03B72B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03B6DB_entry_L4b 0x4C03B72B `mov data_4C1975A4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 16, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=0xFFFFFF, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_61, flags=4, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_62:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 16, 0, 247, 255	# [0]
+
 func_4C03C303_Result_62:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49152, f6=11, memcpy_a1=data_4C1975A4, flags=7, f16=127, x18="\x01\x00"
-data_4C1975C4:
-	# 12 bytes the code takes the address of: func_4C03B6DB_entry_L4b 0x4C03B72B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03B6DB_entry_L4b 0x4C03B72B `mov data_4C1975C4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 17, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=49152, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_62, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_63:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 17, 0, 247, 255	# [0]
+
 func_4C03C303_Result_63:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49152, f6=11, memcpy_a1=data_4C1975C4, flags=7, f16=127, x18="\x01\x00"
-data_4C1975E4:
-	# 12 bytes the code takes the address of: func_4C03B6DB_entry_L4b 0x4C03B72B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03B6DB_entry_L4b 0x4C03B72B `mov data_4C1975E4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 18, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=49152, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_63, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_64:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1975EB, 0x1975F0
+
 func_4C03C303_Result_64:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49152, f6=11, memcpy_a1=data_4C1975E4, flags=7, f16=127, x18="\x01\x00"
-data_4C197604:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197604, 0x197610
+	REC_func_4C03C303_Result	f0=49152, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_64, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_65:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19760B, 0x197610
+
 func_4C03C303_Result_65:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49156, f6=12, memcpy_a1=data_4C197604, flags=7, f16=3, x18="\x01\x00"
-data_4C197624:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197624, 0x197630
+	REC_func_4C03C303_Result	f0=49156, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_65, flags=7, f16=3, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_66:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19762B, 0x197630
+
 func_4C03C303_Result_66:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49280, f6=13, memcpy_a1=data_4C197624, flags=7, f16=3, x18="\x01\x00"
-data_4C197644:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197644, 0x197650
+	REC_func_4C03C303_Result	f0=49280, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_66, flags=7, f16=3, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_67:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19764B, 0x197650
+
 func_4C03C303_Result_67:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49282, f6=13, memcpy_a1=data_4C197644, flags=7, f16=1, x18="\x01\x00"
-data_4C197664:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197664, 0x197670
+	REC_func_4C03C303_Result	f0=49282, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_67, flags=7, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_68:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19766B, 0x197670
+
 func_4C03C303_Result_68:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=49283, f6=13, memcpy_a1=data_4C197664, flags=7, f16=1, x18="\x01\x00"
-data_4C197684:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197684, 0x197690
+	REC_func_4C03C303_Result	f0=49283, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_68, flags=7, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_69:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19768B, 0x197690
+
 func_4C03C303_Result_69:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=53258, memcpy_a1=data_4C197684, flags=7, f16=1, x18="\x01\x00"
-data_4C1976A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1976A4, 0x1976B0
+	REC_func_4C03C303_Result	f0=53258, memcpy_a1=func_4C037E2F_entry_L4b_Block_69, flags=7, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_70:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1976AB, 0x1976B0
+
 func_4C03C303_Result_70:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=53248, memcpy_a1=data_4C1976A4, flags=7, f16=1, x18="\x01\x00"
-data_4C1976C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1976C4, 0x1976D0
+	REC_func_4C03C303_Result	f0=53248, memcpy_a1=func_4C037E2F_entry_L4b_Block_70, flags=7, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_71:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1976CB, 0x1976D0
+
 func_4C03C303_Result_71:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=53249, f6=14, memcpy_a1=data_4C1976C4, flags=3, f16=3, x18="\x01\x00"
-data_4C1976E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1976E4, 0x1976F0
+	REC_func_4C03C303_Result	f0=53249, f6=14, memcpy_a1=func_4C037E2F_entry_L4b_Block_71, flags=3, f16=3, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_72:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1976EB, 0x1976F0
+
 func_4C03C303_Result_72:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=53250, f6=14, memcpy_a1=data_4C1976E4, flags=3, f16=2, x18="\x01\x00"
-data_4C197704:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197704, 0x197710
+	REC_func_4C03C303_Result	f0=53250, f6=14, memcpy_a1=func_4C037E2F_entry_L4b_Block_72, flags=3, f16=2, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_73:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19770B, 0x197710
+
 func_4C03C303_Result_73:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=53251, f6=14, memcpy_a1=data_4C197704, flags=3, f16=2, x18="\x01\x00"
-data_4C197724:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197724, 0x197730
+	REC_func_4C03C303_Result	f0=53251, f6=14, memcpy_a1=func_4C037E2F_entry_L4b_Block_73, flags=3, f16=2, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_74:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19772B, 0x197730
+
 func_4C03C303_Result_74:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32819, f6=15, memcpy_a1=data_4C197724, flags=3, f16=2, x18="\x01\x00"
-data_4C197744:
-	# 12 bytes the code takes the address of: func_4C03B7AC_entry_L3a 0x4C03B7EB `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03B7AC_entry_L3a 0x4C03B7EB `mov data_4C197744, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 40, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=32819, f6=15, memcpy_a1=func_4C037E2F_entry_L4b_Block_74, flags=3, f16=2, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_75:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19774B, 0x197750
+
 func_4C03C303_Result_75:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=160, f6=16, memcpy_a1=data_4C197744, flags=7, f16=5, x18="\x01\x00"
-data_4C197764:
-	# 12 bytes the code takes the address of: func_4C03BAED_entry_L4b 0x4C03BB3D `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03BAED_entry_L4b 0x4C03BB3D `mov data_4C197764, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 48, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=160, f6=16, memcpy_a1=func_4C037E2F_entry_L4b_Block_75, flags=7, f16=5, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_76:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 48, 0, 247, 255	# [0]
+
 func_4C03C303_Result_76:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=57344, f6=17, memcpy_a1=data_4C197764, flags=3, f16=127, x18="\x01\x00"
-data_4C197784:
-	# 12 bytes the code takes the address of: func_4C03BAED_entry_L4b 0x4C03BB3D `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03BAED_entry_L4b 0x4C03BB3D `mov data_4C197784, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 49, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=57344, f6=17, memcpy_a1=func_4C037E2F_entry_L4b_Block_76, flags=3, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_77:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 49, 0, 247, 255	# [0]
+
 func_4C03C303_Result_77:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=57344, f6=17, memcpy_a1=data_4C197784, flags=3, f16=127, x18="\x01\x00"
-data_4C1977A4:
-	# 12 bytes the code takes the address of: func_4C03BAED_entry_L4b 0x4C03BB3D `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03BAED_entry_L4b 0x4C03BB3D `mov data_4C1977A4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 50, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=57344, f6=17, memcpy_a1=func_4C037E2F_entry_L4b_Block_77, flags=3, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_78:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x1977AB, 0x1977B0
+
 func_4C03C303_Result_78:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=57344, f6=17, memcpy_a1=data_4C1977A4, flags=3, f16=127, x18="\x01\x00"
-data_4C1977C4:
-	# 12 bytes the code takes the address of: func_4C03BBBE_entry_L38 0x4C03BBFB `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03BBBE_entry_L38 0x4C03BBFB `mov data_4C1977C4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 56, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=57344, f6=17, memcpy_a1=func_4C037E2F_entry_L4b_Block_78, flags=3, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_79:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 56, 0, 247, 255	# [0]
+
 func_4C03C303_Result_79:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=128, f6=18, memcpy_a1=data_4C1977C4, flags=7, f16=127, x18="\x01\x00"
-data_4C1977E4:
-	# 12 bytes the code takes the address of: func_4C03BBBE_entry_L38 0x4C03BBFB `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03BBBE_entry_L38 0x4C03BBFB `mov data_4C1977E4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 57, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=128, f6=18, memcpy_a1=func_4C037E2F_entry_L4b_Block_79, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_80:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 57, 0, 247, 255	# [0]
+
 func_4C03C303_Result_80:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=128, f6=18, memcpy_a1=data_4C1977E4, flags=7, f16=127, x18="\x01\x00"
-data_4C197804:
-	# 12 bytes the code takes the address of: func_4C03BBBE_entry_L38 0x4C03BBFB `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03BBBE_entry_L38 0x4C03BBFB `mov data_4C197804, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 58, 0, 247, 255	# +0
+	REC_func_4C03C303_Result	f0=128, f6=18, memcpy_a1=func_4C037E2F_entry_L4b_Block_80, flags=7, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_81:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19780B, 0x197810
+
 func_4C03C303_Result_81:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=128, f6=18, memcpy_a1=data_4C197804, flags=7, f16=103, x18="\x01\x00"
-data_4C197824:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197824, 0x197830
+	REC_func_4C03C303_Result	f0=128, f6=18, memcpy_a1=func_4C037E2F_entry_L4b_Block_81, flags=7, f16=103, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_82:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19782B, 0x197830
+
 func_4C03C303_Result_82:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32896, memcpy_a1=data_4C197824, flags=7, f16=1, x18="\x01\x00"
-data_4C197844:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197844, 0x197850
+	REC_func_4C03C303_Result	f0=32896, memcpy_a1=func_4C037E2F_entry_L4b_Block_82, flags=7, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_83:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19784B, 0x197850
+
 func_4C03C303_Result_83:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32897, memcpy_a1=data_4C197844, flags=7, f16=13, x18="\x01\x00"
-data_4C197864:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197864, 0x197870
+	REC_func_4C03C303_Result	f0=32897, memcpy_a1=func_4C037E2F_entry_L4b_Block_83, flags=7, f16=13, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_84:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1	# [0]
+# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x19786B, 0x197870
+
 func_4C03C303_Result_84:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32898, f6=19, memcpy_a1=data_4C197864, flags=7, f16=19, x18="\x01\x00"
-data_4C197884:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197884, 0x197890
+	REC_func_4C03C303_Result	f0=32898, f6=19, memcpy_a1=func_4C037E2F_entry_L4b_Block_84, flags=7, f16=19, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_85:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 0, 127, 0, 247, 255	# [0]
+
 func_4C03C303_Result_85:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, f6=20, memcpy_a1=data_4C197884, flags=2, f16=127, x18="\x01\x00"
-data_4C1978A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1978A4, 0x1978B0
+	REC_func_4C03C303_Result	f0=0xFFFFFF, f6=20, memcpy_a1=func_4C037E2F_entry_L4b_Block_85, flags=2, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_86:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 1, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_86:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45056, memcpy_a1=data_4C1978A4, flags=6, f16=1, x18="\x01\x00"
-data_4C1978C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1978C4, 0x1978D0
+	REC_func_4C03C303_Result	f0=45056, memcpy_a1=func_4C037E2F_entry_L4b_Block_86, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_87:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 1, 1, 0, 247, 255	# [0]
+
 func_4C03C303_Result_87:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45120, memcpy_a1=data_4C1978C4, flags=6, f16=127, x18="\x01\x00"
-data_4C1978E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1978E4, 0x1978F0
+	REC_func_4C03C303_Result	f0=45120, memcpy_a1=func_4C037E2F_entry_L4b_Block_87, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_88:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 1, 2, 0, 247, 255	# [0]
+
 func_4C03C303_Result_88:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45136, memcpy_a1=data_4C1978E4, flags=6, f16=127, x18="\x01\x00"
-data_4C197904:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197904, 0x197910
+	REC_func_4C03C303_Result	f0=45136, memcpy_a1=func_4C037E2F_entry_L4b_Block_88, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_89:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 1, 16, 0, 247, 255	# [0]
+
 func_4C03C303_Result_89:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45057, memcpy_a1=data_4C197904, flags=6, f16=1, x18="\x01\x00"
-data_4C197924:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197924, 0x197930
+	REC_func_4C03C303_Result	f0=45057, memcpy_a1=func_4C037E2F_entry_L4b_Block_89, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_90:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 1, 17, 0, 247, 255	# [0]
+
 func_4C03C303_Result_90:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45120, memcpy_a1=data_4C197924, flags=6, f16=127, x18="\x01\x00"
-data_4C197944:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197944, 0x197950
+	REC_func_4C03C303_Result	f0=45120, memcpy_a1=func_4C037E2F_entry_L4b_Block_90, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_91:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 1, 18, 0, 247, 255	# [0]
+
 func_4C03C303_Result_91:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45136, memcpy_a1=data_4C197944, flags=6, f16=127, x18="\x01\x00"
-data_4C197964:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197964, 0x197970
+	REC_func_4C03C303_Result	f0=45136, memcpy_a1=func_4C037E2F_entry_L4b_Block_91, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_92:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_92:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C197964, flags=6, f16=1, x18="\x01\x00"
-data_4C197984:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197984, 0x197990
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_92, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_93:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 1, 0, 247, 255	# [0]
+
 func_4C03C303_Result_93:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45124, f6=4, memcpy_a1=data_4C197984, flags=6, f16=127, x18="\x01\x00"
-data_4C1979A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1979A4, 0x1979B0
+	REC_func_4C03C303_Result	f0=45124, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_93, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_94:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 2, 0, 247, 255	# [0]
+
 func_4C03C303_Result_94:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45124, f6=5, memcpy_a1=data_4C1979A4, flags=6, f16=127, x18="\x01\x00"
-data_4C1979C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1979C4, 0x1979D0
+	REC_func_4C03C303_Result	f0=45124, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_94, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_95:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 3, 0, 247, 255	# [0]
+
 func_4C03C303_Result_95:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45077, memcpy_a1=data_4C1979C4, flags=6, f16=127, x18="\x01\x00"
-data_4C1979E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1979E4, 0x1979F0
+	REC_func_4C03C303_Result	f0=45077, memcpy_a1=func_4C037E2F_entry_L4b_Block_95, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_96:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 16, 0, 247, 255	# [0]
+
 func_4C03C303_Result_96:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=data_4C1979E4, flags=6, f16=1, x18="\x01\x00"
-data_4C197A04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197A04, 0x197A10
+	REC_func_4C03C303_Result	f0=0x20005F, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_96, flags=6, f16=1, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_97:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 17, 0, 247, 255	# [0]
+
 func_4C03C303_Result_97:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45140, f6=4, memcpy_a1=data_4C197A04, flags=6, f16=127, x18="\x01\x00"
-data_4C197A24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197A24, 0x197A30
+	REC_func_4C03C303_Result	f0=45140, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_97, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_98:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 18, 0, 247, 255	# [0]
+
 func_4C03C303_Result_98:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45140, f6=5, memcpy_a1=data_4C197A24, flags=6, f16=127, x18="\x01\x00"
-data_4C197A44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197A44, 0x197A50
+	REC_func_4C03C303_Result	f0=45140, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_98, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_99:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 44, 32, 48, 31, 1, 2, 19, 0, 247, 255	# [0]
+
 func_4C03C303_Result_99:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=45077, memcpy_a1=data_4C197A44, flags=6, f16=127, x18="\x01\x00"
-data_4C197A64:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197A64, 0x197A6C
+	REC_func_4C03C303_Result	f0=45077, memcpy_a1=func_4C037E2F_entry_L4b_Block_99, flags=6, f16=127, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_100:	# 7 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 80, 37, 0, 0, 247, 255	# [0]
+	.align	4, 0xFF	# pad after func_4C037E2F_entry_L4b_Block_100
+
 func_4C03C303_Result_100:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=4, f6=1, memcpy_a1=data_4C197A64, flags=3, f14=40, f16=300, x18="\x01\x00"
-data_4C197A80:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197A80, 0x197A8C
+	REC_func_4C03C303_Result	f0=4, f6=1, memcpy_a1=func_4C037E2F_entry_L4b_Block_100, flags=3, f14=40, f16=300, x18="\x01\x00"
+
+func_4C037E2F_entry_L4b_Block_101:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 0, 0, 127, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_101:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=8, kind=2, f6=16, memcpy_a1=data_4C197A80, flags=2, f16=6, x18="\x00\x00"
-data_4C197AA0:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197AA0, 0x197AB0
+	REC_func_4C03C303_Result	f0=8, kind=2, f6=16, memcpy_a1=func_4C037E2F_entry_L4b_Block_101, flags=2, f16=6, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_102:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 0, 0, 0, 0, 0	# [0]
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x197AAC, 0x197AB0
+
 func_4C03C303_Result_102:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	kind=2, f6=4, memcpy_a1=data_4C197AA0, flags=2, f16=127, x18="\x00\x00"
-data_4C197AC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197AC4, 0x197AD0
+	REC_func_4C03C303_Result	kind=2, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_102, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_103:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 4, 0, 255, 247, 255	# [0]
+
 func_4C03C303_Result_103:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32769, kind=2, f6=3, memcpy_a1=data_4C197AC4, flags=2, f16=127, x18="\x00\x00"
-data_4C197AE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197AE4, 0x197AF0
+	REC_func_4C03C303_Result	f0=32769, kind=2, f6=3, memcpy_a1=func_4C037E2F_entry_L4b_Block_103, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_104:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 5, 0, 255, 247, 255	# [0]
+
 func_4C03C303_Result_104:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=3, kind=2, f6=5, memcpy_a1=data_4C197AE4, flags=2, f16=127, x18="\x00\x00"
-data_4C197B04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197B04, 0x197B10
+	REC_func_4C03C303_Result	f0=3, kind=2, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_104, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_105:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 127, 0, 65, 247, 255	# [0]
+
 func_4C03C303_Result_105:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=8, kind=2, f6=2, memcpy_a1=data_4C197B04, flags=2, f16=6, x18="\x00\x00"
-data_4C197B24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197B24, 0x197B30
+	REC_func_4C03C303_Result	f0=8, kind=2, f6=2, memcpy_a1=func_4C037E2F_entry_L4b_Block_105, flags=2, f16=6, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_106:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 48, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_106:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40960, kind=2, f6=6, memcpy_a1=data_4C197B24, flags=2, f16=7, x18="\x00\x00"
-data_4C197B44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197B44, 0x197B50
+	REC_func_4C03C303_Result	f0=40960, kind=2, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_106, flags=2, f16=7, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_107:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 49, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_107:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40960, kind=2, f6=6, memcpy_a1=data_4C197B44, flags=2, f16=7, x18="\x00\x00"
-data_4C197B64:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197B64, 0x197B70
+	REC_func_4C03C303_Result	f0=40960, kind=2, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_107, flags=2, f16=7, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_108:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 50, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_108:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=data_4C197B64, flags=2, f16=7, x18="\x00\x00"
-data_4C197B84:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197B84, 0x197B90
+	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_108, flags=2, f16=7, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_109:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 51, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_109:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=data_4C197B84, flags=2, f16=127, x18="\x00\x00"
-data_4C197BA4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197BA4, 0x197BB0
+	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_109, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_110:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 52, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_110:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=data_4C197BA4, flags=2, f16=127, x18="\x00\x00"
-data_4C197BC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197BC4, 0x197BD0
+	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_110, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_111:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 53, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_111:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=data_4C197BC4, flags=2, f16=127, x18="\x00\x00"
-data_4C197BE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197BE4, 0x197BF0
+	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_111, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_112:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 55, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_112:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=data_4C197BE4, flags=2, f16=127, x18="\x00\x00"
-data_4C197C04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197C04, 0x197C10
+	REC_func_4C03C303_Result	f0=40977, kind=2, f6=8, memcpy_a1=func_4C037E2F_entry_L4b_Block_112, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_113:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 56, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_113:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41216, kind=2, f6=7, memcpy_a1=data_4C197C04, flags=2, f16=7, x18="\x00\x00"
-data_4C197C24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197C24, 0x197C30
+	REC_func_4C03C303_Result	f0=41216, kind=2, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_113, flags=2, f16=7, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_114:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 57, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_114:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197C24, flags=2, f16=7, x18="\x00\x00"
-data_4C197C44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197C44, 0x197C50
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_114, flags=2, f16=7, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_115:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 58, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_115:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197C44, flags=2, f16=127, x18="\x00\x00"
-data_4C197C64:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197C64, 0x197C70
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_115, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_116:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 59, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_116:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197C64, flags=2, f16=127, x18="\x00\x00"
-data_4C197C84:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197C84, 0x197C90
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_116, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_117:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 60, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_117:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197C84, flags=2, f16=127, x18="\x00\x00"
-data_4C197CA4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197CA4, 0x197CB0
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_117, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_118:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 61, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_118:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197CA4, flags=2, f16=127, x18="\x00\x00"
-data_4C197CC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197CC4, 0x197CD0
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_118, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_119:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 62, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_119:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197CC4, flags=2, f16=127, x18="\x00\x00"
-data_4C197CE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197CE4, 0x197CF0
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_119, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_120:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 63, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_120:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197CE4, flags=2, f16=127, x18="\x00\x00"
-data_4C197D04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197D04, 0x197D10
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_120, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_121:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 64, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_121:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=data_4C197D04, flags=2, f16=127, x18="\x00\x00"
-data_4C197D24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197D24, 0x197D30
+	REC_func_4C03C303_Result	f0=41233, kind=2, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_121, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_122:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 21, 0, 255, 247, 255	# [0]
+
 func_4C03C303_Result_122:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xC00000, kind=2, f6=15, memcpy_a1=data_4C197D24, flags=2, f16=127, x18="\x00\x00"
-data_4C197D44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197D44, 0x197D50
+	REC_func_4C03C303_Result	f0=0xC00000, kind=2, f6=15, memcpy_a1=func_4C037E2F_entry_L4b_Block_122, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_123:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 31, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_123:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=2, f6=14, memcpy_a1=data_4C197D44, flags=2, f14=1, f16=95, x18="\x00\x00"
-data_4C197D64:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197D64, 0x197D70
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=2, f6=14, memcpy_a1=func_4C037E2F_entry_L4b_Block_123, flags=2, f14=1, f16=95, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_124:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 48, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_124:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004C, kind=2, f6=10, memcpy_a1=data_4C197D64, flags=2, f16=127, x18="\x00\x00"
-data_4C197D84:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197D84, 0x197D90
+	REC_func_4C03C303_Result	f0=0xB0004C, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_124, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_125:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 49, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_125:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004D, kind=2, f6=10, memcpy_a1=data_4C197D84, flags=2, f16=127, x18="\x00\x00"
-data_4C197DA4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197DA4, 0x197DB0
+	REC_func_4C03C303_Result	f0=0xB0004D, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_125, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_126:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 50, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_126:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004A, kind=2, f6=10, memcpy_a1=data_4C197DA4, flags=2, f16=127, x18="\x00\x00"
-data_4C197DC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197DC4, 0x197DD0
+	REC_func_4C03C303_Result	f0=0xB0004A, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_126, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_127:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 51, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_127:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB00047, kind=2, f6=10, memcpy_a1=data_4C197DC4, flags=2, f16=127, x18="\x00\x00"
-data_4C197DE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197DE4, 0x197DF0
+	REC_func_4C03C303_Result	f0=0xB00047, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_127, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_128:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 52, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_128:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB00049, kind=2, f6=10, memcpy_a1=data_4C197DE4, flags=2, f16=127, x18="\x00\x00"
-data_4C197E04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197E04, 0x197E10
+	REC_func_4C03C303_Result	f0=0xB00049, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_128, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_129:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 53, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_129:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004B, kind=2, f6=10, memcpy_a1=data_4C197E04, flags=2, f16=127, x18="\x00\x00"
-data_4C197E24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197E24, 0x197E30
+	REC_func_4C03C303_Result	f0=0xB0004B, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_129, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_130:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 54, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_130:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB00048, kind=2, f6=10, memcpy_a1=data_4C197E24, flags=2, f16=127, x18="\x00\x00"
-data_4C197E44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197E44, 0x197E50
+	REC_func_4C03C303_Result	f0=0xB00048, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_130, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_131:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 55, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_131:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004E, kind=2, f6=10, memcpy_a1=data_4C197E44, flags=2, f16=127, x18="\x00\x00"
-data_4C197E64:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197E64, 0x197E70
+	REC_func_4C03C303_Result	f0=0xB0004E, kind=2, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_131, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_132:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 64, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_132:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C0, kind=2, f6=11, memcpy_a1=data_4C197E64, flags=2, f16=127, x18="\x00\x00"
-data_4C197E84:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197E84, 0x197E90
+	REC_func_4C03C303_Result	f0=0x2000C0, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_132, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_133:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 65, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_133:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C1, kind=2, f6=11, memcpy_a1=data_4C197E84, flags=2, f16=127, x18="\x00\x00"
-data_4C197EA4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197EA4, 0x197EB0
+	REC_func_4C03C303_Result	f0=0x2000C1, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_133, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_134:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 66, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_134:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C2, kind=2, f6=11, memcpy_a1=data_4C197EA4, flags=2, f16=127, x18="\x00\x00"
-data_4C197EC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197EC4, 0x197ED0
+	REC_func_4C03C303_Result	f0=0x2000C2, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_134, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_135:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 67, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_135:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C3, kind=2, f6=11, memcpy_a1=data_4C197EC4, flags=2, f16=127, x18="\x00\x00"
-data_4C197EE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197EE4, 0x197EF0
+	REC_func_4C03C303_Result	f0=0x2000C3, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_135, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_136:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 68, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_136:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C4, kind=2, f6=11, memcpy_a1=data_4C197EE4, flags=2, f16=127, x18="\x00\x00"
-data_4C197F04:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197F04, 0x197F10
+	REC_func_4C03C303_Result	f0=0x2000C4, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_136, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_137:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 69, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_137:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C5, kind=2, f6=11, memcpy_a1=data_4C197F04, flags=2, f16=127, x18="\x00\x00"
-data_4C197F24:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197F24, 0x197F30
+	REC_func_4C03C303_Result	f0=0x2000C5, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_137, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_138:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 70, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_138:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C6, kind=2, f6=11, memcpy_a1=data_4C197F24, flags=2, f16=127, x18="\x00\x00"
-data_4C197F44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197F44, 0x197F50
+	REC_func_4C03C303_Result	f0=0x2000C6, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_138, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_139:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 71, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_139:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C7, kind=2, f6=11, memcpy_a1=data_4C197F44, flags=2, f16=127, x18="\x00\x00"
-data_4C197F64:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197F64, 0x197F70
+	REC_func_4C03C303_Result	f0=0x2000C7, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_139, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_140:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 72, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_140:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C8, kind=2, f6=11, memcpy_a1=data_4C197F64, flags=2, f16=127, x18="\x00\x00"
-data_4C197F84:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197F84, 0x197F90
+	REC_func_4C03C303_Result	f0=0x2000C8, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_140, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_141:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 73, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_141:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C9, kind=2, f6=11, memcpy_a1=data_4C197F84, flags=2, f16=127, x18="\x00\x00"
-data_4C197FA4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197FA4, 0x197FB0
+	REC_func_4C03C303_Result	f0=0x2000C9, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_141, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_142:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 74, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_142:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000CA, kind=2, f6=11, memcpy_a1=data_4C197FA4, flags=2, f16=127, x18="\x00\x00"
-data_4C197FC4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197FC4, 0x197FD0
+	REC_func_4C03C303_Result	f0=0x2000CA, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_142, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_143:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 75, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_143:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000CB, kind=2, f6=11, memcpy_a1=data_4C197FC4, flags=2, f16=127, x18="\x00\x00"
-data_4C197FE4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x197FE4, 0x197FF0
+	REC_func_4C03C303_Result	f0=0x2000CB, kind=2, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_143, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_144:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 32, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_144:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200260, kind=2, f6=12, memcpy_a1=data_4C197FE4, flags=2, f14=40, f16=88, x18="\x00\x00"
-data_4C198004:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198004, 0x198010
+	REC_func_4C03C303_Result	f0=0x200260, kind=2, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_144, flags=2, f14=40, f16=88, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_145:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 33, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_145:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200261, kind=2, f6=12, memcpy_a1=data_4C198004, flags=2, f16=127, x18="\x00\x00"
-data_4C198024:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198024, 0x198030
+	REC_func_4C03C303_Result	f0=0x200261, kind=2, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_145, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_146:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 34, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_146:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200262, kind=2, f6=12, memcpy_a1=data_4C198024, flags=2, f16=127, x18="\x00\x00"
-data_4C198044:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198044, 0x198050
+	REC_func_4C03C303_Result	f0=0x200262, kind=2, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_146, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_147:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 36, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_147:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200263, kind=2, f6=12, memcpy_a1=data_4C198044, flags=2, f16=127, x18="\x00\x00"
-data_4C198064:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198064, 0x198070
+	REC_func_4C03C303_Result	f0=0x200263, kind=2, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_147, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_148:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 37, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_148:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200264, kind=2, f6=12, memcpy_a1=data_4C198064, flags=2, f16=127, x18="\x00\x00"
-data_4C198084:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198084, 0x198090
+	REC_func_4C03C303_Result	f0=0x200264, kind=2, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_148, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_149:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 38, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_149:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200265, kind=2, f6=12, memcpy_a1=data_4C198084, flags=2, f16=127, x18="\x00\x00"
-data_4C1980A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1980A4, 0x1980B0
+	REC_func_4C03C303_Result	f0=0x200265, kind=2, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_149, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_150:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 64, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_150:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200260, kind=2, f6=13, memcpy_a1=data_4C1980A4, flags=2, f14=40, f16=88, x18="\x00\x00"
-data_4C1980C4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1980C4, 0x1980D0
+	REC_func_4C03C303_Result	f0=0x200260, kind=2, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_150, flags=2, f14=40, f16=88, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_151:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 65, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_151:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200261, kind=2, f6=13, memcpy_a1=data_4C1980C4, flags=2, f16=127, x18="\x00\x00"
-data_4C1980E4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1980E4, 0x1980F0
+	REC_func_4C03C303_Result	f0=0x200261, kind=2, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_151, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_152:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 66, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_152:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200262, kind=2, f6=13, memcpy_a1=data_4C1980E4, flags=2, f16=127, x18="\x00\x00"
-data_4C198104:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198104, 0x198110
+	REC_func_4C03C303_Result	f0=0x200262, kind=2, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_152, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_153:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 68, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_153:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200263, kind=2, f6=13, memcpy_a1=data_4C198104, flags=2, f16=127, x18="\x00\x00"
-data_4C198124:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198124, 0x198130
+	REC_func_4C03C303_Result	f0=0x200263, kind=2, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_153, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_154:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 69, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_154:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200264, kind=2, f6=13, memcpy_a1=data_4C198124, flags=2, f16=127, x18="\x00\x00"
-data_4C198144:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198144, 0x198150
+	REC_func_4C03C303_Result	f0=0x200264, kind=2, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_154, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_155:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 70, 0, 0, 247, 255	# [0]
+
 func_4C03C303_Result_155:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200265, kind=2, f6=13, memcpy_a1=data_4C198144, flags=2, f16=127, x18="\x00\x00"
-data_4C198164:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198164, 0x198174
+	REC_func_4C03C303_Result	f0=0x200265, kind=2, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_155, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_156:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 0, 0, 0, 0, 0, 0, 0, 247	# [0]
+	.space	4, 0xFF
+
 func_4C03C303_Result_156:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	kind=3, f6=4, memcpy_a1=data_4C198164, flags=2, f16=127, x18="\x00\x00"
-data_4C198188:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198188, 0x198194
+	REC_func_4C03C303_Result	kind=3, f6=4, memcpy_a1=func_4C037E2F_entry_L4b_Block_156, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_157:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 0, 0, 4, 0, 0, 247, 255, 255	# [0]
+
 func_4C03C303_Result_157:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=32769, kind=3, f6=3, memcpy_a1=data_4C198188, flags=2, f16=127, x18="\x00\x00"
-data_4C1981A8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1981A8, 0x1981B4
+	REC_func_4C03C303_Result	f0=32769, kind=3, f6=3, memcpy_a1=func_4C037E2F_entry_L4b_Block_157, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_158:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 0, 0, 6, 0, 0, 247, 255, 255	# [0]
+
 func_4C03C303_Result_158:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=3, kind=3, f6=5, memcpy_a1=data_4C1981A8, flags=2, f16=127, x18="\x00\x00"
-data_4C1981C8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1981C8, 0x1981D4
+	REC_func_4C03C303_Result	f0=3, kind=3, f6=5, memcpy_a1=func_4C037E2F_entry_L4b_Block_158, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_159:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 0, 0, 126, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_159:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=8, kind=3, f6=2, memcpy_a1=data_4C1981C8, flags=2, x18="\x00\x00"
-data_4C1981E8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1981E8, 0x1981F4
+	REC_func_4C03C303_Result	f0=8, kind=3, f6=2, memcpy_a1=func_4C037E2F_entry_L4b_Block_159, flags=2, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_160:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 2, 1, 0, 0, 0, 247, 255, 255	# [0]
+
 func_4C03C303_Result_160:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=40960, kind=3, f6=6, memcpy_a1=data_4C1981E8, flags=2, f16=127, x18="\x00\x00"
-data_4C198208:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198208, 0x198214
+	REC_func_4C03C303_Result	f0=40960, kind=3, f6=6, memcpy_a1=func_4C037E2F_entry_L4b_Block_160, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_161:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 2, 1, 32, 0, 0, 247, 255, 255	# [0]
+
 func_4C03C303_Result_161:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41216, kind=3, f6=7, memcpy_a1=data_4C198208, flags=2, f16=127, x18="\x00\x00"
-data_4C198228:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198228, 0x198234
+	REC_func_4C03C303_Result	f0=41216, kind=3, f6=7, memcpy_a1=func_4C037E2F_entry_L4b_Block_161, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_162:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 2, 1, 46, 0, 0, 247, 255, 255	# [0]
+
 func_4C03C303_Result_162:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=41233, kind=3, f6=9, memcpy_a1=data_4C198228, flags=2, f16=127, x18="\x00\x00"
-data_4C198248:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198248, 0x198254
+	REC_func_4C03C303_Result	f0=41233, kind=3, f6=9, memcpy_a1=func_4C037E2F_entry_L4b_Block_162, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_163:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 21, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_163:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004C, kind=3, f6=10, memcpy_a1=data_4C198248, flags=2, f16=127, x18="\x00\x00"
-data_4C198268:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198268, 0x198274
+	REC_func_4C03C303_Result	f0=0xB0004C, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_163, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_164:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 22, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_164:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004D, kind=3, f6=10, memcpy_a1=data_4C198268, flags=2, f16=127, x18="\x00\x00"
-data_4C198288:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198288, 0x198294
+	REC_func_4C03C303_Result	f0=0xB0004D, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_164, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_165:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 23, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_165:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004E, kind=3, f6=10, memcpy_a1=data_4C198288, flags=2, f16=127, x18="\x00\x00"
-data_4C1982A8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1982A8, 0x1982B4
+	REC_func_4C03C303_Result	f0=0xB0004E, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_165, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_166:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 24, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_166:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004A, kind=3, f6=10, memcpy_a1=data_4C1982A8, flags=2, f16=127, x18="\x00\x00"
-data_4C1982C8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1982C8, 0x1982D4
+	REC_func_4C03C303_Result	f0=0xB0004A, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_166, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_167:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 25, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_167:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB00047, kind=3, f6=10, memcpy_a1=data_4C1982C8, flags=2, f16=127, x18="\x00\x00"
-data_4C1982E8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1982E8, 0x1982F4
+	REC_func_4C03C303_Result	f0=0xB00047, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_167, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_168:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 26, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_168:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB00049, kind=3, f6=10, memcpy_a1=data_4C1982E8, flags=2, f16=127, x18="\x00\x00"
-data_4C198308:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198308, 0x198314
+	REC_func_4C03C303_Result	f0=0xB00049, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_168, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_169:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 27, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_169:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB0004B, kind=3, f6=10, memcpy_a1=data_4C198308, flags=2, f16=127, x18="\x00\x00"
-data_4C198328:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198328, 0x198334
+	REC_func_4C03C303_Result	f0=0xB0004B, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_169, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_170:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 28, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_170:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xB00048, kind=3, f6=10, memcpy_a1=data_4C198328, flags=2, f16=127, x18="\x00\x00"
-data_4C198348:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198348, 0x198354
+	REC_func_4C03C303_Result	f0=0xB00048, kind=3, f6=10, memcpy_a1=func_4C037E2F_entry_L4b_Block_170, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_171:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 65, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_171:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C0, kind=3, f6=11, memcpy_a1=data_4C198348, flags=2, f16=127, x18="\x00\x00"
-data_4C198368:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198368, 0x198374
+	REC_func_4C03C303_Result	f0=0x2000C0, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_171, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_172:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 66, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_172:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C1, kind=3, f6=11, memcpy_a1=data_4C198368, flags=2, f16=127, x18="\x00\x00"
-data_4C198388:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198388, 0x198394
+	REC_func_4C03C303_Result	f0=0x2000C1, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_172, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_173:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 67, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_173:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C2, kind=3, f6=11, memcpy_a1=data_4C198388, flags=2, f16=127, x18="\x00\x00"
-data_4C1983A8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1983A8, 0x1983B4
+	REC_func_4C03C303_Result	f0=0x2000C2, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_173, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_174:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 68, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_174:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C3, kind=3, f6=11, memcpy_a1=data_4C1983A8, flags=2, f16=127, x18="\x00\x00"
-data_4C1983C8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1983C8, 0x1983D4
+	REC_func_4C03C303_Result	f0=0x2000C3, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_174, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_175:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 69, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_175:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C4, kind=3, f6=11, memcpy_a1=data_4C1983C8, flags=2, f16=127, x18="\x00\x00"
-data_4C1983E8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1983E8, 0x1983F4
+	REC_func_4C03C303_Result	f0=0x2000C4, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_175, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_176:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 70, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_176:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C5, kind=3, f6=11, memcpy_a1=data_4C1983E8, flags=2, f16=127, x18="\x00\x00"
-data_4C198408:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198408, 0x198414
+	REC_func_4C03C303_Result	f0=0x2000C5, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_176, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_177:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 71, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_177:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C6, kind=3, f6=11, memcpy_a1=data_4C198408, flags=2, f16=127, x18="\x00\x00"
-data_4C198428:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198428, 0x198434
+	REC_func_4C03C303_Result	f0=0x2000C6, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_177, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_178:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 72, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_178:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C7, kind=3, f6=11, memcpy_a1=data_4C198428, flags=2, f16=127, x18="\x00\x00"
-data_4C198448:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198448, 0x198454
+	REC_func_4C03C303_Result	f0=0x2000C7, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_178, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_179:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 73, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_179:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C8, kind=3, f6=11, memcpy_a1=data_4C198448, flags=2, f16=127, x18="\x00\x00"
-data_4C198468:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198468, 0x198474
+	REC_func_4C03C303_Result	f0=0x2000C8, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_179, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_180:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 74, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_180:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000C9, kind=3, f6=11, memcpy_a1=data_4C198468, flags=2, f16=127, x18="\x00\x00"
-data_4C198488:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198488, 0x198494
+	REC_func_4C03C303_Result	f0=0x2000C9, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_180, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_181:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 75, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_181:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000CA, kind=3, f6=11, memcpy_a1=data_4C198488, flags=2, f16=127, x18="\x00\x00"
-data_4C1984A8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1984A8, 0x1984B4
+	REC_func_4C03C303_Result	f0=0x2000CA, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_181, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_182:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 76, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_182:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x2000CB, kind=3, f6=11, memcpy_a1=data_4C1984A8, flags=2, f16=127, x18="\x00\x00"
-data_4C1984C8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1984C8, 0x1984D4
+	REC_func_4C03C303_Result	f0=0x2000CB, kind=3, f6=11, memcpy_a1=func_4C037E2F_entry_L4b_Block_182, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_183:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 77, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_183:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200260, kind=3, f6=12, memcpy_a1=data_4C1984C8, flags=2, f14=40, f16=88, x18="\x00\x00"
-data_4C1984E8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1984E8, 0x1984F4
+	REC_func_4C03C303_Result	f0=0x200260, kind=3, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_183, flags=2, f14=40, f16=88, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_184:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 78, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_184:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200261, kind=3, f6=12, memcpy_a1=data_4C1984E8, flags=2, f16=127, x18="\x00\x00"
-data_4C198508:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198508, 0x198514
+	REC_func_4C03C303_Result	f0=0x200261, kind=3, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_184, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_185:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 79, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_185:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200262, kind=3, f6=12, memcpy_a1=data_4C198508, flags=2, f16=127, x18="\x00\x00"
-data_4C198528:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198528, 0x198534
+	REC_func_4C03C303_Result	f0=0x200262, kind=3, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_185, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_186:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 80, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_186:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200263, kind=3, f6=12, memcpy_a1=data_4C198528, flags=2, f16=127, x18="\x00\x00"
-data_4C198548:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198548, 0x198554
+	REC_func_4C03C303_Result	f0=0x200263, kind=3, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_186, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_187:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 81, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_187:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200264, kind=3, f6=12, memcpy_a1=data_4C198548, flags=2, f16=127, x18="\x00\x00"
-data_4C198568:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198568, 0x198574
+	REC_func_4C03C303_Result	f0=0x200264, kind=3, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_187, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_188:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 82, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_188:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200265, kind=3, f6=12, memcpy_a1=data_4C198568, flags=2, f16=127, x18="\x00\x00"
-data_4C198588:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198588, 0x198594
+	REC_func_4C03C303_Result	f0=0x200265, kind=3, f6=12, memcpy_a1=func_4C037E2F_entry_L4b_Block_188, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_189:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 89, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_189:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=3, f6=14, memcpy_a1=data_4C198588, flags=2, f14=1, f16=95, x18="\x00\x00"
-data_4C1985A8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1985A8, 0x1985B4
+	REC_func_4C03C303_Result	f0=0xFFFFFF, kind=3, f6=14, memcpy_a1=func_4C037E2F_entry_L4b_Block_189, flags=2, f14=1, f16=95, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_190:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 90, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_190:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200260, kind=3, f6=13, memcpy_a1=data_4C1985A8, flags=2, f14=40, f16=88, x18="\x00\x00"
-data_4C1985C8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1985C8, 0x1985D4
+	REC_func_4C03C303_Result	f0=0x200260, kind=3, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_190, flags=2, f14=40, f16=88, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_191:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 91, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_191:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200261, kind=3, f6=13, memcpy_a1=data_4C1985C8, flags=2, f16=127, x18="\x00\x00"
-data_4C1985E8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1985E8, 0x1985F4
+	REC_func_4C03C303_Result	f0=0x200261, kind=3, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_191, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_192:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 92, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_192:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200262, kind=3, f6=13, memcpy_a1=data_4C1985E8, flags=2, f16=127, x18="\x00\x00"
-data_4C198608:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198608, 0x198614
+	REC_func_4C03C303_Result	f0=0x200262, kind=3, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_192, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_193:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 93, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_193:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200263, kind=3, f6=13, memcpy_a1=data_4C198608, flags=2, f16=127, x18="\x00\x00"
-data_4C198628:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198628, 0x198634
+	REC_func_4C03C303_Result	f0=0x200263, kind=3, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_193, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_194:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 94, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_194:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200264, kind=3, f6=13, memcpy_a1=data_4C198628, flags=2, f16=127, x18="\x00\x00"
-data_4C198648:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x198648, 0x198654
+	REC_func_4C03C303_Result	f0=0x200264, kind=3, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_194, flags=2, f16=127, x18="\x00\x00"
+
+func_4C037E2F_entry_L4b_Block_195:	# 12 bytes, copied whole by func_4C037E2F_entry_L4b 0x4C037E7F: memcpy(.., 12); func_4C038032_entry_L4b 0x4C038082: memcpy(.., 12); func_4C038123_entry_L56 0x4C03817E: memcpy(.., 12)
+	tab_u8	240, 67, 16, 76, 8, 0, 95, 0, 247, 255, 255, 255	# [0]
+
 func_4C03C303_Result_195:	# REC_func_4C03C303_Result (20 bytes)
-	REC_func_4C03C303_Result	f0=0x200265, kind=3, f6=13, memcpy_a1=data_4C198648, flags=2, f16=127, x18="\x00\x00"
+	REC_func_4C03C303_Result	f0=0x200265, kind=3, f6=13, memcpy_a1=func_4C037E2F_entry_L4b_Block_195, flags=2, f16=127, x18="\x00\x00"
 
 func_4C037CC3_Table:	# 16 x u32, 0..16777215; read by func_4C037CC3 0x4C037CC3: `mov	(a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -11331,8 +11608,8 @@ Str_IK_4:	.asciz "IK "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x1992CC, 0x1992D8
 
-func_4C046A20_Table:	# u32, a constant; read / written by func_4C046A20 0x4C046A20: `mov (a3), d0`; func_4C046A20_entry_L22 0x4C046A47: `mov (a3), d0` ...
-	.long	0x204000
+func_4C046A20_Table:	# REC_func_4C046A20_ArgA0 (4 bytes): the layout func_4C046A20 0x4C046A20 reads through its argument a0 (passed by func_4C04646F_entry_L5f 0x4C0464D3 `call func_4C046A20_entry, [d2,d3,a2,a3], 0x28`, +25 more calls); the layout func_4C046ADE 0x4C046ADE reads through its argument a0 (passed by func_4C046893_entry_L2f 0x4C0468C5 `call func_4C046ADE_entry, [d2,d3,a2,a3], 0x20`, +6 more calls); +1 more routines
+	REC_func_4C046A20_ArgA0	f0=0x204000
 
 func_4C046A20_entry_L99_Table:	# 47 x u32, 8192..16777215; read by func_4C046A20_entry_L99 0x4C046ABE: `mov (a3), d0`; func_4C046ADE_entry_L80 0x4C046B63: `mov (a3), d0` ...
 	tab_u32	2113537, 2113540, 61697, 8192, 8193, 8208, 8209, 8210	# [0]
@@ -11670,8 +11947,11 @@ func_4C04746C_Table:	# 21 x u16, 0..97; read by func_4C04746C 0x4C04746C: `movhu
 	tab_u16	0, 0, 0, 1, 50, 0, 1, 97, 0	# [12]
 func_4C0473B0_Table:	# 4 x u8, 32..255; read by func_4C0473B0 0x4C0473B0: `movbu (a0), d0`
 	tab_u8	73, 75, 32, 255
-func_4C167937_entry_L46_Table:	# 2 x u16, 21845..65535; read by func_4C167937_entry_L46 0x4C167982: `movhu (a3), d0`
-	tab_u16	21845, 65535
+
+func_4C167937_entry_L46_Table:	# REC_func_4C167937_ArgA0 (2 bytes): the layout func_4C167937 0x4C167937 reads through its argument a0 (passed by func_4C1679E3_entry_Lbc 0x4C167AA4 `call func_4C167937_entry, [d2,d3,a2,a3], 0x24`)
+	REC_func_4C167937_ArgA0	f0=21845
+func_4C167937_ArgA0_1:	# REC_func_4C167937_ArgA0 (2 bytes)
+	REC_func_4C167937_ArgA0	f0=65535
 
 func_4C0474AA_Table:
 	.long	loc_4C0474C1
@@ -13074,9 +13354,11 @@ func_4C04E7D6_entry_L2a_Records:	# 16 x REC_func_4C04E7D6_entry_L2a_Records (8 b
 	REC_func_4C04E7D6_entry_L2a_Records	f0=241, proc=loc_4C04E996
 	REC_func_4C04E7D6_entry_L2a_Records	proc=loc_4C04E9D9
 	REC_func_4C04E7D6_entry_L2a_Records	proc=loc_4C04E9D9
+func_4C04EBC0_entry_L7_Records:	# 3 x REC_func_4C04EBC0_entry_L7_Records (4 bytes each); read by func_4C04EBC0_entry_L7 0x4C04EBCC `movbu (a1), d0`
+	REC_func_4C04EBC0_entry_L7_Records	f0=27, x1="\x00\x00\x00"
+	REC_func_4C04EBC0_entry_L7_Records	f0=27, x1="\x00\x00\x00"
+	REC_func_4C04EBC0_entry_L7_Records	f0=28, x1="\x00\x00\x00"
 
-func_4C04EBC0_entry_L7_Records:	# 12 x u8, 0..28; read by func_4C04EBC0_entry_L7 0x4C04EBCC: `movbu (a1), d0`
-	tab_u8	27, 0, 0, 0, 27, 0, 0, 0, 28, 0, 0, 0
 func_4C04EE0A_Table:	# 128 x u8, 0..29; read by func_4C04EE0A : `movbu	(d1, a0), d0`
 	tab_u8	10, 11, 12, 13, 14, 15, 16, 17, 26, 18, 19, 26, 26, 26, 26, 26	# [0]
 	tab_u8	26, 26, 26, 26, 26, 26, 26, 29, 26, 26, 26, 26, 26, 26, 26, 26	# [16]
@@ -13086,58 +13368,50 @@ func_4C04EE0A_Table:	# 128 x u8, 0..29; read by func_4C04EE0A : `movbu	(d1, a0),
 	tab_u8	26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26	# [80]
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 26, 26, 26, 26, 26, 26	# [96]
 	tab_u8	20, 21, 22, 23, 24, 25, 26, 27, 28, 26, 26, 26, 26, 26, 26, 26	# [112]
-func_4C04EF81_Table:	# 2 x u16, 0..1; read by func_4C04EF81 0x4C04EF81: `movhu (a2), d1`; func_4C04EF81_entry_Ld 0x4C04EF93: `movhu (a2), d1`
-	tab_u16	1, 0
 
-func_4C04EF81_entry_Ld_Var:	# u32, a constant; read / written by func_4C04EF81_entry_Ld 0x4C04EF93: `mov (4, a2), a1`
-	.long	0x4c04efad
+func_4C04EF81_Table:	# REC_func_4C04EF81_ArgA0 (8 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
+	REC_func_4C04EF81_ArgA0	f0=1, x2="\x00\x00", proc=func_4C04EFAD
 
 func_4C04EF81_entry_L18_Table:	# 44 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
 	tab_u16	2, 0, 61815, 19460, 4, 0, 61696, 19460, 8, 0, 61755, 19460	# [0]
 	tab_u16	32, 0, 62026, 19460, 256, 0, 62086, 19460, 64, 0, 62194, 19460	# [12]
 	tab_u16	16, 0, 61932, 19460, 128, 0, 62349, 19460, 512, 0, 62289, 19460	# [24]
 	tab_u16	1024, 0, 61979, 19460, 65535, 0, 0, 0	# [36]
-func_4C04EF81_Table_2:	# 2 x u16, 0..1; read by func_4C04EF81 0x4C04EF81: `movhu (a2), d1`; func_4C04EF81_entry_Ld 0x4C04EF93: `movhu (a2), d1`
-	tab_u16	1, 0
 
-func_4C04EF81_entry_Ld_Var_2:	# u32, a constant; read / written by func_4C04EF81_entry_Ld 0x4C04EF93: `mov (4, a2), a1`
-	.long	0x4c04f405
+func_4C04EF81_Table_2:	# REC_func_4C04EF81_ArgA0 (8 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
+	REC_func_4C04EF81_ArgA0	f0=1, x2="\x00\x00", proc=loc_4C04F405
 
 func_4C04EF81_entry_L18_Table_2:	# 36 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
 	tab_u16	2, 0, 62941, 19460, 8, 0, 63108, 19460, 16, 0, 63155, 19460	# [0]
 	tab_u16	32, 0, 63223, 19460, 64, 0, 63291, 19460, 128, 0, 63338, 19460	# [12]
 	tab_u16	256, 0, 63406, 19460, 512, 0, 62941, 19460, 65535, 0, 0, 0	# [24]
-func_4C04EF81_Table_3:	# 2 x u16, 0..1; read by func_4C04EF81 0x4C04EF81: `movhu (a2), d1`; func_4C04EF81_entry_Ld 0x4C04EF93: `movhu (a2), d1`
-	tab_u16	1, 0
 
-func_4C04EF81_entry_Ld_Var_3:	# u32, a constant; read / written by func_4C04EF81_entry_Ld 0x4C04EF93: `mov (4, a2), a1`
-	.long	0x4c04f7dd
+func_4C04EF81_Table_3:	# REC_func_4C04EF81_ArgA0 (8 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
+	REC_func_4C04EF81_ArgA0	f0=1, x2="\x00\x00", proc=loc_4C04F7DD
 
 func_4C04EF81_entry_L18_Table_3:	# 44 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
 	tab_u16	8, 0, 63733, 19460, 16, 0, 63777, 19460, 32, 0, 63824, 19460	# [0]
 	tab_u16	256, 0, 64186, 19460, 128, 0, 64482, 19460, 1024, 0, 64189, 19460	# [12]
 	tab_u16	4096, 0, 64233, 19460, 8192, 0, 64236, 19460, 16384, 0, 64283, 19460	# [24]
 	tab_u16	32768, 0, 64330, 19460, 65535, 0, 0, 0	# [36]
-func_4C04EF81_Table_4:	# 2 x u16, 0..2; read by func_4C04EF81 0x4C04EF81: `movhu (a2), d1`; func_4C04EF81_entry_Ld 0x4C04EF93: `movhu (a2), d1`
-	tab_u16	2, 0
 
-func_4C04EF81_entry_Ld_Var_4:	# u32, a constant; read / written by func_4C04EF81_entry_Ld 0x4C04EF93: `mov (4, a2), a1`
-	.long	0x4c04fbb0
+func_4C04EF81_Table_4:	# REC_func_4C04EF81_ArgA0 (8 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
+	REC_func_4C04EF81_ArgA0	f0=2, x2="\x00\x00", proc=loc_4C04FBB0
 
 func_4C04EF81_entry_L18_Table_4:	# 20 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
 	tab_u16	8, 0, 64435, 19460, 16, 0, 64570, 19460, 32, 0, 64793, 19460	# [0]
 	tab_u16	128, 0, 62409, 19460, 65535, 0, 0, 0	# [12]
 
-func_4C04EF81_Table_5:	# REC_func_4C04EF81_ArgA0 (16 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
-	REC_func_4C04EF81_ArgA0	f0=4, x2="\x00\x00", proc=loc_4C04FE18, f8=65535, x10="\x00\x00\x00\x00\x00\x00"
+func_4C04EF81_Table_5:	# REC_func_4C04EF81_ArgA0 (8 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
+	REC_func_4C04EF81_ArgA0	f0=4, x2="\x00\x00", proc=loc_4C04FE18
 
-func_4C04EF81_Table_6:	# 2 x u16, 0..4; read by func_4C04EF81 0x4C04EF81: `movhu (a2), d1`; func_4C04EF81_entry_Ld 0x4C04EF93: `movhu (a2), d1`
-	tab_u16	4, 0
+func_4C04EF81_entry_L18_Table_5:	# 4 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
+	tab_u16	65535, 0, 0, 0
 
-func_4C04EF81_entry_Ld_Var_5:	# u32, a constant; read / written by func_4C04EF81_entry_Ld 0x4C04EF93: `mov (4, a2), a1`
-	.long	0x4c04fe52
+func_4C04EF81_Table_6:	# REC_func_4C04EF81_ArgA0 (8 bytes): the layout func_4C04EF81 0x4C04EF81 reads through its argument a0 (passed by func_4C04EEA6 0x4C04EEA6 `call func_4C04EF81_entry, [d2,a2], 0x10`, +5 more calls)
+	REC_func_4C04EF81_ArgA0	f0=4, x2="\x00\x00", proc=loc_4C04FE52
 
-func_4C04EF81_entry_L18_Table_5:	# 12 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
+func_4C04EF81_entry_L18_Table_6:	# 12 x u16, 0..65535; read by func_4C04EF81_entry_L18 0x4C04EF9E: `movhu (a2), d0`
 	tab_u16	8192, 0, 65150, 19460, 16384, 0, 65194, 19460, 65535, 0, 0, 0
 func_4C04EFAD_entry_L14b_Table:	# 8 x u8, 2..255; read by func_4C04EFAD_entry : `movbu	(d0, a0), d0`
 	tab_u8	4, 2, 6, 7, 5, 3, 255, 255
@@ -14638,9 +14912,9 @@ func_4C056AC0_Table:	# 5 x u8, 100..110; read by func_4C056AC0_entry : `movbu	(d
 	tab_u8	110, 110, 100, 100, 100
 
 func_4C05739F_entry_L15_Records:	# 3 x REC_func_4C05739F_entry_L15_Records (10 bytes each); read by func_4C05739F_entry_L15 0x4C0573B6 `movbu (d1, a2), d3`; func_4C056BFA_entry_L55 0x4C056C54 `call MemStyleRecPtr, 0, 0`; func_4C056BFA_entry_L7a 0x4C056C79 `call memcpy_entry, [a2,a3], 8` (+15)
-	REC_func_4C05739F_entry_L15_Records	x1="\x01\x02\x03\x0C\x0D\x0E\x0F\x10\x11"
-	REC_func_4C05739F_entry_L15_Records	index=4, x1="\x05\x06\x07\x12\x13\x14\x15\x16\x17"
-	REC_func_4C05739F_entry_L15_Records	index=8, x1="\x09\n\x0B\x18\x19\x1A\x1B\x1C\x1D"
+	REC_func_4C05739F_entry_L15_Records	0, 1, 2, 3, 12, 13, 14, 15, 16, 17
+	REC_func_4C05739F_entry_L15_Records	4, 5, 6, 7, 18, 19, 20, 21, 22, 23
+	REC_func_4C05739F_entry_L15_Records	8, 9, 10, 11, 24, 25, 26, 27, 28, 29
 
 func_4C056BFA_entry_Lcf_Table:	# 30 x u8, 0..58; read by func_4C056BFA_entry : `movbu	(d3, a0), d0`; func_4C057299_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 3, 6, 9, 20, 23, 26, 29, 40, 43, 46, 49, 12, 16, 1, 2	# [0]
@@ -14655,9 +14929,9 @@ Str_G_12:	.asciz "G"
 	.space	1, 0x4B
 Str_H_4:	.asciz "H"
 	.space	1, 0x4B
-data_4C1A2D1D:
-	# 3 bytes the code takes the address of: func_4C056947 0x4C056947 `call memcmp_entry, [d2,a2], 8` (+0, arg a1); func_4C056947 0x4C056947 `mov data_4C1A2D1D, a1` (+0, as a base); byte rows (u8); the callee walk: memcmp (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	76, 75, 70	# +0
+
+func_4C056947_Block:	# 3 bytes, copied whole by func_4C056947 0x4C056947: memcmp(.., 3)
+	tab_u8	76, 75, 70	# [0]
 
 func_4C056BFA_entry_L30_Table:	# 30 x u8, 0..1; read by func_4C056BFA_entry : `movbu	(d1, a0), d0`
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0	# [0]
@@ -14676,7 +14950,7 @@ MemStyleSlotImport_entry_L55_Table:	# 20 x u8, 0..2; read by MemStyleSlotImport_
 MemStyleLegacyBlockUpconvert_Table:	# 29 x u8, 0..19; read by MemStyleLegacyBlockUpconvert_entry : `movbu	(d2, a2), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 13, 14	# [0]
 	tab_u8	15, 15, 12, 12, 13, 14, 15, 15, 16, 16, 17, 18, 19	# [16]
-MemStyleLegacyBlockUpconvert_Table_2:	# 3 x u8, 19..255; read by MemStyleLegacyBlockUpconvert 0x4C0574F2: `movbu (MemStyleLegacyBlockUpconvert_Table_2), d1`; MemStyleLegacyBlockUpconvert_entry_L2d 0x4C057524: `movbu (d2, a2), d0`
+MemStyleLegacyBlockUpconvert_Table_2:	# 3 x u8, 19..255; read by MemStyleLegacyBlockUpconvert 0x4C0574F2: `movbu (MemStyleLegacyBlockUpconvert_Table_2), d1`
 	tab_u8	19, 255, 255
 
 func_4C056E10_entry_L1e_Records:	# 16 x REC_func_4C056E10_entry_L1e_Records (8 bytes each); read by func_4C056E10_entry_L1e 0x4C056E33 `mov (a0), d0`; func_4C056E10_entry_L4a 0x4C056E5F `mov (a0), d0`; func_4C056E10_entry_L4d 0x4C056E62 `mov (4, a0), a0`
@@ -14826,10 +15100,10 @@ MsgTable_4C1A33A0:	# 16 x REC_MsgTable_4C1A33A0 (8 bytes each); read by func_4C0
 Str_ZZZI:	.asciz "ZZZI"
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x1A3425, 0x1A3428
-data_4C1A3428:
-	# 24 bytes the code takes the address of: func_4C061B4B_entry_L3e 0x4C061B8E `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C061B4B_entry_L3e 0x4C061B8E `mov data_4C1A3428, a1` (+0, as a base); func_4C061F86_entry_L5c 0x4C061FE7 `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+3 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# +0
-	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# +16
+
+func_4C061B4B_entry_L3e_Block:	# 24 bytes, copied whole by func_4C061B4B_entry_L3e 0x4C061B8E: memcpy(.., 24); func_4C061F86_entry_L5c 0x4C061FE7: memcpy(.., 24); func_4C0620A4_entry_L36 0x4C0620DF: memcpy(.., 24)
+	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# [0]
+	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# [16]
 
 func_4C061F1C_Table:	# 8 x u8, 0..7; read by func_4C061F1C_entry : `movbu	(d1, a1), d0`; func_4C061F86_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 2, 3, 4, 5, 6, 7, 1
@@ -14873,22 +15147,24 @@ func_4C06210D_entry_L7d_Records:	# 8 x REC_func_4C06210D_entry_L7d_Records (48 b
 	REC_func_4C06210D_entry_L7d_Records	2097164, 2097164, 2097164, 2097164, 2097165, 2097165, 2097165, 2097165, 2097166, 2097166, 2097166, 2097166
 	REC_func_4C06210D_entry_L7d_Records	2097167, 2097167, 2097167, 2097167, 2097168, 2097168, 2097168, 2097168, 2097169, 2097169, 2097169, 2097169
 	REC_func_4C06210D_entry_L7d_Records	2097170, 2097170, 2097170, 2097170, 2097171, 2097171, 2097171, 2097171, 2097152, 2097152, 2097152, 2097152
-
-func_4C06210D_Var:	# u8, a constant; read / written by func_4C06210D 0x4C06210D: `movbu (d0, a1), d0`; func_4C06210D 0x4C06210D: `movbu (func_4C06210D_Var), d0`
-	.byte	127
-func_4C06210D_Var_2:	# u8, a constant; read / written by func_4C06210D 0x4C06210D: `movbu (1, a0), d0`
-	.byte	6
-func_4C06210D_Var_3:	# u8, a constant; read / written by func_4C06210D 0x4C06210D: `movbu (2, a0), d0`
-	.byte	127
-func_4C06210D_Var_4:	# u8, a constant; read / written by func_4C06210D 0x4C06210D: `movbu (3, a1), d3`
-	.byte	12
-
-func_4C06210D_entry_L4f_Table:	# 64 x u8, 0..255; read by func_4C06210D_entry_L4f 0x4C062161: `movbu (d0, a1), d0`
-	tab_u8	127, 7, 127, 12, 76, 3, 80, 7, 118, 3, 116, 4, 100, 2, 96, 0	# [0]
-	tab_u8	66, 4, 68, 5, 116, 1, 52, 3, 25, 2, 39, 5, 34, 5, 33, 0	# [16]
-	tab_u8	32, 4, 34, 0, 44, 1, 45, 1, 4, 4, 4, 7, 11, 2, 11, 4	# [32]
-	tab_u8	113, 4, 112, 4, 123, 4, 122, 2, 125, 3, 126, 10, 255, 255, 255, 255	# [48]
-
+func_4C06210D_Var:	# 16 x REC_func_4C06210D_Var (4 bytes each); read by func_4C06210D 0x4C06210D `movbu (1, a0), d0`; func_4C06210D 0x4C06210D `movbu (2, a0), d0`; func_4C06210D 0x4C06210D `movbu (3, a1), d3` (+2)
+	REC_func_4C06210D_Var	f0=127, key=6, f2=127, f3=12	# [0]
+	REC_func_4C06210D_Var	f0=127, key=7, f2=127, f3=12
+	REC_func_4C06210D_Var	f0=76, key=3, f2=80, f3=7
+	REC_func_4C06210D_Var	f0=118, key=3, f2=116, f3=4
+	REC_func_4C06210D_Var	f0=100, key=2, f2=96
+	REC_func_4C06210D_Var	f0=66, key=4, f2=68, f3=5
+	REC_func_4C06210D_Var	f0=116, key=1, f2=52, f3=3
+	REC_func_4C06210D_Var	f0=25, key=2, f2=39, f3=5
+	REC_func_4C06210D_Var	f0=34, key=5, f2=33	# [8]
+	REC_func_4C06210D_Var	f0=32, key=4, f2=34
+	REC_func_4C06210D_Var	f0=44, key=1, f2=45, f3=1
+	REC_func_4C06210D_Var	f0=4, key=4, f2=4, f3=7
+	REC_func_4C06210D_Var	f0=11, key=2, f2=11, f3=4
+	REC_func_4C06210D_Var	f0=113, key=4, f2=112, f3=4
+	REC_func_4C06210D_Var	f0=123, key=4, f2=122, f3=2
+	REC_func_4C06210D_Var	f0=125, key=3, f2=126, f3=10
+	.space	4, 0xFF
 func_4C0627F1_Table:	# 24 x REC_func_4C0627F1_Table (2 bytes each); read by func_4C0625F6 0x4C0625F6 `movbu (1, a0), d3`; func_4C0627F1 0x4C0627F1 `movbu (d0, a2), d1`; func_4C0625F6_entry_Lb0 0x4C0626AB `call func_4C07BC73_entry, [d2,a2], 0x1c` (+11)
 	REC_func_4C0627F1_Table	kind=176, f1=255	# [0]
 	REC_func_4C0627F1_Table	kind=176, f1=7
@@ -14915,38 +15191,18 @@ func_4C0627F1_Table:	# 24 x REC_func_4C0627F1_Table (2 bytes each); read by func
 	REC_func_4C0627F1_Table	kind=176, f1=17
 	REC_func_4C0627F1_Table	kind=176, f1=13
 
-func_4C0627F1_entry_L48_Table:	# REC_func_4C0625ED_Result (24 bytes)
-	REC_func_4C0625ED_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64, x21="@@@"
+func_4C0627F1_entry_L48_Table:	# REC_func_4C0625ED_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by func_4C0627F1_entry_L48 0x4C06283E `movbu (d3, a1), d3`; func_4C0627F1_entry_L5d 0x4C062853 `movbu (d3, a1), d2`)
+	REC_func_4C0625ED_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
+	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	255, 255, 255, 15, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [64]
+	tab_u8	255, 255, 255, 12, 13, 10, 11, 255, 255, 255, 255, 255, 255, 255, 6, 14	# [80]
+	tab_u8	7, 5, 255, 9, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [96]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [112]
+	tab_u8	255, 255, 255	# [128]
 
-func_4C0625D5_Table:	# 128 x u8, a sparse map by index: 18 entries set, the rest 0xFF (none); read by func_4C0625D5 : `movbu	(d0, a0), d0`
-	map_none8	1	# [0..0]
-	map8	1, 16
-	map_none8	5	# [2..6]
-	map8	7, 1
-	map_none8	2	# [8..9]
-	map8	10, 8
-	map8	11, 17
-	map_none8	1	# [12..12]
-	map8	13, 23
-	map_none8	2	# [14..15]
-	map8	16, 21
-	map8	17, 22
-	map_none8	46	# [18..63]
-	map8	64, 15
-	map_none8	15	# [65..79]
-	map8	80, 12
-	map8	81, 13
-	map8	82, 10
-	map8	83, 11
-	map_none8	7	# [84..90]
-	map8	91, 6
-	map8	92, 14
-	map8	93, 7
-	map8	94, 5
-	map_none8	1	# [95..95]
-	map8	96, 9
-	map8	97, 0
-	map_none8	30	# [98..127]
 func_4C0625E1_Table:	# 128 x u8, a sparse map by index: 16 entries set, the rest 0xFF (none); read by func_4C0625E1 : `movbu	(d0, a0), d0`
 	map_none8	1	# [0..0]
 	map8	1, 16
@@ -14974,14 +15230,26 @@ func_4C0625E1_Table:	# 128 x u8, a sparse map by index: 16 entries set, the rest
 	map8	96, 9
 	map_none8	31	# [97..127]
 
-func_4C062DC9_entry_Lcd_Records:	# 6 x REC_func_4C062DC9_entry_Lcd_Records (17 bytes each); read by func_4C062DC9_entry_Lcd 0x4C062E9B `call memcpy_entry, [a2,a3], 8`; func_4C062EC7_entry_L55 0x4C062F21 `call memcpy_entry, [a2,a3], 8`
+func_4C062DC9_entry_Lcd_Records:	# 3 x REC_func_4C062DC9_entry_Lcd_Records (17 bytes each); read by func_4C062DC9_entry_Lcd 0x4C062E9B `call memcpy_entry, [a2,a3], 8`; func_4C062EC7_entry_L55 0x4C062F21 `call memcpy_entry, [a2,a3], 8`
 	REC_func_4C062DC9_entry_Lcd_Records	s0="  User Bank 1   ", x16="\x00"
 	REC_func_4C062DC9_entry_Lcd_Records	s0="  User Bank 2   ", x16="\x00"
 	REC_func_4C062DC9_entry_Lcd_Records	s0="  User Bank 3   ", x16="\x00"
-	REC_func_4C062DC9_entry_Lcd_Records	s0="\xFFG\x00KH\x00KLKF\xFF\xFF\xFF KN", x16="3"
-	REC_func_4C062DC9_entry_Lcd_Records	s0="000 Phrase  \x00\xFF\xFF\xFF", x16=" "
-	REC_func_4C062DC9_entry_Lcd_Records	s0="KN5000 Phrase  \x00", x16="\xFF"
 	.align	4, 0xFF	# pad after func_4C062DC9_entry_Lcd_Records
+
+Str_G_10:	.asciz "G"
+	.space	1, 0x4B
+Str_H_3:	.asciz "H"
+	.space	1, 0x4B
+
+func_4C0628D3_Block:	# 3 bytes, copied whole by func_4C0628D3 0x4C0628D3: memcmp(.., 3)
+	tab_u8	76, 75, 70	# [0]
+	.align	4, 0xFF	# pad after func_4C0628D3_Block
+
+Str_KN3000_Phrase:	.asciz " KN3000 Phrase  "
+	.align	4, 0xFF	# pad after Str_KN3000_Phrase
+Str_KN5000_Phrase:	.asciz " KN5000 Phrase  "
+	.align	4, 0xFF	# pad after Str_KN5000_Phrase
+
 func_4C062A53_entry_Lf2_Table:	# 16 x REC_func_4C062A53_entry_Lf2_Table (8 bytes each); read by func_4C062A53_entry_Ld5 0x4C062B2D `mov (a0), d0`; func_4C062A53_entry_L102 0x4C062B5A `mov (a0), d0`; func_4C062A53_entry_L105 0x4C062B5D `mov (4, a0), a0`
 	REC_func_4C062A53_entry_Lf2_Table	f0=16, proc=loc_4C062B80	# [0]
 	REC_func_4C062A53_entry_Lf2_Table	f0=1, proc=loc_4C062B62
@@ -19031,12 +19299,9 @@ Bitmap_func_4C072041_3:	# 22 x 117, 8 bit(s) a pixel: func_4C072041 0x4C072041 d
 
 AcSndVariProc_L339_Table:	# 4 x s16, 21..255; read by AcSndVariProc_L339 0x4C0708CD: `movhu	(d0, a0), d2`; AcSpsMmmEditProc_L5e8 0x4C0742E8: `movhu	(d0, a0), d2` ...
 	tab_s16	255, 21, 22, 255
-
-Str_P_11:	.asciz "P\xB0"
-	.align	4, 0x00	# pad after Str_P_11
-
-func_4C06A742_entry_L32_Table:	# 5 x u32, 45072..4294967295; read by func_4C06A742_entry_L32 0x4C06A779: `mov (d0, a2), d0`
-	tab_u32	45120, 45104, 45088, 45072, 4294967295
+func_4C06A742_entry_L1e_Table:	# 5 x u32, 45072..45136; read by func_4C06A742_entry_L1e 0x4C06A765: `mov	(d1, a2), d0`; func_4C06A742_entry_L32 0x4C06A779: `mov	(d0, a2), d0`
+	tab_u32	45136, 45120, 45104, 45088, 45072
+	.space	4, 0xFF
 
 Str_OtPt:	.asciz "OtPt"
 	.align	4, 0xFF	# pad after Str_OtPt
@@ -19319,12 +19584,13 @@ Str_R_2d_4:	.asciz "R%2d"
 	.align	4, 0xFF	# pad after Str_R_2d_4
 Str_empty_1096:	.asciz " --"
 
-func_4C06B459_L37_Table:	# 5 x u32, 45076..45140; read by func_4C06B459 : `mov	(d2, a0), d0`
+func_4C06B459_L37_Table:	# 5 x u32, 45076..45140; read by func_4C06B459_L37 0x4C06B490: `mov	(d2, a0), d0`
 	tab_u32	45076, 45092, 45108, 45124, 45140
-func_4C06B459_L37_Table_2:	# 5 x u32, 45072..45136; read by func_4C06B459 : `mov	(d0, a0), d0`; func_4C06B459 : `mov	(d1, a0), d0`
+func_4C06B459_L37_Table_2:	# 5 x u32, 45072..45136; read by func_4C06B459_L37 0x4C06B490: `mov	(d0, a0), d0`; func_4C06B459_L10c 0x4C06B565: `mov	(d1, a0), d0` ...
 	tab_u32	45072, 45088, 45104, 45120, 45136
-func_4C06B459_L10c_Table:	# 6 x u16, 2..65535; read by func_4C06B459 : `movhu	(d0, a0), d3`
-	tab_u16	2, 3, 4, 5, 6, 65535
+func_4C06B459_L10c_Table:	# 5 x u16, 2..6; read by func_4C06B459_L10c 0x4C06B565: `movhu	(d0, a0), d3`
+	tab_u16	2, 3, 4, 5, 6
+	.align	4, 0xFF	# pad after func_4C06B459_L10c_Table
 
 Str_empty_1095:	.asciz " - "
 Str_empty_1094:	.asciz "                                "
@@ -19575,33 +19841,33 @@ Bitmap_AcHpScreenProc_L9f:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc_L9f 0x4C0
 IsPointOnScreen_Table:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x4C017704 reads through its argument a0 (passed by AcHpScreenProc_L9f 0x4C06C10F `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x4C0177A7 reads through its argument a0 (passed by DrawBitmapSP2 0x4C017704 `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
 	REC_DrawBitmapSP2_ArgA0	f0=2, f2=2
 
-Str_C_15:	.asciz "C"
-Str_D_a0_6:	.asciz "D~a0"
-Str_D_11:	.asciz "D"
-Str_E_a0_6:	.asciz "E~a0"
-Str_E_10:	.asciz "E"
-Str_F_12:	.asciz "F"
-Str_F_9e_6:	.asciz "F~9e"
-Str_G_10:	.asciz "G"
-Str_A_a0_6:	.asciz "A~a0"
-Str_A_28:	.asciz "A"
-Str_B_a0_6:	.asciz "B~a0"
-Str_B_14:	.asciz "B"
-	.align	4, 0xFF	# pad after Str_B_14
+Str_C_14:	.asciz "C"
+Str_D_a0_5:	.asciz "D~a0"
+Str_D_10:	.asciz "D"
+Str_E_a0_5:	.asciz "E~a0"
+Str_E_9:	.asciz "E"
+Str_F_11:	.asciz "F"
+Str_F_9e_5:	.asciz "F~9e"
+Str_G_9:	.asciz "G"
+Str_A_a0_5:	.asciz "A~a0"
+Str_A_27:	.asciz "A"
+Str_B_a0_5:	.asciz "B~a0"
+Str_B_13:	.asciz "B"
+	.align	4, 0xFF	# pad after Str_B_13
 
 AcSplitBoxProc_L78_Table:
-	.long	Str_C_15
-	.long	Str_D_a0_6
-	.long	Str_D_11
-	.long	Str_E_a0_6
-	.long	Str_E_10
-	.long	Str_F_12
-	.long	Str_F_9e_6
-	.long	Str_G_10
-	.long	Str_A_a0_6
-	.long	Str_A_28
-	.long	Str_B_a0_6
-	.long	Str_B_14
+	.long	Str_C_14
+	.long	Str_D_a0_5
+	.long	Str_D_10
+	.long	Str_E_a0_5
+	.long	Str_E_9
+	.long	Str_F_11
+	.long	Str_F_9e_5
+	.long	Str_G_9
+	.long	Str_A_a0_5
+	.long	Str_A_27
+	.long	Str_B_a0_5
+	.long	Str_B_13
 
 Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
 	.align	4, 0xFF	# pad after Str_SPLIT_s_d
@@ -19693,9 +19959,9 @@ Str_empty_1081:	.asciz "-----------------"
 	.align	4, 0xFF	# pad after Str_empty_1081
 Str_X_s:	.asciz "X : %s"
 	.align	4, 0xFF	# pad after Str_X_s
-Str_A_27:	.asciz "A "
-Str_B_13:	.asciz "B "
-Str_C_14:	.asciz "C "
+Str_A_26:	.asciz "A "
+Str_B_12:	.asciz "B "
+Str_C_13:	.asciz "C "
 Str_1_33:	.asciz "1 "
 Str_2_34:	.asciz "2 "
 Str_3_27:	.asciz "3 "
@@ -19709,9 +19975,9 @@ Str_10_8:	.asciz "10"
 	.align	4, 0xFF	# pad after Str_10_8
 
 AcPmemBankNameProc_L6b_Table:
-	.long	Str_A_27
-	.long	Str_B_13
-	.long	Str_C_14
+	.long	Str_A_26
+	.long	Str_B_12
+	.long	Str_C_13
 	.long	Str_1_33
 	.long	Str_2_34
 	.long	Str_3_27
@@ -19773,50 +20039,50 @@ Text_OFF:	# 43 strings of 16 characters, NUL-terminated
 	.asciz	"     -----      "
 	.align	4, 0xFF	# pad after Text_OFF
 
-AcFootSwProc_L83_Table:	# 43 x REC_AcFootSwProc_L83_Table (8 bytes each); read by AcFootSwProc_Ldc 0x4C06D4CA `mov (4, a1), a0`; AcFootSwProc_Ldc 0x4C06D4CA `call sprintf_entry, [a2], 0x20`
-	REC_AcFootSwProc_L83_Table	x0="\x00\x00\x00\x00", text=Text_OFF	# [0]
-	REC_AcFootSwProc_L83_Table	x0="A\x00\x00\x00", text=Text_OFF+17
-	REC_AcFootSwProc_L83_Table	x0="B\x00\x00\x00", text=Text_OFF+34
-	REC_AcFootSwProc_L83_Table	x0="\x90\x00\x00\x00", text=Text_OFF+51
-	REC_AcFootSwProc_L83_Table	x0="\x91\x00\x00\x00", text=Text_OFF+68
-	REC_AcFootSwProc_L83_Table	x0="\xB3\x00\x00\x00", text=Text_OFF+85
-	REC_AcFootSwProc_L83_Table	x0="\xB4\x00\x00\x00", text=Text_OFF+102
-	REC_AcFootSwProc_L83_Table	x0="\xC0\x00\x00\x00", text=Text_OFF+119
-	REC_AcFootSwProc_L83_Table	x0="\xC1\x00\x00\x00", text=Text_OFF+136	# [8]
-	REC_AcFootSwProc_L83_Table	x0="\xC2\x00\x00\x00", text=Text_OFF+153
-	REC_AcFootSwProc_L83_Table	x0="\xC3\x00\x00\x00", text=Text_OFF+170
-	REC_AcFootSwProc_L83_Table	x0="\xC4\x00\x00\x00", text=Text_OFF+187
-	REC_AcFootSwProc_L83_Table	x0="\xC5\x00\x00\x00", text=Text_OFF+204
-	REC_AcFootSwProc_L83_Table	x0="\xC6\x00\x00\x00", text=Text_OFF+221
-	REC_AcFootSwProc_L83_Table	x0="\xC7\x00\x00\x00", text=Text_OFF+238
-	REC_AcFootSwProc_L83_Table	x0="\xB2\x00\x00\x00", text=Text_OFF+255
-	REC_AcFootSwProc_L83_Table	x0="\x88\x00\x00\x00", text=Text_OFF+272	# [16]
-	REC_AcFootSwProc_L83_Table	x0="\x92\x00\x00\x00", text=Text_OFF+289
-	REC_AcFootSwProc_L83_Table	x0="\x93\x00\x00\x00", text=Text_OFF+306
-	REC_AcFootSwProc_L83_Table	x0="\x94\x00\x00\x00", text=Text_OFF+323
-	REC_AcFootSwProc_L83_Table	x0="\x95\x00\x00\x00", text=Text_OFF+340
-	REC_AcFootSwProc_L83_Table	x0="@\x00\x00\x00", text=Text_OFF+357
-	REC_AcFootSwProc_L83_Table	x0="\x96\x00\x00\x00", text=Text_OFF+374
-	REC_AcFootSwProc_L83_Table	x0="\x99\x00\x00\x00", text=Text_OFF+391
-	REC_AcFootSwProc_L83_Table	x0="\x97\x00\x00\x00", text=Text_OFF+408	# [24]
-	REC_AcFootSwProc_L83_Table	x0="\xBF\x00\x00\x00", text=Text_OFF+425
-	REC_AcFootSwProc_L83_Table	x0="\xBE\x00\x00\x00", text=Text_OFF+442
-	REC_AcFootSwProc_L83_Table	x0="\xAD\x00\x00\x00", text=Text_OFF+459
-	REC_AcFootSwProc_L83_Table	x0="\xBC\x00\x00\x00", text=Text_OFF+476
-	REC_AcFootSwProc_L83_Table	x0="\xB0\x00\x00\x00", text=Text_OFF+493
-	REC_AcFootSwProc_L83_Table	x0="\xB1\x00\x00\x00", text=Text_OFF+510
-	REC_AcFootSwProc_L83_Table	x0="\xB8\x00\x00\x00", text=Text_OFF+527
-	REC_AcFootSwProc_L83_Table	x0="\xB9\x00\x00\x00", text=Text_OFF+544	# [32]
-	REC_AcFootSwProc_L83_Table	x0="\xA0\x00\x00\x00", text=Text_OFF+561
-	REC_AcFootSwProc_L83_Table	x0="\xA1\x00\x00\x00", text=Text_OFF+578
-	REC_AcFootSwProc_L83_Table	x0="\xA2\x00\x00\x00", text=Text_OFF+595
-	REC_AcFootSwProc_L83_Table	x0="\xA3\x00\x00\x00", text=Text_OFF+612
-	REC_AcFootSwProc_L83_Table	x0="\xA4\x00\x00\x00", text=Text_OFF+629
-	REC_AcFootSwProc_L83_Table	x0="\xA5\x00\x00\x00", text=Text_OFF+646
-	REC_AcFootSwProc_L83_Table	x0="\xBD\x00\x00\x00", text=Text_OFF+663
-	REC_AcFootSwProc_L83_Table	x0="\xB6\x00\x00\x00", text=Text_OFF+680	# [40]
-	REC_AcFootSwProc_L83_Table	x0="\xB7\x00\x00\x00", text=Text_OFF+697
-	REC_AcFootSwProc_L83_Table	x0="\xFF\xFF\x00\x00", text=Text_OFF+714
+AcFootSwProc_L83_Table:	# 43 x REC_AcFootSwProc_L83_Table (8 bytes each); read by AcFootSwProc_L83 0x4C06D471 `movhu (d1, a1), d1`; AcFootSwProc_Ldc 0x4C06D4CA `mov (4, a1), a0`; AcFootSwProc_Ldc 0x4C06D4CA `call sprintf_entry, [a2], 0x20`
+	REC_AcFootSwProc_L83_Table	x2="\x00\x00", text=Text_OFF	# [0]
+	REC_AcFootSwProc_L83_Table	f0=65, x2="\x00\x00", text=Text_OFF+17
+	REC_AcFootSwProc_L83_Table	f0=66, x2="\x00\x00", text=Text_OFF+34
+	REC_AcFootSwProc_L83_Table	f0=144, x2="\x00\x00", text=Text_OFF+51
+	REC_AcFootSwProc_L83_Table	f0=145, x2="\x00\x00", text=Text_OFF+68
+	REC_AcFootSwProc_L83_Table	f0=179, x2="\x00\x00", text=Text_OFF+85
+	REC_AcFootSwProc_L83_Table	f0=180, x2="\x00\x00", text=Text_OFF+102
+	REC_AcFootSwProc_L83_Table	f0=192, x2="\x00\x00", text=Text_OFF+119
+	REC_AcFootSwProc_L83_Table	f0=193, x2="\x00\x00", text=Text_OFF+136	# [8]
+	REC_AcFootSwProc_L83_Table	f0=194, x2="\x00\x00", text=Text_OFF+153
+	REC_AcFootSwProc_L83_Table	f0=195, x2="\x00\x00", text=Text_OFF+170
+	REC_AcFootSwProc_L83_Table	f0=196, x2="\x00\x00", text=Text_OFF+187
+	REC_AcFootSwProc_L83_Table	f0=197, x2="\x00\x00", text=Text_OFF+204
+	REC_AcFootSwProc_L83_Table	f0=198, x2="\x00\x00", text=Text_OFF+221
+	REC_AcFootSwProc_L83_Table	f0=199, x2="\x00\x00", text=Text_OFF+238
+	REC_AcFootSwProc_L83_Table	f0=178, x2="\x00\x00", text=Text_OFF+255
+	REC_AcFootSwProc_L83_Table	f0=136, x2="\x00\x00", text=Text_OFF+272	# [16]
+	REC_AcFootSwProc_L83_Table	f0=146, x2="\x00\x00", text=Text_OFF+289
+	REC_AcFootSwProc_L83_Table	f0=147, x2="\x00\x00", text=Text_OFF+306
+	REC_AcFootSwProc_L83_Table	f0=148, x2="\x00\x00", text=Text_OFF+323
+	REC_AcFootSwProc_L83_Table	f0=149, x2="\x00\x00", text=Text_OFF+340
+	REC_AcFootSwProc_L83_Table	f0=64, x2="\x00\x00", text=Text_OFF+357
+	REC_AcFootSwProc_L83_Table	f0=150, x2="\x00\x00", text=Text_OFF+374
+	REC_AcFootSwProc_L83_Table	f0=153, x2="\x00\x00", text=Text_OFF+391
+	REC_AcFootSwProc_L83_Table	f0=151, x2="\x00\x00", text=Text_OFF+408	# [24]
+	REC_AcFootSwProc_L83_Table	f0=191, x2="\x00\x00", text=Text_OFF+425
+	REC_AcFootSwProc_L83_Table	f0=190, x2="\x00\x00", text=Text_OFF+442
+	REC_AcFootSwProc_L83_Table	f0=173, x2="\x00\x00", text=Text_OFF+459
+	REC_AcFootSwProc_L83_Table	f0=188, x2="\x00\x00", text=Text_OFF+476
+	REC_AcFootSwProc_L83_Table	f0=176, x2="\x00\x00", text=Text_OFF+493
+	REC_AcFootSwProc_L83_Table	f0=177, x2="\x00\x00", text=Text_OFF+510
+	REC_AcFootSwProc_L83_Table	f0=184, x2="\x00\x00", text=Text_OFF+527
+	REC_AcFootSwProc_L83_Table	f0=185, x2="\x00\x00", text=Text_OFF+544	# [32]
+	REC_AcFootSwProc_L83_Table	f0=160, x2="\x00\x00", text=Text_OFF+561
+	REC_AcFootSwProc_L83_Table	f0=161, x2="\x00\x00", text=Text_OFF+578
+	REC_AcFootSwProc_L83_Table	f0=162, x2="\x00\x00", text=Text_OFF+595
+	REC_AcFootSwProc_L83_Table	f0=163, x2="\x00\x00", text=Text_OFF+612
+	REC_AcFootSwProc_L83_Table	f0=164, x2="\x00\x00", text=Text_OFF+629
+	REC_AcFootSwProc_L83_Table	f0=165, x2="\x00\x00", text=Text_OFF+646
+	REC_AcFootSwProc_L83_Table	f0=189, x2="\x00\x00", text=Text_OFF+663
+	REC_AcFootSwProc_L83_Table	f0=182, x2="\x00\x00", text=Text_OFF+680	# [40]
+	REC_AcFootSwProc_L83_Table	f0=183, x2="\x00\x00", text=Text_OFF+697
+	REC_AcFootSwProc_L83_Table	f0=-1, x2="\x00\x00", text=Text_OFF+714
 
 Str_1_31:	.asciz "1 "
 Str_2_32:	.asciz "2 "
@@ -19824,8 +20090,8 @@ Str_1_30:	.asciz "1 "
 Str_2_31:	.asciz "2 "
 Str_3_26:	.asciz "3 "
 Str_4_25:	.asciz "4 "
-Str_E_9:	.asciz "E "
-	.align	4, 0xFF	# pad after Str_E_9
+Str_E_8:	.asciz "E "
+	.align	4, 0xFF	# pad after Str_E_8
 
 AcFootSwProc_L2d_Table:	# 7 x REC_AcFootSwProc_L2d_Table (8 bytes each); read by AcFootSwProc_L2d 0x4C06D41B `mov (d0, a0), d0`; AcFootSwProc_L83 0x4C06D471 `mov (d0, a3), d0`; AcFootSwProc_Ldc 0x4C06D4CA `mov (4, a3), a0` (+1)
 	REC_AcFootSwProc_L2d_Table	f0=16386, text=Str_1_31
@@ -19834,7 +20100,7 @@ AcFootSwProc_L2d_Table:	# 7 x REC_AcFootSwProc_L2d_Table (8 bytes each); read by
 	REC_AcFootSwProc_L2d_Table	f0=16389, text=Str_2_31
 	REC_AcFootSwProc_L2d_Table	f0=16390, text=Str_3_26
 	REC_AcFootSwProc_L2d_Table	f0=16391, text=Str_4_25
-	REC_AcFootSwProc_L2d_Table	f0=16384, text=Str_E_9
+	REC_AcFootSwProc_L2d_Table	f0=16384, text=Str_E_8
 
 Str_s_s_6:	.asciz "%s: %s"
 	.align	4, 0xFF	# pad after Str_s_s_6
@@ -19919,11 +20185,23 @@ DrawBitmapSPFast4_Impl_entry_Lf0_Table:	# 4 x u32, 0..12632256; read by DrawBitm
 	tab_u32	12632256, 8421504, 4210752, 0
 
 Str_empty_1080:	.asciz "```"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1B80C8, 0x1B80D4
+
+DrawBitmapSPFast4_ArgSp24_0:	# REC_DrawBitmapSPFast4_ArgSp24 (4 bytes)
+	REC_DrawBitmapSPFast4_ArgSp24	key=0x404040
+DrawBitmapSPFast4_ArgSp24_1:	# REC_DrawBitmapSPFast4_ArgSp24 (4 bytes)
+	REC_DrawBitmapSPFast4_ArgSp24	key=0x202020
+DrawBitmapSPFast4_ArgSp24_2:	# REC_DrawBitmapSPFast4_ArgSp24 (4 bytes)
+	REC_DrawBitmapSPFast4_ArgSp24	
+
 Str_empty_1079:	.asciz "\xA0``"
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1B80D8, 0x1B80E4
+
+DrawBitmapSPFast4_ArgSp24_3:	# REC_DrawBitmapSPFast4_ArgSp24 (4 bytes)
+	REC_DrawBitmapSPFast4_ArgSp24	key=0x404080
+DrawBitmapSPFast4_ArgSp24_4:	# REC_DrawBitmapSPFast4_ArgSp24 (4 bytes)
+	REC_DrawBitmapSPFast4_ArgSp24	key=0x202060
+DrawBitmapSPFast4_ArgSp24_5:	# REC_DrawBitmapSPFast4_ArgSp24 (4 bytes)
+	REC_DrawBitmapSPFast4_ArgSp24	
+
 Str_d_20:	.asciz "%d:"
 Str_empty_1078:	.asciz "             "
 	.align	4, 0xFF	# pad after Str_empty_1078
@@ -20170,7 +20448,7 @@ AcAcdnTypeProc_L37_Table:
 	.long	data_4C1B8577
 	.long	data_4C1B8578
 
-AcDrawbarProc_L54_Table:	# 21 x u32, 2097296..908918839; read by AcDrawbarProc_L12d 0x4C07144B: `mov	(d0, a0), d0`; AcDrawbarProc_L281 0x4C07159F: `mov	(d0, a0), d0`
+AcDrawbarProc_L54_Table:	# 21 x u32, 2097296..908918839; read by AcDrawbarProc_L54 0x4C071372: `mov	(d1, a0), d0`; AcDrawbarProc_Lf6 0x4C071414: `mov	(d0, a0), d0` ...
 	tab_u32	2097296, 2097298, 2097297, 2097299, 2097300, 2097301, 2097302, 2097303	# [0]
 	tab_u32	2097304, 721432608, 841678897, 3353344, 721433643, 908787765, 3615488, 754989101	# [8]
 	tab_u32	908918839, 3484928, 754988077, 841809971, 3222784	# [16]
@@ -20580,7 +20858,7 @@ AcSpsMmmEditProc_L5e8_Records:	# 7 x REC_AcSpsMmmEditProc_L5e8_Records (32 bytes
 	REC_AcSpsMmmEditProc_L5e8_Records	28, 0, 29, 0, 30, 0, 31, 0, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
 	REC_AcSpsMmmEditProc_L5e8_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-IvSdpartProc_Lbe_Table:	# 7 x u32, 589836..4294967295; read by IvSdpartProc_Ldd 0x4C0737FB: `mov	(d0, a0), d0`; IvSdpartProc_L306 0x4C073A24: `mov	(d0, a0), d0` ...
+IvSdpartProc_Lbe_Table:	# 7 x u32, 589836..4294967295; read by IvSdpartProc_Lbe 0x4C0737DC: `mov	(d1, a0), d0`; IvSdpartProc_Ldd 0x4C0737FB: `mov	(d0, a0), d0` ...
 	tab_u32	4294967295, 589836, 589867, 589915, 589939, 589972, 589836
 
 Str_SdPT:	.asciz "SdPT"
@@ -24719,10 +24997,17 @@ func_4C094564_Table:	# 41 x u32, 0..4286644095; read by func_4C094564 0x4C094564
 	tab_u32	0	# [40]
 func_4C095B39_entry_Lca_Table:	# 3 x u32, 61520..50332160; read by func_4C095B39_entry_Lca 0x4C095C08: `mov	(a1), d0`
 	tab_u32	65792, 50332160, 61520
-func_4C095B39_entry_L193_Records:	# 32 x u16, 0..65280; read by func_4C095B39_entry_L193 0x4C095CD1: `movhu	(a1), d0`
-	tab_u16	3840, 3840, 3840, 63615, 3840, 3840, 3840, 61520, 296, 3840, 3840, 61520	# [0]
-	tab_u16	296, 1536, 3840, 61520, 296, 3840, 3840, 61520, 3840, 3840, 3840, 65280	# [12]
-	tab_u16	3840, 3840, 3840, 61567, 768, 0, 3885, 62976	# [24]
+
+func_4C095B39_entry_L193_Records:	# 8 x REC_func_4C095B39_entry_L193_Records (8 bytes each); read by func_4C095B39_entry_L193 0x4C095CD1 `movhu (a1), d0`; func_4C095B39_entry_L193 0x4C095CD1 `call func_4C094525, 0, 0`
+	REC_func_4C095B39_entry_L193_Records	f0=3840, x2="\x00\x0F\x00\x0F\x7F\xF8"
+	REC_func_4C095B39_entry_L193_Records	f0=3840, x2="\x00\x0F\x00\x0FP\xF0"
+	REC_func_4C095B39_entry_L193_Records	f0=296, x2="\x00\x0F\x00\x0FP\xF0"
+	REC_func_4C095B39_entry_L193_Records	f0=296, x2="\x00\x06\x00\x0FP\xF0"
+	REC_func_4C095B39_entry_L193_Records	f0=296, x2="\x00\x0F\x00\x0FP\xF0"
+	REC_func_4C095B39_entry_L193_Records	f0=3840, x2="\x00\x0F\x00\x0F\x00\xFF"
+	REC_func_4C095B39_entry_L193_Records	f0=3840, x2="\x00\x0F\x00\x0F\x7F\xF0"
+	REC_func_4C095B39_entry_L193_Records	f0=768, x2="\x00\x00-\x0F\x00\xF6"
+
 func_4C095B39_entry_L27c_Table:	# 6 x u16, 768..62976; read by func_4C095B39_entry_L27c 0x4C095DBA: `movhu	(a1), d0`
 	tab_u16	768, 4096, 3885, 62976, 20480, 32512
 func_4C095B39_entry_L27c_Table_2:	# 24 x u8, 0..23; read by func_4C095B39_entry : `movbu	(d0, a0), d1`
@@ -26994,2694 +27279,2457 @@ func_4C09A4F0_entry_L65_Records:	# 2144 x REC_func_4C09A4F0_entry_L65_Records (8
 	REC_func_4C09A4F0_entry_L65_Records	x6="\x00\x00"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x1CF268, 0x1CF270
-data_4C1CF270:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF270, 0x1CF27C
-data_4C1CF27C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF27C, 0x1CF288
-data_4C1CF288:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF288, 0x1CF294
 
 func_4C09CCB5_Table_p0_0:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3, x6=" H\x00\x00\x00\x00"
-data_4C1CF2A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF2A0, 0x1CF2AC
-data_4C1CF2AC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF2AC, 0x1CF2B8
+	REC_func_4C09CCB5_Table_p0	key=512, x6=" 0\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_1:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=259, x6=" \x10\x03\x00\x00\x00"
-data_4C1CF2C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF2C4, 0x1CF2D0
+	REC_func_4C09CCB5_Table_p0	key=1, x6=" @\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_2:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1280, x6=" \x00\x04\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=513, x6=" H\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_3:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1282, x6=" \x04\x04\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3, x6=" H\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_4:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1026, x6=" \x10\x04\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=770, x6="  \x01\x00\x00\x00"
 func_4C09CCB5_Table_p0_5:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1028, x6=" @\x04\x00\x00\x00"
-data_4C1CF300:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF300, 0x1CF30C
+	REC_func_4C09CCB5_Table_p0	key=257, x6=" \x00\x03\x00\x00\x00"
 func_4C09CCB5_Table_p0_6:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1536, x6=" \x00\x05\x00\x00\x00"
-data_4C1CF318:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF318, 0x1CF324
-data_4C1CF324:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF324, 0x1CF330
+	REC_func_4C09CCB5_Table_p0	key=259, x6=" \x10\x03\x00\x00\x00"
 func_4C09CCB5_Table_p0_7:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1539, x6=" \x10\x05\x00\x00\x00"
-data_4C1CF33C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF33C, 0x1CF348
+	REC_func_4C09CCB5_Table_p0	key=768, x6=" \x00\x02\x00\x00\x00"
 func_4C09CCB5_Table_p0_8:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1794, x6=" \x10\x05\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1280, x6=" \x00\x04\x00\x00\x00"
 func_4C09CCB5_Table_p0_9:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29696, x6=" \x10\x05\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1282, x6=" \x04\x04\x00\x00\x00"
 func_4C09CCB5_Table_p0_10:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1540, x6=" \x14\x05\x00\x00\x00"
-data_4C1CF36C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF36C, 0x1CF378
+	REC_func_4C09CCB5_Table_p0	key=1026, x6=" \x10\x04\x00\x00\x00"
 func_4C09CCB5_Table_p0_11:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1030, x6=" P\x04\x00\x00\x00"
-data_4C1CF384:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF384, 0x1CF390
+	REC_func_4C09CCB5_Table_p0	key=1028, x6=" @\x04\x00\x00\x00"
 func_4C09CCB5_Table_p0_12:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=4, x6=" 0\x01\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1029, x6="  \x04\x00\x00\x00"
 func_4C09CCB5_Table_p0_13:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=262, x6=" 1\x01\x00\x00\x00"
-data_4C1CF3A8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF3A8, 0x1CF3B4
-data_4C1CF3B4:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF3B4, 0x1CF3CC
-data_4C1CF3CC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF3CC, 0x1CF3D8
-data_4C1CF3D8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF3D8, 0x1CF3E4
-data_4C1CF3E4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF3E4, 0x1CF3F0
-data_4C1CF3F0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF3F0, 0x1CF3FC
+	REC_func_4C09CCB5_Table_p0	key=1536, x6=" \x00\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_14:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=4356, x6=" \x10\x07\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1541, x6=" \x18\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_15:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29440, x6="  \x07\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1024, x6=" \x10\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_16:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29184, x6="  \x07\x00\x00\x00"
-data_4C1CF420:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF420, 0x1CF42C
-data_4C1CF42C:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF42C, 0x1CF444
+	REC_func_4C09CCB5_Table_p0	key=1539, x6=" \x10\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_17:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=2304, x6=" \x00\x09\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1CF450, 0x1CF45C
+	REC_func_4C09CCB5_Table_p0	key=29697, x6=" \x10\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_18:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=2048, x6=" \x04\x0B\x00\x00\x00"
-data_4C1CF468:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF468, 0x1CF474
+	REC_func_4C09CCB5_Table_p0	key=1794, x6=" \x10\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_19:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=2052, x6=" P\x0B\x00\x00\x00"
-data_4C1CF480:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF480, 0x1CF48C
-data_4C1CF48C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF48C, 0x1CF498
-data_4C1CF498:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF498, 0x1CF4A4
+	REC_func_4C09CCB5_Table_p0	key=29696, x6=" \x10\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_20:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28928, x6=" @\x0C\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1CF4B0, 0x1CF4BC
-data_4C1CF4BC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF4BC, 0x1CF4C8
-data_4C1CF4C8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF4C8, 0x1CF4D4
+	REC_func_4C09CCB5_Table_p0	key=1540, x6=" \x14\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_21:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3588, x6=" \x10\x0E\x00\x00\x00"
-data_4C1CF4E0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF4E0, 0x1CF4EC
-data_4C1CF4EC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF4EC, 0x1CF4F8
-data_4C1CF4F8:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF4F8, 0x1CF510
-data_4C1CF510:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF510, 0x1CF51C
-data_4C1CF51C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF51C, 0x1CF528
+	REC_func_4C09CCB5_Table_p0	key=1542, x6=" X\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_22:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=5124, x6=" \x1C\x18\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1030, x6=" P\x04\x00\x00\x00"
 func_4C09CCB5_Table_p0_23:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=6916, x6=" 0\x1F\x00\x00\x00"
-data_4C1CF540:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF540, 0x1CF54C
-data_4C1CF54C:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF54C, 0x1CF564
-data_4C1CF564:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF564, 0x1CF570
-data_4C1CF570:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF570, 0x1CF57C
-data_4C1CF57C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF57C, 0x1CF588
-data_4C1CF588:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF588, 0x1CF594
-data_4C1CF594:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF594, 0x1CF5A0
-data_4C1CF5A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF5A0, 0x1CF5AC
-data_4C1CF5AC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF5AC, 0x1CF5B8
+	REC_func_4C09CCB5_Table_p0	key=2, x6=" 0\x01\x00\x00\x00"
 func_4C09CCB5_Table_p0_24:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=6659, x6=" \x01\x1B\x00\x00\x00"
-data_4C1CF5C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF5C4, 0x1CF5D0
-data_4C1CF5D0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF5D0, 0x1CF5DC
+	REC_func_4C09CCB5_Table_p0	key=4, x6=" 0\x01\x00\x00\x00"
 func_4C09CCB5_Table_p0_25:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=6660, x6=" \x18\x1B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=262, x6=" 1\x01\x00\x00\x00"
 func_4C09CCB5_Table_p0_26:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=7170, x6="  \x1B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=773, x6=" P\x03\x00\x00\x00"
 func_4C09CCB5_Table_p0_27:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=7424, x6=" \x00\x1C\x00\x00\x00"
-data_4C1CF600:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF600, 0x1CF60C
-data_4C1CF60C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF60C, 0x1CF618
-data_4C1CF618:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF618, 0x1CF624
-data_4C1CF624:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF624, 0x1CF630
-data_4C1CF630:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF630, 0x1CF63C
+	REC_func_4C09CCB5_Table_p0	key=4096, x6=" \x00\x06\x00\x00\x00"
 func_4C09CCB5_Table_p0_28:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=6912, x6=" \x00\x1F\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1CF648, 0x1CF654
-data_4C1CF654:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF654, 0x1CF660
-data_4C1CF660:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF660, 0x1CF66C
+	REC_func_4C09CCB5_Table_p0	key=4097, x6=" \x00\x06\x00\x00\x00"
 func_4C09CCB5_Table_p0_29:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=7940, x6=" E\x1A\x00\x00\x00"
-data_4C1CF678:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF678, 0x1CF684
-data_4C1CF684:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF684, 0x1CF690
+	REC_func_4C09CCB5_Table_p0	key=4864, x6=" \x00\x06\x00\x00\x00"
 func_4C09CCB5_Table_p0_30:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=8964, x6=" P\x19\x00\x00\x00"
-data_4C1CF69C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF69C, 0x1CF6A8
-data_4C1CF6A8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF6A8, 0x1CF6B4
-data_4C1CF6B4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF6B4, 0x1CF6C0
-data_4C1CF6C0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF6C0, 0x1CF6CC
-data_4C1CF6CC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF6CC, 0x1CF6D8
-data_4C1CF6D8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF6D8, 0x1CF6E4
+	REC_func_4C09CCB5_Table_p0	key=4608, x6=" 0\x06\x00\x00\x00"
 func_4C09CCB5_Table_p0_31:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=9732, x6=" \x10\x0F\x00\x00\x00"
-data_4C1CF6F0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF6F0, 0x1CF6FC
+	REC_func_4C09CCB5_Table_p0	key=4352, x6=" \x00\x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_32:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=9984, x6=" \x00l\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=4355, x6=" \x08\x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_33:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=9985, x6=" \x10l\x00\x00\x00"
-data_4C1CF714:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF714, 0x1CF72C
+	REC_func_4C09CCB5_Table_p0	key=4356, x6=" \x10\x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_34:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3332, x6="  p\x00\x00\x00"
-data_4C1CF738:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF738, 0x1CF744
+	REC_func_4C09CCB5_Table_p0	key=29440, x6="  \x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_35:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3591, x6="  p\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=29184, x6="  \x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_36:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3334, x6=" (p\x00\x00\x00"
-data_4C1CF75C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF75C, 0x1CF768
+	REC_func_4C09CCB5_Table_p0	key=4354, x6=" (\x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_37:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3335, x6=" 0p\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=4357, x6=" 0\x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_38:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF6D8, key=31492, x6=" 0t\x00\x00\x00"
-data_4C1CF780:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF780, 0x1CF78C
-data_4C1CF78C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF78C, 0x1CF798
-data_4C1CF798:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF798, 0x1CF7A4
-data_4C1CF7A4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF7A4, 0x1CF7B0
+	REC_func_4C09CCB5_Table_p0	key=4353, x6=" @\x07\x00\x00\x00"
 func_4C09CCB5_Table_p0_39:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31233, x6=" \x00s\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=2304, x6=" \x00\x09\x00\x00\x00"
 func_4C09CCB5_Table_p0_40:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31491, x6=" \x00t\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3585, x6=" \x00\x09\x00\x00\x00"
 func_4C09CCB5_Table_p0_41:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31234, x6=" \x00u\x00\x00\x00"
-data_4C1CF7D4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF7D4, 0x1CF7E0
+	REC_func_4C09CCB5_Table_p0	key=2048, x6=" \x04\x0B\x00\x00\x00"
 func_4C09CCB5_Table_p0_42:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31235, x6=" \x00w\x00\x00\x00"
-data_4C1CF7EC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF7EC, 0x1CF7F8
-data_4C1CF7F8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF7F8, 0x1CF804
-data_4C1CF804:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF804, 0x1CF810
+	REC_func_4C09CCB5_Table_p0	key=2053, x6=" \x10\x0B\x00\x00\x00"
 func_4C09CCB5_Table_p0_43:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF4E0, key=24580, x6=" \x04(\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=2052, x6=" P\x0B\x00\x00\x00"
 func_4C09CCB5_Table_p0_44:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=24576, x6=" \x00(\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=2816, x6=" \x00\x0D\x00\x00\x00"
 func_4C09CCB5_Table_p0_45:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=24577, x6=" \x10(\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=2560, x6=" \x00\x0C\x00\x00\x00"
 func_4C09CCB5_Table_p0_46:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=24578, x6=" \x00n\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3328, x6="  \x0C\x00\x00\x00"
 func_4C09CCB5_Table_p0_47:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=24834, x6=" \x00)\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28928, x6=" @\x0C\x00\x00\x00"
 func_4C09CCB5_Table_p0_48:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=24832, x6=" \x00*\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=2817, x6=" @\x0D\x00\x00\x00"
 func_4C09CCB5_Table_p0_49:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25088, x6=" \x00+\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3072, x6=" \x00\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_50:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25603, x6=" \x100\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3584, x6=" \x00\x0E\x00\x00\x00"
 func_4C09CCB5_Table_p0_51:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF4BC, key=25860, x6=" \x180\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3588, x6=" \x10\x0E\x00\x00\x00"
 func_4C09CCB5_Table_p0_52:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25600, x6=" \x000\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1792, x6=" \x00\n\x00\x00\x00"
 func_4C09CCB5_Table_p0_53:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF480, key=25604, x6=" \x080\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3586, x6=" \x00p\x00\x00\x00"
 func_4C09CCB5_Table_p0_54:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF498, key=26116, x6="  0\x00\x00\x00"
-data_4C1CF8A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF8A0, 0x1CF8AC
+	REC_func_4C09CCB5_Table_p0	key=5120, x6=" \x00\x18\x00\x00\x00"
 func_4C09CCB5_Table_p0_55:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26118, x6=" 00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=5121, x6=" \x08\x18\x00\x00\x00"
 func_4C09CCB5_Table_p0_56:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26119, x6=" 80\x00\x00\x00"
-data_4C1CF8C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF8C4, 0x1CF8D0
+	REC_func_4C09CCB5_Table_p0	key=5376, x6=" \x10\x18\x00\x00\x00"
 func_4C09CCB5_Table_p0_57:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25601, x6=" \x1C0\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=5125, x6=" \x18\x18\x00\x00\x00"
 func_4C09CCB5_Table_p0_58:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25858, x6=" \x081\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=5124, x6=" \x1C\x18\x00\x00\x00"
 func_4C09CCB5_Table_p0_59:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26112, x6=" @0\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=6916, x6=" 0\x1F\x00\x00\x00"
 func_4C09CCB5_Table_p0_60:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25089, x6=" 90\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=5632, x6=" \x00\x19\x00\x00\x00"
 func_4C09CCB5_Table_p0_61:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25602, x6=" \x00,\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=5888, x6="  \x19\x00\x00\x00"
 func_4C09CCB5_Table_p0_62:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25344, x6=" \x00-\x00\x00\x00"
-data_4C1CF918:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF918, 0x1CF930
-data_4C1CF930:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF930, 0x1CF93C
-data_4C1CF93C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF93C, 0x1CF948
+	REC_func_4C09CCB5_Table_p0	key=5889, x6=" \"\x19\x00\x00\x00"
 func_4C09CCB5_Table_p0_63:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26627, x6=" \x014\x00\x00\x00"
-data_4C1CF954:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF954, 0x1CF960
-data_4C1CF960:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF960, 0x1CF96C
+	REC_func_4C09CCB5_Table_p0	key=6402, x6=" 8\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_64:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF714, key=26628, x6=" \x0C4\x00\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1CF978, 0x1CF990
+	REC_func_4C09CCB5_Table_p0	key=6403, x6=" 0\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_65:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26630, x6=" $4\x00\x00\x00"
-data_4C1CF99C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF99C, 0x1CF9A8
-data_4C1CF9A8:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF9A8, 0x1CF9C0
+	REC_func_4C09CCB5_Table_p0	key=8192, x6=" \x00.\x00\x00\x00"
 func_4C09CCB5_Table_p0_66:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26887, x6=" $5\x00\x00\x00"
-data_4C1CF9CC:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF9CC, 0x1CF9D8
+	REC_func_4C09CCB5_Table_p0	key=8194, x6=" \x10.\x00\x00\x00"
 func_4C09CCB5_Table_p0_67:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26886, x6=" (5\x00\x00\x00"
-data_4C1CF9E4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CF9E4, 0x1CF9F0
+	REC_func_4C09CCB5_Table_p0	key=6400, x6=" \x00\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_68:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF3F0, key=27143, x6=" *5\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=6144, x6=" \x08\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_69:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF3D8, key=27396, x6=" &5\x00\x00\x00"
-data_4C1CFA08:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFA08, 0x1CFA20
+	REC_func_4C09CCB5_Table_p0	key=6656, x6=" \x00\x1B\x00\x00\x00"
 func_4C09CCB5_Table_p0_70:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF4F8, key=27908, x6=" P5\x00\x00\x00"
-data_4C1CFA2C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFA2C, 0x1CFA38
-data_4C1CFA38:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFA38, 0x1CFA44
+	REC_func_4C09CCB5_Table_p0	key=6659, x6=" \x01\x1B\x00\x00\x00"
 func_4C09CCB5_Table_p0_71:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27910, x6=" @5\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7168, x6=" @\x1B\x00\x00\x00"
 func_4C09CCB5_Table_p0_72:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27911, x6=" H5\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1CFA5C, 0x1CFA68
-data_4C1CFA68:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFA68, 0x1CFA74
+	REC_func_4C09CCB5_Table_p0	key=6657, x6=" \x10\x1B\x00\x00\x00"
 func_4C09CCB5_Table_p0_73:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF510, key=28164, x6=" I5\x00\x00\x00"
-data_4C1CFA80:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFA80, 0x1CFA8C
+	REC_func_4C09CCB5_Table_p0	key=6660, x6=" \x18\x1B\x00\x00\x00"
 func_4C09CCB5_Table_p0_74:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28166, x6=" D5\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7170, x6="  \x1B\x00\x00\x00"
 func_4C09CCB5_Table_p0_75:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF6C0, key=32518, x6=" M5\x00\x00\x00"
-data_4C1CFAA4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFAA4, 0x1CFAB0
+	REC_func_4C09CCB5_Table_p0	key=7424, x6=" \x00\x1C\x00\x00\x00"
 func_4C09CCB5_Table_p0_76:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22528, x6=" \x00\x11\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7427, x6="  \x1C\x00\x00\x00"
 func_4C09CCB5_Table_p0_77:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22532, x6=" \x04\x11\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7680, x6=" \x00\x1E\x00\x00\x00"
 func_4C09CCB5_Table_p0_78:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22784, x6=" \x00\x10\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7685, x6=" \x10\x1F\x00\x00\x00"
 func_4C09CCB5_Table_p0_79:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=func_4C09A4F0_entry_L65_Records+17136, key=22788, x6=" \x04\x10\x00\x00\x00"
-data_4C1CFAE0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFAE0, 0x1CFAEC
+	REC_func_4C09CCB5_Table_p0	key=6914, x6=" \x00\x1D\x00\x00\x00"
 func_4C09CCB5_Table_p0_80:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF324, key=23812, x6=" \x14\x10\x00\x00\x00"
-data_4C1CFAF8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFAF8, 0x1CFB04
+	REC_func_4C09CCB5_Table_p0	key=6913, x6=" \x00\x1F\x00\x00\x00"
 func_4C09CCB5_Table_p0_81:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF270, key=23300, x6=" \x0C\x10\x00\x00\x00"
-data_4C1CFB10:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFB10, 0x1CFB1C
+	REC_func_4C09CCB5_Table_p0	key=6912, x6=" \x00\x1F\x00\x00\x00"
 func_4C09CCB5_Table_p0_82:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=23302, x6=" \x1C\x10\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7937, x6=" @\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_83:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=23040, x6=" \x08\x11\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=7939, x6=" A\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_84:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=func_4C09A4F0_entry_L65_Records+17148, key=23044, x6=" \x0C\x11\x00\x00\x00"
-data_4C1CFB40:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFB40, 0x1CFB4C
+	REC_func_4C09CCB5_Table_p0	key=7936, x6=" D\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_85:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF384, key=22790, x6=" $\x10\x00\x00\x00"
-data_4C1CFB58:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFB58, 0x1CFB64
-data_4C1CFB64:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFB64, 0x1CFB70
+	REC_func_4C09CCB5_Table_p0	key=7940, x6=" E\x1A\x00\x00\x00"
 func_4C09CCB5_Table_p0_86:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=23559, x6=" \x04\x12\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=8448, x6=" \x00i\x00\x00\x00"
 func_4C09CCB5_Table_p0_87:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=23299, x6="  \x12\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=8960, x6=" @\x19\x00\x00\x00"
 func_4C09CCB5_Table_p0_88:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF2C4, key=23556, x6=" \x10\x12\x00\x00\x00"
-data_4C1CFB94:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFB94, 0x1CFBA0
+	REC_func_4C09CCB5_Table_p0	key=8964, x6=" P\x19\x00\x00\x00"
 func_4C09CCB5_Table_p0_89:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF2A0, key=23558, x6=" (\x12\x00\x00\x00"
-data_4C1CFBAC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFBAC, 0x1CFBB8
-data_4C1CFBB8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFBB8, 0x1CFBC4
+	REC_func_4C09CCB5_Table_p0	key=9472, x6=" \x00k\x00\x00\x00"
 func_4C09CCB5_Table_p0_90:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21760, x6=" \x10\x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9216, x6=" \x00j\x00\x00\x00"
 func_4C09CCB5_Table_p0_91:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21504, x6=" \x00\x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9728, x6=" \x00h\x00\x00\x00"
 func_4C09CCB5_Table_p0_92:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22020, x6="  \x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9730, x6=" @k\x00\x00\x00"
 func_4C09CCB5_Table_p0_93:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22274, x6=" @\x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9731, x6=" @i\x00\x00\x00"
 func_4C09CCB5_Table_p0_94:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22272, x6=" @\x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=8704, x6=" @\x18\x00\x00\x00"
 func_4C09CCB5_Table_p0_95:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22275, x6=" H\x13\x00\x00\x00"
-data_4C1CFC0C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFC0C, 0x1CFC18
+	REC_func_4C09CCB5_Table_p0	key=9732, x6=" \x10\x0F\x00\x00\x00"
 func_4C09CCB5_Table_p0_96:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22276, x6=" P\x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9729, x6=" \x00\x0F\x00\x00\x00"
 func_4C09CCB5_Table_p0_97:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22018, x6=" \x00\x14\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9984, x6=" \x00l\x00\x00\x00"
 func_4C09CCB5_Table_p0_98:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=22016, x6=" \x00\x14\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=9985, x6=" \x10l\x00\x00\x00"
 func_4C09CCB5_Table_p0_99:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20480, x6=" \x00\x15\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3840, x6=" \x00r\x00\x00\x00"
 func_4C09CCB5_Table_p0_100:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20736, x6=" \x10\x15\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3841, x6=" \x00r\x00\x00\x00"
 func_4C09CCB5_Table_p0_101:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20992, x6=" @\x15\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3332, x6="  p\x00\x00\x00"
 func_4C09CCB5_Table_p0_102:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20481, x6=" \x00\x17\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3587, x6="  p\x00\x00\x00"
 func_4C09CCB5_Table_p0_103:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20996, x6=" H\x15\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3591, x6="  p\x00\x00\x00"
 func_4C09CCB5_Table_p0_104:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20993, x6="$\x08\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3334, x6=" (p\x00\x00\x00"
 func_4C09CCB5_Table_p0_105:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20994, x6="$(\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=3333, x6=" 8p\x00\x00\x00"
 func_4C09CCB5_Table_p0_106:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20995, x6="$ \x00\x00\x00\x00"
-data_4C1CFC9C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFC9C, 0x1CFCA8
+	REC_func_4C09CCB5_Table_p0	key=3335, x6=" 0p\x00\x00\x00"
 func_4C09CCB5_Table_p0_107:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20998, x6="$`\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_94, key=31492, x6=" 0t\x00\x00\x00"
 func_4C09CCB5_Table_p0_108:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20999, x6="$P\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=32256, x6=" \x00/\x00\x00\x00"
 func_4C09CCB5_Table_p0_109:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21254, x6="$X\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=32000, x6=" \x10q\x00\x00\x00"
 func_4C09CCB5_Table_p0_110:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21255, x6="$@\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=32257, x6="  q\x00\x00\x00"
 func_4C09CCB5_Table_p0_111:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20742, x6="$,\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31232, x6=" \x00q\x00\x00\x00"
 func_4C09CCB5_Table_p0_112:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20743, x6="$.\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31233, x6=" \x00s\x00\x00\x00"
 func_4C09CCB5_Table_p0_113:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20482, x6="$\x00\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31491, x6=" \x00t\x00\x00\x00"
 func_4C09CCB5_Table_p0_114:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20483, x6="$\x08\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31234, x6=" \x00u\x00\x00\x00"
 func_4C09CCB5_Table_p0_115:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20484, x6="$ \x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31744, x6=" \x00v\x00\x00\x00"
 func_4C09CCB5_Table_p0_116:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF804, key=20485, x6="$0\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31235, x6=" \x00w\x00\x00\x00"
 func_4C09CCB5_Table_p0_117:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF7EC, key=20486, x6="$`\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=32513, x6=" \x007\x00\x00\x00"
 func_4C09CCB5_Table_p0_118:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF7F8, key=20487, x6="$H\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=32514, x6=" \x007\x00\x00\x00"
 func_4C09CCB5_Table_p0_119:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21252, x6="$X\x08\x00\x00\x00"
-data_4C1CFD44:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFD44, 0x1CFD50
+	REC_func_4C09CCB5_Table_p0	key=32512, x6=" \x007\x00\x00\x00"
 func_4C09CCB5_Table_p0_120:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20740, x6="$,\x08\x00\x00\x00"
-data_4C1CFD5C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFD5C, 0x1CFD68
-data_4C1CFD68:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFD68, 0x1CFD74
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_52, key=24580, x6=" \x04(\x00\x00\x00"
 func_4C09CCB5_Table_p0_121:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12291, x6=" \x048\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=24576, x6=" \x00(\x00\x00\x00"
 func_4C09CCB5_Table_p0_122:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12288, x6=" \x008\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=24577, x6=" \x10(\x00\x00\x00"
 func_4C09CCB5_Table_p0_123:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12292, x6=" \x108\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=24578, x6=" \x00n\x00\x00\x00"
 func_4C09CCB5_Table_p0_124:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12294, x6="  8\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=24834, x6=" \x00)\x00\x00\x00"
 func_4C09CCB5_Table_p0_125:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12290, x6=" \x088\x00\x00\x00"
-data_4C1CFDB0:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFDB0, 0x1CFDC8
+	REC_func_4C09CCB5_Table_p0	key=24832, x6=" \x00*\x00\x00\x00"
 func_4C09CCB5_Table_p0_126:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14851, x6=" d8\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25088, x6=" \x00+\x00\x00\x00"
 func_4C09CCB5_Table_p0_127:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF3A8, key=12800, x6=" \x00;\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25603, x6=" \x100\x00\x00\x00"
 func_4C09CCB5_Table_p0_128:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12801, x6=" \x10;\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_49, key=25860, x6=" \x180\x00\x00\x00"
 func_4C09CCB5_Table_p0_129:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12546, x6=" D8\x00\x00\x00"
-data_4C1CFDF8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFDF8, 0x1CFE04
+	REC_func_4C09CCB5_Table_p0	key=25600, x6=" \x000\x00\x00\x00"
 func_4C09CCB5_Table_p0_130:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12544, x6=" @8\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_44, key=25604, x6=" \x080\x00\x00\x00"
 func_4C09CCB5_Table_p0_131:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF300, key=13056, x6=" 08\x00\x00\x00"
-data_4C1CFE1C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFE1C, 0x1CFE28
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_46, key=26116, x6="  0\x00\x00\x00"
 func_4C09CCB5_Table_p0_132:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF318, key=13568, x6=" \x109\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26117, x6=" (0\x00\x00\x00"
 func_4C09CCB5_Table_p0_133:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF36C, key=13569, x6=" \x189\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26118, x6=" 00\x00\x00\x00"
 func_4C09CCB5_Table_p0_134:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=13315, x6="  ;\x00\x00\x00"
-data_4C1CFE4C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFE4C, 0x1CFE58
+	REC_func_4C09CCB5_Table_p0	key=26119, x6=" 80\x00\x00\x00"
 func_4C09CCB5_Table_p0_135:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=13825, x6=" \x00<\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25856, x6=" \x001\x00\x00\x00"
 func_4C09CCB5_Table_p0_136:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=13828, x6=" @<\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25601, x6=" \x1C0\x00\x00\x00"
 func_4C09CCB5_Table_p0_137:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14081, x6="  :\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25858, x6=" \x081\x00\x00\x00"
 func_4C09CCB5_Table_p0_138:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF468, key=14080, x6=" \x00:\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26112, x6=" @0\x00\x00\x00"
 func_4C09CCB5_Table_p0_139:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14336, x6=" \x00=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25089, x6=" 90\x00\x00\x00"
 func_4C09CCB5_Table_p0_140:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14596, x6=" \x00=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25602, x6=" \x00,\x00\x00\x00"
 func_4C09CCB5_Table_p0_141:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14592, x6=" \x00=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25344, x6=" \x00-\x00\x00\x00"
 func_4C09CCB5_Table_p0_142:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14340, x6=" \x08=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26368, x6=" \x002\x00\x00\x00"
 func_4C09CCB5_Table_p0_143:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14337, x6=" @=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15623, x6=" \x002\x00\x00\x00"
 func_4C09CCB5_Table_p0_144:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14338, x6=" Q;\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26369, x6=" \x003\x00\x00\x00"
 func_4C09CCB5_Table_p0_145:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15104, x6=" H=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26370, x6=" H2\x00\x00\x00"
 func_4C09CCB5_Table_p0_146:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15105, x6=" L=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26627, x6=" \x014\x00\x00\x00"
 func_4C09CCB5_Table_p0_147:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14593, x6=" P8\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26631, x6=" \x004\x00\x00\x00"
 func_4C09CCB5_Table_p0_148:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15108, x6=" T8\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26624, x6=" \x084\x00\x00\x00"
 func_4C09CCB5_Table_p0_149:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF930, key=14342, x6=" X8\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_99, key=26628, x6=" \x0C4\x00\x00\x00"
 func_4C09CCB5_Table_p0_150:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF918, key=14341, x6=" 0=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26881, x6=" \x104\x00\x00\x00"
 func_4C09CCB5_Table_p0_151:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF93C, key=14343, x6=" \x18=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26626, x6="  4\x00\x00\x00"
 func_4C09CCB5_Table_p0_152:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15106, x6=" P=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26630, x6=" $4\x00\x00\x00"
 func_4C09CCB5_Table_p0_153:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14852, x6=" `=\x00\x00\x00"
-data_4C1CFF3C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFF3C, 0x1CFF48
+	REC_func_4C09CCB5_Table_p0	key=26880, x6=" @4\x00\x00\x00"
 func_4C09CCB5_Table_p0_154:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF99C, key=14853, x6=" a=\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28160, x6=" @4\x00\x00\x00"
 func_4C09CCB5_Table_p0_155:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF960, key=14597, x6=" P;\x00\x00\x00"
-data_4C1CFF60:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFF60, 0x1CFF6C
+	REC_func_4C09CCB5_Table_p0	key=28162, x6="  5\x00\x00\x00"
 func_4C09CCB5_Table_p0_156:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14339, x6="  =\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26887, x6=" $5\x00\x00\x00"
 func_4C09CCB5_Table_p0_157:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16131, x6=" \x00?\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_28, key=26885, x6=" )5\x00\x00\x00"
 func_4C09CCB5_Table_p0_158:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16128, x6=" \x00?\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26886, x6=" (5\x00\x00\x00"
 func_4C09CCB5_Table_p0_159:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF75C, key=15360, x6=" \x00>\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26883, x6=" !5\x00\x00\x00"
 func_4C09CCB5_Table_p0_160:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15616, x6=" \x00>\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_32, key=27143, x6=" *5\x00\x00\x00"
 func_4C09CCB5_Table_p0_161:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15872, x6=" \x00>\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_30, key=27396, x6=" &5\x00\x00\x00"
 func_4C09CCB5_Table_p0_162:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15876, x6=" \x08>\x00\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1CFFC0, 0x1CFFD8
-data_4C1CFFD8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFFD8, 0x1CFFE4
+	REC_func_4C09CCB5_Table_p0	key=27904, x6=" \x005\x00\x00\x00"
 func_4C09CCB5_Table_p0_163:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27399, x6=" \x10?\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27906, x6=" \x085\x00\x00\x00"
 func_4C09CCB5_Table_p0_164:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF9A8, key=16133, x6="  >\x00\x00\x00"
-data_4C1CFFFC:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1CFFFC, 0x1D0008
-data_4C1D0008:
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0008, 0x1D002C
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_54, key=27908, x6=" P5\x00\x00\x00"
 func_4C09CCB5_Table_p0_165:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19456, x6=" \x00@\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27907, x6=" R5\x00\x00\x00"
 func_4C09CCB5_Table_p0_166:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF7D4, key=19717, x6=" \x04A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_55, key=27909, x6=" Q5\x00\x00\x00"
 func_4C09CCB5_Table_p0_167:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19714, x6=" \x00A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27910, x6=" @5\x00\x00\x00"
 func_4C09CCB5_Table_p0_168:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF618, key=19712, x6=" \x08A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27911, x6=" H5\x00\x00\x00"
 func_4C09CCB5_Table_p0_169:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19713, x6=" \x18A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28161, x6=" L5\x00\x00\x00"
 func_4C09CCB5_Table_p0_170:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19715, x6=" 0A\x00\x00\x00"
-data_4C1D0074:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0074, 0x1D0080
+	REC_func_4C09CCB5_Table_p0	key=28163, x6=" A5\x00\x00\x00"
 func_4C09CCB5_Table_p0_171:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19716, x6=" 8A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_56, key=28164, x6=" I5\x00\x00\x00"
 func_4C09CCB5_Table_p0_172:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF78C, key=19973, x6=" \x14B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28165, x6=" B5\x00\x00\x00"
 func_4C09CCB5_Table_p0_173:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19971, x6=" \x00B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28166, x6=" D5\x00\x00\x00"
 func_4C09CCB5_Table_p0_174:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20227, x6=" \x00B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_92, key=32518, x6=" M5\x00\x00\x00"
 func_4C09CCB5_Table_p0_175:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19972, x6=" \x00B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27392, x6=" \x006\x00\x00\x00"
 func_4C09CCB5_Table_p0_176:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19969, x6=" \x10B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22528, x6=" \x00\x11\x00\x00\x00"
 func_4C09CCB5_Table_p0_177:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19968, x6=" \x10B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22532, x6=" \x04\x11\x00\x00\x00"
 func_4C09CCB5_Table_p0_178:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20224, x6=" 0B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22784, x6=" \x00\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_179:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF798, key=20230, x6=" 4B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09A4F0_entry_L65_Records+17136, key=22788, x6=" \x04\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_180:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF780, key=20229, x6=" 8B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23808, x6=" \x10\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_181:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20225, x6=" \x00C\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_15, key=23812, x6=" \x14\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_182:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19970, x6=" PB\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23296, x6=" \x08\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_183:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20226, x6=" PC\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_0, key=23300, x6=" \x0C\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_184:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=20228, x6=" XC\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23298, x6=" \x18\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_185:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17408, x6=" \x00G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23302, x6=" \x1C\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_186:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18176, x6=" \x00G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23040, x6=" \x08\x11\x00\x00\x00"
 func_4C09CCB5_Table_p0_187:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17410, x6=" \x08G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09A4F0_entry_L65_Records+17148, key=23044, x6=" \x0C\x11\x00\x00\x00"
 func_4C09CCB5_Table_p0_188:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17411, x6=" \x10G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22786, x6="  \x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_189:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17409, x6=" \x18G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_23, key=22790, x6=" $\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_190:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17664, x6="  G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23554, x6=" \x00\x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_191:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17665, x6=" 0G\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23552, x6=" \x00\x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_192:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16896, x6=" \x00D\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23559, x6=" \x04\x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_193:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF51C, key=17152, x6=" \x00E\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23299, x6="  \x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_194:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=17920, x6=" \x00F\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_7, key=23556, x6=" \x10\x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_195:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21248, x6=" \x00\x16\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=23557, x6=" \x14\x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_196:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=21249, x6=" \x08\x16\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_4, key=23558, x6=" (\x12\x00\x00\x00"
 func_4C09CCB5_Table_p0_197:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18688, x6=" \x00m\x00\x00\x00"
-data_4C1D01C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D01C4, 0x1D01D0
+	REC_func_4C09CCB5_Table_p0	key=24065, x6=" @\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_198:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF42C, key=16384, x6=" \x00H\x00\x00\x00"
-data_4C1D01DC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D01DC, 0x1D01E8
-data_4C1D01E8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D01E8, 0x1D01F4
+	REC_func_4C09CCB5_Table_p0	key=24069, x6=" D\x10\x00\x00\x00"
 func_4C09CCB5_Table_p0_199:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16640, x6=" \x00I\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=21760, x6=" \x10\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_200:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16642, x6=" \x00I\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=21504, x6=" \x00\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_201:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16641, x6="  I\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22020, x6="  \x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_202:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16644, x6=" \x10I\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22274, x6=" @\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_203:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16385, x6=" 0I\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22272, x6=" @\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_204:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=16387, x6=" PI\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22275, x6=" H\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_205:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF7A4, key=19205, x6=" @I\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22277, x6=" P\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_206:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19204, x6=" @I\x00\x00\x00"
-data_4C1D0254:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0254, 0x1D0260
+	REC_func_4C09CCB5_Table_p0	key=22276, x6=" P\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_207:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18432, x6=" \x00K\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22018, x6=" \x00\x14\x00\x00\x00"
 func_4C09CCB5_Table_p0_208:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18433, x6=" \x08K\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22016, x6=" \x00\x14\x00\x00\x00"
 func_4C09CCB5_Table_p0_209:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18436, x6="  O\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D0284, 0x1D0290
+	REC_func_4C09CCB5_Table_p0	key=20480, x6=" \x00\x15\x00\x00\x00"
 func_4C09CCB5_Table_p0_210:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18944, x6=" \x00J\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20736, x6=" \x10\x15\x00\x00\x00"
 func_4C09CCB5_Table_p0_211:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18946, x6=" \x00J\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20992, x6=" @\x15\x00\x00\x00"
 func_4C09CCB5_Table_p0_212:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18945, x6=" \x00O\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20481, x6=" \x00\x17\x00\x00\x00"
 func_4C09CCB5_Table_p0_213:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18434, x6=" \x00L\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20996, x6=" H\x15\x00\x00\x00"
 func_4C09CCB5_Table_p0_214:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28416, x6=" \x00N\x00\x00\x00"
-data_4C1D02CC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D02CC, 0x1D02D8
+	REC_func_4C09CCB5_Table_p0	key=20993, x6="$\x08\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_215:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF540, key=28420, x6=" 0N\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20994, x6="$(\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_216:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19200, x6=" \x00M\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20995, x6="$ \x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_217:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=19201, x6=" @K\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20997, x6="$8\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_218:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18690, x6=" HK\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20998, x6="$`\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_219:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11008, x6=" \x00 \x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20999, x6="$P\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_220:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11009, x6=" \x10 \x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=21254, x6="$X\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_221:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10240, x6=" \x00!\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=21255, x6="$@\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_222:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11264, x6=" \x00!\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20742, x6="$,\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_223:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFB40, key=10759, x6="  !\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20743, x6="$.\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_224:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10241, x6=" \x10!\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20482, x6="$\x00\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_225:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10244, x6=" 0!\x00\x00\x00"
-data_4C1D035C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D035C, 0x1D0368
+	REC_func_4C09CCB5_Table_p0	key=20483, x6="$\x08\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_226:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10242, x6=" \x00#\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20484, x6="$ \x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_227:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10752, x6=" \x00\"\x00\x00\x00"
-data_4C1D0380:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0380, 0x1D038C
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_119, key=20485, x6="$0\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_228:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10496, x6=" \x00$\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_117, key=20486, x6="$`\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_229:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10497, x6=" \x00%\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_118, key=20487, x6="$H\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_230:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11777, x6="  '\x00\x00\x00"
-data_4C1D03B0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D03B0, 0x1D03BC
+	REC_func_4C09CCB5_Table_p0	key=21252, x6="$X\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_231:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12035, x6=" \x10&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=21253, x6="$@\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_232:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11524, x6=" \x08'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20740, x6="$,\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_233:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11520, x6=" \x08'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20741, x6="$^\x08\x00\x00\x00"
 func_4C09CCB5_Table_p0_234:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10753, x6=" \x08&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12293, x6=" \x048\x00\x00\x00"
 func_4C09CCB5_Table_p0_235:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFAE0, key=11781, x6=" \x00'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12291, x6=" \x048\x00\x00\x00"
 func_4C09CCB5_Table_p0_236:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11782, x6=" \x00'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12288, x6=" \x008\x00\x00\x00"
 func_4C09CCB5_Table_p0_237:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11776, x6=" \x00&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12292, x6=" \x108\x00\x00\x00"
 func_4C09CCB5_Table_p0_238:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11780, x6=" \x00&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12294, x6="  8\x00\x00\x00"
 func_4C09CCB5_Table_p0_239:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFB58, key=11527, x6=" \x0C&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12290, x6=" \x088\x00\x00\x00"
 func_4C09CCB5_Table_p0_240:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12036, x6=" \x18&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_150, key=14854, x6=" `8\x00\x00\x00"
 func_4C09CCB5_Table_p0_241:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11015, x6=" X&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14855, x6=" h8\x00\x00\x00"
 func_4C09CCB5_Table_p0_242:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFB10, key=11271, x6=" (&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14851, x6=" d8\x00\x00\x00"
 func_4C09CCB5_Table_p0_243:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFAF8, key=11269, x6=" \x10'\x00\x00\x00"
-data_4C1D0458:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0458, 0x1D0464
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_26, key=12800, x6=" \x00;\x00\x00\x00"
 func_4C09CCB5_Table_p0_244:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11268, x6=" 8'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12801, x6=" \x10;\x00\x00\x00"
 func_4C09CCB5_Table_p0_245:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11010, x6=" 0'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12546, x6=" D8\x00\x00\x00"
 func_4C09CCB5_Table_p0_246:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFB64, key=11525, x6=" 0&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12545, x6=" @8\x00\x00\x00"
 func_4C09CCB5_Table_p0_247:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11526, x6=" 1&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12544, x6=" @8\x00\x00\x00"
 func_4C09CCB5_Table_p0_248:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=12039, x6=" 4'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_12, key=13056, x6=" 08\x00\x00\x00"
 func_4C09CCB5_Table_p0_249:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11265, x6=" @&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=13312, x6=" \x009\x00\x00\x00"
 func_4C09CCB5_Table_p0_250:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFBAC, key=12038, x6=" H&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_14, key=13568, x6=" \x109\x00\x00\x00"
 func_4C09CCB5_Table_p0_251:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11523, x6=" J&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_21, key=13569, x6=" \x189\x00\x00\x00"
 func_4C09CCB5_Table_p0_252:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11266, x6=" P&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=13315, x6="  ;\x00\x00\x00"
 func_4C09CCB5_Table_p0_253:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11267, x6=" `&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=13824, x6=" \x10<\x00\x00\x00"
 func_4C09CCB5_Table_p0_254:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11270, x6=" \\&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=13825, x6=" \x00<\x00\x00\x00"
 func_4C09CCB5_Table_p0_255:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=10500, x6=" @x\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=13828, x6=" @<\x00\x00\x00"
 func_4C09CCB5_Table_p0_256:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=26115, x6=" P0\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14081, x6="  :\x00\x00\x00"
 func_4C09CCB5_Table_p0_257:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25606, x6=" X0\x00\x00\x00"
-data_4C1D050C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D050C, 0x1D0518
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_42, key=14080, x6=" \x00:\x00\x00\x00"
 func_4C09CCB5_Table_p0_258:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF48C, key=25348, x6=" `0\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14336, x6=" \x00=\x00\x00\x00"
 func_4C09CCB5_Table_p0_259:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27398, x6=" \x102\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14596, x6=" \x00=\x00\x00\x00"
 func_4C09CCB5_Table_p0_260:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=4612, x6=" P\x06\x00\x00\x00"
-data_4C1D053C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D053C, 0x1D0548
-data_4C1D0548:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0548, 0x1D0554
+	REC_func_4C09CCB5_Table_p0	key=14592, x6=" \x00=\x00\x00\x00"
 func_4C09CCB5_Table_p0_261:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF8C4, key=13829, x6=" X<\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14340, x6=" \x08=\x00\x00\x00"
 func_4C09CCB5_Table_p0_262:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF4C8, key=26372, x6="  3\x00\x00\x00"
-data_4C1D056C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D056C, 0x1D0578
+	REC_func_4C09CCB5_Table_p0	key=14337, x6=" @=\x00\x00\x00"
 func_4C09CCB5_Table_p0_263:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF3CC, key=27652, x6="  X\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14338, x6=" Q;\x00\x00\x00"
 func_4C09CCB5_Table_p0_264:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25347, x6=" P-\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15104, x6=" H=\x00\x00\x00"
 func_4C09CCB5_Table_p0_265:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF738, key=26375, x6=" P3\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15105, x6=" L=\x00\x00\x00"
 func_4C09CCB5_Table_p0_266:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25862, x6=" H0\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14593, x6=" P8\x00\x00\x00"
 func_4C09CCB5_Table_p0_267:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25607, x6=" P1\x00\x00\x00"
-data_4C1D05B4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D05B4, 0x1D05C0
-data_4C1D05C0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D05C0, 0x1D05CC
+	REC_func_4C09CCB5_Table_p0	key=15108, x6=" T8\x00\x00\x00"
 func_4C09CCB5_Table_p0_268:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25095, x6=" \x184\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_144, key=14342, x6=" X8\x00\x00\x00"
 func_4C09CCB5_Table_p0_269:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=13830, x6=" P<\x00\x00\x00"
-data_4C1D05E4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D05E4, 0x1D05F0
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_142, key=14341, x6=" 0=\x00\x00\x00"
 func_4C09CCB5_Table_p0_270:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0380, key=5, x6=" P\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_145, key=14343, x6=" \x18=\x00\x00\x00"
 func_4C09CCB5_Table_p0_271:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D03B0, key=7, x6=" Q\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15106, x6=" P=\x00\x00\x00"
 func_4C09CCB5_Table_p0_272:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=6, x6=" R\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14852, x6=" `=\x00\x00\x00"
 func_4C09CCB5_Table_p0_273:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFE4C, key=1797, x6=" P\x01\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14848, x6=" `=\x00\x00\x00"
 func_4C09CCB5_Table_p0_274:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1796, x6=" @\x01\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_153, key=14853, x6=" a=\x00\x00\x00"
 func_4C09CCB5_Table_p0_275:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=772, x6=" @\x02\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_148, key=14597, x6=" P;\x00\x00\x00"
 func_4C09CCB5_Table_p0_276:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1286, x6=" @\x05\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14598, x6=" Q;\x00\x00\x00"
 func_4C09CCB5_Table_p0_277:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFE1C, key=1285, x6=" A\x05\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14339, x6="  =\x00\x00\x00"
 func_4C09CCB5_Table_p0_278:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=1284, x6=" B\x05\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16131, x6=" \x00?\x00\x00\x00"
 func_4C09CCB5_Table_p0_279:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFDF8, key=518, x6=" X\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16128, x6=" \x00?\x00\x00\x00"
 func_4C09CCB5_Table_p0_280:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29699, x6=" \x00X\x00\x00\x00"
-data_4C1D0674:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0674, 0x1D0680
-data_4C1D0680:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0680, 0x1D068C
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_105, key=15360, x6=" \x00>\x00\x00\x00"
 func_4C09CCB5_Table_p0_281:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFFD8, key=27648, x6=" \x10X\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15616, x6=" \x00>\x00\x00\x00"
 func_4C09CCB5_Table_p0_282:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29698, x6=" 0X\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15872, x6=" \x00>\x00\x00\x00"
 func_4C09CCB5_Table_p0_283:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31749, x6=" @X\x00\x00\x00"
-data_4C1D06B0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D06B0, 0x1D06BC
-data_4C1D06BC:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D06BC, 0x1D06C8
+	REC_func_4C09CCB5_Table_p0	key=15876, x6=" \x08>\x00\x00\x00"
 func_4C09CCB5_Table_p0_284:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28679, x6=" \x14Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15366, x6=" \x10>\x00\x00\x00"
 func_4C09CCB5_Table_p0_285:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25859, x6=" \x106\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15367, x6=" \x0C?\x00\x00\x00"
 func_4C09CCB5_Table_p0_286:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF3B4, key=26884, x6=" P4\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15621, x6=" \x08?\x00\x00\x00"
 func_4C09CCB5_Table_p0_287:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF4EC, key=26374, x6=" \x18Y\x00\x00\x00"
-data_4C1D06F8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D06F8, 0x1D0704
+	REC_func_4C09CCB5_Table_p0	key=27399, x6=" \x10?\x00\x00\x00"
 func_4C09CCB5_Table_p0_288:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFA08, key=15877, x6="  Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_154, key=16133, x6="  >\x00\x00\x00"
 func_4C09CCB5_Table_p0_289:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF420, key=27142, x6="  Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_151, key=14599, x6=" 8>\x00\x00\x00"
 func_4C09CCB5_Table_p0_290:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=14594, x6="  Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_169, key=16134, x6=" 0>\x00\x00\x00"
 func_4C09CCB5_Table_p0_291:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25863, x6=" \"Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15110, x6=" PZ\x00\x00\x00"
 func_4C09CCB5_Table_p0_292:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27654, x6=" $Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15111, x6=" QZ\x00\x00\x00"
 func_4C09CCB5_Table_p0_293:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28678, x6=" &Y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19456, x6=" \x00@\x00\x00\x00"
 func_4C09CCB5_Table_p0_294:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=25091, x6=" (Y\x00\x00\x00"
-data_4C1D0758:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0758, 0x1D0764
-data_4C1D0764:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0764, 0x1D0770
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_115, key=19717, x6=" \x04A\x00\x00\x00"
 func_4C09CCB5_Table_p0_295:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30720, x6=" \x00\\\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19714, x6=" \x00A\x00\x00\x00"
 func_4C09CCB5_Table_p0_296:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28422, x6=" \x10\\\x00\x00\x00"
-data_4C1D0788:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0788, 0x1D0794
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_78, key=19712, x6=" \x08A\x00\x00\x00"
 func_4C09CCB5_Table_p0_297:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF564, key=29190, x6=" @]\x00\x00\x00"
-data_4C1D07A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D07A0, 0x1D07AC
+	REC_func_4C09CCB5_Table_p0	key=19713, x6=" \x18A\x00\x00\x00"
 func_4C09CCB5_Table_p0_298:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15874, x6=" \x00_\x00\x00\x00"
-data_4C1D07B8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D07B8, 0x1D07C4
+	REC_func_4C09CCB5_Table_p0	key=19715, x6=" 0A\x00\x00\x00"
 func_4C09CCB5_Table_p0_299:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31751, x6=" \x10_\x00\x00\x00"
-data_4C1D07D0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D07D0, 0x1D07DC
-data_4C1D07DC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D07DC, 0x1D07E8
+	REC_func_4C09CCB5_Table_p0	key=19718, x6=" 4A\x00\x00\x00"
 func_4C09CCB5_Table_p0_300:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27655, x6="  f\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19716, x6=" 8A\x00\x00\x00"
 func_4C09CCB5_Table_p0_301:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30721, x6=" \x00g\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_109, key=19973, x6=" \x14B\x00\x00\x00"
 func_4C09CCB5_Table_p0_302:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF570, key=29191, x6="  g\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19971, x6=" \x00B\x00\x00\x00"
 func_4C09CCB5_Table_p0_303:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29952, x6=" \x00P\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20227, x6=" \x00B\x00\x00\x00"
 func_4C09CCB5_Table_p0_304:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30976, x6=" \x00P\x00\x00\x00"
-data_4C1D0824:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0824, 0x1D0830
-data_4C1D0830:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0830, 0x1D083C
+	REC_func_4C09CCB5_Table_p0	key=19972, x6=" \x00B\x00\x00\x00"
 func_4C09CCB5_Table_p0_305:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30467, x6=" \x0CP\x00\x00\x00"
-data_4C1D0848:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0848, 0x1D0854
+	REC_func_4C09CCB5_Table_p0	key=19969, x6=" \x10B\x00\x00\x00"
 func_4C09CCB5_Table_p0_306:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF654, key=30727, x6=" \x14P\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19968, x6=" \x10B\x00\x00\x00"
 func_4C09CCB5_Table_p0_307:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30470, x6=" \x18P\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20224, x6=" 0B\x00\x00\x00"
 func_4C09CCB5_Table_p0_308:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28934, x6="  P\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_110, key=20230, x6=" 4B\x00\x00\x00"
 func_4C09CCB5_Table_p0_309:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30214, x6=" 0P\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_108, key=20229, x6=" 8B\x00\x00\x00"
 func_4C09CCB5_Table_p0_310:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0458, key=24064, x6=" @P\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20225, x6=" \x00C\x00\x00\x00"
 func_4C09CCB5_Table_p0_311:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFD68, key=24320, x6=" @P\x00\x00\x00"
-data_4C1D089C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D089C, 0x1D08A8
+	REC_func_4C09CCB5_Table_p0	key=19970, x6=" PB\x00\x00\x00"
 func_4C09CCB5_Table_p0_312:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF5C4, key=29956, x6=" HP\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=20226, x6=" PC\x00\x00\x00"
 func_4C09CCB5_Table_p0_313:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31239, x6=" `P\x00\x00\x00"
-data_4C1D08C0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D08C0, 0x1D08CC
+	REC_func_4C09CCB5_Table_p0	key=20228, x6=" XC\x00\x00\x00"
 func_4C09CCB5_Table_p0_314:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30208, x6=" \x00Q\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=17408, x6=" \x00G\x00\x00\x00"
 func_4C09CCB5_Table_p0_315:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32006, x6=" \x04Q\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18176, x6=" \x00G\x00\x00\x00"
 func_4C09CCB5_Table_p0_316:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29955, x6=" \x08Q\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=17410, x6=" \x08G\x00\x00\x00"
 func_4C09CCB5_Table_p0_317:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF60C, key=30468, x6=" \x08Q\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=17411, x6=" \x10G\x00\x00\x00"
 func_4C09CCB5_Table_p0_318:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30726, x6=" \x0CQ\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=17409, x6=" \x18G\x00\x00\x00"
 func_4C09CCB5_Table_p0_319:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF600, key=30215, x6=" \x10Q\x00\x00\x00"
-data_4C1D0914:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0914, 0x1D0920
+	REC_func_4C09CCB5_Table_p0	key=17664, x6="  G\x00\x00\x00"
 func_4C09CCB5_Table_p0_320:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32007, x6=" 0Q\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=17665, x6=" 0G\x00\x00\x00"
 func_4C09CCB5_Table_p0_321:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30983, x6=" hQ\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16896, x6=" \x00D\x00\x00\x00"
 func_4C09CCB5_Table_p0_322:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF678, key=31236, x6=" hQ\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_57, key=17152, x6=" \x00E\x00\x00\x00"
 func_4C09CCB5_Table_p0_323:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF54C, key=28676, x6=" `Q\x00\x00\x00"
-data_4C1D0950:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0950, 0x1D095C
-data_4C1D095C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D095C, 0x1D0968
+	REC_func_4C09CCB5_Table_p0	key=17920, x6=" \x00F\x00\x00\x00"
 func_4C09CCB5_Table_p0_324:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D07D0, key=28167, x6=" xQ\x00\x00\x00"
-data_4C1D0974:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0974, 0x1D0980
+	REC_func_4C09CCB5_Table_p0	key=21248, x6=" \x00\x16\x00\x00\x00"
 func_4C09CCB5_Table_p0_325:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF57C, key=30980, x6=" \x10Z\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=21249, x6=" \x08\x16\x00\x00\x00"
 func_4C09CCB5_Table_p0_326:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31750, x6="  Z\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18688, x6=" \x00m\x00\x00\x00"
 func_4C09CCB5_Table_p0_327:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31493, x6=" 0Z\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18689, x6=" \x00o\x00\x00\x00"
 func_4C09CCB5_Table_p0_328:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31494, x6=" 8Z\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_37, key=16384, x6=" \x00H\x00\x00\x00"
 func_4C09CCB5_Table_p0_329:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15364, x6=" @Z\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16645, x6=" \x04I\x00\x00\x00"
 func_4C09CCB5_Table_p0_330:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=18435, x6=" \x00R\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16646, x6=" \x14I\x00\x00\x00"
 func_4C09CCB5_Table_p0_331:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28675, x6=" \x00R\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16640, x6=" \x00I\x00\x00\x00"
 func_4C09CCB5_Table_p0_332:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29954, x6=" \x00S\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16642, x6=" \x00I\x00\x00\x00"
 func_4C09CCB5_Table_p0_333:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D01DC, key=28672, x6=" \x00S\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16641, x6="  I\x00\x00\x00"
 func_4C09CCB5_Table_p0_334:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFAA4, key=15365, x6="  S\x00\x00\x00"
-data_4C1D09F8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D09F8, 0x1D0A04
+	REC_func_4C09CCB5_Table_p0	key=16644, x6=" \x10I\x00\x00\x00"
 func_4C09CCB5_Table_p0_335:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30210, x6=" 0S\x00\x00\x00"
-data_4C1D0A10:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0A10, 0x1D0A1C
+	REC_func_4C09CCB5_Table_p0	key=16385, x6=" 0I\x00\x00\x00"
 func_4C09CCB5_Table_p0_336:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=6915, x6=" \x00T\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=16387, x6=" PI\x00\x00\x00"
 func_4C09CCB5_Table_p0_337:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32262, x6="  T\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_111, key=19205, x6=" @I\x00\x00\x00"
 func_4C09CCB5_Table_p0_338:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28935, x6=" (T\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19204, x6=" @I\x00\x00\x00"
 func_4C09CCB5_Table_p0_339:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0974, key=14087, x6=" 0T\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18437, x6=" \x04K\x00\x00\x00"
 func_4C09CCB5_Table_p0_340:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D01C4, key=6662, x6=" 8T\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18432, x6=" \x00K\x00\x00\x00"
 func_4C09CCB5_Table_p0_341:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF594, key=29188, x6=" `T\x00\x00\x00"
-data_4C1D0A64:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0A64, 0x1D0A70
-data_4C1D0A70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0A70, 0x1D0A7C
+	REC_func_4C09CCB5_Table_p0	key=18433, x6=" \x08K\x00\x00\x00"
 func_4C09CCB5_Table_p0_342:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0254, key=30464, x6=" \x00V\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18436, x6="  O\x00\x00\x00"
 func_4C09CCB5_Table_p0_343:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30723, x6=" \x08V\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18438, x6=" 0O\x00\x00\x00"
 func_4C09CCB5_Table_p0_344:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30981, x6="  V\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18944, x6=" \x00J\x00\x00\x00"
 func_4C09CCB5_Table_p0_345:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30466, x6=" @V\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18946, x6=" \x00J\x00\x00\x00"
 func_4C09CCB5_Table_p0_346:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=11778, x6=" \x00W\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18945, x6=" \x00O\x00\x00\x00"
 func_4C09CCB5_Table_p0_347:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF5AC, key=29444, x6="  W\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18434, x6=" \x00L\x00\x00\x00"
 func_4C09CCB5_Table_p0_348:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32263, x6=" 0W\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28416, x6=" \x00N\x00\x00\x00"
 func_4C09CCB5_Table_p0_349:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29446, x6=" @W\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28418, x6="  N\x00\x00\x00"
 func_4C09CCB5_Table_p0_350:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31495, x6=" HW\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_60, key=28420, x6=" 0N\x00\x00\x00"
 func_4C09CCB5_Table_p0_351:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31238, x6=" \x10c\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19200, x6=" \x00M\x00\x00\x00"
 func_4C09CCB5_Table_p0_352:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32005, x6=" LT\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=19201, x6=" @K\x00\x00\x00"
 func_4C09CCB5_Table_p0_353:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF624, key=29702, x6=" \x10g\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=18690, x6=" HK\x00\x00\x00"
 func_4C09CCB5_Table_p0_354:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=15620, x6=" \x10g\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11008, x6=" \x00 \x00\x00\x00"
 func_4C09CCB5_Table_p0_355:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29443, x6=" 0g\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11009, x6=" \x10 \x00\x00\x00"
 func_4C09CCB5_Table_p0_356:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30722, x6=" @2\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10240, x6=" \x00!\x00\x00\x00"
 func_4C09CCB5_Table_p0_357:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF660, key=30724, x6="  a\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11264, x6=" \x00!\x00\x00\x00"
 func_4C09CCB5_Table_p0_358:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32261, x6=" \x10d\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_188, key=10759, x6="  !\x00\x00\x00"
 func_4C09CCB5_Table_p0_359:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=29187, x6=" @d\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10241, x6=" \x10!\x00\x00\x00"
 func_4C09CCB5_Table_p0_360:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D05C0, key=2306, x6=" \x00b\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10244, x6=" 0!\x00\x00\x00"
 func_4C09CCB5_Table_p0_361:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=3590, x6=" \x08b\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10243, x6=" @!\x00\x00\x00"
 func_4C09CCB5_Table_p0_362:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=2308, x6=" \x10b\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10242, x6=" \x00#\x00\x00\x00"
 func_4C09CCB5_Table_p0_363:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=4868, x6="  d\x00\x00\x00"
-data_4C1D0B84:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0B84, 0x1D0B90
+	REC_func_4C09CCB5_Table_p0	key=10752, x6=" \x00\"\x00\x00\x00"
 func_4C09CCB5_Table_p0_364:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31237, x6=" TT\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12032, x6="  \"\x00\x00\x00"
 func_4C09CCB5_Table_p0_365:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF5A0, key=28932, x6=" PT\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10496, x6=" \x00$\x00\x00\x00"
 func_4C09CCB5_Table_p0_366:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32515, x6=" @T\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10497, x6=" \x00%\x00\x00\x00"
 func_4C09CCB5_Table_p0_367:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF6CC, key=32519, x6=" DT\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11777, x6="  '\x00\x00\x00"
 func_4C09CCB5_Table_p0_368:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28930, x6=" AT\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12034, x6=" ('\x00\x00\x00"
 func_4C09CCB5_Table_p0_369:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=28931, x6=" BT\x00\x00\x00"
-data_4C1D0BD8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0BD8, 0x1D0BE4
+	REC_func_4C09CCB5_Table_p0	key=12035, x6=" \x10&\x00\x00\x00"
 func_4C09CCB5_Table_p0_370:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=8196, x6=" @.\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11524, x6=" \x08'\x00\x00\x00"
 func_4C09CCB5_Table_p0_371:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFF3C, key=2821, x6=" @r\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11520, x6=" \x08'\x00\x00\x00"
 func_4C09CCB5_Table_p0_372:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32259, x6=" C5\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10753, x6=" \x08&\x00\x00\x00"
 func_4C09CCB5_Table_p0_373:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF69C, key=32260, x6=" \x10y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_180, key=11781, x6=" \x00'\x00\x00\x00"
 func_4C09CCB5_Table_p0_374:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF6F0, key=32517, x6=" 07\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11782, x6=" \x00'\x00\x00\x00"
 func_4C09CCB5_Table_p0_375:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF6B4, key=32516, x6=" 07\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11776, x6=" \x00&\x00\x00\x00"
 func_4C09CCB5_Table_p0_376:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF684, key=31748, x6=" @v\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11780, x6=" \x00&\x00\x00\x00"
 func_4C09CCB5_Table_p0_377:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30979, x6=" \x00`\x00\x00\x00"
-data_4C1D0C44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0C44, 0x1D0C50
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_190, key=11527, x6=" \x0C&\x00\x00\x00"
 func_4C09CCB5_Table_p0_378:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=27136, x6=" \x00e\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12036, x6=" \x18&\x00\x00\x00"
 func_4C09CCB5_Table_p0_379:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF3E4, key=27140, x6=" \x00e\x00\x00\x00"
-data_4C1D0C68:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0C68, 0x1D0C74
-data_4C1D0C74:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0C74, 0x1D0C80
-data_4C1D0C80:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D0C80, 0x1D0C8C
+	REC_func_4C09CCB5_Table_p0	key=11015, x6=" X&\x00\x00\x00"
 func_4C09CCB5_Table_p0_380:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF6A8, key=32004, x6=" HV\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_184, key=11271, x6=" (&\x00\x00\x00"
 func_4C09CCB5_Table_p0_381:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF588, key=30982, x6=" XQ\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_182, key=11269, x6=" \x10'\x00\x00\x00"
 func_4C09CCB5_Table_p0_382:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=30471, x6=" \x11}\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12037, x6="  &\x00\x00\x00"
 func_4C09CCB5_Table_p0_383:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0074, key=31745, x6=" \x00x\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11268, x6=" 8'\x00\x00\x00"
 func_4C09CCB5_Table_p0_384:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31746, x6=" \x00y\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11010, x6=" 0'\x00\x00\x00"
 func_4C09CCB5_Table_p0_385:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31747, x6=" \x00z\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_191, key=11525, x6=" 0&\x00\x00\x00"
 func_4C09CCB5_Table_p0_386:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32002, x6=" \x00{\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11526, x6=" 1&\x00\x00\x00"
 func_4C09CCB5_Table_p0_387:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31488, x6=" \x00|\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=12039, x6=" 4'\x00\x00\x00"
 func_4C09CCB5_Table_p0_388:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31489, x6=" \x00}\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11265, x6=" @&\x00\x00\x00"
 func_4C09CCB5_Table_p0_389:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32003, x6=" \x00~\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_197, key=12038, x6=" H&\x00\x00\x00"
 func_4C09CCB5_Table_p0_390:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=31490, x6=" \x00\x7F\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11523, x6=" J&\x00\x00\x00"
 func_4C09CCB5_Table_p0_391:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFF60, key=61440, x6="&\x00\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11266, x6=" P&\x00\x00\x00"
 func_4C09CCB5_Table_p0_392:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D07A0, key=62210, x6="&\x00\x01\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11267, x6=" `&\x00\x00\x00"
 func_4C09CCB5_Table_p0_393:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0C80, key=61954, x6="&\x00\x09\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=11270, x6=" \\&\x00\x00\x00"
 func_4C09CCB5_Table_p0_394:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=63234, x6="&\x00\x03\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=10500, x6=" @x\x00\x00\x00"
 func_4C09CCB5_Table_p0_395:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D06B0, key=62208, x6="&\x00\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=26115, x6=" P0\x00\x00\x00"
 func_4C09CCB5_Table_p0_396:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D08C0, key=65024, x6="&\x00\x02\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25606, x6=" X0\x00\x00\x00"
 func_4C09CCB5_Table_p0_397:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=63232, x6="&\x00\x10\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_100, key=26629, x6=" 01\x00\x00\x00"
 func_4C09CCB5_Table_p0_398:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D01E8, key=63488, x6="&\x00\x11\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_45, key=25348, x6=" `0\x00\x00\x00"
 func_4C09CCB5_Table_p0_399:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0A64, key=61952, x6="&\x00\x18\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27398, x6=" \x102\x00\x00\x00"
 func_4C09CCB5_Table_p0_400:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0008, key=62976, x6="&\x00!\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=4612, x6=" P\x06\x00\x00\x00"
 func_4C09CCB5_Table_p0_401:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFDB0, key=61696, x6="&\x00 \x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=22021, x6=" `\x13\x00\x00\x00"
 func_4C09CCB5_Table_p0_402:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D07B8, key=62720, x6="&\x00(\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_48, key=25605, x6=" H1\x00\x00\x00"
 func_4C09CCB5_Table_p0_403:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D07DC, key=62466, x6="&\x00\x19\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_135, key=13829, x6=" X<\x00\x00\x00"
 func_4C09CCB5_Table_p0_404:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFA2C, key=62722, x6="&\x00\x1A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_50, key=26372, x6="  3\x00\x00\x00"
 func_4C09CCB5_Table_p0_405:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0BD8, key=63744, x6="&\x00\x1B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_163, key=15879, x6=" @_\x00\x00\x00"
 func_4C09CCB5_Table_p0_406:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=64000, x6="&\x00\x1D\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_29, key=27652, x6="  X\x00\x00\x00"
 func_4C09CCB5_Table_p0_407:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D05E4, key=64256, x6="&\x00\x1C\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25347, x6=" P-\x00\x00\x00"
 func_4C09CCB5_Table_p0_408:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0680, key=62464, x6="&\x00\x1F\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_102, key=26375, x6=" P3\x00\x00\x00"
 func_4C09CCB5_Table_p0_409:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0C44, key=65280, x6="&\x00\x1F\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25862, x6=" H0\x00\x00\x00"
 func_4C09CCB5_Table_p0_410:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFA68, key=62978, x6="&\x00\x1E\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25607, x6=" P1\x00\x00\x00"
 func_4C09CCB5_Table_p0_411:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF9E4, key=61698, x6="&\x00H\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25861, x6=" @1\x00\x00\x00"
 func_4C09CCB5_Table_p0_412:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF33C, key=64512, x6="&\x004\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25094, x6=" 84\x00\x00\x00"
 func_4C09CCB5_Table_p0_413:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0830, key=64768, x6="&\x008\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25095, x6=" \x184\x00\x00\x00"
 func_4C09CCB5_Table_p0_414:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=32775, x6="\"\x00\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=13830, x6=" P<\x00\x00\x00"
 func_4C09CCB5_Table_p0_415:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D035C, key=33031, x6="\"\x00\x10\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=17414, x6=" PG\x00\x00\x00"
 func_4C09CCB5_Table_p0_416:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF954, key=61446, x6="\x11\x00\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_364, key=5, x6=" P\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_417:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFD5C, key=32768, x6="\x10\x00\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_368, key=7, x6=" Q\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_418:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFC9C, key=33024, x6="\x10\x00\x01\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=6, x6=" R\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_419:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFD44, key=33280, x6="\x10\x00\x02\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_253, key=1797, x6=" P\x01\x00\x00\x00"
 func_4C09CCB5_Table_p0_420:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=33536, x6="\x10\x00\x03\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1796, x6=" @\x01\x00\x00\x00"
 func_4C09CCB5_Table_p0_421:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=33792, x6="\x10\x00\x04\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=772, x6=" @\x02\x00\x00\x00"
 func_4C09CCB5_Table_p0_422:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D053C, key=34048, x6="\x10\x00\x05\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1286, x6=" @\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_423:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFC0C, key=34304, x6="\x10\x00\x06\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_249, key=1285, x6=" A\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_424:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=34560, x6="\x10\x00\x07\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=1284, x6=" B\x05\x00\x00\x00"
 func_4C09CCB5_Table_p0_425:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF27C, key=34816, x6="\x10\x00\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_246, key=518, x6=" X\x00\x00\x00\x00"
 func_4C09CCB5_Table_p0_426:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF2AC, key=35072, x6="\x10\x00\x09\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=29699, x6=" \x00X\x00\x00\x00"
 func_4C09CCB5_Table_p0_427:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF288, key=35328, x6="\x10\x00\n\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_143, key=27650, x6=" \x10X\x00\x00\x00"
 func_4C09CCB5_Table_p0_428:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFB94, key=35584, x6="\x10\x00\x0B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15622, x6=" \x10X\x00\x00\x00"
 func_4C09CCB5_Table_p0_429:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=35840, x6="\x10\x00\x0C\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_286, key=27648, x6=" \x10X\x00\x00\x00"
 func_4C09CCB5_Table_p0_430:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFBB8, key=36096, x6="\x10\x00\x0D\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=29698, x6=" 0X\x00\x00\x00"
 func_4C09CCB5_Table_p0_431:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=36352, x6="\x10\x00\x0E\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31749, x6=" @X\x00\x00\x00"
 func_4C09CCB5_Table_p0_432:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=36608, x6="\x10\x00\x0F\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_284, key=27393, x6=" \x00Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_433:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=36864, x6="\x10\x00\x10\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_241, key=26882, x6=" \x10Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_434:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0C68, key=37120, x6="\x10\x00\x11\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28679, x6=" \x14Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_435:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=37376, x6="\x10\x00\x12\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25859, x6=" \x106\x00\x00\x00"
 func_4C09CCB5_Table_p0_436:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0548, key=37632, x6="\x10\x00\x13\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_27, key=26884, x6=" P4\x00\x00\x00"
 func_4C09CCB5_Table_p0_437:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D05B4, key=37888, x6="\x10\x00\x14\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_53, key=26374, x6=" \x18Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_438:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF8A0, key=38144, x6="\x10\x00\x15\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_155, key=16135, x6=" \x1CY\x00\x00\x00"
 func_4C09CCB5_Table_p0_439:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0758, key=38400, x6="\x10\x00\x16\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_162, key=15877, x6="  Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_440:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D050C, key=38656, x6="\x10\x00\x17\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_36, key=27142, x6="  Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_441:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF9CC, key=38912, x6="\x10\x00\x18\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=14594, x6="  Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_442:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0A70, key=39168, x6="\x10\x00\x19\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25863, x6=" \"Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_443:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	key=39424, x6="\x10\x00\x1A\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27654, x6=" $Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_444:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0C74, key=39680, x6="\x10\x00\x1B\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28678, x6=" &Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_445:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFA38, key=39936, x6="\x10\x00\x1C\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=25091, x6=" (Y\x00\x00\x00"
 func_4C09CCB5_Table_p0_446:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFA80, key=40192, x6="\x10\x00\x1D\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_40, key=26373, x6=" \x08Z\x00\x00\x00"
 func_4C09CCB5_Table_p0_447:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D089C, key=40448, x6="\x10\x00\x1E\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_285, key=27394, x6=" \x00[\x00\x00\x00"
 func_4C09CCB5_Table_p0_448:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0950, key=40704, x6="\x10\x00\x1F\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=30720, x6=" \x00\\\x00\x00\x00"
 func_4C09CCB5_Table_p0_449:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0824, key=40960, x6="\x10\x00 \x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28422, x6=" \x10\\\x00\x00\x00"
 func_4C09CCB5_Table_p0_450:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0B84, key=41216, x6="\x10\x00!\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_292, key=27138, x6=" \x00]\x00\x00\x00"
 func_4C09CCB5_Table_p0_451:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF5D0, key=41472, x6="\x10\x00\"\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_63, key=29190, x6=" @]\x00\x00\x00"
 func_4C09CCB5_Table_p0_452:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CF630, key=41728, x6="\x10\x00#\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27395, x6=" \x00^\x00\x00\x00"
 func_4C09CCB5_Table_p0_453:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D09F8, key=41984, x6="\x10\x00$\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15874, x6=" \x00_\x00\x00\x00"
 func_4C09CCB5_Table_p0_454:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0848, key=42240, x6="\x10\x00%\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=15878, x6=" \x08_\x00\x00\x00"
 func_4C09CCB5_Table_p0_455:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D095C, key=42496, x6="\x10\x00&\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=31751, x6=" \x10_\x00\x00\x00"
 func_4C09CCB5_Table_p0_456:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0914, key=42752, x6="\x10\x00'\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=5379, x6=" \x00c\x00\x00\x00"
 func_4C09CCB5_Table_p0_457:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1CFFFC, key=61441, x6="x\x00\x00\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27651, x6=" \x00d\x00\x00\x00"
 func_4C09CCB5_Table_p0_458:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D06BC, key=61697, x6="x\x00\x08\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=27655, x6="  f\x00\x00\x00"
 func_4C09CCB5_Table_p0_459:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0788, key=61953, x6="x\x00\x10\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=30721, x6=" \x00g\x00\x00\x00"
 func_4C09CCB5_Table_p0_460:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0764, key=62209, x6="x\x00\x18\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_64, key=29191, x6="  g\x00\x00\x00"
 func_4C09CCB5_Table_p0_461:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0674, key=62465, x6="x\x00\x19\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=29952, x6=" \x00P\x00\x00\x00"
 func_4C09CCB5_Table_p0_462:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D056C, key=62721, x6="x\x00 \x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=30976, x6=" \x00P\x00\x00\x00"
 func_4C09CCB5_Table_p0_463:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D06F8, key=62977, x6="x\x00(\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=28933, x6=" \x04P\x00\x00\x00"
 func_4C09CCB5_Table_p0_464:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D02CC, key=63233, x6="x\x000\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=29953, x6=" \x08P\x00\x00\x00"
 func_4C09CCB5_Table_p0_465:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
-	REC_func_4C09CCB5_Table_p0	p0=data_4C1D0A10, key=63489, x6="x\x008\x00\x00\x00"
+	REC_func_4C09CCB5_Table_p0	key=30467, x6=" \x0CP\x00\x00\x00"
+func_4C09CCB5_Table_p0_466:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30213, x6=" \x10P\x00\x00\x00"
+func_4C09CCB5_Table_p0_467:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_83, key=30727, x6=" \x14P\x00\x00\x00"
+func_4C09CCB5_Table_p0_468:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30470, x6=" \x18P\x00\x00\x00"
+func_4C09CCB5_Table_p0_469:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28934, x6="  P\x00\x00\x00"
+func_4C09CCB5_Table_p0_470:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30214, x6=" 0P\x00\x00\x00"
+func_4C09CCB5_Table_p0_471:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_382, key=24064, x6=" @P\x00\x00\x00"
+func_4C09CCB5_Table_p0_472:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_234, key=24320, x6=" @P\x00\x00\x00"
+func_4C09CCB5_Table_p0_473:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28421, x6=" DP\x00\x00\x00"
+func_4C09CCB5_Table_p0_474:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_71, key=29956, x6=" HP\x00\x00\x00"
+func_4C09CCB5_Table_p0_475:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31239, x6=" `P\x00\x00\x00"
+func_4C09CCB5_Table_p0_476:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30209, x6=" \x00Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_477:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30208, x6=" \x00Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_478:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32006, x6=" \x04Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_479:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29955, x6=" \x08Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_480:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_77, key=30468, x6=" \x08Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_481:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30726, x6=" \x0CQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_482:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_76, key=30215, x6=" \x10Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_483:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_82, key=30725, x6="  Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_484:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32007, x6=" 0Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_485:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30983, x6=" hQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_486:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_86, key=31236, x6=" hQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_487:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_61, key=28676, x6=" `Q\x00\x00\x00"
+func_4C09CCB5_Table_p0_488:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_62, key=28677, x6=" pQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_489:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30469, x6=" tQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_490:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_456, key=28167, x6=" xQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_491:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=26114, x6=" \x00Z\x00\x00\x00"
+func_4C09CCB5_Table_p0_492:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_65, key=30980, x6=" \x10Z\x00\x00\x00"
+func_4C09CCB5_Table_p0_493:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31750, x6="  Z\x00\x00\x00"
+func_4C09CCB5_Table_p0_494:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31493, x6=" 0Z\x00\x00\x00"
+func_4C09CCB5_Table_p0_495:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31494, x6=" 8Z\x00\x00\x00"
+func_4C09CCB5_Table_p0_496:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=15364, x6=" @Z\x00\x00\x00"
+func_4C09CCB5_Table_p0_497:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=18435, x6=" \x00R\x00\x00\x00"
+func_4C09CCB5_Table_p0_498:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28675, x6=" \x00R\x00\x00\x00"
+func_4C09CCB5_Table_p0_499:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29954, x6=" \x00S\x00\x00\x00"
+func_4C09CCB5_Table_p0_500:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_329, key=28672, x6=" \x00S\x00\x00\x00"
+func_4C09CCB5_Table_p0_501:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_175, key=15365, x6="  S\x00\x00\x00"
+func_4C09CCB5_Table_p0_502:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29957, x6=" (S\x00\x00\x00"
+func_4C09CCB5_Table_p0_503:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30210, x6=" 0S\x00\x00\x00"
+func_4C09CCB5_Table_p0_504:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28674, x6=" @S\x00\x00\x00"
+func_4C09CCB5_Table_p0_505:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=6915, x6=" \x00T\x00\x00\x00"
+func_4C09CCB5_Table_p0_506:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32262, x6="  T\x00\x00\x00"
+func_4C09CCB5_Table_p0_507:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28935, x6=" (T\x00\x00\x00"
+func_4C09CCB5_Table_p0_508:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_491, key=14087, x6=" 0T\x00\x00\x00"
+func_4C09CCB5_Table_p0_509:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_327, key=6662, x6=" 8T\x00\x00\x00"
+func_4C09CCB5_Table_p0_510:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_67, key=29188, x6=" `T\x00\x00\x00"
+func_4C09CCB5_Table_p0_511:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_291, key=27137, x6=" \x00U\x00\x00\x00"
+func_4C09CCB5_Table_p0_512:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_38, key=27141, x6="  U\x00\x00\x00"
+func_4C09CCB5_Table_p0_513:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_339, key=30464, x6=" \x00V\x00\x00\x00"
+func_4C09CCB5_Table_p0_514:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30723, x6=" \x08V\x00\x00\x00"
+func_4C09CCB5_Table_p0_515:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30981, x6="  V\x00\x00\x00"
+func_4C09CCB5_Table_p0_516:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30466, x6=" @V\x00\x00\x00"
+func_4C09CCB5_Table_p0_517:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=11778, x6=" \x00W\x00\x00\x00"
+func_4C09CCB5_Table_p0_518:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_69, key=29444, x6="  W\x00\x00\x00"
+func_4C09CCB5_Table_p0_519:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32263, x6=" 0W\x00\x00\x00"
+func_4C09CCB5_Table_p0_520:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29446, x6=" @W\x00\x00\x00"
+func_4C09CCB5_Table_p0_521:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31495, x6=" HW\x00\x00\x00"
+func_4C09CCB5_Table_p0_522:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31238, x6=" \x10c\x00\x00\x00"
+func_4C09CCB5_Table_p0_523:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32005, x6=" LT\x00\x00\x00"
+func_4C09CCB5_Table_p0_524:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_79, key=29702, x6=" \x10g\x00\x00\x00"
+func_4C09CCB5_Table_p0_525:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=15620, x6=" \x10g\x00\x00\x00"
+func_4C09CCB5_Table_p0_526:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29443, x6=" 0g\x00\x00\x00"
+func_4C09CCB5_Table_p0_527:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30722, x6=" @2\x00\x00\x00"
+func_4C09CCB5_Table_p0_528:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_84, key=30724, x6="  a\x00\x00\x00"
+func_4C09CCB5_Table_p0_529:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32261, x6=" \x10d\x00\x00\x00"
+func_4C09CCB5_Table_p0_530:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29187, x6=" @d\x00\x00\x00"
+func_4C09CCB5_Table_p0_531:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_412, key=2306, x6=" \x00b\x00\x00\x00"
+func_4C09CCB5_Table_p0_532:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=3590, x6=" \x08b\x00\x00\x00"
+func_4C09CCB5_Table_p0_533:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=2308, x6=" \x10b\x00\x00\x00"
+func_4C09CCB5_Table_p0_534:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=4868, x6="  d\x00\x00\x00"
+func_4C09CCB5_Table_p0_535:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=29189, x6=" hT\x00\x00\x00"
+func_4C09CCB5_Table_p0_536:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31237, x6=" TT\x00\x00\x00"
+func_4C09CCB5_Table_p0_537:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_68, key=28932, x6=" PT\x00\x00\x00"
+func_4C09CCB5_Table_p0_538:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32515, x6=" @T\x00\x00\x00"
+func_4C09CCB5_Table_p0_539:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_93, key=32519, x6=" DT\x00\x00\x00"
+func_4C09CCB5_Table_p0_540:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28930, x6=" AT\x00\x00\x00"
+func_4C09CCB5_Table_p0_541:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28931, x6=" BT\x00\x00\x00"
+func_4C09CCB5_Table_p0_542:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=28929, x6=" HT\x00\x00\x00"
+func_4C09CCB5_Table_p0_543:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=8196, x6=" @.\x00\x00\x00"
+func_4C09CCB5_Table_p0_544:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_273, key=2821, x6=" @r\x00\x00\x00"
+func_4C09CCB5_Table_p0_545:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32259, x6=" C5\x00\x00\x00"
+func_4C09CCB5_Table_p0_546:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_89, key=32260, x6=" \x10y\x00\x00\x00"
+func_4C09CCB5_Table_p0_547:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_96, key=32517, x6=" 07\x00\x00\x00"
+func_4C09CCB5_Table_p0_548:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_91, key=32516, x6=" 07\x00\x00\x00"
+func_4C09CCB5_Table_p0_549:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_87, key=31748, x6=" @v\x00\x00\x00"
+func_4C09CCB5_Table_p0_550:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30979, x6=" \x00`\x00\x00\x00"
+func_4C09CCB5_Table_p0_551:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_343, key=30465, x6=" \x00a\x00\x00\x00"
+func_4C09CCB5_Table_p0_552:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=27136, x6=" \x00e\x00\x00\x00"
+func_4C09CCB5_Table_p0_553:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_31, key=27140, x6=" \x00e\x00\x00\x00"
+func_4C09CCB5_Table_p0_554:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=25093, x6=" \x10e\x00\x00\x00"
+func_4C09CCB5_Table_p0_555:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=27653, x6="  e\x00\x00\x00"
+func_4C09CCB5_Table_p0_556:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=27139, x6=" \x00f\x00\x00\x00"
+func_4C09CCB5_Table_p0_557:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_90, key=32004, x6=" HV\x00\x00\x00"
+func_4C09CCB5_Table_p0_558:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_66, key=30982, x6=" XQ\x00\x00\x00"
+func_4C09CCB5_Table_p0_559:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=30471, x6=" \x11}\x00\x00\x00"
+func_4C09CCB5_Table_p0_560:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_299, key=31745, x6=" \x00x\x00\x00\x00"
+func_4C09CCB5_Table_p0_561:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31746, x6=" \x00y\x00\x00\x00"
+func_4C09CCB5_Table_p0_562:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31747, x6=" \x00z\x00\x00\x00"
+func_4C09CCB5_Table_p0_563:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32002, x6=" \x00{\x00\x00\x00"
+func_4C09CCB5_Table_p0_564:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31488, x6=" \x00|\x00\x00\x00"
+func_4C09CCB5_Table_p0_565:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31489, x6=" \x00}\x00\x00\x00"
+func_4C09CCB5_Table_p0_566:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32003, x6=" \x00~\x00\x00\x00"
+func_4C09CCB5_Table_p0_567:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=31490, x6=" \x00\x7F\x00\x00\x00"
+func_4C09CCB5_Table_p0_568:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_276, key=61440, x6="&\x00\x00\x00\x00\x00"
+func_4C09CCB5_Table_p0_569:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_452, key=62210, x6="&\x00\x01\x00\x00\x00"
+func_4C09CCB5_Table_p0_570:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_556, key=61954, x6="&\x00\x09\x00\x00\x00"
+func_4C09CCB5_Table_p0_571:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=63234, x6="&\x00\x03\x00\x00\x00"
+func_4C09CCB5_Table_p0_572:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_432, key=62208, x6="&\x00\x08\x00\x00\x00"
+func_4C09CCB5_Table_p0_573:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_476, key=65024, x6="&\x00\x02\x00\x00\x00"
+func_4C09CCB5_Table_p0_574:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=63232, x6="&\x00\x10\x00\x00\x00"
+func_4C09CCB5_Table_p0_575:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_330, key=63488, x6="&\x00\x11\x00\x00\x00"
+func_4C09CCB5_Table_p0_576:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_511, key=61952, x6="&\x00\x18\x00\x00\x00"
+func_4C09CCB5_Table_p0_577:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_290, key=62976, x6="&\x00!\x00\x00\x00"
+func_4C09CCB5_Table_p0_578:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_240, key=61696, x6="&\x00 \x00\x00\x00"
+func_4C09CCB5_Table_p0_579:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_454, key=62720, x6="&\x00(\x00\x00\x00"
+func_4C09CCB5_Table_p0_580:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_457, key=62466, x6="&\x00\x19\x00\x00\x00"
+func_4C09CCB5_Table_p0_581:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_165, key=62722, x6="&\x00\x1A\x00\x00\x00"
+func_4C09CCB5_Table_p0_582:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_542, key=63744, x6="&\x00\x1B\x00\x00\x00"
+func_4C09CCB5_Table_p0_583:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=64000, x6="&\x00\x1D\x00\x00\x00"
+func_4C09CCB5_Table_p0_584:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_415, key=64256, x6="&\x00\x1C\x00\x00\x00"
+func_4C09CCB5_Table_p0_585:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_428, key=62464, x6="&\x00\x1F\x00\x00\x00"
+func_4C09CCB5_Table_p0_586:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_551, key=65280, x6="&\x00\x1F\x00\x00\x00"
+func_4C09CCB5_Table_p0_587:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_170, key=62978, x6="&\x00\x1E\x00\x00\x00"
+func_4C09CCB5_Table_p0_588:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_159, key=61698, x6="&\x00H\x00\x00\x00"
+func_4C09CCB5_Table_p0_589:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_17, key=64512, x6="&\x004\x00\x00\x00"
+func_4C09CCB5_Table_p0_590:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_464, key=64768, x6="&\x008\x00\x00\x00"
+func_4C09CCB5_Table_p0_591:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=32775, x6="\"\x00\x00\x00\x00\x00"
+func_4C09CCB5_Table_p0_592:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_361, key=33031, x6="\"\x00\x10\x00\x00\x00"
+func_4C09CCB5_Table_p0_593:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_147, key=61446, x6="\x11\x00\x00\x00\x00\x00"
+func_4C09CCB5_Table_p0_594:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_233, key=32768, x6="\x10\x00\x00\x00\x00\x00"
+func_4C09CCB5_Table_p0_595:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_217, key=33024, x6="\x10\x00\x01\x00\x00\x00"
+func_4C09CCB5_Table_p0_596:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_231, key=33280, x6="\x10\x00\x02\x00\x00\x00"
+func_4C09CCB5_Table_p0_597:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=33536, x6="\x10\x00\x03\x00\x00\x00"
+func_4C09CCB5_Table_p0_598:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=33792, x6="\x10\x00\x04\x00\x00\x00"
+func_4C09CCB5_Table_p0_599:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_401, key=34048, x6="\x10\x00\x05\x00\x00\x00"
+func_4C09CCB5_Table_p0_600:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_205, key=34304, x6="\x10\x00\x06\x00\x00\x00"
+func_4C09CCB5_Table_p0_601:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=34560, x6="\x10\x00\x07\x00\x00\x00"
+func_4C09CCB5_Table_p0_602:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_1, key=34816, x6="\x10\x00\x08\x00\x00\x00"
+func_4C09CCB5_Table_p0_603:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_5, key=35072, x6="\x10\x00\x09\x00\x00\x00"
+func_4C09CCB5_Table_p0_604:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_2, key=35328, x6="\x10\x00\n\x00\x00\x00"
+func_4C09CCB5_Table_p0_605:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_195, key=35584, x6="\x10\x00\x0B\x00\x00\x00"
+func_4C09CCB5_Table_p0_606:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=35840, x6="\x10\x00\x0C\x00\x00\x00"
+func_4C09CCB5_Table_p0_607:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_198, key=36096, x6="\x10\x00\x0D\x00\x00\x00"
+func_4C09CCB5_Table_p0_608:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=36352, x6="\x10\x00\x0E\x00\x00\x00"
+func_4C09CCB5_Table_p0_609:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=36608, x6="\x10\x00\x0F\x00\x00\x00"
+func_4C09CCB5_Table_p0_610:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=36864, x6="\x10\x00\x10\x00\x00\x00"
+func_4C09CCB5_Table_p0_611:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_554, key=37120, x6="\x10\x00\x11\x00\x00\x00"
+func_4C09CCB5_Table_p0_612:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=37376, x6="\x10\x00\x12\x00\x00\x00"
+func_4C09CCB5_Table_p0_613:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_402, key=37632, x6="\x10\x00\x13\x00\x00\x00"
+func_4C09CCB5_Table_p0_614:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_411, key=37888, x6="\x10\x00\x14\x00\x00\x00"
+func_4C09CCB5_Table_p0_615:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_132, key=38144, x6="\x10\x00\x15\x00\x00\x00"
+func_4C09CCB5_Table_p0_616:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_446, key=38400, x6="\x10\x00\x16\x00\x00\x00"
+func_4C09CCB5_Table_p0_617:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_397, key=38656, x6="\x10\x00\x17\x00\x00\x00"
+func_4C09CCB5_Table_p0_618:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_157, key=38912, x6="\x10\x00\x18\x00\x00\x00"
+func_4C09CCB5_Table_p0_619:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_512, key=39168, x6="\x10\x00\x19\x00\x00\x00"
+func_4C09CCB5_Table_p0_620:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	key=39424, x6="\x10\x00\x1A\x00\x00\x00"
+func_4C09CCB5_Table_p0_621:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_555, key=39680, x6="\x10\x00\x1B\x00\x00\x00"
+func_4C09CCB5_Table_p0_622:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_166, key=39936, x6="\x10\x00\x1C\x00\x00\x00"
+func_4C09CCB5_Table_p0_623:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_172, key=40192, x6="\x10\x00\x1D\x00\x00\x00"
+func_4C09CCB5_Table_p0_624:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_473, key=40448, x6="\x10\x00\x1E\x00\x00\x00"
+func_4C09CCB5_Table_p0_625:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_488, key=40704, x6="\x10\x00\x1F\x00\x00\x00"
+func_4C09CCB5_Table_p0_626:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_463, key=40960, x6="\x10\x00 \x00\x00\x00"
+func_4C09CCB5_Table_p0_627:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_535, key=41216, x6="\x10\x00!\x00\x00\x00"
+func_4C09CCB5_Table_p0_628:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_72, key=41472, x6="\x10\x00\"\x00\x00\x00"
+func_4C09CCB5_Table_p0_629:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_80, key=41728, x6="\x10\x00#\x00\x00\x00"
+func_4C09CCB5_Table_p0_630:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_502, key=41984, x6="\x10\x00$\x00\x00\x00"
+func_4C09CCB5_Table_p0_631:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_466, key=42240, x6="\x10\x00%\x00\x00\x00"
+func_4C09CCB5_Table_p0_632:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_489, key=42496, x6="\x10\x00&\x00\x00\x00"
+func_4C09CCB5_Table_p0_633:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_483, key=42752, x6="\x10\x00'\x00\x00\x00"
+func_4C09CCB5_Table_p0_634:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_289, key=61441, x6="x\x00\x00\x00\x00\x00"
+func_4C09CCB5_Table_p0_635:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_433, key=61697, x6="x\x00\x08\x00\x00\x00"
+func_4C09CCB5_Table_p0_636:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_450, key=61953, x6="x\x00\x10\x00\x00\x00"
+func_4C09CCB5_Table_p0_637:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_447, key=62209, x6="x\x00\x18\x00\x00\x00"
+func_4C09CCB5_Table_p0_638:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_427, key=62465, x6="x\x00\x19\x00\x00\x00"
+func_4C09CCB5_Table_p0_639:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_405, key=62721, x6="x\x00 \x00\x00\x00"
+func_4C09CCB5_Table_p0_640:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_438, key=62977, x6="x\x00(\x00\x00\x00"
+func_4C09CCB5_Table_p0_641:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_349, key=63233, x6="x\x000\x00\x00\x00"
+func_4C09CCB5_Table_p0_642:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
+	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_504, key=63489, x6="x\x008\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_0:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
 	REC_VoiceDirPartRefFind_Table_p0	key=0x200000, x8="\x00\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_1:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
 	REC_VoiceDirPartRefFind_Table_p0	key=0x202000, x8="\x02\x02\x00\x00"
-data_4C1D10AC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D10AC, 0x1D10B8
 VoiceDirPartRefFind_Table_p0_2:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203000, x8="\x02\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202800, x8="\x02\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_3:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204000, x8="\x00\x01\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D10D0, 0x1D10E8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203000, x8="\x02\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_4:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205100, x8="\x00\x07\x00\x00"
-data_4C1D10F4:
-# census: opaque -- unknown-dump: 48 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D10F4, 0x1D1124
-data_4C1D1124:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1124, 0x1D1130
-data_4C1D1130:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1130, 0x1D113C
-data_4C1D113C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D113C, 0x1D1148
-data_4C1D1148:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1148, 0x1D1154
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204000, x8="\x00\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_5:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205001, x8="\x07\x05\x00\x00"
-data_4C1D1160:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1160, 0x1D116C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204800, x8="\x02\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_6:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204002, x8="\x03\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205000, x8="\x00\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_7:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205002, x8="\x03\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205100, x8="\x00\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_8:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200003, x8="\x01\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205200, x8="\x00\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_9:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201003, x8="\x01\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205800, x8="\x02\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_10:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200004, x8="\x05\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x207000, x8=":\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_11:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200404, x8="\x05\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200001, x8="\x01\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_12:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201004, x8="\x04\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202001, x8="\x03\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_13:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202004, x8="\x04\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203001, x8="\x00\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_14:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204004, x8="\x04\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203101, x8="\x01\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_15:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205004, x8="\x04\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204001, x8="\x07\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_16:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200005, x8="\x06\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205001, x8="\x07\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_17:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201005, x8="\x04\x00\x00\x00"
-data_4C1D11FC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D11FC, 0x1D1208
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200002, x8="\x03\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_18:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201805, x8="\x06\x05\x00\x00"
-data_4C1D1214:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1214, 0x1D1220
-data_4C1D1220:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1220, 0x1D122C
-data_4C1D122C:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D122C, 0x1D1244
-data_4C1D1244:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1244, 0x1D1250
-data_4C1D1250:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1250, 0x1D125C
-data_4C1D125C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D125C, 0x1D1268
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204002, x8="\x03\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_19:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203006, x8="\x12\x00\x00\x00"
-data_4C1D1274:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1274, 0x1D1280
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205002, x8="\x03\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_20:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200007, x8="\x11\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D128C, 0x1D1298
-data_4C1D1298:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1298, 0x1D12BC
-data_4C1D12BC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D12BC, 0x1D12C8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200003, x8="\x01\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_21:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204007, x8="\x11\x01\x00\x00"
-data_4C1D12D4:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D12D4, 0x1D12EC
-data_4C1D12EC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D12EC, 0x1D12F8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201003, x8="\x01\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_22:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20040B, x8="\x08\x00\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1304, 0x1D131C
-data_4C1D131C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D131C, 0x1D1328
-data_4C1D1328:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1328, 0x1D1334
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200004, x8="\x05\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_23:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20400C, x8="q\x00\x00\x00"
-data_4C1D1340:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1340, 0x1D134C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200404, x8="\x05\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_24:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20400D, x8="\x0B\x01\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1358, 0x1D1364
-data_4C1D1364:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1364, 0x1D1370
-data_4C1D1370:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1370, 0x1D137C
-data_4C1D137C:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D137C, 0x1D1394
-data_4C1D1394:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1394, 0x1D13AC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201004, x8="\x04\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_25:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200C10, x8="[\x04\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D13B8, 0x1D13C4
-data_4C1D13C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D13C4, 0x1D13D0
-data_4C1D13D0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D13D0, 0x1D13DC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202004, x8="\x04\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_26:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201C10, x8="[\x06\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D13E8, 0x1D13F4
-data_4C1D13F4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D13F4, 0x1D1400
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204004, x8="\x04\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_27:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204010, x8="^\x01\x00\x00"
-data_4C1D140C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D140C, 0x1D1418
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205004, x8="\x04\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_28:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200011, x8="X\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200005, x8="\x06\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_29:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200411, x8="X\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201005, x8="\x04\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_30:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200811, x8="Z\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201405, x8="\x06\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_31:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200C11, x8="Z\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201805, x8="\x06\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_32:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200012, x8="\\\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204005, x8="\x05\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_33:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200412, x8="\\\x07\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1460, 0x1D146C
-data_4C1D146C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D146C, 0x1D1478
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_10, key=0x204105, x8="\x05\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_34:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202012, x8="[\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204205, x8="\x05\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_35:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202812, x8="\\\x06\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1490, 0x1D14A8
-data_4C1D14A8:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D14A8, 0x1D14CC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205005, x8="\x04\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_36:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205013, x8="W\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205805, x8="\x06\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_37:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x206013, x8="V\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200006, x8="\x10\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_38:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200014, x8="V\x02\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D14F0, 0x1D14FC
-data_4C1D14FC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D14FC, 0x1D1508
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202006, x8="\x10\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_39:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204015, x8="R\x00\x00\x00"
-data_4C1D1514:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1514, 0x1D1520
-data_4C1D1520:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1520, 0x1D152C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203006, x8="\x12\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_40:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200816, x8="S\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205006, x8="\x12\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_41:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200017, x8="P\x01\x00\x00"
-data_4C1D1544:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1544, 0x1D1550
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200007, x8="\x11\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_42:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200818, x8="\x14\x01\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D155C, 0x1D1568
-data_4C1D1568:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1568, 0x1D1574
-data_4C1D1574:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1574, 0x1D1580
-data_4C1D1580:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1580, 0x1D158C
-data_4C1D158C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D158C, 0x1D1598
-data_4C1D1598:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1598, 0x1D15A4
-data_4C1D15A4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D15A4, 0x1D15B0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200807, x8="\x11\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_43:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204019, x8="#\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201007, x8="\x11\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_44:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205019, x8="#\x04\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D15C8, 0x1D15D4
-data_4C1D15D4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D15D4, 0x1D15E0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202007, x8="s\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_45:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20301A, x8="\x19\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202807, x8="\x11\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_46:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20381A, x8="\x19\x02\x00\x00"
-data_4C1D15F8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D15F8, 0x1D1604
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203007, x8="\x11\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_47:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20411A, x8="\x1F\x03\x00\x00"
-data_4C1D1610:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1610, 0x1D161C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204007, x8="\x11\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_48:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20451A, x8="\x1F\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200008, x8="\x0C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_49:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20001B, x8="\x1A\x00\x00\x00"
-data_4C1D1634:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1634, 0x1D1640
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200009, x8="\x09\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_50:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20181B, x8="\x1A\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20000A, x8="\x07\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_51:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20201B, x8="\x1C\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20040B, x8="\x08\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_52:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20401B, x8="\x1C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20100B, x8="\x08\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_53:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20001C, x8="\x1D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20500B, x8="\x08\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_54:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20201C, x8="\x1D\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20000C, x8="\n\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_55:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20001D, x8="\x1B\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20200C, x8="\x0D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_56:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20001E, x8="\x1E\x00\x00\x00"
-data_4C1D1694:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1694, 0x1D16A0
-data_4C1D16A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D16A0, 0x1D16AC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20400C, x8="q\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_57:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20301F, x8="\x1B\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20000D, x8="\x0B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_58:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200020, x8="+\x00\x00\x00"
-data_4C1D16C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D16C4, 0x1D16D0
-data_4C1D16D0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D16D0, 0x1D16DC
-data_4C1D16DC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D16DC, 0x1D16E8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20400D, x8="\x0B\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_59:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202021, x8="*\x07\x00\x00"
-data_4C1D16F4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D16F4, 0x1D1700
-data_4C1D1700:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1700, 0x1D170C
-data_4C1D170C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D170C, 0x1D1718
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20000E, x8="\x0E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_60:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202022, x8="/\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20100E, x8="\x0E\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_61:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200023, x8="(\x02\x00\x00"
-data_4C1D1730:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1730, 0x1D173C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20000F, x8="&\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_62:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200025, x8=")\x01\x00\x00"
-data_4C1D1748:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1748, 0x1D1754
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20100F, x8="&\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_63:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1220, key=0x200826, x8="*\x01\x00\x00"
-data_4C1D1760:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1760, 0x1D1778
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200010, x8="Y\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_64:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201826, x8="/\x04\x00\x00"
-data_4C1D1784:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1784, 0x1D179C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200410, x8="Y\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_65:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203026, x8="-\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200810, x8="[\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_66:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203126, x8="-\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200C10, x8="[\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_67:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1124, key=0x204026, x8=",\x01\x00\x00"
-data_4C1D17C0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D17C0, 0x1D17CC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201010, x8="]\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_68:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204A26, x8="-\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201410, x8="]\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_69:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1130, key=0x205026, x8=",\x02\x00\x00"
-data_4C1D17E4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D17E4, 0x1D17F0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201810, x8="[\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_70:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205C26, x8=",\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201C10, x8="[\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_71:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1148, key=0x206026, x8=",\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202010, x8="Y\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_72:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200027, x8=".\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202410, x8="Y\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_73:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200827, x8="-\x04\x00\x00"
-data_4C1D1820:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1820, 0x1D182C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204010, x8="^\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_74:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1160, key=0x202027, x8=".\x01\x00\x00"
-data_4C1D1838:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1838, 0x1D1844
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204410, x8="^\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_75:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203027, x8="+\x02\x00\x00"
-data_4C1D1850:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1850, 0x1D185C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200011, x8="X\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_76:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203827, x8=",\x04\x00\x00"
-data_4C1D1868:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1868, 0x1D1874
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200411, x8="X\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_77:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200428, x8="`\x04\x00\x00"
-data_4C1D1880:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1880, 0x1D1898
-data_4C1D1898:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1898, 0x1D18A4
-data_4C1D18A4:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D18A4, 0x1D18BC
-data_4C1D18BC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D18BC, 0x1D18C8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200811, x8="Z\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_78:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20502D, x8="c\x03\x00\x00"
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D18D4, 0x1D18F8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200C11, x8="Z\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_79:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20402E, x8=" \x04\x00\x00"
-data_4C1D1904:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1904, 0x1D1910
-data_4C1D1910:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1910, 0x1D191C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200012, x8="\\\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_80:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200830, x8="d\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200412, x8="\\\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_81:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201030, x8="d\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201012, x8="\\\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_82:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201830, x8="e\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201412, x8="\\\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_83:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201C30, x8="d\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202012, x8="[\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_84:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202030, x8="f\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202812, x8="\\\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_85:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202830, x8="f\x05\x00\x00"
-data_4C1D1964:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1964, 0x1D1970
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200013, x8="T\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_86:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203830, x8="f\x07\x00\x00"
-data_4C1D197C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D197C, 0x1D1988
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201013, x8="U\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_87:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204030, x8="f\x00\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1994, 0x1D19A0
-data_4C1D19A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D19A0, 0x1D19AC
-data_4C1D19AC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D19AC, 0x1D19B8
-data_4C1D19B8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D19B8, 0x1D19C4
-data_4C1D19C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D19C4, 0x1D19D0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202013, x8="V\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_88:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200831, x8="e\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204013, x8="W\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_89:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1328, key=0x204031, x8="e\x05\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D19E8, 0x1D19F4
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204813, x8="W\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_90:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205031, x8="d\x07\x00\x00"
-data_4C1D1A00:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A00, 0x1D1A0C
-data_4C1D1A0C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A0C, 0x1D1A18
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205013, x8="W\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_91:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204032, x8="x\x02\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A24, 0x1D1A30
-data_4C1D1A30:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A30, 0x1D1A3C
-data_4C1D1A3C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A3C, 0x1D1A48
+	REC_VoiceDirPartRefFind_Table_p0	key=0x206013, x8="V\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_92:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205033, x8="g\x07\x00\x00"
-data_4C1D1A54:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A54, 0x1D1A6C
-data_4C1D1A6C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1A6C, 0x1D1A78
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200014, x8="V\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_93:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1700, key=0x200C34, x8="h\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200015, x8="P\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_94:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201034, x8="i\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201015, x8="Q\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_95:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201834, x8="b\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204015, x8="R\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_96:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1370, key=0x202034, x8="h\x02\x00\x00"
-data_4C1D1AA8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1AA8, 0x1D1AB4
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204815, x8="R\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_97:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203834, x8="b\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200016, x8="S\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_98:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204034, x8="i\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200816, x8="S\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_99:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205034, x8="i\x04\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1AD8, 0x1D1AE4
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200017, x8="P\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_100:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200835, x8="m\x02\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1AF0, 0x1D1AFC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200018, x8="\x14\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_101:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D19A0, key=0x202135, x8="i\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200818, x8="\x14\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_102:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1394, key=0x202435, x8="i\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201018, x8="\x15\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_103:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202635, x8="k\x04\x00\x00"
-data_4C1D1B20:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1B20, 0x1D1B2C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201818, x8="\x14\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_104:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D19AC, key=0x202935, x8="i\x05\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1B38, 0x1D1B44
-data_4C1D1B44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1B44, 0x1D1B50
-data_4C1D1B50:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1B50, 0x1D1B5C
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_35, key=0x201C18, x8="\x14\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_105:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204235, x8="n\x05\x00\x00"
-data_4C1D1B68:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1B68, 0x1D1B74
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204018, x8="\"\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_106:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D13F4, key=0x204435, x8="n\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200019, x8="\x16\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_107:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204835, x8="m\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202019, x8="\x17\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_108:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204935, x8="n\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202219, x8="\x17\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_109:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204C35, x8="n\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204019, x8="#\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_110:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204D35, x8="\x7F\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205019, x8="#\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_111:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205035, x8="m\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001A, x8="\x19\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_112:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205135, x8="m\x05\x00\x00"
-data_4C1D1BC8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1BC8, 0x1D1BD4
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20081A, x8="\x18\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_113:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200036, x8="k\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20301A, x8="\x19\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_114:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201036, x8="e\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20381A, x8="\x19\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_115:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200037, x8="\x7F\x01\x00\x00"
-data_4C1D1BF8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1BF8, 0x1D1C04
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20401A, x8="\x1F\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_116:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200038, x8="0\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20411A, x8="\x1F\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_117:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200438, x8="0\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20441A, x8="\x1F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_118:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200838, x8="0\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20451A, x8="\x1F\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_119:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201038, x8="0\x04\x00\x00"
-data_4C1D1C34:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1C34, 0x1D1C40
-data_4C1D1C40:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1C40, 0x1D1C4C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001B, x8="\x1A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_120:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D14A8, key=0x204038, x8="1\x01\x00\x00"
-data_4C1D1C58:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1C58, 0x1D1C64
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20101B, x8="\x1A\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_121:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205038, x8="9\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20181B, x8="\x1A\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_122:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1748, key=0x205438, x8=";\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20201B, x8="\x1C\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_123:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205838, x8="8\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20401B, x8="\x1C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_124:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1760, key=0x206038, x8=":\x06\x00\x00"
-data_4C1D1C94:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1C94, 0x1D1CA0
-data_4C1D1CA0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1CA0, 0x1D1CAC
-data_4C1D1CAC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1CAC, 0x1D1CB8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001C, x8="\x1D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_125:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201039, x8="5\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20201C, x8="\x1D\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_126:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201839, x8="5\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001D, x8="\x1B\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_127:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1850, key=0x20003A, x8="7\x00\x00\x00"
-data_4C1D1CDC:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1CDC, 0x1D1CE8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001E, x8="\x1E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_128:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20003B, x8="2\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001F, x8="\x1B\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_129:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20103B, x8="2\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20101F, x8="\x1E\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_130:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1520, key=0x20203B, x8="4\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20301F, x8="\x1B\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_131:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20503B, x8="9\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200020, x8="+\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_132:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20513B, x8="9\x06\x00\x00"
-data_4C1D1D24:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1D24, 0x1D1D30
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201020, x8="+\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_133:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20103C, x8="6\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200021, x8="(\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_134:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20403C, x8="6\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201021, x8="(\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_135:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20503C, x8="6\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202021, x8="*\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_136:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20583C, x8="6\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203021, x8="(\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_137:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D11FC, key=0x20003D, x8="8\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204021, x8="(\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_138:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20083D, x8="8\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200022, x8="*\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_139:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20183D, x8="8\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202022, x8="/\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_140:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1544, key=0x20203D, x8="8\x03\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1D90, 0x1D1D9C
-data_4C1D1D9C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1D9C, 0x1D1DA8
-data_4C1D1DA8:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1DA8, 0x1D1DB4
-data_4C1D1DB4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1DB4, 0x1D1DC0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200023, x8="(\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_141:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20503D, x8=";\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200024, x8=")\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_142:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1580, key=0x20603D, x8=":\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200025, x8=")\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_143:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20613D, x8=":\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200026, x8=".\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_144:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20003E, x8="<\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_33, key=0x200826, x8="*\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_145:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20083E, x8=">\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_88, key=0x200C26, x8="-\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_146:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20103E, x8="<\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201026, x8="/\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_147:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D158C, key=0x20203E, x8="?\x05\x00\x00"
-data_4C1D1E14:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E14, 0x1D1E20
-data_4C1D1E20:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E20, 0x1D1E2C
-data_4C1D1E2C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E2C, 0x1D1E38
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201826, x8="/\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_148:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20083F, x8="=\x05\x00\x00"
-data_4C1D1E44:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E44, 0x1D1E50
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_11, key=0x202026, x8="/\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_149:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20103F, x8="k\x07\x00\x00"
-data_4C1D1E5C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E5C, 0x1D1E68
-data_4C1D1E68:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E68, 0x1D1E74
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202826, x8=",\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_150:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200441, x8="M\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203026, x8="-\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_151:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200841, x8="M\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203126, x8="-\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_152:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201841, x8="M\x01\x00\x00"
-data_4C1D1E98:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1E98, 0x1D1EA4
-data_4C1D1EA4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1EA4, 0x1D1EB0
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_12, key=0x204026, x8=",\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_153:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203841, x8="M\x04\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D1EBC, 0x1D1EC8
-data_4C1D1EC8:
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1EC8, 0x1D1EE0
-data_4C1D1EE0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1EE0, 0x1D1EEC
-data_4C1D1EEC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1EEC, 0x1D1EF8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204826, x8="/\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_154:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203842, x8="O\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204A26, x8="-\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_155:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205042, x8="N\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_13, key=0x205026, x8=",\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_156:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200043, x8="O\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205826, x8="+\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_157:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205043, x8="O\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205C26, x8=",\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_158:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205843, x8="O\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_15, key=0x206026, x8=",\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_159:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200044, x8="B\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200027, x8=".\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_160:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200045, x8="C\x00\x00\x00"
-data_4C1D1F4C:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1F4C, 0x1D1F58
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200827, x8="-\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_161:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200047, x8="D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201027, x8=",\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_162:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200847, x8="D\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_17, key=0x202027, x8=".\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_163:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201047, x8="D\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202827, x8="/\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_164:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D113C, key=0x201847, x8="D\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203027, x8="+\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_165:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D170C, key=0x202047, x8="E\x00\x00\x00"
-data_4C1D1F94:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1F94, 0x1D1FA0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203427, x8="/\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_166:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205047, x8="D\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203827, x8=",\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_167:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D13C4, key=0x200048, x8="@\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200028, x8="`\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_168:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200049, x8="A\x00\x00\x00"
-data_4C1D1FC4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1FC4, 0x1D1FD0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200428, x8="`\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_169:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201049, x8="A\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201028, x8="`\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_170:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201449, x8="A\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200029, x8="a\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_171:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1730, key=0x202049, x8="A\x01\x00\x00"
-data_4C1D1FF4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D1FF4, 0x1D2000
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20002A, x8="a\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_172:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204049, x8="K\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20002B, x8="b\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_173:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205049, x8="@\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20002C, x8="d\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_174:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D146C, key=0x20004A, x8="J\x00\x00\x00"
-data_4C1D2024:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2024, 0x1D2030
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20002D, x8="c\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_175:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20044B, x8="H\x05\x00\x00"
-data_4C1D203C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D203C, 0x1D2048
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20502D, x8="c\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_176:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1784, key=0x20404B, x8="K\x01\x00\x00"
-data_4C1D2054:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2054, 0x1D2060
-data_4C1D2060:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2060, 0x1D206C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20002E, x8=" \x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_177:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20004D, x8="K\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20102E, x8=" \x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_178:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20004E, x8="o\x00\x00\x00"
-data_4C1D2084:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2084, 0x1D2090
-data_4C1D2090:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2090, 0x1D209C
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_49, key=0x20202E, x8=" \x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_179:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20004F, x8="J\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20402E, x8=" \x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_180:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1898, key=0x20204F, x8="H\x04\x00\x00"
-data_4C1D20B4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D20B4, 0x1D20C0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20002F, x8="~\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_181:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200050, x8="u\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200030, x8="d\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_182:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1568, key=0x200450, x8="q\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200830, x8="d\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_183:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1574, key=0x200850, x8="u\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201030, x8="d\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_184:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1D9C, key=0x200C50, x8="w\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201830, x8="e\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_185:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1244, key=0x201050, x8="v\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201C30, x8="d\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_186:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1DA8, key=0x201450, x8="x\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202030, x8="f\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_187:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1DB4, key=0x201850, x8="w\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202830, x8="f\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_188:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D18A4, key=0x202050, x8="q\x06\x00\x00"
-data_4C1D2120:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2120, 0x1D212C
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_52, key=0x203030, x8="f\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_189:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1250, key=0x204050, x8="^\x00\x00\x00"
-data_4C1D2138:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2138, 0x1D2144
-data_4C1D2144:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2144, 0x1D2150
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203830, x8="f\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_190:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D125C, key=0x206050, x8="z\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203930, x8="b\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_191:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D197C, key=0x200051, x8="v\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204030, x8="f\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_192:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E20, key=0x200451, x8="}\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204830, x8="e\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_193:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1274, key=0x200851, x8="u\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205030, x8="f\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_194:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1598, key=0x200C51, x8="x\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205830, x8="d\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_195:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201051, x8="v\x07\x00\x00"
-data_4C1D2198:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2198, 0x1D21A4
-data_4C1D21A4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D21A4, 0x1D21B0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x206030, x8="c\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_196:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x205851, x8="y\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200031, x8="e\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_197:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E44, key=0x206051, x8="p\x04\x00\x00"
-data_4C1D21C8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D21C8, 0x1D21D4
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200831, x8="e\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_198:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D12BC, key=0x207051, x8="p\x05\x00\x00"
-data_4C1D21E0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D21E0, 0x1D21EC
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_55, key=0x204031, x8="e\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_199:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x207851, x8="n\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204831, x8="d\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_200:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200052, x8="H\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205031, x8="d\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_201:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200053, x8="u\x02\x00\x00"
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x1D2210, 0x1D221C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200032, x8="g\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_202:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202853, x8="u\x05\x00\x00"
-data_4C1D2228:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2228, 0x1D2234
-data_4C1D2234:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2234, 0x1D2240
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201032, x8="k\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_203:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1EA4, key=0x200054, x8="\x1B\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204032, x8="x\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_204:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1904, key=0x202054, x8="~\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204832, x8="g\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_205:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x202854, x8="q\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200033, x8="g\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_206:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203054, x8="7\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_59, key=0x202033, x8="g\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_207:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203854, x8="\x1A\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205033, x8="g\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_208:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D12EC, key=0x204054, x8="\x7F\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200034, x8="h\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_209:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204154, x8="q\x02\x00\x00"
-data_4C1D2294:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2294, 0x1D22A0
-data_4C1D22A0:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D22A0, 0x1D22AC
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200134, x8="h\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_210:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204854, x8="q\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200834, x8="h\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_211:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204C54, x8="}\x05\x00\x00"
-data_4C1D22C4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D22C4, 0x1D22D0
-data_4C1D22D0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D22D0, 0x1D22DC
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_137, key=0x200C34, x8="h\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_212:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x206054, x8="r\x04\x00\x00"
-data_4C1D22E8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D22E8, 0x1D22F4
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201034, x8="i\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_213:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1EEC, key=0x200055, x8="j\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201834, x8="b\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_214:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1910, key=0x202055, x8="j\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_61, key=0x202034, x8="h\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_215:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200056, x8="w\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202434, x8="h\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_216:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1B50, key=0x200856, x8="x\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203834, x8="b\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_217:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D19C4, key=0x202056, x8="y\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204034, x8="i\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_218:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D131C, key=0x204056, x8="w\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205034, x8="i\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_219:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204856, x8="}\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200035, x8="m\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_220:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200057, x8=".\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200835, x8="m\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_221:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1A00, key=0x202057, x8="s\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_63, key=0x202035, x8="n\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_222:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1A0C, key=0x203057, x8="~\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_193, key=0x202135, x8="i\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_223:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1340, key=0x204057, x8="s\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_64, key=0x202435, x8="i\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_224:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x204857, x8="{\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202635, x8="k\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_225:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200058, x8="t\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_65, key=0x202835, x8="i\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_226:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201058, x8="l\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_194, key=0x202935, x8="i\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_227:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1A30, key=0x202058, x8="l\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_173, key=0x202A35, x8="j\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_228:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203058, x8="t\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_71, key=0x204035, x8="m\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_229:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1A3C, key=0x204058, x8="|\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_53, key=0x204135, x8="n\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_230:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200059, x8="k\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204235, x8="n\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_231:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201059, x8="i\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204335, x8="~\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_232:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201459, x8="p\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_72, key=0x204435, x8="n\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_233:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201859, x8="g\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204835, x8="m\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_234:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D16F4, key=0x201C59, x8="?\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204935, x8="n\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_235:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1A54, key=0x202059, x8="9\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204C35, x8="n\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_236:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1214, key=0x202259, x8="e\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204D35, x8="\x7F\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_237:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D122C, key=0x202459, x8="l\x06\x00\x00"
-data_4C1D2420:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2420, 0x1D242C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205035, x8="m\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_238:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1A6C, key=0x202859, x8="b\x03\x00\x00"
-data_4C1D2438:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2438, 0x1D2444
-data_4C1D2444:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2444, 0x1D2450
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205135, x8="m\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_239:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20105A, x8="y\x04\x00\x00"
-data_4C1D245C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D245C, 0x1D2468
-data_4C1D2468:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2468, 0x1D2474
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_42, key=0x205235, x8="m\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_240:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D15A4, key=0x20385A, x8="{\x06\x00\x00"
-data_4C1D2480:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2480, 0x1D248C
-data_4C1D248C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D248C, 0x1D2498
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200036, x8="k\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_241:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D19B8, key=0x20515A, x8=";\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201036, x8="e\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_242:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20005B, x8="k\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200037, x8="\x7F\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_243:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20005C, x8="x\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_81, key=0x203037, x8="\x7F\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_244:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20105C, x8="o\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200038, x8="0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_245:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20005D, x8="j\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200438, x8="0\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_246:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1C34, key=0x20405D, x8="r\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200838, x8="0\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_247:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1CA0, key=0x20005E, x8="k\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201038, x8="0\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_248:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20005F, x8=">\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_85, key=0x202038, x8="0\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_249:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20085F, x8=">\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_86, key=0x203038, x8="3\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_250:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20105F, x8="|\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_87, key=0x204038, x8="1\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_251:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1CDC, key=0x20405F, x8=">\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_9, key=0x204438, x8="1\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_252:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1514, key=0x200060, x8="y\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205038, x8="9\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_253:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200061, x8="w\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_143, key=0x205438, x8=";\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_254:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1D24, key=0x202061, x8="x\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205838, x8="8\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_255:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200062, x8="\x09\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_145, key=0x206038, x8=":\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_256:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201062, x8="\x09\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_146, key=0x206438, x8=":\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_257:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200063, x8="\x15\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_89, key=0x206838, x8=":\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_258:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2138, key=0x201063, x8="z\x06\x00\x00"
-data_4C1D2570:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2570, 0x1D257C
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200039, x8="4\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_259:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201064, x8="~\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201039, x8="5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_260:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E2C, key=0x202064, x8="\x13\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201839, x8="5\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_261:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D21E0, key=0x204064, x8="r\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_165, key=0x20003A, x8="7\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_262:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200065, x8="j\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_93, key=0x20203A, x8="7\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_263:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201065, x8="b\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20003B, x8="2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_264:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E5C, key=0x202065, x8="l\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103B, x8="2\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_265:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200066, x8="j\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_97, key=0x20203B, x8="4\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_266:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E68, key=0x202066, x8="l\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20503B, x8="9\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_267:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D10F4, key=0x200067, x8="x\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20513B, x8="9\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_268:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D22A0, key=0x201067, x8="t\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20003C, x8="6\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_269:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D22D0, key=0x202067, x8="r\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103C, x8="6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_270:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1EC8, key=0x203067, x8="s\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20403C, x8="6\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_271:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200068, x8="&\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20503C, x8="6\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_272:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200069, x8="!\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20583C, x8="6\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_273:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1694, key=0x204069, x8="&\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_30, key=0x20003D, x8="8\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_274:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20006A, x8="$\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20083D, x8="8\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_275:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20006B, x8="%\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20183D, x8="8\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_276:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1F4C, key=0x20206B, x8="%\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_100, key=0x20203D, x8="8\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_277:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D16D0, key=0x20406B, x8="&\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_102, key=0x20303D, x8="9\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_278:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20006C, x8="'\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20403D, x8="8\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_279:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1AA8, key=0x20106C, x8="'\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20483D, x8=";\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_280:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20006D, x8="I\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204C3D, x8=";\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_281:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20006E, x8="`\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20503D, x8=";\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_282:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20006F, x8="I\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_105, key=0x20603D, x8=":\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_283:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D10AC, key=0x200070, x8="\x0E\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20613D, x8=":\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_284:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2024, key=0x202070, x8="\x0D\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20003E, x8="<\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_285:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D203C, key=0x202870, x8="\x0D\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20083E, x8=">\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_286:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1C58, key=0x203070, x8="\x0D\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103E, x8="<\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_287:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2294, key=0x203870, x8="\x0D\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_106, key=0x20203E, x8="?\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_288:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D17C0, key=0x200071, x8="z\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20303E, x8="?\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_289:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D17E4, key=0x201071, x8="}\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20383E, x8="9\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_290:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2060, key=0x202071, x8="~\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20003F, x8="?\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_291:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1B68, key=0x200072, x8="\x0F\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20083F, x8="=\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_292:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1868, key=0x204072, x8="\x0B\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_44, key=0x200C3F, x8="<\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_293:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200073, x8="z\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103F, x8="k\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_294:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200074, x8="{\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200040, x8="L\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_295:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x203074, x8="{\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200041, x8="M\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_296:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200075, x8="z\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200441, x8="M\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_297:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200076, x8="|\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200841, x8="M\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_298:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2198, key=0x204076, x8="|\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201841, x8="M\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_299:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D21C8, key=0x200077, x8="z\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203041, x8="M\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_300:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200078, x8="|\x01\x00\x00"
-data_4C1D2774:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2774, 0x1D2780
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203441, x8="M\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_301:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x200079, x8="|\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203841, x8="M\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_302:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x201079, x8="~\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200042, x8="N\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_303:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D22E8, key=0x20007A, x8="|\x03\x00\x00"
-data_4C1D27A4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D27A4, 0x1D27B0
-data_4C1D27B0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D27B0, 0x1D27BC
-data_4C1D27BC:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D27BC, 0x1D27C8
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201042, x8="N\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_304:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2774, key=0x20117D, x8="w\x07\x00\x00"
-data_4C1D27D4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D27D4, 0x1D27E0
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201442, x8="N\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_305:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x20007F, x8="{\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203042, x8="O\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_306:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x240800, x8="R\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203442, x8="O\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_307:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x242800, x8="R\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203842, x8="O\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_308:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D18BC, key=0x242000, x8="R\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205042, x8="N\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_309:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x243800, x8="R\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200043, x8="O\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_310:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x246000, x8="R\x06\x00\x00"
-data_4C1D2828:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x1D2828, 0x1D2834
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205043, x8="O\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_311:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x245800, x8="S\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205843, x8="O\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_312:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D12D4, key=0x244000, x8="S\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200044, x8="B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_313:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D15F8, key=0x242C00, x8="Q\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200045, x8="C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_314:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1FC4, key=0x242E00, x8="Q\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200046, x8="F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_315:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2438, key=0x240008, x8="P\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200047, x8="D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_316:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2444, key=0x240808, x8="P\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200847, x8="D\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_317:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D245C, key=0x242008, x8="P\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201047, x8="D\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_318:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2468, key=0x243008, x8="P\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_14, key=0x201847, x8="D\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_319:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1B44, key=0x246008, x8="P\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_138, key=0x202047, x8="E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_320:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1B20, key=0x244808, x8="P\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203047, x8="E\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_321:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D13D0, key=0x245808, x8="S\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205047, x8="D\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_322:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2480, key=0x244008, x8="S\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_68, key=0x200048, x8="@\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_323:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x242C08, x8="Q\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200049, x8="A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_324:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2570, key=0x245E08, x8="Q\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200449, x8="A\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_325:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D27A4, key=0x260000, x8="\xF0\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201049, x8="A\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_326:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D27B0, key=0x260001, x8="\xF3\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201449, x8="A\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_327:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260009, x8="\xF2\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_141, key=0x202049, x8="A\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_328:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D27D4, key=0x260003, x8="\xF7\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203049, x8="@\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_329:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260008, x8="\xF3\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204049, x8="K\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_330:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D27BC, key=0x260002, x8="\xFE\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205049, x8="@\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_331:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260010, x8="\xF7\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_82, key=0x20004A, x8="J\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_332:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260011, x8="\xF8\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_5, key=0x20004B, x8="H\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_333:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260018, x8="\xF2\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20044B, x8="H\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_334:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1BC8, key=0x260021, x8="\xF6\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_6, key=0x20084B, x8="H\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_335:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2144, key=0x260020, x8="\xF1\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_148, key=0x20404B, x8="K\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_336:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260028, x8="\xF5\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_149, key=0x20484B, x8="I\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_337:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260019, x8="\xF4\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004C, x8="H\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_338:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x26001A, x8="\xF5\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004D, x8="K\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_339:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2054, key=0x26001B, x8="\xF9\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004E, x8="o\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_340:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x26001D, x8="\xFA\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_170, key=0x20204E, x8="o\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_341:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1838, key=0x26001C, x8="\xFB\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20304E, x8="o\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_342:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x26001F, x8="\xFF\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004F, x8="J\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_343:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x26001E, x8="\xF6\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_171, key=0x20204F, x8="H\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_344:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D15D4, key=0x260034, x8="\xFC\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20304F, x8="H\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_345:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x260038, x8="\xFD\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200050, x8="u\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_346:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2084, key=0x220000, x8="\x80\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_103, key=0x200450, x8="q\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_347:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1CAC, key=0x220010, x8="\x81\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_104, key=0x200850, x8="u\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_348:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2234, key=0x110000, x8="\xF0\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_278, key=0x200C50, x8="w\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_349:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1298, key=0x100000, x8="\x80\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_36, key=0x201050, x8="v\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_350:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2828, key=0x100001, x8="\x81\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_279, key=0x201450, x8="x\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_351:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x100002, x8="\x82\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_280, key=0x201850, x8="w\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_352:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D22C4, key=0x100003, x8="\x83\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_172, key=0x202050, x8="q\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_353:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1964, key=0x100004, x8="\x84\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203050, x8="v\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_354:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x100005, x8="\x85\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_37, key=0x204050, x8="^\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_355:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x100006, x8="\x86\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204450, x8="o\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_356:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1364, key=0x100007, x8="\x87\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204850, x8="u\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_357:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D137C, key=0x100008, x8="\x88\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_38, key=0x206050, x8="z\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_358:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D248C, key=0x100009, x8="\x89\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_190, key=0x200051, x8="v\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_359:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x10000A, x8="\x8A\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_289, key=0x200451, x8="}\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_360:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1BF8, key=0x10000B, x8="\x8B\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_40, key=0x200851, x8="u\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_361:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1C40, key=0x10000C, x8="\x8C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_107, key=0x200C51, x8="x\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_362:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x10000D, x8="\x8D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201051, x8="v\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_363:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D14FC, key=0x10000E, x8="\x8E\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_227, key=0x202051, x8="x\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_364:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x10000F, x8="\x8F\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203051, x8="}\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_365:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x100010, x8="\x90\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205851, x8="y\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_366:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2420, key=0x100011, x8="\x91\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_292, key=0x206051, x8="p\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_367:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E14, key=0x100012, x8="\x92\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_45, key=0x206851, x8="y\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_368:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x100013, x8="\x93\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_46, key=0x207051, x8="p\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_369:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1634, key=0x100014, x8="\x94\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_111, key=0x207451, x8="w\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_370:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1E98, key=0x100015, x8="\x95\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x207851, x8="n\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_371:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1EE0, key=0x100016, x8="\x96\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200052, x8="H\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_372:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x100017, x8="\x97\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200053, x8="u\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_373:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D16A0, key=0x100018, x8="\x98\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_176, key=0x202053, x8="<\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_374:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D16C4, key=0x100019, x8="\x99\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202853, x8="u\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_375:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D16DC, key=0x10001A, x8="\x9A\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_177, key=0x203053, x8="v\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_376:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1F94, key=0x10001B, x8="\x9B\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_178, key=0x204053, x8="p\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_377:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D140C, key=0x10001C, x8="\x9C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_300, key=0x200054, x8="\x1B\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_378:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1FF4, key=0x10001D, x8="\x9D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_180, key=0x202054, x8="~\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_379:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	key=0x10001E, x8="\x9E\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202854, x8="q\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_380:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1C94, key=0x10001F, x8="\x9F\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203054, x8="7\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_381:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1820, key=0x100020, x8="\xA0\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203854, x8="\x1A\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_382:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1880, key=0x100021, x8="\xA1\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_50, key=0x204054, x8="\x7F\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_383:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2090, key=0x100022, x8="\xA2\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204154, x8="q\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_384:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D20B4, key=0x100023, x8="\xA3\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204254, x8="q\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_385:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2120, key=0x100024, x8="\xA4\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204454, x8="\x7F\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_386:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D21A4, key=0x100025, x8="\xA5\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204854, x8="q\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_387:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D1610, key=0x100026, x8="\xA6\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204C54, x8="}\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_388:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_4C1D2228, key=0x100027, x8="\xA7\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_209, key=0x205054, x8="q\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_389:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_302, key=0x205454, x8="z\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_390:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x206054, x8="r\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_391:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_304, key=0x206854, x8="r\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_392:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_306, key=0x200055, x8="j\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_393:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_181, key=0x202055, x8="j\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_394:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200056, x8="w\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_395:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_229, key=0x200856, x8="x\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_396:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_196, key=0x202056, x8="y\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_397:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_54, key=0x204056, x8="w\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_398:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204856, x8="}\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_399:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200057, x8=".\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_400:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_201, key=0x202057, x8="s\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_401:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_202, key=0x203057, x8="~\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_402:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_57, key=0x204057, x8="s\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_403:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204857, x8="{\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_404:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200058, x8="t\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_405:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201058, x8="l\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_406:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_205, key=0x202058, x8="l\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_407:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203058, x8="t\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_408:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_206, key=0x204058, x8="|\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_409:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200059, x8="k\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_410:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201059, x8="i\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_411:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201459, x8="p\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_412:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201859, x8="g\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_413:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_136, key=0x201C59, x8="?\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_414:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_208, key=0x202059, x8="9\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_415:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_32, key=0x202259, x8="e\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_416:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_34, key=0x202459, x8="l\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_417:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_277, key=0x202659, x8="p\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_418:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_210, key=0x202859, x8="b\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_419:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005A, x8="f\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_420:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20085A, x8="g\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_421:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20105A, x8="y\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_422:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_219, key=0x20205A, x8="|\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_423:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20305A, x8="{\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_424:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_108, key=0x20385A, x8="{\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_425:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_221, key=0x20405A, x8="<\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_426:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_67, key=0x20505A, x8=";\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_427:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_195, key=0x20515A, x8=";\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_428:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005B, x8="k\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_429:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005C, x8="x\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_430:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20105C, x8="o\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_431:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005D, x8="j\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_432:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_248, key=0x20405D, x8="r\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_433:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_257, key=0x20005E, x8="k\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_434:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005F, x8=">\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_435:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20085F, x8=">\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_436:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20105F, x8="|\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_437:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_262, key=0x20405F, x8=">\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_438:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_96, key=0x200060, x8="y\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_439:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200061, x8="w\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_440:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_268, key=0x202061, x8="x\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_441:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200062, x8="\x09\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_442:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201062, x8="\x09\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_443:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200063, x8="\x15\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_444:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_355, key=0x201063, x8="z\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_445:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200064, x8="l\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_446:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201064, x8="~\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_447:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_290, key=0x202064, x8="\x13\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_448:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_369, key=0x204064, x8="r\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_449:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200065, x8="j\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_450:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201065, x8="b\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_451:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_294, key=0x202065, x8="l\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_452:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200066, x8="j\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_453:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_295, key=0x202066, x8="l\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_454:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_8, key=0x200067, x8="x\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_455:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_385, key=0x201067, x8="t\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_456:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_389, key=0x202067, x8="r\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_457:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_303, key=0x203067, x8="s\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_458:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200068, x8="&\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_459:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200069, x8="!\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_460:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_128, key=0x204069, x8="&\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_461:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006A, x8="$\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_462:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006B, x8="%\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_463:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_314, key=0x20206B, x8="%\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_464:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_133, key=0x20406B, x8="&\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_465:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006C, x8="'\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_466:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_215, key=0x20106C, x8="'\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_467:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006D, x8="I\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_468:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006E, x8="`\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_469:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006F, x8="I\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_470:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_2, key=0x200070, x8="\x0E\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_471:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_332, key=0x202070, x8="\x0D\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_472:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_334, key=0x202870, x8="\x0D\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_473:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_251, key=0x203070, x8="\x0D\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_474:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_384, key=0x203870, x8="\x0D\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_475:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_153, key=0x200071, x8="z\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_476:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_156, key=0x201071, x8="}\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_477:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_337, key=0x202071, x8="~\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_478:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_231, key=0x200072, x8="\x0F\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_479:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_167, key=0x204072, x8="\x0B\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_480:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200073, x8="z\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_481:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200074, x8="{\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_482:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203074, x8="{\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_483:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200075, x8="z\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_484:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200076, x8="|\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_485:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_363, key=0x204076, x8="|\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_486:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_367, key=0x200077, x8="z\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_487:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200078, x8="|\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_488:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_373, key=0x204078, x8=")\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_489:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200079, x8="|\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_490:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201079, x8="~\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_491:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_391, key=0x20007A, x8="|\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_492:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_192, key=0x20007B, x8="}\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_493:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_199, key=0x20007C, x8="{\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_494:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_204, key=0x20007D, x8="{\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_495:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_488, key=0x20117D, x8="w\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_496:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20007E, x8="}\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_497:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20007F, x8="{\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_498:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x240800, x8="R\x01\x00\x00"
+VoiceDirPartRefFind_Table_p0_499:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x242800, x8="R\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_500:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_174, key=0x242000, x8="R\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_501:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x243800, x8="R\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_502:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x246000, x8="R\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_503:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x245000, x8="R\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_504:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x245800, x8="S\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_505:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_48, key=0x244000, x8="S\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_506:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_115, key=0x242C00, x8="Q\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_507:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_324, key=0x242E00, x8="Q\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_508:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_419, key=0x240008, x8="P\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_509:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_420, key=0x240808, x8="P\x03\x00\x00"
+VoiceDirPartRefFind_Table_p0_510:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_422, key=0x242008, x8="P\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_511:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_423, key=0x243008, x8="P\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_512:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_228, key=0x246008, x8="P\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_513:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_225, key=0x244808, x8="P\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_514:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_69, key=0x245808, x8="S\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_515:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_425, key=0x244008, x8="S\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_516:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x242C08, x8="Q\x04\x00\x00"
+VoiceDirPartRefFind_Table_p0_517:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_445, key=0x245E08, x8="Q\x05\x00\x00"
+VoiceDirPartRefFind_Table_p0_518:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_492, key=0x260000, x8="\xF0\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_519:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_493, key=0x260001, x8="\xF3\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_520:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260009, x8="\xF2\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_521:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_496, key=0x260003, x8="\xF7\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_522:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260008, x8="\xF3\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_523:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_494, key=0x260002, x8="\xFE\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_524:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260010, x8="\xF7\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_525:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260011, x8="\xF8\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_526:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260018, x8="\xF2\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_527:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_239, key=0x260021, x8="\xF6\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_528:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_356, key=0x260020, x8="\xF1\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_529:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260028, x8="\xF5\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_530:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260019, x8="\xF4\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_531:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001A, x8="\xF5\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_532:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_336, key=0x26001B, x8="\xF9\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_533:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001D, x8="\xFA\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_534:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_163, key=0x26001C, x8="\xFB\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_535:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001F, x8="\xFF\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_536:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001E, x8="\xF6\x02\x00\x00"
+VoiceDirPartRefFind_Table_p0_537:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_112, key=0x260034, x8="\xFC\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_538:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260038, x8="\xFD\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_539:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_340, key=0x220000, x8="\x80\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_540:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_258, key=0x220010, x8="\x81\x07\x00\x00"
+VoiceDirPartRefFind_Table_p0_541:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_376, key=0x110000, x8="\xF0\x06\x00\x00"
+VoiceDirPartRefFind_Table_p0_542:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_43, key=0x100000, x8="\x80\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_543:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_503, key=0x100001, x8="\x81\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_544:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100002, x8="\x82\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_545:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_388, key=0x100003, x8="\x83\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_546:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_188, key=0x100004, x8="\x84\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_547:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100005, x8="\x85\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_548:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100006, x8="\x86\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_549:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_60, key=0x100007, x8="\x87\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_550:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_62, key=0x100008, x8="\x88\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_551:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_426, key=0x100009, x8="\x89\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_552:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10000A, x8="\x8A\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_553:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_243, key=0x10000B, x8="\x8B\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_554:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_249, key=0x10000C, x8="\x8C\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_555:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10000D, x8="\x8D\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_556:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_94, key=0x10000E, x8="\x8E\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_557:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10000F, x8="\x8F\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_558:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100010, x8="\x90\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_559:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_417, key=0x100011, x8="\x91\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_560:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_288, key=0x100012, x8="\x92\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_561:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100013, x8="\x93\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_562:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_120, key=0x100014, x8="\x94\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_563:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_299, key=0x100015, x8="\x95\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_564:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_305, key=0x100016, x8="\x96\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_565:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100017, x8="\x97\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_566:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_129, key=0x100018, x8="\x98\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_567:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_132, key=0x100019, x8="\x99\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_568:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_134, key=0x10001A, x8="\x9A\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_569:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_320, key=0x10001B, x8="\x9B\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_570:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_74, key=0x10001C, x8="\x9C\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_571:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_328, key=0x10001D, x8="\x9D\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_572:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10001E, x8="\x9E\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_573:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_256, key=0x10001F, x8="\x9F\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_574:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_161, key=0x100020, x8="\xA0\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_575:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_169, key=0x100021, x8="\xA1\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_576:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_341, key=0x100022, x8="\xA2\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_577:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_344, key=0x100023, x8="\xA3\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_578:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_353, key=0x100024, x8="\xA4\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_579:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_364, key=0x100025, x8="\xA5\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_580:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_117, key=0x100026, x8="\xA6\x00\x00\x00"
+VoiceDirPartRefFind_Table_p0_581:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
+	REC_VoiceDirPartRefFind_Table_p0	p0=VoiceDirPartRefFind_Table_p0_375, key=0x100027, x8="\xA7\x00\x00\x00"
 
 Str_y:	.asciz "y"
 
@@ -30886,8 +30934,15 @@ BitmapNx_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the b
 Bitmap_4C09FE42_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapGm2 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C09FE42_Pixels.png)
 	.incbin	"build/bitmaps/Bitmap_4C09FE42_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/Bitmap_4C09FE42_Pixels.png
 
-func_4C01900D_Table:	# REC_DrawString_ArgA0 (8 bytes): the layout DrawString 0x4C018178 reads through its argument a0 (passed by DrawStringCentered 0x4C0186A4 `call DrawString_entry, [d2,d3,a2,a3], 0x30`); the layout DrawStringCentered 0x4C0186A4 reads through its argument a0 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls); +1 more routines
-	REC_DrawString_ArgA0	f0=565, f2=6, f4=634, f6=23
+func_4C01900D_Table:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; func_4C01824C_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
+	.word	565
+func_4C01824C_entry_L1b_Var:	# s16, a constant; read / written by func_4C01824C_entry_L1b 0x4C018269: `movhu (a0), d0`; func_4C01824C_entry_L1b 0x4C018269: `movhu d0, (a0)` ...
+	.word	6
+func_4C01824C_entry_L3d_Var:	# s16, a constant; read / written by func_4C01824C_entry_L3d 0x4C01828B: `movhu (a0), d0`; func_4C01824C_entry_L3d 0x4C01828B: `movhu d0, (a0)` ...
+	.word	634
+func_4C01824C_entry_L55_Var:	# s16, a constant; read / written by func_4C01824C_entry_L55 0x4C0182A3: `movhu (a0), d0`; func_4C01824C_entry_L55 0x4C0182A3: `movhu d0, (a0)` ...
+	.word	23
+
 DrawStringCentered_ArgA1_0:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x4C0186A4 reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
 	REC_DrawStringCentered_ArgA1	f0=600, f2=15
 
@@ -30926,33 +30981,33 @@ VocalistGrid_L3ab_Table:
 	.long	AcVocalGridBoxProc_L17f_Table+24
 	.long	AcVocalGridBoxProc_L17f_Table+30
 
-Str_C_13:	.asciz "C "
-Str_D_a0_5:	.asciz "D~a0"
-Str_D_10:	.asciz "D "
-Str_E_a0_5:	.asciz "E~a0"
-Str_E_8:	.asciz "E "
-Str_F_11:	.asciz "F "
-Str_F_9e_5:	.asciz "F~9e"
-Str_G_9:	.asciz "G "
-Str_A_a0_5:	.asciz "A~a0"
-Str_A_26:	.asciz "A "
-Str_B_a0_5:	.asciz "B~a0"
-Str_B_12:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_12
+Str_C_12:	.asciz "C "
+Str_D_a0_4:	.asciz "D~a0"
+Str_D_9:	.asciz "D "
+Str_E_a0_4:	.asciz "E~a0"
+Str_E_7:	.asciz "E "
+Str_F_10:	.asciz "F "
+Str_F_9e_4:	.asciz "F~9e"
+Str_G_8:	.asciz "G "
+Str_A_a0_4:	.asciz "A~a0"
+Str_A_25:	.asciz "A "
+Str_B_a0_4:	.asciz "B~a0"
+Str_B_11:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_11
 
 VocalistGrid_L231_Table:
-	.long	Str_C_13
-	.long	Str_D_a0_5
-	.long	Str_D_10
-	.long	Str_E_a0_5
-	.long	Str_E_8
-	.long	Str_F_11
-	.long	Str_F_9e_5
-	.long	Str_G_9
-	.long	Str_A_a0_5
-	.long	Str_A_26
-	.long	Str_B_a0_5
-	.long	Str_B_12
+	.long	Str_C_12
+	.long	Str_D_a0_4
+	.long	Str_D_9
+	.long	Str_E_a0_4
+	.long	Str_E_7
+	.long	Str_F_10
+	.long	Str_F_9e_4
+	.long	Str_G_8
+	.long	Str_A_a0_4
+	.long	Str_A_25
+	.long	Str_B_a0_4
+	.long	Str_B_11
 
 Str_2_28:	.asciz "-2"
 Str_1_27:	.asciz "-1"
@@ -31131,9 +31186,9 @@ Str_2d_3d_3d_2:	.asciz "+- %2d (%3d - %3d)"
 	.align	4, 0xFF	# pad after Str_2d_3d_3d_2
 Str_2d_3d_3d:	.asciz "+- %2d (%3d - %3d)"
 	.align	4, 0xFF	# pad after Str_2d_3d_3d
-Str_A_25:	.asciz " A"
-Str_B_11:	.asciz " B"
-Str_C_12:	.asciz " C"
+Str_A_24:	.asciz " A"
+Str_B_10:	.asciz " B"
+Str_C_11:	.asciz " C"
 Str_1_25:	.asciz " 1"
 Str_2_26:	.asciz " 2"
 Str_3_22:	.asciz " 3"
@@ -31147,9 +31202,9 @@ Str_10_6:	.asciz "10"
 	.align	4, 0xFF	# pad after Str_10_6
 
 AcPmemBankSelProc_L1c2_Table:
-	.long	Str_A_25
-	.long	Str_B_11
-	.long	Str_C_12
+	.long	Str_A_24
+	.long	Str_B_10
+	.long	Str_C_11
 	.long	Str_1_25
 	.long	Str_2_26
 	.long	Str_3_22
@@ -31501,8 +31556,15 @@ ptrs_4C1DF8A4:
 Str_TT_MDMODE:	.asciz "TT_MDMODE"
 	.align	4, 0xFF	# pad after Str_TT_MDMODE
 
-DrawString_ArgA0_1:	# REC_DrawString_ArgA0 (8 bytes): the layout DrawString 0x4C018178 reads through its argument a0 (passed by DrawStringCentered 0x4C0186A4 `call DrawString_entry, [d2,d3,a2,a3], 0x30`); the layout DrawStringCentered 0x4C0186A4 reads through its argument a0 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls); +1 more routines
-	REC_DrawString_ArgA0	f0=590, f2=168, f4=629, f6=186
+DrawString_ArgA0_1:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; func_4C01824C_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
+	.word	590
+func_4C01824C_entry_L1b_Var_2:	# s16, a constant; read / written by func_4C01824C_entry_L1b 0x4C018269: `movhu (a0), d0`; func_4C01824C_entry_L1b 0x4C018269: `movhu d0, (a0)` ...
+	.word	168
+func_4C01824C_entry_L3d_Var_2:	# s16, a constant; read / written by func_4C01824C_entry_L3d 0x4C01828B: `movhu (a0), d0`; func_4C01824C_entry_L3d 0x4C01828B: `movhu d0, (a0)` ...
+	.word	629
+func_4C01824C_entry_L55_Var_2:	# s16, a constant; read / written by func_4C01824C_entry_L55 0x4C0182A3: `movhu (a0), d0`; func_4C01824C_entry_L55 0x4C0182A3: `movhu d0, (a0)` ...
+	.word	186
+
 DrawStringCentered_ArgA1_1:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x4C0186A4 reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
 	REC_DrawStringCentered_ArgA1	f0=613, f2=177
 DrawStringCentered_ArgA1_2:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x4C0186A4 reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
@@ -31555,9 +31617,9 @@ Str_3d_02xHEX_10:	.asciz " %3d (%02xHEX) "
 Str_3d_02xHEX_9:	.asciz " %3d (%02xHEX) "
 Str_5d_2:	.asciz " %5d )"
 	.align	4, 0xFF	# pad after Str_5d_2
-Str_A_24:	.asciz " A"
-Str_B_10:	.asciz " B"
-Str_C_11:	.asciz " C"
+Str_A_23:	.asciz " A"
+Str_B_9:	.asciz " B"
+Str_C_10:	.asciz " C"
 Str_1_22:	.asciz " 1"
 Str_2_23:	.asciz " 2"
 Str_3_19:	.asciz " 3"
@@ -31571,9 +31633,9 @@ Str_10_5:	.asciz "10"
 	.align	4, 0xFF	# pad after Str_10_5
 
 MidiPmemOutLGrid_L26f_Table:
-	.long	Str_A_24
-	.long	Str_B_10
-	.long	Str_C_11
+	.long	Str_A_23
+	.long	Str_B_9
+	.long	Str_C_10
 	.long	Str_1_22
 	.long	Str_2_23
 	.long	Str_3_19

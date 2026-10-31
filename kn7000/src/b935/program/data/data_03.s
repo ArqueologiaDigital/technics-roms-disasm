@@ -15000,25 +15000,11 @@ MssNameFunc_Table:	# 1084 x u16, 0..1079; read by MssNameFunc 0x4847AF9B: `movhu
 	tab_u16	0, 1, 2, 3	# [1080]
 	.space	2, 0xFF
 
-StyleGenreTable_p4_p12_0:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=4, x2="\x05\x00"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339916, 0x33991C
-data_4873991C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33991C, 0x339926
-data_48739926:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339926, 0x339930
-data_48739930:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339930, 0x33993A
-data_4873993A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33993A, 0x339944
-data_48739944:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339944, 0x33994E
+StyleGenreTable_p4_p12_0:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 29 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\x04"
+	tab_u16	1280, 1536, 1792, 65280, 2303, 2304, 2560, 2816, 65280, 3327, 3328, 3584, 3840, 65280, 4351, 4352	# [0]
+	tab_u16	4608, 4864, 65280, 6399, 6400, 6656, 6912, 65280, 7423, 7424, 7680, 7936, 65280	# [16]
+	.space	1, 0xFF
 
 Str_empty_282:	.asciz " "
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -15056,7 +15042,7 @@ Str_empty_278:	.asciz "\\"
 Str_empty_277:	.asciz "`"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x3399BE, 0x3399C6
-Str_d_2:	.asciz "d"
+Str_d_4:	.asciz "d"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x3399C8, 0x3399D0
 Str_h_2:	.asciz "h"
@@ -15254,573 +15240,117 @@ data_48739C3C:
 StyleGenreTable_p4_p4_1:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=44, x2="-\x00.\x00", f6=47
 	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_1
-StyleGenreTable_p4_p12_1:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=184, x2="\xB9\x00"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C54, 0x339C5A
-data_48739C5A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C5A, 0x339C64
-data_48739C64:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C64, 0x339C6E
-data_48739C6E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C6E, 0x339C78
-data_48739C78:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C78, 0x339C82
-data_48739C82:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C82, 0x339C8C
-data_48739C8C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C8C, 0x339C96
-data_48739C96:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339C96, 0x339CA0
-data_48739CA0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CA0, 0x339CAA
-data_48739CAA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CAA, 0x339CB4
-data_48739CB4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CB4, 0x339CBE
-data_48739CBE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CBE, 0x339CC8
-data_48739CC8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CC8, 0x339CD2
-data_48739CD2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CD2, 0x339CDC
-data_48739CDC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CDC, 0x339CE6
-data_48739CE6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CE6, 0x339CF0
-data_48739CF0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CF0, 0x339CFA
-data_48739CFA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339CFA, 0x339D04
+StyleGenreTable_p4_p12_1:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 89 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\xB8"
+	tab_u16	47360, 47616, 47872, 65280, 54527, 54528, 54784, 55040, 65280, 22783, 22786, 23042, 23298, 65282, 23807, 23810	# [0]
+	tab_u16	24066, 24322, 65282, 24831, 24834, 25090, 25346, 65282, 25855, 25858, 26114, 26370, 65282, 27903, 27906, 28162	# [16]
+	tab_u16	28418, 65282, 28927, 28930, 29186, 29442, 65282, 29951, 29954, 30210, 30466, 65282, 30975, 30978, 31234, 31490	# [32]
+	tab_u16	65282, 31999, 32002, 32258, 32514, 65282, 34047, 34050, 34306, 34562, 65282, 39167, 39170, 39426, 39682, 65282	# [48]
+	tab_u16	41215, 41218, 41474, 41730, 65282, 31999, 32003, 32259, 32515, 65283, 36095, 36099, 36355, 36611, 65283, 42239	# [64]
+	tab_u16	42243, 42499, 42755, 65283, 54527, 54531, 54787, 55043, 65283	# [80]
+	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_1
 StyleGenreTable_p4_p4_2:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=108, x2="m\x00n\x00", f6=111
 	.space	2, 0xFF
-StyleGenreTable_p4_p12_2:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=544, x2="!\x02"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D12, 0x339D18
-data_48739D18:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D18, 0x339D22
-data_48739D22:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D22, 0x339D2C
-data_48739D2C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D2C, 0x339D36
-data_48739D36:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D36, 0x339D40
-data_48739D40:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D40, 0x339D4A
-data_48739D4A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D4A, 0x339D54
-data_48739D54:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D54, 0x339D5E
-data_48739D5E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D5E, 0x339D68
-data_48739D68:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D68, 0x339D72
-data_48739D72:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D72, 0x339D7C
-data_48739D7C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D7C, 0x339D86
-data_48739D86:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D86, 0x339D90
-data_48739D90:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D90, 0x339D9A
-data_48739D9A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339D9A, 0x339DA4
+StyleGenreTable_p4_p12_2:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 74 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0=" "
+	tab_u16	8450, 8706, 8962, 65282, 9471, 9474, 9730, 9986, 65282, 10495, 10498, 10754, 11010, 65282, 11519, 11522	# [0]
+	tab_u16	11778, 12034, 65282, 12543, 12546, 12802, 13058, 65282, 13567, 13570, 13826, 14082, 65282, 14591, 14594, 14850	# [16]
+	tab_u16	15106, 65282, 15615, 15618, 15874, 16130, 65282, 16639, 16642, 16898, 17154, 65282, 17663, 17666, 17922, 18178	# [32]
+	tab_u16	65282, 18687, 18690, 18946, 19202, 65282, 19711, 19714, 19970, 20226, 65282, 20735, 20738, 20994, 21250, 65282	# [48]
+	tab_u16	33023, 33026, 33282, 33538, 65282, 36095, 36098, 36354, 36610, 65282	# [64]
+	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_2
 StyleGenreTable_p4_p4_3:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=140, x2="\x8D\x00\x8E\x00", f6=143
 	.space	2, 0xFF
-StyleGenreTable_p4_p12_3:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=328, x2="I\x01"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DB2, 0x339DB8
-data_48739DB8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DB8, 0x339DC2
-data_48739DC2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DC2, 0x339DCC
-data_48739DCC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DCC, 0x339DD6
-data_48739DD6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DD6, 0x339DE0
-data_48739DE0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DE0, 0x339DEA
-data_48739DEA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DEA, 0x339DF4
-data_48739DF4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DF4, 0x339DFE
-data_48739DFE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339DFE, 0x339E08
-data_48739E08:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E08, 0x339E12
-data_48739E12:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E12, 0x339E1C
-data_48739E1C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E1C, 0x339E26
-data_48739E26:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E26, 0x339E30
-data_48739E30:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E30, 0x339E3A
-data_48739E3A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E3A, 0x339E44
-data_48739E44:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E44, 0x339E4E
-data_48739E4E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E4E, 0x339E58
-data_48739E58:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E58, 0x339E62
-data_48739E62:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E62, 0x339E6C
-data_48739E6C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E6C, 0x339E76
-data_48739E76:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E76, 0x339E80
-data_48739E80:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E80, 0x339E8A
-data_48739E8A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E8A, 0x339E94
-data_48739E94:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E94, 0x339E9E
-data_48739E9E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339E9E, 0x339EA8
-data_48739EA8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EA8, 0x339EB2
+StyleGenreTable_p4_p12_3:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 129 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="H"
+	tab_u16	18689, 18945, 19201, 65281, 19711, 19713, 19969, 20225, 65281, 25855, 25857, 26113, 26369, 65281, 26879, 26881	# [0]
+	tab_u16	27137, 27393, 65281, 2303, 2307, 2563, 2819, 65283, 3327, 3331, 3587, 3843, 65283, 4351, 4355, 4611	# [16]
+	tab_u16	4867, 65283, 5375, 5379, 5635, 5891, 65283, 6399, 6403, 6659, 6915, 65283, 7423, 7427, 7683, 7939	# [32]
+	tab_u16	65283, 8447, 8451, 8707, 8963, 65283, 9471, 9475, 9731, 9987, 65283, 10495, 10499, 10755, 11011, 65283	# [48]
+	tab_u16	11519, 11523, 11779, 12035, 65283, 14591, 14595, 14851, 15107, 65283, 18687, 18691, 18947, 19203, 65283, 20735	# [64]
+	tab_u16	20739, 20995, 21251, 65283, 21759, 21763, 22019, 22275, 65283, 22783, 22787, 23043, 23299, 65283, 23807, 23811	# [80]
+	tab_u16	24067, 24323, 65283, 24831, 24835, 25091, 25347, 65283, 25855, 25859, 26115, 26371, 65283, 26879, 26883, 27139	# [96]
+	tab_u16	27395, 65283, 27903, 27907, 28163, 28419, 65283, 5375, 5380, 5636, 5892, 65284, 9471, 9476, 9732, 9988	# [112]
+	tab_u16	65284	# [128]
+	.space	1, 0xFF
 StyleGenreTable_p4_p4_4:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=220, x2="\xDD\x00\xDE\x00", f6=223
 	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_4
-StyleGenreTable_p4_p12_4:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=224, x2="\xE1\x00"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EC0, 0x339EC6
-data_48739EC6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EC6, 0x339ED0
-data_48739ED0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339ED0, 0x339EDA
-data_48739EDA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EDA, 0x339EE4
-data_48739EE4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EE4, 0x339EEE
-data_48739EEE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EEE, 0x339EF8
-data_48739EF8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339EF8, 0x339F02
-data_48739F02:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F02, 0x339F0C
-data_48739F0C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F0C, 0x339F16
-data_48739F16:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F16, 0x339F20
-data_48739F20:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F20, 0x339F2A
-data_48739F2A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F2A, 0x339F34
-data_48739F34:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F34, 0x339F3E
-data_48739F3E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F3E, 0x339F48
-data_48739F48:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F48, 0x339F52
-data_48739F52:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F52, 0x339F5C
-data_48739F5C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F5C, 0x339F66
-data_48739F66:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F66, 0x339F70
-data_48739F70:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F70, 0x339F7A
-data_48739F7A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F7A, 0x339F84
-data_48739F84:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F84, 0x339F8E
-data_48739F8E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F8E, 0x339F98
-data_48739F98:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339F98, 0x339FA2
-data_48739FA2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FA2, 0x339FAC
-data_48739FAC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FAC, 0x339FB6
-data_48739FB6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FB6, 0x339FC0
-data_48739FC0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FC0, 0x339FCA
+StyleGenreTable_p4_p12_4:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 134 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\xE0"
+	tab_u16	57600, 57856, 58112, 65280, 58623, 58624, 58880, 59136, 65280, 59647, 59648, 59904, 60160, 65280, 60671, 60672	# [0]
+	tab_u16	60928, 61184, 65280, 61695, 61696, 61952, 62208, 65280, 62719, 62720, 62976, 63232, 65280, 63743, 63744, 64000	# [16]
+	tab_u16	64256, 65280, 64767, 64768, 65024, 65280, 65280, 255, 257, 513, 769, 65281, 1279, 1281, 1537, 1793	# [32]
+	tab_u16	65281, 2303, 2305, 2561, 2817, 65281, 3327, 3329, 3585, 3841, 65281, 4351, 4353, 4609, 4865, 65281	# [48]
+	tab_u16	5375, 5377, 5633, 5889, 65281, 7423, 7425, 7681, 7937, 65281, 8447, 8449, 8705, 8961, 65281, 9471	# [64]
+	tab_u16	9473, 9729, 9985, 65281, 10495, 10497, 10753, 11009, 65281, 38143, 38145, 38401, 38657, 65281, 47359, 47361	# [80]
+	tab_u16	47617, 47873, 65281, 35071, 35074, 35330, 35586, 65282, 40191, 40194, 40450, 40706, 65282, 62719, 62722, 62978	# [96]
+	tab_u16	63234, 65282, 33023, 33027, 33283, 33539, 65283, 43263, 43267, 43523, 43779, 65283, 4351, 4356, 4612, 4868	# [112]
+	tab_u16	65284, 12543, 12548, 12804, 13060, 65284	# [128]
+	.space	1, 0xFF
 StyleGenreTable_p4_p4_5:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=280, x2="\x19\x01\x1A\x01", f6=283
 	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_5
-StyleGenreTable_p4_p12_5:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=304, x2="1\x01"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FD8, 0x339FDE
-data_48739FDE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FDE, 0x339FE8
-data_48739FE8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FE8, 0x339FF2
-data_48739FF2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FF2, 0x339FFC
-data_48739FFC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x339FFC, 0x33A006
-data_4873A006:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A006, 0x33A010
-data_4873A010:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A010, 0x33A01A
-data_4873A01A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A01A, 0x33A024
-data_4873A024:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A024, 0x33A02E
-data_4873A02E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A02E, 0x33A038
-data_4873A038:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A038, 0x33A042
-data_4873A042:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A042, 0x33A04C
-data_4873A04C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A04C, 0x33A056
-data_4873A056:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A056, 0x33A060
-data_4873A060:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A060, 0x33A06A
-data_4873A06A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A06A, 0x33A074
-data_4873A074:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A074, 0x33A07E
-data_4873A07E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A07E, 0x33A088
-data_4873A088:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A088, 0x33A092
-data_4873A092:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A092, 0x33A09C
-data_4873A09C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A09C, 0x33A0A6
-data_4873A0A6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0A6, 0x33A0B0
-data_4873A0B0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0B0, 0x33A0BA
-data_4873A0BA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0BA, 0x33A0C4
-data_4873A0C4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0C4, 0x33A0CE
-data_4873A0CE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0CE, 0x33A0D8
-data_4873A0D8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0D8, 0x33A0E2
-data_4873A0E2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0E2, 0x33A0EC
+StyleGenreTable_p4_p12_5:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 139 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="0"
+	tab_u16	12545, 12801, 13057, 65281, 13567, 13569, 13825, 14081, 65281, 14591, 14593, 14849, 15105, 65281, 15615, 15617	# [0]
+	tab_u16	15873, 16129, 65281, 17663, 17665, 17921, 18177, 65281, 21759, 21761, 22017, 22273, 65281, 22783, 22785, 23041	# [16]
+	tab_u16	23297, 65281, 23807, 23809, 24065, 24321, 65281, 24831, 24833, 25089, 25345, 65281, 27903, 27905, 28161, 28417	# [32]
+	tab_u16	65281, 28927, 28929, 29185, 29441, 65281, 29951, 29953, 30209, 30465, 65281, 30975, 30977, 31233, 31489, 65281	# [48]
+	tab_u16	31999, 32001, 32257, 32513, 65281, 33023, 33025, 33281, 33537, 65281, 34047, 34049, 34305, 34561, 65281, 35071	# [64]
+	tab_u16	35073, 35329, 35585, 65281, 36095, 36097, 36353, 36609, 65281, 37119, 37121, 37377, 37633, 65281, 39167, 39169	# [80]
+	tab_u16	39425, 39681, 65281, 42239, 42241, 42497, 42753, 65281, 43263, 43265, 43521, 43777, 65281, 44287, 44289, 44545	# [96]
+	tab_u16	44801, 65281, 45311, 45313, 45569, 45825, 65281, 46335, 46337, 46593, 46849, 65281, 51455, 51458, 51714, 51970	# [112]
+	tab_u16	65282, 60671, 60674, 60930, 61186, 65282, 7423, 7428, 7684, 7940, 65284	# [128]
+	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_5
 StyleGenreTable_p4_p4_6:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=336, x2="Q\x01R\x01", f6=339
 	.space	2, 0xFF
-StyleGenreTable_p4_p12_6:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=724, x2="\xD5\x02"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A0FA, 0x33A100
-data_4873A100:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A100, 0x33A10A
-data_4873A10A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A10A, 0x33A114
-data_4873A114:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A114, 0x33A11E
-data_4873A11E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A11E, 0x33A128
-data_4873A128:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A128, 0x33A132
-data_4873A132:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A132, 0x33A13C
-data_4873A13C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A13C, 0x33A146
-data_4873A146:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A146, 0x33A150
-data_4873A150:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A150, 0x33A15A
-data_4873A15A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A15A, 0x33A164
-data_4873A164:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A164, 0x33A16E
-data_4873A16E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A16E, 0x33A178
-data_4873A178:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A178, 0x33A182
-data_4873A182:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A182, 0x33A18C
-data_4873A18C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A18C, 0x33A196
+StyleGenreTable_p4_p12_6:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 79 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\xD4"
+	tab_u16	54530, 54786, 55042, 65282, 55551, 55554, 55810, 56066, 65282, 56575, 56578, 56834, 57090, 65282, 57599, 57602	# [0]
+	tab_u16	57858, 58114, 65282, 58623, 58626, 58882, 59138, 65282, 59647, 59650, 59906, 60162, 65282, 63743, 63746, 64002	# [16]
+	tab_u16	64258, 65282, 64767, 64770, 65026, 65282, 65282, 255, 259, 515, 771, 65283, 1279, 1283, 1539, 1795	# [32]
+	tab_u16	65283, 12543, 12547, 12803, 13059, 65283, 13567, 13571, 13827, 14083, 65283, 15615, 15619, 15875, 16131, 65283	# [48]
+	tab_u16	16639, 16643, 16899, 17155, 65283, 17663, 17667, 17923, 18179, 65283, 30975, 30979, 31235, 31491, 65283	# [64]
+	.space	1, 0xFF
 StyleGenreTable_p4_p4_7:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=448, x2="\xC1\x01\xC2\x01", f6=451
 	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_7
-StyleGenreTable_p4_p12_7:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=452, x2="\xC5\x01"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1A4, 0x33A1AA
-data_4873A1AA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1AA, 0x33A1B4
-data_4873A1B4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1B4, 0x33A1BE
-data_4873A1BE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1BE, 0x33A1C8
-data_4873A1C8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1C8, 0x33A1D2
-data_4873A1D2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1D2, 0x33A1DC
-data_4873A1DC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1DC, 0x33A1E6
-data_4873A1E6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1E6, 0x33A1F0
-data_4873A1F0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1F0, 0x33A1FA
-data_4873A1FA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A1FA, 0x33A204
-data_4873A204:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A204, 0x33A20E
+StyleGenreTable_p4_p12_7:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 54 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\xC4"
+	tab_u16	50433, 50689, 50945, 65281, 51455, 51457, 51713, 51969, 65281, 52479, 52481, 52737, 52993, 65281, 54527, 54529	# [0]
+	tab_u16	54785, 55041, 65281, 55551, 55553, 55809, 56065, 65281, 57599, 57601, 57857, 58113, 65281, 60671, 60673, 60929	# [16]
+	tab_u16	61185, 65281, 61695, 61697, 61953, 62209, 65281, 37119, 37123, 37379, 37635, 65283, 38143, 38147, 38403, 38659	# [32]
+	tab_u16	65283, 41215, 41219, 41475, 41731, 65283	# [48]
+	.space	1, 0xFF
 StyleGenreTable_p4_p4_8:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=500, x2="\xF5\x01\xF6\x01", f6=503
 	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_8
-StyleGenreTable_p4_p12_8:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=676, x2="\xA5\x02"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A21C, 0x33A222
-data_4873A222:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A222, 0x33A22C
-data_4873A22C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A22C, 0x33A236
-data_4873A236:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A236, 0x33A240
-data_4873A240:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A240, 0x33A24A
-data_4873A24A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A24A, 0x33A254
-data_4873A254:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A254, 0x33A25E
-data_4873A25E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A25E, 0x33A268
-data_4873A268:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A268, 0x33A272
-data_4873A272:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A272, 0x33A27C
-data_4873A27C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A27C, 0x33A286
+StyleGenreTable_p4_p12_8:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 54 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\xA4"
+	tab_u16	42242, 42498, 42754, 65282, 43263, 43266, 43522, 43778, 65282, 44287, 44290, 44546, 44802, 65282, 45311, 45314	# [0]
+	tab_u16	45570, 45826, 65282, 46335, 46338, 46594, 46850, 65282, 47359, 47362, 47618, 47874, 65282, 48383, 48386, 48642	# [16]
+	tab_u16	48898, 65282, 49407, 49410, 49666, 49922, 65282, 50431, 50434, 50690, 50946, 65282, 52479, 52482, 52738, 52994	# [32]
+	tab_u16	65282, 53503, 53506, 53762, 54018, 65282	# [48]
+	.space	1, 0xFF
 StyleGenreTable_p4_p4_9:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=504, x2="\xF9\x01\xFA\x01", f6=507
 	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_9
-StyleGenreTable_p4_p12_9:	# REC_StyleGenreTable_p4_p12 (4 bytes)
-	REC_StyleGenreTable_p4_p12	f0=508, x2="\xFD\x01"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A294, 0x33A29A
-data_4873A29A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A29A, 0x33A2A4
-data_4873A2A4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2A4, 0x33A2AE
-data_4873A2AE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2AE, 0x33A2B8
-data_4873A2B8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2B8, 0x33A2C2
-data_4873A2C2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2C2, 0x33A2CC
-data_4873A2CC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2CC, 0x33A2D6
-data_4873A2D6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2D6, 0x33A2E0
-data_4873A2E0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2E0, 0x33A2EA
-data_4873A2EA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2EA, 0x33A2F4
-data_4873A2F4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2F4, 0x33A2FE
-data_4873A2FE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A2FE, 0x33A308
-data_4873A308:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A308, 0x33A312
-data_4873A312:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A312, 0x33A31C
-data_4873A31C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A31C, 0x33A326
-data_4873A326:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A326, 0x33A330
-data_4873A330:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A330, 0x33A33A
-data_4873A33A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A33A, 0x33A344
-data_4873A344:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A344, 0x33A34E
-data_4873A34E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A34E, 0x33A358
-data_4873A358:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A358, 0x33A362
-data_4873A362:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A362, 0x33A36C
-data_4873A36C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A36C, 0x33A376
-data_4873A376:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A376, 0x33A380
-data_4873A380:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A380, 0x33A38A
-data_4873A38A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33A38A, 0x33A394
+StyleGenreTable_p4_p12_9:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 129 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C1D4 `movhu (d0, a0), d0`)
+	REC_StyleGenreTable_p4_p12	s0="\xFC"
+	tab_u16	64769, 65025, 65281, 65281, 255, 258, 514, 770, 65282, 1279, 1282, 1538, 1794, 65282, 2303, 2306	# [0]
+	tab_u16	2562, 2818, 65282, 3327, 3330, 3586, 3842, 65282, 4351, 4354, 4610, 4866, 65282, 5375, 5378, 5634	# [16]
+	tab_u16	5890, 65282, 6399, 6402, 6658, 6914, 65282, 7423, 7426, 7682, 7938, 65282, 56575, 56579, 56835, 57091	# [32]
+	tab_u16	65283, 57599, 57603, 57859, 58115, 65283, 58623, 58627, 58883, 59139, 65283, 59647, 59651, 59907, 60163, 65283	# [48]
+	tab_u16	60671, 60675, 60931, 61187, 65283, 61695, 61699, 61955, 62211, 65283, 62719, 62723, 62979, 63235, 65283, 63743	# [64]
+	tab_u16	63747, 64003, 64259, 65283, 64767, 64771, 65027, 65283, 65283, 255, 260, 516, 772, 65284, 1279, 1284	# [80]
+	tab_u16	1540, 1796, 65284, 2303, 2308, 2564, 2820, 65284, 3327, 3332, 3588, 3844, 65284, 8447, 8452, 8708	# [96]
+	tab_u16	8964, 65284, 10495, 10500, 10756, 11012, 65284, 11519, 11524, 11780, 12036, 65284, 13567, 13572, 13828, 14084	# [112]
+	tab_u16	65284	# [128]
+	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_9
 
 ptrs_4873A394:
 	.long	Text_Disco_Orchestra
@@ -15828,15 +15358,15 @@ ptrs_4873A394:
 	.long	Text_Disco_Orchestra+17
 	.long	StyleGenreTable_p4_p12_0
 	.long	Text_Disco_Orchestra+34
-	.long	data_4873991C
+	.long	StyleGenreTable_p4_p12_0+10
 	.long	Text_Disco_Orchestra+51
-	.long	data_48739926
+	.long	StyleGenreTable_p4_p12_0+20
 	.long	Text_Disco_Orchestra+68
-	.long	data_48739930
+	.long	StyleGenreTable_p4_p12_0+30
 	.long	Text_Disco_Orchestra+85
-	.long	data_4873993A
+	.long	StyleGenreTable_p4_p12_0+40
 	.long	Text_Disco_Orchestra+102
-	.long	data_48739944
+	.long	StyleGenreTable_p4_p12_0+50
 	.long	Text_Disco_Orchestra+119
 	.long	Str_empty_282
 	.long	Text_Disco_Orchestra+136
@@ -15862,7 +15392,7 @@ ptrs_4873A394:
 	.long	Text_Disco_Orchestra+306
 	.long	Str_empty_277
 	.long	Text_Disco_Orchestra+323
-	.long	Str_d_2
+	.long	Str_d_4
 	.long	Text_Disco_Orchestra+340
 	.long	Str_h_2
 	.long	Text_Disco_Orchestra+357
@@ -16000,39 +15530,39 @@ ptrs_4873A63C:
 	.long	Text_70s_Detroit_Pop+17
 	.long	StyleGenreTable_p4_p12_1
 	.long	Text_70s_Detroit_Pop+34
-	.long	data_48739C5A
+	.long	StyleGenreTable_p4_p12_1+10
 	.long	Text_70s_Detroit_Pop+51
-	.long	data_48739C64
+	.long	StyleGenreTable_p4_p12_1+20
 	.long	Text_70s_Detroit_Pop+68
-	.long	data_48739C6E
+	.long	StyleGenreTable_p4_p12_1+30
 	.long	Text_70s_Detroit_Pop+85
-	.long	data_48739C78
+	.long	StyleGenreTable_p4_p12_1+40
 	.long	Text_70s_Detroit_Pop+102
-	.long	data_48739C82
+	.long	StyleGenreTable_p4_p12_1+50
 	.long	Text_70s_Detroit_Pop+119
-	.long	data_48739C8C
+	.long	StyleGenreTable_p4_p12_1+60
 	.long	Text_70s_Detroit_Pop+136
-	.long	data_48739C96
+	.long	StyleGenreTable_p4_p12_1+70
 	.long	Text_70s_Detroit_Pop+153
-	.long	data_48739CA0
+	.long	StyleGenreTable_p4_p12_1+80
 	.long	Text_70s_Detroit_Pop+170
-	.long	data_48739CAA
+	.long	StyleGenreTable_p4_p12_1+90
 	.long	Text_70s_Detroit_Pop+187
-	.long	data_48739CB4
+	.long	StyleGenreTable_p4_p12_1+100
 	.long	Text_70s_Detroit_Pop+204
-	.long	data_48739CBE
+	.long	StyleGenreTable_p4_p12_1+110
 	.long	Text_70s_Detroit_Pop+221
-	.long	data_48739CC8
+	.long	StyleGenreTable_p4_p12_1+120
 	.long	Text_70s_Detroit_Pop+238
-	.long	data_48739CD2
+	.long	StyleGenreTable_p4_p12_1+130
 	.long	Text_70s_Detroit_Pop+255
-	.long	data_48739CDC
+	.long	StyleGenreTable_p4_p12_1+140
 	.long	Text_70s_Detroit_Pop+272
-	.long	data_48739CE6
+	.long	StyleGenreTable_p4_p12_1+150
 	.long	Text_70s_Detroit_Pop+289
-	.long	data_48739CF0
+	.long	StyleGenreTable_p4_p12_1+160
 	.long	Text_70s_Detroit_Pop+306
-	.long	data_48739CFA
+	.long	StyleGenreTable_p4_p12_1+170
 	.long	0
 	.space	4, 0x00
 ptrs_4873A6DC:
@@ -16041,33 +15571,33 @@ ptrs_4873A6DC:
 	.long	Text_90s_Boy_Groups+17
 	.long	StyleGenreTable_p4_p12_2
 	.long	Text_90s_Boy_Groups+34
-	.long	data_48739D18
+	.long	StyleGenreTable_p4_p12_2+10
 	.long	Text_90s_Boy_Groups+51
-	.long	data_48739D22
+	.long	StyleGenreTable_p4_p12_2+20
 	.long	Text_90s_Boy_Groups+68
-	.long	data_48739D2C
+	.long	StyleGenreTable_p4_p12_2+30
 	.long	Text_90s_Boy_Groups+85
-	.long	data_48739D36
+	.long	StyleGenreTable_p4_p12_2+40
 	.long	Text_90s_Boy_Groups+102
-	.long	data_48739D40
+	.long	StyleGenreTable_p4_p12_2+50
 	.long	Text_90s_Boy_Groups+119
-	.long	data_48739D4A
+	.long	StyleGenreTable_p4_p12_2+60
 	.long	Text_90s_Boy_Groups+136
-	.long	data_48739D54
+	.long	StyleGenreTable_p4_p12_2+70
 	.long	Text_90s_Boy_Groups+153
-	.long	data_48739D5E
+	.long	StyleGenreTable_p4_p12_2+80
 	.long	Text_90s_Boy_Groups+170
-	.long	data_48739D68
+	.long	StyleGenreTable_p4_p12_2+90
 	.long	Text_90s_Boy_Groups+187
-	.long	data_48739D72
+	.long	StyleGenreTable_p4_p12_2+100
 	.long	Text_90s_Boy_Groups+204
-	.long	data_48739D7C
+	.long	StyleGenreTable_p4_p12_2+110
 	.long	Text_90s_Boy_Groups+221
-	.long	data_48739D86
+	.long	StyleGenreTable_p4_p12_2+120
 	.long	Text_90s_Boy_Groups+238
-	.long	data_48739D90
+	.long	StyleGenreTable_p4_p12_2+130
 	.long	Text_90s_Boy_Groups+255
-	.long	data_48739D9A
+	.long	StyleGenreTable_p4_p12_2+140
 	.long	0
 	.space	4, 0x00
 ptrs_4873A764:
@@ -16076,55 +15606,55 @@ ptrs_4873A764:
 	.long	Text_90s_Boy_Groups+289
 	.long	StyleGenreTable_p4_p12_3
 	.long	Text_90s_Boy_Groups+306
-	.long	data_48739DB8
+	.long	StyleGenreTable_p4_p12_3+10
 	.long	Text_90s_Boy_Groups+323
-	.long	data_48739DC2
+	.long	StyleGenreTable_p4_p12_3+20
 	.long	Text_90s_Boy_Groups+340
-	.long	data_48739DCC
+	.long	StyleGenreTable_p4_p12_3+30
 	.long	Text_90s_Boy_Groups+357
-	.long	data_48739DD6
+	.long	StyleGenreTable_p4_p12_3+40
 	.long	Text_90s_Boy_Groups+374
-	.long	data_48739DE0
+	.long	StyleGenreTable_p4_p12_3+50
 	.long	Text_90s_Boy_Groups+391
-	.long	data_48739DEA
+	.long	StyleGenreTable_p4_p12_3+60
 	.long	Text_90s_Boy_Groups+408
-	.long	data_48739DF4
+	.long	StyleGenreTable_p4_p12_3+70
 	.long	Text_90s_Boy_Groups+425
-	.long	data_48739DFE
+	.long	StyleGenreTable_p4_p12_3+80
 	.long	Text_90s_Boy_Groups+442
-	.long	data_48739E08
+	.long	StyleGenreTable_p4_p12_3+90
 	.long	Text_90s_Boy_Groups+459
-	.long	data_48739E12
+	.long	StyleGenreTable_p4_p12_3+100
 	.long	Text_90s_Boy_Groups+476
-	.long	data_48739E1C
+	.long	StyleGenreTable_p4_p12_3+110
 	.long	Text_90s_Boy_Groups+493
-	.long	data_48739E26
+	.long	StyleGenreTable_p4_p12_3+120
 	.long	Text_90s_Boy_Groups+510
-	.long	data_48739E30
+	.long	StyleGenreTable_p4_p12_3+130
 	.long	Text_90s_Boy_Groups+527
-	.long	data_48739E3A
+	.long	StyleGenreTable_p4_p12_3+140
 	.long	Text_90s_Boy_Groups+544
-	.long	data_48739E44
+	.long	StyleGenreTable_p4_p12_3+150
 	.long	Text_90s_Boy_Groups+561
-	.long	data_48739E4E
+	.long	StyleGenreTable_p4_p12_3+160
 	.long	Text_90s_Boy_Groups+578
-	.long	data_48739E58
+	.long	StyleGenreTable_p4_p12_3+170
 	.long	Text_90s_Boy_Groups+595
-	.long	data_48739E62
+	.long	StyleGenreTable_p4_p12_3+180
 	.long	Text_90s_Boy_Groups+612
-	.long	data_48739E6C
+	.long	StyleGenreTable_p4_p12_3+190
 	.long	Text_90s_Boy_Groups+629
-	.long	data_48739E76
+	.long	StyleGenreTable_p4_p12_3+200
 	.long	Text_90s_Boy_Groups+646
-	.long	data_48739E80
+	.long	StyleGenreTable_p4_p12_3+210
 	.long	Text_90s_Boy_Groups+663
-	.long	data_48739E8A
+	.long	StyleGenreTable_p4_p12_3+220
 	.long	Text_90s_Boy_Groups+680
-	.long	data_48739E94
+	.long	StyleGenreTable_p4_p12_3+230
 	.long	Text_90s_Boy_Groups+697
-	.long	data_48739E9E
+	.long	StyleGenreTable_p4_p12_3+240
 	.long	Text_90s_Boy_Groups+714
-	.long	data_48739EA8
+	.long	StyleGenreTable_p4_p12_3+250
 	.long	0
 	.space	4, 0x00
 ptrs_4873A844:
@@ -16133,57 +15663,57 @@ ptrs_4873A844:
 	.long	Text_Blue_Notes+17
 	.long	StyleGenreTable_p4_p12_4
 	.long	Text_Blue_Notes+34
-	.long	data_48739EC6
+	.long	StyleGenreTable_p4_p12_4+10
 	.long	Text_Blue_Notes+51
-	.long	data_48739ED0
+	.long	StyleGenreTable_p4_p12_4+20
 	.long	Text_Blue_Notes+68
-	.long	data_48739EDA
+	.long	StyleGenreTable_p4_p12_4+30
 	.long	Text_Blue_Notes+85
-	.long	data_48739EE4
+	.long	StyleGenreTable_p4_p12_4+40
 	.long	Text_Blue_Notes+102
-	.long	data_48739EEE
+	.long	StyleGenreTable_p4_p12_4+50
 	.long	Text_Blue_Notes+119
-	.long	data_48739EF8
+	.long	StyleGenreTable_p4_p12_4+60
 	.long	Text_Blue_Notes+136
-	.long	data_48739F02
+	.long	StyleGenreTable_p4_p12_4+70
 	.long	Text_Blue_Notes+153
-	.long	data_48739F0C
+	.long	StyleGenreTable_p4_p12_4+80
 	.long	Text_Blue_Notes+170
-	.long	data_48739F16
+	.long	StyleGenreTable_p4_p12_4+90
 	.long	Text_Blue_Notes+187
-	.long	data_48739F20
+	.long	StyleGenreTable_p4_p12_4+100
 	.long	Text_Blue_Notes+204
-	.long	data_48739F2A
+	.long	StyleGenreTable_p4_p12_4+110
 	.long	Text_Blue_Notes+221
-	.long	data_48739F34
+	.long	StyleGenreTable_p4_p12_4+120
 	.long	Text_Blue_Notes+238
-	.long	data_48739F3E
+	.long	StyleGenreTable_p4_p12_4+130
 	.long	Text_Blue_Notes+255
-	.long	data_48739F48
+	.long	StyleGenreTable_p4_p12_4+140
 	.long	Text_Blue_Notes+272
-	.long	data_48739F52
+	.long	StyleGenreTable_p4_p12_4+150
 	.long	Text_Blue_Notes+289
-	.long	data_48739F5C
+	.long	StyleGenreTable_p4_p12_4+160
 	.long	Text_Blue_Notes+306
-	.long	data_48739F66
+	.long	StyleGenreTable_p4_p12_4+170
 	.long	Text_Blue_Notes+323
-	.long	data_48739F70
+	.long	StyleGenreTable_p4_p12_4+180
 	.long	Text_Blue_Notes+340
-	.long	data_48739F7A
+	.long	StyleGenreTable_p4_p12_4+190
 	.long	Text_Blue_Notes+357
-	.long	data_48739F84
+	.long	StyleGenreTable_p4_p12_4+200
 	.long	Text_Blue_Notes+374
-	.long	data_48739F8E
+	.long	StyleGenreTable_p4_p12_4+210
 	.long	Text_Blue_Notes+391
-	.long	data_48739F98
+	.long	StyleGenreTable_p4_p12_4+220
 	.long	Text_Blue_Notes+408
-	.long	data_48739FA2
+	.long	StyleGenreTable_p4_p12_4+230
 	.long	Text_Blue_Notes+425
-	.long	data_48739FAC
+	.long	StyleGenreTable_p4_p12_4+240
 	.long	Text_Blue_Notes+442
-	.long	data_48739FB6
+	.long	StyleGenreTable_p4_p12_4+250
 	.long	Text_Blue_Notes+459
-	.long	data_48739FC0
+	.long	StyleGenreTable_p4_p12_4+260
 	.long	0
 	.space	4, 0x00
 ptrs_4873A92C:
@@ -16192,59 +15722,59 @@ ptrs_4873A92C:
 	.long	Text_Blue_Notes+493
 	.long	StyleGenreTable_p4_p12_5
 	.long	Text_Blue_Notes+510
-	.long	data_48739FDE
+	.long	StyleGenreTable_p4_p12_5+10
 	.long	Text_Blue_Notes+527
-	.long	data_48739FE8
+	.long	StyleGenreTable_p4_p12_5+20
 	.long	Text_Blue_Notes+544
-	.long	data_48739FF2
+	.long	StyleGenreTable_p4_p12_5+30
 	.long	Text_Blue_Notes+561
-	.long	data_48739FFC
+	.long	StyleGenreTable_p4_p12_5+40
 	.long	Text_Blue_Notes+578
-	.long	data_4873A006
+	.long	StyleGenreTable_p4_p12_5+50
 	.long	Text_Blue_Notes+595
-	.long	data_4873A010
+	.long	StyleGenreTable_p4_p12_5+60
 	.long	Text_Blue_Notes+612
-	.long	data_4873A01A
+	.long	StyleGenreTable_p4_p12_5+70
 	.long	Text_Blue_Notes+629
-	.long	data_4873A024
+	.long	StyleGenreTable_p4_p12_5+80
 	.long	Text_Blue_Notes+646
-	.long	data_4873A02E
+	.long	StyleGenreTable_p4_p12_5+90
 	.long	Text_Blue_Notes+663
-	.long	data_4873A038
+	.long	StyleGenreTable_p4_p12_5+100
 	.long	Text_Blue_Notes+680
-	.long	data_4873A042
+	.long	StyleGenreTable_p4_p12_5+110
 	.long	Text_Blue_Notes+697
-	.long	data_4873A04C
+	.long	StyleGenreTable_p4_p12_5+120
 	.long	Text_Blue_Notes+714
-	.long	data_4873A056
+	.long	StyleGenreTable_p4_p12_5+130
 	.long	Text_Blue_Notes+731
-	.long	data_4873A060
+	.long	StyleGenreTable_p4_p12_5+140
 	.long	Text_Blue_Notes+748
-	.long	data_4873A06A
+	.long	StyleGenreTable_p4_p12_5+150
 	.long	Text_Blue_Notes+765
-	.long	data_4873A074
+	.long	StyleGenreTable_p4_p12_5+160
 	.long	Text_Blue_Notes+782
-	.long	data_4873A07E
+	.long	StyleGenreTable_p4_p12_5+170
 	.long	Text_Blue_Notes+799
-	.long	data_4873A088
+	.long	StyleGenreTable_p4_p12_5+180
 	.long	Text_Blue_Notes+816
-	.long	data_4873A092
+	.long	StyleGenreTable_p4_p12_5+190
 	.long	Text_Blue_Notes+833
-	.long	data_4873A09C
+	.long	StyleGenreTable_p4_p12_5+200
 	.long	Text_Blue_Notes+850
-	.long	data_4873A0A6
+	.long	StyleGenreTable_p4_p12_5+210
 	.long	Text_Blue_Notes+867
-	.long	data_4873A0B0
+	.long	StyleGenreTable_p4_p12_5+220
 	.long	Text_Blue_Notes+884
-	.long	data_4873A0BA
+	.long	StyleGenreTable_p4_p12_5+230
 	.long	Text_Blue_Notes+901
-	.long	data_4873A0C4
+	.long	StyleGenreTable_p4_p12_5+240
 	.long	Text_Blue_Notes+918
-	.long	data_4873A0CE
+	.long	StyleGenreTable_p4_p12_5+250
 	.long	Text_Blue_Notes+935
-	.long	data_4873A0D8
+	.long	StyleGenreTable_p4_p12_5+260
 	.long	Text_Blue_Notes+952
-	.long	data_4873A0E2
+	.long	StyleGenreTable_p4_p12_5+270
 	.long	0
 	.space	4, 0x00
 ptrs_4873AA1C:
@@ -16253,35 +15783,35 @@ ptrs_4873AA1C:
 	.long	Text_Standard_3_4+17
 	.long	StyleGenreTable_p4_p12_6
 	.long	Text_Standard_3_4+34
-	.long	data_4873A100
+	.long	StyleGenreTable_p4_p12_6+10
 	.long	Text_Standard_3_4+51
-	.long	data_4873A10A
+	.long	StyleGenreTable_p4_p12_6+20
 	.long	Text_Standard_3_4+68
-	.long	data_4873A114
+	.long	StyleGenreTable_p4_p12_6+30
 	.long	Text_Standard_3_4+85
-	.long	data_4873A11E
+	.long	StyleGenreTable_p4_p12_6+40
 	.long	Text_Standard_3_4+102
-	.long	data_4873A128
+	.long	StyleGenreTable_p4_p12_6+50
 	.long	Text_Standard_3_4+119
-	.long	data_4873A132
+	.long	StyleGenreTable_p4_p12_6+60
 	.long	Text_Standard_3_4+136
-	.long	data_4873A13C
+	.long	StyleGenreTable_p4_p12_6+70
 	.long	Text_Standard_3_4+153
-	.long	data_4873A146
+	.long	StyleGenreTable_p4_p12_6+80
 	.long	Text_Standard_3_4+170
-	.long	data_4873A150
+	.long	StyleGenreTable_p4_p12_6+90
 	.long	Text_Standard_3_4+187
-	.long	data_4873A15A
+	.long	StyleGenreTable_p4_p12_6+100
 	.long	Text_Standard_3_4+204
-	.long	data_4873A164
+	.long	StyleGenreTable_p4_p12_6+110
 	.long	Text_Standard_3_4+221
-	.long	data_4873A16E
+	.long	StyleGenreTable_p4_p12_6+120
 	.long	Text_Standard_3_4+238
-	.long	data_4873A178
+	.long	StyleGenreTable_p4_p12_6+130
 	.long	Text_Standard_3_4+255
-	.long	data_4873A182
+	.long	StyleGenreTable_p4_p12_6+140
 	.long	Text_Standard_3_4+272
-	.long	data_4873A18C
+	.long	StyleGenreTable_p4_p12_6+150
 	.long	0
 	.space	4, 0x00
 ptrs_4873AAAC:
@@ -16290,25 +15820,25 @@ ptrs_4873AAAC:
 	.long	Text_Ballermann+17
 	.long	StyleGenreTable_p4_p12_7
 	.long	Text_Ballermann+34
-	.long	data_4873A1AA
+	.long	StyleGenreTable_p4_p12_7+10
 	.long	Text_Ballermann+51
-	.long	data_4873A1B4
+	.long	StyleGenreTable_p4_p12_7+20
 	.long	Text_Ballermann+68
-	.long	data_4873A1BE
+	.long	StyleGenreTable_p4_p12_7+30
 	.long	Text_Ballermann+85
-	.long	data_4873A1C8
+	.long	StyleGenreTable_p4_p12_7+40
 	.long	Text_Ballermann+102
-	.long	data_4873A1D2
+	.long	StyleGenreTable_p4_p12_7+50
 	.long	Text_Ballermann+119
-	.long	data_4873A1DC
+	.long	StyleGenreTable_p4_p12_7+60
 	.long	Text_Ballermann+136
-	.long	data_4873A1E6
+	.long	StyleGenreTable_p4_p12_7+70
 	.long	Text_Ballermann+153
-	.long	data_4873A1F0
+	.long	StyleGenreTable_p4_p12_7+80
 	.long	Text_Ballermann+170
-	.long	data_4873A1FA
+	.long	StyleGenreTable_p4_p12_7+90
 	.long	Text_Ballermann+187
-	.long	data_4873A204
+	.long	StyleGenreTable_p4_p12_7+100
 	.long	0
 	.space	4, 0x00
 ptrs_4873AB14:
@@ -16317,25 +15847,25 @@ ptrs_4873AB14:
 	.long	Text_Ballermann+221
 	.long	StyleGenreTable_p4_p12_8
 	.long	Text_Ballermann+238
-	.long	data_4873A222
+	.long	StyleGenreTable_p4_p12_8+10
 	.long	Text_Ballermann+255
-	.long	data_4873A22C
+	.long	StyleGenreTable_p4_p12_8+20
 	.long	Text_Ballermann+272
-	.long	data_4873A236
+	.long	StyleGenreTable_p4_p12_8+30
 	.long	Text_Ballermann+289
-	.long	data_4873A240
+	.long	StyleGenreTable_p4_p12_8+40
 	.long	Text_Ballermann+306
-	.long	data_4873A24A
+	.long	StyleGenreTable_p4_p12_8+50
 	.long	Text_Ballermann+323
-	.long	data_4873A254
+	.long	StyleGenreTable_p4_p12_8+60
 	.long	Text_Ballermann+340
-	.long	data_4873A25E
+	.long	StyleGenreTable_p4_p12_8+70
 	.long	Text_Ballermann+357
-	.long	data_4873A268
+	.long	StyleGenreTable_p4_p12_8+80
 	.long	Text_Ballermann+374
-	.long	data_4873A272
+	.long	StyleGenreTable_p4_p12_8+90
 	.long	Text_Ballermann+391
-	.long	data_4873A27C
+	.long	StyleGenreTable_p4_p12_8+100
 	.long	0
 	.space	4, 0x00
 ptrs_4873AB7C:
@@ -16344,59 +15874,59 @@ ptrs_4873AB7C:
 	.long	Text_Ballermann+425
 	.long	StyleGenreTable_p4_p12_9
 	.long	Text_Ballermann+442
-	.long	data_4873A29A
+	.long	StyleGenreTable_p4_p12_9+10
 	.long	Text_Ballermann+459
-	.long	data_4873A2A4
+	.long	StyleGenreTable_p4_p12_9+20
 	.long	Text_Ballermann+476
-	.long	data_4873A2AE
+	.long	StyleGenreTable_p4_p12_9+30
 	.long	Text_Ballermann+493
-	.long	data_4873A2B8
+	.long	StyleGenreTable_p4_p12_9+40
 	.long	Text_Ballermann+510
-	.long	data_4873A2C2
+	.long	StyleGenreTable_p4_p12_9+50
 	.long	Text_Ballermann+527
-	.long	data_4873A2CC
+	.long	StyleGenreTable_p4_p12_9+60
 	.long	Text_Ballermann+544
-	.long	data_4873A2D6
+	.long	StyleGenreTable_p4_p12_9+70
 	.long	Text_Ballermann+561
-	.long	data_4873A2E0
+	.long	StyleGenreTable_p4_p12_9+80
 	.long	Text_Ballermann+578
-	.long	data_4873A2EA
+	.long	StyleGenreTable_p4_p12_9+90
 	.long	Text_Ballermann+595
-	.long	data_4873A2F4
+	.long	StyleGenreTable_p4_p12_9+100
 	.long	Text_Ballermann+612
-	.long	data_4873A2FE
+	.long	StyleGenreTable_p4_p12_9+110
 	.long	Text_Ballermann+629
-	.long	data_4873A308
+	.long	StyleGenreTable_p4_p12_9+120
 	.long	Text_Ballermann+646
-	.long	data_4873A312
+	.long	StyleGenreTable_p4_p12_9+130
 	.long	Text_Ballermann+663
-	.long	data_4873A31C
+	.long	StyleGenreTable_p4_p12_9+140
 	.long	Text_Ballermann+680
-	.long	data_4873A326
+	.long	StyleGenreTable_p4_p12_9+150
 	.long	Text_Ballermann+697
-	.long	data_4873A330
+	.long	StyleGenreTable_p4_p12_9+160
 	.long	Text_Ballermann+714
-	.long	data_4873A33A
+	.long	StyleGenreTable_p4_p12_9+170
 	.long	Text_Ballermann+731
-	.long	data_4873A344
+	.long	StyleGenreTable_p4_p12_9+180
 	.long	Text_Ballermann+748
-	.long	data_4873A34E
+	.long	StyleGenreTable_p4_p12_9+190
 	.long	Text_Ballermann+765
-	.long	data_4873A358
+	.long	StyleGenreTable_p4_p12_9+200
 	.long	Text_Ballermann+782
-	.long	data_4873A362
+	.long	StyleGenreTable_p4_p12_9+210
 	.long	Text_Ballermann+799
-	.long	data_4873A36C
+	.long	StyleGenreTable_p4_p12_9+220
 	.long	Text_Ballermann+816
-	.long	data_4873A376
+	.long	StyleGenreTable_p4_p12_9+230
 	.long	Text_Ballermann+833
-	.long	data_4873A380
+	.long	StyleGenreTable_p4_p12_9+240
 	.long	Text_Ballermann+850
-	.long	data_4873A38A
+	.long	StyleGenreTable_p4_p12_9+250
 	.long	0
 	.space	4, 0x00
 
-StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B629 0x4847B629 `mov (4, a0), a0`; func_4847BA00 0x4847BA00 `mov (4, a0), a3`; func_4847BA00 0x4847BA00 `mov (4, a0), d0` (+6)
+StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B5DB 0x4847B5DB `mov (d0, a0), a1`; func_4847B629 0x4847B629 `mov (4, a0), a0`; func_4847BA00 0x4847BA00 `mov (4, a0), a3` (+7)
 	StyleGenre	name=Text_Rock_Pop, styles=ptrs_4873A394	# [0]
 	StyleGenre	name=Text_Rock_Pop+17, styles=ptrs_4873A56C
 	StyleGenre	name=Text_Rock_Pop+34, styles=ptrs_4873A63C
@@ -27455,19 +26985,12 @@ CMPMSPCMN_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x350ED4, 0x350ED8
 
-func_484FFF32_Table_p4_0:	# REC_func_484FFF32_Table_p4 (12 bytes)
+func_484FFF32_Table_p4_0:	# REC_func_484FFF32_Table_p4 (12 bytes), then 49 x u32 the code indexes from +0 (read by AcChdModTypDrawBoxProc 0x484FF56C `call SendEvent_entry, [d2,d3], 0x24`; AcChdModTypDrawBoxProc 0x484FF56C `mov (4, a1), d0` (+21))
 	REC_func_484FFF32_Table_p4	f0=16, x1="\x00\x00\x00", text=Str_Basic, x8="\x11\x00\x00\x00"
-
-func_484FFF32_Table_p4_0_Tail:	# 1 pointers after func_484FFF32_Table_p4_0: the array its kind's computed-offset read indexes (AcChdModTypDrawBoxProc 0x484FF56C `call SendEvent_entry, [d2,d3], 0x24`; AcChdModTypDrawBoxProc 0x484FF56C `mov (4, a1), d0` (+21)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
-	.long	Str_In_7th_G_8dB_a0
-# census: opaque -- unknown-dump: 156 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x350EE8, 0x350F84
-ptrs_48750F84:	# 3 pointers, typed by value (every word 0 or an address of this region); reader not traced
-	.long	Str_Keep_near_C
-	.long	0
-	.long	Str_Through
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x350F90, 0x350FA8
+	tab_u32	1214520721, 18, 1214520738, 19, 1214520755, 20, 1214520768, 21, 1214520781, 22, 1214520796, 23, 1214520809, 24, 1214520822, 25	# [0]
+	tab_u32	1214520835, 255, 0, 80, 1214520848, 83, 1214520861, 96, 1214520874, 97, 1214520887, 98, 1214520900, 100, 1214520913, 101	# [16]
+	tab_u32	1214520926, 102, 1214520939, 103, 1214520952, 255, 0, 82, 1214520968, 0, 1214520981, 1, 1214520994, 2, 1214521007, 255	# [32]
+	tab_u32	0	# [48]
 
 func_484FFF32_Table:
 	.long	Str_Melody
@@ -38772,377 +38295,377 @@ VoiceDirRemapFind_Var_2:	# u16, a constant; read / written by VoiceDirRemapFind 
 	.word	371
 
 VoiceDirRemapFind_Table:
-	.long	VoiceDirRemapFind_Table_p0_349
-	.long	VoiceDirRemapFind_Table_p0_69
+	.long	VoiceDirRemapFind_Table_p0_975
+	.long	VoiceDirRemapFind_Table_p0_501
 	.long	0
-	.long	VoiceDirRemapFind_Table_p0_34
-	.long	VoiceDirRemapFind_Table_p0_7
-	.long	VoiceDirRemapFind_Table_p0_144
-	.long	VoiceDirRemapFind_Table_p0_145
-	.long	VoiceDirRemapFind_Table_p0_146
-	.long	VoiceDirRemapFind_Table_p0_147
-	.long	VoiceDirRemapFind_Table_p0_340
-	.long	VoiceDirRemapFind_Table_p0_311
-	.long	VoiceDirRemapFind_Table_p0_88
-	.long	VoiceDirRemapFind_Table_p0_89
-	.long	VoiceDirRemapFind_Table_p0_90
-	.long	VoiceDirRemapFind_Table_p0_51
-	.long	VoiceDirRemapFind_Table_p0_52
-	.long	VoiceDirRemapFind_Table_p0_85
-	.long	VoiceDirRemapFind_Table_p0_254
-	.long	VoiceDirRemapFind_Table_p0_255
-	.long	VoiceDirRemapFind_Table_p0_256
-	.long	VoiceDirRemapFind_Table_p0_257
-	.long	VoiceDirRemapFind_Table_p0_287
-	.long	VoiceDirRemapFind_Table_p0_258
-	.long	VoiceDirRemapFind_Table_p0_259
-	.long	VoiceDirRemapFind_Table_p0_322
-	.long	VoiceDirRemapFind_Table_p0_317
-	.long	VoiceDirRemapFind_Table_p0_0
-	.long	VoiceDirRemapFind_Table_p0_71
-	.long	VoiceDirRemapFind_Table_p0_128
-	.long	VoiceDirRemapFind_Table_p0_40
-	.long	VoiceDirRemapFind_Table_p0_9
-	.long	VoiceDirRemapFind_Table_p0_102
-	.long	VoiceDirRemapFind_Table_p0_92
-	.long	VoiceDirRemapFind_Table_p0_98
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_308
-	.long	VoiceDirRemapFind_Table_p0_323
-	.long	VoiceDirRemapFind_Table_p0_309
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_20
-	.long	VoiceDirRemapFind_Table_p0_49
-	.long	VoiceDirRemapFind_Table_p0_50
-	.long	VoiceDirRemapFind_Table_p0_291
-	.long	VoiceDirRemapFind_Table_p0_355
-	.long	VoiceDirRemapFind_Table_p0_285
-	.long	VoiceDirRemapFind_Table_p0_175
-	.long	VoiceDirRemapFind_Table_p0_176
-	.long	VoiceDirRemapFind_Table_p0_177
-	.long	VoiceDirRemapFind_Table_p0_178
-	.long	VoiceDirRemapFind_Table_p0_179
-	.long	VoiceDirRemapFind_Table_p0_329
-	.long	VoiceDirRemapFind_Table_p0_314
-	.long	VoiceDirRemapFind_Table_p0_288
-	.long	VoiceDirRemapFind_Table_p0_330
-	.long	VoiceDirRemapFind_Table_p0_294
-	.long	VoiceDirRemapFind_Table_p0_348
-	.long	VoiceDirRemapFind_Table_p0_25
-	.long	VoiceDirRemapFind_Table_p0_97
-	.long	VoiceDirRemapFind_Table_p0_41
-	.long	VoiceDirRemapFind_Table_p0_78
-	.long	VoiceDirRemapFind_Table_p0_79
-	.long	VoiceDirRemapFind_Table_p0_277
-	.long	VoiceDirRemapFind_Table_p0_303
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_337
-	.long	VoiceDirRemapFind_Table_p0_23
-	.long	VoiceDirRemapFind_Table_p0_155
-	.long	VoiceDirRemapFind_Table_p0_26
-	.long	VoiceDirRemapFind_Table_p0_107
-	.long	VoiceDirRemapFind_Table_p0_138
-	.long	VoiceDirRemapFind_Table_p0_140
-	.long	VoiceDirRemapFind_Table_p0_27
-	.long	VoiceDirRemapFind_Table_p0_117
-	.long	VoiceDirRemapFind_Table_p0_210
-	.long	VoiceDirRemapFind_Table_p0_220
-	.long	VoiceDirRemapFind_Table_p0_352
-	.long	VoiceDirRemapFind_Table_p0_21
-	.long	VoiceDirRemapFind_Table_p0_301
-	.long	VoiceDirRemapFind_Table_p0_221
-	.long	VoiceDirRemapFind_Table_p0_230
-	.long	VoiceDirRemapFind_Table_p0_284
-	.long	VoiceDirRemapFind_Table_p0_160
-	.long	VoiceDirRemapFind_Table_p0_161
-	.long	VoiceDirRemapFind_Table_p0_162
-	.long	VoiceDirRemapFind_Table_p0_331
-	.long	VoiceDirRemapFind_Table_p0_163
-	.long	VoiceDirRemapFind_Table_p0_164
-	.long	VoiceDirRemapFind_Table_p0_298
-	.long	VoiceDirRemapFind_Table_p0_296
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_66
-	.long	VoiceDirRemapFind_Table_p0_12
-	.long	VoiceDirRemapFind_Table_p0_211
-	.long	VoiceDirRemapFind_Table_p0_212
-	.long	VoiceDirRemapFind_Table_p0_213
-	.long	VoiceDirRemapFind_Table_p0_214
-	.long	VoiceDirRemapFind_Table_p0_215
-	.long	VoiceDirRemapFind_Table_p0_216
-	.long	VoiceDirRemapFind_Table_p0_217
-	.long	VoiceDirRemapFind_Table_p0_310
-	.long	VoiceDirRemapFind_Table_p0_75
-	.long	VoiceDirRemapFind_Table_p0_76
-	.long	VoiceDirRemapFind_Table_p0_77
-	.long	VoiceDirRemapFind_Table_p0_131
-	.long	VoiceDirRemapFind_Table_p0_32
-	.long	VoiceDirRemapFind_Table_p0_341
-	.long	VoiceDirRemapFind_Table_p0_186
-	.long	VoiceDirRemapFind_Table_p0_187
-	.long	VoiceDirRemapFind_Table_p0_188
-	.long	VoiceDirRemapFind_Table_p0_189
-	.long	VoiceDirRemapFind_Table_p0_112
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_19
-	.long	VoiceDirRemapFind_Table_p0_302
-	.long	VoiceDirRemapFind_Table_p0_278
-	.long	VoiceDirRemapFind_Table_p0_111
-	.long	VoiceDirRemapFind_Table_p0_68
-	.long	VoiceDirRemapFind_Table_p0_29
-	.long	VoiceDirRemapFind_Table_p0_222
-	.long	VoiceDirRemapFind_Table_p0_223
-	.long	VoiceDirRemapFind_Table_p0_224
-	.long	VoiceDirRemapFind_Table_p0_225
-	.long	VoiceDirRemapFind_Table_p0_226
-	.long	VoiceDirRemapFind_Table_p0_227
-	.long	VoiceDirRemapFind_Table_p0_342
-	.long	VoiceDirRemapFind_Table_p0_339
-	.long	VoiceDirRemapFind_Table_p0_99
-	.long	VoiceDirRemapFind_Table_p0_93
-	.long	VoiceDirRemapFind_Table_p0_44
-	.long	VoiceDirRemapFind_Table_p0_37
-	.long	VoiceDirRemapFind_Table_p0_3
-	.long	VoiceDirRemapFind_Table_p0_84
-	.long	VoiceDirRemapFind_Table_p0_243
-	.long	VoiceDirRemapFind_Table_p0_244
-	.long	VoiceDirRemapFind_Table_p0_245
-	.long	VoiceDirRemapFind_Table_p0_246
-	.long	VoiceDirRemapFind_Table_p0_247
-	.long	VoiceDirRemapFind_Table_p0_248
-	.long	VoiceDirRemapFind_Table_p0_249
-	.long	VoiceDirRemapFind_Table_p0_293
-	.long	VoiceDirRemapFind_Table_p0_318
-	.long	VoiceDirRemapFind_Table_p0_119
-	.long	VoiceDirRemapFind_Table_p0_120
-	.long	VoiceDirRemapFind_Table_p0_332
-	.long	VoiceDirRemapFind_Table_p0_35
-	.long	VoiceDirRemapFind_Table_p0_8
-	.long	VoiceDirRemapFind_Table_p0_95
-	.long	VoiceDirRemapFind_Table_p0_91
-	.long	VoiceDirRemapFind_Table_p0_124
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_353
-	.long	VoiceDirRemapFind_Table_p0_275
-	.long	VoiceDirRemapFind_Table_p0_18
-	.long	VoiceDirRemapFind_Table_p0_14
-	.long	VoiceDirRemapFind_Table_p0_338
-	.long	VoiceDirRemapFind_Table_p0_241
-	.long	VoiceDirRemapFind_Table_p0_48
-	.long	VoiceDirRemapFind_Table_p0_81
-	.long	VoiceDirRemapFind_Table_p0_260
-	.long	VoiceDirRemapFind_Table_p0_261
-	.long	VoiceDirRemapFind_Table_p0_262
-	.long	VoiceDirRemapFind_Table_p0_292
-	.long	VoiceDirRemapFind_Table_p0_269
-	.long	VoiceDirRemapFind_Table_p0_270
-	.long	VoiceDirRemapFind_Table_p0_271
-	.long	VoiceDirRemapFind_Table_p0_328
-	.long	VoiceDirRemapFind_Table_p0_154
-	.long	VoiceDirRemapFind_Table_p0_1
-	.long	VoiceDirRemapFind_Table_p0_290
-	.long	VoiceDirRemapFind_Table_p0_159
-	.long	VoiceDirRemapFind_Table_p0_307
-	.long	VoiceDirRemapFind_Table_p0_2
-	.long	VoiceDirRemapFind_Table_p0_347
-	.long	VoiceDirRemapFind_Table_p0_122
-	.long	VoiceDirRemapFind_Table_p0_346
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_10
-	.long	VoiceDirRemapFind_Table_p0_324
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_15
-	.long	VoiceDirRemapFind_Table_p0_6
-	.long	VoiceDirRemapFind_Table_p0_272
-	.long	VoiceDirRemapFind_Table_p0_273
-	.long	VoiceDirRemapFind_Table_p0_274
-	.long	VoiceDirRemapFind_Table_p0_63
-	.long	VoiceDirRemapFind_Table_p0_139
-	.long	VoiceDirRemapFind_Table_p0_17
-	.long	VoiceDirRemapFind_Table_p0_118
-	.long	VoiceDirRemapFind_Table_p0_209
-	.long	VoiceDirRemapFind_Table_p0_218
-	.long	VoiceDirRemapFind_Table_p0_228
-	.long	VoiceDirRemapFind_Table_p0_134
-	.long	VoiceDirRemapFind_Table_p0_321
-	.long	VoiceDirRemapFind_Table_p0_219
-	.long	VoiceDirRemapFind_Table_p0_229
-	.long	VoiceDirRemapFind_Table_p0_82
-	.long	VoiceDirRemapFind_Table_p0_57
-	.long	VoiceDirRemapFind_Table_p0_58
-	.long	VoiceDirRemapFind_Table_p0_130
-	.long	VoiceDirRemapFind_Table_p0_105
-	.long	VoiceDirRemapFind_Table_p0_103
-	.long	VoiceDirRemapFind_Table_p0_354
-	.long	VoiceDirRemapFind_Table_p0_283
-	.long	VoiceDirRemapFind_Table_p0_297
-	.long	VoiceDirRemapFind_Table_p0_104
-	.long	VoiceDirRemapFind_Table_p0_65
-	.long	VoiceDirRemapFind_Table_p0_123
-	.long	VoiceDirRemapFind_Table_p0_202
-	.long	VoiceDirRemapFind_Table_p0_203
-	.long	VoiceDirRemapFind_Table_p0_204
-	.long	VoiceDirRemapFind_Table_p0_205
-	.long	VoiceDirRemapFind_Table_p0_286
-	.long	VoiceDirRemapFind_Table_p0_206
-	.long	VoiceDirRemapFind_Table_p0_207
-	.long	VoiceDirRemapFind_Table_p0_208
-	.long	VoiceDirRemapFind_Table_p0_172
-	.long	VoiceDirRemapFind_Table_p0_173
-	.long	VoiceDirRemapFind_Table_p0_174
-	.long	VoiceDirRemapFind_Table_p0_31
-	.long	VoiceDirRemapFind_Table_p0_30
-	.long	VoiceDirRemapFind_Table_p0_83
-	.long	VoiceDirRemapFind_Table_p0_60
-	.long	VoiceDirRemapFind_Table_p0_61
+	.long	VoiceDirRemapFind_Table_p0_380
 	.long	VoiceDirRemapFind_Table_p0_62
-	.long	VoiceDirRemapFind_Table_p0_129
-	.long	VoiceDirRemapFind_Table_p0_28
-	.long	VoiceDirRemapFind_Table_p0_121
-	.long	VoiceDirRemapFind_Table_p0_127
-	.long	VoiceDirRemapFind_Table_p0_300
-	.long	VoiceDirRemapFind_Table_p0_153
-	.long	VoiceDirRemapFind_Table_p0_108
-	.long	VoiceDirRemapFind_Table_p0_109
-	.long	VoiceDirRemapFind_Table_p0_110
-	.long	VoiceDirRemapFind_Table_p0_132
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_94
-	.long	VoiceDirRemapFind_Table_p0_74
-	.long	VoiceDirRemapFind_Table_p0_142
-	.long	VoiceDirRemapFind_Table_p0_143
-	.long	VoiceDirRemapFind_Table_p0_319
-	.long	VoiceDirRemapFind_Table_p0_320
-	.long	VoiceDirRemapFind_Table_p0_100
-	.long	VoiceDirRemapFind_Table_p0_101
-	.long	VoiceDirRemapFind_Table_p0_42
-	.long	VoiceDirRemapFind_Table_p0_306
-	.long	VoiceDirRemapFind_Table_p0_4
-	.long	VoiceDirRemapFind_Table_p0_86
-	.long	VoiceDirRemapFind_Table_p0_233
-	.long	VoiceDirRemapFind_Table_p0_234
-	.long	VoiceDirRemapFind_Table_p0_235
-	.long	VoiceDirRemapFind_Table_p0_236
-	.long	VoiceDirRemapFind_Table_p0_237
-	.long	VoiceDirRemapFind_Table_p0_238
-	.long	VoiceDirRemapFind_Table_p0_239
-	.long	VoiceDirRemapFind_Table_p0_315
-	.long	VoiceDirRemapFind_Table_p0_316
-	.long	VoiceDirRemapFind_Table_p0_276
-	.long	VoiceDirRemapFind_Table_p0_70
-	.long	VoiceDirRemapFind_Table_p0_24
-	.long	VoiceDirRemapFind_Table_p0_38
-	.long	VoiceDirRemapFind_Table_p0_39
-	.long	VoiceDirRemapFind_Table_p0_148
-	.long	VoiceDirRemapFind_Table_p0_149
-	.long	VoiceDirRemapFind_Table_p0_137
-	.long	VoiceDirRemapFind_Table_p0_16
-	.long	VoiceDirRemapFind_Table_p0_191
-	.long	VoiceDirRemapFind_Table_p0_312
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_190
-	.long	VoiceDirRemapFind_Table_p0_343
-	.long	VoiceDirRemapFind_Table_p0_46
-	.long	VoiceDirRemapFind_Table_p0_47
-	.long	VoiceDirRemapFind_Table_p0_136
-	.long	VoiceDirRemapFind_Table_p0_263
-	.long	VoiceDirRemapFind_Table_p0_264
-	.long	VoiceDirRemapFind_Table_p0_265
-	.long	VoiceDirRemapFind_Table_p0_356
-	.long	VoiceDirRemapFind_Table_p0_266
-	.long	VoiceDirRemapFind_Table_p0_267
-	.long	VoiceDirRemapFind_Table_p0_268
-	.long	VoiceDirRemapFind_Table_p0_327
-	.long	VoiceDirRemapFind_Table_p0_152
-	.long	VoiceDirRemapFind_Table_p0_116
-	.long	VoiceDirRemapFind_Table_p0_72
-	.long	VoiceDirRemapFind_Table_p0_335
-	.long	VoiceDirRemapFind_Table_p0_336
-	.long	VoiceDirRemapFind_Table_p0_33
-	.long	VoiceDirRemapFind_Table_p0_96
-	.long	VoiceDirRemapFind_Table_p0_133
-	.long	VoiceDirRemapFind_Table_p0_345
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_22
-	.long	VoiceDirRemapFind_Table_p0_325
-	.long	VoiceDirRemapFind_Table_p0_250
-	.long	VoiceDirRemapFind_Table_p0_240
-	.long	VoiceDirRemapFind_Table_p0_251
-	.long	VoiceDirRemapFind_Table_p0_252
-	.long	VoiceDirRemapFind_Table_p0_242
-	.long	VoiceDirRemapFind_Table_p0_253
-	.long	ptrs_486A4640
-	.long	VoiceDirRemapFind_Table_p0_180
-	.long	VoiceDirRemapFind_Table_p0_181
-	.long	VoiceDirRemapFind_Table_p0_182
-	.long	VoiceDirRemapFind_Table_p0_183
-	.long	VoiceDirRemapFind_Table_p0_184
-	.long	VoiceDirRemapFind_Table_p0_185
-	.long	VoiceDirRemapFind_Table_p0_304
-	.long	VoiceDirRemapFind_Table_p0_326
-	.long	VoiceDirRemapFind_Table_p0_11
-	.long	VoiceDirRemapFind_Table_p0_80
-	.long	VoiceDirRemapFind_Table_p0_53
-	.long	VoiceDirRemapFind_Table_p0_54
-	.long	VoiceDirRemapFind_Table_p0_55
-	.long	VoiceDirRemapFind_Table_p0_115
-	.long	VoiceDirRemapFind_Table_p0_56
-	.long	VoiceDirRemapFind_Table_p0_113
-	.long	VoiceDirRemapFind_Table_p0_114
-	.long	VoiceDirRemapFind_Table_p0_279
-	.long	VoiceDirRemapFind_Table_p0_280
-	.long	VoiceDirRemapFind_Table_p0_281
-	.long	VoiceDirRemapFind_Table_p0_64
-	.long	VoiceDirRemapFind_Table_p0_135
-	.long	VoiceDirRemapFind_Table_p0_282
-	.long	VoiceDirRemapFind_Table_p0_192
-	.long	VoiceDirRemapFind_Table_p0_193
-	.long	VoiceDirRemapFind_Table_p0_194
-	.long	VoiceDirRemapFind_Table_p0_195
-	.long	VoiceDirRemapFind_Table_p0_196
-	.long	VoiceDirRemapFind_Table_p0_197
-	.long	VoiceDirRemapFind_Table_p0_198
-	.long	VoiceDirRemapFind_Table_p0_199
-	.long	VoiceDirRemapFind_Table_p0_200
-	.long	VoiceDirRemapFind_Table_p0_201
-	.long	VoiceDirRemapFind_Table_p0_231
-	.long	VoiceDirRemapFind_Table_p0_344
-	.long	VoiceDirRemapFind_Table_p0_232
-	.long	VoiceDirRemapFind_Table_p0_59
-	.long	VoiceDirRemapFind_Table_p0_289
-	.long	VoiceDirRemapFind_Table_p0_165
-	.long	VoiceDirRemapFind_Table_p0_166
-	.long	VoiceDirRemapFind_Table_p0_167
-	.long	VoiceDirRemapFind_Table_p0_168
-	.long	VoiceDirRemapFind_Table_p0_169
-	.long	VoiceDirRemapFind_Table_p0_299
-	.long	VoiceDirRemapFind_Table_p0_295
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_67
-	.long	VoiceDirRemapFind_Table_p0_13
-	.long	VoiceDirRemapFind_Table_p0_36
-	.long	VoiceDirRemapFind_Table_p0_351
-	.long	VoiceDirRemapFind_Table_p0_106
-	.long	VoiceDirRemapFind_Table_p0_125
-	.long	VoiceDirRemapFind_Table_p0_73
-	.long	VoiceDirRemapFind_Table_p0_126
-	.long	VoiceDirRemapFind_Table_p0_157
-	.long	VoiceDirRemapFind_Table_p0_305
-	.long	VoiceDirRemapFind_Table_p0_158
-	.long	VoiceDirRemapFind_Table_p0_141
-	.long	VoiceDirRemapFind_Table_p0_43
-	.long	VoiceDirRemapFind_Table_p0_156
+	.long	VoiceDirRemapFind_Table_p0_714
+	.long	VoiceDirRemapFind_Table_p0_715
+	.long	VoiceDirRemapFind_Table_p0_716
+	.long	VoiceDirRemapFind_Table_p0_717
+	.long	VoiceDirRemapFind_Table_p0_966
+	.long	VoiceDirRemapFind_Table_p0_935
+	.long	VoiceDirRemapFind_Table_p0_558
+	.long	VoiceDirRemapFind_Table_p0_559
+	.long	VoiceDirRemapFind_Table_p0_560
+	.long	VoiceDirRemapFind_Table_p0_437
+	.long	VoiceDirRemapFind_Table_p0_438
+	.long	VoiceDirRemapFind_Table_p0_551
+	.long	VoiceDirRemapFind_Table_p0_864
+	.long	VoiceDirRemapFind_Table_p0_865
+	.long	VoiceDirRemapFind_Table_p0_866
+	.long	VoiceDirRemapFind_Table_p0_867
+	.long	VoiceDirRemapFind_Table_p0_909
+	.long	VoiceDirRemapFind_Table_p0_869
+	.long	VoiceDirRemapFind_Table_p0_870
+	.long	VoiceDirRemapFind_Table_p0_948
+	.long	VoiceDirRemapFind_Table_p0_943
 	.long	VoiceDirRemapFind_Table_p0_5
-	.long	VoiceDirRemapFind_Table_p0_87
-	.long	VoiceDirRemapFind_Table_p0_45
-	.long	VoiceDirRemapFind_Table_p0_333
-	.long	VoiceDirRemapFind_Table_p0_334
-	.long	VoiceDirRemapFind_Table_p0_150
-	.long	VoiceDirRemapFind_Table_p0_151
-	.long	VoiceDirRemapFind_Table_p0_170
-	.long	VoiceDirRemapFind_Table_p0_171
+	.long	VoiceDirRemapFind_Table_p0_504
+	.long	VoiceDirRemapFind_Table_p0_681
+	.long	VoiceDirRemapFind_Table_p0_391
+	.long	VoiceDirRemapFind_Table_p0_76
+	.long	VoiceDirRemapFind_Table_p0_590
+	.long	VoiceDirRemapFind_Table_p0_566
+	.long	VoiceDirRemapFind_Table_p0_582
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_931
+	.long	VoiceDirRemapFind_Table_p0_949
+	.long	VoiceDirRemapFind_Table_p0_933
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_293
+	.long	VoiceDirRemapFind_Table_p0_427
+	.long	VoiceDirRemapFind_Table_p0_428
+	.long	VoiceDirRemapFind_Table_p0_913
+	.long	VoiceDirRemapFind_Table_p0_982
+	.long	VoiceDirRemapFind_Table_p0_907
+	.long	VoiceDirRemapFind_Table_p0_768
+	.long	VoiceDirRemapFind_Table_p0_769
+	.long	VoiceDirRemapFind_Table_p0_770
+	.long	VoiceDirRemapFind_Table_p0_771
+	.long	VoiceDirRemapFind_Table_p0_772
+	.long	VoiceDirRemapFind_Table_p0_955
+	.long	VoiceDirRemapFind_Table_p0_939
+	.long	VoiceDirRemapFind_Table_p0_910
+	.long	VoiceDirRemapFind_Table_p0_956
+	.long	VoiceDirRemapFind_Table_p0_916
+	.long	VoiceDirRemapFind_Table_p0_974
+	.long	VoiceDirRemapFind_Table_p0_317
+	.long	VoiceDirRemapFind_Table_p0_577
+	.long	VoiceDirRemapFind_Table_p0_396
+	.long	VoiceDirRemapFind_Table_p0_534
+	.long	VoiceDirRemapFind_Table_p0_535
+	.long	VoiceDirRemapFind_Table_p0_895
+	.long	VoiceDirRemapFind_Table_p0_925
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_963
+	.long	VoiceDirRemapFind_Table_p0_307
+	.long	VoiceDirRemapFind_Table_p0_733
+	.long	VoiceDirRemapFind_Table_p0_324
+	.long	VoiceDirRemapFind_Table_p0_607
+	.long	VoiceDirRemapFind_Table_p0_702
+	.long	VoiceDirRemapFind_Table_p0_706
+	.long	VoiceDirRemapFind_Table_p0_327
+	.long	VoiceDirRemapFind_Table_p0_652
+	.long	VoiceDirRemapFind_Table_p0_811
+	.long	VoiceDirRemapFind_Table_p0_823
+	.long	VoiceDirRemapFind_Table_p0_979
+	.long	VoiceDirRemapFind_Table_p0_301
+	.long	VoiceDirRemapFind_Table_p0_923
+	.long	VoiceDirRemapFind_Table_p0_824
+	.long	VoiceDirRemapFind_Table_p0_836
+	.long	VoiceDirRemapFind_Table_p0_906
+	.long	VoiceDirRemapFind_Table_p0_742
+	.long	VoiceDirRemapFind_Table_p0_743
+	.long	VoiceDirRemapFind_Table_p0_744
+	.long	VoiceDirRemapFind_Table_p0_957
+	.long	VoiceDirRemapFind_Table_p0_746
+	.long	VoiceDirRemapFind_Table_p0_747
+	.long	VoiceDirRemapFind_Table_p0_920
+	.long	VoiceDirRemapFind_Table_p0_918
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_497
+	.long	VoiceDirRemapFind_Table_p0_108
+	.long	VoiceDirRemapFind_Table_p0_813
+	.long	VoiceDirRemapFind_Table_p0_814
+	.long	VoiceDirRemapFind_Table_p0_815
+	.long	VoiceDirRemapFind_Table_p0_816
+	.long	VoiceDirRemapFind_Table_p0_817
+	.long	VoiceDirRemapFind_Table_p0_818
+	.long	VoiceDirRemapFind_Table_p0_819
+	.long	VoiceDirRemapFind_Table_p0_934
+	.long	VoiceDirRemapFind_Table_p0_526
+	.long	VoiceDirRemapFind_Table_p0_527
+	.long	VoiceDirRemapFind_Table_p0_529
+	.long	VoiceDirRemapFind_Table_p0_684
+	.long	VoiceDirRemapFind_Table_p0_364
+	.long	VoiceDirRemapFind_Table_p0_967
+	.long	VoiceDirRemapFind_Table_p0_781
+	.long	VoiceDirRemapFind_Table_p0_782
+	.long	VoiceDirRemapFind_Table_p0_783
+	.long	VoiceDirRemapFind_Table_p0_784
+	.long	VoiceDirRemapFind_Table_p0_619
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_233
+	.long	VoiceDirRemapFind_Table_p0_924
+	.long	VoiceDirRemapFind_Table_p0_898
+	.long	VoiceDirRemapFind_Table_p0_616
+	.long	VoiceDirRemapFind_Table_p0_500
 	.long	VoiceDirRemapFind_Table_p0_350
-	.long	VoiceDirRemapFind_Table_p0_313
+	.long	VoiceDirRemapFind_Table_p0_825
+	.long	VoiceDirRemapFind_Table_p0_826
+	.long	VoiceDirRemapFind_Table_p0_827
+	.long	VoiceDirRemapFind_Table_p0_828
+	.long	VoiceDirRemapFind_Table_p0_829
+	.long	VoiceDirRemapFind_Table_p0_830
+	.long	VoiceDirRemapFind_Table_p0_968
+	.long	VoiceDirRemapFind_Table_p0_965
+	.long	VoiceDirRemapFind_Table_p0_583
+	.long	VoiceDirRemapFind_Table_p0_570
+	.long	VoiceDirRemapFind_Table_p0_404
+	.long	VoiceDirRemapFind_Table_p0_388
+	.long	VoiceDirRemapFind_Table_p0_30
+	.long	VoiceDirRemapFind_Table_p0_549
+	.long	VoiceDirRemapFind_Table_p0_852
+	.long	VoiceDirRemapFind_Table_p0_853
+	.long	VoiceDirRemapFind_Table_p0_854
+	.long	VoiceDirRemapFind_Table_p0_855
+	.long	VoiceDirRemapFind_Table_p0_856
+	.long	VoiceDirRemapFind_Table_p0_857
+	.long	VoiceDirRemapFind_Table_p0_858
+	.long	VoiceDirRemapFind_Table_p0_915
+	.long	VoiceDirRemapFind_Table_p0_944
+	.long	VoiceDirRemapFind_Table_p0_658
+	.long	VoiceDirRemapFind_Table_p0_665
+	.long	VoiceDirRemapFind_Table_p0_958
+	.long	VoiceDirRemapFind_Table_p0_383
+	.long	VoiceDirRemapFind_Table_p0_72
+	.long	VoiceDirRemapFind_Table_p0_575
+	.long	VoiceDirRemapFind_Table_p0_564
+	.long	VoiceDirRemapFind_Table_p0_675
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_980
+	.long	VoiceDirRemapFind_Table_p0_892
+	.long	VoiceDirRemapFind_Table_p0_177
+	.long	VoiceDirRemapFind_Table_p0_127
+	.long	VoiceDirRemapFind_Table_p0_964
+	.long	VoiceDirRemapFind_Table_p0_850
+	.long	VoiceDirRemapFind_Table_p0_420
+	.long	VoiceDirRemapFind_Table_p0_542
+	.long	VoiceDirRemapFind_Table_p0_872
+	.long	VoiceDirRemapFind_Table_p0_873
+	.long	VoiceDirRemapFind_Table_p0_874
+	.long	VoiceDirRemapFind_Table_p0_914
+	.long	VoiceDirRemapFind_Table_p0_884
+	.long	VoiceDirRemapFind_Table_p0_885
+	.long	VoiceDirRemapFind_Table_p0_886
+	.long	VoiceDirRemapFind_Table_p0_954
+	.long	VoiceDirRemapFind_Table_p0_729
+	.long	VoiceDirRemapFind_Table_p0_7
+	.long	VoiceDirRemapFind_Table_p0_912
+	.long	VoiceDirRemapFind_Table_p0_741
+	.long	VoiceDirRemapFind_Table_p0_930
+	.long	VoiceDirRemapFind_Table_p0_8
+	.long	VoiceDirRemapFind_Table_p0_973
+	.long	VoiceDirRemapFind_Table_p0_672
+	.long	VoiceDirRemapFind_Table_p0_972
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_80
+	.long	VoiceDirRemapFind_Table_p0_950
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_132
+	.long	VoiceDirRemapFind_Table_p0_55
+	.long	VoiceDirRemapFind_Table_p0_888
+	.long	VoiceDirRemapFind_Table_p0_889
+	.long	VoiceDirRemapFind_Table_p0_890
+	.long	VoiceDirRemapFind_Table_p0_485
+	.long	VoiceDirRemapFind_Table_p0_703
+	.long	VoiceDirRemapFind_Table_p0_163
+	.long	VoiceDirRemapFind_Table_p0_653
+	.long	VoiceDirRemapFind_Table_p0_809
+	.long	VoiceDirRemapFind_Table_p0_821
+	.long	VoiceDirRemapFind_Table_p0_833
+	.long	VoiceDirRemapFind_Table_p0_694
+	.long	VoiceDirRemapFind_Table_p0_947
+	.long	VoiceDirRemapFind_Table_p0_822
+	.long	VoiceDirRemapFind_Table_p0_834
+	.long	VoiceDirRemapFind_Table_p0_545
+	.long	VoiceDirRemapFind_Table_p0_456
+	.long	VoiceDirRemapFind_Table_p0_457
+	.long	VoiceDirRemapFind_Table_p0_683
+	.long	VoiceDirRemapFind_Table_p0_595
+	.long	VoiceDirRemapFind_Table_p0_591
+	.long	VoiceDirRemapFind_Table_p0_981
+	.long	VoiceDirRemapFind_Table_p0_904
+	.long	VoiceDirRemapFind_Table_p0_919
+	.long	VoiceDirRemapFind_Table_p0_594
+	.long	VoiceDirRemapFind_Table_p0_495
+	.long	VoiceDirRemapFind_Table_p0_674
+	.long	VoiceDirRemapFind_Table_p0_801
+	.long	VoiceDirRemapFind_Table_p0_802
+	.long	VoiceDirRemapFind_Table_p0_803
+	.long	VoiceDirRemapFind_Table_p0_804
+	.long	VoiceDirRemapFind_Table_p0_908
+	.long	VoiceDirRemapFind_Table_p0_806
+	.long	VoiceDirRemapFind_Table_p0_807
+	.long	VoiceDirRemapFind_Table_p0_808
+	.long	VoiceDirRemapFind_Table_p0_763
+	.long	VoiceDirRemapFind_Table_p0_764
+	.long	VoiceDirRemapFind_Table_p0_765
+	.long	VoiceDirRemapFind_Table_p0_363
+	.long	VoiceDirRemapFind_Table_p0_361
+	.long	VoiceDirRemapFind_Table_p0_548
+	.long	VoiceDirRemapFind_Table_p0_471
+	.long	VoiceDirRemapFind_Table_p0_472
+	.long	VoiceDirRemapFind_Table_p0_473
+	.long	VoiceDirRemapFind_Table_p0_682
+	.long	VoiceDirRemapFind_Table_p0_336
+	.long	VoiceDirRemapFind_Table_p0_671
+	.long	VoiceDirRemapFind_Table_p0_678
+	.long	VoiceDirRemapFind_Table_p0_922
+	.long	VoiceDirRemapFind_Table_p0_728
+	.long	VoiceDirRemapFind_Table_p0_612
+	.long	VoiceDirRemapFind_Table_p0_613
+	.long	VoiceDirRemapFind_Table_p0_614
+	.long	VoiceDirRemapFind_Table_p0_686
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_573
+	.long	VoiceDirRemapFind_Table_p0_519
+	.long	VoiceDirRemapFind_Table_p0_711
+	.long	VoiceDirRemapFind_Table_p0_713
+	.long	VoiceDirRemapFind_Table_p0_945
+	.long	VoiceDirRemapFind_Table_p0_946
+	.long	VoiceDirRemapFind_Table_p0_585
+	.long	VoiceDirRemapFind_Table_p0_586
+	.long	VoiceDirRemapFind_Table_p0_402
+	.long	VoiceDirRemapFind_Table_p0_929
+	.long	VoiceDirRemapFind_Table_p0_32
+	.long	VoiceDirRemapFind_Table_p0_553
+	.long	VoiceDirRemapFind_Table_p0_840
+	.long	VoiceDirRemapFind_Table_p0_841
+	.long	VoiceDirRemapFind_Table_p0_842
+	.long	VoiceDirRemapFind_Table_p0_843
+	.long	VoiceDirRemapFind_Table_p0_844
+	.long	VoiceDirRemapFind_Table_p0_845
+	.long	VoiceDirRemapFind_Table_p0_846
+	.long	VoiceDirRemapFind_Table_p0_941
+	.long	VoiceDirRemapFind_Table_p0_942
+	.long	VoiceDirRemapFind_Table_p0_894
+	.long	VoiceDirRemapFind_Table_p0_502
+	.long	VoiceDirRemapFind_Table_p0_309
+	.long	VoiceDirRemapFind_Table_p0_389
+	.long	VoiceDirRemapFind_Table_p0_390
+	.long	VoiceDirRemapFind_Table_p0_718
+	.long	VoiceDirRemapFind_Table_p0_719
+	.long	VoiceDirRemapFind_Table_p0_700
+	.long	VoiceDirRemapFind_Table_p0_154
+	.long	VoiceDirRemapFind_Table_p0_787
+	.long	VoiceDirRemapFind_Table_p0_936
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_785
+	.long	VoiceDirRemapFind_Table_p0_969
+	.long	VoiceDirRemapFind_Table_p0_415
+	.long	VoiceDirRemapFind_Table_p0_418
+	.long	VoiceDirRemapFind_Table_p0_696
+	.long	VoiceDirRemapFind_Table_p0_876
+	.long	VoiceDirRemapFind_Table_p0_877
+	.long	VoiceDirRemapFind_Table_p0_878
+	.long	VoiceDirRemapFind_Table_p0_983
+	.long	VoiceDirRemapFind_Table_p0_880
+	.long	VoiceDirRemapFind_Table_p0_881
+	.long	VoiceDirRemapFind_Table_p0_882
+	.long	VoiceDirRemapFind_Table_p0_953
+	.long	VoiceDirRemapFind_Table_p0_727
+	.long	VoiceDirRemapFind_Table_p0_636
+	.long	VoiceDirRemapFind_Table_p0_505
+	.long	VoiceDirRemapFind_Table_p0_961
+	.long	VoiceDirRemapFind_Table_p0_962
+	.long	VoiceDirRemapFind_Table_p0_376
+	.long	VoiceDirRemapFind_Table_p0_576
+	.long	VoiceDirRemapFind_Table_p0_687
+	.long	VoiceDirRemapFind_Table_p0_971
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_303
+	.long	VoiceDirRemapFind_Table_p0_951
+	.long	VoiceDirRemapFind_Table_p0_860
+	.long	VoiceDirRemapFind_Table_p0_848
+	.long	VoiceDirRemapFind_Table_p0_861
+	.long	VoiceDirRemapFind_Table_p0_862
+	.long	VoiceDirRemapFind_Table_p0_851
+	.long	VoiceDirRemapFind_Table_p0_863
+	.long	ptrs_486A4640
+	.long	VoiceDirRemapFind_Table_p0_774
+	.long	VoiceDirRemapFind_Table_p0_775
+	.long	VoiceDirRemapFind_Table_p0_776
+	.long	VoiceDirRemapFind_Table_p0_777
+	.long	VoiceDirRemapFind_Table_p0_778
+	.long	VoiceDirRemapFind_Table_p0_779
+	.long	VoiceDirRemapFind_Table_p0_926
+	.long	VoiceDirRemapFind_Table_p0_952
+	.long	VoiceDirRemapFind_Table_p0_81
+	.long	VoiceDirRemapFind_Table_p0_541
+	.long	VoiceDirRemapFind_Table_p0_447
+	.long	VoiceDirRemapFind_Table_p0_448
+	.long	VoiceDirRemapFind_Table_p0_449
+	.long	VoiceDirRemapFind_Table_p0_629
+	.long	VoiceDirRemapFind_Table_p0_451
+	.long	VoiceDirRemapFind_Table_p0_621
+	.long	VoiceDirRemapFind_Table_p0_622
+	.long	VoiceDirRemapFind_Table_p0_899
+	.long	VoiceDirRemapFind_Table_p0_901
+	.long	VoiceDirRemapFind_Table_p0_902
+	.long	VoiceDirRemapFind_Table_p0_491
+	.long	VoiceDirRemapFind_Table_p0_695
+	.long	VoiceDirRemapFind_Table_p0_903
+	.long	VoiceDirRemapFind_Table_p0_790
+	.long	VoiceDirRemapFind_Table_p0_791
+	.long	VoiceDirRemapFind_Table_p0_792
+	.long	VoiceDirRemapFind_Table_p0_793
+	.long	VoiceDirRemapFind_Table_p0_794
+	.long	VoiceDirRemapFind_Table_p0_795
+	.long	VoiceDirRemapFind_Table_p0_797
+	.long	VoiceDirRemapFind_Table_p0_798
+	.long	VoiceDirRemapFind_Table_p0_799
+	.long	VoiceDirRemapFind_Table_p0_800
+	.long	VoiceDirRemapFind_Table_p0_837
+	.long	VoiceDirRemapFind_Table_p0_970
+	.long	VoiceDirRemapFind_Table_p0_839
+	.long	VoiceDirRemapFind_Table_p0_463
+	.long	VoiceDirRemapFind_Table_p0_911
+	.long	VoiceDirRemapFind_Table_p0_751
+	.long	VoiceDirRemapFind_Table_p0_752
+	.long	VoiceDirRemapFind_Table_p0_753
+	.long	VoiceDirRemapFind_Table_p0_754
+	.long	VoiceDirRemapFind_Table_p0_755
+	.long	VoiceDirRemapFind_Table_p0_921
+	.long	VoiceDirRemapFind_Table_p0_917
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_498
+	.long	VoiceDirRemapFind_Table_p0_109
+	.long	VoiceDirRemapFind_Table_p0_384
+	.long	VoiceDirRemapFind_Table_p0_978
+	.long	VoiceDirRemapFind_Table_p0_604
+	.long	VoiceDirRemapFind_Table_p0_676
+	.long	VoiceDirRemapFind_Table_p0_518
+	.long	VoiceDirRemapFind_Table_p0_677
+	.long	VoiceDirRemapFind_Table_p0_738
+	.long	VoiceDirRemapFind_Table_p0_927
+	.long	VoiceDirRemapFind_Table_p0_740
+	.long	VoiceDirRemapFind_Table_p0_709
+	.long	VoiceDirRemapFind_Table_p0_403
+	.long	VoiceDirRemapFind_Table_p0_734
+	.long	VoiceDirRemapFind_Table_p0_33
+	.long	VoiceDirRemapFind_Table_p0_554
+	.long	VoiceDirRemapFind_Table_p0_406
+	.long	VoiceDirRemapFind_Table_p0_959
+	.long	VoiceDirRemapFind_Table_p0_960
+	.long	VoiceDirRemapFind_Table_p0_720
+	.long	VoiceDirRemapFind_Table_p0_721
+	.long	VoiceDirRemapFind_Table_p0_758
+	.long	VoiceDirRemapFind_Table_p0_759
+	.long	VoiceDirRemapFind_Table_p0_976
+	.long	VoiceDirRemapFind_Table_p0_938
 
 VoiceDirClassFind_Var:	# u16, a constant; read / written by VoiceDirClassFind 0x485726E8: `movhu (VoiceDirClassFind_Var), d1`
 	.word	1
@@ -39150,638 +38673,638 @@ VoiceDirClassFind_Var_2:	# u16, a constant; read / written by VoiceDirClassFind 
 	.word	633
 
 VoiceDirClassFind_Table:
-	.long	VoiceDirClassFind_Table_p0_221
-	.long	VoiceDirClassFind_Table_p0_0
-	.long	VoiceDirClassFind_Table_p0_222
+	.long	VoiceDirClassFind_Table_p0_338
 	.long	VoiceDirClassFind_Table_p0_1
-	.long	VoiceDirClassFind_Table_p0_2
-	.long	VoiceDirClassFind_Table_p0_79
+	.long	VoiceDirClassFind_Table_p0_339
 	.long	VoiceDirClassFind_Table_p0_3
-	.long	VoiceDirClassFind_Table_p0_80
-	.long	VoiceDirClassFind_Table_p0_81
-	.long	VoiceDirClassFind_Table_p0_82
-	.long	VoiceDirClassFind_Table_p0_238
-	.long	VoiceDirClassFind_Table_p0_239
-	.long	VoiceDirClassFind_Table_p0_83
+	.long	VoiceDirClassFind_Table_p0_4
+	.long	VoiceDirClassFind_Table_p0_159
+	.long	VoiceDirClassFind_Table_p0_6
+	.long	VoiceDirClassFind_Table_p0_160
+	.long	VoiceDirClassFind_Table_p0_161
+	.long	VoiceDirClassFind_Table_p0_162
+	.long	VoiceDirClassFind_Table_p0_355
+	.long	VoiceDirClassFind_Table_p0_356
+	.long	VoiceDirClassFind_Table_p0_165
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_12
-	.long	VoiceDirClassFind_Table_p0_240
-	.long	VoiceDirClassFind_Table_p0_13
+	.long	VoiceDirClassFind_Table_p0_24
+	.long	VoiceDirClassFind_Table_p0_357
+	.long	VoiceDirClassFind_Table_p0_25
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_14
-	.long	VoiceDirClassFind_Table_p0_95
-	.long	VoiceDirClassFind_Table_p0_15
+	.long	VoiceDirClassFind_Table_p0_26
+	.long	VoiceDirClassFind_Table_p0_178
+	.long	VoiceDirClassFind_Table_p0_28
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_96
+	.long	VoiceDirClassFind_Table_p0_179
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_254
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_255
-	.long	VoiceDirClassFind_Table_p0_256
-	.long	0
+	.long	VoiceDirClassFind_Table_p0_371
 	.long	0
 	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_110
-	.long	VoiceDirClassFind_Table_p0_111
-	.long	VoiceDirClassFind_Table_p0_112
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_113
-	.long	VoiceDirClassFind_Table_p0_286
-	.long	VoiceDirClassFind_Table_p0_114
-	.long	VoiceDirClassFind_Table_p0_287
-	.long	VoiceDirClassFind_Table_p0_288
-	.long	VoiceDirClassFind_Table_p0_289
-	.long	VoiceDirClassFind_Table_p0_290
-	.long	VoiceDirClassFind_Table_p0_291
-	.long	VoiceDirClassFind_Table_p0_292
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_127
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_128
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_129
-	.long	VoiceDirClassFind_Table_p0_323
-	.long	VoiceDirClassFind_Table_p0_130
-	.long	VoiceDirClassFind_Table_p0_324
-	.long	VoiceDirClassFind_Table_p0_325
-	.long	VoiceDirClassFind_Table_p0_326
-	.long	VoiceDirClassFind_Table_p0_327
-	.long	VoiceDirClassFind_Table_p0_328
-	.long	VoiceDirClassFind_Table_p0_329
-	.long	VoiceDirClassFind_Table_p0_34
-	.long	VoiceDirClassFind_Table_p0_142
+	.long	VoiceDirClassFind_Table_p0_372
+	.long	VoiceDirClassFind_Table_p0_373
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_358
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_359
-	.long	VoiceDirClassFind_Table_p0_360
-	.long	VoiceDirClassFind_Table_p0_361
-	.long	VoiceDirClassFind_Table_p0_362
-	.long	VoiceDirClassFind_Table_p0_363
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_152
-	.long	VoiceDirClassFind_Table_p0_153
-	.long	VoiceDirClassFind_Table_p0_154
-	.long	VoiceDirClassFind_Table_p0_155
-	.long	VoiceDirClassFind_Table_p0_156
-	.long	VoiceDirClassFind_Table_p0_385
-	.long	VoiceDirClassFind_Table_p0_386
-	.long	VoiceDirClassFind_Table_p0_387
-	.long	VoiceDirClassFind_Table_p0_388
-	.long	VoiceDirClassFind_Table_p0_389
-	.long	VoiceDirClassFind_Table_p0_390
-	.long	VoiceDirClassFind_Table_p0_391
-	.long	VoiceDirClassFind_Table_p0_392
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_167
-	.long	VoiceDirClassFind_Table_p0_168
-	.long	VoiceDirClassFind_Table_p0_169
-	.long	VoiceDirClassFind_Table_p0_170
-	.long	VoiceDirClassFind_Table_p0_171
-	.long	VoiceDirClassFind_Table_p0_423
-	.long	VoiceDirClassFind_Table_p0_424
-	.long	VoiceDirClassFind_Table_p0_425
-	.long	VoiceDirClassFind_Table_p0_426
-	.long	VoiceDirClassFind_Table_p0_427
-	.long	VoiceDirClassFind_Table_p0_428
-	.long	VoiceDirClassFind_Table_p0_429
-	.long	VoiceDirClassFind_Table_p0_430
-	.long	VoiceDirClassFind_Table_p0_46
-	.long	VoiceDirClassFind_Table_p0_192
-	.long	VoiceDirClassFind_Table_p0_193
-	.long	VoiceDirClassFind_Table_p0_194
-	.long	VoiceDirClassFind_Table_p0_195
-	.long	VoiceDirClassFind_Table_p0_196
-	.long	VoiceDirClassFind_Table_p0_197
 	.long	VoiceDirClassFind_Table_p0_198
 	.long	VoiceDirClassFind_Table_p0_199
+	.long	VoiceDirClassFind_Table_p0_200
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_50
-	.long	VoiceDirClassFind_Table_p0_51
-	.long	VoiceDirClassFind_Table_p0_52
-	.long	VoiceDirClassFind_Table_p0_53
-	.long	VoiceDirClassFind_Table_p0_54
-	.long	VoiceDirClassFind_Table_p0_212
+	.long	VoiceDirClassFind_Table_p0_201
+	.long	VoiceDirClassFind_Table_p0_403
+	.long	VoiceDirClassFind_Table_p0_203
+	.long	VoiceDirClassFind_Table_p0_404
+	.long	VoiceDirClassFind_Table_p0_405
+	.long	VoiceDirClassFind_Table_p0_406
+	.long	VoiceDirClassFind_Table_p0_407
+	.long	VoiceDirClassFind_Table_p0_408
+	.long	VoiceDirClassFind_Table_p0_409
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_213
-	.long	VoiceDirClassFind_Table_p0_214
-	.long	VoiceDirClassFind_Table_p0_215
-	.long	VoiceDirClassFind_Table_p0_216
+	.long	VoiceDirClassFind_Table_p0_227
 	.long	0
+	.long	VoiceDirClassFind_Table_p0_228
 	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_70
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_71
-	.long	VoiceDirClassFind_Table_p0_72
-	.long	VoiceDirClassFind_Table_p0_230
-	.long	VoiceDirClassFind_Table_p0_73
+	.long	VoiceDirClassFind_Table_p0_229
+	.long	VoiceDirClassFind_Table_p0_440
 	.long	VoiceDirClassFind_Table_p0_231
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_232
-	.long	VoiceDirClassFind_Table_p0_233
-	.long	VoiceDirClassFind_Table_p0_234
-	.long	VoiceDirClassFind_Table_p0_235
-	.long	VoiceDirClassFind_Table_p0_8
-	.long	VoiceDirClassFind_Table_p0_92
-	.long	VoiceDirClassFind_Table_p0_93
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_246
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_247
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_21
+	.long	VoiceDirClassFind_Table_p0_441
+	.long	VoiceDirClassFind_Table_p0_442
+	.long	VoiceDirClassFind_Table_p0_443
+	.long	VoiceDirClassFind_Table_p0_444
+	.long	VoiceDirClassFind_Table_p0_445
+	.long	VoiceDirClassFind_Table_p0_446
+	.long	VoiceDirClassFind_Table_p0_77
+	.long	VoiceDirClassFind_Table_p0_248
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_22
-	.long	VoiceDirClassFind_Table_p0_103
-	.long	VoiceDirClassFind_Table_p0_104
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_475
 	.long	0
 	.long	0
+	.long	VoiceDirClassFind_Table_p0_476
+	.long	VoiceDirClassFind_Table_p0_477
+	.long	VoiceDirClassFind_Table_p0_478
+	.long	VoiceDirClassFind_Table_p0_479
+	.long	VoiceDirClassFind_Table_p0_480
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_272
+	.long	VoiceDirClassFind_Table_p0_258
+	.long	VoiceDirClassFind_Table_p0_259
+	.long	VoiceDirClassFind_Table_p0_260
+	.long	VoiceDirClassFind_Table_p0_261
+	.long	VoiceDirClassFind_Table_p0_262
+	.long	VoiceDirClassFind_Table_p0_502
+	.long	VoiceDirClassFind_Table_p0_503
+	.long	VoiceDirClassFind_Table_p0_504
+	.long	VoiceDirClassFind_Table_p0_505
+	.long	VoiceDirClassFind_Table_p0_506
+	.long	VoiceDirClassFind_Table_p0_507
+	.long	VoiceDirClassFind_Table_p0_508
+	.long	VoiceDirClassFind_Table_p0_509
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_273
-	.long	VoiceDirClassFind_Table_p0_274
-	.long	VoiceDirClassFind_Table_p0_275
 	.long	VoiceDirClassFind_Table_p0_276
 	.long	VoiceDirClassFind_Table_p0_277
 	.long	VoiceDirClassFind_Table_p0_278
-	.long	VoiceDirClassFind_Table_p0_25
-	.long	VoiceDirClassFind_Table_p0_122
-	.long	VoiceDirClassFind_Table_p0_26
-	.long	VoiceDirClassFind_Table_p0_27
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_123
+	.long	VoiceDirClassFind_Table_p0_279
+	.long	VoiceDirClassFind_Table_p0_280
+	.long	VoiceDirClassFind_Table_p0_540
+	.long	VoiceDirClassFind_Table_p0_541
+	.long	VoiceDirClassFind_Table_p0_542
+	.long	VoiceDirClassFind_Table_p0_543
+	.long	VoiceDirClassFind_Table_p0_544
+	.long	VoiceDirClassFind_Table_p0_545
+	.long	VoiceDirClassFind_Table_p0_546
+	.long	VoiceDirClassFind_Table_p0_547
+	.long	VoiceDirClassFind_Table_p0_114
 	.long	VoiceDirClassFind_Table_p0_309
 	.long	VoiceDirClassFind_Table_p0_310
 	.long	VoiceDirClassFind_Table_p0_311
 	.long	VoiceDirClassFind_Table_p0_312
 	.long	VoiceDirClassFind_Table_p0_313
-	.long	0
 	.long	VoiceDirClassFind_Table_p0_314
 	.long	VoiceDirClassFind_Table_p0_315
-	.long	VoiceDirClassFind_Table_p0_32
+	.long	VoiceDirClassFind_Table_p0_316
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_124
+	.long	VoiceDirClassFind_Table_p0_125
+	.long	VoiceDirClassFind_Table_p0_126
+	.long	VoiceDirClassFind_Table_p0_127
+	.long	VoiceDirClassFind_Table_p0_128
+	.long	VoiceDirClassFind_Table_p0_329
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_330
+	.long	VoiceDirClassFind_Table_p0_331
+	.long	VoiceDirClassFind_Table_p0_332
+	.long	VoiceDirClassFind_Table_p0_333
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_147
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_148
+	.long	VoiceDirClassFind_Table_p0_149
+	.long	VoiceDirClassFind_Table_p0_347
+	.long	VoiceDirClassFind_Table_p0_151
+	.long	VoiceDirClassFind_Table_p0_348
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_349
+	.long	VoiceDirClassFind_Table_p0_350
+	.long	VoiceDirClassFind_Table_p0_351
+	.long	VoiceDirClassFind_Table_p0_352
+	.long	VoiceDirClassFind_Table_p0_17
+	.long	VoiceDirClassFind_Table_p0_175
+	.long	VoiceDirClassFind_Table_p0_176
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_363
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_364
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_38
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_39
+	.long	VoiceDirClassFind_Table_p0_187
+	.long	VoiceDirClassFind_Table_p0_188
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_389
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_390
+	.long	VoiceDirClassFind_Table_p0_391
+	.long	VoiceDirClassFind_Table_p0_392
+	.long	VoiceDirClassFind_Table_p0_393
+	.long	VoiceDirClassFind_Table_p0_394
+	.long	VoiceDirClassFind_Table_p0_395
+	.long	VoiceDirClassFind_Table_p0_50
+	.long	VoiceDirClassFind_Table_p0_217
+	.long	VoiceDirClassFind_Table_p0_52
+	.long	VoiceDirClassFind_Table_p0_53
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_218
+	.long	VoiceDirClassFind_Table_p0_426
+	.long	VoiceDirClassFind_Table_p0_427
+	.long	VoiceDirClassFind_Table_p0_428
+	.long	VoiceDirClassFind_Table_p0_429
+	.long	VoiceDirClassFind_Table_p0_430
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_431
+	.long	VoiceDirClassFind_Table_p0_432
+	.long	VoiceDirClassFind_Table_p0_72
+	.long	VoiceDirClassFind_Table_p0_241
+	.long	VoiceDirClassFind_Table_p0_242
+	.long	VoiceDirClassFind_Table_p0_243
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_244
+	.long	VoiceDirClassFind_Table_p0_460
+	.long	VoiceDirClassFind_Table_p0_246
+	.long	VoiceDirClassFind_Table_p0_461
+	.long	VoiceDirClassFind_Table_p0_462
+	.long	VoiceDirClassFind_Table_p0_463
+	.long	VoiceDirClassFind_Table_p0_464
+	.long	VoiceDirClassFind_Table_p0_465
+	.long	VoiceDirClassFind_Table_p0_466
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_256
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_490
+	.long	VoiceDirClassFind_Table_p0_491
+	.long	VoiceDirClassFind_Table_p0_492
+	.long	VoiceDirClassFind_Table_p0_493
+	.long	VoiceDirClassFind_Table_p0_494
+	.long	VoiceDirClassFind_Table_p0_495
+	.long	VoiceDirClassFind_Table_p0_99
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_271
+	.long	VoiceDirClassFind_Table_p0_272
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_273
+	.long	VoiceDirClassFind_Table_p0_524
+	.long	VoiceDirClassFind_Table_p0_525
+	.long	VoiceDirClassFind_Table_p0_526
+	.long	VoiceDirClassFind_Table_p0_527
+	.long	VoiceDirClassFind_Table_p0_528
+	.long	VoiceDirClassFind_Table_p0_529
+	.long	VoiceDirClassFind_Table_p0_530
+	.long	VoiceDirClassFind_Table_p0_531
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_296
+	.long	VoiceDirClassFind_Table_p0_297
+	.long	VoiceDirClassFind_Table_p0_298
+	.long	VoiceDirClassFind_Table_p0_299
+	.long	VoiceDirClassFind_Table_p0_300
+	.long	VoiceDirClassFind_Table_p0_562
+	.long	VoiceDirClassFind_Table_p0_563
+	.long	VoiceDirClassFind_Table_p0_564
+	.long	VoiceDirClassFind_Table_p0_565
+	.long	VoiceDirClassFind_Table_p0_566
+	.long	VoiceDirClassFind_Table_p0_567
+	.long	VoiceDirClassFind_Table_p0_568
+	.long	VoiceDirClassFind_Table_p0_569
+	.long	VoiceDirClassFind_Table_p0_121
+	.long	VoiceDirClassFind_Table_p0_324
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_135
 	.long	VoiceDirClassFind_Table_p0_136
 	.long	VoiceDirClassFind_Table_p0_137
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_340
+	.long	0
 	.long	VoiceDirClassFind_Table_p0_138
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_139
-	.long	VoiceDirClassFind_Table_p0_343
-	.long	VoiceDirClassFind_Table_p0_140
-	.long	VoiceDirClassFind_Table_p0_344
-	.long	VoiceDirClassFind_Table_p0_345
-	.long	VoiceDirClassFind_Table_p0_346
-	.long	VoiceDirClassFind_Table_p0_347
-	.long	VoiceDirClassFind_Table_p0_348
-	.long	VoiceDirClassFind_Table_p0_349
+	.long	VoiceDirClassFind_Table_p0_341
+	.long	VoiceDirClassFind_Table_p0_9
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_150
+	.long	VoiceDirClassFind_Table_p0_10
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_166
+	.long	VoiceDirClassFind_Table_p0_11
+	.long	VoiceDirClassFind_Table_p0_167
+	.long	VoiceDirClassFind_Table_p0_168
+	.long	VoiceDirClassFind_Table_p0_169
+	.long	VoiceDirClassFind_Table_p0_358
+	.long	VoiceDirClassFind_Table_p0_171
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_29
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_30
+	.long	VoiceDirClassFind_Table_p0_31
+	.long	VoiceDirClassFind_Table_p0_180
+	.long	VoiceDirClassFind_Table_p0_181
 	.long	0
 	.long	0
 	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_373
 	.long	VoiceDirClassFind_Table_p0_374
 	.long	VoiceDirClassFind_Table_p0_375
 	.long	VoiceDirClassFind_Table_p0_376
 	.long	VoiceDirClassFind_Table_p0_377
 	.long	VoiceDirClassFind_Table_p0_378
-	.long	VoiceDirClassFind_Table_p0_42
+	.long	VoiceDirClassFind_Table_p0_379
+	.long	VoiceDirClassFind_Table_p0_380
+	.long	VoiceDirClassFind_Table_p0_381
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_205
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_163
-	.long	VoiceDirClassFind_Table_p0_164
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_165
-	.long	VoiceDirClassFind_Table_p0_407
-	.long	VoiceDirClassFind_Table_p0_408
-	.long	VoiceDirClassFind_Table_p0_409
+	.long	VoiceDirClassFind_Table_p0_206
+	.long	VoiceDirClassFind_Table_p0_207
 	.long	VoiceDirClassFind_Table_p0_410
 	.long	VoiceDirClassFind_Table_p0_411
 	.long	VoiceDirClassFind_Table_p0_412
 	.long	VoiceDirClassFind_Table_p0_413
 	.long	VoiceDirClassFind_Table_p0_414
+	.long	VoiceDirClassFind_Table_p0_415
+	.long	VoiceDirClassFind_Table_p0_416
+	.long	VoiceDirClassFind_Table_p0_417
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_182
-	.long	VoiceDirClassFind_Table_p0_183
-	.long	VoiceDirClassFind_Table_p0_184
-	.long	VoiceDirClassFind_Table_p0_185
-	.long	VoiceDirClassFind_Table_p0_186
-	.long	VoiceDirClassFind_Table_p0_445
-	.long	VoiceDirClassFind_Table_p0_446
+	.long	VoiceDirClassFind_Table_p0_233
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_234
+	.long	0
 	.long	VoiceDirClassFind_Table_p0_447
 	.long	VoiceDirClassFind_Table_p0_448
 	.long	VoiceDirClassFind_Table_p0_449
 	.long	VoiceDirClassFind_Table_p0_450
 	.long	VoiceDirClassFind_Table_p0_451
 	.long	VoiceDirClassFind_Table_p0_452
-	.long	VoiceDirClassFind_Table_p0_47
-	.long	VoiceDirClassFind_Table_p0_207
+	.long	VoiceDirClassFind_Table_p0_453
+	.long	VoiceDirClassFind_Table_p0_454
 	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_60
-	.long	VoiceDirClassFind_Table_p0_61
-	.long	VoiceDirClassFind_Table_p0_62
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_223
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_63
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_224
-	.long	VoiceDirClassFind_Table_p0_4
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_5
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_84
-	.long	VoiceDirClassFind_Table_p0_6
-	.long	VoiceDirClassFind_Table_p0_85
-	.long	VoiceDirClassFind_Table_p0_86
-	.long	VoiceDirClassFind_Table_p0_87
-	.long	VoiceDirClassFind_Table_p0_241
-	.long	VoiceDirClassFind_Table_p0_88
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_16
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_17
-	.long	VoiceDirClassFind_Table_p0_18
-	.long	VoiceDirClassFind_Table_p0_97
-	.long	VoiceDirClassFind_Table_p0_98
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_257
-	.long	VoiceDirClassFind_Table_p0_258
-	.long	VoiceDirClassFind_Table_p0_259
-	.long	VoiceDirClassFind_Table_p0_260
-	.long	VoiceDirClassFind_Table_p0_261
-	.long	VoiceDirClassFind_Table_p0_262
-	.long	VoiceDirClassFind_Table_p0_263
-	.long	VoiceDirClassFind_Table_p0_264
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_115
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_116
-	.long	VoiceDirClassFind_Table_p0_117
-	.long	VoiceDirClassFind_Table_p0_293
-	.long	VoiceDirClassFind_Table_p0_294
-	.long	VoiceDirClassFind_Table_p0_295
-	.long	VoiceDirClassFind_Table_p0_296
-	.long	VoiceDirClassFind_Table_p0_297
-	.long	VoiceDirClassFind_Table_p0_298
-	.long	VoiceDirClassFind_Table_p0_299
-	.long	VoiceDirClassFind_Table_p0_300
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_131
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_132
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_330
-	.long	VoiceDirClassFind_Table_p0_331
-	.long	VoiceDirClassFind_Table_p0_332
-	.long	VoiceDirClassFind_Table_p0_333
-	.long	VoiceDirClassFind_Table_p0_334
-	.long	VoiceDirClassFind_Table_p0_335
-	.long	VoiceDirClassFind_Table_p0_336
-	.long	VoiceDirClassFind_Table_p0_337
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_143
-	.long	VoiceDirClassFind_Table_p0_144
-	.long	VoiceDirClassFind_Table_p0_145
-	.long	VoiceDirClassFind_Table_p0_146
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_364
-	.long	VoiceDirClassFind_Table_p0_147
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_365
-	.long	VoiceDirClassFind_Table_p0_366
-	.long	VoiceDirClassFind_Table_p0_35
-	.long	VoiceDirClassFind_Table_p0_367
-	.long	VoiceDirClassFind_Table_p0_36
-	.long	VoiceDirClassFind_Table_p0_37
-	.long	VoiceDirClassFind_Table_p0_157
-	.long	VoiceDirClassFind_Table_p0_158
-	.long	VoiceDirClassFind_Table_p0_159
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_393
-	.long	VoiceDirClassFind_Table_p0_394
-	.long	VoiceDirClassFind_Table_p0_395
-	.long	VoiceDirClassFind_Table_p0_396
-	.long	VoiceDirClassFind_Table_p0_397
-	.long	VoiceDirClassFind_Table_p0_398
-	.long	VoiceDirClassFind_Table_p0_399
-	.long	VoiceDirClassFind_Table_p0_400
-	.long	VoiceDirClassFind_Table_p0_44
-	.long	VoiceDirClassFind_Table_p0_172
-	.long	VoiceDirClassFind_Table_p0_173
-	.long	VoiceDirClassFind_Table_p0_174
-	.long	VoiceDirClassFind_Table_p0_175
-	.long	VoiceDirClassFind_Table_p0_176
-	.long	VoiceDirClassFind_Table_p0_431
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_432
-	.long	VoiceDirClassFind_Table_p0_433
-	.long	VoiceDirClassFind_Table_p0_434
-	.long	VoiceDirClassFind_Table_p0_435
-	.long	VoiceDirClassFind_Table_p0_436
-	.long	VoiceDirClassFind_Table_p0_437
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_200
-	.long	VoiceDirClassFind_Table_p0_201
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_202
-	.long	VoiceDirClassFind_Table_p0_203
-	.long	VoiceDirClassFind_Table_p0_204
-	.long	VoiceDirClassFind_Table_p0_205
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_55
-	.long	VoiceDirClassFind_Table_p0_56
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_57
-	.long	VoiceDirClassFind_Table_p0_217
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_218
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_74
-	.long	VoiceDirClassFind_Table_p0_75
-	.long	VoiceDirClassFind_Table_p0_76
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_77
-	.long	VoiceDirClassFind_Table_p0_236
-	.long	VoiceDirClassFind_Table_p0_78
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_237
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_9
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_10
-	.long	VoiceDirClassFind_Table_p0_94
-	.long	VoiceDirClassFind_Table_p0_11
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_248
 	.long	VoiceDirClassFind_Table_p0_249
-	.long	0
 	.long	VoiceDirClassFind_Table_p0_250
-	.long	VoiceDirClassFind_Table_p0_23
 	.long	VoiceDirClassFind_Table_p0_251
 	.long	VoiceDirClassFind_Table_p0_252
-	.long	VoiceDirClassFind_Table_p0_253
-	.long	VoiceDirClassFind_Table_p0_24
-	.long	VoiceDirClassFind_Table_p0_105
-	.long	VoiceDirClassFind_Table_p0_106
-	.long	VoiceDirClassFind_Table_p0_107
-	.long	VoiceDirClassFind_Table_p0_108
-	.long	VoiceDirClassFind_Table_p0_109
-	.long	VoiceDirClassFind_Table_p0_279
-	.long	VoiceDirClassFind_Table_p0_280
-	.long	VoiceDirClassFind_Table_p0_281
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_282
+	.long	VoiceDirClassFind_Table_p0_481
+	.long	VoiceDirClassFind_Table_p0_253
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_482
+	.long	VoiceDirClassFind_Table_p0_483
+	.long	VoiceDirClassFind_Table_p0_89
+	.long	VoiceDirClassFind_Table_p0_484
+	.long	VoiceDirClassFind_Table_p0_90
+	.long	VoiceDirClassFind_Table_p0_91
+	.long	VoiceDirClassFind_Table_p0_265
+	.long	VoiceDirClassFind_Table_p0_266
+	.long	VoiceDirClassFind_Table_p0_267
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_510
+	.long	VoiceDirClassFind_Table_p0_511
+	.long	VoiceDirClassFind_Table_p0_512
+	.long	VoiceDirClassFind_Table_p0_513
+	.long	VoiceDirClassFind_Table_p0_514
+	.long	VoiceDirClassFind_Table_p0_515
+	.long	VoiceDirClassFind_Table_p0_516
+	.long	VoiceDirClassFind_Table_p0_517
+	.long	VoiceDirClassFind_Table_p0_107
 	.long	VoiceDirClassFind_Table_p0_283
 	.long	VoiceDirClassFind_Table_p0_284
 	.long	VoiceDirClassFind_Table_p0_285
-	.long	VoiceDirClassFind_Table_p0_28
-	.long	VoiceDirClassFind_Table_p0_124
-	.long	VoiceDirClassFind_Table_p0_29
-	.long	VoiceDirClassFind_Table_p0_30
+	.long	VoiceDirClassFind_Table_p0_286
+	.long	VoiceDirClassFind_Table_p0_287
+	.long	VoiceDirClassFind_Table_p0_548
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_125
-	.long	VoiceDirClassFind_Table_p0_316
-	.long	VoiceDirClassFind_Table_p0_126
+	.long	VoiceDirClassFind_Table_p0_549
+	.long	VoiceDirClassFind_Table_p0_550
+	.long	VoiceDirClassFind_Table_p0_551
+	.long	VoiceDirClassFind_Table_p0_552
+	.long	VoiceDirClassFind_Table_p0_553
+	.long	VoiceDirClassFind_Table_p0_554
+	.long	0
 	.long	VoiceDirClassFind_Table_p0_317
 	.long	VoiceDirClassFind_Table_p0_318
+	.long	0
+	.long	0
 	.long	VoiceDirClassFind_Table_p0_319
 	.long	VoiceDirClassFind_Table_p0_320
 	.long	VoiceDirClassFind_Table_p0_321
 	.long	VoiceDirClassFind_Table_p0_322
-	.long	VoiceDirClassFind_Table_p0_33
-	.long	VoiceDirClassFind_Table_p0_141
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_129
+	.long	VoiceDirClassFind_Table_p0_130
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_131
+	.long	VoiceDirClassFind_Table_p0_334
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_335
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_350
-	.long	VoiceDirClassFind_Table_p0_351
-	.long	VoiceDirClassFind_Table_p0_352
+	.long	VoiceDirClassFind_Table_p0_153
+	.long	VoiceDirClassFind_Table_p0_154
+	.long	VoiceDirClassFind_Table_p0_155
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_156
 	.long	VoiceDirClassFind_Table_p0_353
+	.long	VoiceDirClassFind_Table_p0_158
+	.long	0
+	.long	0
 	.long	VoiceDirClassFind_Table_p0_354
-	.long	VoiceDirClassFind_Table_p0_355
-	.long	VoiceDirClassFind_Table_p0_356
-	.long	VoiceDirClassFind_Table_p0_357
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_151
+	.long	VoiceDirClassFind_Table_p0_20
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_21
+	.long	VoiceDirClassFind_Table_p0_177
+	.long	VoiceDirClassFind_Table_p0_23
 	.long	0
 	.long	0
 	.long	0
+	.long	VoiceDirClassFind_Table_p0_365
+	.long	VoiceDirClassFind_Table_p0_366
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_379
-	.long	VoiceDirClassFind_Table_p0_380
-	.long	VoiceDirClassFind_Table_p0_381
-	.long	0
+	.long	VoiceDirClassFind_Table_p0_367
+	.long	VoiceDirClassFind_Table_p0_41
+	.long	VoiceDirClassFind_Table_p0_368
+	.long	VoiceDirClassFind_Table_p0_369
+	.long	VoiceDirClassFind_Table_p0_370
 	.long	VoiceDirClassFind_Table_p0_43
+	.long	VoiceDirClassFind_Table_p0_190
+	.long	VoiceDirClassFind_Table_p0_191
+	.long	VoiceDirClassFind_Table_p0_192
+	.long	VoiceDirClassFind_Table_p0_193
+	.long	VoiceDirClassFind_Table_p0_194
+	.long	VoiceDirClassFind_Table_p0_396
+	.long	VoiceDirClassFind_Table_p0_397
+	.long	VoiceDirClassFind_Table_p0_398
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_399
+	.long	VoiceDirClassFind_Table_p0_400
+	.long	VoiceDirClassFind_Table_p0_401
+	.long	VoiceDirClassFind_Table_p0_402
+	.long	VoiceDirClassFind_Table_p0_58
+	.long	VoiceDirClassFind_Table_p0_222
+	.long	VoiceDirClassFind_Table_p0_59
+	.long	VoiceDirClassFind_Table_p0_60
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_223
+	.long	VoiceDirClassFind_Table_p0_433
+	.long	VoiceDirClassFind_Table_p0_225
+	.long	VoiceDirClassFind_Table_p0_434
+	.long	VoiceDirClassFind_Table_p0_435
+	.long	VoiceDirClassFind_Table_p0_436
+	.long	VoiceDirClassFind_Table_p0_437
+	.long	VoiceDirClassFind_Table_p0_438
+	.long	VoiceDirClassFind_Table_p0_439
+	.long	VoiceDirClassFind_Table_p0_74
+	.long	VoiceDirClassFind_Table_p0_247
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_467
+	.long	VoiceDirClassFind_Table_p0_468
+	.long	VoiceDirClassFind_Table_p0_469
+	.long	VoiceDirClassFind_Table_p0_470
+	.long	VoiceDirClassFind_Table_p0_471
+	.long	VoiceDirClassFind_Table_p0_472
+	.long	VoiceDirClassFind_Table_p0_473
+	.long	VoiceDirClassFind_Table_p0_474
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_257
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_496
+	.long	VoiceDirClassFind_Table_p0_497
+	.long	VoiceDirClassFind_Table_p0_498
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_100
+	.long	VoiceDirClassFind_Table_p0_499
+	.long	VoiceDirClassFind_Table_p0_500
+	.long	VoiceDirClassFind_Table_p0_501
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_275
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_532
+	.long	VoiceDirClassFind_Table_p0_533
+	.long	VoiceDirClassFind_Table_p0_534
+	.long	VoiceDirClassFind_Table_p0_535
+	.long	VoiceDirClassFind_Table_p0_536
+	.long	VoiceDirClassFind_Table_p0_537
+	.long	VoiceDirClassFind_Table_p0_538
+	.long	VoiceDirClassFind_Table_p0_539
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_304
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_305
+	.long	VoiceDirClassFind_Table_p0_306
+	.long	VoiceDirClassFind_Table_p0_307
+	.long	VoiceDirClassFind_Table_p0_308
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_122
+	.long	VoiceDirClassFind_Table_p0_123
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_325
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_326
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_327
+	.long	VoiceDirClassFind_Table_p0_328
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_139
+	.long	VoiceDirClassFind_Table_p0_140
+	.long	VoiceDirClassFind_Table_p0_141
+	.long	VoiceDirClassFind_Table_p0_142
+	.long	VoiceDirClassFind_Table_p0_143
+	.long	VoiceDirClassFind_Table_p0_342
+	.long	VoiceDirClassFind_Table_p0_145
+	.long	VoiceDirClassFind_Table_p0_343
+	.long	VoiceDirClassFind_Table_p0_344
+	.long	VoiceDirClassFind_Table_p0_345
+	.long	VoiceDirClassFind_Table_p0_13
+	.long	VoiceDirClassFind_Table_p0_346
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_172
+	.long	VoiceDirClassFind_Table_p0_173
+	.long	VoiceDirClassFind_Table_p0_174
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_359
+	.long	VoiceDirClassFind_Table_p0_360
+	.long	VoiceDirClassFind_Table_p0_361
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_362
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_35
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_36
+	.long	VoiceDirClassFind_Table_p0_182
+	.long	VoiceDirClassFind_Table_p0_183
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_184
 	.long	VoiceDirClassFind_Table_p0_382
+	.long	VoiceDirClassFind_Table_p0_186
 	.long	VoiceDirClassFind_Table_p0_383
 	.long	VoiceDirClassFind_Table_p0_384
+	.long	VoiceDirClassFind_Table_p0_385
+	.long	VoiceDirClassFind_Table_p0_386
+	.long	VoiceDirClassFind_Table_p0_387
+	.long	VoiceDirClassFind_Table_p0_388
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_166
+	.long	VoiceDirClassFind_Table_p0_211
+	.long	VoiceDirClassFind_Table_p0_212
+	.long	VoiceDirClassFind_Table_p0_213
 	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_415
-	.long	VoiceDirClassFind_Table_p0_416
-	.long	VoiceDirClassFind_Table_p0_417
+	.long	VoiceDirClassFind_Table_p0_214
 	.long	VoiceDirClassFind_Table_p0_418
 	.long	VoiceDirClassFind_Table_p0_419
 	.long	VoiceDirClassFind_Table_p0_420
 	.long	VoiceDirClassFind_Table_p0_421
 	.long	VoiceDirClassFind_Table_p0_422
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_187
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_188
-	.long	VoiceDirClassFind_Table_p0_189
-	.long	VoiceDirClassFind_Table_p0_190
-	.long	VoiceDirClassFind_Table_p0_191
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_48
-	.long	VoiceDirClassFind_Table_p0_49
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_208
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_209
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_210
-	.long	VoiceDirClassFind_Table_p0_211
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_64
-	.long	VoiceDirClassFind_Table_p0_65
-	.long	VoiceDirClassFind_Table_p0_66
-	.long	VoiceDirClassFind_Table_p0_67
-	.long	VoiceDirClassFind_Table_p0_68
-	.long	VoiceDirClassFind_Table_p0_225
+	.long	VoiceDirClassFind_Table_p0_423
+	.long	VoiceDirClassFind_Table_p0_424
+	.long	VoiceDirClassFind_Table_p0_425
 	.long	VoiceDirClassFind_Table_p0_69
-	.long	VoiceDirClassFind_Table_p0_226
-	.long	VoiceDirClassFind_Table_p0_227
-	.long	VoiceDirClassFind_Table_p0_228
-	.long	VoiceDirClassFind_Table_p0_7
-	.long	VoiceDirClassFind_Table_p0_229
+	.long	VoiceDirClassFind_Table_p0_238
+	.long	VoiceDirClassFind_Table_p0_239
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_240
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_455
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_456
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_457
+	.long	VoiceDirClassFind_Table_p0_458
+	.long	VoiceDirClassFind_Table_p0_459
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_89
-	.long	VoiceDirClassFind_Table_p0_90
-	.long	VoiceDirClassFind_Table_p0_91
+	.long	VoiceDirClassFind_Table_p0_254
+	.long	VoiceDirClassFind_Table_p0_255
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_242
-	.long	VoiceDirClassFind_Table_p0_243
-	.long	VoiceDirClassFind_Table_p0_244
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_245
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_19
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_20
-	.long	VoiceDirClassFind_Table_p0_99
-	.long	VoiceDirClassFind_Table_p0_100
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_101
-	.long	VoiceDirClassFind_Table_p0_265
-	.long	VoiceDirClassFind_Table_p0_102
-	.long	VoiceDirClassFind_Table_p0_266
-	.long	VoiceDirClassFind_Table_p0_267
+	.long	VoiceDirClassFind_Table_p0_485
+	.long	VoiceDirClassFind_Table_p0_486
+	.long	VoiceDirClassFind_Table_p0_487
+	.long	VoiceDirClassFind_Table_p0_488
+	.long	VoiceDirClassFind_Table_p0_93
+	.long	VoiceDirClassFind_Table_p0_94
+	.long	VoiceDirClassFind_Table_p0_489
+	.long	VoiceDirClassFind_Table_p0_96
+	.long	VoiceDirClassFind_Table_p0_97
 	.long	VoiceDirClassFind_Table_p0_268
 	.long	VoiceDirClassFind_Table_p0_269
 	.long	VoiceDirClassFind_Table_p0_270
-	.long	VoiceDirClassFind_Table_p0_271
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_118
-	.long	VoiceDirClassFind_Table_p0_119
-	.long	VoiceDirClassFind_Table_p0_120
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_121
-	.long	VoiceDirClassFind_Table_p0_301
-	.long	VoiceDirClassFind_Table_p0_302
-	.long	VoiceDirClassFind_Table_p0_303
-	.long	VoiceDirClassFind_Table_p0_304
-	.long	VoiceDirClassFind_Table_p0_305
-	.long	VoiceDirClassFind_Table_p0_306
-	.long	VoiceDirClassFind_Table_p0_307
-	.long	VoiceDirClassFind_Table_p0_308
-	.long	VoiceDirClassFind_Table_p0_31
+	.long	VoiceDirClassFind_Table_p0_518
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_519
+	.long	VoiceDirClassFind_Table_p0_520
+	.long	VoiceDirClassFind_Table_p0_521
+	.long	VoiceDirClassFind_Table_p0_522
+	.long	VoiceDirClassFind_Table_p0_523
+	.long	VoiceDirClassFind_Table_p0_110
+	.long	VoiceDirClassFind_Table_p0_289
+	.long	VoiceDirClassFind_Table_p0_290
+	.long	VoiceDirClassFind_Table_p0_291
+	.long	VoiceDirClassFind_Table_p0_292
+	.long	VoiceDirClassFind_Table_p0_293
+	.long	VoiceDirClassFind_Table_p0_555
+	.long	VoiceDirClassFind_Table_p0_556
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_557
+	.long	VoiceDirClassFind_Table_p0_558
+	.long	VoiceDirClassFind_Table_p0_559
+	.long	VoiceDirClassFind_Table_p0_560
+	.long	VoiceDirClassFind_Table_p0_561
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_323
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirClassFind_Table_p0_132
 	.long	VoiceDirClassFind_Table_p0_133
-	.long	VoiceDirClassFind_Table_p0_134
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_135
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_338
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_339
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_340
-	.long	VoiceDirClassFind_Table_p0_341
-	.long	VoiceDirClassFind_Table_p0_342
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_148
-	.long	VoiceDirClassFind_Table_p0_149
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirClassFind_Table_p0_368
-	.long	VoiceDirClassFind_Table_p0_369
-	.long	VoiceDirClassFind_Table_p0_370
-	.long	VoiceDirClassFind_Table_p0_371
-	.long	VoiceDirClassFind_Table_p0_38
-	.long	VoiceDirClassFind_Table_p0_39
-	.long	VoiceDirClassFind_Table_p0_372
-	.long	VoiceDirClassFind_Table_p0_40
-	.long	VoiceDirClassFind_Table_p0_41
-	.long	VoiceDirClassFind_Table_p0_160
-	.long	VoiceDirClassFind_Table_p0_161
-	.long	VoiceDirClassFind_Table_p0_162
+	.long	VoiceDirClassFind_Table_p0_336
 	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_401
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_402
-	.long	VoiceDirClassFind_Table_p0_403
-	.long	VoiceDirClassFind_Table_p0_404
-	.long	VoiceDirClassFind_Table_p0_405
-	.long	VoiceDirClassFind_Table_p0_406
-	.long	VoiceDirClassFind_Table_p0_45
-	.long	VoiceDirClassFind_Table_p0_177
-	.long	VoiceDirClassFind_Table_p0_178
-	.long	VoiceDirClassFind_Table_p0_179
-	.long	VoiceDirClassFind_Table_p0_180
-	.long	VoiceDirClassFind_Table_p0_181
-	.long	VoiceDirClassFind_Table_p0_438
-	.long	VoiceDirClassFind_Table_p0_439
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_440
-	.long	VoiceDirClassFind_Table_p0_441
-	.long	VoiceDirClassFind_Table_p0_442
-	.long	VoiceDirClassFind_Table_p0_443
-	.long	VoiceDirClassFind_Table_p0_444
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_206
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_58
-	.long	VoiceDirClassFind_Table_p0_59
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_219
-	.long	0
-	.long	VoiceDirClassFind_Table_p0_220
+	.long	VoiceDirClassFind_Table_p0_337
 	.long	0
 
 VoiceDirIndexFind_Var:	# u16, a constant; read / written by VoiceDirIndexFind 0x485727D0: `movhu (VoiceDirIndexFind_Var), d1`
@@ -39790,636 +39313,1276 @@ VoiceDirIndexFind_Var_2:	# u16, a constant; read / written by VoiceDirIndexFind 
 	.word	633
 
 VoiceDirIndexFind_Table:
-	.long	VoiceDirIndexFind_Table_p0_221
-	.long	VoiceDirIndexFind_Table_p0_0
-	.long	VoiceDirIndexFind_Table_p0_222
+	.long	VoiceDirIndexFind_Table_p0_338
 	.long	VoiceDirIndexFind_Table_p0_1
-	.long	VoiceDirIndexFind_Table_p0_2
-	.long	VoiceDirIndexFind_Table_p0_79
+	.long	VoiceDirIndexFind_Table_p0_339
 	.long	VoiceDirIndexFind_Table_p0_3
-	.long	VoiceDirIndexFind_Table_p0_80
-	.long	VoiceDirIndexFind_Table_p0_81
-	.long	VoiceDirIndexFind_Table_p0_82
-	.long	VoiceDirIndexFind_Table_p0_238
-	.long	VoiceDirIndexFind_Table_p0_239
-	.long	VoiceDirIndexFind_Table_p0_83
+	.long	VoiceDirIndexFind_Table_p0_4
+	.long	VoiceDirIndexFind_Table_p0_159
+	.long	VoiceDirIndexFind_Table_p0_6
+	.long	VoiceDirIndexFind_Table_p0_160
+	.long	VoiceDirIndexFind_Table_p0_161
+	.long	VoiceDirIndexFind_Table_p0_162
+	.long	VoiceDirIndexFind_Table_p0_355
+	.long	VoiceDirIndexFind_Table_p0_356
+	.long	VoiceDirIndexFind_Table_p0_165
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_12
-	.long	VoiceDirIndexFind_Table_p0_240
-	.long	VoiceDirIndexFind_Table_p0_13
+	.long	VoiceDirIndexFind_Table_p0_24
+	.long	VoiceDirIndexFind_Table_p0_357
+	.long	VoiceDirIndexFind_Table_p0_25
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_14
-	.long	VoiceDirIndexFind_Table_p0_95
-	.long	VoiceDirIndexFind_Table_p0_15
+	.long	VoiceDirIndexFind_Table_p0_26
+	.long	VoiceDirIndexFind_Table_p0_178
+	.long	VoiceDirIndexFind_Table_p0_28
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_96
+	.long	VoiceDirIndexFind_Table_p0_179
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_254
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_255
-	.long	VoiceDirIndexFind_Table_p0_256
-	.long	0
+	.long	VoiceDirIndexFind_Table_p0_371
 	.long	0
 	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_110
-	.long	VoiceDirIndexFind_Table_p0_111
-	.long	VoiceDirIndexFind_Table_p0_112
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_113
-	.long	VoiceDirIndexFind_Table_p0_286
-	.long	VoiceDirIndexFind_Table_p0_114
-	.long	VoiceDirIndexFind_Table_p0_287
-	.long	VoiceDirIndexFind_Table_p0_288
-	.long	VoiceDirIndexFind_Table_p0_289
-	.long	VoiceDirIndexFind_Table_p0_290
-	.long	VoiceDirIndexFind_Table_p0_291
-	.long	VoiceDirIndexFind_Table_p0_292
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_127
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_128
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_129
-	.long	VoiceDirIndexFind_Table_p0_323
-	.long	VoiceDirIndexFind_Table_p0_130
-	.long	VoiceDirIndexFind_Table_p0_324
-	.long	VoiceDirIndexFind_Table_p0_325
-	.long	VoiceDirIndexFind_Table_p0_326
-	.long	VoiceDirIndexFind_Table_p0_327
-	.long	VoiceDirIndexFind_Table_p0_328
-	.long	VoiceDirIndexFind_Table_p0_329
-	.long	VoiceDirIndexFind_Table_p0_34
-	.long	VoiceDirIndexFind_Table_p0_142
+	.long	VoiceDirIndexFind_Table_p0_372
+	.long	VoiceDirIndexFind_Table_p0_373
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_358
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_359
-	.long	VoiceDirIndexFind_Table_p0_360
-	.long	VoiceDirIndexFind_Table_p0_361
-	.long	VoiceDirIndexFind_Table_p0_362
-	.long	VoiceDirIndexFind_Table_p0_363
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_152
-	.long	VoiceDirIndexFind_Table_p0_153
-	.long	VoiceDirIndexFind_Table_p0_154
-	.long	VoiceDirIndexFind_Table_p0_155
-	.long	VoiceDirIndexFind_Table_p0_156
-	.long	VoiceDirIndexFind_Table_p0_385
-	.long	VoiceDirIndexFind_Table_p0_386
-	.long	VoiceDirIndexFind_Table_p0_387
-	.long	VoiceDirIndexFind_Table_p0_388
-	.long	VoiceDirIndexFind_Table_p0_389
-	.long	VoiceDirIndexFind_Table_p0_390
-	.long	VoiceDirIndexFind_Table_p0_391
-	.long	VoiceDirIndexFind_Table_p0_392
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_167
-	.long	VoiceDirIndexFind_Table_p0_168
-	.long	VoiceDirIndexFind_Table_p0_169
-	.long	VoiceDirIndexFind_Table_p0_170
-	.long	VoiceDirIndexFind_Table_p0_171
-	.long	VoiceDirIndexFind_Table_p0_423
-	.long	VoiceDirIndexFind_Table_p0_424
-	.long	VoiceDirIndexFind_Table_p0_425
-	.long	VoiceDirIndexFind_Table_p0_426
-	.long	VoiceDirIndexFind_Table_p0_427
-	.long	VoiceDirIndexFind_Table_p0_428
-	.long	VoiceDirIndexFind_Table_p0_429
-	.long	VoiceDirIndexFind_Table_p0_430
-	.long	VoiceDirIndexFind_Table_p0_46
-	.long	VoiceDirIndexFind_Table_p0_192
-	.long	VoiceDirIndexFind_Table_p0_193
-	.long	VoiceDirIndexFind_Table_p0_194
-	.long	VoiceDirIndexFind_Table_p0_195
-	.long	VoiceDirIndexFind_Table_p0_196
-	.long	VoiceDirIndexFind_Table_p0_197
 	.long	VoiceDirIndexFind_Table_p0_198
 	.long	VoiceDirIndexFind_Table_p0_199
+	.long	VoiceDirIndexFind_Table_p0_200
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_50
-	.long	VoiceDirIndexFind_Table_p0_51
-	.long	VoiceDirIndexFind_Table_p0_52
-	.long	VoiceDirIndexFind_Table_p0_53
-	.long	VoiceDirIndexFind_Table_p0_54
-	.long	VoiceDirIndexFind_Table_p0_212
+	.long	VoiceDirIndexFind_Table_p0_201
+	.long	VoiceDirIndexFind_Table_p0_403
+	.long	VoiceDirIndexFind_Table_p0_203
+	.long	VoiceDirIndexFind_Table_p0_404
+	.long	VoiceDirIndexFind_Table_p0_405
+	.long	VoiceDirIndexFind_Table_p0_406
+	.long	VoiceDirIndexFind_Table_p0_407
+	.long	VoiceDirIndexFind_Table_p0_408
+	.long	VoiceDirIndexFind_Table_p0_409
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_213
-	.long	VoiceDirIndexFind_Table_p0_214
-	.long	VoiceDirIndexFind_Table_p0_215
-	.long	VoiceDirIndexFind_Table_p0_216
+	.long	VoiceDirIndexFind_Table_p0_227
 	.long	0
+	.long	VoiceDirIndexFind_Table_p0_228
 	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_70
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_71
-	.long	VoiceDirIndexFind_Table_p0_72
-	.long	VoiceDirIndexFind_Table_p0_230
-	.long	VoiceDirIndexFind_Table_p0_73
+	.long	VoiceDirIndexFind_Table_p0_229
+	.long	VoiceDirIndexFind_Table_p0_440
 	.long	VoiceDirIndexFind_Table_p0_231
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_232
-	.long	VoiceDirIndexFind_Table_p0_233
-	.long	VoiceDirIndexFind_Table_p0_234
-	.long	VoiceDirIndexFind_Table_p0_235
-	.long	VoiceDirIndexFind_Table_p0_8
-	.long	VoiceDirIndexFind_Table_p0_92
-	.long	VoiceDirIndexFind_Table_p0_93
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_246
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_247
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_21
+	.long	VoiceDirIndexFind_Table_p0_441
+	.long	VoiceDirIndexFind_Table_p0_442
+	.long	VoiceDirIndexFind_Table_p0_443
+	.long	VoiceDirIndexFind_Table_p0_444
+	.long	VoiceDirIndexFind_Table_p0_445
+	.long	VoiceDirIndexFind_Table_p0_446
+	.long	VoiceDirIndexFind_Table_p0_77
+	.long	VoiceDirIndexFind_Table_p0_248
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_22
-	.long	VoiceDirIndexFind_Table_p0_103
-	.long	VoiceDirIndexFind_Table_p0_104
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_475
 	.long	0
 	.long	0
+	.long	VoiceDirIndexFind_Table_p0_476
+	.long	VoiceDirIndexFind_Table_p0_477
+	.long	VoiceDirIndexFind_Table_p0_478
+	.long	VoiceDirIndexFind_Table_p0_479
+	.long	VoiceDirIndexFind_Table_p0_480
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_272
+	.long	VoiceDirIndexFind_Table_p0_258
+	.long	VoiceDirIndexFind_Table_p0_259
+	.long	VoiceDirIndexFind_Table_p0_260
+	.long	VoiceDirIndexFind_Table_p0_261
+	.long	VoiceDirIndexFind_Table_p0_262
+	.long	VoiceDirIndexFind_Table_p0_502
+	.long	VoiceDirIndexFind_Table_p0_503
+	.long	VoiceDirIndexFind_Table_p0_504
+	.long	VoiceDirIndexFind_Table_p0_505
+	.long	VoiceDirIndexFind_Table_p0_506
+	.long	VoiceDirIndexFind_Table_p0_507
+	.long	VoiceDirIndexFind_Table_p0_508
+	.long	VoiceDirIndexFind_Table_p0_509
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_273
-	.long	VoiceDirIndexFind_Table_p0_274
-	.long	VoiceDirIndexFind_Table_p0_275
 	.long	VoiceDirIndexFind_Table_p0_276
 	.long	VoiceDirIndexFind_Table_p0_277
 	.long	VoiceDirIndexFind_Table_p0_278
-	.long	VoiceDirIndexFind_Table_p0_25
-	.long	VoiceDirIndexFind_Table_p0_122
-	.long	VoiceDirIndexFind_Table_p0_26
-	.long	VoiceDirIndexFind_Table_p0_27
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_123
+	.long	VoiceDirIndexFind_Table_p0_279
+	.long	VoiceDirIndexFind_Table_p0_280
+	.long	VoiceDirIndexFind_Table_p0_540
+	.long	VoiceDirIndexFind_Table_p0_541
+	.long	VoiceDirIndexFind_Table_p0_542
+	.long	VoiceDirIndexFind_Table_p0_543
+	.long	VoiceDirIndexFind_Table_p0_544
+	.long	VoiceDirIndexFind_Table_p0_545
+	.long	VoiceDirIndexFind_Table_p0_546
+	.long	VoiceDirIndexFind_Table_p0_547
+	.long	VoiceDirIndexFind_Table_p0_114
 	.long	VoiceDirIndexFind_Table_p0_309
 	.long	VoiceDirIndexFind_Table_p0_310
 	.long	VoiceDirIndexFind_Table_p0_311
 	.long	VoiceDirIndexFind_Table_p0_312
 	.long	VoiceDirIndexFind_Table_p0_313
-	.long	0
 	.long	VoiceDirIndexFind_Table_p0_314
 	.long	VoiceDirIndexFind_Table_p0_315
-	.long	VoiceDirIndexFind_Table_p0_32
+	.long	VoiceDirIndexFind_Table_p0_316
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_124
+	.long	VoiceDirIndexFind_Table_p0_125
+	.long	VoiceDirIndexFind_Table_p0_126
+	.long	VoiceDirIndexFind_Table_p0_127
+	.long	VoiceDirIndexFind_Table_p0_128
+	.long	VoiceDirIndexFind_Table_p0_329
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_330
+	.long	VoiceDirIndexFind_Table_p0_331
+	.long	VoiceDirIndexFind_Table_p0_332
+	.long	VoiceDirIndexFind_Table_p0_333
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_147
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_148
+	.long	VoiceDirIndexFind_Table_p0_149
+	.long	VoiceDirIndexFind_Table_p0_347
+	.long	VoiceDirIndexFind_Table_p0_151
+	.long	VoiceDirIndexFind_Table_p0_348
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_349
+	.long	VoiceDirIndexFind_Table_p0_350
+	.long	VoiceDirIndexFind_Table_p0_351
+	.long	VoiceDirIndexFind_Table_p0_352
+	.long	VoiceDirIndexFind_Table_p0_17
+	.long	VoiceDirIndexFind_Table_p0_175
+	.long	VoiceDirIndexFind_Table_p0_176
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_363
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_364
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_38
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_39
+	.long	VoiceDirIndexFind_Table_p0_187
+	.long	VoiceDirIndexFind_Table_p0_188
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_389
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_390
+	.long	VoiceDirIndexFind_Table_p0_391
+	.long	VoiceDirIndexFind_Table_p0_392
+	.long	VoiceDirIndexFind_Table_p0_393
+	.long	VoiceDirIndexFind_Table_p0_394
+	.long	VoiceDirIndexFind_Table_p0_395
+	.long	VoiceDirIndexFind_Table_p0_50
+	.long	VoiceDirIndexFind_Table_p0_217
+	.long	VoiceDirIndexFind_Table_p0_52
+	.long	VoiceDirIndexFind_Table_p0_53
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_218
+	.long	VoiceDirIndexFind_Table_p0_426
+	.long	VoiceDirIndexFind_Table_p0_427
+	.long	VoiceDirIndexFind_Table_p0_428
+	.long	VoiceDirIndexFind_Table_p0_429
+	.long	VoiceDirIndexFind_Table_p0_430
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_431
+	.long	VoiceDirIndexFind_Table_p0_432
+	.long	VoiceDirIndexFind_Table_p0_72
+	.long	VoiceDirIndexFind_Table_p0_241
+	.long	VoiceDirIndexFind_Table_p0_242
+	.long	VoiceDirIndexFind_Table_p0_243
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_244
+	.long	VoiceDirIndexFind_Table_p0_460
+	.long	VoiceDirIndexFind_Table_p0_246
+	.long	VoiceDirIndexFind_Table_p0_461
+	.long	VoiceDirIndexFind_Table_p0_462
+	.long	VoiceDirIndexFind_Table_p0_463
+	.long	VoiceDirIndexFind_Table_p0_464
+	.long	VoiceDirIndexFind_Table_p0_465
+	.long	VoiceDirIndexFind_Table_p0_466
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_256
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_490
+	.long	VoiceDirIndexFind_Table_p0_491
+	.long	VoiceDirIndexFind_Table_p0_492
+	.long	VoiceDirIndexFind_Table_p0_493
+	.long	VoiceDirIndexFind_Table_p0_494
+	.long	VoiceDirIndexFind_Table_p0_495
+	.long	VoiceDirIndexFind_Table_p0_99
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_271
+	.long	VoiceDirIndexFind_Table_p0_272
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_273
+	.long	VoiceDirIndexFind_Table_p0_524
+	.long	VoiceDirIndexFind_Table_p0_525
+	.long	VoiceDirIndexFind_Table_p0_526
+	.long	VoiceDirIndexFind_Table_p0_527
+	.long	VoiceDirIndexFind_Table_p0_528
+	.long	VoiceDirIndexFind_Table_p0_529
+	.long	VoiceDirIndexFind_Table_p0_530
+	.long	VoiceDirIndexFind_Table_p0_531
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_296
+	.long	VoiceDirIndexFind_Table_p0_297
+	.long	VoiceDirIndexFind_Table_p0_298
+	.long	VoiceDirIndexFind_Table_p0_299
+	.long	VoiceDirIndexFind_Table_p0_300
+	.long	VoiceDirIndexFind_Table_p0_562
+	.long	VoiceDirIndexFind_Table_p0_563
+	.long	VoiceDirIndexFind_Table_p0_564
+	.long	VoiceDirIndexFind_Table_p0_565
+	.long	VoiceDirIndexFind_Table_p0_566
+	.long	VoiceDirIndexFind_Table_p0_567
+	.long	VoiceDirIndexFind_Table_p0_568
+	.long	VoiceDirIndexFind_Table_p0_569
+	.long	VoiceDirIndexFind_Table_p0_121
+	.long	VoiceDirIndexFind_Table_p0_324
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_135
 	.long	VoiceDirIndexFind_Table_p0_136
 	.long	VoiceDirIndexFind_Table_p0_137
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_340
+	.long	0
 	.long	VoiceDirIndexFind_Table_p0_138
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_139
-	.long	VoiceDirIndexFind_Table_p0_343
-	.long	VoiceDirIndexFind_Table_p0_140
-	.long	VoiceDirIndexFind_Table_p0_344
-	.long	VoiceDirIndexFind_Table_p0_345
-	.long	VoiceDirIndexFind_Table_p0_346
-	.long	VoiceDirIndexFind_Table_p0_347
-	.long	VoiceDirIndexFind_Table_p0_348
-	.long	VoiceDirIndexFind_Table_p0_349
+	.long	VoiceDirIndexFind_Table_p0_341
+	.long	VoiceDirIndexFind_Table_p0_9
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_150
+	.long	VoiceDirIndexFind_Table_p0_10
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_166
+	.long	VoiceDirIndexFind_Table_p0_11
+	.long	VoiceDirIndexFind_Table_p0_167
+	.long	VoiceDirIndexFind_Table_p0_168
+	.long	VoiceDirIndexFind_Table_p0_169
+	.long	VoiceDirIndexFind_Table_p0_358
+	.long	VoiceDirIndexFind_Table_p0_171
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_29
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_30
+	.long	VoiceDirIndexFind_Table_p0_31
+	.long	VoiceDirIndexFind_Table_p0_180
+	.long	VoiceDirIndexFind_Table_p0_181
 	.long	0
 	.long	0
 	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_373
 	.long	VoiceDirIndexFind_Table_p0_374
 	.long	VoiceDirIndexFind_Table_p0_375
 	.long	VoiceDirIndexFind_Table_p0_376
 	.long	VoiceDirIndexFind_Table_p0_377
 	.long	VoiceDirIndexFind_Table_p0_378
-	.long	VoiceDirIndexFind_Table_p0_42
+	.long	VoiceDirIndexFind_Table_p0_379
+	.long	VoiceDirIndexFind_Table_p0_380
+	.long	VoiceDirIndexFind_Table_p0_381
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_205
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_163
-	.long	VoiceDirIndexFind_Table_p0_164
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_165
-	.long	VoiceDirIndexFind_Table_p0_407
-	.long	VoiceDirIndexFind_Table_p0_408
-	.long	VoiceDirIndexFind_Table_p0_409
+	.long	VoiceDirIndexFind_Table_p0_206
+	.long	VoiceDirIndexFind_Table_p0_207
 	.long	VoiceDirIndexFind_Table_p0_410
 	.long	VoiceDirIndexFind_Table_p0_411
 	.long	VoiceDirIndexFind_Table_p0_412
 	.long	VoiceDirIndexFind_Table_p0_413
 	.long	VoiceDirIndexFind_Table_p0_414
+	.long	VoiceDirIndexFind_Table_p0_415
+	.long	VoiceDirIndexFind_Table_p0_416
+	.long	VoiceDirIndexFind_Table_p0_417
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_182
-	.long	VoiceDirIndexFind_Table_p0_183
-	.long	VoiceDirIndexFind_Table_p0_184
-	.long	VoiceDirIndexFind_Table_p0_185
-	.long	VoiceDirIndexFind_Table_p0_186
-	.long	VoiceDirIndexFind_Table_p0_445
-	.long	VoiceDirIndexFind_Table_p0_446
+	.long	VoiceDirIndexFind_Table_p0_233
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_234
+	.long	0
 	.long	VoiceDirIndexFind_Table_p0_447
 	.long	VoiceDirIndexFind_Table_p0_448
 	.long	VoiceDirIndexFind_Table_p0_449
 	.long	VoiceDirIndexFind_Table_p0_450
 	.long	VoiceDirIndexFind_Table_p0_451
 	.long	VoiceDirIndexFind_Table_p0_452
-	.long	VoiceDirIndexFind_Table_p0_47
-	.long	VoiceDirIndexFind_Table_p0_207
+	.long	VoiceDirIndexFind_Table_p0_453
+	.long	VoiceDirIndexFind_Table_p0_454
 	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_60
-	.long	VoiceDirIndexFind_Table_p0_61
-	.long	VoiceDirIndexFind_Table_p0_62
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_223
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_63
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_224
-	.long	VoiceDirIndexFind_Table_p0_4
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_5
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_84
-	.long	VoiceDirIndexFind_Table_p0_6
-	.long	VoiceDirIndexFind_Table_p0_85
-	.long	VoiceDirIndexFind_Table_p0_86
-	.long	VoiceDirIndexFind_Table_p0_87
-	.long	VoiceDirIndexFind_Table_p0_241
-	.long	VoiceDirIndexFind_Table_p0_88
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_16
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_17
-	.long	VoiceDirIndexFind_Table_p0_18
-	.long	VoiceDirIndexFind_Table_p0_97
-	.long	VoiceDirIndexFind_Table_p0_98
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_257
-	.long	VoiceDirIndexFind_Table_p0_258
-	.long	VoiceDirIndexFind_Table_p0_259
-	.long	VoiceDirIndexFind_Table_p0_260
-	.long	VoiceDirIndexFind_Table_p0_261
-	.long	VoiceDirIndexFind_Table_p0_262
-	.long	VoiceDirIndexFind_Table_p0_263
-	.long	VoiceDirIndexFind_Table_p0_264
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_115
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_116
-	.long	VoiceDirIndexFind_Table_p0_117
-	.long	VoiceDirIndexFind_Table_p0_293
-	.long	VoiceDirIndexFind_Table_p0_294
-	.long	VoiceDirIndexFind_Table_p0_295
-	.long	VoiceDirIndexFind_Table_p0_296
-	.long	VoiceDirIndexFind_Table_p0_297
-	.long	VoiceDirIndexFind_Table_p0_298
-	.long	VoiceDirIndexFind_Table_p0_299
-	.long	VoiceDirIndexFind_Table_p0_300
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_131
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_132
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_330
-	.long	VoiceDirIndexFind_Table_p0_331
-	.long	VoiceDirIndexFind_Table_p0_332
-	.long	VoiceDirIndexFind_Table_p0_333
-	.long	VoiceDirIndexFind_Table_p0_334
-	.long	VoiceDirIndexFind_Table_p0_335
-	.long	VoiceDirIndexFind_Table_p0_336
-	.long	VoiceDirIndexFind_Table_p0_337
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_143
-	.long	VoiceDirIndexFind_Table_p0_144
-	.long	VoiceDirIndexFind_Table_p0_145
-	.long	VoiceDirIndexFind_Table_p0_146
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_364
-	.long	VoiceDirIndexFind_Table_p0_147
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_365
-	.long	VoiceDirIndexFind_Table_p0_366
-	.long	VoiceDirIndexFind_Table_p0_35
-	.long	VoiceDirIndexFind_Table_p0_367
-	.long	VoiceDirIndexFind_Table_p0_36
-	.long	VoiceDirIndexFind_Table_p0_37
-	.long	VoiceDirIndexFind_Table_p0_157
-	.long	VoiceDirIndexFind_Table_p0_158
-	.long	VoiceDirIndexFind_Table_p0_159
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_393
-	.long	VoiceDirIndexFind_Table_p0_394
-	.long	VoiceDirIndexFind_Table_p0_395
-	.long	VoiceDirIndexFind_Table_p0_396
-	.long	VoiceDirIndexFind_Table_p0_397
-	.long	VoiceDirIndexFind_Table_p0_398
-	.long	VoiceDirIndexFind_Table_p0_399
-	.long	VoiceDirIndexFind_Table_p0_400
-	.long	VoiceDirIndexFind_Table_p0_44
-	.long	VoiceDirIndexFind_Table_p0_172
-	.long	VoiceDirIndexFind_Table_p0_173
-	.long	VoiceDirIndexFind_Table_p0_174
-	.long	VoiceDirIndexFind_Table_p0_175
-	.long	VoiceDirIndexFind_Table_p0_176
-	.long	VoiceDirIndexFind_Table_p0_431
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_432
-	.long	VoiceDirIndexFind_Table_p0_433
-	.long	VoiceDirIndexFind_Table_p0_434
-	.long	VoiceDirIndexFind_Table_p0_435
-	.long	VoiceDirIndexFind_Table_p0_436
-	.long	VoiceDirIndexFind_Table_p0_437
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_200
-	.long	VoiceDirIndexFind_Table_p0_201
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_202
-	.long	VoiceDirIndexFind_Table_p0_203
-	.long	VoiceDirIndexFind_Table_p0_204
-	.long	VoiceDirIndexFind_Table_p0_205
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_55
-	.long	VoiceDirIndexFind_Table_p0_56
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_57
-	.long	VoiceDirIndexFind_Table_p0_217
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_218
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_74
-	.long	VoiceDirIndexFind_Table_p0_75
-	.long	VoiceDirIndexFind_Table_p0_76
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_77
-	.long	VoiceDirIndexFind_Table_p0_236
-	.long	VoiceDirIndexFind_Table_p0_78
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_237
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_9
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_10
-	.long	VoiceDirIndexFind_Table_p0_94
-	.long	VoiceDirIndexFind_Table_p0_11
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_248
 	.long	VoiceDirIndexFind_Table_p0_249
-	.long	0
 	.long	VoiceDirIndexFind_Table_p0_250
-	.long	VoiceDirIndexFind_Table_p0_23
 	.long	VoiceDirIndexFind_Table_p0_251
 	.long	VoiceDirIndexFind_Table_p0_252
-	.long	VoiceDirIndexFind_Table_p0_253
-	.long	VoiceDirIndexFind_Table_p0_24
-	.long	VoiceDirIndexFind_Table_p0_105
-	.long	VoiceDirIndexFind_Table_p0_106
-	.long	VoiceDirIndexFind_Table_p0_107
-	.long	VoiceDirIndexFind_Table_p0_108
-	.long	VoiceDirIndexFind_Table_p0_109
-	.long	VoiceDirIndexFind_Table_p0_279
-	.long	VoiceDirIndexFind_Table_p0_280
-	.long	VoiceDirIndexFind_Table_p0_281
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_282
+	.long	VoiceDirIndexFind_Table_p0_481
+	.long	VoiceDirIndexFind_Table_p0_253
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_482
+	.long	VoiceDirIndexFind_Table_p0_483
+	.long	VoiceDirIndexFind_Table_p0_89
+	.long	VoiceDirIndexFind_Table_p0_484
+	.long	VoiceDirIndexFind_Table_p0_90
+	.long	VoiceDirIndexFind_Table_p0_91
+	.long	VoiceDirIndexFind_Table_p0_265
+	.long	VoiceDirIndexFind_Table_p0_266
+	.long	VoiceDirIndexFind_Table_p0_267
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_510
+	.long	VoiceDirIndexFind_Table_p0_511
+	.long	VoiceDirIndexFind_Table_p0_512
+	.long	VoiceDirIndexFind_Table_p0_513
+	.long	VoiceDirIndexFind_Table_p0_514
+	.long	VoiceDirIndexFind_Table_p0_515
+	.long	VoiceDirIndexFind_Table_p0_516
+	.long	VoiceDirIndexFind_Table_p0_517
+	.long	VoiceDirIndexFind_Table_p0_107
 	.long	VoiceDirIndexFind_Table_p0_283
 	.long	VoiceDirIndexFind_Table_p0_284
 	.long	VoiceDirIndexFind_Table_p0_285
-	.long	VoiceDirIndexFind_Table_p0_28
-	.long	VoiceDirIndexFind_Table_p0_124
-	.long	VoiceDirIndexFind_Table_p0_29
-	.long	VoiceDirIndexFind_Table_p0_30
+	.long	VoiceDirIndexFind_Table_p0_286
+	.long	VoiceDirIndexFind_Table_p0_287
+	.long	VoiceDirIndexFind_Table_p0_548
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_125
-	.long	VoiceDirIndexFind_Table_p0_316
-	.long	VoiceDirIndexFind_Table_p0_126
+	.long	VoiceDirIndexFind_Table_p0_549
+	.long	VoiceDirIndexFind_Table_p0_550
+	.long	VoiceDirIndexFind_Table_p0_551
+	.long	VoiceDirIndexFind_Table_p0_552
+	.long	VoiceDirIndexFind_Table_p0_553
+	.long	VoiceDirIndexFind_Table_p0_554
+	.long	0
 	.long	VoiceDirIndexFind_Table_p0_317
 	.long	VoiceDirIndexFind_Table_p0_318
+	.long	0
+	.long	0
 	.long	VoiceDirIndexFind_Table_p0_319
 	.long	VoiceDirIndexFind_Table_p0_320
 	.long	VoiceDirIndexFind_Table_p0_321
 	.long	VoiceDirIndexFind_Table_p0_322
-	.long	VoiceDirIndexFind_Table_p0_33
-	.long	VoiceDirIndexFind_Table_p0_141
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_129
+	.long	VoiceDirIndexFind_Table_p0_130
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_131
+	.long	VoiceDirIndexFind_Table_p0_334
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_335
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_350
-	.long	VoiceDirIndexFind_Table_p0_351
-	.long	VoiceDirIndexFind_Table_p0_352
+	.long	VoiceDirIndexFind_Table_p0_153
+	.long	VoiceDirIndexFind_Table_p0_154
+	.long	VoiceDirIndexFind_Table_p0_155
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_156
 	.long	VoiceDirIndexFind_Table_p0_353
+	.long	VoiceDirIndexFind_Table_p0_158
+	.long	0
+	.long	0
 	.long	VoiceDirIndexFind_Table_p0_354
-	.long	VoiceDirIndexFind_Table_p0_355
-	.long	VoiceDirIndexFind_Table_p0_356
-	.long	VoiceDirIndexFind_Table_p0_357
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_151
+	.long	VoiceDirIndexFind_Table_p0_20
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_21
+	.long	VoiceDirIndexFind_Table_p0_177
+	.long	VoiceDirIndexFind_Table_p0_23
 	.long	0
 	.long	0
 	.long	0
+	.long	VoiceDirIndexFind_Table_p0_365
+	.long	VoiceDirIndexFind_Table_p0_366
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_379
-	.long	VoiceDirIndexFind_Table_p0_380
-	.long	VoiceDirIndexFind_Table_p0_381
-	.long	0
+	.long	VoiceDirIndexFind_Table_p0_367
+	.long	VoiceDirIndexFind_Table_p0_41
+	.long	VoiceDirIndexFind_Table_p0_368
+	.long	VoiceDirIndexFind_Table_p0_369
+	.long	VoiceDirIndexFind_Table_p0_370
 	.long	VoiceDirIndexFind_Table_p0_43
+	.long	VoiceDirIndexFind_Table_p0_190
+	.long	VoiceDirIndexFind_Table_p0_191
+	.long	VoiceDirIndexFind_Table_p0_192
+	.long	VoiceDirIndexFind_Table_p0_193
+	.long	VoiceDirIndexFind_Table_p0_194
+	.long	VoiceDirIndexFind_Table_p0_396
+	.long	VoiceDirIndexFind_Table_p0_397
+	.long	VoiceDirIndexFind_Table_p0_398
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_399
+	.long	VoiceDirIndexFind_Table_p0_400
+	.long	VoiceDirIndexFind_Table_p0_401
+	.long	VoiceDirIndexFind_Table_p0_402
+	.long	VoiceDirIndexFind_Table_p0_58
+	.long	VoiceDirIndexFind_Table_p0_222
+	.long	VoiceDirIndexFind_Table_p0_59
+	.long	VoiceDirIndexFind_Table_p0_60
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_223
+	.long	VoiceDirIndexFind_Table_p0_433
+	.long	VoiceDirIndexFind_Table_p0_225
+	.long	VoiceDirIndexFind_Table_p0_434
+	.long	VoiceDirIndexFind_Table_p0_435
+	.long	VoiceDirIndexFind_Table_p0_436
+	.long	VoiceDirIndexFind_Table_p0_437
+	.long	VoiceDirIndexFind_Table_p0_438
+	.long	VoiceDirIndexFind_Table_p0_439
+	.long	VoiceDirIndexFind_Table_p0_74
+	.long	VoiceDirIndexFind_Table_p0_247
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_467
+	.long	VoiceDirIndexFind_Table_p0_468
+	.long	VoiceDirIndexFind_Table_p0_469
+	.long	VoiceDirIndexFind_Table_p0_470
+	.long	VoiceDirIndexFind_Table_p0_471
+	.long	VoiceDirIndexFind_Table_p0_472
+	.long	VoiceDirIndexFind_Table_p0_473
+	.long	VoiceDirIndexFind_Table_p0_474
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_257
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_496
+	.long	VoiceDirIndexFind_Table_p0_497
+	.long	VoiceDirIndexFind_Table_p0_498
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_100
+	.long	VoiceDirIndexFind_Table_p0_499
+	.long	VoiceDirIndexFind_Table_p0_500
+	.long	VoiceDirIndexFind_Table_p0_501
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_275
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_532
+	.long	VoiceDirIndexFind_Table_p0_533
+	.long	VoiceDirIndexFind_Table_p0_534
+	.long	VoiceDirIndexFind_Table_p0_535
+	.long	VoiceDirIndexFind_Table_p0_536
+	.long	VoiceDirIndexFind_Table_p0_537
+	.long	VoiceDirIndexFind_Table_p0_538
+	.long	VoiceDirIndexFind_Table_p0_539
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_304
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_305
+	.long	VoiceDirIndexFind_Table_p0_306
+	.long	VoiceDirIndexFind_Table_p0_307
+	.long	VoiceDirIndexFind_Table_p0_308
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_122
+	.long	VoiceDirIndexFind_Table_p0_123
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_325
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_326
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_327
+	.long	VoiceDirIndexFind_Table_p0_328
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_139
+	.long	VoiceDirIndexFind_Table_p0_140
+	.long	VoiceDirIndexFind_Table_p0_141
+	.long	VoiceDirIndexFind_Table_p0_142
+	.long	VoiceDirIndexFind_Table_p0_143
+	.long	VoiceDirIndexFind_Table_p0_342
+	.long	VoiceDirIndexFind_Table_p0_145
+	.long	VoiceDirIndexFind_Table_p0_343
+	.long	VoiceDirIndexFind_Table_p0_344
+	.long	VoiceDirIndexFind_Table_p0_345
+	.long	VoiceDirIndexFind_Table_p0_13
+	.long	VoiceDirIndexFind_Table_p0_346
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_172
+	.long	VoiceDirIndexFind_Table_p0_173
+	.long	VoiceDirIndexFind_Table_p0_174
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_359
+	.long	VoiceDirIndexFind_Table_p0_360
+	.long	VoiceDirIndexFind_Table_p0_361
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_362
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_35
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_36
+	.long	VoiceDirIndexFind_Table_p0_182
+	.long	VoiceDirIndexFind_Table_p0_183
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_184
 	.long	VoiceDirIndexFind_Table_p0_382
+	.long	VoiceDirIndexFind_Table_p0_186
 	.long	VoiceDirIndexFind_Table_p0_383
 	.long	VoiceDirIndexFind_Table_p0_384
+	.long	VoiceDirIndexFind_Table_p0_385
+	.long	VoiceDirIndexFind_Table_p0_386
+	.long	VoiceDirIndexFind_Table_p0_387
+	.long	VoiceDirIndexFind_Table_p0_388
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_166
+	.long	VoiceDirIndexFind_Table_p0_211
+	.long	VoiceDirIndexFind_Table_p0_212
+	.long	VoiceDirIndexFind_Table_p0_213
 	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_415
-	.long	VoiceDirIndexFind_Table_p0_416
-	.long	VoiceDirIndexFind_Table_p0_417
+	.long	VoiceDirIndexFind_Table_p0_214
 	.long	VoiceDirIndexFind_Table_p0_418
 	.long	VoiceDirIndexFind_Table_p0_419
 	.long	VoiceDirIndexFind_Table_p0_420
 	.long	VoiceDirIndexFind_Table_p0_421
 	.long	VoiceDirIndexFind_Table_p0_422
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_187
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_188
-	.long	VoiceDirIndexFind_Table_p0_189
-	.long	VoiceDirIndexFind_Table_p0_190
-	.long	VoiceDirIndexFind_Table_p0_191
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_48
-	.long	VoiceDirIndexFind_Table_p0_49
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_208
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_209
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_210
-	.long	VoiceDirIndexFind_Table_p0_211
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_64
-	.long	VoiceDirIndexFind_Table_p0_65
-	.long	VoiceDirIndexFind_Table_p0_66
-	.long	VoiceDirIndexFind_Table_p0_67
-	.long	VoiceDirIndexFind_Table_p0_68
-	.long	VoiceDirIndexFind_Table_p0_225
+	.long	VoiceDirIndexFind_Table_p0_423
+	.long	VoiceDirIndexFind_Table_p0_424
+	.long	VoiceDirIndexFind_Table_p0_425
 	.long	VoiceDirIndexFind_Table_p0_69
-	.long	VoiceDirIndexFind_Table_p0_226
-	.long	VoiceDirIndexFind_Table_p0_227
-	.long	VoiceDirIndexFind_Table_p0_228
-	.long	VoiceDirIndexFind_Table_p0_7
-	.long	VoiceDirIndexFind_Table_p0_229
+	.long	VoiceDirIndexFind_Table_p0_238
+	.long	VoiceDirIndexFind_Table_p0_239
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_240
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_455
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_456
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_457
+	.long	VoiceDirIndexFind_Table_p0_458
+	.long	VoiceDirIndexFind_Table_p0_459
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_89
-	.long	VoiceDirIndexFind_Table_p0_90
-	.long	VoiceDirIndexFind_Table_p0_91
+	.long	VoiceDirIndexFind_Table_p0_254
+	.long	VoiceDirIndexFind_Table_p0_255
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_242
-	.long	VoiceDirIndexFind_Table_p0_243
-	.long	VoiceDirIndexFind_Table_p0_244
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_245
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_19
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_20
-	.long	VoiceDirIndexFind_Table_p0_99
-	.long	VoiceDirIndexFind_Table_p0_100
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_101
-	.long	VoiceDirIndexFind_Table_p0_265
-	.long	VoiceDirIndexFind_Table_p0_102
-	.long	VoiceDirIndexFind_Table_p0_266
-	.long	VoiceDirIndexFind_Table_p0_267
+	.long	VoiceDirIndexFind_Table_p0_485
+	.long	VoiceDirIndexFind_Table_p0_486
+	.long	VoiceDirIndexFind_Table_p0_487
+	.long	VoiceDirIndexFind_Table_p0_488
+	.long	VoiceDirIndexFind_Table_p0_93
+	.long	VoiceDirIndexFind_Table_p0_94
+	.long	VoiceDirIndexFind_Table_p0_489
+	.long	VoiceDirIndexFind_Table_p0_96
+	.long	VoiceDirIndexFind_Table_p0_97
 	.long	VoiceDirIndexFind_Table_p0_268
 	.long	VoiceDirIndexFind_Table_p0_269
 	.long	VoiceDirIndexFind_Table_p0_270
-	.long	VoiceDirIndexFind_Table_p0_271
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_118
-	.long	VoiceDirIndexFind_Table_p0_119
-	.long	VoiceDirIndexFind_Table_p0_120
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_121
-	.long	VoiceDirIndexFind_Table_p0_301
-	.long	VoiceDirIndexFind_Table_p0_302
-	.long	VoiceDirIndexFind_Table_p0_303
-	.long	VoiceDirIndexFind_Table_p0_304
-	.long	VoiceDirIndexFind_Table_p0_305
-	.long	VoiceDirIndexFind_Table_p0_306
-	.long	VoiceDirIndexFind_Table_p0_307
-	.long	VoiceDirIndexFind_Table_p0_308
-	.long	VoiceDirIndexFind_Table_p0_31
+	.long	VoiceDirIndexFind_Table_p0_518
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_519
+	.long	VoiceDirIndexFind_Table_p0_520
+	.long	VoiceDirIndexFind_Table_p0_521
+	.long	VoiceDirIndexFind_Table_p0_522
+	.long	VoiceDirIndexFind_Table_p0_523
+	.long	VoiceDirIndexFind_Table_p0_110
+	.long	VoiceDirIndexFind_Table_p0_289
+	.long	VoiceDirIndexFind_Table_p0_290
+	.long	VoiceDirIndexFind_Table_p0_291
+	.long	VoiceDirIndexFind_Table_p0_292
+	.long	VoiceDirIndexFind_Table_p0_293
+	.long	VoiceDirIndexFind_Table_p0_555
+	.long	VoiceDirIndexFind_Table_p0_556
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_557
+	.long	VoiceDirIndexFind_Table_p0_558
+	.long	VoiceDirIndexFind_Table_p0_559
+	.long	VoiceDirIndexFind_Table_p0_560
+	.long	VoiceDirIndexFind_Table_p0_561
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_323
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_132
 	.long	VoiceDirIndexFind_Table_p0_133
-	.long	VoiceDirIndexFind_Table_p0_134
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_135
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_338
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_339
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_340
-	.long	VoiceDirIndexFind_Table_p0_341
-	.long	VoiceDirIndexFind_Table_p0_342
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_148
-	.long	VoiceDirIndexFind_Table_p0_149
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_368
-	.long	VoiceDirIndexFind_Table_p0_369
-	.long	VoiceDirIndexFind_Table_p0_370
-	.long	VoiceDirIndexFind_Table_p0_371
-	.long	VoiceDirIndexFind_Table_p0_38
-	.long	VoiceDirIndexFind_Table_p0_39
-	.long	VoiceDirIndexFind_Table_p0_372
-	.long	VoiceDirIndexFind_Table_p0_40
-	.long	VoiceDirIndexFind_Table_p0_41
-	.long	VoiceDirIndexFind_Table_p0_160
-	.long	VoiceDirIndexFind_Table_p0_161
-	.long	VoiceDirIndexFind_Table_p0_162
+	.long	VoiceDirIndexFind_Table_p0_336
+	.long	0
+	.long	VoiceDirIndexFind_Table_p0_337
+	.long	0
+
+VoiceDirRefFind_Var:	# u16, a constant; read / written by VoiceDirRefFind 0x48572928: `movhu (VoiceDirRefFind_Var), d1`
+	.word	1
+VoiceDirRefFind_Var_2:	# u16, a constant; read / written by VoiceDirRefFind 0x48572928: `movhu (VoiceDirRefFind_Var_2), d0`
+	.word	633
+
+VoiceDirRefFind_Table:
+	.long	VoiceDirRefFind_Table_p0_181
+	.long	VoiceDirRefFind_Table_p0_604
+	.long	VoiceDirRefFind_Table_p0_191
+	.long	VoiceDirRefFind_Table_p0_5
+	.long	VoiceDirRefFind_Table_p0_26
+	.long	VoiceDirRefFind_Table_p0_418
+	.long	VoiceDirRefFind_Table_p0_420
+	.long	VoiceDirRefFind_Table_p0_419
+	.long	VoiceDirRefFind_Table_p0_371
+	.long	VoiceDirRefFind_Table_p0_380
+	.long	VoiceDirRefFind_Table_p0_473
+	.long	VoiceDirRefFind_Table_p0_391
+	.long	VoiceDirRefFind_Table_p0_389
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_10
+	.long	VoiceDirRefFind_Table_p0_609
+	.long	VoiceDirRefFind_Table_p0_11
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_426
+	.long	VoiceDirRefFind_Table_p0_425
+	.long	VoiceDirRefFind_Table_p0_424
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_254
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_143
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_401
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_402
-	.long	VoiceDirIndexFind_Table_p0_403
-	.long	VoiceDirIndexFind_Table_p0_404
-	.long	VoiceDirIndexFind_Table_p0_405
-	.long	VoiceDirIndexFind_Table_p0_406
-	.long	VoiceDirIndexFind_Table_p0_45
-	.long	VoiceDirIndexFind_Table_p0_177
-	.long	VoiceDirIndexFind_Table_p0_178
-	.long	VoiceDirIndexFind_Table_p0_179
-	.long	VoiceDirIndexFind_Table_p0_180
-	.long	VoiceDirIndexFind_Table_p0_181
-	.long	VoiceDirIndexFind_Table_p0_438
-	.long	VoiceDirIndexFind_Table_p0_439
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_440
-	.long	VoiceDirIndexFind_Table_p0_441
-	.long	VoiceDirIndexFind_Table_p0_442
-	.long	VoiceDirIndexFind_Table_p0_443
-	.long	VoiceDirIndexFind_Table_p0_444
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_206
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirIndexFind_Table_p0_58
-	.long	VoiceDirIndexFind_Table_p0_59
+	.long	VoiceDirRefFind_Table_p0_409
+	.long	VoiceDirRefFind_Table_p0_400
+	.long	VoiceDirRefFind_Table_p0_614
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_219
+	.long	VoiceDirRefFind_Table_p0_262
+	.long	VoiceDirRefFind_Table_p0_268
+	.long	VoiceDirRefFind_Table_p0_443
 	.long	0
-	.long	VoiceDirIndexFind_Table_p0_220
+	.long	VoiceDirRefFind_Table_p0_261
+	.long	VoiceDirRefFind_Table_p0_277
+	.long	VoiceDirRefFind_Table_p0_570
+	.long	VoiceDirRefFind_Table_p0_636
+	.long	VoiceDirRefFind_Table_p0_148
+	.long	VoiceDirRefFind_Table_p0_151
+	.long	VoiceDirRefFind_Table_p0_619
+	.long	VoiceDirRefFind_Table_p0_154
+	.long	VoiceDirRefFind_Table_p0_595
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_284
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_455
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_285
+	.long	VoiceDirRefFind_Table_p0_441
+	.long	VoiceDirRefFind_Table_p0_581
+	.long	VoiceDirRefFind_Table_p0_641
+	.long	VoiceDirRefFind_Table_p0_583
+	.long	VoiceDirRefFind_Table_p0_166
+	.long	VoiceDirRefFind_Table_p0_624
+	.long	VoiceDirRefFind_Table_p0_169
+	.long	VoiceDirRefFind_Table_p0_170
+	.long	VoiceDirRefFind_Table_p0_60
+	.long	VoiceDirRefFind_Table_p0_324
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_37
+	.long	VoiceDirRefFind_Table_p0_585
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_532
+	.long	VoiceDirRefFind_Table_p0_512
+	.long	VoiceDirRefFind_Table_p0_629
+	.long	VoiceDirRefFind_Table_p0_453
+	.long	VoiceDirRefFind_Table_p0_462
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_342
+	.long	VoiceDirRefFind_Table_p0_343
+	.long	VoiceDirRefFind_Table_p0_349
+	.long	VoiceDirRefFind_Table_p0_499
+	.long	VoiceDirRefFind_Table_p0_344
+	.long	VoiceDirRefFind_Table_p0_515
+	.long	VoiceDirRefFind_Table_p0_588
+	.long	VoiceDirRefFind_Table_p0_518
+	.long	VoiceDirRefFind_Table_p0_467
+	.long	VoiceDirRefFind_Table_p0_482
+	.long	VoiceDirRefFind_Table_p0_634
+	.long	VoiceDirRefFind_Table_p0_470
+	.long	VoiceDirRefFind_Table_p0_561
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_298
+	.long	VoiceDirRefFind_Table_p0_299
+	.long	VoiceDirRefFind_Table_p0_297
+	.long	VoiceDirRefFind_Table_p0_300
+	.long	VoiceDirRefFind_Table_p0_302
+	.long	VoiceDirRefFind_Table_p0_296
+	.long	VoiceDirRefFind_Table_p0_562
+	.long	VoiceDirRefFind_Table_p0_563
+	.long	VoiceDirRefFind_Table_p0_564
+	.long	VoiceDirRefFind_Table_p0_551
+	.long	VoiceDirRefFind_Table_p0_433
+	.long	VoiceDirRefFind_Table_p0_495
+	.long	VoiceDirRefFind_Table_p0_457
+	.long	VoiceDirRefFind_Table_p0_90
+	.long	VoiceDirRefFind_Table_p0_213
+	.long	VoiceDirRefFind_Table_p0_216
+	.long	VoiceDirRefFind_Table_p0_217
+	.long	VoiceDirRefFind_Table_p0_218
+	.long	VoiceDirRefFind_Table_p0_215
+	.long	VoiceDirRefFind_Table_p0_597
+	.long	VoiceDirRefFind_Table_p0_220
+	.long	VoiceDirRefFind_Table_p0_221
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_358
+	.long	VoiceDirRefFind_Table_p0_361
+	.long	VoiceDirRefFind_Table_p0_364
+	.long	VoiceDirRefFind_Table_p0_594
+	.long	VoiceDirRefFind_Table_p0_362
+	.long	VoiceDirRefFind_Table_p0_205
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_204
+	.long	VoiceDirRefFind_Table_p0_206
+	.long	VoiceDirRefFind_Table_p0_208
+	.long	VoiceDirRefFind_Table_p0_602
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_373
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_392
+	.long	VoiceDirRefFind_Table_p0_372
+	.long	VoiceDirRefFind_Table_p0_387
+	.long	VoiceDirRefFind_Table_p0_388
+	.long	VoiceDirRefFind_Table_p0_379
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_196
+	.long	VoiceDirRefFind_Table_p0_607
+	.long	VoiceDirRefFind_Table_p0_198
+	.long	VoiceDirRefFind_Table_p0_194
+	.long	VoiceDirRefFind_Table_p0_423
+	.long	VoiceDirRefFind_Table_p0_245
+	.long	VoiceDirRefFind_Table_p0_246
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_127
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_126
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_43
+	.long	VoiceDirRefFind_Table_p0_612
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_45
+	.long	VoiceDirRefFind_Table_p0_259
+	.long	VoiceDirRefFind_Table_p0_258
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_140
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_510
+	.long	VoiceDirRefFind_Table_p0_397
+	.long	VoiceDirRefFind_Table_p0_133
+	.long	VoiceDirRefFind_Table_p0_617
+	.long	VoiceDirRefFind_Table_p0_135
+	.long	VoiceDirRefFind_Table_p0_136
+	.long	VoiceDirRefFind_Table_p0_103
+	.long	VoiceDirRefFind_Table_p0_282
+	.long	VoiceDirRefFind_Table_p0_106
+	.long	VoiceDirRefFind_Table_p0_108
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_498
+	.long	VoiceDirRefFind_Table_p0_503
+	.long	VoiceDirRefFind_Table_p0_574
+	.long	VoiceDirRefFind_Table_p0_639
+	.long	VoiceDirRefFind_Table_p0_571
+	.long	VoiceDirRefFind_Table_p0_163
+	.long	VoiceDirRefFind_Table_p0_622
+	.long	VoiceDirRefFind_Table_p0_401
+	.long	VoiceDirRefFind_Table_p0_289
+	.long	VoiceDirRefFind_Table_p0_402
+	.long	VoiceDirRefFind_Table_p0_333
+	.long	VoiceDirRefFind_Table_p0_335
+	.long	VoiceDirRefFind_Table_p0_334
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_336
+	.long	VoiceDirRefFind_Table_p0_502
+	.long	VoiceDirRefFind_Table_p0_577
+	.long	VoiceDirRefFind_Table_p0_644
+	.long	VoiceDirRefFind_Table_p0_500
+	.long	VoiceDirRefFind_Table_p0_489
+	.long	VoiceDirRefFind_Table_p0_627
+	.long	VoiceDirRefFind_Table_p0_446
+	.long	VoiceDirRefFind_Table_p0_436
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_325
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_463
+	.long	VoiceDirRefFind_Table_p0_592
+	.long	VoiceDirRefFind_Table_p0_501
+	.long	VoiceDirRefFind_Table_p0_481
+	.long	VoiceDirRefFind_Table_p0_476
+	.long	VoiceDirRefFind_Table_p0_632
+	.long	VoiceDirRefFind_Table_p0_76
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_353
+	.long	VoiceDirRefFind_Table_p0_354
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_340
+	.long	VoiceDirRefFind_Table_p0_339
+	.long	VoiceDirRefFind_Table_p0_114
+	.long	VoiceDirRefFind_Table_p0_116
+	.long	VoiceDirRefFind_Table_p0_118
+	.long	VoiceDirRefFind_Table_p0_488
+	.long	VoiceDirRefFind_Table_p0_538
+	.long	VoiceDirRefFind_Table_p0_524
+	.long	VoiceDirRefFind_Table_p0_477
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_211
+	.long	VoiceDirRefFind_Table_p0_214
+	.long	VoiceDirRefFind_Table_p0_226
+	.long	VoiceDirRefFind_Table_p0_227
+	.long	VoiceDirRefFind_Table_p0_228
+	.long	VoiceDirRefFind_Table_p0_229
+	.long	VoiceDirRefFind_Table_p0_230
+	.long	VoiceDirRefFind_Table_p0_231
+	.long	VoiceDirRefFind_Table_p0_540
+	.long	VoiceDirRefFind_Table_p0_550
+	.long	VoiceDirRefFind_Table_p0_549
+	.long	VoiceDirRefFind_Table_p0_176
+	.long	VoiceDirRefFind_Table_p0_541
+	.long	VoiceDirRefFind_Table_p0_97
+	.long	VoiceDirRefFind_Table_p0_201
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_600
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_356
+	.long	VoiceDirRefFind_Table_p0_357
+	.long	VoiceDirRefFind_Table_p0_386
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_188
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_381
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_189
+	.long	VoiceDirRefFind_Table_p0_605
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_8
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_238
+	.long	VoiceDirRefFind_Table_p0_27
+	.long	VoiceDirRefFind_Table_p0_241
+	.long	VoiceDirRefFind_Table_p0_237
+	.long	VoiceDirRefFind_Table_p0_239
+	.long	VoiceDirRefFind_Table_p0_474
+	.long	VoiceDirRefFind_Table_p0_240
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_15
+	.long	VoiceDirRefFind_Table_p0_610
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_18
+	.long	VoiceDirRefFind_Table_p0_22
+	.long	VoiceDirRefFind_Table_p0_252
+	.long	VoiceDirRefFind_Table_p0_253
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_131
+	.long	VoiceDirRefFind_Table_p0_138
+	.long	VoiceDirRefFind_Table_p0_142
+	.long	VoiceDirRefFind_Table_p0_129
+	.long	VoiceDirRefFind_Table_p0_132
+	.long	VoiceDirRefFind_Table_p0_615
+	.long	VoiceDirRefFind_Table_p0_398
+	.long	VoiceDirRefFind_Table_p0_412
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_546
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_244
+	.long	VoiceDirRefFind_Table_p0_274
+	.long	VoiceDirRefFind_Table_p0_276
+	.long	VoiceDirRefFind_Table_p0_580
+	.long	VoiceDirRefFind_Table_p0_637
+	.long	VoiceDirRefFind_Table_p0_590
+	.long	VoiceDirRefFind_Table_p0_438
+	.long	VoiceDirRefFind_Table_p0_620
+	.long	VoiceDirRefFind_Table_p0_160
+	.long	VoiceDirRefFind_Table_p0_158
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_281
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_280
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_290
+	.long	VoiceDirRefFind_Table_p0_579
+	.long	VoiceDirRefFind_Table_p0_642
+	.long	VoiceDirRefFind_Table_p0_589
+	.long	VoiceDirRefFind_Table_p0_173
+	.long	VoiceDirRefFind_Table_p0_625
+	.long	VoiceDirRefFind_Table_p0_175
+	.long	VoiceDirRefFind_Table_p0_492
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_316
+	.long	VoiceDirRefFind_Table_p0_320
+	.long	VoiceDirRefFind_Table_p0_318
+	.long	VoiceDirRefFind_Table_p0_319
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_36
+	.long	VoiceDirRefFind_Table_p0_586
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_528
+	.long	VoiceDirRefFind_Table_p0_520
+	.long	VoiceDirRefFind_Table_p0_630
+	.long	VoiceDirRefFind_Table_p0_522
+	.long	VoiceDirRefFind_Table_p0_72
+	.long	VoiceDirRefFind_Table_p0_75
+	.long	VoiceDirRefFind_Table_p0_328
+	.long	VoiceDirRefFind_Table_p0_511
+	.long	VoiceDirRefFind_Table_p0_355
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_450
+	.long	VoiceDirRefFind_Table_p0_461
+	.long	VoiceDirRefFind_Table_p0_529
+	.long	VoiceDirRefFind_Table_p0_516
+	.long	VoiceDirRefFind_Table_p0_530
+	.long	VoiceDirRefFind_Table_p0_635
+	.long	VoiceDirRefFind_Table_p0_483
+	.long	VoiceDirRefFind_Table_p0_469
+	.long	VoiceDirRefFind_Table_p0_87
+	.long	VoiceDirRefFind_Table_p0_308
+	.long	VoiceDirRefFind_Table_p0_307
+	.long	VoiceDirRefFind_Table_p0_313
+	.long	VoiceDirRefFind_Table_p0_304
+	.long	VoiceDirRefFind_Table_p0_306
+	.long	VoiceDirRefFind_Table_p0_303
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_565
+	.long	VoiceDirRefFind_Table_p0_568
+	.long	VoiceDirRefFind_Table_p0_559
+	.long	VoiceDirRefFind_Table_p0_525
+	.long	VoiceDirRefFind_Table_p0_480
+	.long	VoiceDirRefFind_Table_p0_486
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_326
+	.long	VoiceDirRefFind_Table_p0_327
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_232
+	.long	VoiceDirRefFind_Table_p0_598
+	.long	VoiceDirRefFind_Table_p0_222
+	.long	VoiceDirRefFind_Table_p0_223
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_367
+	.long	VoiceDirRefFind_Table_p0_368
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_396
+	.long	VoiceDirRefFind_Table_p0_178
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_179
+	.long	VoiceDirRefFind_Table_p0_603
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_377
+	.long	VoiceDirRefFind_Table_p0_369
+	.long	VoiceDirRefFind_Table_p0_519
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_378
+	.long	VoiceDirRefFind_Table_p0_375
+	.long	VoiceDirRefFind_Table_p0_376
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_183
+	.long	VoiceDirRefFind_Table_p0_608
+	.long	VoiceDirRefFind_Table_p0_12
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_13
+	.long	VoiceDirRefFind_Table_p0_250
+	.long	VoiceDirRefFind_Table_p0_24
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_128
+	.long	VoiceDirRefFind_Table_p0_141
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_447
+	.long	VoiceDirRefFind_Table_p0_41
+	.long	VoiceDirRefFind_Table_p0_613
+	.long	VoiceDirRefFind_Table_p0_533
+	.long	VoiceDirRefFind_Table_p0_415
+	.long	VoiceDirRefFind_Table_p0_535
+	.long	VoiceDirRefFind_Table_p0_260
+	.long	VoiceDirRefFind_Table_p0_264
+	.long	VoiceDirRefFind_Table_p0_265
+	.long	VoiceDirRefFind_Table_p0_279
+	.long	VoiceDirRefFind_Table_p0_263
+	.long	VoiceDirRefFind_Table_p0_271
+	.long	VoiceDirRefFind_Table_p0_270
+	.long	VoiceDirRefFind_Table_p0_272
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_406
+	.long	VoiceDirRefFind_Table_p0_618
+	.long	VoiceDirRefFind_Table_p0_439
+	.long	VoiceDirRefFind_Table_p0_410
+	.long	VoiceDirRefFind_Table_p0_53
+	.long	VoiceDirRefFind_Table_p0_283
+	.long	VoiceDirRefFind_Table_p0_534
+	.long	VoiceDirRefFind_Table_p0_105
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_527
+	.long	VoiceDirRefFind_Table_p0_431
+	.long	VoiceDirRefFind_Table_p0_587
+	.long	VoiceDirRefFind_Table_p0_640
+	.long	VoiceDirRefFind_Table_p0_582
+	.long	VoiceDirRefFind_Table_p0_408
+	.long	VoiceDirRefFind_Table_p0_623
+	.long	VoiceDirRefFind_Table_p0_445
+	.long	VoiceDirRefFind_Table_p0_460
+	.long	VoiceDirRefFind_Table_p0_536
+	.long	VoiceDirRefFind_Table_p0_323
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_49
+	.long	VoiceDirRefFind_Table_p0_584
+	.long	VoiceDirRefFind_Table_p0_542
+	.long	VoiceDirRefFind_Table_p0_543
+	.long	VoiceDirRefFind_Table_p0_539
+	.long	VoiceDirRefFind_Table_p0_628
+	.long	VoiceDirRefFind_Table_p0_471
+	.long	VoiceDirRefFind_Table_p0_509
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_317
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_479
+	.long	VoiceDirRefFind_Table_p0_575
+	.long	VoiceDirRefFind_Table_p0_505
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_77
+	.long	VoiceDirRefFind_Table_p0_633
+	.long	VoiceDirRefFind_Table_p0_472
+	.long	VoiceDirRefFind_Table_p0_484
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_295
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_566
+	.long	VoiceDirRefFind_Table_p0_567
+	.long	VoiceDirRefFind_Table_p0_569
+	.long	VoiceDirRefFind_Table_p0_115
+	.long	VoiceDirRefFind_Table_p0_109
+	.long	VoiceDirRefFind_Table_p0_496
+	.long	VoiceDirRefFind_Table_p0_497
+	.long	VoiceDirRefFind_Table_p0_523
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_212
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_234
+	.long	VoiceDirRefFind_Table_p0_596
+	.long	VoiceDirRefFind_Table_p0_224
+	.long	VoiceDirRefFind_Table_p0_225
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_99
+	.long	VoiceDirRefFind_Table_p0_100
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_593
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_210
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_209
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_203
+	.long	VoiceDirRefFind_Table_p0_601
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_359
+	.long	VoiceDirRefFind_Table_p0_390
+	.long	VoiceDirRefFind_Table_p0_393
+	.long	VoiceDirRefFind_Table_p0_394
+	.long	VoiceDirRefFind_Table_p0_385
+	.long	VoiceDirRefFind_Table_p0_383
+	.long	VoiceDirRefFind_Table_p0_395
+	.long	VoiceDirRefFind_Table_p0_382
+	.long	VoiceDirRefFind_Table_p0_195
+	.long	VoiceDirRefFind_Table_p0_185
+	.long	VoiceDirRefFind_Table_p0_606
+	.long	VoiceDirRefFind_Table_p0_187
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_249
+	.long	VoiceDirRefFind_Table_p0_427
+	.long	VoiceDirRefFind_Table_p0_247
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_123
+	.long	VoiceDirRefFind_Table_p0_124
+	.long	VoiceDirRefFind_Table_p0_125
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_122
+	.long	VoiceDirRefFind_Table_p0_611
+	.long	VoiceDirRefFind_Table_p0_20
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_422
+	.long	VoiceDirRefFind_Table_p0_421
+	.long	VoiceDirRefFind_Table_p0_256
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_257
+	.long	VoiceDirRefFind_Table_p0_405
+	.long	VoiceDirRefFind_Table_p0_416
+	.long	VoiceDirRefFind_Table_p0_139
+	.long	VoiceDirRefFind_Table_p0_437
+	.long	VoiceDirRefFind_Table_p0_130
+	.long	VoiceDirRefFind_Table_p0_616
+	.long	VoiceDirRefFind_Table_p0_411
+	.long	VoiceDirRefFind_Table_p0_444
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_266
+	.long	VoiceDirRefFind_Table_p0_267
+	.long	VoiceDirRefFind_Table_p0_273
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_269
+	.long	VoiceDirRefFind_Table_p0_554
+	.long	VoiceDirRefFind_Table_p0_578
+	.long	VoiceDirRefFind_Table_p0_638
+	.long	VoiceDirRefFind_Table_p0_572
+	.long	VoiceDirRefFind_Table_p0_555
+	.long	VoiceDirRefFind_Table_p0_621
+	.long	VoiceDirRefFind_Table_p0_442
+	.long	VoiceDirRefFind_Table_p0_162
+	.long	VoiceDirRefFind_Table_p0_35
+	.long	VoiceDirRefFind_Table_p0_330
+	.long	VoiceDirRefFind_Table_p0_337
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_338
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_350
+	.long	VoiceDirRefFind_Table_p0_576
+	.long	VoiceDirRefFind_Table_p0_643
+	.long	VoiceDirRefFind_Table_p0_573
+	.long	VoiceDirRefFind_Table_p0_352
+	.long	VoiceDirRefFind_Table_p0_626
+	.long	VoiceDirRefFind_Table_p0_451
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_321
+	.long	VoiceDirRefFind_Table_p0_322
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_21
+	.long	VoiceDirRefFind_Table_p0_591
+	.long	VoiceDirRefFind_Table_p0_432
+	.long	VoiceDirRefFind_Table_p0_428
+	.long	VoiceDirRefFind_Table_p0_83
+	.long	VoiceDirRefFind_Table_p0_631
+	.long	VoiceDirRefFind_Table_p0_526
+	.long	VoiceDirRefFind_Table_p0_507
+	.long	VoiceDirRefFind_Table_p0_61
+	.long	VoiceDirRefFind_Table_p0_346
+	.long	VoiceDirRefFind_Table_p0_348
+	.long	VoiceDirRefFind_Table_p0_347
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_464
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_552
+	.long	VoiceDirRefFind_Table_p0_494
+	.long	VoiceDirRefFind_Table_p0_517
+	.long	VoiceDirRefFind_Table_p0_560
+	.long	VoiceDirRefFind_Table_p0_487
+	.long	VoiceDirRefFind_Table_p0_545
+	.long	VoiceDirRefFind_Table_p0_309
+	.long	VoiceDirRefFind_Table_p0_312
+	.long	VoiceDirRefFind_Table_p0_314
+	.long	VoiceDirRefFind_Table_p0_305
+	.long	VoiceDirRefFind_Table_p0_315
+	.long	VoiceDirRefFind_Table_p0_311
+	.long	VoiceDirRefFind_Table_p0_310
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_547
+	.long	VoiceDirRefFind_Table_p0_548
+	.long	VoiceDirRefFind_Table_p0_531
+	.long	VoiceDirRefFind_Table_p0_508
+	.long	VoiceDirRefFind_Table_p0_521
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_202
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_599
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_365
+	.long	VoiceDirRefFind_Table_p0_374
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_180
+	.long	0
+	.long	VoiceDirRefFind_Table_p0_360
 	.long	0

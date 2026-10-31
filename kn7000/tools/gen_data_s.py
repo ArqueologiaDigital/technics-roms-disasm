@@ -182,6 +182,18 @@ for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
     PROFILES[_m]["readers_callee"] = True
 PROFILE = "941"
+# (lane mn10300-typer, 2026-10-31) the typer and walk rules it added, each switchable so that
+# kn7000/notes/mn10300-typer-probes/ can measure what each one changes; all on by default:
+#   ptr_starts   a word is a pointer into code only when it lands on an instruction start
+#   array_end    a stepped pointer compared with an address (`cmp End, aN`, a loop back) ends its array
+#   mem_ptrs     (walk) a data address stored to a RAM global or a record field and loaded back
+#   loop_index   (walk) an index register a loop steps is an induction variable, not its first value
+#   step_arrays  a loop stepping a parameter pointer by N >= 2 over a bounded block: N-byte records
+#   deep_records records a typed pointer field leads to are followed again, depth-guarded
+FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records")}
+for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
+    if _k.strip():
+        FEATURES[_k.strip()] = False
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 TAIL = None                   # (CPU lo, hi) of gen_program_s.py's tail code, see configure()
 from data_readers import LIBC as DR_LIBC  # noqa: E402
@@ -341,6 +353,11 @@ class Gen:
         self.host_ids, self.host_used = self.host_id_names(), set()
         self.readers_ext = bool(P.get("readers_ext"))   # tools/data_readers.py Reader(ext=)
         self.readers_callee = bool(P.get("readers_callee"))   # Reader(callee=), lane callee-walk
+        self.array_end = FEATURES["array_end"]                # Reader(array_end=), lane mn10300-typer
+        self.mem_ptrs = FEATURES["mem_ptrs"]                  # Reader(mem_ptrs=)
+        self.loop_index = FEATURES["loop_index"]              # Reader(loop_index=)
+        self.deep_records = FEATURES["deep_records"]          # Reader(chains=), field_targets' closure
+        self.step_arrays = FEATURES["step_arrays"]            # arg_kinds' arrays of stepped records
 
     def host_id_names(self):
         """(a plug-in) {id: name} of the host firmware's titles, modes and Function /
@@ -366,6 +383,7 @@ class Gen:
                 elif not lf.endswith(".inc") and line.strip():
                     pairs.append(tuple(line.split()))
         self.prev_data_label = {}       # name -> address of the previous build's data labels
+        self.label_pairs = [(n, int(v, 16)) for n, v in pairs]   # (the instruction-start oracle's anchors)
         for n, v in pairs:
             a = int(v, 16)
             if self.in_data(a):
@@ -1286,7 +1304,7 @@ class Gen:
             self.add(a, w * n, self.name_at(a, base), "reader table",
                      lambda g, it, vals=vals, kind=kind, readers=readers, w=w: g.render_table(it, vals, kind, readers, w))
 
-    def render_table(self, it, vals, kind, readers, w):
+    def render_table(self, it, vals, kind, readers, w, note=""):
         ones = (1 << (8 * w)) - 1
         unset = sum(1 for v in vals if v & ones == ones)
         rd = "; ".join(f"{f or '?'} {('0x%08X' % c) if c else ''}: `{ins}`".replace("  ", " ")
@@ -1307,7 +1325,7 @@ class Gen:
                     out.append(f"\tmap{8 * w}\t{i}, {vals[i]}")
                     i += 1
             return out
-        out = [f"{it.label}:\t# {len(vals)} x {kind}, {lo}..{hi}; read by {rd}"]
+        out = [f"{it.label}:\t# {len(vals)} x {kind}, {lo}..{hi}; read by {rd}{note}"]
         per = {1: 16, 2: 12, 4: 8}[w]
         for i in range(0, len(vals), per):
             out.append(f"\ttab_{kind}\t" + ", ".join(str(v) for v in vals[i:i + per])
@@ -1336,7 +1354,7 @@ class Gen:
                     if not self.free(a + 4 * n, 4) or (n and (a + 4 * n) in self.refs):
                         break
                     w = m.u32(a + 4 * n)
-                    if not (w and (self.in_data(w) or w in self.extern or self.in_code(w))):
+                    if not self.is_addr(w):
                         break
                     n += 1
                 if n >= 2:
@@ -1384,8 +1402,31 @@ class Gen:
 
     # -- struct arrays, from their readers (tools/data_structs.py) ----------------
     def is_addr(self, v):
-        """A 32-bit value that is an address a pointer field may hold."""
-        return bool(v) and (self.in_data(v) or v in self.extern or self.in_code(v))
+        """A 32-bit value that is an address a pointer field may hold: a data address, a named one
+        outside the data region, or code -- where a pointer into code can land, on the first byte of
+        an instruction (code_ptr_ok; lane mn10300-typer: text such as "><SH" = 0x48533C3E reads as a
+        code address but lands inside an instruction)."""
+        return bool(v) and (self.in_data(v) or ((v in self.extern or self.in_code(v)) and self.code_ptr_ok(v)))
+
+    def init_word(self, a):
+        """The initial 32-bit value of data address a (data_readers' mem_ptrs: a word that starts as 0)."""
+        try:
+            return self.m.u32(a)
+        except Exception:
+            return None
+
+    def code_ptr_ok(self, v):
+        """False when v is code that tools/mn10300_insn_len.py decodes and v is inside an instruction
+        (no pointer lands there); True otherwise (an instruction start, or no code the oracle knows:
+        RAM, the host, another chip).  FEATURES["ptr_starts"] off: always True (the test before)."""
+        if not FEATURES["ptr_starts"] or self.in_data(v):
+            return True
+        st = getattr(self, "_starts", None)
+        if st is None:
+            import glob as _glob
+            import mn10300_insn_len as IL
+            st = self._starts = IL.oracle(self.rom, BASE, sorted(_glob.glob(code_glob())), self.label_pairs)
+        return st.is_start(v) is not False
 
     # A name an earlier generation made up from a guess about the bytes, which a
     # reader-typed item replaces (the code is regenerated with the new name)
@@ -1424,9 +1465,16 @@ class Gen:
                 if n and len(set(rest)) == 1 and rest[0] == 0xFF:
                     break
                 n += 1
-            bounds = [x.bound for _o, x in g.accs if getattr(x, "bound", None)]
+            bounds = [x.bound for _o, x in g.accs if getattr(x, "bound", None) and x.inner != -1]
             if bounds and n > max(bounds):
                 n = max(bounds)        # [INFERENCE] the index is checked (or is a byte) below this
+            end_note = ""
+            lb = self.loop_end(a, s, n)
+            if lb is not None:
+                n, x = lb
+                end_note = (f"; ends at +{n * s}, where {re.sub(r'_entry$', '', x.func or '?')} 0x{x.cpu or 0:08X}'s "
+                            f"loop stops (`{' '.join(x.insn.split())}`)")
+                g.evidence = [end_note[2:]]
             if n < 1:
                 continue
             g.count = n
@@ -1456,7 +1504,8 @@ class Gen:
                              lambda gen, it, vals=vals: [f"{it.label}:"] + [f"\t.long\t{gen.ref(v)}" for v in vals])
                 else:
                     self.add(a, n * s, g.label, "reader table",
-                             lambda gen, it, vals=vals, kind=kind, rd=rd, s=s: gen.render_table(it, vals, kind, rd, s))
+                             lambda gen, it, vals=vals, kind=kind, rd=rd, s=s, nt=end_note:
+                             gen.render_table(it, vals, kind, rd, s, nt))
                 continue
             kind, names, new_label = DN.lookup3(g.label, s)
             if new_label and g.label != new_label:
@@ -1466,6 +1515,28 @@ class Gen:
             self.struct_groups.append(g)
             self.add(a, n * s, g.label, "struct array",
                      lambda gen, it, g=g: gen.render_structs(it, g))
+
+    def loop_end(self, a, s, n):
+        """(FEATURES["array_end"], lane mn10300-typer) The record count of the s-byte array at `a` that
+        a proven pointer loop gives (data_readers.Reader.loop_bound: `cmp End, aN` and a branch back,
+        aN stepped by s from a record boundary B of the array): (count up to End, the bound access),
+        when that is fewer than n records; else None."""
+        if not self.array_end:
+            return None
+        lb = getattr(self, "_loop_bounds", None)
+        if lb is None:
+            lb = self._loop_bounds = collections.defaultdict(list)
+            for x in self.dr.accesses:
+                if x.key[0] == "bound":
+                    lb[x.key[1]].append(x)
+        best = None
+        for k in range(n):
+            for x in lb.get(a + k * s, ()):
+                if x.width == s:
+                    m = k + x.off // s
+                    if m < n and (best is None or m < best[0]):
+                        best = (m, x)
+        return best
 
     # the bytes masks of a one-touch part record (src/include/panel_memory.inc PM_PART), as
     # tools/gen_customdata_s.py checks them
@@ -1841,6 +1912,7 @@ class Gen:
         if hasattr(self, "_arg_kinds"):
             return self._arg_kinds
         self._arg_kinds, self.arg_skip = {}, {}
+        self._arg_arrays = {}
         dr = getattr(self, "dr", None)
         if not self.readers_callee or dr is None or not hasattr(dr, "arg_calls"):
             return self._arg_kinds
@@ -1852,6 +1924,11 @@ class Gen:
             fixed = [a for a in lay if a.width and a.key == ("ptr", ("arg", F, r)) and a.inner != -1]
             steps = dr.param_steps.get((F, r), set())
             why = None
+            arr = self.arg_array(F, r, lay, steps) if self.step_arrays and not self.LIB_ROUTINE.match(F) else None
+            if arr is not None:
+                self._arg_arrays[("arg", F, r)] = arr
+                self._arg_kinds[("arg", F, r)] = (ts, lay, cs)
+                continue
             if self.LIB_ROUTINE.match(F):
                 why = "a library routine: what it reads is a string or a block, not fields"
             elif not fixed:
@@ -1870,6 +1947,29 @@ class Gen:
                 continue
             self._arg_kinds[("arg", F, r)] = (ts, lay, cs)
         return self._arg_kinds
+
+    def arg_array(self, F, r, lay, steps):
+        """(FEATURES["step_arrays"], lane mn10300-typer) F walks the block it is handed in argument r as
+        an array of s-byte records: it steps the pointer by one s >= 2 in a loop (param_steps), or reads
+        it through an index the walk knows the scale s of (a loop counter times s: dyn accesses whose
+        bound is s).  Returns (s, {s: count} the loops prove: data_readers param_count, a counter compared
+        with a constant or the end the loop compares the pointer with; how) or None.  The records'
+        fields are the accesses at their offsets modulo s."""
+        fld = ("ptr", ("arg", F, r))
+        how = None
+        if len(steps) == 1 and min(steps) >= 2:
+            s_, how = min(steps), f"{F} steps it by {min(steps)} in a loop"
+        else:
+            ks = {a.bound for a in lay if a.key == fld and a.inner == -1 and a.width and type(a.bound) is int}
+            if len(ks) != 1 or min(ks) < 2:
+                return None
+            s_, how = min(ks), f"{F} reads it at an index times {min(ks)} (a loop counter)"
+        if not any(a.width and a.key == fld and a.off >= 0 for a in lay):
+            return None
+        if max(a.width for a in lay if a.width and a.key == fld) > s_:
+            return None
+        counts = {n for (st_, n) in self.dr.param_count.get((F, r), ()) if st_ == s_}
+        return s_, (min(counts) if counts else None), how
 
     def arg_evidence(self, fld):
         """The block header's evidence for an ("arg", F, slot) kind: the routine, its address, the
@@ -1894,6 +1994,9 @@ class Gen:
         spans = []
         for fld, (ts, lay, _cs) in self.arg_kinds().items():
             need = max([a.off + a.width for a in lay if a.width and a.key == ("ptr", fld) and a.inner != -1] + [0])
+            if fld in self._arg_arrays:
+                s_, n_, _h = self._arg_arrays[fld]
+                need = s_ * (n_ or 1)
             for t in ts:
                 if need and self.free(t, need):
                     spans.append((self.off(t), self.off(t) + need))
@@ -1995,6 +2098,11 @@ class Gen:
             if f[0] == "tgt":
                 fn = next((x.func for x in sorted(accs, key=lambda x: (x.cpu or 0, x.insn)) if x.func), None)
                 org = self.dr.tgt_origin.get(f[1])
+                mo = getattr(self.dr, "mem_origin", {}).get(f[1])
+                if not org and mo:
+                    # (mem_ptrs) the records a memory slot holds, named after the first function storing them
+                    self._tgt_names[f] = re.sub(r"_entry.*$", "", mo) + "_Stored"
+                    continue
                 self._tgt_names[f] = (org + "_Result" if org else
                                       re.sub(r"_entry$", "", fn) + "_Selected" if fn else None)
         self.build_index()
@@ -2025,6 +2133,13 @@ class Gen:
         hard = sorted(set(all_targets) | set(self.fixed) - self.fixed_by_code)
         for root, fs in sorted(kinds.items(), key=lambda kv: min(min(targets(f)) for f in kv[1])):
             accs = [a for f in fs for a in by_fld[f]]
+            arr = next((self._arg_arrays[f] for f in fs if f in getattr(self, "_arg_arrays", {})), None)
+            if arr is not None:
+                # (step_arrays) the records of an array the routine walks: its reads at their offsets
+                # modulo the record size, the indexed ones too
+                afs = {("ptr", f) for f in fs if f in self._arg_arrays}
+                accs = [a._replace(off=a.off % arr[0], inner=None if a.inner == -1 else a.inner)
+                        if a.key in afs and a.off >= 0 else a for a in accs]
             ts = sorted({t for f in fs for t in targets(f)} - set())
             ts = [t for t in ts if self.free(t, 1)]
             if not ts or not any(a.width for a in accs):
@@ -2054,7 +2169,9 @@ class Gen:
             tail = None
             if opt.get("tail") and all(room[t] > need for t in ts):
                 stride, tail = need, opt["tail"]
-            elif dyn and len({room[t] for t in ts}) > 1 and all(room[t] > need for t in ts) and (
+            elif dyn and (len({room[t] for t in ts}) > 1 or (self.loop_index and len(ts) == 1)) \
+                    and all(room[t] > need for t in ts) and (
+                    # (loop_index, lane mn10300-typer: also one record, whose rows the code indexes)
                     not gaps_ or (self.readers_ext and any(room[t] < collections.Counter(gaps_).most_common(1)[0][0]
                                                            for t in ts))):
                 # (readers_ext: also when a common distance would leave the shorter records out: the
@@ -2110,6 +2227,13 @@ class Gen:
             # (callee) the routines whose reads through an argument give the layout
             g.evidence = [self.arg_evidence(f) for f in args_[:2]] + (
                 [f"+{len(args_) - 2} more routines"] if len(args_) > 2 else [])
+            for f in args_:
+                if f in getattr(self, "_arg_arrays", {}):
+                    s_, n_, how = self._arg_arrays[f]
+                    g.evidence.append(f"an array of {s_}-byte records: {how}; "
+                                      + (f"{n_} of them (the loop's count)" if n_ else
+                                         "as many as are free up to the next label [INFERENCE: the block's extent]"))
+                    break
             g.arg_of = {t: [f for f in args_ if t in self._arg_kinds[f][0]] for t in ts} if args_ else {}
             g.arg_tail = {}
             g.accs = [(a.off, a) for a in accs if a.off < stride and (not vsuf or a.off + (a.width or 1) <= stride)]
@@ -2194,11 +2318,16 @@ class Gen:
         return out
 
     def field_targets(self, fld, depth=0):
-        """The data addresses the pointer field `fld` holds."""
+        """The data addresses the pointer field `fld` holds (and, lane mn10300-typer: the records of a
+        block a routine walks as an array, arg_array(); every record a chain of the kind reaches,
+        chain_closure())."""
         if fld[0] == "tgt":
-            return {t for t in fld[1] if self.in_data(t)}
+            return self.chain_closure(fld, {t for t in fld[1] if self.in_data(t)})
         if fld[0] == "arg":
-            return set(self.arg_kinds().get(fld, ((),))[0])
+            ts = set(self.arg_kinds().get(fld, ((),))[0])
+            if fld in getattr(self, "_arg_arrays", {}):
+                ts = self.array_records(fld, ts)
+            return ts
         if fld not in self._tmemo:
             ts = set()
             for L in self.field_locs(fld, depth):
@@ -2206,8 +2335,83 @@ class Gen:
                     v = self.m.u32(L)
                     if v and self.in_data(v):
                         ts.add(v)
-            self._tmemo[fld] = ts
+            # (mem_ptrs, lane mn10300-typer) and what the code stores in the field at run time
+            ts |= {v for v in self.stored_targets(fld, depth) if self.in_data(v)}
+            self._tmemo[fld] = self.chain_closure(fld, ts)
         return self._tmemo[fld]
+
+    def stored_targets(self, fld, depth=0):
+        """(mem_ptrs) The data addresses the code stores in pointer field fld at run time
+        (data_readers field_stores): stores keyed as fld itself, and stores to the same offset of the
+        records another pointer field leads to that is read from the same words as fld's own
+        (`(0x14, a0)` after `mov (0x34, a0), a0` through func_484288AC_Table[i] in SetApTimer and through
+        func_484288AC_Table+0x34 elsewhere: one field, two spellings of its path)."""
+        fs = getattr(getattr(self, "dr", None), "field_stores", None)
+        if not fs:
+            return set()
+        out = set(fs.get(fld, ()))
+        if fld[0] == "fld" and fld[1][0] == "ptr" and fld[1][1][0] == "fld" and depth < 4:
+            idx = self.__dict__.setdefault("_fs_index", [(k[1][1], k[2], v) for k, v in fs.items()
+                                                         if k[1][0] == "ptr" and k[1][1][0] == "fld"])
+            mine = None
+            for ks, off2, vals in idx:
+                if off2 != fld[2] or ks == fld[1][1]:
+                    continue
+                if mine is None:
+                    mine = self.field_locs(fld[1][1], depth + 1)
+                if mine and mine & self.field_locs(ks, depth + 1):
+                    out |= vals
+        return out
+
+    def chains(self):
+        """(FEATURES["deep_records"]) {kind key: {field offset}}: data_readers' "chain" accesses, a loop
+        that advances a pointer to records of the kind through their own field (a list, a tree path)."""
+        ch = getattr(self, "_chains", None)
+        if ch is None:
+            ch = self._chains = collections.defaultdict(set)
+            if self.deep_records and getattr(self, "dr", None) is not None:
+                for x in self.dr.accesses:
+                    if x.rw == "chain" and x.key[0] == "ptr" and x.key[1][0] in ("fld", "tgt") and 0 <= x.off < 0x1000:
+                        ch[x.key[1]].add(x.off)
+        return ch
+
+    def chain_closure(self, fld, ts):
+        """ts and every record the kind's chain fields lead to from them (field f of a record of the
+        kind points at the next one), visited once each, at most 4,096 records."""
+        offs = self.chains().get(fld)
+        if not offs or not ts:
+            return ts
+        seen, todo = set(ts), list(ts)
+        while todo and len(seen) < 4096:
+            t = todo.pop()
+            for f in offs:
+                if self.in_data(t + f) and self.in_data(t + f + 3):
+                    v = self.m.u32(t + f)
+                    if v and self.in_data(v) and v not in seen:
+                        seen.add(v)
+                        todo.append(v)
+        return seen
+
+    def array_records(self, fld, ts):
+        """(step_arrays) The records of each block in ts that arg_array() says the routine walks: the
+        loop's count of them when it is proven, else as many as are free up to the next address
+        anything names [INFERENCE: the block's extent]."""
+        memo = self.__dict__.setdefault("_arr_memo", {})
+        if fld in memo:
+            return memo[fld]
+        s_, n, _how = self._arg_arrays[fld]
+        out = set()
+        for t in ts:
+            out.add(t)
+            j = 1
+            while j < (n or 4096):
+                e = t + j * s_
+                if not self.free(e, s_) or (n is None and (e in self.refs or e in self.fixed or e in self.label_at)):
+                    break
+                out.add(e)
+                j += 1
+        memo[fld] = out
+        return out
 
     def kind_name(self, fld):
         """A name for what the field fld points at: its container's label and the field."""
@@ -2285,7 +2489,7 @@ class Gen:
             while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8):
                 w0 = int.from_bytes(self.rom[o + 8 * n:o + 8 * n + 4], "little")
                 w1 = int.from_bytes(self.rom[o + 8 * n + 4:o + 8 * n + 8], "little")
-                if not self.in_code(w1) or self.is_addr(w0):
+                if not (self.in_code(w1) and self.code_ptr_ok(w1)) or self.is_addr(w0):
                     break
                 n += 1
             if n >= 3:
@@ -3259,13 +3463,15 @@ class Gen:
             if fn not in ("memcpy", "memcmp", "strncmp", "strncpy", "memmove") or not c.get("d0"):
                 continue
             k = acc.key
+            # (deep_records, lane mn10300-typer) also through a pointer field of a typed record: the
+            # KN2400's switch descriptors, whose p8 block func_5016594F copies 12 bytes of
             ts = {k[1]} if k[0] == "abs" else set(self.field_targets(k[1])) if k[0] == "ptr" and \
-                k[1][0] == "tgt" and acc.off == 0 else set()
+                (k[1][0] == "tgt" or (self.deep_records and k[1][0] == "fld")) and acc.off == 0 else set()
             for t in ts:
                 found[t].add((c["d0"], fn, re.sub(r"_entry$", "", acc.func or "?"), acc.cpu or 0))
         n = 0
         for a in sorted(found):
-            uses = sorted(found[a], key=lambda u: (u[3], u[2]))
+            uses = sorted(found[a], key=lambda u: (u[3], u[2], u[1], u[0]))   # (a full key: a set's order varies)
             size = min(u[0] for u in uses)
             if not 0 < size <= 4096 or not self.in_data(a) or not self.free(a, size):
                 continue
@@ -3421,7 +3627,10 @@ class Gen:
         so such bytes are not taken for a string (a long text may still hold
         one such word by chance: "...eH" ends a word)."""
         words = range(o + (-o % 4), e - 3, 4)
-        hits = sum(1 for k in words if BASE <= int.from_bytes(self.rom[k:k + 4], "little") < BASE + len(self.rom))
+        # (lane mn10300-typer) not a word that lands inside an instruction: "RIGH" = 0x48474952 of
+        # "RIGHT 1" (MidiPmemOutLGrid's labels) is no pointer
+        hits = sum(1 for k in words if BASE <= (w := int.from_bytes(self.rom[k:k + 4], "little")) < BASE + len(self.rom)
+                   and self.code_ptr_ok(w))
         return hits > 0 and 2 * hits >= len(words)
 
     def string_arrays(self):
@@ -4249,6 +4458,10 @@ class Gen:
             # then what a span arg_reserve() kept for a record that did not fit, as before
             self.ptr_records(only_arg=True)
             self.indexed_tails()
+            if self.deep_records and not P.get("readers_ext"):
+                # (lane mn10300-typer) the siblings: the blocks a pointer field of a record leads to that
+                # the code copies whole (copied_blocks, which the KN7000 builds run with readers_ext)
+                self.copied_blocks()
             self._arg_spans = []
             self.reader_tables()
             if P.get("structs"):

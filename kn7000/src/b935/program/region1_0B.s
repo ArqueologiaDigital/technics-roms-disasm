@@ -49907,11 +49907,11 @@ loc_4857F2D7:
     jmp     loc_4857F45B
 loc_4857F2E0:
     mov     a0, d0
-    mov     (ptrs_486AF1BC), a0
+    mov     (func_4857F2BC_Records), a0
     mov     d0, (0x5009cf80)
     clr     d2
     cmp     0, a0
-    mov     ptrs_486AF1BC, a2
+    mov     func_4857F2BC_Records, a2
     bne     loc_4857F2FC
     jmp     loc_4857F43E
 loc_4857F2FC:
@@ -50304,7 +50304,7 @@ loc_4857F5C7:
     mov     d0, (0x18, sp)
     inc     d0
     mov     d0, (0x1c, sp)
-    mov     ptrs_486AF274, a3
+    mov     func_4857F5AB_Table, a3
 loc_4857F5DD:
     mov     a2, d0
     mov     (0x10c, sp), a0
@@ -50466,7 +50466,7 @@ func_4857F6FB:
     mov     a0, d0
     add     0x68, d0
     mov     d0, (0x18, sp)
-    mov     ptrs_486AF288, a2
+    mov     func_4857F6FB_Table, a2
 loc_4857F729:
     mov     d3, d0
     mov     (0x108, sp), a0
@@ -50666,7 +50666,7 @@ loc_4857F8B0:
     mov     d0, (0x1c, sp)
     mov     sp, a3
     add     0x6c, a3
-    mov     ptrs_486AF29C, a2
+    mov     func_4857F873_Table_2, a2
 loc_4857F8C0:
     mov     d3, d0
     mov     (0x10c, sp), a0
@@ -50904,7 +50904,7 @@ loc_4857FAAB:
     bgt     loc_4857FAEA
     mov     d2, d0
     asl2    d0
-    mov     ptrs_486AF808, a0
+    mov     func_4857FA3C_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4857FAD0:
@@ -50998,7 +50998,7 @@ func_4857FB46:
     mov     d0, (0x18, sp)
     mov     sp, a3
     add     0xe8, a3
-    mov     Str_D_jHH_jH, a2
+    mov     func_4857FB46_Table_2, a2
 loc_4857FB84:
     mov     d3, d0
     mov     (0x188, sp), a0
@@ -51101,7 +51101,7 @@ func_4857FC0D:
     mov     d0, (0x18, sp)
     mov     sp, a3
     add     0xec, a3
-    mov     ptrs_486AF4E0, a2
+    mov     func_4857FC0D_Table_2, a2
 loc_4857FC50:
     mov     d3, d0
     mov     (0x18c, sp), a0
@@ -51220,7 +51220,7 @@ func_4857FD13:
     mov     a0, d0
     add     0x68, d0
     mov     d0, (0x18, sp)
-    mov     ptrs_486AF574, a2
+    mov     func_4857FD13_Table, a2
 loc_4857FD41:
     mov     d3, d0
     mov     (0x108, sp), a0
@@ -51404,7 +51404,7 @@ loc_4857FEBF:
     mov     (0x20, sp), a1
     mov     a2, d1
     call    func_4857F4B1_entry, [d2,d3,a2,a3], 0x24
-    mov     (ptrs_486AF594), a0
+    mov     (func_4857FE65_Table_2), a0
     clr     d3
     movbu   (a0), d0
     cmp     d3, d0
@@ -51413,7 +51413,7 @@ loc_4857FEBF:
 loc_4857FEDD:
     mov     d3, d0
     asl2    d0
-    mov     ptrs_486AF594, a0
+    mov     func_4857FE65_Table_2, a0
     mov     (d0, a0), d0
     mov     (0x20, sp), a1
     mov     d0, a0
@@ -51471,7 +51471,7 @@ loc_4857FF5A:
     exth    d3
     mov     d3, d0
     asl2    d0
-    mov     ptrs_486AF594, a0
+    mov     func_4857FE65_Table_2, a0
     mov     (d0, a0), a0
     movbu   (a0), d0
     cmp     0, d0

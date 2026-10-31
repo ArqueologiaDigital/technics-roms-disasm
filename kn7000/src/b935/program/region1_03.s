@@ -3299,7 +3299,7 @@ loc_48472B06:
     ret     [a2], 0x14
 loc_48472B19:
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table_4+38, a1
+    mov     func_48472AEF_Var_3, a1
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a1), d0
     mov     func_48472AEF_Var, a0
@@ -3353,7 +3353,7 @@ loc_48472B90:
     ret     [a2], 0x14
 loc_48472BAA:
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table_4+38, a0
+    mov     func_48472AEF_Var_3, a0
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a0), d0
     mov     func_48472AEF_Var, a1
@@ -3392,7 +3392,7 @@ loc_48472C0C:
     bne     loc_48472C1F
     ret     [a2], 0x14
 loc_48472C1F:
-    movbu   (func_48472AEF_Table_4+38), d1
+    movbu   (func_48472AEF_Var_3), d1
     movbu   (func_48472AEF_Var), d0
     extb    d1
     extb    d0
@@ -3401,7 +3401,7 @@ loc_48472C1F:
     ret     [a2], 0x14
 loc_48472C33:
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table_4+38, a1
+    mov     func_48472AEF_Var_3, a1
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a1), d0
     mov     func_48472AEF_Var, a0
@@ -3436,7 +3436,7 @@ loc_48472C94:
     mov     func_48472AEF_Table_4, a0
     call    func_48472D01_entry, [d2,d3,a2,a3], 0x10
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table_4+38, a0
+    mov     func_48472AEF_Var_3, a0
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a0), d0
     mov     func_48472AEF_Var, a1

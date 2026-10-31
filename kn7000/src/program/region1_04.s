@@ -13988,8 +13988,8 @@ func_4848AD6E_entry:
 loc_4848AD7D:
     clr     d2
     clr     d1
-    mov     Str_P_10, a2
-    mov     (Str_P_10), a0
+    mov     func_4848AD6E_Table, a2
+    mov     (func_4848AD6E_Table), a0
     mov     -1, d3
     cmp     d3, a0
     beq     loc_4848ADB0
@@ -19211,7 +19211,7 @@ loc_4848DED5:
 loc_4848DED7:
     mov     d2, a0
     add     a0, a0
-    add     data_50001850_p0_1, a0
+    add     TtSqmixer_Table, a0
     movhu   d0, (-2, a0)
     inc     d2
     mov     d2, d1
@@ -19249,7 +19249,7 @@ loc_4848DF23:
     cmp     0x12, d0
     bne     loc_4848DF75
 loc_4848DF49:
-    movhu   (data_50001850_p0_1+96), d0
+    movhu   (TtSqmixer_Table+96), d0
     cmp     1, d0
     beq     loc_4848DF75
     mov     0x90008041, d0
@@ -19268,25 +19268,25 @@ loc_4848DF75:
     ret     [d2,d3], 0x18
 
 func_4848DF79:
-    mov     (data_50001850_p0_1+100), a0
+    mov     (func_4848DF79_Var), a0
     exth    d0
     asl     4, d0
     add     d0, a0
     retf    0, 0
 
 func_4848DF88:
-    mov     a0, (data_50001850_p0_1+100)
+    mov     a0, (func_4848DF79_Var)
     retf    0, 0
 
 func_4848DF91:
     exth    d0
-    mov     (data_50001850_p0_1+104), a0
+    mov     (func_4848DF91_Var), a0
     add     d0, d0
     movhu   (d0, a0), d0
     retf    0, 0
 
 func_4848DF9E:
-    mov     a0, (data_50001850_p0_1+104)
+    mov     a0, (func_4848DF91_Var)
     retf    0, 0
 # AcMixerScreenProc  (CPU 0x4848dfa7)
 AcMixerScreenProc:
@@ -19549,7 +19549,7 @@ loc_4848E25C:
     cmp     0xffff, d0
     beq     loc_4848E2C2
     movhu   (0x5006b5d8), d0
-    movhu   d0, (data_50001850_p0_1+96)
+    movhu   d0, (TtSqmixer_Table+96)
     mov     0x00008041, d0
     movhu   (0x5006b5dc), d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
@@ -34274,8 +34274,8 @@ func_484974A4_entry:
 loc_484974B3:
     clr     d2
     clr     d1
-    mov     Str_P_20, a2
-    mov     (Str_P_20), a0
+    mov     func_484974A4_Table, a2
+    mov     (func_484974A4_Table), a0
     mov     -1, d3
     cmp     d3, a0
     beq     loc_484974E6

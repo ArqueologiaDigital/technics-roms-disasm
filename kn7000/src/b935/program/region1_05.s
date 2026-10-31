@@ -3504,7 +3504,7 @@ loc_484A2447:
     asl2    d2
     mov     Str_s_51, d0
     mov     d0, (0xc, sp)
-    mov     ptrs_4860CF7C, a0
+    mov     InOutTestWindowProc_Table_16, a0
     mov     (d2, a0), d0
     mov     d2, a2
     mov     d0, (0x10, sp)
@@ -3546,7 +3546,7 @@ loc_484A2447:
     mov     a2, (8, sp)
     mov     Str_s_64, d0
     mov     d0, (0xc, sp)
-    mov     (InOutTestWindowProc_Var), a0
+    mov     (InOutTestWindowProc_Table_16+56), a0
     extbu   d2
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -5700,7 +5700,7 @@ loc_484A3A3F:
     clr     d0
 loc_484A3A41:
     asl2    d0
-    mov     Str_p_45, a0
+    mov     SdTestFilter_Table, a0
     mov     (d0, a0), d0
     call    SetMmmFilter_entry, [d2], 0x18
     inc     d2
@@ -14636,7 +14636,7 @@ loc_484A97F5:
     clr     d0
 loc_484A97F7:
     asl2    d0
-    mov     Str_empty_1304, a0
+    mov     TouchFilter_Table, a0
     mov     (d0, a0), d0
     call    SetMmmFilter_entry, [d2], 0x18
     inc     d2
@@ -20638,7 +20638,7 @@ loc_484AD78D:
     mov     d1, d0
     asl2    d0
     mov     d0, a1
-    add     Str_ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklm+64, a1
+    add     PanelExtSwShadowInit_Records, a1
     asl2    d1
     mov     d1, a0
     add     0x5006bed2, a0

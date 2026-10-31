@@ -38,6 +38,7 @@
 0x4C3F7790  KernelWaitAbortHook          ; `retf 0, 0`: called with a0 = the TCB and d0 = -0x55 (E_TMOUT) or -0x51 (E_DLT) for a wait that ends in an error [INFERENCE]
 0x4C3F7793  KernelStart                  ; sp := (KernelRamLayout + 0x14), jmp KernelInit: the kernel's start
 0x4C3F779E  KernelInitHook               ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
+0x4C3F77A1  KernelTickIsrDefault         ; the kernel's default system-tick interrupt handler, after KernelInitHook: clears bits 4..7 of G6ICR 0x34000118 (acknowledges interrupt group 6), calls func_4C3F7272_L3 (the kernel's wake-up of the task (0x50380000) points at) and returns with `rets` (LibIrqScheduler enters handlers with `calls (a2)` through the RAM table 0x50380B64). Nothing enters it: no word of the image holds its address, and the application start-up (through the def_int service) installs 0x4C171C06 for the same interrupt (number 1, G6ICR) [INFERENCE: the kernel configuration's default tick handler, replaced by the application's; lane mn10300-typer]
 ;
 ;
 ; ---- zlib 1.0.4's data tables (lane mn10300-formats, 2026-10-31): found by their contents, which are

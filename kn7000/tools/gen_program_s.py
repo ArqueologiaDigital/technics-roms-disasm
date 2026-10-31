@@ -668,6 +668,14 @@ FUNC_DOC = {
         "[INFERENCE] An empty hook (`ret 0, 0`) KernelInit calls before it starts the",
         "dispatcher.",
     ),
+    "KernelTickIsrDefault": (
+        "[INFERENCE] The kernel's default system-tick interrupt handler: acknowledges",
+        "interrupt group 6 (clears bits 4..7 of G6ICR 0x34000118), calls func_4C03DC87 (wakes",
+        "the task (0x50380000) points at) and returns with `rets` (LibIrqScheduler calls",
+        "handlers with `calls (a2)` from the RAM table 0x50380B64).  Nothing enters it: no word",
+        "of the image holds its address, and func_48447F33 installs KernelTickHandler for the",
+        "same interrupt (number 1, G6ICR) through the def_int service func_4C03DB21.",
+    ),
     "IndexSwEventHandler": (
         "The balance (index-switch) UP/DOWN handler. It rebuilds the",
         "both-buttons-held accumulator 0x50021FE0 = (0x50021FDC & 0x50021FD8)",
@@ -4085,6 +4093,18 @@ def read_event_ids():
     return ids
 
 
+def read_data_loc_names():
+    """The loc_<ADDR> names the typed data region's sources spell (None: no data region)."""
+    if not DATA_SRC:
+        return None
+    import glob as _glob
+    out = set()
+    d = os.path.dirname(DATA_SRC)
+    for f in _glob.glob(os.path.join(d, "*.s")) + _glob.glob(os.path.join(d, "*.inc")):
+        out.update(re.findall(r"\bloc_[0-9A-F]{8}\b", open(f, encoding="latin-1").read()))
+    return out
+
+
 def read_data_code_refs():
     """The code addresses listed in the typed data region's code_refs.txt."""
     if not DATA_SRC:
@@ -4404,7 +4424,10 @@ def main():
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
     ctx = EmitCtx(names, label_of, A, data_names, read_data_labels())
+    data_locs = read_data_loc_names()
     for a in data_code_refs:              # one that is no instruction start (or has another name)
+        if data_locs is not None and label_of.get(a) == f"func_{a:08X}" and f"loc_{a:08X}" not in data_locs:
+            continue                      # the data spells it func_<ADDR> (lane mn10300-typer): no loc_ .equ
         if label_of.get(a) != f"loc_{a:08X}":
             ctx.ext.setdefault(a, f"loc_{a:08X}")
     ctx.pro_starts = {p for p, _ins in pro.values()}

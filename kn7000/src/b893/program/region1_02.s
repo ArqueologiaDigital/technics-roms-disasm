@@ -389,7 +389,7 @@ loc_484405FC:
 
 func_484405FF:
     extbu   d0
-    mov     func_484405FF_Table, a0
+    mov     func_48440617_Result_0+24, a0
     movbu   (d0, a0), d0
     retf    0, 0
 
@@ -814,7 +814,7 @@ func_484408FD:
     add     -0x14, sp
 func_484408FD_entry:
     mov     a0, a2
-    mov     func_48440E0B_Records+58, a1
+    mov     func_484408FD_Block, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -823,7 +823,7 @@ func_484408FD_entry:
     bra     loc_48440963
 loc_48440919:
     mov     a2, a0
-    mov     func_48440E0B_Records+55, a1
+    mov     Str_H_7, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -832,7 +832,7 @@ loc_48440919:
     bra     loc_48440963
 loc_48440931:
     mov     a2, a0
-    mov     func_48440E0B_Records+52, a1
+    mov     Str_G_15, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -840,7 +840,7 @@ loc_48440931:
     mov     2, d0
     bra     loc_48440963
 loc_48440949:
-    mov     func_48440E0B_Records+61, a1
+    mov     func_484408FD_Block_2, a1
     mov     3, d0
     mov     a2, a0
     call    memcmp_entry, [d2,a2], 8
@@ -1495,7 +1495,7 @@ loc_48440E2B:
     call    memset_entry, [a2], 4
     mov     0x20, a0
     add     d3, a0
-    mov     func_48440E0B_Records+64, a1
+    mov     Str_KN3000_Phrase, a1
     mov     0x10, d0
     call    memcpy_entry, [a2,a3], 8
     mov     a3, a0
@@ -1651,7 +1651,7 @@ loc_48440F92:
     call    memset_entry, [a2], 4
     mov     0x20, a0
     add     d3, a0
-    mov     func_48440E0B_Records+84, a1
+    mov     Str_KN5000_Phrase, a1
     mov     0x10, d0
     call    memcpy_entry, [a2,a3], 8
     mov     a2, a0
