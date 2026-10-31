@@ -4,9 +4,10 @@
 """gen_ic21own_s.py -- write the typed includes of the user-settings blocks of a whole KN7000 IC21 image
 (the custom-data flash, 2 MB at CPU 0x96800000) below its CUSTOM STYLE bank:
 
-  midi.inc       chip 0x04000, 0xAA4 bytes: the USER MIDI SETTING image (the .MD part: header, the
-                 parameter-id list, three settings), the 0x7F0-byte panel image (PANEL MEMORY records,
-                 PMR_* of src/include/panel_memory.inc), the 26 system-setting halfwords (USR_SETUP)
+  midi.inc       chip 0x04000, 0xAA4 bytes: the settings Initial Setting keeps -- the USER MIDI SETTINGs
+                 (the .MD part: header, the parameter-id list, three settings), the CUSTOM PANEL (0x7F0
+                 bytes of PANEL MEMORY records, PMR_* of src/include/panel_memory.inc) and the 26
+                 system-setting halfwords (USR_SETUP)
   favorites.inc  chip 0x10000, 0x198 bytes: FAVORITES (FAV_HEADER, four FAV_BANKs of ten FAV_ITEMs)
   homepage.inc   chip 0x11000, 0x4442 bytes: the HOME PAGE record (HP_HEADER, 64 HP_PARTs) and its BMP,
                  an .incbin of the committed picture the record carries (checked byte for byte)
@@ -105,7 +106,8 @@ def gen_midi(d):
     w = struct.unpack_from("<6H", m, 4)
     if m[:4] != SIG or w[1:] != (0x10, 0xC0, 0xD0, 0x90, 3):
         sys.exit("midi.inc: not a USER MIDI SETTING image")
-    o.w(f"# ---- USER MIDI SETTING: the .MD part (0x280 bytes, the layout of a .MD file)")
+    o.label("PersistentSettings")
+    o.w(f"# ---- the USER MIDI SETTINGs: the .MD part (0x280 bytes, the layout of a .MD file)")
     o.emit(f"UMD_HEADER {w[0]}, UmdParams - UserMidiSetting, UmdParams_End - UmdParams, UmdSet1 - UserMidiSetting, "
            f"UmdSet2 - UmdSet1, 3", m[0:0x10], label="UserMidiSetting")
     ids = list(struct.unpack_from("<48I", m, 0x10))
@@ -135,15 +137,15 @@ def gen_midi(d):
         pad = 0x90 - used
         o.emit(f".space {pad}, 0xff", b"\xff" * pad, f"not written: the 0x90-byte setting holds {used} values")
     o.w()
-    o.w("# ---- the panel image (+0x280, 0x7F0 bytes): the live panel state 0x84000020 as func_4C021903 stores it")
-    o.w("# (func_4C021F7F / func_4C021FD9) and recalls it (func_4C021FB8 / func_4C022012): a PANEL MEMORY record")
-    o.w("# (0x750 bytes, 43 records), then a second record list (0xA0 bytes), each ended by FF FF")
+    o.w("# ---- the CUSTOM PANEL (+0x280, 0x7F0 bytes): the live panel state 0x84000020 as func_4C021903 stores it")
+    o.w("# (SET + CUSTOM PANEL: func_4C021F7F / func_4C021FD9) and recalls it (func_4C021FB8 / func_4C022012): a")
+    o.w("# PANEL MEMORY record (0x750 bytes, 43 records), then a second record list (0xA0 bytes), each ended by FF FF")
     p = m
     q = 0x280
-    for blk, lab in ((1, "UmdPanel"), (2, "UmdPanel2")):
+    for blk, lab in ((1, "CustomPanel"), (2, "CustomPanel_Rest")):
         recs, end = kn_panel.block(p, q)
         if recs is None:
-            sys.exit(f"midi.inc: panel block {blk} does not parse")
+            sys.exit(f"midi.inc: CUSTOM PANEL block {blk} does not parse")
         o.label(lab)
         for r, t, n in recs:
             pay = p[r + 2:r + 2 + n]
@@ -164,13 +166,13 @@ def gen_midi(d):
         o.emit("PMR_END", b"\xff\xff")
         q = end
     if q != 0xA70:
-        sys.exit(f"midi.inc: the panel image ends at +{q:#x}, not +0xA70")
+        sys.exit(f"midi.inc: the CUSTOM PANEL ends at +{q:#x}, not +0xA70")
     o.w()
     o.w("# ---- system settings (+0xA70, 26 halfwords)")
     hw = struct.unpack_from("<26H", m, 0xA70)
     o.emit("USR_SETUP " + ", ".join(f"{x:#06x}" if x >= 0x100 else str(x) for x in hw), m[0xA70:0xAA4],
-           label="UmdSetup")
-    o.label("UserMidiSetting_End")
+           label="SystemSetup")
+    o.label("PersistentSettings_End")
     if o.pos != UMD + UMD_SIZE:
         sys.exit("midi.inc: size")
     return o

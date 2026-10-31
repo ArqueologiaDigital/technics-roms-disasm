@@ -20,14 +20,23 @@
 	.byte	0
 .endm
 
-# ---- USER MIDI SETTING: 0xAA4 bytes at 0x96804000, RAM copy 0x500D2B14 ----------------------
+# ---- the settings Initial Setting keeps: 0xAA4 bytes at 0x96804000, RAM copy 0x500D2B14 -------
+# "User MIDI Settings, Help language, and Rhythm Custom etc. are not affected by Initial Setting"
+# (help text HelpTextEn41_0, kn7000/src/table.s): the image holds the three USER MIDI SETTINGs (the
+# .MD part, +0x000), the CUSTOM PANEL (+0x280) and system settings such as the language (+0xA70).
 # func_4C024247 copies the whole image to RAM, func_4C024000(n) programs it back after a change
 # (FlashProgram128Words, 0xAA4 bytes), and func_4C024030(n) re-reads section n:
 #   n = 0 +0x000 0x10 header; 1 +0x010 0xC0 parameter ids; 2..4 +0x0D0 / +0x160 / +0x1F0 0x90 the
-#   three settings; 5 +0x000 0x280 the .MD part whole; 6 +0x280 0x750 / 7 +0x280 0x7F0 the panel
-#   image; 8..20 the fields of USR_SETUP.
+#   three settings; 5 +0x000 0x280 the .MD part whole; 6 +0x280 0x750 / 7 +0x280 0x7F0 the CUSTOM
+#   PANEL; 8..20 the fields of USR_SETUP.
+# The CUSTOM PANEL is "a special Panel Memory in which you can store your favorite Panel Memory
+# settings ... Even initializing the KN will not delete the Custom Panel" (HelpTextEn35_0):
+# func_4C021903 stores the live panel state 0x84000020 there (func_4C021F7F 0x750 bytes,
+# func_4C021FD9 0x7F0) or recalls it (func_4C021FB8, func_4C022012).  It is spelled with the
+# PANEL MEMORY record macros PMR_* of panel_memory.inc: a 43-record list (0x750 bytes), then a
+# second list of 0xA0 bytes, each ended by FF FF.
 # At boot (func_4854AC28) func_4C023EC9 checks the signature; when it is missing it rebuilds the
-# image from ROM: the .MD part (func_484C41B6), the panel image (func_4C01ED5D), the USR_SETUP
+# image from ROM: the .MD part (func_484C41B6), the CUSTOM PANEL (func_4C01ED5D: Str_empty_1431), the USR_SETUP
 # defaults (26 halfwords func_4C023EC9_Table), and also resets the home page
 # (HpFlashWriteDefaults) and the favorites (func_4849EDEB).
 #
@@ -61,7 +70,7 @@
 	.byte	\value
 .endm
 
-# The 0x34 bytes after the panel image (+0xA70..+0xAA3, RAM 0x500D3584..0x500D35B7): 26 halfwords
+# The 0x34 bytes after the CUSTOM PANEL (+0xA70..+0xAA3, RAM 0x500D3584..0x500D35B7): 26 halfwords
 # of system settings, each section of func_4C024030 one field group.  Named after the firmware's
 # routines that read the RAM copy (reflection names):
 #   language       0x500D3584  CheckLanguage, AcLanguageTextProc (also AcIndexWideToggleFunc*)
@@ -75,7 +84,9 @@
 #   s35a6, s35a8, s35aa  0x500D35A6..AA  (func_4854E5C6 reads the first; no named reader)
 #   data_protect   0x500D35AC  DataProtectGridCheck
 #   cus_mem_mode   0x500D35AE  CusMemModeBoxProc; non-zero makes func_4C021903 store and recall the
-#                  0x7F0-byte panel image instead of 0x750 bytes
+#                  0x7F0-byte CUSTOM PANEL instead of 0x750 bytes ([INFERENCE] the help text's choice
+#                  "whether to load all panel settings or to load panel memory parameters",
+#                  HelpTextEn35_1)
 #   s35b0          0x500D35B0  func_4C027803
 #   rsp_select     0x500D35B2  RSpSelectProc, TestVideoOutFunc; bit 0 survives the reset of func_4C023EC9
 #   panel_sw1, panel_sw2  0x500D35B4  SdcPanelSwAsFunc (one 4-byte section)
