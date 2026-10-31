@@ -280,7 +280,7 @@ AccompSeq_VRAMHelperData_Skip:
 	ld	iy, wa
 AccompSeq_VRAMHelperData_Return:
 	ret
-; AccompSeq_GetBlockBase: Returns XIY = 0x1E8B00 + 256 * ((0x7E42) & 0xFFF), the start of the accompaniment
+; AccompSeq_GetBlockBase: Returns XIY = 0x1E8B00 + 256 * ((ACCSEQ_BLOCK) & 0xFFF), the start of the accompaniment
 ;   sequencer's current 256-byte data block in the block pool. Basis: callers + body -- AccompSeq_VRAMHelperData uses
 ;   it in pool mode ((0x7E25) >= 128); AccompSeq_InlineCodeBlock follows a 0x87 link by storing the next block in
 ;   0x7E42, calling it, and setting the offset IY = 6.

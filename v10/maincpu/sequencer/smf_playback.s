@@ -382,7 +382,7 @@ SMF_ResetMidiChanMap_Loop:
 	pop xbc
 	ret
 
-; Loads the current song slot ((0xffe3), 0x800 bytes from SEQ_SONG_SLOTS + (0xffe3)*0x800) into
+; Loads the current song slot ((SEQ_CURRENT_SONG), 0x800 bytes from SEQ_SONG_SLOTS + (SEQ_CURRENT_SONG)*0x800) into
 ; the working record at 0xf180, keeping the free-list head 0xf22f and the free count 0xf231
 ; that were there (saved through 0x286f / 0x2871).  The active-part mask 0xf19e is moved to
 ; 0xffec and cleared.

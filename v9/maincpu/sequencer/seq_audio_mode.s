@@ -677,7 +677,7 @@ AccVoice_ComputeParamOffset:
 ; 0x32E6.
 ; Reader: AccVoice_ComputeParamOffset (0xF53D2E, the tail of
 ; AccVoice_ResolveParamAddr 0xF53D20): `ld xix, AccVoice_BankBaseTable` then
-; `ld xix, (xix+wa)` = ld xix, (xix + wa) with wa = (0x32E6)*4.
+; `ld xix, (xix+wa)` = ld xix, (xix + wa) with wa = (ACC_STYLE_GROUP)*4.
 ; The entry is added to the 32-bit offset the routine first loaded from
 ; RhythmTiming_OffsetTable[A] (A clamped to 0..0x1D), plus 0x60; the sum is
 ; returned in XIY.  So each entry is the base of a bank that those offsets
@@ -1512,7 +1512,7 @@ RhythmROM_CheckDone:
 	ret
 
 ; -----------------------------------------------------------------------------
-; Heap_AllocAndFreeTwoBlocks -- Malloc(0x400) (pointer kept in RAM 0x355C),
+; Heap_AllocAndFreeTwoBlocks -- Malloc(BOOT_STAGE) (pointer kept in RAM 0x355C),
 ; Malloc(0x1000), Free(second), Free(first), return.  A heap round trip with
 ; no lasting effect except RAM 0x355C.  C-compiler shaped (`ld xwa,xhl;
 ; ld xwa,xwa; push xwa`).  NO CALLER FOUND: scripts/analysis/sequi_find_refs.py

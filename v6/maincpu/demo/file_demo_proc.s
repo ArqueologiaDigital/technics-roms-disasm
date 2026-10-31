@@ -548,7 +548,7 @@ FDemo_FileOpen_Exit:
 DemoMode_Main_Operation:
 	res	0, (0x2895:16)
 	call Voice_InitializeAll
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	lda xwa, (0xffbe:16)
 	sub XWA,XBC
 	inc 2,XWA
@@ -560,9 +560,9 @@ DemoMode_Main_Operation:
 	lda xsp, (xsp + 0x0a)
 	call Fade_Cancel
 	calr Voice_LoadVoiceTable
-	set 4, (0xfd50:16)
-	res 2, (0xfd50:16)
-	res 2, (0xfd52:16)
+	set 4, (PANEL_MIDI:16)
+	res 2, (PANEL_MIDI:16)
+	res 2, (PANEL_MIDI+2:16)
 	calr Demo_PreSetup
 	res 0, (0x045b:16)
 	call AccompSeq_StopSequence
@@ -650,7 +650,7 @@ Demo_SelectEntry_PreSaveCheck:
 	cp (CURRENT_MODE:16), 0x13
 	jr nz, Demo_SelectEntry_CheckVoiceKeys
 	calr Voice_SavePreset
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	lda xwa, (0xffbe:16)
 	sub XWA,XBC
 	inc 2,XWA
@@ -946,7 +946,7 @@ Demo_ResetCountdownTimer:
 ;   sends to the sub CPU as system message 0x85 (glide off). Called only by DemoMode_Main_Operation; it touches no
 ;   timer. Basis: caller + body + descriptor 0x4080.
 Demo_ReleaseGlidePedal:
-	lda	xbc, (64920:16)
+	lda	xbc, (PANEL_PMEM_SETTINGS+2:16)
 	ld	e, (xbc)
 	res	7, e
 	ld	(xbc), e

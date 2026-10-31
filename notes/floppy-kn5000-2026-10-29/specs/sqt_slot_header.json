@@ -644,7 +644,7 @@
      "size": 66,
      "name": "song_panel_block1_head",
      "kind": "hex",
-     "evidence": "the first 0x42 bytes of panel block 1 (RAM 0xfd60..0xfda1): the copy ends at PANEL_REC_98 + 12 = 0xfda2 (BitMapOut_ComputeRegionDelta length = 0x422). Records tag 0x17 (24 B), 0x18 (24 B) and tag 0x98 (18 B) with its first 12 payload bytes; match_layout finds those 3 PanelTlv_Block1_Layout records ending at +0x708 in 153/153",
+     "evidence": "the first 0x42 bytes of panel block 1 (RAM 0xfd60..0xfda1): the copy ends at PANEL_PMEM_SETTINGS + 12 = 0xfda2 (BitMapOut_ComputeRegionDelta length = 0x422). Records tag 0x17 (24 B), 0x18 (24 B) and tag 0x98 (18 B) with its first 12 payload bytes; match_layout finds those 3 PanelTlv_Block1_Layout records ending at +0x708 in 153/153",
      "inference": false
     },
     {

@@ -45,7 +45,7 @@ MidiSerial_Return:
 
 ; MidiSerial_StatusTable -- one 0xFF pad byte, then 8 handler pointers indexed by
 ; the status byte's high nibble.  Reader MidiSerial_PumpLoop (this file): `ld a,
-; (0x9634) / and a, 0x70 / srl a, 2` (= 4 * ((status >> 4) & 7)), `ld xiz,
+; (MIDIRX_STATUS) / and a, 0x70 / srl a, 2` (= 4 * ((status >> 4) & 7)), `ld xiz,
 ; MidiSerial_StatusHandlers / ld xiz, (xiz+a) / call (xiz)`, so entry 0 is at +1
 ; (MidiSerial_StatusHandlers = this label + 1, shared/positional_labels.s) and
 ; 8 entries reach MidiSerial_WaitForData.  Slots 0-6 (8x note off .. Ex pitch
@@ -97,7 +97,7 @@ MidiRx_SystemMsgDispatch:
 
 ; MidiSerial_CmdJumpTable -- 16 handler pointers for SYSTEM messages F0..FF,
 ; indexed by the status byte's low nibble.  Reader MidiRx_SystemMsgDispatch
-; (MidiSerial_StatusTable slot 7): `ld l, (0x9634) / and l, 15 / sla l, 2 /
+; (MidiSerial_StatusTable slot 7): `ld l, (MIDIRX_STATUS) / and l, 15 / sla l, 2 /
 ; ld xiz, MidiSerial_CmdJumpTable / ld xiz, (xiz+hl) / call (xiz)`.  F2 (song
 ; position pointer) -> MidiSerial_HandleSongPosition, F3 (song select) ->
 ; MidiSerial_HandleSongSelect, every other slot -> MidiRx_SystemMsg_MarkIgnored
@@ -145,10 +145,10 @@ MidiRx_SystemMsg_MarkIgnored:
 	ret
 ; MidiRx_ChannelMsgDispatch -- entry for channel-voice messages (status 8x..Ex):
 ; MidiSerial_StatusTable slots 0-6 point here (that table's header gives the
-; indexing).  Maps the status byte's channel, (0x9634) & 0x0F, through the
+; indexing).  Maps the status byte's channel, (MIDIRX_STATUS) & 0x0F, through the
 ; 16-byte RAM table 0x94F4 to a list in 0x9514 (count, then part numbers), and
-; for each part stores it in (0x966A) and calls
-; MidiCC_LowRange_Table[((0x9634) & 0x70) >> 4]; (0x966B) counts the parts down.
+; for each part stores it in (MIDIRX_PART) and calls
+; MidiCC_LowRange_Table[((MIDIRX_STATUS) & 0x70) >> 4]; (MIDIRX_PARTS_LEFT) counts the parts down.
 ; It follows MidiRx_SystemMsg_MarkIgnored's `ret` and had no label: the old
 ; sweep read that routine's first byte as `.byte 0xc1` and the rest as
 ; `pushw wa / max / push xiz / normal`.
@@ -188,7 +188,7 @@ MidiRx_ChannelMsgDispatch_Return:
 
 
 ; MidiCC_LowRange_Table -- 8 handler pointers, one per status-byte high nibble.
-; Reader MidiRx_ChannelMsgDispatch: `ld l, (0x9634) / and l, 0x70 / srl hl, 2 /
+; Reader MidiRx_ChannelMsgDispatch: `ld l, (MIDIRX_STATUS) / and l, 0x70 / srl hl, 2 /
 ; ld xix, MidiCC_LowRange_Table / ld xix, (xix+hl) / call (xix)`, slot =
 ; (status >> 4) & 7, called once per part in the channel's part list.  Slots:
 ; 8x note off, 9x note on, Ax key pressure -> MidiCC_Handler_SimpleParamStore
@@ -323,7 +323,7 @@ MidiCC_Handler_BitManipulation_Return:
 ; MidiCC_CC83_ValueMap (0xFCFCB9, 3 x u8): controller value 0..2 -> E.  Reader
 ; MidiCC_Handler_BitManipulation (0xFCFC74), CC function 18 <- CC83
 ; (MidiCC_ChannelMappingData): only for part 25, with `bit 2, (0xfd51)` set;
-; `ld a, (0x9636) / cp a, 2 / jr ugt` (E stays 0 above 2) / `ld e, (xix+a)`,
+; `ld a, (MIDIRX_DATA2) / cp a, 2 / jr ugt` (E stays 0 above 2) / `ld e, (xix+a)`,
 ; then BC = 0x0B98, D = 0xC0 -> MidiCC_RxCC83_SetParamBitsAndQueue.
 ; Previously spelled `.byte 0x80, 0x40` behind a `nop`.
 MidiCC_CC83_ValueMap:
@@ -396,7 +396,7 @@ MidiCC_Handler_RangeCheck_Return:
 	.byte 0xff
 ; MidiCC_CC80_ValueMap (0xFCFD77, 4 x u8): controller value 0..3 -> E.  Reader
 ; MidiCC_Handler_RangeCheck (0xFCFD38), CC function 16 <- CC80: only for part 16;
-; `ld a, (0x9636) / cp a, 3 / jr ugt` (E stays 0 above 3) / `ld e, (xix+a)`,
+; `ld a, (MIDIRX_DATA2) / cp a, 3 / jr ugt` (E stays 0 above 3) / `ld e, (xix+a)`,
 ; then BC = 0x0348, D = 7 -> MidiStream_ApplyPendingParams.  Previously
 ; spelled `nop / push sr / normal / pop sr`.
 MidiCC_CC80_ValueMap:
@@ -438,7 +438,7 @@ MidiCC_Handler_ChannelMapping_Return:
 	ret
 ; MidiCC_CC82_Records (0xFCFDDB, 12 records x 4 bytes, one per line = controller
 ; value 0..11).  Reader MidiCC_Handler_ChannelMapping (0xFCFD7B), CC function
-; 17 <- CC82: only for part 20; `ld a, (0x9636) / cp a, 11 / jr ugt` (above 11
+; 17 <- CC82: only for part 20; `ld a, (MIDIRX_DATA2) / cp a, 11 / jr ugt` (above 11
 ; it keeps B = 5, DE = 0xFC00) / `sll wa, 2 / ld bc, (xix+wa) / inc 2, wa /
 ; ld de, (xix+wa)`.  Fields as used: +1 B -> (0x3489), +2 E -> (0x347C),
 ; +3 D -> (0x347D), then `call AccWrap_ReplaySavedExpr`; when E == 0 it calls
@@ -1049,7 +1049,7 @@ UIState_DisplayUpdate_BitmapHandler_Return:
 	ret
 ; MidiRx_BuildChannelPartLists: Builds the receive-channel -> part lists for selector (0x966D): 0x80 -> offset table
 ;   0x94F4 and lists 0x9514, 0x40 -> 0x9594 / 0x95B4. Fills the 32 offsets with 0xFF and clears the lists, then for
-;   each channel 0-31 collects the parts 0-31 (records (0x90F2)[p], 0xFFFFFFFF = absent) whose byte +13 has that
+;   each channel 0-31 collects the parts 0-31 (records (PART_RECORD_PTRS)[p], 0xFFFFFFFF = absent) whose byte +13 has that
 ;   channel in bits 0-4 and the selector bit clear, stores {count, part...} and its offset. Basis: callers + body --
 ;   UIState_DisplayUpdate_BitmapHandler runs it for 0x80 and 0x40; MidiRx_ChannelMsgDispatch reads the 0x80 pair this
 ;   way.
@@ -2152,22 +2152,22 @@ Periodic_TimestampCompare_Done:
 ;
 ; How a received message gets here (all in this file):
 ;   MidiRx_ChannelMsgDispatch (0xFCFAD5) takes the running status byte
-;   from (0x9634), maps channel = status & 0x0F through the 16-byte RAM table
+;   from (MIDIRX_STATUS), maps channel = status & 0x0F through the 16-byte RAM table
 ;   0x94F4 and the part list 0x9514, stores each target PART number (0..31)
-;   in (0x966A) and calls MidiCC_LowRange_Table[(status & 0x70) >> 4]:
+;   in (MIDIRX_PART) and calls MidiCC_LowRange_Table[(status & 0x70) >> 4]:
 ;   8x/9x/Ax/Fx -> MidiCC_Handler_SimpleParamStore, Bx -> ..._CC3_TableLookup,
 ;   Cx -> ..._CC4_VoiceParam, Dx -> ..._CC5_VoiceParam, Ex -> ..._CC6_VoiceParam.
-;   The two data bytes are at (0x9635) and (0x9636).
+;   The two data bytes are at (MIDIRX_DATA1) and (MIDIRX_DATA2).
 ; Every per-part table below is indexed by that part number, range-checked by
 ; its reader with `cp <part>, 31 / jr ugt` -- which is what pins 32 entries.
 ; The readers pass the entry to the dispatcher named per table below through
-; (0x9644) = BC, (0x9646) = DE (E = the message's data byte), (0x9648) = (0x9637);
+; (MIDIRX_PART_EVENT) = BC, (0x9646) = DE (E = the message's data byte), (0x9648) = (0x9637);
 ; the selector encoding is that dispatcher's business and was not traced here.
 ; =====================================================================
 ;
 ; MidiCC_ChannelMappingData (+0x000, 128 x u8): CONTROLLER NUMBER -> CC FUNCTION
 ; INDEX (0..47), 0xFF = controller ignored.  Reader MidiRx_ControlChange
-; (0xFCFB63): `ld xix, MidiCC_ChannelMappingData / ld l, (0x9635) /
+; (0xFCFB63): `ld xix, MidiCC_ChannelMappingData / ld l, (MIDIRX_DATA1) /
 ; ld a, (xix+l)`, result kept in (0x9657) and used as the index into the
 ; 48-entry MidiCC_ExtendedRange_Table.  Mapped here: CC0->24 CC1->1 CC6->32
 ; CC7->2 CC10->4 CC11->3 CC32->25 CC38->33 CC64->0 CC80->16 CC82->17
@@ -2241,12 +2241,12 @@ MidiCC_FunctionRxFilter:
 	.byte 0xff, 0xff
 ;
 ; Per-part target records, 32 records x 3 bytes (4 per line, record n = part n):
-;   +0 u16 selector -> BC -> (0x9644); low byte 0xFF = part not affected, skip
-;   +2 u8           -> D  -> (0x9647); E = the controller value (0x9636)
+;   +0 u16 selector -> BC -> (MIDIRX_PART_EVENT); low byte 0xFF = part not affected, skip
+;   +2 u8           -> D  -> (0x9647); E = the controller value (MIDIRX_DATA2)
 ; Sixteen such tables follow (fourteen with a reader, two marked Unread); the
 ; reader of each is the handler at its CC function's slot of
 ; MidiCC_ExtendedRange_Table, all of the
-; shape `ld a, (0x966a) / cp a, 31 / jr ugt / hl = 3*a / ld xix, <table> /
+; shape `ld a, (MIDIRX_PART) / cp a, 31 / jr ugt / hl = 3*a / ld xix, <table> /
 ; ld bc, (xix+hl) / cp c, 255 / jr z / inc 2, xix / ld d, (xix+hl)`.
 ;
 ; MidiCC_PartTargets_CC64_Sustain (+0x0E0): function 0 <- CC64; reader
@@ -2463,7 +2463,7 @@ MidiCC_PartTargets_CC120_AllSoundOff:
 	.short 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff
 ; MidiPC_PartTargets (+0x760): PROGRAM CHANGE (status Cx).  Reader
 ; MidiRx_ProgramChange (0xFD039C, MidiCC_LowRange_Table slot 4):
-; E = program number (0x9635), D = 0xFF, gated by bit 4 of (0xFD57),
+; E = program number (MIDIRX_DATA1), D = 0xFF, gated by bit 4 of (0xFD57),
 ; -> MidiRx_ApplyProgramChange.
 MidiPC_PartTargets:
 	.short 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007
@@ -2471,15 +2471,15 @@ MidiPC_PartTargets:
 	.short 0x0010, 0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0xffff, 0x0017
 	.short 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff
 ; MidiPB_PartTargets (+0x7A0): PITCH BEND (status Ex).  Reader
-; MidiRx_PitchBend (0xFD03D8, slot 6): E = LSB (0x9635),
-; D = MSB (0x9636), gated by bit 6 of (0xFD57), -> MidiRx_SetPendingPartPitchBend.
+; MidiRx_PitchBend (0xFD03D8, slot 6): E = LSB (MIDIRX_DATA1),
+; D = MSB (MIDIRX_DATA2), gated by bit 6 of (0xFD57), -> MidiRx_SetPendingPartPitchBend.
 MidiPB_PartTargets:
 	.short 0x00b1, 0x01b1, 0x02b1, 0x03b1, 0x04b1, 0x05b1, 0x06b1, 0x07b1
 	.short 0x08b1, 0x09b1, 0x0ab1, 0x0bb1, 0x0cb1, 0x0db1, 0x0eb1, 0xffff
 	.short 0x10b1, 0x11b1, 0x12b1, 0x13b1, 0xffff, 0x15b1, 0xffff, 0x17b1
 	.short 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff
 ; MidiCP_PartTargets (+0x7E0): CHANNEL PRESSURE (status Dx).  Reader
-; MidiRx_ChannelPressure (0xFD0416, slot 5): E = pressure (0x9635),
+; MidiRx_ChannelPressure (0xFD0416, slot 5): E = pressure (MIDIRX_DATA1),
 ; D = 0x7F, gated by bit 5 of (0xFD57), -> MidiCC_QueuePartParam.
 MidiCP_PartTargets:
 	.short 0x00b4, 0x01b4, 0x02b4, 0x03b4, 0x04b4, 0x05b4, 0x06b4, 0x07b4
@@ -7314,7 +7314,7 @@ DataBuf_InitSlotFromPreset:
 	call Mem_Copy
 	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x300
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, 0xf9a0
 	pushw wa
 	pushw SndParamRam_DefaultImage@hi16
@@ -7343,7 +7343,7 @@ DataBuf_InitSlotFromPreset_Alt:
 	ld xbc, SEQ_SONG_SLOTS
 	add xbc, xwa
 	add xbc, 0x300
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, 0xf9a0
 	pushw wa
 	pushw SndParamRam_DefaultImage@hi16
@@ -7538,7 +7538,7 @@ SndParam_ApplyModeSpecific:
 	ld c, (0xb7f0:16)
 	cp c, 2:i3
 	ret z
-	lda xwa, (PANEL_REC_91+3:16)
+	lda xwa, (PANEL_GM+3:16)
 	cp c, 0:i3
 	jr z, SndParam_ClearBits
 	cp c, 1:i3
@@ -7806,7 +7806,7 @@ SndParam_UpdateChan_CopyMemory:
 	ld xwa, 0x2e0
 	add (xsp), xwa
 	lda xbc, (LIVE_PANEL_BLOCK:16)
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, xbc
 	pushw wa
 	push xbc
@@ -10280,7 +10280,7 @@ MidiPkt_SetXferTotal_Panel:
 	ld	(xwa+8), xde
 	ret
 ; MidiPkt_SetXferBlock_LivePanel: Fills the transfer descriptor at XWA for the live-panel block: {start 0xF980, end
-;   0xFFC0, length 0x640}, which holds the live panel's block 0 (0xF9A0) and block 1 (0xFD60). It is block 1 of the
+;   0xFFC0, length 0x640}, which holds the live panel's block 0 (PANEL_RECORDS) and block 1 (0xFD60). It is block 1 of the
 ;   panel transfer; block 2 is the 80 panel memories at 0x1ED350 (MidiPkt_SetXferBlock_PanelMemories). Basis: callers + body
 ;   -- MidiPkt_ArpExtHandler_A (command 11, state 0) writes all panel TLV headers, then points the total descriptor
 ;   0xBCDC (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBCEC (this) and starts step 1; the send side
@@ -10914,7 +10914,7 @@ AssSwb_ProcessLoop_Data_Join:
 	inc	6, xsp
 	ret
 
-; Returns in L byte BC of the record that entry WA of the pointer table at (0x90f2) points to,
+; Returns in L byte BC of the record that entry WA of the pointer table at (PART_RECORD_PTRS) points to,
 ; or 0 when that entry is 0xffffffff.
 Part_LookupTableEntry:
 	ld xde, (PART_RECORD_PTRS:16)
@@ -13952,7 +13952,7 @@ VoiceData_SyncLoop:
 	inc 1, iz
 	cp iz, 7:i3
 	jr c, VoiceData_SyncLoop
-	lda xbc, (PANEL_REC_98+1:16)
+	lda xbc, (PANEL_PMEM_SETTINGS+1:16)
 	ld a, (xbc)
 	and a, 0x80
 	ld (xbc), a
@@ -13960,7 +13960,7 @@ VoiceData_SyncLoop:
 	res 7, e
 	or a, e
 	ld (xbc), a
-	lda xwa, (PANEL_REC_60+1:16)
+	lda xwa, (PANEL_EFFECT_SWITCHES+1:16)
 	cp (0x8e74:16), 0
 	jr z, VoiceSync_ClearBit5
 	setm 5, (xwa)

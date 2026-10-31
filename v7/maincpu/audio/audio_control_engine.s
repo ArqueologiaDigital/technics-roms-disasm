@@ -1101,7 +1101,7 @@ PanelButton_Variation_Skip2:
 	ld	(xde), l
 	ld	a, (xbc)
 	extz	wa
-	lda	xbc, (PANEL_REC_49:16)
+	lda	xbc, (PANEL_VARI_STYLE:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), l
@@ -5232,7 +5232,7 @@ ExtData_ToneParam_MultiChannel_Skip4:
 	ret	z
 	ld	c, (EXTDATA_VALUE:16)
 	and	c, 3
-	lda	xwa, (PANEL_REC_90+4:16)
+	lda	xwa, (PANEL_CONDUCTOR+4:16)
 	cp	c, 3:i3
 	jr	z, ExtData_ToneParam_MultiChannel_Skip7
 	cp	c, 1:i3
@@ -5272,7 +5272,7 @@ ExtData_ToneParam_MultiChannel_Join2:
 	calr	SwbtWr_FlushAndAppendParams
 	ret
 ExtData_ToneParam_MultiChannel_Join3:
-	lda	xbc, (PANEL_REC_90:16)
+	lda	xbc, (PANEL_CONDUCTOR:16)
 	ld	e, (xbc+1)
 	extz	de
 	sll	de, 8
@@ -5350,7 +5350,7 @@ ExtData_ToneParam_MultiChannel_Skip8:
 	bit	1, c
 	ret	z
 ExtData_ToneParam_MultiChannel_Skip9:
-	lda	xde, (PANEL_REC_90:16)
+	lda	xde, (PANEL_CONDUCTOR:16)
 	extz	wa
 	lda	xbc, (ExtData_ToneParam_MultiChannel_Data:24)
 	ld	c, (xbc+wa)
@@ -5389,7 +5389,7 @@ MIDI_WriteResetSequence:
 	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xhl
 	add	xhl, xbc
-	lda	xde, (PANEL_REC_90:16)
+	lda	xde, (PANEL_CONDUCTOR:16)
 	ld	a, (xde)
 	ld	(xhl), a
 	ld	wa, (SWBTWR_WRITE_INDEX:16)
@@ -5440,7 +5440,7 @@ ExtData_Voice_UpdateFlags:
 	ld	wa, 1:i3
 	calr	ExtData_SetTlvField
 	calr	SwbtWr_FlushAndAppendParams
-	lda	xbc, (PANEL_REC_90:16)
+	lda	xbc, (PANEL_CONDUCTOR:16)
 	bit	0, (xbc+3)
 	ret	nz
 	ld	a, (PANEL_STYLE+3:16)
@@ -5506,7 +5506,7 @@ ExtData_Voice_MixedHandler_Join:
 	and	a, (EXTDATA_MASK:16)
 	bit	0, a
 	jr	z, ExtData_Voice_MixedHandler_Skip5
-	ld	a, (PANEL_REC_70:16)
+	ld	a, (PANEL_PLAY_SETTINGS:16)
 	and	a, 3
 	extz	wa
 	lda	xbc, (SplitPoint_LedMaskByPreset:24)
@@ -5554,7 +5554,7 @@ ExtData_Voice_MixedHandler_Join2:
 	calr	ExtData_StepTlvField
 	jr	ExtData_Voice_MixedHandler_Join3
 ExtData_Voice_MixedHandler_Skip3:
-	lda	xbc, (PANEL_REC_70+2:16)
+	lda	xbc, (PANEL_PLAY_SETTINGS+2:16)
 	ld	a, (xbc)
 	cp	a, 5:i3
 	ret	z
@@ -5621,14 +5621,14 @@ ExtData_Voice_FullHandler_Helper:
 	.byte	0xd7
 	swi	2
 	.byte	0x04
-	ld	a, (PANEL_REC_98+11:16)
+	ld	a, (PANEL_PMEM_SETTINGS+11:16)
 	and	a, 192
 	ldfr_berp	a, 251
 	ldw	wa, 128
 	calr	ExtData_ToggleTlvBits
 	ldw	wa, 64
 	calr	ExtData_ToggleTlvBits
-	lda	xde, (PANEL_REC_98+11:16)
+	lda	xde, (PANEL_PMEM_SETTINGS+11:16)
 	ld	c, (xde)
 	ld	a, c
 	and	a, 192
@@ -7329,7 +7329,7 @@ PanelTlv_CompanionOfPart:
 PanelTlv_CompanionOfPart_Style:
 	cp	a, 0x48
 	jr	nz, PanelTlv_CompanionOfPart_None
-	lda	xhl, (PANEL_REC_49:16)
+	lda	xhl, (PANEL_VARI_STYLE:16)
 	ret
 PanelTlv_CompanionOfPart_None:
 	ld	xhl, 0xffffffff
@@ -8027,7 +8027,7 @@ ToneGen_DispatchByMode:
 	pushw	wa
 	pushw	hl
 	push	xix
-	ld	wa, (PANEL_REC_90:16)
+	ld	wa, (PANEL_CONDUCTOR:16)
 	and	wa, 0x203
 	cp	a, 0:i3
 	jr	nz, RegBitManip_Dispatch
@@ -8059,7 +8059,7 @@ RegisterBit_Manipulate_Table:
 	.long	RegBitManip_Handler_4
 	.long	RegBitManip_Handler_4
 RegBitManip_Handler_1:
-	bit	0, (PANEL_REC_90+3:16)
+	bit	0, (PANEL_CONDUCTOR+3:16)
 	jr	nz, RegBitManip_Handler_0
 RegBitManip_Handler_3:
 	and	w, 0xfd
@@ -8070,7 +8070,7 @@ RegBitManip_Handler_0:
 	jr	nz, RegBitManip_Handler_4
 	ld	wa, 1:i3
 RegBitManip_Handler_4:
-	ld	(PANEL_REC_90:16), wa
+	ld	(PANEL_CONDUCTOR:16), wa
 	pop	xix
 	popw	hl
 	popw	wa
@@ -8163,7 +8163,7 @@ MidiStream_ResolveVoiceIndexMode1:
 	ret
 MIDI_ParamValidate_CheckBit2:
 	xor	hl, hl
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jr	nz, MidiParamValid_CheckW78
 	cp	a, 0xf0
 	jr	nc, MidiParamValid_SetInvalid
@@ -10544,12 +10544,12 @@ MidiStream_PartEventMapTable:
 	.fill	8, 1, 0xff
 MidiCC_RxCC83_SetParamBitsAndQueue:
 	ld	(0x905c:16), 255
-	ld	a, (PANEL_REC_98+11:16)
+	ld	a, (PANEL_PMEM_SETTINGS+11:16)
 	and	a, 63
 	ld	w, e
 	and	w, 192
 	or	a, w
-	ld	(PANEL_REC_98+11:16), a
+	ld	(PANEL_PMEM_SETTINGS+11:16), a
 	ld	e, a
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
@@ -11056,7 +11056,7 @@ MidiStream_CtrlData:
 	jr	z, MidiStream_CtrlData_Return
 	bit	7, e
 	jr	z, MidiStream_CtrlData_Return
-	ldb_d8	e, (PANEL_REC_60+1)
+	ldb_d8	e, (PANEL_EFFECT_SWITCHES+1)
 	and	e, 128
 	ld	d, 128:opc
 	call	MIDI_ClearGuardAndDispatchCC
@@ -11100,7 +11100,7 @@ MidiStream_CmdMaskedNotify:
 	jr	z, MidiStream_CmdMaskedDone
 	and	e, d
 	jr	z, MidiStream_CmdMaskedDone
-	ldb_d8	e, (PANEL_REC_98+11)
+	ldb_d8	e, (PANEL_PMEM_SETTINGS+11)
 	and	e, 192
 	ld	d, 192:opc
 	call	MIDI_ClearGuardAndDispatchCC
@@ -11115,7 +11115,7 @@ MidiStream_CmdPedalNotify:
 	and	e, 127
 	jr	z, MidiStream_CmdPedalDone
 	ld	bc, 0:i3
-	ldb_d8	e, (PANEL_REC_98+1)
+	ldb_d8	e, (PANEL_PMEM_SETTINGS+1)
 	and	e, 127
 	dec	1, e
 	ld	d, 127:opc

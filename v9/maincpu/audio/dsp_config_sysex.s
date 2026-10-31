@@ -1197,7 +1197,7 @@ VoiceParam_RestoreReverbChorus_Loop:
 	ret
 
 BitMapOut_ComputeRegionDelta:
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	lda xbc, (LIVE_PANEL_BLOCK:16)
 	sub xwa, xbc
 	pushw wa
@@ -1229,7 +1229,7 @@ BitMapOut_RenderDisplay:
 	ld a, (xbc + 9)
 	ldfr_berp A, 0xfb
 	ldmi16 (xsp + 4), 0x8d3a
-	lda xbc, (PANEL_REC_98:16)
+	lda xbc, (PANEL_PMEM_SETTINGS:16)
 	ld a, (xbc + 1)
 	ld (xsp + 6), a
 	ld a, (xbc + 11)
@@ -1290,7 +1290,7 @@ BitMapOut_SkipRestore:
 	calr VoiceParam_RestoreReverbChorus
 
 BitMapOut_MergeOutputFields:
-	lda xix, (PANEL_REC_98:16)
+	lda xix, (PANEL_PMEM_SETTINGS:16)
 	lda xbc, (xix + 1)
 	lda xhl, (LIVE_PANEL_BLOCK:16)
 	ld xwa, xbc
@@ -1348,7 +1348,7 @@ BitMapOut_MergeOutputFields:
 	call AddswbWr
 	ld w, (xsp + 6)
 	and w, 0x80
-	lda xbc, (PANEL_REC_98+1:16)
+	lda xbc, (PANEL_PMEM_SETTINGS+1:16)
 	ld a, (xbc)
 	res 7, a
 	ld (xbc), a
@@ -1360,7 +1360,7 @@ BitMapOut_MergeOutputFields:
 	ldw wa, 0x98
 	ld bc, 1:i3
 	call AddswbWr
-	ld e, (PANEL_REC_98+11:16)
+	ld e, (PANEL_PMEM_SETTINGS+11:16)
 	ld c, e
 	and c, 0xc0
 	ld a, (xsp + 8)
@@ -5416,7 +5416,7 @@ AudioInit_ProcessModeChange:
 	ret z
 	call Audio_CheckInitStatus
 	andw (0xc594:16), 0xfffb
-	bit 1, (PANEL_REC_90+1:16)
+	bit 1, (PANEL_CONDUCTOR+1:16)
 	jr z, AudioModeChange_Handler
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5458,7 +5458,7 @@ Audio_CheckSubsystemReady:
 	ld wa, (0xc598:16)
 	and wa, 0x60
 	call z, (AudioInit_RefreshToneBank:24)
-	bit 1, (PANEL_REC_90+1:16)
+	bit 1, (PANEL_CONDUCTOR+1:16)
 	jr z, AudioSubsystem_Callback
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5532,7 +5532,7 @@ AudioDispatch_SetTimerBase:
 	ld (0xc5a0:16), 16
 
 AudioDispatch_CheckStereoMode:
-	bit 1, (PANEL_REC_90+1:16)
+	bit 1, (PANEL_CONDUCTOR+1:16)
 	jr z, AudioVoice_Callback
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5565,7 +5565,7 @@ AudioVoice_SkipToDispatch:
 	jp AudioInit_DispatchChanges
 
 AudioMode_SetStereoFlags:
-	bit 0, (PANEL_REC_90+3:16)
+	bit 0, (PANEL_CONDUCTOR+3:16)
 	ret z
 	orw (0xc596:16), 128
 	orw (0xc594:16), 4
@@ -5573,7 +5573,7 @@ AudioMode_SetStereoFlags:
 	ret
 
 AudioMode_ResetVoiceState:
-	bit 1, (PANEL_REC_90+1:16)
+	bit 1, (PANEL_CONDUCTOR+1:16)
 	jr z, AudioVoiceReset_Handler
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5620,17 +5620,17 @@ AudioMode_ConfigureExternal:
 
 AudioMode_ConfigExternal_Off:
 	andw (0xc594:16), 0xffef
-	bit 0, (PANEL_REC_90:16)
+	bit 0, (PANEL_CONDUCTOR:16)
 	jr z, AudioMode_ConfigExternal_CheckBit1
 	set 0, (0xc1fe:16)
 
 AudioMode_ConfigExternal_CheckBit1:
-	bit 1, (PANEL_REC_90:16)
+	bit 1, (PANEL_CONDUCTOR:16)
 	jr z, AudioMode_ConfigExternal_CheckStereo
 	set 1, (0xc1fe:16)
 
 AudioMode_ConfigExternal_CheckStereo:
-	bit 1, (PANEL_REC_90+1:16)
+	bit 1, (PANEL_CONDUCTOR+1:16)
 	jr z, AudioMode_ConfigExternal_NoStereo
 	orw (0xc596:16), 32
 	jr AudioMode_ConfigExternal_MergeFlags
@@ -5643,7 +5643,7 @@ AudioMode_ConfigExternal_NoStereo:
 
 AudioMode_ConfigExternal_MergeFlags:
 	res 2, (0xc1fe:16)
-	ld a, (PANEL_REC_90+1:16)
+	ld a, (PANEL_CONDUCTOR+1:16)
 	and a, 0x2
 	ld c, a
 	add a, c
@@ -5842,7 +5842,7 @@ UIStateEvt_TransposeUpdate:
 	ld	bc, wa
 	add	bc, 228
 	lda_d16	xde, (0xc1ff)
-	ldb_d8	a, (PANEL_REC_90+4)
+	ldb_d8	a, (PANEL_CONDUCTOR+4)
 	and	a, 255
 	sub	a, 64
 	ld	(xde+bc), a
@@ -6231,7 +6231,7 @@ PanelTag70_UpdateAudioConfig:
 	jr	z, PanelTag70_UpdateAudioConfig_Skip5
 	cp	a, 0:i3
 	jr	nz, PanelTag70_UpdateAudioConfig_Join
-	ldb_d8	a, (PANEL_REC_70+1)
+	ldb_d8	a, (PANEL_PLAY_SETTINGS+1)
 	res	7, a
 	stb_d8	(0xc5a2), a
 	orw	(0xc59a:16), 0x400
@@ -6255,7 +6255,7 @@ PanelTag70_UpdateAudioConfig_Skip:
 	res	7, a
 	cp	a, 0:i3
 	ret	z
-	ldb_d8	a, (PANEL_REC_70)
+	ldb_d8	a, (PANEL_PLAY_SETTINGS)
 	and	a, 3
 	jr	nz, PanelTag70_UpdateAudioConfig_Skip8
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
@@ -6373,7 +6373,7 @@ PanelTag80_UpdateAudioConfig_Loop2:
 	ld	hl, wa
 	extz	xhl
 	add	xhl, xbc
-	ldb_d8	a, (PANEL_REC_70+2)
+	ldb_d8	a, (PANEL_PLAY_SETTINGS+2)
 	and	a, 255
 	extz	wa
 	lda	xbc, (EffectSelect_StepTable:24)

@@ -99,13 +99,13 @@ INTTX0_HANDLER:
 	bit	3, a
 	jr	z, IntTx0_DequeueAndSend
 	res	3, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, IntTx0_SendHoldByte
 	ld	(208:16), 252
 	jr	IntTx0_CheckQueueEmpty
 IntTx0_FlagBit0Branch:
 	res	0, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, IntTx0_SendHoldByte
 	ld	(208:16), 248
 	jr	IntTx0_CheckQueueEmpty
@@ -116,13 +116,13 @@ IntTx0_SendHoldByte:
 	jr	IntTx0_CheckQueueEmpty
 IntTx0_FlagBit1Branch:
 	res	1, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, IntTx0_SendHoldByte
 	ld	(208:16), 250
 	jr	IntTx0_CheckQueueEmpty
 IntTx0_FlagBit2Branch:
 	res	2, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, IntTx0_SendHoldByte
 	ld	(208:16), 251
 	jr	IntTx0_CheckQueueEmpty
@@ -236,7 +236,7 @@ MIDI_SYSTEM_MESSAGE_HANDLER:
 SysMsg_Return:
 	ret
 SysMsg_NotActiveSense:
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, SysMsg_Return
 	cp	a, 0xfd
 	jr	nc, SysMsg_Return
@@ -257,7 +257,7 @@ SysMsg_ClockTransportDispatch:
 	ld	a, (0x432:16)
 	and	a, 0x3
 	jr	nz, SysMsg_Return
-	bit	2, (0xfd50:16)
+	bit	2, (PANEL_MIDI:16)
 	jrl	z, AltClk_DisabledClockPath
 	cp	d, 0xf8
 	jr	nz, ClkTick_PerClockCounters
@@ -407,7 +407,7 @@ ClkTick_Src3OverflowQueue:
 	jr	z, Transport_StopHandler
 	calr	MIDI_QUEUE_TRACK_EVENT
 Transport_StopHandler:
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, Transport_Return
 	cp	d, 0xfc
 	jr	nz, Transport_Return
@@ -436,7 +436,7 @@ Transport_StopSrc3Snapshot:
 Transport_Return:
 	ret
 Transport_NoClockSourcePath:
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, Transport_StopSrc3Snapshot
 	bit	2, (0x288b:16)
 	jr	nz, Transport_NoClockReturn
@@ -547,7 +547,7 @@ AltClk_DisabledClockPath:
 	and	a, 0x5
 	popw	wa
 	jr	z, AltClk_NoSrcFlagPath
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, AltClk_Return
 	cp	d, 0xfc
 	jr	nz, AltClk_Return
@@ -576,7 +576,7 @@ AltClk_StopSrc3Snapshot:
 AltClk_Return:
 	ret
 AltClk_NoSrcFlagPath:
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, AltClk_NoMatchReturn
 	bit	2, (0x288b:16)
 	jr	nz, AltClk_NoMatchReturn
@@ -951,7 +951,7 @@ SC0TxEnable_Return:
 MidiSerial_RetStub:
 	ret
 MidiSerial_ProcessInput:
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, MidiSerial_Return
 	call	SeqMain_SaveWritePos
 	ldw	(0x901e:16), 0
@@ -1052,7 +1052,7 @@ MidiSerial_CmdJumpTable:
 MidiSerial_HandleSongPosition:
 	ld	wa, (0x9575:16)
 	ld	(1069:16), a
-	bit	2, (0xfd52:16)
+	bit	2, (PANEL_MIDI+2:16)
 	jr	z, MidiSerial_HandleSongPosition_Skip
 	set	7, w
 MidiSerial_HandleSongPosition_Skip:
@@ -1060,7 +1060,7 @@ MidiSerial_HandleSongPosition_Skip:
 	ret
 MidiSerial_HandleSongSelect:
 	ld	a, (0x9575:16)
-	bit	3, (0xfd51:16)
+	bit	3, (PANEL_MIDI+1:16)
 	jr	z, MidiSerial_HandleSongSelect_Skip
 	set	7, a
 MidiSerial_HandleSongSelect_Skip:
@@ -1222,7 +1222,7 @@ MidiCC_ExtendedRange_Table:
 MidiCC_NullHandlerBlock:
 	ret
 MidiCC_Handler_BitManipulation:
-	bit	2, (0xfd51:16)
+	bit	2, (PANEL_MIDI+1:16)
 	jr	z, MidiCC_Handler_BitManipulation_Return
 	ld	a, (0x95aa:16)
 	cp	a, 25
@@ -1262,7 +1262,7 @@ MidiCC_Handler_PairedParamA:
 	ld	l, (0x95aa:16)
 	cp	l, 31
 	jr	ugt, MidiCC_Handler_PairedParamA_Return
-	bit	4, (0xfd57:16)
+	bit	4, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_PairedParamA_Return
 	sll	hl, 1
 	ld	xix, MidiCC_PartTargets_BankSelect
@@ -1283,7 +1283,7 @@ MidiCC_Handler_PairedParamB:
 	ld	l, (0x95aa:16)
 	cp	l, 31
 	jr	ugt, MidiCC_Handler_PairedParamB_Return
-	bit	4, (0xfd57:16)
+	bit	4, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_PairedParamB_Return
 	sll	hl, 1
 	ld	xix, MidiCC_PartTargets_BankSelect

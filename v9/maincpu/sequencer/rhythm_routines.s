@@ -1516,7 +1516,7 @@ Rhythm_SeqReset_Store:
 ; Rhythm_SeqResetTable -- 17 x 32-bit RAM pointers (or 0), indexed by RAM byte
 ; 0x379B.
 ; Reader: Rhythm_SeqResetCheck -- when bit 2 of RAM 0x34CF is set and bit 4
-; clear: L := (0x379B), `sla l, 2`, `ld xiy, Rhythm_SeqResetTable`,
+; clear: L := (CMP_RECORD_PART), `sla l, 2`, `ld xiy, Rhythm_SeqResetTable`,
 ; `ld xix, (xiy+hl)` (xix := table[L]); if non-zero, with
 ; interrupts masked (`ei 6` .. `ei 0`) the word at (xix+6) is copied to
 ; (xix+4).  Stride 4 from `sla l, 2`; 17 entries = 68 bytes, to

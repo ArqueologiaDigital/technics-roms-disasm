@@ -481,7 +481,7 @@ WndScroll_Sym_Exclam:	.incbin "includes/generated/naka_disk_warning.bin", 0x1224
 AcNaming_PageCharLists:	.incbin "includes/generated/naka_disk_warning.bin", 0x1226, 0xC
 ; WndScroll_NamingPageLastIndex -- 2 x 3 uint16_t = {{37,37,31},{36,36,31}}: last selectable entry of each naming
 ; character page (0 = A-Z _ 0-9 SPC, 1 = a-z _ 0-9 SPC, 2 = symbols) per naming mode (EVT_GET_NAMING_MODE, RAM 0x274e2);
-; mode 1 stops at '9', leaving out SPC. Read in ui/ui_window_procs.s at [(0x274e2)*3 + page (0x274da)] to bound the
+; mode 1 stops at '9', leaving out SPC. Read in ui/ui_window_procs.s at [(NAMING_MODE)*3 + page (NAMING_PAGE)] to bound the
 ; drawn/scrolled character index. This slice is element [0][0]; the other 5 words are the unnamed 10 bytes after it.
 WndScroll_NamingPageLastIndex:	.incbin "includes/generated/naka_disk_warning.bin", 0x1232, 0x2
 	.incbin "includes/generated/naka_disk_warning.bin", 0x1234, 0xA	; 10 bytes after WndScroll_NamingPageLastIndex's string; unnamed (they sat under its label until 2026-10-03)

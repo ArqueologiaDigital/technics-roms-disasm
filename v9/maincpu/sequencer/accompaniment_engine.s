@@ -7998,11 +7998,11 @@ AccAutoPlay_ModeAvail_Padding3:
 	nop
 
 AccAutoPlay_ModeAvail:
-	ld l, (PANEL_REC_70:16)
+	ld l, (PANEL_PLAY_SETTINGS:16)
 	and l, 0x3
 	cp l, 0:i3
 	jr nz, AccAutoPlay_ModeAvail_Process
-	ld l, (PANEL_REC_70+1:16)
+	ld l, (PANEL_PLAY_SETTINGS+1:16)
 	and l, 0x7f
 	dec 1, l
 	cp l, 0xff
@@ -8029,10 +8029,10 @@ AccAutoPlay_ModeAvail_Return:
 
 	.byte	0x00, 0x00	; padding
 AccAutoPlay_ModeAvail_Values:
-	; AccAutoPlay_ModeAvail_Process: L := this[(0xFD02) & 3] for (0xFD02) & 3 = 1..3; the fifth
+	; AccAutoPlay_ModeAvail_Process: L := this[(PANEL_PLAY_SETTINGS) & 3] for (PANEL_PLAY_SETTINGS) & 3 = 1..3; the fifth
 	; byte pads the code below to an even address.  Was decoded as `push xhl / ld iz, 0x423b ...`.
 	.byte	0x3b, 0x36, 0x3b, 0x42, 0x47
-	; No reference found.  Returns unless bit 2 of (0x041E) is clear, bit 1 of (0x346E) set, bit 0
+	; No reference found.  Returns unless bit 2 of (ACC_TRANSPORT_STATE) is clear, bit 1 of (0x346E) set, bit 0
 	; of (0x3498) set and bit 0 of (0x3499) clear; then calls AccAutoPlay_Configure, copies (0x3498)
 	; to (0x3499) and sets bit 0 of (0x3498).
 AccAutoPlay_ConfigureIfPending:
@@ -10263,7 +10263,7 @@ AccDir_ReadState:
 
 AccDir_ReadState_StoreFlags:
 	ld (0x34a5:16), a
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	bit 0, a
 	jr nz, AccDir_ReadState_Ret
 	and (0x349f:16), 246
@@ -10304,7 +10304,7 @@ AccDir_AdjustDirection:
 	and (0x349f:16), 254
 	cp (0x34a4:16), 128
 	jr nc, AccDir_Adjust_LeftHand
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and w, 0x1
 	ld a, (PANEL_STYLE+7:16)
 	and a, 0x30
@@ -10328,7 +10328,7 @@ AccDir_Adjust_LeftHand:
 	and (0x349f:16), 247
 	cp (0x34a4:16), 128
 	jr nc, AccDir_Adjust_SetChanged
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and w, 0x1
 	ld a, (PANEL_STYLE+7:16)
 	and a, 0x30
@@ -10357,7 +10357,7 @@ AccDir_Padding4:
 	nop
 
 AccDir_DispatchEvent:
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and w, 0x1
 	cp w, 0:i3
 	jr z, AccDir_DispatchEvent_Ret
@@ -10368,7 +10368,7 @@ AccDir_DispatchEvent:
 	ld a, (PANEL_STYLE+7:16)
 	ld w, 0x30:opc
 	call SwbtWr_QueuePostEvent
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	and a, 0x70
 	cp a, 0x10
 	jr z, AccDir_DispatchEvent_Ret
@@ -10884,7 +10884,7 @@ AccVoice_CopyFromROM_DataBlock_Data_2:
 
 ; SndArg_TickVector: Slot 0 of the Sound Arranger engine's jump-vector block (`jp AccStyle_Process`;
 ;   AccStyle_JumpTable's ToggleBit0 / ModeEnter / ModeExit / InlinedBlock_Helper slots follow): Seq_DispatcherTick
-;   calls it on every sequencer tick. While a Sound Arranger part is selected ((0x338E) & 0x1F != 0) AccStyle_Process
+;   calls it on every sequencer tick. While a Sound Arranger part is selected ((SNDARG_PART_SELECT) & 0x1F != 0) AccStyle_Process
 ;   copies changed accompaniment-part sounds into the current style's 10-byte arrangement record at 0x1E7810 + 10 *
 ;   index. Basis: callers + body -- 0x338E is cleared on entering / leaving mode 17 (MD_SND_ARG) and set from the
 ;   Sound Arranger grid (AcSndArgGridBoxProc).
@@ -11177,14 +11177,14 @@ AccStyle_InlinedBlock_Return:
 ; AccStyle_InlinedBlock +0x1A0..+0x1FF -- two u8 tables after the routine above.
 ; ** RE-TYPED 2026-09-25 (lane accomp): was nop/rcf/`ld (0:8),0:io`/push_a
 ; mnemonics (data-as-code).  The +0x1E0 table is read twice:
-;   AccStyle_IndexedLookup ("Routine 2" above): l = (0x338e) & 0x1f /
+;   AccStyle_IndexedLookup ("Routine 2" above): l = (SNDARG_PART_SELECT) & 0x1f /
 ;       ld xwa, AccStyle_IndexedLookup_Data / ld_rrb a, xwa, hl /
-;       cp (0x8d3a), a
+;       cp (PART_SELECT), a
 ;   AccVoiceState_DispatchChange: ld xwa, AccStyle_IndexedLookup_Data /
 ;       ldb_sri E, 0x03, 0xe0, 0xec (c3 03 e0 ec 25 = ld e,(xwa+l)); E goes
-;       to (0x90f7) before PartCtrl_WriteProgramChange
-; so it maps the one-hot selector (0x338e) to the same 0x10..0x14 part codes
-; AccPatch_PartNumberTable produces into (0x8d3a) -- in a different order.
+;       to (PROGRAM_CHANGE_PART) before PartCtrl_WriteProgramChange
+; so it maps the one-hot selector (SNDARG_PART_SELECT) to the same 0x10..0x14 part codes
+; AccPatch_PartNumberTable produces into (PART_SELECT) -- in a different order.
 ; 32 entries: the `and l, 0x1f` of the first reader, ending at
 ; AccVoiceReg_WritePart3.
 ; readers in v9/v10 (address from the linked ELF): AccVoiceState_DispatchChange 0xF5CAF6
@@ -11845,7 +11845,7 @@ Demo_StyleRhythmData:
 ;   Demo_LoadVariationData       +0x374, 0x100 B x30 and +0x474, 0x100 B x4 x30
 ;                                                    -> 0x94800+0x1400..
 ;   Demo_LoadVariationC_Data     +0x574, 0x100 B x190 -> 0x94800+0xAA00
-; 0x94800 is also the base AccPatch_InitSlotChain_WithAddr stores to (0x39ae), so
+; 0x94800 is also the base AccPatch_InitSlotChain_WithAddr stores to (STYLE_SRC_IMAGE_PTR), so
 ; this is the style image the AccDemo_* loaders build in that RAM area.  The one
 ; interior offset a reader names by itself, +0x57C, is AccDemo_SectionRecordTail.
 ; 30 section names: AccDemo_LoadVariation's loop bound is `cp a, 0x1e`, and the
@@ -12340,7 +12340,7 @@ AccTone_InlineBytecodeData_Code_Helper2:
 ;   index BC, measure DE: word at 0x95440 (RHYTHM_PATTERN_BUF_A + 0xC40) + 160*A + 32*BC + 4*DE; _Helper2 beside it
 ;   returns the offset word (+2). Basis: callers + body -- AccVoice_BarCounterBytecodeData reads it for the five
 ;   channels (BC = 0..4) with each channel's current measure and flags 0xFFFE (empty) in 0x33E0; the table is written
-;   by AccPatch_StoreMeasureCursor with the cursor block (0x3612) at +0.
+;   by AccPatch_StoreMeasureCursor with the cursor block (ACC_PATCH_CURSOR_BLOCK) at +0.
 AccVoice_GetMeasureStartBlock:
 	extz	de
 	sla	de, 2
@@ -14218,7 +14218,7 @@ AccPatch_SlotScanByteData_Skip:
 AccPatch_SlotScanByteData_Return2:
 	ret
 ; AccPatch_GetSlotBeatsAndMeasures: Returns the measure layout of the current patch slot record
-;   (AccPatch_GetCurrentSlotAddr, XIY = RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * (0x34D6)): A = beats per measure, the
+;   (AccPatch_GetCurrentSlotAddr, XIY = RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * (STYLE_SECTION)): A = beats per measure, the
 ;   byte of AccTone_LookupByProgram_Table indexed by the slot's time-signature code (+12), and C = number of measures,
 ;   the last measure index (+13) + 1. Basis: callers + body -- AccPatch_CheckAndInitDemo_Helper loops C - 1 times
 ;   skipping A beat codes per measure and stores each measure start; Not_sure_maybe_SOFT_VERSION_related_Code_Helper
@@ -14247,8 +14247,8 @@ AccPatch_SlotScanByteData_Join2:
 AccPatch_SlotScanByteData_Return3:
 	ret
 ; AccPatch_StoreMeasureCursor: Stores the pattern-data cursor (block word 0x3612, offset word 0x3614) as entry C
-;   (0..7) of the measure-start table: RHYTHM_PATTERN_BUF_A + 0xC40 + 160*slot(0x34D6) + 32*channelIndex + 4*C,
-;   channelIndex from the one-hot channel (0x379B) through the byte table AccPatch_ChannelBitToIndex. Basis:
+;   (0..7) of the measure-start table: RHYTHM_PATTERN_BUF_A + 0xC40 + 160*slot(STYLE_SECTION) + 32*channelIndex + 4*C,
+;   channelIndex from the one-hot channel (CMP_RECORD_PART) through the byte table AccPatch_ChannelBitToIndex. Basis:
 ;   callers + body -- AccPatch_SlotScanByteData fills entries 0..7 with the channel start; the
 ;   AccPatch_CheckAndInitDemo_Helper loop stores the cursor after skipping each measure (one beats-per-measure run of
 ;   0x81 beat codes); AccVoice_GetMeasureStartBlock/_Helper2 read +0/+2 back.
@@ -15240,8 +15240,8 @@ AccPatch_CountSlots_Store:
 	ret
 
 ; AccPatch_CountAvailableSlotsInAltImage: Counts the free patch entries 0x96..0x153 (bit 7 of byte 0 clear) of the
-;   style image at RAM 0x69800 instead of the current one: temporarily points (0x39AE) at 0x69800, stores 190 minus
-;   the used entries in 0x34D4, restores (0x39AE). Basis: callers + body -- only caller is the thunk
+;   style image at RAM 0x69800 instead of the current one: temporarily points (STYLE_SRC_IMAGE_PTR) at 0x69800, stores 190 minus
+;   the used entries in 0x34D4, restores (STYLE_SRC_IMAGE_PTR). Basis: callers + body -- only caller is the thunk
 ;   AccPatch_CountSlotsAlt, called after a style image is loaded into 0x69800 (DualVoice_LoadAndScan,
 ;   Flash_InitBytecodeBlock, AccBankData); same loop as AccPatch_CountAvailableSlots, which uses RHYTHM_PATTERN_BUF_B.
 AccPatch_CountAvailableSlotsInAltImage:
@@ -15274,7 +15274,7 @@ AccPatch_CountSlotsAlt_Store:
 
 AccPatch_MiscDataBlock:
 	ld	xwa, 100
-	mul	xwa, (STYLE_FREE_BLOCKS:16)	; XWA, (0x34d4) (unidasm; no llvm-mc spelling)
+	mul	xwa, (STYLE_FREE_BLOCKS:16)	; XWA, (STYLE_FREE_BLOCKS) (unidasm; no llvm-mc spelling)
 	ldw	hl, 190
 	div	xwa, hl
 	cp	a, 100
@@ -15367,11 +15367,11 @@ AccPatch_SetRepeatBit_Done:
 
 AccPatch_PartNumberTable:
 ; AccPatch_PartNumberTable -- 32 x u8, indexed by the one-hot selector
-; (0x379b) & 0x1F.  ** RE-TYPED 2026-09-25 (lane accomp): was
+; (CMP_RECORD_PART) & 0x1F.  ** RE-TYPED 2026-09-25 (lane accomp): was
 ; nop/rcf/scf/ccf/zcf/push_a mnemonics (data-as-code).  Read by
 ; AccPatch_PartChanges_MapLookup:
-;     ld a,(0x379b) / and a,0x1f / ld l,a / add xhl, <this> / ld a,(xhl) /
-;     ld (0x8d3a),a
+;     ld a,(CMP_RECORD_PART) / and a,0x1f / ld l,a / add xhl, <this> / ld a,(xhl) /
+;     ld (PART_SELECT),a
 ; Only the five one-hot indices are non-zero: 1->0x10, 2->0x11, 4->0x12,
 ; 8->0x13, 16->0x14, i.e. it turns the selected bit into 0x10+bit.  32
 ; entries: pinned by `and a, 0x1f`, and the table ends exactly where
@@ -18010,13 +18010,13 @@ AccPatch_StoreEntryPtr:
 
 AccPatch_AdvPlayPos_DataBlock:
 ; AccPatch_AdvPlayPos_DataBlock -- two parallel 17-entry tables of RAM
-; pointers, indexed by the one-hot selector (0x379b).
+; pointers, indexed by the one-hot selector (CMP_RECORD_PART).
 ; ** RE-TYPED 2026-09-25 (lane accomp): was `.byte 0x9d` / `ldw de, 0` / nop
 ; runs (data-as-code).  Read by AccPatch_LoadTablePointers:
-;     ld c,(0x379b) / sll bc,2 / add xbc, AccPatch_PartOffsetVarTable /
+;     ld c,(CMP_RECORD_PART) / sll bc,2 / add xbc, AccPatch_PartOffsetVarTable /
 ;     ld xix,(xbc) ... ld xiy, AccPatch_PartBlockVarTable / add xiy,xbc /
 ;     ld xiy,(xiy)
-; so entry (0x379b) of each table is a 32-bit pointer.  Only the one-hot
+; so entry (CMP_RECORD_PART) of each table is a 32-bit pointer.  Only the one-hot
 ; entries 1, 2, 4, 8 and 16 are non-zero (v9/v10: +0x07 gives 0x329D, 0x329F,
 ; 0x32A1, 0x329B, 0x3297 and +0x4B gives 0x328D, 0x328F, 0x3291, 0x328B,
 ; 0x3287) -- word variables two bytes apart, which AccPatch_AdjustTableEntryPos and its
@@ -20593,9 +20593,9 @@ AccPlayback_VoiceState_CalcOff_Pad:
 ; __pad_F62230_0x* symbols in shared/positional_labels.s, so it is kept).
 ; ** RE-TYPED 2026-09-25 (lane accomp): was `.byte 0x9d` / `ldw de,0` / nop
 ; runs (data-as-code).  Two parallel 17-entry tables of RAM pointers, indexed
-; by the one-hot selector (0x379b) & 0x1F -- the playback-side twin of
+; by the one-hot selector (CMP_RECORD_PART) & 0x1F -- the playback-side twin of
 ; AccPatch_AdvPlayPos_DataBlock.  Read by ToneGen_InitPlaybackState:
-;     ld a,(0x379b) / and a,0x1f (0 becomes 0x10) / sla a,2 / ld l,a /
+;     ld a,(CMP_RECORD_PART) / and a,0x1f (0 becomes 0x10) / sla a,2 / ld l,a /
 ;     ld xix, ToneGen_InitPlay_SetupTables_Data / ld_sril3 xix,(xix+hl) / ld (0x3548),xix
 ;     ld xix, ToneGen_InitPlay_SetupTables_Data_2 / ld_sril3 xix,(xix+hl) / ld (0x354c),xix
 ; and the two pointers are then dereferenced as words into (0x3441) and
@@ -21857,10 +21857,10 @@ ToneGen_StepAlt_Done:
 	nop
 
 ; AccTiming_ScrollFourBarViewForward: Scrolls the four-measure view one measure forward: when more measures follow (B
-;   = (0x34D7) > C + 3), the previous measure D (0x3747) was the view's last (C + 4) and the current one E (0x371A) is
-;   D + 1, increments the view's first measure C (0x3746). Basis: callers + body -- ToneGen_StepAlt_CheckBeat runs it
-;   first among the four view checks used when (0x34D9) <= 4 (the 0x20-pixel-per-measure layout of
-;   AccTiming_ComputeOffset, x = (measure - (0x3746)) * width); ChordDetect_CheckAscending is the same test for the
+;   = (STYLE_SECTION_LAST_MEASURE) > C + 3), the previous measure D (0x3747) was the view's last (C + 4) and the current one E (SQSTEP_MEASURE) is
+;   D + 1, increments the view's first measure C (ACC_VIEW_FIRST_MEASURE). Basis: callers + body -- ToneGen_StepAlt_CheckBeat runs it
+;   first among the four view checks used when (STYLE_SECTION_BEATS) <= 4 (the 0x20-pixel-per-measure layout of
+;   AccTiming_ComputeOffset, x = (measure - (ACC_VIEW_FIRST_MEASURE)) * width); ChordDetect_CheckAscending is the same test for the
 ;   two-measure (0x40) layout (D == C + 2).
 AccTiming_ScrollFourBarViewForward:
 	ld a, c
@@ -22771,9 +22771,9 @@ RhythmROM_LoadPattern:
 ; reti, neg wa ... and -- by this lane's own third re-frame pass, now undone --
 ; two `.byte` "xor HL,(rD3L+QB0)" readings (data-as-code).  Read by the
 ; routine it sits in, RhythmROM_LoadPattern:
-;     ld l,(0x34ef) / and l,0xf / xor h,h / sla hl,1 /
+;     ld l,(RHYTHM_LOAD_PART) / and l,0xf / xor h,h / sla hl,1 /
 ;     ld xix, RhythmROM_LoadPattern_Data / xor xwa,xwa / ldw_sri WA,(xix+hl)
-; then RhythmROM_PatternDisp_ReadByte adds WA to the pointer in (0x3564) and
+; then RhythmROM_PatternDisp_ReadByte adds WA to the pointer in (RHYTHM_PATTERN_ALLOC) and
 ; reads the byte there.  16 entries: `and l, 0xf`; the table ends exactly at
 ; RhythmROM_PatternDisp_ReadByte.  The label RhythmROM_PatternDisp_InitLoop
 ; that sat inside it (a symboliser target of a phantom branch, referenced
@@ -22822,7 +22822,7 @@ RhythmROM_PatternDisp_ReadByte:
 	jr RhythmROM_PatternDisp_Handle90
 
 RhythmROM_PatternDisp_BufOffsets:
-	; Indexed by (0x34EF) & 0xF; the word is added to the pointer in (0x3564) (RhythmROM_PatternDisp_Handle90).
+	; Indexed by (RHYTHM_LOAD_PART) & 0xF; the word is added to the pointer in (RHYTHM_PATTERN_ALLOC) (RhythmROM_PatternDisp_Handle90).
 	; Was decoded as `popw wa / push sr / jrl ge, 18434 ...` and a data-as-code note.
 	.short	0x0248, 0x0279, 0x0648, 0x0679, 0x036e, 0x076e, 0x039f, 0x079f
 	.short	0x030c, 0x030c, 0x033d, 0x033d, 0x070c, 0x070c, 0x073d, 0x073d
@@ -23278,7 +23278,7 @@ RhythmROM_LoadKit_CopyReturn_Code:
 
 	nop
 	nop
-; ToneData_EffectParamWords -- 16 words: RhythmROM_LoadKit_CopyReturn_Code stores entry [(0x34EF) & 15] to
+; ToneData_EffectParamWords -- 16 words: RhythmROM_LoadKit_CopyReturn_Code stores entry [(RHYTHM_LOAD_PART) & 15] to
 ;          (0x35B4).  Was named VoiceSlot_ResolveIndex and decoded as `.zero 8 / nop / nop / push xwa /
 ;          normal ...`; its reader used the positional alias VoiceSlot_ResolveIndex_0x2.
 ToneData_EffectParamWords:
@@ -23651,7 +23651,7 @@ AccFill_AdvanceAndCheck_Pad:
 	nop
 	nop
 ; RhythmBuf_BarQuartersByTimeSig: 20-byte table: bar length in quarter notes for each time-signature index 0..19
-;   (1/2..4/2 = 2,4,6,8; 1/4..8/4 = 1..8; 2/8..16/8 = 1..8), indexed by byte +12 of the rhythm header at (0x3560).
+;   (1/2..4/2 = 2,4,6,8; 1/4..8/4 = 1..8; 2/8..16/8 = 1..8), indexed by byte +12 of the rhythm header at (RHYTHM_SECTION_PTR).
 ;   Basis: readers + bytes -- the values equal the length bytes of the 20 TimeSig_DisplayStrings records;
 ;   RhythmBuf_FillEmptyPattern multiplies it by the measure count to fill an empty pattern with 0x81 beat codes,
 ;   RhythmROM_ProcessPattern divides by it.
@@ -24389,8 +24389,8 @@ DrumKit_FallbackSlotTable:
 	.byte 0x18, 0x19, 0x1a, 0x1b, 0x1d, 0x1d
 
 ; AccPatch_QuantizeTick: Thunk to DrumParam_Lookup: rounds the event tick A (0..95 within a beat) to the composer
-;   QUANTIZE grid W = (0x34DB) & 7 -- settings 1..7 = 8, 12, 16, 24, 32, 48, 96 ticks; the result 0x7F means 'rounds
-;   up into the next beat'. Basis: callers + body -- AccPatch_LookupStepByDrumParam calls it with W = (0x34DB) unless
+;   QUANTIZE grid W = (CMP_QUANTIZE) & 7 -- settings 1..7 = 8, 12, 16, 24, 32, 48, 96 ticks; the result 0x7F means 'rounds
+;   up into the next beat'. Basis: callers + body -- AccPatch_LookupStepByDrumParam calls it with W = (CMP_QUANTIZE) unless
 ;   that is 0 (off) and on 0x7F moves to the next beat; 0x34DB is the value PsCmpQtzBoxProc prints and
 ;   CmpRealTtl_CycleQuantize steps; the eight 96-byte arrays of DrumParam_Lookup_Data are nearest-grid-point maps.
 AccPatch_QuantizeTick:
@@ -24487,7 +24487,7 @@ DrumParam_Lookup_Data:
 
 ; CmpMode_Activate: XIZ-preserving entry run when the Composer mode (MD_CMP, 14) is activated: through
 ;   DrumKitInit_Entry it lights panel indicator 0x48 and, unless the previous mode was already 14, clears SOLO
-;   (0x34F1) and QUANTIZE (0x34DB), presets the step note fields 0x3714-0x3716, sets 0x379B = 64 (no part), saves the
+;   (CMP_SOLO) and QUANTIZE (CMP_QUANTIZE), presets the step note fields 0x3714-0x3716, sets 0x379B = 64 (no part), saves the
 ;   panel rhythm (0xFC5A/0xFC5B) in 0x34ED/0x34EE and 0x352B/0x352C, sends the composer program change and counts free
 ;   patch slots. Basis: callers + body -- CmpModeFunc calls it on EVT_ACTIVATE_STATE phase 0 (mode activated).
 CmpMode_Activate:
@@ -24577,7 +24577,7 @@ DrumKit_SendPC_MaskAndSend:
 
 ; CmpMode_Deactivate: XIZ-preserving entry run when the Composer mode (MD_CMP, 14) is deactivated: through
 ;   DrumKitExit_Entry, unless the mode is still 14, it calls CtrlPanel_SetIndicatorBit(0x48), clears the composer
-;   flags, SOLO (0x34F1) and the record part 0x379B, restores the panel rhythm 0xFC5A/0xFC5B saved in 0x352B/0x352C
+;   flags, SOLO (CMP_SOLO) and the record part 0x379B, restores the panel rhythm 0xFC5A/0xFC5B saved in 0x352B/0x352C
 ;   (when 0x34CD bit 6 is set) and posts it, then restores the playback state. Basis: callers + body -- CmpModeFunc's
 ;   phase-1 branch (label CmpMenuTtl_InitTitle) calls it on EVT_ACTIVATE_STATE phase 1 (mode deactivated); twin of
 ;   CmpMode_Activate.
@@ -24697,7 +24697,7 @@ DrumKit_StoreAndSendBank:
 	and (PANEL_STYLE+1:16), 128
 	ld h, 0x0:opc
 	call PartCtrl_WriteProgramChange
-	ld xix, PANEL_REC_49
+	ld xix, PANEL_VARI_STYLE
 	ld	(xix+l), h
 	call DrumKit_PostMidiEvents
 	ret
@@ -24811,7 +24811,7 @@ DrumKit_UpdateStatusFlags_Helper_Join:
 	calr	DrumKit_SendProgramChange
 DrumKit_UpdateStatusFlags_Return:
 	ret
-; DrumKit_SlotClassBits: for each slot (0x34D6) 0..29, the (0x34CD) bits 4-5 its class has: slots 0-3 and
+; DrumKit_SlotClassBits: for each slot (STYLE_SECTION) 0..29, the (0x34CD) bits 4-5 its class has: slots 0-3 and
 ;   12-17 -> 0, 4-7 and 18-23 -> 0x20, 8-11 and 24-29 -> 0x10.  DrumKit_UpdateStatusFlags_Helper compares it
 ;   with (0x34CD) & 0x30 and, when they differ, moves the slot to 0, 4 or 8 and sends the program change.
 ;   Spelled as nop / ld w / rcf / .ascii until 2026-10-06.
@@ -24931,7 +24931,7 @@ CmpBkslSTtl_EnterTitle:
 	pop xiz
 	ret
 RhythmPatInit_Entry:
-	; --- Conditional init: check (0x8d37), calr, store, optional call (39 bytes) ---
+	; --- Conditional init: check (PREVIOUS_TITLE), calr, store, optional call (39 bytes) ---
 	cp	(PREVIOUS_TITLE:16), 178
 	jr z, RhythmPatInit_Cleanup
 	calr RhythmPatInit_LoadParams
@@ -25080,7 +25080,7 @@ RhythmFillIn_Select_Return:
 ;   RhythmMute_StateMachine it sets 0xE3E2 bit 3 and steps the composer quantize setting 0x34DB through 0 (off) -> 4
 ;   -> 5 -> 6 -> 7 -> 1 -> 2 -> 3 -> 0, i.e. 1/16, 8th triplet, 8th, quarter, 32nd triplet, 32nd, 16th triplet (grids
 ;   24, 32, 48, 96, 8, 12, 16 ticks). Basis: callers + body -- right-side switch row 4 of TT_CMREAL (menu text
-;   "QUANTIZE") calls it and repaints 0xB5001D (the PsCmpQtzBox, which prints PtrTbl_NotePositionStrs[(0x34DB)]);
+;   "QUANTIZE") calls it and repaints 0xB5001D (the PsCmpQtzBox, which prints PtrTbl_NotePositionStrs[(CMP_QUANTIZE)]);
 ;   nothing in it mutes.
 CmpRealTtl_CycleQuantize:
 	push xiz
@@ -25218,7 +25218,7 @@ RhythmVariation_InlineCode:
 	calr	DrumKit_UpdateStatusFlags
 	ret
 ; CmpStep_SetStepModeAndBlockSustain: XIZ-preserving call of CmpStep_SetStepModeAndBlockSustain_Impl: when the TT_CMSTEP screen
-;   is entered from another title (PREVIOUS_TITLE != 0xB6) it sets the step mode (0x3712) = 4 and bit 0 of 0x8D88; it
+;   is entered from another title (PREVIOUS_TITLE != 0xB6) it sets the step mode (CMP_STEP_MODE) = 4 and bit 0 of 0x8D88; it
 ;   always clears bit 0 of 0xE3E2 and sets 0x34CD bit 3, the flag that makes PanelButton_Sustain and
 ;   PanelAction_PedalFn_Code40 ignore the sustain input. Basis: callers + body -- CmpStep_SetupAndQueueDraw (the
 ;   TT_CMSTEP draw method) is its only caller and its header lists these effects; the hide method clears bit 3 again
@@ -25229,7 +25229,7 @@ CmpStep_SetStepModeAndBlockSustain:
 	pop	xiz
 	ret
 ; CmpStep_SetStepModeAndBlockSustain_Impl: Body of CmpStep_SetStepModeAndBlockSustain: unless PREVIOUS_TITLE is 0xB6
-;   (re-entry), sets the step mode (0x3712) = 4 and 0x8D88 bit 0; always clears 0xE3E2 bit 0 and sets 0x34CD bit 3
+;   (re-entry), sets the step mode (CMP_STEP_MODE) = 4 and 0x8D88 bit 0; always clears 0xE3E2 bit 0 and sets 0x34CD bit 3
 ;   (sustain input ignored). Basis: callers + body -- its only caller is the XIZ wrapper
 ;   CmpStep_SetStepModeAndBlockSustain, whose header describes exactly these stores.
 CmpStep_SetStepModeAndBlockSustain_Impl:
@@ -25349,7 +25349,7 @@ RhythmVariation_InlineCode_Code2:
 	.zero 8
 	ret
 ; AccDraw_StepNoteValue_Wrap: XIZ-preserving wrapper of AccDraw_StepNoteValue, which in mode
-;   (0x3712) = 4 steps the note value (0x3714) up (W bit 7 clear) or down within 1..13. Basis: callers + body --
+;   (CMP_STEP_MODE) = 4 steps the note value (STEP_NOTE_VALUE) up (W bit 7 clear) or down within 1..13. Basis: callers + body --
 ;   AccDraw_SecondarySub_Handler03 calls it and redraws the beat block; 0x3714 is the note value that
 ;   Disp_ShowNoteValueFields names and PerfMode_Evt03_FlagHandler_A also clamps to 1..13.
 AccDraw_StepNoteValue_Wrap:
@@ -25357,7 +25357,7 @@ AccDraw_StepNoteValue_Wrap:
 	calr	AccDraw_StepNoteValue
 	pop	xiz
 	ret
-; AccDraw_StepNoteValue: In step mode (0x3712) = 4, steps the note value (0x3714) up (W bit 7 clear) or down (set),
+; AccDraw_StepNoteValue: In step mode (CMP_STEP_MODE) = 4, steps the note value (STEP_NOTE_VALUE) up (W bit 7 clear) or down (set),
 ;   clamped to 1..13; other modes do nothing. Basis: callers + body -- AccDraw_StepNoteValue_Wrap (XIZ-preserving
 ;   wrapper whose header already describes this) is its only caller, and AccDraw_SecondarySub_Handler03 calls that and
 ;   redraws the beat block; 0x3714 is the note value Disp_ShowNoteValueFields names.
@@ -25391,7 +25391,7 @@ AccDraw_AdjustPlusNoteValue:
 	calr	AccDraw_StepPlusNoteValue
 	pop	xiz
 	ret
-; AccDraw_StepPlusNoteValue: In step mode (0x3712) = 4, steps the '+' note-value index (0x3715) up (W bit 7 clear, max
+; AccDraw_StepPlusNoteValue: In step mode (CMP_STEP_MODE) = 4, steps the '+' note-value index (STEP_PLUS_NOTE_VALUE) up (W bit 7 clear, max
 ;   13) or down (set, min 0); other modes do nothing. Basis: callers + body -- AccDraw_AdjustPlusNoteValue (its XIZ-
 ;   preserving wrapper, header already describing this) is its only caller, from AccDraw_SecondarySub_Handler04;
 ;   0x3715 indexes Tbl_NoteValuePlusNames in Disp_ShowNoteValueFields.
@@ -25414,7 +25414,7 @@ AccDraw_StepPlusNoteValue_Join2:
 	jr	AccDraw_StepPlusNoteValue_Return2
 AccDraw_StepPlusNoteValue_Return2:
 	ret
-; AccDraw_StepArticulation_Wrap: XIZ-preserving wrapper of AccDraw_StepArticulation, which in mode (0x3712) = 4
+; AccDraw_StepArticulation_Wrap: XIZ-preserving wrapper of AccDraw_StepArticulation, which in mode (CMP_STEP_MODE) = 4
 ;   steps the articulation (0x3716: TENU/NORM/STAC/CUTT) up (W bit 7 clear) or down within 0..3; in other modes it
 ;   latches the direction in (0x372D) bit 4 (up) / bit 5 (down). Basis: callers + body --
 ;   AccDraw_SecondarySub_Handler05 calls it; 0x3716 is the articulation index Disp_ShowNoteValueFields names and
@@ -25424,7 +25424,7 @@ AccDraw_StepArticulation_Wrap:
 	calr	AccDraw_StepArticulation
 	pop	xiz
 	ret
-; AccDraw_StepArticulation: In step mode (0x3712) = 4, steps the articulation index (0x3716: TENU/NORM/STAC/CUTT) up
+; AccDraw_StepArticulation: In step mode (CMP_STEP_MODE) = 4, steps the articulation index (0x3716: TENU/NORM/STAC/CUTT) up
 ;   (W bit 7 clear, max 3) or down (set, min 0); in other modes it only latches the direction in (0x372D) bit 4 (up) /
 ;   bit 5 (down). Basis: callers + body -- AccDraw_StepArticulation_Wrap (header already describing this) is its only
 ;   caller, from AccDraw_SecondarySub_Handler05; 0x3716 indexes Tbl_ArticulationNames.
@@ -25829,13 +25829,13 @@ DrumVoice_Handler7_Code_Helper:
 	ld (PANEL_STYLE:16), a
 	ld (RHYTHM_LOAD_PROGRAM:16), a
 	and	a, 127
-	ld	(PANEL_REC_49+15:16), a
+	ld	(PANEL_VARI_STYLE+15:16), a
 	ld	(0xffbf:16), a
 	calr	DrumKit_PostMidiEvents
 DrumVoice_Handler7_Code_Return2:
 	ret
 CmpNcp_ProgramGroupBase:
-	; (0xFC5A) & 0x7F -> the first program of its group of four: 0x81..0x83 -> 0x80, 0x85..0x87 ->
+	; (PANEL_STYLE) & 0x7F -> the first program of its group of four: 0x81..0x83 -> 0x80, 0x85..0x87 ->
 	; 0x84, 0x89..0x8B -> 0x88.  DrumVoice_Handler7_Code_Helper returns before the lookup for
 	; values below 0x80 and for 0x80, 0x84 and 0x88 themselves.
 	.byte	0x80, 0x80, 0x80, 0x80, 0x84, 0x84, 0x84, 0x84, 0x88, 0x88, 0x88, 0x88
@@ -25855,7 +25855,7 @@ DrumVoice_Handler7_Data_3:
 DrumVoice_Handler7_Code_Return3:
 	ret
 ; CmpNcp_StepItemA_Wrap: XIZ-preserving wrapper of CmpNcp_StepItemA, which steps the Composer NCP
-;   item-A selector (0x39A7) up (W bit 7 set) or down within 0..2. Basis: callers + body -- CmpNcpTtl_Dispatch2 calls
+;   item-A selector (CMPNCP_FROM_ITEM) up (W bit 7 set) or down within 0..2. Basis: callers + body -- CmpNcpTtl_Dispatch2 calls
 ;   it with W = 0 and cases 128/129 with W = 128; 0x39A7 is the index CmpNcp_ItemA_HandlerIndex maps to
 ;   CmpNcp_ItemHandlerTable.
 CmpNcp_StepItemA_Wrap:
@@ -25863,7 +25863,7 @@ CmpNcp_StepItemA_Wrap:
 	call	CmpNcp_StepItemA
 	pop	xiz
 	ret
-; CmpNcp_StepItemA: Steps the Composer NCP item-A selector (0x39A7) within 0..2: W bit 7 set = up, clear = down; no
+; CmpNcp_StepItemA: Steps the Composer NCP item-A selector (CMPNCP_FROM_ITEM) within 0..2: W bit 7 set = up, clear = down; no
 ;   wrap. Basis: callers + body -- its only caller is the XIZ wrapper CmpNcp_StepItemA_Wrap, which CmpNcpTtl_Dispatch2
 ;   (W = 0) and the case-128/129 handler (W = 128) call; CmpNcp_ItemA_HandlerIndex maps 0x39A7 to a
 ;   CmpNcp_ItemHandlerTable index.
@@ -25884,7 +25884,7 @@ DrumVoice_Handler7_Code_Join:
 DrumVoice_Handler7_Code_Return4:
 	ret
 ; CmpNcp_StepItemAValue_Wrap: XIZ-preserving wrapper: steps the value of the selected FROM item (selector 0x39A7,
-;   0..2) in direction W (bit 7 set = down) by calling CmpNcp_ItemHandlerTable[CmpNcp_ItemA_HandlerIndex[(0x39A7)]]
+;   0..2) in direction W (bit 7 set = down) by calling CmpNcp_ItemHandlerTable[CmpNcp_ItemA_HandlerIndex[(CMPNCP_FROM_ITEM)]]
 ;   through CmpNcp_CallItemHandler. Basis: callers + body -- CmpNcpTtl_TableDispatch_OnFromValueUp (W = 0) and
 ;   _OnFromValueDown (W = 128) call it; twin of CmpNcp_StepItemA_Wrap, which steps the selector itself.
 CmpNcp_StepItemAValue_Wrap:
@@ -25893,7 +25893,7 @@ CmpNcp_StepItemAValue_Wrap:
 	pop	xiz
 	ret
 ; CmpNcp_StepItemAValue: Steps the value of the Composer NCP FROM item selected by 0x39A7 (0..2): calls
-;   CmpNcp_CallItemHandler with HL = CmpNcp_ItemA_HandlerIndex[(0x39A7)] (handlers 0-2), passing the direction through
+;   CmpNcp_CallItemHandler with HL = CmpNcp_ItemA_HandlerIndex[(CMPNCP_FROM_ITEM)] (handlers 0-2), passing the direction through
 ;   in W (bit 7 set = down). Basis: callers + body -- its only caller is the XIZ wrapper CmpNcp_StepItemAValue_Wrap,
 ;   which CmpNcpTtl_TableDispatch_OnFromValueUp (W = 0) and _OnFromValueDown (W = 128) call; same wrapper/body pairing
 ;   as CmpNcp_StepItemA_Wrap / CmpNcp_StepItemA.
@@ -25905,7 +25905,7 @@ CmpNcp_StepItemAValue:
 	call	CmpNcp_CallItemHandler
 	ret
 CmpNcp_ItemA_HandlerIndex:
-	; (0x39A7), stepped between 0 and 2 by CmpNcp_StepItemA -> the
+	; (CMPNCP_FROM_ITEM), stepped between 0 and 2 by CmpNcp_StepItemA -> the
 	; CmpNcp_ItemHandlerTable index that CmpNcp_StepItemAValue dispatches.
 	; Reached through CmpNcp_StepItemA_Wrap / _Helper2.
 	.short	0, 1, 2
@@ -25938,7 +25938,7 @@ DrumVoice_Handler7_Code_Join2:
 DrumVoice_Handler7_Code_Return5:
 	ret
 ; CmpNcp_StepItemBValue_Wrap: XIZ-preserving wrapper: steps the value of the selected TO item (selector 0x39A8, 0..1)
-;   in direction W (bit 7 set = down) by calling CmpNcp_ItemHandlerTable[CmpNcp_ItemB_HandlerIndex[(0x39A8)]]
+;   in direction W (bit 7 set = down) by calling CmpNcp_ItemHandlerTable[CmpNcp_ItemB_HandlerIndex[(CMPNCP_TO_ITEM)]]
 ;   (handlers 3, 4) through CmpNcp_CallItemHandler. Basis: callers + body -- CmpNcpTtl_TableDispatch_OnToValueUp (W =
 ;   0) and _OnToValueDown (W = 128) call it; TO counterpart of CmpNcp_StepItemAValue_Wrap.
 CmpNcp_StepItemBValue_Wrap:
@@ -25947,7 +25947,7 @@ CmpNcp_StepItemBValue_Wrap:
 	pop	xiz
 	ret
 ; CmpNcp_StepItemBValue: Steps the value of the Composer NCP TO item selected by 0x39A8 (0..1): calls
-;   CmpNcp_CallItemHandler with HL = CmpNcp_ItemB_HandlerIndex[(0x39A8)] (handlers 3, 4), passing the direction
+;   CmpNcp_CallItemHandler with HL = CmpNcp_ItemB_HandlerIndex[(CMPNCP_TO_ITEM)] (handlers 3, 4), passing the direction
 ;   through in W (bit 7 set = down). Basis: callers + body -- its only caller is the XIZ wrapper
 ;   CmpNcp_StepItemBValue_Wrap, which CmpNcpTtl_TableDispatch_OnToValueUp (W = 0) and _OnToValueDown (W = 128) call;
 ;   TO counterpart of CmpNcp_StepItemAValue (CmpNcp_StepItemAValue).
@@ -25959,7 +25959,7 @@ CmpNcp_StepItemBValue:
 	call	CmpNcp_CallItemHandler
 	ret
 CmpNcp_ItemB_HandlerIndex:
-	; (0x39A8), stepped between 0 and 1 by CmpNcp_StepItemB -> the
+	; (CMPNCP_TO_ITEM), stepped between 0 and 1 by CmpNcp_StepItemB -> the
 	; CmpNcp_ItemHandlerTable index that CmpNcp_StepItemBValue dispatches.
 	; Reached through CmpNcp_StepItemBValue_Wrap.
 	.short	3, 4
@@ -25969,8 +25969,8 @@ CmpNcp_ItemB_HandlerIndex:
 	ret
 ; CmpNcp_CallItemHandler: Calls entry (HL & 7) of CmpNcp_ItemHandlerTable (0-4 = CmpNcp_ItemHandler0-4, 5/6 =
 ;   DrumVoice_NullHandler), passing W (the step direction) through. Basis: callers + body --
-;   CmpNcp_StepItemAValue / _Helper4 load HL from CmpNcp_ItemA_HandlerIndex[(0x39A7)] /
-;   CmpNcp_ItemB_HandlerIndex[(0x39A8)] and call it; the CmpNcp title's case handlers reach those with W = 0 or 128.
+;   CmpNcp_StepItemAValue / _Helper4 load HL from CmpNcp_ItemA_HandlerIndex[(CMPNCP_FROM_ITEM)] /
+;   CmpNcp_ItemB_HandlerIndex[(CMPNCP_TO_ITEM)] and call it; the CmpNcp title's case handlers reach those with W = 0 or 128.
 CmpNcp_CallItemHandler:
 	pushw	hl
 	ld	xhl, 0:i3
@@ -26094,9 +26094,9 @@ DrumVoice_Handler7_Code_Return6:
 	ld	(STYLE_SECTION:16), 0
 	calr	DrumKit_SendProgramChange
 	ret
-; Rhythm_StepProgram: Steps the selected rhythm's program (0xFC5A) up to 13 (W bit 7 clear) or down to 0 (W bit 7 set)
+; Rhythm_StepProgram: Steps the selected rhythm's program (PANEL_STYLE) up to 13 (W bit 7 clear) or down to 0 (W bit 7 set)
 ;   and takes the bank for the new program from the style part's companion bytes 0xFF92[program]: first
-;   PartCtrl_WriteProgramChange with the current program / bank and (0x90F7) = 72 (part 0x48), then
+;   PartCtrl_WriteProgramChange with the current program / bank and (PROGRAM_CHANGE_PART) = 72 (part 0x48), then
 ;   SndParam_ApplyProgramChange_Safe with the new pair and (0x90F6) = 72, storing the resolved program and bank (&
 ;   0x7F) back to 0xFC5A / 0xFC5B. Basis: callers + body -- DrumVoice_Handler6 (entry 6 of DrumVoice_DispatchTable,
 ;   chosen by DrumVoice_Select from (0x3540)) calls it before DrumKit_PostMidiEvents and Rhythm_LoadCurrentTimeSig,
@@ -26124,7 +26124,7 @@ DrumVoice_Handler7_Code_Skip2:
 	jr	nz, DrumVoice_Handler7_Code_Join3
 	ld	l, 0:opc
 DrumVoice_Handler7_Code_Join3:
-	ld	xix, PANEL_REC_49
+	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld a, 72:opc
 	ld	(0x90f6:16), a
@@ -26370,7 +26370,7 @@ TimeSig_DisplayStrings_Code_Skip3:
 	ld	l, 0:opc
 TimeSig_DisplayStrings_Code_Join:
 	ld	a, l
-	ld	xix, PANEL_REC_49
+	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld l, a
 	ld	a, 72:opc
@@ -26450,7 +26450,7 @@ TimeSig_DisplayStrings_Code_Join2:
 	and	h, 127
 	ld	(PANEL_STYLE+1:16), h
 	ret
-; Two 12-entry step tables for (0x342D) when AccVoice_GetChannelCount_Direct returns 15: the routine above
+; Two 12-entry step tables for (ACC_EVENT) when AccVoice_GetChannelCount_Direct returns 15: the routine above
 ; takes A := TimeSig_StepUpTable15[A] on an up step and A := TimeSig_StepDownTable15[A] on a down step
 ; (bit 7 of W).  Were decoded as `max ... / ld (P2:8),8 ...` code; the second was the positional alias
 ; TimeSig_DisplayStrings + 0x227.
@@ -26460,7 +26460,7 @@ TimeSig_StepDownTable15:	.byte	0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4
 ;   bank 0xFC5B & 0x7F -- into 0x34ED / 0x34EE, the rhythm the Composer copies from (< 0x80 a preset rhythm of that
 ;   bank, 0x80 + n composer memory n). Basis: callers + body -- every caller is on the Composer copy title TT_CMPNCP:
 ;   its FROM item handlers 0 and 1, its title-activate set-up, and AccPatch_CallParamLookup after a panel rhythm press
-;   while CURRENT_TITLE = 184; AccPat_DispatchNoteChange copies from (0x34ED) into the current pattern 0x34D6.
+;   while CURRENT_TITLE = 184; AccPat_DispatchNoteChange copies from (RHYTHM_LOAD_PROGRAM) into the current pattern 0x34D6.
 CmpNcp_LatchPanelRhythmAsSource:
 	ld	a, (PANEL_STYLE:16)
 	and	a, 255
@@ -26604,9 +26604,9 @@ TimeSig_DisplayStrings_Code_Skip15:
 	ld	(RHYTHM_LOAD_PART:16), a
 	ret
 TimeSig_StepDownTable26:
-	; The two 33-entry remaps of (0x34D6) used by CmpNcp_ItemStep2 when the position in (0x34EF)
-	; crosses 26: a down step below (0x342F) sets 26 and (0x34D6) := TimeSig_StepDownTable26[(0x34D6)];
-	; an up step from 26 sets (0x342F) and (0x34D6) := TimeSig_StepUpTable26[(0x34D6)].  Were decoded
+	; The two 33-entry remaps of (STYLE_SECTION) used by CmpNcp_ItemStep2 when the position in (RHYTHM_LOAD_PART)
+	; crosses 26: a down step below (0x342F) sets 26 and (STYLE_SECTION) := TimeSig_StepDownTable26[(STYLE_SECTION)];
+	; an up step from 26 sets (0x342F) and (STYLE_SECTION) := TimeSig_StepUpTable26[(STYLE_SECTION)].  Were decoded
 	; as `calr 7710 / ... / max / ld (P2:8), 8` code.
 	.byte	30, 30, 30, 30, 31, 31, 31, 31, 32, 32, 32, 32
 	.byte	30, 30, 30, 30, 30, 30, 31, 31, 31, 31, 31, 31
@@ -26653,7 +26653,7 @@ CmpNcp_ItemStep3_Down_Skip:
 	jr	TimeSig_DisplayStrings_Code_Return3
 TimeSig_DisplayStrings_Code_Return3:
 	ret
-; Called by CmpNcp_ItemHandler4.  Steps (0x34D6) through one of three helpers chosen by bits 4/5 of (0x34CD).
+; Called by CmpNcp_ItemHandler4.  Steps (STYLE_SECTION) through one of three helpers chosen by bits 4/5 of (0x34CD).
 CmpNcp_ItemStep4:
 	ld	a, (STYLE_SECTION:16)
 	bit	4, (0x34cd:16)
@@ -26714,8 +26714,8 @@ TimeSig_DisplayStrings_Code_Skip19:
 	ld	a, 17:opc
 TimeSig_DisplayStrings_Code_Return4:
 	ret
-; CmpNcp_ResetPatternToVari1: Sets the composer's style-pattern index (0x34EF) to Vari1 of the current rhythm's
-;   pattern-name set: 16 (StrStylePatt_Vari1) when the rhythm program (0xFC5A) is >= 128, else 0
+; CmpNcp_ResetPatternToVari1: Sets the composer's style-pattern index (RHYTHM_LOAD_PART) to Vari1 of the current rhythm's
+;   pattern-name set: 16 (StrStylePatt_Vari1) when the rhythm program (PANEL_STYLE) is >= 128, else 0
 ;   (StrStylePatt_Vari1b). Basis: callers + body -- CmpNcp_StepSlotInGroup1/2 call it when the slot steps up out of
 ;   the special slot (31 -> 4, 32 -> 8), the reverse of their step down, which sets 0x34EF = 26 (ALL);
 ;   PsCmpCpFPtnBoxProc_OnPaintOrRepaint prints 0x34EF through the name table where 0 and 16 are 'Vari1' and 26 is
@@ -26731,7 +26731,7 @@ TimeSig_DisplayStrings_Code_Skip20:
 	ld	(RHYTHM_LOAD_PART:16), 0
 TimeSig_DisplayStrings_Code_Return5:
 	ret
-; CmpNcp_StepSlotInGroup1: Steps the composer pattern slot in A (0x34D6) within group 1 (0x34CD bit 5) in the order
+; CmpNcp_StepSlotInGroup1: Steps the composer pattern slot in A (STYLE_SECTION) within group 1 (0x34CD bit 5) in the order
 ;   31, 4..7, 18..23: W bit 7 clear = up (stops at 23; 31 -> 4 also resets 0x34EF through
 ;   CmpNcp_ResetPatternToVari1), set = down (stops at 31; 4 -> 31 also sets 0x34EF = 26). Returns the new slot
 ;   in A. Basis: callers + body -- CmpNcp_ItemStep4 calls it when (0x34CD) bit 5 is set and stores A to 0x34D6;
@@ -26779,7 +26779,7 @@ TimeSig_DisplayStrings_Code_Skip26:
 	ld	a, 23:opc
 TimeSig_DisplayStrings_Code_Return6:
 	ret
-; CmpNcp_StepSlotInGroup2: Steps the composer pattern slot in A (0x34D6) within group 2 (0x34CD bit 4) in the order
+; CmpNcp_StepSlotInGroup2: Steps the composer pattern slot in A (STYLE_SECTION) within group 2 (0x34CD bit 4) in the order
 ;   32, 8..11, 24..29: W bit 7 clear = up (stops at 29; 32 -> 8 also resets 0x34EF through
 ;   CmpNcp_ResetPatternToVari1), set = down (stops at 32; 8 -> 32 also sets 0x34EF = 26). Returns the new slot
 ;   in A. Basis: callers + body -- CmpNcp_ItemStep4 calls it when (0x34CD) bit 4 is set and stores A to 0x34D6;
@@ -27221,7 +27221,7 @@ TimeSig_DisplayStrings_Code_Return11:
 	ret
 ; TimeSig_SlotFieldOffsets -- offsets into the current slot record (AccPatch_GetCurrentSlotAddr), indexed by (0x39AA)
 TimeSig_SlotFieldOffsets:	.byte	37, 45, 53, 61
-; S2cTtl_InitOnTitleChange -- when CURRENT_TITLE differs from PREVIOUS_TITLE: (0x3989) := (0xFFE3) + 1, and if (0x398A)
+; S2cTtl_InitOnTitleChange -- when CURRENT_TITLE differs from PREVIOUS_TITLE: (0x3989) := (SEQ_CURRENT_SONG) + 1, and if (0x398A)
 ;          is 0, seed 0x398A-0x3995.  Called from S2cTtl_Dispatch.  Was hidden: the table above was decoded as code
 ;          running into its first instruction, and the call used the positional alias TimeSig_DisplayStrings_0x8E2.
 S2cTtl_InitOnTitleChange:
@@ -28876,10 +28876,10 @@ VoiceSlot_Dispatch_Return:
 	call	CmpEsy_StepVariPattern
 	pop	xiz
 	ret
-; CmpEsy_StepVariPattern: Easy Composer: steps the composer pattern index (0x34D6) up by one (A bit 7 clear, max 11)
+; CmpEsy_StepVariPattern: Easy Composer: steps the composer pattern index (STYLE_SECTION) up by one (A bit 7 clear, max 11)
 ;   or down (A bit 7 set, min 0) -- 0-11 are the A/B/C-vari1..4 patterns -- then (CmpEsy_SetStyleNumberFromPattern)
-;   sets (0xFC5A) = index | 0x80, keeps only bit 7 of (0xFC5B), posts a SwbtWr event (E = 0x48, D = 0, W = 0, A =
-;   (0xFC5A)) and rebuilds the channel-difference mask 0x37C8 (DrumParam_BuildActiveMask). Basis: callers + body --
+;   sets (PANEL_STYLE) = index | 0x80, keeps only bit 7 of (0xFC5B), posts a SwbtWr event (E = 0x48, D = 0, W = 0, A =
+;   (PANEL_STYLE)) and rebuilds the channel-difference mask 0x37C8 (DrumParam_BuildActiveMask). Basis: callers + body --
 ;   the XIZ-preserving VoiceSlot_Dispatch_Return is called by the Easy Composer title's switch cases 3 (A = 0) and 4
 ;   (A = 0x80).
 CmpEsy_StepVariPattern:
@@ -28904,9 +28904,9 @@ VoiceSlot_Dispatch_Return_Join2:
 	calr	CmpEsy_SetStyleNumberFromPattern
 	calr	DrumParam_BuildActiveMask
 	ret
-; CmpEsy_SetStyleNumberFromPattern: Makes the selected composer pattern (0x34D6) the panel's current style: record
+; CmpEsy_SetStyleNumberFromPattern: Makes the selected composer pattern (STYLE_SECTION) the panel's current style: record
 ;   0x48 +0 (style number, 0xFC5A) = 0x80 + (index & 31), +1 (0xFC5B) reduced to its bit 7, then queues the
-;   record-0x48 offset-0 change (SwbtWr_QueuePostEvent, E = 0x48, D = 0, W = 0, A = (0xFC5A)). Basis: callers + body
+;   record-0x48 offset-0 change (SwbtWr_QueuePostEvent, E = 0x48, D = 0, W = 0, A = (PANEL_STYLE)). Basis: callers + body
 ;   -- CmpEsy_StepVariPattern's header describes exactly this step after moving the pattern index (0-11, the A/B/C
 ;   vari 1-4 patterns); record 0x48 +0/+1 are SndParam_Style_Number / SndParam_Style_Bank.
 CmpEsy_SetStyleNumberFromPattern:
@@ -29781,7 +29781,7 @@ AccVoice_SetupSlots_Return:
 	ret
 
 ; AccVoice_WriteEmptyPattern: Writes an empty pattern body after the 6-byte block header at XWA: one 0x81 beat marker
-;   per beat ((0x34D7) + 1 times (0x34D9)) followed by the end code 0x83. Basis: callers + body --
+;   per beat ((STYLE_SECTION_LAST_MEASURE) + 1 times (STYLE_SECTION_BEATS)) followed by the end code 0x83. Basis: callers + body --
 ;   AccVoice_SetupStyleSlots resolves the channel's first block, clears its link word and buffer, and calls it before
 ;   re-filling the slots.
 AccVoice_WriteEmptyPattern:
@@ -29806,7 +29806,7 @@ AccVoice_SetupSlots_Done:
 	ret
 
 ; AccPatch_GetCurrentSlotAddrXix: XIX = RHYTHM_PATTERN_BUF_A + 0x60 * (s + 1), the 96-byte record of the current patch
-;   slot s = (0x34D6) (s >= 30 gives slot 0; signed compare): the XIX twin of AccPatch_GetCurrentSlotAddr, which
+;   slot s = (STYLE_SECTION) (s >= 30 gives slot 0; signed compare): the XIX twin of AccPatch_GetCurrentSlotAddr, which
 ;   returns the same address in XIY. Basis: callers + body -- AccPatch_SetCursorToChannelStart reads a channel's first
 ;   block word from XIX, AccPatch_InitEasySlotHeader writes the record's +12.. fields through it.
 AccPatch_GetCurrentSlotAddrXix:
@@ -29867,8 +29867,8 @@ AccVoice_SetupSlots_DataBlock_Helper:
 	ldir85
 	ret
 ; AccPatch_SetCursorToChannelStart: Points the pattern-data write cursor at the start of the selected accompaniment
-;   channel's data in the current pattern: (0x3612) = that channel's first block number (word from the pattern's
-;   RHYTHM_PATTERN_BUF_A entry, indexed by DrumChannel_MapToIndexB of the one-hot (0x37C9)), (0x3614) = 6, the first
+;   channel's data in the current pattern: (ACC_PATCH_CURSOR_BLOCK) = that channel's first block number (word from the pattern's
+;   RHYTHM_PATTERN_BUF_A entry, indexed by DrumChannel_MapToIndexB of the one-hot (0x37C9)), (ACC_PATCH_CURSOR_OFFSET) = 6, the first
 ;   data byte after the block header. Basis: callers + body -- AccVoice_SetupSlots_* call it before the routines that
 ;   write 0x81/0x83 at that cursor.
 AccPatch_SetCursorToChannelStart:
@@ -29924,7 +29924,7 @@ AccPatch_ResolveEntryAddr_Return2:
 ;   (one-hot 0x37C9, through Rhythm_MapChannelToDrumIndex) for measure (0x38D1): the long at 0x380A + 16 * drum index
 ;   + 4 * measure, one of the four pointers RegPreset_Load_Loop stores per channel (pattern data + 6, via
 ;   ChanAssign_Lookup_Found). Basis: callers + body -- AccPatch_ResolveEntryAddr_Helper4 (inside the per-measure loop
-;   of _Helper3, counter 0x38D1 up to (0x34D7)) and _Helper11 (for channels 1, 2 and 4) store the result as the
+;   of _Helper3, counter 0x38D1 up to (STYLE_SECTION_LAST_MEASURE)) and _Helper11 (for channels 1, 2 and 4) store the result as the
 ;   channel's source stream at 0x3898 + 4 * drum, the slot AccPatch_CopyEventToCursor copies events from.
 AccPatch_GetMeasureSourceStream:
 	calr	Rhythm_MapChannelToDrumIndex
@@ -30091,8 +30091,8 @@ AccPatch_CopyEventToCursor_Join3:
 AccPatch_CopyEventToCursor_Return4:
 	ret
 ; AccPatch_LinkNewPatternBlock: Links a fresh 256-byte block of RHYTHM_PATTERN_BUF_B to the pattern being written: if
-;   the free-block count (0x34D4) is non-zero it searches from block 150 for the first block whose byte 0 has bit 7
-;   clear, marks it used (bit 7), stores the current block (0x3612) in its +1 word and its number in the current
+;   the free-block count (STYLE_FREE_BLOCKS) is non-zero it searches from block 150 for the first block whose byte 0 has bit 7
+;   clear, marks it used (bit 7), stores the current block (ACC_PATCH_CURSOR_BLOCK) in its +1 word and its number in the current
 ;   block's +3 word, decrements 0x34D4 and makes it current (0x3612, write offset 0x3614 = 6). With no free block it
 ;   sets 0x3614 = 6 and GLOBAL_ERROR_CODE = 15. Basis: callers + body -- AccPatch_CopyEventToCursor calls it when the
 ;   event does not fit in the current 255-byte block and then copies the rest at the new cursor; its header already
@@ -30162,7 +30162,7 @@ AccVoice_SetupSlots_Apply:
 	calr	AccVoice_SetupSlots_ForEachSlot
 	ret
 ; AccPatch_InitEasySlotHeader: Fills the header of the current patch slot record (XIX from
-;   AccPatch_GetCurrentSlotAddrXix): +12 = time-signature code (0x34D8), +13 = last measure index (0x34D7), +14 =
+;   AccPatch_GetCurrentSlotAddrXix): +12 = time-signature code (STYLE_SECTION_TIME_SIG), +13 = last measure index (STYLE_SECTION_LAST_MEASURE), +14 =
 ;   32, +15 = 0, +16/+17 = bytes from the tables at 0x38D2/0x38D9 for the drum-channel index, and the 16-character
 ;   name "Easy" at +64. Basis: callers + body -- AccVoice_SetupSlots_Apply (the slot setup whose comment lists it)
 ;   calls it; AccPatch_GetSlotBeatsAndMeasures reads +12 as the beats-per-measure index and +13 + 1 as the measure
@@ -30204,7 +30204,7 @@ AccVoice_SlotName_Easy:
 	; The slot name the routine above copies (ldir85, BC = 16) to the slot at +64.  Was
 	; `aligned_string "Easy            #"`, which took the next instruction's 23 00 as "#\0".
 	.ascii	"Easy            "
-	; (0x38D1) := 0, then while (0x38D1) < (0x34D7) + 1: ...
+	; (0x38D1) := 0, then while (0x38D1) < (STYLE_SECTION_LAST_MEASURE) + 1: ...
 AccVoice_SetupSlots_ForEachSlot:
 	ld	c, 0:opc
 	ld	(0x38d1:16), c
@@ -32796,7 +32796,7 @@ CstmCpTtl_RecMode2_OnFromSlotDec_Skip7:
 	ld	xbc, EVT_DRAW
 	ld	xde, 0:i3
 	jrl	CstmCpTtlFunc_Join
-; CstmCpTtl_RecMode2_OnDirectionSwap: DIRECTION switches (3/4, 0x83/0x84): exchange the FROM (0x39b6) and TO (0x39b7)
+; CstmCpTtl_RecMode2_OnDirectionSwap: DIRECTION switches (3/4, 0x83/0x84): exchange the FROM (CSTMCP_FROM_SLOT) and TO (CSTMCP_TO_SLOT)
 ;   rhythm slots and repaint both sides.
 CstmCpTtl_RecMode2_OnDirectionSwap:	; cases 119, 120, 131, 132
 	cp	(CSTMCP_WINDOW:16), 0
@@ -32901,7 +32901,7 @@ CstmCpTtl_RecMode2_OnWindowExecute_Skip10:
 	ld	(GLOBAL_ERROR_CODE:16), 35
 	ldw	wa, TT_MESAGE
 	jrl	CstmCpTtlFunc_Join3
-; CstmCpTtl_RecMode2_OnCopyOrWindowAbort: Switch 11: on the main page copies rhythm slot FROM (0x39b6) to TO (0x39b7)
+; CstmCpTtl_RecMode2_OnCopyOrWindowAbort: Switch 11: on the main page copies rhythm slot FROM (CSTMCP_FROM_SLOT) to TO (CSTMCP_TO_SLOT)
 ;   with Flash_InitBytecodeBlock (result 2 opens CstmMemFulWin / CstmFuncSelWin); with a window open it is that
 ;   window's ABORT.
 CstmCpTtl_RecMode2_OnCopyOrWindowAbort:
@@ -34442,7 +34442,7 @@ AccGraphics_BoundOp04:
 	ret
 ; CmpStep_DrawScreen: XIZ-preserving body of TT_CMSTEP's draw method (method 0 of CmpStepTitleFunc_ProcTable, run on
 ;   EVT_ALL_PAINT and EVT_PARA_DRAW): through CmpStep_SetupAndQueueDraw it calls AccPlayback_InitOrUpdate and sets
-;   0x3525 = 0xB6 when entered from another title (PREVIOUS_TITLE != 0xB6), runs CmpStep_SetStepModeAndBlockSustain ((0x3712)
+;   0x3525 = 0xB6 when entered from another title (PREVIOUS_TITLE != 0xB6), runs CmpStep_SetStepModeAndBlockSustain ((CMP_STEP_MODE)
 ;   = 4 on entry, 0x34CD bit 3 set), and queues the draw functions AccScreen_DataBlock_Code (static frame; skipped on
 ;   a partial redraw, 0xE3E0 bit 4) and AccScreen_DataBlock_Code2 (values). Basis: callers + body -- its only caller
 ;   is the method-0 stub CmpStepTitle_OnPaint (0xF6A2FF = CmpStepTitleFunc_ProcTable[0]); DirmdEmulator calls method 0 on
@@ -35102,7 +35102,7 @@ AccScreen_UIDataBlock:
 ; +0x32; the calls land on Display_DeferOrDrawWall / Display_DeferOrUpdateScreen;
 ; and v7's copy of this block differs from v10's here in exactly those two call
 ; operands (by -0x40D, v7's code-relocation delta for that range) and in two
-; RAM operands, (0x379b) and (0x39b8), each 0x9C lower in v7 --
+; RAM operands, (CMP_RECORD_PART) and (0x39b8), each 0x9C lower in v7 --
 ; scripts/converters/lane_accomp_v7_uidatablock.py --diff.
 ; The four 16-byte .byte rows these 51 bytes were spelled as carried these
 ; ascii renderings:
@@ -35122,7 +35122,7 @@ AccScreen_RefreshScreen:
 	ld	a, 12:opc
 	call	Display_DeferOrUpdateScreen
 	ret
-; W = index of the lowest set bit of ((0x379b) & 31), 0 when none is set;
+; W = index of the lowest set bit of ((CMP_RECORD_PART) & 31), 0 when none is set;
 ; stored to (0x39b8).
 AccScreen_SelectorToWidgetIndex:
 	xor	wa, wa
@@ -35162,7 +35162,7 @@ AccScreen_DataBlock_Data_2:
 ;   CmpStep_ValueFieldRecords): cell text "NOTE VEL LENGTH" at cell 0x1F1E, two rows of 0x8D / 0x8E glyphs (marks the
 ;   main frame also places above and below its PART and MEAS / CURSOR fields) at cells 0x2127 / 0x232F, four op-0A
 ;   boxes x = 45..75, 85..115, 125..155, 165..195 (y 210..236) and their op-01 dividers at y = 223.
-;   AccDraw_Secondary_Helper5 draws it when the step mode (0x3712) is 4; the label is also the end of the screen's
+;   AccDraw_Secondary_Helper5 draws it when the step mode (CMP_STEP_MODE) is 4; the label is also the end of the screen's
 ;   main frame list (AccScreen_DataBlock_Data_2: "STEP RECORDING", PATTERN:, PART: ...). Basis: readers + bytes.
 CmpStep_NoteEntryFrameRecords:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
 	.byte 0x54, 0x45, 0x20, 0x56, 0x45, 0x4c, 0x20, 0x20, 0x20, 0x4c, 0x45, 0x4e, 0x47, 0x54, 0x48, 0x06	; |TE VEL   LENGTH.|
@@ -35192,7 +35192,7 @@ CmpStep_ValueFieldRecords:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09,
 ;   shift 0, so it always takes entry 0 of its rectangle list at 0xF6AC38: text cell 0x1F1D, 20 characters by 40
 ;   pixels -- the note-entry row's area (its caption starts at cell 0x1F1E). AccDraw_Secondary_Helper5 colour-blits it
 ;   (COLORBLIT_MODE 2, AccGraphics_BoundOp04) instead of drawing CmpStep_NoteEntryFrameRecords when the step mode
-;   (0x3712) is not 4. It is also the end of CmpStep_ValueFieldRecords. Basis: readers + bytes.
+;   (CMP_STEP_MODE) is not 4. It is also the end of CmpStep_ValueFieldRecords. Basis: readers + bytes.
 CmpStep_NoteEntryAreaBand:	.byte	0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x38, 0xac, 0xf6
 	.byte	0x00, 0x1d, 0x1f, 0x14, 0x00, 0x28, 0x00	; |.....(....9...M.|
 AccScreen_DataBlock_Data_7:	.byte	0x02, 0x0f, 0xbb, 0x39, 0x01, 0x00, 0x06, 0x4d, 0xac
@@ -35237,7 +35237,7 @@ AccScreen_BeatDataBlock_DisplayList:	.incbin "includes/generated/accomp_display_
 ; AccScreen_ArticulationCell: Display-list item (15 bytes, opcode 2) at +0x62 of accomp_display_full.bin: a
 ;   4-character text cell bound to byte 0x39BB, drawn from the TENU/NORM/STAC/CUTT table at 0xF6AE4C
 ;   (Accomp_Articulation_Names) at (154, 27); the rest of the slice is the note- and octave-name text other cells
-;   point at. Basis: readers + bytes -- the step-edit draw code copies the articulation index (0x3716) to 0x39BB and
+;   point at. Basis: readers + bytes -- the step-edit draw code copies the articulation index (STEP_ARTICULATION) to 0x39BB and
 ;   draws this one item with AccDraw_Secondary; AccScreen_BeatDataBlock uses its address as the end of
 ;   AccScreen_BeatDataBlock_DisplayList.
 AccScreen_ArticulationCell:	.incbin "includes/generated/accomp_display_full.bin", 0x62, 0xBD

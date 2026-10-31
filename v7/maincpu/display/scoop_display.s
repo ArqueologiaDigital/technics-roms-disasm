@@ -4714,7 +4714,7 @@ TempoRingBuf_OnNoteEvent_Loop2:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, DisplayMode_Handler_3_Join2
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip10
 	jp	DisplayMode_Handler_3_Join2
 DisplayMode_Handler_3_Skip10:
@@ -4952,7 +4952,7 @@ PerfMode_StepNoteNumber_Skip27:
 	cp	(xde+iz), 0x0c
 	pop	xde
 	jrl	nz, DisplayMode_Handler_3_Skip19
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip19
 	cp	a, 0:i3
 	jrl	nz, DisplayMode_Handler_3_Skip19
@@ -4979,7 +4979,7 @@ PerfMode_MapEventNoteToDisplay:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, DisplayMode_Handler_3_Return5
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip20
 	jp	DisplayMode_Handler_3_Return5
 DisplayMode_Handler_3_Skip20:
@@ -4997,7 +4997,7 @@ PerfMode_MapDisplayNoteToEvent:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, DisplayMode_Handler_3_Return6
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jrl	z, DisplayMode_Handler_3_Skip21
 	jp	DisplayMode_Handler_3_Return6
 DisplayMode_Handler_3_Skip21:
@@ -10935,7 +10935,7 @@ VoiceSlot_StatusRet_Skip4:
 	cp	(xix+iz), 0x0c
 	pop	xix
 	jrl	nz, VoiceSlot_StatusRet_Join
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jrl	z, VoiceSlot_StatusRet_Skip5
 	jp	VoiceSlot_StatusRet_Join
 VoiceSlot_StatusRet_Skip5:

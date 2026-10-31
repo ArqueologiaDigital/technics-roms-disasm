@@ -12250,7 +12250,7 @@ SeqVoice_InitEntryForCurrentBank:
 	push	qiz
 	ld	a, (SEQ_SONG:16)
 	ldfr_berp	a, 251
-	; ld (0x2878),(0x00ffe3)
+	; ld (SEQ_SONG),(0x00ffe3)
 	ld	(SEQ_SONG:16), (SEQ_CURRENT_SONG:24)
 	call	SeqVoice_InitEntry
 	ldto_berp	a, 251
@@ -19682,7 +19682,7 @@ SeqData_SetErrorCode:
 	ret
 
 SeqStatus_CheckBit2:
-	ld l, (PANEL_REC_91+3:16)
+	ld l, (PANEL_GM+3:16)
 	and l, 0x4
 	ret
 
@@ -19714,7 +19714,7 @@ Seq_ComputePercent_Compute:
 	ret
 
 SeqStatus_SetOrClearBit:
-	lda xde, (PANEL_REC_91+3:16)
+	lda xde, (PANEL_GM+3:16)
 	cp c, 0:i3
 	jr z, SeqStatus_SetOrClear_ClearPath
 	or (xde), a
@@ -19755,7 +19755,7 @@ Part_IsVoiceActive_Return:
 	ret
 
 SeqStatus_ResetAndSendCmd:
-	res 0, (PANEL_REC_91+3:16)
+	res 0, (PANEL_GM+3:16)
 	pushw 0x1
 	ldw wa, 0x91
 	ld bc, 3:i3
@@ -19985,7 +19985,7 @@ SeqTimer_BarChangeProcess:
 	ld wa, 0:i3
 	ldw bc, 0xbd
 	calr Part_ReadByteDirect
-	lda xwa, (PANEL_REC_91+3:16)
+	lda xwa, (PANEL_GM+3:16)
 	cp l, 0xff
 	jr nz, SeqTimer_BarChangeLoop
 	bitm 2, (xwa)
@@ -25129,7 +25129,7 @@ MainExe_SongMemNextPart:
 MainExe_CallSongHandler:
 	calr SoundCtrl_SaveAndSendCmd_EE
 	jrl MainExe_ReturnZero
-; MainExeCall_OnTitleSqtrkmrg: EXECUTE on TT_SQTRKMRG: merges MrgTrA (0xf1d3) and MrgTrB (0xf1d4) into MrgTrC (0xf1d5)
+; MainExeCall_OnTitleSqtrkmrg: EXECUTE on TT_SQTRKMRG: merges MrgTrA (SQEDT_TRKMRG_TRACK_A) and MrgTrB (SQEDT_TRKMRG_TRACK_B) into MrgTrC (SQEDT_TRKMRG_TRACK_C)
 ;   through SeqPart_Compare and moves the tracks' bits in 0x2875 / 0xffec from A and B to C.
 MainExeCall_OnTitleSqtrkmrg:
 	ldmm8 SEQ_TRACK, 0xf1d3
@@ -25899,7 +25899,7 @@ SingleLoad_PrepareSongSlot:
 	dec	2, xsp
 	pushw	iz
 	ld	(xsp+2), a
-	; ldw (0xf19e),(0x00ffec)
+	; ldw (SEQ_TRACK_MASK),(0x00ffec)
 	ldw	(SEQ_TRACK_MASK:16), (SEQ_TRACK_MASK_COPY:24)
 	call	Audio_CheckSubsystemReady
 	ld	a, (SEQ_CURRENT_SONG:24)
@@ -25922,7 +25922,7 @@ SingleLoad_PrepareSongSlot:
 	ret
 ; SingleLoad_FinishSongLoad: After a song file's header and events were read into slot A: on a read error (BC < 0) re-
 ;   initialises the song again; otherwise makes it current, relocates the loaded block numbers by the free-block base
-;   ((0xF22F) - 1: the 16 part-chain head/tail words and every block's link words), recomputes positions, stores it
+;   ((SEQ_FREE_LIST_HEAD) - 1: the 16 part-chain head/tail words and every block's link words), recomputes positions, stores it
 ;   back into its slot, re-inits pans and voice data, restarts the accompaniment and restores word 0xFFEC from 0xF19E.
 ;   Basis: callers + body -- SingleLoad_LoadSong calls it with BC = the read result after
 ;   SingleLoad_PrepareSongSlot prepared the slot.
@@ -26024,7 +26024,7 @@ SeqLoad_ProcessDataBlock_Skip7:
 	calr	SeqLoad_InitPartPanPresets
 	calr	SeqLoad_ProcessAllVoiceData
 	call	Seq_ResetAndRestartAccompaniment
-	; ldw (0x00ffec),(0xf19e)
+	; ldw (0x00ffec),(SEQ_TRACK_MASK)
 	ldw	(SEQ_TRACK_MASK_COPY:24), (SEQ_TRACK_MASK:16)
 SeqLoad_ProcessDataBlock_Join:
 	pop	xiz
@@ -26451,10 +26451,10 @@ SeqLoad_RestoreFreeBlockList:
 	ldmm16	SEQ_FREE_LIST_HEAD, 10698
 	ldmm16	SEQ_FREE_BLOCKS, 10700
 	ret
-; SeqLoad_GetBlockRelocationOffset: Returns HL = (0xF22F) - 1, the free-list head minus one, or 0 when the head word
+; SeqLoad_GetBlockRelocationOffset: Returns HL = (SEQ_FREE_LIST_HEAD) - 1, the free-list head minus one, or 0 when the head word
 ;   is 0. Basis: callers + body -- SingleLoad_FinishSongLoad stores HL at (xsp+6) and adds it to every block number of
 ;   the loaded song that is not 0 / 0xFFFF (the 16 part-chain head/tail words, every block's link words); its header
-;   calls this the free-block base '(0xF22F) - 1'.
+;   calls this the free-block base '(SEQ_FREE_LIST_HEAD) - 1'.
 SeqLoad_GetBlockRelocationOffset:
 	ld	hl, 0:i3
 	ld	wa, (SEQ_FREE_LIST_HEAD:16)
@@ -28154,7 +28154,7 @@ Seq_AdvanceValidateB0Params:
 	jrl z, Seq_AdvanceNoteStep
 	cp w, 0x50
 	jrl ugt, Seq_AdvanceNoteStep
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, Seq_AdvanceNoteStep
 	dec 1, w
 	ld c, w
@@ -28467,7 +28467,7 @@ SeqEvt_SetBit7B0Event:
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	cp l, 0x50
 	jrl ugt, SeqEvt_ReadAndDispatchLoop
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	extz hl
 	dec 1, hl
@@ -29195,7 +29195,7 @@ SeqSearch_ValidateB0Params:
 	jrl z, SeqSearch_AdvanceToPosition
 	cp e, 0x50
 	jrl ugt, SeqSearch_AdvanceToPosition
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqSearch_AdvanceToPosition
 	dec 1, e
 	extz de

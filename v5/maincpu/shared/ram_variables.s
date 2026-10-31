@@ -147,3 +147,5 @@
 ; 0x34100 .. +16376; the probe loops (SndParam_ProbeEntry and its twins) index slot n at +8n,
 ; wrapping modulo 0x7FF.
 	.equ SNDPARAM_HASH_TABLE,	0x34100
+; the live panel records (TLV payloads), named from SndParam_BlockRamPtrs
+	.include "shared/ram_panel_records.s"

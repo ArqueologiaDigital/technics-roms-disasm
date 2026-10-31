@@ -373,11 +373,11 @@ DispatchHandler_ClearActiveFlag:
 PlayMode_InitFlagBlock:
 	call	PlayMode_ArmStartCountdown
 	ret
-; PlayMode_ArmStartCountdown: Once per arming ((0x0D34) = 0): sets (0x0D34) = 1, sets bit 2 of 0x28AC and loads the
-;   playback countdown (0x1144) = 10, which CDlikeSwitch_PlaybackTimer (main-loop tick) counts down -- at 5 it
+; PlayMode_ArmStartCountdown: Once per arming ((PLAYBACK_START_ARMED) = 0): sets (PLAYBACK_START_ARMED) = 1, sets bit 2 of 0x28AC and loads the
+;   playback countdown (PLAYBACK_COUNTDOWN) = 10, which CDlikeSwitch_PlaybackTimer (main-loop tick) counts down -- at 5 it
 ;   restarts the accompaniment and at 0 starts the transport (CDlike_ResetPlaybackState) on the medley-play titles
 ;   120/122. Basis: callers + body -- PlayMode_InitFlagBlock, the activate-state case 0 of SqMdlyPlyTtlFunc and
-;   DkMdlyPlyTtlFunc, is its only caller; PlayMode_StartAndSendCommand acts only when (0x0D34) = 1 and the countdown
+;   DkMdlyPlyTtlFunc, is its only caller; PlayMode_StartAndSendCommand acts only when (PLAYBACK_START_ARMED) = 1 and the countdown
 ;   has reached 0. Twins: SongMode_InitFlagBlock_Helper, PartFormat_InitFlagBlock_Helper,
 ;   PlayModeStop_InitFlagBlock_Helper.
 PlayMode_ArmStartCountdown:
@@ -387,7 +387,7 @@ PlayMode_ArmStartCountdown:
 	call	PlayMode_LoadStartCountdown
 PlayMode_ArmStartCountdown_Return:
 	ret
-; PlayMode_LoadStartCountdown: Sets bit 2 of 0x28AC and loads the playback countdown (0x1144) = 10. Basis: callers +
+; PlayMode_LoadStartCountdown: Sets bit 2 of 0x28AC and loads the playback countdown (PLAYBACK_COUNTDOWN) = 10. Basis: callers +
 ;   body -- PlayMode_ArmStartCountdown calls it once per arming; CDlikeSwitch_PlaybackTimer counts 0x1144 down (at 5
 ;   it restarts the accompaniment, at 0 starts the transport on titles 120/122), SeqRestart_CheckAndDispatch and
 ;   SeqRestart_SendPlaybackNotify act only while 0x28AC bit 2 is set, and PlayMode_DispatchAndClearBit2 clears it.
@@ -956,7 +956,7 @@ CDlikeReset_SetTimerFlags:
 
 CDlike_InitModeAndLoadBank:
 	or (0xb7e2:16), 64
-	ld a, (PANEL_REC_91+3:16)
+	ld a, (PANEL_GM+3:16)
 	ld (3394:16), a
 	ld (PLAYBACK_START_ARMED:16), 0
 	ld (PLAYBACK_COUNTDOWN:16), 0
@@ -1074,16 +1074,16 @@ SongBank_LoadToWorkArea:
 SongBank_CheckAccompanimentMode:
 	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SongBank_EnableAccompaniment
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr z, SongBank_CheckBassMode
-	and (PANEL_REC_91+3:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SongBank_SendAccompEvent
 
 SongBank_EnableAccompaniment:
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SongBank_CheckBassMode
-	or (PANEL_REC_91+3:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SongBank_SendAccompEvent:
@@ -1097,12 +1097,12 @@ SongBank_SendAccompEvent:
 SongBank_CheckBassMode:
 	cp (SEQ_SONG_RECORD+203:16), 255
 	jr z, SongBank_EnableBassMode
-	and (PANEL_REC_91+3:16), 254
+	and (PANEL_GM+3:16), 254
 	xor a, a
 	jr SongBank_SendBassEvent
 
 SongBank_EnableBassMode:
-	or (PANEL_REC_91+3:16), 1
+	or (PANEL_GM+3:16), 1
 	ld a, 0x1:opc
 
 SongBank_SendBassEvent:

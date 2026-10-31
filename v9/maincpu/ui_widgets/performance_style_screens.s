@@ -702,13 +702,13 @@ FtLangText16_LangStrings:	.incbin "includes/generated/naka_perf_style.bin", 0x6F
 FtLangText17_Texts:	.incbin "includes/generated/naka_perf_style.bin", 0x704C, 0x60
 ; NoteEvent_DefaultPatternSlot -- 1 x {u8 flags, u16 prev_slot, u16 next_slot, u8 events[251]}: default 256-byte pattern slot
 ; NoteEvent_LoadSoundGenParams (storage/flash_floppy_handlers.s) copies it (ldirw 0x80 words) into all 340
-; slots at *(0xC72)+0x1400 (0x100 apart, 0..0x153) and clears byte 0 for slots 150 on
+; slots at *(STYLE_WORK_IMAGE_PTR)+0x1400 (0x100 apart, 0..0x153) and clears byte 0 for slots 150 on
 ; slot layout as AccPatch_FindFreeSlot / AccPatch_ClearLinkedListEntries use it (sequencer/accompaniment_engine.s):
 ; bit 7 of +0 = allocated, +1 = previous slot, +3 = next slot (0xFFFF = none); events from +5
 NoteEvent_DefaultPatternSlot:	.incbin "includes/generated/naka_perf_style.bin", 0x70AC, 0x100
 ; AccPatch_SlotRecordTemplate -- 1 x struct (64 B): the first 64 bytes of the 96-byte default slot record that
 ; NoteEvent_LoadSoundGenParams copies (ldirw 0x30 words; the last 32 bytes, "     Init       " + zeros, follow in
-; naka_property_descriptors.s) into the 30 accompaniment-patch slots at *(0xc72)+0x60+96*i, giving slot i the chain heads
+; naka_property_descriptors.s) into the 30 accompaniment-patch slots at *(STYLE_WORK_IMAGE_PTR)+0x60+96*i, giving slot i the chain heads
 ; 5i..5i+4 at +0, +4, +6, +8, +10 (AccPatch_FreeAllChains / AccPatch_FillAllVoiceData walk those five words; +2 is not one).
 ; +12.. is the settings block AccPatch_CopyDefaultsToSlot resets from AccPatch_DefaultSlotData; byte +12 indexes
 ; AccTone_LookupByProgram_Table, whose value times (byte +13) + 1 is the fill length AccPatch_FillEntryWithVoiceData uses.

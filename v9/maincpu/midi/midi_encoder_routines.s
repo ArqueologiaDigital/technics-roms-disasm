@@ -56,7 +56,7 @@ CPanel_EncoderDispatch:
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
 ; Encoder_ProcessExpressionPedal: Analog ID 2, which only the main CPU's own A/D channel 0 produces
 ;   (MidiParam_ProcessChannel0 / MidiParam_ForceResync pass BC = 2; no panel header maps to it): the expression pedal.
-;   Inverts the raw byte, maps (~raw) >> 1 through ENCODER_LUT_EXPRESSION_PEDAL into EXPRESSION_PEDAL_VALUE (0x8EE4); HL = the
+;   Inverts the raw byte, maps (~raw) >> 1 through ENCODER_LUT_EXPRESSION_PEDAL into EXPRESSION_PEDAL_VALUE (EXPRESSION_PEDAL_VALUE); HL = the
 ;   value, or 0xFFFF if unchanged. Basis: callers + readers of its output.
 Encoder_ProcessExpressionPedal:
 	ldw hl, 0xffff	; Default return = no change
@@ -82,7 +82,7 @@ Encoder_ProcessExpressionPedal_End:
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
 ; Encoder_ProcessAfterTouch: Analog ID 5, produced only by the main CPU's A/D channel 1 (MidiParam_ProcessChannel1, BC
 ;   = 5): the after-touch sensor. Maps the raw byte through ENCODER_LUT_AFTERTOUCH, applies the AFTER TOUCH threshold and
-;   curve (Encoder_ClampScaleAndNormalize) and stores AFTERTOUCH_VALUE (0x8EF4); HL = the value or 0xFFFF. Basis:
+;   curve (Encoder_ClampScaleAndNormalize) and stores AFTERTOUCH_VALUE (AFTERTOUCH_VALUE); HL = the value or 0xFFFF. Basis:
 ;   callers + readers of its output.
 Encoder_ProcessAfterTouch:
 	pushw iz
@@ -143,8 +143,8 @@ Encoder_ClampScaleAndNormalize_End:
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
 ; Encoder_ProcessPitchBend: Analog ID 25 = left-panel header 0xD1, the pitch-bend wheel: inverts the raw byte, maps it
-;   through ENCODER_LUT_PITCH_BEND (flat 0x80 centre) and stores PITCH_BEND_VALUE (0x8EE8) -- directly, or, when
-;   (0x379B) & 0x0F or (0x7F0B) is non-zero, narrowed to COMPOSER_BEND_RANGE / 12 around the centre (0 = no event). HL
+;   through ENCODER_LUT_PITCH_BEND (flat 0x80 centre) and stores PITCH_BEND_VALUE (PITCH_BEND_VALUE) -- directly, or, when
+;   (CMP_RECORD_PART) & 0x0F or (0x7F0B) is non-zero, narrowed to COMPOSER_BEND_RANGE / 12 around the centre (0 = no event). HL
 ;   = the value or 0xFFFF. Basis: header map + readers of its output.
 Encoder_ProcessPitchBend:
 	ldw hl, 0xffff	; Default return = no change
@@ -197,7 +197,7 @@ Encoder_ProcessPitchBend_End:
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
 ; Encoder_ProcessModulation: Analog ID 26 = left-panel header 0xD2, the modulation wheel: maps raw >> 1 through
-;   ENCODER_LUT_MODULATION into MODULATION_VALUE (0x8EEA); HL = the value or 0xFFFF if unchanged. Basis: header map +
+;   ENCODER_LUT_MODULATION into MODULATION_VALUE (MODULATION_VALUE); HL = the value or 0xFFFF if unchanged. Basis: header map +
 ;   readers of its output.
 Encoder_ProcessModulation:
 	ldw hl, 0xffff	; Default return = no change
@@ -220,7 +220,7 @@ Encoder_ProcessModulation_End:
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value (always returns value, no skip)
 ; Encoder_ProcessMainVolume: Analog ID 27 = left-panel header 0xD3, the MAIN VOLUME slider: inverts the raw byte, maps
-;   (~raw) >> 1 through ENCODER_LUT_MAIN_VOLUME into MAIN_VOLUME_VALUE (0x8EE6) and always returns it in HL. Basis:
+;   (~raw) >> 1 through ENCODER_LUT_MAIN_VOLUME into MAIN_VOLUME_VALUE (MAIN_VOLUME_VALUE) and always returns it in HL. Basis:
 ;   header map + readers of its output (identity as MAIN_VOLUME_VALUE).
 Encoder_ProcessMainVolume:
 	cpl a	; Invert input

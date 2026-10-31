@@ -8353,8 +8353,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Join4:
 	pop	xbc
 	pop	xwa
 	ret
-; SeMenu_DrawPartSelector: Draws the part selector on the side rows: for each part (2 or 4, by (0x6AE)) its
-;   "1ST".."4TH" label if enabled in mask (0x65E), a hatch pattern if not, then the highlight box around the selected
+; SeMenu_DrawPartSelector: Draws the part selector on the side rows: for each part (2 or 4, by (SEMENU_PART_MODE)) its
+;   "1ST".."4TH" label if enabled in mask (SEMENU_PART_MASK), a hatch pattern if not, then the highlight box around the selected
 ;   part (0x65D). Basis: callers + body -- page-draw routines call it right after SeMenu_DrawSoloButton.
 SeMenu_DrawPartSelector:
 	push	xwa
@@ -8821,7 +8821,7 @@ SeMenuTitle_DrawStaticScreen_Return:
 ; SeMenu_DrawOriginalEditedBadge: Draws the "ORIGINAL" badge (SeMenu_DrawOriginalEditedBadge_Records2) at (236,31)-(308,50), or "EDITED"
 ;   (SeMenu_DrawOriginalEditedBadge_Records) when page param 1 (0x661) is 1. Basis: callers + body -- the screen-0x20 draw
 ;   SeMenuTitle_DrawStaticScreen (entry 0 of SeTitle_StaticScreenTable) and its field redraw SeMenuTitle_DrawField
-;   (entry 0 of SeTitle_FieldDrawTable) call it in the layout used when (0x6AE) != 1.
+;   (entry 0 of SeTitle_FieldDrawTable) call it in the layout used when (SEMENU_PART_MODE) != 1.
 SeMenu_DrawOriginalEditedBadge:
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(0x661:16), 1
@@ -9000,7 +9000,7 @@ SeTonHyb1_DrawStaticScreen_Join:
 	call	SeMenu_DrawTitleIcon
 	ret
 ; SeMenu_DrawPartLabels: Draws the part labels in the alternate side-row layout (y 79/111/143/175): "1ST".."4TH" for
-;   parts enabled in (0x65E), a hatch pattern for disabled ones, 2 or 4 parts by (0x6AE); no selection box (unlike
+;   parts enabled in (SEMENU_PART_MASK), a hatch pattern for disabled ones, 2 or 4 parts by (SEMENU_PART_MODE); no selection box (unlike
 ;   SeMenu_DrawPartSelector). Basis: callers + body -- page-draw routines call it after SeMenu_DrawSoloButton.
 SeMenu_DrawPartLabels:
 	cp	(SEMENU_PART_MODE:16), 1
@@ -9392,7 +9392,7 @@ SeMenu_CompareAndApply_End:
 	call SeMenu_CompareAndApply_Data4
 	ret
 ; SeAmp_DrawSectionFrame: Draws the AMPLITUDE section frame common to its five titles: 'AMPLITUDE', 'SOUND EDIT', the
-;   ENV / AMP / LFO tabs and boxes (all 17 records, or fewer in 2-part mode, (0x6AE) = 1). Basis: callers + body
+;   ENV / AMP / LFO tabs and boxes (all 17 records, or fewer in 2-part mode, (SEMENU_PART_MODE) = 1). Basis: callers + body
 ;   (records).
 SeAmp_DrawSectionFrame:
 	; --- Init helper: language-conditional XIX setup (35 bytes) ---
@@ -11608,7 +11608,7 @@ SePitEnv1_Records:
 ; evidence: SeMenu_CompareAndApply_Data3
 ; SeAmp_SectionFrameRecords: The AMPLITUDE section frame common to its five titles (0x2B-0x2F): "AMPLITUDE", "SOUND
 ;   EDIT", the ENV/AMP/LFO tab buttons with their arrows; SeAmp_DrawSectionFrame draws all 17 records, or only up to
-;   +119 (no LFO tab) when (0x6AE) = 1 (drum-kit mode). Basis: reader + bytes.
+;   +119 (no LFO tab) when (SEMENU_PART_MODE) = 1 (drum-kit mode). Basis: reader + bytes.
 SeAmp_SectionFrameRecords:
 	sd_ptext	0x1c, 15, 122, 5, "AMPLITUDE"
 	sd_ptext	0x17, 16, 6, 7, "SOUND EDIT"
@@ -11683,7 +11683,7 @@ SeAmpAmp1_Part4TouchCurveFrame:
 	sd_quad	0x01, 214, 186, 224, 186
 ; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeAmpAmp1_DrumKitPart2TouchCurveFrame
 ; evidence: startptrs at SeAmpAmp1_DrumKitTouchCurveFramePtrs
-; SeAmpAmp1_DrumKitPart1TouchCurveFrame: AMPLITUDE AMP1 page in drum-kit mode ((0x6AE) = 1, 2 parts): "TOUCH" "CURVE",
+; SeAmpAmp1_DrumKitPart1TouchCurveFrame: AMPLITUDE AMP1 page in drum-kit mode ((SEMENU_PART_MODE) = 1, 2 parts): "TOUCH" "CURVE",
 ;   the frame at x 168-206 and the leader line (y 90) from part 1's row, drawn when part 1 is selected; entry 1 (and
 ;   the unused entry 0) of SeAmpAmp1_DrumKitTouchCurveFramePtrs. Basis: indexer + bytes.
 SeAmpAmp1_DrumKitPart1TouchCurveFrame:
@@ -11693,7 +11693,7 @@ SeAmpAmp1_DrumKitPart1TouchCurveFrame:
 	sd_quad	0x01, 158, 90, 168, 90
 ; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeAmpAmp1_TouchCurveFramePtrs
 ; evidence: startptrs at SeAmpAmp1_DrumKitTouchCurveFramePtrs
-; SeAmpAmp1_DrumKitPart2TouchCurveFrame: AMPLITUDE AMP1 page in drum-kit mode ((0x6AE) = 1, 2 parts): "TOUCH" "CURVE",
+; SeAmpAmp1_DrumKitPart2TouchCurveFrame: AMPLITUDE AMP1 page in drum-kit mode ((SEMENU_PART_MODE) = 1, 2 parts): "TOUCH" "CURVE",
 ;   the frame at x 168-206 and the leader line (y 122) from part 2's row, drawn when part 2 is selected; entry 2 of
 ;   SeAmpAmp1_DrumKitTouchCurveFramePtrs. Basis: indexer + bytes.
 SeAmpAmp1_DrumKitPart2TouchCurveFrame:
@@ -11714,7 +11714,7 @@ SeAmpAmp1_TouchCurveFramePtrs:
 ; list-start table: entry i -> a list of 42 bytes (3 entries, LE32)
 ; evidence: code 0xF0F42E
 ; SeAmpAmp1_DrumKitTouchCurveFramePtrs: List-start table of the AMP1 touch-curve frame per selected part in drum-kit
-;   mode ((0x6AE) = 1). Basis: indexer.
+;   mode ((SEMENU_PART_MODE) = 1). Basis: indexer.
 SeAmpAmp1_DrumKitTouchCurveFramePtrs:
 	.long	SeAmpAmp1_DrumKitPart1TouchCurveFrame
 	.long	SeAmpAmp1_DrumKitPart1TouchCurveFrame
@@ -12447,7 +12447,7 @@ SeMenu_CompareAndApply_Match_Records:
 	.incbin "includes/generated/se_compare_screen.bin"
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (13 entries, LE32)
 ; evidence: SeAmpAmp1_DrawField
-; SeAmpAmp1_FourPartFieldRecordPtrs: AMPLITUDE AMP1 page, 4-part layout ((0x6AE) != 1): record-pointer table of its 13
+; SeAmpAmp1_FourPartFieldRecordPtrs: AMPLITUDE AMP1 page, 4-part layout ((SEMENU_PART_MODE) != 1): record-pointer table of its 13
 ;   fields (0 = part cursor box, 1-4 LEVEL, 5-8 TOUCH, 9-12 CURVE of parts 1-4 in se_compare_screen), entry A drawn by
 ;   SeAmpAmp1_DrawField. Basis: indexer + bytes.
 SeAmpAmp1_FourPartFieldRecordPtrs:
@@ -12542,7 +12542,7 @@ SeAmpEnv1_ReleaseField:
 	sdb_num	0x0666, 0x7f, 0, 0x20, 220*40+31, 3
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (7 entries, LE32)
 ; evidence: SeAmpEnv1_DrawField
-; SeAmpEnv1_FourPartFieldRecordPtrs: AMPLITUDE ENV1 page, 4-part layout ((0x6AE) != 1): the record-pointer table of
+; SeAmpEnv1_FourPartFieldRecordPtrs: AMPLITUDE ENV1 page, 4-part layout ((SEMENU_PART_MODE) != 1): the record-pointer table of
 ;   its 7 fields ATK, PEAK, DECAY1, SUST1, DECAY2, SUST2, RELEASE (RAM 0x660-0x666), entry A drawn by
 ;   SeAmpEnv1_DrawField. Basis: indexer + bytes.
 SeAmpEnv1_FourPartFieldRecordPtrs:

@@ -118,7 +118,7 @@ StyleUI_ParamBlockPtrTable:
 ; StyleUI_ParamBlockEndPtrTable: 19 x u32: the END pointers of the display lists that StyleUI_ParamBlockPtrTable's
 ;   entries start (the second of the 4 x 19 tables): Scoop_InitPartDisplay loads xiy = StyleUI_ParamBlockPtrTable[k]
 ;   and xix = this[k] and draws [xiy, xix) with the Scoop static interpreter (UIRender_TwoTableGeneral) on the step-
-;   record screen, unless the display mode (0x0D65) is 2 (CONTROL track). Basis: readers + bytes -- each entry is the
+;   record screen, unless the display mode (SQSTEP_DISPLAY_MODE) is 2 (CONTROL track). Basis: readers + bytes -- each entry is the
 ;   object that follows (or the one after) the matching start block, as in Scoop_InitDisplayFull's AltE /
 ;   StyleUI_ParamBlockPtrTable pair.
 StyleUI_ParamBlockEndPtrTable:
@@ -142,7 +142,7 @@ StyleUI_ParamBlockEndPtrTable:
 	.long StyleUI_ParamBlock_AltB
 	.long StyleUI_ParamBlock_AltE
 ; StyleUI_ControlTrackParamBlockPtrTable: 19 x u32: the START pointers Scoop_InitPartDisplay uses instead of
-;   StyleUI_ParamBlockPtrTable when the step-record display mode (0x0D65) is 2, the CONTROL track (third of the 4 x 19
+;   StyleUI_ParamBlockPtrTable when the step-record display mode (SQSTEP_DISPLAY_MODE) is 2, the CONTROL track (third of the 4 x 19
 ;   tables); identical to it except entry 1 (ParamBlock_Common instead of ScreenData_MeasCursor). Basis: readers +
 ;   bytes.
 StyleUI_ControlTrackParamBlockPtrTable:
@@ -167,7 +167,7 @@ StyleUI_ControlTrackParamBlockPtrTable:
 	.long StyleUI_ParamBlock_AltD
 ; StyleUI_ControlTrackParamBlockEndPtrTable: 19 x u32: the END pointers paired with
 ;   StyleUI_ControlTrackParamBlockPtrTable (fourth of the 4 x 19 tables), used when the step-record display mode
-;   (0x0D65) is 2 (CONTROL track); entry 1 is ParamBlock_Short where the default end table has ScreenData_YesCtl.
+;   (SQSTEP_DISPLAY_MODE) is 2 (CONTROL track); entry 1 is ParamBlock_Short where the default end table has ScreenData_YesCtl.
 ;   Basis: readers + bytes.
 StyleUI_ControlTrackParamBlockEndPtrTable:
 	.long StyleUI_ParamBlock_VALUE

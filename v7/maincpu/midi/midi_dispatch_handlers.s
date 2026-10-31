@@ -6722,7 +6722,7 @@ DataBuf_InitSlotFromPreset:
 	call	Mem_Copy
 	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x300
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, 0xf9a0
 	pushw wa
 	pushw SndParamRam_DefaultImage@hi16
@@ -6750,7 +6750,7 @@ DataBuf_InitSlotFromPreset_Alt:
 	ld xbc, SEQ_SONG_SLOTS
 	add xbc, xwa
 	add xbc, 0x300
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, 0xf9a0
 	pushw wa
 	pushw SndParamRam_DefaultImage@hi16
@@ -6929,7 +6929,7 @@ SndParam_ApplyModeSpecific:
 	ld	c, (0xb754:16)
 	cp c, 2:i3
 	ret z
-	lda xwa, (PANEL_REC_91+3:16)
+	lda xwa, (PANEL_GM+3:16)
 	cp c, 0:i3
 	jr	z, SndParam_ClearBits
 	cp c, 1:i3
@@ -7168,7 +7168,7 @@ SndParam_UpdateChan_CopyMemory:
 	ld xwa, 0x2e0
 	add (xsp), xwa
 	lda xbc, (LIVE_PANEL_BLOCK:16)
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, xbc
 	pushw wa
 	push xbc
@@ -12801,7 +12801,7 @@ VoiceData_SyncLoop:
 	inc 1, iz
 	cp iz, 7:i3
 	jr	c, VoiceData_SyncLoop
-	lda xbc, (PANEL_REC_98+1:16)
+	lda xbc, (PANEL_PMEM_SETTINGS+1:16)
 	ld a, (xbc)
 	and a, 0x80
 	ld (xbc), a
@@ -12809,7 +12809,7 @@ VoiceData_SyncLoop:
 	res 7, e
 	or a, e
 	ld (xbc), a
-	lda xwa, (PANEL_REC_60+1:16)
+	lda xwa, (PANEL_EFFECT_SWITCHES+1:16)
 	cp	(0x8dd8:16), 0
 	jr	z, VoiceSync_ClearBit5
 	setm 5, (xwa)

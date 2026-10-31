@@ -1899,18 +1899,18 @@ EditControlProc:
 ;   1. Call 0xef0797 -- check bit 7 of DRAM 0x0406 (set once after boot by
 ;      Boot_DisplayScreen, cleared only during flash update). Returns HL=1
 ;      if set; returns early (HL=0) if not.
-;   2. Read *(0x8d38) = index R into SSF_PresentationGateTable (ROM 0xe01f80).
+;   2. Read *(ACTIVE_TITLE) = index R into SSF_PresentationGateTable (ROM 0xe01f80).
 ;   3. Read P = SSF_PresentationGateTable[R] -- base of a ROM state-value array.
 ;   4. If P == 0 (null), return.
 ;   5. Walk the 16-bit array at P:
 ;      - If first entry == 0xfffe: send event unconditionally.
 ;      - If first entry == 0xffff: no entries, return.
-;      - Otherwise: compare each entry to BC=(0xc080<<8)|(0xc07d) until match
+;      - Otherwise: compare each entry to BC=(0xc080<<8)|(SWBTWR_PAYLOAD_1) until match
 ;        or 0xffff sentinel. If match found, send event.
 ;   6. Send: XWA=0xffffffff XBC=0x1c00038 XDE=(0xc07d-0xc080 packed), jp FA9945.
 ;
 ; FA9945 routes 0x1c00038 to widgets registered via FA9752 whose match value
-; (upper 16 bits of XDE) matches (0xc080<<8)|(0xc07d).
+; (upper 16 bits of XDE) matches (0xc080<<8)|(SWBTWR_PAYLOAD_1).
 ;
 ; =============================================================================
 ; KeyPress_StateDispatch -- Key press dispatcher
@@ -1919,7 +1919,7 @@ EditControlProc:
 ; the key mapping array for that state. Then either:
 ;   - PASS-THROUGH (0xfffe): broadcasts ANY key as event 0x1c00038
 ;   - SCAN (normal): searches for matching key code in the array
-;   - EMPTY (0xffff): returns immediately
+;   - EMPTY (NAKA_INDEX_NONE): returns immediately
 ;
 ; Event data in XDE = (chain << 24) | (param << 16) | (C07E << 8) | C07F
 ; Target: XWA = 0xffffffff (broadcast to all handlers)
@@ -2040,7 +2040,7 @@ CtrlPanel_HandleKey10:
 ; Sets PART_SELECT from bit 0 of the word at 0xfc66 (bit clear: 1, set: 0) and appends switch
 ; command {0x90, 0x10, PART_SELECT, 0xff} (AddswbWr).
 PartSelect_UpdateDisplayState:
-	ld a, (PANEL_REC_90:16)
+	ld a, (PANEL_CONDUCTOR:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc8 z, e

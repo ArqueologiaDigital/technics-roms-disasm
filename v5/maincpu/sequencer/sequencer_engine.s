@@ -3678,7 +3678,7 @@ SeqNote_SpecialChan_ComparePos:
 	jr c, SeqNote_ProcessSpecialChannels
 
 SeqNote_SpecialChan_ClearAndStore:
-	ld a, (0xfc5f:16)
+	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	call z, (BitMapOut_PrepareAndDisplay:24)
 	ldw	(7568:16), 0xffff
@@ -4075,7 +4075,7 @@ SeqNote_HandleMasterChannel:
 	extz wa
 	sla wa, 3
 	ldw	(xix+wa), 0xffff
-	ld a, (0xfc5f:16)
+	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	jr nz, SeqNote_ReturnNotProcessed
 	bit 2, (1054:16)
@@ -4843,7 +4843,7 @@ AccPedalConfig_ApplyTempo:
 AccPedalTempo_ClearBit7:
 	srl_erpb 0xfb, 0x01
 
-	lda xbc, (0xfc5a:16)
+	lda xbc, (PANEL_STYLE:16)
 
 	ld (xbc + 8), e
 
@@ -6567,7 +6567,7 @@ SeqCh_ClearActive_ShiftDone:
 	cpl de
 	and (SEQ_ACTIVE_PARTS:16), de
 	and	(8974:16), de
-	ld a, (0xfc5f:16)
+	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	ret nz
 	ld	a, (8982:16)
@@ -8169,7 +8169,7 @@ SeqPlay_PrepareDrum_ShiftDone:
 	ld (xwa + 1), 0x0
 	ld (xwa + 2), 0x48
 	ld (xwa + 3), 0x3
-	ld c, (0xfc5d:16)
+	ld c, (PANEL_STYLE+3:16)
 	ld (xwa + 4), c
 	ld (xwa + 5), 0x7
 	calr Part_CheckAndSetModifiedFlags
@@ -8214,7 +8214,7 @@ PartVoiceStatus_ShiftDone:
 	lda	xbc, (xsp+2)
 	ld	(xbc), 128
 	ld	(xbc+1), 0
-	lda	xwa, (64602:16)
+	lda	xwa, (PANEL_STYLE:16)
 	ld	d, (xwa+8)
 	ld	e, d
 	res	7, e
@@ -11203,7 +11203,7 @@ SeqVoice_ScanParts_CheckType:
 	jr SeqVoice_ScanParts_LoopNext
 
 SeqVoice_ScanParts_ReadGPIO:
-	lda	xwa, (64602:16)
+	lda	xwa, (PANEL_STYLE:16)
 	ld	e, (xwa+3)
 	and	e, 7
 	lda	xbc, (xwa+4)
@@ -17851,7 +17851,7 @@ SeqFind_ReturnResult:
 
 SeqPart_DispatchRhythmNote:
 	push xiz
-	lda xwa, (0xfc5a:16)
+	lda xwa, (PANEL_STYLE:16)
 	sub xwa, 0xf980
 	ld iz, wa
 	add iz, 0x2e0
@@ -19060,7 +19060,7 @@ SeqPlay_CheckAndStartPlayback:
 	ld (SEQ_BEAT_TICK:16), 0
 	ei 0
 	call AccWrap_PlayModeStart
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	ret z
 	calr SeqTimer_SetPlaybackFlags
 	ret
@@ -19104,7 +19104,7 @@ SeqPlay_SetBarAndResetScroll:
 SeqPlay_HandleVoiceReassign:
 	bit	2, (0x2897:16)
 	jr z, SeqPlay_CheckNoteDisplayPending
-	ld a, (0xfc5f:16)
+	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	jr nz, SeqPlay_CheckNoteDisplayPending
 	call SeqRestart_CheckAndDispatch
@@ -19340,12 +19340,12 @@ SeqData_SetErrorCode:
 	ret
 
 SeqStatus_CheckBit2:
-	ld l, (0xfdad:16)
+	ld l, (PANEL_GM+3:16)
 	and l, 0x4
 	ret
 
 SeqStatus_CheckMaskedBit:
-	ld l, (0xfd52:16)
+	ld l, (PANEL_MIDI+2:16)
 	and l, a
 	ret
 
@@ -19372,7 +19372,7 @@ Seq_ComputePercent_Compute:
 	ret
 
 SeqStatus_SetOrClearBit:
-	lda xde, (0xfdad:16)
+	lda xde, (PANEL_GM+3:16)
 	cp c, 0:i3
 	jr z, SeqStatus_SetOrClear_ClearPath
 	or (xde), a
@@ -19413,7 +19413,7 @@ Part_IsVoiceActive_Return:
 	ret
 
 SeqStatus_ResetAndSendCmd:
-	res 0, (0xfdad:16)
+	res 0, (PANEL_GM+3:16)
 
 	pushw 0x1
 
@@ -26074,7 +26074,7 @@ SeqLoad_ProcessDataBlock_Helper2:
 	cp	l, 8
 	ret	nz
 SeqBar_DataBlock_Code_Skip2:
-	lda	xde, (0xfc5a:16)
+	lda	xde, (PANEL_STYLE:16)
 	lda	xbc, (xde+8)
 	ld	xwa, xbc
 	sub	xwa, 0xf980
@@ -27209,13 +27209,13 @@ Seq_AdvanceValidateB0Params:
 	jrl z, Seq_AdvanceNoteStep
 	cp w, 0x50
 	jrl ugt, Seq_AdvanceNoteStep
-	bit 6, (0xfd97:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, Seq_AdvanceNoteStep
 	dec 1, w
 	ld c, w
 	extz bc
 	mul bc, 0x3b0
-	lda xwa, (0xfc5a:16)
+	lda xwa, (PANEL_STYLE:16)
 	sub xwa, 0xf9a0
 	ld hl, wa
 	add hl, bc
@@ -27522,14 +27522,14 @@ SeqEvt_SetBit7B0Event:
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	cp l, 0x50
 	jrl ugt, SeqEvt_ReadAndDispatchLoop
-	bit 6, (0xfd97:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	extz hl
 	dec 1, hl
 	ld bc, hl
 	mul bc, 0x3b0
 	ld hl, bc
-	lda xwa, (0xfc5a:16)
+	lda xwa, (PANEL_STYLE:16)
 	sub xwa, 0xf9a0
 	ld ix, wa
 	add ix, hl
@@ -28006,7 +28006,7 @@ Portamento_ScanInitAndLoop:
 	ldw	(9642:16), 0
 	ld	(9644:16), 0
 	ld	(9646:16), 0
-	lda xwa, (0xfc5a:16)
+	lda xwa, (PANEL_STYLE:16)
 	sub xwa, 0xf980
 	ld iz, wa
 	add iz, 0x2e0
@@ -28268,14 +28268,14 @@ SeqSearch_ValidateB0Params:
 	jrl z, SeqSearch_AdvanceToPosition
 	cp e, 0x50
 	jrl ugt, SeqSearch_AdvanceToPosition
-	bit 6, (0xfd97:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqSearch_AdvanceToPosition
 	dec 1, e
 	extz de
 	ld bc, de
 	mul bc, 0x3b0
 	ld de, bc
-	lda xwa, (0xfc5a:16)
+	lda xwa, (PANEL_STYLE:16)
 	sub xwa, 0xf9a0
 	ld hl, wa
 	add hl, de

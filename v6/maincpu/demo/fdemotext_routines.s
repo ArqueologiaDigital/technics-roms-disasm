@@ -340,8 +340,8 @@ FDemoText_UpdateVoiceDisplay_CheckSend:
 	ld a, (0x0247ee:24)
 	and a, 0x38
 	jr nz, FDemoText_UpdateVoiceDisplay_Done
-	ld c, (0xfc26:16)
-	cp (0xfc74:16), c
+	ld c, (PANEL_DRAWBAR_RIGHT1:16)
+	cp (PANEL_DSP_EFFECT:16), c
 	jr z, FDemoText_UpdateVoiceDisplay_Done
 	extz bc
 	ldw wa, 0x61
@@ -356,7 +356,7 @@ FDemoText_SyncVoicePreset:
 	dec 6, xsp
 	pushw_erp 0xfa
 	ld (xsp + 6), a
-	lda xwa, (0xfc74:16)
+	lda xwa, (PANEL_DSP_EFFECT:16)
 	ld (xsp + 2), xwa
 	ld a, (0x0247ee:24)
 	and a, 0x38
@@ -390,7 +390,7 @@ FDemoText_SyncPreset_NextActive:
 FDemoText_SyncPreset_DirectCopy:
 	ld xwa, (xsp + 2)
 	ld a, (xwa)
-	ld (0xfc26:16), a
+	ld (PANEL_DRAWBAR_RIGHT1:16), a
 	ldib_erp 0xfb, 0
 
 FDemoText_SyncPreset_DirectLoop:
@@ -1171,7 +1171,7 @@ FDemoText_NotifyUIChange:
 	extz	bc
 	ld	xwa, 18688
 	call	DSPCfg_WriteParamFull
-	ld	e, (64628:16)
+	ld	e, (PANEL_DSP_EFFECT:16)
 	extz	de
 	pushw	255
 	ldw	wa, 97

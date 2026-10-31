@@ -517,7 +517,7 @@ AudioInit_UpdateIndicators:
 	call	CtrlPanel_SetIndicatorBit
 	cp	(0xc52c:16), 255
 	jr	z, AudioInit_ClearDrumModeAlt
-	ld	a, (PANEL_REC_70:16)
+	ld	a, (PANEL_PLAY_SETTINGS:16)
 	and	a, 0x3
 	jr	z, AudioInit_ClearDrumMode
 	ld	a, (0xc506:16)
@@ -1404,7 +1404,7 @@ AudioInit_Pan_CheckTypeED:
 	ld	wa, (0xc4fc:16)
 	and	wa, 0x60
 	jr	z, AudioInit_Pan_DefaultCenter
-	ld	a, (PANEL_REC_90:16)
+	ld	a, (PANEL_CONDUCTOR:16)
 	and	a, 0x3
 	cp	a, 2:i3
 	jr	nz, AudioInit_Pan_TypeED_Left
@@ -1443,7 +1443,7 @@ AudioInit_Pan_Reverb_CheckTypeED:
 	ld	wa, (0xc4fc:16)
 	and	wa, 0x60
 	jr	z, AudioInit_Pan_Reverb_Center
-	ld	a, (PANEL_REC_90:16)
+	ld	a, (PANEL_CONDUCTOR:16)
 	and	a, 0x3
 	cp	a, 2:i3
 	jr	nz, AudioInit_Pan_Reverb_TypeED_Left

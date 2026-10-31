@@ -19,7 +19,7 @@ INTT2_HANDLER:
 NMI_HANDLER:
 	ldw (0x00ffca:24), 0x0000
 	calr NMI_StorePayloadChecksums
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr z, NMI_SetPowerOffCode_A5A5
 	ldw (0x00ffcc:24), 0x5a5a
 	jr NMI_ClearGuardAndHalt

@@ -281,7 +281,7 @@ AccompSeq_AdvanceDone:
 	ret
 
 ; Out: in pool mode ((0x7e25) 128 or more) XIY = the current block's base (AccompSeq_GetBlockBase);
-; otherwise IY = (0x7e42).
+; otherwise IY = (ACCSEQ_BLOCK).
 AccompSeq_VRAMHelperData:
 	cp	(0x7e25:16), 128
 	jr	c, AccompSeq_VRAMHelperData_Skip
@@ -292,7 +292,7 @@ AccompSeq_VRAMHelperData_Skip:
 	ld	iy, wa
 AccompSeq_VRAMHelperData_Return:
 	ret
-; AccompSeq_GetBlockBase: Returns XIY = 0x1E8B00 + 256 * ((0x7E42) & 0xFFF), the start of the accompaniment
+; AccompSeq_GetBlockBase: Returns XIY = 0x1E8B00 + 256 * ((ACCSEQ_BLOCK) & 0xFFF), the start of the accompaniment
 ;   sequencer's current 256-byte data block in the block pool. Basis: callers + body -- AccompSeq_VRAMHelperData uses
 ;   it in pool mode ((0x7E25) >= 128); AccompSeq_InlineCodeBlock follows a 0x87 link by storing the next block in
 ;   0x7E42, calling it, and setting the offset IY = 6.
@@ -348,7 +348,7 @@ AccompSeq_BuildVRAMAddr:
 	pop xhl
 	ret
 
-; Out: WA = the link word at +3 of page (0x7e42) of the MIDI sequence buffer pool (the next page of
+; Out: WA = the link word at +3 of page (ACCSEQ_BLOCK) of the MIDI sequence buffer pool (the next page of
 ; the accompaniment sequence).
 AccompSeq_ReadBeatHeader:
 	ld wa, (ACCSEQ_BLOCK:16)
@@ -414,7 +414,7 @@ AccompSeq_DispatchReturn:
 	ret
 
 ; Ticks from the current accompaniment-sequence position (beat 0x7e1c, tick 0x7e1e) to an event
-; at tick A of beat (0x7e46).
+; at tick A of beat (ACCSEQ_BEAT_COUNTER).
 ;   Out: A = the difference within the same beat (0 if already passed), tick + 96 - current tick
 ;   for the next beat, 0x60 for a later beat, 0 for an earlier beat.
 AccompSeq_CalcDeltaTime:
@@ -1549,7 +1549,7 @@ AccompSeq_HandleSpecialMode_Return:
 	ret
 
 ; Sends a controller pair for the voice in HL (Voice_DecodeNoteChannel).  When the sequencer is
-; running (0x28aa) or title 138 is showing with 0xd65 = 2, and bit 3 of 0x7f15 is clear,
+; running (SEQ_RECORDING_TRACKS) or title 138 is showing with 0xd65 = 2, and bit 3 of 0x7f15 is clear,
 ; Tempo_ProcessExpressionChange sees it first; MidiPkt_SendControlPair sends it unless bit 1 of
 ; 0x7f15 is set.  Preserves HL.
 AccompSeq_OutputEvent:
@@ -1906,7 +1906,7 @@ AccompSeq_ChordChange_Return:
 
 ; Only when bit 0 of 0x3283 is set and bit 2 of 0x28b2 clear: 0x7e60 / 0x7e61 = L / H; looks up the
 ; voice's style data (AccompSeq_ResetMidiState, AccompSeq_LookupStyleData) and, when bit 4 of its
-; first byte is set, sets bit 0 of 0x7e5f if byte 0x433 equals (0x416) + 1, else bit 1.  0x7e28 /
+; first byte is set, sets bit 0 of 0x7e5f if byte 0x433 equals (ACC_BEAT) + 1, else bit 1.  0x7e28 /
 ; 0x7e2a are saved and restored.
 AccompSeq_CompareChord:
 	bit 0, (0x3283:16)

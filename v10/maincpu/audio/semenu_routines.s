@@ -6024,7 +6024,7 @@ SeMenu_SetSelectedRow_Data:
 
 ; Copies the sound-editor state byte at RAM 0x6ae to (XWA); callers test it for 0, 1 or 2.
 ;   The instruction is spelled `ldmi16 (xwa), 0x6ae`, which encodes the memory-to-memory move
-;   `ld (xwa), (0x6ae)` (see TLCS900InstrInfo.td), not a store of the number 0x6ae.
+;   `ld (xwa), (SEMENU_PART_MODE)` (see TLCS900InstrInfo.td), not a store of the number 0x6ae.
 SeMenu_LoadObjEntries:
 	ldmi16 (xwa), 0x6ae
 	ret

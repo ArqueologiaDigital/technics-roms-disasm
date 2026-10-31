@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """name_kn5000_panel_records.py -- name the KN5000 live panel records (RAM 0xF9A0-0xFFBE) and spell every
-operand inside one as RECORD+offset, in v10, v9 and v7.
+operand inside one as RECORD+offset, in v10, v9, v7, v6 and v5.
 
 QUESTION THIS ANSWERS / JOB IT DOES
   The panel work area is a run of TLV records {tag, length, payload} -- the records a .LSW file saves
@@ -8,8 +8,8 @@ QUESTION THIS ANSWERS / JOB IT DOES
   in SndParam_BlockRamPtrs (256 longs indexed by tag; ui_widgets/widget_dispatch.s), and the default
   image SndParamRam_DefaultImage (extensions/extension_data.s) holds every record's tag and length.
   This script
-    1. reads SndParam_BlockRamPtrs from each tree and requires the three tables to be equal (they are:
-       the records sit at the same RAM in v7, v9 and v10, so one set of values serves all three);
+    1. reads SndParam_BlockRamPtrs from each tree and requires the tables to be equal (they are: the
+       records sit at the same RAM in v5, v6, v7, v9 and v10, so one set of values serves all five);
     2. walks the default image (the same bytes in the v7, v9 and v10 ROMs) from 0xF9A0 (0xFF bytes between records are padding) and
        requires every table entry to be the payload of a walked record (entries 0xD5 / 0xD6 / 0xD8 alias
        the records of 0xD0 / 0xD3 / 0xD7);
@@ -17,10 +17,11 @@ QUESTION THIS ANSWERS / JOB IT DOES
        record's keys where they are of one kind (PANEL_STYLE: style number, bank, tempo at +8 ...), by the
        mixer's part name for the 26 part records (PANEL_PART_RT1 ...), else by tag (PANEL_REC_44); the
        comment gives tag, payload length and, from the docs' key table, the keys it holds;
-    4. rewrites, in every .s of the three trees, the numeric memory operands `(N)` / `(N:8|16|24)` and
+    4. rewrites, in every .s of the five trees, the numeric memory operands `(N)` / `(N:8|16|24)` and
        both operands of the ldmm8 / ldmm16 pseudos that fall inside a payload as NAME / NAME+offset, and
        a pointer loaded into an index register (`ld xix, N`) when N is a payload's first byte; 0xF9A0, the
        first record's tag byte, is PANEL_RECORDS.
+    5. spells SndParam_BlockRamPtrs itself (256 longs) as `.long NAME`, 0 staying 0 (open item N-b5219071).
   A number becomes an expression of the same value: the ROM bytes cannot change (make gate checks).
 
 USAGE
@@ -36,9 +37,10 @@ import sys
 
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
-TREES = ("v10", "v9", "v7")
+TREES = ("v10", "v9", "v7", "v6", "v5")
 OUT = "shared/ram_panel_records.s"
-IMAGE_ADDR = 0xEDB3FC          # SndParamRam_DefaultImage, the same in v7 / v9 / v10 (symbols/*.txt)
+# SndParamRam_DefaultImage of each tree (symbols/maincpu_<tree>_symbols_reference.txt); the bytes are the same
+IMAGE_ADDR = {"v10": 0xEDB3FC, "v9": 0xEDB3FC, "v7": 0xEDB3FC, "v6": 0xEDB300, "v5": 0xEDB2E8}
 START, END = 0xF9A0, 0xFFBE
 
 # the 26 part tags, named by the mixer's channel table (panel-parameter-keys.md, "The part namespace")
@@ -59,6 +61,23 @@ NAMED = {0x43: ("PANEL_MIC", "MIC reverb on/off, mute, volume"),
          0x92: ("PANEL_SCALE_TUNE", "scale tune type (+0), key / on-off (+1), user notes (+2..)"),
          0x93: ("PANEL_TOUCH", "initial touch velocity sense (+0), after touch curve (+5), on/off and threshold (+6)"),
          0x99: ("PANEL_FOOT_CONTROLLERS", "expression pedal (+2), foot switches 1-2 (+4/+5), foot controller switches 1-4 (+6..+9)")}
+# 2026-10-31 (open item N-4aa9f799): the records the tag fallback left, named from
+# analysis/disk-format-probes/README-lsw-nonpart-records.md and README-lsw-drawbar-records.md (their probes
+# lsw_nonpart_records.py / lsw_drawbar_records.py) and the keys above.  0x68 and 0x9A keep their tag: no
+# routine but the generic block walkers reads them.
+NAMED.update({
+    0x78: ("PANEL_STYLIST_NAME", "16-character name of the selected Music Stylist style (EffectMode_DisplayName_Render copies it), then 2 bytes"),
+    0x44: ("PANEL_DRAWBAR_RIGHT1", "the RIGHT 1 drawbar registration (parameter ids 0x82nn)"),
+    0x45: ("PANEL_DRAWBAR_RIGHT2", "the RIGHT 2 drawbar registration (parameter ids 0x86nn)"),
+    0x46: ("PANEL_DRAWBAR_LEFT", "the LEFT drawbar registration (parameter ids 0x8Ann)"),
+    0x49: ("PANEL_VARI_STYLE", "the style record's companion block, 16 slots (PanelTlv_CompanionOfPart_Style; MainVariSet writes it)"),
+    0x60: ("PANEL_EFFECT_SWITCHES", "acoustic illusion / equalizer / reverb on/off (+1)"),
+    0x70: ("PANEL_PLAY_SETTINGS", "rotary speed, split point (+0/+1), transpose (+2), orchestrator (+3), TechniChord type (+4), fade in / out time (+5/+6)"),
+    0x71: ("PANEL_PMEMOUT_L", "the PANEL MEMORY page's ON/OFF cell, bit 1 of +0 (PmemOutLGridCheck; it gates the drawbar re-post of BitMapOut_Snapshot_PostProcess)"),
+    0x90: ("PANEL_CONDUCTOR", "conductor (+0), APC on bass / left hold (+3), R1R2 octave (+4)"),
+    0x91: ("PANEL_GM", "GM on/off (+3)"),
+    0x98: ("PANEL_PMEM_SETTINGS", "panel memory mode / number (+0/+1), music style arranger (+3), metronome mute / volume (+4), panel memory filter (+7)"),
+})
 KEYS = {0x60: "acoustic illusion / equalizer / reverb on/off (+1)", 0x70: "rotary speed, split point (+0/+1), transpose (+2), orchestrator (+3), TechniChord type (+4), fade in / out time (+5/+6)",
         0x90: "conductor (+0), APC on bass / left hold (+3), R1R2 octave (+4)", 0x91: "GM on/off (+3)",
         0x98: "panel memory mode / number (+0/+1), music style arranger (+3), metronome mute / volume (+4), panel memory filter (+7)"}
@@ -93,8 +112,8 @@ def walk_image():
     imgs = []
     for t in TREES:
         rom = open(os.path.join(REPO, "original_ROMs", "kn5000_%s_program.rom" % t), "rb").read()
-        imgs.append(rom[IMAGE_ADDR - 0xE00000:IMAGE_ADDR - 0xE00000 + (END - START) + 64])
-    assert imgs[0] == imgs[1] == imgs[2], "the default panel image differs between versions"
+        imgs.append(rom[IMAGE_ADDR[t] - 0xE00000:IMAGE_ADDR[t] - 0xE00000 + (END - START) + 64])
+    assert all(x == imgs[0] for x in imgs), "the default panel image differs between versions"
     img = imgs[0]
     recs, i = [], 0
     while START + i < END:
@@ -109,7 +128,7 @@ def walk_image():
 
 def records():
     ptrs = [block_ram_ptrs(t) for t in TREES]
-    assert ptrs[0] == ptrs[1] == ptrs[2], "SndParam_BlockRamPtrs differs between trees"
+    assert all(x == ptrs[0] for x in ptrs), "SndParam_BlockRamPtrs differs between trees"
     recs = walk_image()
     byaddr = {p: (t, n) for t, p, n in recs}
     for tag, p in enumerate(ptrs[0]):
@@ -124,6 +143,10 @@ def records():
             name, what = "PANEL_PART_18", "part record of tag 0x18 (no mixer channel)"
         elif t in NAMED:
             name, what = NAMED[t]
+        elif 0xC0 <= t <= 0xD7 and (t - 0xC0) in PARTS:
+            name = "PANEL_VARI_%s" % PARTS[t - 0xC0]
+            what = ("companion block of part record 0x%02x (%s): PanelTlv_CompanionOfPart, written by MainVariSet's "
+                    "MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels" % (t - 0xC0, PARTS[t - 0xC0]))
         else:
             name, what = "PANEL_REC_%02X" % t, KEYS.get(t, "keys not identified")
         out.append((name, t, p, n, what))
@@ -138,7 +161,7 @@ def write_defs(recs):
     hdr = ["; ram_panel_records.s -- the live panel records, RAM 0x%04x-0x%04x: TLV records {tag, length, payload}," % (START, END),
            "; the ones a .LSW file saves (technics-docs panel-parameter-keys.md).  Each name is a record's payload,",
            "; as SndParam_BlockRamPtrs (ui_widgets/widget_dispatch.s) holds it per tag; tags and lengths are the",
-           "; default image's (SndParamRam_DefaultImage).  The table is the same in v7, v9 and v10, so are these",
+           "; default image's (SndParamRam_DefaultImage).  The table is the same in v5, v6, v7, v9 and v10, so are these",
            "; values.  An operand inside a record is spelled NAME+offset.  Generated by",
            "; scripts/tools/name_kn5000_panel_records.py."]
     width = max(8 + 5 + len(r[0]) + 1 for r in recs + [AREA]) // 8 * 8 + 8
@@ -212,6 +235,35 @@ def rewrite(t, recs, apply):
     return st
 
 
+def spell_table(t, recs, apply):
+    """SndParam_BlockRamPtrs: each nonzero .long becomes the name of the record payload it holds."""
+    base = {p: name for name, _, p, n, _ in recs}
+    f = os.path.join(REPO, t, "maincpu", "ui_widgets", "widget_dispatch.s")
+    L = read(f)
+    i = next(k for k, l in enumerate(L) if l.startswith("SndParam_BlockRamPtrs:"))
+    done = 0
+    for k in range(i + 1, len(L)):
+        code, sep, cmt = L[k].partition(";")
+        c = code.strip()
+        if c.startswith(".long"):
+            vals = [x.strip() for x in c[5:].split(",")]
+            out = []
+            for x in vals:
+                if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', x) and int(x, 0) in base:
+                    out.append(base[int(x, 0)])
+                    done += 1
+                else:
+                    out.append(x)
+            L[k] = "\t.long " + ", ".join(out) + ("\t" + sep + cmt if sep else "")
+        elif c and not c.endswith(":"):
+            break
+        if done and k > i + 80:
+            pass
+    if apply:
+        open(f, "wb").write("\n".join(L).encode("latin-1"))
+    return done
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -222,6 +274,7 @@ def main():
         write_defs(recs)
     for t in TREES:
         print("%s: %s%s" % (t, dict(rewrite(t, recs, not a.dry_run)), " (dry run)" if a.dry_run else ""))
+        print("%s: SndParam_BlockRamPtrs entries named: %d" % (t, spell_table(t, recs, not a.dry_run)))
     return 0
 
 

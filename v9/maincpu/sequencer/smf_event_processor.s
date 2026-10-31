@@ -832,12 +832,12 @@ SeqPlay_StartWithDisplay:
 	call SeqPlay_CheckStartConditions
 	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SeqPlay_SetFlagAndMode
-	and (PANEL_REC_91+3:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SeqPlay_QueueDisplayEvent
 
 SeqPlay_SetFlagAndMode:
-	or (PANEL_REC_91+3:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SeqPlay_QueueDisplayEvent:
@@ -902,7 +902,7 @@ SMF_FoundActiveChannel:
 	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld (4325:16), wa
 	ld (4324:16), 255
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SMF_InitChannelScan
 	ld (4324:16), 0
 
@@ -10879,7 +10879,7 @@ SeqCtl_CheckBit3:
 
 SeqCtl_StorePedalFlags:
 	ld (0x32ff:16), a
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	and a, 0x1
 	ld (0x3301:16), a
 	ld a, (PANEL_STYLE+4:16)
@@ -10892,7 +10892,7 @@ SeqCtl_StorePedalFlags:
 	srl a, 4
 	ld (ACC_SECTION_REQUEST:16), a
 	xor a, a
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SeqCtl_StoreKeyMask
 	or a, 0x3f
 

@@ -21795,7 +21795,7 @@ SoundParam_InitDefaultBanks:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	set	2, (PANEL_REC_91+3:16)
+	set	2, (PANEL_GM+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 0:i3
 	ld	de, 1:i3
@@ -21834,7 +21834,7 @@ SoundParam_InitDefau_Block:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	2, (PANEL_REC_91+3:16)
+	res	2, (PANEL_GM+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 1:i3
 	ld	de, 1:i3
@@ -21873,7 +21873,7 @@ SoundParam_InitDefau_Block2:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	0, (PANEL_REC_91+3:16)
+	res	0, (PANEL_GM+3:16)
 	ld	xwa, 0xc1
 	ld	bc, 1:i3
 	ld	de, 1:i3

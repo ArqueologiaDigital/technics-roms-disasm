@@ -201,7 +201,7 @@ SLSrcBankList_FuncBody:
 	inc	6, xsp
 	ret
 ; SingleLoadSrc_PanelMemDrawBankName: PANEL MEMORY source list, row 1: writes cell 1 of the list buffer (0x8963) with
-;   the name of bank (0x89FC) / C (C = SingleLoadSrc_PanelMemBankSize, 8) read from the selected .PMT file
+;   the name of bank (SLOAD_SRC_PMEM_POS) / C (C = SingleLoadSrc_PanelMemBankSize, 8) read from the selected .PMT file
 ;   (SingleLoadSrc_ReadPmtBankName: 16 bytes at file offset 16 + 16 * bank), pads it to 16 and posts EVT_PARA_DRAW
 ;   of 0x8963 to the file-name box XWA. Basis: callers + body -- SingleLoadSrc_PanelMemListProc draws the four rows on
 ;   EVT_PAINT with SLSrcBankList_FuncBody (row 0 'BANK:n'), Helper2, this and Helper3, and redraws it on parameter 40
@@ -232,7 +232,7 @@ SingleLoadSrc_PanelMemDrawBankName:
 	inc	4, xsp
 	ret
 ; SingleLoadSrc_PanelMemDrawMemoryNumber: PANEL MEMORY source list, row 2 (and row 3 in ALL mode): writes cell 2
-;   (0x8978) as StorageArea_UnitNames[mode] ('MEMORY') + ': ' + the memory number within its bank ((0x89FC) mod C + 1,
+;   (0x8978) as StorageArea_UnitNames[mode] ('MEMORY') + ': ' + the memory number within its bank ((SLOAD_SRC_PMEM_POS) mod C + 1,
 ;   omitted when ALL flag 0x89FA is set), posts it, and when 0x89FA is set writes cell 3 (0x898D) as 'ALL' and posts
 ;   it. Basis: callers + body -- SingleLoadSrc_PanelMemListProc calls it on EVT_PAINT and after every cursor move
 ;   (parameters 5 and 6), which change the memory number.
@@ -292,7 +292,7 @@ SingleLoadSrc_PanelMemDrawMemoryNumber_Epilogue:
 	inc	6, xsp
 	ret
 ; SingleLoadSrc_PanelMemDrawMemoryName: PANEL MEMORY source list, row 3: unless ALL mode (0x89FA set), writes cell 3
-;   (0x898D) with the name of panel memory (0x89FC) read from the selected .PMT file (SingleLoadSrc_ReadPmtMemoryName:
+;   (0x898D) with the name of panel memory (SLOAD_SRC_PMEM_POS) read from the selected .PMT file (SingleLoadSrc_ReadPmtMemoryName:
 ;   16 bytes at 178 + index * entry size, the size being the file's word at offset 13), pads it and posts
 ;   EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_PanelMemListProc calls it on EVT_PAINT and on parameter 40
 ;   when a memory change is pending (0x81CE).
@@ -587,8 +587,8 @@ SingleLoadSrc_SequencerListProc_Skip11:
 	pop	xiz
 	inc	4, xsp
 	ret
-; SingleLoadSrc_ComposerDrawBankName: COMPOSER source list, rows 0-1: writes cell 0 (0x894E) as the bank caption
-;   SingleLoad_BankCaptionByMode[mode] ('BANK') + ':' and cell 1 (0x8963) as the memory-bank name of position (0x89FE)
+; SingleLoadSrc_ComposerDrawBankName: COMPOSER source list, rows 0-1: writes cell 0 (SINGLE_LOAD_SRC_ROWS) as the bank caption
+;   SingleLoad_BankCaptionByMode[mode] ('BANK') + ':' and cell 1 (0x8963) as the memory-bank name of position (SLOAD_SRC_CMP_POS)
 ;   / C (WP_GetPresetName1 -> SingleLoad_MemoryBankNames: MEMORY-A/B/C; C = SLSrcComposer_RowsPerColumn, 10), and
 ;   posts both with EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
 ;   after a +-10 move (parameter 5), the moves that change the bank.
@@ -631,7 +631,7 @@ SingleLoadSrc_ComposerDrawBankName:
 	inc	2, xsp
 	ret
 ; SingleLoadSrc_ComposerDrawPatternSlot: COMPOSER source list, rows 2-3 for the slot: writes cell 2 (0x8978) as
-;   StorageArea_UnitNames[mode] ('PATTERN') + ': ' + PtrTbl_VariationNames[(0x89FE) mod C] (VARI 1-4; omitted in ALL
+;   StorageArea_UnitNames[mode] ('PATTERN') + ': ' + PtrTbl_VariationNames[(SLOAD_SRC_CMP_POS) mod C] (VARI 1-4; omitted in ALL
 ;   mode 0x89FA) and posts it; then cell 3 (0x898D) is 'ALL' in ALL mode, or for slots 4-9 the fixed section name
 ;   (WP_GetBankMemName -> WP_SectionNameTable: INTRO 1 .. ENDING 2); slots 0-3 leave cell 3 to
 ;   SingleLoadSrc_ComposerDrawPatternName. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
@@ -707,8 +707,8 @@ SingleLoadSrc_ComposerDrawPatternSlot_Epilogue:
 	pop	xiz
 	inc	8, xsp
 	ret
-; SingleLoadSrc_ComposerDrawPatternName: COMPOSER source list, row 3 for user patterns: unless ALL mode (0x89FA) or
-;   slot (0x89FE) mod C >= 4, writes cell 3 (0x898D) with the 13-character name of pattern (bank, slot) read from the
+; SingleLoadSrc_ComposerDrawPatternName: COMPOSER source list, row 3 for user patterns: unless ALL mode (SINGLE_LOAD_ALL) or
+;   slot (SLOAD_SRC_CMP_POS) mod C >= 4, writes cell 3 (0x898D) with the 13-character name of pattern (bank, slot) read from the
 ;   selected .CMP file (SingleLoadSrc_ReadCmpPatternName: offset 160 + 96 * (4 * bank + slot), the layout of RAM
 ;   0x948A0), pads it and posts EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on
 ;   EVT_PAINT and on parameter 40 when a move left it pending (0x81D6).

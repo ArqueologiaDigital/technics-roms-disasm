@@ -1248,11 +1248,11 @@ Rhythm_VoiceAssignDetect:
 	ld	a, (0x3261:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_PartBDetect
-	and (0xfc5f:16), 0xbf
+	and (PANEL_STYLE+5:16), 0xbf
 	ld	a, (0x325b:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_PartAOn
-	or (0xfc5f:16), 0x80
+	or (PANEL_STYLE+5:16), 0x80
 	or	(0x3244:16), 0x02
 Rhythm_VoiceAssign_PartAOn:
 	ld e, 72:opc
@@ -1279,11 +1279,11 @@ Rhythm_VoiceAssign_PartBDetect:
 	ld	a, (0x3262:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_Ext1Detect
-	and (0xfc5f:16), 0x7f
+	and (PANEL_STYLE+5:16), 0x7f
 	ld	a, (0x325a:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_PartBOn
-	or (0xfc5f:16), 0x40
+	or (PANEL_STYLE+5:16), 0x40
 	or	(0x3244:16), 0x01
 Rhythm_VoiceAssign_PartBOn:
 	ld e, 72:opc
@@ -1310,7 +1310,7 @@ Rhythm_VoiceAssign_Ext1Detect:
 	ld	a, (0x3265:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_Ext2Detect
-	and (0xfc5f:16), 0xfb
+	and (PANEL_STYLE+5:16), 0xfb
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1333,7 +1333,7 @@ Rhythm_VoiceAssign_Ext2Detect:
 	ld	a, (0x3266:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_Ext3Detect
-	and (0xfc5f:16), 0xf7
+	and (PANEL_STYLE+5:16), 0xf7
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1356,7 +1356,7 @@ Rhythm_VoiceAssign_Ext3Detect:
 	ld	a, (0x3267:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_Perc1Detect
-	and (0xfc60:16), 0xfb
+	and (PANEL_STYLE+6:16), 0xfb
 	ld e, 72:opc
 	ld d, 6:opc
 	ld a, 0:opc
@@ -1379,7 +1379,7 @@ Rhythm_VoiceAssign_Perc1Detect:
 	ld	a, (0x3263:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_Perc2Detect
-	and (0xfc5f:16), 0xef
+	and (PANEL_STYLE+5:16), 0xef
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1394,7 +1394,7 @@ Rhythm_VoiceAssign_Perc2Detect:
 	ld	a, (0x3264:16)
 	and a, 63
 	jr z, Rhythm_VoiceAssign_SaveShadow
-	and (0xfc5f:16), 0xdf
+	and (PANEL_STYLE+5:16), 0xdf
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc

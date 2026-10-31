@@ -290,7 +290,7 @@ WndEvt_EventCodeDispatch:
 	ld	xbc, (xsp+46)
 	ld	xde, (xsp+42)
 	jrl	WndEvt_EventCodeDispatch_Join3
-; WndEvt_DispatchByEventCode_CursorRight: button 2: cursor (0x274D8) + 1 while below the name length (0x274D6),
+; WndEvt_DispatchByEventCode_CursorRight: button 2: cursor (NAMING_CURSOR) + 1 while below the name length (NAMING_LENGTH),
 ;   EVT_SET_CURSOR
 WndEvt_DispatchByEventCode_CursorRight:
 	ld	wa, (NAMING_CURSOR:24)

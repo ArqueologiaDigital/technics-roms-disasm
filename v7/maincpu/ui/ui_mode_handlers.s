@@ -9,7 +9,7 @@
 
 EffectMode_CopyVoiceParams:
 	pushw iz
-	lda xbc, (PANEL_REC_70+3:16)
+	lda xbc, (PANEL_PLAY_SETTINGS+3:16)
 	lda xhl, (PANEL_RECORDS:16)
 	sub xbc, xhl
 	lda xde, (0x03c2c4:24)
@@ -496,7 +496,7 @@ EffectMode_DisplayName_DefaultLookup:
 	push xwa
 
 EffectMode_DisplayName_Render:
-	lda	xwa, (PANEL_REC_78:16)
+	lda	xwa, (PANEL_STYLIST_NAME:16)
 	push	xwa
 	call	Strncpy
 	lda	xsp, (xsp+10)
@@ -626,7 +626,7 @@ EffectMode_UpdateBitFlags:
 	and	l, 32
 	ld	xwa, (xsp+16)
 	ld	(xwa), l
-	lda	xwa, (PANEL_REC_70:16)
+	lda	xwa, (PANEL_PLAY_SETTINGS:16)
 	sub	xwa, xde
 	ld	(xsp+28), xwa
 	add	(xsp+28), xbc
@@ -634,7 +634,7 @@ EffectMode_UpdateBitFlags:
 	ld	a, (xwa)
 	and	a, 59
 	ld	(xsp+4), a
-	lda	xhl, (PANEL_REC_60+1:16)
+	lda	xhl, (PANEL_EFFECT_SWITCHES+1:16)
 	sub	xhl, xde
 	add	xhl, xbc
 	ld	a, (xhl)
@@ -797,7 +797,7 @@ EffectMode_SetRegion_Apply:
 	or	a, h
 	ld	(xbc), a
 	set	1, (xiz+5)
-	lda	xbc, (PANEL_REC_70:16)
+	lda	xbc, (PANEL_PLAY_SETTINGS:16)
 	ld	h, (xbc)
 	and	h, 3
 	sub	xbc, 63904

@@ -936,7 +936,7 @@ Demo_ResetCountdownTimer:
 ;   sends to the sub CPU as system message 0x85 (glide off). Called only by DemoMode_Main_Operation; it touches no
 ;   timer. Basis: caller + body + descriptor 0x4080.
 Demo_ReleaseGlidePedal:
-	lda xbc, (PANEL_REC_98+2:16)
+	lda xbc, (PANEL_PMEM_SETTINGS+2:16)
 	ld e, (xbc)
 	res 7, e
 	ld (xbc), e
@@ -1786,7 +1786,7 @@ LoadRegion0_OpenSuccess:
 	call PreLswLoad				; primary display setup
 	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	lda	xbc, (0xffc0:16)
-	ld xde, xwa				; XDE = base (0xf980)
+	ld xde, xwa				; XDE = base (LIVE_PANEL_BLOCK)
 	sub xbc, xde				; XBC = size (0xffc0-0xf980)
 	call FileIO_ReadBlock				; configure memory range
 	lda xwa, (0x1e7800:24); VRAM region base

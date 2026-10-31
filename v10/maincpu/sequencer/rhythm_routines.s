@@ -199,8 +199,8 @@ Rhythm_SetupChannel_D6:
 	calr RhythmEvt_ProcessNote
 	ret
 
-; Chooses how a rhythm note is processed: RhythmEvt_IterateNoteOn when (0x32e5) >= 0xf0, the
-; selected part (0x33d4) has no bit set in 0x3312..0x3318, and the tuning offset
+; Chooses how a rhythm note is processed: RhythmEvt_IterateNoteOn when (ACC_STYLE_NUMBER) >= 0xf0, the
+; selected part (ACC_PART_BIT) has no bit set in 0x3312..0x3318, and the tuning offset
 ; (AccTuning_CallWithSaveRestore, result 0x3422) is the same for style numbers 0x32df and 0x32d8;
 ; RhythmEvt_FullProcess otherwise.
 RhythmEvt_ProcessNote:
@@ -1595,7 +1595,7 @@ Rhythm_SeqReset_Store:
 ; Rhythm_SeqResetTable -- 17 x 32-bit RAM pointers (or 0), indexed by RAM byte
 ; 0x379B.
 ; Reader: Rhythm_SeqResetCheck -- when bit 2 of RAM 0x34CF is set and bit 4
-; clear: L := (0x379B), `sla l, 2`, `ld xiy, Rhythm_SeqResetTable`,
+; clear: L := (CMP_RECORD_PART), `sla l, 2`, `ld xiy, Rhythm_SeqResetTable`,
 ; `ld xix, (xiy+hl)` (xix := table[L]); if non-zero, with
 ; interrupts masked (`ei 6` .. `ei 0`) the word at (xix+6) is copied to
 ; (xix+4).  Stride 4 from `sla l, 2`; 17 entries = 68 bytes, to

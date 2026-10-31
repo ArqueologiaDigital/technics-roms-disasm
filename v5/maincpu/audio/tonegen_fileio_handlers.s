@@ -230,27 +230,27 @@ PanelTlv_ValidateBlock0_Loop:
 	inc	1, iz
 	cp	iz, 0x2e
 	jr	c, PanelTlv_ValidateBlock0_Loop
-	lda	xbc, (0xfc74:16)
+	lda	xbc, (PANEL_DSP_EFFECT:16)
 	sub	xbc, 0xf9a0
 	add	xbc, (xsp + 2)
 	ld	wa, 0:i3
 	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (0xfc8e:16)
+	lda	xbc, (PANEL_DIGITAL_REVERB:16)
 	sub	xbc, 0xf9a0
 	add	xbc, (xsp + 2)
 	ld	wa, 1:i3
 	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (0xfcc2:16)
+	lda	xbc, (PANEL_ACOUSTIC_ILLUSION:16)
 	sub	xbc, 0xf9a0
 	add	xbc, (xsp + 2)
 	ld	wa, 2:i3
 	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (0xfcdc:16)
+	lda	xbc, (PANEL_MIC_REVERB:16)
 	sub	xbc, 0xf9a0
 	add	xbc, (xsp + 2)
 	ld	wa, 3:i3
 	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (0xfca8:16)
+	lda	xbc, (PANEL_EQUALIZER:16)
 	sub	xbc, 0xf9a0
 	add	xbc, (xsp + 2)
 	ld	wa, 4:i3
@@ -683,21 +683,21 @@ SndParam_SyncDisplayBitmap:
 	pushw	0xc8e4
 	call	Mem_Copy
 	lda	xsp, (xsp + 10)
-	lda	xbc, (0xf9a0:16)
-	lda	xwa, (0xf9b6:16)
+	lda	xbc, (PANEL_RECORDS:16)
+	lda	xwa, (PANEL_PART_RT1:16)
 	sub	xwa, xbc
 	lda	xde, (0x03c8e4:24)
 	add	xwa, xde
 	xormi8	(xwa), 0x1
-	lda	xwa, (0xf9d0:16)
+	lda	xwa, (PANEL_PART_RT2:16)
 	sub	xwa, xbc
 	add	xwa, xde
 	xormi8	(xwa), 0x1
-	lda	xwa, (0xf9ea:16)
+	lda	xwa, (PANEL_PART_LEFT:16)
 	sub	xwa, xbc
 	add	xwa, xde
 	xormi8	(xwa), 0x1
-	lda	xwa, (0xfd97:16)
+	lda	xwa, (PANEL_PMEM_SETTINGS+1:16)
 	sub	xwa, xbc
 	add	xwa, xde
 	ormi8	(xwa), 0x7f
@@ -844,8 +844,8 @@ ToneGen_FileIO_SaveAndSync:
 	ldmi16	(xwa), 0xfd50
 	ldmi16	(xwa + 1), 0xfd52
 	ldmi16	(xwa + 2), 0xfd54
-	lda	xwa, (0xfda2:16)
-	lda	xbc, (0xf9a0:16)
+	lda	xwa, (PANEL_PMEM_SETTINGS+12:16)
+	lda	xbc, (PANEL_RECORDS:16)
 	sub	xwa, xbc
 	pushw	wa
 	push	xiz

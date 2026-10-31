@@ -946,7 +946,7 @@ Demo_ResetCountdownTimer:
 ;   sends to the sub CPU as system message 0x85 (glide off). Called only by DemoMode_Main_Operation; it touches no
 ;   timer. Basis: caller + body + descriptor 0x4080.
 Demo_ReleaseGlidePedal:
-	lda	xbc, (PANEL_REC_98+2:16)
+	lda	xbc, (PANEL_PMEM_SETTINGS+2:16)
 	ld	e, (xbc)
 	res	7, e
 	ld	(xbc), e

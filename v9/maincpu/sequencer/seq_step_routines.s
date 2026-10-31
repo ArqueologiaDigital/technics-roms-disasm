@@ -3044,7 +3044,7 @@ SeqStep_RebuildReturn:
 ; shared/positional_labels.s -- other lanes' files -- use it).  Two routines:
 ;  +0x00: save RAM 0xFFE3 (byte) / 0xFFEC (word) into 0xF247 / 0xF248, run
 ;         SeqData_CopyBlockToBuffer and SeqStep_FindAndCompact for part
-;         (0xFFE3), then VoicePreset_LoadAndInitPan for it, preserving RAM
+;         (SEQ_CURRENT_SONG), then VoicePreset_LoadAndInitPan for it, preserving RAM
 ;         0xF1CE, 0xF231 and 0xF22F across the call.
 ;  +0x4E (MidiSysEx_RestoreSongSelection): restore 0xFFE3 / 0xFFEC from
 ;         0xF247 / 0xF248 (clearing those), set word 0x2668 := 1, clear bit 3

@@ -549,7 +549,7 @@ MidiPkt_EnqueueControl_3368:
 	ld	xwa, SysEx_Msg_35DC
 	ld bc, 6:i3
 	call	ArpQueue_Enqueue
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	and a, 0x1
 	cp a, 1:i3
 	jr	nz, MidiPkt_EnqueueControl_3368_NoPedal
@@ -807,7 +807,7 @@ SysEx_OnGmSystemOn_Skip2:
 	ret	nc
 SysEx_OnGmSystemOn_Skip3:
 	set	7, (0x905d:16)
-	lda	xbc, (PANEL_REC_91+3:16)
+	lda	xbc, (PANEL_GM+3:16)
 	ld	e, (xbc)
 	set	2, e
 	ld	(xbc), e
@@ -835,7 +835,7 @@ MidiPkt_SysExProcessor_Data_Skip2:
 	cp	a, 148
 	ret	nc
 MidiPkt_SysExProcessor_Data_Skip3:
-	lda	xbc, (PANEL_REC_91+3:16)
+	lda	xbc, (PANEL_GM+3:16)
 	ld	a, (xbc)
 	bit	2, a
 	ret	z

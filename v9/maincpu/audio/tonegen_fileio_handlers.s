@@ -105,7 +105,7 @@ PanelTlv_WriteAllHeaders:
 ; PanelTlv_ValidateSongPanel: Validates the block-0 panel records stored at 0xF480, inside the current-song record
 ;   0xF180-0xF980: XWA = 0xF480, tail-jump to PanelTlv_ValidateBlock0. Basis: callers + body --
 ;   MidiSysEx_FinishSeqXfer calls it first after a sequencer transfer, and its header calls this validating 'the
-;   block-0 panel records at 0xF480, inside the received current-song record'; PanelTlv_ValidateLivePanel (0xF9A0) and
+;   block-0 panel records at 0xF480, inside the received current-song record'; PanelTlv_ValidateLivePanel (PANEL_RECORDS) and
 ;   PanelTlv_ValidatePanelMemory (0x1ED400 + 960*n) do the same for the live panel and the panel memories.
 PanelTlv_ValidateSongPanel:
 	lda xwa, (SEQ_SONG_RECORD+768:16)
@@ -730,7 +730,7 @@ SndParam_SyncDisplayBitmap:
 	sub xwa, xbc
 	add xwa, xde
 	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_REC_98+1:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+1:16)
 	sub xwa, xbc
 	add xwa, xde
 	ormi8 (xwa), 0x7f
@@ -886,7 +886,7 @@ ToneGen_FileIO_SaveAndSync:
 	ldmi16 (xwa), 0xfd50
 	ldmi16 (xwa + 1), 0xfd52
 	ldmi16 (xwa + 2), 0xfd54
-	lda xwa, (PANEL_REC_98+12:16)
+	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	lda xbc, (PANEL_RECORDS:16)
 	sub xwa, xbc
 	pushw wa
@@ -1321,7 +1321,7 @@ Encoder_AlignByte:
 	ret
 
 ; Dispatch every queued panel change (PanelButton_FetchChange, then PanelButton_DispatchChange), end the
-; event queue at (0xC039) with 0xFF, clear the change queue, then VoiceEntry_FindMasterVolume.
+; event queue at (PANEL_EVENT_QUEUE) with 0xFF, clear the change queue, then VoiceEntry_FindMasterVolume.
 PanelButton_ProcessChanges:
 	ld (0x8e8c:16), 0
 	ld (0x8e8e:16), 0

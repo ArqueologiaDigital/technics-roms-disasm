@@ -2670,7 +2670,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret
-; Flash_WriteSlotOwnerMap: Copies the 64 KB section-7 sector into its RAM image at (0x0C96), writes owner A into the
+; Flash_WriteSlotOwnerMap: Copies the 64 KB section-7 sector into its RAM image at (FLASH_SECTOR_IMAGE_PTR), writes owner A into the
 ;   owner byte of every slot in the assignment list at RAM 0x7A0, clears A from the remaining slots after them, then
 ;   erases and rewrites the sector (Flash_EraseSectorAndWrite). Basis: callers + body -- Flash_InitBytecodeBlock calls
 ;   it on its write path after Flash_AssignSlotsToBlocks built the list, with the same owner A.
@@ -4310,7 +4310,7 @@ Flash_WriteBackSlotTable_Skip4:
 	inc	2, xsp
 	ret
 ; FileIO_LoadRcmToFlash: Loads an .RCM file into the custom-data flash: checks the 1 KB header starts 'H',0,'K', then
-;   for flash sections 0..6 resets the buffer at (0x0C72) (NoteEvent_LoadSoundGenParams), reads the length held in
+;   for flash sections 0..6 resets the buffer at (STYLE_WORK_IMAGE_PTR) (NoteEvent_LoadSoundGenParams), reads the length held in
 ;   header dword +68+4*i and stores it (NoteEventBuffer_Store i+1); finally reads 0xF400 bytes over the section-7
 ;   image, rewrites that sector and calls TmFlash_CopyToExtMem. HL = read result, 0xFF9A on a bad header. Basis:
 ;   callers + body -- FileIO_LoadRegion6_Simple (.RCM, extension index 6) calls it once the region signature matched.
@@ -5353,9 +5353,9 @@ AccPatch_ConvertLegacySectionLayout_Skip30:
 	ld	hl, (xsp+4)
 	inc	6, xsp
 	ret
-; AccPatch_CopySection: Copies section (0x39AC) of the source image (0x39AE) to section (0x39AD) of the destination
-;   image (0x39B2) with DualVoice_ParamLoadDone; when the copy reports failure (0x35B0 bit 0) it re-initialises the
-;   destination section (AccPatch_InitFromSlotIndex), restores the source pointer 0x39AE to the work image (0x0C72)
+; AccPatch_CopySection: Copies section (STYLE_COPY_SRC_SECTION) of the source image (STYLE_SRC_IMAGE_PTR) to section (STYLE_COPY_DST_SECTION) of the destination
+;   image (STYLE_DST_IMAGE_PTR) with DualVoice_ParamLoadDone; when the copy reports failure (0x35B0 bit 0) it re-initialises the
+;   destination section (AccPatch_InitFromSlotIndex), restores the source pointer 0x39AE to the work image (STYLE_WORK_IMAGE_PTR)
 ;   and returns HL = 0xFF95, else HL = 0. Basis: callers + body -- AccPatch_ConvertLegacySectionLayout calls it for
 ;   each old -> new section pair (0x39AC / 0x39AD) and keeps the first 0xFF95; its header calls this 'copies each old
 ;   section into its new place(s)'.
@@ -5520,7 +5520,7 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld (RHYTHM_LOAD_PART:16), c
 	pop xiz
 	ret
-; AccPatch_LoadSectionFromRhythm: Loads part (0x34EF) of rhythm (0x34ED/0x34EE) into section (0x34D6): sets 0x34D1 bit
+; AccPatch_LoadSectionFromRhythm: Loads part (RHYTHM_LOAD_PART) of rhythm (0x34ED/0x34EE) into section (STYLE_SECTION): sets 0x34D1 bit
 ;   0 and calls AccPat_IndexToAddress_Sub (AccPat_DispatchNoteChange: a ROM rhythm below 0x80 through
 ;   RhythmROM_PatternDispatcher, 0x80-0x9F a copy of a section); returns HL = 0xFF95 when it reports failure (0x35B0
 ;   bit 0), else the status passed in WA. Basis: callers + body -- AccPatch_LoadIntroFillEndingFromRhythm calls it for

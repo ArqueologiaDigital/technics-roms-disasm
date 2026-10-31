@@ -708,7 +708,7 @@ INTA_HANDLER_END:
 
 
 ; 11 routine pointers, one per state of the control-panel serial link.  INTTX1_HANDLER and
-; INTRX1_HANDLER both run `ld l,(0x8D8A); xor h,h; extz xhl; add xhl,<this>; ld xhl,(xhl);
+; INTRX1_HANDLER both run `ld l,(CPANEL_STATE_MACHINE_INDEX); xor h,h; extz xhl; add xhl,<this>; ld xhl,(xhl);
 ; jp (xhl)`: the state byte at RAM 0x8D8A is the byte offset (0, 4, ... 40).
 CPANEL_STATE_MACHINE_TABLE:
 	.long CPanel_SM_Idle

@@ -61,3 +61,35 @@ and v9 (124; v9 does not define the 11 `Voice_FactoryPresetData_*` labels; run l
 `carry-v7-reparent-2026-10-31.txt`).  v6 and v5 already had v7's names.  `sync_names_from_v10.py --tree v9`
 and `--tree v7` then found 6 and 3 same-address same-bytes pairs (v9's `SeScreenData_0x216B..0x2193` are the se3
 batch's `SeFilHpq1_SeFilLpq1_Field1..4_Record`); applied, and v7's 3 carried to v6 / v5 by name.
+
+## Panel records and RAM quotes (N-4aa9f799, N-b5219071)
+
+`scripts/tools/name_kn5000_panel_records.py` now covers all five trees (v6 / v5's `SndParam_BlockRamPtrs` and
+default panel image `SndParamRam_DefaultImage` (0xEDB300 / 0xEDB2E8) are byte-identical to v7's, so the records
+sit at the same RAM): it wrote `shared/ram_panel_records.s` for v6 / v5 (included from their `ram_variables.s`)
+and respelled 1,022 / 1,018 memory operands and 17 pointer loads there.  It now also spells the table itself as
+`.long PANEL_*` (77 entries per tree, 0 staying 0).
+
+33 of the 35 `PANEL_REC_<tag>` placeholders take names (`rename_panel_rec_placeholders.sed` for their uses):
+
+| tag(s)            | name                       | evidence                                                                                   |
+|-------------------|----------------------------|--------------------------------------------------------------------------------------------|
+| 0x78              | `PANEL_STYLIST_NAME`       | README-lsw-nonpart-records.md [CODE]: EffectMode_DisplayName_Render copies the 16-char name |
+| 0x44 / 0x45 / 0x46| `PANEL_DRAWBAR_RIGHT1/2`, `_LEFT` | README-lsw-drawbar-records.md: 48 parameter ids 0x82nn / 0x86nn / 0x8Ann                |
+| 0xC0..0xD4, 0xD7  | `PANEL_VARI_<part>`        | PanelTlv_CompanionOfPart's table maps part T to block 0xC0+T; MainVariSet writes it        |
+| 0x49              | `PANEL_VARI_STYLE`         | PanelTlv_CompanionOfPart_Style returns it for the style record 0x48                        |
+| 0x60              | `PANEL_EFFECT_SWITCHES`    | key table: acoustic illusion / equalizer / reverb on/off (+1)                              |
+| 0x70              | `PANEL_PLAY_SETTINGS`      | key table: rotary speed, split point, transpose, orchestrator, TechniChord type, fade times |
+| 0x71              | `PANEL_PMEMOUT_L`          | README-lsw-drawbar-records.md: bit 1 is the ON/OFF cell PmemOutLGridCheck draws            |
+| 0x90              | `PANEL_CONDUCTOR`          | key table: conductor (+0), APC on bass / left hold (+3), R1R2 octave (+4)                  |
+| 0x91              | `PANEL_GM`                 | key table: GM on/off (+3)                                                                  |
+| 0x98              | `PANEL_PMEM_SETTINGS`      | key table: panel memory mode / number, music style arranger, metronome, memory filter      |
+
+`PANEL_REC_68` and `PANEL_REC_9A` keep their tag: README-lsw-nonpart-records.md records that nothing but the
+generic block walkers (`PanelTlv_ValidateBlock1`, `BitMapOut_CopyAuxTable_*`) reads them, and its probe
+`analysis/disk-format-probes/lsw_nonpart_records.py` is the search; there is no reader to name them from.
+The meaning of the C-family's index (sound group) stays the [INFERENCE] that note marks.
+
+`scripts/tools/respell_ram_quotes_in_comments.py` names the parenthesised RAM quotes of comments, "(0x0D57)" ->
+"(SQSTEP_CLOCK)", when exactly one `.equ` of the tree has the value: 728 in v10, 527 in v9 (their RAM equates
+agree, 574 of 574).  v7 / v6 / v5 are not run: their headers often carry v10's text and v10's addresses.

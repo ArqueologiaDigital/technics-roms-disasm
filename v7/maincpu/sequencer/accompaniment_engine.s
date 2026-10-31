@@ -7647,11 +7647,11 @@ AccAutoPlay_ModeAvail_Padding3:
 	nop
 
 AccAutoPlay_ModeAvail:
-	ld l, (PANEL_REC_70:16)
+	ld l, (PANEL_PLAY_SETTINGS:16)
 	and l, 0x3
 	cp l, 0:i3
 	jr nz, AccAutoPlay_ModeAvail_Process
-	ld l, (PANEL_REC_70+1:16)
+	ld l, (PANEL_PLAY_SETTINGS+1:16)
 	and l, 0x7f
 	dec 1, l
 	cp l, 0xff
@@ -9884,7 +9884,7 @@ AccDir_ReadState:
 AccDir_ReadState_StoreFlags:
 .Lc_f5b9fa:
 	ld (0x3409:16), a
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	bit 0x00,A
 	jr nz, AccDir_ReadState_Ret
 	and (0x3403:16), 0xf6
@@ -9922,7 +9922,7 @@ AccDir_AdjustDirection:
 	and (0x3403:16), 0xfe
 	cp (0x3408:16), 0x80
 	jr nc, AccDir_Adjust_LeftHand
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and W,0x01
 	ld a, (PANEL_STYLE+7:16)
 	and A,0x30
@@ -9945,7 +9945,7 @@ AccDir_Adjust_LeftHand:
 	and	(0x3403:16), 247
 	cp	(0x3408:16), 128
 	jr	nc, AccDir_Adjust_SetChanged
-	ld	w, (PANEL_REC_98+3:16)
+	ld	w, (PANEL_PMEM_SETTINGS+3:16)
 	and	w, 1
 	ld	a, (PANEL_STYLE+7:16)
 	and	a, 48
@@ -9972,7 +9972,7 @@ AccDir_Padding4:
 	nop
 
 AccDir_DispatchEvent:
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and W,0x01
 	cp w, 0:i3
 	jr z, AccDir_DispatchEvent_Ret
@@ -9983,7 +9983,7 @@ AccDir_DispatchEvent:
 	ld a, (PANEL_STYLE+7:16)
 	ld W, 0x30:opc
 	call SwbtWr_QueuePostEvent
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	and A,0x70
 	cp A,0x10
 	jr z, AccDir_DispatchEvent_Ret
@@ -24143,7 +24143,7 @@ DrumKit_StoreAndSendBank:
 	and (PANEL_STYLE+1:16), 128
 	ld h, 0x0:opc
 	call PartCtrl_WriteProgramChange
-	ld xix, PANEL_REC_49
+	ld xix, PANEL_VARI_STYLE
 	ld	(xix+l), h
 	call DrumKit_PostMidiEvents
 	ret
@@ -25285,7 +25285,7 @@ DrumVoice_Handler7_Code_Helper:
 	ld	(PANEL_STYLE:16), a
 	ld	(RHYTHM_LOAD_PROGRAM:16), a
 	and	a, 127
-	ld	(PANEL_REC_49+15:16), a
+	ld	(PANEL_VARI_STYLE+15:16), a
 	ld	(0xffbf:16), a
 	calr	DrumKit_PostMidiEvents
 DrumVoice_Handler7_Code_Return2:
@@ -25558,7 +25558,7 @@ DrumVoice_Handler7_Code_Skip2:
 	jr	nz, DrumVoice_Handler7_Code_Join3
 	ld	l, 0:opc
 DrumVoice_Handler7_Code_Join3:
-	ld	xix, PANEL_REC_49
+	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld	a, 72:opc
 	ld	(0x905a:16), a
@@ -25804,7 +25804,7 @@ TimeSig_DisplayStrings_Code_Skip3:
 	ld	l, 0:opc
 TimeSig_DisplayStrings_Code_Join:
 	ld	a, l
-	ld	xix, PANEL_REC_49
+	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld	l, a
 	ld	a, 72:opc

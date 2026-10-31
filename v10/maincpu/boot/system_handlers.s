@@ -19,7 +19,7 @@ INTT2_HANDLER:
 NMI_HANDLER:
 	ldw (0x00ffca:24), 0x0000
 	calr NMI_StorePayloadChecksums
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr z, NMI_SetPowerOffCode_A5A5
 	ldw (0x00ffcc:24), 0x5a5a
 	jr NMI_ClearGuardAndHalt
@@ -293,7 +293,7 @@ Vga_RestorePlane3FromBuffer:
 ;      General-purpose work RAM used by the event dispatcher and subsystem state.
 ;
 ;   2. Zero-fill block 2: 0x000400 .. 0x00e35d  (0xdf5d bytes, ~55 KB)
-;      Low DRAM including the control-panel button state array (0x8e4a),
+;      Low DRAM including the control-panel button state array (STATE_OF_CPANEL_BUTTONS),
 ;      the combo-code cell (0x402), and other low-DRAM variables.
 ;
 ;   3. ROM copy block 1: ROM 0xeed8c8 -> DRAM 0x03d524  (0x219e bytes, ~8.5 KB)
@@ -2379,7 +2379,7 @@ TaskSched_SpawnTask:
 	ld (xiy + 2), ix
 	jrl TaskSched_Dispatch
 ; TaskSched_ExitCurrentTask: Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's
-;   TCB (0x487) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters
+;   TCB (TASK_CURRENT) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters
 ;   TaskSched_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action
 ;   once the stream is read (0x2357E := 0); TaskSched_SpawnTask is the start side (TCB +9 := 4, linked into queue 0x4C1 +
 ;   4 * priority).

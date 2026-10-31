@@ -1150,8 +1150,8 @@ FDC_SendParams_Specify:
 	or	a, c
 	extz	wa
 	jrl	FDC_SendParameterByte
-; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8A2E & 7), SC (0x8A32), GPL (0x8A33) and filler D
-;   (0x8A34) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
+; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8A2E & 7), SC (FDC_FORMAT_SC), GPL (FDC_FORMAT_GPL) and filler D
+;   (FDC_FORMAT_FILL) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
 ;   (FORMAT TRACK) after the unit/head byte; FDC_MODE_CONFIG fills 0x8A2E/0x8A33/0x8A34 (N, gap 80/108/116, fill
 ;   0xE5); bootloader twin FDC_SendParams_Format.
 FDC_SendParams_Format:
@@ -1175,8 +1175,8 @@ FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
-; FDC_SendParams_ReadWrite: Sends the data-command parameters C (0x8A2B), H (0x8A2C & 1), R (0x8A2D), N (0x8A2E & 7),
-;   EOT (0x8A2F), GPL (0x8A30), then DTL (0x8A31) -- or STP ((0x8A35) & 3) for the scan opcodes 0xD1/0xD9/0xDD --
+; FDC_SendParams_ReadWrite: Sends the data-command parameters C (FDC_PARAM_C), H (0x8A2C & 1), R (FDC_PARAM_R), N (0x8A2E & 7),
+;   EOT (FDC_PARAM_EOT), GPL (FDC_PARAM_GPL), then DTL (FDC_PARAM_DTL) -- or STP ((FDC_PARAM_STP) & 3) for the scan opcodes 0xD1/0xD9/0xDD --
 ;   through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for every opcode not handled
 ;   earlier (READ/WRITE DATA 0xC6/0xC5 among them); bootloader twin FDC_SendParams_ReadWrite.
 FDC_SendParams_ReadWrite:
@@ -1396,15 +1396,15 @@ FDC_InitSequence_Full:
 
 ; --- FDC_CmdRecalibrate (formerly FDC_SeekRecalibrate): recalibrate to track 0 ---
 ; Renamed to match its bootloader twin FDC_CmdRecalibrate (table_data/
-; boot_fdc_driver.s): saves the caller's target track (0x8a36) in QIZH, seeks
+; boot_fdc_driver.s): saves the caller's target track (FDC_TARGET_TRACK) in QIZH, seeks
 ; to track 5 first (head-load settling), then issues RECALIBRATE (0x07) and
-; waits for the result; on failure invalidates the track cache (0x8b04).
+; waits for the result; on failure invalidates the track cache (FDC_CURRENT_CYLINDER).
 ; The raw block below also contains the SEEK command handler at 0xf97696,
 ; reached through the .set alias FDC_CmdSeek (renamed from the misnomer
 ; FDC_STATUS_HANDLER -- it reads and writes no status register).  Verified
 ; instruction-for-instruction against its bootloader twin FDC_CmdSeek in
-; table_data/boot_fdc_driver.s: compare the target track (0x8a36) against
-; the track cache (0x8b04) and return if equal, delay (WA=2), clear the
+; table_data/boot_fdc_driver.s: compare the target track (FDC_TARGET_TRACK) against
+; the track cache (FDC_CURRENT_CYLINDER) and return if equal, delay (WA=2), clear the
 ; result buffer, LD WA,0x000F (= FDC SEEK opcode 0x0F), issue the command,
 ; wait for the result, set the track cache to 0xFF on error, then settle
 ; (WA=0x10; the delay routine busy-waits WA/2 ticks).
@@ -1790,7 +1790,7 @@ FDC_MC_EXIT:
 	ld	(FDC_CURRENT_CYLINDER:16), 255
 	ret
 ; FDC_FormatOneTrack: Formats one side of the current track: seeks (FDC_CmdSeek; on an error leaves through
-;   FDC_CONFIG_VERIFY), builds the C/H/R/N ID-field list in the buffer at (0x8A70) (FDC_MC_EXIT_Code_Helper2), sets
+;   FDC_CONFIG_VERIFY), builds the C/H/R/N ID-field list in the buffer at (FDC_FORMAT_IDS) (FDC_MC_EXIT_Code_Helper2), sets
 ;   command 0x4D (MF FORMAT TRACK) in 0x8A28, points the DMA address 0x8A4C at the list and runs the transfer and
 ;   command (FDC_Setup_DMA_Mode, FDC_MC_EXIT_Code_Helper, FDC_MC_EXIT_Code_Join2). Basis: callers + body --
 ;   FDC_MODE_CONFIG (handler 5, the format command in technics-docs fdc-subsystem.md) calls it once per track and

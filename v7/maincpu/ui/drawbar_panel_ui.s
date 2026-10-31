@@ -1140,7 +1140,7 @@ PmemOutLGridCheck:
 	ld (xsp + 24), xwa
 	lda xwa, (PANEL_RECORDS:16)
 	ld (xsp + 20), xwa
-	lda xwa, (PANEL_REC_71:16)
+	lda xwa, (PANEL_PMEMOUT_L:16)
 	sub xwa, (xsp + 20)
 	ld xiz, xwa
 	lda xiy, (xbc + 2)
@@ -1205,7 +1205,7 @@ PmemOutLGridCheck_OnIndexswUp_Skip:
 	lda	xix, (xsp+60)
 	ldw	bc, 11
 	ldirw
-	lda	xde, (PANEL_REC_71:16)
+	lda	xde, (PANEL_PMEMOUT_L:16)
 	sub	xde, 63904
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
@@ -1276,7 +1276,7 @@ PmemOutLGridCheck_OnIndexswDown_Skip:
 	lda	xix, (xsp+60)
 	ldw	bc, 11
 	ldirw
-	lda	xde, (PANEL_REC_71:16)
+	lda	xde, (PANEL_PMEMOUT_L:16)
 	sub	xde, 63904
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
@@ -1363,7 +1363,7 @@ PmemOutLGridCheck_OnRamData:
 	lda	xde, (xsp+36)
 	ld	xbc, EVT_GRID_DRAW
 	call	SendEvent
-	lda	xde, (PANEL_REC_71:16)
+	lda	xde, (PANEL_PMEMOUT_L:16)
 	sub	xde, 63904
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)

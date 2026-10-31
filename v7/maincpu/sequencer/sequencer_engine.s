@@ -19713,7 +19713,7 @@ SeqData_SetErrorCode:
 	ret
 
 SeqStatus_CheckBit2:
-	ld l, (PANEL_REC_91+3:16)
+	ld l, (PANEL_GM+3:16)
 	and l, 0x4
 	ret
 
@@ -19745,7 +19745,7 @@ Seq_ComputePercent_Compute:
 	ret
 
 SeqStatus_SetOrClearBit:
-	lda xde, (PANEL_REC_91+3:16)
+	lda xde, (PANEL_GM+3:16)
 	cp c, 0:i3
 	jr z, SeqStatus_SetOrClear_ClearPath
 	or (xde), a
@@ -19786,7 +19786,7 @@ Part_IsVoiceActive_Return:
 	ret
 
 SeqStatus_ResetAndSendCmd:
-	res 0, (PANEL_REC_91+3:16)
+	res 0, (PANEL_GM+3:16)
 
 	pushw 0x1
 
@@ -20023,7 +20023,7 @@ SeqTimer_BarChangeProcess:
 	ld wa, 0:i3
 	ldw bc, 0xbd
 	calr Part_ReadByteDirect
-	lda xwa, (PANEL_REC_91+3:16)
+	lda xwa, (PANEL_GM+3:16)
 	cp l, 0xff
 	jr nz, SeqTimer_BarChangeLoop
 	bitm 2, (xwa)
@@ -27649,7 +27649,7 @@ Seq_AdvanceValidateB0Params:
 	jrl z, Seq_AdvanceNoteStep
 	cp w, 0x50
 	jrl ugt, Seq_AdvanceNoteStep
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, Seq_AdvanceNoteStep
 	dec 1, w
 	ld c, w
@@ -27962,7 +27962,7 @@ SeqEvt_SetBit7B0Event:
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	cp l, 0x50
 	jrl ugt, SeqEvt_ReadAndDispatchLoop
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	extz hl
 	dec 1, hl
@@ -28708,7 +28708,7 @@ SeqSearch_ValidateB0Params:
 	jrl z, SeqSearch_AdvanceToPosition
 	cp e, 0x50
 	jrl ugt, SeqSearch_AdvanceToPosition
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqSearch_AdvanceToPosition
 	dec 1, e
 	extz de
