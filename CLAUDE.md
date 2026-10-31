@@ -1332,18 +1332,35 @@ When encountering disputed interpretations:
 3. **Add investigation items** - document what research would resolve the dispute
 4. **Update when resolved** - move to confirmed findings once agreement is reached
 
-| Topic                       | Status               | Claude's View                                    | Human's Concern                                            | Details                                                                                                  |
-|-----------------------------|----------------------|--------------------------------------------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| **Preset Data Destination** | 🟡 PARTIALLY RESOLVED | LZSS preset data (~33KB) goes to Sub CPU 0xF000+ | Transfer sizes don't match, fallback produces invalid data | `table_data/kn5000_table_data.s` (`Compressed_Preset_Data_LZSS`), `../technics-docs/lzss-compression.md` |
+No dispute is open. Resolved ones stay below with their evidence.
+
+**Resolved 2026-10-31 (owner confirmed): Preset Data Destination.** Claude's earlier view was that the LZSS
+preset data (~33 KB) goes to Sub CPU `0xF000+`; the human's concern was that the transfer sizes do not match and
+that the fallback produces invalid data. The concern was right:
+- the SLIDE4K block at `0x8E0000` (`Compressed_Preset_Data_LZSS` = `DemoSongPreset18`,
+  `table_data/kn5000_table_data.s`) is demo-song preset 18, 38,144 bytes decompressed. `Demo_ParseSlideHeader`
+  (`v10/maincpu/demo/file_demo_proc.s`) takes it from the demo-song pointer table and decompresses it to
+  **main-CPU RAM `0x69800`**. It is never sent to the Sub CPU;
+- the 64 KB bulk transfers are not the preset. `SubCPU_Send_Payload` sends the tone database (0x830000-0x87FFFF,
+  five 64 KB transfers to Sub-CPU data RAM `0x50000`) and, from its payload base (`0x3E0000`, else the raw
+  `0x800000`), 64 KB + 64 KB + 0xFF00 bytes to Sub CPU `0xF000` / `0x1F000` / `0x2F000` plus 256 bytes to `0x400`:
+  the Sub CPU payload, not the preset;
+- the `0xF7` bytes of the `0x800000` fallback are the transparent pixels (palette index `0xF7`) of the table data's
+  bitmaps at that address: the fallback ships picture data.
+
+Details: `../technics-docs/lzss-compression.md` (sections "Preset Data Destination dispute" and "Remaining
+Questions"). Still unconfirmed, as an emulation check rather than a dispute: what MAME's `0x800000` fallback
+delivers to Sub CPU `0x400` / `0xF000+` (`../technics-docs/subcpu-payload-provenance.md`).
 
 **Resolved: Address 0x3E0000 Mapping**
 - [x] ~~Trace what `0x3E0000` actually maps to during boot~~ → **Custom Data Flash** (not Table Data ROM)
 - [x] ~~Understand when 0x3E0000 contains valid LZSS data~~ → **After firmware update** (File Type 007 writes here)
 
-**Still investigating for Preset Data Destination:**
-- [ ] Explain why 64KB bulk transfers are used for ~33KB of data
-- [ ] Determine why fallback to `0x800000` produces `0xF7` padding bytes
-- [ ] Verify the exact Sub CPU address where preset data is written
+**Resolved items of the Preset Data Destination checklist**
+- [x] ~~Explain why 64KB bulk transfers are used for ~33KB of data~~ → they carry the tone database and the Sub CPU
+  payload; the 38,144-byte preset goes to main-CPU RAM `0x69800`
+- [x] ~~Determine why fallback to `0x800000` produces `0xF7` padding bytes~~ → they are bitmap transparent pixels
+- [x] ~~Verify the exact Sub CPU address where preset data is written~~ → none: the preset never reaches the Sub CPU
 
 **Adding new disputes:** When Claude Code and a human contributor disagree on an interpretation, add it to this table with:
 - Brief summary of both positions
