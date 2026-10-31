@@ -392,15 +392,15 @@ Scoop_EventLoop_12Entry_Process_Str_Fmt1d:		.incbin "includes/generated/style_ui
 Scoop_EventLoop_12Entry_Process_Str_Fmt2d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1D7, 0x4
 Scoop_EventLoop_12Entry_Process_Str_Fmt3d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DB, 0x4
 ; Scoop_BoundOp05_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display
-;   op 05: Scoop_EventLoop_12Entry_Alt_Data_Target5 copies it with ldirw into its frame and passes the copy to
+;   op 05: Scoop_BoundOp05_PrintFieldAtCell copies it with ldirw into its frame and passes the copy to
 ;   DrawString. Basis: readers + bytes (cf. Scoop_BoundOp07_ClipBox, Scoop_BoundOp0A_ClipBox).
 Scoop_BoundOp05_ClipBox:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DF, 0x8
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt1d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1E7, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EB, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EF, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F3, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F7, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt4d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FB, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt1d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1E7, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EB, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EF, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F3, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F7, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt4d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FB, 0x4
 ; Scoop_BoundOp06_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display
 ;   op 06, which prints a RAM word with %1d / %2d / %3d: Scoop_EventLoop_36Entry copies it with ldirw into its frame
 ;   and passes the copy to DrawString. Basis: readers + bytes.

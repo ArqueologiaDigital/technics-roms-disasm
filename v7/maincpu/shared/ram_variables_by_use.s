@@ -352,3 +352,4 @@
 	.equ SDPART_ROW,			0x3e99e	; word: the selected row of the part list (IvSdpart_*, AcLswPartEdit*, PsMixer_*): row * 2 indexes the row's part
 	.equ GFX_BG_COLOR,			0x3efa2	; word: background colour (Display_SetBackgroundColor stores it)
 	.equ GFX_FG_COLOR,			0x3efa4	; word: foreground colour of the drawing primitives (GraphicsRender_ByteData stores it; the SeGfx ops and DrawText_* push it)
+	.equ FONTID_NAME_TABLE,		0x3efac	; the font-name pointer list FontIDProc reads (RAM copy of FontIDProc_FontNameTable, made by Boot_InitWorkRAM; no code writes it after boot: notes/kn5000-a-2026-10-31/probes/fontid_table_writers.py)

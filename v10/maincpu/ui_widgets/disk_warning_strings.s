@@ -867,9 +867,9 @@ PsTextBox_Str_LineBreak:			.incbin "includes/generated/naka_disk_warning.bin", 0
 AcTrkSw_Select_HighTrack_Str_PsTextBox:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B7E, 0xA	; "PsTextBox"
 ; [nakarest] naka_disk_warning+0x1b88  +0x1b88..+0x1b98 (0xeaa834, 16 B)
 ; [nakarest] Text (16 B at 0xeaa834), first string "AcLanguageText"; no registered NAKA table
-; [nakarest] points into it; reached through source references AcTrkSw_ShowHide_CheckDirty
-; [nakarest] (ui/ui_widget_defs.s: `lda xhl, (AcTrkSw_ShowHide_CheckDirty_Str_AcLanguageText:24)`).
-AcTrkSw_ShowHide_CheckDirty_Str_AcLanguageText:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B88, 0x10	; "AcLanguageText"
+; [nakarest] points into it; reached through source references AcLanguageTextProc_OnGetStrPtr
+; [nakarest] (ui/ui_widget_defs.s: `lda xhl, (AcLanguageTextProc_ClassName:24)`).
+AcLanguageTextProc_ClassName:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B88, 0x10	; "AcLanguageText"
 ; LanguageCheck_LanguageNames -- 6 x uint32_t + strings: name of each help language, index = language
 ; {"English", "German", "French", "Spanish", "Italian", "Indonesian"} (strings stored in reverse order).
 ; LanguageCheck (ui/ui_widget_defs.s) returns the table for EVT_GET_LANGUAGE_PTR; AcLanguageTextProc draws

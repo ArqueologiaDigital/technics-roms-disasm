@@ -228,7 +228,10 @@ ids are named in every GUI C file.
 - **525 `field_XX` members** (533 in v7/v6/v5). 291 are in `naka_sequencer_channels.c`; none of those is read by its
   RAM address in the asm (checked: one direct `(0xADDR)` use among them), and none is a widget's cell. Naming them
   needs the routines that reach them through a base pointer. The rest are spread over 15 files.
-- **1 property value has no name**: `TEST3.fontcolor = 0x0043`.
+- **1 property value has no name**: `TEST3.fontcolor = 0x0043`.  (Settled 2026-10-31, lane kn5000-a: it cannot have a
+  firmware name.  ColorIDProc's name table names no 0x43, the boot palette's entry 0x43 is 0x000000, and
+  `SineWaveScreenProc` never reads its fontcolor field, +42: it draws with the fixed colours 0xff / 0xf5.  The C says so
+  beside the value; naka_gui_census.py's 'unnamed prop' stays 1 for that reason.)
 - **81 titles have no path.** No traced code opens 108 of the 130 title names that the asm never spells. That
   includes most sound-edit (`TITLE_SE*`) pages, which the Scoop module's sound-editor screens open through their own
   data, not NAKA records.
@@ -240,7 +243,9 @@ ids are named in every GUI C file.
   them.  (Done 2026-10-31, lane kn5000-a: they take RectY2Proc's case names, `RectX2Proc_OnGetPropMember` ...,
   in v10/v9/v7/v6/v5; `scripts/renaming/rename_rectx2proc_locals.sed`.)
 - Is the font index table (`FontIDProc_FontNameTable`, in DRAM) rewritten at run time? The names assume the boot
-  image.
+  image.  (Answered 2026-10-31, lane kn5000-a: no.  The RAM copy, now `FONTID_NAME_TABLE` (0x3efac; 0x3efa8 in v6/v5), is
+  read by FontIDProc's three loads of its base and written by nothing else in any main-CPU or HD-AE5000 image:
+  `notes/kn5000-a-2026-10-31/probes/fontid_table_writers.py`.)
 - These routine names changed in the second pass, and the documentation site still uses the old ones in
   `feature-demo.md`, `test-modes.md` and `ssf-presentation.md`:
   - `UI_PostModeChangeEvent` is now `UI_ChangeTitleByIndex`;

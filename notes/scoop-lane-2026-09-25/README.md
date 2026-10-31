@@ -206,7 +206,9 @@ and they belong to lane `sys` to delete.
   arguments that a positional-label pass symbolised by accident. (Resolved: d8e699346, then 695e7284f spells them as NAKA_VIEW_<name> view ids; open-items register 2026-10-31.)
 * naming: handler routines reached through the dispatch tables carry
   `<Table>_Target<k>` names; the sound-editor code (all of
-  scoop_editor_data.s, 3,4xx instructions) has only structural labels.
+  scoop_editor_data.s, 3,4xx instructions) has only structural labels. (Resolved: the sound-editor code is named since 1813072cd; the last 21
+  `<Table>_Target<k>` handlers were named from their table entry and body on 2026-10-31, lane kn5000-a,
+  `scripts/renaming/rename_dispatch_target_handlers.sed`, all five trees.)
 * scoop_editor_data.s is entered through the pointer table
   `EmbeddedPtrTable_v*_gui_display_struct_data_000B00` in
   `kn5000_v*_program.s`: one entry is `.long Scoop_SoundEditorData`, 187 more

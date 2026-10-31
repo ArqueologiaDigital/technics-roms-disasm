@@ -800,11 +800,11 @@ SoundEvt_ModeDispatch_Return:
 	; 4 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 SoundEvt_ModeDispatch_Tbl:
 	.long	DefaultHandler_Ret
-	.long	SoundEvt_LongPacketHandler_DispatchTbl_Target1
-	.long	SoundEvt_LongPacketHandler_DispatchTbl_Target2
+	.long	SoundEvt_Mode1_StepAndRefresh
+	.long	SoundEvt_Mode2_StepAndRefresh
 	.long	DefaultHandler_Ret
 	; Entry 1 of SoundEvt_ModeDispatch_Tbl (a code pointer the table holds).
-SoundEvt_LongPacketHandler_DispatchTbl_Target1:
+SoundEvt_Mode1_StepAndRefresh:
 	and	w, 3
 	ld	(3925:16), w
 	ex8 a, w
@@ -838,15 +838,15 @@ SoundEvt_LongPacketHandler_Skip:
 	cp	a, 3:i3
 	jrl	ule, SoundEvt_LongPacketHandler_Loop
 SoundEvt_LongPacketHandler_Skip2:
-	call	SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2
-	jp	SoundEvt_LongPacketHandler_DispatchTbl_Target1_Join
+	call	SoundEvt_Mode1_StepAndRefresh_Helper2
+	jp	SoundEvt_Mode1_StepAndRefresh_Join
 SoundEvt_LongPacketHandler_Loop:
 	or	(0x0dd3:16), 1
 	call	VoiceSlot_TableSetup
-SoundEvt_LongPacketHandler_DispatchTbl_Target1_Join:
-	call	SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper
+SoundEvt_Mode1_StepAndRefresh_Join:
+	call	SoundEvt_Mode1_StepAndRefresh_Helper
 	ret
-	; Handler dispatch table, 16 B.  Read by SoundEvt_LongPacketHandler_DispatchTbl_Target1 (0xEF60B8): `ld xhl, ScoopDisp_HandlerData2`
+	; Handler dispatch table, 16 B.  Read by SoundEvt_Mode1_StepAndRefresh (0xEF60B8): `ld xhl, ScoopDisp_HandlerData2`
 	; indexed with stride 4 (`sla wa, 2`), index from `ld a, (3420:16)`
 	; 4 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 ScoopDisp_HandlerData2:
@@ -855,7 +855,7 @@ ScoopDisp_HandlerData2:
 	.long	Timer_ParamLoadAndCompare
 	.long	DefaultHandler_Ret
 	; Entry 2 of SoundEvt_ModeDispatch_Tbl (a code pointer the table holds).
-SoundEvt_LongPacketHandler_DispatchTbl_Target2:
+SoundEvt_Mode2_StepAndRefresh:
 	and	w, 3
 	ex8	a, w
 	exts	wa
@@ -872,30 +872,30 @@ SoundEvt_LongPacketHandler_DispatchTbl_Target2:
 	call	(xiy)
 	ldw_d16	wa, (SQSTEP_MEASURE)
 	cp	wa, (0x0ee8:16)
-	jrl	nz, SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip3
+	jrl	nz, SoundEvt_Mode2_StepAndRefresh_Skip3
 	ldb_d8	a, (SQSTEP_BEAT)
 	ldb_d8	w, (0x0eed)
 	cp	a, w
-	jrl	z, SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip2
+	jrl	z, SoundEvt_Mode2_StepAndRefresh_Skip2
 	cp	(SQSTEP_MEASURE_BEATS:16), 4
-	jrl	ule, SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip2
+	jrl	ule, SoundEvt_Mode2_StepAndRefresh_Skip2
 	cp	w, 3:i3
-	jrl	ugt, SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip
+	jrl	ugt, SoundEvt_Mode2_StepAndRefresh_Skip
 	cp	a, 3:i3
 	jrl	ugt, SoundEvt_LongPacketHandler_Loop
-	jp	SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip2
-SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip:
+	jp	SoundEvt_Mode2_StepAndRefresh_Skip2
+SoundEvt_Mode2_StepAndRefresh_Skip:
 	cp	a, 3:i3
-	jrl	ule, SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip3
-SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip2:
-	call	SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2
-	jp	SoundEvt_LongPacketHandler_DispatchTbl_Target2_Return
-SoundEvt_LongPacketHandler_DispatchTbl_Target2_Skip3:
+	jrl	ule, SoundEvt_Mode2_StepAndRefresh_Skip3
+SoundEvt_Mode2_StepAndRefresh_Skip2:
+	call	SoundEvt_Mode1_StepAndRefresh_Helper2
+	jp	SoundEvt_Mode2_StepAndRefresh_Return
+SoundEvt_Mode2_StepAndRefresh_Skip3:
 	or	(0x0dd3:16), 1
 	call	VoiceSlot_TableSetup
-SoundEvt_LongPacketHandler_DispatchTbl_Target2_Return:
+SoundEvt_Mode2_StepAndRefresh_Return:
 	ret
-	; Handler dispatch table, 16 B.  Read by SoundEvt_LongPacketHandler_DispatchTbl_Target2 (0xEF613F): `ld xhl, SoundEvt_LongPacketHandler_DispatchTbl2`
+	; Handler dispatch table, 16 B.  Read by SoundEvt_Mode2_StepAndRefresh (0xEF613F): `ld xhl, SoundEvt_LongPacketHandler_DispatchTbl2`
 	; indexed with stride 4 (`sla wa, 2`)
 	; 4 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 SoundEvt_LongPacketHandler_DispatchTbl2:
@@ -1009,7 +1009,7 @@ ScoopDisp_DispatchTable_Small:
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target11
+	.long	UIState_Evt0B_ShowPopup18
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -1171,8 +1171,8 @@ PerfMode_ParamHandler_0_Return:
 	; index bounded to 0..31 (`cp hl, 31` / `jrl ugt` skips larger values)
 PerfMode_EventTable_0:
 	.long	UIDisp_DefaultInputHandler
-	.long	PerfMode_EventTable_0_Target1
-	.long	PerfMode_EventTable_0_Target2
+	.long	PerfMode_Evt01_NoteNumberDial
+	.long	PerfMode_Evt02_NoteVelocityDial
 	.long	PerfMode_Evt03_FlagHandler_A
 	.long	PerfMode_Evt03_FlagHandler_B
 	.long	PerfMode_Evt03_ClampAndUpdate
@@ -1188,8 +1188,8 @@ PerfMode_EventTable_0:
 	.long	ToneParam_Evt0F_BytecodeHandler
 	.long	DefaultHandler_Ret
 	.long	UIDisp_DefaultInputHandler
-	.long	PerfMode_EventTable_0_Target1
-	.long	PerfMode_EventTable_0_Target2
+	.long	PerfMode_Evt01_NoteNumberDial
+	.long	PerfMode_Evt02_NoteVelocityDial
 	.long	PerfMode_Evt03_FlagHandler_A
 	.long	PerfMode_Evt03_FlagHandler_B
 	.long	PerfMode_Evt03_ClampAndUpdate
@@ -2075,13 +2075,13 @@ UIState_EventTable:
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target5
-	.long	UIState_EventTable_Target6
+	.long	UIState_Evt05_MemConfig1ThenSeqPlay
+	.long	UIState_Evt06_MemConfig0ThenSeqPlay
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	ToneParam_ShortCallHandler
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target11
+	.long	UIState_Evt0B_ShowPopup18
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2092,8 +2092,8 @@ UIState_EventTable:
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target5
-	.long	UIState_EventTable_Target6
+	.long	UIState_Evt05_MemConfig1ThenSeqPlay
+	.long	UIState_Evt06_MemConfig0ThenSeqPlay
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2645,13 +2645,13 @@ PerfMode_DispatchTable_B:
 	.long	DefaultHandler_Ret
 	.long	PerfMode_ParamHandler_Data
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target5
-	.long	UIState_EventTable_Target6
+	.long	UIState_Evt05_MemConfig1ThenSeqPlay
+	.long	UIState_Evt06_MemConfig0ThenSeqPlay
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	ToneParam_ShortCallHandler
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target11
+	.long	UIState_Evt0B_ShowPopup18
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2662,8 +2662,8 @@ PerfMode_DispatchTable_B:
 	.long	DefaultHandler_Ret
 	.long	PerfMode_ParamHandler_Data
 	.long	DefaultHandler_Ret
-	.long	UIState_EventTable_Target5
-	.long	UIState_EventTable_Target6
+	.long	UIState_Evt05_MemConfig1ThenSeqPlay
+	.long	UIState_Evt06_MemConfig0ThenSeqPlay
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2907,16 +2907,16 @@ ScoopDisp_DispatchTable_Extended:
 PerfMode_Handler_EvtB_Data:
 	.byte	0x00, 0x03, 0x03, 0x03, 0x00, 0x01, 0x03, 0x03, 0x00, 0x03, 0x02, 0x03, 0x00, 0x00, 0x00, 0x00
 	; Entry 11 of ScoopDisp_DispatchTable_Small (a code pointer the table holds).
-UIState_EventTable_Target11:
+UIState_Evt0B_ShowPopup18:
 	bit	7, w
-	jrl	nz, UIState_EventTable_Target11_Return
+	jrl	nz, UIState_Evt0B_ShowPopup18_Return
 	ld	xiy, STATUS_POPUP_ID
 	ld	a, (xiy)
 	stb_d8	(0x0df0), a
 	ld	(xiy), 18
 	ld	(0x0d5e:16), 0
 	call	Display_UpdateRegion0_Wrap
-UIState_EventTable_Target11_Return:
+UIState_Evt0B_ShowPopup18_Return:
 	ret
 DisplayMode_Dispatch_Mode0_Helper:
 	ld a, (SEQ_CURSOR_TRACK:16)
@@ -3123,7 +3123,7 @@ Timer_ModeHandler_0_Skip2:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
 	ret
-SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper:
+SoundEvt_Mode1_StepAndRefresh_Helper:
 	ld	xhl, 3412
 	bitm	2, (xhl)
 	jrl	z, Timer_ModeHandler_0_Return3
@@ -4889,19 +4889,19 @@ SqStep_SeekForwardByDistance_Skip26:
 	ld	(SQSTEP_CLOCK:16), l
 	ret
 	; Entry 1 of PerfMode_EventTable_0 (a code pointer the table holds).
-PerfMode_EventTable_0_Target1:
+PerfMode_Evt01_NoteNumberDial:
 	bit	7, w
 	jrl	nz, DisplayMode_Handler_3_Skip8
 	call	PerfMode_IncNoteNumber
-	jp	PerfMode_EventTable_0_Target1_Return
+	jp	PerfMode_Evt01_NoteNumberDial_Return
 DisplayMode_Handler_3_Skip8:
 	call	PerfMode_DecNoteNumber
-PerfMode_EventTable_0_Target1_Return:
+PerfMode_Evt01_NoteNumberDial_Return:
 	ret
 ; PerfMode_IncNoteNumber: Raises by 1 the note number (byte +2) of the note-on event at the song-data cursor: sets the
 ;   step (0x0DF2) = +1 and runs PerfMode_StepNoteNumber, which on a note track adds it (a result above
 ;   127 keeps the old note), stores it to 0x367C and shows note name and velocity. Basis: callers + body --
-;   PerfMode_EventTable_0_Target1 (entry 1 of the PerfMode_EventTable_0 switch) calls it when W bit 7 is clear and its
+;   PerfMode_Evt01_NoteNumberDial (entry 1 of the PerfMode_EventTable_0 switch) calls it when W bit 7 is clear and its
 ;   twin PerfMode_DecNoteNumber when set; entry 2 is the same pair for the velocity (PerfMode_IncNoteVelocity).
 PerfMode_IncNoteNumber:
 	ld	(PERF_STEP_AMOUNT:16), 1
@@ -4910,7 +4910,7 @@ PerfMode_IncNoteNumber:
 ; PerfMode_DecNoteNumber: Lowers by 1 the note number (byte +2) of the note-on event at the song-data cursor: sets the
 ;   step (0x0DF2) = -1 (0xFF) and runs PerfMode_StepNoteNumber (a result below 0 keeps the old note),
 ;   which stores the note to 0x367C and shows note name and velocity. Basis: callers + body --
-;   PerfMode_EventTable_0_Target1 calls it when W bit 7 is set; twin of PerfMode_IncNoteNumber.
+;   PerfMode_Evt01_NoteNumberDial calls it when W bit 7 is set; twin of PerfMode_IncNoteNumber.
 PerfMode_DecNoteNumber:
 	ld	(PERF_STEP_AMOUNT:16), 255
 	call	PerfMode_StepNoteNumber
@@ -5008,7 +5008,7 @@ DisplayMode_Handler_3_Return6:
 PerfMode_ParamHandler_7_Helper:
 	ldw (0x0ef0:16), 0x0001
 	ld (PERF_STEP_FIELD:16), 0x02
-	call PerfMode_EventTable_0_Target1_Helper
+	call PerfMode_Evt01_NoteNumberDial_Helper
 	call DisplayStr_WriteTempoValue
 	call Display_UpdateRegion3
 	or (0xe31c:16), 0x08
@@ -5016,19 +5016,19 @@ PerfMode_ParamHandler_7_Helper:
 PerfMode_ParamHandler_7_Helper2:
 	ldw (0x0ef0:16), 0xffff
 	ld (PERF_STEP_FIELD:16), 0x02
-	call PerfMode_EventTable_0_Target1_Helper
+	call PerfMode_Evt01_NoteNumberDial_Helper
 	call DisplayStr_WriteTempoValue
 	call Display_UpdateRegion3
 	or (0xe31c:16), 0x08
 	ret
-PerfMode_EventTable_0_Target1_Helper:
+PerfMode_Evt01_NoteNumberDial_Helper:
 	call	VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp	w, 0:i3
-	jrl	z, PerfMode_EventTable_0_Target1_Helper_Return
+	jrl	z, PerfMode_Evt01_NoteNumberDial_Helper_Return
 	call	VoiceSlot_ReadCurrentParams
 	and	a, 240
 	cp	a, 128
-	jrl	nz, PerfMode_EventTable_0_Target1_Helper_Return
+	jrl	nz, PerfMode_Evt01_NoteNumberDial_Helper_Return
 	xor	a, a
 	call	VoiceSlot_SaveState
 	ldb_d8	e, (PERF_STEP_FIELD)
@@ -5050,14 +5050,14 @@ PerfMode_EventTable_0_Target1_Helper:
 	ld	bc, wa
 	add	wa, (0x0ef0:16)
 	cp	wa, 40
-	jrl	nc, PerfMode_EventTable_0_Target1_Helper_Skip
+	jrl	nc, PerfMode_Evt01_NoteNumberDial_Helper_Skip
 	ld	wa, bc
-	jp	PerfMode_EventTable_0_Target1_Join
-PerfMode_EventTable_0_Target1_Helper_Skip:
+	jp	PerfMode_Evt01_NoteNumberDial_Join
+PerfMode_Evt01_NoteNumberDial_Helper_Skip:
 	cp	wa, 300
-	jrl	ule, PerfMode_EventTable_0_Target1_Join
+	jrl	ule, PerfMode_Evt01_NoteNumberDial_Join
 	ld	wa, bc
-PerfMode_EventTable_0_Target1_Join:
+PerfMode_Evt01_NoteNumberDial_Join:
 	ld	(0x0ef2:16), wa
 	ld	bc, wa
 	and	a, 127
@@ -5076,7 +5076,7 @@ PerfMode_EventTable_0_Target1_Join:
 	call	VoiceSlot_WriteCurrentParam
 	xor	a, a
 	call	VoiceSlot_RestoreState
-PerfMode_EventTable_0_Target1_Helper_Return:
+PerfMode_Evt01_NoteNumberDial_Helper_Return:
 	ret
 PerfMode_ParamHandler_3_Helper:
 	ld	(PERF_STEP_AMOUNT:16), 1
@@ -5097,11 +5097,11 @@ PerfMode_ParamHandler_3_Helper:
 	pop	xhl
 	cp	l, 210
 	jrl	nz, PerfMode_ParamHandler_Data_Helper2_Skip
-	call	PerfMode_EventTable_0_Target1_Helper3
-	jp	PerfMode_EventTable_0_Target1_Join2
+	call	PerfMode_Evt01_NoteNumberDial_Helper3
+	jp	PerfMode_Evt01_NoteNumberDial_Join2
 PerfMode_ParamHandler_Data_Helper2_Skip:
 	call	PerfMode_StepCursorEventByte
-PerfMode_EventTable_0_Target1_Join2:
+PerfMode_Evt01_NoteNumberDial_Join2:
 	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	or	(0xe31c:16), 8
@@ -5126,31 +5126,31 @@ PerfMode_ParamHandler_3_Helper2:
 	pop	xhl
 	cp	l, 210
 	jrl	nz, PerfMode_ParamHandler_3_Helper2_Skip2
-	call	PerfMode_EventTable_0_Target1_Helper3
-	jp	PerfMode_EventTable_0_Target1_Join3
+	call	PerfMode_Evt01_NoteNumberDial_Helper3
+	jp	PerfMode_Evt01_NoteNumberDial_Join3
 PerfMode_ParamHandler_3_Helper2_Skip2:
 	call	PerfMode_StepCursorEventByte
-PerfMode_EventTable_0_Target1_Join3:
+PerfMode_Evt01_NoteNumberDial_Join3:
 	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	or	(0xe31c:16), 8
 PerfMode_ParamHandler_3_Helper2_Return3:
 	ret
 	; Entry 2 of PerfMode_EventTable_0 (a code pointer the table holds).
-PerfMode_EventTable_0_Target2:
+PerfMode_Evt02_NoteVelocityDial:
 	bit	7, w
-	jrl	nz, PerfMode_EventTable_0_Target2_Skip3
+	jrl	nz, PerfMode_Evt02_NoteVelocityDial_Skip3
 	call	PerfMode_IncNoteVelocity
-	jp	PerfMode_EventTable_0_Target2_Return
-PerfMode_EventTable_0_Target2_Skip3:
+	jp	PerfMode_Evt02_NoteVelocityDial_Return
+PerfMode_Evt02_NoteVelocityDial_Skip3:
 	call	PerfMode_DecNoteVelocity
-PerfMode_EventTable_0_Target2_Return:
+PerfMode_Evt02_NoteVelocityDial_Return:
 	ret
 ; PerfMode_IncNoteVelocity: Raises by 1 the velocity (byte +3) of the note-on event at the song-data cursor: sets step
 ;   (3570) = +1 and field (3571) = 3, and only on a note track ((0x0D65) = 1) when the cursor's event is 0x9n on the
 ;   current channel (3415) it lets PerfMode_StepCursorEventByte add the step (a result above 127 keeps the
 ;   old value) and store it at 0x367B, then shows note name and velocity (Disp_ShowNoteNameAndVelocity) and redraws
-;   region 3. Basis: callers + body -- PerfMode_EventTable_0_Target2 (entry 2 of the PerfMode_EventTable_0 switch
+;   region 3. Basis: callers + body -- PerfMode_Evt02_NoteVelocityDial (entry 2 of the PerfMode_EventTable_0 switch
 ;   table) calls it when W bit 7 is clear and its twin PerfMode_DecNoteVelocity (step -1) when set; 0x367B
 ;   is the value Disp_ShowNoteNameAndVelocity prints after 'V'.
 PerfMode_IncNoteVelocity:
@@ -5179,7 +5179,7 @@ PerfMode_IncNoteVelocity_Return10:
 ;   (0x0DF2) = -1, field (0x0DF3) = 3, and only on a note track ((0x0D65) = 1) when the cursor's event is 0x9n at the
 ;   current position it lets PerfMode_StepCursorEventByte subtract (a result below 0 keeps the old value) and store it
 ;   at 0x367B, then shows note name and velocity and redraws region 3. Basis: callers + body --
-;   PerfMode_EventTable_0_Target2 calls it when W bit 7 is set and PerfMode_IncNoteVelocity (the same body with step
+;   PerfMode_Evt02_NoteVelocityDial calls it when W bit 7 is set and PerfMode_IncNoteVelocity (the same body with step
 ;   +1) when clear.
 PerfMode_DecNoteVelocity:
 	ld	(PERF_STEP_AMOUNT:16), 255
@@ -5233,7 +5233,7 @@ PerfMode_StepCursorEventByte_Skip12:
 	call	VoiceSlot_RestoreState
 PerfMode_StepCursorEventByte_Return2:
 	ret
-PerfMode_EventTable_0_Target1_Helper3:
+PerfMode_Evt01_NoteNumberDial_Helper3:
 	call	VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp	w, 0:i3
 	jrl	z, DisplayMode_Handler_3_Return3
@@ -5303,7 +5303,7 @@ Timer_ParamCompareAlt_Helper6:
 	call	(xhl)
 DisplayMode_Handler_3_Return12:
 	ret
-	; Handler dispatch table, 16 B.  Read by PerfMode_EventTable_0_Target2 (0xEF8DD1): `ld xix, DMA_ChannelSelect_Table`
+	; Handler dispatch table, 16 B.  Read by PerfMode_Evt02_NoteVelocityDial (0xEF8DD1): `ld xix, DMA_ChannelSelect_Table`
 	; indexed with stride 4 (`sla hl, 2`)
 	; 4 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 DMA_ChannelSelect_Table:
@@ -5374,7 +5374,7 @@ VoiceSlot_TableSetup_Skip:
 VoiceSlot_TableSetup_Join:
 	and (0x0dd3:16), 0xfe
 	call AccPedal_CheckBitAndUpdate
-	call SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2
+	call SoundEvt_Mode1_StepAndRefresh_Helper2
 	xor A,A
 	call VoiceSlot_SaveState
 	call SqStep_GetBeatInGridRow
@@ -5833,12 +5833,12 @@ SqStep_SetupNextGridRow_Join3:
 VoiceSlot_TableSetup_Code_Return2:
 	ret
 	; Entry 6 of UIState_EventTable (a code pointer the table holds).
-UIState_EventTable_Target6:
+UIState_Evt06_MemConfig0ThenSeqPlay:
 	call	MemConfig_Handler_0
 	call	SysInit_SendAllNotesAndReset
 	ret
 	; Entry 5 of UIState_EventTable (a code pointer the table holds).
-UIState_EventTable_Target5:
+UIState_Evt05_MemConfig1ThenSeqPlay:
 	call	MemConfig_Handler_1
 	call	SysInit_SendAllNotesAndReset
 	ret
@@ -7227,7 +7227,7 @@ SqStep_SetupCursorTrack_Skip:
 	call	PerfMode_Handler_EvtB_Helper2_Helper8
 	jp	PerfMode_Handler_EvtB_Helper2_Join
 PerfMode_Handler_EvtB_Helper2_Skip:
-	call	MemoryConfig_Handler_Table_Target2_Sub
+	call	MemConfig_Handler_2_Sub
 PerfMode_Handler_EvtB_Helper2_Join:
 	call	SqStep_ResetPositionState
 	bit	2, (SEQ_TRANSPORT_STATE:16)
@@ -8134,7 +8134,7 @@ SysEx_BytecodeDispatcher_Return:
 MemoryConfig_Handler_Table:
 	.long	MemConfig_Handler_0
 	.long	MemConfig_Handler_1
-	.long	MemoryConfig_Handler_Table_Target2
+	.long	MemConfig_Handler_2
 	.long	MemConfig_Handler_3
 	.long	MemConfig_Handler_4
 	.long	MemConfig_Handler_5
@@ -8213,35 +8213,35 @@ SysEx_BytecodeDispatcher_Tbl:
 	.byte	0x40, 0x40, 0x00, 0x04, 0x00, 0x40, 0x2f, 0x01, 0x80, 0x80, 0x00, 0x04, 0x00, 0x80, 0x2f, 0x01
 	.byte	0x0e
 	; Entry 2 of MemoryConfig_Handler_Table (a code pointer the table holds).
-MemoryConfig_Handler_Table_Target2:
+MemConfig_Handler_2:
 	ld	xhl, 0x10f9
 	bitm	2, (xhl)
-	jrl	z, MemoryConfig_Handler_Table_Target2_Skip
+	jrl	z, MemConfig_Handler_2_Skip
 	resm	2, (xhl)
-	jp	MemoryConfig_Handler_Table_Target2_Join
-MemoryConfig_Handler_Table_Target2_Skip:
+	jp	MemConfig_Handler_2_Join
+MemConfig_Handler_2_Skip:
 	ld	w, 114:opc
 	call	MIDI_SendSysExFromW
 	set	1, (0x10f9:16)
-MemoryConfig_Handler_Table_Target2_Sub:
+MemConfig_Handler_2_Sub:
 	call	MemConfig_Handler_4_Helper
 	ld	xiz, 0x0d53
 	andmi8	(xiz), 191
 	call	MemConfig_VoiceSlotLookup
 	call	SqStep_ResetPositionState
-MemoryConfig_Handler_Table_Target2_Join:
+MemConfig_Handler_2_Join:
 	cp	(SQSTEP_DISPLAY_MODE:16), 0
-	jrl	nz, MemoryConfig_Handler_Table_Target2_Join2
+	jrl	nz, MemConfig_Handler_2_Join2
 	ld	(0x0d6a:16), 0
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 144
-	jr	nz, MemoryConfig_Handler_Table_Target2_Sub_Skip
+	jr	nz, MemConfig_Handler_2_Sub_Skip
 	call	MemConfig_Handler_5_Helper10
-MemoryConfig_Handler_Table_Target2_Sub_Skip:
+MemConfig_Handler_2_Sub_Skip:
 	call	MemConfig_Handler_5_Helper12
 	call	DMA_FlagCheckWithCalls
 	call	MemConfig_Handler_5_Helper11
-MemoryConfig_Handler_Table_Target2_Join2:
+MemConfig_Handler_2_Join2:
 	ld	w, 0:opc
 	ret
 MemConfig_VoiceSlotLookup:
@@ -12236,18 +12236,18 @@ VoiceState_DataBlock2_Helper4_Skip5:
 	ld	a, 2:opc
 VoiceState_DataBlock2_Return5:
 	ret
-SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2:
+SoundEvt_Mode1_StepAndRefresh_Helper2:
 	ld	a, 32:opc
 	ld	w, (SQSTEP_MEASURE_BEATS:16)
 	cp	(SQSTEP_BEAT:16), 3
-	jrl	le, SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2_Skip6
+	jrl	le, SoundEvt_Mode1_StepAndRefresh_Helper2_Skip6
 	sub	w, 4
-	jp	SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2_Skip7
-SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2_Skip6:
+	jp	SoundEvt_Mode1_StepAndRefresh_Helper2_Skip7
+SoundEvt_Mode1_StepAndRefresh_Helper2_Skip6:
 	cp	w, 4:i3
-	jrl	ule, SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2_Skip7
+	jrl	ule, SoundEvt_Mode1_StepAndRefresh_Helper2_Skip7
 	ld	w, 4:opc
-SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper2_Skip7:
+SoundEvt_Mode1_StepAndRefresh_Helper2_Skip7:
 	ld	(13952:16), a
 	ld	(13941:16), w
 	ld	(SQSTEP_ROW2_BEATS:16), w
@@ -12759,14 +12759,14 @@ SubCPU_ToneDispatch:
 SubCPU_ToneParamDisplay_Tbl:
 	.byte	0x08, 0x09, 0x0a, 0x0b
 	; Entry 1 of SubCPU_ToneParamRet (a code pointer the table holds).
-SubCPU_ToneParamRet_Target1:
+SubCPU_ToneParam_Evt01_SelectParamDial:
 	xor	l, l
 	bit	7, w
-	jrl	nz, SubCPU_ToneParamRet_Target1_Skip
+	jrl	nz, SubCPU_ToneParam_Evt01_SelectParamDial_Skip
 	ld	l, 3:opc
-SubCPU_ToneParamRet_Target1_Skip:
+SubCPU_ToneParam_Evt01_SelectParamDial_Skip:
 	cp	(PART_PARAM_SELECT:16), l
-	jrl	z, SubCPU_ToneParamRet_Target1_Return
+	jrl	z, SubCPU_ToneParam_Evt01_SelectParamDial_Return
 	ld	a, (PART_PARAM_SELECT:16)
 	xor	l, l
 	ld	h, 3:opc
@@ -12775,7 +12775,7 @@ SubCPU_ToneParamRet_Target1_Skip:
 	call	PartParam_LoadSelectedValue
 	call	DisplayStr_ShowPartParamLine
 	call	SubCPU_ToneParamDisplay_Helper
-SubCPU_ToneParamRet_Target1_Return:
+SubCPU_ToneParam_Evt01_SelectParamDial_Return:
 	ret
 SubCPU_ToneHandler_A:
 	or	(0xe31c:16), 8
@@ -12884,7 +12884,7 @@ PerfMode_ParamHandler_11_Return:
 	; index bounded to 0..31 (`cp hl, 31` / `jrl ugt` skips larger values)
 SubCPU_ToneParamRet:
 	.long	UIDisp_DefaultInputHandler
-	.long	SubCPU_ToneParamRet_Target1
+	.long	SubCPU_ToneParam_Evt01_SelectParamDial
 	.long	DefaultHandler_Ret
 	.long	SubCPU_ToneHandler_A
 	.long	DefaultHandler_Ret
@@ -12901,7 +12901,7 @@ SubCPU_ToneParamRet:
 	.long	ToneParam_Evt0F_BytecodeHandler
 	.long	DefaultHandler_Ret
 	.long	UIDisp_DefaultInputHandler
-	.long	SubCPU_ToneParamRet_Target1
+	.long	SubCPU_ToneParam_Evt01_SelectParamDial
 	.long	DefaultHandler_Ret
 	.long	SubCPU_ToneHandler_A
 	.long	DefaultHandler_Ret
@@ -15088,7 +15088,7 @@ DisplayStr_BlankLineBuffer:
 	djnz16	bc, -6
 	ret
 ; Display_UpdateRegion0_Wrap: Call-through to Display_UpdateRegion0, the status-bar region that shows the pop-up id
-;   (0x0DEF): `call Display_UpdateRegion0 / ret`. Basis: callers + body -- UIState_EventTable_Target11 saves (0x0DEF)
+;   (0x0DEF): `call Display_UpdateRegion0 / ret`. Basis: callers + body -- UIState_Evt0B_ShowPopup18 saves (0x0DEF)
 ;   in 0x0DF0, sets it to 18 and calls it to redraw the status bar; the name follows the X_Wrap convention of
 ;   Display_UpdateRegion2_Wrap. (DisplayMode_Handler_3_Helper13 is a second copy of the same two instructions.)
 Display_UpdateRegion0_Wrap:
@@ -18608,7 +18608,7 @@ Scoop_CurveUpdate_SegmentEnd_Skip2:
 	pop	xiz
 	lda	xsp, (xsp+274)
 	ret
-Scoop_EventLoop_12Entry_Alt_Data_Target4:
+Scoop_BoundOp04_DrawBoxByField:
 	dec	8, xsp
 	ld	xbc, xwa
 	ld	wa, (xbc+2)
@@ -18652,7 +18652,7 @@ Scoop_CurveUpdate_SegmentEnd_Skip3:
 	call	DrawBox
 	inc	8, xsp
 	ret
-Scoop_EventLoop_12Entry_Alt_Data_Target8:
+Scoop_BoundOp08_DrawRectByField:
 	dec	8, xsp
 	ld	xbc, xwa
 	ld	wa, (xbc+2)
@@ -19312,7 +19312,7 @@ Scoop_EventLoop_12Entry_Join:
 	pop	xiz
 	lda	xsp, (xsp+268)
 	ret
-Scoop_EventLoop_12Entry_Alt_Data_Target5:
+Scoop_BoundOp05_PrintFieldAtCell:
 	lda	xsp, (xsp-268)
 	push	xiz
 	ld	xiz, xwa
@@ -19375,8 +19375,8 @@ Scoop_EventLoop_12Entry_Join2:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt1d@hi16
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt1d@lo16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt1d@hi16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt1d@lo16
 	lda	xwa, (xsp+11)
 	push	xwa
 	call	Sprintf_Locked
@@ -19386,8 +19386,8 @@ Scoop_EventLoop_12Entry_Skip5:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d@hi16
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d@lo16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d@hi16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d@lo16
 	lda	xwa, (xsp+11)
 	push	xwa
 	call	Sprintf_Locked
@@ -19397,8 +19397,8 @@ Scoop_EventLoop_12Entry_Skip6:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d@hi16
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d@lo16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d@hi16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d@lo16
 	lda	xwa, (xsp+11)
 	push	xwa
 	call	Sprintf_Locked
@@ -19414,8 +19414,8 @@ Scoop_EventLoop_12Entry_Skip7:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d_2@hi16
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d_2@lo16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d_2@hi16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d_2@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -19425,8 +19425,8 @@ Scoop_EventLoop_12Entry_Skip8:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d_2@hi16
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d_2@lo16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d_2@hi16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d_2@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -19436,8 +19436,8 @@ Scoop_EventLoop_12Entry_Skip9:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt4d@hi16
-	pushw	Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt4d@lo16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt4d@hi16
+	pushw	Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt4d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -19656,7 +19656,7 @@ Scoop_EventLoop_36Entry_Branch1_Code_Join:
 	pop	xiz
 	lda	xsp, (xsp+268)
 	ret
-Scoop_EventLoop_12Entry_Alt_Data_Target11:
+Scoop_BoundOp0B_PrintSignedField:
 	lda	xsp, (xsp-268)
 	push	xiz
 	ld	xiz, xwa
@@ -19797,7 +19797,7 @@ Scoop_EventLoop_36Entry_Branch1_Code_Join3:
 	pop	xiz
 	lda	xsp, (xsp+268)
 	ret
-Scoop_EventLoop_12Entry_Alt_Data_Target10:
+Scoop_BoundOp0A_PrintByte:
 	lda	xsp, (xsp-268)
 	push	xiz
 	ld	xiz, xwa
@@ -19863,7 +19863,7 @@ Scoop_EventLoop_36Entry_Join4:
 	pop	xiz
 	lda	xsp, (xsp+268)
 	ret
-Scoop_EventLoop_12Entry_Alt_Data_Target7:
+Scoop_BoundOp07_DrawStringByField:
 	lda	xsp, (xsp-270)
 	push	xiz
 	ld	xde, xwa

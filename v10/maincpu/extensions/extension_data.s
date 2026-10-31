@@ -2551,9 +2551,9 @@ ENCODER_LUT_EXPRESSION:
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup1Handlers:
 	.short 0x0001
-	.long MIDI_ProcessChangedChannels_Data_Target0
+	.long PanelLed_ShowPartVoiceCategory
 	.short 0x0002
-	.long MIDI_ProcessChangedChannels_Data_Target1
+	.long PanelLed_ShowPartSelect
 	.short 0x0004
 	.long SndParam_TableLookup_Via4100
 	.short 0x0008
@@ -2574,7 +2574,7 @@ PanelLed_PendingGroup1Handlers:
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup2Handlers:
 	.short 0x0001
-	.long MidiChanged_ProcessGroup2_Data_Target0
+	.long PanelLed_ShowVoiceCategory_Via028000
 	.short 0x0002
 	.long SndParam_VoiceEntryLookup_ViaReg8000
 	.short 0x0004
@@ -2615,11 +2615,11 @@ PanelLed_PendingGroup3Handlers:
 	.short 0x0100
 	.long ExtData_VoiceParam_DispatchBytecode
 	.short 0x0400
-	.long MidiChanged_ProcessGroup3_Data_Target7
+	.long SndParam_SetResBit3_Via3390
 	.short 0x1000
-	.long MidiChanged_ProcessGroup3_Data_Target8
+	.long CtrlPanel_SetBit5At8F1E_ViaMode
 	.short 0x2000
-	.long MidiChanged_ProcessGroup3_Data_Target9
+	.long SndParam_SetResBit5_Via40C0
 	.short 0x4000
 	.long CtrlPanel_SetResBit6_ViaLookup
 	.short 0x8000

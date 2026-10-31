@@ -3229,16 +3229,16 @@ ExtData_VoiceParam_DispatchBytecode_Join:
 ExtData_VoiceParam_DispatchBytecode_Epilogue2:
 	pop	xiz
 	ret
-MidiChanged_ProcessGroup3_Data_Target7:
+SndParam_SetResBit3_Via3390:
 	lda_d16	xwa, (ENCODER_STATE_BASE)
 	cp	(0x3390:16), 0
-	jr	z, MidiChanged_ProcessGroup3_Data_Target7_Skip
+	jr	z, SndParam_SetResBit3_Via3390_Skip
 	setm	3, (xwa)
 	ret
-MidiChanged_ProcessGroup3_Data_Target7_Skip:
+SndParam_SetResBit3_Via3390_Skip:
 	res	3, (xwa)
 	ret
-MidiChanged_ProcessGroup3_Data_Target8:
+CtrlPanel_SetBit5At8F1E_ViaMode:
 	lda	xwa, (0x8f1e:16)
 	res	5, (xwa)
 	bit	0, (10405:16)
@@ -3256,7 +3256,7 @@ MidiChanged_ProcessGroup3_Data_Target8:
 	ret	z
 	.byte 0xb0, 0xbd
 	ret
-MIDI_ProcessChangedChannels_Data_Target0:
+PanelLed_ShowPartVoiceCategory:
 	lda	xsp, (xsp-10)
 	push	xiz
 	lda	xwa, (ENCODER_STATE_BASE:16)
@@ -3283,14 +3283,14 @@ MIDI_ProcessChangedChannels_Data_Target0:
 	call	SndParam_ResolveVoiceEntry
 	lda	xwa, (xsp+8)
 	cp	(xwa), 7
-	jr	ugt, MIDI_ProcessChangedChannels_Data_Target0_Skip
+	jr	ugt, PanelLed_ShowPartVoiceCategory_Skip
 	ld	a, (xwa)
 	extz	wa
 	ld	xiz, 7:i3
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry_Code_Join
-MIDI_ProcessChangedChannels_Data_Target0_Skip:
+PanelLed_ShowPartVoiceCategory_Skip:
 	cp	(xwa), 15
-	jr	ugt, MIDI_ProcessChangedChannels_Data_Target0_Skip2
+	jr	ugt, PanelLed_ShowPartVoiceCategory_Skip2
 	ld	a, (xwa)
 	dec	8, a
 	extz	wa
@@ -3301,7 +3301,7 @@ ExtData_VoiceParam_DispatchBytecode_Entry_Code_Join:
 	add	xwa, xiz
 	ld	(xwa), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry_Code_Epilogue
-MIDI_ProcessChangedChannels_Data_Target0_Skip2:
+PanelLed_ShowPartVoiceCategory_Skip2:
 	cp	(xwa), 0x11
 	jr	ugt, ExtData_VoiceParam_DispatchBytecode_Entry_Code_Skip
 	ld	a, (xwa)
@@ -3320,7 +3320,7 @@ ExtData_VoiceParam_DispatchBytecode_Entry_Code_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
-MidiChanged_ProcessGroup2_Data_Target0:
+PanelLed_ShowVoiceCategory_Via028000:
 	dec	6, xsp
 	push	xiz
 	lda	xiz, (ENCODER_STATE_BASE:16)
@@ -3338,7 +3338,7 @@ MidiChanged_ProcessGroup2_Data_Target0:
 	call	SndParam_ResolveVoiceEntry
 	lda	xwa, (xsp+4)
 	cp	(xwa), 6
-	jr	ugt, MidiChanged_ProcessGroup2_Data_Target0_Skip2
+	jr	ugt, PanelLed_ShowVoiceCategory_Via028000_Skip2
 	ld	a, (xwa)
 	extz	wa
 	call	CtrlPanel_LookupIndicatorEntry
@@ -3346,21 +3346,21 @@ MidiChanged_ProcessGroup2_Data_Target0:
 	and	(xiz+2), 128
 	or	(xiz+2), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue
-MidiChanged_ProcessGroup2_Data_Target0_Skip2:
+PanelLed_ShowVoiceCategory_Via028000_Skip2:
 	cp	(xwa), 14
-	jr	ugt, MidiChanged_ProcessGroup2_Data_Target0_Skip3
+	jr	ugt, PanelLed_ShowVoiceCategory_Via028000_Skip3
 	ld	a, (xwa)
 	dec	7, a
 	extz	wa
 	call	CtrlPanel_LookupIndicatorEntry
 	ld	(xiz+1), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue
-MidiChanged_ProcessGroup2_Data_Target0_Skip3:
+PanelLed_ShowVoiceCategory_Via028000_Skip3:
 	cp	(xwa), 15
-	jr	nz, MidiChanged_ProcessGroup2_Data_Target0_Skip
+	jr	nz, PanelLed_ShowVoiceCategory_Via028000_Skip
 	set	0, (xiz)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue
-MidiChanged_ProcessGroup2_Data_Target0_Skip:
+PanelLed_ShowVoiceCategory_Via028000_Skip:
 	lda	xbc, (xiz+2)
 	ld	a, (xbc)
 	and	a, 128
@@ -3370,7 +3370,7 @@ ExtData_VoiceParam_DispatchBytecode_Epilogue:
 	pop	xiz
 	inc	6, xsp
 	ret
-MIDI_ProcessChangedChannels_Data_Target1:
+PanelLed_ShowPartSelect:
 	push	xiz
 	lda	xiz, (ENCODER_STATE_BASE:16)
 	call	GetCurrentPartSelect
@@ -3381,7 +3381,7 @@ MIDI_ProcessChangedChannels_Data_Target1:
 	cp	l, 1:i3
 	jr	z, ExtData_VoiceParam_DispatchBytecode_Skip
 	cp	l, 0:i3
-	jr	nz, MIDI_ProcessChangedChannels_Data_Target1_Skip
+	jr	nz, PanelLed_ShowPartSelect_Skip
 	and	a, 248
 	set	2, a
 	ld	(xbc), a
@@ -3396,23 +3396,23 @@ ExtData_VoiceParam_DispatchBytecode_Skip2:
 	set	0, a
 	ld	(xbc), a
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue
-MIDI_ProcessChangedChannels_Data_Target1_Skip:
+PanelLed_ShowPartSelect_Skip:
 	and	(xbc), 0xf8
 ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue:
 	pop	xiz
 	ret
-MidiChanged_ProcessGroup3_Data_Target9:
+SndParam_SetResBit5_Via40C0:
 	push	xiz
 	lda	xiz, (ENCODER_STATE_BASE:16)
 	ld	xwa, 0x40c0
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
-	jr	nz, MidiChanged_ProcessGroup3_Data_Target9_Skip
+	jr	nz, SndParam_SetResBit5_Via40C0_Skip
 	set	5, (xiz)
-	jr	MidiChanged_ProcessGroup3_Data_Target9_Epilogue
-MidiChanged_ProcessGroup3_Data_Target9_Skip:
+	jr	SndParam_SetResBit5_Via40C0_Epilogue
+SndParam_SetResBit5_Via40C0_Skip:
 	res	5, (xiz)
-MidiChanged_ProcessGroup3_Data_Target9_Epilogue:
+SndParam_SetResBit5_Via40C0_Epilogue:
 	pop	xiz
 	ret
 CtrlPanel_SetResBit6_ViaLookup:

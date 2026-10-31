@@ -8428,14 +8428,14 @@ AcLanguageTextProc:
 	push xiz
 	ld xiz, xwa
 	cp xbc, EVT_GET_STR_PTR
-	jr z, AcTrkSw_ShowHide_CheckDirty
+	jr z, AcLanguageTextProc_OnGetStrPtr
 	cp xbc, EVT_DRAW
-	jr z, AcTrkSw_ShowHide
+	jr z, AcLanguageTextProc_OnDraw
 	ld xwa, xiz
 	calr PsTextBoxProc
-	jr AcTrkSw_ShowHide_Refresh
+	jr AcLanguageTextProc_Return
 
-AcTrkSw_ShowHide:
+AcLanguageTextProc_OnDraw:
 	ld xwa, xiz
 	calr PsTextBoxProc
 	ld xwa, xiz
@@ -8452,12 +8452,12 @@ AcTrkSw_ShowHide:
 	ld xbc, EVT_PARA_DRAW
 	call SendEvent
 	ld xhl, 0:i3
-	jr AcTrkSw_ShowHide_Refresh
+	jr AcLanguageTextProc_Return
 
-AcTrkSw_ShowHide_CheckDirty:
-	lda xhl, (AcTrkSw_ShowHide_CheckDirty_Str_AcLanguageText:24)
+AcLanguageTextProc_OnGetStrPtr:
+	lda xhl, (AcLanguageTextProc_ClassName:24)
 
-AcTrkSw_ShowHide_Refresh:
+AcLanguageTextProc_Return:
 	pop xiz
 	ret
 
@@ -15250,7 +15250,7 @@ FontIDProc:
 	ld XWA, (xsp + 0x0108)
 	ld xwa, (xwa + 8)
 	sll xwa, 2
-	ld xbc, 0x3efac
+	ld xbc, FONTID_NAME_TABLE
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
@@ -15286,7 +15286,7 @@ FontIDProc_OnGetOrDumpPropertyEx:
 	ld (xwa), xbc
 	ld xwa, (xwa)
 	sll xwa, 2
-	ld xbc, 0x3efac
+	ld xbc, FONTID_NAME_TABLE
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
@@ -15325,7 +15325,7 @@ FontIDProc_SetProp_NextIndex:
 FontIDProc_SetProp_LoopHead:
 	ld xbc, xiz
 	sll xbc, 2
-	ld xwa, 0x3efac
+	ld xwa, FONTID_NAME_TABLE
 	add xwa, xbc
 	ld xwa, (xwa)
 	or xwa, xwa
