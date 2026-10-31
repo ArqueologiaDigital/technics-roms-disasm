@@ -20,7 +20,7 @@ KN7000 program builds only; the siblings' and the plug-in's walks are unchanged)
 | T values (joins)  | a label that paths reach with different data addresses (or NULL) holds "one of them"; reads through it are reads of each                             | func_484C01F1, a 260-way switch that leaves one descriptor's address in (0, sp)              |
 | return values     | a first walk collects what each function returns in a0: one of a set of addresses (a T), or a pointer loaded from a typed field; callers' a0 gets it | func_484C01F1 (260 records), func_485831BA (an entry of func_485831BA_Table)                 |
 | named loop labels | a label is a function start only at its `# Name  (CPU ...)` header, or where nothing falls in and no branch reaches it                               | `DrawIcons_Impl_RowLoop:` keeps `a3 = DrawIcons_PixelPairTable`                              |
-| loop bodies       | a label reached only by a backward branch keeps the frame's slots; at `setlb` a register holding a constant becomes an unknown index                 | func_485831DC's `movbu (d1, a0), d2` over a demo stream                                      |
+| loop bodies       | a label reached only by a backward branch keeps the frame's slots; at `setlb` a register holding a constant becomes an unknown index                 | func_485831DC's `movbu (d1, a0), d2` over a sound list (SoundAlphaIndexBuild; see below)     |
 | bounds            | a load whose source the walk does not know drops the bound an earlier `cmp` gave the register                                                        | DrawIcons_PixelPairTable is 256 entries, not the 240 of `cmp 0xf0, d0` on the row counter    |
 | dedupe            | a callee's access seen through many call sites of one caller is one access (without it the stack slots make the rounds multiply)                     |                                                                                              |
 
@@ -276,6 +276,6 @@ website sync.)
 > code reaches each byte.  It now also follows values the compiler parks on the stack, pointers that
 > several branches choose between, and what a function returns: a 260-way switch that returns one
 > MIDI-command descriptor, the resource-id trie (a nibble-indexed tree of 177 tables over 469
-> parameter records), the demo-song event streams.  About 91% of the program's data region is typed;
+> parameter records), the alphabetical sound lists.  About 91% of the program's data region is typed;
 > what is left is listed with the search that found no reader for it.
 
