@@ -52,7 +52,7 @@ PROM_C_SRC = prom_c/wsa1_prom_c.s \
 PROM_A_SRC = prom_a/wsa1_prom_a.s $(wildcard prom_a/modules/*.s)
 PROM_B_SRC = prom_b/wsa1_prom_b.s $(wildcard prom_b/modules/*.s)
 
-.PHONY: all clean images-check images-export images-rewrite gui-menu-map gui-menu-map-check gui-census
+.PHONY: all clean images-check images-export images-sheet gui-menu-map gui-menu-map-check gui-census
 
 # ---------------------------------------------------------------- the GUI index
 # docs/gui-menu-map.md is GENERATED from the sources (every screen object, what it draws, its key map
@@ -69,31 +69,40 @@ gui-census:
 	python3 scripts/analysis/gui_readability_census.py
 
 # ---------------------------------------------------------------- images
-# Every ROM range that is pixel data is committed as a PNG beside the source,
-# and the `.byte` rows are regenerated from it.  `images-check` re-derives every
-# one of those values from the committed PNG and asserts the assembly already
-# holds exactly it -- 220 images, 93,944 bytes.  See notes/FINDINGS-image-files.md.
-#
-# ⚠ NOT a prerequisite of `all` ON PURPOSE: a reframing that moves a range out of
-#   plain `.byte` lines should fail this check, not every build.  Since 2026-10-30
-#   (lane media-files) the root `make gate-wsa1` runs it, so the PNGs are the
-#   checked source of these rows (208 bitmaps, 46,440 B, and 12 font faces).
+# Every ROM range that is pixel data is committed as a PNG beside the source (210 bitmaps and
+# 12 font sheets, 95,342 bytes).  Since 2026-10-31 (lane media-build; the owner: "Images and wav
+# files must be commited and the conversion must happen as a build step") the source holds no
+# pixel rows: each range is an `.incbin "images/<name>.bin"`, and wsa1_bitmaps.py / wsa1_fonts.py
+# `build` write those git-ignored .bin files from the PNGs.  They are real prerequisites of the
+# prom_a / prom_b objects.  See notes/FINDINGS-image-files.md and
+# ../notes/media-build-2026-10-31/README.md.
+WSA1_IMAGE_BINS := $(shell python3 scripts/build/wsa1_bitmaps.py outputs)
+$(WSA1_IMAGE_BINS) &: $(WSA1_IMAGE_BINS:.bin=.png) scripts/build/wsa1_bitmaps.py scripts/build/wsa1_fonts.py
+	python3 scripts/build/wsa1_bitmaps.py build
+	python3 scripts/build/wsa1_fonts.py build
+	@touch $(WSA1_IMAGE_BINS)
+
+# `images-check` (run by the root `make gate-wsa1`): every range is an .incbin of its built .bin,
+# and every PNG decodes to the ROM's bytes (original_ROMs/ is committed for this model).
 images-check:
 	python3 scripts/build/wsa1_bitmaps.py check
 	python3 scripts/build/wsa1_fonts.py check
+	python3 scripts/build/wsa1_bitmaps.py verify
+	python3 scripts/build/wsa1_fonts.py verify
 
+# MAINTENANCE: rewrite every PNG from the ROMs (overwrites edits).
 images-export:
 	python3 scripts/build/wsa1_bitmaps.py export
 	python3 scripts/build/wsa1_fonts.py export
 
-images-rewrite:
-	python3 scripts/build/wsa1_bitmaps.py rewrite
-	python3 scripts/build/wsa1_fonts.py rewrite
+# Browsing aids, not build inputs: the CONTACT_*.png sheets (git-ignored), made from the PNGs.
+images-sheet:
+	python3 scripts/build/wsa1_bitmaps.py sheet
 .SECONDARY:
 
 all: rebuilt_ROMs/wsa1_prom_a.llvm.rom rebuilt_ROMs/wsa1_prom_b.llvm.rom rebuilt_ROMs/wsa1_prom_c.llvm.rom rebuilt_ROMs/wsa1_prom_d.llvm.rom
 
-rebuilt_ROMs/wsa1_prom_a.llvm.o: $(PROM_A_SRC) $(COMMON_INC) $(KERNEL_SRC) $(MAINCPU_SHARED) $(DSP_SRC) $(LLVM_MC)
+rebuilt_ROMs/wsa1_prom_a.llvm.o: $(PROM_A_SRC) $(COMMON_INC) $(KERNEL_SRC) $(MAINCPU_SHARED) $(DSP_SRC) $(WSA1_IMAGE_BINS) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I . -I prom_a -o $@ $<
 
@@ -103,7 +112,7 @@ rebuilt_ROMs/wsa1_prom_a.llvm.elf: rebuilt_ROMs/wsa1_prom_a.llvm.o prom_a/prom_a
 rebuilt_ROMs/wsa1_prom_a.llvm.rom: rebuilt_ROMs/wsa1_prom_a.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
-rebuilt_ROMs/wsa1_prom_b.llvm.o: $(PROM_B_SRC) $(COMMON_INC) $(MAINCPU_SHARED) $(LLVM_MC)
+rebuilt_ROMs/wsa1_prom_b.llvm.o: $(PROM_B_SRC) $(COMMON_INC) $(MAINCPU_SHARED) $(WSA1_IMAGE_BINS) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I . -I prom_b -o $@ $<
 

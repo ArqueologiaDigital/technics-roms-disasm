@@ -213,7 +213,7 @@ verify-subprogram-update-images:
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) -C wsa1 images-check	# the pictures' and fonts' rows equal their committed PNGs (lane media-files)
+	$(MAKE) -C wsa1 images-check	# every picture and font range is an .incbin of the .bin built from its PNG (lane media-build)
 	cd wsa1 && python3 scripts/analysis/gui_menu_map.py --check	# docs/gui-menu-map.md is generated from the sources
 
 gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3 gate-floppy

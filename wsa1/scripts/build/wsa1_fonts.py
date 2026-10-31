@@ -8,9 +8,15 @@ lossless, exact rendering of its bytes and from which those bytes are
 regenerated:
 
     python3 scripts/build/wsa1_fonts.py export   # ROM  -> PNG sheets  (run once)
+    python3 scripts/build/wsa1_fonts.py build    # PNG  -> prom_b/images/fonts/<face>.bin (build step)
     python3 scripts/build/wsa1_fonts.py verify   # PNG  -> bytes == ROM
-    python3 scripts/build/wsa1_fonts.py check    # PNG  -> assert the .s says this
-    python3 scripts/build/wsa1_fonts.py rewrite  # PNG  -> patch the .s `.byte` values
+    python3 scripts/build/wsa1_fonts.py check    # assert each face is an .incbin of its .bin
+    python3 scripts/build/wsa1_fonts.py respell  # (run once, 2026-10-31) `.byte` rows -> .incbin lines
+
+Since 2026-10-31 (lane media-build; the owner: "Images and wav files must be commited and the
+conversion must happen as a build step") the source holds no glyph rows: each face is
+`.incbin "images/fonts/<face>.bin", skip, count`, and `build` writes that git-ignored .bin from
+the committed sheet before the assembler runs.
 
 ================================================================================
 THE TABLE, AND WHY EACH NUMBER IS NOT A GUESS
@@ -193,34 +199,40 @@ def cmd_verify(_):
     return 1 if bad else 0
 
 
-def _rewrite(apply_):
+MARK = '; census: generated -- scripts/build/wsa1_fonts.py, from the .png beside it'
+
+
+def bin_ref(name):
+    return f'images/fonts/{name}.bin'
+
+
+def cmd_respell(_):
     check_abutment()
-    lines, amap, dropped = WB.source_map('b')
-    base_b, data = WB.rom('b')
-    changed = 0
+    WB.respell_ranges('b', [(bin_ref(name), base, pitch * cells)
+                            for name, base, pitch, w, cells, _svc, _n in FACES], MARK)
+    return 0
+
+
+def cmd_build(_):
+    tot = check_abutment()
     for name, base, pitch, w, cells, _svc, _n in FACES:
-        changed += WB.patch_lines(lines, amap, base,
-                                  sheet_to_bytes(name, base, pitch, w, cells),
-                                  data, base_b, name, apply_)
-    if apply_ and changed:
-        WB.write_back('b', lines)          # into the module file that holds each line
-    print(f"prom_b fonts: {changed} `.byte` value(s) "
-          f"{'rewritten' if apply_ else 'would change'}"
-          f"   (map guard discarded {dropped:,} unconfirmed slots)")
-    return changed
+        data = sheet_to_bytes(name, base, pitch, w, cells)
+        out = sheet_path(name).with_suffix('.bin')
+        if not out.exists() or out.read_bytes() != data:
+            out.write_bytes(data)
+    print(f"wsa1_fonts.py build: {len(FACES)} faces, {tot:,} B from the sheets")
+    return 0
 
 
 def cmd_check(_):
-    if _rewrite(False):
-        print("check FAILED: the assembly does not match the font sheets")
-        return 1
-    print("check: every glyph table in the assembly is exactly what its sheet says")
-    return 0
-
-
-def cmd_rewrite(_):
-    _rewrite(True)
-    return 0
+    idx = WB.incbin_index('b')
+    bad = 0
+    for name, base, pitch, w, cells, _svc, _n in FACES:
+        if not WB.covered(idx.get(bin_ref(name), []), pitch * cells):
+            print(f"  NOT AN INCBIN  {name}: the source does not .incbin {bin_ref(name)} exactly once")
+            bad += 1
+    print(f"check: {len(FACES) - bad} of {len(FACES)} faces are .incbin of the .bin built from their sheet")
+    return 1 if bad else 0
 
 
 def cmd_list(_):
@@ -236,7 +248,7 @@ def cmd_list(_):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('command', choices=['export', 'verify', 'check', 'rewrite', 'list'])
+    ap.add_argument('command', choices=['export', 'build', 'verify', 'check', 'respell', 'list'])
     a = ap.parse_args()
     return globals()['cmd_' + a.command](a)
 
