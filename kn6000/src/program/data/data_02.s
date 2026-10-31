@@ -16459,7 +16459,7 @@ Str_Device_s_OK:	.asciz "      Device: %s   OK!"
 	.align	4, 0xFF	# pad after Str_Device_s_OK
 Str_Not_Good:	.asciz "  !!!! Not Good !!!"
 
-func_4C1722F9_Block:	# 32 bytes, copied whole by func_4C1722F9 0x4C1722F9: memcpy(.., 32); func_4C1722F9 0x4C1722F9: memcmp(.., 32)
+func_4C1722F9_Block:	# 32 bytes, copied whole by func_4C1722F9 0x4C1722F9: memcmp(.., 32); func_4C1722F9 0x4C1722F9: memcpy(.., 32)
 	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
 	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 
