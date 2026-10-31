@@ -39,8 +39,9 @@ CLASSES (first match wins)
               no better representation than themselves.  The reason is mandatory and is listed in the report.
               Accepted kinds: pcm (sample bodies), compressed (an entropy-coded stream with no committed
               encoder), code (an undisassembled code gap; not data, counted so it is visible), unknown-dump (an
-              undecoded vendor blob, with what was tried), personal (the owner's own instrument data, kept out of
-              the public sources on purpose), fill (verified uniform fill).
+              undecoded vendor blob, with what was tried), fill (verified uniform fill).  (A kind `personal`, for the
+              owner's own instrument data, existed until 2026-10-31; no source used it, and that day the owner
+              decided that his KN7000's IC21 read becomes typed source, kn7000/src/ic21own/.)
   generic     everything else: an anonymous binclude.  The goal is generic = 0.
 
   A program image's `.incbin_range` gaps in kn7000/ and the MN10300 siblings mix code and data; until a lane
@@ -114,7 +115,7 @@ EXTRA_INCLUDE = {
 }
 
 MEDIA = {"jpg", "jpeg", "bmp", "png", "gif", "tif", "tiff", "wav", "aif", "aiff", "mid"}
-KINDS = {"pcm", "compressed", "code", "unknown-dump", "personal", "fill"}
+KINDS = {"pcm", "compressed", "code", "unknown-dump", "fill"}
 INC = re.compile(rb'^\s*(?:[A-Za-z_.$][\w.$]*:\s*)?\.(incbin_range|incbin)\s+"([^"]+)"\s*(?:,\s*([^,;#\s]+))?\s*(?:,\s*([^,;#\s]+))?')
 MARK = re.compile(rb'census:\s*(generated|opaque)\s*--\s*(.*)')
 FROM_MEDIA = re.compile(r'\bfrom\b.*?\.(?:' + "|".join(sorted(MEDIA)) + r')\b', re.I)

@@ -16,15 +16,15 @@ KN5000 program `original_ROMs/kn5000_v10_program.rom`. They only print.
     make -C kn7000 ic21-own-probes          # all of them, in this order
     python3 -I kn7000/notes/ic21-own-probes/<script>.py
 
-| script            | question it answers                                                                                     |
-|-------------------|---------------------------------------------------------------------------------------------------------|
-| `regions.py`      | which parts below `0x20000` are used, and do they equal the Initial Data Disk files?                    |
-| `regions2.py`     | where exactly the home-page block differs; what the `0x6000` block and the extra 0x4000 records hold    |
-| `templates.py`    | does each block below `0x20000` equal the default the firmware writes there (programs 893 and 941)?     |
-| `custom.py`       | how much of the CUSTOM bank occurs in the nine factory banks; its text that none of them has            |
-| `names_kn5000.py` | where each text run of the CUSTOM bank comes from (KN5000 program, KN7000 firmware, factory sets)       |
-| `name_fields.py`  | the same for every NAME FIELD of the 20 records, read from their structure: did anyone type a name?     |
-| `marker.py`       | where the firmware refers to the `A5A55A5A` constant and to `0x96806000`                                |
+| script            | question it answers                                                                                  |
+|-------------------|------------------------------------------------------------------------------------------------------|
+| `regions.py`      | which parts below `0x20000` are used, and do they equal the Initial Data Disk files?                 |
+| `regions2.py`     | where exactly the home-page block differs; what the `0x6000` block and the extra 0x4000 records hold |
+| `templates.py`    | does each block below `0x20000` equal the default the firmware writes there (programs 893 and 941)?  |
+| `custom.py`       | how much of the CUSTOM bank occurs in the nine factory banks; its text that none of them has         |
+| `names_kn5000.py` | where each text run of the CUSTOM bank comes from (KN5000 program, KN7000 firmware, factory sets)    |
+| `name_fields.py`  | the same for every NAME FIELD of the 20 records, read from their structure: did anyone type a name?  |
+| `marker.py`       | where the firmware refers to the `A5A55A5A` constant and to `0x96806000`                             |
 
 ## What the output means (2026-10-31, worktree of branch open2/ic21-own)
 
@@ -42,7 +42,8 @@ KN5000 program `original_ROMs/kn5000_v10_program.rom`. They only print.
   .MD part `0x486162a0`, FAVORITES `0x48604390`, BMP `0x48743e5c` equal; Custom Panel 1935 of 2032
   (candidate 893 `0x4858b0d4`, 941 `0x4858cbcc` = `Str_empty_1431`), settings tail 42 of 52 (941
   `0x4858d6fc`, the halfword `func_4C023EC9_Table` and the 25 of `func_4C023F9B_Table` after it), home-page
-  record 344 of 396 (941 `0x485f9584`, HpFlashCheck's template).
+  record 344 of 396 (941 `0x485f9584`, HpFlashCheck's template). The `disk` lines: `02UMDINI.MD`,
+  `03FAVINI.FAV` and the `.HMP`'s BMP equal the programs' defaults; the `.HMP` record has 395 of 396.
 - `custom.py`: every used 64 KB sector of the bank (`0x20000`..`0xf0000`) shows `-` (no factory bank holds
   it); `256-byte chunks ... 969 of 3472 occur in a known set (27.9%)`.
 - `names_kn5000.py` (text runs split on double spaces): `KN5000 program: 39`, `KN7000 firmware/table only:

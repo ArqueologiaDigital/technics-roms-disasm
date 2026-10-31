@@ -77,6 +77,8 @@ src/ic18/boot.s IC18's first 64 KB, the boot ROM and update system, GENERATED, f
 src/ic18/rhythm.s  IC18 from 0x10000: the "Technics Rhythms" style data, GENERATED, every
                 record and event typed; one file per style in src/ic18/styles/<group>/,
                 the leftovers in src/ic18/old_build.s; src/ic18/ic18.s is boot.s + rhythm.s.
+src/customdata/ The nine factory CUSTOM STYLE banks of IC21, GENERATED: see "IC21".
+src/ic21own/    All 2 MB of IC21 as read from Felipe's own instrument, typed: see "IC21".
 src/cnv/        The seven Style Convert Disk converters (.CNV), GENERATED, fully
                 disassembled: see "Style Convert Disk converters".
 cnv_manual.sym  Their names: one line per routine shared across converters.
@@ -108,6 +110,9 @@ make ic18-rhythm-src   # regenerate src/ic18/rhythm.s (needs baserom/kn7000_prog
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
 make verify-cnv        # the 7 Style Convert Disk converters from src/cnv/: assert 100% byte-match
+make verify-customdata # the 9 factory CUSTOM STYLE banks from src/customdata/ (notes/custom-data-ic21.md)
+make verify-ic21-own   # Felipe's 2 MB IC21 read from src/ic21own/ic21.s (notes/ic21-own/README.md)
+make ic21-own-src ic21-own-probes   # regenerate src/ic21own/; print the figures its header quotes
 make cnv-src           # regenerate src/cnv/*.s (needs unidasm and baserom/kn7000_program.rom)
 make table-src         # regenerate src/table.s + src/table/ from build 84's table image
 make clean      # remove build/
@@ -382,6 +387,22 @@ reproduces was made on a real KN7000 (PROGRAM 893) on 2026-10-19 with `tools/cnv
 `make verify-picture` checks the rebuild against that read's SHA-1, and against the read
 itself when it is at hand. Why only 2 MB of a 64 Mbit chip, how the firmware reads it, and
 what the pictures are for: [`notes/ic19-picture-rom.md`](notes/ic19-picture-rom.md).
+
+## IC21, the custom-data flash
+
+IC21 is a 2 MB flash at `0x96800000` that holds the user data the firmware keeps in flash. Its upper 1,920 KB,
+from `0x96820000`, are the CUSTOM STYLE memory: 20 styles with their ONE TOUCH SETTINGs. The
+Initial Data Disk and the two Custom Style disks carry nine factory sets of it. `src/customdata/`
+rebuilds all nine from the floppies' `.AST` files ([`notes/custom-data-ic21.md`](notes/custom-data-ic21.md)).
+Below `0x96820000` the chip holds the USER MIDI SETTINGs, the Custom Panel and the system settings
+at `0x96804000`. It also holds the ROM test's flash pattern at `0x96806000`, FAVORITES at
+`0x96810000` and the HOME PAGE at `0x96811000`.
+
+[`src/ic21own/ic21.s`](src/ic21own/ic21.s) is the whole chip as read from Felipe's own
+instrument (PROGRAM 893 / TABLE 80, 2026-10-19). Every region is typed, and its header says
+what each region holds and how it compares with the factory data. The read is private: the
+Makefile copies it (git-ignored, SHA-1 checked) from `IC21_OWN`, and `make verify-ic21-own`
+rebuilds it. Formats and evidence: [`notes/ic21-own/README.md`](notes/ic21-own/README.md).
 
 ## License
 

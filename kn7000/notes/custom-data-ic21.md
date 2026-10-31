@@ -38,9 +38,12 @@ floppy images are those of the 2026-10-18 rebuild (`SOFTLIST_DIR`).
     make -C kn7000 customdata-src          # regenerate src/customdata/ (tools/gen_customdata_s.py)
     make -C kn6000 customdata-src
 
-Felipe's own IC21 read (`real_dump_v1.3_b893`) is not used anywhere: it is personal data. Only
-the README of its analysis folder was read, for orientation (it found the custom area at chip
-`0x20000`, which is this bank).
+Felipe's own IC21 read (`real_dump_v1.3_b893`, PROGRAM 893) was at first kept out of the trees as
+personal data. On 2026-10-31 the owner decided to add it. `kn7000/src/ic21own/ic21.s` now types the
+whole 2 MB chip, this bank included, with this lane's generator (`gen_customdata_s.py --base 0x20000
+--part`) and macros (`make verify-ic21-own`; [`ic21-own/README.md`](ic21-own/README.md)). Its CUSTOM
+bank holds KN5000 styles someone loaded. In two of its slots the record's `+0xA4` differs from the
+directory, which the factory banks never show (see "The slot record" below).
 
 Addresses of routines are KN7000 program 941's (`kn7000/src/program/region1_04.s`, names from
 `kn7000_manual.sym`). `[INFERENCE]` marks a reading that no traced code fixes.
@@ -95,7 +98,7 @@ Built by the MEMORY -> CUSTOM save `func_484854E3` in RAM (`0x5031C000` or `INST
 | `+0x8C`          | `{offset, size}` of the 4 one-touch-setting panel memories | `func_484842D8`; record size from `func_4C02AD02` (0xA0)                                             |
 | `+0x94`          | `{offset, size}` of the "TCMP" style container             | `func_48484305`, `CustomStyleBlockFetch` 0x48484578                                                  |
 | `+0x9C`          | `{offset, size}` of the "TPAD" pad container               | `func_48484332`, `func_4848435C`                                                                     |
-| `+0xA4`, `+0xA5` | first block, block count (as in the directory)             | equal to the slot descriptor in all 200 live records                                                 |
+| `+0xA4`, `+0xA5` | first block, block count (as in the directory)             | equal to the slot descriptor in all 200 live records; not in 2 of Felipe's 20 (`ic21-own/README.md`) |
 | `+0xA6..+0xFF`   | RAM residue of the build buffer                            | `[INFERENCE]`: debug strings ("TITLE : TT_RVARI", "MODE  : MD_NORMAL"); no accessor reads past +0xA4 |
 
 The sections follow the header in that order with no gap. In the factory sets only one record
