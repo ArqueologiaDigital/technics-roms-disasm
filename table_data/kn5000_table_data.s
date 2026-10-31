@@ -234,7 +234,7 @@ Feature_Demo_XML:
 ; FeatureDemo_FileEntry1 names it; VwUserBitmapByNameProc (0xF9C5FC) appends
 ; ".BMP" to a widget's key "FTBMP01", FDemo_LinkedListLookupField (0xF868EF)
 ; returns this address and DrawBitmapFile (0xFAC697) draws it.
-Feature_Bitmap_1:	.incbin "images/FTBMP01.BMP"
+Feature_Bitmap_1:	.incbin "images/FTBMP01.BMP"	; census: generated -- scripts/build/ftbmp_images.py, from the .png beside it
 
 	.org 0x89344E - 0x800000, 0xFF
 ; FTBMP02.BMP, 320x130 8bpp, 256-colour palette, 42,678 B: the keyboard seen from above with coloured rings
@@ -242,35 +242,35 @@ Feature_Bitmap_1:	.incbin "images/FTBMP01.BMP"
 ; FeatureDemo_FileEntry2 names it; VwUserBitmapByNameProc (0xF9C5FC) appends
 ; ".BMP" to a widget's key "FTBMP02", FDemo_LinkedListLookupField (0xF868EF)
 ; returns this address and DrawBitmapFile (0xFAC697) draws it.
-Feature_Bitmap_2:	.incbin "images/FTBMP02.BMP"
+Feature_Bitmap_2:	.incbin "images/FTBMP02.BMP"	; census: generated -- scripts/build/ftbmp_images.py, from the .png beside it
 
 	.org 0x89DB04 - 0x800000, 0xFF
 ; FTBMP03.BMP, 320x120 8bpp, 256-colour palette, 39,478 B: a fan of floppy disks.
 ; FeatureDemo_FileEntry3 names it; VwUserBitmapByNameProc (0xF9C5FC) appends
 ; ".BMP" to a widget's key "FTBMP03", FDemo_LinkedListLookupField (0xF868EF)
 ; returns this address and DrawBitmapFile (0xFAC697) draws it.
-Feature_Bitmap_3:	.incbin "images/FTBMP03.BMP"
+Feature_Bitmap_3:	.incbin "images/FTBMP03.BMP"	; census: generated -- scripts/build/ftbmp_images.py, from the .png beside it
 
 	.org 0x8A753A - 0x800000, 0xFF
 ; FTBMP04.BMP, 320x120 8bpp, 256-colour palette, 39,478 B: floppy disks going into the keyboard's disk drive.
 ; FeatureDemo_FileEntry4 names it; VwUserBitmapByNameProc (0xF9C5FC) appends
 ; ".BMP" to a widget's key "FTBMP04", FDemo_LinkedListLookupField (0xF868EF)
 ; returns this address and DrawBitmapFile (0xFAC697) draws it.
-Feature_Bitmap_4:	.incbin "images/FTBMP04.BMP"
+Feature_Bitmap_4:	.incbin "images/FTBMP04.BMP"	; census: generated -- scripts/build/ftbmp_images.py, from the .png beside it
 
 	.org 0x8B0F70 - 0x800000, 0xFF
 ; FTBMP05.BMP, 320x125 8bpp, 256-colour palette, 41,078 B: the keyboard circled by two curved arrows.
 ; FeatureDemo_FileEntry5 names it; VwUserBitmapByNameProc (0xF9C5FC) appends
 ; ".BMP" to a widget's key "FTBMP05", FDemo_LinkedListLookupField (0xF868EF)
 ; returns this address and DrawBitmapFile (0xFAC697) draws it.
-Feature_Bitmap_5:	.incbin "images/FTBMP05.BMP"
+Feature_Bitmap_5:	.incbin "images/FTBMP05.BMP"	; census: generated -- scripts/build/ftbmp_images.py, from the .png beside it
 
 	.org 0x8BAFE6 - 0x800000, 0xFF
 ; FTBMP06.BMP, 320x240 8bpp, 256-colour palette, 77,878 B: "KN5000" and a rainbow comet over a starfield.
 ; FeatureDemo_FileEntry6 names it; VwUserBitmapByNameProc (0xF9C5FC) appends
 ; ".BMP" to a widget's key "FTBMP06", FDemo_LinkedListLookupField (0xF868EF)
 ; returns this address and DrawBitmapFile (0xFAC697) draws it.
-Feature_Bitmap_6:	.incbin "images/FTBMP06.BMP"
+Feature_Bitmap_6:	.incbin "images/FTBMP06.BMP"	; census: generated -- scripts/build/ftbmp_images.py, from the .png beside it
 
 
 	.org 0x8CE01C - 0x800000, 0xFF

@@ -20,3 +20,10 @@ notes/.prom_c-image.s
 # one of those changes, and it is what makes a cache-missing run take seconds
 # instead of 17 minutes. Regenerated automatically; never commit it.
 notes/.reachability-decode.txt
+
+# derived from the committed PNGs (lane media-build, 2026-10-31): the .bin files the assembler
+# .incbin's (scripts/build/wsa1_bitmaps.py / wsa1_fonts.py `build`) and the CONTACT_*.png browsing
+# sheets (`make images-sheet`).  The PNGs themselves are the source.
+prom_*/images/*.bin
+prom_b/images/fonts/*.bin
+prom_*/images/CONTACT_*.png

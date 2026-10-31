@@ -1,8 +1,10 @@
 # prom_b bitmaps as PNG
 
 Every file here is a **lossless, exact** rendering of a range of
-`original_ROMs/wsa1_prom_b.ic13`, and the assembly's `.byte` rows for that range
-are regenerated from it by `scripts/build/wsa1_bitmaps.py rewrite`.  The
+`original_ROMs/wsa1_prom_b.ic13`, and it is the build's input for that range:
+`scripts/build/wsa1_bitmaps.py build` writes `<name>.bin` (git-ignored) beside it and the
+assembly `.incbin`s that (lane media-build, 2026-10-31; until then the assembly held `.byte`
+rows rewritten from the PNG).  The
 dimensions are the firmware's -- run `wsa1_bitmaps.py list` for each file's
 evidence.  Ink is black.
 

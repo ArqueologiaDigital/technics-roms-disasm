@@ -4,6 +4,15 @@ The owner's request: *"'Media: pictures and PCM' <== I want these to be represen
 could be opened by the user on normal media viewers / sound apps. Then included in the source listing (maybe
 with a lossless conversion step if necessary)"*.
 
+> **Superseded in part, 2026-10-31** (lane media-build, `../media-build-2026-10-31/README.md`). The owner
+> decided: *"Images and wav files must be commited and the conversion must happen as a build step."* So the
+> WAVs and the floppies' BMP / JPEG / MIDI files ARE committed now, and every file a converter writes from a
+> media file is a git-ignored build product: the `images/*.bin` beside the KN5000 PNGs, the Feature Demo
+> `.BMP`s, the NAKA GUI C's pixel rows (now a generated `.inc` the C `#include`s), and the WSA1R's `.byte`
+> rows (now `.incbin`s of PNG-built bins).  The statements below that say otherwise ("not committed",
+> "committed beside the PNGs", "c_bitmaps.py writes the initializers", "checked by wsa1_bitmaps.py check",
+> the three REFUSED WSA1R ranges) describe 2026-10-30.
+
 ## Outcome
 
 | what                                         | before                                                    | now                                                                                   |

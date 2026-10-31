@@ -2,8 +2,9 @@
 
 One PNG per face, 16 cells per row, ink black, paper white, 1-pixel grey (160)
 gutter between cells.  Each sheet is a **lossless, exact** rendering of its
-table's bytes; `scripts/build/wsa1_fonts.py rewrite` regenerates the `.byte`
-rows in `prom_b/wsa1_prom_b.s` from it, and `check` asserts they already agree.
+table's bytes and the build's input: `scripts/build/wsa1_fonts.py build` writes `<face>.bin`
+(git-ignored) beside it, which the assembly `.incbin`s (lane media-build, 2026-10-31; until then
+`rewrite` regenerated `.byte` rows in the source from it), and `check` asserts the source does.
 Run `wsa1_fonts.py list` for the bases, pitches and cell counts, and
 `notes/FINDINGS-fonts.md` for how each was established.
 

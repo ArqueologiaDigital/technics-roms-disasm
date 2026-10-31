@@ -76,11 +76,14 @@ endef
 
 # ---- a byte range of a disk file cut out as a file of its own kind (a .bmp inside a .HMP) ----
 # $(1) model, $(2) disk, $(3) extracted name, $(4) output suffix, $(5) offset, $(6) count
+# Every cut is a media file (a BMP, a MIDI file), committed in $(1)/$(2)/media/ (lane media-build,
+# 2026-10-31): the cut from the reference is made only for the maintenance target media-$(1), which
+# copies it there; the disk object reads the committed copy.
 define KD_CUT
 build/$(1)/$(2)/$(3).$(4): build/$(1)/$(2)/extract.stamp
 	$$(PYTHON) -I -c "import sys; d=open(sys.argv[1],'rb').read(); open(sys.argv[2],'wb').write(d[$(5):$(5)+$(6)])" \
 	    build/$(1)/$(2)/$(3) $$@
-build/$(1)/$(2).o: build/$(1)/$(2)/$(3).$(4)
+media-$(1): build/$(1)/$(2)/$(3).$(4)
 endef
 
 # Last: the per-disk rules use every variable above.

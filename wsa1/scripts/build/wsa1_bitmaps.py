@@ -5,18 +5,23 @@ QUESTION ANSWERED (lane IMAGE, 2026-09-02, notes/lanes/BRIEF-2026-09-01.md):
 "If a data range is an image, it should be represented in the source as an image
 file."  Before this script the WSA1R tree carried ZERO image files: every bitmap
 was `.byte` rows with, at best, an ASCII-art preview in a comment.  This script
-makes the PNG the thing you edit and the `.byte` rows a generated artefact:
+makes the PNG the thing you edit.  Until 2026-10-31 the `.byte` rows stayed in
+the source, rewritten from the PNGs (`rewrite`) and checked against them
+(`check`).  Since then (lane media-build; the owner: "Images and wav files must
+be commited and the conversion must happen as a build step") the source holds no
+pixel rows: each range is `.incbin "images/<name>.bin", skip, count`, and `build`
+writes that git-ignored .bin beside its PNG before the assembler runs.
 
     python3 scripts/build/wsa1_bitmaps.py census    # re-derive the geometry from the ROMs
     python3 scripts/build/wsa1_bitmaps.py export    # ROM  -> PNG   (run once)
+    python3 scripts/build/wsa1_bitmaps.py build     # PNG  -> prom_X/images/<name>.bin (build step)
     python3 scripts/build/wsa1_bitmaps.py verify    # PNG  -> bytes, assert == the ROM
-    python3 scripts/build/wsa1_bitmaps.py check     # PNG  -> assert the .s already says this
-    python3 scripts/build/wsa1_bitmaps.py rewrite   # PNG  -> patch the .s `.byte` values
+    python3 scripts/build/wsa1_bitmaps.py check     # assert every range is an .incbin of its .bin
+    python3 scripts/build/wsa1_bitmaps.py outputs   # the .bin files `build` writes (bitmaps and fonts)
+    python3 scripts/build/wsa1_bitmaps.py respell   # (run once, 2026-10-31) `.byte` rows -> .incbin lines
+    python3 scripts/build/wsa1_bitmaps.py sheet     # the CONTACT_*.png browsing sheets (git-ignored)
 
-`check` is the one that belongs in a build: it re-derives every `.byte` value in
-every listed range from the committed PNG and asserts the source already holds
-exactly those bytes.  Edit a PNG, run `rewrite`, and the assembly follows; the
-byte gate then says whether the ROM still rebuilds.
+Edit a PNG and rebuild; the byte gate then says whether the ROM still rebuilds.
 
 ================================================================================
 THE PIXEL FORMAT, AND WHY IT IS NOT A GUESS
@@ -323,6 +328,21 @@ def build_manifest():
                        'byte-identical to entries 0-3 of the 0xF31EE1 value-glyph array (BC=3, HL=24 '
                        'from DrawValueGlyph_24x24); unread older-build copy, geometry inherited from the identity'))
 
+    # The two drawbar sprites.  Drawbar_DrawColumn (0xF538B6) builds an op-03 record on its
+    # stack -- BC = 1 column, HL = 0x7B rows, XIY = base + DrawbarRowOffsets[value] -- and issues
+    # it three times through Blit_FromStackRecord, adding 1 to the destination column (IX, one
+    # byte = 8 pixels) and 233 (`ld XBC,0x000000e9`) to XIY each time.  So a sprite is three
+    # 8-pixel columns of 233 bytes, the LCD_Svc_03_BlitColumns layout with BC = 3, HL = 233, and
+    # the screen shows a 123-row window of it starting at the row offset (0x7B + the largest
+    # offset 0x6E = 0xE9).  Lane media-build, 2026-10-31: these were REFUSED for want of a
+    # rectangle; the stored rectangle is 24 x 233, the window is the caller's.
+    for nm, ad, use in [('Bitmap_DrawbarA', 0xF54808, "the integer footages 16' 8' 4' 2' 1'"),
+                        ('Bitmap_DrawbarB', 0xF54AC3, "the fractional footages 5 1/3' 2 2/3' 1 3/5' 1 1/3'")]:
+        m.append(entry(nm, 'b', ad, 3, 233,
+                       f'Drawbar_DrawColumn 0xF538B6: three op-03 blits of BC=1 x HL=0x7B from '
+                       f'base + DrawbarRowOffsets[value] + 233*k, destination column +k (k = 0..2), '
+                       f'so 3 columns x 233 rows; {use}'))
+
     # The 80x24 line drawing.  ⚠ Its geometry is the WEAKEST here: no record and no
     # code names 0xF0D5BF.  BC=10 is a boundary argument (the run must end at
     # 0xF0D6AF; the only 24-aligned start that does not split the 0x01..0x21 ramp
@@ -337,22 +357,16 @@ def build_manifest():
 
 # Ranges that LOOK like pictures and are deliberately NOT converted.
 REFUSED = [
-    ("prom_a 0xFC48E4-0xFC52F7 `Bitmap1bpp_FC48E4` (2,580 B)",
-     "Its committed header reads the range as 172 rows x 15 bytes ROW-MAJOR, 120 px wide, "
-     "from a 15-byte autocorrelation peak.  The peak is real but it is the COLUMN HEIGHT "
-     "of a column-major object, not a row stride: the pointer table at prom_b 0xF09B7B "
-     "names eight 90-byte objects at 0xFC48D7 stride 90 = 6 * 15, blitted BC=6 / HL=15.  "
-     "Those eight (720 B) ARE exported, as Widget_FC48D7..; the remaining 1,860 B of the "
-     "range is named by nothing and its object grid is unknown."),
-    ("prom_b 0xF54808 Bitmap_DrawbarA / 0xF54AC3 Bitmap_DrawbarB (699 B each)",
-     "The source header establishes 3 slices of 233 bytes blitted 1 byte x 0x7B rows with "
-     "the source advanced by 233 -- so the drawn image is a 123-row WINDOW into a 233-row "
-     "slice, at an offset the caller computes from the drawbar value.  What the other 110 "
-     "rows of each slice are is not established, so there is no single rectangle to call "
-     "the image."),
     ("prom_b 0xF17AE0 second/third/fourth 72-byte cells beyond the four listed",
      "The header states four cells; nothing establishes a fifth."),
 ]
+# RESOLVED 2026-10-31 (lane media-build), no longer refused:
+#  * prom_a 0xFC48E4-0xFC52F7 `Bitmap1bpp_FC48E4` (the 1,860 B beyond the eight widgets): not a picture.
+#    0xFC48E4-0xFC4BA6 is widgets 1-7 of the eight Widget_FC48D7.. (listed above); from 0xFC4BA7 on it is
+#    the SOUND EDIT COPY page's display lists and tables, typed as dl_* / dlb_* records, `.short`
+#    rectangles and `.ascii` names in prom_a/modules/fc4000_fc53ff_digital_effect_screen_data.s (each
+#    named by its prom_b reader there, SoundEditCopy_Paint 0xF09B9B and friends).  No pixel rows remain.
+#  * prom_b Bitmap_DrawbarA / Bitmap_DrawbarB: 24 x 233 column-major sprites (the entries above).
 
 
 def rom(img):
@@ -441,6 +455,7 @@ DIRECTIVE = re.compile(r'^\s*\.([a-z_0-9]+)\b(.*)$')
 LABEL_ONLY = re.compile(r'^\s*[.A-Za-z_][\w.]*:\s*(?:;.*)?$')
 ASCII_LIT = re.compile(r'^\s*"((?:[^"\\]|\\.)*)"\s*(?:;.*)?$')
 FILL_ARGS = re.compile(r'^\s*(\d+)\s*,\s*(\d+)\s*,')
+INCBIN_ARGS = re.compile(r'^\s*"[^"]+"\s*,\s*(\w+)\s*,\s*(\w+)')
 
 
 def _line_size(line):
@@ -475,6 +490,9 @@ def _line_size(line):
     if d == 'fill':
         fm = FILL_ARGS.match(rest)
         return int(fm.group(1)) * int(fm.group(2)) if fm else None
+    if d == 'incbin':
+        im = INCBIN_ARGS.match(rest)
+        return int(im.group(2), 0) if im else None
     return None
 
 
@@ -718,17 +736,192 @@ def _rewrite(apply_):
     return total_changed
 
 
-def cmd_check(_):
-    n = _rewrite(False)
-    if n:
-        print(f"check FAILED: the committed source does not match the PNGs in {n} places")
-        return 1
-    print("check: every listed range in the assembly is exactly what its PNG says")
+MARK = '; census: generated -- scripts/build/wsa1_bitmaps.py, from the .png beside it'
+ART_LINE = re.compile(r'^\s*;\s+[.#]+\s*$')     # an ASCII-art preview row of the pixels
+
+
+def bin_path(e):
+    return png_path(e).with_suffix('.bin')
+
+
+def bin_ref(e):
+    """the .incbin operand: relative to prom_<img>/, which is on the assembler's -I"""
+    return f"images/{e['name']}.bin"
+
+
+def respell_ranges(img, ranges, mark):
+    """Replace the `.byte` slots of every range with `.incbin "<ref>", skip, count` lines.
+
+    ranges = [(ref, addr, n)].  A line that holds bytes of two ranges, or of a range and its
+    neighbour, is split; pieces of one range on consecutive lines merge into one .incbin across
+    blank lines and ASCII-art comment rows (dropped: the PNG is the picture), and split at any
+    other line (a label, an explanatory comment), which stays where it was.  Every address must
+    be covered by a ROM-confirmed `.byte` slot (source_map's guard) or nothing is written."""
+    lines, amap, _dropped = source_map(img)
+    origin, texts = _ORIGIN[img]
+    owner = {}
+    for ri, (ref, a, n) in enumerate(ranges):
+        for k in range(n):
+            if a + k not in amap:
+                sys.exit(f"respell: {ref} 0x{a + k:06X} is not a confirmed `.byte` slot -- refusing")
+            owner[a + k] = (ri, k)
+    slots = {}
+    for a, (li, vi) in amap.items():
+        slots.setdefault(li, {})[vi] = a
+    touched = sorted({amap[a][0] for a in owner})
+    first, last = touched[0], touched[-1]
+    touched = set(touched)
+
+    def segments(li):
+        m = BYTE_LINE.match(lines[li])
+        vals = [v.strip() for v in m.group(2).split(',')]
+        segs = []
+        for vi, v in enumerate(vals):
+            o = owner.get(slots.get(li, {}).get(vi))
+            if o is None:
+                if segs and segs[-1][0] == 'bytes':
+                    segs[-1][1].append(v)
+                else:
+                    segs.append(['bytes', [v], vi == 0])
+            else:
+                ri, k = o
+                if segs and segs[-1][0] == 'inc' and segs[-1][1] == ri and segs[-1][2] + segs[-1][3] == k:
+                    segs[-1][3] += 1
+                else:
+                    segs.append(['inc', ri, k, 1])
+        return m, segs
+
+    out = {}            # expanded line index -> replacement lines
+    pending = None      # [ri, k0, count, li of its first line]
+    held = []           # blank / art lines after `pending`: dropped if the picture goes on, else kept
+
+    def flush():
+        nonlocal pending
+        if pending:
+            ri, k0, c, li0 = pending
+            out.setdefault(li0, []).append(f'\t.incbin\t"{ranges[ri][0]}", {k0}, {c}\t{mark}')
+            pending = None
+        for hl, line in held:
+            if hl in out:
+                out[hl] = [line]
+        held.clear()
+
+    for li in range(first, last + 1):
+        line = lines[li]
+        if li not in touched:
+            if pending and (not line.strip() or ART_LINE.match(line)):
+                out[li] = []                     # dropped if the picture goes on
+                held.append((li, line))
+                continue
+            flush()
+            continue
+        m, segs = segments(li)
+        out[li] = []
+        for seg in segs:
+            if seg[0] == 'inc':
+                _, ri, k, c = seg
+                if pending and pending[0] == ri and pending[1] + pending[2] == k \
+                        and origin[pending[3]][0] == origin[li][0]:
+                    pending[2] += c
+                    held.clear()                 # inside the picture: the held lines go
+                    continue
+                flush()
+                pending = [ri, k, c, li]
+            else:
+                flush()
+                hint = ''
+                h = ADDR_HINT.search(line)
+                if seg[2] and h:
+                    hint = f'   ; {h.group(1)}'
+                out[li].append(m.group(1) + ', '.join(seg[1]) + hint)
+        # a later piece may still join `pending`; its line is emitted at the piece's first line
+    flush()
+    # write back, file by file (line counts change)
+    per_file = {}
+    for li, new in out.items():
+        path, k = origin[li]
+        per_file.setdefault(path, {})[k] = new
+    for path, repl in per_file.items():
+        rel = path.relative_to(ROOT).as_posix()
+        if not rel.startswith(f'prom_{img}/'):
+            sys.exit(f"refusing to rewrite {rel}: a source shared with another image")
+        text = texts[path]
+        new = []
+        for k, ln in enumerate(text):
+            if k in repl:
+                new.extend(repl[k])
+            else:
+                new.append(ln)
+        tmp = path.with_suffix('.s.tmp')
+        tmp.write_bytes('\n'.join(new).encode('latin-1'))
+        os.replace(tmp, path)
+    print(f"prom_{img}: {len(ranges)} ranges respelled as .incbin in {len(per_file)} file(s)")
+
+
+def cmd_respell(_):
+    man = build_manifest()
+    for img in sorted({e['img'] for e in man}):
+        respell_ranges(img, [(bin_ref(e), e['addr'], e['bc'] * e['hl']) for e in man if e['img'] == img], MARK)
     return 0
 
 
-def cmd_rewrite(_):
-    _rewrite(True)
+def png_bytes(e):
+    return from_grid(png_to_grid(png_path(e), e['bc'] * 8, e['hl']), e['bc'], e['hl'], e['order'])
+
+
+def cmd_build(_):
+    n = 0
+    for e in build_manifest():
+        data = png_bytes(e)
+        out = bin_path(e)
+        if not out.exists() or out.read_bytes() != data:
+            out.write_bytes(data)
+        n += len(data)
+    print(f"wsa1_bitmaps.py build: {len(build_manifest())} bitmaps, {n:,} B from PNGs")
+    return 0
+
+
+def incbin_index(img):
+    """{operand: [(skip, count)]} over the expanded image source"""
+    lines, _origin, _texts = image_source(img)
+    idx = {}
+    for ln in lines:
+        m = re.match(r'^\s*(?:[.A-Za-z_][\w.]*:)?\s*\.incbin\s+"([^"]+)"\s*,\s*(\w+)\s*,\s*(\w+)', ln)
+        if m:
+            idx.setdefault(m.group(1), []).append((int(m.group(2), 0), int(m.group(3), 0)))
+    return idx
+
+
+def covered(pieces, n):
+    got = sorted(pieces)
+    pos = 0
+    for k, c in got:
+        if k != pos:
+            return False
+        pos += c
+    return pos == n
+
+
+def cmd_check(_):
+    """every listed range is spelled as .incbin pieces of its own .bin that cover it exactly once"""
+    bad = 0
+    man = build_manifest()
+    for img in sorted({e['img'] for e in man}):
+        idx = incbin_index(img)
+        for e in man:
+            if e['img'] == img and not covered(idx.get(bin_ref(e), []), e['bc'] * e['hl']):
+                print(f"  NOT AN INCBIN  {e['name']}: the source does not .incbin {bin_ref(e)} exactly once over 0..{e['bc'] * e['hl']}")
+                bad += 1
+    print(f"check: {len(man) - bad} of {len(man)} bitmaps are .incbin of the .bin built from their PNG")
+    return 1 if bad else 0
+
+
+def cmd_outputs(_):
+    import wsa1_fonts as WF
+    for e in build_manifest():
+        print(bin_path(e).relative_to(ROOT).as_posix())
+    for name, *_rest in WF.FACES:
+        print(WF.sheet_path(name).with_suffix('.bin').relative_to(ROOT).as_posix())
     return 0
 
 
@@ -806,8 +999,8 @@ def cmd_sheet(_):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('command', choices=['census', 'probe', 'export', 'verify',
-                                        'check', 'rewrite', 'list', 'sheet'])
+    ap.add_argument('command', choices=['census', 'probe', 'export', 'build', 'verify',
+                                        'check', 'respell', 'outputs', 'list', 'sheet'])
     a = ap.parse_args()
     return globals()['cmd_' + a.command](a)
 

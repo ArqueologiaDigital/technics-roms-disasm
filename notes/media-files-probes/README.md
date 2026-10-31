@@ -5,12 +5,12 @@ read-only (`$KN7000_WAVE_DIR`, default `~/compartilhado/technics_romsets/kn7000`
 `~/compartilhado/technics_romsets/kn5000/kn5000_waveform_rom.ic307`) and print numbers only: no sample
 data is written. They need numpy.
 
-| script                       | question it answers                                                                                                                | run                                      |
-|------------------------------|------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| `media_inventory.py`         | for every census tree, which items are pictures, PCM recordings or MIDI, and is a standalone media file the build's input for each | `python3 media_inventory.py [--list]`    |
-| `pcm_encoding_probe.py`      | which reading of a recording's words is right: two's complement or offset binary or sign-magnitude, byte order, 16-bit or 8+8      | `python3 pcm_encoding_probe.py`          |
-| `ic307_kn7000_match.py`      | do KN5000 IC307's waves occur in the KN7000's wave chips, in which chip, and what format does the KN7000 directory give them       | `python3 ic307_kn7000_match.py [--list]` |
-| `ic307_records_vs_kn7000.py` | are IC307's parameter records the Y-chip half (words p1, p3, p5 ...) of the KN7000 records that play the same recording            | `python3 ic307_records_vs_kn7000.py`     |
+| script                       | question it answers                                                                                                                                                                               | run                                      |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| `media_inventory.py`         | for every census tree, which items are pictures, PCM recordings or MIDI; is each one's media file committed and read directly or converted at build; is any converter output tracked (2026-10-31) | `python3 media_inventory.py [--list]`    |
+| `pcm_encoding_probe.py`      | which reading of a recording's words is right: two's complement or offset binary or sign-magnitude, byte order, 16-bit or 8+8                                                                     | `python3 pcm_encoding_probe.py`          |
+| `ic307_kn7000_match.py`      | do KN5000 IC307's waves occur in the KN7000's wave chips, in which chip, and what format does the KN7000 directory give them                                                                      | `python3 ic307_kn7000_match.py [--list]` |
+| `ic307_records_vs_kn7000.py` | are IC307's parameter records the Y-chip half (words p1, p3, p5 ...) of the KN7000 records that play the same recording                                                                           | `python3 ic307_records_vs_kn7000.py`     |
 
 Run each from the repository root as `python3 notes/media-files-probes/<script>`.
 
@@ -38,4 +38,5 @@ Run each from the repository root as `python3 notes/media-files-probes/<script>`
   words p1, p3, p5, ...; for 965 the IC307 record is head-only and a partner has at most one parameter word;
   9 match no partner; none matches the control (p0, p2, p4, ...).
 
-`media_inventory.py`'s result is in the lane notes (section "Inventory").
+`media_inventory.py`'s result is in the lane notes (section "Inventory"); its 2026-10-31 form, which also
+counts untracked media files and tracked derived outputs, is in `../media-build-2026-10-31/README.md`.

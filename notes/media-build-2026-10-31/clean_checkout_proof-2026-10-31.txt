@@ -1,0 +1,30 @@
+clone: cd758fe62 notes: clean_checkout_proof.sh leaves two kinds of pre-existing tracked build state writable
+== A: converter outputs with no reference reachable
+   7033 outputs built, no reference image present
+== B: every gate, references copied by the Makefiles
+   make gate: exit 0  PASS: every rebuilt ROM is byte-identical.
+   make gate-wsa1: exit 0  PASS: every rebuilt ROM is byte-identical.
+   make gate-floppy: exit 0  All 6 kn7000 floppies reproduced byte-for-byte.
+   make gate-kn7000: exit 0  All 9 factory custom-style banks reproduced byte-for-byte.
+   make gate-kn6000: exit 0  
+   make gate-kn6500: exit 0  
+   make gate-kn2400: exit 0  
+   make gate-hdsx3: exit 0  
+   make -C kn7000 symbols-check: exit 0
+== C: the checkout is clean
+   git status --porcelain: empty
+== D: delete every converter output, tracked files read-only, gates again
+   make gate: exit 0  PASS: every rebuilt ROM is byte-identical.
+   make gate-wsa1: exit 0  PASS: every rebuilt ROM is byte-identical.
+   make gate-floppy: exit 0  All 6 kn7000 floppies reproduced byte-for-byte.
+   make gate-kn7000: exit 0  All 9 factory custom-style banks reproduced byte-for-byte.
+   make gate-kn6000: exit 0  
+   make gate-kn6500: exit 0  
+   make gate-kn2400: exit 0  
+   make gate-hdsx3: exit 0  
+   make -C kn7000 symbols-check: exit 0
+   7033 outputs rebuilt, SHA-256 identical to phase A
+== E: floppy media come from git
+   93 extracted copies deleted; 4 models reproduced byte-for-byte
+PASS: clean checkout of open2/media-build
+exit 0

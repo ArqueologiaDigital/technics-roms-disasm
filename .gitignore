@@ -50,6 +50,8 @@ cruft_please_ignore/
 mame_driver/build_error.txt
 # Generated binary blobs (compiled from C, .incbin'd by assembly)
 */maincpu/includes/generated/*.bin
+# the pixels of the NAKA GUI C pictures, written from images/*.png by scripts/build/c_bitmaps.py
+*/maincpu/includes/generated/pictures/
 hdae5000/includes/generated/*.bin
 hdae5000_v2_01i/includes/generated/*.bin
 hdae5000_v1_15i/includes/generated/*.bin
@@ -112,7 +114,18 @@ original_ROMs/kn5000_waveform_rom.ic307
 original_ROMs/kn5000_rhythm_data_rom.ic14
 original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped
 
-# KN5000 IC307's recordings as WAV files and their raw items (lane media-files, 2026-10-30): dump bytes,
-# extracted from the git-ignored reference image by `make waveform-wav`; never commit them.
-waveform/wav/
+# KN5000 IC307's recordings: the WAVs in waveform/wav/ are committed (the owner, 2026-10-31); the raw
+# items scripts/build/pcm_wav.py builds from them are build products.
 waveform/build/
+
+# Pictures: the PNG is committed and is the build's input; what a converter writes from it is a build
+# product (the owner, 2026-10-31: "Images and wav files must be commited and the conversion must happen
+# as a build step").  The KN5000 .bin files beside their PNGs (scripts/build/kn5000_image_outputs.py lists
+# them), the Feature Demo BMPs (scripts/build/ftbmp_images.py), and the WSA1R bitmaps and font faces
+# (wsa1/.gitignore).  The palettes in images/ are data, not converter output, and stay tracked.
+v*/maincpu/images/*.bin
+!v*/maincpu/images/Palette_8bit_RGBA.bin
+!v*/maincpu/images/Palette_8bit_RGBA_2.bin
+table_data/images/Wallpaper_*.bin
+table_data/images/FTBMP0?.BMP
+hdae5000/images/HDAE5000_Bitmap_Button01.bin

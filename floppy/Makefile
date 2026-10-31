@@ -5,6 +5,9 @@
 #   make -C floppy src-kn5000      regenerate floppy/kn5000/<disk>/ from the references
 #                                  (tools/fat12_to_s.py + kn5000/formats.py); the committed
 #                                  sources are that output
+#   make -C floppy media-kn5000    MAINTENANCE: refresh the committed media files (BMP, JPEG,
+#                                  MIDI) in floppy/kn5000/<disk>/media/ from the references
+#                                  (tools/fat12_media.py); the build reads those, not the images
 #   make -C floppy clean           remove build/ (the references in */baserom/ stay)
 #
 # Interface and conventions: floppy/README.md.  A model is a directory <model>/ with a
@@ -27,7 +30,7 @@ include $(MODELS:%=%/disks.mk)
 
 TOOLS := tools/fat12.inc
 
-.PHONY: all gate clean $(MODELS:%=gate-%) $(MODELS:%=src-%) $(MODELS:%=refs-%)
+.PHONY: all gate clean $(MODELS:%=gate-%) $(MODELS:%=src-%) $(MODELS:%=refs-%) $(MODELS:%=media-%)
 all: $(foreach m,$(MODELS),$(foreach d,$($(m)_DISKS),build/$(m)/$(d).img))
 gate: $(MODELS:%=gate-%)
 
@@ -62,7 +65,15 @@ src-$(1): refs-$(1) tools/fat12_to_s.py tools/fat12lib.py $$($(1)_FORMATS)
 	  || exit 1; \
 	done
 
-gate-$(1): $$(foreach d,$$($(1)_DISKS),build/$(1)/$$(d).img) tools/sha1_gate.py
+# The disks' standalone media files (BMP, JPEG, MIDI) are committed in <model>/<disk>/media/ (the owner,
+# 2026-10-31: "Images and wav files must be commited ..."); the disk objects read them through
+# `-I <model>/<disk>/media`.  This MAINTENANCE target rewrites them from the references (each one's
+# extraction, and the KD_CUT byte ranges of floppy/tools/kd/kd.mk); a build never runs it.
+media-$(1): $$(foreach d,$$($(1)_DISKS),build/$(1)/$$(d)/extract.stamp)
+	for d in $$($(1)_DISKS); do $$(PYTHON) tools/fat12_media.py update $(1) $$$$d || exit 1; done
+
+gate-$(1): $$(foreach d,$$($(1)_DISKS),build/$(1)/$$(d).img) tools/sha1_gate.py tools/fat12_media.py
+	for d in $$($(1)_DISKS); do $$(PYTHON) tools/fat12_media.py check $(1) $$$$d || exit 1; done
 	$$(PYTHON) tools/sha1_gate.py $(1) build/$(1) $(1)/baserom \
 	    $$(foreach d,$$($(1)_DISKS),$$(d)=$$($(1)_SHA1_$$(d)))
 endef
@@ -70,11 +81,13 @@ endef
 # $(1) = model, $(2) = disk.  The object depends on every source of the disk and on the
 # assembler itself (a new llvm-mc rebuilds every image).
 define FLOPPY_DISK
+# The committed media files ($(1)/$(2)/media/) come before build/$(1)/$(2)/ on the include path, so a
+# picture or MIDI file is read from git, never from the reference's extraction.
 build/$(1)/$(2).o: $(1)/$(2)/disk.s $(1)/baserom/$(2).img build/$(1)/$(2)/extract.stamp $$(TOOLS) \
-		$$(LLVM_MC) $$(wildcard $(1)/$(2)/*.s $(1)/$(2)/files/*.s $(1)/include/*.inc)
+		$$(LLVM_MC) $$(wildcard $(1)/$(2)/*.s $(1)/$(2)/files/*.s $(1)/include/*.inc $(1)/$(2)/media/*)
 	@mkdir -p $$(@D)
 	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I tools -I $(1)/include -I $(1)/$(2) \
-	    -I $(1)/baserom -I build/$(1)/$(2) -o $$@ $$<
+	    -I $(1)/baserom -I $(1)/$(2)/media -I build/$(1)/$(2) -o $$@ $$<
 endef
 $(foreach m,$(MODELS),$(eval $(call FLOPPY_MODEL,$(m)))\
   $(foreach d,$($(m)_DISKS),$(eval $(call FLOPPY_DISK,$(m),$(d)))))

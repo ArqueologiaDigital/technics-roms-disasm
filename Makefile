@@ -30,6 +30,16 @@ HELP_DB_STALE_COMPRESSED=$(HELP_DB_DIR)/help_db_german_stale_compressed.bin
 STALE_HELP_DUPLICATE=$(HELP_DB_DIR)/stale_style_records_residue.bin $(HELP_DB_DIR)/stale_help_db_german_head.bin
 CLANG=$(LLVM_BIN)/clang
 
+# The raw .bin files the KN5000 picture converters write beside their committed PNGs (git-ignored build
+# products; the rule is with the other image rules below).  Defined here, before the first object that
+# names it: a prerequisite list is expanded when make reads the rule.
+KN5000_IMAGE_BINS := $(shell python3 scripts/build/kn5000_image_outputs.py)
+KN5000_IMAGE_CONVERTERS := scripts/build/indexed_images.py scripts/build/mono_images.py scripts/build/se_bitmaps.py \
+	scripts/build/kn5000_image_outputs.py v10/maincpu/images/Palette_8bit_RGBA.bin
+# ... and the ones hdae5000_images.py and the table_data picture converters write into includes/generated/
+HDAE_IMAGE_BINS      := $(shell python3 scripts/build/kn5000_image_outputs.py hdae)
+TABLEDATA_IMAGE_BINS := $(shell python3 scripts/build/kn5000_image_outputs.py tabledata)
+
 .PHONY: all llvm-all paramblocks screendata naka clean clean-asl clean-all
 .PHONY: wsa1 wsa1-clean everything gate gate-wsa1 gate-all
 .PHONY: verify-v8-reference verify-hdae5000-v201-reference verify-subprogram-update-images
@@ -207,7 +217,7 @@ verify-subprogram-update-images:
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) -C wsa1 images-check	# the pictures' and fonts' rows equal their committed PNGs (lane media-files)
+	$(MAKE) -C wsa1 images-check	# every picture and font range is an .incbin of the .bin built from its PNG (lane media-build)
 	cd wsa1 && python3 scripts/analysis/gui_menu_map.py --check	# docs/gui-menu-map.md is generated from the sources
 
 gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3 gate-floppy
@@ -827,7 +837,7 @@ TABLEDATA_SRC = $(wildcard table_data/*.s table_data/*/*.s)
 CUSTOMDATA_SRC = $(wildcard custom_data/*.s custom_data/*/*.s)
 
 # --- Maincpu ---
-rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) indexed-images $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v10/maincpu -o $@ v10/maincpu/kn5000_v10_program.s
 
@@ -838,7 +848,7 @@ rebuilt_ROMs/kn5000_v10_program.llvm.rom: rebuilt_ROMs/kn5000_v10_program.llvm.e
 	$(LLVM_OBJCOPY) -O binary $< $@
 
 # --- V9 Maincpu ---
-rebuilt_ROMs/kn5000_v9_program.llvm.o: $(V9_SRC) original_ROMs/kn5000_v9_program.rom $(V9_C_DATA_BINS) indexed-images $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v9_program.llvm.o: $(V9_SRC) original_ROMs/kn5000_v9_program.rom $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v9/maincpu -o $@ v9/maincpu/kn5000_v9_program.s
 
@@ -882,7 +892,7 @@ verify-v8-reference: original_ROMs/kn5000_v8_program.rom
 	 if [ "$$got" = "$(KN5000_V8_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_V8_SHA1)"; \
 	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_V8_SHA1)"; exit 1; fi
 
-rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(V9_C_DATA_BINS) indexed-images $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj --defsym FW_VERSION_BYTE=0x08 -I v9/maincpu -o $@ v9/maincpu/kn5000_v9_program.s
 
@@ -907,7 +917,7 @@ rebuilt_ROMs/kn5000_v8_program.llvm.rom: rebuilt_ROMs/kn5000_v8_program.llvm.elf
 v7-extract-bins: $(V7_C_DATA_BINS)
 	python3 scripts/build/apply_v7_c_divergence.py
 
-rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) v7-extract-bins indexed-images $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v7/maincpu -o $@ v7/maincpu/kn5000_v7_program.s
 
@@ -1062,7 +1072,7 @@ $(1)-c-bins-raw: $$($(2)_C_DATA_BINS)
 $(1)-c-bins: $(1)-c-bins-raw
 	python3 scripts/build/apply_c_divergence.py $(1)
 
-rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins indexed-images $$(wildcard $(1)/maincpu/images/*.png) $$(LLVM_MC)
+rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins $$(KN5000_IMAGE_BINS) $$(wildcard $(1)/maincpu/images/*.png) $$(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I $(1)/maincpu -o $$@ $(1)/maincpu/kn5000_$(1)_program.s
 
@@ -1246,34 +1256,54 @@ INDEXED_IMAGE_SRC  := $(shell find v10/maincpu/images -name '*.png' 2>/dev/null)
 TABLEDATA_IMAGE_SRC:= $(shell find table_data/images  -name '*.png' 2>/dev/null)
 HDAE_IMAGE_SRC     := $(shell find hdae5000/images    -name '*.png' 2>/dev/null)
 
-indexed-images:
+# The KN5000 pictures that the assembly `.incbin`s as raw bytes (KN5000_IMAGE_BINS, defined at the top
+# of this file because the objects above name it): each .bin is written beside its committed PNG by
+# indexed_images.py, mono_images.py or se_bitmaps.py, and is a git-ignored build product (lane
+# media-build, 2026-10-31).  These are real targets: a changed PNG, a changed converter or a deleted
+# .bin rebuilds them.
+$(KN5000_IMAGE_BINS) &: $(KN5000_IMAGE_BINS:.bin=.png) $(KN5000_IMAGE_CONVERTERS)
 	python3 scripts/build/indexed_images.py build
 	python3 scripts/build/mono_images.py build
 	python3 scripts/build/se_bitmaps.py build
+	@touch $(KN5000_IMAGE_BINS)
+indexed-images: $(KN5000_IMAGE_BINS)
 
-# The pictures the NAKA GUI C holds as initializers come from <tree>/maincpu/images/*.png:
-# scripts/build/c_bitmaps.py writes the initializers' values from the PNGs before clang compiles
-# the C (an unchanged PNG leaves the C untouched).  Lane media-files, 2026-10-30.
-C_BITMAP_PNGS := $(wildcard $(foreach t,v10 v9 v7 v6 v5,$(t)/maincpu/images/*.png))
-rebuilt_ROMs/c_bitmaps.stamp: $(C_BITMAP_PNGS) scripts/build/c_bitmaps.py
-	mkdir -p rebuilt_ROMs
-	python3 scripts/build/c_bitmaps.py build
-	@touch $@
-$(foreach t,v10 v9 v7 v6 v5,$(addprefix $(t)/maincpu/includes/generated/,naka_technichord_strings.bin \
-	naka_style_bitmaps.bin naka_widget_tables_2.bin naka_widget_descriptors.bin naka_disk_warning.bin)): rebuilt_ROMs/c_bitmaps.stamp
+# The pictures the NAKA GUI C holds as initializers come from <tree>/maincpu/images/*.png.  The C
+# holds no pixels: each initializer is `#include "../includes/generated/pictures/<name>.inc"`, and
+# scripts/build/c_bitmaps.py writes those git-ignored .inc files from the PNGs before clang compiles
+# the C (lane media-files 2026-10-30; the .inc form, lane media-build 2026-10-31).  One stamp per
+# revision, inside the generated directory, so deleting it rebuilds them.
+C_BITMAP_TREES := v10 v9 v7 v6 v5
+define C_BITMAP_RULES
+$(1)/maincpu/includes/generated/pictures/.stamp: $$(wildcard $(1)/maincpu/images/*.png) v10/maincpu/images/Palette_8bit_RGBA.bin scripts/build/c_bitmaps.py
+	python3 scripts/build/c_bitmaps.py build $(1)
+	@touch $$@
+$$(addprefix $(1)/maincpu/includes/generated/,naka_technichord_strings.bin naka_style_bitmaps.bin \
+	naka_widget_tables_2.bin naka_widget_descriptors.bin naka_disk_warning.bin): $(1)/maincpu/includes/generated/pictures/.stamp
+endef
+$(foreach t,$(C_BITMAP_TREES),$(eval $(call C_BITMAP_RULES,$(t))))
 
-hdae5000-images:
+# The HD-AE5000 pictures and palettes (hdae5000_images.py) and the table_data UI bitmaps, icons and fonts:
+# real grouped outputs since lane media-build (2026-10-31), so a deleted one is rebuilt (`media`, below);
+# `hdae5000-images` / `tabledata-images` stay as the names the objects use.
+$(HDAE_IMAGE_BINS) &: $(wildcard hdae5000*/images/*.png hdae5000*/images/*.txt) hdae5000/images/row_padding.json \
+		scripts/build/hdae5000_images.py
 	python3 scripts/build/hdae5000_images.py build
+	@touch $(HDAE_IMAGE_BINS)
 # HDAE5000_Bitmap_Button01 comes from its PNG through indexed_images.py (lane media-files)
-hdae5000-images: indexed-images
+hdae5000-images: $(HDAE_IMAGE_BINS) $(KN5000_IMAGE_BINS)
 
-# The wallpapers are built from their committed PNGs the same way; see
-# scripts/build/indexed_images.py, whose `verify` asserts the round trip.
-tabledata-images: indexed-images
+$(TABLEDATA_IMAGE_BINS) &: $(wildcard table_data/images/ui_bitmaps/*.png table_data/images/icons_png/*.png \
+		table_data/images/fonts/*.png) table_data/images/ui_bitmaps_manifest.json table_data/images/ui_bitmaps_padding.json \
+		table_data/fonts.s table_data/includes/icon_pixel_data.bin v10/maincpu/images/Palette_8bit_RGBA.bin \
+		scripts/build/ui_bitmaps_images.py scripts/build/icon_images.py scripts/build/font_images.py
 	python3 scripts/build/ui_bitmaps_images.py build
 	python3 scripts/build/icon_images.py build
 	python3 scripts/build/font_images.py build
-	python3 scripts/build/mono_images.py build
+	@touch $(TABLEDATA_IMAGE_BINS)
+# The wallpapers are built from their committed PNGs the same way; see
+# scripts/build/indexed_images.py, whose `verify` asserts the round trip.
+tabledata-images: $(TABLEDATA_IMAGE_BINS) $(KN5000_IMAGE_BINS)
 
 rebuilt_ROMs/hd-ae5000_v2_06i.llvm.o: $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
@@ -1400,9 +1430,9 @@ rebuilt_ROMs/hd-ae5000_v1_10i.llvm.rom: rebuilt_ROMs/hd-ae5000_v1_10i.llvm.elf
 
 # The six Feature Demo BMPs (FTBMP01..06.BMP) are built from their committed PNGs
 # plus the header fields in ftbmp_headers.json; scripts/build/ftbmp_images.py
-# `verify` asserts the round trip against the committed .BMP and the ROM.  The
-# .BMP files stay tracked as a build cache, like Wallpaper_*.bin, so they are named
-# here as real outputs (not behind the output-less `tabledata-images`): an edited
+# `verify` asserts the round trip against the built .BMP and the ROM.  The
+# .BMP files are git-ignored build products (lane media-build, 2026-10-31), like
+# Wallpaper_*.bin, named here as real outputs (not behind the output-less `tabledata-images`): an edited
 # PNG makes them, and then the table_data object, out of date.  `build` touches an
 # output whose bytes did not change, so a checkout's mtime order cannot make this
 # rule rerun on every invocation.
@@ -1498,30 +1528,29 @@ rebuilt_ROMs/kn5000_custom_data.llvm.rom: rebuilt_ROMs/kn5000_custom_data.llvm.e
 # and refuses a copy whose SHA-1 differs; override the source with
 #   make KN5000_IC307_REF=/path/to/kn5000_waveform_rom.ic307 ...
 # The directory, the parameter records, the alignment and the 0xFF tails are
-# typed source.  Each PCM item is a WAV file in waveform/wav/ (git-ignored, like
-# the reference: dump bytes stay out of the public repository); `make
-# waveform-wav` extracts any missing WAV from the reference copy, and
-# scripts/build/pcm_wav.py turns the WAVs into the raw items waveform/build/pcm/
-# that the source `.incbin`s.  The manifest waveform/wav_manifest.tsv says where
-# each item is and how it is encoded.  Notes: notes/waveform-ic307-2026-10-29/
-# README.md and notes/media-files-2026-10-30/README.md.
+# typed source.  Each PCM item is a WAV file in waveform/wav/, committed (the owner,
+# 2026-10-31: "Images and wav files must be commited and the conversion must happen as
+# a build step"); scripts/build/pcm_wav.py turns the WAVs into the raw items
+# waveform/build/pcm/ (git-ignored) that the source `.incbin`s, and reads no reference
+# image to do it.  The manifest waveform/wav_manifest.tsv says where each item is and
+# how it is encoded.  The reference image is needed only for the byte compare and for
+# the maintenance target `waveform-wav`.  Notes: notes/waveform-ic307-2026-10-29/
+# README.md, notes/media-files-2026-10-30/README.md, notes/media-build-2026-10-31/README.md.
 KN5000_IC307_REF  ?= $(PROJECTS_ROOT)/technics_romsets/kn5000/kn5000_waveform_rom.ic307
 KN5000_IC307_SHA1 := 4b511bff6625f4655cabd96a263bf548d2ef4bf7
 WAVEFORM_SRC = $(wildcard waveform/*.s waveform/*.inc)
 IC307_WAV_MANIFEST := waveform/wav_manifest.tsv
+# every WAV the manifest names (column 6), so a missing one stops make instead of being skipped
+IC307_WAVS := $(addprefix waveform/wav/,$(shell tail -n +2 $(IC307_WAV_MANIFEST) | cut -f6))
 
-waveform/wav/.extracted: original_ROMs/kn5000_waveform_rom.ic307 $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
-	python3 scripts/build/pcm_wav.py extract --missing $(IC307_WAV_MANIFEST) $< waveform/wav
+waveform/build/pcm/.built: $(IC307_WAVS) $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
+	python3 scripts/build/pcm_wav.py build $(IC307_WAV_MANIFEST) waveform/wav waveform/build/pcm
 	@touch $@
 
-waveform/build/pcm/.built: waveform/wav/.extracted $(wildcard waveform/wav/*.wav) $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
-	python3 scripts/build/pcm_wav.py build --ref original_ROMs/kn5000_waveform_rom.ic307 $(IC307_WAV_MANIFEST) waveform/wav waveform/build/pcm
-	@touch $@
-
-# re-extract the WAVs that are missing (an edited WAV is never overwritten)
+# MAINTENANCE, not a build step: write the WAVs that are missing from the reference image
+# (an edited WAV is never overwritten).  The WAVs are committed; run this only to recover one.
 waveform-wav: original_ROMs/kn5000_waveform_rom.ic307
 	python3 scripts/build/pcm_wav.py extract --missing $(IC307_WAV_MANIFEST) $< waveform/wav
-	@touch waveform/wav/.extracted
 
 original_ROMs/kn5000_waveform_rom.ic307:
 	@if [ ! -f "$(KN5000_IC307_REF)" ]; then \
@@ -1550,6 +1579,15 @@ rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom: rebuilt_ROMs/kn5000_waveform_ic307.
 	$(LLVM_OBJCOPY) -O binary $< $@
 
 llvm-all: original_ROMs/kn5000_waveform_rom.ic307 rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom
+
+# Every KN5000 media conversion's output (lane media-build, 2026-10-31).  `all` names them so that a
+# deleted one is made again: `.SECONDARY:` marks every target intermediate, and make does not remake a
+# missing intermediate for an object that is otherwise up to date -- while assert_images_assemble.py,
+# which assembles the sources directly, needs every file they `.incbin`.
+.PHONY: media
+media: $(KN5000_IMAGE_BINS) $(HDAE_IMAGE_BINS) $(TABLEDATA_IMAGE_BINS) $(FTBMP_BMPS) waveform/build/pcm/.built \
+	$(foreach t,$(C_BITMAP_TREES),$(t)/maincpu/includes/generated/pictures/.stamp)
+llvm-all: media
 gate: verify-ic307-reference
 clean: clean-waveform
 clean-waveform:

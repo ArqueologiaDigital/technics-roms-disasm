@@ -1,5 +1,14 @@
 # The WSA1R's images are image files now — and three committed readings were transposed
 
+> **Update 2026-10-31 (lane media-build, `../../notes/media-build-2026-10-31/README.md`).** The PNGs
+> are no longer a check on `.byte` rows: the source holds no pixel rows at all.  Each range is
+> `.incbin "images/<name>.bin", skip, count`, and `wsa1_bitmaps.py build` / `wsa1_fonts.py build`
+> write those git-ignored .bin files from the PNGs before the assembler runs (`rewrite` is gone;
+> `check` now asserts that every range is such an `.incbin`).  The two drawbar sprites this note
+> left REFUSED are converted (24 x 233, from Drawbar_DrawColumn's three blits), and the prom_a
+> range after the eight widgets turned out to be typed display lists, not pixels: 210 bitmaps,
+> 47,838 B, and the 12 faces, 47,504 B.  The text below is the 2026-09-02 record.
+
 Lane IMAGE, 2026-09-02, against `notes/lanes/BRIEF-2026-09-01.md` and the
 project owner's rule: *"if a data range is an image, it should be represented in
 the source as an image file (such as PNG)."*
