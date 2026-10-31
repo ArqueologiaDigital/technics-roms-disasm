@@ -1000,5 +1000,5 @@ ic21-own-src: tools/gen_ic21own_s.py tools/gen_customdata_s.py $(IC21_OWN_REF) $
 
 # The probes behind the figures in src/ic21own/ic21.s and notes/ic21-own/README.md.
 ic21-own-probes: $(IC21_OWN_REF) $(CD_REFS) baserom/idd7000.img
-	@for p in regions regions2 custom names_kn5000 marker; do \
+	@for p in regions regions2 templates custom names_kn5000 name_fields marker; do \
 	  echo "==== notes/ic21-own-probes/$$p.py"; $(PYTHON) -I notes/ic21-own-probes/$$p.py || exit 1; done
