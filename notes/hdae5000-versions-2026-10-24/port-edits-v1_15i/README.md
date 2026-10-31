@@ -20,6 +20,12 @@ The order, and why it is that order:
 | 5    | `10` .. `89` (now `11`, `13`), then the passes twice          | edits written against the tree the passes leave                             |
 | 6    | `90` .. `99`                                                  | byte-neutral clean-ups (comments, labels, constants) and the zero tail      |
 
+`98b_label_review.py` (2026-10-31) is the label review: it runs
+`scripts/renaming/rename_hdae5000_v1_label_review.sed` and fixes the comments around the renamed
+blocks.  It is not idempotent (it renames `.Lts925_1` to `.Lts925_loop`), so it runs once per tree:
+here after `98`, and on v1.10i once by hand (`PORT_TREE=hdae5000_v1_10i`), never in
+`../port-edits-v1_10i/replay.sh`, which starts from the fixed v1.15i tree.
+
 What each script changes, and the evidence, is in its docstring.  `_edit.py` takes the tree
 from `PORT_TREE` (default `hdae5000_v1_15i`), so `../port-edits-v1_10i/replay.sh` runs the
 clean-ups 92-99 on v1.10i too.

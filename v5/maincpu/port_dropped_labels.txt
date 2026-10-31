@@ -27,8 +27,6 @@ SoundBank_InitFlags_Type2	0xf230e2	sequencer/smf_playback.s
 SoundBank_InitFlags_Type4	0xf230f0	sequencer/smf_playback.s
 SoundBank_StoreChParam	0xf230f8	sequencer/smf_playback.s
 SoundBank_NextEntry3	0xf23109	sequencer/smf_playback.s
-GmOffSureLang_ReturnZero	0xf2a7be	sequencer/sequencer_ui.s
-TrAsSureLangCheck	0xf2a7c1	sequencer/sequencer_ui.s
 StsAtPunchCheck	0xf2ee07	sequencer/sequencer_ui.s
 StsAtPunchCheck_ReturnZero	0xf2ee15	sequencer/sequencer_ui.s
 SeqPlay_ProcessTempoVoiceEvent	0xf395d2	sequencer/sequencer_engine.s

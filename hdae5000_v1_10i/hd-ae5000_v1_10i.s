@@ -180,7 +180,6 @@
 	.equ HDAE5000_RAM_PportSectorBuffer, 0x23c652	; 512 bytes: a sector received by HDAE5000_PPORT_RecvSector, or read for HDAE5000_PPORT_InitRegionDescriptors_Lookup
 	.equ HDAE5000_RAM_PcLinkStatusText, 0x22ab7c	; the text of the PC-link page's PP_STATUS object; the status string goes in at +7, at most 25 characters (HDAE5000_PcLink_ShowStatus, service 26)
 	.equ HDAE5000_RAM_PportPartMask, 0x23c4e4	; the parts (bits 0-7) a link command works on; InitRegionDescriptors sizes one region per set bit
-	.equ HDAE5000_RAM_PportPartMaskHi, 0x23c4e4	; bit 0: the ninth part (TLX), with PportPartMask
 	.equ HDAE5000_RAM_PportStepError, 0x23c4e6	; 1 when a service call of InitRegionDescriptors_Lookup / SendRegionToPc (or a command handler) failed
 	.equ HDAE5000_RAM_PportSizeFieldOffset, 0x23c4ea	; byte offset of the size field in a part file's first sector (InitRegionDescriptors -> _Lookup)
 	.equ HDAE5000_RAM_PportSizeFieldWidth, 0x23c4ec	; 0x20: that field is a long; 0x10: a word counting 16-byte units

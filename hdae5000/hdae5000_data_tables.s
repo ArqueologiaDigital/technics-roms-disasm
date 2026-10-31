@@ -686,8 +686,8 @@ HDAE5000_TextPtrs_A_to_SPC:	; 0x2E1EF8, 38 x .long -> string
 	.long	HDAE5000_Str_8
 	.long	HDAE5000_Str_9
 	.long	HDAE5000_Str_SPC
-	.byte 0x94, 0x1f
-	.asciz "."
+	.long	HDAE5000_Str_Empty_AtoSPC	; the table's end: a pointer to the empty string after it
+HDAE5000_Str_Empty_AtoSPC:
 	.zero 2
 HDAE5000_Str_SPC:	; 0x2E1F96
 	; pointed at by entry 37 of HDAE5000_TextPtrs_A_to_SPC
@@ -843,8 +843,8 @@ HDAE5000_TextPtrs_A_to_SPC_2:	; 0x2E1FE4, 38 x .long -> string
 	.long	HDAE5000_Str_8_2
 	.long	HDAE5000_Str_9_2
 	.long	HDAE5000_Str_SPC_2
-	.byte 0x80
-	.asciz " ."
+	.long	HDAE5000_Str_Empty_AtoSPC_2	; the table's end: a pointer to the empty string after it
+HDAE5000_Str_Empty_AtoSPC_2:
 	.zero 2
 HDAE5000_Str_SPC_2:	; 0x2E2082
 	; pointed at by entry 37 of HDAE5000_TextPtrs_A_to_SPC_2
