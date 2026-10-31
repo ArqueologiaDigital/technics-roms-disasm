@@ -115,7 +115,11 @@ symbols-check:
 # does not need this.
 # Recover the MILK framework's named-constant tables (colours, view flags, ...)
 # into a reference listing + an assembler include.
-constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
+# src/constants.inc is committed generated source (the firmware's own {name, value} tables as .equ
+# lines; the assembly names them).  Only this maintenance target rewrites it, from the reference
+# image; the build reads the committed file (lane media-cleanup, 2026-10-31: it used to be a file
+# target, so every fresh clone regenerated it the moment the reference copy was newer).
+constants: tools/gen_constants.py baserom/kn7000_program.rom
 	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
 
 program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
