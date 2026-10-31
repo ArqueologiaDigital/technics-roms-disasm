@@ -374,6 +374,35 @@ In §1's unit that is a **minimum cutoff of 466 Hz .. 2093 Hz per key zone** —
 keeps the filter above the zone's own band.  No closed form; the values are data.
 **Grade: range PROVEN, unit STRONG (it inherits §1's).**
 
+### 7a. ★ The bias `b = (int8)(0x00E08C)` over every factory key zone, and what the 27 values are (lane `open4/wsa1-a`, 2026-10-31)
+
+Probe: `notes/open4-a-probes/zone_bias_census.py` (exits 0 on PASS).  The chain, all prom_c instructions:
+`Voice_SelectKeyZone_Reg0040` (0xFA819A) takes the voice's 14-byte `ToneDB_EnvDescTable` descriptor
+(voice[+0x1F]), maps the note through the descriptor's curve to a zone, the zone to a sub-index, and the
+sub-index to an element of part B (stride 8/6/6/4 by tag bits 7:6); `KeyZone_Stage_Reg0040_Stride8` and
+`_Stride6A` (tag bit 6 set) hand element byte **+5** to `Pack104_SetInputs_Rec0C_E08C`, which stores it at
+`(0x00E08C)` (0xFC4D99); `_Stride6B` / `_Stride4` hand 0.  `Dev104_PackStagingStruct` reads it **signed** as
+the bias of the `0x0140`/`0x0180` index (`ld IX,(0x00E08C) / exts IX`, 0xFC4FB7) and **unsigned** as the index
+of this table (0xFC52A6, 0xFC541C).
+
+Over all 318 descriptors of directory slot +0x30 and every note 0..127 (161 at +0x38 and the four drawbar
+descriptors at +0x70 give b = 0 throughout):
+
+| b              | 0      | -2..-10 | -12..-20 | -24..-30 | -32   |
+|----------------|--------|---------|----------|----------|-------|
+| (desc, note)s  | 24,995 | 5,257   | 4,336    | 1,571    | 4,417 |
+
+863 of the 1,762 distinct zone elements carry a non-zero b.  **b is never positive and never `0x30`**, so the
+`(a, 1−a)` coincidence of §5 does not hold on factory data: with `b <= 0` the `0x0140` decay form is
+`2^(−3 + b/16) · 2^(−v1/16)` — 18 dB (b = 0) to 30 dB (b = −32) below the exact pair.
+
+**And the floor table is a function of b, not of the zone.**  Its 256 bytes are `0x3C` (60) at indices
+0..127 (b >= 0), `0x22` (34) at 128..224 (b <= −32), and a non-decreasing ramp `0x22 → 0x3B` over 224..255
+(b = −32..−1): 34, 35, 36, 36, 37, … 57, 58, 59 — about 0.8 per step.  That ramp IS the 27 distinct values.
+So a zone's floor follows from its bias alone: a negative bias lowers the `0x0140` decay term and lowers the
+minimum cutoff index with it, by about 4/5 of a semitone per step.  The zone's key range plays no part.
+The label `…ByKeyZone…` stays: it is indexed by the key-zone record's byte, which is still true.
+
 ---
 
 ## 8. The table an emulator author can use directly
@@ -433,9 +462,12 @@ it cannot choose between.
 * **`Curve_Fitting_Exp2Decay_256`'s rate.**  §5 shows the table is absurd per sample and musical at
   40.69 Hz.  Which rate the LSI actually uses is not in this ROM.
 * **`Table_Muting_CutoffFloor_ByKeyZone_256`'s 27 values.**  A per-zone floor, with no closed form.  Its producer is the
-  key-zone record in prom_d, so prom_d's zone format would give the 27 numbers a meaning.
+  key-zone record in prom_d, so prom_d's zone format would give the 27 numbers a meaning. (Resolved 2026-10-31,
+  lane open4/wsa1-a: §7a -- they are not per-zone data but ONE RAMP of the zone's signed bias b: 60 for b >= 0,
+  34 for b <= -32, rising by about 0.8 per step in between.)
 * **The `0x00E08C` bias in `0x0140`'s index.**  If it is `0x30` the `(a, 1−a)` pair of §5 is
-  exact.  It comes from prom_d.
+  exact.  It comes from prom_d. (Resolved 2026-10-31, lane open4/wsa1-a: §7a -- b is never 0x30 and never
+  positive: it is 0 or -2 .. -32 over every factory key zone, so the §5 pair is NOT exact on factory data.)
 * **Register `chan+0x0000`, `0x0040`, `0x0080`, `0x02C0`, `0x03C0`, `0x0480`** — no table
   passes through them, so this pass had no lever on them at all. (Resolved: HLE-GUIDE-l7a1429.md section 5.3 (1ccfc5fb2): 0x0040/0x0080 PROVEN as KEY SHIFT + DETUNE (and RESO SCALE, FINDINGS-l7a1429-reso-scale.md, d3f9ef977), 0x0000 named by its fields, 0x03C0/0x0480 resolved negatively, 0x02C0 the literal 0xFF00; open-items register 2026-10-31.)
 
