@@ -13,8 +13,9 @@ made by `make -C kn7000 verify-customdata`), programs 893 / 941 and table 80 fro
 EPROM halves (`ROMSET_DIR=`, default `~/compartilhado/technics_romsets/kn7000`) and the tracked
 KN5000 program `original_ROMs/kn5000_v10_program.rom`. They only print.
 
-    make -C kn7000 ic21-own-probes          # all of them, in this order
+    make -C kn7000 ic21-own-probes          # all of them but name_search.py, in this order
     python3 -I kn7000/notes/ic21-own-probes/<script>.py
+    python3 -I kn7000/notes/ic21-own-probes/name_search.py [root ...]   # a few minutes; walks the private dumps
 
 | script            | question it answers                                                                                  |
 |-------------------|------------------------------------------------------------------------------------------------------|
@@ -25,6 +26,12 @@ KN5000 program `original_ROMs/kn5000_v10_program.rom`. They only print.
 | `names_kn5000.py` | where each text run of the CUSTOM bank comes from (KN5000 program, KN7000 firmware, factory sets)    |
 | `name_fields.py`  | the same for every NAME FIELD of the 20 records, read from their structure: did anyone type a name?  |
 | `marker.py`       | where the firmware refers to the `A5A55A5A` constant and to `0x96806000`                             |
+| `name_search.py`  | is any of the five respelled names anywhere in the dumps, floppies and installers we hold?           |
+| `name_origin.py`  | are each slot's four setting names the KN5000 MUSIC DATABASE titles of its style, in order?          |
+| `ots_origin.py`   | why no setting holds 941's part tails: 893 vs 941 writer, and the KN6000-file conversion's shape     |
+| `hp_parts.py`     | what the home-page parts are (kind name, x, y) in the chip, the `.HMP` file and the ROM template     |
+| `section_map.py`  | which settings field is section n of `func_4C024030`, and which fields no routine names              |
+| `stream_rules.py` | which position rules and stream sizes the live event streams keep (the residue typer's rules)        |
 
 ## What the output means (2026-10-31, worktree of branch open2/ic21-own)
 
@@ -51,12 +58,38 @@ KN5000 program `original_ROMs/kn5000_v10_program.rom`. They only print.
   printable (`nnjiinriA` ...) and one is `Jazz At 3.00am`; this is why `name_fields.py` exists.
 - `name_fields.py`: `340 name fields in 20 records`; `KN5000 program: 208 fields, 116 distinct`; `KN7000
   program/table: 127 fields, 18 distinct`; `none of these: 4` (`3/4 Played By 4`, `Disco - Techni`,
-  `Metallic Dance`, `Sentimntal Solo`); `KN5000 program, ':' written '.': 1` (`Jazz At 3.00am`). By hand
-  (2026-10-31): the KN5000 v5-v10 programs hold `3/4 Played by 4`, `Disco-Techni` and `Sentimental Solo`;
-  `Metallic Dance` is in no KN5000, KN6000, KN6500, KN2400 or KN7000 image of this repository, and in no
-  softlist floppy image as plain text.
+  `Metallic Dance`, `Sentimntal Solo`); `KN5000 program, ':' written '.': 1` (`Jazz At 3.00am`). The
+  probe compares whole fields with KN5000 program text, so it counts `Harry J.& Co` (KN5000 `Harry J.& Co.`)
+  as a KN5000 name: `name_origin.py` compares them title by title.
 - `marker.py`: `a5a55a5a` once in each program (893 `0x4849fb0c`, 941 `0x4849fd19`: the `mov 0x5a5aa5a5, d0`
   of the flash test), `0x96806000` once (893 `0x4849fb28`, 941 `0x4849fd35`).
 
 The residue figures of the CUSTOM bank (`donor 117903, stream 35260, events 32210, opaque 2256` bytes)
 are printed by `make -C kn7000 ic21-own-src` (`gen_customdata_s.py`'s last line).
+
+## What the new probes print (2026-10-31, lane ic21-rest, worktree of branch open3/ic21-rest)
+
+- `name_search.py`: `3903 blobs searched under 4 roots` (this repository's `original_ROMs`, the private
+  `technics_romsets` and `technics_roms/roms`, the `ca-software-mirror` files; zip / self-extracting zip
+  members, `.AST` inflated, PDFs through `pdftotext`, `.cab` / `.msi` through `7z`, EPROM halves interleaved).
+  `metallic dance`, `sentimntal solo`, `disco - techni` and `jazz at 3.00am` occur only in Felipe's own reads
+  (`real_dump_v1.3_b893` pass1 IC21 and the pass4 / pass5 `R5480000.BIN` / `R5680000.BIN`, the same bank);
+  `3/4 played by 4` also in the KN5000 table data and programs, case aside. `metalic dance` is in the KN5000
+  table data (`0x15DA09`, a MUSIC DATABASE record of style "Straight Dance") and the KN5000 v5-v10 programs.
+- `name_origin.py`: `KN5000 table data: 1000 MUSIC DATABASE records`; for every slot the KN5000 has exactly four
+  records of that style, and the slot's four setting names are their titles, in the table's order;
+  `setting names equal to the KN5000 title: 75; spelled differently: 5` (`Metallic Dance` for `Metalic Dance`,
+  `Disco - Techni` for `Disco-Techni`, `Sentimntal Solo` for `Sentimental Solo`, `Harry J.& Co` for
+  `Harry J.& Co.`, `3/4 Played By 4` for `3/4 Played by 4`).
+- `ots_origin.py`: the field-map tables of 893 and 941 are `identical`, so are the writers (their sources differ
+  only in labels); `func_48485B52_Block at 0x48738fb8`; Felipe's bank `80 settings; shape of func_48485B52's
+  conversion ...: 80; with 941 part tails ...: 0`; the factory banks 0 conversions, with tails 4 (01ctmini) and 80
+  (the other eight); the KN6000 bank's 80 settings of 0x90 bytes all end FF FF.
+- `hp_parts.py`: the chip's record type 0, three parts (TITLE BAR NORM 0,-1; RIGHT COMBI 1 8,0; BALANCE NORM 1
+  0,4); the `.HMP` file and the ROM template the same twelve parts (type 5 and 0); in each, the one negative
+  coordinate is a TITLE BAR part's y = -1.
+- `section_map.py`: the 23 cases (n 5 language ... n 10 contrast, 11 r_a94, 12 r_a96, 13 / 14 the CUSTOM PANEL,
+  15 data_protect, 16 the `.MD` part, 17 cus_mem_mode, 18 acc_reverb_mask, 19 rsp_select, 20 / 21 none,
+  22 panel_sw); r_a94 and r_a96 are named only by the section code, in 893, 935 and 941.
+- `stream_rules.py`: `10 banks: rise 221122, equal 43611, decrease 1, pos after pos 0, status w/o pos 220000`;
+  `largest stream count: 0x23b9`.

@@ -42,8 +42,9 @@ Felipe's own IC21 read (`real_dump_v1.3_b893`, PROGRAM 893) was at first kept ou
 personal data. On 2026-10-31 the owner decided to add it. `kn7000/src/ic21own/ic21.s` now types the
 whole 2 MB chip, this bank included, with this lane's generator (`gen_customdata_s.py --base 0x20000
 --part`) and macros (`make verify-ic21-own`; [`ic21-own/README.md`](ic21-own/README.md)). Its CUSTOM
-bank holds KN5000 styles someone loaded. In two of its slots the record's `+0xA4` differs from the
-directory, which the factory banks never show (see "The slot record" below).
+bank holds KN5000 styles loaded from a KN6000 file: the firmware's KN6000-to-KN7000 conversion
+(`func_48485B52`, see "Loading a KN6000 file" below) shaped all 80 of its settings, left three
+KN6000-layout records in free blocks and, in two slots, a `+0xA4` that differs from the directory.
 
 Addresses of routines are KN7000 program 941's (`kn7000/src/program/region1_04.s`, names from
 `kn7000_manual.sym`). `[INFERENCE]` marks a reading that no traced code fixes.
@@ -98,7 +99,7 @@ Built by the MEMORY -> CUSTOM save `func_484854E3` in RAM (`0x5031C000` or `INST
 | `+0x8C`          | `{offset, size}` of the 4 one-touch-setting panel memories | `func_484842D8`; record size from `func_4C02AD02` (0xA0)                                             |
 | `+0x94`          | `{offset, size}` of the "TCMP" style container             | `func_48484305`, `CustomStyleBlockFetch` 0x48484578                                                  |
 | `+0x9C`          | `{offset, size}` of the "TPAD" pad container               | `func_48484332`, `func_4848435C`                                                                     |
-| `+0xA4`, `+0xA5` | first block, block count (as in the directory)             | equal to the slot descriptor in all 200 live records; not in 2 of Felipe's 20 (`ic21-own/README.md`) |
+| `+0xA4`, `+0xA5` | first block, block count (as in the directory)             | equal to the slot descriptor in all 200 live records; not in 2 of Felipe's 20 (`func_48485B52`)      |
 | `+0xA6..+0xFF`   | RAM residue of the build buffer                            | `[INFERENCE]`: debug strings ("TITLE : TT_RVARI", "MODE  : MD_NORMAL"); no accessor reads past +0xA4 |
 
 The sections follow the header in that order with no gap. In the factory sets only one record
@@ -155,9 +156,29 @@ remainder: `notes/data-semantics-2026-10-29/kn67-field-names.md`. Two observatio
 - No stored byte breaks a mask, except that **all 80 KN6000 settings have part 3 all 0xFF**
   (880 bytes outside their masks): the v7.1 writer copies part 3, so these were written by an
   earlier one.
-- **82 of the KN7000 settings** (76 live) do not hold program 941's part tails at `+0x8F` (their
-  `p23` exceeds the mask 0x07); `02custm6` has none such, `01ctmini` most. Those 13 bytes are
-  spelled as plain bytes with that comment; the rest use `PM_PART_TAIL`.
+- **Program 941's part tails at `+0x8F`** are missing from 76 live settings of `01ctmini` (their `p23`
+  exceeds the mask 0x07) and from none of the other eight factory banks' live settings; with the stale
+  records, the generator counts 135 such settings over the nine banks. Programs 893 and 941 have the
+  same writer and the same field-map tables (`ic21-own-probes/ots_origin.py`), so those bytes come from
+  a writer older than program 893. Those 13 bytes are spelled as plain bytes with that comment; the
+  rest use `PM_PART_TAIL`.
+
+**Loading a KN6000 file** (lane ic21-rest, 2026-10-31). AstLoadHandler (`.AST`, all 20 slots) and LoadCst
+(`.CST`, one slot) check the file's signature with `func_4852B746`, which returns 1 for a KN7000 file and
+3 for a KN6000 one. For 3 they call `func_48485E55` (every slot) or `func_48485E79` (one), which run
+`func_48485B52` on the slot:
+
+1. it copies the record's 0x100-byte header to `INSTALL_SCRATCH`, then the dependency sections;
+2. for each of the four settings it copies the 0xA0-byte default `func_48485B52_Block`, then the KN6000
+   setting's 0x90 bytes over it, so `+0x8E..+0x8F` keep the KN6000 record's FF FF and `+0x90..+0x9F` are
+   the default's (`PM_KN6000_END`, `PM_CONVERT_TAIL` in `panel_memory.inc`);
+3. it grows the record size by 0x40 and the settings section to 0x280, copies the TCMP and TPAD
+   containers, allocates blocks for the bigger record (`func_484843A4`) and installs it (AstHeaderIngest).
+
+The header keeps the KN6000 record's `+0xA4`/`+0xA5`, and the old record stays in its freed blocks. Felipe's
+bank shows all of it: its 80 settings have exactly that shape, two slots keep the old block number, and
+free blocks 22, 24-25 and 26-27 hold three complete records in the KN6000 layout, two of them the
+originals of those two slots (`Stale22`, `Stale24`, `Stale26` of `src/ic21own/custom/`).
 
 ## The "TCMP" style container (N = 1)
 
@@ -233,54 +254,65 @@ before. So:
 - **Past a record's end** its blocks hold the tail of an earlier, longer write. 166 records have
   such residue (`slack_origin.py`); no accessor reads past `+0x00`'s size.
 - **Free blocks** (map 0) are not erased in the nine KN7000 sets: they hold 41 complete older
-  records (no slot points at them; their `+0xA4` gives the block they were written for) and one
+  records (Felipe's bank holds three more, in the KN6000 layout) (no slot points at them; their `+0xA4` gives the block they were written for) and one
   fragment (01ctmini block 21). The complete ones are typed like live records (`StaleNN.inc`),
   e.g. "Revival Rock" (in 7 sets) and "Soloist Sounds" (4).
 - The 80 "Blank" slots of the eight custom1/custom2 sets are each 0x237F bytes.
 
 The KN6000 bank has no stale records and no residue.
 
-**How the residue is typed** (third round; `gen_customdata_s.py`, class `Cover`; each run is an
-include file `<image>/SlotNN_Residue.inc`, `StaleNN_Residue.inc` or `BlockNN_Residue.inc`):
+**How the residue is typed** (third round, extended by lane ic21-rest on 2026-10-31; `gen_customdata_s.py`,
+class `Cover`; each run is an include file `<image>/SlotNN_Residue.inc`, `StaleNN_Residue.inc` or
+`BlockNN_Residue.inc`):
 
 1. **Copies of typed records.** At the start of a run, and after each matched piece, the
    generator first looks for a record of the nine sets with the same bytes at the **same
    record-relative offset** (32 bytes or more), then for the longest match at **any offset** in
    any record. A match is spelled with that record's own lines (its macros, every label folded
-   to a number), from the first whole line to the last; partial lines at the edges are bytes
-   with a comment naming the line they are part of. The first line carries
+   to a number). The first line carries
    `stale tail of an earlier write; same bytes as <image> <Record> +0x..+0x..`.
-   Many residue runs equal *other residue* at the same offsets (122 of 166, the first round's
-   finding), which is not typed anywhere; those are typed by the next two steps.
-2. **Structures that no record holds.** In what is left: whole event streams (`{index, u24
-   count, F4 .. F5}` that parse with the firmware's event lengths), TCMP variation records
-   (zero fields, per-part bytes, eight part set-ups with CC94 = 64 and CC96 = 12) and TPAD pad
-   records (printable name, zero fields, two part set-ups), each spelled with its macros
-   (`STREAM_HEADER` + `ev_*`, `TCMP_VAR` + `PART_SETUP`, `TPAD_PAD` + `PART_SETUP`).
-3. **Runs of events.** Any run of 16 bytes or more with at least two status events that parses
-   under the stream rules the firmware's own streams keep (a position byte 0-95 is followed by
-   an event, positions rise within a beat) is spelled with `ev_*` lines.
-4. **Opaque**: what is left matches no typed record at 32 bytes and does not parse: mostly
-   1-15-byte splinters between matched pieces (partial events, the bytes of a header cut by the
-   next write).
+2. **The donor's structure, other values.** Where a match ends (or starts) inside one of the donor's
+   lines, or on a line boundary, the generator goes on along the donor's lines in place and spells each
+   from the residue's own bytes when they keep the macro's shape: `PART_SETUP`, `PM_PART`, `PM_STYLE`,
+   `PM_SET77`, `PM_FX`, `PM_SET88`, `PM_SET8C`, `PM_PART_TAIL`, `PM_ENTRIES`, `STREAM_HEADER`,
+   `TCMP_VAR`, `TCMP_STYLE`, `TPAD_PAD`, `.ascii`, and an events run where the donor has an event line.
+   A byte must lie in the range the corpus's items of that macro have, and the macro's fixed fields
+   (zeros, `00 20`) must hold. These lines say "other values than the donor's line at the same place".
+3. **Structures that no record holds.** In what is left: whole event streams (`{index, u24
+   count, F4 .. F5}` that parse with the firmware's event lengths), the cut start of a stream (its
+   header and events up to the next piece) and a stream header whose stream is the next piece, both
+   only right after a stream's F5 (streams are contiguous) and with a count of at most 0x8000 (the live
+   maximum is 0x23B9), TCMP variation records, TCMP / TPAD container headers, TPAD pad records and
+   their first 0x28 bytes, each spelled with its macros.
+4. **Runs of events.** A run of 16 bytes or more with at least two status events, or one that ends
+   with F5, that parses under the stream rules the firmware's own streams keep (a position byte 0-95 is
+   followed by an event; positions do not fall within a beat: the live streams repeat a position
+   43,611 times and lower one once, `ic21-own-probes/stream_rules.py`). Also: a short piece between two
+   typed pieces that parses exactly as events; events whose last one runs into the next piece on a
+   donor line boundary; right after an F5, the 1-5 data bytes of an event whose status byte the newer
+   stream overwrote (`[INFERENCE]` in the comment); the first bytes of an event cut by the end of the
+   record's last block.
+5. **Opaque**: what is left.
 
-Tally, all nine sets (bytes; `residue_cover.py` prints it per image):
+Tally, all nine sets (bytes; `residue_cover.py` prints it per image; "shaped" includes the pad and
+variation records):
 
-| image      | record copies | streams | events | variation / pad records | opaque |
-|------------|---------------|---------|--------|-------------------------|--------|
-| `01ctmini` | 62,671        | 50,763  | 42,037 | 4,480                   | 232    |
-| `01custm1` | 211,092       | 37,226  | 30,778 | 0                       | 130    |
-| `02custm2` | 283,708       | 4,549   | 7,456  | 0                       | 187    |
-| `03custm3` | 286,424       | 4,549   | 7,445  | 0                       | 187    |
-| `04custm4` | 205,350       | 19,845  | 15,498 | 0                       | 108    |
-| `01custm5` | 245,989       | 15,916  | 23,885 | 192                     | 2,374  |
-| `02custm6` | 268,267       | 54,958  | 38,750 | 0                       | 410    |
-| `03custm7` | 326,793       | 3,818   | 10,353 | 0                       | 309    |
-| `04custm8` | 312,016       | 3,818   | 9,503  | 0                       | 242    |
+| image      | record copies | streams | events | shaped | opaque |
+|------------|---------------|---------|--------|--------|--------|
+| `01ctmini` | 60,805        | 68,789  | 21,908 | 8,677  | 4      |
+| `01custm1` | 210,540       | 48,138  | 19,229 | 1,318  | 1      |
+| `02custm2` | 282,330       | 5,563   | 5,759  | 2,243  | 5      |
+| `03custm3` | 285,830       | 5,563   | 5,748  | 1,459  | 5      |
+| `04custm4` | 204,806       | 26,300  | 8,384  | 1,311  | 0      |
+| `01custm5` | 225,148       | 28,792  | 8,313  | 26,027 | 76     |
+| `02custm6` | 261,576       | 73,359  | 13,535 | 13,872 | 43     |
+| `03custm7` | 318,805       | 6,341   | 7,500  | 8,614  | 13     |
+| `04custm8` | 308,169       | 6,333   | 6,760  | 4,307  | 10     |
 
-Totals: 2,202,310 record copies, 195,442 in whole streams, 185,705 in event runs, 4,672 in
-variation and pad records, 4,179 opaque: of the 2,592,308 residue bytes the first rounds declared
-opaque, 2,588,129 (99.84%) are typed and 4,179 remain opaque, in 679 entries (the census figure).
+157 bytes remain opaque, in 28 entries (the census figure; 4,179 B in 679 entries before). They are
+pieces of one-touch settings and TCMP style records cut at both ends by other pieces (the largest, 42
+bytes of `01custm5`, is the tail `+0x77..+0x9F` of a setting just past a record's end), event bytes
+between two pieces where a position falls, and single bytes after a stream's end.
 
 **PMR and SOUND records.** floppy-others' `PMR_*` (the full 0x750 / 0x700-byte PANEL MEMORY
 record) and `SOUND_HEAD` / `SOUND_MOD` (the 0x2C8-byte SOUND EDIT record) are in the shared
@@ -312,31 +344,37 @@ it to regenerate these files.
 
 ## Census
 
-`scripts/analysis/data_incbin_census.py`, 2026-10-29 on this branch (count / bytes):
+`scripts/analysis/data_incbin_census.py`, 2026-10-31 on branch open3/ic21-rest (count / bytes):
 
 | tree                | opaque      | generic n | generic bytes |
 |---------------------|-------------|-----------|---------------|
-| `kn7000-customdata` | 679 / 4,179 | 0         | 0             |
+| `kn7000-customdata` | 28 / 157    | 0         | 0             |
 | `kn6000-customdata` | 0 / 0       | 0         | 0             |
 
 Generic is 0 in both trees: the panel memories and the voice records are typed since the second
 round (`panel_memory.inc`, `voice_record.inc`). The opaque entries are the residue splinters
-above (third round; it was 183 / 2,592,308 before).
+above (it was 183 / 2,592,308 before the third round, 679 / 4,179 before lane ic21-rest).
 
 ## Open questions
 
-- The panel-memory fields named only by their parameter id (`m<id>`), and the bytes no parameter
-  record covers: `notes/data-semantics-2026-10-29/kn67-field-names.md`.
-- The 0x42-byte dependency records (five kinds) and the 0x2C8 SOUND EDIT records: none in the
-  factory sets, so only their strides are known.
-- The voice record's single fields beyond those `voice_record.inc` now names (the sub-record's element
-  reference, the element's velocity splits and layers, the tone head and the 0x7A unit's EG / level
-  fields), and the custom-sound block's 0x27-byte header.
-- TCMP variation bytes `+0x01`, `+0x02`, `+0x18`, `+0x19`; the style record's two u16BE at
-  `+0x70`; the pad record's 13 setting bytes beyond those named.
-- A reader of the 24-field part set-up: the field mapping is the table's order, unconfirmed.
-- Where the factory sets were made: the residue matches across sets, so one tool built them in
-  sequence, reusing its buffer.
+State after lane ic21-rest (2026-10-31):
+
+- **BLOCKED** (no image holds one): the 0x42-byte dependency records (five kinds) and the 0x2C8 SOUND
+  EDIT records. None of the ten factory banks, nor Felipe's bank and its three KN6000-layout records,
+  has a dependency section other than `03custm3` slot 7's custom-sound block, so only the strides are
+  known. Needs a bank saved with user effects or SOUND EDIT sounds.
+- **BLOCKED** (needs a program build older than 893, v1.0-v1.2, not dumped): the writer of the 76
+  `01ctmini` settings without 941's part tails. Programs 893 and 941 write them alike.
+- **BLOCKED** (needs a KN6000 program older than v7.1): the writer of the KN6000 bank's settings with
+  part 3 all 0xFF.
+- **BLOCKED** (no copy of the tool): where the factory sets were made; the residue shows one tool built
+  them in sequence, reusing its buffer.
+- Not closed by this lane (firmware tracing still to do; no blocker): the panel-memory fields named only
+  by their parameter id (`m<id>`), see `notes/data-semantics-2026-10-29/kn67-field-names.md`; the voice
+  record's single fields beyond those `voice_record.inc` names, and the custom-sound block's 0x27-byte
+  header; TCMP variation bytes `+0x01`, `+0x02`, `+0x18`, `+0x19`, the style record's two u16BE at
+  `+0x70` and the pad record's setting bytes; a reader of the 24-field part set-up.
+- The 157 opaque residue bytes above.
 
 ## Website page draft
 
