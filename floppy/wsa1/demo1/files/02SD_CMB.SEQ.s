@@ -5,18 +5,60 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_02SD_CMB_SEQ:
 	seq_block	0x00, 0, 2	; block 1: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"demo1.img", 0x98205, 251
+; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
+; 5-byte block headers the free-chain set-up wrote over them
+	.byte	128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
+	cmb_common	64, 216, 2, 88, 4, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0xff, 0xff	; the end of a combination's record list
+	cmb_name
+	.ascii	"   GaGaku Set   "
+	cmb_effect_common	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x61, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x62, 49, 99, 36, 34, 66, 216, 84, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 4, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x63, 21, 39, 60, 18, 80, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 2, 88, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_a	0, 80, 0, 0, 116, 0, 64, 0, 64, 64, 76, 128, 2, 0, 192, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x20, 0, 0, 0, 1, 0, 24, 0, 48, 71, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 1, 12, 4, 0
 	seq_block	0x00, 1, 3	; block 2: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"demo1.img", 0x98305, 251
+; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
+; 5-byte block headers the free-chain set-up wrote over them
+	.byte	116, 0, 64, 0, 64, 64, 78, 128, 2, 0, 193, 128, 128, 0, 128, 128
+	.byte	128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x21, 0, 0, 0, 1, 0, 24, 0, 48, 71, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 1, 12, 4, 0
+	cmb_part_a	2, 80, 0, 0, 116, 0, 64, 0, 64, 64, 81, 128, 2, 0, 194, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x22, 0, 0, 0, 1, 0, 24, 0, 48, 71, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 1, 12, 4, 0
+	cmb_part_a	3, 80, 0, 0, 116, 0, 64, 0, 64, 64, 83, 128, 2, 0, 195, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x23, 0, 0, 0, 1, 0, 24, 0, 48, 71, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 1, 12, 4, 0
+	cmb_part_a	4, 76, 9, 0, 118, 0, 0, 0, 64, 64, 64, 128, 2, 0, 196, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x24, 0, 0, 0, 1, 0, 24, 0, 72, 127, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 8, 9, 4, 9
 	seq_block	0x00, 2, 4	; block 3: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"demo1.img", 0x98405, 251
+; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
+; 5-byte block headers the free-chain set-up wrote over them
+	.byte	123, 0, 0, 127, 64, 94, 100, 159, 2, 0, 197, 128, 128, 0, 128, 128
+	.byte	128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x25, 0, 0, 0, 1, 0, 24, 0, 42, 47, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 1, 14, 0, 1
+	cmb_part_a	6, 122, 0, 0, 123, 0, 0, 127, 64, 93, 98, 128, 2, 0, 198, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x26, 0, 0, 0, 1, 0, 24, 0, 42, 47, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 1, 1, 14, 0, 1
+	cmb_part_a	7, 110, 9, 0, 125, 0, 0, 0, 64, 21, 52, 128, 2, 0, 199, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x27, 0, 0, 0, 1, 0, 24, 0, 0, 41, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 0, 4, 2, 13, 6, 9
+	cmb_key_scaling	0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
+	cmb_common	64, 216, 2, 88, 4, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0xff, 0xff	; the end of a combination's record list
 	seq_block	0x00, 3, 5	; block 4: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"demo1.img", 0x98505, 251
+; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
+; 5-byte block headers the free-chain set-up wrote over them
+	.byte	99, 104, 99, 111, 99, 107, 32, 77, 111, 118, 105, 101, 32
+	cmb_effect_common	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x61, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x62, 39, 80, 33, 16, 34, 192, 34, 128, 34, 160, 36, 104, 37, 84, 0, 0, 0, 0, 0, 0, 0, 60, 18, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x63, 21, 55, 60, 18, 80, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 2, 88, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_a	0, 47, 9, 0, 127, 0, 0, 0, 90, 0, 64, 128, 2, 0, 192, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x20, 0, 0, 0, 1, 0, 34, 0, 0, 127, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 1, 1, 1, 5, 7, 9
+	cmb_part_a	1, 47, 9, 0, 108, 0, 0, 0, 90, 34, 61, 128, 2, 0, 193, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x21, 0, 0, 0, 1, 0, 24, 0, 0, 127, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 1, 1, 1, 5, 7, 9

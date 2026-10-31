@@ -23,6 +23,8 @@ BS_VolumeSerial:	.long	0x6b9e8149
 BS_VolumeLabel:		.ascii	"MCOMPOS    "
 BS_FileSystemType:	.ascii	"FAT12   "
 Boot_Code:
-	; census: opaque -- code: x86 boot code written by the formatting PC, not part of any instrument firmware
-	.incbin	"mcompos.img", 0x3e, 448
+	; The PC boot stub of the image-making tool ("This is not a bootable disk ..."): 16-bit x86,
+	; disassembled in floppy/tools/pc_boot_stub.s, assembled by floppy/Makefile.
+	; census: generated -- llvm-mc -triple=i386, from floppy/tools/pc_boot_stub.s
+	.incbin	"pc_boot_stub.bin", 0, 448
 Boot_Signature:		.short	0xaa55
