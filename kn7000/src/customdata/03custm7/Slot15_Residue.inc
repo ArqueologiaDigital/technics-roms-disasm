@@ -4476,8 +4476,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x7726a, 0x7726b	# stale bytes of an earlier write
+	.byte 0x11	# [INFERENCE] the last 1 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	56
 	ev_note	3, 64, 63, 12, 0, 17
@@ -4940,9 +4939,7 @@
 	ev_note	0, 47, 87, 3, 0, 0
 	ev_note	0, 64, 87, 3, 0, 0
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x77a1d, 0x77a21	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 12, 0x5e7	# stale start of a stream of an earlier write, cut after 0x5d9 of its 0x5e7 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	3, 48, 56, 100, 7, 1
 	ev_at	12
@@ -4981,7 +4978,6 @@
 	ev_note	0, 63, 63, 3, 0, 0
 	ev_at	4
 	ev_note	0, 64, 111, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	4
 	ev_note	3, 67, 44, 68, 0, 1
 	ev_note	3, 71, 50, 80, 0, 1
@@ -5002,9 +4998,10 @@
 	ev_note	0, 63, 55, 3, 0, 0
 	ev_at	84
 	ev_note	0, 64, 63, 3, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x77af1, 0x77afa	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	ev_at	84
+	ev_note	3, 67, 56, 20, 0, 1
+	ev_beat
+	ev_at	8
 	ev_note	0, 63, 55, 3, 0, 0
 	ev_at	8
 	ev_note	3, 69, 56, 20, 0, 1
@@ -5020,7 +5017,6 @@
 	ev_note	0, 64, 55, 3, 0, 0
 	ev_at	68
 	ev_note	0, 63, 47, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	68
 	ev_note	3, 74, 56, 20, 0, 1
 	ev_at	80
@@ -5031,7 +5027,6 @@
 	ev_note	0, 63, 55, 3, 0, 0
 	ev_at	12
 	ev_note	0, 64, 55, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	12
 	ev_note	3, 77, 56, 20, 0, 1
 	ev_at	28
@@ -5044,7 +5039,6 @@
 	ev_note	0, 63, 63, 3, 0, 0
 	ev_at	68
 	ev_note	0, 64, 63, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	68
 	ev_note	3, 76, 50, 20, 0, 1
 	ev_at	84
@@ -5065,7 +5059,6 @@
 	ev_note	0, 64, 71, 3, 0, 0
 	ev_at	68
 	ev_note	0, 63, 63, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	68
 	ev_note	3, 76, 50, 24, 0, 1
 	ev_at	80
@@ -5090,7 +5083,6 @@
 	ev_note	0, 63, 63, 3, 0, 0
 	ev_at	84
 	ev_note	0, 64, 71, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	84
 	ev_note	3, 71, 50, 24, 0, 1
 	ev_beat
@@ -5130,7 +5122,6 @@
 	ev_note	0, 63, 71, 3, 0, 0
 	ev_at	60
 	ev_note	0, 78, 63, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	60
 	ev_note	3, 48, 50, 40, 3, 1
 	ev_at	68
@@ -5155,7 +5146,6 @@
 	ev_note	0, 64, 79, 3, 0, 0
 	ev_at	68
 	ev_note	0, 63, 71, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	68
 	ev_note	3, 67, 50, 48, 0, 1
 	ev_at	80
@@ -5187,7 +5177,6 @@
 	ev_at	48
 	ev_note	0, 60, 79, 3, 0, 0
 	ev_note	0, 69, 63, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	48
 	ev_note	4, 60, 63, 20, 0, 1
 	ev_at	72
@@ -5198,9 +5187,7 @@
 	ev_at	48
 	ev_note	0, 104, 71, 3, 0, 0
 	ev_note	0, 60, 79, 3, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x77d8e, 0x77d8f	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	ev_at	48
 	ev_note	1, 31, 79, 8, 1, 1
 	ev_at	48
 	ev_note	4, 69, 79, 28, 0, 1
@@ -5210,7 +5197,6 @@
 	ev_at	48
 	ev_note	0, 60, 79, 3, 0, 0
 	ev_note	0, 69, 63, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	48
 	ev_note	4, 67, 87, 20, 0, 1
 	ev_beat
@@ -5222,7 +5208,6 @@
 	ev_at	48
 	ev_note	0, 104, 63, 3, 0, 0
 	ev_note	0, 64, 87, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	48
 	ev_note	4, 60, 71, 16, 0, 1
 	ev_at	72
@@ -5241,7 +5226,6 @@
 	ev_note	4, 65, 71, 20, 0, 1
 	ev_at	72
 	ev_note	0, 99, 79, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	72
 	ev_note	4, 60, 71, 24, 0, 1
 	ev_beat
@@ -5253,7 +5237,6 @@
 	ev_at	48
 	ev_note	0, 104, 71, 3, 0, 0
 	ev_note	0, 60, 79, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	48
 	ev_note	1, 36, 79, 12, 1, 1
 	ev_beat
@@ -5300,7 +5283,6 @@
 	ev_at	48
 	ev_note	0, 104, 71, 3, 0, 0
 	ev_note	0, 60, 79, 3, 0, 0
-	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	48
 	ev_note	1, 38, 79, 12, 1, 1
 	ev_beat

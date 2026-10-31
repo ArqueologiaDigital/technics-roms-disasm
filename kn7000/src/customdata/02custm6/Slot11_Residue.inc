@@ -3367,8 +3367,19 @@
 	ev_beat
 	ev_beat
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x55ec3, 0x55ed6	# stale bytes of an earlier write
+	.byte 0x22, 0x01, 0x00, 0x00	# [INFERENCE] the last 4 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
+	# stale events of an earlier write: no record holds them; they parse as events
+	ev_beat
+	ev_beat
+	ev_at	51
+	ev_cc	2, 64, 127
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_at	55
+	ev_cc	2, 64, 0
+	ev_end
 	STREAM_HEADER 16, 0xb69	# stale stream of an earlier write (no record holds it; it parses as events)
 	ev_beat
 	ev_at	2
@@ -5233,9 +5244,7 @@
 	ev_at	71
 	ev_cc	3, 64, 0
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x57c08, 0x57c0c	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 19, 0x7d4	# stale start of a stream of an earlier write, cut after 0x3f2 of its 0x7d4 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	0, 57, 95, 1, 0, 0
 	ev_note	0, 69, 87, 1, 0, 0
@@ -5472,5 +5481,4 @@
 	ev_note	7, 104, 83, 1, 0, 0
 	ev_beat
 	ev_note	0, 19, 50, 1, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x57ffe, 0x58000	# stale bytes of an earlier write
+	.byte 0x90, 0x45	# the first 2 byte(s) of an event of an earlier write, cut by the end of the record's last block

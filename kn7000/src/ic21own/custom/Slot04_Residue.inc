@@ -66,8 +66,8 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
+	.byte 0x00	# [INFERENCE] the last 1 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
-	ev_at	0
 	ev_note	0, 95, 11, 12, 0, 0
 	ev_at	46
 	ev_cc	1, 11, 87
@@ -944,9 +944,7 @@
 	ev_cc	3, 11, 127
 	ev_cc	4, 11, 127
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/kn7000_ic21_own.bin", 0xc9c19, 0xc9c1d	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 19, 0x16d6	# stale start of a stream of an earlier write, cut after 0x16cf of its 0x16d6 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	0, 59, 108, 12, 0, 0
 	ev_note	0, 36, 98, 12, 0, 0
@@ -2601,71 +2599,44 @@
 	ev_at	90
 	ev_cc	1, 11, 127
 	ev_cc	2, 11, 127
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_cc	3, 11, 127
 	ev_cc	4, 11, 127
-	ev_end	# stale tail of an earlier write; same bytes as 01custm5 Slot01 +0x4050..+0x40cd
-	TPAD_HEADER 0xccd
-	.ascii "  User Bank "	# bytes 0..11 of `TPAD_BANK`
+	ev_end
+	TPAD_HEADER 0xccd	# stale tail of an earlier write; same bytes as 01custm5 Slot01 +0x4051..+0x40cd
+	.ascii "  User Bank "	# stale tail of an earlier write; same bytes as 01custm5 Slot01 +0x40c1..; bytes 0..11 of `TPAD_BANK`
 	.ascii "1   "	# stale tail of an earlier write; same bytes as 01ctmini Stale28 +0x8a78..+0x8a9e; bytes 12..47 of `TPAD_BANK`
 	.byte 0x00, 0x00, 0x20, 0x00, 0x01, 0x20, 0x00, 0x02, 0x20, 0x00, 0x03, 0x20, 0x00, 0x04, 0x20, 0x00
 	.byte 0x05, 0x20
 	.space 14
-	.byte 0x20, 0x20	# bytes 0..1 of `TPAD_PAD`
-	.ascii "Piano Minuet  "	# stale tail of an earlier write; same bytes as custom Slot09 +0x6c28..+0x6c52; bytes 2..39 of `TPAD_PAD`
-	.space 4
-	.byte 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x00, 0x02, 0xe0
+	TPAD_PAD "  Piano Minuet  ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x2e0	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Stale28 +0x8a9e..
+	TPAD_PAD "BaroqueInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x03, 0x00, 0x00, 0x5b5	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	PART_SETUP 0x06, 127, 0x10, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Stale28 +0x8a9e..
+	TPAD_PAD "   Grandiose    ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x03, 0x00, 0x00, 0x7df	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Stale28 +0x8a9e..
+	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Stale28 +0x8a9e..
+	TPAD_PAD "Pizz Ending     ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x92d	# stale first 0x28 bytes of a pad record of an earlier write (name, settings, stream offset, zeros)
+	PART_SETUP 0x06, 127, 0x63, 0x00, 0x30, 127, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot07 +0x3eea..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x66b7..+0x6703
 	.space 8
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb3bf, 0xcb3c0	# stale bytes of an earlier write
-	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x3eef..+0x3f4c; bytes 5..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	TPAD_PAD "BaroqueInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x03, 0x00, 0x00, 0x5b5
-	.byte 0x06, 0x7f	# bytes 0..1 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb41d, 0xcb420	# stale bytes of an earlier write
-	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot04 +0x3cde..+0x3d14; bytes 5..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	.byte 0x20, 0x20, 0x20	# bytes 0..2 of `TPAD_PAD`
-	.ascii "Grandiose    "	# stale tail of an earlier write; same bytes as 01ctmini Slot12 +0x5cb0..+0x5cd9; bytes 3..39 of `TPAD_PAD`
-	.space 4
-	.byte 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x03, 0x00, 0x00, 0x00, 0x07, 0xdf
-	.space 8
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb47f, 0xcb480	# stale bytes of an earlier write
-	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x3eef..+0x3f22; bytes 5..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb4b3, 0xcb4e1	# stale bytes of an earlier write
-	.byte 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x3ef0..+0x3f22; bytes 6..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x06, 0x00, 0x00, 0x99f	# stale tail of an earlier write; same bytes as 01ctmini Slot02 +0x8ac0..+0x8aec
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	.byte 0x30, 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot16 +0x8228..+0x825c; bytes 4..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x0e, 0x00, 0x00, 0xb2f	# stale tail of an earlier write; same bytes as 01ctmini Slot02 +0x8b20..+0x8b4c
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	.byte 0x30, 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot16 +0x8228..+0x825e; bytes 4..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	.byte 0x00, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb5d5, 0xcb5d7	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
-	ev_beat
-	ev_at	1
+	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x06, 0x00, 0x00, 0x99f
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot15 +0x6703..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x0e, 0x00, 0x00, 0xb2f	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot15 +0x6703..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	STREAM_HEADER 0, 0x2d1	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	ev_beat	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01ctmini Slot15 +0x6703..
+	# stale events of an earlier write, at an event boundary of the donor record: 01ctmini Slot15 +0x6703..
 	ev_note	0, 79, 73, 37, 0, 17
 	ev_at	3
 	ev_note	0, 60, 82, 41, 0, 17
@@ -2888,8 +2859,8 @@
 	ev_note	0, 64, 67, 12, 0, 17
 	ev_at	54
 	ev_note	0, 67, 55, 18, 0, 17
-	ev_end	# stale tail of an earlier write; same bytes as custom Slot18 +0x6a00..+0x6d84
-	STREAM_HEADER 1, 0x226
+	ev_end
+	STREAM_HEADER 1, 0x226	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x43d7..+0x475a
 	ev_beat
 	ev_note 0, 72, 97, 10, 0, 17
 	ev_note 0, 79, 103, 13, 0, 17
@@ -3151,36 +3122,36 @@
 	STREAM_HEADER 3, 0x6e
 	ev_beat
 	ev_at 1
-	.byte 0x90, 0x30, 0x5b, 0x10, 0x00	# bytes 0..4 of `ev_note`
-	.byte 0x11	# stale tail of an earlier write; same bytes as 01custm5 Slot06 +0x4b7f..+0x4be6; bytes 5..5 of `ev_note`
-	ev_at 48
-	ev_note 0, 53, 100, 11, 0, 17
+	# stale events of an earlier write, at an event boundary of the donor record: 01ctmini Slot07 +0x475a..
+	ev_note	0, 48, 91, 16, 0, 17
+	ev_at	48
+	ev_note	0, 53, 100, 11, 0, 17
 	ev_beat
-	ev_at 1
-	ev_note 0, 58, 107, 12, 0, 17
-	ev_at 49
-	ev_note 0, 63, 105, 9, 0, 17
+	ev_at	1
+	ev_note	0, 58, 107, 12, 0, 17
+	ev_at	49
+	ev_note	0, 63, 105, 9, 0, 17
 	ev_beat
-	ev_note 0, 68, 105, 12, 0, 17
-	ev_at 49
-	ev_note 0, 73, 98, 10, 0, 17
+	ev_note	0, 68, 105, 12, 0, 17
+	ev_at	49
+	ev_note	0, 73, 98, 10, 0, 17
 	ev_beat
-	ev_at 2
-	ev_note 0, 78, 98, 9, 0, 17
-	ev_at 49
-	ev_note 0, 83, 107, 11, 0, 17
-	ev_at 54
-	ev_note 0, 79, 93, 13, 0, 17
-	ev_at 55
-	ev_note 0, 67, 92, 12, 0, 17
-	ev_note 0, 77, 93, 12, 0, 17
+	ev_at	2
+	ev_note	0, 78, 98, 9, 0, 17
+	ev_at	49
+	ev_note	0, 83, 107, 11, 0, 17
+	ev_at	54
+	ev_note	0, 79, 93, 13, 0, 17
+	ev_at	55
+	ev_note	0, 67, 92, 12, 0, 17
+	ev_note	0, 77, 93, 12, 0, 17
 	ev_beat
-	ev_at 2
-	ev_note 0, 84, 111, 9, 0, 17
-	ev_at 5
-	ev_note 0, 60, 93, 18, 0, 17
-	ev_note 0, 76, 102, 18, 0, 17
-	ev_note 0, 79, 107, 18, 0, 17
+	ev_at	2
+	ev_note	0, 84, 111, 9, 0, 17
+	ev_at	5
+	ev_note	0, 60, 93, 18, 0, 17
+	ev_note	0, 76, 102, 18, 0, 17
+	ev_note	0, 79, 107, 18, 0, 17
 	ev_beat
 	ev_beat
 	ev_beat

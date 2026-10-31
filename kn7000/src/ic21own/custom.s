@@ -109,23 +109,15 @@ CustDir:	CUSTDIR_SIGNATURE
 .include "src/ic21own/custom/Slot04_Residue.inc"
 	.space 0x4040, 0xff	# erased flash
 
-# ---- block 22: free, holding part of an older record (its start was overwritten)
-.include "src/ic21own/custom/Block22_Residue.inc"
+.include "src/ic21own/custom/Stale22.inc"
 	.space 0x1891, 0xff	# erased flash
 	.space 0x8000, 0xff	# block 23: free, erased
 
-# ---- block 24: free, holding part of an older record (its start was overwritten)
-.include "src/ic21own/custom/Block24_Residue.inc"
-
-# ---- block 25: free, holding part of an older record (its start was overwritten)
-.include "src/ic21own/custom/Block25_Residue.inc"
+.include "src/ic21own/custom/Stale24.inc"
+.include "src/ic21own/custom/Stale24_Residue.inc"
 	.space 0x6099, 0xff	# erased flash
 
-# ---- block 26: free, holding part of an older record (its start was overwritten)
-.include "src/ic21own/custom/Block26_Residue.inc"
-
-# ---- block 27: free, holding part of an older record (its start was overwritten)
-.include "src/ic21own/custom/Block27_Residue.inc"
+.include "src/ic21own/custom/Stale26.inc"
 	.space 0x70e9, 0xff	# erased flash
 	.space 0x8000, 0xff	# block 28: free, erased
 	.space 0x8000, 0xff	# block 29: free, erased

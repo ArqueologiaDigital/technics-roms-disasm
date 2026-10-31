@@ -3,165 +3,160 @@
 	.byte 0x00, 0x00, 0x20, 0x40, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x522..+0x560; bytes 2..23 of `PART_SETUP`
 	.space 10
 	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11	# bytes 0..15 of `TCMP_VAR`
-	.space 5
-	.byte 0x03, 0x03	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x720..+0x5318; bytes 16..31 of `TCMP_VAR`
-	.space 4
-	.byte 0x16, 0xa5, 0xff, 0x04
-	.space 6
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x1b2a, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x1c21, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x1d08, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x2157, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x227a, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x23e1, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x2798, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x28c0, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x2a22, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x2d23, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x02, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x3024, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x35a4, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x02, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 5, 3, 0x3b24, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 5, 3, 0x4027, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x452a, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x38, 0x50, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x4a58, 0xff, 0x04
-	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	STREAM_HEADER 0, 0x284
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x16a5, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x1b2a, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x1c21, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x1d08, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x2157, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x227a, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x23e1, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x2798, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 0, 3, 0x28c0, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x2a22, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x2d23, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x02, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x3024, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x35a4, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x02, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 5, 3, 0x3b24, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 5, 3, 0x4027, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x01, 0x20, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x00, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x452a, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x38, 0x50, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	TCMP_VAR 0x00, 0x06, 0x00, 0x10, 0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00, 3, 3, 0x4a58, 0xff, 0x04	# stale `TCMP_VAR` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 109, 0x01, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x0b, 109, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1b, 0x01, 0x20, 64, 40, 0, 11, 12, 28, 64, 108, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x3d, 0x00, 0x20, 64, 40, 0, 116, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 98, 0x1c, 0x01, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	PART_SETUP 0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x560..
+	STREAM_HEADER 0, 0x284	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x15f0..+0x5318
 	ev_beat
 	ev_at 2
 	ev_note 0, 36, 73, 103, 0, 0
@@ -4048,73 +4043,45 @@
 	ev_at 14
 	ev_bend 2, 0, 64
 	ev_end
-	.ascii "TPAD"	# bytes 0..17 of `TPAD_HEADER`
+	.ascii "TPAD"	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x5306..; bytes 0..17 of `TPAD_HEADER`
 	.space 13
 	.byte 0x0c
 	.byte 0xcd, 0x00, 0x0c, 0xcd, 0x00, 0x01, 0x00, 0x60, 0x10, 0x06, 0x10, 0x02, 0x00, 0x00, 0x00, 0x0f	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x6b37..+0x6ba1; bytes 18..111 of `TPAD_HEADER`
 	.space 14
 	.ascii "                                                                "
-	.ascii "  User Bank "	# bytes 0..11 of `TPAD_BANK`
+	.ascii "  User Bank "	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x6b95..; bytes 0..11 of `TPAD_BANK`
 	.ascii "1   "	# stale tail of an earlier write; same bytes as 01custm1 Slot10 +0x1748..+0x176e; bytes 12..47 of `TPAD_BANK`
 	.byte 0x00, 0x00, 0x20, 0x00, 0x01, 0x20, 0x00, 0x02, 0x20, 0x00, 0x03, 0x20, 0x00, 0x04, 0x20, 0x00
 	.byte 0x05, 0x20
 	.space 14
-	.byte 0x20, 0x20	# bytes 0..1 of `TPAD_PAD`
-	.ascii "Piano Minuet  "	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x6bc7..+0x6bf1; bytes 2..39 of `TPAD_PAD`
-	.space 4
-	.byte 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x00, 0x02, 0xe0
+	TPAD_PAD "  Piano Minuet  ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x2e0	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	.space 8	# stale tail of an earlier write; same bytes as 01custm1 Slot10 +0x176e..
+	TPAD_PAD "BaroqueInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x03, 0x00, 0x00, 0x5b5	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	PART_SETUP 0x06, 127, 0x10, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	.space 8	# stale tail of an earlier write; same bytes as 01custm1 Slot10 +0x176e..
+	TPAD_PAD "   Grandiose    ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x03, 0x00, 0x00, 0x7df	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Slot10 +0x176e..
+	.space 8	# stale tail of an earlier write; same bytes as 01custm1 Slot10 +0x176e..
+	TPAD_PAD "Pizz Ending     ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x92d	# stale first 0x28 bytes of a pad record of an earlier write (name, settings, stream offset, zeros)
+	PART_SETUP 0x06, 127, 0x63, 0x00, 0x30, 127, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Stale30 +0xfcea..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x865f..+0x86ab
 	.space 8
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0x4d392, 0x4d393	# stale bytes of an earlier write
-	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01custm1 Stale30 +0xfcef..+0xfd4c; bytes 5..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	TPAD_PAD "BaroqueInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x03, 0x00, 0x00, 0x5b5
-	.byte 0x06, 0x7f	# bytes 0..1 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0x4d3f0, 0x4d3f3	# stale bytes of an earlier write
-	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01custm1 Stale20 +0x726c..+0x72a2; bytes 5..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	.byte 0x20, 0x20, 0x20	# bytes 0..2 of `TPAD_PAD`
-	.ascii "Grandiose    "	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x6c88..+0x6cb1; bytes 3..39 of `TPAD_PAD`
-	.space 4
-	.byte 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x03, 0x00, 0x00, 0x00, 0x07, 0xdf
-	.space 8
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0x4d452, 0x4d453	# stale bytes of an earlier write
-	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01custm1 Stale30 +0xfcef..+0xfd22; bytes 5..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0x4d486, 0x4d4b4	# stale bytes of an earlier write
-	.byte 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01custm1 Stale30 +0xfcf0..+0xfd22; bytes 6..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x06, 0x00, 0x00, 0x99f	# stale tail of an earlier write; same bytes as 02custm6 Slot03 +0xac40..+0xac6c
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	.byte 0x30, 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot16 +0x8228..+0x825c; bytes 4..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x0e, 0x00, 0x00, 0xb2f	# stale tail of an earlier write; same bytes as 02custm6 Slot03 +0xaca0..+0xaccc
-	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	.byte 0x30, 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot16 +0x8228..+0x825e; bytes 4..23 of `PART_SETUP`
-	.space 10
-	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	.byte 0x00, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0x4d5a8, 0x4d5aa	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
-	ev_beat
-	ev_at	1
+	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x06, 0x00, 0x00, 0x99f
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Stale24 +0x86ab..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	.space 8	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	TPAD_PAD "ClassicInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x0e, 0x00, 0x00, 0xb2f	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale `PART_SETUP` of an earlier write, other values than the donor's line at the same place: 01custm1 Stale24 +0x86ab..
+	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	.space 8	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	STREAM_HEADER 0, 0x2d1	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm1 Stale24 +0x86ab..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm1 Stale24 +0x86ab..
 	ev_note	0, 79, 73, 37, 0, 17
 	ev_at	3
 	ev_note	0, 60, 82, 41, 0, 17
@@ -4337,8 +4304,8 @@
 	ev_note	0, 64, 67, 12, 0, 17
 	ev_at	54
 	ev_note	0, 67, 55, 18, 0, 17
-	ev_end	# stale tail of an earlier write; same bytes as 01custm1 Stale30 +0x101d6..+0x1055a
-	STREAM_HEADER 1, 0x226
+	ev_end
+	STREAM_HEADER 1, 0x226	# stale tail of an earlier write; same bytes as 01custm1 Stale30 +0x101d7..+0x1055a
 	ev_beat
 	ev_note 0, 72, 97, 10, 0, 17
 	ev_note 0, 79, 103, 13, 0, 17
@@ -4600,36 +4567,36 @@
 	STREAM_HEADER 3, 0x6e
 	ev_beat
 	ev_at 1
-	.byte 0x90, 0x30, 0x5b, 0x10, 0x00	# bytes 0..4 of `ev_note`
-	.byte 0x11	# stale tail of an earlier write; same bytes as 01custm5 Slot06 +0x4b7f..+0x4be6; bytes 5..5 of `ev_note`
-	ev_at 48
-	ev_note 0, 53, 100, 11, 0, 17
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm1 Stale30 +0x1055a..
+	ev_note	0, 48, 91, 16, 0, 17
+	ev_at	48
+	ev_note	0, 53, 100, 11, 0, 17
 	ev_beat
-	ev_at 1
-	ev_note 0, 58, 107, 12, 0, 17
-	ev_at 49
-	ev_note 0, 63, 105, 9, 0, 17
+	ev_at	1
+	ev_note	0, 58, 107, 12, 0, 17
+	ev_at	49
+	ev_note	0, 63, 105, 9, 0, 17
 	ev_beat
-	ev_note 0, 68, 105, 12, 0, 17
-	ev_at 49
-	ev_note 0, 73, 98, 10, 0, 17
+	ev_note	0, 68, 105, 12, 0, 17
+	ev_at	49
+	ev_note	0, 73, 98, 10, 0, 17
 	ev_beat
-	ev_at 2
-	ev_note 0, 78, 98, 9, 0, 17
-	ev_at 49
-	ev_note 0, 83, 107, 11, 0, 17
-	ev_at 54
-	ev_note 0, 79, 93, 13, 0, 17
-	ev_at 55
-	ev_note 0, 67, 92, 12, 0, 17
-	ev_note 0, 77, 93, 12, 0, 17
+	ev_at	2
+	ev_note	0, 78, 98, 9, 0, 17
+	ev_at	49
+	ev_note	0, 83, 107, 11, 0, 17
+	ev_at	54
+	ev_note	0, 79, 93, 13, 0, 17
+	ev_at	55
+	ev_note	0, 67, 92, 12, 0, 17
+	ev_note	0, 77, 93, 12, 0, 17
 	ev_beat
-	ev_at 2
-	ev_note 0, 84, 111, 9, 0, 17
-	ev_at 5
-	ev_note 0, 60, 93, 18, 0, 17
-	ev_note 0, 76, 102, 18, 0, 17
-	ev_note 0, 79, 107, 18, 0, 17
+	ev_at	2
+	ev_note	0, 84, 111, 9, 0, 17
+	ev_at	5
+	ev_note	0, 60, 93, 18, 0, 17
+	ev_note	0, 76, 102, 18, 0, 17
+	ev_note	0, 79, 107, 18, 0, 17
 	ev_beat
 	ev_beat
 	ev_beat

@@ -886,334 +886,333 @@
 	ev_note 3, 67, 95, 8, 0, 17
 	ev_note 3, 72, 89, 8, 0, 17
 	ev_end
-	.byte 0x06, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x53184, 0x53186	# stale bytes of an earlier write
-	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x42b5..+0x4ed3
-	ev_note 2, 64, 78, 72, 0, 17
-	ev_note 2, 67, 76, 71, 0, 17
-	ev_note 2, 60, 70, 72, 0, 17
-	ev_note 1, 36, 93, 48, 1, 16
-	ev_note 5, 48, 89, 121, 0, 17
-	ev_note 5, 48, 93, 1, 1, 17
-	ev_note 3, 72, 77, 8, 0, 17
-	ev_note 3, 76, 72, 7, 0, 17
-	ev_note 3, 72, 53, 5, 0, 17
-	ev_at 12
-	ev_note 3, 76, 58, 14, 0, 17
-	ev_at 15
-	ev_note 3, 72, 65, 8, 0, 17
-	ev_at 33
-	ev_note 3, 72, 63, 11, 0, 17
-	ev_at 34
-	ev_note 3, 76, 64, 9, 0, 17
-	ev_at 35
-	ev_note 3, 72, 71, 12, 0, 17
-	ev_note 3, 76, 68, 11, 0, 17
-	ev_at 53
-	ev_note 3, 76, 68, 9, 0, 17
-	ev_note 3, 72, 58, 9, 0, 17
-	ev_at 54
-	ev_note 3, 76, 70, 11, 0, 17
-	ev_note 3, 72, 63, 10, 0, 17
-	ev_at 70
-	ev_note 3, 76, 56, 8, 0, 17
-	ev_note 3, 72, 60, 12, 0, 17
-	ev_at 75
-	ev_note 3, 72, 71, 11, 0, 17
-	ev_at 76
-	ev_note 3, 76, 66, 10, 0, 17
-	ev_at 89
-	ev_note 3, 72, 60, 10, 0, 17
-	ev_at 91
-	ev_note 3, 76, 67, 6, 0, 17
-	ev_at 93
-	ev_note 4, 76, 73, 12, 0, 17
-	ev_at 95
-	ev_note 4, 72, 67, 11, 0, 17
-	ev_note 4, 79, 68, 10, 0, 17
-	ev_beat
-	ev_note 2, 64, 65, 15, 0, 17
-	ev_note 2, 67, 70, 16, 0, 17
-	ev_note 2, 60, 63, 16, 0, 17
-	ev_note 3, 76, 68, 11, 0, 17
-	ev_at 1
-	ev_note 3, 72, 66, 9, 0, 17
-	ev_at 2
-	ev_note 6, 76, 90, 12, 0, 17
-	ev_at 4
-	ev_note 6, 72, 70, 9, 0, 17
-	ev_at 11
-	ev_note 3, 72, 74, 10, 0, 17
-	ev_note 3, 76, 73, 10, 0, 17
-	ev_at 22
-	ev_note 3, 76, 70, 11, 0, 17
-	ev_at 23
-	ev_note 3, 72, 75, 10, 0, 17
-	ev_at 31
-	ev_note 3, 72, 61, 10, 0, 17
-	ev_at 44
-	ev_note 3, 76, 65, 11, 0, 17
-	ev_at 46
-	ev_note 4, 76, 63, 9, 0, 17
-	ev_at 46
-	ev_note 3, 72, 69, 9, 0, 17
-	ev_at 47
-	ev_note 3, 72, 67, 10, 0, 17
-	ev_note 3, 76, 75, 9, 0, 17
-	ev_at 48
-	ev_note 2, 64, 73, 17, 0, 17
-	ev_note 2, 60, 64, 17, 0, 17
-	ev_note 2, 67, 70, 13, 0, 17
-	ev_at 48
-	ev_note 6, 72, 86, 15, 0, 17
-	ev_at 49
-	ev_note 4, 79, 50, 8, 0, 17
-	ev_at 49
-	ev_note 6, 76, 88, 10, 0, 17
-	ev_at 51
-	ev_note 5, 48, 91, 34, 0, 17
-	ev_at 65
-	ev_note 3, 76, 61, 10, 0, 17
-	ev_note 3, 72, 64, 11, 0, 17
-	ev_at 69
-	ev_note 3, 72, 71, 10, 0, 17
-	ev_at 70
-	ev_note 3, 76, 67, 6, 0, 17
-	ev_at 85
-	ev_note 3, 76, 76, 10, 0, 17
-	ev_note 3, 72, 72, 11, 0, 17
-	ev_at 87
-	ev_note 3, 76, 60, 8, 0, 17
-	ev_at 90
-	ev_note 3, 72, 52, 5, 0, 17
-	ev_at 94
-	ev_note 4, 72, 80, 10, 0, 17
-	ev_note 4, 76, 77, 8, 0, 17
-	ev_note 4, 79, 71, 9, 0, 17
-	ev_beat
-	ev_note 2, 64, 72, 72, 0, 17
-	ev_note 2, 60, 65, 72, 0, 17
-	ev_note 2, 67, 71, 68, 0, 17
-	ev_note 1, 40, 93, 98, 0, 16
-	ev_note 5, 43, 90, 72, 0, 17
-	ev_at 3
-	ev_note 6, 76, 91, 68, 0, 17
-	ev_note 6, 72, 85, 69, 0, 17
-	ev_at 8
-	ev_note 3, 72, 78, 12, 0, 17
-	ev_at 9
-	ev_note 3, 76, 78, 8, 0, 17
-	ev_note 3, 76, 66, 10, 0, 17
-	ev_at 11
-	ev_note 3, 72, 61, 9, 0, 17
-	ev_at 28
-	ev_note 3, 72, 76, 12, 0, 17
-	ev_at 29
-	ev_note 3, 76, 76, 8, 0, 17
-	ev_at 32
-	ev_note 3, 76, 49, 6, 0, 17
-	ev_at 33
-	ev_note 3, 72, 53, 7, 0, 17
-	ev_at 48
-	ev_note 3, 76, 78, 8, 0, 17
-	ev_note 3, 72, 70, 10, 0, 17
-	ev_at 66
-	ev_note 3, 72, 74, 11, 0, 17
-	ev_at 68
-	ev_note 3, 76, 76, 7, 0, 17
-	ev_at 87
-	ev_note 3, 76, 73, 8, 0, 17
-	ev_at 89
-	ev_note 3, 72, 60, 6, 0, 17
-	ev_at 92
-	ev_note 4, 76, 77, 11, 0, 17
-	ev_at 93
-	ev_note 4, 72, 76, 12, 0, 17
-	ev_at 94
-	ev_note 4, 79, 76, 10, 0, 17
-	ev_beat
-	ev_note 2, 64, 70, 68, 0, 17
-	ev_note 2, 60, 65, 65, 0, 17
-	ev_note 2, 67, 75, 65, 0, 17
-	ev_note 1, 43, 95, 86, 0, 16
-	ev_at 3
-	ev_note 5, 43, 97, 79, 0, 17
-	ev_at 6
-	ev_note 6, 72, 83, 57, 0, 17
-	ev_note 6, 79, 96, 59, 0, 17
-	ev_at 9
-	ev_note 3, 72, 73, 9, 0, 17
-	ev_note 3, 76, 78, 8, 0, 17
-	ev_at 28
-	ev_note 3, 72, 67, 9, 0, 17
-	ev_at 29
-	ev_note 3, 76, 65, 7, 0, 17
-	ev_at 43
-	ev_note 3, 76, 74, 12, 0, 17
-	ev_note 3, 72, 78, 11, 0, 17
-	ev_at 86
-	ev_note 3, 79, 76, 7, 0, 17
-	ev_note 3, 76, 74, 7, 0, 17
-	ev_at 93
-	ev_note 4, 76, 72, 11, 0, 17
-	ev_at 95
-	ev_note 4, 72, 67, 10, 0, 17
-	ev_beat
-	ev_note 2, 67, 78, 73, 0, 17
-	ev_note 2, 60, 74, 73, 0, 17
-	ev_note 2, 64, 66, 73, 0, 17
-	ev_note 1, 36, 96, 55, 1, 16
-	ev_at 1
-	ev_note 6, 79, 91, 79, 0, 17
-	ev_at 2
-	ev_note 5, 48, 90, 0, 1, 17
-	ev_note 6, 72, 75, 66, 0, 17
-	ev_at 3
-	ev_note 4, 76, 84, 9, 0, 17
-	ev_at 4
-	ev_note 4, 72, 77, 8, 0, 17
-	ev_at 5
-	ev_note 4, 79, 70, 7, 0, 17
-	ev_at 11
-	ev_note 3, 79, 67, 7, 0, 17
-	ev_at 12
-	ev_note 3, 76, 63, 7, 0, 17
-	ev_at 26
-	ev_note 3, 76, 70, 11, 0, 17
-	ev_note 3, 79, 72, 9, 0, 17
-	ev_at 47
-	ev_note 3, 79, 75, 10, 0, 17
-	ev_at 48
-	ev_note 3, 76, 70, 10, 0, 17
-	ev_at 68
-	ev_note 3, 79, 76, 10, 0, 17
-	ev_note 3, 76, 71, 11, 0, 17
-	ev_at 88
-	ev_note 3, 76, 70, 12, 0, 17
-	ev_at 89
-	ev_note 3, 79, 74, 9, 0, 17
-	ev_at 91
-	ev_note 4, 76, 76, 10, 0, 17
-	ev_at 93
-	ev_note 4, 72, 72, 8, 0, 17
-	ev_note 4, 79, 65, 7, 0, 17
-	ev_beat
-	ev_note 2, 64, 71, 16, 0, 17
-	ev_note 2, 60, 68, 15, 0, 17
-	ev_note 2, 67, 70, 14, 0, 17
-	ev_at 3
-	ev_note 6, 76, 86, 19, 0, 17
-	ev_at 4
-	ev_note 6, 72, 84, 19, 0, 17
-	ev_at 13
-	ev_note 3, 76, 69, 12, 0, 17
-	ev_at 16
-	ev_note 3, 79, 67, 7, 0, 17
-	ev_at 34
-	ev_note 3, 76, 64, 11, 0, 17
-	ev_at 35
-	ev_note 3, 79, 66, 9, 0, 17
-	ev_at 44
-	ev_note 4, 72, 83, 11, 0, 17
-	ev_note 4, 76, 86, 8, 0, 17
-	ev_note 4, 79, 76, 11, 0, 17
-	ev_at 47
-	ev_note 5, 48, 89, 50, 0, 17
-	ev_at 48
-	ev_note 2, 64, 61, 13, 0, 17
-	ev_note 2, 67, 66, 15, 0, 17
-	ev_note 2, 60, 57, 16, 0, 17
-	ev_at 51
-	ev_note 6, 76, 83, 15, 0, 17
-	ev_at 52
-	ev_note 6, 72, 81, 16, 0, 17
-	ev_at 54
-	ev_note 3, 79, 70, 11, 0, 17
-	ev_note 3, 76, 68, 11, 0, 17
-	ev_at 76
-	ev_note 3, 76, 73, 12, 0, 17
-	ev_at 77
-	ev_note 3, 79, 73, 10, 0, 17
-	ev_at 94
-	ev_note 4, 76, 81, 13, 0, 17
-	ev_note 4, 72, 79, 15, 0, 17
-	ev_note 4, 79, 71, 15, 0, 17
-	ev_beat
-	ev_note 2, 67, 76, 62, 0, 17
-	ev_note 2, 60, 71, 63, 0, 17
-	ev_note 2, 64, 76, 64, 0, 17
-	ev_note 1, 40, 91, 91, 0, 16
-	ev_at 1
-	ev_note 5, 43, 91, 77, 0, 17
-	ev_at 1
-	ev_note 3, 79, 65, 9, 0, 17
-	ev_at 2
-	ev_note 3, 76, 56, 8, 0, 17
-	ev_at 6
-	ev_note 6, 72, 84, 60, 0, 17
-	ev_at 7
-	ev_note 6, 76, 91, 12, 0, 17
-	ev_at 20
-	ev_note 3, 79, 71, 11, 0, 17
-	ev_note 3, 76, 69, 11, 0, 17
-	ev_at 36
-	ev_note 6, 76, 59, 32, 0, 17
-	ev_at 41
-	ev_note 3, 76, 63, 11, 0, 17
-	ev_note 3, 79, 61, 10, 0, 17
-	ev_at 77
-	ev_note 3, 77, 73, 6, 0, 17
-	ev_at 79
-	ev_note 3, 74, 65, 5, 0, 17
-	ev_at 92
-	ev_note 4, 76, 79, 12, 0, 17
-	ev_at 93
-	ev_note 4, 72, 70, 11, 0, 17
-	ev_at 94
-	ev_note 4, 79, 69, 12, 0, 17
-	ev_at 94
-	ev_note 3, 74, 61, 11, 0, 17
-	ev_beat
-	ev_note 2, 60, 79, 45, 0, 17
-	ev_note 2, 64, 76, 46, 0, 17
-	ev_note 2, 67, 78, 44, 0, 17
-	ev_note 1, 43, 99, 84, 0, 16
-	ev_at 1
-	ev_note 6, 72, 72, 17, 0, 17
-	ev_note 6, 79, 83, 57, 0, 17
-	ev_at 2
-	ev_note 6, 76, 79, 11, 0, 17
-	ev_at 3
-	ev_note 5, 40, 97, 80, 0, 17
-	ev_at 15
-	ev_note 3, 74, 68, 12, 0, 17
-	ev_at 16
-	ev_note 3, 77, 76, 9, 0, 17
-	ev_at 32
-	ev_note 3, 77, 78, 12, 0, 17
-	ev_note 3, 74, 70, 12, 0, 17
-	ev_at 37
-	ev_note 6, 76, 50, 18, 0, 17
-	ev_note 6, 72, 36, 13, 0, 17
-	ev_at 72
-	ev_note 3, 76, 66, 9, 0, 17
-	ev_at 74
-	ev_note 3, 72, 64, 8, 0, 17
-	ev_at 93
-	ev_note 4, 76, 73, 12, 0, 17
-	ev_at 94
-	ev_note 4, 72, 70, 14, 0, 17
-	ev_at 94
-	ev_note 6, 76, 90, 23, 0, 17
-	ev_note 6, 72, 81, 21, 0, 17
-	ev_note 6, 79, 79, 25, 0, 17
-	ev_at 94
-	ev_note 3, 76, 65, 11, 0, 17
-	ev_at 95
-	ev_note 4, 79, 69, 12, 0, 17
+	STREAM_HEADER 6, 0x513	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 78, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 76, 71, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 70, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 1, 36, 93, 48, 1, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 48, 89, 121, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 48, 93, 1, 1, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 77, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 72, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 53, 5, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 12	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 58, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 15	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 65, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 33	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 63, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 34	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 64, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 35	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 71, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 68, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 53	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 68, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 58, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 54	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 63, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 70	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 56, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 60, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 75	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 71, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 76	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 66, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 89	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 60, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 91	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 67, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 67, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 68, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 65, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 70, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 63, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 68, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 66, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 90, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 70, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 74, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 73, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 22	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 23	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 75, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 31	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 61, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 44	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 65, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 63, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 69, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 47	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 67, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 75, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 73, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 64, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 70, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 86, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 50, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 88, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 51	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 48, 91, 34, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 65	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 61, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 64, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 69	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 71, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 70	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 67, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 85	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 72, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 87	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 60, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 90	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 52, 5, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 80, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 77, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 71, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 72, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 65, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 71, 68, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 1, 40, 93, 98, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 43, 90, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 91, 68, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 85, 69, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 8	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 78, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 9	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 78, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 66, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 61, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 76, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 29	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 76, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 32	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 49, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 33	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 53, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 78, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 70, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 66	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 74, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 68	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 76, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 87	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 73, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 89	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 60, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 92	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 77, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 76, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 70, 68, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 65, 65, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 75, 65, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 1, 43, 95, 86, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 43, 97, 79, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 6	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 83, 57, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 79, 96, 59, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 9	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 73, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 78, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 67, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 29	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 65, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 43	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 74, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 78, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 86	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 76, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 74, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 72, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 67, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 78, 73, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 74, 73, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 66, 73, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 1, 36, 96, 55, 1, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 79, 91, 79, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 48, 90, 0, 1, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 75, 66, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 84, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 77, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 5	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 70, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 67, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 12	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 63, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 26	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 72, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 47	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 75, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 70, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 68	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 71, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 88	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 70, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 89	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 74, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 91	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 72, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 65, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 71, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 68, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 70, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 86, 19, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 84, 19, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 13	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 69, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 67, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 34	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 64, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 35	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 66, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 44	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 83, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 86, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 47	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 48, 89, 50, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 61, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 66, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 57, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 51	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 83, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 52	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 81, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 54	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 68, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 76	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 77	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 73, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 81, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 79, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 71, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 76, 62, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 71, 63, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 76, 64, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 1, 40, 91, 91, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 43, 91, 77, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 65, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 56, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 6	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 84, 60, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 7	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 91, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 20	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 71, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 69, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 36	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 59, 32, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 41	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 63, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 79, 61, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 77	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 77, 73, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 79	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 74, 65, 5, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 92	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 79, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 69, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 74, 61, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 60, 79, 45, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 64, 76, 46, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 2, 67, 78, 44, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 1, 43, 99, 84, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 72, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 79, 83, 57, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 79, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 5, 40, 97, 80, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 15	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 74, 68, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 77, 76, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 32	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 77, 78, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 74, 70, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 37	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 50, 18, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 36, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 72	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 66, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 74	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 72, 64, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 76, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 72, 70, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 76, 90, 23, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 72, 81, 21, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 6, 79, 79, 25, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 3, 76, 65, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	ev_note 4, 79, 69, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3da1..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot07 +0x3da1..
 	ev_end
-	STREAM_HEADER 7, 0x3a0
+	STREAM_HEADER 7, 0x3a0	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x47c8..+0x4ed3
 	ev_beat
 	ev_note 2, 64, 78, 72, 0, 17
 	ev_note 2, 67, 76, 71, 0, 17
@@ -1663,437 +1662,434 @@
 	ev_at 56
 	ev_note 6, 74, 79, 10, 0, 17
 	ev_end
-	.byte 0x09, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x53da4, 0x53da6	# stale bytes of an earlier write
-	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x20e5..+0x210c
-	ev_note 2, 64, 78, 72, 0, 17
-	ev_note 2, 67, 76, 71, 0, 17
-	ev_note 2, 60, 70, 72, 0, 17
-	ev_note 3, 64, 70, 8, 0, 17
-	ev_note 3, 60, 69, 17, 0, 17
-	ev_note 3, 67, 65, 8, 0, 17
-	.byte 0x91, 0x24	# bytes 0..1 of `ev_note`
-	.byte 0x65, 0x0c, 0x01, 0x10	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4efc..+0x556d; bytes 2..5 of `ev_note`
-	ev_note 5, 48, 90, 107, 0, 17
-	ev_at 11
-	ev_note 3, 79, 75, 27, 0, 17
-	ev_at 13
-	ev_note 3, 76, 65, 7, 0, 17
-	ev_at 18
-	ev_note 3, 64, 78, 29, 0, 17
-	ev_at 19
-	ev_note 3, 67, 78, 11, 0, 17
-	ev_at 27
-	ev_note 3, 76, 83, 10, 0, 17
-	ev_at 28
-	ev_note 3, 76, 69, 11, 0, 17
-	ev_at 29
-	ev_note 3, 72, 58, 14, 0, 17
-	ev_at 33
-	ev_note 3, 60, 56, 41, 0, 17
-	ev_at 36
-	ev_note 3, 67, 61, 11, 0, 17
-	ev_at 47
-	ev_note 3, 76, 78, 11, 0, 17
-	ev_note 3, 79, 81, 10, 0, 17
-	ev_at 48
-	ev_note 3, 72, 70, 13, 0, 17
-	ev_at 49
-	ev_note 3, 76, 78, 12, 0, 17
-	ev_at 56
-	ev_note 3, 67, 72, 10, 0, 17
-	ev_note 3, 64, 68, 12, 0, 17
-	ev_at 64
-	ev_note 3, 79, 85, 14, 0, 17
-	ev_at 66
-	ev_note 3, 76, 73, 9, 0, 17
-	ev_at 70
-	ev_note 3, 72, 65, 11, 0, 17
-	ev_at 71
-	ev_note 3, 76, 63, 9, 0, 17
-	ev_at 73
-	ev_note 3, 64, 63, 11, 0, 17
-	ev_at 74
-	ev_note 3, 67, 73, 9, 0, 17
-	ev_at 80
-	ev_note 3, 60, 47, 21, 0, 17
-	ev_at 83
-	ev_note 3, 79, 83, 13, 0, 17
-	ev_note 3, 76, 81, 12, 0, 17
-	ev_at 91
-	ev_note 3, 72, 79, 31, 0, 17
-	ev_at 93
-	ev_note 4, 76, 73, 12, 0, 17
-	ev_at 95
-	ev_note 4, 72, 67, 11, 0, 17
-	ev_note 4, 79, 68, 10, 0, 17
-	ev_beat
-	ev_note 2, 64, 65, 15, 0, 17
-	ev_note 2, 67, 70, 16, 0, 17
-	ev_note 2, 60, 63, 16, 0, 17
-	ev_at 2
-	ev_note 3, 64, 75, 22, 0, 17
-	ev_at 2
-	ev_note 6, 76, 90, 12, 0, 17
-	ev_at 3
-	ev_note 3, 67, 72, 22, 0, 17
-	ev_at 4
-	ev_note 3, 76, 79, 13, 0, 17
-	ev_note 3, 79, 80, 16, 0, 17
-	ev_at 4
-	ev_note 6, 72, 70, 9, 0, 17
-	ev_at 13
-	ev_note 3, 76, 76, 12, 0, 17
-	ev_at 28
-	ev_note 3, 60, 76, 46, 0, 17
-	ev_at 33
-	ev_note 3, 72, 73, 32, 0, 17
-	ev_at 34
-	ev_note 3, 76, 76, 13, 0, 17
-	ev_at 38
-	ev_note 3, 74, 87, 10, 0, 17
-	ev_at 40
-	ev_note 3, 77, 75, 8, 0, 17
-	ev_at 46
-	ev_note 4, 76, 63, 9, 0, 17
-	ev_at 48
-	ev_note 2, 64, 73, 17, 0, 17
-	ev_note 2, 60, 64, 17, 0, 17
-	ev_note 2, 67, 70, 13, 0, 17
-	ev_at 48
-	ev_note 6, 72, 86, 15, 0, 17
-	ev_at 48
-	ev_note 1, 40, 98, 36, 0, 16
-	ev_note 5, 52, 93, 24, 0, 17
-	ev_at 49
-	ev_note 4, 79, 50, 8, 0, 17
-	ev_at 49
-	ev_note 6, 76, 88, 10, 0, 17
-	ev_at 52
-	ev_note 3, 76, 64, 14, 0, 17
-	ev_at 53
-	ev_note 3, 77, 70, 13, 0, 17
-	ev_at 56
-	ev_note 3, 74, 61, 9, 0, 17
-	ev_at 58
-	ev_note 3, 64, 61, 15, 0, 17
-	ev_at 59
-	ev_note 3, 67, 75, 12, 0, 17
-	ev_at 78
-	ev_note 3, 76, 63, 9, 0, 17
-	ev_note 3, 72, 63, 49, 0, 17
-	ev_at 86
-	ev_note 3, 67, 71, 12, 0, 17
-	ev_at 87
-	ev_note 3, 64, 66, 11, 0, 17
-	ev_at 89
-	ev_note 3, 72, 76, 9, 0, 17
-	ev_at 92
-	ev_note 3, 76, 60, 5, 0, 17
-	ev_at 94
-	ev_note 4, 72, 80, 10, 0, 17
-	ev_note 4, 76, 77, 8, 0, 17
-	ev_note 4, 79, 71, 9, 0, 17
-	ev_beat
-	ev_note 2, 64, 72, 72, 0, 17
-	ev_note 2, 60, 65, 72, 0, 17
-	ev_note 2, 67, 71, 68, 0, 17
-	ev_note 1, 43, 103, 92, 0, 16
-	ev_note 5, 55, 90, 70, 0, 17
-	ev_at 3
-	ev_note 6, 76, 91, 68, 0, 17
-	ev_note 6, 72, 85, 69, 0, 17
-	ev_at 8
-	ev_note 3, 76, 45, 23, 0, 17
-	ev_at 9
-	ev_note 3, 60, 71, 43, 0, 17
-	ev_at 13
-	ev_note 3, 64, 63, 9, 0, 17
-	ev_at 14
-	ev_note 3, 67, 60, 6, 0, 17
-	ev_at 26
-	ev_note 3, 72, 61, 11, 0, 17
-	ev_at 28
-	ev_note 3, 76, 83, 9, 0, 17
-	ev_at 33
-	ev_note 3, 67, 69, 51, 0, 17
-	ev_at 34
-	ev_note 3, 64, 63, 12, 0, 17
-	ev_at 42
-	ev_note 3, 76, 67, 12, 0, 17
-	ev_note 3, 72, 64, 12, 0, 17
-	ev_at 47
-	ev_note 3, 76, 86, 12, 0, 17
-	ev_note 3, 72, 83, 11, 0, 17
-	ev_at 51
-	ev_note 3, 64, 63, 32, 0, 17
-	ev_at 63
-	ev_note 3, 72, 60, 12, 0, 17
-	ev_at 64
-	ev_note 3, 76, 58, 11, 0, 17
-	ev_at 66
-	ev_note 3, 72, 80, 10, 0, 17
-	ev_note 3, 76, 79, 11, 0, 17
-	ev_at 85
-	ev_note 3, 72, 83, 11, 0, 17
-	ev_note 3, 76, 85, 11, 0, 17
-	ev_at 91
-	ev_note 3, 67, 76, 15, 0, 17
-	ev_note 3, 64, 76, 14, 0, 17
-	ev_note 3, 72, 76, 25, 0, 17
-	ev_at 92
-	ev_note 4, 76, 77, 11, 0, 17
-	ev_at 93
-	ev_note 4, 72, 76, 12, 0, 17
-	ev_at 94
-	ev_note 4, 79, 76, 10, 0, 17
-	ev_beat
-	ev_note 2, 64, 70, 68, 0, 17
-	ev_note 2, 60, 65, 65, 0, 17
-	ev_note 2, 67, 75, 65, 0, 17
-	ev_note 1, 40, 101, 36, 0, 16
-	ev_note 5, 52, 90, 20, 0, 17
-	ev_at 2
-	ev_note 3, 60, 68, 52, 0, 17
-	ev_at 6
-	ev_note 6, 72, 83, 57, 0, 17
-	ev_note 6, 79, 96, 59, 0, 17
-	ev_at 9
-	ev_note 3, 76, 75, 12, 0, 17
-	ev_at 10
-	ev_note 3, 76, 81, 12, 0, 17
-	ev_at 12
-	ev_note 3, 72, 76, 9, 0, 17
-	ev_at 23
-	ev_note 3, 67, 60, 15, 0, 17
-	ev_note 3, 64, 63, 16, 0, 17
-	ev_at 31
-	ev_note 3, 72, 70, 9, 0, 17
-	ev_note 3, 76, 71, 10, 0, 17
-	ev_at 32
-	ev_note 3, 76, 60, 28, 0, 17
-	ev_at 33
-	ev_note 3, 72, 63, 27, 0, 17
-	ev_at 48
-	ev_note 1, 43, 98, 48, 0, 16
-	ev_note 5, 55, 90, 25, 0, 17
-	ev_at 49
-	ev_note 3, 64, 65, 13, 0, 17
-	ev_at 50
-	ev_note 3, 76, 69, 9, 0, 17
-	ev_note 3, 72, 75, 10, 0, 17
-	ev_at 51
-	ev_note 3, 67, 78, 15, 0, 17
-	ev_at 68
-	ev_note 3, 76, 73, 10, 0, 17
-	ev_at 69
-	ev_note 3, 72, 69, 9, 0, 17
-	ev_at 72
-	ev_note 3, 72, 67, 13, 0, 17
-	ev_note 3, 76, 67, 13, 0, 17
-	ev_at 74
-	ev_note 3, 67, 58, 18, 0, 17
-	ev_at 75
-	ev_note 3, 64, 63, 17, 0, 17
-	ev_at 87
-	ev_note 3, 76, 78, 11, 0, 17
-	ev_note 3, 72, 77, 10, 0, 17
-	ev_at 93
-	ev_note 4, 76, 72, 11, 0, 17
-	ev_at 95
-	ev_note 4, 72, 67, 10, 0, 17
-	ev_beat
-	ev_note 2, 67, 78, 73, 0, 17
-	ev_note 2, 60, 74, 73, 0, 17
-	ev_note 2, 64, 66, 73, 0, 17
-	ev_note 3, 60, 81, 41, 0, 17
-	ev_note 1, 36, 96, 22, 1, 16
-	ev_note 5, 48, 89, 116, 0, 17
-	ev_at 1
-	ev_note 3, 72, 70, 31, 0, 17
-	ev_at 1
-	ev_note 6, 79, 91, 79, 0, 17
-	ev_at 2
-	ev_note 6, 72, 75, 66, 0, 17
-	ev_at 3
-	ev_note 4, 76, 84, 9, 0, 17
-	ev_at 4
-	ev_note 4, 72, 77, 8, 0, 17
-	ev_at 5
-	ev_note 4, 79, 70, 7, 0, 17
-	ev_at 11
-	ev_note 3, 72, 74, 11, 0, 17
-	ev_note 3, 76, 73, 10, 0, 17
-	ev_at 15
-	ev_note 3, 64, 71, 11, 0, 17
-	ev_at 16
-	ev_note 3, 67, 72, 10, 0, 17
-	ev_at 21
-	ev_note 3, 76, 14, 10, 0, 17
-	ev_at 28
-	ev_note 3, 76, 80, 13, 0, 17
-	ev_note 3, 72, 80, 13, 0, 17
-	ev_at 40
-	ev_note 3, 67, 69, 27, 0, 17
-	ev_note 3, 64, 66, 27, 0, 17
-	ev_at 43
-	ev_note 3, 72, 60, 12, 0, 17
-	ev_at 44
-	ev_note 3, 76, 59, 9, 0, 17
-	ev_at 46
-	ev_note 3, 72, 65, 16, 0, 17
-	ev_note 3, 76, 75, 12, 0, 17
-	ev_at 60
-	ev_note 3, 72, 63, 14, 0, 17
-	ev_at 61
-	ev_note 3, 76, 68, 13, 0, 17
-	ev_at 78
-	ev_note 3, 67, 73, 12, 0, 17
-	ev_at 79
-	ev_note 3, 64, 66, 10, 0, 17
-	ev_at 89
-	ev_note 3, 72, 76, 17, 0, 17
-	ev_at 91
-	ev_note 4, 76, 76, 10, 0, 17
-	ev_at 93
-	ev_note 4, 72, 72, 8, 0, 17
-	ev_note 4, 79, 65, 7, 0, 17
-	ev_at 94
-	ev_note 3, 76, 67, 11, 0, 17
-	ev_beat
-	ev_note 2, 64, 71, 16, 0, 17
-	ev_note 2, 60, 68, 15, 0, 17
-	ev_note 2, 67, 70, 14, 0, 17
-	ev_at 1
-	ev_note 3, 60, 80, 60, 0, 17
-	ev_at 3
-	ev_note 3, 67, 68, 12, 0, 17
-	ev_at 3
-	ev_note 6, 76, 86, 19, 0, 17
-	ev_at 4
-	ev_note 3, 64, 66, 11, 0, 17
-	ev_at 4
-	ev_note 6, 72, 84, 19, 0, 17
-	ev_at 19
-	ev_note 3, 72, 45, 9, 0, 17
-	ev_at 26
-	ev_note 3, 64, 61, 12, 0, 17
-	ev_at 27
-	ev_note 3, 67, 65, 10, 0, 17
-	ev_at 39
-	ev_note 3, 72, 56, 9, 0, 17
-	ev_at 44
-	ev_note 4, 72, 83, 11, 0, 17
-	ev_note 4, 76, 86, 8, 0, 17
-	ev_note 4, 79, 76, 11, 0, 17
-	ev_at 46
-	ev_note 3, 64, 65, 12, 0, 17
-	ev_note 3, 67, 73, 12, 0, 17
-	ev_at 48
-	ev_note 2, 64, 61, 13, 0, 17
-	ev_note 2, 67, 66, 15, 0, 17
-	ev_note 2, 60, 57, 16, 0, 17
-	ev_at 48
-	ev_note 1, 40, 97, 31, 0, 16
-	ev_note 5, 52, 92, 23, 0, 17
-	ev_at 51
-	ev_note 6, 76, 83, 15, 0, 17
-	ev_at 52
-	ev_note 6, 72, 81, 16, 0, 17
-	ev_at 58
-	ev_note 3, 72, 60, 14, 0, 17
-	ev_note 3, 76, 70, 14, 0, 17
-	ev_at 67
-	ev_note 3, 67, 70, 11, 0, 17
-	ev_note 3, 64, 65, 11, 0, 17
-	ev_at 79
-	ev_note 3, 72, 51, 21, 0, 17
-	ev_note 3, 76, 56, 11, 0, 17
-	ev_at 92
-	ev_note 3, 64, 61, 9, 0, 17
-	ev_note 3, 67, 61, 9, 0, 17
-	ev_at 94
-	ev_note 4, 76, 81, 13, 0, 17
-	ev_note 4, 72, 79, 15, 0, 17
-	ev_note 4, 79, 71, 15, 0, 17
-	ev_at 95
-	ev_note 3, 60, 78, 50, 0, 17
-	ev_note 3, 81, 97, 21, 0, 17
-	ev_note 3, 77, 94, 28, 0, 17
-	ev_beat
-	ev_note 2, 67, 76, 62, 0, 17
-	ev_note 2, 60, 71, 63, 0, 17
-	ev_note 2, 64, 76, 64, 0, 17
-	ev_note 1, 43, 104, 90, 0, 16
-	ev_note 5, 55, 89, 67, 0, 17
-	ev_at 6
-	ev_note 6, 72, 84, 60, 0, 17
-	ev_at 7
-	ev_note 6, 76, 91, 12, 0, 17
-	ev_at 11
-	ev_note 3, 72, 81, 13, 0, 17
-	ev_at 12
-	ev_note 3, 76, 76, 12, 0, 17
-	ev_at 14
-	ev_note 3, 67, 68, 17, 0, 17
-	ev_note 3, 64, 61, 13, 0, 17
-	ev_at 36
-	ev_note 6, 76, 59, 32, 0, 17
-	ev_at 64
-	ev_note 3, 79, 96, 38, 0, 17
-	ev_at 66
-	ev_note 3, 76, 95, 39, 0, 17
-	ev_at 92
-	ev_note 4, 76, 79, 12, 0, 17
-	ev_at 93
-	ev_note 4, 72, 70, 11, 0, 17
-	ev_at 94
-	ev_note 4, 79, 69, 12, 0, 17
-	ev_beat
-	ev_note 2, 60, 79, 45, 0, 17
-	ev_note 2, 64, 76, 46, 0, 17
-	ev_note 2, 67, 78, 44, 0, 17
-	ev_note 1, 40, 101, 40, 0, 16
-	ev_note 5, 52, 89, 22, 0, 17
-	ev_at 1
-	ev_note 6, 72, 72, 17, 0, 17
-	ev_note 6, 79, 83, 57, 0, 17
-	ev_at 2
-	ev_note 6, 76, 79, 11, 0, 17
-	ev_at 16
-	ev_note 3, 72, 80, 19, 0, 17
-	ev_at 19
-	ev_note 3, 67, 68, 10, 0, 17
-	ev_at 35
-	ev_note 3, 77, 98, 19, 0, 17
-	ev_at 36
-	ev_note 3, 74, 96, 14, 0, 17
-	ev_at 37
-	ev_note 6, 76, 50, 18, 0, 17
-	ev_note 6, 72, 36, 13, 0, 17
-	ev_at 48
-	ev_note 1, 43, 105, 32, 0, 16
-	ev_note 5, 55, 91, 27, 0, 17
-	ev_at 88
-	ev_note 3, 76, 91, 8, 0, 17
-	ev_note 3, 79, 85, 8, 0, 17
-	ev_at 91
-	ev_note 3, 72, 58, 16, 0, 17
-	ev_at 93
-	ev_note 4, 76, 73, 12, 0, 17
-	ev_at 94
-	ev_note 4, 72, 70, 14, 0, 17
-	ev_at 94
-	ev_note 6, 76, 90, 23, 0, 17
-	ev_note 6, 72, 81, 21, 0, 17
-	ev_note 6, 79, 79, 25, 0, 17
-	ev_at 95
-	ev_note 4, 79, 69, 12, 0, 17
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x5443e, 0x54440	# stale bytes of an earlier write
-	.byte 0x00, 0x04, 0x5e	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x359f..+0x3a00; bytes 1..3 of `STREAM_HEADER`
-	ev_beat
+	STREAM_HEADER 9, 0x699	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 78, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 76, 71, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 70, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 70, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 69, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 65, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 36, 101, 12, 1, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 48, 90, 107, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 75, 27, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 13	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 65, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 18	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 78, 29, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 19	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 78, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 27	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 83, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 69, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 29	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 58, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 33	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 56, 41, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 36	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 61, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 47	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 78, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 81, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 70, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 78, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 56	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 72, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 68, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 64	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 85, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 66	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 73, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 70	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 65, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 71	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 63, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 73	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 63, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 74	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 73, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 80	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 47, 21, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 83	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 83, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 81, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 91	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 79, 31, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 67, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 68, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 65, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 70, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 63, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 75, 22, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 90, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 72, 22, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 79, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 80, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 70, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 13	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 76, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 76, 46, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 33	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 73, 32, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 34	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 76, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 38	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 74, 87, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 40	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 77, 75, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 63, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 73, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 64, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 70, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 86, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 40, 98, 36, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 52, 93, 24, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 50, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 88, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 52	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 64, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 53	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 77, 70, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 56	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 74, 61, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 58	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 61, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 59	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 75, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 78	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 63, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 63, 49, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 86	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 71, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 87	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 66, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 89	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 76, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 92	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 60, 5, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 80, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 77, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 71, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 72, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 65, 72, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 71, 68, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 43, 103, 92, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 55, 90, 70, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 91, 68, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 85, 69, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 8	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 45, 23, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 9	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 71, 43, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 13	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 63, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 14	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 60, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 26	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 61, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 83, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 33	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 69, 51, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 34	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 63, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 42	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 67, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 64, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 47	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 86, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 83, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 51	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 63, 32, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 63	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 60, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 64	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 58, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 66	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 80, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 79, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 85	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 83, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 85, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 91	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 76, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 76, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 76, 25, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 92	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 77, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 76, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 70, 68, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 65, 65, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 75, 65, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 40, 101, 36, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 52, 90, 20, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 68, 52, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 6	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 83, 57, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 79, 96, 59, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 9	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 75, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 10	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 81, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 12	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 76, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 23	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 60, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 63, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 31	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 70, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 71, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 32	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 60, 28, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 33	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 63, 27, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 43, 98, 48, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 55, 90, 25, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 65, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 50	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 69, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 75, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 51	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 78, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 68	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 73, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 69	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 69, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 72	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 67, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 67, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 74	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 58, 18, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 75	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 63, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 87	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 78, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 77, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 72, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 67, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 78, 73, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 74, 73, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 66, 73, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 81, 41, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 36, 96, 22, 1, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 48, 89, 116, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 70, 31, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 79, 91, 79, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 75, 66, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 84, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 77, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 5	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 70, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 74, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 73, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 15	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 71, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 72, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 21	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 14, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 80, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 80, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 40	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 69, 27, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 66, 27, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 43	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 60, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 44	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 59, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 65, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 75, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 60	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 63, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 61	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 68, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 78	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 79	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 66, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 89	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 76, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 91	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 72, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 65, 7, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 67, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 71, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 68, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 70, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 80, 60, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 68, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 86, 19, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 66, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 4	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 84, 19, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 19	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 45, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 26	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 61, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 27	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 65, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 39	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 56, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 44	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 83, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 86, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 65, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 61, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 66, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 57, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 40, 97, 31, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 52, 92, 23, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 51	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 83, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 52	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 81, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 58	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 60, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 70, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 67	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 65, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 79	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 51, 21, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 56, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 92	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 61, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 61, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 81, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 79, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 71, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 60, 78, 50, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 81, 97, 21, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 77, 94, 28, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 76, 62, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 71, 63, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 76, 64, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 43, 104, 90, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 55, 89, 67, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 6	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 84, 60, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 7	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 91, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 81, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 12	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 76, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 14	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 68, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 64, 61, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 36	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 59, 32, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 64	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 96, 38, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 66	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 95, 39, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 92	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 79, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 69, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 60, 79, 45, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 64, 76, 46, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 2, 67, 78, 44, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 40, 101, 40, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 52, 89, 22, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 72, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 79, 83, 57, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 79, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 80, 19, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 19	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 67, 68, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 35	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 77, 98, 19, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 36	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 74, 96, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 37	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 50, 18, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 36, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 1, 43, 105, 32, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 5, 55, 91, 27, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 88	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 76, 91, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 79, 85, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 91	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 3, 72, 58, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 93	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 76, 73, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 72, 70, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 76, 90, 23, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 72, 81, 21, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 6, 79, 79, 25, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	ev_note 4, 79, 69, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x4ed3..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot07 +0x4ed3..
+	ev_end
+	STREAM_HEADER 10, 0x45e	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x359e..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x35a2..+0x3a00
 	ev_note 2, 64, 78, 72, 0, 17
 	ev_note 2, 67, 76, 71, 0, 17
 	ev_note 2, 60, 70, 72, 0, 17
@@ -2356,898 +2352,895 @@
 	ev_note 6, 79, 79, 11, 0, 17
 	ev_note 6, 76, 70, 8, 0, 17
 	ev_end
-	STREAM_HEADER 11, 0x39b	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x6068..+0x640a
+	STREAM_HEADER 11, 0x39b	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x3a00..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 1, 36, 106, 45, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 5, 48, 93, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 93, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 85, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 60, 100, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 64, 95, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 97, 22, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 109, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 76, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 48, 88, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 84, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 86, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 26, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 75, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 18	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 76, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 26	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 83, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 85, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 87, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 29	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 66, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 87, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 30	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 65, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 31	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 64, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 32	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 75, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 45	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 58, 6, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 83, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 71, 22, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 47	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 75, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 52, 78, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 49	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 84, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 84, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 50	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 76, 48, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 56	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 84, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 67	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 79, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 81, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 68	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 74, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 78, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 69	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 71, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 78	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 87, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 90, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 86	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 79, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 87	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 77, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 88	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 84, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 84, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 85, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 1, 36, 104, 20, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 5, 48, 93, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 83, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 88, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 55, 90, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 64, 97, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 60, 99, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 71, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 12	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 13	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 80, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 14	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 78, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 86, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 19	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 84, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 81, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 28	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 67, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 29	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 74, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 32	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 83, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 73, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 34	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 73, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 39	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 80, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 73, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 1, 36, 100, 23, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 5, 48, 95, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 73, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 75, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 64, 91, 16, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 60, 94, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 60, 91, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 52	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 75, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 55	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 73, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 65, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 56	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 84, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 58	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 85, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 68	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 66, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 71	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 80, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 71, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 73	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 79, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 74	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 76	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 83, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 77	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 84, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 86	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 70, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 68, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 94	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 80, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 95	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 78, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 1, 36, 103, 64, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 5, 48, 98, 17, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 64, 93, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 1	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 64, 99, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 85, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 85, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 60, 103, 15, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 10	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 65, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 20	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 70, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 71, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 22	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 90, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 86, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 27	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 70, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 76, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 39	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 69, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 60, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 41	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 83, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 42	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 84, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 46	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 60, 78, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 84, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 67, 91, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 58	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 71, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 70, 25, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 60	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 85, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 61	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 80, 9, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 76	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 76, 87, 13, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 79, 75, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 77	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 72, 87, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 1, 31, 106, 87, 0, 16	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 5, 43, 105, 21, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 90, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 86, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 64, 89, 12, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 2	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 60, 104, 26, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 3	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 4, 55, 103, 20, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 11	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 74, 87, 18, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 14	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 77, 76, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 20	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 64, 83, 25, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 81, 26, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 37	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 77, 28, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 38	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 74, 64, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 48	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 2, 60, 88, 11, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 55	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 77, 83, 14, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 56	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 6, 74, 79, 10, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_at 86	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 67, 95, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_note 3, 72, 89, 8, 0, 17	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	ev_end	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	STREAM_HEADER 12, 0xa3d	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x3a00..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x3a00..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot07 +0x3a00..
+	ev_cc	1, 11, 127
+	ev_cc	2, 11, 127
+	ev_cc	5, 11, 127
+	ev_cc	7, 11, 127
+	ev_note	6, 79, 68, 8, 0, 1
+	ev_note	6, 76, 55, 6, 0, 1
+	ev_at	1
+	ev_note	6, 76, 90, 7, 0, 1
+	ev_at	4
+	ev_note	2, 64, 78, 73, 0, 1
+	ev_note	2, 67, 76, 72, 0, 1
+	ev_note	2, 60, 70, 73, 0, 1
+	ev_at	4
+	ev_note	1, 36, 101, 19, 0, 1
+	ev_at	5
+	ev_note	5, 48, 90, 107, 0, 1
+	ev_at	15
+	ev_note	6, 79, 61, 27, 0, 1
+	ev_at	17
+	ev_note	6, 72, 41, 26, 0, 1
+	ev_at	17
+	ev_note	6, 79, 66, 7, 0, 1
+	ev_note	6, 76, 60, 22, 0, 1
+	ev_at	18
+	ev_note	6, 76, 67, 6, 0, 1
+	ev_at	30
+	ev_note	6, 79, 61, 8, 0, 1
+	ev_at	32
+	ev_note	6, 76, 71, 10, 0, 1
+	ev_at	46
+	ev_note	6, 76, 63, 11, 0, 1
+	ev_at	47
+	ev_note	6, 79, 65, 7, 0, 1
+	ev_at	50
+	ev_note	6, 76, 71, 12, 0, 1
+	ev_at	51
+	ev_note	6, 79, 65, 9, 0, 1
+	ev_at	53
+	ev_note	6, 72, 44, 9, 0, 1
+	ev_at	63
+	ev_note	6, 76, 46, 47, 0, 1
+	ev_at	68
+	ev_note	6, 72, 59, 12, 0, 1
+	ev_note	6, 79, 67, 11, 0, 1
+	ev_at	69
+	ev_note	6, 76, 74, 9, 0, 1
+	ev_at	76
+	ev_note	6, 79, 56, 27, 0, 1
+	ev_at	87
+	ev_note	6, 72, 67, 12, 0, 1
+	ev_at	88
+	ev_note	6, 76, 78, 10, 0, 1
+	ev_note	6, 79, 71, 9, 0, 1
 	ev_beat
-	ev_note 1, 36, 106, 45, 0, 16
-	ev_note 5, 48, 93, 14, 0, 17
-	ev_note 3, 60, 93, 9, 0, 17
-	ev_note 3, 64, 85, 8, 0, 17
-	ev_note 4, 60, 100, 15, 0, 17
-	ev_note 4, 64, 95, 12, 0, 17
-	ev_note 6, 76, 97, 22, 0, 17
-	ev_note 6, 72, 109, 11, 0, 17
-	ev_note 6, 76, 76, 17, 0, 17
-	ev_note 2, 48, 88, 10, 0, 17
-	ev_at 11
-	ev_note 3, 67, 84, 10, 0, 17
-	ev_note 3, 72, 86, 12, 0, 17
-	ev_note 6, 79, 26, 8, 0, 17
-	ev_at 16
-	ev_note 3, 60, 75, 12, 0, 17
-	ev_at 18
-	ev_note 3, 64, 76, 8, 0, 17
-	ev_at 26
-	ev_note 6, 72, 83, 10, 0, 17
-	ev_at 28
-	ev_note 6, 76, 85, 10, 0, 17
-	ev_note 6, 79, 87, 9, 0, 17
-	ev_at 29
-	ev_note 3, 72, 66, 10, 0, 17
-	ev_note 6, 76, 87, 12, 0, 17
-	ev_at 30
-	ev_note 3, 67, 65, 9, 0, 17
-	ev_at 31
-	ev_note 3, 60, 64, 12, 0, 17
-	ev_at 32
-	ev_note 3, 64, 75, 10, 0, 17
-	ev_at 45
-	ev_note 6, 72, 58, 6, 0, 17
-	ev_at 46
-	ev_note 3, 72, 83, 14, 0, 17
-	ev_note 6, 76, 71, 22, 0, 17
-	ev_at 47
-	ev_note 3, 67, 75, 11, 0, 17
-	ev_at 48
-	ev_note 2, 52, 78, 10, 0, 17
-	ev_at 49
-	ev_note 6, 76, 84, 10, 0, 17
-	ev_note 6, 79, 84, 9, 0, 17
-	ev_at 50
-	ev_note 3, 60, 76, 48, 0, 17
-	ev_note 3, 64, 76, 11, 0, 17
-	ev_at 56
-	ev_note 6, 72, 84, 13, 0, 17
-	ev_at 67
-	ev_note 3, 72, 79, 12, 0, 17
-	ev_note 6, 79, 81, 10, 0, 17
-	ev_at 68
-	ev_note 3, 67, 74, 11, 0, 17
-	ev_note 6, 76, 78, 9, 0, 17
-	ev_at 69
-	ev_note 3, 64, 71, 9, 0, 17
-	ev_at 78
-	ev_note 6, 72, 87, 10, 0, 17
-	ev_note 6, 76, 90, 10, 0, 17
-	ev_at 86
-	ev_note 3, 64, 79, 12, 0, 17
-	ev_at 87
-	ev_note 3, 67, 77, 12, 0, 17
-	ev_at 88
-	ev_note 3, 72, 84, 11, 0, 17
-	ev_note 6, 76, 84, 11, 0, 17
-	ev_note 6, 79, 85, 9, 0, 17
+	ev_at	1
+	ev_note	4, 67, 96, 62, 0, 1
+	ev_at	3
+	ev_note	2, 64, 65, 15, 0, 1
+	ev_note	2, 67, 70, 17, 0, 1
+	ev_note	2, 60, 63, 17, 0, 1
+	ev_at	12
+	ev_note	6, 79, 72, 11, 0, 1
+	ev_at	13
+	ev_note	6, 76, 71, 9, 0, 1
+	ev_at	14
+	ev_note	6, 72, 56, 8, 0, 1
+	ev_at	33
+	ev_note	6, 79, 65, 11, 0, 1
+	ev_note	6, 76, 67, 9, 0, 1
+	ev_at	37
+	ev_note	6, 72, 43, 6, 0, 1
+	ev_at	51
+	ev_note	1, 40, 98, 36, 0, 1
+	ev_at	51
+	ev_note	2, 64, 73, 18, 0, 1
+	ev_note	2, 60, 64, 18, 0, 1
+	ev_note	2, 67, 70, 13, 0, 1
+	ev_at	51
+	ev_note	5, 52, 93, 25, 0, 1
+	ev_at	53
+	ev_note	6, 79, 59, 11, 0, 1
+	ev_at	54
+	ev_note	6, 76, 70, 9, 0, 1
+	ev_at	56
+	ev_note	6, 72, 41, 8, 0, 1
+	ev_at	71
+	ev_note	6, 79, 63, 12, 0, 1
+	ev_at	73
+	ev_note	6, 76, 73, 9, 0, 1
+	ev_at	74
+	ev_note	6, 72, 56, 9, 0, 1
+	ev_at	94
+	ev_note	6, 79, 56, 11, 0, 1
+	ev_note	6, 72, 53, 28, 0, 1
+	ev_at	95
+	ev_note	6, 76, 66, 9, 0, 1
 	ev_beat
-	ev_note 1, 36, 104, 20, 0, 16
-	ev_note 5, 48, 93, 13, 0, 17
-	ev_note 6, 76, 83, 10, 0, 17
-	ev_note 6, 72, 88, 12, 0, 17
-	ev_note 2, 55, 90, 10, 0, 17
-	ev_at 2
-	ev_note 4, 64, 97, 15, 0, 17
-	ev_at 3
-	ev_note 4, 60, 99, 13, 0, 17
-	ev_at 11
-	ev_note 3, 64, 71, 10, 0, 17
-	ev_note 3, 60, 70, 11, 0, 17
-	ev_at 12
-	ev_note 3, 67, 76, 11, 0, 17
-	ev_at 13
-	ev_note 3, 72, 80, 10, 0, 17
-	ev_at 14
-	ev_note 6, 76, 78, 10, 0, 17
-	ev_note 6, 79, 86, 11, 0, 17
-	ev_at 19
-	ev_note 6, 76, 84, 11, 0, 17
-	ev_note 6, 72, 81, 11, 0, 17
-	ev_at 28
-	ev_note 3, 60, 67, 13, 0, 17
-	ev_at 29
-	ev_note 3, 64, 74, 11, 0, 17
-	ev_at 32
-	ev_note 3, 72, 83, 12, 0, 17
-	ev_note 3, 67, 73, 11, 0, 17
-	ev_at 34
-	ev_note 6, 79, 73, 9, 0, 17
-	ev_note 6, 76, 76, 10, 0, 17
-	ev_at 39
-	ev_note 6, 72, 80, 11, 0, 17
-	ev_note 6, 76, 73, 8, 0, 17
-	ev_at 48
-	ev_note 1, 36, 100, 23, 0, 16
-	ev_note 5, 48, 95, 13, 0, 17
-	ev_at 48
-	ev_note 3, 60, 73, 11, 0, 17
-	ev_note 3, 64, 75, 11, 0, 17
-	ev_note 4, 64, 91, 16, 0, 17
-	ev_note 4, 60, 94, 14, 0, 17
-	ev_at 48
-	ev_note 2, 60, 91, 11, 0, 17
-	ev_at 52
-	ev_note 6, 76, 75, 11, 0, 17
-	ev_note 6, 79, 76, 11, 0, 17
-	ev_at 55
-	ev_note 3, 72, 73, 9, 0, 17
-	ev_note 3, 67, 65, 11, 0, 17
-	ev_at 56
-	ev_note 6, 72, 84, 12, 0, 17
-	ev_at 58
-	ev_note 6, 76, 85, 9, 0, 17
-	ev_at 68
-	ev_note 3, 64, 76, 11, 0, 17
-	ev_note 3, 60, 66, 11, 0, 17
-	ev_at 71
-	ev_note 3, 72, 80, 14, 0, 17
-	ev_note 3, 67, 71, 13, 0, 17
-	ev_at 73
-	ev_note 6, 79, 79, 12, 0, 17
-	ev_at 74
-	ev_note 6, 76, 76, 10, 0, 17
-	ev_at 76
-	ev_note 6, 76, 83, 12, 0, 17
-	ev_at 77
-	ev_note 6, 72, 84, 10, 0, 17
-	ev_at 86
-	ev_note 3, 60, 70, 12, 0, 17
-	ev_note 3, 64, 68, 11, 0, 17
-	ev_at 94
-	ev_note 6, 76, 80, 11, 0, 17
-	ev_at 95
-	ev_note 6, 79, 78, 9, 0, 17
+	ev_at	3
+	ev_note	1, 43, 103, 93, 0, 1
+	ev_at	3
+	ev_note	2, 64, 72, 72, 0, 1
+	ev_note	2, 60, 65, 72, 0, 1
+	ev_note	2, 67, 71, 69, 0, 1
+	ev_at	3
+	ev_note	5, 55, 90, 71, 0, 1
+	ev_at	3
+	ev_note	4, 72, 101, 58, 0, 1
+	ev_at	15
+	ev_note	6, 79, 56, 12, 0, 1
+	ev_at	16
+	ev_note	6, 76, 67, 9, 0, 1
+	ev_at	36
+	ev_note	6, 79, 63, 11, 0, 1
+	ev_at	37
+	ev_note	6, 76, 70, 9, 0, 1
+	ev_at	39
+	ev_note	6, 72, 48, 8, 0, 1
+	ev_at	56
+	ev_note	6, 79, 58, 10, 0, 1
+	ev_at	57
+	ev_note	6, 76, 65, 8, 0, 1
+	ev_at	76
+	ev_note	6, 79, 61, 10, 0, 1
+	ev_at	77
+	ev_note	6, 76, 65, 8, 0, 1
+	ev_at	79
+	ev_note	6, 72, 38, 7, 0, 1
+	ev_at	94
+	ev_note	6, 76, 73, 12, 0, 1
+	ev_at	95
+	ev_note	6, 72, 55, 10, 0, 1
+	ev_note	6, 79, 61, 11, 0, 1
 	ev_beat
-	ev_note 1, 36, 103, 64, 0, 16
-	ev_note 5, 48, 98, 17, 0, 17
-	ev_note 2, 64, 93, 10, 0, 17
-	ev_at 1
-	ev_note 4, 64, 99, 15, 0, 17
-	ev_note 6, 76, 85, 10, 0, 17
-	ev_note 6, 72, 85, 11, 0, 17
-	ev_at 2
-	ev_note 4, 60, 103, 15, 0, 17
-	ev_at 10
-	ev_note 3, 60, 65, 11, 0, 17
-	ev_note 3, 64, 76, 10, 0, 17
-	ev_at 20
-	ev_note 6, 76, 70, 9, 0, 17
-	ev_note 6, 79, 71, 9, 0, 17
-	ev_at 22
-	ev_note 6, 76, 90, 10, 0, 17
-	ev_note 6, 72, 86, 11, 0, 17
-	ev_at 27
-	ev_note 3, 60, 70, 11, 0, 17
-	ev_note 3, 64, 76, 11, 0, 17
-	ev_at 39
-	ev_note 6, 76, 69, 10, 0, 17
-	ev_note 6, 79, 60, 9, 0, 17
-	ev_at 41
-	ev_note 6, 76, 83, 9, 0, 17
-	ev_at 42
-	ev_note 6, 72, 84, 10, 0, 17
-	ev_at 46
-	ev_note 3, 60, 78, 11, 0, 17
-	ev_note 3, 64, 84, 13, 0, 17
-	ev_at 48
-	ev_note 2, 67, 91, 13, 0, 17
-	ev_at 58
-	ev_note 6, 79, 71, 9, 0, 17
-	ev_note 6, 76, 70, 25, 0, 17
-	ev_at 60
-	ev_note 6, 76, 85, 10, 0, 17
-	ev_at 61
-	ev_note 6, 72, 80, 9, 0, 17
-	ev_at 76
-	ev_note 6, 76, 87, 13, 0, 17
-	ev_note 6, 79, 75, 8, 0, 17
-	ev_at 77
-	ev_note 6, 72, 87, 10, 0, 17
+	ev_at	3
+	ev_note	1, 40, 101, 37, 0, 1
+	ev_at	3
+	ev_note	2, 64, 70, 69, 0, 1
+	ev_note	2, 60, 65, 67, 0, 1
+	ev_note	2, 67, 75, 67, 0, 1
+	ev_at	3
+	ev_note	5, 52, 90, 21, 0, 1
+	ev_at	7
+	ev_note	4, 76, 107, 46, 0, 1
+	ev_at	51
+	ev_note	1, 43, 98, 48, 0, 1
+	ev_at	51
+	ev_note	5, 55, 90, 26, 0, 1
+	ev_at	94
+	ev_note	6, 74, 58, 9, 0, 1
+	ev_at	95
+	ev_note	6, 71, 57, 6, 0, 1
 	ev_beat
-	ev_note 1, 31, 106, 87, 0, 16
-	ev_note 5, 43, 105, 21, 0, 17
-	ev_note 3, 64, 90, 8, 0, 17
-	ev_note 3, 67, 86, 8, 0, 17
-	ev_note 2, 64, 89, 12, 0, 17
-	ev_at 2
-	ev_note 4, 60, 104, 26, 0, 17
-	ev_at 3
-	ev_note 4, 55, 103, 20, 0, 17
-	ev_at 11
-	ev_note 6, 74, 87, 18, 0, 17
-	ev_at 14
-	ev_note 6, 77, 76, 10, 0, 17
-	ev_at 20
-	ev_note 3, 64, 83, 25, 0, 17
-	ev_note 3, 67, 81, 26, 0, 17
-	ev_at 37
-	ev_note 6, 77, 28, 10, 0, 17
-	ev_at 38
-	ev_note 6, 74, 64, 10, 0, 17
-	ev_at 48
-	ev_note 2, 60, 88, 11, 0, 17
-	ev_at 55
-	ev_note 6, 77, 83, 14, 0, 17
-	ev_at 56
-	ev_note 6, 74, 79, 10, 0, 17
-	ev_at 86
-	ev_note 3, 67, 95, 8, 0, 17
-	ev_note 3, 72, 89, 8, 0, 17
-	ev_end
-	.byte 0x0c, 0x00, 0x0a	# bytes 0..2 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x54c43, 0x54c44	# stale bytes of an earlier write
-	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x640b..+0x6df7
-	ev_cc 1, 11, 127
-	ev_cc 2, 11, 127
-	ev_cc 5, 11, 127
-	ev_cc 7, 11, 127
-	ev_note 6, 79, 68, 8, 0, 1
-	ev_note 6, 76, 55, 6, 0, 1
-	ev_at 1
-	ev_note 6, 76, 90, 7, 0, 1
-	ev_at 4
-	ev_note 2, 64, 78, 73, 0, 1
-	ev_note 2, 67, 76, 72, 0, 1
-	ev_note 2, 60, 70, 73, 0, 1
-	ev_at 4
-	ev_note 1, 36, 101, 19, 0, 1
-	ev_at 5
-	ev_note 5, 48, 90, 107, 0, 1
-	ev_at 15
-	ev_note 6, 79, 61, 27, 0, 1
-	ev_at 17
-	ev_note 6, 72, 41, 26, 0, 1
-	ev_at 17
-	ev_note 6, 79, 66, 7, 0, 1
-	ev_note 6, 76, 60, 22, 0, 1
-	ev_at 18
-	ev_note 6, 76, 67, 6, 0, 1
-	ev_at 30
-	ev_note 6, 79, 61, 8, 0, 1
-	ev_at 32
-	ev_note 6, 76, 71, 10, 0, 1
-	ev_at 46
-	ev_note 6, 76, 63, 11, 0, 1
-	ev_at 47
-	ev_note 6, 79, 65, 7, 0, 1
-	ev_at 50
-	ev_note 6, 76, 71, 12, 0, 1
-	ev_at 51
-	ev_note 6, 79, 65, 9, 0, 1
-	ev_at 53
-	ev_note 6, 72, 44, 9, 0, 1
-	ev_at 63
-	ev_note 6, 76, 46, 47, 0, 1
-	ev_at 68
-	ev_note 6, 72, 59, 12, 0, 1
-	ev_note 6, 79, 67, 11, 0, 1
-	ev_at 69
-	ev_note 6, 76, 74, 9, 0, 1
-	ev_at 76
-	ev_note 6, 79, 56, 27, 0, 1
-	ev_at 87
-	ev_note 6, 72, 67, 12, 0, 1
-	ev_at 88
-	ev_note 6, 76, 78, 10, 0, 1
-	ev_note 6, 79, 71, 9, 0, 1
+	ev_at	1
+	ev_note	4, 79, 99, 8, 0, 1
+	ev_at	3
+	ev_note	1, 36, 96, 4, 0, 1
+	ev_at	3
+	ev_note	2, 67, 78, 4, 0, 1
+	ev_note	2, 60, 74, 4, 0, 1
+	ev_note	2, 64, 66, 4, 0, 1
+	ev_at	3
+	ev_note	5, 48, 89, 6, 0, 1
+	ev_at	7
+	ev_note	1, 31, 80, 19, 1, 1
+	ev_at	7
+	ev_note	2, 59, 50, 70, 0, 1
+	ev_note	2, 55, 58, 70, 0, 1
+	ev_note	2, 62, 62, 70, 0, 1
+	ev_at	9
+	ev_note	5, 43, 73, 112, 0, 1
+	ev_at	9
+	ev_note	3, 83, 93, 8, 0, 1
+	ev_note	3, 79, 94, 8, 0, 1
+	ev_at	15
+	ev_note	6, 67, 60, 11, 0, 1
+	ev_note	6, 71, 78, 10, 0, 1
+	ev_note	6, 74, 78, 11, 0, 1
+	ev_at	21
+	ev_note	4, 79, 91, 11, 0, 1
+	ev_at	26
+	ev_note	3, 79, 76, 28, 0, 1
+	ev_note	3, 83, 81, 31, 0, 1
+	ev_at	37
+	ev_note	6, 74, 66, 28, 0, 1
+	ev_at	38
+	ev_note	4, 79, 80, 29, 0, 1
+	ev_at	39
+	ev_note	6, 71, 63, 9, 0, 1
+	ev_note	6, 67, 46, 25, 0, 1
+	ev_at	53
+	ev_note	6, 71, 50, 8, 0, 1
+	ev_at	71
+	ev_note	6, 74, 66, 10, 0, 1
+	ev_note	6, 67, 53, 28, 0, 1
+	ev_at	72
+	ev_note	6, 71, 71, 9, 0, 1
+	ev_at	89
+	ev_note	6, 74, 81, 10, 0, 1
+	ev_note	6, 71, 76, 9, 0, 1
+	ev_at	94
+	ev_note	3, 83, 91, 17, 0, 1
 	ev_beat
-	ev_at 1
-	ev_note 4, 67, 96, 62, 0, 1
-	ev_at 3
-	ev_note 2, 64, 65, 15, 0, 1
-	ev_note 2, 67, 70, 17, 0, 1
-	ev_note 2, 60, 63, 17, 0, 1
-	ev_at 12
-	ev_note 6, 79, 72, 11, 0, 1
-	ev_at 13
-	ev_note 6, 76, 71, 9, 0, 1
-	ev_at 14
-	ev_note 6, 72, 56, 8, 0, 1
-	ev_at 33
-	ev_note 6, 79, 65, 11, 0, 1
-	ev_note 6, 76, 67, 9, 0, 1
-	ev_at 37
-	ev_note 6, 72, 43, 6, 0, 1
-	ev_at 51
-	ev_note 1, 40, 98, 36, 0, 1
-	ev_at 51
-	ev_note 2, 64, 73, 18, 0, 1
-	ev_note 2, 60, 64, 18, 0, 1
-	ev_note 2, 67, 70, 13, 0, 1
-	ev_at 51
-	ev_note 5, 52, 93, 25, 0, 1
-	ev_at 53
-	ev_note 6, 79, 59, 11, 0, 1
-	ev_at 54
-	ev_note 6, 76, 70, 9, 0, 1
-	ev_at 56
-	ev_note 6, 72, 41, 8, 0, 1
-	ev_at 71
-	ev_note 6, 79, 63, 12, 0, 1
-	ev_at 73
-	ev_note 6, 76, 73, 9, 0, 1
-	ev_at 74
-	ev_note 6, 72, 56, 9, 0, 1
-	ev_at 94
-	ev_note 6, 79, 56, 11, 0, 1
-	ev_note 6, 72, 53, 28, 0, 1
-	ev_at 95
-	ev_note 6, 76, 66, 9, 0, 1
+	ev_note	3, 79, 92, 12, 0, 1
+	ev_at	2
+	ev_note	2, 59, 71, 19, 0, 1
+	ev_note	2, 55, 68, 18, 0, 1
+	ev_note	2, 62, 70, 17, 0, 1
+	ev_at	3
+	ev_note	4, 79, 98, 12, 0, 1
+	ev_at	14
+	ev_note	6, 74, 80, 10, 0, 1
+	ev_note	6, 71, 73, 10, 0, 1
+	ev_at	15
+	ev_note	6, 67, 53, 9, 0, 1
+	ev_at	32
+	ev_note	6, 74, 78, 10, 0, 1
+	ev_at	33
+	ev_note	6, 71, 76, 9, 0, 1
+	ev_note	6, 67, 61, 10, 0, 1
+	ev_at	48
+	ev_note	4, 79, 98, 12, 0, 1
+	ev_at	50
+	ev_note	3, 83, 93, 11, 0, 1
+	ev_note	3, 79, 95, 12, 0, 1
+	ev_at	51
+	ev_note	1, 35, 97, 32, 0, 1
+	ev_at	51
+	ev_note	2, 59, 61, 14, 0, 1
+	ev_note	2, 62, 66, 16, 0, 1
+	ev_note	2, 55, 57, 17, 0, 1
+	ev_at	51
+	ev_note	5, 47, 92, 24, 0, 1
+	ev_at	53
+	ev_note	3, 81, 80, 2, 0, 1
+	ev_at	54
+	ev_note	6, 71, 69, 9, 0, 1
+	ev_note	6, 74, 75, 9, 0, 1
+	ev_at	55
+	ev_note	6, 67, 52, 10, 0, 1
+	ev_at	74
+	ev_note	6, 74, 65, 8, 0, 1
+	ev_note	6, 71, 69, 9, 0, 1
+	ev_at	92
+	ev_note	6, 74, 73, 10, 0, 1
+	ev_note	6, 71, 76, 10, 0, 1
+	ev_at	95
+	ev_note	4, 77, 96, 9, 0, 1
 	ev_beat
-	ev_at 3
-	ev_note 1, 43, 103, 93, 0, 1
-	ev_at 3
-	ev_note 2, 64, 72, 72, 0, 1
-	ev_note 2, 60, 65, 72, 0, 1
-	ev_note 2, 67, 71, 69, 0, 1
-	ev_at 3
-	ev_note 5, 55, 90, 71, 0, 1
-	ev_at 3
-	ev_note 4, 72, 101, 58, 0, 1
-	ev_at 15
-	ev_note 6, 79, 56, 12, 0, 1
-	ev_at 16
-	ev_note 6, 76, 67, 9, 0, 1
-	ev_at 36
-	ev_note 6, 79, 63, 11, 0, 1
-	ev_at 37
-	ev_note 6, 76, 70, 9, 0, 1
-	ev_at 39
-	ev_note 6, 72, 48, 8, 0, 1
-	ev_at 56
-	ev_note 6, 79, 58, 10, 0, 1
-	ev_at 57
-	ev_note 6, 76, 65, 8, 0, 1
-	ev_at 76
-	ev_note 6, 79, 61, 10, 0, 1
-	ev_at 77
-	ev_note 6, 76, 65, 8, 0, 1
-	ev_at 79
-	ev_note 6, 72, 38, 7, 0, 1
-	ev_at 94
-	ev_note 6, 76, 73, 12, 0, 1
-	ev_at 95
-	ev_note 6, 72, 55, 10, 0, 1
-	ev_note 6, 79, 61, 11, 0, 1
+	ev_at	2
+	ev_note	3, 81, 93, 9, 0, 1
+	ev_at	3
+	ev_note	1, 38, 104, 91, 0, 1
+	ev_at	3
+	ev_note	2, 62, 76, 62, 0, 1
+	ev_note	2, 55, 71, 64, 0, 1
+	ev_note	2, 59, 76, 65, 0, 1
+	ev_at	3
+	ev_note	5, 50, 89, 67, 0, 1
+	ev_at	3
+	ev_note	3, 77, 91, 7, 0, 1
+	ev_at	5
+	ev_note	3, 79, 81, 2, 0, 1
+	ev_at	17
+	ev_note	6, 74, 75, 10, 0, 1
+	ev_at	18
+	ev_note	6, 71, 70, 9, 0, 1
+	ev_at	20
+	ev_note	6, 67, 49, 7, 0, 1
+	ev_at	21
+	ev_note	3, 81, 83, 31, 0, 1
+	ev_note	3, 77, 75, 11, 0, 1
+	ev_note	4, 77, 87, 9, 0, 1
+	ev_at	34
+	ev_note	4, 77, 85, 14, 0, 1
+	ev_at	35
+	ev_note	3, 77, 73, 16, 0, 1
+	ev_at	38
+	ev_note	6, 74, 70, 9, 0, 1
+	ev_note	6, 71, 70, 9, 0, 1
+	ev_at	41
+	ev_note	6, 67, 43, 6, 0, 1
+	ev_at	57
+	ev_note	6, 74, 75, 11, 0, 1
+	ev_note	6, 71, 75, 11, 0, 1
+	ev_at	59
+	ev_note	6, 67, 49, 9, 0, 1
+	ev_at	79
+	ev_note	6, 74, 70, 10, 0, 1
+	ev_note	6, 71, 71, 11, 0, 1
+	ev_at	82
+	ev_note	6, 67, 41, 7, 0, 1
+	ev_at	94
+	ev_note	4, 77, 100, 12, 0, 1
 	ev_beat
-	ev_at 3
-	ev_note 1, 40, 101, 37, 0, 1
-	ev_at 3
-	ev_note 2, 64, 70, 69, 0, 1
-	ev_note 2, 60, 65, 67, 0, 1
-	ev_note 2, 67, 75, 67, 0, 1
-	ev_at 3
-	ev_note 5, 52, 90, 21, 0, 1
-	ev_at 7
-	ev_note 4, 76, 107, 46, 0, 1
-	ev_at 51
-	ev_note 1, 43, 98, 48, 0, 1
-	ev_at 51
-	ev_note 5, 55, 90, 26, 0, 1
-	ev_at 94
-	ev_note 6, 74, 58, 9, 0, 1
-	ev_at 95
-	ev_note 6, 71, 57, 6, 0, 1
+	ev_note	3, 81, 91, 14, 0, 1
+	ev_at	1
+	ev_note	3, 77, 94, 12, 0, 1
+	ev_at	1
+	ev_note	6, 74, 71, 12, 0, 1
+	ev_at	2
+	ev_note	1, 35, 101, 42, 0, 1
+	ev_at	2
+	ev_note	2, 55, 79, 47, 0, 1
+	ev_note	2, 59, 76, 48, 0, 1
+	ev_note	2, 62, 78, 46, 0, 1
+	ev_at	2
+	ev_note	5, 47, 89, 24, 0, 1
+	ev_at	2
+	ev_note	6, 71, 63, 10, 0, 1
+	ev_at	45
+	ev_note	4, 77, 100, 15, 0, 1
+	ev_at	49
+	ev_note	3, 81, 89, 12, 0, 1
+	ev_note	3, 77, 93, 12, 0, 1
+	ev_at	51
+	ev_note	1, 38, 105, 33, 0, 1
+	ev_at	51
+	ev_note	5, 50, 91, 28, 0, 1
+	ev_at	91
+	ev_note	6, 71, 47, 8, 0, 1
+	ev_at	93
+	ev_note	6, 74, 43, 7, 0, 1
+	ev_at	95
+	ev_note	3, 76, 91, 9, 0, 1
+	ev_note	3, 79, 89, 9, 0, 1
+	ev_note	4, 76, 98, 8, 0, 1
 	ev_beat
-	ev_at 1
-	ev_note 4, 79, 99, 8, 0, 1
-	ev_at 3
-	ev_note 1, 36, 96, 4, 0, 1
-	ev_at 3
-	ev_note 2, 67, 78, 4, 0, 1
-	ev_note 2, 60, 74, 4, 0, 1
-	ev_note 2, 64, 66, 4, 0, 1
-	ev_at 3
-	ev_note 5, 48, 89, 6, 0, 1
-	ev_at 7
-	ev_note 1, 31, 80, 19, 1, 1
-	ev_at 7
-	ev_note 2, 59, 50, 70, 0, 1
-	ev_note 2, 55, 58, 70, 0, 1
-	ev_note 2, 62, 62, 70, 0, 1
-	ev_at 9
-	ev_note 5, 43, 73, 112, 0, 1
-	ev_at 9
-	ev_note 3, 83, 93, 8, 0, 1
-	ev_note 3, 79, 94, 8, 0, 1
-	ev_at 15
-	ev_note 6, 67, 60, 11, 0, 1
-	ev_note 6, 71, 78, 10, 0, 1
-	ev_note 6, 74, 78, 11, 0, 1
-	ev_at 21
-	ev_note 4, 79, 91, 11, 0, 1
-	ev_at 26
-	ev_note 3, 79, 76, 28, 0, 1
-	ev_note 3, 83, 81, 31, 0, 1
-	ev_at 37
-	ev_note 6, 74, 66, 28, 0, 1
-	ev_at 38
-	ev_note 4, 79, 80, 29, 0, 1
-	ev_at 39
-	ev_note 6, 71, 63, 9, 0, 1
-	ev_note 6, 67, 46, 25, 0, 1
-	ev_at 53
-	ev_note 6, 71, 50, 8, 0, 1
-	ev_at 71
-	ev_note 6, 74, 66, 10, 0, 1
-	ev_note 6, 67, 53, 28, 0, 1
-	ev_at 72
-	ev_note 6, 71, 71, 9, 0, 1
-	ev_at 89
-	ev_note 6, 74, 81, 10, 0, 1
-	ev_note 6, 71, 76, 9, 0, 1
-	ev_at 94
-	ev_note 3, 83, 91, 17, 0, 1
+	ev_at	3
+	ev_note	1, 31, 101, 13, 1, 1
+	ev_at	3
+	ev_note	2, 59, 78, 73, 0, 1
+	ev_note	2, 62, 76, 72, 0, 1
+	ev_note	2, 55, 70, 73, 0, 1
+	ev_at	4
+	ev_note	5, 43, 90, 107, 0, 1
+	ev_at	13
+	ev_note	6, 74, 55, 45, 0, 1
+	ev_note	6, 71, 55, 9, 0, 1
+	ev_at	14
+	ev_note	6, 67, 12, 26, 0, 1
+	ev_at	18
+	ev_note	4, 76, 83, 9, 0, 1
+	ev_at	19
+	ev_note	3, 76, 75, 31, 0, 1
+	ev_note	3, 79, 78, 32, 0, 1
+	ev_at	28
+	ev_note	6, 71, 58, 11, 0, 1
+	ev_at	33
+	ev_note	4, 76, 81, 14, 0, 1
+	ev_at	49
+	ev_note	6, 71, 65, 10, 0, 1
+	ev_at	51
+	ev_note	6, 67, 49, 29, 0, 1
+	ev_at	66
+	ev_note	6, 71, 70, 11, 0, 1
+	ev_at	67
+	ev_note	6, 74, 71, 10, 0, 1
+	ev_at	85
+	ev_note	6, 71, 76, 12, 0, 1
+	ev_at	86
+	ev_note	6, 67, 45, 11, 0, 1
+	ev_note	6, 74, 77, 12, 0, 1
+	ev_at	89
+	ev_note	4, 76, 93, 13, 0, 1
 	ev_beat
-	ev_note 3, 79, 92, 12, 0, 1
-	ev_at 2
-	ev_note 2, 59, 71, 19, 0, 1
-	ev_note 2, 55, 68, 18, 0, 1
-	ev_note 2, 62, 70, 17, 0, 1
-	ev_at 3
-	ev_note 4, 79, 98, 12, 0, 1
-	ev_at 14
-	ev_note 6, 74, 80, 10, 0, 1
-	ev_note 6, 71, 73, 10, 0, 1
-	ev_at 15
-	ev_note 6, 67, 53, 9, 0, 1
-	ev_at 32
-	ev_note 6, 74, 78, 10, 0, 1
-	ev_at 33
-	ev_note 6, 71, 76, 9, 0, 1
-	ev_note 6, 67, 61, 10, 0, 1
-	ev_at 48
-	ev_note 4, 79, 98, 12, 0, 1
-	ev_at 50
-	ev_note 3, 83, 93, 11, 0, 1
-	ev_note 3, 79, 95, 12, 0, 1
-	ev_at 51
-	ev_note 1, 35, 97, 32, 0, 1
-	ev_at 51
-	ev_note 2, 59, 61, 14, 0, 1
-	ev_note 2, 62, 66, 16, 0, 1
-	ev_note 2, 55, 57, 17, 0, 1
-	ev_at 51
-	ev_note 5, 47, 92, 24, 0, 1
-	ev_at 53
-	ev_note 3, 81, 80, 2, 0, 1
-	ev_at 54
-	ev_note 6, 71, 69, 9, 0, 1
-	ev_note 6, 74, 75, 9, 0, 1
-	ev_at 55
-	ev_note 6, 67, 52, 10, 0, 1
-	ev_at 74
-	ev_note 6, 74, 65, 8, 0, 1
-	ev_note 6, 71, 69, 9, 0, 1
-	ev_at 92
-	ev_note 6, 74, 73, 10, 0, 1
-	ev_note 6, 71, 76, 10, 0, 1
-	ev_at 95
-	ev_note 4, 77, 96, 9, 0, 1
+	ev_note	3, 79, 91, 12, 0, 1
+	ev_at	1
+	ev_note	3, 76, 92, 11, 0, 1
+	ev_at	3
+	ev_note	2, 59, 65, 15, 0, 1
+	ev_note	2, 62, 70, 17, 0, 1
+	ev_note	2, 55, 63, 17, 0, 1
+	ev_at	9
+	ev_note	6, 71, 73, 12, 0, 1
+	ev_at	10
+	ev_note	6, 74, 76, 11, 0, 1
+	ev_note	6, 67, 56, 12, 0, 1
+	ev_at	29
+	ev_note	6, 67, 64, 34, 0, 1
+	ev_at	31
+	ev_note	6, 71, 73, 12, 0, 1
+	ev_note	6, 74, 75, 12, 0, 1
+	ev_at	46
+	ev_note	4, 76, 97, 12, 0, 1
+	ev_at	47
+	ev_note	3, 76, 93, 14, 0, 1
+	ev_at	48
+	ev_note	3, 79, 90, 10, 0, 1
+	ev_at	50
+	ev_note	1, 35, 98, 38, 0, 1
+	ev_at	50
+	ev_note	2, 59, 73, 19, 0, 1
+	ev_note	2, 55, 64, 19, 0, 1
+	ev_note	2, 62, 70, 15, 0, 1
+	ev_at	50
+	ev_note	5, 47, 93, 26, 0, 1
+	ev_at	50
+	ev_note	6, 71, 63, 12, 0, 1
+	ev_at	51
+	ev_note	6, 74, 64, 12, 0, 1
+	ev_at	70
+	ev_note	6, 71, 71, 12, 0, 1
+	ev_at	71
+	ev_note	6, 74, 70, 12, 0, 1
+	ev_note	6, 67, 46, 12, 0, 1
+	ev_at	90
+	ev_note	6, 71, 69, 11, 0, 1
+	ev_note	6, 74, 67, 13, 0, 1
+	ev_at	92
+	ev_note	6, 67, 43, 10, 0, 1
+	ev_at	93
+	ev_note	4, 74, 93, 10, 0, 1
 	ev_beat
-	ev_at 2
-	ev_note 3, 81, 93, 9, 0, 1
-	ev_at 3
-	ev_note 1, 38, 104, 91, 0, 1
-	ev_at 3
-	ev_note 2, 62, 76, 62, 0, 1
-	ev_note 2, 55, 71, 64, 0, 1
-	ev_note 2, 59, 76, 65, 0, 1
-	ev_at 3
-	ev_note 5, 50, 89, 67, 0, 1
-	ev_at 3
-	ev_note 3, 77, 91, 7, 0, 1
-	ev_at 5
-	ev_note 3, 79, 81, 2, 0, 1
-	ev_at 17
-	ev_note 6, 74, 75, 10, 0, 1
-	ev_at 18
-	ev_note 6, 71, 70, 9, 0, 1
-	ev_at 20
-	ev_note 6, 67, 49, 7, 0, 1
-	ev_at 21
-	ev_note 3, 81, 83, 31, 0, 1
-	ev_note 3, 77, 75, 11, 0, 1
-	ev_note 4, 77, 87, 9, 0, 1
-	ev_at 34
-	ev_note 4, 77, 85, 14, 0, 1
-	ev_at 35
-	ev_note 3, 77, 73, 16, 0, 1
-	ev_at 38
-	ev_note 6, 74, 70, 9, 0, 1
-	ev_note 6, 71, 70, 9, 0, 1
-	ev_at 41
-	ev_note 6, 67, 43, 6, 0, 1
-	ev_at 57
-	ev_note 6, 74, 75, 11, 0, 1
-	ev_note 6, 71, 75, 11, 0, 1
-	ev_at 59
-	ev_note 6, 67, 49, 9, 0, 1
-	ev_at 79
-	ev_note 6, 74, 70, 10, 0, 1
-	ev_note 6, 71, 71, 11, 0, 1
-	ev_at 82
-	ev_note 6, 67, 41, 7, 0, 1
-	ev_at 94
-	ev_note 4, 77, 100, 12, 0, 1
+	ev_note	3, 77, 90, 8, 0, 1
+	ev_note	3, 74, 88, 8, 0, 1
+	ev_at	3
+	ev_note	1, 38, 103, 92, 0, 1
+	ev_at	3
+	ev_note	2, 59, 72, 72, 0, 1
+	ev_note	2, 55, 65, 72, 0, 1
+	ev_note	2, 62, 71, 69, 0, 1
+	ev_at	3
+	ev_note	5, 50, 90, 71, 0, 1
+	ev_at	13
+	ev_note	6, 71, 73, 12, 0, 1
+	ev_note	6, 74, 64, 12, 0, 1
+	ev_at	17
+	ev_note	3, 74, 78, 12, 0, 1
+	ev_note	3, 77, 85, 12, 0, 1
+	ev_at	17
+	ev_note	6, 67, 41, 7, 0, 1
+	ev_at	18
+	ev_note	4, 74, 84, 31, 0, 1
+	ev_at	33
+	ev_note	3, 77, 67, 16, 0, 1
+	ev_note	3, 74, 72, 16, 0, 1
+	ev_at	37
+	ev_note	6, 71, 55, 7, 0, 1
+	ev_at	58
+	ev_note	6, 74, 49, 6, 0, 1
+	ev_at	71
+	ev_note	6, 71, 70, 12, 0, 1
+	ev_at	72
+	ev_note	6, 74, 66, 11, 0, 1
+	ev_note	6, 67, 53, 11, 0, 1
 	ev_beat
-	ev_note 3, 81, 91, 14, 0, 1
-	ev_at 1
-	ev_note 3, 77, 94, 12, 0, 1
-	ev_at 1
-	ev_note 6, 74, 71, 12, 0, 1
-	ev_at 2
-	ev_note 1, 35, 101, 42, 0, 1
-	ev_at 2
-	ev_note 2, 55, 79, 47, 0, 1
-	ev_note 2, 59, 76, 48, 0, 1
-	ev_note 2, 62, 78, 46, 0, 1
-	ev_at 2
-	ev_note 5, 47, 89, 24, 0, 1
-	ev_at 2
-	ev_note 6, 71, 63, 10, 0, 1
-	ev_at 45
-	ev_note 4, 77, 100, 15, 0, 1
-	ev_at 49
-	ev_note 3, 81, 89, 12, 0, 1
-	ev_note 3, 77, 93, 12, 0, 1
-	ev_at 51
-	ev_note 1, 38, 105, 33, 0, 1
-	ev_at 51
-	ev_note 5, 50, 91, 28, 0, 1
-	ev_at 91
-	ev_note 6, 71, 47, 8, 0, 1
-	ev_at 93
-	ev_note 6, 74, 43, 7, 0, 1
-	ev_at 95
-	ev_note 3, 76, 91, 9, 0, 1
-	ev_note 3, 79, 89, 9, 0, 1
-	ev_note 4, 76, 98, 8, 0, 1
+	ev_at	2
+	ev_note	1, 35, 101, 39, 0, 1
+	ev_at	2
+	ev_note	2, 59, 70, 71, 0, 1
+	ev_note	2, 55, 65, 68, 0, 1
+	ev_note	2, 62, 75, 68, 0, 1
+	ev_at	2
+	ev_note	5, 47, 90, 22, 0, 1
+	ev_at	2
+	ev_note	4, 74, 96, 13, 0, 1
+	ev_at	3
+	ev_note	3, 74, 96, 14, 0, 1
+	ev_note	3, 77, 94, 14, 0, 1
+	ev_at	6
+	ev_note	3, 76, 86, 3, 0, 1
+	ev_at	49
+	ev_note	3, 79, 91, 13, 0, 1
+	ev_note	4, 76, 99, 10, 0, 1
+	ev_at	50
+	ev_note	1, 38, 98, 44, 0, 1
+	ev_at	50
+	ev_note	5, 50, 90, 27, 0, 1
+	ev_at	50
+	ev_note	3, 76, 96, 13, 0, 1
+	ev_at	91
+	ev_note	6, 76, 63, 9, 0, 1
+	ev_at	92
+	ev_note	6, 79, 65, 8, 0, 1
+	ev_at	94
+	ev_note	1, 48, 82, 5, 0, 1
+	ev_at	95
+	ev_note	4, 74, 95, 9, 0, 1
 	ev_beat
-	ev_at 3
-	ev_note 1, 31, 101, 13, 1, 1
-	ev_at 3
-	ev_note 2, 59, 78, 73, 0, 1
-	ev_note 2, 62, 76, 72, 0, 1
-	ev_note 2, 55, 70, 73, 0, 1
-	ev_at 4
-	ev_note 5, 43, 90, 107, 0, 1
-	ev_at 13
-	ev_note 6, 74, 55, 45, 0, 1
-	ev_note 6, 71, 55, 9, 0, 1
-	ev_at 14
-	ev_note 6, 67, 12, 26, 0, 1
-	ev_at 18
-	ev_note 4, 76, 83, 9, 0, 1
-	ev_at 19
-	ev_note 3, 76, 75, 31, 0, 1
-	ev_note 3, 79, 78, 32, 0, 1
-	ev_at 28
-	ev_note 6, 71, 58, 11, 0, 1
-	ev_at 33
-	ev_note 4, 76, 81, 14, 0, 1
-	ev_at 49
-	ev_note 6, 71, 65, 10, 0, 1
-	ev_at 51
-	ev_note 6, 67, 49, 29, 0, 1
-	ev_at 66
-	ev_note 6, 71, 70, 11, 0, 1
-	ev_at 67
-	ev_note 6, 74, 71, 10, 0, 1
-	ev_at 85
-	ev_note 6, 71, 76, 12, 0, 1
-	ev_at 86
-	ev_note 6, 67, 45, 11, 0, 1
-	ev_note 6, 74, 77, 12, 0, 1
-	ev_at 89
-	ev_note 4, 76, 93, 13, 0, 1
+	ev_note	3, 77, 92, 9, 0, 1
+	ev_at	1
+	ev_note	3, 74, 90, 7, 0, 1
+	ev_at	3
+	ev_note	1, 36, 96, 22, 1, 1
+	ev_at	3
+	ev_note	2, 67, 78, 74, 0, 1
+	ev_note	2, 60, 74, 74, 0, 1
+	ev_note	2, 64, 66, 74, 0, 1
+	ev_at	3
+	ev_note	5, 48, 89, 117, 0, 1
+	ev_at	18
+	ev_note	3, 77, 78, 11, 0, 1
+	ev_at	20
+	ev_note	3, 74, 70, 9, 0, 1
+	ev_at	29
+	ev_note	6, 79, 67, 15, 0, 1
+	ev_at	30
+	ev_note	6, 76, 74, 12, 0, 1
+	ev_at	31
+	ev_note	4, 74, 86, 14, 0, 1
+	ev_at	31
+	ev_note	6, 72, 13, 10, 0, 1
+	ev_at	34
+	ev_note	3, 77, 71, 12, 0, 1
+	ev_note	3, 74, 69, 12, 0, 1
+	ev_at	49
+	ev_note	6, 79, 63, 15, 0, 1
+	ev_at	50
+	ev_note	4, 74, 76, 12, 0, 1
+	ev_at	51
+	ev_note	3, 74, 73, 15, 0, 1
+	ev_note	3, 77, 85, 16, 0, 1
+	ev_at	51
+	ev_note	6, 76, 71, 11, 0, 1
+	ev_at	53
+	ev_note	6, 72, 55, 9, 0, 1
+	ev_at	70
+	ev_note	6, 76, 73, 13, 0, 1
+	ev_note	6, 79, 60, 11, 0, 1
+	ev_at	72
+	ev_note	6, 72, 49, 10, 0, 1
+	ev_at	89
+	ev_note	6, 76, 73, 14, 0, 1
+	ev_at	91
+	ev_note	6, 79, 68, 10, 0, 1
+	ev_note	6, 72, 56, 12, 0, 1
 	ev_beat
-	ev_note 3, 79, 91, 12, 0, 1
-	ev_at 1
-	ev_note 3, 76, 92, 11, 0, 1
-	ev_at 3
-	ev_note 2, 59, 65, 15, 0, 1
-	ev_note 2, 62, 70, 17, 0, 1
-	ev_note 2, 55, 63, 17, 0, 1
-	ev_at 9
-	ev_note 6, 71, 73, 12, 0, 1
-	ev_at 10
-	ev_note 6, 74, 76, 11, 0, 1
-	ev_note 6, 67, 56, 12, 0, 1
-	ev_at 29
-	ev_note 6, 67, 64, 34, 0, 1
-	ev_at 31
-	ev_note 6, 71, 73, 12, 0, 1
-	ev_note 6, 74, 75, 12, 0, 1
-	ev_at 46
-	ev_note 4, 76, 97, 12, 0, 1
-	ev_at 47
-	ev_note 3, 76, 93, 14, 0, 1
-	ev_at 48
-	ev_note 3, 79, 90, 10, 0, 1
-	ev_at 50
-	ev_note 1, 35, 98, 38, 0, 1
-	ev_at 50
-	ev_note 2, 59, 73, 19, 0, 1
-	ev_note 2, 55, 64, 19, 0, 1
-	ev_note 2, 62, 70, 15, 0, 1
-	ev_at 50
-	ev_note 5, 47, 93, 26, 0, 1
-	ev_at 50
-	ev_note 6, 71, 63, 12, 0, 1
-	ev_at 51
-	ev_note 6, 74, 64, 12, 0, 1
-	ev_at 70
-	ev_note 6, 71, 71, 12, 0, 1
-	ev_at 71
-	ev_note 6, 74, 70, 12, 0, 1
-	ev_note 6, 67, 46, 12, 0, 1
-	ev_at 90
-	ev_note 6, 71, 69, 11, 0, 1
-	ev_note 6, 74, 67, 13, 0, 1
-	ev_at 92
-	ev_note 6, 67, 43, 10, 0, 1
-	ev_at 93
-	ev_note 4, 74, 93, 10, 0, 1
+	ev_at	1
+	ev_note	4, 72, 94, 12, 0, 1
+	ev_at	2
+	ev_note	3, 76, 95, 13, 0, 1
+	ev_note	3, 72, 96, 14, 0, 1
+	ev_at	3
+	ev_note	2, 64, 71, 17, 0, 1
+	ev_note	2, 60, 68, 16, 0, 1
+	ev_note	2, 67, 70, 15, 0, 1
+	ev_at	13
+	ev_note	6, 76, 73, 14, 0, 1
+	ev_at	14
+	ev_note	6, 79, 67, 12, 0, 1
+	ev_at	15
+	ev_note	6, 72, 54, 11, 0, 1
+	ev_at	35
+	ev_note	6, 76, 64, 12, 0, 1
+	ev_note	6, 79, 60, 12, 0, 1
+	ev_at	36
+	ev_note	6, 72, 52, 12, 0, 1
+	ev_at	48
+	ev_note	4, 72, 99, 10, 0, 1
+	ev_at	51
+	ev_note	1, 40, 97, 33, 0, 1
+	ev_at	51
+	ev_note	2, 64, 61, 14, 0, 1
+	ev_note	2, 67, 66, 17, 0, 1
+	ev_note	2, 60, 57, 18, 0, 1
+	ev_at	51
+	ev_note	5, 52, 92, 24, 0, 1
+	ev_at	52
+	ev_note	3, 76, 95, 9, 0, 1
+	ev_note	3, 72, 100, 9, 0, 1
+	ev_at	55
+	ev_note	6, 79, 65, 12, 0, 1
+	ev_note	6, 76, 70, 12, 0, 1
+	ev_at	56
+	ev_note	6, 72, 56, 12, 0, 1
+	ev_at	70
+	ev_note	4, 72, 77, 10, 0, 1
+	ev_at	71
+	ev_note	3, 76, 68, 11, 0, 1
+	ev_at	72
+	ev_note	3, 72, 69, 24, 0, 1
+	ev_at	76
+	ev_note	6, 79, 61, 12, 0, 1
+	ev_note	6, 76, 64, 12, 0, 1
+	ev_at	77
+	ev_note	6, 72, 53, 12, 0, 1
+	ev_at	85
+	ev_note	3, 76, 70, 12, 0, 1
+	ev_note	4, 72, 70, 11, 0, 1
 	ev_beat
-	ev_note 3, 77, 90, 8, 0, 1
-	ev_note 3, 74, 88, 8, 0, 1
-	ev_at 3
-	ev_note 1, 38, 103, 92, 0, 1
-	ev_at 3
-	ev_note 2, 59, 72, 72, 0, 1
-	ev_note 2, 55, 65, 72, 0, 1
-	ev_note 2, 62, 71, 69, 0, 1
-	ev_at 3
-	ev_note 5, 50, 90, 71, 0, 1
-	ev_at 13
-	ev_note 6, 71, 73, 12, 0, 1
-	ev_note 6, 74, 64, 12, 0, 1
-	ev_at 17
-	ev_note 3, 74, 78, 12, 0, 1
-	ev_note 3, 77, 85, 12, 0, 1
-	ev_at 17
-	ev_note 6, 67, 41, 7, 0, 1
-	ev_at 18
-	ev_note 4, 74, 84, 31, 0, 1
-	ev_at 33
-	ev_note 3, 77, 67, 16, 0, 1
-	ev_note 3, 74, 72, 16, 0, 1
-	ev_at 37
-	ev_note 6, 71, 55, 7, 0, 1
-	ev_at 58
-	ev_note 6, 74, 49, 6, 0, 1
-	ev_at 71
-	ev_note 6, 71, 70, 12, 0, 1
-	ev_at 72
-	ev_note 6, 74, 66, 11, 0, 1
-	ev_note 6, 67, 53, 11, 0, 1
+	ev_at	1
+	ev_note	6, 76, 65, 11, 0, 1
+	ev_note	6, 79, 58, 12, 0, 1
+	ev_at	2
+	ev_note	6, 72, 48, 11, 0, 1
+	ev_at	3
+	ev_note	1, 43, 104, 91, 0, 1
+	ev_at	3
+	ev_note	2, 67, 76, 62, 0, 1
+	ev_note	2, 60, 71, 64, 0, 1
+	ev_note	2, 64, 76, 65, 0, 1
+	ev_at	3
+	ev_note	5, 55, 89, 68, 0, 1
+	ev_at	10
+	ev_note	4, 72, 72, 11, 0, 1
+	ev_at	11
+	ev_note	3, 72, 84, 12, 0, 1
+	ev_at	12
+	ev_note	3, 76, 81, 10, 0, 1
+	ev_at	21
+	ev_note	6, 72, 56, 52, 0, 1
+	ev_at	22
+	ev_note	6, 79, 50, 11, 0, 1
+	ev_note	6, 76, 60, 10, 0, 1
+	ev_at	30
+	ev_note	4, 72, 65, 10, 0, 1
+	ev_at	31
+	ev_note	3, 76, 73, 10, 0, 1
+	ev_note	3, 72, 71, 10, 0, 1
+	ev_at	42
+	ev_note	6, 79, 57, 10, 0, 1
+	ev_at	44
+	ev_note	6, 76, 50, 6, 0, 1
+	ev_at	49
+	ev_note	3, 76, 78, 13, 0, 1
+	ev_note	3, 72, 76, 12, 0, 1
+	ev_at	50
+	ev_note	4, 72, 67, 11, 0, 1
+	ev_at	62
+	ev_note	6, 79, 51, 9, 0, 1
+	ev_at	70
+	ev_note	3, 72, 76, 12, 0, 1
+	ev_at	71
+	ev_note	3, 76, 73, 9, 0, 1
+	ev_note	4, 72, 56, 28, 0, 1
+	ev_at	83
+	ev_note	6, 79, 48, 6, 0, 1
+	ev_note	6, 72, 27, 43, 0, 1
+	ev_at	90
+	ev_note	3, 72, 73, 14, 0, 1
+	ev_at	91
+	ev_note	3, 76, 75, 14, 0, 1
 	ev_beat
-	ev_at 2
-	ev_note 1, 35, 101, 39, 0, 1
-	ev_at 2
-	ev_note 2, 59, 70, 71, 0, 1
-	ev_note 2, 55, 65, 68, 0, 1
-	ev_note 2, 62, 75, 68, 0, 1
-	ev_at 2
-	ev_note 5, 47, 90, 22, 0, 1
-	ev_at 2
-	ev_note 4, 74, 96, 13, 0, 1
-	ev_at 3
-	ev_note 3, 74, 96, 14, 0, 1
-	ev_note 3, 77, 94, 14, 0, 1
-	ev_at 6
-	ev_note 3, 76, 86, 3, 0, 1
-	ev_at 49
-	ev_note 3, 79, 91, 13, 0, 1
-	ev_note 4, 76, 99, 10, 0, 1
-	ev_at 50
-	ev_note 1, 38, 98, 44, 0, 1
-	ev_at 50
-	ev_note 5, 50, 90, 27, 0, 1
-	ev_at 50
-	ev_note 3, 76, 96, 13, 0, 1
-	ev_at 91
-	ev_note 6, 76, 63, 9, 0, 1
-	ev_at 92
-	ev_note 6, 79, 65, 8, 0, 1
-	ev_at 94
-	ev_note 1, 48, 82, 5, 0, 1
-	ev_at 95
-	ev_note 4, 74, 95, 9, 0, 1
+	ev_at	3
+	ev_note	1, 40, 101, 41, 0, 1
+	ev_at	3
+	ev_note	2, 60, 79, 46, 0, 1
+	ev_note	2, 64, 76, 47, 0, 1
+	ev_note	2, 67, 78, 45, 0, 1
+	ev_at	3
+	ev_note	5, 52, 89, 22, 0, 1
+	ev_at	3
+	ev_note	6, 79, 67, 32, 0, 1
+	ev_at	5
+	ev_note	6, 76, 53, 25, 0, 1
+	ev_at	13
+	ev_note	3, 72, 73, 15, 0, 1
+	ev_note	3, 76, 56, 12, 0, 1
+	ev_at	31
+	ev_note	3, 72, 59, 16, 0, 1
+	ev_at	33
+	ev_note	3, 76, 75, 10, 0, 1
+	ev_at	51
+	ev_note	1, 43, 105, 33, 0, 1
+	ev_at	51
+	ev_note	5, 55, 91, 27, 0, 1
+	ev_at	51
+	ev_note	3, 72, 56, 29, 0, 1
+	ev_at	52
+	ev_note	3, 76, 76, 28, 0, 1
 	ev_beat
-	ev_note 3, 77, 92, 9, 0, 1
-	ev_at 1
-	ev_note 3, 74, 90, 7, 0, 1
-	ev_at 3
-	ev_note 1, 36, 96, 22, 1, 1
-	ev_at 3
-	ev_note 2, 67, 78, 74, 0, 1
-	ev_note 2, 60, 74, 74, 0, 1
-	ev_note 2, 64, 66, 74, 0, 1
-	ev_at 3
-	ev_note 5, 48, 89, 117, 0, 1
-	ev_at 18
-	ev_note 3, 77, 78, 11, 0, 1
-	ev_at 20
-	ev_note 3, 74, 70, 9, 0, 1
-	ev_at 29
-	ev_note 6, 79, 67, 15, 0, 1
-	ev_at 30
-	ev_note 6, 76, 74, 12, 0, 1
-	ev_at 31
-	ev_note 4, 74, 86, 14, 0, 1
-	ev_at 31
-	ev_note 6, 72, 13, 10, 0, 1
-	ev_at 34
-	ev_note 3, 77, 71, 12, 0, 1
-	ev_note 3, 74, 69, 12, 0, 1
-	ev_at 49
-	ev_note 6, 79, 63, 15, 0, 1
-	ev_at 50
-	ev_note 4, 74, 76, 12, 0, 1
-	ev_at 51
-	ev_note 3, 74, 73, 15, 0, 1
-	ev_note 3, 77, 85, 16, 0, 1
-	ev_at 51
-	ev_note 6, 76, 71, 11, 0, 1
-	ev_at 53
-	ev_note 6, 72, 55, 9, 0, 1
-	ev_at 70
-	ev_note 6, 76, 73, 13, 0, 1
-	ev_note 6, 79, 60, 11, 0, 1
-	ev_at 72
-	ev_note 6, 72, 49, 10, 0, 1
-	ev_at 89
-	ev_note 6, 76, 73, 14, 0, 1
-	ev_at 91
-	ev_note 6, 79, 68, 10, 0, 1
-	ev_note 6, 72, 56, 12, 0, 1
-	ev_beat
-	ev_at 1
-	ev_note 4, 72, 94, 12, 0, 1
-	ev_at 2
-	ev_note 3, 76, 95, 13, 0, 1
-	ev_note 3, 72, 96, 14, 0, 1
-	ev_at 3
-	ev_note 2, 64, 71, 17, 0, 1
-	ev_note 2, 60, 68, 16, 0, 1
-	ev_note 2, 67, 70, 15, 0, 1
-	ev_at 13
-	ev_note 6, 76, 73, 14, 0, 1
-	ev_at 14
-	ev_note 6, 79, 67, 12, 0, 1
-	ev_at 15
-	ev_note 6, 72, 54, 11, 0, 1
-	ev_at 35
-	ev_note 6, 76, 64, 12, 0, 1
-	ev_note 6, 79, 60, 12, 0, 1
-	ev_at 36
-	ev_note 6, 72, 52, 12, 0, 1
-	ev_at 48
-	ev_note 4, 72, 99, 10, 0, 1
-	ev_at 51
-	ev_note 1, 40, 97, 33, 0, 1
-	ev_at 51
-	ev_note 2, 64, 61, 14, 0, 1
-	ev_note 2, 67, 66, 17, 0, 1
-	ev_note 2, 60, 57, 18, 0, 1
-	ev_at 51
-	ev_note 5, 52, 92, 24, 0, 1
-	ev_at 52
-	ev_note 3, 76, 95, 9, 0, 1
-	ev_note 3, 72, 100, 9, 0, 1
-	ev_at 55
-	ev_note 6, 79, 65, 12, 0, 1
-	ev_note 6, 76, 70, 12, 0, 1
-	ev_at 56
-	ev_note 6, 72, 56, 12, 0, 1
-	ev_at 70
-	ev_note 4, 72, 77, 10, 0, 1
-	ev_at 71
-	ev_note 3, 76, 68, 11, 0, 1
-	ev_at 72
-	ev_note 3, 72, 69, 24, 0, 1
-	ev_at 76
-	ev_note 6, 79, 61, 12, 0, 1
-	ev_note 6, 76, 64, 12, 0, 1
-	ev_at 77
-	ev_note 6, 72, 53, 12, 0, 1
-	ev_at 85
-	ev_note 3, 76, 70, 12, 0, 1
-	ev_note 4, 72, 70, 11, 0, 1
-	ev_beat
-	ev_at 1
-	ev_note 6, 76, 65, 11, 0, 1
-	ev_note 6, 79, 58, 12, 0, 1
-	ev_at 2
-	ev_note 6, 72, 48, 11, 0, 1
-	ev_at 3
-	ev_note 1, 43, 104, 91, 0, 1
-	ev_at 3
-	ev_note 2, 67, 76, 62, 0, 1
-	ev_note 2, 60, 71, 64, 0, 1
-	ev_note 2, 64, 76, 65, 0, 1
-	ev_at 3
-	ev_note 5, 55, 89, 68, 0, 1
-	ev_at 10
-	ev_note 4, 72, 72, 11, 0, 1
-	ev_at 11
-	ev_note 3, 72, 84, 12, 0, 1
-	ev_at 12
-	ev_note 3, 76, 81, 10, 0, 1
-	ev_at 21
-	ev_note 6, 72, 56, 52, 0, 1
-	ev_at 22
-	ev_note 6, 79, 50, 11, 0, 1
-	ev_note 6, 76, 60, 10, 0, 1
-	ev_at 30
-	ev_note 4, 72, 65, 10, 0, 1
-	ev_at 31
-	ev_note 3, 76, 73, 10, 0, 1
-	ev_note 3, 72, 71, 10, 0, 1
-	ev_at 42
-	ev_note 6, 79, 57, 10, 0, 1
-	ev_at 44
-	ev_note 6, 76, 50, 6, 0, 1
-	ev_at 49
-	ev_note 3, 76, 78, 13, 0, 1
-	ev_note 3, 72, 76, 12, 0, 1
-	ev_at 50
-	ev_note 4, 72, 67, 11, 0, 1
-	ev_at 62
-	ev_note 6, 79, 51, 9, 0, 1
-	ev_at 70
-	ev_note 3, 72, 76, 12, 0, 1
-	ev_at 71
-	ev_note 3, 76, 73, 9, 0, 1
-	ev_note 4, 72, 56, 28, 0, 1
-	ev_at 83
-	ev_note 6, 79, 48, 6, 0, 1
-	ev_note 6, 72, 27, 43, 0, 1
-	ev_at 90
-	ev_note 3, 72, 73, 14, 0, 1
-	ev_at 91
-	ev_note 3, 76, 75, 14, 0, 1
-	ev_beat
-	ev_at 3
-	ev_note 1, 40, 101, 41, 0, 1
-	ev_at 3
-	ev_note 2, 60, 79, 46, 0, 1
-	ev_note 2, 64, 76, 47, 0, 1
-	ev_note 2, 67, 78, 45, 0, 1
-	ev_at 3
-	ev_note 5, 52, 89, 22, 0, 1
-	ev_at 3
-	ev_note 6, 79, 67, 32, 0, 1
-	ev_at 5
-	ev_note 6, 76, 53, 25, 0, 1
-	ev_at 13
-	ev_note 3, 72, 73, 15, 0, 1
-	ev_note 3, 76, 56, 12, 0, 1
-	ev_at 31
-	ev_note 3, 72, 59, 16, 0, 1
-	ev_at 33
-	ev_note 3, 76, 75, 10, 0, 1
-	ev_at 51
-	ev_note 1, 43, 105, 33, 0, 1
-	ev_at 51
-	ev_note 5, 55, 91, 27, 0, 1
-	ev_at 51
-	ev_note 3, 72, 56, 29, 0, 1
-	ev_at 52
-	ev_note 3, 76, 76, 28, 0, 1
-	ev_beat
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x55630, 0x55631	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	ev_at	3
 	ev_note	1, 36, 106, 47, 0, 1
 	ev_at	3
 	ev_note	2, 48, 88, 10, 0, 1
@@ -3273,9 +3266,7 @@
 	ev_at	50
 	ev_note	6, 81, 96, 16, 0, 1
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x55681, 0x55685	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 13, 0xa2	# stale start of a stream of an earlier write, cut after 0xa1 of its 0xa2 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	0, 19, 60, 12, 0, 0
 	ev_note	1, 36, 103, 110, 0, 1
@@ -3899,79 +3890,79 @@
 	ev_beat
 	ev_beat
 	ev_end
-	.byte 0x0f, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	.byte 0x01, 0x4f	# stale tail of an earlier write; same bytes as 01custm5 Stale26 +0x8326..+0x8aa2; bytes 2..3 of `STREAM_HEADER`
+	STREAM_HEADER 15, 0x14f	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x8326..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x8326..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot07 +0x8326..
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 81, 122, 0, 1
+	ev_note	2, 55, 69, 1, 1, 1
+	ev_note	2, 60, 65, 2, 1, 1
+	ev_note	2, 63, 67, 2, 1, 1
+	ev_note	3, 55, 76, 22, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 67, 84, 78, 2, 1
 	ev_beat
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 0, 36, 86, 16, 0, 0
-	ev_note 1, 36, 81, 122, 0, 1
-	ev_note 2, 55, 69, 1, 1, 1
-	ev_note 2, 60, 65, 2, 1, 1
-	ev_note 2, 63, 67, 2, 1, 1
-	ev_note 3, 55, 76, 22, 1, 1
-	ev_at 48
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 3, 67, 84, 78, 2, 1
+	ev_note	0, 38, 93, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 63, 75, 27, 2, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 62, 22, 0, 1
+	ev_note	2, 55, 51, 46, 0, 1
+	ev_note	2, 60, 51, 46, 0, 1
+	ev_note	2, 63, 51, 46, 0, 1
+	ev_note	3, 62, 72, 107, 1, 1
+	ev_at	72
+	ev_note	0, 38, 61, 14, 0, 0
+	ev_note	1, 36, 75, 22, 0, 1
 	ev_beat
-	ev_note 0, 38, 93, 14, 0, 0
-	ev_note 0, 18, 66, 12, 0, 0
-	ev_note 3, 63, 75, 27, 2, 1
-	ev_at 48
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 0, 36, 57, 16, 0, 0
-	ev_note 1, 36, 62, 22, 0, 1
-	ev_note 2, 55, 51, 46, 0, 1
-	ev_note 2, 60, 51, 46, 0, 1
-	ev_note 2, 63, 51, 46, 0, 1
-	ev_note 3, 62, 72, 107, 1, 1
-	ev_at 72
-	ev_note 0, 38, 61, 14, 0, 0
-	ev_note 1, 36, 75, 22, 0, 1
+	ev_note	0, 51, 117, 12, 0, 0
+	ev_note	0, 38, 90, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	2, 55, 60, 94, 0, 1
+	ev_note	2, 60, 60, 94, 0, 1
+	ev_note	2, 63, 60, 94, 0, 1
+	ev_note	3, 60, 70, 57, 1, 1
+	ev_at	1
+	ev_note	1, 36, 85, 79, 0, 1
+	ev_at	48
+	ev_note	3, 55, 65, 12, 1, 1
 	ev_beat
-	ev_note 0, 51, 117, 12, 0, 0
-	ev_note 0, 38, 90, 14, 0, 0
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 0, 36, 83, 16, 0, 0
-	ev_note 2, 55, 60, 94, 0, 1
-	ev_note 2, 60, 60, 94, 0, 1
-	ev_note 2, 63, 60, 94, 0, 1
-	ev_note 3, 60, 70, 57, 1, 1
-	ev_at 1
-	ev_note 1, 36, 85, 79, 0, 1
-	ev_at 48
-	ev_note 3, 55, 65, 12, 1, 1
+	ev_note	0, 51, 105, 12, 0, 0
+	ev_note	3, 51, 62, 54, 0, 1
+	ev_at	1
+	ev_note	1, 43, 101, 95, 0, 1
+	ev_note	2, 55, 58, 92, 0, 1
+	ev_note	2, 60, 58, 92, 0, 1
+	ev_note	2, 63, 58, 91, 0, 1
+	ev_at	48
+	ev_note	3, 50, 70, 41, 0, 1
+	ev_at	88
+	ev_note	3, 48, 43, 71, 1, 1
+	ev_at	92
+	ev_note	3, 51, 45, 71, 1, 1
+	ev_at	95
+	ev_note	3, 55, 47, 66, 1, 1
 	ev_beat
-	ev_note 0, 51, 105, 12, 0, 0
-	ev_note 3, 51, 62, 54, 0, 1
-	ev_at 1
-	ev_note 1, 43, 101, 95, 0, 1
-	ev_note 2, 55, 58, 92, 0, 1
-	ev_note 2, 60, 58, 92, 0, 1
-	ev_note 2, 63, 58, 91, 0, 1
-	ev_at 48
-	ev_note 3, 50, 70, 41, 0, 1
-	ev_at 88
-	ev_note 3, 48, 43, 71, 1, 1
-	ev_at 92
-	ev_note 3, 51, 45, 71, 1, 1
-	ev_at 95
-	ev_note 3, 55, 47, 66, 1, 1
-	ev_beat
-	ev_note 0, 36, 64, 16, 0, 0
-	ev_note 0, 51, 84, 12, 0, 0
-	ev_at 1
-	ev_note 2, 55, 71, 65, 1, 1
-	ev_note 2, 60, 71, 64, 1, 1
-	ev_note 2, 63, 71, 64, 1, 1
-	ev_at 2
-	ev_note 1, 36, 106, 62, 1, 1
-	ev_note 3, 60, 49, 63, 1, 1
-	ev_at 4
-	ev_note 3, 63, 52, 62, 1, 1
+	ev_note	0, 36, 64, 16, 0, 0
+	ev_note	0, 51, 84, 12, 0, 0
+	ev_at	1
+	ev_note	2, 55, 71, 65, 1, 1
+	ev_note	2, 60, 71, 64, 1, 1
+	ev_note	2, 63, 71, 64, 1, 1
+	ev_at	2
+	ev_note	1, 36, 106, 62, 1, 1
+	ev_note	3, 60, 49, 63, 1, 1
+	ev_at	4
+	ev_note	3, 63, 52, 62, 1, 1
 	ev_beat
 	ev_beat
-	ev_at 1
-	ev_note 1, 36, 56, 11, 0, 1
+	ev_at	1
+	ev_note	1, 36, 56, 11, 0, 1
 	ev_beat
 	ev_beat
 	ev_beat
@@ -3986,7 +3977,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	STREAM_HEADER 16, 0x625
+	STREAM_HEADER 16, 0x625	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x8c6f..+0x929a
 	ev_beat
 	ev_cc 1, 11, 127
 	ev_cc 2, 11, 127
@@ -4388,26 +4379,21 @@
 	ev_note 6, 72, 83, 58, 0, 1
 	ev_note 6, 79, 96, 60, 0, 1
 	ev_end
-	.byte 0x11, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x56793, 0x56795	# stale bytes of an earlier write
-	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Stale26 +0x99fe..+0x9a38
-	ev_note 0, 36, 86, 16, 0, 0
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 1, 36, 87, 108, 0, 1
-	ev_note 2, 55, 59, 62, 1, 1
-	ev_note 2, 60, 51, 62, 1, 1
-	ev_note 2, 63, 61, 62, 1, 1
-	ev_note 3, 48, 73, 100, 0, 1
-	ev_at 48
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 3, 55, 54, 51, 0, 1
+	STREAM_HEADER 17, 0x1c8	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0x929a..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x929a..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot07 +0x929a..
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 108, 0, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 63, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
 	ev_beat
-	.byte 0x90	# bytes 0..0 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x567cf, 0x567d3	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
-	ev_at	0
+	ev_note	0, 51, 90, 12, 0, 0
 	ev_note	0, 18, 66, 12, 0, 0
 	ev_note	3, 60, 72, 94, 0, 1
 	ev_note	3, 63, 70, 94, 0, 1
@@ -4490,8 +4476,8 @@
 	ev_beat
 	ev_beat
 	ev_beat
-	ev_end	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x9cff..+0xa1f4
-	STREAM_HEADER 18, 0x4ee
+	ev_end
+	STREAM_HEADER 18, 0x4ee	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0x9d00..+0xa1f4
 	ev_beat
 	ev_cc 1, 11, 127
 	ev_cc 2, 11, 127
@@ -4812,109 +4798,109 @@
 	ev_beat
 	ev_beat
 	ev_end
-	.byte 0x13, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	.byte 0x01, 0xdb	# stale tail of an earlier write; same bytes as 01custm5 Stale26 +0x99fc..+0xa88c; bytes 2..3 of `STREAM_HEADER`
+	STREAM_HEADER 19, 0x1db	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot07 +0xa1f4..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot07 +0xa1f4..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot07 +0xa1f4..
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 108, 0, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 63, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
 	ev_beat
-	ev_note 0, 36, 86, 16, 0, 0
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 1, 36, 87, 108, 0, 1
-	ev_note 2, 55, 59, 62, 1, 1
-	ev_note 2, 60, 51, 62, 1, 1
-	ev_note 2, 63, 61, 62, 1, 1
-	ev_note 3, 48, 73, 100, 0, 1
-	ev_at 48
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 3, 55, 54, 51, 0, 1
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 51, 94, 12, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 63, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 53, 38, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 66, 18, 0, 1
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_at	72
+	ev_note	0, 53, 53, 12, 0, 0
 	ev_beat
-	ev_note 0, 18, 66, 12, 0, 0
-	ev_note 0, 51, 94, 12, 0, 0
-	ev_note 3, 60, 72, 94, 0, 1
-	ev_note 3, 63, 70, 94, 0, 1
-	ev_at 48
-	ev_note 0, 53, 38, 12, 0, 0
-	ev_note 0, 36, 57, 16, 0, 0
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 1, 36, 66, 18, 0, 1
-	ev_note 3, 55, 63, 50, 0, 1
-	ev_at 72
-	ev_note 0, 53, 53, 12, 0, 0
+	ev_note	0, 53, 70, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 64, 1, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 63, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 38, 62, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_at	72
+	ev_note	0, 38, 78, 16, 0, 0
 	ev_beat
-	ev_note 0, 53, 70, 12, 0, 0
-	ev_note 0, 36, 83, 16, 0, 0
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 1, 36, 87, 64, 1, 1
-	ev_note 2, 55, 59, 62, 1, 1
-	ev_note 2, 60, 51, 62, 1, 1
-	ev_note 2, 63, 61, 62, 1, 1
-	ev_note 3, 48, 73, 100, 0, 1
-	ev_at 48
-	ev_note 0, 38, 62, 16, 0, 0
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 3, 55, 54, 51, 0, 1
-	ev_at 72
-	ev_note 0, 38, 78, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 63, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 45, 105, 12, 0, 0
+	ev_note	3, 55, 63, 50, 0, 1
 	ev_beat
-	ev_note 0, 18, 66, 12, 0, 0
-	ev_note 0, 38, 100, 16, 0, 0
-	ev_note 3, 60, 72, 94, 0, 1
-	ev_note 3, 63, 70, 94, 0, 1
-	ev_at 48
-	ev_note 0, 19, 53, 12, 0, 0
-	ev_note 0, 45, 105, 12, 0, 0
-	ev_note 3, 55, 63, 50, 0, 1
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 38, 87, 95, 0, 1
+	ev_note	2, 53, 61, 94, 0, 1
+	ev_note	2, 56, 52, 94, 0, 1
+	ev_note	2, 62, 65, 94, 0, 1
+	ev_note	3, 50, 80, 24, 1, 1
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	3, 53, 68, 47, 0, 1
 	ev_beat
-	ev_note 0, 59, 70, 12, 0, 0
-	ev_note 0, 44, 19, 12, 0, 0
-	ev_note 0, 36, 86, 16, 0, 0
-	ev_note 1, 38, 87, 95, 0, 1
-	ev_note 2, 53, 61, 94, 0, 1
-	ev_note 2, 56, 52, 94, 0, 1
-	ev_note 2, 62, 65, 94, 0, 1
-	ev_note 3, 50, 80, 24, 1, 1
-	ev_at 48
-	ev_note 0, 44, 19, 12, 0, 0
-	ev_note 3, 53, 68, 47, 0, 1
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 57, 16, 0, 0
+	ev_note	1, 43, 96, 88, 0, 1
+	ev_note	2, 53, 68, 94, 0, 1
+	ev_note	2, 55, 56, 90, 0, 1
+	ev_note	2, 59, 62, 94, 0, 1
+	ev_note	2, 62, 65, 94, 0, 1
+	ev_note	3, 55, 72, 49, 0, 1
+	ev_note	3, 62, 69, 59, 0, 1
+	ev_note	3, 65, 65, 60, 0, 1
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	3, 53, 72, 47, 0, 1
+	ev_at	72
+	ev_note	0, 38, 75, 16, 0, 0
 	ev_beat
-	ev_note 0, 59, 93, 12, 0, 0
-	ev_note 0, 44, 67, 12, 0, 0
-	ev_note 0, 38, 57, 16, 0, 0
-	ev_note 1, 43, 96, 88, 0, 1
-	ev_note 2, 53, 68, 94, 0, 1
-	ev_note 2, 55, 56, 90, 0, 1
-	ev_note 2, 59, 62, 94, 0, 1
-	ev_note 2, 62, 65, 94, 0, 1
-	ev_note 3, 55, 72, 49, 0, 1
-	ev_note 3, 62, 69, 59, 0, 1
-	ev_note 3, 65, 65, 60, 0, 1
-	ev_at 48
-	ev_note 0, 44, 19, 12, 0, 0
-	ev_note 0, 36, 57, 16, 0, 0
-	ev_note 3, 53, 72, 47, 0, 1
-	ev_at 72
-	ev_note 0, 38, 75, 16, 0, 0
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	2, 51, 59, 93, 1, 1
+	ev_note	2, 55, 63, 94, 1, 1
+	ev_note	2, 60, 50, 93, 1, 1
+	ev_note	3, 51, 76, 96, 1, 1
+	ev_note	3, 55, 71, 99, 1, 1
+	ev_note	3, 60, 80, 95, 1, 1
+	ev_at	1
+	ev_note	1, 36, 87, 87, 1, 1
 	ev_beat
-	ev_note 0, 38, 100, 16, 0, 0
-	ev_note 0, 44, 13, 12, 0, 0
-	ev_note 0, 36, 83, 16, 0, 0
-	ev_note 2, 51, 59, 93, 1, 1
-	ev_note 2, 55, 63, 94, 1, 1
-	ev_note 2, 60, 50, 93, 1, 1
-	ev_note 3, 51, 76, 96, 1, 1
-	ev_note 3, 55, 71, 99, 1, 1
-	ev_note 3, 60, 80, 95, 1, 1
-	ev_at 1
-	ev_note 1, 36, 87, 87, 1, 1
-	ev_beat
-	ev_at 3
-	ev_note 0, 51, 69, 12, 0, 0
-	ev_at 4
-	ev_note 0, 36, 41, 16, 0, 0
+	ev_at	3
+	ev_note	0, 51, 69, 12, 0, 0
+	ev_at	4
+	ev_note	0, 36, 41, 16, 0, 0
 	ev_beat
 	ev_beat
 	ev_beat
 	ev_beat
 	ev_end
-	TPAD_HEADER 0xcb3
+	TPAD_HEADER 0xcb3	# stale tail of an earlier write; same bytes as 01ctmini Slot14 +0x6ab8..+0x776b
 	TPAD_BANK "  User Bank 1   "
 	TPAD_PAD "   Voice Loop   ", 0x71, 0x02, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x00, 0x03, 0x03, 0x00, 0x00, 0x2e0
 	PART_SETUP 0x08, 127, 0x40, 0x00, 0x26, 64, 0, 0, 64, 12, 60, 68, 92, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -5867,8 +5853,8 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
+	.byte 0x4e	# [INFERENCE] the last 1 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
-	ev_at	78
 	ev_note	0, 36, 30, 1, 0, 0
 	ev_at	93
 	ev_note	3, 48, 39, 7, 0, 1
@@ -6056,5 +6042,4 @@
 	ev_note	7, 104, 83, 1, 0, 0
 	ev_beat
 	ev_note	0, 19, 50, 1, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x57ffe, 0x58000	# stale bytes of an earlier write
+	.byte 0x90, 0x45	# the first 2 byte(s) of an event of an earlier write, cut by the end of the record's last block

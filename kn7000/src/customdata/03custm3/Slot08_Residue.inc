@@ -2453,8 +2453,8 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
+	.byte 0x04	# [INFERENCE] the last 1 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
-	ev_at	4
 	ev_note	3, 72, 97, 43, 0, 1
 	ev_at	46
 	ev_note	7, 64, 124, 20, 0, 0
@@ -2699,10 +2699,11 @@
 	ev_cc	4, 11, 91
 	ev_at	76
 	ev_cc	4, 11, 90
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_at	88
 	ev_cc	4, 11, 89
-	ev_end	# stale tail of an earlier write; same bytes as 01ctmini Slot11 +0x4f08..+0x5bbc
-	TPAD_HEADER 0xcb3
+	ev_end
+	TPAD_HEADER 0xcb3	# stale tail of an earlier write; same bytes as 01ctmini Slot11 +0x4f09..+0x5bbc
 	TPAD_BANK "  User Bank 1   "
 	TPAD_PAD "   Voice Loop   ", 0x71, 0x02, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x00, 0x03, 0x03, 0x00, 0x00, 0x2e0
 	PART_SETUP 0x08, 127, 0x40, 0x00, 0x26, 64, 0, 0, 64, 12, 60, 68, 92, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

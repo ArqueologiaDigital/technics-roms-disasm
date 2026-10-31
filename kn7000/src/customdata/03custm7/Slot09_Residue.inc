@@ -15,554 +15,537 @@
 	ev_note 2, 59, 71, 14, 0, 1
 	ev_note 2, 55, 71, 14, 0, 1
 	ev_at 94
-	.byte 0x93	# bytes 0..0 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4ce29, 0x4ce2a	# stale bytes of an earlier write
-	.byte 0x6b, 0x02, 0x01, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x41d4..+0x424c; bytes 2..5 of `ev_note`
+	# stale events of an earlier write, at an event boundary of the donor record: 03custm7 Slot01 +0x41d3..
+	ev_note	3, 77, 107, 2, 1, 1
 	ev_beat
-	ev_note 0, 61, 127, 10, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 18, 0, 0
-	ev_at 46
-	ev_note 2, 55, 68, 20, 0, 1
-	ev_note 2, 59, 68, 18, 0, 1
-	ev_note 2, 62, 68, 18, 0, 1
-	ev_at 48
-	ev_note 0, 63, 116, 10, 0, 0
-	ev_note 0, 69, 107, 6, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 106, 16, 0, 0
-	ev_at 48
-	ev_note 1, 38, 99, 40, 0, 1
-	ev_at 48
-	ev_note 2, 65, 68, 14, 0, 1
+	ev_note	0, 61, 127, 10, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 18, 0, 0
+	ev_at	46
+	ev_note	2, 55, 68, 20, 0, 1
+	ev_note	2, 59, 68, 18, 0, 1
+	ev_note	2, 62, 68, 18, 0, 1
+	ev_at	48
+	ev_note	0, 63, 116, 10, 0, 0
+	ev_note	0, 69, 107, 6, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 106, 16, 0, 0
+	ev_at	48
+	ev_note	1, 38, 99, 40, 0, 1
+	ev_at	48
+	ev_note	2, 65, 68, 14, 0, 1
 	ev_beat
-	ev_note 0, 64, 112, 14, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 103, 18, 0, 0
-	ev_note 1, 41, 99, 42, 0, 1
-	ev_at 36
-	.byte 0x93	# bytes 0..0 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4cea2, 0x4cea3	# stale bytes of an earlier write
-	.byte 0x66, 0x3c, 0x00, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x424d..+0x4286; bytes 2..5 of `ev_note`
-	ev_at 46
-	ev_note 2, 65, 68, 16, 0, 1
-	ev_note 2, 62, 68, 16, 0, 1
-	ev_note 2, 59, 68, 14, 0, 1
-	ev_note 2, 55, 68, 16, 0, 1
-	ev_at 48
-	ev_note 0, 63, 116, 8, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 106, 16, 0, 0
-	ev_at 48
-	ev_note 1, 31, 99, 44, 0, 1
-	ev_at 94
-	.byte 0x93	# bytes 0..0 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4cedc, 0x4cedd	# stale bytes of an earlier write
-	.byte 0x6b, 0x5a, 0x00, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x4287..+0x42ac; bytes 2..5 of `ev_note`
+	ev_note	0, 64, 112, 14, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 103, 18, 0, 0
+	ev_note	1, 41, 99, 42, 0, 1
+	ev_at	36
+	ev_note	3, 79, 102, 60, 0, 1
+	ev_at	46
+	ev_note	2, 65, 68, 16, 0, 1
+	ev_note	2, 62, 68, 16, 0, 1
+	ev_note	2, 59, 68, 14, 0, 1
+	ev_note	2, 55, 68, 16, 0, 1
+	ev_at	48
+	ev_note	0, 63, 116, 8, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 106, 16, 0, 0
+	ev_at	48
+	ev_note	1, 31, 99, 44, 0, 1
+	ev_at	94
+	ev_note	3, 75, 107, 90, 0, 1
 	ev_beat
-	ev_note 0, 54, 109, 6, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 115, 14, 0, 0
-	ev_note 1, 36, 99, 30, 0, 1
-	ev_at 46
-	.byte 0x92	# bytes 0..0 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4cf02, 0x4cf03	# stale bytes of an earlier write
-	.byte 0x33, 0x5a, 0x00, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x42ad..+0x42ed; bytes 2..5 of `ev_note`
-	ev_at 48
-	ev_note 0, 64, 108, 18, 0, 0
-	ev_note 0, 69, 119, 6, 0, 0
-	ev_note 0, 54, 101, 12, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 108, 12, 0, 0
-	ev_at 58
-	ev_note 2, 55, 57, 80, 0, 1
-	ev_at 70
-	ev_note 2, 60, 65, 68, 0, 1
-	ev_at 72
-	ev_note 0, 63, 119, 18, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_at 82
-	.byte 0x92	# bytes 0..0 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4cf43, 0x4cf44	# stale bytes of an earlier write
-	.byte 0x43, 0x3a, 0x00, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x42ee..+0x4352; bytes 2..5 of `ev_note`
-	ev_at 92
-	ev_note 3, 72, 102, 120, 2, 1
-	ev_at 92
-	ev_note 4, 60, 101, 96, 0, 1
+	ev_note	0, 54, 109, 6, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 115, 14, 0, 0
+	ev_note	1, 36, 99, 30, 0, 1
+	ev_at	46
+	ev_note	2, 51, 51, 90, 0, 1
+	ev_at	48
+	ev_note	0, 64, 108, 18, 0, 0
+	ev_note	0, 69, 119, 6, 0, 0
+	ev_note	0, 54, 101, 12, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 108, 12, 0, 0
+	ev_at	58
+	ev_note	2, 55, 57, 80, 0, 1
+	ev_at	70
+	ev_note	2, 60, 65, 68, 0, 1
+	ev_at	72
+	ev_note	0, 63, 119, 18, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_at	82
+	ev_note	2, 63, 67, 58, 0, 1
+	ev_at	92
+	ev_note	3, 72, 102, 120, 2, 1
+	ev_at	92
+	ev_note	4, 60, 101, 96, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 14, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 103, 16, 0, 0
-	ev_note 1, 36, 99, 52, 0, 1
-	ev_at 48
-	ev_note 0, 99, 127, 6, 0, 0
-	ev_note 0, 54, 127, 8, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 108, 14, 0, 0
-	ev_at 48
-	ev_note 2, 60, 71, 14, 0, 1
-	ev_note 2, 55, 71, 14, 0, 1
-	.byte 0x92	# bytes 0..0 of `ev_note`
-	.byte 0x33, 0x47, 0x0e, 0x00, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x4fb2..+0x57e4; bytes 1..5 of `ev_note`
-	ev_note 2, 63, 71, 14, 0, 1
+	ev_note	0, 61, 127, 14, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 103, 16, 0, 0
+	ev_note	1, 36, 99, 52, 0, 1
+	ev_at	48
+	ev_note	0, 99, 127, 6, 0, 0
+	ev_note	0, 54, 127, 8, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 108, 14, 0, 0
+	ev_at	48
+	ev_note	2, 60, 71, 14, 0, 1
+	ev_note	2, 55, 71, 14, 0, 1
+	ev_note	2, 51, 71, 14, 0, 1
+	ev_note	2, 63, 71, 14, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 8, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 102, 18, 0, 0
-	ev_note 1, 36, 99, 36, 0, 1
-	ev_note 4, 63, 114, 2, 1, 1
-	ev_at 48
-	ev_note 0, 54, 114, 8, 0, 0
-	ev_note 0, 63, 115, 6, 0, 0
-	ev_note 0, 69, 120, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 14, 0, 0
-	ev_at 48
-	ev_note 1, 32, 99, 48, 0, 1
-	ev_at 48
-	ev_note 2, 63, 68, 18, 0, 1
-	ev_note 2, 51, 68, 16, 0, 1
-	ev_note 2, 60, 68, 16, 0, 1
-	ev_note 2, 55, 68, 14, 0, 1
+	ev_note	0, 61, 127, 8, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 102, 18, 0, 0
+	ev_note	1, 36, 99, 36, 0, 1
+	ev_note	4, 63, 114, 2, 1, 1
+	ev_at	48
+	ev_note	0, 54, 114, 8, 0, 0
+	ev_note	0, 63, 115, 6, 0, 0
+	ev_note	0, 69, 120, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 14, 0, 0
+	ev_at	48
+	ev_note	1, 32, 99, 48, 0, 1
+	ev_at	48
+	ev_note	2, 63, 68, 18, 0, 1
+	ev_note	2, 51, 68, 16, 0, 1
+	ev_note	2, 60, 68, 16, 0, 1
+	ev_note	2, 55, 68, 14, 0, 1
 	ev_beat
-	ev_note 0, 54, 104, 10, 0, 0
-	ev_note 0, 64, 94, 12, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 108, 16, 0, 0
-	ev_note 1, 31, 99, 42, 0, 1
-	ev_at 38
-	ev_note 4, 68, 114, 64, 0, 1
-	ev_at 46
-	ev_note 2, 60, 68, 16, 0, 1
-	ev_note 2, 55, 68, 16, 0, 1
-	ev_note 2, 63, 68, 14, 0, 1
-	ev_note 2, 51, 68, 16, 0, 1
-	ev_at 48
-	ev_note 0, 60, 127, 12, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 63, 93, 4, 0, 0
-	ev_note 0, 51, 104, 12, 0, 0
-	ev_at 48
-	ev_note 1, 36, 99, 32, 1, 1
+	ev_note	0, 54, 104, 10, 0, 0
+	ev_note	0, 64, 94, 12, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 108, 16, 0, 0
+	ev_note	1, 31, 99, 42, 0, 1
+	ev_at	38
+	ev_note	4, 68, 114, 64, 0, 1
+	ev_at	46
+	ev_note	2, 60, 68, 16, 0, 1
+	ev_note	2, 55, 68, 16, 0, 1
+	ev_note	2, 63, 68, 14, 0, 1
+	ev_note	2, 51, 68, 16, 0, 1
+	ev_at	48
+	ev_note	0, 60, 127, 12, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 63, 93, 4, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_at	48
+	ev_note	1, 36, 99, 32, 1, 1
 	ev_beat
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 16, 0, 0
-	ev_at 4
-	ev_note 4, 67, 97, 120, 2, 1
-	ev_at 48
-	ev_note 0, 54, 105, 8, 0, 0
-	ev_note 0, 64, 94, 18, 0, 0
-	ev_note 0, 69, 120, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 99, 14, 0, 0
-	ev_at 48
-	ev_note 2, 51, 51, 88, 0, 1
-	ev_at 58
-	ev_note 2, 55, 57, 80, 0, 1
-	ev_at 70
-	ev_note 2, 60, 65, 68, 0, 1
-	ev_at 72
-	ev_note 0, 63, 119, 18, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_at 82
-	ev_note 2, 63, 67, 58, 0, 1
-	ev_at 92
-	ev_note 3, 67, 107, 94, 0, 1
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 16, 0, 0
+	ev_at	4
+	ev_note	4, 67, 97, 120, 2, 1
+	ev_at	48
+	ev_note	0, 54, 105, 8, 0, 0
+	ev_note	0, 64, 94, 18, 0, 0
+	ev_note	0, 69, 120, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 99, 14, 0, 0
+	ev_at	48
+	ev_note	2, 51, 51, 88, 0, 1
+	ev_at	58
+	ev_note	2, 55, 57, 80, 0, 1
+	ev_at	70
+	ev_note	2, 60, 65, 68, 0, 1
+	ev_at	72
+	ev_note	0, 63, 119, 18, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_at	82
+	ev_note	2, 63, 67, 58, 0, 1
+	ev_at	92
+	ev_note	3, 67, 107, 94, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 12, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 108, 18, 0, 0
-	ev_at 48
-	ev_note 0, 99, 127, 8, 0, 0
-	ev_note 0, 54, 120, 8, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 108, 14, 0, 0
-	ev_at 48
-	ev_note 1, 36, 99, 48, 0, 1
-	ev_at 48
-	ev_note 2, 60, 71, 14, 0, 1
-	ev_note 2, 55, 71, 14, 0, 1
-	ev_note 2, 51, 71, 14, 0, 1
-	ev_note 2, 63, 71, 14, 0, 1
-	ev_at 94
-	ev_note 3, 79, 113, 4, 1, 1
+	ev_note	0, 61, 127, 12, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 108, 18, 0, 0
+	ev_at	48
+	ev_note	0, 99, 127, 8, 0, 0
+	ev_note	0, 54, 120, 8, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 108, 14, 0, 0
+	ev_at	48
+	ev_note	1, 36, 99, 48, 0, 1
+	ev_at	48
+	ev_note	2, 60, 71, 14, 0, 1
+	ev_note	2, 55, 71, 14, 0, 1
+	ev_note	2, 51, 71, 14, 0, 1
+	ev_note	2, 63, 71, 14, 0, 1
+	ev_at	94
+	ev_note	3, 79, 113, 4, 1, 1
 	ev_beat
-	ev_note 0, 61, 127, 10, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 18, 0, 0
-	ev_note 1, 38, 99, 48, 0, 1
-	ev_at 46
-	ev_note 2, 63, 68, 20, 0, 1
-	ev_note 2, 51, 68, 18, 0, 1
-	ev_note 2, 60, 68, 18, 0, 1
-	ev_at 48
-	ev_note 0, 63, 115, 8, 0, 0
-	ev_note 0, 69, 120, 6, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 106, 16, 0, 0
-	ev_at 48
-	ev_note 1, 39, 99, 46, 0, 1
-	ev_at 48
-	ev_note 2, 55, 68, 14, 0, 1
+	ev_note	0, 61, 127, 10, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 18, 0, 0
+	ev_note	1, 38, 99, 48, 0, 1
+	ev_at	46
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_note	2, 51, 68, 18, 0, 1
+	ev_note	2, 60, 68, 18, 0, 1
+	ev_at	48
+	ev_note	0, 63, 115, 8, 0, 0
+	ev_note	0, 69, 120, 6, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 106, 16, 0, 0
+	ev_at	48
+	ev_note	1, 39, 99, 46, 0, 1
+	ev_at	48
+	ev_note	2, 55, 68, 14, 0, 1
 	ev_beat
-	ev_note 0, 64, 103, 14, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 103, 18, 0, 0
-	ev_note 1, 31, 99, 48, 0, 1
-	ev_at 40
-	ev_note 3, 80, 107, 52, 0, 1
-	ev_at 46
-	ev_note 2, 60, 68, 16, 0, 1
-	ev_note 2, 55, 68, 16, 0, 1
-	ev_note 2, 63, 68, 14, 0, 1
-	ev_note 2, 51, 68, 16, 0, 1
-	ev_at 48
-	ev_note 0, 99, 127, 10, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 63, 93, 4, 0, 0
-	ev_note 0, 51, 106, 16, 0, 0
-	ev_at 48
-	ev_note 1, 42, 99, 42, 0, 1
+	ev_note	0, 64, 103, 14, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 103, 18, 0, 0
+	ev_note	1, 31, 99, 48, 0, 1
+	ev_at	40
+	ev_note	3, 80, 107, 52, 0, 1
+	ev_at	46
+	ev_note	2, 60, 68, 16, 0, 1
+	ev_note	2, 55, 68, 16, 0, 1
+	ev_note	2, 63, 68, 14, 0, 1
+	ev_note	2, 51, 68, 16, 0, 1
+	ev_at	48
+	ev_note	0, 99, 127, 10, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 63, 93, 4, 0, 0
+	ev_note	0, 51, 106, 16, 0, 0
+	ev_at	48
+	ev_note	1, 42, 99, 42, 0, 1
 	ev_beat
-	ev_note 0, 54, 101, 6, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 115, 14, 0, 0
-	ev_note 1, 41, 99, 40, 0, 1
-	ev_at 4
-	ev_note 3, 77, 119, 88, 0, 1
-	ev_at 46
-	ev_note 2, 55, 51, 90, 0, 1
-	ev_at 48
-	ev_note 0, 64, 107, 16, 0, 0
-	ev_note 0, 54, 109, 10, 0, 0
-	ev_note 0, 69, 68, 8, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 108, 12, 0, 0
-	ev_at 58
-	ev_note 2, 59, 57, 80, 0, 1
-	ev_at 70
-	ev_note 2, 62, 65, 68, 0, 1
-	ev_at 72
-	ev_note 0, 63, 108, 16, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_at 82
-	ev_note 2, 65, 67, 58, 0, 1
-	ev_at 90
-	ev_note 4, 59, 114, 98, 0, 1
+	ev_note	0, 54, 101, 6, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 115, 14, 0, 0
+	ev_note	1, 41, 99, 40, 0, 1
+	ev_at	4
+	ev_note	3, 77, 119, 88, 0, 1
+	ev_at	46
+	ev_note	2, 55, 51, 90, 0, 1
+	ev_at	48
+	ev_note	0, 64, 107, 16, 0, 0
+	ev_note	0, 54, 109, 10, 0, 0
+	ev_note	0, 69, 68, 8, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 108, 12, 0, 0
+	ev_at	58
+	ev_note	2, 59, 57, 80, 0, 1
+	ev_at	70
+	ev_note	2, 62, 65, 68, 0, 1
+	ev_at	72
+	ev_note	0, 63, 108, 16, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_at	82
+	ev_note	2, 65, 67, 58, 0, 1
+	ev_at	90
+	ev_note	4, 59, 114, 98, 0, 1
 	ev_beat
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 103, 16, 0, 0
-	ev_note 1, 41, 99, 94, 0, 1
-	ev_note 3, 74, 107, 124, 2, 1
-	ev_at 48
-	ev_note 0, 54, 109, 6, 0, 0
-	ev_note 0, 99, 127, 10, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 108, 14, 0, 0
-	ev_at 48
-	ev_note 2, 65, 71, 14, 0, 1
-	ev_note 2, 62, 71, 14, 0, 1
-	ev_note 2, 59, 71, 14, 0, 1
-	ev_note 2, 55, 71, 14, 0, 1
-	ev_at 94
-	ev_note 4, 62, 109, 6, 1, 1
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 103, 16, 0, 0
+	ev_note	1, 41, 99, 94, 0, 1
+	ev_note	3, 74, 107, 124, 2, 1
+	ev_at	48
+	ev_note	0, 54, 109, 6, 0, 0
+	ev_note	0, 99, 127, 10, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 108, 14, 0, 0
+	ev_at	48
+	ev_note	2, 65, 71, 14, 0, 1
+	ev_note	2, 62, 71, 14, 0, 1
+	ev_note	2, 59, 71, 14, 0, 1
+	ev_note	2, 55, 71, 14, 0, 1
+	ev_at	94
+	ev_note	4, 62, 109, 6, 1, 1
 	ev_beat
-	ev_note 0, 61, 127, 8, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 102, 18, 0, 0
-	ev_note 1, 38, 99, 42, 0, 1
-	ev_at 48
-	ev_note 0, 54, 101, 10, 0, 0
-	ev_note 0, 63, 115, 6, 0, 0
-	ev_note 0, 69, 111, 6, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 14, 0, 0
-	ev_at 48
-	ev_note 1, 32, 99, 42, 0, 1
-	ev_at 48
-	ev_note 2, 55, 68, 18, 0, 1
-	ev_note 2, 59, 68, 16, 0, 1
-	ev_note 2, 62, 68, 16, 0, 1
-	ev_note 2, 65, 68, 14, 0, 1
+	ev_note	0, 61, 127, 8, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 102, 18, 0, 0
+	ev_note	1, 38, 99, 42, 0, 1
+	ev_at	48
+	ev_note	0, 54, 101, 10, 0, 0
+	ev_note	0, 63, 115, 6, 0, 0
+	ev_note	0, 69, 111, 6, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 14, 0, 0
+	ev_at	48
+	ev_note	1, 32, 99, 42, 0, 1
+	ev_at	48
+	ev_note	2, 55, 68, 18, 0, 1
+	ev_note	2, 59, 68, 16, 0, 1
+	ev_note	2, 62, 68, 16, 0, 1
+	ev_note	2, 65, 68, 14, 0, 1
 	ev_beat
-	ev_note 0, 54, 124, 10, 0, 0
-	ev_note 0, 64, 111, 12, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 108, 16, 0, 0
-	ev_note 1, 41, 99, 40, 0, 1
-	ev_at 38
-	ev_note 4, 67, 107, 66, 0, 1
-	ev_at 46
-	ev_note 2, 65, 68, 16, 0, 1
-	ev_note 2, 62, 68, 16, 0, 1
-	ev_note 2, 59, 68, 14, 0, 1
-	ev_note 2, 55, 68, 16, 0, 1
-	ev_at 48
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 63, 93, 4, 0, 0
-	ev_note 0, 51, 104, 12, 0, 0
-	ev_at 48
-	ev_note 1, 31, 99, 36, 1, 1
+	ev_note	0, 54, 124, 10, 0, 0
+	ev_note	0, 64, 111, 12, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 108, 16, 0, 0
+	ev_note	1, 41, 99, 40, 0, 1
+	ev_at	38
+	ev_note	4, 67, 107, 66, 0, 1
+	ev_at	46
+	ev_note	2, 65, 68, 16, 0, 1
+	ev_note	2, 62, 68, 16, 0, 1
+	ev_note	2, 59, 68, 14, 0, 1
+	ev_note	2, 55, 68, 16, 0, 1
+	ev_at	48
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 63, 93, 4, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_at	48
+	ev_note	1, 31, 99, 36, 1, 1
 	ev_beat
-	ev_note 0, 54, 114, 10, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 16, 0, 0
-	ev_at 2
-	ev_note 4, 65, 107, 60, 1, 1
-	ev_at 48
-	ev_note 0, 64, 111, 14, 0, 0
-	ev_note 0, 54, 124, 12, 0, 0
-	ev_note 0, 69, 108, 6, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 99, 14, 0, 0
-	ev_at 48
-	ev_note 2, 55, 51, 88, 0, 1
-	ev_at 58
-	ev_note 2, 59, 57, 80, 0, 1
-	ev_at 70
-	ev_note 2, 62, 65, 68, 0, 1
-	ev_at 72
-	ev_note 0, 63, 104, 14, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_at 82
-	ev_note 2, 65, 67, 58, 0, 1
+	ev_note	0, 54, 114, 10, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 16, 0, 0
+	ev_at	2
+	ev_note	4, 65, 107, 60, 1, 1
+	ev_at	48
+	ev_note	0, 64, 111, 14, 0, 0
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_note	0, 69, 108, 6, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 99, 14, 0, 0
+	ev_at	48
+	ev_note	2, 55, 51, 88, 0, 1
+	ev_at	58
+	ev_note	2, 59, 57, 80, 0, 1
+	ev_at	70
+	ev_note	2, 62, 65, 68, 0, 1
+	ev_at	72
+	ev_note	0, 63, 104, 14, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_at	82
+	ev_note	2, 65, 67, 58, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 14, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 51, 108, 18, 0, 0
-	ev_note 3, 77, 113, 98, 0, 1
-	ev_at 48
-	ev_note 0, 99, 127, 4, 0, 0
-	ev_note 0, 54, 127, 10, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 108, 14, 0, 0
-	ev_at 48
-	ev_note 1, 31, 99, 50, 0, 1
-	ev_at 48
-	ev_note 2, 65, 71, 14, 0, 1
-	ev_note 2, 62, 71, 14, 0, 1
-	ev_note 2, 59, 71, 14, 0, 1
-	ev_note 2, 55, 71, 14, 0, 1
-	ev_at 90
-	ev_note 4, 63, 96, 102, 0, 1
-	ev_at 94
-	ev_note 3, 75, 102, 8, 1, 1
-	ev_at 94
-	ev_note 4, 55, 99, 70, 0, 1
+	ev_note	0, 61, 127, 14, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 51, 108, 18, 0, 0
+	ev_note	3, 77, 113, 98, 0, 1
+	ev_at	48
+	ev_note	0, 99, 127, 4, 0, 0
+	ev_note	0, 54, 127, 10, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 108, 14, 0, 0
+	ev_at	48
+	ev_note	1, 31, 99, 50, 0, 1
+	ev_at	48
+	ev_note	2, 65, 71, 14, 0, 1
+	ev_note	2, 62, 71, 14, 0, 1
+	ev_note	2, 59, 71, 14, 0, 1
+	ev_note	2, 55, 71, 14, 0, 1
+	ev_at	90
+	ev_note	4, 63, 96, 102, 0, 1
+	ev_at	94
+	ev_note	3, 75, 102, 8, 1, 1
+	ev_at	94
+	ev_note	4, 55, 99, 70, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 10, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 18, 0, 0
-	ev_note 1, 32, 99, 82, 0, 1
-	ev_at 46
-	ev_note 2, 55, 68, 20, 0, 1
-	ev_note 2, 59, 68, 18, 0, 1
-	ev_note 2, 62, 68, 18, 0, 1
-	ev_at 48
-	ev_note 0, 63, 116, 10, 0, 0
-	ev_note 0, 69, 107, 6, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 106, 16, 0, 0
-	ev_at 48
-	ev_note 2, 65, 68, 14, 0, 1
-	ev_at 90
-	ev_note 4, 62, 92, 88, 0, 1
-	ev_at 92
-	ev_note 4, 53, 90, 66, 0, 1
+	ev_note	0, 61, 127, 10, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 18, 0, 0
+	ev_note	1, 32, 99, 82, 0, 1
+	ev_at	46
+	ev_note	2, 55, 68, 20, 0, 1
+	ev_note	2, 59, 68, 18, 0, 1
+	ev_note	2, 62, 68, 18, 0, 1
+	ev_at	48
+	ev_note	0, 63, 116, 10, 0, 0
+	ev_note	0, 69, 107, 6, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 106, 16, 0, 0
+	ev_at	48
+	ev_note	2, 65, 68, 14, 0, 1
+	ev_at	90
+	ev_note	4, 62, 92, 88, 0, 1
+	ev_at	92
+	ev_note	4, 53, 90, 66, 0, 1
 	ev_beat
-	ev_note 0, 64, 112, 14, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 103, 18, 0, 0
-	ev_note 1, 31, 99, 88, 0, 1
-	ev_at 36
-	ev_note 3, 71, 119, 56, 0, 1
-	ev_at 46
-	ev_note 2, 65, 68, 16, 0, 1
-	ev_note 2, 62, 68, 16, 0, 1
-	ev_note 2, 59, 68, 14, 0, 1
-	ev_note 2, 55, 68, 16, 0, 1
-	ev_at 48
-	ev_note 0, 63, 116, 8, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 106, 16, 0, 0
-	ev_at 88
-	ev_note 4, 60, 86, 122, 2, 1
-	ev_at 90
-	ev_note 4, 51, 100, 118, 2, 1
-	ev_at 94
-	ev_note 3, 72, 107, 62, 2, 1
+	ev_note	0, 64, 112, 14, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 103, 18, 0, 0
+	ev_note	1, 31, 99, 88, 0, 1
+	ev_at	36
+	ev_note	3, 71, 119, 56, 0, 1
+	ev_at	46
+	ev_note	2, 65, 68, 16, 0, 1
+	ev_note	2, 62, 68, 16, 0, 1
+	ev_note	2, 59, 68, 14, 0, 1
+	ev_note	2, 55, 68, 16, 0, 1
+	ev_at	48
+	ev_note	0, 63, 116, 8, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 106, 16, 0, 0
+	ev_at	88
+	ev_note	4, 60, 86, 122, 2, 1
+	ev_at	90
+	ev_note	4, 51, 100, 118, 2, 1
+	ev_at	94
+	ev_note	3, 72, 107, 62, 2, 1
 	ev_beat
-	ev_note 0, 54, 109, 6, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 115, 14, 0, 0
-	ev_note 1, 36, 99, 26, 0, 1
-	ev_at 48
-	ev_note 0, 64, 108, 18, 0, 0
-	ev_note 0, 69, 119, 6, 0, 0
-	ev_note 0, 54, 101, 12, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 108, 12, 0, 0
-	ev_at 48
-	ev_note 2, 51, 51, 88, 0, 1
-	ev_at 58
-	ev_note 2, 55, 57, 80, 0, 1
-	ev_at 70
-	ev_note 2, 60, 65, 68, 0, 1
-	ev_at 72
-	ev_note 0, 63, 119, 18, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_at 82
-	ev_note 2, 63, 67, 58, 0, 1
+	ev_note	0, 54, 109, 6, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 115, 14, 0, 0
+	ev_note	1, 36, 99, 26, 0, 1
+	ev_at	48
+	ev_note	0, 64, 108, 18, 0, 0
+	ev_note	0, 69, 119, 6, 0, 0
+	ev_note	0, 54, 101, 12, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 108, 12, 0, 0
+	ev_at	48
+	ev_note	2, 51, 51, 88, 0, 1
+	ev_at	58
+	ev_note	2, 55, 57, 80, 0, 1
+	ev_at	70
+	ev_note	2, 60, 65, 68, 0, 1
+	ev_at	72
+	ev_note	0, 63, 119, 18, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_at	82
+	ev_note	2, 63, 67, 58, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 14, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 51, 103, 16, 0, 0
-	ev_note 1, 36, 99, 4, 1, 1
-	ev_at 48
-	ev_note 0, 99, 127, 6, 0, 0
-	ev_note 0, 54, 127, 8, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 108, 14, 0, 0
-	ev_at 48
-	ev_note 2, 60, 71, 14, 0, 1
-	ev_note 2, 55, 71, 14, 0, 1
-	ev_note 2, 51, 71, 14, 0, 1
-	ev_note 2, 63, 71, 14, 0, 1
+	ev_note	0, 61, 127, 14, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 51, 103, 16, 0, 0
+	ev_note	1, 36, 99, 4, 1, 1
+	ev_at	48
+	ev_note	0, 99, 127, 6, 0, 0
+	ev_note	0, 54, 127, 8, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 108, 14, 0, 0
+	ev_at	48
+	ev_note	2, 60, 71, 14, 0, 1
+	ev_note	2, 55, 71, 14, 0, 1
+	ev_note	2, 51, 71, 14, 0, 1
+	ev_note	2, 63, 71, 14, 0, 1
 	ev_beat
-	ev_note 0, 61, 127, 8, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 102, 18, 0, 0
-	ev_at 46
-	ev_note 2, 63, 68, 20, 0, 1
-	ev_at 48
-	ev_note 0, 54, 114, 8, 0, 0
-	ev_note 0, 63, 115, 6, 0, 0
-	ev_note 0, 69, 120, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 103, 14, 0, 0
-	ev_at 48
-	ev_note 1, 39, 99, 44, 0, 1
-	ev_at 48
-	ev_note 2, 51, 68, 16, 0, 1
-	ev_note 2, 60, 68, 16, 0, 1
-	ev_note 2, 55, 68, 14, 0, 1
+	ev_note	0, 61, 127, 8, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 102, 18, 0, 0
+	ev_at	46
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	48
+	ev_note	0, 54, 114, 8, 0, 0
+	ev_note	0, 63, 115, 6, 0, 0
+	ev_note	0, 69, 120, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 103, 14, 0, 0
+	ev_at	48
+	ev_note	1, 39, 99, 44, 0, 1
+	ev_at	48
+	ev_note	2, 51, 68, 16, 0, 1
+	ev_note	2, 60, 68, 16, 0, 1
+	ev_note	2, 55, 68, 14, 0, 1
 	ev_beat
-	ev_note 0, 54, 104, 10, 0, 0
-	ev_note 0, 64, 94, 12, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 0, 51, 108, 16, 0, 0
-	ev_note 1, 41, 99, 40, 0, 1
-	ev_at 48
-	ev_note 0, 60, 127, 12, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 63, 93, 4, 0, 0
-	ev_note 0, 51, 104, 12, 0, 0
-	ev_at 48
-	ev_note 1, 42, 99, 40, 0, 1
-	ev_at 48
-	ev_note 2, 60, 68, 14, 0, 1
-	ev_note 2, 55, 68, 14, 0, 1
-	ev_note 2, 63, 68, 12, 0, 1
-	ev_note 2, 51, 68, 14, 0, 1
+	ev_note	0, 54, 104, 10, 0, 0
+	ev_note	0, 64, 94, 12, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	0, 51, 108, 16, 0, 0
+	ev_note	1, 41, 99, 40, 0, 1
+	ev_at	48
+	ev_note	0, 60, 127, 12, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 63, 93, 4, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_at	48
+	ev_note	1, 42, 99, 40, 0, 1
+	ev_at	48
+	ev_note	2, 60, 68, 14, 0, 1
+	ev_note	2, 55, 68, 14, 0, 1
+	ev_note	2, 63, 68, 12, 0, 1
+	ev_note	2, 51, 68, 14, 0, 1
 	ev_beat
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 51, 127, 12, 0, 0
-	ev_note 1, 31, 99, 34, 0, 1
-	ev_note 2, 55, 72, 90, 0, 1
-	ev_at 2
-	ev_note 2, 59, 72, 88, 0, 1
-	ev_at 6
-	ev_note 2, 62, 75, 82, 0, 1
-	ev_at 10
-	ev_note 2, 65, 71, 78, 0, 1
-	ev_at 48
-	ev_note 0, 54, 105, 8, 0, 0
-	ev_note 0, 64, 94, 18, 0, 0
-	ev_note 0, 69, 120, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_at 72
-	ev_note 0, 63, 119, 18, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 51, 127, 12, 0, 0
+	ev_note	1, 31, 99, 34, 0, 1
+	ev_note	2, 55, 72, 90, 0, 1
+	ev_at	2
+	ev_note	2, 59, 72, 88, 0, 1
+	ev_at	6
+	ev_note	2, 62, 75, 82, 0, 1
+	ev_at	10
+	ev_note	2, 65, 71, 78, 0, 1
+	ev_at	48
+	ev_note	0, 54, 105, 8, 0, 0
+	ev_note	0, 64, 94, 18, 0, 0
+	ev_note	0, 69, 120, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_at	72
+	ev_note	0, 63, 119, 18, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
 	ev_beat
-	ev_note 0, 61, 127, 12, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 1, 31, 99, 46, 1, 1
-	ev_note 2, 79, 75, 96, 0, 1
-	ev_note 2, 75, 79, 92, 0, 1
-	ev_note 2, 55, 68, 100, 0, 1
-	ev_at 48
-	ev_note 0, 99, 127, 8, 0, 0
-	ev_note 0, 54, 120, 8, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
+	ev_note	0, 61, 127, 12, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	1, 31, 99, 46, 1, 1
+	ev_note	2, 79, 75, 96, 0, 1
+	ev_note	2, 75, 79, 92, 0, 1
+	ev_note	2, 55, 68, 100, 0, 1
+	ev_at	48
+	ev_note	0, 99, 127, 8, 0, 0
+	ev_note	0, 54, 120, 8, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
 	ev_beat
-	ev_note 0, 61, 127, 10, 0, 0
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 2, 75, 73, 94, 0, 1
-	ev_note 2, 57, 72, 102, 0, 1
-	ev_note 2, 78, 67, 82, 0, 1
-	ev_at 48
-	ev_note 0, 63, 115, 8, 0, 0
-	ev_note 0, 69, 120, 6, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
+	ev_note	0, 61, 127, 10, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	2, 75, 73, 94, 0, 1
+	ev_note	2, 57, 72, 102, 0, 1
+	ev_note	2, 78, 67, 82, 0, 1
+	ev_at	48
+	ev_note	0, 63, 115, 8, 0, 0
+	ev_note	0, 69, 120, 6, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
 	ev_beat
-	ev_note 0, 64, 103, 14, 0, 0
-	ev_note 0, 38, 125, 4, 0, 0
-	ev_note 0, 46, 115, 4, 0, 0
-	ev_note 2, 59, 76, 92, 0, 1
-	ev_note 2, 74, 75, 94, 0, 1
-	ev_note 2, 77, 80, 94, 0, 1
-	ev_at 48
-	ev_note 0, 99, 127, 10, 0, 0
-	ev_note 0, 18, 110, 4, 0, 0
-	ev_note 0, 63, 93, 4, 0, 0
-	ev_at 92
-	ev_note 0, 49, 127, 4, 0, 0
+	ev_note	0, 64, 103, 14, 0, 0
+	ev_note	0, 38, 125, 4, 0, 0
+	ev_note	0, 46, 115, 4, 0, 0
+	ev_note	2, 59, 76, 92, 0, 1
+	ev_note	2, 74, 75, 94, 0, 1
+	ev_note	2, 77, 80, 94, 0, 1
+	ev_at	48
+	ev_note	0, 99, 127, 10, 0, 0
+	ev_note	0, 18, 110, 4, 0, 0
+	ev_note	0, 63, 93, 4, 0, 0
+	ev_at	92
+	ev_note	0, 49, 127, 4, 0, 0
 	ev_end
-	.byte 0x12, 0x00, 0x03	# bytes 0..2 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4d7da, 0x4d7db	# stale bytes of an earlier write
+	STREAM_HEADER 18, 0x3dd	# stale stream header of an earlier write; its stream (from the F4 after it) is the next piece
 	ev_beat	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x57e5..+0x5a79
 	ev_note 0, 36, 110, 4, 0, 0
 	ev_note 0, 46, 115, 4, 0, 0
@@ -710,10 +693,8 @@
 	ev_at 48
 	ev_note 4, 62, 120, 48, 0, 1
 	ev_at 86
-	.byte 0x92, 0x40, 0x5d	# bytes 0..2 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4da6f, 0x4da72	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	# stale events of an earlier write, at an event boundary of the donor record: 03custm7 Slot01 +0x5a79..
+	ev_note	2, 64, 93, 126, 3, 1
 	ev_at	88
 	ev_note	2, 60, 97, 96, 7, 1
 	ev_note	2, 72, 102, 96, 7, 1
@@ -722,79 +703,79 @@
 	ev_note	3, 84, 92, 84, 7, 1
 	ev_note	3, 60, 81, 84, 7, 1
 	ev_note	3, 67, 77, 84, 7, 1
-	ev_beat	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x5aa6..+0x5bc9
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 49, 127, 12, 0, 0
-	ev_note 0, 54, 114, 10, 0, 0
-	ev_note 1, 36, 99, 86, 1, 1
-	ev_cc 4, 64, 0
-	ev_note 4, 48, 122, 98, 0, 1
-	ev_at 2
-	ev_note 4, 60, 122, 110, 0, 1
-	ev_at 4
-	ev_note 4, 64, 124, 106, 0, 1
-	ev_at 6
-	ev_note 4, 55, 127, 108, 0, 1
-	ev_at 44
-	ev_note 0, 48, 127, 8, 0, 0
-	ev_at 50
-	ev_note 0, 47, 127, 12, 0, 0
 	ev_beat
-	ev_at 44
-	ev_note 0, 45, 127, 8, 0, 0
-	ev_at 48
-	ev_note 4, 55, 122, 58, 0, 1
-	ev_at 50
-	ev_note 0, 3, 127, 12, 0, 0
-	ev_at 50
-	ev_note 4, 64, 117, 60, 0, 1
-	ev_at 52
-	ev_note 4, 60, 109, 58, 0, 1
-	ev_at 54
-	ev_note 4, 48, 120, 58, 0, 1
-	ev_at 94
-	ev_note 0, 3, 127, 8, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 49, 127, 12, 0, 0
+	ev_note	0, 54, 114, 10, 0, 0
+	ev_note	1, 36, 99, 86, 1, 1
+	ev_cc	4, 64, 0
+	ev_note	4, 48, 122, 98, 0, 1
+	ev_at	2
+	ev_note	4, 60, 122, 110, 0, 1
+	ev_at	4
+	ev_note	4, 64, 124, 106, 0, 1
+	ev_at	6
+	ev_note	4, 55, 127, 108, 0, 1
+	ev_at	44
+	ev_note	0, 48, 127, 8, 0, 0
+	ev_at	50
+	ev_note	0, 47, 127, 12, 0, 0
 	ev_beat
-	ev_note 0, 36, 116, 4, 0, 0
-	ev_at 2
-	ev_note 0, 43, 127, 12, 0, 0
-	ev_at 48
-	ev_note 1, 33, 101, 44, 0, 1
-	ev_at 48
-	ev_note 4, 48, 124, 26, 0, 1
-	ev_at 50
-	ev_note 4, 60, 83, 26, 0, 1
-	ev_at 52
-	ev_note 4, 64, 114, 26, 0, 1
-	ev_at 54
-	ev_note 4, 55, 115, 28, 0, 1
-	ev_at 72
-	ev_note 0, 24, 123, 12, 0, 0
+	ev_at	44
+	ev_note	0, 45, 127, 8, 0, 0
+	ev_at	48
+	ev_note	4, 55, 122, 58, 0, 1
+	ev_at	50
+	ev_note	0, 3, 127, 12, 0, 0
+	ev_at	50
+	ev_note	4, 64, 117, 60, 0, 1
+	ev_at	52
+	ev_note	4, 60, 109, 58, 0, 1
+	ev_at	54
+	ev_note	4, 48, 120, 58, 0, 1
+	ev_at	94
+	ev_note	0, 3, 127, 8, 0, 0
 	ev_beat
-	ev_note 0, 46, 116, 4, 0, 0
-	ev_note 0, 24, 127, 12, 0, 0
-	ev_note 1, 31, 103, 84, 0, 1
-	ev_note 4, 55, 105, 34, 0, 1
-	ev_at 2
-	ev_note 4, 64, 118, 32, 0, 1
-	ev_at 4
-	ev_note 4, 60, 117, 30, 0, 1
-	ev_at 6
-	ev_note 4, 48, 114, 30, 0, 1
+	ev_note	0, 36, 116, 4, 0, 0
+	ev_at	2
+	ev_note	0, 43, 127, 12, 0, 0
+	ev_at	48
+	ev_note	1, 33, 101, 44, 0, 1
+	ev_at	48
+	ev_note	4, 48, 124, 26, 0, 1
+	ev_at	50
+	ev_note	4, 60, 83, 26, 0, 1
+	ev_at	52
+	ev_note	4, 64, 114, 26, 0, 1
+	ev_at	54
+	ev_note	4, 55, 115, 28, 0, 1
+	ev_at	72
+	ev_note	0, 24, 123, 12, 0, 0
 	ev_beat
-	ev_note 0, 36, 127, 12, 0, 0
-	ev_note 0, 49, 127, 12, 0, 0
-	ev_note 1, 36, 111, 48, 3, 1
-	ev_note 4, 48, 122, 56, 2, 1
-	ev_at 2
-	ev_note 4, 55, 109, 48, 2, 1
-	ev_at 6
-	ev_note 4, 60, 117, 40, 2, 1
-	ev_at 10
-	ev_note 4, 64, 118, 36, 2, 1
-	ev_at 14
-	ev_note 4, 67, 120, 30, 2, 1
+	ev_note	0, 46, 116, 4, 0, 0
+	ev_note	0, 24, 127, 12, 0, 0
+	ev_note	1, 31, 103, 84, 0, 1
+	ev_note	4, 55, 105, 34, 0, 1
+	ev_at	2
+	ev_note	4, 64, 118, 32, 0, 1
+	ev_at	4
+	ev_note	4, 60, 117, 30, 0, 1
+	ev_at	6
+	ev_note	4, 48, 114, 30, 0, 1
+	ev_beat
+	ev_note	0, 36, 127, 12, 0, 0
+	ev_note	0, 49, 127, 12, 0, 0
+	ev_note	1, 36, 111, 48, 3, 1
+	ev_note	4, 48, 122, 56, 2, 1
+	ev_at	2
+	ev_note	4, 55, 109, 48, 2, 1
+	ev_at	6
+	ev_note	4, 60, 117, 40, 2, 1
+	ev_at	10
+	ev_note	4, 64, 118, 36, 2, 1
+	ev_at	14
+	ev_note	4, 67, 120, 30, 2, 1
 	ev_beat
 	ev_beat
 	ev_beat
@@ -803,9 +784,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	.byte 0x13, 0x00, 0x03	# bytes 0..2 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4dbbb, 0x4dbbc	# stale bytes of an earlier write
+	STREAM_HEADER 19, 0x3dd	# stale stream header of an earlier write; its stream (from the F4 after it) is the next piece
 	ev_beat	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x5bca..+0x5e5e
 	ev_note 0, 36, 110, 4, 0, 0
 	ev_note 0, 46, 115, 4, 0, 0
@@ -953,10 +932,8 @@
 	ev_at 48
 	ev_note 4, 55, 120, 48, 0, 1
 	ev_at 86
-	.byte 0x92, 0x3f, 0x5d	# bytes 0..2 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x4de50, 0x4de53	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	# stale events of an earlier write, at an event boundary of the donor record: 03custm7 Slot01 +0x5e5e..
+	ev_note	2, 63, 93, 126, 3, 1
 	ev_at	88
 	ev_note	2, 60, 97, 96, 7, 1
 	ev_note	2, 72, 102, 96, 7, 1
@@ -965,79 +942,79 @@
 	ev_note	3, 79, 92, 84, 7, 1
 	ev_note	3, 60, 81, 84, 7, 1
 	ev_note	3, 72, 77, 84, 7, 1
-	ev_beat	# stale tail of an earlier write; same bytes as 03custm7 Slot01 +0x5e8b..+0x6c5e
-	ev_note 0, 36, 110, 4, 0, 0
-	ev_note 0, 44, 127, 4, 0, 0
-	ev_note 0, 49, 127, 12, 0, 0
-	ev_note 0, 54, 114, 10, 0, 0
-	ev_note 1, 36, 99, 86, 1, 1
-	ev_cc 4, 64, 0
-	ev_note 4, 48, 122, 98, 0, 1
-	ev_at 2
-	ev_note 4, 60, 122, 110, 0, 1
-	ev_at 4
-	ev_note 4, 63, 124, 106, 0, 1
-	ev_at 6
-	ev_note 4, 55, 127, 108, 0, 1
-	ev_at 44
-	ev_note 0, 48, 127, 8, 0, 0
-	ev_at 50
-	ev_note 0, 47, 127, 12, 0, 0
 	ev_beat
-	ev_at 44
-	ev_note 0, 45, 127, 8, 0, 0
-	ev_at 48
-	ev_note 4, 55, 122, 58, 0, 1
-	ev_at 50
-	ev_note 0, 3, 127, 12, 0, 0
-	ev_at 50
-	ev_note 4, 63, 117, 60, 0, 1
-	ev_at 52
-	ev_note 4, 60, 109, 58, 0, 1
-	ev_at 54
-	ev_note 4, 48, 120, 58, 0, 1
-	ev_at 94
-	ev_note 0, 3, 127, 8, 0, 0
+	ev_note	0, 36, 110, 4, 0, 0
+	ev_note	0, 44, 127, 4, 0, 0
+	ev_note	0, 49, 127, 12, 0, 0
+	ev_note	0, 54, 114, 10, 0, 0
+	ev_note	1, 36, 99, 86, 1, 1
+	ev_cc	4, 64, 0
+	ev_note	4, 48, 122, 98, 0, 1
+	ev_at	2
+	ev_note	4, 60, 122, 110, 0, 1
+	ev_at	4
+	ev_note	4, 63, 124, 106, 0, 1
+	ev_at	6
+	ev_note	4, 55, 127, 108, 0, 1
+	ev_at	44
+	ev_note	0, 48, 127, 8, 0, 0
+	ev_at	50
+	ev_note	0, 47, 127, 12, 0, 0
 	ev_beat
-	ev_note 0, 36, 116, 4, 0, 0
-	ev_at 2
-	ev_note 0, 43, 127, 12, 0, 0
-	ev_at 48
-	ev_note 1, 32, 101, 44, 0, 1
-	ev_at 48
-	ev_note 4, 48, 124, 26, 0, 1
-	ev_at 50
-	ev_note 4, 60, 83, 26, 0, 1
-	ev_at 52
-	ev_note 4, 63, 114, 26, 0, 1
-	ev_at 54
-	ev_note 4, 55, 115, 28, 0, 1
-	ev_at 72
-	ev_note 0, 24, 123, 12, 0, 0
+	ev_at	44
+	ev_note	0, 45, 127, 8, 0, 0
+	ev_at	48
+	ev_note	4, 55, 122, 58, 0, 1
+	ev_at	50
+	ev_note	0, 3, 127, 12, 0, 0
+	ev_at	50
+	ev_note	4, 63, 117, 60, 0, 1
+	ev_at	52
+	ev_note	4, 60, 109, 58, 0, 1
+	ev_at	54
+	ev_note	4, 48, 120, 58, 0, 1
+	ev_at	94
+	ev_note	0, 3, 127, 8, 0, 0
 	ev_beat
-	ev_note 0, 46, 116, 4, 0, 0
-	ev_note 0, 24, 127, 12, 0, 0
-	ev_note 1, 31, 103, 84, 0, 1
-	ev_note 4, 55, 105, 34, 0, 1
-	ev_at 2
-	ev_note 4, 63, 118, 32, 0, 1
-	ev_at 4
-	ev_note 4, 60, 117, 30, 0, 1
-	ev_at 6
-	ev_note 4, 48, 114, 30, 0, 1
+	ev_note	0, 36, 116, 4, 0, 0
+	ev_at	2
+	ev_note	0, 43, 127, 12, 0, 0
+	ev_at	48
+	ev_note	1, 32, 101, 44, 0, 1
+	ev_at	48
+	ev_note	4, 48, 124, 26, 0, 1
+	ev_at	50
+	ev_note	4, 60, 83, 26, 0, 1
+	ev_at	52
+	ev_note	4, 63, 114, 26, 0, 1
+	ev_at	54
+	ev_note	4, 55, 115, 28, 0, 1
+	ev_at	72
+	ev_note	0, 24, 123, 12, 0, 0
 	ev_beat
-	ev_note 0, 36, 127, 12, 0, 0
-	ev_note 0, 49, 127, 12, 0, 0
-	ev_note 1, 36, 111, 48, 3, 1
-	ev_note 4, 48, 122, 56, 2, 1
-	ev_at 2
-	ev_note 4, 55, 109, 48, 2, 1
-	ev_at 6
-	ev_note 4, 60, 117, 40, 2, 1
-	ev_at 10
-	ev_note 4, 63, 118, 36, 2, 1
-	ev_at 14
-	ev_note 4, 67, 120, 30, 2, 1
+	ev_note	0, 46, 116, 4, 0, 0
+	ev_note	0, 24, 127, 12, 0, 0
+	ev_note	1, 31, 103, 84, 0, 1
+	ev_note	4, 55, 105, 34, 0, 1
+	ev_at	2
+	ev_note	4, 63, 118, 32, 0, 1
+	ev_at	4
+	ev_note	4, 60, 117, 30, 0, 1
+	ev_at	6
+	ev_note	4, 48, 114, 30, 0, 1
+	ev_beat
+	ev_note	0, 36, 127, 12, 0, 0
+	ev_note	0, 49, 127, 12, 0, 0
+	ev_note	1, 36, 111, 48, 3, 1
+	ev_note	4, 48, 122, 56, 2, 1
+	ev_at	2
+	ev_note	4, 55, 109, 48, 2, 1
+	ev_at	6
+	ev_note	4, 60, 117, 40, 2, 1
+	ev_at	10
+	ev_note	4, 63, 118, 36, 2, 1
+	ev_at	14
+	ev_note	4, 67, 120, 30, 2, 1
 	ev_beat
 	ev_beat
 	ev_beat
@@ -1046,7 +1023,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	TPAD_HEADER 0xcb3
+	TPAD_HEADER 0xcb3	# stale tail of an earlier write; same bytes as 01ctmini Slot14 +0x6ab8..+0x776b
 	TPAD_BANK "  User Bank 1   "
 	TPAD_PAD "   Voice Loop   ", 0x71, 0x02, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x00, 0x03, 0x03, 0x00, 0x00, 0x2e0
 	PART_SETUP 0x08, 127, 0x40, 0x00, 0x26, 64, 0, 0, 64, 12, 60, 68, 92, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

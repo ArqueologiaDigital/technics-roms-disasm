@@ -2761,9 +2761,7 @@
 	ev_bend	2, 0, 64
 	ev_bend	3, 0, 64
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0xa9bf9, 0xa9bfd	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 19, 0x1503	# stale start of a stream of an earlier write, cut after 0x14ff of its 0x1503 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 36, 115, 12, 0, 0
@@ -4527,11 +4525,10 @@
 	ev_bend	4, 0, 64
 	ev_at	93
 	ev_cc	3, 1, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0xab0fc, 0xab0fd	# stale bytes of an earlier write
-	.byte 0x01, 0x00	# stale tail of an earlier write; same bytes as 02custm6 Slot03 +0xaa1d..+0xb6ed; bytes 1..2 of `ev_cc`
+	# stale events of an earlier write, at an event boundary of the donor record: 02custm6 Slot03 +0xaa1c..
+	ev_cc	4, 1, 0
 	ev_end
-	TPAD_HEADER 0xccd
+	TPAD_HEADER 0xccd	# stale tail of an earlier write; same bytes as 02custm6 Slot03 +0xaa20..+0xb6ed
 	TPAD_BANK "  User Bank 2   "
 	TPAD_PAD "  Piano Minuet  ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x2e0
 	PART_SETUP 0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

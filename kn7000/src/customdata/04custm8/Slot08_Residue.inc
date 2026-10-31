@@ -61,19 +61,17 @@
 	ev_note 0, 57, 116, 56, 0, 0
 	ev_note 0, 36, 113, 19, 0, 0
 	ev_at 64
-	.byte 0x91, 0x24, 0x50	# bytes 0..2 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/04custm8.ic21", 0x4657c, 0x4657d	# stale bytes of an earlier write
-	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 01custm1 Slot06 +0x6575..+0x7ff8; bytes 4..5 of `ev_note`
-	ev_at 65
-	ev_note 4, 72, 123, 20, 0, 1
-	ev_note 4, 84, 123, 22, 0, 1
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm1 Slot06 +0x6574..
+	ev_note	1, 36, 80, 77, 0, 1
+	ev_at	65
+	ev_note	4, 72, 123, 20, 0, 1
+	ev_note	4, 84, 123, 22, 0, 1
 	ev_beat
 	ev_beat
 	ev_beat
 	ev_beat
 	ev_end
-	STREAM_HEADER 19, 0x109c
+	STREAM_HEADER 19, 0x109c	# stale tail of an earlier write; same bytes as 01custm1 Slot06 +0x6589..+0x7ff8
 	ev_beat
 	ev_note 0, 52, 110, 18, 0, 0
 	ev_note 0, 35, 127, 5, 0, 0

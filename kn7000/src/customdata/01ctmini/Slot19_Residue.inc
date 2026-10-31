@@ -1034,5 +1034,4 @@
 	ev_cc	6, 1, 24
 	ev_at	70
 	ev_cc	6, 1, 23
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01ctmini.ic21", 0xa7fff, 0xa8000	# stale bytes of an earlier write
+	ev_at	72
