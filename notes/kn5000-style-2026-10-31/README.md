@@ -190,3 +190,34 @@ orphans, not a second link convention.
 > SETTING (key, major / minor, bass and accompaniment type), a flag that keeps the meter changeable until something
 > is recorded, the preset style the section uses, and per part the sound, panpot, digital effect on/off, pitch point and upper
 > note limit. The same layout is in the IC19 custom-data banks, the .CMP files and each section of an .RCM file.
+
+## Website page draft (technics-docs, "KN5000 disk files", additions)
+
+> **The last 2 KB of a .LSW file** are the Sound Arranger memory, RAM 0x1e7800: a 16-byte header and 200 ten-byte
+> records, one per preset style, holding the DRUM kit and the BASS and ACCOMP1-3 sounds the player chose for that
+> style (each with its DIGITAL EFFECT switch), and a flag that tells the accompaniment to use them instead of the
+> style's own sounds.
+>
+> **Panel records, byte by byte.** Every editable panel setting has a parameter descriptor in the firmware that
+> names the record (its tag), the byte and the bits that hold it, so the floppy sources name each byte after its
+> setting: a part's sound, bank, volume and mute, sustain bits, DIGITAL EFFECT, DSP effect send, reverb send, pan,
+> key shift, tuning, bend range and its MIDI bits; the style number, bank, APC mode and variation; the panel-memory
+> filter switches; the metronome; and so on. A DSP effect slot holds the effect number and then that effect's
+> parameters in order (DEPTH, LFO SPEED, ... from the effect's own parameter table).
+
+## Left open (with the next step)
+
+- **N-b64487fc** (sound record: envelope pair order, LFO captions, controller groups): not settled. The sub-CPU
+  source records that its two readers of the envelope pairs disagree (`Voice_Level_ComputeTriplet` treats the
+  second byte as signed and scales it with `Detune_ScaleSymmetric`; the type-1/2 path indexes
+  `Voice_EnvelopeRate_Table` with it). The way to settle it in this repository is the SOUND EDIT pages: each page's
+  object entries carry the record offset and bit field (`SeMenu_StepParamFieldAndSend` reads entry +3, +6, +7), so
+  mapping the pages' captions (ATTACK TIME / LEVEL ...) to offsets names both bytes of each pair.
+- **125 panel bytes** keep `f<offset>` (see the table above): most are in the companion records 0xC0..0xD7, which
+  `PanelTlv_ResolvePartCompanions` fills from the part's sound through `SndParam_ResolveVoiceEntry`; tracing that
+  routine's frame offsets would name them.
+- **DSP slot packing** for 16 effects (reverbs 18-27, GEQ, ROOM, PEQ+S.DELAY, EXCITER, CHORUS's 40 odd records,
+  NO OPERATION): the parameter names are attached, the byte packing is not; `DSPCfg_ExtractPairFromStruct` /
+  `DSPCfg_ExtractFieldPair` are the readers to follow.
+- Renames this lane found but did not make (v10 / v9 / v7 / v6 / v5, a sed script each): the table under "Names
+  in the firmware that this changes".
