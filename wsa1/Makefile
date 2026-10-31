@@ -101,6 +101,8 @@ images-sheet:
 .SECONDARY:
 
 all: rebuilt_ROMs/wsa1_prom_a.llvm.rom rebuilt_ROMs/wsa1_prom_b.llvm.rom rebuilt_ROMs/wsa1_prom_c.llvm.rom rebuilt_ROMs/wsa1_prom_d.llvm.rom
+# named here so a deleted .bin is made again (`.SECONDARY:` above makes every target intermediate)
+all: $(WSA1_IMAGE_BINS)
 
 rebuilt_ROMs/wsa1_prom_a.llvm.o: $(PROM_A_SRC) $(COMMON_INC) $(KERNEL_SRC) $(MAINCPU_SHARED) $(DSP_SRC) $(WSA1_IMAGE_BINS) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs

@@ -1565,6 +1565,15 @@ rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom: rebuilt_ROMs/kn5000_waveform_ic307.
 	$(LLVM_OBJCOPY) -O binary $< $@
 
 llvm-all: original_ROMs/kn5000_waveform_rom.ic307 rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom
+
+# Every KN5000 media conversion's output (lane media-build, 2026-10-31).  `all` names them so that a
+# deleted one is made again: `.SECONDARY:` marks every target intermediate, and make does not remake a
+# missing intermediate for an object that is otherwise up to date -- while assert_images_assemble.py,
+# which assembles the sources directly, needs every file they `.incbin`.
+.PHONY: media
+media: $(KN5000_IMAGE_BINS) $(FTBMP_BMPS) waveform/build/pcm/.built \
+	$(foreach t,$(C_BITMAP_TREES),$(t)/maincpu/includes/generated/pictures/.stamp)
+llvm-all: media
 gate: verify-ic307-reference
 clean: clean-waveform
 clean-waveform:
