@@ -6604,11 +6604,7 @@ Str_VEUILLEZ_PATIENTER_2:	.asciz "VEUILLEZ PATIENTER!"
 Str_POR_FAVOR_ESPERE_2:	.asciz "\xA1POR FAVOR, ESPERE!"
 Str_PLEASE_WAIT_3:	.asciz "PLEASE WAIT!"
 Str_SILAHKAN_TUNGGU_2:	.asciz "SILAHKAN TUNGGU!"
-
-AcKssPleaseWaitProc_L1dc_Table_p0_0:	# REC_AcKssPleaseWaitProc_L1dc_Table_p0 (4 bytes)
-	REC_AcKssPleaseWaitProc_L1dc_Table_p0	f0=-92, f1=-73, x2="\xA4\xD0"
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A08D1, 0x0A08E4
+StrJa_978A08CD:	.asciz "\xA4\xB7\xA4\xD0\xA4\xE9\xA4\xAF\xA4\xAA\xC2\xD4\xA4\xC1\xB2\xBC\xA4\xB5\xA4\xA4\xA1\xA3"	# EUC-JP
 
 AcKssPleaseWaitProc_L1dc_Table:
 	.long	Str_PLEASE_WAIT_4
@@ -6617,7 +6613,7 @@ AcKssPleaseWaitProc_L1dc_Table:
 	.long	Str_POR_FAVOR_ESPERE_2
 	.long	Str_PLEASE_WAIT_3
 	.long	Str_SILAHKAN_TUNGGU_2
-	.long	AcKssPleaseWaitProc_L1dc_Table_p0_0
+	.long	StrJa_978A08CD
 
 Text_20:	# 88 strings of 3 characters, NUL-terminated
 	.asciz	"~20"
@@ -10358,7 +10354,7 @@ PfDoubleToDecimal_entry_L1e1_Var:	# 2 x u32, 1070810131..1352628735; read by PfD
 	tab_u32	1352628735, 1070810131
 
 PfDoubleToDecimal_entry_L290_Records:	# 1 x REC_PfDoubleToDecimal_entry_L290_Records (8 bytes each); read by PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1` (+3)
-	REC_PfDoubleToDecimal_entry_L290_Records	f4=0x3FF00000
+	REC_PfDoubleToDecimal_entry_L290_Records	LibF64Div_d1=0x3FF00000
 
 doubles_978AFDA0:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x00000000, 0x40240000	# 100
@@ -12451,7 +12447,7 @@ V_HDD_MAIN_MENU_ResNames:
 .mnbase 0x9785C17C   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
 
 
-func_97805FD0_L26_Var:	# 4 x REC_func_97805FD0_L26_Var (4 bytes each); read by func_97800082_L2a 0x978000AC `mov d0, (a1)`; func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)` (+4)
+func_97805FD0_L26_Var:	# 4 x REC_func_97805FD0_L26_Var (4 bytes each); read by XaprRamInit_L2a 0x978000AC `mov d0, (a1)`; func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)` (+4)
 	REC_func_97805FD0_L26_Var	x2="\xFF\xFF"
 	REC_func_97805FD0_L26_Var	x2="\x00\x00"
 	REC_func_97805FD0_L26_Var	x2="\x00\x00"
@@ -13640,17 +13636,17 @@ func_978341C0_Var:	# u32, initial value of a RAM variable; read / written by fun
 	.long	0
 
 func_97834719_Table:	# 12 x REC_func_97834719_Table (12 bytes each); read by func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`; func_9783403D 0x9783403D `call func_97834109_entry, 0, 0x18` (+1)
-	REC_func_97834719_Table	p0=Str_FONT, x4="\x03\x00\x00\x00", proc=func_978343AC	# [0]
-	REC_func_97834719_Table	p0=Str_P_4, x4="\x01\x00\x00\x00", proc=loc_9783439E
-	REC_func_97834719_Table	p0=Str_BR, x4="\x02\x00\x00\x00", proc=loc_97834382
-	REC_func_97834719_Table	p0=Str_H1, x4="\x00\x00\x00\x00", proc=loc_97834289
-	REC_func_97834719_Table	p0=Str_H2, x4="\x00\x00\x00\x00", proc=loc_97834289
-	REC_func_97834719_Table	p0=Str_H3, x4="\x00\x00\x00\x00", proc=loc_97834289
-	REC_func_97834719_Table	p0=Str_H4, x4="\x00\x00\x00\x00", proc=loc_97834289
-	REC_func_97834719_Table	p0=Str_H5, x4="\x00\x00\x00\x00", proc=loc_97834289
-	REC_func_97834719_Table	p0=Str_H6, x4="\x00\x00\x00\x00", proc=loc_97834289	# [8]
-	REC_func_97834719_Table	p0=func_97834719_Table_p0_0, x4="\x03\x00\x00\x00", proc=loc_97834285
-	REC_func_97834719_Table	p0=Str_empty_395, x4="\x00\x00\x00\x00"
+	REC_func_97834719_Table	text=Str_FONT, x4="\x03\x00\x00\x00", proc=func_978343AC	# [0]
+	REC_func_97834719_Table	text=Str_P_4, x4="\x01\x00\x00\x00", proc=loc_9783439E
+	REC_func_97834719_Table	text=Str_BR, x4="\x02\x00\x00\x00", proc=loc_97834382
+	REC_func_97834719_Table	text=Str_H1, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	text=Str_H2, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	text=Str_H3, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	text=Str_H4, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	text=Str_H5, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	text=Str_H6, x4="\x00\x00\x00\x00", proc=loc_97834289	# [8]
+	REC_func_97834719_Table	text=func_97834719_Table_p0_0, x4="\x03\x00\x00\x00", proc=loc_97834285
+	REC_func_97834719_Table	text=Str_empty_395, x4="\x00\x00\x00\x00"
 	REC_func_97834719_Table	x4="\x18\xF4\x8A\x97"
 
 func_978355D3_L266_Table:	# 4 x s16, -1..4; read by func_978355D3_L266 0x97835839: `movhu (func_978355D3_L266_Table), d1`
@@ -13692,9 +13688,9 @@ func_978392F9_L1e_Var_2:	# u32, initial value of a RAM variable; read / written 
 	.long	0
 func_978392F9_L1e_Var_3:	# u32, initial value of a RAM variable; read / written by func_978392F9_L1e 0x97839317: `mov d0, (func_978392F9_L1e_Var_3)`; func_978392F9_L51 0x9783934A: `mov d0, (func_978392F9_L1e_Var_3)` ...
 	.long	0
-func_978392F9_Var:	# u32, initial value of a RAM variable; read / written by func_978392F9 0x978392F9: `mov d0, (func_978392F9_Var)`; func_97839372_L19 0x9783938B: `mov (func_978392F9_Var), d0` ...
+func_978392F9_Var:	# u32, initial value of a RAM variable; read / written by func_978392F9 0x978392F9: `mov d0, (func_978392F9_Var)`; XaprEntryIsrGroup27_L19 0x9783938B: `mov (func_978392F9_Var), d0` ...
 	.long	0
-func_978392F9_Var_2:	# u32, initial value of a RAM variable; read / written by func_978392F9 0x978392F9: `mov d0, (func_978392F9_Var_2)`; func_97839372_L38 0x978393AA: `mov (func_978392F9_Var_2), d0` ...
+func_978392F9_Var_2:	# u32, initial value of a RAM variable; read / written by func_978392F9 0x978392F9: `mov d0, (func_978392F9_Var_2)`; XaprEntryIsrGroup27_L38 0x978393AA: `mov (func_978392F9_Var_2), d0` ...
 	.long	1
 
 func_978392F9_L1e_Table:	# 4 x u8, 255..255; read by func_978392F9_L1e 0x97839317: `movbu d0, (func_978392F9_L1e_Table)`; func_978392F9_L51 0x9783934A: `movbu d0, (func_978392F9_L1e_Table)` ...
@@ -13702,9 +13698,9 @@ func_978392F9_L1e_Table:	# 4 x u8, 255..255; read by func_978392F9_L1e 0x9783931
 
 func_9783A3F5_Var:	# u32, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `mov d0, (func_9783A3F5_Var)`
 	.long	0
-func_9783A3F5_Var_2:	# u32, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `mov d0, (func_9783A3F5_Var_2)`; func_9783BB6D 0x9783BB6D: `mov d0, (func_9783A3F5_Var_2)` ...
+func_9783A3F5_Var_2:	# u32, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `mov d0, (func_9783A3F5_Var_2)`; XaprExtFileOpen 0x9783BB6D: `mov d0, (func_9783A3F5_Var_2)` ...
 	.long	0
-func_9783BAEA_Var:	# u32, initial value of a RAM variable; read / written by func_9783BAEA 0x9783BAEA: `mov d0, (func_9783BAEA_Var)`; func_9783BB0D 0x9783BB0D: `mov (func_9783BAEA_Var), d0`
+func_9783BAEA_Var:	# u32, initial value of a RAM variable; read / written by func_9783BAEA 0x9783BAEA: `mov d0, (func_9783BAEA_Var)`; XaprExtDiskFreeSpace 0x9783BB0D: `mov (func_9783BAEA_Var), d0`
 	.long	0
 func_9783A475_entry_L20c_Var:	# u32, initial value of a RAM variable; read / written by func_9783A475_entry_L20c 0x9783A684: `mov d0, (func_9783A475_entry_L20c_Var)`; func_9783A475_entry_L354 0x9783A7CC: `mov d0, (func_9783A475_entry_L20c_Var)` ...
 	.long	0xffffffff
@@ -13712,7 +13708,7 @@ func_9783A475_entry_L20c_Var_2:	# u32, initial value of a RAM variable; read / w
 	.long	0xffffffff
 func_9783A3EC_Var:	# u32, initial value of a RAM variable; read / written by func_9783A3EC 0x9783A3EC: `mov (func_9783A3EC_Var), d0`; func_9783A475_entry_L20c 0x9783A684: `mov d0, (func_9783A3EC_Var)` ...
 	.long	0
-func_9783BAF5_Var:	# u16, initial value of a RAM variable; read / written by func_9783BAF5 0x9783BAF5: `movhu d0, (func_9783BAF5_Var)`; func_9783BB3E 0x9783BB3E: `movhu (func_9783BAF5_Var), d0` ...
+func_9783BAF5_Var:	# u16, initial value of a RAM variable; read / written by func_9783BAF5 0x9783BAF5: `movhu d0, (func_9783BAF5_Var)`; XaprExtFileError 0x9783BB3E: `movhu (func_9783BAF5_Var), d0` ...
 	.word	0
 func_9783A3F5_Var_3:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_3)`
 	.byte	0
@@ -13722,37 +13718,37 @@ func_9783A3F5_Var_5:	# u8, initial value of a RAM variable; read / written by fu
 	.byte	0
 func_9783AA10_entry_L58_Var:	# u8, initial value of a RAM variable; read / written by func_9783AA10_entry_L58 0x9783AA6D: `movbu d0, (func_9783AA10_entry_L58_Var)`; func_9783AA10_entry_L94 0x9783AAA9: `movbu d0, (func_9783AA10_entry_L58_Var)` ...
 	.byte	0
-func_9783A3F5_Var_6:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_6)`; func_9783BB6D 0x9783BB6D: `movbu (func_9783A3F5_Var_6), d0` ...
+func_9783A3F5_Var_6:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_6)`; XaprExtFileOpen 0x9783BB6D: `movbu (func_9783A3F5_Var_6), d0` ...
 	.byte	0
 func_9783A3F5_Var_7:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_7)`
 	.byte	0
-func_9783A3F5_Var_8:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_8)`; func_9783BD14_L29 0x9783BD3D: `movbu (func_9783A3F5_Var_8), d0` ...
+func_9783A3F5_Var_8:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_8)`; XaprExtFileSeek_L29 0x9783BD3D: `movbu (func_9783A3F5_Var_8), d0` ...
 	.byte	0
-func_9783A3F5_Var_9:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_9)`; func_9783BD14_L41 0x9783BD55: `movbu (func_9783A3F5_Var_9), d0` ...
+func_9783A3F5_Var_9:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_9)`; XaprExtFileSeek_L41 0x9783BD55: `movbu (func_9783A3F5_Var_9), d0` ...
 	.byte	0
-func_9783A3F5_Var_10:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_10)`; func_9783BD14_L5f 0x9783BD73: `movbu (func_9783A3F5_Var_10), d0` ...
+func_9783A3F5_Var_10:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_10)`; XaprExtFileSeek_L5f 0x9783BD73: `movbu (func_9783A3F5_Var_10), d0` ...
 	.byte	0
-func_9783A3F5_Var_11:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_11)`; func_9783BDE9 0x9783BDE9: `movbu (func_9783A3F5_Var_11), d0` ...
+func_9783A3F5_Var_11:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_11)`; XaprExtFileTell 0x9783BDE9: `movbu (func_9783A3F5_Var_11), d0` ...
 	.byte	0
-func_9783A3F5_Var_12:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_12)`; func_9783BE85 0x9783BE85: `movbu (func_9783A3F5_Var_12), d0` ...
+func_9783A3F5_Var_12:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_12)`; XaprExtFileWrite 0x9783BE85: `movbu (func_9783A3F5_Var_12), d0` ...
 	.byte	0
-func_9783A3F5_Var_13:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_13)`; func_9783BE17 0x9783BE17: `movbu (func_9783A3F5_Var_13), d0` ...
+func_9783A3F5_Var_13:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_13)`; XaprExtFilePutc 0x9783BE17: `movbu (func_9783A3F5_Var_13), d0` ...
 	.byte	0
-func_9783A3F5_Var_14:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_14)`; func_9783BB0D 0x9783BB0D: `movbu (func_9783A3F5_Var_14), d0` ...
+func_9783A3F5_Var_14:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_14)`; XaprExtDiskFreeSpace 0x9783BB0D: `movbu (func_9783A3F5_Var_14), d0` ...
 	.byte	0
-func_9783A3F5_Var_15:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_15)`; func_9783BDFF 0x9783BDFF: `movbu (func_9783A3F5_Var_15), d0` ...
+func_9783A3F5_Var_15:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_15)`; XaprExtFileRewind 0x9783BDFF: `movbu (func_9783A3F5_Var_15), d0` ...
 	.byte	0
-func_9783A3F5_Var_16:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_16)`; func_9783BC09 0x9783BC09: `movbu (func_9783A3F5_Var_16), d0` ...
+func_9783A3F5_Var_16:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_16)`; XaprExtFileRemove 0x9783BC09: `movbu (func_9783A3F5_Var_16), d0` ...
 	.byte	0
-func_9783A3F5_Var_17:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_17)`; func_9783BC7F 0x9783BC7F: `movbu (func_9783A3F5_Var_17), d0` ...
+func_9783A3F5_Var_17:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_17)`; XaprExtFileRead 0x9783BC7F: `movbu (func_9783A3F5_Var_17), d0` ...
 	.byte	0
-func_9783A3F5_Var_18:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_18)`; func_9783BC1A 0x9783BC1A: `movbu (func_9783A3F5_Var_18), d0` ...
+func_9783A3F5_Var_18:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_18)`; XaprExtFileGetc 0x9783BC1A: `movbu (func_9783A3F5_Var_18), d0` ...
 	.byte	0
 func_9783A3CE_Var:	# u8, initial value of a RAM variable; read / written by func_9783A3CE 0x9783A3CE: `movbu d0, (func_9783A3CE_Var)`; func_9783A3DA 0x9783A3DA: `movbu (func_9783A3CE_Var), d0`
 	.byte	0
-func_9783B74D_Var:	# u32, initial value of a RAM variable; read / written by func_9783B74D 0x9783B74D: `mov (func_9783B74D_Var), d0`; func_9783B816_entry_Le9 0x9783B903: `mov d0, (func_9783B74D_Var)` ...
+func_9783B74D_Var:	# u32, initial value of a RAM variable; read / written by func_9783B74D 0x9783B74D: `mov (func_9783B74D_Var), d0`; XaprExtFileCommand_entry_Le9 0x9783B903: `mov d0, (func_9783B74D_Var)` ...
 	.long	0
-func_9783DC78_L12_Var:	# u32, initial value of a RAM variable; read / written by func_9783DC78_L12 0x9783DC8A: `mov (func_9783DC78_L12_Var), d0`; func_9783DC78_L12 0x9783DC8A: `mov d1, (func_9783DC78_L12_Var)`
+func_9783DC78_L12_Var:	# u32, initial value of a RAM variable; read / written by XaprEntryIdle_L12 0x9783DC8A: `mov (func_9783DC78_L12_Var), d0`; XaprEntryIdle_L12 0x9783DC8A: `mov d1, (func_9783DC78_L12_Var)`
 	.long	0
 func_9780011C_entry_L4a_Var:	# u32, initial value of a RAM variable; read / written by func_9780011C_entry_L4a 0x97800169: `mov (func_9780011C_entry_L4a_Var), d0`; func_9780011C_entry_L4a 0x97800169: `mov d0, (func_9780011C_entry_L4a_Var)` ...
 	.long	0
@@ -14638,19 +14634,19 @@ Module08_MainFunctionNames:
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B63E0, 0x0B63E8
 
-func_97837743_L48f_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L48f 0x97837BD2: `mov (func_97837743_L48f_Var), d0`; func_97837743_L48f 0x97837BD2: `mov d0, (func_97837743_L48f_Var)`
+func_97837743_L48f_Var:	# u32, initial value of a RAM variable; read / written by XaprEntryIsrGroup24_L48f 0x97837BD2: `mov (func_97837743_L48f_Var), d0`; XaprEntryIsrGroup24_L48f 0x97837BD2: `mov d0, (func_97837743_L48f_Var)`
 	.long	0
-func_97837743_L461_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L461 0x97837BA4: `mov d0, (func_97837743_L461_Var)`; func_97837743_L470 0x97837BB3: `mov (func_97837743_L461_Var), d0` ...
+func_97837743_L461_Var:	# u32, initial value of a RAM variable; read / written by XaprEntryIsrGroup24_L461 0x97837BA4: `mov d0, (func_97837743_L461_Var)`; XaprEntryIsrGroup24_L470 0x97837BB3: `mov (func_97837743_L461_Var), d0` ...
 	.long	0
-func_97837743_L58e_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L58e 0x97837CD1: `mov (func_97837743_L58e_Var), d0`; func_97837743_L58e 0x97837CD1: `mov d0, (func_97837743_L58e_Var)`
+func_97837743_L58e_Var:	# u32, initial value of a RAM variable; read / written by XaprEntryIsrGroup24_L58e 0x97837CD1: `mov (func_97837743_L58e_Var), d0`; XaprEntryIsrGroup24_L58e 0x97837CD1: `mov d0, (func_97837743_L58e_Var)`
 	.long	0
-func_97837743_L50b_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L50b 0x97837C4E: `mov (func_97837743_L50b_Var), d0`; func_97837743_L50b 0x97837C4E: `mov d0, (func_97837743_L50b_Var)`
+func_97837743_L50b_Var:	# u32, initial value of a RAM variable; read / written by XaprEntryIsrGroup24_L50b 0x97837C4E: `mov (func_97837743_L50b_Var), d0`; XaprEntryIsrGroup24_L50b 0x97837C4E: `mov d0, (func_97837743_L50b_Var)`
 	.long	0
 
-func_97837743_L603_Table:	# 2 x u32, 0..0; read by func_97837743_L603 0x97837D46: `mov (func_97837743_L603_Table), d0`; func_97837743_L603 0x97837D46: `mov d0, (func_97837743_L603_Table)`
+func_97837743_L603_Table:	# 2 x u32, 0..0; read by XaprEntryIsrGroup24_L603 0x97837D46: `mov (func_97837743_L603_Table), d0`; XaprEntryIsrGroup24_L603 0x97837D46: `mov d0, (func_97837743_L603_Table)`
 	tab_u32	0, 0
 
-func_97837743_L39b_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L39b 0x97837ADE: `mov (func_97837743_L39b_Var), d0`; func_97837743_L39b 0x97837ADE: `mov d0, (func_97837743_L39b_Var)`
+func_97837743_L39b_Var:	# u32, initial value of a RAM variable; read / written by XaprEntryIsrGroup24_L39b 0x97837ADE: `mov (func_97837743_L39b_Var), d0`; XaprEntryIsrGroup24_L39b 0x97837ADE: `mov d0, (func_97837743_L39b_Var)`
 	.long	0
 
 func_97837D7C_entry_L118_Table:	# 2 x u32, 0..1; read by func_97837D7C_entry_L118 0x97837E99: `mov (func_97837D7C_entry_L118_Table), d0`; func_97837D7C_entry_L118 0x97837E99: `mov d0, (func_97837D7C_entry_L118_Table)`
@@ -14696,7 +14692,7 @@ func_97837D7C_Table_6:	# 32 x s8, -1..88; read by func_97837D7C_entry : `movbu	(
 	tab_s8	31, 3, 83, 0, 88, 0, 54, 0, 45, 0, 49, 0, 50, 0, 51, 0	# [0]
 	tab_s8	52, 0, 45, 0, 53, 0, 54, 0, 55, 0, 56, 0, 57, 0, 0, -1	# [16]
 
-func_9783730D_Var:	# u32, initial value of a RAM variable; read / written by func_9783730D 0x9783730D: `mov (func_9783730D_Var), d0`; func_97837743_L22 0x97837765: `mov d0, (func_9783730D_Var)` ...
+func_9783730D_Var:	# u32, initial value of a RAM variable; read / written by func_9783730D 0x9783730D: `mov (func_9783730D_Var), d0`; XaprEntryIsrGroup24_L22 0x97837765: `mov d0, (func_9783730D_Var)` ...
 	.long	0
 func_97838E82_L28_Var:	# u32, initial value of a RAM variable; read / written by func_97838E82_L28 0x97838EAA: `mov (func_97838E82_L28_Var), d0`; func_97838E82_Lae 0x97838F30: `mov (func_97838E82_L28_Var), d0` ...
 	.long	0
@@ -14720,7 +14716,7 @@ func_9783A02E_Table:	# 8 x u8, 1..128; read by func_9783A02E : `movbu	(d0, a0), 
 func_9783A02E_Table_2:	# 8 x u8, 127..254; read by func_9783A02E : `movbu	(d0, a0), d0`
 	tab_u8	254, 253, 251, 247, 239, 223, 191, 127
 
-func_978003E3_entry_L595_Var:	# u32, initial value of a RAM variable; read / written by func_978003E3_entry_L595 0x9780097B: `mov (func_978003E3_entry_L595_Var), a0`; func_97803C8A_entry_L110 0x97803D9D: `mov (func_978003E3_entry_L595_Var), a0` ...
+XaprHostRegistry:	# u32, initial value of a RAM variable; read / written by func_978003E3_entry_L595 0x9780097B: `mov (XaprHostRegistry), a0`; func_97803C8A_entry_L110 0x97803D9D: `mov (XaprHostRegistry), a0` ...
 	.long	0
 
 Str_This_is_Test_data_for_initial:	.asciz "This is Test data for initial"

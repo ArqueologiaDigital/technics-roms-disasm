@@ -14225,7 +14225,7 @@ CaptureLcd_entry:
 	call	func_4C14D65C_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0
 	mov	Str_wb_20, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	beq	CaptureLcd_entry_L4c
@@ -14433,7 +14433,7 @@ CaptureLcdArea:
 	call	func_4C14D65C_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0
 	mov	Str_wb_19, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	beq	CaptureLcdArea_L53
@@ -67362,13 +67362,13 @@ func_4C024359_entry:
 	movhu	d0, (0x34000280)
 	mov	a3, a0
 	mov	4, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	d2, a0
 	mov	6, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	5, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	0x7d, d0
 	movbu	d0, (0x5001af23)
 	bset	0x40, (0x5001af22)
@@ -69410,7 +69410,7 @@ PutM3Em_entry_L45:
 PutM3Em_entry_L58:
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C03CDDE_entry, [d2,d3,a2,a3], 0x24
+	call	M3HookDispatch_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	cmp	-1, d2
 	beq	PutM3Em_entry_L6b
@@ -69569,7 +69569,7 @@ PutM3Force_entry_L45:
 PutM3Force_entry_L58:
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C03CDDE_entry, [d2,d3,a2,a3], 0x24
+	call	M3HookDispatch_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	cmp	-1, d2
 	beq	PutM3Force_entry_L6b
@@ -69690,7 +69690,7 @@ PutM3Non_entry_L45:
 PutM3Non_entry_L58:
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C03CDDE_entry, [d2,d3,a2,a3], 0x24
+	call	M3HookDispatch_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	cmp	-1, d2
 	beq	PutM3Non_entry_L6b
@@ -80375,7 +80375,7 @@ func_4C02B65F_entry_L10:
 	bra	func_4C02B65F_entry_L42
 func_4C02B65F_entry_L1e:
 	mov	d2, (0x14, sp)
-	mov	data_4C190590, a0
+	mov	func_4C0268BC_ArgA0_0_2, a0
 	mov	d3, d0
 	and	0xff000000, d0
 	add	0x80, d0
@@ -80755,7 +80755,7 @@ func_4C02B95E_entry_L4c:
 	add	d3, a2
 	extbu	d2
 	mov	a3, (0x14, sp)
-	mov	data_4C191064, a0
+	mov	func_4C026FA7_Selected_5, a0
 	mov	a2, d0
 	mov	d2, d1
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
@@ -83085,16 +83085,16 @@ func_4C02CBC9:
 
 func_4C02CBC9_entry:
 	and	0x00ffffff, d0
-	call	func_4C02CBDA_entry, [d2,d3], 8
+	call	ResourceIdFind_entry, [d2,d3], 8
 	ret	0, 0xc
 
-func_4C02CBDA:
+ResourceIdFind:
 	movm	[d2,d3], (sp)
 
-func_4C02CBDA_entry:
+ResourceIdFind_entry:
 	mov	d0, d3
 	mov	0x14, d0
-	mov	func_4C02CBDA_Records, d2
+	mov	ResourceIdTrieNode_4C1925F8+6656, d2
 	setlb
 	exthu	d0
 	mov	d3, d1
@@ -83105,26 +83105,26 @@ func_4C02CBDA_entry:
 	mov	d2, a1
 	mov	(a1), d1
 	cmp	0, d1
-	bne	func_4C02CBDA_entry_L20
+	bne	ResourceIdFind_entry_L20
 	mov	0, a0
-	bra	func_4C02CBDA_entry_L55
-func_4C02CBDA_entry_L20:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L20:
 	movbu	(4, a1), d1
 	cmp	0, d1
-	bne	func_4C02CBDA_entry_L33
+	bne	ResourceIdFind_entry_L33
 	mov	(a1), a0
 	mov	(a0), d1
 	mov	(a1), a0
 	cmp	d1, d3
-	beq	func_4C02CBDA_entry_L55
+	beq	ResourceIdFind_entry_L55
 	mov	0, a0
-	bra	func_4C02CBDA_entry_L55
-func_4C02CBDA_entry_L33:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L33:
 	cmp	0, d0
-	bgt	func_4C02CBDA_entry_L3b
+	bgt	ResourceIdFind_entry_L3b
 	mov	0, a0
-	bra	func_4C02CBDA_entry_L55
-func_4C02CBDA_entry_L3b:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L3b:
 	movbu	(5, a1), d1
 	add	-4, d0
 	mov	d1, a0
@@ -83135,13 +83135,13 @@ func_4C02CBDA_entry_L3b:
 	lsr	d2, d1
 	and	0x0f, d1
 	cmp	a0, d1
-	bcs	func_4C02CBDA_entry_L53
+	bcs	ResourceIdFind_entry_L53
 	mov	0, a0
-	bra	func_4C02CBDA_entry_L55
-func_4C02CBDA_entry_L53:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L53:
 	mov	(a1), d2
 	lra
-func_4C02CBDA_entry_L55:
+ResourceIdFind_entry_L55:
 	retf	[d2,d3], 8
 
 func_4C02CC34:
@@ -84036,7 +84036,7 @@ func_4C02D1ED_entry_Le9:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	func_4C02CBDA_Records_p0_64+8, a0
+	mov	func_4C026FA7_Selected_41, a0
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_Lfd:
@@ -84058,7 +84058,7 @@ loc_4C02D305:
 	mov	d1, (0x14, sp)
 	add	0x8002, d0
 	mov	d3, d1
-	mov	data_4C191034, a0
+	mov	func_4C026FA7_Selected_3_2, a0
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x20, sp)
 	jmp	func_4C02D1ED_entry_L822
@@ -84208,7 +84208,7 @@ func_4C02D1ED_entry_L267:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	data_4C1922F4, a0
+	mov	func_4C026FA7_Selected_46, a0
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_L27b:
@@ -84266,7 +84266,7 @@ func_4C02D1ED_entry_L2b5:
 	bne	func_4C02D1ED_entry_L2fc
 func_4C02D1ED_entry_L2ea:
 	mov	a3, (0x14, sp)
-	mov	data_4C19230C, a0
+	mov	func_4C026FA7_Selected_47, a0
 	mov	(0x28, sp), d0
 	mov	d3, d1
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
@@ -84326,7 +84326,7 @@ func_4C02D1ED_entry_L336:
 	bne	func_4C02D1ED_entry_L37d
 func_4C02D1ED_entry_L36b:
 	mov	a3, (0x14, sp)
-	mov	Str_empty_1162, a0
+	mov	func_4C0268BC_ArgA0_16, a0
 	mov	(0x24, sp), d0
 	mov	d3, d1
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
@@ -84388,7 +84388,7 @@ func_4C02D1ED_entry_L3eb:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	func_4C026EAE_ArgA0_0+44, a0
+	mov	func_4C026FA7_Selected_45, a0
 	call	func_4C0295F3_entry, [d2,d3,a2,a3], 0x28
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_L3ff:
@@ -84508,7 +84508,7 @@ func_4C02D1ED_entry_L4ee:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d0
-	mov	Str_empty_1163, a0
+	mov	func_4C0268BC_ArgA0_14, a0
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_L502:
@@ -84568,7 +84568,7 @@ func_4C02D1ED_entry_L570:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d0
-	mov	Str_J_4, a0
+	mov	func_4C0268BC_ArgA0_11, a0
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_L584:
@@ -84628,7 +84628,7 @@ func_4C02D1ED_entry_L5f2:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	Str_G_15, a0
+	mov	func_4C0268BC_ArgA0_8, a0
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_L606:
@@ -84806,7 +84806,7 @@ func_4C02D1ED_entry_L743:
 	bne	func_4C02D1ED_entry_L78a
 func_4C02D1ED_entry_L778:
 	mov	a3, (0x14, sp)
-	mov	Str_I_5, a0
+	mov	func_4C0268BC_ArgA0_10, a0
 	mov	(0x28, sp), d0
 	mov	d3, d1
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
@@ -84868,7 +84868,7 @@ func_4C02D1ED_entry_L7f8:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
-	mov	Str_H_8, a0
+	mov	func_4C0268BC_ArgA0_9, a0
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D1ED_entry_L80c:
@@ -84976,7 +84976,7 @@ func_4C02DA19_entry_Lb1:
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
-	mov	func_4C02CBDA_Records_p0_64+8, a0
+	mov	func_4C026FA7_Selected_41, a0
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	mov	0x10, d0
 	mov	d0, (0x10, sp)
@@ -85108,7 +85108,7 @@ func_4C02DA19_entry_L1de:
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	(0x20, sp), d0
-	mov	func_4C02CBDA_Records_p0_64+8, a0
+	mov	func_4C026FA7_Selected_41, a0
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	mov	0x10, d0
 	mov	d0, (0x10, sp)
@@ -85230,7 +85230,7 @@ func_4C02DCCE_entry_L4c:
 func_4C02DCCE_entry_L71:
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_2_33, a0
+	mov	func_4C026FA7_Selected_9, a0
 	and	0xf0000000, d2
 	add	0x8032, d2
 	clr	d1
@@ -85240,7 +85240,7 @@ func_4C02DCCE_entry_L71:
 func_4C02DCCE_entry_L8f:
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	data_4C192110_p0_0, a0
+	mov	func_4C026FA7_Selected_8, a0
 	and	0xf0000000, d2
 	add	0x8031, d2
 	clr	d1
@@ -85389,7 +85389,7 @@ func_4C02DEA8_L2f:
 	and	0xff000000, d3
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	func_4C02CBDA_Records_p0_64+8, a0
+	mov	func_4C026FA7_Selected_41, a0
 	mov	0x07b00001, d0
 	add	d2, d0
 	mov	d3, d1
@@ -85411,21 +85411,21 @@ func_4C02DEA8_L2f:
 	call	func_4C027333_entry, [d2,d3,a2,a3], 0x38
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_A_31, a0
+	mov	func_4C026926_ArgA0_1, a0
 	mov	0x07b00041, d0
 	add	d2, d0
 	mov	d3, d1
 	call	func_4C027333_entry, [d2,d3,a2,a3], 0x38
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_B_15, a0
+	mov	func_4C026FA7_Selected_50, a0
 	mov	0x07b00042, d0
 	add	d2, d0
 	mov	d3, d1
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_C_19, a0
+	mov	func_4C026FA7_Selected_51, a0
 	mov	0x07b00043, d0
 	add	d2, d0
 	mov	d3, d1
@@ -93355,16 +93355,16 @@ func_4C032A0C_entry:
 	call	func_4C03296C_entry, 0, 8
 	mov	d2, a0
 	mov	8, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	d3, a0
 	mov	7, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	a3, a0
 	mov	0xa, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	9, d0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	8, d0
 	call	ena_int_entry, [d2], 4
 	mov	7, d0
@@ -113564,11 +113564,11 @@ func_4C03C303_entry_Lad5:
 	mov	a1, a0
 	retf	[a2], 4
 
-func_4C03CDDE:
+M3HookDispatch:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C03CDDE_entry:
+M3HookDispatch_entry:
 	mov	d1, (0x30, sp)
 	mov	d0, (0x2c, sp)
 	mov	0xffffffff, a1
@@ -113576,50 +113576,50 @@ func_4C03CDDE_entry:
 	lsr	24, d0
 	extbu	d0
 	cmp	7, d0
-	bne	func_4C03CDDE_entry_L1d
+	bne	M3HookDispatch_entry_L1d
 	mov	-1, d0
 	ret	[d2,d3,a2,a3], 0x24
-func_4C03CDDE_entry_L1d:
+M3HookDispatch_entry_L1d:
 	mov	(0x2c, sp), d0
 	mov	func_4C03CDDE_entry_L8c_Selected_0, d2
 	and	0x00ff0000, d0
 	lsr	16, d0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_1, d2
 	cmp	0x20, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_2, d2
 	cmp	0x60, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_3, d2
 	cmp	0x70, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_4, d2
 	cmp	0xb0, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_5, d2
 	cmp	0xc0, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_6, d2
 	cmp	0xd0, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CDDE_entry_L8c_Selected_7, d2
 	cmp	0xe0, d0
-	beq	func_4C03CDDE_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	-1, d0
-	bra	func_4C03CDDE_entry_Lb6
-func_4C03CDDE_entry_L85:
+	bra	M3HookDispatch_entry_Lb6
+M3HookDispatch_entry_L85:
 	mov	8, a3
 	add	d2, a3
 	mov	d2, a2
 	inc4	a2
-func_4C03CDDE_entry_L8c:
+M3HookDispatch_entry_L8c:
 	mov	(a3), d0
 	mov	d0, a0
 	cmp	0, d0
-	beq	func_4C03CDDE_entry_Lb4
+	beq	M3HookDispatch_entry_Lb4
 	mov	a1, (0x10, sp)
 	mov	d2, a1
 	mov	(a1), d1
@@ -113628,20 +113628,20 @@ func_4C03CDDE_entry_L8c:
 	mov	(0x10, sp), a1
 	and	d0, d1
 	cmp	d3, d1
-	bne	func_4C03CDDE_entry_Lac
+	bne	M3HookDispatch_entry_Lac
 	mov	(0x30, sp), d1
 	calls	(a0)
 	mov	d0, a1
 	cmp	0, d0
-	beq	func_4C03CDDE_entry_Lb4
-func_4C03CDDE_entry_Lac:
+	beq	M3HookDispatch_entry_Lb4
+M3HookDispatch_entry_Lac:
 	add	0xc, d2
 	add	0xc, a2
 	add	0xc, a3
-	bra	func_4C03CDDE_entry_L8c
-func_4C03CDDE_entry_Lb4:
+	bra	M3HookDispatch_entry_L8c
+M3HookDispatch_entry_Lb4:
 	mov	a1, d0
-func_4C03CDDE_entry_Lb6:
+M3HookDispatch_entry_Lb6:
 	ret	[d2,d3,a2,a3], 0x24
 
 func_4C03CE9C:
@@ -151895,7 +151895,7 @@ func_4C053C6D_entry:
 	call	func_4C04EE80_entry, 0, 8
 	call	func_4C112011_entry, 0, 0x40
 	call	func_4C16CC16_entry, [d2], 0x18
-	call	func_4C17327C_entry, 0, 0xc
+	call	XaprInit_entry, 0, 0xc
 	ret	0, 8
 
 func_4C053CDD:
@@ -152072,7 +152072,7 @@ func_4C053D2C_L1b7:
 	call	func_4C167CD2_entry, [d2], 0x10
 	call	M3BufferOut_entry, [a2,a3], 0x20
 	call	SndSetupApplyMemoryPair_entry, 0, 0x10
-	call	func_4C173264_entry, 0, 8
+	call	XaprCallIdle_entry, 0, 8
 	jmp	func_4C053D2C_L1b
 # func_4C053D2C + 0x242: no traced path reaches what follows (--decode-gaps)
 	ret	[d2,d3], 0x24
@@ -192239,7 +192239,7 @@ func_4C06968E_entry:
 	mov	3, d0
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	3, d0
 	call	ena_int_entry, [d2], 4
 	ret	0, 0x24
@@ -193001,7 +193001,7 @@ func_4C069D9E_entry:
 	mov	1, d0
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	1, d0
 	call	ena_int_entry, [d2], 4
 	call	func_4C07AEC5_entry, 0, 0x28
@@ -220407,7 +220407,7 @@ func_4C07AEC5_entry:
 	mov	d0, (0x10, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	(0x10, sp), d0
 	call	ena_int_entry, [d2], 4
 	call	func_4C05071A_entry, [d2], 0x10
@@ -310745,7 +310745,7 @@ func_4C0AC94F_entry:
 	call	strcat_entry, [a2], 4
 	mov	Str_rt_2, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -310793,7 +310793,7 @@ func_4C0AC9BE_entry:
 	call	strcat_entry, [a2], 4
 	mov	Str_rt, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	mov	d0, d2
 	exth	d0
 	cmp	0, d0
@@ -310886,7 +310886,7 @@ func_4C0ACA98_entry:
 	call	strcat_entry, [a2], 4
 	mov	Str_rb_43, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	mov	d0, d3
 	exth	d0
 	cmp	0, d0
@@ -311400,7 +311400,7 @@ func_4C0ACF83_entry_L19:
 	call	func_4C0AC5DB_entry, [d2,a2,a3], 0x24
 	mov	a3, a0
 	mov	Str_rb_42, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	movhu	d0, (0x14, sp)
 	movhu	(0x14, sp), d0
 	exth	d0
@@ -476373,11 +476373,11 @@ func_4C112011_entry:
 	mov	(0x10, sp), d0
 	mov	sp, a0
 	add	0x18, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	(0x14, sp), d0
 	mov	sp, a0
 	add	0x2c, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	(0x14, sp), d0
 	call	ena_int_entry, [d2], 4
 	mov	(0x10, sp), d0
@@ -476874,7 +476874,7 @@ func_4C1125FE_entry:
 	mov	d0, (0x10, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	clr	d0
 	mov	d0, (0x50288164)
 	mov	d0, (0x50288168)
@@ -506003,7 +506003,7 @@ SaveSmf_entry_L31:
 	call	SetSeqPlyPart_entry, [d2,d3,a2], 0x20
 	call	func_4C1221E4_entry, 0, 0xc
 SaveSmf_entry_L95:
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x5005d158)
 	call	func_4C14CB18_entry, 0, 0x10
 	exth	d0
@@ -551672,7 +551672,7 @@ FilePriorityFunc:
 	call	func_4C13A4F2, 0, 0
 	call	func_4C1505D9, 0, 0
 	call	func_4C14F381, 0, 0
-	call	func_4C17321A, 0, 0x14
+	call	XaprBoardDetect, 0, 0x14
 	extbu	d0
 	cmp	0, d0
 	bne	FilePriorityFunc_L58
@@ -554997,7 +554997,7 @@ FmmLoadTitleFunc_L385:
 	clr	d0
 	ret	[d2], 0x24
 FmmLoadTitleFunc_L389:
-	call	func_4C17321A, 0, 0x14
+	call	XaprBoardDetect, 0, 0x14
 	extbu	d0
 	cmp	0, d0
 	bne	FmmLoadTitleFunc_L3b7
@@ -573954,7 +573954,7 @@ func_4C149927_entry_L14:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_39, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149927_entry_L4d
@@ -574281,7 +574281,7 @@ func_4C149BFE_entry_L12:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_38, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	blt	func_4C149BFE_entry_L4e
@@ -574355,7 +574355,7 @@ func_4C149C89_entry_L11:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_37, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149C89_entry_L44
@@ -574462,7 +574462,7 @@ func_4C149D4D_entry_Lf:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_36, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C149D4D_entry_L41
@@ -574691,7 +574691,7 @@ func_4C149F25_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_35, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149F25_entry_L24
@@ -574807,7 +574807,7 @@ func_4C14A055_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_34, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A055_entry_L25
@@ -574935,7 +574935,7 @@ func_4C14A1D1_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_33, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A1D1_entry_L24
@@ -574979,7 +574979,7 @@ func_4C14A235_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_32, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A235_entry_L25
@@ -575271,7 +575271,7 @@ func_4C14A58C_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_rb_31, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A58C_entry_L28
@@ -575343,7 +575343,7 @@ func_4C14A58C_entry_L7c:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_30, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	call	func_4C14F38B_entry, 0, 8
 	mov	d0, d3
 	exth	d0
@@ -575398,7 +575398,7 @@ func_4C14A58C_entry_L11e:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_29, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	call	func_4C14F38B_entry, 0, 8
 	mov	d0, d3
 	exth	d0
@@ -575442,7 +575442,7 @@ func_4C14A747_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_28, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A747_entry_L25
@@ -575523,7 +575523,7 @@ func_4C14A813_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_27, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A813_entry_L25
@@ -575604,7 +575604,7 @@ func_4C14A8DF_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_26, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A8DF_entry_L25
@@ -575725,7 +575725,7 @@ func_4C14AA1F_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_25, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AA1F_entry_L25
@@ -575803,7 +575803,7 @@ func_4C14AAE3_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_24, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AAE3_entry_L24
@@ -575847,7 +575847,7 @@ func_4C14AB47_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_23, a1
 	mov	a3, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AB47_entry_L24
@@ -575900,7 +575900,7 @@ func_4C14ABAB_entry:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	Str_rb_22, a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C14ABAB_entry_L4c
@@ -576049,7 +576049,7 @@ LoadCst_entry_L48:
 	call	func_4C14E23B_entry, [d2], 0x10
 	mov	a0, a2
 	mov	Str_rb_21, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d2, d0
 	bge	LoadCst_entry_L67
@@ -576475,7 +576475,7 @@ func_4C14B0D9_entry:
 	call	func_4C02FB1F, 0, 0
 	mov	d0, d2
 	call	func_4C0302C1, 0, 0
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	(0x18, sp), d1
 	exth	d2
 	add	d2, d1
@@ -576492,7 +576492,7 @@ func_4C14B0D9_entry_L2e:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_15, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B0D9_entry_L51
@@ -576540,7 +576540,7 @@ func_4C14B170_entry_L15:
 	call	func_4C03D1DE, 0, 0
 	mov	d0, d3
 func_4C14B170_entry_L1d:
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x14, sp)
 	cmp	0, d0
 	bge	func_4C14B170_entry_L2d
@@ -576555,7 +576555,7 @@ func_4C14B170_entry_L2d:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_14, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B170_entry_L52
@@ -576654,7 +576654,7 @@ func_4C14B29E_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C046C1C, 0, 0
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	0, d0
 	blt	func_4C14B29E_entry_L21
 	mov	(0x18, sp), a0
@@ -576674,7 +576674,7 @@ func_4C14B29E_entry_L25:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_13, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B29E_entry_L49
@@ -576711,7 +576711,7 @@ func_4C14B318_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C07AAB8, 0, 0
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	0, d0
 	blt	func_4C14B318_entry_L21
 	mov	(0x18, sp), a0
@@ -576731,7 +576731,7 @@ func_4C14B318_entry_L25:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_12, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B318_entry_L49
@@ -576768,7 +576768,7 @@ func_4C14B392_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C07AC9C, 0, 0
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	0, d0
 	blt	func_4C14B392_entry_L21
 	mov	(0x18, sp), a0
@@ -576788,7 +576788,7 @@ func_4C14B392_entry_L25:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_11, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B392_entry_L49
@@ -576825,7 +576825,7 @@ func_4C14B40C_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C15FE25, 0, 0
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B40C_entry_L1d
@@ -576840,7 +576840,7 @@ func_4C14B40C_entry_L1d:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_10, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B40C_entry_L42
@@ -576908,7 +576908,7 @@ func_4C14B4CD_entry:
 	mov	d0, (0x14, sp)
 	call	func_4C1173FF_entry, [d2], 0x18
 	mov	d0, (0x18, sp)
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B4CD_entry_L22
@@ -576923,7 +576923,7 @@ func_4C14B4CD_entry_L22:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_9, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B4CD_entry_L47
@@ -577031,7 +577031,7 @@ func_4C14B612_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C059B02_entry, [a2], 0xc
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B612_entry_L1d
@@ -577046,7 +577046,7 @@ func_4C14B612_entry_L1d:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_8, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B612_entry_L42
@@ -577115,7 +577115,7 @@ func_4C14B6D3_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C059CEE_entry, [a2], 0xc
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B6D3_entry_L1d
@@ -577130,7 +577130,7 @@ func_4C14B6D3_entry_L1d:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_7, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B6D3_entry_L42
@@ -577197,7 +577197,7 @@ func_4C14B794_entry:
 	call	func_4C07D5BD, 0, 0
 	exthu	d0
 	mov	d0, (0x14, sp)
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B794_entry_L1a
@@ -577212,7 +577212,7 @@ func_4C14B794_entry_L1a:
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_6, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B794_entry_L3f
@@ -577291,7 +577291,7 @@ SaveCst_entry:
 	mov	0, a2
 	call	func_4C14CF04_entry, 0, 8
 	mov	a0, a3
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x14, sp)
 	cmp	0, d0
 	bge	SaveCst_entry_L4e
@@ -577300,7 +577300,7 @@ SaveCst_entry:
 SaveCst_entry_L4e:
 	mov	a3, a0
 	mov	Str_wb_5, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	SaveCst_entry_L67
@@ -577454,7 +577454,7 @@ func_4C14BA1A_entry:
 	mov	a2, a0
 	mov	0xa, d0
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14BA1A_entry_L4e
@@ -577463,7 +577463,7 @@ func_4C14BA1A_entry:
 func_4C14BA1A_entry_L4e:
 	mov	a2, a0
 	mov	Str_wb_4, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14BA1A_entry_L67
@@ -577710,7 +577710,7 @@ func_4C14BC80_entry_L11:
 	call	func_4C14DA2E_entry, [d2], 0x10
 	mov	a0, a2
 	mov	Str_rb_20, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14BC80_entry_L2f
@@ -577868,7 +577868,7 @@ func_4C14BD68_entry_L5b:
 	mov	d3, a1
 	mov	2, d0
 	call	func_4C14CCC7_entry, [d2,a2], 0x18
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14BD68_entry_L92
@@ -577877,7 +577877,7 @@ func_4C14BD68_entry_L5b:
 func_4C14BD68_entry_L92:
 	mov	(0x14, sp), a0
 	mov	Str_wb_3, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14BD68_entry_Lac
@@ -578908,7 +578908,7 @@ func_4C14C67F_entry_L3d:
 	exth	d2
 	cmp	0xd, d2
 	bcs	func_4C14C67F_entry_L27
-	call	func_4C14D282_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	d3, d0
 	bge	func_4C14C67F_entry_L50
 	mov	-0x65, d0
@@ -579128,7 +579128,7 @@ LoadHpBmpFile_entry_Lf:
 	exthu	d0
 	call	func_4C14F2E5_entry, [d2], 0x10
 	mov	Str_rb_19, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	LoadHpBmpFile_entry_L2c
@@ -579437,7 +579437,7 @@ func_4C14CB18:
 func_4C14CB18_entry:
 	call	func_4C14CEC8_entry, 0, 8
 	mov	Str_wb_2, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	ret	0, 0x10
 
 func_4C14CB2E:
@@ -580470,22 +580470,22 @@ func_4C14D252_entry_L22:
 	mov	(0x50061200), d0
 	ret	[a2], 0x14
 
-func_4C14D282:
+FileDiskFreeSpace:
 	add	-0x10, sp
 
-func_4C14D282_entry:
+FileDiskFreeSpace_entry:
 	call	CheckExtMode, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C14D282_entry_L13
-	call	func_4C174230_entry, 0, 8
-	bra	func_4C14D282_entry_L2c
-func_4C14D282_entry_L13:
+	beq	FileDiskFreeSpace_entry_L13
+	call	XaprCallDiskFreeSpace_entry, 0, 8
+	bra	FileDiskFreeSpace_entry_L2c
+FileDiskFreeSpace_entry_L13:
 	mov	0x50061200, a0
 	mov	0x50061204, a1
 	call	GetDiskFreeSpace_entry, [a2,a3], 0x18
 	mov	(0x50061200), d0
-func_4C14D282_entry_L2c:
+FileDiskFreeSpace_entry_L2c:
 	ret	0, 0x10
 
 func_4C14D2B4:
@@ -581854,7 +581854,7 @@ func_4C14DCBC_entry:
 	mov	d0, a0
 	add	0x5006131d, a0
 	mov	Str_rb_18, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14DCBC_entry_L31
@@ -582612,7 +582612,7 @@ func_4C14E32C_entry:
 	mulu	d1, d0
 	add	d0, a0
 	mov	Str_rb_17, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14E32C_entry_L31
@@ -583099,7 +583099,7 @@ func_4C14E6D1_entry_L1d:
 func_4C14E6D1_entry_L2c:
 	mov	Str_MUSIC_DIR_2, a0
 	mov	Str_rb_16, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	blt	func_4C14E6D1_entry_L85
@@ -583127,7 +583127,7 @@ func_4C14E6D1_entry_L2c:
 func_4C14E6D1_entry_L85:
 	mov	Str_PIANODIR_FIL_3, a0
 	mov	Str_rb_15, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	blt	func_4C14E6D1_entry_Lca
@@ -583280,7 +583280,7 @@ func_4C14E856_entry_L33:
 	clr	d3
 	mov	Str_MUSIC_DIR, a0
 	mov	Str_rb_14, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C14E856_entry_L4c
@@ -583348,7 +583348,7 @@ func_4C14E856_entry_Ld4:
 	clr	d3
 	mov	Str_PIANODIR_FIL_2, a0
 	mov	Str_rb_13, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C14E856_entry_Led
@@ -583533,7 +583533,7 @@ func_4C14EAA5_entry:
 func_4C14EAA5_entry_Ld:
 	mov	Str_NAME_MDA, a0
 	mov	Str_rb_12, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14EAA5_entry_L77
@@ -583665,7 +583665,7 @@ func_4C14EAA5_entry_L123:
 func_4C14EAA5_entry_L12b:
 	mov	Str_PIANODIR_FIL, a0
 	mov	Str_rb_11, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14EAA5_entry_L194
@@ -583874,7 +583874,7 @@ func_4C14ED5A_entry:
 	call	func_4C14CBF3, 0, 0
 	mov	(0xb0, sp), a1
 	mov	a2, a0
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	ret	[a2,a3], 0xa4
 
 func_4C14ED90:
@@ -584629,11 +584629,11 @@ func_4C14F38B_entry_L13:
 func_4C14F38B_entry_L19:
 	ret	0, 8
 
-func_4C14F3AA:
+FileOpen:
 	movm	[a2,a3], (sp)
 	add	-0x90, sp
 
-func_4C14F3AA_entry:
+FileOpen_entry:
 	mov	a1, (0xa4, sp)
 	mov	a0, a3
 	mov	Str_A_11, a2
@@ -584649,11 +584649,11 @@ func_4C14F3AA_entry:
 	lne
 	movbu	(0x50062efe), d0
 	cmp	0, d0
-	beq	func_4C14F3AA_entry_L2d
+	beq	FileOpen_entry_L2d
 	mov	(0xa4, sp), a1
 	call	func_4C1742BF_entry, [a2], 0x14
 	ret	[a2,a3], 0x98
-func_4C14F3AA_entry_L2d:
+FileOpen_entry_L2d:
 	mov	sp, a2
 	add	0x10, a2
 	mov	a2, a0
@@ -584664,34 +584664,34 @@ func_4C14F3AA_entry_L2d:
 	call	func_4C130418_entry, [d2,d3,a2,a3], 0x2c
 	mov	a0, (0x50062ef8)
 	cmp	0, a0
-	bne	func_4C14F3AA_entry_L89
+	bne	FileOpen_entry_L89
 	mov	(0xa4, sp), a0
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x72, d0
-	bne	func_4C14F3AA_entry_L5e
+	bne	FileOpen_entry_L5e
 	mov	-2, d0
 	movhu	d0, (0x50062efc)
-	bra	func_4C14F3AA_entry_L90
-func_4C14F3AA_entry_L5e:
+	bra	FileOpen_entry_L90
+FileOpen_entry_L5e:
 	movbu	(a0), d0
 	mov	-1, d1
 	extb	d0
 	movhu	d1, (0x50062efc)
 	cmp	0x77, d0
-	bne	func_4C14F3AA_entry_L90
+	bne	FileOpen_entry_L90
 	mov	(0x50200000), d0
 	cmp	0x1f, d0
 	mov	-0xb, d0
 	movhu	d0, (0x50062efc)
-	beq	func_4C14F3AA_entry_L90
+	beq	FileOpen_entry_L90
 	mov	-3, d0
 	movhu	d0, (0x50062efc)
-	bra	func_4C14F3AA_entry_L90
-func_4C14F3AA_entry_L89:
+	bra	FileOpen_entry_L90
+FileOpen_entry_L89:
 	clr	d0
 	movhu	d0, (0x50062efc)
-func_4C14F3AA_entry_L90:
+FileOpen_entry_L90:
 	movhu	(0x50062efc), d0
 	ret	[a2,a3], 0x98
 
@@ -616228,7 +616228,7 @@ func_4C161B11_entry_L69d:
 func_4C161B11_entry_L6a5:
 	mov	0x500b8240, a0
 	mov	Str_rb_7, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161B11_entry_L6c5
@@ -616356,7 +616356,7 @@ func_4C161B11_entry_L7f5:
 	call	strcat_entry, [a2], 4
 	mov	0x500b8240, a0
 	mov	Str_rb_6, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161B11_entry_L823
@@ -616533,7 +616533,7 @@ func_4C161B11_entry_L9bc:
 	mov	(0x500b7930), d3
 	mov	(0x14, sp), a0
 	mov	Str_rb_5, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161B11_entry_L9fc
@@ -616630,7 +616630,7 @@ func_4C161B11_entry_La94:
 	movbu	d1, (d0, a0)
 	mov	(0x14, sp), a0
 	mov	Str_rb_4, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161B11_entry_Lac0
@@ -616729,7 +616729,7 @@ func_4C161B11_entry_Lb55:
 	movbu	d1, (d0, a0)
 	mov	(0x14, sp), a0
 	mov	Str_rb_3, a1
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161B11_entry_Lb8a
@@ -645698,11 +645698,11 @@ func_4C1727CA_entry_Ld1:
 	call	func_4C172727_entry, 0, 0xc
 	ret	[a2], 0x18
 
-func_4C1728C5:
+XaprInstallIsrs:
 	movm	[d2,d3], (sp)
 	add	-0x38, sp
 
-func_4C1728C5_entry:
+XaprInstallIsrs_entry:
 	mov	0xe, d0
 	call	dis_int_entry, [d2], 4
 	mov	1, d2
@@ -645720,7 +645720,7 @@ func_4C1728C5_entry:
 	mov	0xe, d0
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	0xf, d0
 	call	dis_int_entry, [d2], 4
 	movhu	d2, (0x24, sp)
@@ -645736,7 +645736,7 @@ func_4C1728C5_entry:
 	mov	0xf, d0
 	mov	sp, a0
 	add	0x24, a0
-	call	func_4C380D01_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	ret	[d2,d3], 0x40
 
 putstr:
@@ -646512,63 +646512,63 @@ hamadeb_La8:
 	retf	0, 0
 	add	-0x14, sp
 
-func_4C17321A:
+XaprBoardDetect:
 	mov	0x97800000, a0
 	mov	Str_XAPR_2, a1
 	mov	4, d0
 	call	strncmp_entry, [a2], 4
 	cmp	0, d0
-	bne	func_4C17321A_L3a
+	bne	XaprBoardDetect_L3a
 	mov	(0x97800004), a0
 	mov	Str_XAPR, a1
 	mov	4, d0
 	call	strncmp_entry, [a2], 4
 	mov	1, d1
-	movbu	d1, (func_4C17321A_Table)
+	movbu	d1, (XaprBoardPresent)
 	cmp	0, d0
-	beq	func_4C17321A_L41
-func_4C17321A_L3a:
+	beq	XaprBoardDetect_L41
+XaprBoardDetect_L3a:
 	clr	d0
-	movbu	d0, (func_4C17321A_Table)
-func_4C17321A_L41:
-	movbu	(func_4C17321A_Table), d0
+	movbu	d0, (XaprBoardPresent)
+XaprBoardDetect_L41:
+	movbu	(XaprBoardPresent), d0
 	ret	0, 0x14
 
-func_4C173264:
+XaprCallIdle:
 	add	-8, sp
 
-func_4C173264_entry:
-	movbu	(func_4C17321A_Table), d0
+XaprCallIdle_entry:
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C173264_entry_L12
+	beq	XaprCallIdle_entry_L12
 	mov	(0x9780000c), a0
 	calls	(a0)
-func_4C173264_entry_L12:
+XaprCallIdle_entry_L12:
 	ret	0, 8
 
-func_4C17327C:
+XaprInit:
 	add	-0xc, sp
 
-func_4C17327C_entry:
-	call	func_4C17321A, 0, 0x14
-	movbu	(func_4C17321A_Table), d0
+XaprInit_entry:
+	call	XaprBoardDetect, 0, 0x14
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C17327C_entry_L22
+	beq	XaprInit_entry_L22
 	mov	(0x97800008), a1
 	mov	0x5024be58, a0
 	calls	(a1)
-	call	func_4C1728C5_entry, [d2,d3], 0x40
-func_4C17327C_entry_L22:
+	call	XaprInstallIsrs_entry, [d2,d3], 0x40
+XaprInit_entry_L22:
 	ret	0, 0xc
 
-func_4C1732A4:
+XaprIsrGroup24:
 	add	-0xc, sp
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C1732A4_L15
+	beq	XaprIsrGroup24_L15
 	mov	(0x97800010), a0
 	calls	(a0)
-func_4C1732A4_L15:
+XaprIsrGroup24_L15:
 	clr	d0
 	call	dis_int_entry, [d2], 4
 	movhu	(0x34000160), d0
@@ -646578,13 +646578,15 @@ func_4C1732A4_L15:
 	clr	d0
 	call	ena_int_entry, [d2], 4
 	ret	0, 0xc
+
+XaprIsrGroup27:
 	add	-0xc, sp
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C1732A4_L50
+	beq	XaprIsrGroup27_L15
 	mov	(0x97800014), a0
 	calls	(a0)
-func_4C1732A4_L50:
+XaprIsrGroup27_L15:
 	clr	d0
 	call	dis_int_entry, [d2], 4
 	movhu	(0x3400016c), d0
@@ -647870,26 +647872,26 @@ func_4C174200_L6:
 	call	func_4C1741B5_entry, [a2,a3], 0x1c
 	ret	[d2], 0x10
 
-func_4C174230:
+XaprCallDiskFreeSpace:
 	add	-8, sp
 
-func_4C174230_entry:
-	movbu	(func_4C17321A_Table), d0
+XaprCallDiskFreeSpace_entry:
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C174230_entry_L14
+	beq	XaprCallDiskFreeSpace_entry_L14
 	mov	(0x9780001c), a0
 	calls	(a0)
-	bra	func_4C174230_entry_L1a
-func_4C174230_entry_L14:
+	bra	XaprCallDiskFreeSpace_entry_L1a
+XaprCallDiskFreeSpace_entry_L14:
 	mov	0x0000ffff, d0
-func_4C174230_entry_L1a:
+XaprCallDiskFreeSpace_entry_L1a:
 	ret	0, 8
 
 func_4C174250:
 	add	-8, sp
 
 func_4C174250_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C174250_entry_L14
 	mov	(0x97800020), a0
@@ -647904,7 +647906,7 @@ func_4C17426C:
 	add	-8, sp
 
 func_4C17426C_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C17426C_entry_L14
 	mov	(0x97800024), a0
@@ -647919,7 +647921,7 @@ func_4C174288:
 	add	-8, sp
 
 func_4C174288_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C174288_entry_L14
 	mov	(0x97800028), a0
@@ -647934,7 +647936,7 @@ func_4C1742A4:
 	add	-8, sp
 
 func_4C1742A4_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C1742A4_entry_L14
 	mov	(0x9780002c), a0
@@ -647950,7 +647952,7 @@ func_4C1742BF:
 	add	-0x10, sp
 
 func_4C1742BF_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C1742BF_entry_L14
 	mov	(0x97800030), a2
@@ -647965,7 +647967,7 @@ func_4C1742DC:
 	add	-8, sp
 
 func_4C1742DC_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C1742DC_entry_L14
 	mov	(0x97800034), a0
@@ -647980,7 +647982,7 @@ func_4C1742F7:
 	add	-0xc, sp
 
 func_4C1742F7_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C1742F7_entry_L14
 	mov	(0x97800038), a1
@@ -647995,7 +647997,7 @@ func_4C174312:
 	add	-8, sp
 
 func_4C174312_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C174312_entry_L14
 	mov	(0x9780003c), a0
@@ -648010,7 +648012,7 @@ func_4C17432D:
 	add	-0xc, sp
 
 func_4C17432D_entry:
-	movbu	(func_4C17321A_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C17432D_entry_L15
 	mov	(0x97800040), a0
@@ -648026,7 +648028,7 @@ func_4C174349:
 	add	-0x10, sp
 
 func_4C174349_entry:
-	movbu	(func_4C17321A_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C174349_entry_L12
 	mov	(0x97800044), a1
@@ -648038,7 +648040,7 @@ func_4C174361:
 	add	-0x10, sp
 
 func_4C174361_entry:
-	movbu	(func_4C17321A_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C174361_entry_L12
 	mov	(0x97800048), a1
@@ -648052,7 +648054,7 @@ func_4C174379:
 
 func_4C174379_entry:
 	mov	d1, d2
-	movbu	(func_4C17321A_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C174379_entry_L15
 	mov	(0x9780004c), a0
@@ -648066,7 +648068,7 @@ func_4C174396:
 	add	-8, sp
 
 func_4C174396_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C174396_entry_L14
 	mov	(0x97800050), a0
@@ -648081,7 +648083,7 @@ func_4C1743B1:
 	add	-8, sp
 
 func_4C1743B1_entry:
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C1743B1_entry_L14
 	mov	(0x97800054), a0
@@ -648094,7 +648096,7 @@ func_4C1743B1_entry_L15:
 
 fopen_ext:
 	add	-0x10, sp
-	call	func_4C14F3AA_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	ret	0, 0x10
 
 fwrite_ext:
@@ -648127,22 +648129,22 @@ free_X:
 	call	Free_entry, [d2,d3,a2,a3], 0x2c
 	ret	0, 0xc
 
-func_4C174427:
+XaprCallM3Hook:
 	movm	[d2], (sp)
 	add	-0x10, sp
 	mov	d1, d2
 	mov	d0, d1
-	movbu	(func_4C17321A_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C174427_L1d
+	beq	XaprCallM3Hook_L1d
 	mov	(0x97800018), a0
 	mov	d1, d0
 	mov	d2, d1
 	calls	(a0)
-	bra	func_4C174427_L1f
-func_4C174427_L1d:
+	bra	XaprCallM3Hook_L1f
+XaprCallM3Hook_L1d:
 	mov	-1, d0
-func_4C174427_L1f:
+XaprCallM3Hook_L1f:
 	ret	[d2], 0x14
 
 GetLyricsData:
@@ -656367,15 +656369,15 @@ func_4C380C9D_entry_L47:
 func_4C380C9D_entry_L5c:
 	ret	[d2,d3,a2,a3], 0x1c
 
-func_4C380D01:
+KernelDefInt:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C380D01_entry:
+KernelDefInt_entry:
 	mov	d0, d2
 	mov	a0, a2
 	cmp	0xffffffff, a2
-	bne	func_4C380D01_entry_L26
+	bne	KernelDefInt_entry_L26
 	call	func_4C37EBBE, 0, 0
 	mov	d0, a2
 	and	0xf7ff, psw
@@ -656385,7 +656387,7 @@ func_4C380D01_entry:
 	call	func_4C37EBC3, 0, 0
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-func_4C380D01_entry_L26:
+KernelDefInt_entry_L26:
 	call	func_4C37EBBE, 0, 0
 	mov	d0, (0xc, sp)
 	and	0xf7ff, psw
@@ -656395,10 +656397,10 @@ func_4C380D01_entry_L26:
 	add	0x50180b64, a3
 	mov	(a3), d0
 	cmp	0x4c381665, d0
-	beq	func_4C380D01_entry_L4a
+	beq	KernelDefInt_entry_L4a
 	mov	d2, d0
 	call	func_4C380DD3_entry, [d2,a2,a3], 0xc
-func_4C380D01_entry_L4a:
+KernelDefInt_entry_L4a:
 	mov	8, a1
 	add	a2, a1
 	movhu	(a1), d0

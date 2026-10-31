@@ -25773,7 +25773,7 @@ func_4C004FBF_entry_L30_Table_2:	# 63 x u8, 0..255; read by func_4C004FBF_entry_
 	tab_u8	0, 17, 17, 0, 0, 17, 17, 0, 0, 17, 17, 0, 255, 255, 255	# [48]
 
 func_4C16DD5B_Var:	# REC_func_4C16DD5B_ArgA0 (12 bytes): the layout func_4C16DD5B 0x4C16DD5B reads through its argument a0 (passed by func_4C16DC9F_Lb 0x4C16DCAA `call func_4C16DD5B_entry, [d2,d3,a2,a3], 0x28`); the layout func_4C16DF59 0x4C16DF59 reads through its argument a0 (passed by func_4C16DCDC_L43 0x4C16DD1F `call func_4C16DF59_entry, [d2,d3,a2,a3], 0x30`)
-	REC_func_4C16DD5B_ArgA0	f0=0x500DEB5C, f4=0x500DEC5C, f8=0x500DEC9C
+	REC_func_4C16DD5B_ArgA0	f0=0x500DEB5C, addr=0x500DEC5C, addr_=0x500DEC9C
 
 func_4C16DC42_L3a_Records:	# 3 x REC_func_4C16DC42_L3a_Records (16 bytes each); read by func_4C16DC42_L3a 0x4C16DC7C `mov (d0, a0), d1`
 	REC_func_4C16DC42_L3a_Records	1343089500, 1343089564, 1343089628, 1343089692

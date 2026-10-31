@@ -64,11 +64,11 @@
 .endm
 
 # REC_PfDoubleToDecimal_entry_L290_Records: 8-byte records (PfDoubleToDecimal_entry_L290_Records, 1 records); fields, and what reads them:
-#   +0   f0           u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-8, a0), d0`
-#   +4   f4           u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1`
-.macro REC_PfDoubleToDecimal_entry_L290_Records f0=0, f4=0
-	.long	\f0
-	.long	\f4
+#   +0   LibF64Div_d0 u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-8, a0), d0`
+#   +4   LibF64Div_d1 u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1`
+.macro REC_PfDoubleToDecimal_entry_L290_Records LibF64Div_d0=0, LibF64Div_d1=0
+	.long	\LibF64Div_d0
+	.long	\LibF64Div_d1
 .endm
 
 # REC_func_97805FD0_L26_Var: 4-byte records (func_97805FD0_L26_Var, 4 records); fields, and what reads them:
@@ -82,17 +82,17 @@
 .endm
 
 # REC_func_97833B38_entry_L34_Records: 160-byte records (func_97833B38_entry_L34_Records, 9 records); fields, and what reads them:
-#   +0   a0           40 x 4 (u32)   func_97833B38_entry_L34 0x97833B71 `mov (d0, a0), d0`; func_97833B38_entry_L59 0x97833B96 `mov (d0, a0), a0` (+1)
-.macro REC_func_97833B38_entry_L34_Records a0:vararg
-	.long	\a0
+#   +0   text         40 x 4 (u32)   func_97833B38_entry_L34 0x97833B71 `mov (d0, a0), d0`; func_97833B38_entry_L59 0x97833B96 `mov (d0, a0), a0` (+1)
+.macro REC_func_97833B38_entry_L34_Records text:vararg
+	.long	\text
 .endm
 
 # REC_func_97834719_Table: 12-byte records (func_97834719_Table, 12 records); fields, and what reads them:
-#   +0   p0           ptr            func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`
+#   +0   text         ptr            func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`
 #   +4   x4           u8[4]          no reader seen
 #   +8   proc         ptr            no reader seen
-.macro REC_func_97834719_Table p0=0, x4, proc=0
-	.long	\p0
+.macro REC_func_97834719_Table text=0, x4, proc=0
+	.long	\text
 	.ascii	\x4
 	.long	\proc
 .endm
@@ -101,16 +101,6 @@
 #   +0   x0           u8[2]          no reader seen
 .macro REC_data_978AFD7C_p0 x0
 	.ascii	\x0
-.endm
-
-# REC_AcKssPleaseWaitProc_L1dc_Table_p0: 4-byte records (AcKssPleaseWaitProc_L1dc_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           s8             LibStrlen 0x9780A2C5 `movbu (a1), d1`
-#   +1   f1           s8             LibStrlen 0x9780A2C5 `movbu (a1), d1`
-#   +2   x2           u8[2]          no reader seen
-.macro REC_AcKssPleaseWaitProc_L1dc_Table_p0 f0=0, f1=0, x2
-	.byte	\f0
-	.byte	\f1
-	.ascii	\x2
 .endm
 
 # REC_names_978A31BC_p0: 1-byte records (names_978A31BC_p0, 4 records); fields, and what reads them:

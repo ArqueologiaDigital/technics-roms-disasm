@@ -1358,8 +1358,8 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
 
 ## Titles
 
-| title     | screen        | led to from |
-|-----------|---------------|-------------|
-| TT_HDDEXT | HDD_MAIN_MENU |             |
-| TT_NORMAL |               |             |
-| TT_PS     |               |             |
+| title     | screen                      | led to from |
+|-----------|-----------------------------|-------------|
+| TT_HDDEXT | HDD_MAIN_MENU               |             |
+| TT_NORMAL | TtHomepage (the host's)     |             |
+| TT_PS     | PanelSimulator (the host's) |             |

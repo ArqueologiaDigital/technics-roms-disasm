@@ -14223,7 +14223,7 @@ CaptureLcd_entry:
 	call	func_4C14D1D3_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0
 	mov	Str_wb_20, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	beq	CaptureLcd_entry_L4c
@@ -14431,7 +14431,7 @@ CaptureLcdArea:
 	call	func_4C14D1D3_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0
 	mov	Str_wb_19, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	beq	CaptureLcdArea_L53
@@ -15139,7 +15139,7 @@ MainGetSoundName_L26:
 	extbu	d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a3)
 	mov	a2, (0x10, sp)
@@ -15178,7 +15178,7 @@ MainGetSoundName_Lb7:
 	extbu	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
-	call	func_4C07BBDD_entry, [d2], 0x20
+	call	SoundIconFetch_entry, [d2], 0x20
 	extbu	d0
 	bra	MainGetSoundName_L169
 MainGetSoundName_Lf9:
@@ -15207,7 +15207,7 @@ MainGetSoundName_Lf9:
 	movbu	d0, (0x21, sp)
 	mov	d2, d0
 	exthu	d0
-	call	func_4C007A5B_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnit_entry, [d2,d3,a2,a3], 0x20
 	cmp	0, d0
 	bne	MainGetSoundName_L14c
 	movbu	(0x21, sp), d0
@@ -15215,7 +15215,7 @@ MainGetSoundName_Lf9:
 	movbu	d0, (0x21, sp)
 MainGetSoundName_L14c:
 	mov	a2, a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d0
 	movbu	(0x1d, sp), d1
 	asl	8, d0
@@ -15257,7 +15257,7 @@ GetSoundDev_entry:
 	lsr	24, d0
 	extbu	d0
 	exthu	d0
-	call	func_4C007A5B_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnit_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	beq	GetSoundDev_entry_L43
 	mov	2, d0
@@ -15268,7 +15268,7 @@ GetSoundDev_entry_L43:
 	movbu	d0, (0x15, sp)
 GetSoundDev_entry_L48:
 	mov	a2, a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x15, sp), d0
 	cmp	2, d0
 	blt	GetSoundDev_entry_L6b
@@ -15284,30 +15284,30 @@ GetSoundDev_entry_L6b:
 	mov	d2, d0
 	ret	[d2,a2], 0x20
 
-func_4C007A5B:
+PartHasDspUnit:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4C007A5B_entry:
+PartHasDspUnit_entry:
 	mov	d0, d3
 	mov	(func_4C007A5B_entry_L14_Table), d0
 	clr	d2
 	clr	d1
 	cmp	-1, d0
 	mov	func_4C007A5B_entry_L14_Table, a2
-	beq	func_4C007A5B_entry_L33
+	beq	PartHasDspUnit_entry_L33
 	exthu	d3
-func_4C007A5B_entry_L14:
+PartHasDspUnit_entry_L14:
 	asl2	d1
 	mov	(d1, a2), d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	exthu	d0
 	cmp	d0, d3
-	bne	func_4C007A5B_entry_L27
+	bne	PartHasDspUnit_entry_L27
 	mov	1, d0
-	bra	func_4C007A5B_entry_L34
-func_4C007A5B_entry_L27:
+	bra	PartHasDspUnit_entry_L34
+PartHasDspUnit_entry_L27:
 	exthu	d2
 	inc	d2
 	mov	d2, d1
@@ -15316,10 +15316,10 @@ func_4C007A5B_entry_L27:
 	asl2	d0
 	mov	(d0, a2), d0
 	cmp	-1, d0
-	bne	func_4C007A5B_entry_L14
-func_4C007A5B_entry_L33:
+	bne	PartHasDspUnit_entry_L14
+PartHasDspUnit_entry_L33:
 	clr	d0
-func_4C007A5B_entry_L34:
+PartHasDspUnit_entry_L34:
 	ret	[d2,d3,a2,a3], 0x20
 
 MainGetRhythmName:
@@ -67248,13 +67248,13 @@ func_4C024238_entry:
 	movhu	d0, (0x34000280)
 	mov	a3, a0
 	mov	4, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	d2, a0
 	mov	6, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	5, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	0x7d, d0
 	movbu	d0, (0x5001af77)
 	bset	0x40, (0x5001af76)
@@ -69296,7 +69296,7 @@ PutM3Em_entry_L45:
 PutM3Em_entry_L58:
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C03CC6E_entry, [d2,d3,a2,a3], 0x24
+	call	M3HookDispatch_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	cmp	-1, d2
 	beq	PutM3Em_entry_L6b
@@ -69455,7 +69455,7 @@ PutM3Force_entry_L45:
 PutM3Force_entry_L58:
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C03CC6E_entry, [d2,d3,a2,a3], 0x24
+	call	M3HookDispatch_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	cmp	-1, d2
 	beq	PutM3Force_entry_L6b
@@ -69576,7 +69576,7 @@ PutM3Non_entry_L45:
 PutM3Non_entry_L58:
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C03CC6E_entry, [d2,d3,a2,a3], 0x24
+	call	M3HookDispatch_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	cmp	-1, d2
 	beq	PutM3Non_entry_L6b
@@ -71429,7 +71429,7 @@ func_4C026C16_entry:
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -71770,7 +71770,7 @@ func_4C026E83_entry:
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -72909,7 +72909,7 @@ func_4C02773B_entry_Lbc:
 	bra	func_4C02773B_entry_Lf0
 func_4C02773B_entry_Ldc:
 	mov	a3, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -72919,7 +72919,7 @@ func_4C02773B_entry_Led:
 	movbu	d1, (0x31, sp)
 func_4C02773B_entry_Lf0:
 	mov	a2, a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x2c, sp), d0
 	mov	sp, a0
 	movbu	d0, (0x34, sp)
@@ -73844,7 +73844,7 @@ func_4C027F97_entry_La5:
 func_4C027F97_entry_Lac:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C027F97_entry_Lbf
@@ -73914,7 +73914,7 @@ func_4C027F97_entry_L13c:
 func_4C027F97_entry_L143:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C027F97_entry_L156
@@ -74040,7 +74040,7 @@ func_4C027F97_entry_L25b:
 func_4C027F97_entry_L262:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C027F97_entry_L275
@@ -74073,7 +74073,7 @@ func_4C027F97_entry_L2a7:
 func_4C027F97_entry_L2ae:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C027F97_entry_L2c1
@@ -74706,7 +74706,7 @@ func_4C0287CC_entry:
 	and	d2, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -76333,7 +76333,7 @@ func_4C02949D_entry:
 	and	d2, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -77096,7 +77096,7 @@ func_4C029A62_entry_L73:
 	bra	func_4C029A62_entry_Laa
 func_4C029A62_entry_L97:
 	mov	d2, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -77106,7 +77106,7 @@ func_4C029A62_entry_La7:
 	movbu	d1, (0x31, sp)
 func_4C029A62_entry_Laa:
 	mov	a2, a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 func_4C029A62_entry_Lb2:
 	movbu	(0x2f, sp), d0
 	movbu	(0x30, sp), d1
@@ -79046,7 +79046,7 @@ func_4C02AB55_entry:
 	mov	-1, d0
 	bra	func_4C02AB55_entry_L2e
 func_4C02AB55_entry_L12:
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	0, d0
 	bge	func_4C02AB55_entry_L20
@@ -79088,7 +79088,7 @@ func_4C02AB8B_entry_L11:
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x3c
 func_4C02AB8B_entry_L28:
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -80228,7 +80228,7 @@ func_4C02B4EF_entry_L10:
 	bra	func_4C02B4EF_entry_L42
 func_4C02B4EF_entry_L1e:
 	mov	d2, (0x14, sp)
-	mov	data_4C18FB74, a0
+	mov	func_4C026766_ArgA0_0_2, a0
 	mov	d3, d0
 	and	0xff000000, d0
 	add	0x80, d0
@@ -80608,7 +80608,7 @@ func_4C02B7EE_entry_L4c:
 	add	d3, a2
 	extbu	d2
 	mov	a3, (0x14, sp)
-	mov	data_4C190648, a0
+	mov	func_4C026E51_Selected_5, a0
 	mov	a2, d0
 	mov	d2, d1
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
@@ -82938,16 +82938,16 @@ func_4C02CA59:
 
 func_4C02CA59_entry:
 	and	0x00ffffff, d0
-	call	func_4C02CA6A_entry, [d2,d3], 8
+	call	ResourceIdFind_entry, [d2,d3], 8
 	ret	0, 0xc
 
-func_4C02CA6A:
+ResourceIdFind:
 	movm	[d2,d3], (sp)
 
-func_4C02CA6A_entry:
+ResourceIdFind_entry:
 	mov	d0, d3
 	mov	0x14, d0
-	mov	func_4C02CA6A_Records, d2
+	mov	ResourceIdTrieNode_4C191BDC+6656, d2
 	setlb
 	exthu	d0
 	mov	d3, d1
@@ -82958,26 +82958,26 @@ func_4C02CA6A_entry:
 	mov	d2, a1
 	mov	(a1), d1
 	cmp	0, d1
-	bne	func_4C02CA6A_entry_L20
+	bne	ResourceIdFind_entry_L20
 	mov	0, a0
-	bra	func_4C02CA6A_entry_L55
-func_4C02CA6A_entry_L20:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L20:
 	movbu	(4, a1), d1
 	cmp	0, d1
-	bne	func_4C02CA6A_entry_L33
+	bne	ResourceIdFind_entry_L33
 	mov	(a1), a0
 	mov	(a0), d1
 	mov	(a1), a0
 	cmp	d1, d3
-	beq	func_4C02CA6A_entry_L55
+	beq	ResourceIdFind_entry_L55
 	mov	0, a0
-	bra	func_4C02CA6A_entry_L55
-func_4C02CA6A_entry_L33:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L33:
 	cmp	0, d0
-	bgt	func_4C02CA6A_entry_L3b
+	bgt	ResourceIdFind_entry_L3b
 	mov	0, a0
-	bra	func_4C02CA6A_entry_L55
-func_4C02CA6A_entry_L3b:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L3b:
 	movbu	(5, a1), d1
 	add	-4, d0
 	mov	d1, a0
@@ -82988,13 +82988,13 @@ func_4C02CA6A_entry_L3b:
 	lsr	d2, d1
 	and	0x0f, d1
 	cmp	a0, d1
-	bcs	func_4C02CA6A_entry_L53
+	bcs	ResourceIdFind_entry_L53
 	mov	0, a0
-	bra	func_4C02CA6A_entry_L55
-func_4C02CA6A_entry_L53:
+	bra	ResourceIdFind_entry_L55
+ResourceIdFind_entry_L53:
 	mov	(a1), d2
 	lra
-func_4C02CA6A_entry_L55:
+ResourceIdFind_entry_L55:
 	retf	[d2,d3], 8
 
 func_4C02CAC4:
@@ -83889,7 +83889,7 @@ func_4C02D07D_entry_Le9:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	func_4C02CA6A_Records_p0_64+8, a0
+	mov	func_4C026E51_Selected_41, a0
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_Lfd:
@@ -83911,7 +83911,7 @@ loc_4C02D195:
 	mov	d1, (0x14, sp)
 	add	0x8002, d0
 	mov	d3, d1
-	mov	data_4C190618, a0
+	mov	func_4C026E51_Selected_3_2, a0
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x20, sp)
 	jmp	func_4C02D07D_entry_L822
@@ -84061,7 +84061,7 @@ func_4C02D07D_entry_L267:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	data_4C1918D8, a0
+	mov	func_4C026E51_Selected_46, a0
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_L27b:
@@ -84119,7 +84119,7 @@ func_4C02D07D_entry_L2b5:
 	bne	func_4C02D07D_entry_L2fc
 func_4C02D07D_entry_L2ea:
 	mov	a3, (0x14, sp)
-	mov	data_4C1918F0, a0
+	mov	func_4C026E51_Selected_47, a0
 	mov	(0x28, sp), d0
 	mov	d3, d1
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
@@ -84179,7 +84179,7 @@ func_4C02D07D_entry_L336:
 	bne	func_4C02D07D_entry_L37d
 func_4C02D07D_entry_L36b:
 	mov	a3, (0x14, sp)
-	mov	Str_empty_915, a0
+	mov	func_4C026766_ArgA0_16, a0
 	mov	(0x24, sp), d0
 	mov	d3, d1
 	call	func_4C0270D4_entry, [d2,d3,a2,a3], 0x30
@@ -84241,7 +84241,7 @@ func_4C02D07D_entry_L3eb:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	func_4C026D58_ArgA0_0+44, a0
+	mov	func_4C026E51_Selected_45, a0
 	call	func_4C02949D_entry, [d2,d3,a2,a3], 0x28
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_L3ff:
@@ -84361,7 +84361,7 @@ func_4C02D07D_entry_L4ee:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d0
-	mov	Str_empty_916, a0
+	mov	func_4C026766_ArgA0_14, a0
 	call	func_4C0270D4_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_L502:
@@ -84421,7 +84421,7 @@ func_4C02D07D_entry_L570:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d0
-	mov	Str_J_4, a0
+	mov	func_4C026766_ArgA0_11, a0
 	call	func_4C0270D4_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_L584:
@@ -84481,7 +84481,7 @@ func_4C02D07D_entry_L5f2:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	Str_G_15, a0
+	mov	func_4C026766_ArgA0_8, a0
 	call	func_4C0270D4_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_L606:
@@ -84659,7 +84659,7 @@ func_4C02D07D_entry_L743:
 	bne	func_4C02D07D_entry_L78a
 func_4C02D07D_entry_L778:
 	mov	a3, (0x14, sp)
-	mov	Str_I_5, a0
+	mov	func_4C026766_ArgA0_10, a0
 	mov	(0x28, sp), d0
 	mov	d3, d1
 	call	func_4C0270D4_entry, [d2,d3,a2,a3], 0x30
@@ -84721,7 +84721,7 @@ func_4C02D07D_entry_L7f8:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
-	mov	Str_H_8, a0
+	mov	func_4C026766_ArgA0_9, a0
 	call	func_4C0270D4_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_4C02D07D_entry_L80c:
@@ -84829,7 +84829,7 @@ func_4C02D8A9_entry_Lb1:
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
-	mov	func_4C02CA6A_Records_p0_64+8, a0
+	mov	func_4C026E51_Selected_41, a0
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
 	mov	0x10, d0
 	mov	d0, (0x10, sp)
@@ -84961,7 +84961,7 @@ func_4C02D8A9_entry_L1de:
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	(0x20, sp), d0
-	mov	func_4C02CA6A_Records_p0_64+8, a0
+	mov	func_4C026E51_Selected_41, a0
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
 	mov	0x10, d0
 	mov	d0, (0x10, sp)
@@ -85083,7 +85083,7 @@ func_4C02DB5E_entry_L4c:
 func_4C02DB5E_entry_L71:
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_2_33, a0
+	mov	func_4C026E51_Selected_9, a0
 	and	0xf0000000, d2
 	add	0x8032, d2
 	clr	d1
@@ -85093,7 +85093,7 @@ func_4C02DB5E_entry_L71:
 func_4C02DB5E_entry_L8f:
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	data_4C1916F4_p0_0, a0
+	mov	func_4C026E51_Selected_8, a0
 	and	0xf0000000, d2
 	add	0x8031, d2
 	clr	d1
@@ -85242,7 +85242,7 @@ func_4C02DD38_L2f:
 	and	0xff000000, d3
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	func_4C02CA6A_Records_p0_64+8, a0
+	mov	func_4C026E51_Selected_41, a0
 	mov	0x07b00001, d0
 	add	d2, d0
 	mov	d3, d1
@@ -85264,21 +85264,21 @@ func_4C02DD38_L2f:
 	call	func_4C0271DD_entry, [d2,d3,a2,a3], 0x38
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_A_31, a0
+	mov	func_4C0267D0_ArgA0_1, a0
 	mov	0x07b00041, d0
 	add	d2, d0
 	mov	d3, d1
 	call	func_4C0271DD_entry, [d2,d3,a2,a3], 0x38
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_B_15, a0
+	mov	func_4C026E51_Selected_50, a0
 	mov	0x07b00042, d0
 	add	d2, d0
 	mov	d3, d1
 	call	func_4C029080_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_C_19, a0
+	mov	func_4C026E51_Selected_51, a0
 	mov	0x07b00043, d0
 	add	d2, d0
 	mov	d3, d1
@@ -89364,7 +89364,7 @@ func_4C0302B3_entry_Le5:
 	or	d0, d1
 	movbu	d1, (a3)
 	mov	d2, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -89998,7 +89998,7 @@ func_4C030856_entry_L1b:
 	bra	func_4C030856_entry_L72
 func_4C030856_entry_L61:
 	mov	d2, d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -90008,7 +90008,7 @@ func_4C030856_entry_L6f:
 	movbu	d1, (0x21, sp)
 func_4C030856_entry_L72:
 	mov	a3, a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	movbu	d0, (0x24, sp)
@@ -90146,7 +90146,7 @@ func_4C030977_entry_L3c:
 	bra	func_4C030977_entry_L84
 func_4C030977_entry_L72:
 	movbu	(a2), d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -90156,7 +90156,7 @@ func_4C030977_entry_L81:
 	movbu	d1, (0x21, sp)
 func_4C030977_entry_L84:
 	mov	d3, a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d0
 	mov	d2, a0
 	movbu	d0, (0x24, sp)
@@ -92274,10 +92274,10 @@ func_4C031E91_entry:
 	call	TempoBpmReloadWrite_entry, [d2], 4
 	ret	0, 0xc
 
-func_4C031EAD:
+PartDspUnitFind:
 	movm	[d2,d3], (sp)
 
-func_4C031EAD_entry:
+PartDspUnitFind_entry:
 	mov	d0, d3
 	clr	d2
 	clr	d0
@@ -92288,10 +92288,10 @@ func_4C031EAD_entry:
 	mov	0x84000722, a0
 	movbu	(d1, a0), d1
 	cmp	d3, d1
-	bne	func_4C031EAD_entry_L1b
+	bne	PartDspUnitFind_entry_L1b
 	mov	d2, d0
-	bra	func_4C031EAD_entry_L24
-func_4C031EAD_entry_L1b:
+	bra	PartDspUnitFind_entry_L24
+PartDspUnitFind_entry_L1b:
 	mov	d0, d2
 	inc	d2
 	mov	d2, d0
@@ -92299,7 +92299,7 @@ func_4C031EAD_entry_L1b:
 	cmp	5, d0
 	lcs
 	mov	-1, d0
-func_4C031EAD_entry_L24:
+PartDspUnitFind_entry_L24:
 	retf	[d2,d3], 8
 
 func_4C031ED6:
@@ -93208,16 +93208,16 @@ func_4C03289C_entry:
 	call	func_4C0327FC_entry, 0, 8
 	mov	d2, a0
 	mov	8, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	d3, a0
 	mov	7, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	a3, a0
 	mov	0xa, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	a2, a0
 	mov	9, d0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	8, d0
 	call	ena_int_entry, [d2], 4
 	mov	7, d0
@@ -113417,11 +113417,11 @@ func_4C03C193_entry_Lad5:
 	mov	a1, a0
 	retf	[a2], 4
 
-func_4C03CC6E:
+M3HookDispatch:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C03CC6E_entry:
+M3HookDispatch_entry:
 	mov	d1, (0x30, sp)
 	mov	d0, (0x2c, sp)
 	mov	0xffffffff, a1
@@ -113429,50 +113429,50 @@ func_4C03CC6E_entry:
 	lsr	24, d0
 	extbu	d0
 	cmp	7, d0
-	bne	func_4C03CC6E_entry_L1d
+	bne	M3HookDispatch_entry_L1d
 	mov	-1, d0
 	ret	[d2,d3,a2,a3], 0x24
-func_4C03CC6E_entry_L1d:
+M3HookDispatch_entry_L1d:
 	mov	(0x2c, sp), d0
 	mov	func_4C03CC6E_entry_L8c_Selected_0, d2
 	and	0x00ff0000, d0
 	lsr	16, d0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_1, d2
 	cmp	0x20, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_2, d2
 	cmp	0x60, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_3, d2
 	cmp	0x70, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_4, d2
 	cmp	0xb0, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_5, d2
 	cmp	0xc0, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_6, d2
 	cmp	0xd0, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	func_4C03CC6E_entry_L8c_Selected_7, d2
 	cmp	0xe0, d0
-	beq	func_4C03CC6E_entry_L85
+	beq	M3HookDispatch_entry_L85
 	mov	-1, d0
-	bra	func_4C03CC6E_entry_Lb6
-func_4C03CC6E_entry_L85:
+	bra	M3HookDispatch_entry_Lb6
+M3HookDispatch_entry_L85:
 	mov	8, a3
 	add	d2, a3
 	mov	d2, a2
 	inc4	a2
-func_4C03CC6E_entry_L8c:
+M3HookDispatch_entry_L8c:
 	mov	(a3), d0
 	mov	d0, a0
 	cmp	0, d0
-	beq	func_4C03CC6E_entry_Lb4
+	beq	M3HookDispatch_entry_Lb4
 	mov	a1, (0x10, sp)
 	mov	d2, a1
 	mov	(a1), d1
@@ -113481,20 +113481,20 @@ func_4C03CC6E_entry_L8c:
 	mov	(0x10, sp), a1
 	and	d0, d1
 	cmp	d3, d1
-	bne	func_4C03CC6E_entry_Lac
+	bne	M3HookDispatch_entry_Lac
 	mov	(0x30, sp), d1
 	calls	(a0)
 	mov	d0, a1
 	cmp	0, d0
-	beq	func_4C03CC6E_entry_Lb4
-func_4C03CC6E_entry_Lac:
+	beq	M3HookDispatch_entry_Lb4
+M3HookDispatch_entry_Lac:
 	add	0xc, d2
 	add	0xc, a2
 	add	0xc, a3
-	bra	func_4C03CC6E_entry_L8c
-func_4C03CC6E_entry_Lb4:
+	bra	M3HookDispatch_entry_L8c
+M3HookDispatch_entry_Lb4:
 	mov	a1, d0
-func_4C03CC6E_entry_Lb6:
+M3HookDispatch_entry_Lb6:
 	ret	[d2,d3,a2,a3], 0x24
 
 func_4C03CD2C:
@@ -144313,7 +144313,7 @@ func_4C04EE3D_entry_L3d:
 	movbu	d0, (0x19, sp)
 	movbu	(0x18, sp), d0
 	movbu	d0, (0x14, sp)
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x14, sp), d0
 	cmp	4, d0
 	bge	func_4C04EE3D_entry_Lba
@@ -144531,7 +144531,7 @@ func_4C04F116:
 	bclr	0x08, (0x50250354)
 	bra	func_4C04F116_L69
 func_4C04F116_L1a:
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	cmp	0, d0
 	bge	func_4C04F116_L2e
 	bclr	0x08, (0x50250354)
@@ -144570,7 +144570,7 @@ func_4C04F182:
 	bclr	0x04, (0x50250354)
 	bra	func_4C04F182_L5c
 func_4C04F182_L1f:
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	cmp	0, d0
 	bge	func_4C04F182_L33
 	bclr	0x04, (0x50250354)
@@ -147622,7 +147622,7 @@ func_4C050FDA_entry:
 	mov	(0x10, sp), a0
 	movbu	d0, (5, a0)
 	mov	(0x10, sp), a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	mov	0x90008020, d0
 	clr	d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
@@ -147649,7 +147649,7 @@ func_4C051025_entry:
 	mov	(0x10, sp), a0
 	movbu	d0, (5, a0)
 	mov	(0x10, sp), a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	mov	0x90008020, d0
 	clr	d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
@@ -148139,7 +148139,7 @@ func_4C05155A_entry:
 	movbu	d0, (0x11, sp)
 	mov	sp, a0
 	add	0xc, a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	call	func_4C032BCD_entry, [d2], 0x18
 func_4C05155A_entry_L52:
 	ret	0, 0x14
@@ -151656,7 +151656,7 @@ func_4C0539C7_entry:
 	call	func_4C04ED10_entry, 0, 8
 	call	func_4C1121BD_entry, 0, 0x40
 	call	func_4C16C572_entry, [d2], 0x18
-	call	func_4C172A7A_entry, 0, 0xc
+	call	XaprInit_entry, 0, 0xc
 	ret	0, 8
 
 func_4C053A37:
@@ -151833,7 +151833,7 @@ func_4C053A86_L1b7:
 	call	func_4C1676DE_entry, [d2], 0x10
 	call	M3BufferOut_entry, [a2,a3], 0x20
 	call	SndSetupApplyMemoryPair_entry, 0, 0x10
-	call	func_4C172A62_entry, 0, 8
+	call	XaprCallIdle_entry, 0, 8
 	jmp	func_4C053A86_L1b
 # func_4C053A86 + 0x242: no traced path reaches what follows (--decode-gaps)
 	ret	[d2,d3], 0x24
@@ -191861,7 +191861,7 @@ func_4C069286_entry:
 	mov	3, d0
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	3, d0
 	call	ena_int_entry, [d2], 4
 	ret	0, 0x24
@@ -192623,7 +192623,7 @@ func_4C069990_entry:
 	mov	1, d0
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	1, d0
 	call	ena_int_entry, [d2], 4
 	call	func_4C07AD31_entry, 0, 0x28
@@ -193346,36 +193346,36 @@ func_4C06A2E3_L4e:
 	clr	d0
 	rets
 
-func_4C06A334:
+PartHasDspUnitExceptAcc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4C06A334_entry:
+PartHasDspUnitExceptAcc_entry:
 	exthu	d0
 	mov	d0, a3
 	cmp	0x12, a3
-	ble	func_4C06A334_entry_La
+	ble	PartHasDspUnitExceptAcc_entry_La
 	clr	d0
-	bra	func_4C06A334_entry_L3e
-func_4C06A334_entry_La:
+	bra	PartHasDspUnitExceptAcc_entry_L3e
+PartHasDspUnitExceptAcc_entry_La:
 	clr	d2
 	clr	d1
 	mov	func_4C06A334_entry_L1e_Table, a2
 	mov	(func_4C06A334_entry_L1e_Table), a0
 	mov	-1, d3
 	cmp	d3, a0
-	beq	func_4C06A334_entry_L3d
-func_4C06A334_entry_L1e:
+	beq	PartHasDspUnitExceptAcc_entry_L3d
+PartHasDspUnitExceptAcc_entry_L1e:
 	asl2	d1
 	mov	(d1, a2), d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	exthu	d0
 	cmp	d0, a3
-	bne	func_4C06A334_entry_L32
+	bne	PartHasDspUnitExceptAcc_entry_L32
 	mov	1, d0
-	bra	func_4C06A334_entry_L3e
-func_4C06A334_entry_L32:
+	bra	PartHasDspUnitExceptAcc_entry_L3e
+PartHasDspUnitExceptAcc_entry_L32:
 	exthu	d2
 	inc	d2
 	mov	d2, d1
@@ -193384,10 +193384,10 @@ func_4C06A334_entry_L32:
 	asl2	d0
 	mov	(d0, a2), d0
 	cmp	d3, d0
-	bne	func_4C06A334_entry_L1e
-func_4C06A334_entry_L3d:
+	bne	PartHasDspUnitExceptAcc_entry_L1e
+PartHasDspUnitExceptAcc_entry_L3d:
 	clr	d0
-func_4C06A334_entry_L3e:
+PartHasDspUnitExceptAcc_entry_L3e:
 	ret	[d2,d3,a2,a3], 0x20
 
 AcResetPageProc:
@@ -195114,7 +195114,7 @@ func_4C06B283:
 	beq	func_4C06B283_L6d
 	exthu	d1
 	mov	d1, d0
-	call	func_4C06A334_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	beq	func_4C06B283_L6d
 	mov	a2, d1
@@ -195464,7 +195464,7 @@ func_4C06B593_L1d:
 	extbu	d2
 	mov	a2, a0
 	mov	d2, d0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a2)
 	bra	func_4C06B593_Lb9
@@ -195559,7 +195559,7 @@ MainSoundAdd_L22:
 	movhu	d0, (0x32, sp)
 	movhu	(0x32, sp), d0
 	mov	d0, (0x18, sp)
-	call	func_4C06A334_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	bne	MainSoundAdd_L6b
 	mov	1, d2
@@ -195575,7 +195575,7 @@ MainSoundAdd_L6b:
 	movbu	d3, (0x3a, sp)
 	movbu	d2, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x38, sp), d0
 	cmp	0xf, d0
 	beq	MainSoundAdd_Ld0
@@ -195584,7 +195584,7 @@ MainSoundAdd_L6b:
 	mov	0xb, d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	movbu	(0x39, sp), d1
 	extbu	d0
 	add	-1, d0
@@ -195594,14 +195594,14 @@ MainSoundAdd_L6b:
 	add	2, d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	bra	MainSoundAdd_Ld0
 MainSoundAdd_Lbf:
 	movbu	(0x3d, sp), d0
 	add	2, d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 MainSoundAdd_Ld0:
 	movbu	(0x38, sp), d0
 	mov	d0, a2
@@ -195630,7 +195630,7 @@ MainSoundAdd_Lfd:
 	mov	a2, d0
 	extbu	d0
 	extbu	d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	movbu	(0x2d, sp), d1
 	mov	d0, d2
 	extbu	d2
@@ -195674,7 +195674,7 @@ MainSoundAdd_L148:
 	extbu	d0
 	mov	d2, d1
 	extbu	d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	movbu	(0x2d, sp), d1
 	extbu	d0
 	add	-1, d0
@@ -195693,7 +195693,7 @@ MainSoundAdd_L177:
 	mov	0xb, d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	add	-1, d0
 	movbu	d0, (0x2d, sp)
@@ -195735,7 +195735,7 @@ MainSoundAdd_L1b0:
 	movbu	(0x2c, sp), d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3c, sp), d2
 	movbu	(0x3a, sp), d0
 	movbu	(0x3b, sp), d1
@@ -195875,7 +195875,7 @@ MainSoundAdd_L2ee:
 	mov	0xf, a2
 	extbu	d1
 	mov	0xf, d0
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	add	-1, d0
 	movbu	d0, (0x2d, sp)
@@ -195906,7 +195906,7 @@ MainSoundAdd_L329:
 	extbu	d1
 	mov	d0, a2
 	extbu	d0
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	add	-1, d0
 	movbu	d0, (0x2d, sp)
@@ -195915,7 +195915,7 @@ MainSoundAdd_L329:
 	movbu	d0, (0x39, sp)
 	movbu	d2, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3c, sp), d2
 	movbu	(0x3a, sp), d0
 	movbu	(0x3b, sp), d1
@@ -195991,7 +195991,7 @@ MainSoundAdd_L3dc:
 	movhu	(0x30, sp), d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3a, sp), d2
 	movbu	(0x3b, sp), d3
 	movbu	(0x3c, sp), d0
@@ -202336,7 +202336,7 @@ TtSvari_L3c:
 	mov	1, d2
 	mov	d2, (0x500337b0)
 	mov	d2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	d3, d0
 	bne	TtSvari_L58
@@ -202347,7 +202347,7 @@ TtSvari_L58:
 	mov	d0, (0x500337b4)
 TtSvari_L5f:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	d3, d0
 	bne	TtSvari_L74
@@ -202465,7 +202465,7 @@ func_4C06FA68_entry:
 	clr	d0
 	movhu	d0, (0x5003398c)
 	movhu	(0x50033974), d0
-	call	func_4C06A334_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	0, d0
 	bne	func_4C06FA68_entry_L40
 	movhu	(0x5003398c), d0
@@ -202495,7 +202495,7 @@ func_4C06FA68_entry_L40:
 	movbu	d0, (0x1e, sp)
 	movhu	(0x5003398c), d0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	mov	(0x18, sp), d0
 	mov	d0, (0x50033984)
 	movbu	(0x1c, sp), d0
@@ -202508,7 +202508,7 @@ func_4C06FA68_entry_L40:
 	movbu	(0x1e, sp), d0
 	movbu	(0x1f, sp), d1
 	mov	d2, (0x10, sp)
-	call	func_4C07BBDD_entry, [d2], 0x20
+	call	SoundIconFetch_entry, [d2], 0x20
 	extbu	d0
 	movhu	d0, (0x50033996)
 	mov	(0x50033990), d0
@@ -202539,7 +202539,7 @@ func_4C06FA68_entry_L104:
 	mov	0xb, d0
 	movbu	d1, (0x14, sp)
 	movbu	(0x14, sp), d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	movhu	(0x5003397a), d1
 	extbu	d0
 	exth	d1
@@ -202562,7 +202562,7 @@ func_4C06FA68_entry_L138:
 	movhu	d0, (0x5003398c)
 	movhu	(0x5003398c), d0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x21, sp), d0
 	mov	2, d1
 	extbu	d0
@@ -202599,7 +202599,7 @@ func_4C06FA68_entry_L1c1:
 	movhu	(0x5003398c), d1
 	extbu	d0
 	extbu	d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	movhu	d0, (0x5003397c)
 	mov	(0x50033990), d0
@@ -202671,7 +202671,7 @@ func_4C06FCC9_entry_L38:
 	clr	d0
 	movbu	d0, (0x19, sp)
 	mov	(0x14, sp), a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d2
 	movbu	(0x1a, sp), d0
 	movbu	(0x1b, sp), d1
@@ -203319,7 +203319,7 @@ AcSndVariProc_L1f3:
 	movhu	(0x5003398e), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1e, sp), d1
 	movbu	(0x1f, sp), d2
 	movbu	(0x20, sp), d3
@@ -203396,7 +203396,7 @@ AcSndVariProc_L2ec:
 	movhu	(0x5003398e), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1f, sp), d2
 	movbu	(0x20, sp), d1
 	movbu	(0x1e, sp), d0
@@ -203404,7 +203404,7 @@ AcSndVariProc_L2ec:
 	mov	(0x44, sp), a2
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a2)
 	bra	AcSndVariProc_L385
@@ -203610,7 +203610,7 @@ AcSndGroupProc_L6f:
 	bra	AcSndGroupProc_Lba
 AcSndGroupProc_L80:
 	movhu	(0x50033974), d0
-	call	func_4C06A334_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	0, d0
 	beq	AcSndGroupProc_La3
 	mov	(0x2c, sp), a2
@@ -204226,7 +204226,7 @@ loc_4C070CE9:
 	movhu	(0x5003398e), d0
 	add	0x38, a0
 	movbu	d0, (0x3d, sp)
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3a, sp), d0
 	movbu	(0x3b, sp), d3
 	movbu	(0x3c, sp), d2
@@ -205633,7 +205633,7 @@ AcDrawVariProc_L108:
 	movbu	d0, (0x19, sp)
 AcDrawVariProc_L10d:
 	mov	a2, a0
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1a, sp), d0
 	movbu	(0x1b, sp), d3
 	movbu	(0x1c, sp), d2
@@ -205715,7 +205715,7 @@ AcDrawVariProc_L1bf:
 	movhu	(0x5003398e), d0
 	add	0x18, a0
 	movbu	d0, (0x1d, sp)
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1b, sp), d2
 	movbu	(0x1c, sp), d1
 	movbu	(0x1a, sp), d0
@@ -205723,7 +205723,7 @@ AcDrawVariProc_L1bf:
 	mov	(0x40, sp), a2
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a2)
 	bra	AcDrawVariProc_L215
@@ -206032,7 +206032,7 @@ AcSndExpGroupProc_L2b8:
 	extbu	d0
 	movbu	d1, (0x1c, sp)
 	movbu	(0x1c, sp), d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	movhu	d0, (0x5003397c)
 	movhu	(0x5003397c), d0
@@ -206128,7 +206128,7 @@ AcSndExpGroupProc_L3e5:
 	movhu	(0x5003398e), d1
 	movbu	(0x1c, sp), d0
 	extbu	d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	movhu	d0, (0x5003397c)
 	movhu	(0x5003397c), d0
@@ -206242,7 +206242,7 @@ AcSndExpVariProc_L1c:
 	movhu	(0x5003398e), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	mov	(0x44, sp), a1
 	mov	Str_d_d_d, d0
 	mov	a1, (8, sp)
@@ -206284,7 +206284,7 @@ AcSndExpVariProc_L72:
 	movhu	(0x5003398e), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C0DB_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1e, sp), d1
 	movbu	(0x1f, sp), d0
 	movbu	(0x20, sp), d3
@@ -206482,7 +206482,7 @@ AcExpToggleProc_L183:
 	movbu	(0x14, sp), d0
 	movbu	d1, (0x14, sp)
 	movbu	(0x14, sp), d1
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	extbu	d0
 	movhu	d0, (0x5003397c)
 	movhu	(0x5003397c), d0
@@ -212855,7 +212855,7 @@ func_4C0761E5_entry_L15a:
 	extbu	d2
 	mov	d3, a0
 	mov	d2, d0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x58, sp)
 	mov	(0x30, sp), a0
@@ -217876,7 +217876,7 @@ loc_4C07944D:
 	mov	d1, (0x10, sp)
 	mov	a2, a0
 	mov	d2, d1
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x40, sp)
 	mov	(0x60, sp), a0
@@ -217913,7 +217913,7 @@ loc_4C0794FA:
 	extbu	d2
 	mov	a2, a0
 	mov	d2, d0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x40, sp)
 	mov	(0x60, sp), a0
@@ -220331,7 +220331,7 @@ func_4C07AD31_entry:
 	mov	d0, (0x10, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	(0x10, sp), d0
 	call	ena_int_entry, [d2], 4
 	call	func_4C0505AA_entry, [d2], 0x10
@@ -221486,18 +221486,18 @@ loc_4C07B95F:
 loc_4C07B96A:
 	retf	0, 0
 
-func_4C07B96D:
+VoiceBankSourcePresent:
 	add	-0xc, sp
 
-func_4C07B96D_entry:
+VoiceBankSourcePresent_entry:
 	extbu	d0
 	call	func_4C07CEE6, 0, 0
 	clr	d1
 	extbu	d0
 	cmp	1, d0
-	beq	func_4C07B96D_entry_Le
+	beq	VoiceBankSourcePresent_entry_Le
 	mov	-1, d1
-func_4C07B96D_entry_Le:
+VoiceBankSourcePresent_entry_Le:
 	mov	d1, d0
 	ret	0, 0xc
 
@@ -221534,7 +221534,7 @@ func_4C07B9A6:
 	mov	sp, a0
 	add	0x14, a0
 	mov	d2, d0
-	call	func_4C09B520_entry, [d2,d3,a2], 0x18
+	call	SoundGroupSizeGet_entry, [d2,d3,a2], 0x18
 	exth	d0
 	cmp	d2, d0
 	bne	func_4C07B9A6_L1b
@@ -221544,11 +221544,11 @@ func_4C07B9A6_L1b:
 	movbu	(0x14, sp), d0
 	ret	[d2], 0x1c
 
-func_4C07B9C7:
+SoundGroupSizeFetch:
 	movm	[d2], (sp)
 	add	-0x18, sp
 
-func_4C07B9C7_entry:
+SoundGroupSizeFetch_entry:
 	mov	d1, d2
 	extbu	d2
 	extbu	d0
@@ -221556,17 +221556,17 @@ func_4C07B9C7_entry:
 	mov	sp, a0
 	add	0x14, a0
 	mov	d2, d0
-	call	func_4C09B520_entry, [d2,d3,a2], 0x18
+	call	SoundGroupSizeGet_entry, [d2,d3,a2], 0x18
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07B9C7_entry_L18
+	bne	SoundGroupSizeFetch_entry_L18
 	clr	d0
 	movbu	d0, (0x14, sp)
-func_4C07B9C7_entry_L18:
+SoundGroupSizeFetch_entry_L18:
 	movbu	(0x14, sp), d0
 	ret	[d2], 0x1c
 
-func_4C07B9EA:
+SoundGroupNameCopy:
 	movm	[d2,a2], (sp)
 	add	-0x18, sp
 	mov	a0, a2
@@ -221576,10 +221576,10 @@ func_4C07B9EA:
 	mov	sp, a0
 	add	0x14, a0
 	mov	d2, d0
-	call	func_4C09B42E_entry, [d2,d3,a2], 0x18
+	call	SoundGroupNameGet_entry, [d2,d3,a2], 0x18
 	exth	d0
 	cmp	d2, d0
-	bne	func_4C07B9EA_L2d
+	bne	SoundGroupNameCopy_L2d
 	clr	d0
 	setlb
 	mov	Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er, a0
@@ -221591,8 +221591,8 @@ func_4C07B9EA:
 	exthu	d2
 	cmp	0x10, d2
 	llt
-	bra	func_4C07B9EA_L41
-func_4C07B9EA_L2d:
+	bra	SoundGroupNameCopy_L41
+SoundGroupNameCopy_L2d:
 	clr	d0
 	setlb
 	mov	(0x14, sp), a0
@@ -221607,7 +221607,7 @@ func_4C07B9EA_L2d:
 	exthu	d2
 	cmp	0x10, d2
 	llt
-func_4C07B9EA_L41:
+SoundGroupNameCopy_L41:
 	ret	[d2,a2], 0x20
 
 func_4C07BA2E:
@@ -221623,7 +221623,7 @@ func_4C07BA2E_entry:
 	mov	sp, a0
 	add	0x14, a0
 	mov	d2, d0
-	call	func_4C09B42E_entry, [d2,d3,a2], 0x18
+	call	SoundGroupNameGet_entry, [d2,d3,a2], 0x18
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07BA2E_entry_L2b
@@ -221659,40 +221659,40 @@ func_4C07BA2E_entry_L2b:
 func_4C07BA2E_entry_L40:
 	ret	[d2,a2], 0x20
 
-func_4C07BA76:
+SoundNameGet:
 	movm	[d2,a2], (sp)
 	add	-0x24, sp
 
-func_4C07BA76_entry:
+SoundNameGet_entry:
 	mov	a0, a2
 	mov	d1, d2
 	extbu	d0
 	cmp	0x10, d0
-	beq	func_4C07BA76_entry_L15
+	beq	SoundNameGet_entry_L15
 	cmp	0x11, d0
-	beq	func_4C07BA76_entry_L1f
+	beq	SoundNameGet_entry_L1f
 	cmp	0x18, d0
-	beq	func_4C07BA76_entry_L29
+	beq	SoundNameGet_entry_L29
 	cmp	0x19, d0
-	beq	func_4C07BA76_entry_L33
-	bra	func_4C07BA76_entry_L3d
-func_4C07BA76_entry_L15:
+	beq	SoundNameGet_entry_L33
+	bra	SoundNameGet_entry_L3d
+SoundNameGet_entry_L15:
 	movbu	(0x3c, sp), d0
 	call	func_4C07D6FC, 0, 0
-	bra	func_4C07BA76_entry_L67
-func_4C07BA76_entry_L1f:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L1f:
 	movbu	(0x3c, sp), d0
 	call	func_4C07D710, 0, 0
-	bra	func_4C07BA76_entry_L67
-func_4C07BA76_entry_L29:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L29:
 	movbu	(0x3c, sp), d0
 	call	func_4C07CF1C_entry, 0, 0x14
-	bra	func_4C07BA76_entry_L67
-func_4C07BA76_entry_L33:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L33:
 	movbu	(0x3c, sp), d0
 	call	func_4C07CF39_entry, 0, 0x14
-	bra	func_4C07BA76_entry_L67
-func_4C07BA76_entry_L3d:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L3d:
 	movbu	(0x3c, sp), d1
 	extbu	d2
 	mov	d1, (0x10, sp)
@@ -221705,11 +221705,11 @@ func_4C07BA76_entry_L3d:
 	exth	d0
 	cmp	0, d0
 	mov	Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er+16, a0
-	beq	func_4C07BA76_entry_L67
+	beq	SoundNameGet_entry_L67
 	movhu	(0x20, sp), d0
 	movbu	(0x1c, sp), d1
 	call	func_4C07C353_entry, [d2,d3], 0x14
-func_4C07BA76_entry_L67:
+SoundNameGet_entry_L67:
 	clr	d0
 	clr	d2
 	setlb
@@ -221850,11 +221850,11 @@ func_4C07BB50_entry_L7a:
 	call	set_flg, 0, 0
 	ret	[d2,d3,a2], 0x2c
 
-func_4C07BBDD:
+SoundIconFetch:
 	movm	[d2], (sp)
 	add	-0x1c, sp
 
-func_4C07BBDD_entry:
+SoundIconFetch_entry:
 	mov	d0, d2
 	movbu	(0x30, sp), d0
 	extbu	d2
@@ -221866,10 +221866,10 @@ func_4C07BBDD_entry:
 	call	SoundIconGet_entry, [d2,a2], 0x24
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07BBDD_entry_L1c
+	bne	SoundIconFetch_entry_L1c
 	clr	d0
 	movbu	d0, (0x18, sp)
-func_4C07BBDD_entry_L1c:
+SoundIconFetch_entry_L1c:
 	movbu	(0x18, sp), d0
 	ret	[d2], 0x20
 
@@ -222397,7 +222397,7 @@ func_4C07BFB3_entry:
 	call	VoiceDirPartRefProbe_entry, [d2,d3,a2,a3], 0x28
 	ret	[d2], 0x20
 
-func_4C07BFD0:
+SoundSwFromBankState0:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x28, sp
 	mov	a0, a3
@@ -222431,11 +222431,11 @@ func_4C07BFD0:
 	call	SoundSwNoGet_entry, [d2,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07BFD0_L46
+	bne	SoundSwFromBankState0_L46
 	clr	d0
 	movbu	d0, (0x20, sp)
 	movbu	d0, (a2)
-func_4C07BFD0_L46:
+SoundSwFromBankState0_L46:
 	mov	sp, a1
 	add	0x20, a1
 	mov	-6, d1
@@ -222448,11 +222448,11 @@ func_4C07BFD0_L46:
 	lne
 	ret	[d2,d3,a2,a3], 0x38
 
-func_4C07C027:
+SoundSwFromBank:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x28, sp
 
-func_4C07C027_entry:
+SoundSwFromBank_entry:
 	mov	a0, a3
 	mov	a3, a1
 	mov	sp, a0
@@ -222482,11 +222482,11 @@ func_4C07C027_entry:
 	call	SoundSwNoGet_entry, [d2,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C027_entry_L3e
+	bne	SoundSwFromBank_entry_L3e
 	clr	d0
 	movbu	d0, (0x20, sp)
 	movbu	d0, (a2)
-func_4C07C027_entry_L3e:
+SoundSwFromBank_entry_L3e:
 	mov	sp, a1
 	add	0x20, a1
 	mov	-6, d1
@@ -222499,7 +222499,7 @@ func_4C07C027_entry_L3e:
 	lne
 	ret	[d2,d3,a2,a3], 0x38
 
-func_4C07C07B:
+SoundSwToBankState0:
 	movm	[d2,a2,a3], (sp)
 	add	-0x28, sp
 	mov	a0, (0x3c, sp)
@@ -222534,14 +222534,14 @@ func_4C07C07B:
 	call	SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C07B_L4d
+	bne	SoundSwToBankState0_L4d
 	mov	0x14, d0
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (a3)
 	mov	d2, a0
 	movbu	d0, (a0)
-func_4C07C07B_L4d:
+SoundSwToBankState0_L4d:
 	mov	sp, a1
 	add	0x20, a1
 	mov	(0x3c, sp), a0
@@ -222555,11 +222555,11 @@ func_4C07C07B_L4d:
 	lne
 	ret	[d2,a2,a3], 0x34
 
-func_4C07C0DB:
+SoundSwToBank:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x28, sp
 
-func_4C07C0DB_entry:
+SoundSwToBank_entry:
 	mov	a0, (0x40, sp)
 	mov	a0, a1
 	mov	sp, a0
@@ -222591,14 +222591,14 @@ func_4C07C0DB_entry:
 	call	SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C0DB_entry_L47
+	bne	SoundSwToBank_entry_L47
 	mov	0x14, d0
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (a3)
 	mov	d2, a0
 	movbu	d0, (a0)
-func_4C07C0DB_entry_L47:
+SoundSwToBank_entry_L47:
 	mov	sp, a1
 	add	0x20, a1
 	mov	(0x40, sp), a0
@@ -282272,7 +282272,7 @@ ToneKeyFind_entry:
 	mov	d1, d3
 	movbu	d0, (0x2c, sp)
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	ToneKeyFind_entry_L34
@@ -282285,7 +282285,7 @@ ToneKeyFind_entry:
 	movbu	(0x34, sp), d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C09B0FF_entry, [d2,d3,a2], 0x20
+	call	ToneKeyLookupSrc1_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
 	beq	ToneKeyFind_entry_L34
 	mov	1, d0
@@ -282293,7 +282293,7 @@ ToneKeyFind_entry:
 	ret	[d2,d3,a2,a3], 0x24
 ToneKeyFind_entry_L34:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	ToneKeyFind_entry_L62
@@ -282305,7 +282305,7 @@ ToneKeyFind_entry_L34:
 	add	d1, d0
 	movbu	(0x34, sp), d1
 	add	d1, d0
-	call	func_4C09B170_entry, [d2,d3,a2], 0x20
+	call	ToneKeyLookupSrc2_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
 	beq	ToneKeyFind_entry_L62
 	mov	2, d0
@@ -282745,7 +282745,7 @@ ToneKeyLookup_entry:
 	cmp	0, d0
 	bne	ToneKeyLookup_entry_L17
 	mov	d2, d0
-	call	func_4C09B0FF_entry, [d2,d3,a2], 0x20
+	call	ToneKeyLookupSrc1_entry, [d2,d3,a2], 0x20
 	bra	ToneKeyLookup_entry_L6b
 ToneKeyLookup_entry_L17:
 	mov	2, d0
@@ -282754,7 +282754,7 @@ ToneKeyLookup_entry_L17:
 	cmp	0, d0
 	bne	ToneKeyLookup_entry_L2d
 	mov	d2, d0
-	call	func_4C09B170_entry, [d2,d3,a2], 0x20
+	call	ToneKeyLookupSrc2_entry, [d2,d3,a2], 0x20
 	bra	ToneKeyLookup_entry_L6b
 ToneKeyLookup_entry_L2d:
 	movhu	(ToneKeyHashDesc), d1
@@ -282763,7 +282763,7 @@ ToneKeyLookup_entry_L2d:
 	exthu	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
-	call	func_4C09B1EC_entry, [d2], 4
+	call	ToneKeyHashIndex_entry, [d2], 4
 	asl2	d0
 	mov	ToneKeyHashBuckets, a0
 	mov	(d0, a0), a2
@@ -282772,7 +282772,7 @@ ToneKeyLookup_entry_L2d:
 ToneKeyLookup_entry_L50:
 	mov	(4, a2), d1
 	mov	d2, d0
-	call	func_4C09B1E1, 0, 0
+	call	ToneKeyEqual, 0, 0
 	cmp	0, d0
 	beq	ToneKeyLookup_entry_L63
 	mov	8, a0
@@ -282787,11 +282787,11 @@ ToneKeyLookup_entry_L69:
 ToneKeyLookup_entry_L6b:
 	ret	[d2,a2], 0x1c
 
-func_4C09B0FF:
+ToneKeyLookupSrc1:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_4C09B0FF_entry:
+ToneKeyLookupSrc1_entry:
 	mov	d0, (0x28, sp)
 	mov	(0x5700000c), d1
 	mov	0x18, a2
@@ -282815,7 +282815,7 @@ func_4C09B0FF_entry:
 	exthu	d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
-	call	func_4C09B1EC_entry, [d2], 4
+	call	ToneKeyHashIndex_entry, [d2], 4
 	mov	(a2), a0
 	asl2	d0
 	add	d3, a0
@@ -282827,33 +282827,33 @@ func_4C09B0FF_entry:
 	mov	d2, a2
 	mov	d2, d0
 	sub	d3, d0
-	beq	func_4C09B0FF_entry_L67
-func_4C09B0FF_entry_L4a:
+	beq	ToneKeyLookupSrc1_entry_L67
+ToneKeyLookupSrc1_entry_L4a:
 	mov	(4, a2), d1
 	mov	(0x28, sp), d0
-	call	func_4C09B1E1, 0, 0
+	call	ToneKeyEqual, 0, 0
 	cmp	0, d0
-	beq	func_4C09B0FF_entry_L5e
+	beq	ToneKeyLookupSrc1_entry_L5e
 	mov	8, a0
 	add	a2, a0
-	bra	func_4C09B0FF_entry_L69
-func_4C09B0FF_entry_L5e:
+	bra	ToneKeyLookupSrc1_entry_L69
+ToneKeyLookupSrc1_entry_L5e:
 	mov	(a2), d0
 	add	d3, d0
 	mov	d0, a2
 	mov	a2, a0
 	sub	d3, a0
-	bne	func_4C09B0FF_entry_L4a
-func_4C09B0FF_entry_L67:
+	bne	ToneKeyLookupSrc1_entry_L4a
+ToneKeyLookupSrc1_entry_L67:
 	mov	0, a0
-func_4C09B0FF_entry_L69:
+ToneKeyLookupSrc1_entry_L69:
 	ret	[d2,d3,a2], 0x20
 
-func_4C09B170:
+ToneKeyLookupSrc2:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_4C09B170_entry:
+ToneKeyLookupSrc2_entry:
 	mov	d0, (0x28, sp)
 	mov	(0x5600000c), d1
 	mov	0x18, a2
@@ -282877,7 +282877,7 @@ func_4C09B170_entry:
 	exthu	d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
-	call	func_4C09B1EC_entry, [d2], 4
+	call	ToneKeyHashIndex_entry, [d2], 4
 	mov	(a2), a0
 	asl2	d0
 	add	d3, a0
@@ -282889,42 +282889,42 @@ func_4C09B170_entry:
 	mov	d2, a2
 	mov	d2, d0
 	sub	d3, d0
-	beq	func_4C09B170_entry_L67
-func_4C09B170_entry_L4a:
+	beq	ToneKeyLookupSrc2_entry_L67
+ToneKeyLookupSrc2_entry_L4a:
 	mov	(4, a2), d1
 	mov	(0x28, sp), d0
-	call	func_4C09B1E1, 0, 0
+	call	ToneKeyEqual, 0, 0
 	cmp	0, d0
-	beq	func_4C09B170_entry_L5e
+	beq	ToneKeyLookupSrc2_entry_L5e
 	mov	8, a0
 	add	a2, a0
-	bra	func_4C09B170_entry_L69
-func_4C09B170_entry_L5e:
+	bra	ToneKeyLookupSrc2_entry_L69
+ToneKeyLookupSrc2_entry_L5e:
 	mov	(a2), d0
 	add	d3, d0
 	mov	d0, a2
 	mov	a2, a0
 	sub	d3, a0
-	bne	func_4C09B170_entry_L4a
-func_4C09B170_entry_L67:
+	bne	ToneKeyLookupSrc2_entry_L4a
+ToneKeyLookupSrc2_entry_L67:
 	mov	0, a0
-func_4C09B170_entry_L69:
+ToneKeyLookupSrc2_entry_L69:
 	ret	[d2,d3,a2], 0x20
 
-func_4C09B1E1:
+ToneKeyEqual:
 	cmp	d1, d0
-	bne	func_4C09B1E1_L7
+	bne	ToneKeyEqual_L7
 	mov	1, d0
-	bra	func_4C09B1E1_L8
-func_4C09B1E1_L7:
+	bra	ToneKeyEqual_L8
+ToneKeyEqual_L7:
 	clr	d0
-func_4C09B1E1_L8:
+ToneKeyEqual_L8:
 	retf	0, 0
 
-func_4C09B1EC:
+ToneKeyHashIndex:
 	movm	[d2], (sp)
 
-func_4C09B1EC_entry:
+ToneKeyHashIndex_entry:
 	exthu	d1
 	nop
 	nop
@@ -283024,11 +283024,11 @@ SoundSwNoBankGet_entry_L77:
 	bra	SoundSwNoBankGet_entry_L8d
 SoundSwNoBankGet_entry_L7f:
 	exthu	d0
-	call	func_4C09B324_entry, [d2,d3,a2,a3], 0x24
+	call	ShortKeyLookupSrc1_entry, [d2,d3,a2,a3], 0x24
 	bra	SoundSwNoBankGet_entry_L8d
 SoundSwNoBankGet_entry_L87:
 	exthu	d0
-	call	func_4C09B39A_entry, [d2,d3,a2,a3], 0x24
+	call	ShortKeyLookupSrc2_entry, [d2,d3,a2,a3], 0x24
 SoundSwNoBankGet_entry_L8d:
 	cmp	0, a0
 	bne	SoundSwNoBankGet_entry_L94
@@ -283059,7 +283059,7 @@ ShortKeyLookup_entry:
 	bne	ShortKeyLookup_entry_L18
 	exthu	d2
 	mov	d2, d0
-	call	func_4C09B324_entry, [d2,d3,a2,a3], 0x24
+	call	ShortKeyLookupSrc1_entry, [d2,d3,a2,a3], 0x24
 	bra	ShortKeyLookup_entry_L6e
 ShortKeyLookup_entry_L18:
 	mov	2, d0
@@ -283069,7 +283069,7 @@ ShortKeyLookup_entry_L18:
 	bne	ShortKeyLookup_entry_L2f
 	exthu	d2
 	mov	d2, d0
-	call	func_4C09B39A_entry, [d2,d3,a2,a3], 0x24
+	call	ShortKeyLookupSrc2_entry, [d2,d3,a2,a3], 0x24
 	bra	ShortKeyLookup_entry_L6e
 ShortKeyLookup_entry_L2f:
 	movhu	(ShortKeyHashDesc), d1
@@ -283103,11 +283103,11 @@ ShortKeyLookup_entry_L6c:
 ShortKeyLookup_entry_L6e:
 	ret	[d2,a2], 0x1c
 
-func_4C09B324:
+ShortKeyLookupSrc1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C09B324_entry:
+ShortKeyLookupSrc1_entry:
 	mov	(0x5700000c), d1
 	mov	0x18, a2
 	add	0x57000000, d1
@@ -283145,33 +283145,33 @@ func_4C09B324_entry:
 	mov	d2, a2
 	mov	d2, d0
 	sub	d3, d0
-	beq	func_4C09B324_entry_L6c
-func_4C09B324_entry_L4f:
+	beq	ShortKeyLookupSrc1_entry_L6c
+ShortKeyLookupSrc1_entry_L4f:
 	movhu	(4, a2), d1
 	mov	a3, d0
 	call	func_4C09B410, 0, 0
 	cmp	0, d0
-	beq	func_4C09B324_entry_L63
+	beq	ShortKeyLookupSrc1_entry_L63
 	mov	6, a0
 	add	a2, a0
-	bra	func_4C09B324_entry_L6e
-func_4C09B324_entry_L63:
+	bra	ShortKeyLookupSrc1_entry_L6e
+ShortKeyLookupSrc1_entry_L63:
 	mov	(a2), d0
 	add	d3, d0
 	mov	d0, a2
 	mov	a2, a0
 	sub	d3, a0
-	bne	func_4C09B324_entry_L4f
-func_4C09B324_entry_L6c:
+	bne	ShortKeyLookupSrc1_entry_L4f
+ShortKeyLookupSrc1_entry_L6c:
 	mov	0, a0
-func_4C09B324_entry_L6e:
+ShortKeyLookupSrc1_entry_L6e:
 	ret	[d2,d3,a2,a3], 0x24
 
-func_4C09B39A:
+ShortKeyLookupSrc2:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C09B39A_entry:
+ShortKeyLookupSrc2_entry:
 	mov	(0x5600000c), d1
 	mov	0x18, a2
 	add	0x56000000, d1
@@ -283209,26 +283209,26 @@ func_4C09B39A_entry:
 	mov	d2, a2
 	mov	d2, d0
 	sub	d3, d0
-	beq	func_4C09B39A_entry_L6c
-func_4C09B39A_entry_L4f:
+	beq	ShortKeyLookupSrc2_entry_L6c
+ShortKeyLookupSrc2_entry_L4f:
 	movhu	(4, a2), d1
 	mov	a3, d0
 	call	func_4C09B410, 0, 0
 	cmp	0, d0
-	beq	func_4C09B39A_entry_L63
+	beq	ShortKeyLookupSrc2_entry_L63
 	mov	6, a0
 	add	a2, a0
-	bra	func_4C09B39A_entry_L6e
-func_4C09B39A_entry_L63:
+	bra	ShortKeyLookupSrc2_entry_L6e
+ShortKeyLookupSrc2_entry_L63:
 	mov	(a2), d0
 	add	d3, d0
 	mov	d0, a2
 	mov	a2, a0
 	sub	d3, a0
-	bne	func_4C09B39A_entry_L4f
-func_4C09B39A_entry_L6c:
+	bne	ShortKeyLookupSrc2_entry_L4f
+ShortKeyLookupSrc2_entry_L6c:
 	mov	0, a0
-func_4C09B39A_entry_L6e:
+ShortKeyLookupSrc2_entry_L6e:
 	ret	[d2,d3,a2,a3], 0x24
 
 func_4C09B410:
@@ -283255,126 +283255,126 @@ func_4C09B41D:
 	mov	mdr, d0
 	rets
 
-func_4C09B42E:
+SoundGroupNameGet:
 	movm	[d2,d3,a2], (sp)
 	add	-0xc, sp
 
-func_4C09B42E_entry:
+SoundGroupNameGet_entry:
 	mov	a0, a2
 	extbu	d0
 	clr	d2
 	cmp	d2, d0
-	beq	func_4C09B42E_entry_L53
+	beq	SoundGroupNameGet_entry_L53
 	cmp	1, d0
-	beq	func_4C09B42E_entry_L24
+	beq	SoundGroupNameGet_entry_L24
 	cmp	2, d0
-	beq	func_4C09B42E_entry_L29
+	beq	SoundGroupNameGet_entry_L29
 	cmp	3, d0
-	beq	func_4C09B42E_entry_L2e
+	beq	SoundGroupNameGet_entry_L2e
 	cmp	4, d0
-	beq	func_4C09B42E_entry_L33
+	beq	SoundGroupNameGet_entry_L33
 	cmp	5, d0
-	beq	func_4C09B42E_entry_L3a
+	beq	SoundGroupNameGet_entry_L3a
 	cmp	6, d0
-	beq	func_4C09B42E_entry_L41
+	beq	SoundGroupNameGet_entry_L41
 	cmp	7, d0
-	beq	func_4C09B42E_entry_L48
-	bra	func_4C09B42E_entry_L4f
-func_4C09B42E_entry_L24:
+	beq	SoundGroupNameGet_entry_L48
+	bra	SoundGroupNameGet_entry_L4f
+SoundGroupNameGet_entry_L24:
 	extbu	d1
 	add	0x10, d1
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L29:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L29:
 	extbu	d1
 	add	0x40, d1
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L2e:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L2e:
 	extbu	d1
 	add	0x60, d1
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L33:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L33:
 	extbu	d1
 	add	0x40, d1
 	mov	1, d2
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L3a:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L3a:
 	extbu	d1
 	add	0x60, d1
 	mov	1, d2
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L41:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L41:
 	extbu	d1
 	add	0x40, d1
 	mov	2, d2
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L48:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L48:
 	extbu	d1
 	add	0x60, d1
 	mov	2, d2
-	bra	func_4C09B42E_entry_L53
-func_4C09B42E_entry_L4f:
+	bra	SoundGroupNameGet_entry_L53
+SoundGroupNameGet_entry_L4f:
 	clr	d0
 	ret	[d2,d3,a2], 0x18
-func_4C09B42E_entry_L53:
+SoundGroupNameGet_entry_L53:
 	mov	d1, d3
 	extbu	d3
 	cmp	0x80, d3
-	blt	func_4C09B42E_entry_L5f
+	blt	SoundGroupNameGet_entry_L5f
 	clr	d0
 	ret	[d2,d3,a2], 0x18
-func_4C09B42E_entry_L5f:
+SoundGroupNameGet_entry_L5f:
 	mov	d2, d0
 	extbu	d0
 	cmp	0, d0
-	bne	func_4C09B42E_entry_L87
+	bne	SoundGroupNameGet_entry_L87
 	mov	1, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B42E_entry_L77
+	bne	SoundGroupNameGet_entry_L77
 	mov	1, d2
-	bra	func_4C09B42E_entry_L87
-func_4C09B42E_entry_L77:
+	bra	SoundGroupNameGet_entry_L87
+SoundGroupNameGet_entry_L77:
 	mov	2, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B42E_entry_L87
+	bne	SoundGroupNameGet_entry_L87
 	mov	2, d2
-func_4C09B42E_entry_L87:
+SoundGroupNameGet_entry_L87:
 	extbu	d2
 	cmp	0, d2
-	beq	func_4C09B42E_entry_L96
+	beq	SoundGroupNameGet_entry_L96
 	cmp	1, d2
-	beq	func_4C09B42E_entry_La4
+	beq	SoundGroupNameGet_entry_La4
 	cmp	2, d2
-	beq	func_4C09B42E_entry_Lb2
-	bra	func_4C09B42E_entry_Lbe
-func_4C09B42E_entry_L96:
+	beq	SoundGroupNameGet_entry_Lb2
+	bra	SoundGroupNameGet_entry_Lbe
+SoundGroupNameGet_entry_L96:
 	mov	(0x48000018), d1
 	add	0x48000000, d1
-	bra	func_4C09B42E_entry_Lbe
-func_4C09B42E_entry_La4:
+	bra	SoundGroupNameGet_entry_Lbe
+SoundGroupNameGet_entry_La4:
 	mov	(0x5700000c), d1
 	add	0x57000000, d1
-	bra	func_4C09B42E_entry_Lbe
-func_4C09B42E_entry_Lb2:
+	bra	SoundGroupNameGet_entry_Lbe
+SoundGroupNameGet_entry_Lb2:
 	mov	(0x5600000c), d1
 	add	0x56000000, d1
-func_4C09B42E_entry_Lbe:
+SoundGroupNameGet_entry_Lbe:
 	cmp	0, d2
-	beq	func_4C09B42E_entry_Lcc
+	beq	SoundGroupNameGet_entry_Lcc
 	cmp	1, d2
-	beq	func_4C09B42E_entry_Ld8
+	beq	SoundGroupNameGet_entry_Ld8
 	cmp	2, d2
-	beq	func_4C09B42E_entry_Ld8
-	bra	func_4C09B42E_entry_Le8
-func_4C09B42E_entry_Lcc:
+	beq	SoundGroupNameGet_entry_Ld8
+	bra	SoundGroupNameGet_entry_Le8
+SoundGroupNameGet_entry_Lcc:
 	asl	4, d3
-	add	data_4C3EB620, d3
+	add	SoundGroupNames, d3
 	mov	d3, (a2)
-	bra	func_4C09B42E_entry_Le8
-func_4C09B42E_entry_Ld8:
+	bra	SoundGroupNameGet_entry_Le8
+SoundGroupNameGet_entry_Ld8:
 	mov	d1, a0
 	mov	(0x18, a0), a0
 	asl	4, d3
@@ -283383,132 +283383,132 @@ func_4C09B42E_entry_Ld8:
 	add	d0, d1
 	add	d3, d1
 	mov	d1, (a2)
-func_4C09B42E_entry_Le8:
+SoundGroupNameGet_entry_Le8:
 	mov	1, d0
 	ret	[d2,d3,a2], 0x18
 
-func_4C09B520:
+SoundGroupSizeGet:
 	movm	[d2,d3,a2], (sp)
 	add	-0xc, sp
 
-func_4C09B520_entry:
+SoundGroupSizeGet_entry:
 	mov	a0, a2
 	mov	d1, d3
 	extbu	d0
 	clr	d2
 	cmp	d2, d0
-	beq	func_4C09B520_entry_L54
+	beq	SoundGroupSizeGet_entry_L54
 	cmp	1, d0
-	beq	func_4C09B520_entry_L25
+	beq	SoundGroupSizeGet_entry_L25
 	cmp	2, d0
-	beq	func_4C09B520_entry_L2a
+	beq	SoundGroupSizeGet_entry_L2a
 	cmp	3, d0
-	beq	func_4C09B520_entry_L2f
+	beq	SoundGroupSizeGet_entry_L2f
 	cmp	4, d0
-	beq	func_4C09B520_entry_L34
+	beq	SoundGroupSizeGet_entry_L34
 	cmp	5, d0
-	beq	func_4C09B520_entry_L3b
+	beq	SoundGroupSizeGet_entry_L3b
 	cmp	6, d0
-	beq	func_4C09B520_entry_L42
+	beq	SoundGroupSizeGet_entry_L42
 	cmp	7, d0
-	beq	func_4C09B520_entry_L49
-	bra	func_4C09B520_entry_L50
-func_4C09B520_entry_L25:
+	beq	SoundGroupSizeGet_entry_L49
+	bra	SoundGroupSizeGet_entry_L50
+SoundGroupSizeGet_entry_L25:
 	extbu	d3
 	add	0x10, d3
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L2a:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L2a:
 	extbu	d3
 	add	0x40, d3
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L2f:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L2f:
 	extbu	d3
 	add	0x60, d3
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L34:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L34:
 	extbu	d3
 	add	0x40, d3
 	mov	1, d2
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L3b:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L3b:
 	extbu	d3
 	add	0x60, d3
 	mov	1, d2
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L42:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L42:
 	extbu	d3
 	add	0x40, d3
 	mov	2, d2
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L49:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L49:
 	extbu	d3
 	add	0x60, d3
 	mov	2, d2
-	bra	func_4C09B520_entry_L54
-func_4C09B520_entry_L50:
+	bra	SoundGroupSizeGet_entry_L54
+SoundGroupSizeGet_entry_L50:
 	clr	d0
 	ret	[d2,d3,a2], 0x18
-func_4C09B520_entry_L54:
+SoundGroupSizeGet_entry_L54:
 	mov	d3, d0
 	extbu	d0
 	cmp	0x80, d0
-	blt	func_4C09B520_entry_L60
+	blt	SoundGroupSizeGet_entry_L60
 	clr	d0
 	ret	[d2,d3,a2], 0x18
-func_4C09B520_entry_L60:
+SoundGroupSizeGet_entry_L60:
 	mov	d2, d0
 	extbu	d0
 	cmp	0, d0
-	bne	func_4C09B520_entry_L88
+	bne	SoundGroupSizeGet_entry_L88
 	mov	1, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B520_entry_L78
+	bne	SoundGroupSizeGet_entry_L78
 	mov	1, d2
-	bra	func_4C09B520_entry_L88
-func_4C09B520_entry_L78:
+	bra	SoundGroupSizeGet_entry_L88
+SoundGroupSizeGet_entry_L78:
 	mov	2, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B520_entry_L88
+	bne	SoundGroupSizeGet_entry_L88
 	mov	2, d2
-func_4C09B520_entry_L88:
+SoundGroupSizeGet_entry_L88:
 	extbu	d2
 	cmp	0, d2
-	beq	func_4C09B520_entry_L97
+	beq	SoundGroupSizeGet_entry_L97
 	cmp	1, d2
-	beq	func_4C09B520_entry_La5
+	beq	SoundGroupSizeGet_entry_La5
 	cmp	2, d2
-	beq	func_4C09B520_entry_Lb3
-	bra	func_4C09B520_entry_Lbf
-func_4C09B520_entry_L97:
+	beq	SoundGroupSizeGet_entry_Lb3
+	bra	SoundGroupSizeGet_entry_Lbf
+SoundGroupSizeGet_entry_L97:
 	mov	(0x48000018), d1
 	add	0x48000000, d1
-	bra	func_4C09B520_entry_Lbf
-func_4C09B520_entry_La5:
+	bra	SoundGroupSizeGet_entry_Lbf
+SoundGroupSizeGet_entry_La5:
 	mov	(0x5700000c), d1
 	add	0x57000000, d1
-	bra	func_4C09B520_entry_Lbf
-func_4C09B520_entry_Lb3:
+	bra	SoundGroupSizeGet_entry_Lbf
+SoundGroupSizeGet_entry_Lb3:
 	mov	(0x5600000c), d1
 	add	0x56000000, d1
-func_4C09B520_entry_Lbf:
+SoundGroupSizeGet_entry_Lbf:
 	cmp	0, d2
-	beq	func_4C09B520_entry_Lcd
+	beq	SoundGroupSizeGet_entry_Lcd
 	cmp	1, d2
-	beq	func_4C09B520_entry_Lda
+	beq	SoundGroupSizeGet_entry_Lda
 	cmp	2, d2
-	beq	func_4C09B520_entry_Lda
-	bra	func_4C09B520_entry_Lec
-func_4C09B520_entry_Lcd:
+	beq	SoundGroupSizeGet_entry_Lda
+	bra	SoundGroupSizeGet_entry_Lec
+SoundGroupSizeGet_entry_Lcd:
 	extbu	d3
-	mov	func_4C09B520_entry_Lcd_Table, a0
+	mov	SoundGroupSizes, a0
 	movbu	(d3, a0), d0
 	movbu	d0, (a2)
-	bra	func_4C09B520_entry_Lec
-func_4C09B520_entry_Lda:
+	bra	SoundGroupSizeGet_entry_Lec
+SoundGroupSizeGet_entry_Lda:
 	mov	d1, a0
 	mov	(0x18, a0), a0
 	extbu	d3
@@ -283518,7 +283518,7 @@ func_4C09B520_entry_Lda:
 	mov	d0, a0
 	movbu	(d3, a0), d0
 	movbu	d0, (a2)
-func_4C09B520_entry_Lec:
+SoundGroupSizeGet_entry_Lec:
 	mov	1, d0
 	ret	[d2,d3,a2], 0x18
 
@@ -283551,7 +283551,7 @@ func_4C09B616_entry_L20:
 	bra	func_4C09B616_entry_L89
 func_4C09B616_entry_L25:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09B616_entry_L37
@@ -283563,7 +283563,7 @@ func_4C09B616_entry_L37:
 	bra	func_4C09B616_entry_L89
 func_4C09B616_entry_L3d:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09B616_entry_L4f
@@ -283575,7 +283575,7 @@ func_4C09B616_entry_L4f:
 	bra	func_4C09B616_entry_L89
 func_4C09B616_entry_L55:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09B616_entry_L67
@@ -283587,7 +283587,7 @@ func_4C09B616_entry_L67:
 	bra	func_4C09B616_entry_L89
 func_4C09B616_entry_L6d:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09B616_entry_L7f
@@ -283649,7 +283649,7 @@ func_4C09B616_entry_Le8:
 	bra	func_4C09B616_entry_L112
 func_4C09B616_entry_Lf6:
 	extbu	d3
-	mov	func_4C09B520_entry_Lcd_Table, a0
+	mov	SoundGroupSizes, a0
 	movbu	(d3, a0), d0
 	bra	func_4C09B616_entry_L112
 func_4C09B616_entry_L101:
@@ -283681,7 +283681,7 @@ func_4C09B731_entry:
 	jmp	func_4C09B731_entry_L93
 func_4C09B731_entry_L10:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09B731_entry_L45
@@ -283705,7 +283705,7 @@ func_4C09B731_entry_L10:
 	ret	[d2,d3,a2,a3], 0x20
 func_4C09B731_entry_L45:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09B731_entry_L77
@@ -283806,7 +283806,7 @@ func_4C09B838_entry:
 	jmp	func_4C09B838_entry_La4
 func_4C09B838_entry_L12:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09B838_entry_L4c
@@ -283831,7 +283831,7 @@ func_4C09B838_entry_L12:
 	ret	[d2,d3,a2,a3], 0x20
 func_4C09B838_entry_L4c:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09B838_entry_L87
@@ -284169,7 +284169,7 @@ func_4C09BB12_entry:
 	cmp	0, d3
 	beq	func_4C09BB12_entry_L77
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09BB12_entry_L41
@@ -284191,7 +284191,7 @@ func_4C09BB12_entry:
 	ret	[d2,d3,a2,a3], 0x1c
 func_4C09BB12_entry_L41:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	beq	func_4C09BB12_entry_L52
@@ -284426,7 +284426,7 @@ SoundBankIndexGet_entry:
 	bra	SoundBankIndexGet_entry_L86
 SoundBankIndexGet_entry_Lf:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	SoundBankIndexGet_entry_L40
@@ -284449,7 +284449,7 @@ SoundBankIndexGet_entry_Lf:
 	ret	[d2,d3,a2,a3], 0x1c
 SoundBankIndexGet_entry_L40:
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	SoundBankIndexGet_entry_L75
@@ -284722,12 +284722,12 @@ func_4C09BF2A_entry:
 	jmp	func_4C09BF2A_entry_L218
 func_4C09BF2A_entry_L11:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09BF2A_entry_L30
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09BF2A_entry_L30
@@ -284735,12 +284735,12 @@ func_4C09BF2A_entry_L11:
 	bra	func_4C09BF2A_entry_L8e
 func_4C09BF2A_entry_L30:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09BF2A_entry_L50
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09BF2A_entry_L50
@@ -284748,12 +284748,12 @@ func_4C09BF2A_entry_L30:
 	bra	func_4C09BF2A_entry_L8e
 func_4C09BF2A_entry_L50:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09BF2A_entry_L70
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09BF2A_entry_L70
@@ -284761,12 +284761,12 @@ func_4C09BF2A_entry_L50:
 	bra	func_4C09BF2A_entry_L8e
 func_4C09BF2A_entry_L70:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09BF2A_entry_L8e
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09BF2A_entry_L8e
@@ -285342,12 +285342,12 @@ func_4C09C3CF_entry:
 	jmp	func_4C09C3CF_entry_L1b6
 func_4C09C3CF_entry_L16:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C3CF_entry_L35
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C3CF_entry_L35
@@ -285355,12 +285355,12 @@ func_4C09C3CF_entry_L16:
 	bra	func_4C09C3CF_entry_L93
 func_4C09C3CF_entry_L35:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C3CF_entry_L55
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C3CF_entry_L55
@@ -285368,12 +285368,12 @@ func_4C09C3CF_entry_L35:
 	bra	func_4C09C3CF_entry_L93
 func_4C09C3CF_entry_L55:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C3CF_entry_L75
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C3CF_entry_L75
@@ -285381,12 +285381,12 @@ func_4C09C3CF_entry_L55:
 	bra	func_4C09C3CF_entry_L93
 func_4C09C3CF_entry_L75:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C3CF_entry_L93
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C3CF_entry_L93
@@ -285846,12 +285846,12 @@ func_4C09C794_entry:
 	jmp	func_4C09C794_entry_L184
 func_4C09C794_entry_L11:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C794_entry_L30
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C794_entry_L30
@@ -285859,12 +285859,12 @@ func_4C09C794_entry_L11:
 	bra	func_4C09C794_entry_L8e
 func_4C09C794_entry_L30:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C794_entry_L50
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C794_entry_L50
@@ -285872,12 +285872,12 @@ func_4C09C794_entry_L30:
 	bra	func_4C09C794_entry_L8e
 func_4C09C794_entry_L50:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C09C794_entry_L70
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C794_entry_L70
@@ -285885,12 +285885,12 @@ func_4C09C794_entry_L50:
 	bra	func_4C09C794_entry_L8e
 func_4C09C794_entry_L70:
 	mov	1, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C794_entry_L8e
 	mov	2, d0
-	call	func_4C07B96D_entry, 0, 0xc
+	call	VoiceBankSourcePresent_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	func_4C09C794_entry_L8e
@@ -311042,7 +311042,7 @@ func_4C0ACBCE_entry:
 	call	strcat_entry, [a2], 4
 	mov	Str_rt_2, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -311090,7 +311090,7 @@ func_4C0ACC3D_entry:
 	call	strcat_entry, [a2], 4
 	mov	Str_rt, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	mov	d0, d2
 	exth	d0
 	cmp	0, d0
@@ -311183,7 +311183,7 @@ func_4C0ACD17_entry:
 	call	strcat_entry, [a2], 4
 	mov	Str_rb_43, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	mov	d0, d3
 	exth	d0
 	cmp	0, d0
@@ -311697,7 +311697,7 @@ func_4C0AD202_entry_L19:
 	call	func_4C0AC85A_entry, [d2,a2,a3], 0x24
 	mov	a3, a0
 	mov	Str_rb_42, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	movhu	d0, (0x14, sp)
 	movhu	(0x14, sp), d0
 	exth	d0
@@ -329702,7 +329702,7 @@ SndArgGridCheck_L26a:
 	extbu	d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x34, sp)
 	call	GetFocusObject_entry, 0, 0x10
@@ -336223,7 +336223,7 @@ CmpPartSetGrid1_L3f3:
 	extbu	d1
 	mov	a3, a0
 	mov	d3, d0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x34, sp)
 	jmp	CmpPartSetGrid1_L5eb
@@ -340336,7 +340336,7 @@ PadPartSetGrid1_L427:
 	extbu	d1
 	mov	a3, a0
 	mov	d3, d0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x34, sp)
 	jmp	PadPartSetGrid1_L5ff
@@ -367171,7 +367171,7 @@ loc_4C0CF967:
 	lsr	8, d1
 	extbu	d1
 	mov	a2, a0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x40, sp)
 	mov	(0xc8, sp), d0
@@ -376583,7 +376583,7 @@ func_4C0D581D_entry_L3ca:
 	mov	sp, a2
 	add	0x3c, a2
 	mov	a2, a0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	mov	a2, a0
 	clr	d0
 	movbu	d0, (0x4c, sp)
@@ -377636,7 +377636,7 @@ func_4C0D61A2_entry_L57f:
 	mov	d2, d1
 	extbu	d1
 	mov	a2, a0
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x30, sp)
 	mov	0x489, d0
@@ -388539,7 +388539,7 @@ VwMnameSeProc_L37:
 	mov	a3, a0
 	mov	0x10, d0
 	clr	d1
-	call	func_4C07BA76_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	mov	a3, a1
 	clr	d0
 	movbu	d0, (Str_Sound_Naming_Edt_3+16)
@@ -455492,7 +455492,7 @@ loc_4C104170:
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C031EAD_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -463602,12 +463602,12 @@ MainSvariIni_L10:
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (5, a2)
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(a2), d0
 	clr	d1
 	movbu	d0, (0x50250391)
 	movbu	(a2), d0
-	call	func_4C07B9C7_entry, [d2], 0x1c
+	call	SoundGroupSizeFetch_entry, [d2], 0x1c
 	movbu	d0, (a3)
 	mov	0x90008020, d0
 	clr	d1
@@ -463657,7 +463657,7 @@ MainSvariSet_L10:
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (5, a2)
-	call	func_4C07C027_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(a2), d0
 	mov	MT_SvariSet, d1
 	movbu	d0, (0x50250391)
@@ -476574,11 +476574,11 @@ func_4C1121BD_entry:
 	mov	(0x10, sp), d0
 	mov	sp, a0
 	add	0x18, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	(0x14, sp), d0
 	mov	sp, a0
 	add	0x2c, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	(0x14, sp), d0
 	call	ena_int_entry, [d2], 4
 	mov	(0x10, sp), d0
@@ -477075,7 +477075,7 @@ func_4C1127AA_entry:
 	mov	d0, (0x10, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	clr	d0
 	mov	d0, (0x50288170)
 	mov	d0, (0x50288174)
@@ -505796,7 +505796,7 @@ SaveSmf_entry_L31:
 	call	SetSeqPlyPart_entry, [d2,d3,a2], 0x20
 	call	func_4C121F62_entry, 0, 0xc
 SaveSmf_entry_L95:
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x5005c51c)
 	call	func_4C14C68F_entry, 0, 0x10
 	exth	d0
@@ -551369,7 +551369,7 @@ FilePriorityFunc:
 	call	func_4C13A161, 0, 0
 	call	func_4C150150, 0, 0
 	call	func_4C14EEF8, 0, 0
-	call	func_4C172A18, 0, 0x14
+	call	XaprBoardDetect, 0, 0x14
 	extbu	d0
 	cmp	0, d0
 	bne	FilePriorityFunc_L58
@@ -554521,7 +554521,7 @@ FmmLoadTitleFunc_L385:
 	clr	d0
 	ret	[d2], 0x24
 FmmLoadTitleFunc_L389:
-	call	func_4C172A18, 0, 0x14
+	call	XaprBoardDetect, 0, 0x14
 	extbu	d0
 	cmp	0, d0
 	bne	FmmLoadTitleFunc_L3b7
@@ -573460,7 +573460,7 @@ func_4C1493D2_entry_L14:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_39, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C1493D2_entry_L4d
@@ -573787,7 +573787,7 @@ func_4C1496A9_entry_L12:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_38, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	blt	func_4C1496A9_entry_L4e
@@ -573861,7 +573861,7 @@ func_4C149734_entry_L11:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_37, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149734_entry_L44
@@ -573968,7 +573968,7 @@ func_4C1497F8_entry_Lf:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_36, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C1497F8_entry_L41
@@ -574197,7 +574197,7 @@ func_4C1499D0_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_35, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C1499D0_entry_L24
@@ -574313,7 +574313,7 @@ func_4C149B00_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_34, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149B00_entry_L25
@@ -574441,7 +574441,7 @@ func_4C149C7C_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_33, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149C7C_entry_L24
@@ -574485,7 +574485,7 @@ func_4C149CE0_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_32, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C149CE0_entry_L25
@@ -574777,7 +574777,7 @@ func_4C14A037_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_rb_31, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A037_entry_L28
@@ -574849,7 +574849,7 @@ func_4C14A037_entry_L7c:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_30, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	call	func_4C14EF02_entry, 0, 8
 	mov	d0, d3
 	exth	d0
@@ -574904,7 +574904,7 @@ func_4C14A037_entry_L11e:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_29, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	call	func_4C14EF02_entry, 0, 8
 	mov	d0, d3
 	exth	d0
@@ -574948,7 +574948,7 @@ func_4C14A1F2_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_28, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A1F2_entry_L25
@@ -575029,7 +575029,7 @@ func_4C14A2BE_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_27, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A2BE_entry_L25
@@ -575110,7 +575110,7 @@ func_4C14A38A_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_26, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A38A_entry_L25
@@ -575231,7 +575231,7 @@ func_4C14A4CA_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_25, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A4CA_entry_L25
@@ -575309,7 +575309,7 @@ func_4C14A58E_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_24, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A58E_entry_L24
@@ -575353,7 +575353,7 @@ func_4C14A5F2_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_23, a1
 	mov	a3, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14A5F2_entry_L24
@@ -575406,7 +575406,7 @@ func_4C14A656_entry:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	Str_rb_22, a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C14A656_entry_L4c
@@ -575555,7 +575555,7 @@ LoadCst_entry_L48:
 	call	func_4C14DDB2_entry, [d2], 0x10
 	mov	a0, a2
 	mov	Str_rb_21, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d2, d0
 	bge	LoadCst_entry_L67
@@ -575982,7 +575982,7 @@ func_4C14AB84_entry:
 	mov	d0, d3
 	exth	d3
 	call	func_4C030151, 0, 0
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x14, sp)
 	cmp	0, d0
 	bge	func_4C14AB84_entry_L2e
@@ -575997,7 +575997,7 @@ func_4C14AB84_entry_L2e:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_15, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AB84_entry_L52
@@ -576120,7 +576120,7 @@ func_4C14ACE7_entry_L15:
 	call	func_4C03D06E, 0, 0
 	mov	d0, d3
 func_4C14ACE7_entry_L1d:
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x14, sp)
 	cmp	0, d0
 	bge	func_4C14ACE7_entry_L2d
@@ -576135,7 +576135,7 @@ func_4C14ACE7_entry_L2d:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_14, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14ACE7_entry_L52
@@ -576234,7 +576234,7 @@ func_4C14AE15_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C046AAC, 0, 0
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	0, d0
 	blt	func_4C14AE15_entry_L21
 	mov	(0x18, sp), a0
@@ -576254,7 +576254,7 @@ func_4C14AE15_entry_L25:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_13, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AE15_entry_L49
@@ -576291,7 +576291,7 @@ func_4C14AE8F_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C07A924, 0, 0
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	0, d0
 	blt	func_4C14AE8F_entry_L21
 	mov	(0x18, sp), a0
@@ -576311,7 +576311,7 @@ func_4C14AE8F_entry_L25:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_12, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AE8F_entry_L49
@@ -576348,7 +576348,7 @@ func_4C14AF09_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C07AB08, 0, 0
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	0, d0
 	blt	func_4C14AF09_entry_L21
 	mov	(0x18, sp), a0
@@ -576368,7 +576368,7 @@ func_4C14AF09_entry_L25:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_11, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AF09_entry_L49
@@ -576405,7 +576405,7 @@ func_4C14AF83_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C15F869, 0, 0
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14AF83_entry_L1d
@@ -576420,7 +576420,7 @@ func_4C14AF83_entry_L1d:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_10, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14AF83_entry_L42
@@ -576488,7 +576488,7 @@ func_4C14B044_entry:
 	mov	d0, (0x14, sp)
 	call	func_4C117549_entry, [d2], 0x18
 	mov	d0, (0x18, sp)
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B044_entry_L22
@@ -576503,7 +576503,7 @@ func_4C14B044_entry_L22:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_9, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B044_entry_L47
@@ -576611,7 +576611,7 @@ func_4C14B189_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C05980B_entry, [a2], 0xc
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B189_entry_L1d
@@ -576626,7 +576626,7 @@ func_4C14B189_entry_L1d:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_8, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B189_entry_L42
@@ -576695,7 +576695,7 @@ func_4C14B24A_entry:
 	mov	sp, a1
 	add	0x18, a1
 	call	func_4C0599F7_entry, [a2], 0xc
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B24A_entry_L1d
@@ -576710,7 +576710,7 @@ func_4C14B24A_entry_L1d:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_7, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B24A_entry_L42
@@ -576777,7 +576777,7 @@ func_4C14B30B_entry:
 	call	func_4C07D6E1, 0, 0
 	exthu	d0
 	mov	d0, (0x14, sp)
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B30B_entry_L1a
@@ -576792,7 +576792,7 @@ func_4C14B30B_entry_L1a:
 	call	func_4C14C83E_entry, [d2,a2], 0x18
 	mov	a3, a0
 	mov	Str_wb_6, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B30B_entry_L3f
@@ -576871,7 +576871,7 @@ SaveCst_entry:
 	mov	0, a2
 	call	func_4C14CA7B_entry, 0, 8
 	mov	a0, a3
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, (0x14, sp)
 	cmp	0, d0
 	bge	SaveCst_entry_L4e
@@ -576880,7 +576880,7 @@ SaveCst_entry:
 SaveCst_entry_L4e:
 	mov	a3, a0
 	mov	Str_wb_5, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	SaveCst_entry_L67
@@ -577034,7 +577034,7 @@ func_4C14B591_entry:
 	mov	a2, a0
 	mov	0xa, d0
 	call	func_4C14C83E_entry, [d2,a2], 0x18
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B591_entry_L4e
@@ -577043,7 +577043,7 @@ func_4C14B591_entry:
 func_4C14B591_entry_L4e:
 	mov	a2, a0
 	mov	Str_wb_4, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B591_entry_L67
@@ -577290,7 +577290,7 @@ func_4C14B7F7_entry_L11:
 	call	func_4C14D5A5_entry, [d2], 0x10
 	mov	a0, a2
 	mov	Str_rb_20, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B7F7_entry_L2f
@@ -577448,7 +577448,7 @@ func_4C14B8DF_entry_L5b:
 	mov	d3, a1
 	mov	2, d0
 	call	func_4C14C83E_entry, [d2,a2], 0x18
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	mov	d0, d3
 	cmp	0, d0
 	bge	func_4C14B8DF_entry_L92
@@ -577457,7 +577457,7 @@ func_4C14B8DF_entry_L5b:
 func_4C14B8DF_entry_L92:
 	mov	(0x14, sp), a0
 	mov	Str_wb_3, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14B8DF_entry_Lac
@@ -578488,7 +578488,7 @@ func_4C14C1F6_entry_L3d:
 	exth	d2
 	cmp	0xd, d2
 	bcs	func_4C14C1F6_entry_L27
-	call	func_4C14CDF9_entry, 0, 0x10
+	call	FileDiskFreeSpace_entry, 0, 0x10
 	cmp	d3, d0
 	bge	func_4C14C1F6_entry_L50
 	mov	-0x65, d0
@@ -578708,7 +578708,7 @@ LoadHpBmpFile_entry_Lf:
 	exthu	d0
 	call	func_4C14EE5C_entry, [d2], 0x10
 	mov	Str_rb_19, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	LoadHpBmpFile_entry_L2c
@@ -579017,7 +579017,7 @@ func_4C14C68F:
 func_4C14C68F_entry:
 	call	func_4C14CA3F_entry, 0, 8
 	mov	Str_wb_2, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	ret	0, 0x10
 
 func_4C14C6A5:
@@ -580050,22 +580050,22 @@ func_4C14CDC9_entry_L22:
 	mov	(0x500605b4), d0
 	ret	[a2], 0x14
 
-func_4C14CDF9:
+FileDiskFreeSpace:
 	add	-0x10, sp
 
-func_4C14CDF9_entry:
+FileDiskFreeSpace_entry:
 	call	CheckExtMode, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C14CDF9_entry_L13
-	call	func_4C173A2E_entry, 0, 8
-	bra	func_4C14CDF9_entry_L2c
-func_4C14CDF9_entry_L13:
+	beq	FileDiskFreeSpace_entry_L13
+	call	XaprCallDiskFreeSpace_entry, 0, 8
+	bra	FileDiskFreeSpace_entry_L2c
+FileDiskFreeSpace_entry_L13:
 	mov	0x500605b4, a0
 	mov	0x500605b8, a1
 	call	GetDiskFreeSpace_entry, [a2,a3], 0x18
 	mov	(0x500605b4), d0
-func_4C14CDF9_entry_L2c:
+FileDiskFreeSpace_entry_L2c:
 	ret	0, 0x10
 
 func_4C14CE2B:
@@ -581434,7 +581434,7 @@ func_4C14D833_entry:
 	mov	d0, a0
 	add	0x500606d1, a0
 	mov	Str_rb_18, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14D833_entry_L31
@@ -582192,7 +582192,7 @@ func_4C14DEA3_entry:
 	mulu	d1, d0
 	add	d0, a0
 	mov	Str_rb_17, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14DEA3_entry_L31
@@ -582679,7 +582679,7 @@ func_4C14E248_entry_L1d:
 func_4C14E248_entry_L2c:
 	mov	Str_MUSIC_DIR_2, a0
 	mov	Str_rb_16, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	blt	func_4C14E248_entry_L85
@@ -582707,7 +582707,7 @@ func_4C14E248_entry_L2c:
 func_4C14E248_entry_L85:
 	mov	Str_PIANODIR_FIL_3, a0
 	mov	Str_rb_15, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	blt	func_4C14E248_entry_Lca
@@ -582860,7 +582860,7 @@ func_4C14E3CD_entry_L33:
 	clr	d3
 	mov	Str_MUSIC_DIR, a0
 	mov	Str_rb_14, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C14E3CD_entry_L4c
@@ -582928,7 +582928,7 @@ func_4C14E3CD_entry_Ld4:
 	clr	d3
 	mov	Str_PIANODIR_FIL_2, a0
 	mov	Str_rb_13, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	d3, d0
 	bge	func_4C14E3CD_entry_Led
@@ -583113,7 +583113,7 @@ func_4C14E61C_entry:
 func_4C14E61C_entry_Ld:
 	mov	Str_NAME_MDA, a0
 	mov	Str_rb_12, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14E61C_entry_L77
@@ -583245,7 +583245,7 @@ func_4C14E61C_entry_L123:
 func_4C14E61C_entry_L12b:
 	mov	Str_PIANODIR_FIL, a0
 	mov	Str_rb_11, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C14E61C_entry_L194
@@ -583454,7 +583454,7 @@ func_4C14E8D1_entry:
 	call	func_4C14C76A, 0, 0
 	mov	(0xb0, sp), a1
 	mov	a2, a0
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	ret	[a2,a3], 0xa4
 
 func_4C14E907:
@@ -584209,11 +584209,11 @@ func_4C14EF02_entry_L13:
 func_4C14EF02_entry_L19:
 	ret	0, 8
 
-func_4C14EF21:
+FileOpen:
 	movm	[a2,a3], (sp)
 	add	-0x90, sp
 
-func_4C14EF21_entry:
+FileOpen_entry:
 	mov	a1, (0xa4, sp)
 	mov	a0, a3
 	mov	Str_A_11, a2
@@ -584229,11 +584229,11 @@ func_4C14EF21_entry:
 	lne
 	movbu	(0x500622b2), d0
 	cmp	0, d0
-	beq	func_4C14EF21_entry_L2d
+	beq	FileOpen_entry_L2d
 	mov	(0xa4, sp), a1
 	call	func_4C173ABD_entry, [a2], 0x14
 	ret	[a2,a3], 0x98
-func_4C14EF21_entry_L2d:
+FileOpen_entry_L2d:
 	mov	sp, a2
 	add	0x10, a2
 	mov	a2, a0
@@ -584244,34 +584244,34 @@ func_4C14EF21_entry_L2d:
 	call	func_4C130087_entry, [d2,d3,a2,a3], 0x2c
 	mov	a0, (0x500622ac)
 	cmp	0, a0
-	bne	func_4C14EF21_entry_L89
+	bne	FileOpen_entry_L89
 	mov	(0xa4, sp), a0
 	movbu	(a0), d0
 	extb	d0
 	cmp	0x72, d0
-	bne	func_4C14EF21_entry_L5e
+	bne	FileOpen_entry_L5e
 	mov	-2, d0
 	movhu	d0, (0x500622b0)
-	bra	func_4C14EF21_entry_L90
-func_4C14EF21_entry_L5e:
+	bra	FileOpen_entry_L90
+FileOpen_entry_L5e:
 	movbu	(a0), d0
 	mov	-1, d1
 	extb	d0
 	movhu	d1, (0x500622b0)
 	cmp	0x77, d0
-	bne	func_4C14EF21_entry_L90
+	bne	FileOpen_entry_L90
 	mov	(0x50200000), d0
 	cmp	0x1f, d0
 	mov	-0xb, d0
 	movhu	d0, (0x500622b0)
-	beq	func_4C14EF21_entry_L90
+	beq	FileOpen_entry_L90
 	mov	-3, d0
 	movhu	d0, (0x500622b0)
-	bra	func_4C14EF21_entry_L90
-func_4C14EF21_entry_L89:
+	bra	FileOpen_entry_L90
+FileOpen_entry_L89:
 	clr	d0
 	movhu	d0, (0x500622b0)
-func_4C14EF21_entry_L90:
+FileOpen_entry_L90:
 	movhu	(0x500622b0), d0
 	ret	[a2,a3], 0x98
 
@@ -615694,7 +615694,7 @@ func_4C161555_entry_L69d:
 func_4C161555_entry_L6a5:
 	mov	0x500b75f4, a0
 	mov	Str_rb_7, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161555_entry_L6c5
@@ -615822,7 +615822,7 @@ func_4C161555_entry_L7f5:
 	call	strcat_entry, [a2], 4
 	mov	0x500b75f4, a0
 	mov	Str_rb_6, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161555_entry_L823
@@ -615999,7 +615999,7 @@ func_4C161555_entry_L9bc:
 	mov	(0x500b6ce4), d3
 	mov	(0x14, sp), a0
 	mov	Str_rb_5, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161555_entry_L9fc
@@ -616096,7 +616096,7 @@ func_4C161555_entry_La94:
 	movbu	d1, (d0, a0)
 	mov	(0x14, sp), a0
 	mov	Str_rb_4, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161555_entry_Lac0
@@ -616195,7 +616195,7 @@ func_4C161555_entry_Lb55:
 	movbu	d1, (d0, a0)
 	mov	(0x14, sp), a0
 	mov	Str_rb_3, a1
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
 	bge	func_4C161555_entry_Lb8a
@@ -644819,7 +644819,7 @@ func_4C171FC8_entry_L61:
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	0x97000000, d0
 	mov	d0, (func_4C171FC8_entry_L61_Var)
-	call	func_4C172252_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_EXPANSION_SLOT_2_Check, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	Str_EX21, a0
@@ -644845,16 +644845,16 @@ func_4C171FC8_entry_Ld1:
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	0x96000000, d0
 	mov	d0, (func_4C171FC8_entry_L61_Var)
-	call	func_4C172252_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	clr	d0
 	call	func_4C171F25_entry, 0, 0xc
 	ret	[a2], 0x18
 
-func_4C1720C3:
+XaprInstallIsrs:
 	movm	[d2,d3], (sp)
 	add	-0x38, sp
 
-func_4C1720C3_entry:
+XaprInstallIsrs_entry:
 	mov	0xe, d0
 	call	dis_int_entry, [d2], 4
 	mov	1, d2
@@ -644872,7 +644872,7 @@ func_4C1720C3_entry:
 	mov	0xe, d0
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	mov	0xf, d0
 	call	dis_int_entry, [d2], 4
 	movhu	d2, (0x24, sp)
@@ -644888,7 +644888,7 @@ func_4C1720C3_entry:
 	mov	0xf, d0
 	mov	sp, a0
 	add	0x24, a0
-	call	func_4C3F70A1_entry, [d2,d3,a2,a3], 0x24
+	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
 	ret	[d2,d3], 0x40
 
 putstr:
@@ -644971,10 +644971,10 @@ func_4C172218_entry:
 	call	unl_cpu, 0, 0
 	ret	[a2], 0x10
 
-func_4C172252:
+HddTestFlashIdCheck:
 	movm	[d2,d3,a2], (sp)
 
-func_4C172252_entry:
+HddTestFlashIdCheck_entry:
 	add	-0x118, sp
 	mov	(func_4C171FC8_entry_L61_Var), a2
 	call	loc_cpu_entry, 0, 0x10
@@ -645002,14 +645002,14 @@ func_4C172252_entry:
 	asl	5, d0
 	movhu	(d0, a0), d0
 	cmp	d0, a1
-	bne	func_4C172252_entry_L8a
+	bne	HddTestFlashIdCheck_entry_L8a
 	mov	d1, d0
 	asl	5, d0
 	add	a0, d0
 	mov	d0, a2
 	movhu	(2, a2), d0
 	cmp	d0, d2
-	bne	func_4C172252_entry_L8a
+	bne	HddTestFlashIdCheck_entry_L8a
 	mov	sp, a2
 	add	0x18, a2
 	mov	a2, (8, sp)
@@ -645024,8 +645024,8 @@ func_4C172252_entry:
 	mov	a2, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	d3, d0
-	bra	func_4C172252_entry_L9e
-func_4C172252_entry_L8a:
+	bra	HddTestFlashIdCheck_entry_L9e
+HddTestFlashIdCheck_entry_L8a:
 	mov	d1, d3
 	inc	d3
 	mov	d3, d1
@@ -645035,7 +645035,7 @@ func_4C172252_entry_L8a:
 	mov	Str_Not_Good, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	-1, d0
-func_4C172252_entry_L9e:
+HddTestFlashIdCheck_entry_L9e:
 	add	0x118, sp
 	ret	[d2,d3,a2], 0xc
 
@@ -645521,7 +645521,7 @@ loc_4C1727CD:
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	0x97800000, d0
 	mov	d0, (func_4C171FC8_entry_L61_Var)
-	call	func_4C172252_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_HDD_SRAM_Check_2, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	call	func_4C172331_entry, [d2,a2], 0xa0
@@ -645540,17 +645540,17 @@ loc_4C172860:
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	0x97800000, d0
 	mov	d0, (func_4C171FC8_entry_L61_Var)
-	call	func_4C172252_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_EXP1_Flash_ROM_Check, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	0x97000000, d0
 	mov	d0, (func_4C171FC8_entry_L61_Var)
-	call	func_4C172252_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_EXP2_Flash_ROM_Check, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	mov	0x96000000, d0
 	mov	d0, (func_4C171FC8_entry_L61_Var)
-	call	func_4C172252_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	LibStrlen_Var_2, a0
 	call	func_4C1721B7_entry, [a2,a3], 0x1c
 	jmp	HDDTestProc_L1fe
@@ -645664,61 +645664,63 @@ hamadeb_La8:
 	retf	0, 0
 	add	-0x14, sp
 
-func_4C172A18:
+XaprBoardDetect:
 	mov	0x97800000, a0
 	mov	Str_XAPR_2, a1
 	mov	4, d0
 	call	strncmp_entry, [a2], 4
 	cmp	0, d0
-	bne	func_4C172A18_L3a
+	bne	XaprBoardDetect_L3a
 	mov	(0x97800004), a0
 	mov	Str_XAPR, a1
 	mov	4, d0
 	call	strncmp_entry, [a2], 4
 	mov	1, d1
-	movbu	d1, (func_4C172A18_Table)
+	movbu	d1, (XaprBoardPresent)
 	cmp	0, d0
-	beq	func_4C172A18_L41
-func_4C172A18_L3a:
+	beq	XaprBoardDetect_L41
+XaprBoardDetect_L3a:
 	clr	d0
-	movbu	d0, (func_4C172A18_Table)
-func_4C172A18_L41:
-	movbu	(func_4C172A18_Table), d0
+	movbu	d0, (XaprBoardPresent)
+XaprBoardDetect_L41:
+	movbu	(XaprBoardPresent), d0
 	ret	0, 0x14
 
-func_4C172A62:
+XaprCallIdle:
 	add	-8, sp
 
-func_4C172A62_entry:
-	movbu	(func_4C172A18_Table), d0
+XaprCallIdle_entry:
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C172A62_entry_L12
+	beq	XaprCallIdle_entry_L12
 	mov	(0x9780000c), a0
 	calls	(a0)
-func_4C172A62_entry_L12:
+XaprCallIdle_entry_L12:
 	ret	0, 8
 
-func_4C172A7A:
+XaprInit:
 	add	-0xc, sp
 
-func_4C172A7A_entry:
-	call	func_4C172A18, 0, 0x14
-	movbu	(func_4C172A18_Table), d0
+XaprInit_entry:
+	call	XaprBoardDetect, 0, 0x14
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C172A7A_entry_L22
+	beq	XaprInit_entry_L22
 	mov	(0x97800008), a1
 	mov	0x5024be58, a0
 	calls	(a1)
-	call	func_4C1720C3_entry, [d2,d3], 0x40
-func_4C172A7A_entry_L22:
+	call	XaprInstallIsrs_entry, [d2,d3], 0x40
+XaprInit_entry_L22:
 	ret	0, 0xc
+
+XaprIsrGroup24:
 	add	-0xc, sp
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C172A7A_entry_L3a
+	beq	XaprIsrGroup24_L15
 	mov	(0x97800010), a0
 	calls	(a0)
-func_4C172A7A_entry_L3a:
+XaprIsrGroup24_L15:
 	clr	d0
 	call	dis_int_entry, [d2], 4
 	movhu	(0x34000160), d0
@@ -645729,14 +645731,14 @@ func_4C172A7A_entry_L3a:
 	call	ena_int_entry, [d2], 4
 	ret	0, 0xc
 
-func_4C172ADD:
+XaprIsrGroup27:
 	add	-0xc, sp
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C172ADD_L15
+	beq	XaprIsrGroup27_L15
 	mov	(0x97800014), a0
 	calls	(a0)
-func_4C172ADD_L15:
+XaprIsrGroup27_L15:
 	clr	d0
 	call	dis_int_entry, [d2], 4
 	movhu	(0x3400016c), d0
@@ -647022,26 +647024,26 @@ func_4C1739FE_L6:
 	call	func_4C1739B3_entry, [a2,a3], 0x1c
 	ret	[d2], 0x10
 
-func_4C173A2E:
+XaprCallDiskFreeSpace:
 	add	-8, sp
 
-func_4C173A2E_entry:
-	movbu	(func_4C172A18_Table), d0
+XaprCallDiskFreeSpace_entry:
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C173A2E_entry_L14
+	beq	XaprCallDiskFreeSpace_entry_L14
 	mov	(0x9780001c), a0
 	calls	(a0)
-	bra	func_4C173A2E_entry_L1a
-func_4C173A2E_entry_L14:
+	bra	XaprCallDiskFreeSpace_entry_L1a
+XaprCallDiskFreeSpace_entry_L14:
 	mov	0x0000ffff, d0
-func_4C173A2E_entry_L1a:
+XaprCallDiskFreeSpace_entry_L1a:
 	ret	0, 8
 
 func_4C173A4E:
 	add	-8, sp
 
 func_4C173A4E_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173A4E_entry_L14
 	mov	(0x97800020), a0
@@ -647056,7 +647058,7 @@ func_4C173A6A:
 	add	-8, sp
 
 func_4C173A6A_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173A6A_entry_L14
 	mov	(0x97800024), a0
@@ -647071,7 +647073,7 @@ func_4C173A86:
 	add	-8, sp
 
 func_4C173A86_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173A86_entry_L14
 	mov	(0x97800028), a0
@@ -647086,7 +647088,7 @@ func_4C173AA2:
 	add	-8, sp
 
 func_4C173AA2_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173AA2_entry_L14
 	mov	(0x9780002c), a0
@@ -647102,7 +647104,7 @@ func_4C173ABD:
 	add	-0x10, sp
 
 func_4C173ABD_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173ABD_entry_L14
 	mov	(0x97800030), a2
@@ -647117,7 +647119,7 @@ func_4C173ADA:
 	add	-8, sp
 
 func_4C173ADA_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173ADA_entry_L14
 	mov	(0x97800034), a0
@@ -647132,7 +647134,7 @@ func_4C173AF5:
 	add	-0xc, sp
 
 func_4C173AF5_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173AF5_entry_L14
 	mov	(0x97800038), a1
@@ -647147,7 +647149,7 @@ func_4C173B10:
 	add	-8, sp
 
 func_4C173B10_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173B10_entry_L14
 	mov	(0x9780003c), a0
@@ -647162,7 +647164,7 @@ func_4C173B2B:
 	add	-0xc, sp
 
 func_4C173B2B_entry:
-	movbu	(func_4C172A18_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C173B2B_entry_L15
 	mov	(0x97800040), a0
@@ -647178,7 +647180,7 @@ func_4C173B47:
 	add	-0x10, sp
 
 func_4C173B47_entry:
-	movbu	(func_4C172A18_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C173B47_entry_L12
 	mov	(0x97800044), a1
@@ -647190,7 +647192,7 @@ func_4C173B5F:
 	add	-0x10, sp
 
 func_4C173B5F_entry:
-	movbu	(func_4C172A18_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C173B5F_entry_L12
 	mov	(0x97800048), a1
@@ -647204,7 +647206,7 @@ func_4C173B77:
 
 func_4C173B77_entry:
 	mov	d1, d2
-	movbu	(func_4C172A18_Table), d1
+	movbu	(XaprBoardPresent), d1
 	cmp	0, d1
 	beq	func_4C173B77_entry_L15
 	mov	(0x9780004c), a0
@@ -647218,7 +647220,7 @@ func_4C173B94:
 	add	-8, sp
 
 func_4C173B94_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173B94_entry_L14
 	mov	(0x97800050), a0
@@ -647233,7 +647235,7 @@ func_4C173BAF:
 	add	-8, sp
 
 func_4C173BAF_entry:
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
 	beq	func_4C173BAF_entry_L14
 	mov	(0x97800054), a0
@@ -647246,7 +647248,7 @@ func_4C173BAF_entry_L15:
 
 fopen_ext:
 	add	-0x10, sp
-	call	func_4C14EF21_entry, [a2,a3], 0x98
+	call	FileOpen_entry, [a2,a3], 0x98
 	ret	0, 0x10
 
 fwrite_ext:
@@ -647279,22 +647281,22 @@ free_X:
 	call	Free_entry, [d2,d3,a2,a3], 0x2c
 	ret	0, 0xc
 
-func_4C173C25:
+XaprCallM3Hook:
 	movm	[d2], (sp)
 	add	-0x10, sp
 	mov	d1, d2
 	mov	d0, d1
-	movbu	(func_4C172A18_Table), d0
+	movbu	(XaprBoardPresent), d0
 	cmp	0, d0
-	beq	func_4C173C25_L1d
+	beq	XaprCallM3Hook_L1d
 	mov	(0x97800018), a0
 	mov	d1, d0
 	mov	d2, d1
 	calls	(a0)
-	bra	func_4C173C25_L1f
-func_4C173C25_L1d:
+	bra	XaprCallM3Hook_L1f
+XaprCallM3Hook_L1d:
 	mov	-1, d0
-func_4C173C25_L1f:
+XaprCallM3Hook_L1f:
 	ret	[d2], 0x14
 
 GetLyricsData:
@@ -655519,15 +655521,15 @@ func_4C3F703D_entry_L47:
 func_4C3F703D_entry_L5c:
 	ret	[d2,d3,a2,a3], 0x1c
 
-func_4C3F70A1:
+KernelDefInt:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C3F70A1_entry:
+KernelDefInt_entry:
 	mov	d0, d2
 	mov	a0, a2
 	cmp	0xffffffff, a2
-	bne	func_4C3F70A1_entry_L26
+	bne	KernelDefInt_entry_L26
 	call	func_4C3F4F5E, 0, 0
 	mov	d0, a2
 	and	0xf7ff, psw
@@ -655537,7 +655539,7 @@ func_4C3F70A1_entry:
 	call	func_4C3F4F63, 0, 0
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-func_4C3F70A1_entry_L26:
+KernelDefInt_entry_L26:
 	call	func_4C3F4F5E, 0, 0
 	mov	d0, (0xc, sp)
 	and	0xf7ff, psw
@@ -655547,10 +655549,10 @@ func_4C3F70A1_entry_L26:
 	add	0x50180b64, a3
 	mov	(a3), d0
 	cmp	0x4c3f7a05, d0
-	beq	func_4C3F70A1_entry_L4a
+	beq	KernelDefInt_entry_L4a
 	mov	d2, d0
 	call	func_4C3F7173_entry, [d2,a2,a3], 0xc
-func_4C3F70A1_entry_L4a:
+KernelDefInt_entry_L4a:
 	mov	8, a1
 	add	a2, a1
 	movhu	(a1), d0

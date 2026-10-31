@@ -7,9 +7,9 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 	.long	0x4c1760a8
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	text=Str_C_20, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	text=Str_C_19, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_989, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_999, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -20,7 +20,7 @@ PfDoubleToDecimal_entry_L1e1_Table:	# 2 x u32, 1070810131..1352628735; read by P
 	tab_u32	1352628735, 1070810131
 
 func_4C002A49_entry_L3d_Table:	# 1 x REC_func_4C002A49_entry_L3d_Table (8 bytes each); read by func_4C002A49_entry_L49 0x4C002A97 `mov (-0x7c, a0), d1`; func_4C002A49_entry_L49 0x4C002A97 `mov (-0x80, a0), d0`; func_4C002A49_entry_Ldf 0x4C002B2D `mov (0x80, a0), d1` (+12)
-	REC_func_4C002A49_entry_L3d_Table	f4=0x3FF00000
+	REC_func_4C002A49_entry_L3d_Table	LibF64Div_d1=0x3FF00000
 
 PfDoubleToDecimal_Table_2:	# 30 x u32, 0..3892314112; read by PfDoubleToDecimal_entry : `mov	(a0), d0`
 	tab_u32	0, 1076101120, 0, 1079574528, 0, 1083129856, 0, 1086556160	# [0]
@@ -7487,7 +7487,7 @@ func_4C0506C7_entry_L4_Records:	# 3 x REC_func_4C0506C7_entry_L4_Records (12 byt
 	REC_func_4C0506C7_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
 	REC_func_4C0506C7_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
 func_4C050787_entry_L4_Records:	# 1 x REC_func_4C050787_entry_L4_Records (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
-	REC_func_4C050787_entry_L4_Records	f0=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
+	REC_func_4C050787_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
 ptrs_4C35992C:
 	.long	loc_4C05A425
@@ -15711,9 +15711,9 @@ func_4C05E846_Block_2:	# 2 bytes, copied whole by func_4C05E846 0x4C05E846: memc
 .incbin_range "baserom/kn6000_program.rom", 0x36152A, 0x3615F0
 
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_1:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
 	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_entry_L3a_Selected_1
 
 ptrs_4C36160C:
@@ -19163,14 +19163,14 @@ func_4C085A64_Table:	# 123 x u16, 65281..65534; read by func_4C085A64 0x4C085A64
 .incbin_range "baserom/kn6000_program.rom", 0x36B1A4, 0x36B1AE
 
 func_4C09948D_Records:	# 8 x REC_func_4C09948D_Records (6 bytes each); read by func_4C09948D 0x4C09948D `movbu (d1, a0), d0`; func_4C099573 0x4C099573 `movbu (1, a0), d3`; func_4C099658 0x4C099658 `movbu (4, a0), d3` (+1)
-	REC_func_4C09948D_Records	a0="\x01\x02\x00\x00", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x01\x03\x00\x00", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x01\x04\x00\x00", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x01\x03\x00\x01", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\xFF\xFF\xFF\xFF", index=3
-	REC_func_4C09948D_Records	a0="\x00\x05\x00\x06", index=5
+	REC_func_4C09948D_Records	index="\x01\x02\x00\x00", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x01\x03\x00\x00", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x01\x04\x00\x00", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x01\x03\x00\x01", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x00\x00\x00\x03", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x00\x00\x00\x03", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\xFF\xFF\xFF\xFF", index_=3
+	REC_func_4C09948D_Records	index="\x00\x05\x00\x06", index_=5
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36B1DE, 0x36B202
 func_4C099573_entry_L46_Records:	# 8 x REC_func_4C099573_entry_L46_Records (102 bytes each); read by func_4C099573_entry_L46 0x4C0995BB `movhu (d1, a0), d0`; func_4C099573_entry_L8c 0x4C099601 `movhu (d0, a0), d0`; func_4C0996D3_entry_L23 0x4C0996F8 `movhu (d1, a0), d0`
@@ -19227,134 +19227,134 @@ func_4C09248D_entry_L7d_Table_3:	# 35 x u16, 0..65532; read by func_4C09248D_ent
 	.align	4, 0xFF	# pad after func_4C09248D_entry_L7d_Table_3
 
 func_4C081D83_entry_L37_Records:	# 128 x REC_func_4C081D83_entry_L37_Records (12 bytes each); read by func_4C081D83_entry_L37 0x4C081DBF `mov (4, a0), d1`; func_4C081D83_entry_L37 0x4C081DBF `mov (a0), d0`; func_4C081D83_entry_L320 0x4C0820A8 `movhu (8, a0), d0` (+18)
-	REC_func_4C081D83_entry_L37_Records	f0=0xC8E33341, f4=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
-	REC_func_4C081D83_entry_L37_Records	f0=0x48A30701, f4=0x4078964D, f8=183, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x56F8345A, f4=0x406526FF, f8=79, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x66574CF, f4=0x405B10E0, f8=51, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xCC3CAF08, f4=0x40523287, f8=34, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x79C8180, f4=0x404BD6E2, f8=26, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2A3E6CF8, f4=0x40462855, f8=21, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE752342A, f4=0x404317B8, f8=18, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x1B27CEA6, f4=0x404073A4, f8=16, x10="\x00\x00"	# [8]
-	REC_func_4C081D83_entry_L37_Records	f0=0xB343B9BE, f4=0x403E1780, f8=14, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2DB6F270, f4=0x403A3025, f8=13, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDFB30378, f4=0x40373F66, f8=11, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x48205535, f4=0x40350D18, f8=10, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x51C39719, f4=0x4033A366, f8=10, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x970D2252, f4=0x40330FEA, f8=9, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x31B30073, f4=0x4031C865, f8=9, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x78C69048, f4=0x4030EBFF, f8=8, x10="\x00\x00"	# [16]
-	REC_func_4C081D83_entry_L37_Records	f0=0x38DD4139, f4=0x40303010, f8=8, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x5AD69045, f4=0x402EF890, f8=8, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x93BA5C88, f4=0x402DA099, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDE7FA7AB, f4=0x402C578E, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8198F1D4, f4=0x402B1CCA, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF398BE7D, f4=0x4029EFAD, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8C015596, f4=0x4028CFA1, f8=6, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x37199CB4, f4=0x4027BC14, f8=6, x10="\x00\x00"	# [24]
-	REC_func_4C081D83_entry_L37_Records	f0=0x2B19893E, f4=0x4026B47B, f8=6, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA50E41E2, f4=0x4025B851, f8=6, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA3BADAB2, f4=0x4024C718, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA860E551, f4=0x4023E056, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x79BFF0AD, f4=0x40230397, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE9548F46, f4=0x4022306B, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x9B7A1977, f4=0x40216669, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD1A1032C, f4=0x4020A52A, f8=4, x10="\x00\x00"	# [32]
-	REC_func_4C081D83_entry_L37_Records	f0=0x6E9C5115, f4=0x401FD89C, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x61C2BDAA, f4=0x401E76ED, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x59AF5A06, f4=0x401D2496, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xEDCBED4B, f4=0x401BE0EC, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x19FA8E37, f4=0x401AAB4E, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xEC93D650, f4=0x4019831D, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x37E26F76, f4=0x401867C7, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x470ACDDC, f4=0x401758BB, f8=3, x10="\x00\x00"	# [40]
-	REC_func_4C081D83_entry_L37_Records	f0=0x95E6D401, f4=0x40165571, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8CB4B760, f4=0x40155D67, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x3DC94A72, f4=0x40147020, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2749118E, f4=0x40138D24, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF638F0A6, f4=0x4012B400, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x4D8475CF, f4=0x4011E449, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8EC2D0F5, f4=0x40111D94, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA532BB24, f4=0x40105F7E, f8=2, x10="\x00\x00"	# [48]
-	REC_func_4C081D83_entry_L37_Records	f0=0xA776EBB4, f4=0x400F534F, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8F1DAE8, f4=0x400DF769, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x35A962C3, f4=0x400CAA9A, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8E0F6694, f4=0x400B6C3B, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xB8741413, f4=0x400A3BAC, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x4FF49B2E, f4=0x40091854, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x974E5491, f4=0x4008019F, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2EEA8A5E, f4=0x4006F702, f8=2, x10="\x00\x00"	# [56]
-	REC_func_4C081D83_entry_L37_Records	f0=0xCE22E32F, f4=0x4005F7F5, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xFFBE6F45, f4=0x400503F9, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE0FB8B85, f4=0x40041A93, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE45BD70E, f4=0x40033B4D, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x953E515B, f4=0x400265B7, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x609323F0, f4=0x40019965, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x5D8F6C08, f4=0x4000D5F0, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x1A67CF0B, f4=0x40001AF6, f8=1, x10="\x00\x00"	# [64]
-	REC_func_4C081D83_entry_L37_Records	f0=0xD5D830A6, f4=0x3FFED030, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x713997EB, f4=0x3FFD79FA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xAADFD6DA, f4=0x3FFC329C, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA0A8CEE3, f4=0x3FFAF972, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x98C9876A, f4=0x3FF9CDDE, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xAFEEBD04, f4=0x3FF8AF49, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8EE195EE, f4=0x3FF79D23, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x220D5FD4, f4=0x3FF696E2, f8=1, x10="\x00\x00"	# [72]
-	REC_func_4C081D83_entry_L37_Records	f0=0x52E656E2, f4=0x3FF59C01, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xC557379F, f4=0x3FF4AC02, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x99BF0BF8, f4=0x3FF3C66D, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2DDC177F, f4=0x3FF2EACE, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE46CC061, f4=0x3FF218B5, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xEC4707F4, f4=0x3FF14FBA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBBB863A, f4=0x3FF08F78, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD98D1BFF, f4=0x3FEFAF18, f8=1, x10="\x00\x00"	# [80]
-	REC_func_4C081D83_entry_L37_Records	f0=0xDA903779, f4=0x3FEE4F36, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE09D4A64, f4=0x3FECFE98, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x5FD6B2DD, f4=0x3FEBBC95, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2952F966, f4=0x3FEA888A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x16D2E67E, f4=0x3FE961DC, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBCE8DCAB, f4=0x3FE847F6, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x20E24526, f4=0x3FE73A4C, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x704D4D99, f4=0x3FE63854, f8=1, x10="\x00\x00"	# [88]
-	REC_func_4C081D83_entry_L37_Records	f0=0xBDDD09A0, f4=0x3FE5418D, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBED704A3, f4=0x3FE4557B, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8CCC56B0, f4=0x3FE373A7, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x6A01EB2B, f4=0x3FE29B9F, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8887F95E, f4=0x3FE1CCF6, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD0C80CA7, f4=0x3FE10744, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xB24663BD, f4=0x3FE04A26, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD685B333, f4=0x3FDF2A79, f8=1, x10="\x00\x00"	# [96]
-	REC_func_4C081D83_entry_L37_Records	f0=0xBC9E7032, f4=0x3FDDD058, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xC0C2CAB8, f4=0x3FDC853B, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x1DE64D85, f4=0x3FDB487C, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x4D56A88C, f4=0x3FDA197A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xAEAFB3EB, f4=0x3FD8F79D, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x476EC346, f4=0x3FD7E254, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x6D0C6A3E, f4=0x3FD6D912, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x85A2B088, f4=0x3FD5DB52, f8=1, x10="\x00\x00"	# [104]
-	REC_func_4C081D83_entry_L37_Records	f0=0xC447C30D, f4=0x3FD4E894, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE67B85C4, f4=0x3FD4005E, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF8066A05, f4=0x3FD3223B, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x16D844E1, f4=0x3FD24DBC, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x3B32A86B, f4=0x3FD18274, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x41EC001, f4=0x3FD0BFFE, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7E84C8DB, f4=0x3FD005F7, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF24C270F, f4=0x3FCEA805, f8=1, x10="\x00\x00"	# [112]
-	REC_func_4C081D83_entry_L37_Records	f0=0xC88E687D, f4=0x3FCCE251, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDB10EE76, f4=0x3FCAADEA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7D5C439A, f4=0x3FC8A498, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE3747B74, f4=0x3FC6C310, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x80F170E0, f4=0x3FC5064A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x78D6AB73, f4=0x3FC2D99F, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x919A3590, f4=0x3FC0917E, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBCEBE1C4, f4=0x3FBEE9A4, f8=1, x10="\x00\x00"	# [120]
-	REC_func_4C081D83_entry_L37_Records	f0=0xF252CBDD, f4=0x3FBB2BB7, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7BF8851E, f4=0x3FB81EBA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x44088FE9, f4=0x3FB42C8A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7A6DC920, f4=0x3FB0DF9E, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDD8F1A6D, f4=0x3FA7D7FB, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x47A8FACF, f4=0x3FA35B99, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xCFD84D92, f4=0x3F95C579, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC8E33341, LibF64Mul_d1=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x48A30701, LibF64Mul_d1=0x4078964D, f8=183, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x56F8345A, LibF64Mul_d1=0x406526FF, f8=79, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x66574CF, LibF64Mul_d1=0x405B10E0, f8=51, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xCC3CAF08, LibF64Mul_d1=0x40523287, f8=34, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x79C8180, LibF64Mul_d1=0x404BD6E2, f8=26, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2A3E6CF8, LibF64Mul_d1=0x40462855, f8=21, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE752342A, LibF64Mul_d1=0x404317B8, f8=18, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x1B27CEA6, LibF64Mul_d1=0x404073A4, f8=16, x10="\x00\x00"	# [8]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xB343B9BE, LibF64Mul_d1=0x403E1780, f8=14, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2DB6F270, LibF64Mul_d1=0x403A3025, f8=13, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDFB30378, LibF64Mul_d1=0x40373F66, f8=11, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x48205535, LibF64Mul_d1=0x40350D18, f8=10, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x51C39719, LibF64Mul_d1=0x4033A366, f8=10, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x970D2252, LibF64Mul_d1=0x40330FEA, f8=9, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x31B30073, LibF64Mul_d1=0x4031C865, f8=9, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x78C69048, LibF64Mul_d1=0x4030EBFF, f8=8, x10="\x00\x00"	# [16]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x38DD4139, LibF64Mul_d1=0x40303010, f8=8, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x5AD69045, LibF64Mul_d1=0x402EF890, f8=8, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x93BA5C88, LibF64Mul_d1=0x402DA099, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDE7FA7AB, LibF64Mul_d1=0x402C578E, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8198F1D4, LibF64Mul_d1=0x402B1CCA, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF398BE7D, LibF64Mul_d1=0x4029EFAD, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8C015596, LibF64Mul_d1=0x4028CFA1, f8=6, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x37199CB4, LibF64Mul_d1=0x4027BC14, f8=6, x10="\x00\x00"	# [24]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2B19893E, LibF64Mul_d1=0x4026B47B, f8=6, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA50E41E2, LibF64Mul_d1=0x4025B851, f8=6, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA3BADAB2, LibF64Mul_d1=0x4024C718, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA860E551, LibF64Mul_d1=0x4023E056, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x79BFF0AD, LibF64Mul_d1=0x40230397, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE9548F46, LibF64Mul_d1=0x4022306B, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x9B7A1977, LibF64Mul_d1=0x40216669, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD1A1032C, LibF64Mul_d1=0x4020A52A, f8=4, x10="\x00\x00"	# [32]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x6E9C5115, LibF64Mul_d1=0x401FD89C, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x61C2BDAA, LibF64Mul_d1=0x401E76ED, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x59AF5A06, LibF64Mul_d1=0x401D2496, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xEDCBED4B, LibF64Mul_d1=0x401BE0EC, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x19FA8E37, LibF64Mul_d1=0x401AAB4E, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xEC93D650, LibF64Mul_d1=0x4019831D, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x37E26F76, LibF64Mul_d1=0x401867C7, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x470ACDDC, LibF64Mul_d1=0x401758BB, f8=3, x10="\x00\x00"	# [40]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x95E6D401, LibF64Mul_d1=0x40165571, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8CB4B760, LibF64Mul_d1=0x40155D67, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x3DC94A72, LibF64Mul_d1=0x40147020, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2749118E, LibF64Mul_d1=0x40138D24, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF638F0A6, LibF64Mul_d1=0x4012B400, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x4D8475CF, LibF64Mul_d1=0x4011E449, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8EC2D0F5, LibF64Mul_d1=0x40111D94, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA532BB24, LibF64Mul_d1=0x40105F7E, f8=2, x10="\x00\x00"	# [48]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA776EBB4, LibF64Mul_d1=0x400F534F, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8F1DAE8, LibF64Mul_d1=0x400DF769, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x35A962C3, LibF64Mul_d1=0x400CAA9A, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8E0F6694, LibF64Mul_d1=0x400B6C3B, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xB8741413, LibF64Mul_d1=0x400A3BAC, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x4FF49B2E, LibF64Mul_d1=0x40091854, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x974E5491, LibF64Mul_d1=0x4008019F, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2EEA8A5E, LibF64Mul_d1=0x4006F702, f8=2, x10="\x00\x00"	# [56]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xCE22E32F, LibF64Mul_d1=0x4005F7F5, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xFFBE6F45, LibF64Mul_d1=0x400503F9, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE0FB8B85, LibF64Mul_d1=0x40041A93, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE45BD70E, LibF64Mul_d1=0x40033B4D, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x953E515B, LibF64Mul_d1=0x400265B7, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x609323F0, LibF64Mul_d1=0x40019965, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x5D8F6C08, LibF64Mul_d1=0x4000D5F0, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x1A67CF0B, LibF64Mul_d1=0x40001AF6, f8=1, x10="\x00\x00"	# [64]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD5D830A6, LibF64Mul_d1=0x3FFED030, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x713997EB, LibF64Mul_d1=0x3FFD79FA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xAADFD6DA, LibF64Mul_d1=0x3FFC329C, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA0A8CEE3, LibF64Mul_d1=0x3FFAF972, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x98C9876A, LibF64Mul_d1=0x3FF9CDDE, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xAFEEBD04, LibF64Mul_d1=0x3FF8AF49, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8EE195EE, LibF64Mul_d1=0x3FF79D23, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x220D5FD4, LibF64Mul_d1=0x3FF696E2, f8=1, x10="\x00\x00"	# [72]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x52E656E2, LibF64Mul_d1=0x3FF59C01, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC557379F, LibF64Mul_d1=0x3FF4AC02, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x99BF0BF8, LibF64Mul_d1=0x3FF3C66D, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2DDC177F, LibF64Mul_d1=0x3FF2EACE, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE46CC061, LibF64Mul_d1=0x3FF218B5, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xEC4707F4, LibF64Mul_d1=0x3FF14FBA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBBB863A, LibF64Mul_d1=0x3FF08F78, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD98D1BFF, LibF64Mul_d1=0x3FEFAF18, f8=1, x10="\x00\x00"	# [80]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDA903779, LibF64Mul_d1=0x3FEE4F36, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE09D4A64, LibF64Mul_d1=0x3FECFE98, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x5FD6B2DD, LibF64Mul_d1=0x3FEBBC95, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2952F966, LibF64Mul_d1=0x3FEA888A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x16D2E67E, LibF64Mul_d1=0x3FE961DC, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBCE8DCAB, LibF64Mul_d1=0x3FE847F6, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x20E24526, LibF64Mul_d1=0x3FE73A4C, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x704D4D99, LibF64Mul_d1=0x3FE63854, f8=1, x10="\x00\x00"	# [88]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBDDD09A0, LibF64Mul_d1=0x3FE5418D, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBED704A3, LibF64Mul_d1=0x3FE4557B, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8CCC56B0, LibF64Mul_d1=0x3FE373A7, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x6A01EB2B, LibF64Mul_d1=0x3FE29B9F, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8887F95E, LibF64Mul_d1=0x3FE1CCF6, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD0C80CA7, LibF64Mul_d1=0x3FE10744, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xB24663BD, LibF64Mul_d1=0x3FE04A26, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD685B333, LibF64Mul_d1=0x3FDF2A79, f8=1, x10="\x00\x00"	# [96]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBC9E7032, LibF64Mul_d1=0x3FDDD058, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC0C2CAB8, LibF64Mul_d1=0x3FDC853B, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x1DE64D85, LibF64Mul_d1=0x3FDB487C, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x4D56A88C, LibF64Mul_d1=0x3FDA197A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xAEAFB3EB, LibF64Mul_d1=0x3FD8F79D, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x476EC346, LibF64Mul_d1=0x3FD7E254, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x6D0C6A3E, LibF64Mul_d1=0x3FD6D912, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x85A2B088, LibF64Mul_d1=0x3FD5DB52, f8=1, x10="\x00\x00"	# [104]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC447C30D, LibF64Mul_d1=0x3FD4E894, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE67B85C4, LibF64Mul_d1=0x3FD4005E, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF8066A05, LibF64Mul_d1=0x3FD3223B, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x16D844E1, LibF64Mul_d1=0x3FD24DBC, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x3B32A86B, LibF64Mul_d1=0x3FD18274, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x41EC001, LibF64Mul_d1=0x3FD0BFFE, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7E84C8DB, LibF64Mul_d1=0x3FD005F7, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF24C270F, LibF64Mul_d1=0x3FCEA805, f8=1, x10="\x00\x00"	# [112]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC88E687D, LibF64Mul_d1=0x3FCCE251, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDB10EE76, LibF64Mul_d1=0x3FCAADEA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7D5C439A, LibF64Mul_d1=0x3FC8A498, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE3747B74, LibF64Mul_d1=0x3FC6C310, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x80F170E0, LibF64Mul_d1=0x3FC5064A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x78D6AB73, LibF64Mul_d1=0x3FC2D99F, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x919A3590, LibF64Mul_d1=0x3FC0917E, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBCEBE1C4, LibF64Mul_d1=0x3FBEE9A4, f8=1, x10="\x00\x00"	# [120]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF252CBDD, LibF64Mul_d1=0x3FBB2BB7, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7BF8851E, LibF64Mul_d1=0x3FB81EBA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x44088FE9, LibF64Mul_d1=0x3FB42C8A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7A6DC920, LibF64Mul_d1=0x3FB0DF9E, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDD8F1A6D, LibF64Mul_d1=0x3FA7D7FB, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x47A8FACF, LibF64Mul_d1=0x3FA35B99, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xCFD84D92, LibF64Mul_d1=0x3F95C579, f8=1, x10="\x00\x00"
 
 func_4C09A372_entry_L2a_Table:	# 20 x u8, 0..255; read by func_4C09A372_entry : `movbu	(d0, a0), d1`
 	tab_u8	16, 16, 8, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -19369,33 +19369,33 @@ func_4C09A60C_Table:	# 8 x u8, 0..255; read by func_4C09A60C : `movbu	(a1), d0`
 	tab_u8	6, 5, 2, 4, 3, 1, 0, 255
 
 func_4C09A63A_entry_L65_Records_p0_0:	# REC_func_4C09A63A_entry_L65_Records_p0 (29 bytes)
-	REC_func_4C09A63A_entry_L65_Records_p0	f0=134, count=133, x2="\x06\x05", key=33668, x6="\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
+	REC_func_4C09A63A_entry_L65_Records_p0	key=134, key_=133, x2="\x06\x05", key__=33668, x6="\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
 data_4C36C089:
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C089, 0x36C094
 data_4C36C094:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C094, 0x36C0A0
-func_4C03CC6E_entry_L8c_Selected_0:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
+func_4C03CC6E_entry_L8c_Selected_0:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
 	.space	12, 0x00
-func_4C03CC6E_entry_L8c_Selected_1:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_2:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_3:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=func_4C173C25
+func_4C03CC6E_entry_L8c_Selected_1:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_2:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_3:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=XaprCallM3Hook
 # census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C0DC, 0x36C124
-func_4C03CC6E_entry_L8c_Selected_4:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DD38
+func_4C03CC6E_entry_L8c_Selected_4:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DD38
 	.space	12, 0x00
-func_4C03CC6E_entry_L8c_Selected_5:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_6:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_7:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_5:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_6:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_7:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
 func_4C03CD2C_entry_L9d_Selected_0:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
 	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFF00, key_=8192, proc=loc_4C066D29
 # census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -24474,34 +24474,34 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table		# [16]
-	REC_func_4C09D886_entry_L6e_Table	f0=21, f1=145
+	REC_func_4C09D886_entry_L6e_Table	f0=21, index=145
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=6, f1=144
-	REC_func_4C09D886_entry_L6e_Table	f0=35, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=6, index=144
+	REC_func_4C09D886_entry_L6e_Table	f0=35, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=3, f1=128	# [24]
-	REC_func_4C09D886_entry_L6e_Table	f0=36, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=32, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=3, index=128	# [24]
+	REC_func_4C09D886_entry_L6e_Table	f0=36, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=32, index=1
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table		# [32]
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=33
-	REC_func_4C09D886_entry_L6e_Table	f0=15, f1=129
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=33
+	REC_func_4C09D886_entry_L6e_Table	f0=15, index=129
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=2, f1=33
-	REC_func_4C09D886_entry_L6e_Table	f0=22, f1=144
+	REC_func_4C09D886_entry_L6e_Table	f0=2, index=33
+	REC_func_4C09D886_entry_L6e_Table	f0=22, index=144
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=2, f1=128	# [40]
-	REC_func_4C09D886_entry_L6e_Table	f0=24, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=2, index=128	# [40]
+	REC_func_4C09D886_entry_L6e_Table	f0=24, index=128
 	REC_func_4C09D886_entry_L6e_Table	f0=39
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=16, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=16, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24523,17 +24523,17 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table		# [64]
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=18, f1=129
+	REC_func_4C09D886_entry_L6e_Table	f0=18, index=129
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=1, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=1, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=5, f1=80	# [72]
+	REC_func_4C09D886_entry_L6e_Table	f0=5, index=80	# [72]
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=18, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=18, index=128
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=24, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=24, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24541,31 +24541,31 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	f0=10
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=40, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=40, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=41, f1=80	# [88]
+	REC_func_4C09D886_entry_L6e_Table	f0=41, index=80	# [88]
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=35, f1=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
+	REC_func_4C09D886_entry_L6e_Table	f0=35, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=128	# [96]
-	REC_func_4C09D886_entry_L6e_Table	f0=31, f1=128
-	REC_func_4C09D886_entry_L6e_Table	f0=25, f1=96
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=27, f1=96
-	REC_func_4C09D886_entry_L6e_Table	f0=31, f1=32
-	REC_func_4C09D886_entry_L6e_Table	f0=34, f1=32
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=128	# [104]
-	REC_func_4C09D886_entry_L6e_Table	f0=31, f1=128
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128	# [96]
+	REC_func_4C09D886_entry_L6e_Table	f0=31, index=128
+	REC_func_4C09D886_entry_L6e_Table	f0=25, index=96
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=30, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=27, index=96
+	REC_func_4C09D886_entry_L6e_Table	f0=31, index=32
+	REC_func_4C09D886_entry_L6e_Table	f0=34, index=32
+	REC_func_4C09D886_entry_L6e_Table	
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128	# [104]
+	REC_func_4C09D886_entry_L6e_Table	f0=31, index=128
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128
+	REC_func_4C09D886_entry_L6e_Table	
+	REC_func_4C09D886_entry_L6e_Table	f0=30, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24589,15 +24589,15 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	f0=3
 	REC_func_4C09D886_entry_L6e_Table	f0=2
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=5, f1=144
+	REC_func_4C09D886_entry_L6e_Table	f0=5, index=144
 	REC_func_4C09D886_entry_L6e_Table	f0=35
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	f0=4	# [136]
 	REC_func_4C09D886_entry_L6e_Table	f0=26
 	REC_func_4C09D886_entry_L6e_Table	f0=12
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=9, f1=144
+	REC_func_4C09D886_entry_L6e_Table	f0=9, index=144
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24605,31 +24605,31 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	f0=3
 	REC_func_4C09D886_entry_L6e_Table	f0=2
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=11, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=35, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=11, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=35, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=26, f1=128	# [152]
-	REC_func_4C09D886_entry_L6e_Table	f0=36, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=32, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=26, index=128	# [152]
+	REC_func_4C09D886_entry_L6e_Table	f0=36, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=32, index=1
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	f0=13	# [160]
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=33
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=33
 	REC_func_4C09D886_entry_L6e_Table	f0=14
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=8, f1=96
-	REC_func_4C09D886_entry_L6e_Table	f0=22, f1=144
-	REC_func_4C09D886_entry_L6e_Table	f0=32, f1=32
+	REC_func_4C09D886_entry_L6e_Table	f0=8, index=96
+	REC_func_4C09D886_entry_L6e_Table	f0=22, index=144
+	REC_func_4C09D886_entry_L6e_Table	f0=32, index=32
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=12, f1=128	# [168]
-	REC_func_4C09D886_entry_L6e_Table	f0=34, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=12, index=128	# [168]
+	REC_func_4C09D886_entry_L6e_Table	f0=34, index=128
 	REC_func_4C09D886_entry_L6e_Table	f0=39
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=33, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=33, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24653,11 +24653,11 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=3, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=3, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=9, f1=80	# [200]
+	REC_func_4C09D886_entry_L6e_Table	f0=9, index=80	# [200]
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24669,7 +24669,7 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=17, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=17, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -31840,17 +31840,17 @@ func_4C0BB259_entry_L56_Table:	# 9 x u32, 0..1278720192; read by func_4C0BB259_e
 
 MainCMP_CmpEasyCopy_Table:	# 12 x REC_MainCMP_CmpEasyCopy_Table (2 bytes each); read by MainCMP_CmpEasyCopy 0x4C0B1046 `movbu (1, a2), d1`; MainCMP_CmpEasyCopy 0x4C0B1046 `movbu (d0, a2), d1`; MainCMP_CmpCompileCopy 0x4C0B10C4 `movbu (1, a2), d1` (+16)
 	REC_MainCMP_CmpEasyCopy_Table		# [0]
-	REC_MainCMP_CmpEasyCopy_Table	f1=3
-	REC_MainCMP_CmpEasyCopy_Table	f1=6
-	REC_MainCMP_CmpEasyCopy_Table	f1=9
-	REC_MainCMP_CmpEasyCopy_Table	f0=1
-	REC_MainCMP_CmpEasyCopy_Table	f0=1, f1=3
-	REC_MainCMP_CmpEasyCopy_Table	f0=1, f1=6
-	REC_MainCMP_CmpEasyCopy_Table	f0=1, f1=9
-	REC_MainCMP_CmpEasyCopy_Table	f0=2	# [8]
-	REC_MainCMP_CmpEasyCopy_Table	f0=2, f1=3
-	REC_MainCMP_CmpEasyCopy_Table	f0=2, f1=6
-	REC_MainCMP_CmpEasyCopy_Table	f0=2, f1=9
+	REC_MainCMP_CmpEasyCopy_Table	key=3
+	REC_MainCMP_CmpEasyCopy_Table	key=6
+	REC_MainCMP_CmpEasyCopy_Table	key=9
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=3
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=6
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=9
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2	# [8]
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=3
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=6
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=9
 
 # 287 ApFunction procedures; a function id is (0x12f << 16) | its index (the names are the parallel table at slot 0x32f)
 User15_ApFunctions:
