@@ -482,4 +482,7 @@ change nothing structurally: it needs the correct `d`, and the flag that picks i
 * **`0x00E093`** — the per-element block the three gate-opening arms fill, still with
   no located reader (`FINDINGS-l7a1429-gate-and-keyscaling.md` §1.8).  Untouched. (Resolved: FINDINGS-l7a1429-e093-block.md section 1 (810567ba6, d244aba4f): its reader is Pack104_SolveCoupledDetune, handed the address as a call argument; open-items register 2026-10-31.)
 * **The eight remaining 43-byte-record parameters** — p0, p1, p2, p12, p20 — still do
-  nothing this image reads.  Untouched.
+  nothing this image reads.  Untouched. (Resolved 2026-10-31, lane open4/wsa1-a: p0-p2 are the
+  velocity-split thresholds `VelSplit_LayerFromVelocity` reads, p20 is read at 0xFC588B, p12 has
+  no located reader; FINDINGS-l7a1429-editor-pages.md, the last bullet of its open list, and
+  notes/open4-a-probes/wavesel_field_readers.py.)

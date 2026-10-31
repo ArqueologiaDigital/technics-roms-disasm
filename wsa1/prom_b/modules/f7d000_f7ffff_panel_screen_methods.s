@@ -82,35 +82,35 @@
 ;           symbol of the other image (an absolute `.set`) only as a constant displacement.
 ; ---------------------------------------------------------------------
 StubBlock_F7D000:
-	jrl	Paint_StepRecord - 0xF7D003	; F7D000  jrl T,0xf81acb
+	jrl	Paint_StepRecord	; F7D000  jrl T,0xf81acb
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81BD4.  Named for the destination only.  [round7-entrypoints]
 Veneer_Paint_StepRecordTrackClrMeas:
-	jrl	Paint_StepRecordTrackClrMeas - 0xF7D006	; F7D003  jrl T,0xf81bd4
+	jrl	Paint_StepRecordTrackClrMeas	; F7D003  jrl T,0xf81bd4
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81C15.  Named for the destination only.  [round7-entrypoints]
 Veneer_F81C15:
-	jrl	sub_F81C15 - 0xF7D009	; F7D006  jrl T,0xf81c15
+	jrl	sub_F81C15	; F7D006  jrl T,0xf81c15
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81E7C.  Named for the destination only.  [round7-entrypoints]
 Veneer_F81E7C:
-	jrl	LCD_ClearLayer2_32Cols10Rows_Nop - 0xF7D00C	; F7D009  jrl T,0xf81e7c
+	jrl	LCD_ClearLayer2_32Cols10Rows_Nop	; F7D009  jrl T,0xf81e7c
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81D41.  Named for the destination only.  [round7-entrypoints]
 Veneer_F81D41:
-	jrl	sub_F81D41 - 0xF7D00F	; F7D00C  jrl T,0xf81d41
+	jrl	sub_F81D41	; F7D00C  jrl T,0xf81d41
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81C33.  Named for the destination only.  [round7-entrypoints]
 Veneer_F81C33:
-	jrl	sub_F81C33 - 0xF7D012	; F7D00F  jrl T,0xf81c33
+	jrl	sub_F81C33	; F7D00F  jrl T,0xf81c33
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81C90.  Named for the destination only.  [round7-entrypoints]
 Veneer_F81C90:
-	jrl	sub_F81C90 - 0xF7D015	; F7D012  jrl T,0xf81c90
+	jrl	sub_F81C90	; F7D012  jrl T,0xf81c90
 ; Evidence: a 3-byte `jrl` long-branch veneer, slot of the 0xF7D000 veneer table;
 ;           destination prom_a 0xF81E7E.  Named for the destination only.  [round7-entrypoints]
 Veneer_F81E7E:
-	jrl	sub_F81E7E - 0xF7D018	; F7D015  jrl T,0xf81e7e
+	jrl	sub_F81E7E	; F7D015  jrl T,0xf81e7e
 ; Evidence: the +0 word of screen object F43040, which prom_a's PanelScreen_VtableTable
 ;           names at 0xF86EDD.  ⚠ NO NAME: its body reaches no display list, so nothing says which screen this is.  [round7-entrypoints]
 ; ModeEnter_Edit: the +0 ENTER of panel mode 7 (T_ModeEnter_Edit); PanelMode_ToScreenIdMap[7] = 0x1A, ScreenEnter_Edit's screen.
@@ -2899,6 +2899,10 @@ ButtonTable_SequencerMedley_Nop:
 ; -- is measured by `python3 notes/maincpu_join_probe.py --callers --nearest`.
 ; ------------------------------------------------------------------------------
 	.include "maincpu/shared/lcd_screen_redraw.s"
+; prom_a calls THIS copy (its boot block, below 0xF80000's own copy) under these two names;
+; they are prom_b's names for it, exported (prom_b/exports.syms), so the link checks them.
+	.set	PromB_LCD_ScreenRedraw_Begin, LCD_ScreenRedraw_Begin
+	.set	PromB_LCD_ScreenRedraw_End, LCD_ScreenRedraw_End
 
 ; Evidence: reached from call from prom_b 0xF7EEF4, and from nothing else
 ;           the scans see.
@@ -9370,7 +9374,7 @@ Vel0cityChange_FormatSignedValue:
 	call	T_Value_ToSignedAsciiDigits3_RightJustified	; F7F93E  call 0xf41af8
 	ldw	bc, 4	; F7F942  ld BC,0x0004
 	xor	hl, hl	; F7F945  xor HL,HL
-	ld	xiy, 9824	; F7F947  ld XIY,0x00002660
+	ld	xiy, Value_AsciiSign	; F7F947  ld XIY,0x00002660
 	ld	a, 7:opc	; F7F94C  ld A,0x07
 	ret	; F7F94E  ret
 
@@ -11028,7 +11032,7 @@ SoftKeyCol5_AdvanceDelay_StageZero_Skip:
 SoftKeyCol5_AdvanceDelay_StageZero_Skip2:
 	call	T_AdvanceDelay_StepFieldUp	; F7FFF0  call 0xf42a78
 SoftKeyCol5_AdvanceDelay_StageZero_Skip3:
-	calr	AdvanceDelay_DrawValues - 0xF7FFF7	; F7FFF4  calr 0xf80086
+	calr	AdvanceDelay_DrawValues	; F7FFF4  calr 0xf80086
 	ret	; F7FFF7  ret
 ButtonTable_AdvanceDelay_StageZero_Nop5:
 	ret	; F7FFF8  ret   <- button table 0xF7DCD8 entry 5 (ADVANCE/DELAY)
@@ -11036,6 +11040,14 @@ ButtonTable_AdvanceDelay_StageZero_Nop6:
 	ret	; F7FFF9  ret   <- button table 0xF7DCD8 entry 6 (ADVANCE/DELAY)
 ButtonTable_AdvanceDelay_StageZero_Nop7:
 	ret	; F7FFFA  ret   <- button table 0xF7DCD8 entry 7 (ADVANCE/DELAY)
+
+; ⚠ THE ONE BRANCH THE JOINT LINK CANNOT RELOCATE.  The `jr` at the end of
+; LcdKeyRow1_AdvanceDelay_StageZero (below) crosses the chip boundary into prom_a,
+; and the tlcs900 backend has no 8-bit PC-relative relocation: left to the linker, llvm-mc relaxes it
+; to the 3-byte `jrl` and the image grows by one byte.  So this one name keeps a local equate, and
+; maincpu/maincpu.ld ASSERTs that prom_a's own AdvanceDelay_SelectField1_Ret (exported in
+; prom_a/exports.syms) is at the same address -- the link still checks the name.
+	.set	AdvanceDelay_SelectField1_Ret, 0xf80019
 
 ; ---------------------------------------------------------------------
 ; LcdKeyRow1_AdvanceDelay_StageZero -- row 1 of the five key pairs flanking the

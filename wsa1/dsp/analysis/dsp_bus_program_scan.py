@@ -18,7 +18,7 @@ MEASURED 2026-09-07 (30 s boot + two effect changes, u0->20 and u1->9):
     no cmd-0x01 program record.
   => DIRECTLY PROVEN: the firmware never emits a per-effect I-RAM body at runtime; the
   program is uploaded once at boot, and effect changes stream coefficients only. So
-  sub_FA3A3C's field+12 op3 emit is gated (the boot program is treated as resident), and
+  P7Unit_ReloadOnProgramChange's field+12 op3 emit is gated (the boot program is treated as resident), and
   the goal is not reachable via effect selection. This confirms the write-tap result
   (0 I-RAM writes on a change) at the bus level.
 

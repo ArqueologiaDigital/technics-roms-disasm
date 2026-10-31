@@ -104,6 +104,40 @@ ones. **It does not claim to be a census of every entry shape in the image** —
 these were found from one region's call sites, and a veneer used nowhere near
 `0xF58000` would not appear here.
 
+### The image-wide census (2026-10-31, lane open4/wsa1-d)
+
+(Resolved: the census this section did not claim now exists,
+`python3 notes/open4-d-probes/single_record_entry_census.py --selftest`.) It
+covers BOTH CPU-1 images, which hold no `.incbin` of code, so every direct
+reference is visible in the source. The entry set is every target of the two
+handler tables (interpreter A: 8 distinct handlers over 36 slots; B: 10 over
+15), the three interpreter-level one-record runners (`DisplayListB_RunOne`,
+`DisplayList_RunOne_Stack`, `DisplayListB_RunOne_Stack`), and the 17 prom_b
+thunks whose `jp` lands on one of them. Every operand anywhere that names one,
+outside the two tables and the thunk lines, is counted:
+
+| image  | sites | shape                                                                                                |
+|--------|-------|------------------------------------------------------------------------------------------------------|
+| prom_a | 97    | `call T_DLB_Handler_*` / `T_DLHandler_IX_Text`: one handler, XIY = the record                        |
+| prom_a | 129   | `call T_DisplayList_RunOne_Stack` / `T_DisplayListB_RunOne_Stack`: pointer on the stack              |
+| prom_a | 1     | `lda XIX,T_DisplayList_RunOne_Stack`, the cached-pointer form (`ControllerAssign_LoadChoiceIndices`) |
+| prom_b | 30    | `call T_DLB_Handler_*`: one handler, XIY = the record                                                |
+| prom_b | 5     | `call T_DisplayListB_RunOne`: XIY = the record                                                       |
+| prom_b | 27    | `call` a RunOne_Stack veneer (2 of them direct, 25 through the thunks)                               |
+| prom_b | 39    | `.long`: `OldBuild_DLHandlerTables_Tail`, an older build's copy of the two tables (stale)            |
+
+No operand spells any of these addresses as a number. 66 routines run one
+handler directly and 71 run one record through a RunOne runner; the probe lists
+them by name. So the image has **three** single-record entry shapes, not five:
+a handler called with XIY set (directly or through one of the four prom_a
+stack veneers `DLB_Handler_Decimal_Veneer`, `DLB_Array8_SaveRegs`,
+`DLB_Array8_2_OnLayer1_SaveRegs`, `DLB_Handler_StringTable_Veneer`, which are
+themselves in the 66), `DisplayListB_RunOne` with XIY set, and the two
+RunOne_Stack veneers with the pointer on the stack (called or cached in XIX).
+The 25 entry points above are a subset of these, found from one module; no
+other veneer exists, because any veneer would have to name an entry of this set
+and would then be in the probe's routine lists.
+
 ---
 
 ## 2. What is in it — the answer gap V asked for

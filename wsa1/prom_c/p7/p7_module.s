@@ -326,7 +326,7 @@
 ;   sub_F9F9FA, sub_F9FBA9, sub_F9FD0E, sub_F9FEA5   the four siblings around
 ;       P7Stream_StageAndSend, each opening a 0x01/0x03 record and reading globals
 ;       0x00863A/3E/42.  What those three globals are is not established here.
-;   sub_FA237C, sub_FA26CB, P7Unit_SendModulatedField, P7Field_ModulateClamped, sub_FA2A19, sub_FA3A3C,
+;   sub_FA237C, sub_FA26CB, P7Unit_SendModulatedField, P7Field_ModulateClamped, sub_FA2A19, P7Unit_ReloadOnProgramChange,
 ;   sub_FA4A0D, sub_FA4C5E, sub_FA4CE5, sub_FA4E23, sub_FA4E97   the unit
 ;       state-machine's helpers.  Several are one switch away from a name; none was
 ;       taken on the strength of position or of a plausible-looking caller.
@@ -16567,7 +16567,7 @@ P7Units_ReloadForGroup__FA3A39:
 	unlk	xiz                                 ; FA3A39  unlk XIZ
 	ret                                        ; FA3A3B  ret
 ; --------------------------------------------------------------------------
-; sub_FA3A3C -- 0xFA3A3C..0xFA3CA5 (618 bytes)
+; P7Unit_ReloadOnProgramChange -- 0xFA3A3C..0xFA3CA5 (618 bytes)
 ;
 ; Called from: no site outside this module.
 ;          3 site(s) inside this module:
@@ -16584,10 +16584,27 @@ P7Units_ReloadForGroup__FA3A39:
 ;          notes/prom_c_verify_fragment.py before insertion).  Every field above
 ;          is an instruction operand, listed by notes/gen_prom_c_block_headers.py;
 ;          the call sites are notes/prom_c_module_map.py's image-wide scan.
-; Unknown:  what the routine is FOR.  Nothing here reads the meaning of a field,
-;          so the name is an address.
+; Name:    re-sends ONE unit's effect program after its program number changed.
+;          arg1 = unit 0..2, arg2 = the group byte (0x00F35D).  It runs the unit's
+;          whole program (P7Unit_LoadProgramStreams, fields +8/+0), the preamble, the two
+;          fixed streams P7Stream_FD29F9 / P7Stream_FD292B, then the resolved directory
+;          record's +12 stream (the op-3 body: command 0x01, address 0x006E relocated by
+;          b3) at 0xFA3B9C and its +4 stream at 0xFA3BB6, all with relocation record
+;          unit + 1 of P7Stream_Data_FD4B85, and finally copies the unit block into its
+;          shadow at 0x85BC.
+; Evidence: the only instruction in the image that adds +12 to PoolDir_Records is
+;          0xFA3AE4/0xFA3AEA here (15 references, one +12); there is no branch between
+;          the entry and 0xFA3B9C; P7Units_ResolveProgramsAndReload calls it at 0xFA5773
+;          (unit 1), 0xFA581C (unit 0) and 0xFA58CE (unit 2) only when the unit block's
+;          resolved record (+0x18 of 0x856E + 26*unit) differs from the shadow's.
+;          P7Stream_Data_FD4B85 sends unit 0 and unit 1 to DESTINATION 0 (bodies at
+;          0x006E and 0x00E7) and unit 2 to DESTINATION 1 (body at 0x00A8); no unit
+;          reaches destination 2.  notes/open4-f-probes/p7_unit_program_paths.py.
+; Unknown:  whether the device stores a command-0x01 body sent while its DSPnRST2
+;          line is high (this routine does not touch PB; the boot uploads run with it
+;          low) -- the uPD6383 has no datasheet here.
 ; --------------------------------------------------------------------------
-sub_FA3A3C:
+P7Unit_ReloadOnProgramChange:
 	link	xiz, 0xffea              ; FA3A3C  link XIZ,0xffea
 	pushw	hl                                   ; FA3A40  push HL
 	push	xix                                   ; FA3A41  push XIX
@@ -16748,17 +16765,17 @@ sub_FA3A3C:
 	add	xwa, xix                               ; FA3BF5  add XWA,XIX
 	ld	(xiz-22), xwa                           ; FA3BF7  ld (XIZ+0xea),XWA
 	popw	bc                                    ; FA3BFA  pop BC
-sub_FA3A3C__FA3BFB:
+P7Unit_ReloadOnProgramChange__FA3BFB:
 	cp (xiz-2), 0x10                           ; FA3BFB  cp (XIZ+0xfe),0x10
-	jr nc, sub_FA3A3C__FA3C43                  ; FA3BFF  jr NC,0xfa3c43
-	jr sub_FA3A3C__FA3C08                      ; FA3C01  jr T,0xfa3c08
-sub_FA3A3C__FA3C03:
+	jr nc, P7Unit_ReloadOnProgramChange__FA3C43                  ; FA3BFF  jr NC,0xfa3c43
+	jr P7Unit_ReloadOnProgramChange__FA3C08                      ; FA3C01  jr T,0xfa3c08
+P7Unit_ReloadOnProgramChange__FA3C03:
 	incm8	1, (xiz-2)                           ; FA3C03  inc 1,(XIZ+0xfe)
-	jr sub_FA3A3C__FA3BFB                      ; FA3C06  jr T,0xfa3bfb
-sub_FA3A3C__FA3C08:
+	jr P7Unit_ReloadOnProgramChange__FA3BFB                      ; FA3C06  jr T,0xfa3bfb
+P7Unit_ReloadOnProgramChange__FA3C08:
 	ld	c, (xiz-2)                              ; FA3C08  ld C,(XIZ+0xfe)
 	cp	c, (xiz-1)                   ; FA3C0B  cp C,(XIZ+0xff)
-	jr z, sub_FA3A3C__FA3C2B                   ; FA3C0E  jr Z,0xfa3c2b
+	jr z, P7Unit_ReloadOnProgramChange__FA3C2B                   ; FA3C0E  jr Z,0xfa3c2b
 	ld	xbc, (xiz-22)                           ; FA3C10  ld XBC,(XIZ+0xea)
 	ld	a, (xbc)                                ; FA3C13  ld A,(XBC)
 	xor	a, 0xFF                                ; FA3C15  xor A,0xff
@@ -16769,8 +16786,8 @@ sub_FA3A3C__FA3C08:
 	inc	1, xbc                                 ; FA3C21  inc 1,XBC
 	add	(xiz-22), xbc                          ; FA3C23  add (XIZ+0xea),XBC
 	add	(xiz-18), xbc                          ; FA3C26  add (XIZ+0xee),XBC
-	jr sub_FA3A3C__FA3C41                      ; FA3C29  jr T,0xfa3c41
-sub_FA3A3C__FA3C2B:
+	jr P7Unit_ReloadOnProgramChange__FA3C41                      ; FA3C29  jr T,0xfa3c41
+P7Unit_ReloadOnProgramChange__FA3C2B:
 	ld	xbc, (xiz-22)                           ; FA3C2B  ld XBC,(XIZ+0xea)
 	ld	a, (xbc)                                ; FA3C2E  ld A,(XBC)
 	ld	h, a                                    ; FA3C30  ld H,A
@@ -16780,22 +16797,22 @@ sub_FA3A3C__FA3C2B:
 	inc	1, xbc                                 ; FA3C39  inc 1,XBC
 	add	(xiz-22), xbc                          ; FA3C3B  add (XIZ+0xea),XBC
 	add	(xiz-18), xbc                          ; FA3C3E  add (XIZ+0xee),XBC
-sub_FA3A3C__FA3C41:
-	jr sub_FA3A3C__FA3C03                      ; FA3C41  jr T,0xfa3c03
-sub_FA3A3C__FA3C43:
+P7Unit_ReloadOnProgramChange__FA3C41:
+	jr P7Unit_ReloadOnProgramChange__FA3C03                      ; FA3C41  jr T,0xfa3c03
+P7Unit_ReloadOnProgramChange__FA3C43:
 	push	0                                     ; FA3C43  push 0x00
 	push	(xiz+8)                   ; FA3C45  push (XIZ+0x08)
 	calr P7Unit_EmitChangedParams                 ; FA3C48  calr 0xfa3cd7
 	ld	(xiz-2), 0                              ; FA3C4B  ld (XIZ+0xfe),0x00
 	popw	bc                                    ; FA3C4F  pop BC
-sub_FA3A3C__FA3C50:
+P7Unit_ReloadOnProgramChange__FA3C50:
 	cp (xiz-2), 0x10                           ; FA3C50  cp (XIZ+0xfe),0x10
-	jr nc, sub_FA3A3C__FA3C87                  ; FA3C54  jr NC,0xfa3c87
-	jr sub_FA3A3C__FA3C5D                      ; FA3C56  jr T,0xfa3c5d
-sub_FA3A3C__FA3C58:
+	jr nc, P7Unit_ReloadOnProgramChange__FA3C87                  ; FA3C54  jr NC,0xfa3c87
+	jr P7Unit_ReloadOnProgramChange__FA3C5D                      ; FA3C56  jr T,0xfa3c5d
+P7Unit_ReloadOnProgramChange__FA3C58:
 	incm8	1, (xiz-2)                           ; FA3C58  inc 1,(XIZ+0xfe)
-	jr sub_FA3A3C__FA3C50                      ; FA3C5B  jr T,0xfa3c50
-sub_FA3A3C__FA3C5D:
+	jr P7Unit_ReloadOnProgramChange__FA3C50                      ; FA3C5B  jr T,0xfa3c50
+P7Unit_ReloadOnProgramChange__FA3C5D:
 	ld	c, 26:opc                                  ; FA3C5D  ld C,0x1a
 	mul	bc, (xiz+8)                   ; FA3C5F  mul BC,(XIZ+0x08)
 	extz	xbc                                   ; FA3C62  extz XBC
@@ -16812,8 +16829,8 @@ sub_FA3A3C__FA3C5D:
 	lda	xbc, (0x85BC:24)                       ; FA3C7C  lda XBC,0x0085bc
 	add	xbc, xix                               ; FA3C81  add XBC,XIX
 	ld	(xbc), a                                ; FA3C83  ld (XBC),A
-	jr sub_FA3A3C__FA3C58                      ; FA3C85  jr T,0xfa3c58
-sub_FA3A3C__FA3C87:
+	jr P7Unit_ReloadOnProgramChange__FA3C58                      ; FA3C85  jr T,0xfa3c58
+P7Unit_ReloadOnProgramChange__FA3C87:
 	push	0                                     ; FA3C87  push 0x00
 	push	(xiz+10)                   ; FA3C89  push (XIZ+0x0a)
 	ld	bc, (xiz+8)                             ; FA3C8C  ld BC,(XIZ+0x08)
@@ -19443,7 +19460,7 @@ P7Units_ServiceTask__FA552E:
 ; Inputs:  frame `link XIZ,-34`; no positive frame slot is read
 ; Outputs: writes 0x007E97, 0x007EB1, 0x007ECB, 0x008586, 0x0085A0, 0x0085BA, 0x0085D4, 0x0085EE, 0x008608, 0x00860A, 0x00860C, 0x00F354, 0x00F356, 0x00F358, 0x00F35A, 0x00F35D, 0x00F35E
 ;          reads 0x007ECD, 0x007ECF, 0x00856E, 0x008570, 0x008588, 0x00858A, 0x0085A2, 0x0085A4, 0x0085BE, 0x0085D8, 0x0085F2, 0x00F361
-; Calls:   0xFA3802 = P7Units_ReloadForGroup, 0xFA3A3C = sub_FA3A3C
+; Calls:   0xFA3802 = P7Units_ReloadForGroup, 0xFA3A3C = P7Unit_ReloadOnProgramChange
 ;          0xFA3CD7 = P7Unit_EmitChangedParams, 0xFA4957 = P7Unit_FlushDirtyParams
 ;          0xFA4A0D = sub_FA4A0D, 0xFA4C5E = sub_FA4C5E
 ;          0xFA4CE5 = sub_FA4CE5, 0xFA4E23 = sub_FA4E23
@@ -19661,7 +19678,7 @@ P7Units_ResolveProgramsAndReload__FA5734:
 	push	(0x00f35d:24)       ; FA5769  push (0x00f35d)
 	push	0                                     ; FA576E  push 0x00
 	push	(xiz-1)                   ; FA5770  push (XIZ+0xff)
-	calr sub_FA3A3C                 ; FA5773  calr 0xfa3a3c
+	calr P7Unit_ReloadOnProgramChange                 ; FA5773  calr 0xfa3a3c
 	pop	xiy                                    ; FA5776  pop XIY
 	push	0                                     ; FA5777  push 0x00
 	push	(xiz-1)                   ; FA5779  push (XIZ+0xff)
@@ -19729,7 +19746,7 @@ P7Units_ResolveProgramsAndReload__FA57B9:
 	push	(0x00f35d:24)       ; FA5812  push (0x00f35d)
 	push	0                                     ; FA5817  push 0x00
 	push	(xiz-1)                   ; FA5819  push (XIZ+0xff)
-	calr sub_FA3A3C                 ; FA581C  calr 0xfa3a3c
+	calr P7Unit_ReloadOnProgramChange                 ; FA581C  calr 0xfa3a3c
 	pop	xiy                                    ; FA581F  pop XIY
 	push	0                                     ; FA5820  push 0x00
 	push	(xiz-1)                   ; FA5822  push (XIZ+0xff)
@@ -19801,7 +19818,7 @@ P7Units_ResolveProgramsAndReload__FA5862:
 	push	(0x00f35d:24)       ; FA58C4  push (0x00f35d)
 	push	0                                     ; FA58C9  push 0x00
 	push	(xiz-1)                   ; FA58CB  push (XIZ+0xff)
-	calr sub_FA3A3C                 ; FA58CE  calr 0xfa3a3c
+	calr P7Unit_ReloadOnProgramChange                 ; FA58CE  calr 0xfa3a3c
 	pop	xiy                                    ; FA58D1  pop XIY
 	jr P7Units_ResolveProgramsAndReload__FA58DD                      ; FA58D2  jr T,0xfa58dd
 P7Units_ResolveProgramsAndReload__FA58D4:

@@ -3,7 +3,42 @@
 Written at 99% context. Everything needed to continue is here or in a committed script; nothing
 load-bearing lives only in a transcript.
 
-## Status: A1 DONE (c3b3623), B1 tool ported (kn5000 32ef2db), A2 OPEN
+## Status 2026-10-31 (lane open4/wsa1-e): B3 DONE, A4 DONE (KN5000 sub-CPU), A3 BLOCKED (owner decision)
+
+Register item N-8c52a3ed.  Probes and tools: `notes/open4-e-probes/README.md`.
+
+* ★ **B3 -- the maincpu join: DONE.**  prom_b and prom_a are ONE link (`maincpu/maincpu.ld`);
+  the Makefile cuts both EPROM images and the per-image ELF views out of one ELF.  The 3,630
+  cross-image names that were held as numbers (1,809 `.set` in prom_b, 1,811 in prom_a, 10 in
+  prom_a.ld) are resolved by ld.lld from `prom_X/exports.syms`; a renamed name fails the link.
+  `scripts/tools/join_maincpu_link.py --proof 130735749`: 3,630 names, 0 moved; `--selftest`.
+  ⚠ Measured on the way: a `.global` label makes llvm-mc relax a short branch (prom_a +6 bytes,
+  prom_b +1), so exports are globalized AFTER assembly; and prom_b's last `jr z` (0xF7FFFE) crosses
+  the chip boundary with no 8-bit PC-relative relocation in the backend, so it keeps one local
+  equate that `maincpu.ld` ASSERTs.  The "4 label collisions" needed no rename: the three
+  duplicated routines stay local to each object and `end` was already `prom_{a,b}_image_end`.
+  The SPLIT half of B3 was already done: prom_a/prom_b per module (2026-10-24,
+  `scripts/tools/split_cpu1_images.py`), KN5000 maincpu in 15 subject directories.
+* ★ **A4 -- split the KN5000 sub-CPU: DONE for the payload.**  The 58,847-line core of
+  `v142/subcpu/kn5000_subprogram_v142.s` is 14 files in `v142/subcpu/core/`, cut at the section
+  banners it already had, every line moved verbatim (`scripts/tools/split_v142_subcpu_core.py
+  --check 130735749`).  v141 and v140 split the same way through their generators.
+  `subcpu/boot/kn5000_subcpu_boot.s` is NOT split, deliberately: it is 3,115 lines / 119 KB today
+  (the "1,256 KB monolith" this file quotes is out of date), one boot ROM's worth of code.
+  WSA1's half (prom_c per subject) was done before (`notes/prom_c_split.py`).
+* ⚠ **A3 -- the shared kernel source for the KN5000 sub-CPU: BLOCKED on an owner decision.**
+  `notes/open4-e-probes/kernel_a3_shareability.py` (--selftest): of 26 kernel routines, ONE
+  (`Kernel_ResumeTask`, 9 instructions) can be emitted for the KN5000 by `.equ` alone; 24 have WSA1
+  instructions with no KN5000 partner (93 in all, a lower bound) and 7 have instructions of a
+  different length.  A shared source therefore needs `.if/.else` round instructions or per-CPU
+  spellings, which A1's design ("symbolic `.equ` per CPU, NOT `.if/.else`") ruled out.  It would
+  also replace the KN5000 tree's own text for those routines with `kernel.s`'s byte-emitter
+  dialect (constraint 2 above) and adopt names where A2 found the KN5000's kernel labels wrong.
+  **The question for the owner:** may the shared kernel carry per-CPU `.if/.else` blocks (and
+  replace the KN5000 sub-CPU's kernel text and names), or does the KN5000 keep its own kernel
+  source with a cross-reference to `kernel/kernel.s`?
+
+## Status before 2026-10-31 (kept as written): A1 DONE (c3b3623), B1 tool ported (kn5000 32ef2db), A2 OPEN
 
 ★ A1 SHIPPED: kernel/kernel.s + kernel_maincpu.inc + kernel_subcpu.inc. ONE source assembles to
 2,180 bytes of prom_a AND 2,180 of prom_c, both byte-identical to the EPROMs -- which is the proof

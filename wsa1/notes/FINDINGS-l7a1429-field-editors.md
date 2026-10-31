@@ -143,6 +143,18 @@ every page.  GRADE **PROVEN** for the arithmetic.  ⚠ *Which physical control*
 is the fine group and which the coarse is **UNIDENTIFIED** -- this pass did not
 trace the panel scan that produces the event code.
 
+★ **ANSWERED 2026-10-31 (lane open4/wsa1-c):** the fine group is the soft-key column itself
+(codes `0x00`-`0x07`); the coarse group (`0x11`-`0x18`) is the **same column pressed on its
+second wire while the first is held**.  Codes `0x11`-`0x18` are made on CPU 1, not by the
+panel MCU: `PanelAction_PairPos0_HeldMaskAltCode` / `PanelAction_PairPos1_HeldMaskAltCode`
+(`0xF8AE68` / `0xF8AEDB`) add `0x11` to a press whose held bit is already set and deliver its
+release with the same code.  The action pool routes them **only variant-1 groups `0x03`-`0x06`**,
+whose event lists are pairwise identical (each soft-key column wired twice); variant 2, the
+SX-WSA1R, routes neither.  **So on the SX-WSA1R the x3 step cannot be raised at all**; on the
+variant-1 machine it is "hold one of the two keys of a column and press the other".  Which
+physical key of the variant-1 panel is which wire is the SX-WSA1 keyboard panel question already
+recorded as BLOCKED (gap O).  Probe: `notes/open4-c-probes/key_alt_code_census.py` (C1-C4).
+
 ### 1c. THE COMMIT.  PROVEN
 
 `ToneEdit_CommitField(screen, ramIndex, layer, param, D)`:
@@ -177,6 +189,19 @@ an editor to a page.  **No adjacency argument is used anywhere in this note.**
 
 Both were already known.  `RESONATOR TYPE`'s `0..63` bound is new here, and it
 matches the 64-name table at prom_b `0xF03241` exactly.
+
+★ **The other keys of this page, named 2026-10-31 (lane open4/wsa1-c)** from their bodies,
+none of them an edit-descriptor editor:
+
+| key       | slot | routine                           | what it does                                                                                                                                                                                                                                                                            |
+|-----------|------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1         | 0    | `ToneEditPage_A0_SetLayerOnOff`   | the `ON/OFF` column: for the selected layer (`ModelingPage_Fields[0]`) turns it ON on one key of the pair and OFF on the other, through `SoundEdit_SetSlotEnabled` (bit 2n-2 of `ToneEdit_LayerOnBits`, sent as tone parameter `0x11`); repaints `0xC0` field 1                         |
+| 2         | 1    | `ToneEditPage_A0_StepDriverGroup` | the `DRIVER` column's group step: moves `ModelingPage_GetItemGroup` by one within `(0x27F4)` groups and sends the group's first driver (`ModelingPage_GroupStartIndex`) with `ToneMsg88_Id16`                                                                                           |
+| 3         | 2    | `ToneEditPage_A0_StepDriver`      | the `DRIVER` column's item step: moves `ModelingPage_GetItemIndex` by one within `(0x27F2)` and sends it with `ToneMsg88_Id16`                                                                                                                                                          |
+| LCD row 5 | 12   | `ToneEditPage_A0_SelectLayer4`    | one key of the pair does nothing; the other selects layer 4 (`Var27A3_SelectSlot(0xC0, 4, 0)`) unless `SoundEdit_SoundKind` is non-zero -- the row-2..5 keys select layers 1..4 (`ToneEditPage_A0_Op9`..`Op11` select 1..3; rows 2-4's other key open screens `0x86` / `0xC3` / `0xC5`) |
+
+So the old reading "slots 0, 1, 2 and 12 are the ON/OFF and DRIVER columns" was right for
+0-2 and wrong for 12.
 
 ### 2b. `PAGE1/2  P0SITI0N PARAMETER` (screen `0xA3`, table `0xFCF9BC`)
 
@@ -290,6 +315,17 @@ the three pages share the routine; what that does on `0xA6` and `0xA7` is
 **UNIDENTIFIED** -- this pass did not read prom_b's partial repaint for `0xA5`
 field 0, so it is not claiming a defect.
 
+★ **ANSWERED 2026-10-31 (lane open4/wsa1-c): harmless, not a defect.**  Selector `0xC5`
+reaches `Dispatch_Code80_RepaintFieldTable[0xA5]` = `ToneEditPage_A5_RepaintField`
+(prom_b `0xF5CD46`).  Its field-0 arm is the same 25 bytes as the field-0 arms of
+`ToneEditPage_A6_RepaintField` and `ToneEditPage_A7_RepaintField` (layer 1:
+`DL_F03581`, then `ToneEditPage_PaintMainAndSubFocus`), and the layer-0 record it
+then runs, `DLRecordPtrs_F0355D[0]`, is byte-identical to the A6 and A7 pages' own
+field-0 records `Data_F03617[0]` / `DLRecordPtrs_F036C2[0]` (op 03, var
+`ModelingPage_Fields[0]`, mask `0x01`, service 5, table `DLTable_F035AA`).  So on
+`0xA6`/`0xA7` the `0xC5` repaint draws exactly what `0xC6`/`0xC7` would.  GRADE
+**PROVEN**: `notes/open4-c-probes/tone_edit_c5_repaint.py` (R1-R4).
+
 ---
 
 ## 3. THE CROSS-CHECK, AND THE FACT THAT IT COULD HAVE FAILED
@@ -399,9 +435,12 @@ negative that does not say what it looked for cannot be disagreed with:
 
 * **Which physical control is the fine key group and which the coarse.**  The
   `x3` step exists and is proven; the panel scan that produces event codes
-  `0x11`-`0x18` was not read.
+  `0x11`-`0x18` was not read. (Resolved: §1b, 2026-10-31: CPU 1 makes 0x11-0x18 itself from a second press of
+  a soft-key column's twin wire, on variant 1 only; the SX-WSA1R never raises the coarse group;
+  `notes/open4-c-probes/key_alt_code_census.py`.)
 * **What `ToneEditPage_ToggleRowFocus` does on screens `0xA6`/`0xA7`**, given
-  that it repaints with the literal `0xC5`.
+  that it repaints with the literal `0xC5`. (Resolved: §2g, 2026-10-31: the three pages' field-0 repaints draw the
+  same bytes, so the literal is harmless; `notes/open4-c-probes/tone_edit_c5_repaint.py`.)
 * **Screen `0xA8`** (table `0xFCFB24`, 8 live slots, selector 0).  It is a real
   screen with its own paint routines, and this pass says nothing more about it. (Resolved: fd781ed52 and wsa1/docs/gui-menu-map.md "screen 0xC8": ToneEditPage_A8_SerialParallel, the SERIAL / PARALLEL, EFFECT BLOCK and TONE TEMPLATE LEVEL/KEY/TUNE page; open-items register 2026-10-31.)
 * **What p22 bit 7 (`RESO SCALE`) does to the coefficients.**  Unchanged from
@@ -409,7 +448,10 @@ negative that does not say what it looked for cannot be disagreed with:
 * The `MODELING top`'s slots 0, 1, 2 and 12 (`0xFD3FE0`, `0xFD4039`,
   `0xFD40D4`, `0xFD4468`) are a per-layer ON/OFF toggle and two list selectors
   that are not edit-descriptor editors.  They are the `ON/OFF` and `DRIVER`
-  columns of that page's legend; naming them is a separate hop.
+  columns of that page's legend; naming them is a separate hop. (Resolved 2026-10-31, §2a: renamed `ToneEditPage_A0_SetLayerOnOff`,
+  `ToneEditPage_A0_StepDriverGroup`, `ToneEditPage_A0_StepDriver` and
+  `ToneEditPage_A0_SelectLayer4`; slot 12 is not a DRIVER selector but LCD row 5's
+  layer-4 key -- `scripts/renaming/rename_wsa1_open4_c.sed`.)
 
 ---
 

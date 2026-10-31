@@ -4678,7 +4678,7 @@ PartRec_ApplyParam_0001:
 	unlk	xiz                                 ; FAEAF6  unlk XIZ
 	ret                                        ; FAEAF8  ret
 ; --------------------------------------------------------------------------
-; sub_FAEAF9 -- 0xFAEAF9..0xFAEB64 (108 bytes)
+; CtrlDest29_Position_Apply -- 0xFAEAF9..0xFAEB64 (108 bytes)
 ;
 ; Called from: no site outside this module.
 ;          1 site(s) inside this module:
@@ -4693,10 +4693,22 @@ PartRec_ApplyParam_0001:
 ;          notes/prom_c_verify_fragment.py before insertion).  Every field above
 ;          is an instruction operand, listed by notes/gen_prom_c_block_headers.py;
 ;          the call sites are notes/prom_c_module_map.py's image-wide scan.
-; Unknown:  what the routine is FOR.  Nothing here reads the meaning of a field,
-;          so the name is an address.
+; ★ NAMED (lane open4/wsa1-a, 2026-10-31).  CONTROLLER DESTINATION 29, "POSITION".  This is the
+;          arm Voice_ApplyParamChange_Dispatch reaches for target code 29 (table index 28,
+;          0xFAF08F + 4*28).  The code is the 6-bit field of a tone record's controller
+;          assignment slot (`ld L,(XIX+0x01) / and L,0x3f` at 0xFAF041): MidiCtrl_CC01 hands
+;          the dispatcher tone[+0x17]/[+0x1A], CC02 tone[+0x1D]/[+0x20], CC04 tone[+0x25]/[+0x28].
+;          CPU 1 names the same field: prom_b ControllerDestinationNames (0xF33022, 64 x 13
+;          bytes, read with mask 0x3F by UiText_CopyLabel13_To_22F0) holds "POSITION" at entry 29,
+;          and its neighbours match the other arms' registers (28 FITTING, 31 POS.COLOR,
+;          35 MUTING, 36 RESO.KEYSHIFT).  The value is scaled by the slot's depth byte
+;          (Scale7Bit_ByDepth_UniOrBipolar_Shl7, 0xFAEB08) and stored as a part-level offset (PartRec_SetPositionOffset_0003 -> PART[+0x03],
+;          0xFAEB19); then every voice of the part is restaged and shipped (Pack104_RestageRegs_00C0_0100_0240_ForVoice / Dev104_SetChanRegs_00C0_0100_0240: registers 0x00C0, 0x0100, 0x0240).
+;          Factory use: notes/open4-a-probes/ctrl_dest_names.py counts the codes over prom_d's
+;          melodic tones -- code 29 is CC02's (breath) first destination in 119 of 256 and
+;          its second in 33; codes 30 and 37 are assigned by no factory tone.
 ; --------------------------------------------------------------------------
-sub_FAEAF9:
+CtrlDest29_Position_Apply:
 	link	xiz, 0x0000              ; FAEAF9  link XIZ,0x0000
 	pushw	hl                                   ; FAEAFD  push HL
 	push	xix                                   ; FAEAFE  push XIX
@@ -4749,7 +4761,7 @@ sub_FAEAF9__FAEB60:
 	unlk	xiz                                 ; FAEB62  unlk XIZ
 	ret                                        ; FAEB64  ret
 ; --------------------------------------------------------------------------
-; sub_FAEB65 -- 0xFAEB65..0xFAEBD0 (108 bytes)
+; CtrlDest30_PosDepth_Apply -- 0xFAEB65..0xFAEBD0 (108 bytes)
 ;
 ; Called from: no site outside this module.
 ;          1 site(s) inside this module:
@@ -4764,10 +4776,26 @@ sub_FAEAF9__FAEB60:
 ;          notes/prom_c_verify_fragment.py before insertion).  Every field above
 ;          is an instruction operand, listed by notes/gen_prom_c_block_headers.py;
 ;          the call sites are notes/prom_c_module_map.py's image-wide scan.
-; Unknown:  what the routine is FOR.  Nothing here reads the meaning of a field,
-;          so the name is an address.
+; ★ NAMED (lane open4/wsa1-a, 2026-10-31).  CONTROLLER DESTINATION 30, "POS.DEPTH".  This is the
+;          arm Voice_ApplyParamChange_Dispatch reaches for target code 30 (table index 29,
+;          0xFAF08F + 4*29).  The code is the 6-bit field of a tone record's controller
+;          assignment slot (`ld L,(XIX+0x01) / and L,0x3f` at 0xFAF041): MidiCtrl_CC01 hands
+;          the dispatcher tone[+0x17]/[+0x1A], CC02 tone[+0x1D]/[+0x20], CC04 tone[+0x25]/[+0x28].
+;          CPU 1 names the same field: prom_b ControllerDestinationNames (0xF33022, 64 x 13
+;          bytes, read with mask 0x3F by UiText_CopyLabel13_To_22F0) holds "POS.DEPTH" at entry 30,
+;          and its neighbours match the other arms' registers (28 FITTING, 31 POS.COLOR,
+;          35 MUTING, 36 RESO.KEYSHIFT).  The value is scaled by the slot's depth byte
+;          (Scale7Bit_ByDepth_UniOrBipolar, 0xFAEB74) and stored as a part-level offset (PartRec_SetPositionOffset_0005 -> PART[+0x05],
+;          0xFAEB85); then every voice of the part is restaged and shipped (the same two routines: registers 0x00C0, 0x0100, 0x0240).
+;          Factory use: notes/open4-a-probes/ctrl_dest_names.py counts the codes over prom_d's
+;          melodic tones -- code 29 is CC02's (breath) first destination in 119 of 256 and
+;          its second in 33; codes 30 and 37 are assigned by no factory tone.
+;          ⚠ PART[+0x05] is the POS.DEPTH offset by this evidence, but the routine that stores
+;          it re-derives P[+0x20]/P[+0x22] from PART[+0x03] (its own header's asymmetry), so no
+;          located code folds the stored POS.DEPTH value into a register; its label keeps
+;          `PositionOffset`, which names the shared refresh, not the field.
 ; --------------------------------------------------------------------------
-sub_FAEB65:
+CtrlDest30_PosDepth_Apply:
 	link	xiz, 0x0000              ; FAEB65  link XIZ,0x0000
 	pushw	hl                                   ; FAEB69  push HL
 	push	xix                                   ; FAEB6A  push XIX
@@ -5022,7 +5050,7 @@ PartRec_ApplyParam_000D:
 	unlk	xiz                                 ; FAECC4  unlk XIZ
 	ret                                        ; FAECC6  ret
 ; --------------------------------------------------------------------------
-; sub_FAECC7 -- 0xFAECC7..0xFAED32 (108 bytes)
+; CtrlDest37_SubGain_Apply -- 0xFAECC7..0xFAED32 (108 bytes)
 ;
 ; Called from: no site outside this module.
 ;          1 site(s) inside this module:
@@ -5037,10 +5065,22 @@ PartRec_ApplyParam_000D:
 ;          notes/prom_c_verify_fragment.py before insertion).  Every field above
 ;          is an instruction operand, listed by notes/gen_prom_c_block_headers.py;
 ;          the call sites are notes/prom_c_module_map.py's image-wide scan.
-; Unknown:  what the routine is FOR.  Nothing here reads the meaning of a field,
-;          so the name is an address.
+; ★ NAMED (lane open4/wsa1-a, 2026-10-31).  CONTROLLER DESTINATION 37, "SUB GAIN".  This is the
+;          arm Voice_ApplyParamChange_Dispatch reaches for target code 37 (table index 36,
+;          0xFAF08F + 4*36).  The code is the 6-bit field of a tone record's controller
+;          assignment slot (`ld L,(XIX+0x01) / and L,0x3f` at 0xFAF041): MidiCtrl_CC01 hands
+;          the dispatcher tone[+0x17]/[+0x1A], CC02 tone[+0x1D]/[+0x20], CC04 tone[+0x25]/[+0x28].
+;          CPU 1 names the same field: prom_b ControllerDestinationNames (0xF33022, 64 x 13
+;          bytes, read with mask 0x3F by UiText_CopyLabel13_To_22F0) holds "SUB GAIN" at entry 37,
+;          and its neighbours match the other arms' registers (28 FITTING, 31 POS.COLOR,
+;          35 MUTING, 36 RESO.KEYSHIFT).  The value is scaled by the slot's depth byte
+;          (Scale7Bit_ByDepth_UniOrBipolar, 0xFAECD6) and stored as a part-level offset (PartRec_SetSubGainOffset_000F -> PART[+0x0F],
+;          0xFAECE7); then every voice of the part is restaged and shipped (Pack104_RestageReg_0280_ForVoice / Dev104_SetChanReg_0280: register 0x0280).
+;          Factory use: notes/open4-a-probes/ctrl_dest_names.py counts the codes over prom_d's
+;          melodic tones -- code 29 is CC02's (breath) first destination in 119 of 256 and
+;          its second in 33; codes 30 and 37 are assigned by no factory tone.
 ; --------------------------------------------------------------------------
-sub_FAECC7:
+CtrlDest37_SubGain_Apply:
 	link	xiz, 0x0000              ; FAECC7  link XIZ,0x0000
 	pushw	hl                                   ; FAECCB  push HL
 	push	xix                                   ; FAECCC  push XIX
@@ -5792,10 +5832,10 @@ sub_FAF00C:
 ;          0xFAE484 = Voice_Restage_Reg0440_ValueCurve_ForPart, 0xFAE5C7 = Voice_Restage_Reg0180_BaseCurve_ForPart
 ;          0xFAE703 = Voice_Restage_Reg0180_ValueCurve_ForPart, 0xFAE848 = Voice_Restage_Reg04C0_BaseCurve_ForPart
 ;          0xFAE986 = Voice_Restage_Reg04C0_ValueCurve_ForPart, 0xFAEACE = PartRec_ApplyParam_0001
-;          0xFAEAF9 = sub_FAEAF9, 0xFAEB65 = sub_FAEB65
+;          0xFAEAF9 = CtrlDest29_Position_Apply, 0xFAEB65 = CtrlDest30_PosDepth_Apply
 ;          0xFAEBD1 = sub_FAEBD1, 0xFAEC21 = PartRec_ApplyParam_0009
 ;          0xFAEC71 = PartRec_ApplyParam_000B, 0xFAEC9C = PartRec_ApplyParam_000D
-;          0xFAECC7 = sub_FAECC7, 0xFAED33 = PartRec_ApplyParam_0023
+;          0xFAECC7 = CtrlDest37_SubGain_Apply, 0xFAED33 = PartRec_ApplyParam_0023
 ;          0xFAED76 = PartRec_ApplyParam_0025, 0xFAEDC4 = PartRec_ApplyParam_0027
 ;          0xFAEE07 = PartRec_ApplyParam_0029, 0xFAEE4A = PartRec_ApplyParam_002B
 ;          0xFAEE8D = PartRec_ApplyParam_002D, 0xFAEED0 = PartRec_ApplyParam_002F
@@ -6083,7 +6123,7 @@ Voice_ApplyParamChange_Dispatch__FAF246:
 	pushw	bc                                   ; FAF249  push BC
 	push	0                                     ; FAF24A  push 0x00
 	push	h                                     ; FAF24C  push H
-	calr sub_FAEAF9                 ; FAF24E  calr 0xfaeaf9
+	calr CtrlDest29_Position_Apply                 ; FAF24E  calr 0xfaeaf9
 	jrl Voice_ApplyParamChange_Dispatch__FAF31B                     ; FAF251  jrl T,0xfaf31b
 Voice_ApplyParamChange_Dispatch__FAF254:
 	push	xix                                   ; FAF254  push XIX
@@ -6091,7 +6131,7 @@ Voice_ApplyParamChange_Dispatch__FAF254:
 	pushw	bc                                   ; FAF257  push BC
 	push	0                                     ; FAF258  push 0x00
 	push	h                                     ; FAF25A  push H
-	calr sub_FAEB65                 ; FAF25C  calr 0xfaeb65
+	calr CtrlDest30_PosDepth_Apply                 ; FAF25C  calr 0xfaeb65
 	jrl Voice_ApplyParamChange_Dispatch__FAF31B                     ; FAF25F  jrl T,0xfaf31b
 Voice_ApplyParamChange_Dispatch__FAF262:
 	push	xix                                   ; FAF262  push XIX
@@ -6131,7 +6171,7 @@ Voice_ApplyParamChange_Dispatch__FAF29A:
 	pushw	bc                                   ; FAF29D  push BC
 	push	0                                     ; FAF29E  push 0x00
 	push	h                                     ; FAF2A0  push H
-	calr sub_FAECC7                 ; FAF2A2  calr 0xfaecc7
+	calr CtrlDest37_SubGain_Apply                 ; FAF2A2  calr 0xfaecc7
 	jrl Voice_ApplyParamChange_Dispatch__FAF31B                     ; FAF2A5  jrl T,0xfaf31b
 Voice_ApplyParamChange_Dispatch__FAF2A8:
 	push	xix                                   ; FAF2A8  push XIX

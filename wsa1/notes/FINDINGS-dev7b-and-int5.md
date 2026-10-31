@@ -33,15 +33,15 @@ A byte census over prom_a and prom_b of the 24-bit memory-operand form
 |---|---|---|
 | `0xFE54B6` | `ld L,(0x7B0004)` | `Dev7B_ReadStatus` |
 | `0xFE54BC` | `ld L,(0x7B0005)` | `Dev7B_ReadData` |
-| `0xFE54C5` | `ld (0x7B0004),A` | `Dev7B_WriteControl` |
-| `0xFE54DD` | `ld (0x7B0004),A` | `Dev7B_WriteControl_Shadowed` |
+| `0xFE54C5` | `ld (0x7B0004),A` | `Dev7B_WriteDsr` |
+| `0xFE54DD` | `ld (0x7B0004),A` | `Dev7B_WriteDsr_Shadowed` |
 | `0xFE54E6` | `ld (0x7B0005),A` | `Dev7B_WriteData` |
 
 No other address in `0x7B0000`-`0x7B000F` is referenced at all, and prom_b never
 touches the device. So those five accessors — all converted — are the **entire**
 software interface, and every argument arrives on the stack at `(XSP+0x04)`.
 
-`Dev7B_WriteControl_Shadowed` additionally keeps the previous control byte at
+`Dev7B_WriteDsr_Shadowed` additionally keeps the previous control byte at
 `(0x605B08)` and the new one at `(0x605B09)`: the register is write-only and
 software has to remember it.
 

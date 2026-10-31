@@ -539,7 +539,7 @@ StepRecord_SongTrackCursorKey:
 	exts	wa	; F674E7  exts WA
 	sla	wa, 2	; F674E9  sla 0x02,WA
 	ld	iy, wa	; F674EC  ld IY,WA
-	ld	wa, (4786:16)	; F674EE  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F674EE  ld WA,(0x12b2)
 	ld	(4098:16), wa	; F674F2  ld (0x1002),WA
 	ld	a, (3672:16)	; F674F6  ld A,(0x0e58)
 	ld	(4103:16), a	; F674FA  ld (0x1007),A
@@ -548,7 +548,7 @@ StepRecord_SongTrackCursorKey:
 	ld	xiy, (xhl+iy)	; F67504  ld XIY,(XHL+IY)
 	pop	xhl	; F67509  pop XHL
 	call	(xiy)	; F6750A  call T,XIY
-	ld	wa, (4786:16)	; F6750C  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6750C  ld WA,(0x12b2)
 	cp	wa, (0x1002:16)	; F67510  cp WA,(0x1002)
 	jr	nz, StepRecord_SongTrackCursorKey_Loop	; F67514  jr NZ,0xf6753c
 	ld	a, (3672:16)	; F67516  ld A,(0x0e58)
@@ -614,7 +614,7 @@ StepRecord_MasterTrackCursorKey:
 	exts	wa	; F6755D  exts WA
 	sla	wa, 2	; F6755F  sla 0x02,WA
 	ld	iy, wa	; F67562  ld IY,WA
-	ld	wa, (4786:16)	; F67564  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F67564  ld WA,(0x12b2)
 	ld	(4098:16), wa	; F67568  ld (0x1002),WA
 	ld	a, (3672:16)	; F6756C  ld A,(0x0e58)
 	ld	(4103:16), a	; F67570  ld (0x1007),A
@@ -623,7 +623,7 @@ StepRecord_MasterTrackCursorKey:
 	ld	xiy, (xhl+iy)	; F6757A  ld XIY,(XHL+IY)
 	pop	xhl	; F6757F  pop XHL
 	call	(xiy)	; F67580  call T,XIY
-	ld	wa, (4786:16)	; F67582  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F67582  ld WA,(0x12b2)
 	cp	wa, (0x1002:16)	; F67586  cp WA,(0x1002)
 	jr	nz, StepRecord_MasterTrackCursorKey_Skip2	; F6758A  jr NZ,0xf675b2
 	ld	a, (3672:16)	; F6758C  ld A,(0x0e58)
@@ -1068,33 +1068,33 @@ StepRecordSub00_ButtonTable:
 ; SoftKeyCol4_StepRecordSub00: the 4th of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub00_ButtonTable slot 0x03; StepRecordSub00_ButtonTable slot 0x14.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol4_StepRecordSub00:
 	or	(UI_RequestBits:16), 0x08	; F6786F  or (0x2075),0x08
-	ld	a, (4780:16)	; F67874  ld A,(0x12ac)
+	ld	a, (StepRecord_Length:16)	; F67874  ld A,(0x12ac)
 	ld	l, 1:opc	; F67878  ld L,0x01
 	ld	h, 13:opc	; F6787A  ld H,0x0d
 	calr	StepRecordSub00_StepValueClamped_Veneer	; F6787C  calr 0xf67400
-	ld	(4780:16), a	; F6787F  ld (0x12ac),A
+	ld	(StepRecord_Length:16), a	; F6787F  ld (0x12ac),A
 	call	MsgLine_FormatLengthAndPhrasing	; F67883  call 0xf6dbf9
 	call	T_F431B4	; F67887  call 0xf431b4
 	ret	; F6788B  ret
 ; SoftKeyCol5_StepRecordSub00: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub00_ButtonTable slot 0x04; StepRecordSub00_ButtonTable slot 0x15.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol5_StepRecordSub00:
 	or	(UI_RequestBits:16), 0x08	; F6788C  or (0x2075),0x08
-	ld	a, (4781:16)	; F67891  ld A,(0x12ad)
+	ld	a, (StepRecord_TieLength:16)	; F67891  ld A,(0x12ad)
 	ld	l, 0:opc	; F67895  ld L,0x00
 	ld	h, 12:opc	; F67897  ld H,0x0c
 	calr	StepRecordSub00_StepValueClamped_Veneer	; F67899  calr 0xf67400
-	ld	(4781:16), a	; F6789C  ld (0x12ad),A
+	ld	(StepRecord_TieLength:16), a	; F6789C  ld (0x12ad),A
 	call	MsgLine_FormatLengthAndPhrasing	; F678A0  call 0xf6dbf9
 	call	T_F431B4	; F678A4  call 0xf431b4
 	ret	; F678A8  ret
 ; SoftKeyCol6_StepRecordSub00: the 6th of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub00_ButtonTable slot 0x05; StepRecordSub00_ButtonTable slot 0x16.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol6_StepRecordSub00:
 	or	(UI_RequestBits:16), 0x08	; F678A9  or (0x2075),0x08
-	ld	a, (4782:16)	; F678AE  ld A,(0x12ae)
+	ld	a, (StepRecord_Phrasing:16)	; F678AE  ld A,(0x12ae)
 	ld	l, 0:opc	; F678B2  ld L,0x00
 	ld	h, 3:opc	; F678B4  ld H,0x03
 	calr	StepRecordSub00_StepValueClamped_Veneer	; F678B6  calr 0xf67400
-	ld	(4782:16), a	; F678B9  ld (0x12ae),A
+	ld	(StepRecord_Phrasing:16), a	; F678B9  ld (0x12ae),A
 	call	MsgLine_FormatLengthAndPhrasing	; F678BD  call 0xf6dbf9
 	call	T_F431B4	; F678C1  call 0xf431b4
 	ret	; F678C5  ret
@@ -1828,7 +1828,7 @@ MsgLine_Volume:
 	ld	xix, MsgLine_Text+11	; F67DA1  ld XIX,0x00000fef
 	ldw	bc, 9	; F67DA6  ld BC,0x0009
 	ldir85	; F67DA9  ldir
-	ld	a, (4113:16)	; F67DAB  ld A,(0x1011)
+	ld	a, (StepRecord_TrackVolume:16)	; F67DAB  ld A,(0x1011)
 	exts	wa	; F67DAF  exts WA
 	push	xix	; F67DB1  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F67DB2  call 0xf41af0
@@ -1928,11 +1928,11 @@ StepRecordSub09_ButtonTable:
 ; SoftKeyCol5_StepRecordSub09: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub09_ButtonTable slot 0x04; StepRecordSub09_ButtonTable slot 0x15.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol5_StepRecordSub09:
 	or	(UI_RequestBits:16), 0x08	; F67E69  or (0x2075),0x08
-	ld	a, (4113:16)	; F67E6E  ld A,(0x1011)
+	ld	a, (StepRecord_TrackVolume:16)	; F67E6E  ld A,(0x1011)
 	ld	l, 0:opc	; F67E72  ld L,0x00
 	ld	h, 127:opc	; F67E74  ld H,0x7f
 	calr	StepByteWithinLH	; F67E76  calr 0xf67f68
-	ld	(4113:16), a	; F67E79  ld (0x1011),A
+	ld	(StepRecord_TrackVolume:16), a	; F67E79  ld (0x1011),A
 	ld	l, (3676:16)	; F67E7D  ld L,(0x0e5c)
 	dec	1, l	; F67E81  dec 1,L
 	xor	h, h	; F67E83  xor H,H
@@ -1953,7 +1953,7 @@ SoftKeyCol5_StepRecordSub09:
 	popw	de	; F67EB0  pop DE
 	ld	c, e	; F67EB1  ld C,E
 	ld	b, 3:opc	; F67EB3  ld B,0x03
-	ld	e, (4113:16)	; F67EB5  ld E,(0x1011)
+	ld	e, (StepRecord_TrackVolume:16)	; F67EB5  ld E,(0x1011)
 	ld	d, 127:opc	; F67EB9  ld D,0x7f
 	call	T_ParamShadow_SetField3	; F67EBB  call 0xf40874
 	call	T_ParamShadow_FlushAll	; F67EBF  call 0xf40898
@@ -2144,7 +2144,7 @@ StepRecordSub10_ButtonTable:
 
 ; SoftKeyCol5_StepRecordSub10: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub10_ButtonTable slot 0x04; StepRecordSub10_ButtonTable slot 0x15.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol5_StepRecordSub10:
-	ld	a, (4696:16)	; F68016  ld A,(0x1258)
+	ld	a, (SongEvent_Byte0:16)	; F68016  ld A,(0x1258)
 	cp	a, 188	; F6801A  cp A,0xbc
 	jrl	z, SoftKeyCol5_StepRecordSub10_Skip5	; F6801D  jrl Z,0xf680fc
 	cp	a, 189	; F68020  cp A,0xbd
@@ -2159,7 +2159,7 @@ SoftKeyCol5_StepRecordSub10:
 	jrl	z, SoftKeyCol5_StepRecordSub10_Skip10	; F6803B  jrl Z,0xf68191
 	cp	a, 187	; F6803E  cp A,0xbb
 	jrl	z, SoftKeyCol5_StepRecordSub10_Skip11	; F68041  jrl Z,0xf681ae
-	ld	a, (4697:16)	; F68044  ld A,(0x1259)
+	ld	a, (SongEvent_Byte1:16)	; F68044  ld A,(0x1259)
 	cp	a, 3:i3	; F68048  cp A,3
 	jr	z, SoftKeyCol5_StepRecordSub10_Skip	; F6804A  jr Z,0xf68085
 	cp	a, 8	; F6804C  cp A,0x08
@@ -2172,141 +2172,141 @@ SoftKeyCol5_StepRecordSub10:
 	jrl	z, SoftKeyCol5_StepRecordSub10_Skip12	; F6805F  jrl Z,0xf681cb
 	cp	a, 5:i3	; F68062  cp A,5
 	jrl	z, SoftKeyCol5_StepRecordSub10_Skip13	; F68064  jrl Z,0xf681e8
-	ld	a, (4698:16)	; F68067  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F68067  ld A,(0x125a)
 	ld	l, 28:opc	; F6806B  ld L,0x1c
 	ld	h, 100:opc	; F6806D  ld H,0x64
 	calr	StepByteWithinLH	; F6806F  calr 0xf67f68
-	ld	(4698:16), a	; F68072  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F68072  ld (0x125a),A
 	ld	(3835:16), 4	; F68076  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F6807B  calr 0xf6820f
 	call	MsgLine_PartKeyShift	; F6807E  call 0xf6df57
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F68082  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip:
-	ld	a, (4698:16)	; F68085  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F68085  ld A,(0x125a)
 	ld	l, 0:opc	; F68089  ld L,0x00
 	ld	h, 127:opc	; F6808B  ld H,0x7f
 	calr	StepByteWithinLH	; F6808D  calr 0xf67f68
-	ld	(4698:16), a	; F68090  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F68090  ld (0x125a),A
 	ld	(3835:16), 4	; F68094  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F68099  calr 0xf6820f
 	calr	MsgLine_PartVolume_Veneer	; F6809C  calr 0xf67450
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F6809F  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip2:
-	ld	a, (4698:16)	; F680A2  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F680A2  ld A,(0x125a)
 	ld	l, 0:opc	; F680A6  ld L,0x00
 	ld	h, 127:opc	; F680A8  ld H,0x7f
 	calr	StepByteWithinLH	; F680AA  calr 0xf67f68
-	ld	(4698:16), a	; F680AD  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F680AD  ld (0x125a),A
 	ld	(3835:16), 4	; F680B1  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F680B6  calr 0xf6820f
 	call	MsgLine_PartPanpot	; F680B9  call 0xf6def7
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F680BD  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip3:
-	ld	a, (4698:16)	; F680C0  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F680C0  ld A,(0x125a)
 	ld	l, 0:opc	; F680C4  ld L,0x00
 	ld	h, 255:opc	; F680C6  ld H,0xff
 	calr	StepByteWithinLH	; F680C8  calr 0xf67f68
-	ld	(4698:16), a	; F680CB  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F680CB  ld (0x125a),A
 	ld	(3835:16), 4	; F680CF  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByteSplitBit7	; F680D4  calr 0xf68234
 	call	MsgLine_PartTuning	; F680D7  call 0xf6dfc4
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F680DB  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip4:
-	ld	a, (4698:16)	; F680DE  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F680DE  ld A,(0x125a)
 	ld	l, 0:opc	; F680E2  ld L,0x00
 	ld	h, 12:opc	; F680E4  ld H,0x0c
 	calr	StepByteWithinLH	; F680E6  calr 0xf67f68
-	ld	(4698:16), a	; F680E9  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F680E9  ld (0x125a),A
 	ld	(3835:16), 4	; F680ED  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F680F2  calr 0xf6820f
 	call	MsgLine_PartBendSens	; F680F5  call 0xf6e02e
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F680F9  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip5:
-	ld	a, (4698:16)	; F680FC  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F680FC  ld A,(0x125a)
 	ld	l, 0:opc	; F68100  ld L,0x00
 	ld	h, 127:opc	; F68102  ld H,0x7f
 	calr	StepByteWithinLH	; F68104  calr 0xf67f68
-	ld	(4698:16), a	; F68107  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F68107  ld (0x125a),A
 	ld	(3835:16), 4	; F6810B  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F68110  calr 0xf6820f
 	call	MsgLine_PartModulation2	; F68113  call 0xf6e73a
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F68117  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip6:
-	ld	a, (4698:16)	; F6811A  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6811A  ld A,(0x125a)
 	ld	l, 0:opc	; F6811E  ld L,0x00
 	ld	h, 127:opc	; F68120  ld H,0x7f
 	calr	StepByteWithinLH	; F68122  calr 0xf67f68
-	ld	(4698:16), a	; F68125  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F68125  ld (0x125a),A
 	ld	(3835:16), 4	; F68129  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F6812E  calr 0xf6820f
 	call	MsgLine_PartCtrlPedal	; F68131  call 0xf6e797
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F68135  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip7:
-	ld	a, (4698:16)	; F68138  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F68138  ld A,(0x125a)
 	ld	l, 0:opc	; F6813C  ld L,0x00
 	ld	h, 127:opc	; F6813E  ld H,0x7f
 	calr	StepByteWithinLH	; F68140  calr 0xf67f68
-	ld	(4698:16), a	; F68143  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F68143  ld (0x125a),A
 	ld	(3835:16), 4	; F68147  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F6814C  calr 0xf6820f
 	call	MsgLine_PartHold	; F6814F  call 0xf6e7f3
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F68153  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip8:
-	ld	a, (4698:16)	; F68156  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F68156  ld A,(0x125a)
 	ld	l, 0:opc	; F6815A  ld L,0x00
 	ld	h, 127:opc	; F6815C  ld H,0x7f
 	calr	StepByteWithinLH	; F6815E  calr 0xf67f68
-	ld	(4698:16), a	; F68161  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F68161  ld (0x125a),A
 	ld	(3835:16), 4	; F68165  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F6816A  calr 0xf6820f
 	call	MsgLine_PartRtCreateX	; F6816D  call 0xf6e849
 	jrl	SoftKeyCol5_StepRecordSub10_Join	; F68171  jrl T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip9:
-	ld	a, (4698:16)	; F68174  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F68174  ld A,(0x125a)
 	ld	l, 0:opc	; F68178  ld L,0x00
 	ld	h, 127:opc	; F6817A  ld H,0x7f
 	calr	StepByteWithinLH	; F6817C  calr 0xf67f68
-	ld	(4698:16), a	; F6817F  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6817F  ld (0x125a),A
 	ld	(3835:16), 4	; F68183  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F68188  calr 0xf6820f
 	call	MsgLine_PartRtCreateY	; F6818B  call 0xf6e8a6
 	jr	SoftKeyCol5_StepRecordSub10_Join	; F6818F  jr T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip10:
-	ld	a, (4698:16)	; F68191  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F68191  ld A,(0x125a)
 	ld	l, 0:opc	; F68195  ld L,0x00
 	ld	h, 127:opc	; F68197  ld H,0x7f
 	calr	StepByteWithinLH	; F68199  calr 0xf67f68
-	ld	(4698:16), a	; F6819C  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6819C  ld (0x125a),A
 	ld	(3835:16), 4	; F681A0  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F681A5  calr 0xf6820f
 	call	MsgLine_PartRtCtrlX	; F681A8  call 0xf6e903
 	jr	SoftKeyCol5_StepRecordSub10_Join	; F681AC  jr T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip11:
-	ld	a, (4698:16)	; F681AE  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F681AE  ld A,(0x125a)
 	ld	l, 0:opc	; F681B2  ld L,0x00
 	ld	h, 127:opc	; F681B4  ld H,0x7f
 	calr	StepByteWithinLH	; F681B6  calr 0xf67f68
-	ld	(4698:16), a	; F681B9  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F681B9  ld (0x125a),A
 	ld	(3835:16), 4	; F681BD  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F681C2  calr 0xf6820f
 	call	MsgLine_PartRtCtrlY	; F681C5  call 0xf6e95f
 	jr	SoftKeyCol5_StepRecordSub10_Join	; F681C9  jr T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip12:
-	ld	a, (4698:16)	; F681CB  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F681CB  ld A,(0x125a)
 	ld	l, 0:opc	; F681CF  ld L,0x00
 	ld	h, 127:opc	; F681D1  ld H,0x7f
 	calr	StepByteWithinLH	; F681D3  calr 0xf67f68
-	ld	(4698:16), a	; F681D6  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F681D6  ld (0x125a),A
 	ld	(3835:16), 4	; F681DA  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F681DF  calr 0xf6820f
 	call	MsgLine_PartReverb	; F681E2  call 0xf6e2ba
 	jr	SoftKeyCol5_StepRecordSub10_Join	; F681E6  jr T,0xf68205
 SoftKeyCol5_StepRecordSub10_Skip13:
-	ld	a, (4698:16)	; F681E8  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F681E8  ld A,(0x125a)
 	ld	l, 0:opc	; F681EC  ld L,0x00
 	ld	h, 127:opc	; F681EE  ld H,0x7f
 	calr	StepByteWithinLH	; F681F0  calr 0xf67f68
-	ld	(4698:16), a	; F681F3  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F681F3  ld (0x125a),A
 	ld	(3835:16), 4	; F681F7  ld (0x0efb),0x04
 	calr	StepRecord_WriteEventByte	; F681FC  calr 0xf6820f
 	call	MsgLine_PartEffect1	; F681FF  call 0xf6e212
@@ -2343,7 +2343,7 @@ StepRecord_WriteEventByte:
 	xor	d, d	; F6821F  xor D,D
 	calr	TrackCursor_AdvanceBytes	; F68221  calr 0xf6ba11
 	calr	BStore_ReadByteAtSongPosition	; F68224  calr 0xf6b8bd
-	ld	w, (4698:16)	; F68227  ld W,(0x125a)
+	ld	w, (SongEvent_Byte2:16)	; F68227  ld W,(0x125a)
 	calr	BStore_WriteByteAtSongPosition	; F6822B  calr 0xf6b9df
 	xor	a, a	; F6822E  xor A,A
 	calr	StepRecord_RestoreCursorFromSlot	; F68230  calr 0xf6c2e5
@@ -2373,7 +2373,7 @@ StepRecord_WriteEventByteSplitBit7:
 	xor	a, a	; F6823B  xor A,A
 	calr	StepRecord_SaveCursorToSlot	; F6823D  calr 0xf6c292
 	calr	BStore_ReadByteAtSongPosition	; F68240  calr 0xf6b8bd
-	ld	w, (4698:16)	; F68243  ld W,(0x125a)
+	ld	w, (SongEvent_Byte2:16)	; F68243  ld W,(0x125a)
 	and	w, 128	; F68247  and W,0x80
 	rlc	w	; F6824A  rlc 0x01,W
 	and	a, 254	; F6824D  and A,0xfe
@@ -2383,7 +2383,7 @@ StepRecord_WriteEventByteSplitBit7:
 	xor	d, d	; F68259  xor D,D
 	calr	TrackCursor_AdvanceBytes	; F6825B  calr 0xf6ba11
 	calr	BStore_ReadByteAtSongPosition	; F6825E  calr 0xf6b8bd
-	ld	w, (4698:16)	; F68261  ld W,(0x125a)
+	ld	w, (SongEvent_Byte2:16)	; F68261  ld W,(0x125a)
 	and	w, 127	; F68265  and W,0x7f
 	calr	BStore_WriteByteAtSongPosition	; F68268  calr 0xf6b9df
 	xor	a, a	; F6826B  xor A,A
@@ -2507,7 +2507,7 @@ StepRecordKind3Sub12_ButtonTable:
 SoftKeyCol1_StepRecordSub16:
 	ld	(4205:16), 1	; F6830B  ld (0x106d),0x01
 	pushw	wa	; F68310  push WA
-	ld	wa, (4786:16)	; F68311  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F68311  ld WA,(0x12b2)
 	ld	(4098:16), wa	; F68315  ld (0x1002),WA
 	popw	wa	; F68319  pop WA
 	bit	7, w	; F6831A  bit 0x07,W
@@ -2517,7 +2517,7 @@ SoftKeyCol1_StepRecordSub16:
 SoftKeyCol1_StepRecordSub16_Skip:
 	calr	StepRecord_CursorBackToMeasureStart	; F68324  calr 0xf6a1f1
 SoftKeyCol1_StepRecordSub16_Join:
-	ld	wa, (4786:16)	; F68327  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F68327  ld WA,(0x12b2)
 	cp	wa, (0x1002:16)	; F6832B  cp WA,(0x1002)
 	jr	nz, SoftKeyCol1_StepRecordSub16_Skip2	; F6832F  jr NZ,0xf6833a
 	calr	StepRecord_BuildCurrentMeasureRow	; F68331  calr 0xf683d4
@@ -2575,7 +2575,7 @@ StepRecord_BuildPrevMeasureRow:
 	and	(0x106c:16), 0xfc	; F68354  and (0x106c),0xfc
 	ldw	(3934:16), 0	; F68359  ld (0x0f5e),0x0000
 	calr	StepRecord_BlankPrevRowText	; F6835F  calr 0xf68575
-	ld	wa, (4786:16)	; F68362  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F68362  ld WA,(0x12b2)
 	cp	wa, 1:i3	; F68366  cp WA,1
 	jr	z, StepRecord_BuildPrevMeasureRow_Return	; F68368  jr Z,0xf683d3
 	dec	1, wa	; F6836A  dec 1,WA
@@ -2639,14 +2639,14 @@ StepRecord_BuildPrevMeasureRow_Return:
 StepRecord_BuildCurrentMeasureRow:
 	and	(0x106c:16), 0xf3	; F683D4  and (0x106c),0xf3
 	calr	StepRecord_LoadMeasureBeat	; F683D9  calr 0xf6a20f
-	ld	wa, (4786:16)	; F683DC  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F683DC  ld WA,(0x12b2)
 	cp	wa, 1000	; F683E0  cp WA,0x03e8
 	jr	c, StepRecord_BuildCurrentMeasureRow_Skip	; F683E4  jr C,0xf683e9
 	ldw	wa, 1000	; F683E6  ld WA,0x03e8
 StepRecord_BuildCurrentMeasureRow_Skip:
 	ld	(3936:16), wa	; F683E9  ld (0x0f60),WA
 	calr	StepRecord_BlankCurrentRowText	; F683ED  calr 0xf6857e
-	ld	wa, (4786:16)	; F683F0  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F683F0  ld WA,(0x12b2)
 	ld	(3216:16), wa	; F683F4  ld (0x0c90),WA
 	calr	StepRecord_TimeSigFromCurrentEntry	; F683F8  calr 0xf684fa
 	ld	a, (3676:16)	; F683FB  ld A,(0x0e5c)
@@ -2709,7 +2709,7 @@ StepRecord_BuildCurrentMeasureRow_Return:
 StepRecord_BuildNextMeasureRow:
 	and	(0x106c:16), 0xcf	; F68473  and (0x106c),0xcf
 	calr	StepRecord_BlankNextRowText	; F68478  calr 0xf68587
-	ld	wa, (4786:16)	; F6847B  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6847B  ld WA,(0x12b2)
 	inc	1, wa	; F6847F  inc 1,WA
 	ld	(3216:16), wa	; F68481  ld (0x0c90),WA
 	cp	wa, 1000	; F68485  cp WA,0x03e8
@@ -3609,7 +3609,7 @@ StepRecord_MainLoopService_Kind0:
 	cp	w, 0:i3	; F689E8  cp W,0
 	jr	nz, StepRecord_MainLoopService_Kind0_Return	; F689EA  jr NZ,0xf689f4
 	calr	sub_F68982_Nop	; F689EC  calr 0xf6b1e8
-	ld	(4800:16), 0	; F689EF  ld (0x12c0),0x00
+	ld	(StepEvent_RhythmControl:16), 0	; F689EF  ld (0x12c0),0x00
 StepRecord_MainLoopService_Kind0_Return:
 	ret	; F689F4  ret
 
@@ -3882,7 +3882,7 @@ StepRecord_CursorStep:
 	calr	StepRecord_AppendLatchedParamEvents	; F68B91  calr 0xf6a908
 	xor	a, a	; F68B94  xor A,A
 	calr	StepRecord_SaveCursorToSlot	; F68B96  calr 0xf6c292
-	pushw	(0x12b2:16)	; F68B99  pushw (0x12b2)
+	pushw	(StepRecord_Measure:16)	; F68B99  pushw (0x12b2)
 	pushw	(0x0e58:16)	; F68B9D  pushw (0x0e58)
 	ld	(3778:16), 0	; F68BA1  ld (0x0ec2),0x00
 	calr	StepRecord_ReadEventTickAtCursor	; F68BA6  calr 0xf68dbe
@@ -3938,7 +3938,7 @@ StepRecord_CursorStep_Skip7:
 	popw	de	; F68C29  pop DE
 	xor	a, a	; F68C2A  xor A,A
 	calr	StepRecord_SaveCursorToSlot	; F68C2C  calr 0xf6c292
-	pushw	(0x12b2:16)	; F68C2F  pushw (0x12b2)
+	pushw	(StepRecord_Measure:16)	; F68C2F  pushw (0x12b2)
 	pushw	(0x0e58:16)	; F68C33  pushw (0x0e58)
 	calr	TrackCursor_StepBackKeepBeatPosition	; F68C37  calr 0xf6b770
 	calr	BStore_ReadByteAtSongPosition	; F68C3A  calr 0xf6b8bd
@@ -3954,7 +3954,7 @@ StepRecord_CursorStep_Skip7:
 StepRecord_CursorStep_Skip8:
 	ld	(3667:16), 84	; F68C56  ld (0x0e53),0x54
 	popw	(0x0e58:16)	; F68C5B  popw (0x0e58)
-	popw	(0x12b2:16)	; F68C5F  popw (0x12b2)
+	popw	(StepRecord_Measure:16)	; F68C5F  popw (0x12b2)
 	xor	a, a	; F68C63  xor A,A
 	calr	StepRecord_RestoreCursorFromSlot	; F68C65  calr 0xf6c2e5
 	calr	StepRecord_ReturnToTrackKindPage	; F68C68  calr 0xf69c03
@@ -4075,7 +4075,7 @@ StepRecord_CursorStep_Skip16:
 StepRecord_CursorStep_Join4:
 	ld	(3667:16), e	; F68D4A  ld (0x0e53),E
 	popw	(0x0e58:16)	; F68D4E  popw (0x0e58)
-	popw	(0x12b2:16)	; F68D52  popw (0x12b2)
+	popw	(StepRecord_Measure:16)	; F68D52  popw (0x12b2)
 	xor	a, a	; F68D56  xor A,A
 	calr	StepRecord_RestoreCursorFromSlot	; F68D58  calr 0xf6c2e5
 	calr	StepRecord_ReturnToTrackKindPage	; F68D5B  calr 0xf69c03
@@ -5481,7 +5481,7 @@ StepRecord_ShowMasterTrackPage:
 StepRecord_ShowKind3Page:
 	ld	(UI_StepRecord_SubScreen:16), 15	; F69560  ld (0x0ef5),0x0f
 	call	sub_F6D5B5	; F69565  call 0xf6d5b5
-	ld	(4800:16), 0	; F69569  ld (0x12c0),0x00
+	ld	(StepEvent_RhythmControl:16), 0	; F69569  ld (0x12c0),0x00
 	call	MsgLine_TransportState_Plus4	; F6956E  call 0xf6d608
 	ret	; F69572  ret
 StepRecord_ShowKind3Page_Skip:
@@ -5702,13 +5702,13 @@ sub_F69697_Skip2:
 	ld	w, (31010:16)	; F696FC  ld W,(0x7922)
 	call	T_F413E4	; F69700  call 0xf413e4
 sub_F69697_Join:
-	ld	(4784:16), a	; F69704  ld (0x12b0),A
+	ld	(StepEvent_NoteNumber:16), a	; F69704  ld (0x12b0),A
 	ldfr_lerp	xiy, 0x38	; F69708  ld XDE3,XIY
 	lda	xiy, (xiy+hl)	; F6970B  lda XIY,XIY+HL
 	ld	a, (xiy+8)	; F69710  ld A,(XIY+0x08)
 	ldto_lerp	xiy, 0x38	; F69713  ld XIY,XDE3
 	ld	(xix+3), a	; F69716  ld (XIX+0x03),A
-	ld	(4783:16), a	; F69719  ld (0x12af),A
+	ld	(StepEvent_Velocity:16), a	; F69719  ld (0x12af),A
 	ld	a, (4839:16)	; F6971D  ld A,(0x12e7)
 	ld	(xix+4), a	; F69721  ld (XIX+0x04),A
 	ld	a, (4840:16)	; F69724  ld A,(0x12e8)
@@ -5984,7 +5984,7 @@ StepRecord_StepNoteNumber:
 	jr	z, StepRecord_StepNoteNumber_Skip	; F698C6  jr Z,0xf698ca
 	ld	a, w	; F698C8  ld A,W
 StepRecord_StepNoteNumber_Skip:
-	ld	(4784:16), a	; F698CA  ld (0x12b0),A
+	ld	(StepEvent_NoteNumber:16), a	; F698CA  ld (0x12b0),A
 	pushw	hl	; F698CE  push HL
 	calr	sub_F69938	; F698CF  calr 0xf69938
 	popw	hl	; F698D2  pop HL
@@ -5999,7 +5999,7 @@ StepRecord_StepNoteNumber_Skip:
 	jr	z, StepRecord_StepNoteNumber_Skip2	; F698EC  jr Z,0xf698f8
 	cp	a, 0:i3	; F698EE  cp A,0
 	jr	nz, StepRecord_StepNoteNumber_Skip2	; F698F0  jr NZ,0xf698f8
-	ld	(4784:16), l	; F698F2  ld (0x12b0),L
+	ld	(StepEvent_NoteNumber:16), l	; F698F2  ld (0x12b0),L
 	jr	StepRecord_StepNoteNumber_Join	; F698F6  jr T,0xf698fd
 StepRecord_StepNoteNumber_Skip2:
 	ld	w, a	; F698F8  ld W,A
@@ -6171,7 +6171,7 @@ StepRecord_StepTempo_Skip:
 	jr	ule, StepRecord_StepTempo_Join	; F699EC  jr ULE,0xf699f0
 	ld	wa, bc	; F699EE  ld WA,BC
 StepRecord_StepTempo_Join:
-	ld	(4108:16), wa	; F699F0  ld (0x100c),WA
+	ld	(StepRecord_Tempo:16), wa	; F699F0  ld (0x100c),WA
 	ld	bc, wa	; F699F4  ld BC,WA
 	and	a, 127	; F699F6  and A,0x7f
 	ld	w, a	; F699F9  ld W,A
@@ -6218,7 +6218,7 @@ StepRecordSub03_SoftKeyCol5:
 	cp	a, (0x0e53:16)	; F69A3A  cp A,(0x0e53)
 	jr	nz, StepRecordSub03_SoftKeyCol5_Return	; F69A3E  jr NZ,0xf69a66
 	push	xhl	; F69A40  push XHL
-	ld	xhl, 4793	; F69A41  ld XHL,0x000012b9
+	ld	xhl, StepEvent_ControlValue	; F69A41  ld XHL,0x000012b9
 	ld	(3824:16), xhl	; F69A46  ld (0x0ef0),XHL
 	pop	xhl	; F69A4A  pop XHL
 	cp	l, 210	; F69A4B  cp L,0xd2
@@ -6264,7 +6264,7 @@ StepRecord_ControlValueDown:
 	cp	a, (0x0e53:16)	; F69A83  cp A,(0x0e53)
 	jr	nz, StepRecord_ControlValueDown_Return	; F69A87  jr NZ,0xf69aaf
 	push	xhl	; F69A89  push XHL
-	ld	xhl, 4793	; F69A8A  ld XHL,0x000012b9
+	ld	xhl, StepEvent_ControlValue	; F69A8A  ld XHL,0x000012b9
 	ld	(3824:16), xhl	; F69A8F  ld (0x0ef0),XHL
 	pop	xhl	; F69A93  pop XHL
 	cp	l, 210	; F69A94  cp L,0xd2
@@ -6315,7 +6315,7 @@ StepRecordSub00_SoftKeyCol3:
 	cp	a, (0x0e53:16)	; F69ADD  cp A,(0x0e53)
 	jr	nz, StepRecordSub00_SoftKeyCol3_Return	; F69AE1  jr NZ,0xf69afe
 	push	xhl	; F69AE3  push XHL
-	ld	xhl, 4783	; F69AE4  ld XHL,0x000012af
+	ld	xhl, StepEvent_Velocity	; F69AE4  ld XHL,0x000012af
 	ld	(3824:16), xhl	; F69AE9  ld (0x0ef0),XHL
 	pop	xhl	; F69AED  pop XHL
 	calr	StepRecord_AdjustEventByte	; F69AEE  calr 0xf69b40
@@ -6353,7 +6353,7 @@ StepRecord_VelocityDown:
 	cp	a, (0x0e53:16)	; F69B1E  cp A,(0x0e53)
 	jr	nz, StepRecord_VelocityDown_Return	; F69B22  jr NZ,0xf69b3f
 	push	xhl	; F69B24  push XHL
-	ld	xhl, 4783	; F69B25  ld XHL,0x000012af
+	ld	xhl, StepEvent_Velocity	; F69B25  ld XHL,0x000012af
 	ld	(3824:16), xhl	; F69B2A  ld (0x0ef0),XHL
 	pop	xhl	; F69B2E  pop XHL
 	calr	StepRecord_AdjustEventByte	; F69B2F  calr 0xf69b40
@@ -6429,11 +6429,11 @@ StepRecord_AdjustEvent14BitValue:
 	xor	d, d	; F69B87  xor D,D
 	calr	TrackCursor_AdvanceBytes	; F69B89  calr 0xf6ba11
 	calr	BStore_ReadByteAtSongPosition	; F69B8C  calr 0xf6b8bd
-	ld	(4793:16), a	; F69B8F  ld (0x12b9),A
+	ld	(StepEvent_ControlValue:16), a	; F69B8F  ld (0x12b9),A
 	call	BStore_ReadByteAtSongPositionPlus1	; F69B93  call 0xf6b8f1
-	ld	(4843:16), a	; F69B97  ld (0x12eb),A
+	ld	(StepEvent_PitchBendMsb:16), a	; F69B97  ld (0x12eb),A
 	ld	w, a	; F69B9B  ld W,A
-	ld	a, (4793:16)	; F69B9D  ld A,(0x12b9)
+	ld	a, (StepEvent_ControlValue:16)	; F69B9D  ld A,(0x12b9)
 	and	a, 127	; F69BA1  and A,0x7f
 	and	w, 127	; F69BA4  and W,0x7f
 	rrc	w	; F69BA7  rrc 0x01,W
@@ -6456,13 +6456,13 @@ StepRecord_AdjustEvent14BitValue:
 StepRecord_AdjustEvent14BitValue_Skip:
 	ld	bc, wa	; F69BD1  ld BC,WA
 	and	a, 127	; F69BD3  and A,0x7f
-	ld	(4793:16), a	; F69BD6  ld (0x12b9),A
+	ld	(StepEvent_ControlValue:16), a	; F69BD6  ld (0x12b9),A
 	rlc	c	; F69BDA  rlc 0x01,C
 	and	c, 1	; F69BDD  and C,0x01
 	sla	w, 1	; F69BE0  sla 0x01,W
 	and	w, 126	; F69BE3  and W,0x7e
 	or	c, w	; F69BE6  or C,W
-	ld	(4843:16), c	; F69BE8  ld (0x12eb),C
+	ld	(StepEvent_PitchBendMsb:16), c	; F69BE8  ld (0x12eb),C
 	ld	w, a	; F69BEC  ld W,A
 	pushw	bc	; F69BEE  push BC
 	calr	BStore_WriteByteAtSongPosition	; F69BEF  calr 0xf6b9df
@@ -6540,7 +6540,7 @@ StepRecord_TrackKindPageReturnHandlers:
 ;   screen 0 only rewrites its message line (sub_F6D710: measure, note/velocity, length), else sub-screen := 0 and
 ;   sub_F6D70C. Basis: table index + body. (notes/naming-pilot-2026-10-06/proposals_wave11_t11.json)
 StepRecord_ReturnToSongTrackPage:
-	ld	(4783:16), 255	; F69C34  ld (0x12af),0xff
+	ld	(StepEvent_Velocity:16), 255	; F69C34  ld (0x12af),0xff
 	cp	(UI_StepRecord_SubScreen:16), 0x00	; F69C39  cp (0x0ef5),0x00
 	jr	nz, StepRecord_ReturnToSongTrackPage_Skip	; F69C3E  jr NZ,0xf69c46
 	call	sub_F6D710	; F69C40  call 0xf6d710
@@ -6564,7 +6564,7 @@ StepRecord_ReturnToMasterTrackPage_Skip:
 StepRecord_ReturnToMasterTrackPage_Return:
 	ret	; F69C66  ret
 MsgLine_TransportState_Plus10_Call:
-	ld	(4800:16), 0	; F69C67  ld (0x12c0),0x00
+	ld	(StepEvent_RhythmControl:16), 0	; F69C67  ld (0x12c0),0x00
 	call	MsgLine_TransportState_Plus10	; F69C6C  call 0xf6d642
 	ret	; F69C70  ret
 ; StepRecord_ReturnToKind3Page: StepRecord_TrackKindPageReturnHandlers[3] (track kind 3, never stored): sub-screen :=
@@ -6577,7 +6577,7 @@ StepRecord_ReturnToKind3Page:
 	call	sub_F6D5B5	; F69C7D  call 0xf6d5b5
 StepRecord_ReturnToKind3Page_Skip:
 	call	MsgLine_PutMeasureDigits	; F69C81  call 0xf6d5ba
-	ld	(4800:16), 0	; F69C85  ld (0x12c0),0x00
+	ld	(StepEvent_RhythmControl:16), 0	; F69C85  ld (0x12c0),0x00
 	call	MsgLine_TransportState_Plus4	; F69C8A  call 0xf6d608
 	ret	; F69C8E  ret
 
@@ -6689,7 +6689,7 @@ sub_F69CB4_Join2:
 	calr	sub_F69DBD	; F69D68  calr 0xf69dbd
 	call	StepRecord_PaintPositionMarker_Call	; F69D6B  call 0xf6d6d6
 	call	MsgLine_MeasureNumber	; F69D6F  call 0xf6d6dc
-	ld	wa, (4786:16)	; F69D73  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F69D73  ld WA,(0x12b2)
 	cp	wa, 1000	; F69D77  cp WA,0x03e8
 	jr	c, sub_F69CB4_Skip2	; F69D7B  jr C,0xf69d80
 	ldw	wa, 1000	; F69D7D  ld WA,0x03e8
@@ -6931,11 +6931,11 @@ sub_F69F5B:
 	ld	(3940:16), a	; F69F7E  ld (0x0f64),A
 	jrl	sub_F69F5B_Return	; F69F82  jrl T,0xf6a096
 sub_F69F5B_Skip:
-	cpw	(0x12b2:16), 0x0001	; F69F85  cp (0x12b2),0x0001
+	cpw	(StepRecord_Measure:16), 0x0001	; F69F85  cp (0x12b2),0x0001
 	jrl	z, sub_F69F5B_Skip7	; F69F8B  jrl Z,0xf6a02f
 	cp	(0x0e58:16), 0x04	; F69F8E  cp (0x0e58),0x04
 	jr	c, sub_F69F5B_Skip4	; F69F93  jr C,0xf69fdf
-	ld	wa, (4786:16)	; F69F95  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F69F95  ld WA,(0x12b2)
 	ld	(3216:16), wa	; F69F99  ld (0x0c90),WA
 	calr	sub_F6EC6A	; F69F9D  calr 0xf6ec6a
 	cp	(0x0e63:16), 0x02	; F69FA0  cp (0x0e63),0x02
@@ -6950,7 +6950,7 @@ sub_F69F5B_Skip2:
 	ld	(4054:16), iy	; F69FBF  ld (0x0fd6),IY
 	ld	iy, (BStore_CursorBlock:16)	; F69FC3  ld IY,(0x345c)
 	ld	(4052:16), iy	; F69FC7  ld (0x0fd4),IY
-	ld	iy, (4786:16)	; F69FCB  ld IY,(0x12b2)
+	ld	iy, (StepRecord_Measure:16)	; F69FCB  ld IY,(0x12b2)
 	cp	iy, 1000	; F69FCF  cp IY,0x03e8
 	jr	c, sub_F69F5B_Skip3	; F69FD3  jr C,0xf69fd8
 	ldw	iy, 1000	; F69FD5  ld IY,0x03e8
@@ -6958,7 +6958,7 @@ sub_F69F5B_Skip3:
 	ld	(3934:16), iy	; F69FD8  ld (0x0f5e),IY
 	jrl	sub_F69F5B_Join	; F69FDC  jrl T,0xf6a086
 sub_F69F5B_Skip4:
-	ld	wa, (4786:16)	; F69FDF  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F69FDF  ld WA,(0x12b2)
 	dec	1, wa	; F69FE3  dec 1,WA
 	ld	(3216:16), wa	; F69FE5  ld (0x0c90),WA
 	calr	sub_F6EC6A	; F69FE9  calr 0xf6ec6a
@@ -6991,7 +6991,7 @@ sub_F69F5B_Skip7:
 	jrl	sub_F69F5B_Return	; F6A03C  jrl T,0xf6a096
 sub_F69F5B_Skip8:
 	ld	(3940:16), 4	; F6A03F  ld (0x0f64),0x04
-	ld	wa, (4786:16)	; F6A044  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6A044  ld WA,(0x12b2)
 	ld	(3216:16), wa	; F6A048  ld (0x0c90),WA
 	calr	sub_F6EC6A	; F6A04C  calr 0xf6ec6a
 	cp	(0x0e63:16), 0x02	; F6A04F  cp (0x0e63),0x02
@@ -7005,7 +7005,7 @@ sub_F69F5B_Skip9:
 	ld	(4054:16), iy	; F6A069  ld (0x0fd6),IY
 	ld	iy, (BStore_CursorBlock:16)	; F6A06D  ld IY,(0x345c)
 	ld	(4052:16), iy	; F6A071  ld (0x0fd4),IY
-	ld	iy, (4786:16)	; F6A075  ld IY,(0x12b2)
+	ld	iy, (StepRecord_Measure:16)	; F6A075  ld IY,(0x12b2)
 	cp	iy, 1000	; F6A079  cp IY,0x03e8
 	jr	c, sub_F69F5B_Skip10	; F6A07D  jr C,0xf6a082
 	ldw	iy, 1000	; F6A07F  ld IY,0x03e8
@@ -7054,7 +7054,7 @@ sub_F69F5B_Skip11:
 	cp	(0x0e59:16), 0x04	; F6A0C8  cp (0x0e59),0x04
 	jrl	ugt, sub_F69F5B_Skip19	; F6A0CD  jrl UGT,0xf6a154
 sub_F69F5B_Skip12:
-	ld	wa, (4786:16)	; F6A0D0  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6A0D0  ld WA,(0x12b2)
 	inc	1, wa	; F6A0D4  inc 1,WA
 	ld	(3216:16), wa	; F6A0D6  ld (0x0c90),WA
 	cp	wa, 1000	; F6A0DA  cp WA,0x03e8
@@ -7108,7 +7108,7 @@ sub_F69F5B_Skip19:
 	ld	a, (3673:16)	; F6A154  ld A,(0x0e59)
 	sub	a, 4	; F6A158  sub A,0x04
 	ld	(3942:16), a	; F6A15B  ld (0x0f66),A
-	ld	wa, (4786:16)	; F6A15F  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6A15F  ld WA,(0x12b2)
 	ld	(3216:16), wa	; F6A163  ld (0x0c90),WA
 	cp	wa, 1000	; F6A167  cp WA,0x03e8
 	jr	c, sub_F69F5B_Skip20	; F6A16B  jr C,0xf6a170
@@ -7174,7 +7174,7 @@ StepRecordSub16_SoftKeyCol1_Loop:
 	calr	BStore_ReadByteAtSongPositionPlus1	; F6A1DF  calr 0xf6b8f1
 	cp	a, 132	; F6A1E2  cp A,0x84
 	jr	nz, StepRecordSub16_SoftKeyCol1_Return	; F6A1E5  jr NZ,0xf6a1f0
-	ld	(4800:16), 9	; F6A1E7  ld (0x12c0),0x09
+	ld	(StepEvent_RhythmControl:16), 9	; F6A1E7  ld (0x12c0),0x09
 	call	MsgLine_TransportState_Plus4	; F6A1EC  call 0xf6d608
 StepRecordSub16_SoftKeyCol1_Return:
 	ret	; F6A1F0  ret
@@ -7248,7 +7248,7 @@ StepRecord_LoadMeasureBeat_Skip2:
 	call	T_Seq_BeatsToMeasureAndBeat	; F6A245  call 0xf40c60
 	cp	(BStore_ErrorCode:16), 0x00	; F6A249  cp (0x0d4a),0x00
 	jr	nz, StepRecord_LoadMeasureBeat_Skip4	; F6A24E  jr NZ,0xf6a264
-	ld	(4786:16), de	; F6A250  ld (0x12b2),DE
+	ld	(StepRecord_Measure:16), de	; F6A250  ld (0x12b2),DE
 	ld	(3672:16), c	; F6A254  ld (0x0e58),C
 	ld	(3673:16), a	; F6A258  ld (0x0e59),A
 	ret	; F6A25C  ret
@@ -7429,7 +7429,7 @@ sub_F6A344:
 sub_F6A304_Skip:
 	xor	a, a	; F6A34F  xor A,A
 	ld	(3831:16), a	; F6A351  ld (0x0ef7),A
-	ld	(4792:16), a	; F6A355  ld (0x12b8),A
+	ld	(StepEvent_ControlType:16), a	; F6A355  ld (0x12b8),A
 	ld	xiy, 3726	; F6A359  ld XIY,0x00000e8e
 	call	T_SeqBufRing_Get	; F6A35E  call 0xf41d84
 	ld	(xiy), a	; F6A362  ld (XIY),A
@@ -7815,7 +7815,7 @@ sub_F6A5FF:
 	ld	w, l	; F6A633  ld W,L
 	rrc	w	; F6A635  rrc 0x01,W
 	and	w, 1	; F6A638  and W,0x01
-	ld	(4108:16), wa	; F6A63B  ld (0x100c),WA
+	ld	(StepRecord_Tempo:16), wa	; F6A63B  ld (0x100c),WA
 	or	(0x0e4e:16), 0x10	; F6A63F  or (0x0e4e),0x10
 	ld	(3796:16), 4	; F6A644  ld (0x0ed4),0x04
 	ld	xhl, UI_StepRecord_SubScreen	; F6A649  ld XHL,0x00000ef5
@@ -7847,7 +7847,7 @@ sub_F6A5FF_Join:
 ; --------------------------------------------------------------------------
 sub_F6A674:
 	ld	a, 134:opc	; F6A674  ld A,0x86
-	ld	(4800:16), 2	; F6A676  ld (0x12c0),0x02
+	ld	(StepEvent_RhythmControl:16), 2	; F6A676  ld (0x12c0),0x02
 	jr	sub_F6A674_Join	; F6A67B  jr T,0xf6a684
 
 ; --------------------------------------------------------------------------
@@ -7863,7 +7863,7 @@ sub_F6A674:
 ; --------------------------------------------------------------------------
 sub_F6A67D:
 	ld	a, 133:opc	; F6A67D  ld A,0x85
-	ld	(4800:16), 1	; F6A67F  ld (0x12c0),0x01
+	ld	(StepEvent_RhythmControl:16), 1	; F6A67F  ld (0x12c0),0x01
 sub_F6A674_Join:
 	call	sub_F6A67D_Nop	; F6A684  call 0xf6a6bb
 	cp	c, 0:i3	; F6A688  cp C,0
@@ -7992,10 +7992,10 @@ sub_F6A704_Skip:
 	ld	(xiy+1), a	; F6A727  ld (XIY+0x01),A
 	call	T_SeqBufRing_Get	; F6A72A  call 0xf41d84
 	ld	(xiy+2), a	; F6A72E  ld (XIY+0x02),A
-	ld	(4793:16), a	; F6A731  ld (0x12b9),A
+	ld	(StepEvent_ControlValue:16), a	; F6A731  ld (0x12b9),A
 	call	T_SeqBufRing_Get	; F6A735  call 0xf41d84
 	ld	(3796:16), 3	; F6A739  ld (0x0ed4),0x03
-	ld	(4792:16), 2	; F6A73E  ld (0x12b8),0x02
+	ld	(StepEvent_ControlType:16), 2	; F6A73E  ld (0x12b8),0x02
 	cp	(UI_StepRecord_SubScreen:16), 0x02	; F6A743  cp (0x0ef5),0x02
 	jr	nz, sub_F6A704_Skip2	; F6A748  jr NZ,0xf6a750
 	call	MsgLine_Control	; F6A74A  call 0xf6d447
@@ -8034,13 +8034,13 @@ sub_F6A75F_Skip:
 	ld	(xiy+1), a	; F6A782  ld (XIY+0x01),A
 	call	T_SeqBufRing_Get	; F6A785  call 0xf41d84
 	ld	(xiy+2), a	; F6A789  ld (XIY+0x02),A
-	ld	(4793:16), a	; F6A78C  ld (0x12b9),A
+	ld	(StepEvent_ControlValue:16), a	; F6A78C  ld (0x12b9),A
 	call	T_SeqBufRing_Get	; F6A790  call 0xf41d84
 	ld	(xiy+3), a	; F6A794  ld (XIY+0x03),A
-	ld	(4843:16), a	; F6A797  ld (0x12eb),A
+	ld	(StepEvent_PitchBendMsb:16), a	; F6A797  ld (0x12eb),A
 	call	T_SeqBufRing_Get	; F6A79B  call 0xf41d84
 	ld	(3796:16), 4	; F6A79F  ld (0x0ed4),0x04
-	ld	(4792:16), 1	; F6A7A4  ld (0x12b8),0x01
+	ld	(StepEvent_ControlType:16), 1	; F6A7A4  ld (0x12b8),0x01
 	cp	(UI_StepRecord_SubScreen:16), 0x02	; F6A7A9  cp (0x0ef5),0x02
 	jr	nz, sub_F6A75F_Skip2	; F6A7AE  jr NZ,0xf6a7b6
 	call	MsgLine_Control	; F6A7B0  call 0xf6d447
@@ -8109,7 +8109,7 @@ StepRecord_AppendBeatMarks_Return:
 ;   (0x12AE) = 0/1/2/3, as (0x12E8) : (0x12E7) -- bytes 5/4 of the note events the note-input arm writes. Basis:
 ;   callers + table + body. (notes/naming-pilot-2026-10-06/proposals_wave6_u.json)
 StepRecord_CalcStepAndNoteLength:
-	ld	l, (4780:16)	; F6A7EB  ld L,(0x12ac)
+	ld	l, (StepRecord_Length:16)	; F6A7EB  ld L,(0x12ac)
 	cp	l, 0:i3	; F6A7EF  cp L,0
 	jr	nz, StepRecord_CalcStepAndNoteLength_Skip	; F6A7F1  jr NZ,0xf6a7f5
 	ld	l, 6:opc	; F6A7F3  ld L,0x06
@@ -8119,7 +8119,7 @@ StepRecord_CalcStepAndNoteLength_Skip:
 	push	xix	; F6A7FA  push XIX
 	ld	xix, StepLengthTicks	; F6A7FB  ld XIX,0x00f6a879
 	ld	de, (xix+hl)	; F6A800  ld DE,(XIX+HL)
-	ld	l, (4781:16)	; F6A805  ld L,(0x12ad)
+	ld	l, (StepRecord_TieLength:16)	; F6A805  ld L,(0x12ad)
 	sla	l, 1	; F6A809  sla 0x01,L
 	ld	bc, (xix+hl)	; F6A80C  ld BC,(XIX+HL)
 	pop	xix	; F6A811  pop XIX
@@ -8129,7 +8129,7 @@ StepRecord_CalcStepAndNoteLength_Skip:
 	div	wa, l	; F6A818  div WA,L
 	ld	(4841:16), w	; F6A81A  ld (0x12e9),W
 	ld	(4842:16), a	; F6A81E  ld (0x12ea),A
-	ld	a, (4782:16)	; F6A822  ld A,(0x12ae)
+	ld	a, (StepRecord_Phrasing:16)	; F6A822  ld A,(0x12ae)
 	cp	a, 1:i3	; F6A826  cp A,1
 	jr	nz, StepRecord_CalcStepAndNoteLength_Skip2	; F6A828  jr NZ,0xf6a83e
 	sla	de, 2	; F6A82A  sla 0x02,DE
@@ -8457,9 +8457,9 @@ StepRecord_OnEnter:		; <- T_StepRecord_OnEnter
 ;   measure/beat. StepRecord_OnEnter falls into it. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave6_u.json)
 StepRecord_BeginSession:
-	ld	(4780:16), 4	; F6A9E3  ld (0x12ac),0x04
-	ld	(4781:16), 0	; F6A9E8  ld (0x12ad),0x00
-	ld	(4782:16), 1	; F6A9ED  ld (0x12ae),0x01
+	ld	(StepRecord_Length:16), 4	; F6A9E3  ld (0x12ac),0x04
+	ld	(StepRecord_TieLength:16), 0	; F6A9E8  ld (0x12ad),0x00
+	ld	(StepRecord_Phrasing:16), 1	; F6A9ED  ld (0x12ae),0x01
 	calr	BStore_ResetAllocHeapBase	; F6A9F2  calr 0xf6ad24
 	calr	StepRecord_SetEntryAndTrackKind	; F6A9F5  calr 0xf6ac7e
 	ld	a, (UI_PartIndex:16)	; F6A9F8  ld A,(0x2250)
@@ -8593,7 +8593,7 @@ sub_F6A9E3_Skip11:
 	and	(xiy), 0xdf	; F6AB50  and (XIY),0xdf
 	calr	StepRecord_LoadMeasureBeat	; F6AB53  calr 0xf6a20f
 	set	1, (0x0ed5:16)	; F6AB56  set 1,(0x0ed5)
-	ld	(4800:16), 0	; F6AB5A  ld (0x12c0),0x00
+	ld	(StepEvent_RhythmControl:16), 0	; F6AB5A  ld (0x12c0),0x00
 	cp	(0x126b:16), 0x00	; F6AB5F  cp (0x126b),0x00
 	jr	nz, sub_F6A9E3_Skip12	; F6AB64  jr NZ,0xf6ab69
 	calr	sub_F6ABB6	; F6AB66  calr 0xf6abb6
@@ -9110,9 +9110,9 @@ StepRecord_ResetSessionState:
 	ld	(3668:16), wa	; F6ADDC  ld (0x0e54),WA
 	ld	(3670:16), wa	; F6ADE0  ld (0x0e56),WA
 	ld	(3667:16), a	; F6ADE4  ld (0x0e53),A
-	ld	(4786:16), wa	; F6ADE8  ld (0x12b2),WA
+	ld	(StepRecord_Measure:16), wa	; F6ADE8  ld (0x12b2),WA
 	ld	(4785:16), a	; F6ADEC  ld (0x12b1),A
-	ld	(4800:16), a	; F6ADF0  ld (0x12c0),A
+	ld	(StepEvent_RhythmControl:16), a	; F6ADF0  ld (0x12c0),A
 	ld	(3686:16), a	; F6ADF4  ld (0x0e66),A
 	ld	(3685:16), a	; F6ADF8  ld (0x0e65),A
 	ld	(3674:16), a	; F6ADFC  ld (0x0e5a),A
@@ -9137,7 +9137,7 @@ StepRecord_ResetSessionState:
 	djnz16	bc, -6	; F6AE40  djnz BC,0xf6ae3d
 	pop	xix	; F6AE43  pop XIX
 	popw	bc	; F6AE44  pop BC
-	ld	(4788:16), 32	; F6AE45  ld (0x12b4),0x20
+	ld	(MsgLine_MeasureSuffix:16), 32	; F6AE45  ld (0x12b4),0x20
 	ret	; F6AE4A  ret
 
 ; --------------------------------------------------------------------------
@@ -9722,7 +9722,7 @@ sub_F6A9E3_Nop:
 ;   UI_Request_Hi |= 0x02. After STEP RECORD sub 17's col 6/7 edits, and when StepRecord_Tick's (0x0E68) countdown expires.
 ;   Basis: callers + body. (notes/naming-pilot-2026-10-06/proposals_wave2_f.json)
 StepRecord_ClearMsgLineField:
-	ld	(4800:16), 0	; F6B1EA  ld (0x12c0),0x00
+	ld	(StepEvent_RhythmControl:16), 0	; F6B1EA  ld (0x12c0),0x00
 	call	MsgLine_TransportState_Plus4	; F6B1EF  call 0xf6d608
 	ld	(UI_Request:16), 8	; F6B1F3  ld (0x2070),0x08
 	or	(UI_Request_Hi:16), 0x02	; F6B1F8  or (0x2071),0x02
@@ -11276,7 +11276,7 @@ sub_F6BBFC_Join:
 	jr	sub_F6BBFC_Join	; F6BC18  jr T,0xf6bc06
 sub_F6BBFC_Skip:
 	ld	xiy, 3680	; F6BC1A  ld XIY,0x00000e60
-	ld	xix, 4800	; F6BC1F  ld XIX,0x000012c0
+	ld	xix, StepEvent_RhythmControl	; F6BC1F  ld XIX,0x000012c0
 	cp	a, 130	; F6BC24  cp A,0x82
 	jr	z, sub_F6BBFC_Skip5	; F6BC27  jr Z,0xf6bc66
 	cp	a, 132	; F6BC29  cp A,0x84
@@ -11406,7 +11406,7 @@ sub_F6BC89_Skip4:
 	jrl	nz, sub_F6BC89_Loop	; F6BD00  jrl NZ,0xf6bd06
 	jrl	sub_F6BFF2_Join	; F6BD03  jrl T,0xf6c186
 sub_F6BC89_Loop:
-	ld	(4792:16), 0	; F6BD06  ld (0x12b8),0x00
+	ld	(StepEvent_ControlType:16), 0	; F6BD06  ld (0x12b8),0x00
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6BD0B  cp (0x0ef5),0x01
 	jr	nz, sub_F6BC89_Skip5	; F6BD10  jr NZ,0xf6bd17
 	call	MsgLine_Control_Cleared	; F6BD12  call 0xf6d410
@@ -11436,9 +11436,9 @@ sub_F6BC89_Skip7:
 	ld	w, (31010:16)	; F6BD4D  ld W,(0x7922)
 	call	T_F413E4	; F6BD51  call 0xf413e4
 sub_F6BC89_Join:
-	ld	(4784:16), a	; F6BD55  ld (0x12b0),A
+	ld	(StepEvent_NoteNumber:16), a	; F6BD55  ld (0x12b0),A
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6BD59  calr 0xf6b95f
-	ld	(4783:16), a	; F6BD5C  ld (0x12af),A
+	ld	(StepEvent_Velocity:16), a	; F6BD5C  ld (0x12af),A
 	cp	(UI_StepRecord_SubScreen:16), 0x00	; F6BD60  cp (0x0ef5),0x00
 	jr	nz, sub_F6BC89_Skip8	; F6BD65  jr NZ,0xf6bd6d
 	call	sub_F6D710	; F6BD67  call 0xf6d710
@@ -11512,7 +11512,7 @@ sub_F6BC89_Skip15:
 	and	h, 4	; F6BE19  and H,0x04
 	sla	h, 5	; F6BE1C  sla 0x05,H
 	or	a, h	; F6BE1F  or A,H
-	ld	(4696:16), a	; F6BE21  ld (0x1258),A
+	ld	(SongEvent_Byte0:16), a	; F6BE21  ld (0x1258),A
 	cp	a, 72	; F6BE25  cp A,0x48
 	jrl	nz, sub_F6BC89_Skip16	; F6BE28  jrl NZ,0xf6be31
 	jr	sub_F6BC89_Loop2	; F6BE2B  jr T,0xf6be09
@@ -11520,22 +11520,22 @@ sub_F6BC89_Skip15:
 	ret	; F6BE30  ret
 sub_F6BC89_Skip16:
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6BE31  calr 0xf6b95f
-	ld	(4697:16), a	; F6BE34  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6BE34  ld (0x1259),A
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6BE38  calr 0xf6b95f
 	ld	l, (3786:16)	; F6BE3B  ld L,(0x0eca)
 	ld	h, l	; F6BE3F  ld H,L
 	and	l, 1	; F6BE41  and L,0x01
 	rrc	l	; F6BE44  rrc 0x01,L
 	or	a, l	; F6BE47  or A,L
-	ld	(4698:16), a	; F6BE49  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6BE49  ld (0x125a),A
 	push	xhl	; F6BE4D  push XHL
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6BE4E  calr 0xf6b95f
 	pop	xhl	; F6BE51  pop XHL
 	and	h, 2	; F6BE52  and H,0x02
 	.byte 0xCE, 0xE9, 0x02	; F6BE55  rrc 0x02,H   [llvm-mc cannot encode this]
 	or	a, h	; F6BE58  or A,H
-	ld	(4708:16), a	; F6BE5A  ld (0x1264),A
-	ld	a, (4696:16)	; F6BE5E  ld A,(0x1258)
+	ld	(SongEvent_Byte3:16), a	; F6BE5A  ld (0x1264),A
+	ld	a, (SongEvent_Byte0:16)	; F6BE5E  ld A,(0x1258)
 	cp	a, 0:i3	; F6BE62  cp A,0
 	jr	c, sub_F6BC89_Skip17	; F6BE64  jr C,0xf6bea2
 	cp	a, 31	; F6BE66  cp A,0x1f
@@ -11619,7 +11619,7 @@ sub_F6BC89_Skip31:
 	call	MsgLine_PartRtCtrlY	; F6BF33  call 0xf6e95f
 	ret	; F6BF37  ret
 sub_F6BC89_Skip32:
-	ld	a, (4697:16)	; F6BF38  ld A,(0x1259)
+	ld	a, (SongEvent_Byte1:16)	; F6BF38  ld A,(0x1259)
 	cp	a, 3:i3	; F6BF3C  cp A,3
 	jr	z, sub_F6BC89_Skip33	; F6BF3E  jr Z,0xf6bf4b
 	cp	a, 1:i3	; F6BF40  cp A,1
@@ -11628,10 +11628,10 @@ sub_F6BC89_Skip32:
 	jr	z, sub_F6BC89_Skip33	; F6BF46  jr Z,0xf6bf4b
 	jrl	sub_F6BC89_Loop2	; F6BF48  jrl T,0xf6be09
 sub_F6BC89_Skip33:
-	ld	a, (4698:16)	; F6BF4B  ld A,(0x125a)
-	cp	(0x1258:16), 0x91	; F6BF4F  cp (0x1258),0x91
+	ld	a, (SongEvent_Byte2:16)	; F6BF4B  ld A,(0x125a)
+	cp	(SongEvent_Byte0:16), 0x91	; F6BF4F  cp (0x1258),0x91
 	jr	nz, sub_F6BC89_Skip35	; F6BF54  jr NZ,0xf6bf78
-	ld	l, (4697:16)	; F6BF56  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6BF56  ld L,(0x1259)
 	cp	l, 1:i3	; F6BF5A  cp L,1
 	jr	z, sub_F6BC89_Skip34	; F6BF5C  jr Z,0xf6bf65
 	jrl	sub_F6BC89_Loop2	; F6BF5E  jrl T,0xf6be09
@@ -11641,14 +11641,14 @@ sub_F6BC89_Skip34:
 	calr	MsgLine_NoteName_Veneer	; F6BF65  calr 0xf67458
 	ret	; F6BF68  ret
 	jrl	sub_F6BC89_Loop2	; F6BF69  jrl T,0xf6be09
-	bit	7, (0x1264:16)	; F6BF6C  bit 7,(0x1264)
+	bit	7, (SongEvent_Byte3:16)	; F6BF6C  bit 7,(0x1264)
 	jrl	z, sub_F6BC89_Loop2	; F6BF70  jrl Z,0xf6be09
 	call	MsgLine_TotalReverb_Veneer	; F6BF73  call 0xf67468
 	ret	; F6BF77  ret
 sub_F6BC89_Skip35:
-	cp	(0x1258:16), 0x98	; F6BF78  cp (0x1258),0x98
+	cp	(SongEvent_Byte0:16), 0x98	; F6BF78  cp (0x1258),0x98
 	jr	nz, sub_F6BC89_Join2	; F6BF7D  jr NZ,0xf6bf91
-	ld	l, (4697:16)	; F6BF7F  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6BF7F  ld L,(0x1259)
 	cp	l, 1:i3	; F6BF83  cp L,1
 	jr	z, sub_F6BC89_Skip36	; F6BF85  jr Z,0xf6bf89
 	jr	sub_F6BC89_Join2	; F6BF87  jr T,0xf6bf91
@@ -11659,7 +11659,7 @@ sub_F6BC89_Skip36:
 sub_F6BC89_Join2:
 	jrl	sub_F6BC89_Loop2	; F6BF91  jrl T,0xf6be09
 sub_F6BC89_Skip37:
-	ld	a, (4696:16)	; F6BF94  ld A,(0x1258)
+	ld	a, (SongEvent_Byte0:16)	; F6BF94  ld A,(0x1258)
 	cp	a, 144	; F6BF98  cp A,0x90
 	jrl	z, sub_F6BFF2_Skip17	; F6BF9B  jrl Z,0xf6c0bd
 	cp	a, 80	; F6BF9E  cp A,0x50
@@ -11673,7 +11673,7 @@ sub_F6BC89_Skip37:
 sub_F6BC89_Skip38:
 	jrl	sub_F6BC89_Loop2	; F6BFB3  jrl T,0xf6be09
 sub_F6BC89_Skip39:
-	ld	a, (4697:16)	; F6BFB6  ld A,(0x1259)
+	ld	a, (SongEvent_Byte1:16)	; F6BFB6  ld A,(0x1259)
 	cp	a, 3:i3	; F6BFBA  cp A,3
 	jr	z, MsgLine_PartVolume_Call	; F6BFBC  jr Z,0xf6bff2
 	cp	a, 4:i3	; F6BFBE  cp A,4
@@ -11713,7 +11713,7 @@ MsgLine_PartVolume_Call:
 	calr	MsgLine_PartVolume_Veneer	; F6BFF2  calr 0xf67450
 	ret	; F6BFF5  ret
 MsgLine_PartVolume_Call_Skip:
-	ld	a, (4708:16)	; F6BFF6  ld A,(0x1264)
+	ld	a, (SongEvent_Byte3:16)	; F6BFF6  ld A,(0x1264)
 	bit	6, a	; F6BFFA  bit 0x06,A
 	jr	nz, MsgLine_PartVolume_Call_Skip2	; F6BFFD  jr NZ,0xf6c00c
 	jrl	sub_F6BC89_Loop2	; F6BFFF  jrl T,0xf6be09
@@ -11750,7 +11750,7 @@ MsgLine_PartVolume_Call_Skip8:
 	ret	; F6C04F  ret
 sub_F6BFF2_Entry:
 	ldfr_berp	a, 0x3c	; F6C050  ld RL3,A
-	ld	a, (4708:16)	; F6C053  ld A,(0x1264)
+	ld	a, (SongEvent_Byte3:16)	; F6C053  ld A,(0x1264)
 	and	a, 192	; F6C057  and A,0xc0
 	ldto_berp	a, 0x3c	; F6C05A  ld A,RL3
 	jrl	z, sub_F6BC89_Loop2	; F6C05D  jrl Z,0xf6be09
@@ -11774,7 +11774,7 @@ sub_F6BFF2_Skip13:
 	jrl	sub_F6BC89_Loop2	; F6C07F  jrl T,0xf6be09
 	call	MsgLine_PartVolume_Call	; F6C082  call 0xf6bff2
 	ret	; F6C086  ret
-	ld	a, (4708:16)	; F6C087  ld A,(0x1264)
+	ld	a, (SongEvent_Byte3:16)	; F6C087  ld A,(0x1264)
 	bit	3, a	; F6C08B  bit 0x03,A
 	jr	nz, sub_F6BFF2_Skip14	; F6C08E  jr NZ,0xf6c09d
 	bit	4, a	; F6C090  bit 0x04,A
@@ -11799,9 +11799,9 @@ sub_F6BFF2_Skip16:
 	ret	; F6C0B9  ret
 	jrl	sub_F6BC89_Loop2	; F6C0BA  jrl T,0xf6be09
 sub_F6BFF2_Skip17:
-	ld	a, (4697:16)	; F6C0BD  ld A,(0x1259)
+	ld	a, (SongEvent_Byte1:16)	; F6C0BD  ld A,(0x1259)
 	jrl	sub_F6BC89_Loop2	; F6C0C1  jrl T,0xf6be09
-	ld	a, (4698:16)	; F6C0C4  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6C0C4  ld A,(0x125a)
 	bit	0, a	; F6C0C8  bit 0x00,A
 	jrl	nz, sub_F6BC89_Loop2	; F6C0CB  jrl NZ,0xf6be09
 	bit	1, a	; F6C0CE  bit 0x01,A
@@ -11813,7 +11813,7 @@ sub_F6BFF2_Skip17:
 	jrl	sub_F6BC89_Loop2	; F6C0E0  jrl T,0xf6be09
 sub_F6BFF2_Skip18:
 	calr	BStore_ReadByteAtSongPositionAndAdvance	; F6C0E3  calr 0xf6b95f
-	ld	xiy, 4800	; F6C0E6  ld XIY,0x000012c0
+	ld	xiy, StepEvent_RhythmControl	; F6C0E6  ld XIY,0x000012c0
 	cp	a, 128	; F6C0EB  cp A,0x80
 	jr	z, sub_F6BFF2_Skip22	; F6C0EE  jr Z,0xf6c12e
 	cp	a, 133	; F6C0F0  cp A,0x85
@@ -11855,7 +11855,7 @@ sub_F6BFF2_Skip22:
 	srl	l, 1	; F6C142  srl 0x01,L
 	and	l, 1	; F6C145  and L,0x01
 	ld	w, l	; F6C148  ld W,L
-	ld	(4108:16), wa	; F6C14A  ld (0x100c),WA
+	ld	(StepRecord_Tempo:16), wa	; F6C14A  ld (0x100c),WA
 	cp	(0x0e63:16), 0x03	; F6C14E  cp (0x0e63),0x03
 	jr	z, sub_F6BFF2_Skip23	; F6C153  jr Z,0xf6c15f
 	ld	(UI_StepRecord_SubScreen:16), 7	; F6C155  ld (0x0ef5),0x07
@@ -11893,8 +11893,8 @@ sub_F6BFF2_Join:
 	jrl	sub_F6BC89_Loop	; F6C19D  jrl T,0xf6bd06
 sub_F6BFF2_Skip27:
 	calr	BStore_SkipTickReadFirstDataByte	; F6C1A0  calr 0xf6c230
-	ld	(4793:16), a	; F6C1A3  ld (0x12b9),A
-	ld	(4792:16), 5	; F6C1A7  ld (0x12b8),0x05
+	ld	(StepEvent_ControlValue:16), a	; F6C1A3  ld (0x12b9),A
+	ld	(StepEvent_ControlType:16), 5	; F6C1A7  ld (0x12b8),0x05
 	cp	(UI_StepRecord_SubScreen:16), 0x03	; F6C1AC  cp (0x0ef5),0x03
 	jr	nz, sub_F6BFF2_Skip28	; F6C1B1  jr NZ,0xf6c1b8
 	call	MsgLine_Control_Cleared	; F6C1B3  call 0xf6d410
@@ -11905,8 +11905,8 @@ sub_F6BFF2_Skip28:
 	ret	; F6C1C1  ret
 sub_F6BFF2_Skip29:
 	calr	BStore_SkipTickReadFirstDataByte	; F6C1C2  calr 0xf6c230
-	ld	(4793:16), a	; F6C1C5  ld (0x12b9),A
-	ld	(4792:16), 2	; F6C1C9  ld (0x12b8),0x02
+	ld	(StepEvent_ControlValue:16), a	; F6C1C5  ld (0x12b9),A
+	ld	(StepEvent_ControlType:16), 2	; F6C1C9  ld (0x12b8),0x02
 	cp	(UI_StepRecord_SubScreen:16), 0x03	; F6C1CE  cp (0x0ef5),0x03
 	jr	nz, sub_F6BFF2_Skip30	; F6C1D3  jr NZ,0xf6c1da
 	call	MsgLine_Control_Cleared	; F6C1D5  call 0xf6d410
@@ -11917,10 +11917,10 @@ sub_F6BFF2_Skip30:
 	ret	; F6C1E3  ret
 sub_F6BFF2_Skip31:
 	calr	BStore_SkipTickReadFirstDataByte	; F6C1E4  calr 0xf6c230
-	ld	(4793:16), a	; F6C1E7  ld (0x12b9),A
-	ld	(4792:16), 1	; F6C1EB  ld (0x12b8),0x01
+	ld	(StepEvent_ControlValue:16), a	; F6C1E7  ld (0x12b9),A
+	ld	(StepEvent_ControlType:16), 1	; F6C1EB  ld (0x12b8),0x01
 	call	BStore_ReadByteAtSongPositionAndAdvance	; F6C1F0  call 0xf6b95f
-	ld	(4843:16), a	; F6C1F4  ld (0x12eb),A
+	ld	(StepEvent_PitchBendMsb:16), a	; F6C1F4  ld (0x12eb),A
 	cp	(UI_StepRecord_SubScreen:16), 0x03	; F6C1F8  cp (0x0ef5),0x03
 	jr	nz, sub_F6BFF2_Skip32	; F6C1FD  jr NZ,0xf6c204
 	call	MsgLine_Control_Cleared	; F6C1FF  call 0xf6d410
@@ -11931,8 +11931,8 @@ sub_F6BFF2_Skip32:
 	ret	; F6C20D  ret
 sub_F6BFF2_Skip33:
 	calr	BStore_SkipTickReadFirstDataByte	; F6C20E  calr 0xf6c230
-	ld	(4793:16), a	; F6C211  ld (0x12b9),A
-	ld	(4792:16), 3	; F6C215  ld (0x12b8),0x03
+	ld	(StepEvent_ControlValue:16), a	; F6C211  ld (0x12b9),A
+	ld	(StepEvent_ControlType:16), 3	; F6C215  ld (0x12b8),0x03
 	cp	(UI_StepRecord_SubScreen:16), 0x03	; F6C21A  cp (0x0ef5),0x03
 	jr	nz, sub_F6BFF2_Skip34	; F6C21F  jr NZ,0xf6c226
 	call	MsgLine_Control_Cleared	; F6C221  call 0xf6d410
@@ -12837,7 +12837,7 @@ sub_F6C736_Skip:
 	jr	ule, sub_F6C736_Join	; F6C74A  jr ULE,0xf6c74e
 	ld	w, 4:opc	; F6C74C  ld W,0x04
 sub_F6C736_Join:
-	ld	(4788:16), a	; F6C74E  ld (0x12b4),A
+	ld	(MsgLine_MeasureSuffix:16), a	; F6C74E  ld (0x12b4),A
 	ld	(4777:16), w	; F6C752  ld (0x12a9),W
 	ld	(3941:16), w	; F6C756  ld (0x0f65),W
 	ld	(3817:16), w	; F6C75A  ld (0x0ee9),W
@@ -13074,7 +13074,7 @@ LcdKeyRow3_StepRecord:
 	dec	1, l	; F6C916  dec 1,L
 	ld	(UI_StepRecord_SubScreen:16), 11	; F6C918  ld (0x0ef5),0x0b
 	call	T_F431B0	; F6C91D  call 0xf431b0
-	ld	(4844:16), 0	; F6C921  ld (0x12ec),0x00
+	ld	(StepRecord_PartParamSelect:16), 0	; F6C921  ld (0x12ec),0x00
 	call	StepRecord_LoadPartParamValue	; F6C926  call 0xf6c984
 	call	MsgLine_PanKeyShiftTuningBendSens	; F6C92A  call 0xf6c9c7
 	call	StepRecord_BuildPartParamEvent	; F6C92E  call 0xf6c935
@@ -13100,10 +13100,10 @@ sub_F6C877_Epilogue:
 StepRecord_BuildPartParamEvent:
 	push	xix	; F6C935  push XIX
 	push	xiy	; F6C936  push XIY
-	ld	a, (4845:16)	; F6C937  ld A,(0x12ed)
+	ld	a, (StepRecord_PartParamValue:16)	; F6C937  ld A,(0x12ed)
 	ld	xix, 4846	; F6C93B  ld XIX,0x000012ee
 	ld	(xix), 176	; F6C940  ld (XIX),0xb0
-	cp	(0x12ec:16), 0x02	; F6C943  cp (0x12ec),0x02
+	cp	(StepRecord_PartParamSelect:16), 0x02	; F6C943  cp (0x12ec),0x02
 	jr	nz, StepRecord_BuildPartParamEvent_Skip	; F6C948  jr NZ,0xf6c94d
 	or	(xix), 0x02	; F6C94A  or (XIX),0x02
 StepRecord_BuildPartParamEvent_Skip:
@@ -13118,7 +13118,7 @@ StepRecord_BuildPartParamEvent_Skip2:
 	ld	(xix+1), a	; F6C964  ld (XIX+0x01),A
 	ld	a, (UI_PartIndex:16)	; F6C967  ld A,(0x2250)
 	ld	(xix+2), a	; F6C96B  ld (XIX+0x02),A
-	ld	l, (4844:16)	; F6C96E  ld L,(0x12ec)
+	ld	l, (StepRecord_PartParamSelect:16)	; F6C96E  ld L,(0x12ec)
 	exts	hl	; F6C972  exts HL
 	ld	xiy, Map_12EC_F6CAE3	; F6C974  ld XIY,0x00f6cae3
 	ld	a, (xiy+hl)	; F6C979  ld A,(XIY+HL)
@@ -13154,11 +13154,11 @@ StepRecord_LoadPartParamValue:
 	cp	xhl, 4294967295	; F6C9A4  cp XHL,0xffffffff
 	jr	z, StepRecord_LoadPartParamValue_Epilogue	; F6C9AA  jr Z,0xf6c9c5
 	xor	wa, wa	; F6C9AC  xor WA,WA
-	ld	a, (4844:16)	; F6C9AE  ld A,(0x12ec)
+	ld	a, (StepRecord_PartParamSelect:16)	; F6C9AE  ld A,(0x12ec)
 	ld	xix, Map_12EC_F6CAE3	; F6C9B2  ld XIX,0x00f6cae3
 	ld	a, (xix+wa)	; F6C9B7  ld A,(XIX+WA)
 	ld	a, (xhl+wa)	; F6C9BC  ld A,(XHL+WA)
-	ld	(4845:16), a	; F6C9C1  ld (0x12ed),A
+	ld	(StepRecord_PartParamValue:16), a	; F6C9C1  ld (0x12ed),A
 StepRecord_LoadPartParamValue_Epilogue:
 	pop	xix	; F6C9C5  pop XIX
 	ret	; F6C9C6  ret
@@ -13196,7 +13196,7 @@ MsgLine_PanKeyShiftTuningBendSens:
 	ld	(xix+), a	; F6C9D1  ld (XIX+),A
 	djnz16	bc, -6	; F6C9D4  djnz BC,0xf6c9d1
 	ld	xiy, Text_PanKeyShiftTuningBendSens	; F6C9D7  ld XIY,0x00f6ca3b
-	ld	a, (4844:16)	; F6C9DC  ld A,(0x12ec)
+	ld	a, (StepRecord_PartParamSelect:16)	; F6C9DC  ld A,(0x12ec)
 	ld	w, a	; F6C9E0  ld W,A
 	sla	a, 3	; F6C9E2  sla 0x03,A
 	sla	w, 1	; F6C9E5  sla 0x01,W
@@ -13207,10 +13207,10 @@ MsgLine_PanKeyShiftTuningBendSens:
 	ldw	bc, 10	; F6C9F6  ld BC,0x000a
 	ldir85	; F6C9F9  ldir
 	xor	wa, wa	; F6C9FB  xor WA,WA
-	ld	a, (4845:16)	; F6C9FD  ld A,(0x12ed)
-	cp	(0x12ec:16), 0x01	; F6CA01  cp (0x12ec),0x01
+	ld	a, (StepRecord_PartParamValue:16)	; F6C9FD  ld A,(0x12ed)
+	cp	(StepRecord_PartParamSelect:16), 0x01	; F6CA01  cp (0x12ec),0x01
 	jr	z, MsgLine_PanKeyShiftTuningBendSens_Skip	; F6CA06  jr Z,0xf6ca14
-	cp	(0x12ec:16), 0x02	; F6CA08  cp (0x12ec),0x02
+	cp	(StepRecord_PartParamSelect:16), 0x02	; F6CA08  cp (0x12ec),0x02
 	jr	nz, MsgLine_PanKeyShiftTuningBendSens_Skip2	; F6CA0D  jr NZ,0xf6ca26
 	ldw	de, 128	; F6CA0F  ld DE,0x0080
 	jr	MsgLine_PanKeyShiftTuningBendSens_Join	; F6CA12  jr T,0xf6ca17
@@ -13220,7 +13220,7 @@ MsgLine_PanKeyShiftTuningBendSens_Join:
 	push	xix	; F6CA17  push XIX
 	call	T_Value_ToSignedAsciiDigits3_RightJustified	; F6CA18  call 0xf41af8
 	pop	xix	; F6CA1C  pop XIX
-	ld	a, (9824:16)	; F6CA1D  ld A,(0x2660)
+	ld	a, (Value_AsciiSign:16)	; F6CA1D  ld A,(0x2660)
 	ld	(xix+), a	; F6CA21  ld (XIX+),A
 	jr	MsgLine_PanKeyShiftTuningBendSens_Join2	; F6CA24  jr T,0xf6ca2c
 MsgLine_PanKeyShiftTuningBendSens_Skip2:
@@ -13335,13 +13335,13 @@ SoftKeyCol2_StepRecordSub11:
 	jr	nz, SoftKeyCol2_StepRecordSub11_Skip	; F6CAEC  jr NZ,0xf6caf0
 	ld	l, 3:opc	; F6CAEE  ld L,0x03
 SoftKeyCol2_StepRecordSub11_Skip:
-	cp	(4844:16), l	; F6CAF0  cp (0x12ec),L
+	cp	(StepRecord_PartParamSelect:16), l	; F6CAF0  cp (0x12ec),L
 	jr	z, SoftKeyCol2_StepRecordSub11_Return	; F6CAF4  jr Z,0xf6cb12
-	ld	a, (4844:16)	; F6CAF6  ld A,(0x12ec)
+	ld	a, (StepRecord_PartParamSelect:16)	; F6CAF6  ld A,(0x12ec)
 	xor	l, l	; F6CAFA  xor L,L
 	ld	h, 3:opc	; F6CAFC  ld H,0x03
 	call	StepRecordSub11_SoftKeyCol2	; F6CAFE  call 0xf6cb52
-	ld	(4844:16), a	; F6CB02  ld (0x12ec),A
+	ld	(StepRecord_PartParamSelect:16), a	; F6CB02  ld (0x12ec),A
 	call	StepRecord_LoadPartParamValue	; F6CB06  call 0xf6c984
 	call	MsgLine_PanKeyShiftTuningBendSens	; F6CB0A  call 0xf6c9c7
 	call	StepRecord_BuildPartParamEvent	; F6CB0E  call 0xf6c935
@@ -13350,26 +13350,26 @@ SoftKeyCol2_StepRecordSub11_Return:
 ; SoftKeyCol4_StepRecordSub11: the 4th of the eight soft keys under the LCD; bit 7 of the code picks the LOWER (set) or UPPER (clear) of the column's two switches; StepRecordSub11_ButtonTable slot 0x03; StepRecordSub11_ButtonTable slot 0x14.  Slot -> control: wave7_panel_names_round11.CONTROL.
 SoftKeyCol4_StepRecordSub11:
 	or	(UI_RequestBits:16), 0x08	; F6CB13  or (0x2075),0x08
-	ld	a, (4845:16)	; F6CB18  ld A,(0x12ed)
+	ld	a, (StepRecord_PartParamValue:16)	; F6CB18  ld A,(0x12ed)
 	xor	l, l	; F6CB1C  xor L,L
 	ld	h, 127:opc	; F6CB1E  ld H,0x7f
-	cp	(0x12ec:16), 0x01	; F6CB20  cp (0x12ec),0x01
+	cp	(StepRecord_PartParamSelect:16), 0x01	; F6CB20  cp (0x12ec),0x01
 	jr	nz, SoftKeyCol4_StepRecordSub11_Skip	; F6CB25  jr NZ,0xf6cb2d
 	ld	l, 28:opc	; F6CB27  ld L,0x1c
 	ld	h, 100:opc	; F6CB29  ld H,0x64
 	jr	SoftKeyCol4_StepRecordSub11_Join	; F6CB2B  jr T,0xf6cb41
 SoftKeyCol4_StepRecordSub11_Skip:
-	cp	(0x12ec:16), 0x03	; F6CB2D  cp (0x12ec),0x03
+	cp	(StepRecord_PartParamSelect:16), 0x03	; F6CB2D  cp (0x12ec),0x03
 	jr	nz, SoftKeyCol4_StepRecordSub11_Skip2	; F6CB32  jr NZ,0xf6cb38
 	ld	h, 12:opc	; F6CB34  ld H,0x0c
 	jr	SoftKeyCol4_StepRecordSub11_Join	; F6CB36  jr T,0xf6cb41
 SoftKeyCol4_StepRecordSub11_Skip2:
-	cp	(0x12ec:16), 0x02	; F6CB38  cp (0x12ec),0x02
+	cp	(StepRecord_PartParamSelect:16), 0x02	; F6CB38  cp (0x12ec),0x02
 	jr	nz, SoftKeyCol4_StepRecordSub11_Join	; F6CB3D  jr NZ,0xf6cb41
 	ld	h, 255:opc	; F6CB3F  ld H,0xff
 SoftKeyCol4_StepRecordSub11_Join:
 	call	StepByteWithinLH	; F6CB41  call 0xf67f68
-	ld	(4845:16), a	; F6CB45  ld (0x12ed),A
+	ld	(StepRecord_PartParamValue:16), a	; F6CB45  ld (0x12ed),A
 	call	MsgLine_PanKeyShiftTuningBendSens	; F6CB49  call 0xf6c9c7
 	call	StepRecord_BuildPartParamEvent	; F6CB4D  call 0xf6c935
 	ret	; F6CB51  ret
@@ -13584,7 +13584,7 @@ sub_F6CC6E_Skip2:
 	res	2, (0x0e4f:16)	; F6CCD8  res 2,(0x0e4f)
 	jr	sub_F6CC6E_Join	; F6CCDC  jr T,0xf6cce7
 sub_F6CC6E_Skip3:
-	ld	(4783:16), 255	; F6CCDE  ld (0x12af),0xff
+	ld	(StepEvent_Velocity:16), 255	; F6CCDE  ld (0x12af),0xff
 	call	StepRecord_ReturnToTrackKindPage	; F6CCE3  call 0xf69c03
 sub_F6CC6E_Join:
 	or	(0x0ed5:16), 0x01	; F6CCE7  or (0x0ed5),0x01
@@ -13606,7 +13606,7 @@ sub_F6CC6E_Skip4:
 	res	2, (0x0e4f:16)	; F6CD1E  res 2,(0x0e4f)
 	jr	sub_F6CC6E_Join2	; F6CD22  jr T,0xf6cd2d
 sub_F6CC6E_Skip5:
-	ld	(4783:16), 255	; F6CD24  ld (0x12af),0xff
+	ld	(StepEvent_Velocity:16), 255	; F6CD24  ld (0x12af),0xff
 	call	StepRecord_ReturnToTrackKindPage	; F6CD29  call 0xf69c03
 sub_F6CC6E_Join2:
 	or	(0x0ed5:16), 0x01	; F6CD2D  or (0x0ed5),0x01
@@ -13753,9 +13753,9 @@ sub_F6CE26:
 	ld	a, (xiy+4)	; F6CE40  ld A,(XIY+0x04)
 	ld	(4928:16), a	; F6CE43  ld (0x1340),A
 	ld	a, (xiy+3)	; F6CE47  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6CE4A  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6CE4A  ld (0x1259),A
 	ld	a, (xiy+4)	; F6CE4E  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6CE51  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6CE51  ld (0x125a),A
 	push	xiy	; F6CE55  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6CE56  cp (0x0ef5),0x01
 	jr	z, sub_F6CE26_Skip	; F6CE5B  jr Z,0xf6ce66
@@ -13846,9 +13846,9 @@ sub_F6CED0:
 	ld	a, (xiy+4)	; F6CEEA  ld A,(XIY+0x04)
 	ld	(4929:16), a	; F6CEED  ld (0x1341),A
 	ld	a, (xiy+3)	; F6CEF1  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6CEF4  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6CEF4  ld (0x1259),A
 	ld	a, (xiy+4)	; F6CEF8  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6CEFB  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6CEFB  ld (0x125a),A
 	push	xiy	; F6CEFF  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6CF00  cp (0x0ef5),0x01
 	jr	z, sub_F6CED0_Skip	; F6CF05  jr Z,0xf6cf10
@@ -13938,9 +13938,9 @@ sub_F6CF7A:
 	ld	a, (xiy+4)	; F6CF94  ld A,(XIY+0x04)
 	ld	(4930:16), a	; F6CF97  ld (0x1342),A
 	ld	a, (xiy+3)	; F6CF9B  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6CF9E  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6CF9E  ld (0x1259),A
 	ld	a, (xiy+4)	; F6CFA2  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6CFA5  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6CFA5  ld (0x125a),A
 	push	xiy	; F6CFA9  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6CFAA  cp (0x0ef5),0x01
 	jr	z, sub_F6CF7A_Skip	; F6CFAF  jr Z,0xf6cfba
@@ -14222,9 +14222,9 @@ sub_F6D024:
 	ld	a, (xiy+4)	; F6D03E  ld A,(XIY+0x04)
 	ld	(4931:16), a	; F6D041  ld (0x1343),A
 	ld	a, (xiy+3)	; F6D045  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6D048  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6D048  ld (0x1259),A
 	ld	a, (xiy+4)	; F6D04C  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6D04F  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6D04F  ld (0x125a),A
 	push	xiy	; F6D053  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6D054  cp (0x0ef5),0x01
 	jr	z, sub_F6D024_Skip	; F6D059  jr Z,0xf6d064
@@ -14329,9 +14329,9 @@ sub_F6D0CE:
 	ld	a, (xiy+4)	; F6D0E8  ld A,(XIY+0x04)
 	ld	(4932:16), a	; F6D0EB  ld (0x1344),A
 	ld	a, (xiy+3)	; F6D0EF  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6D0F2  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6D0F2  ld (0x1259),A
 	ld	a, (xiy+4)	; F6D0F6  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6D0F9  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6D0F9  ld (0x125a),A
 	push	xiy	; F6D0FD  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6D0FE  cp (0x0ef5),0x01
 	jr	z, sub_F6D0CE_Skip	; F6D103  jr Z,0xf6d10e
@@ -14436,9 +14436,9 @@ sub_F6D178:
 	ld	a, (xiy+4)	; F6D192  ld A,(XIY+0x04)
 	ld	(4933:16), a	; F6D195  ld (0x1345),A
 	ld	a, (xiy+3)	; F6D199  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6D19C  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6D19C  ld (0x1259),A
 	ld	a, (xiy+4)	; F6D1A0  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6D1A3  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6D1A3  ld (0x125a),A
 	push	xiy	; F6D1A7  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6D1A8  cp (0x0ef5),0x01
 	jr	z, sub_F6D178_Skip	; F6D1AD  jr Z,0xf6d1b8
@@ -14543,9 +14543,9 @@ sub_F6D222:
 	ld	a, (xiy+4)	; F6D23C  ld A,(XIY+0x04)
 	ld	(4934:16), a	; F6D23F  ld (0x1346),A
 	ld	a, (xiy+3)	; F6D243  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6D246  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6D246  ld (0x1259),A
 	ld	a, (xiy+4)	; F6D24A  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6D24D  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6D24D  ld (0x125a),A
 	push	xiy	; F6D251  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6D252  cp (0x0ef5),0x01
 	jr	z, sub_F6D222_Skip	; F6D257  jr Z,0xf6d262
@@ -14644,16 +14644,16 @@ sub_F6D2CC:
 	or	a, w	; F6D2D7  or A,W
 	cp	a, 31	; F6D2D9  cp A,0x1f
 	jr	ugt, sub_F6D2CC_Skip2	; F6D2DC  jr UGT,0xf6d31d
-	ld	(4696:16), a	; F6D2DE  ld (0x1258),A
+	ld	(SongEvent_Byte0:16), a	; F6D2DE  ld (0x1258),A
 	ld	a, (xiy+3)	; F6D2E2  ld A,(XIY+0x03)
 	cp	a, 7:i3	; F6D2E5  cp A,7
 	jr	nz, sub_F6D2CC_Skip2	; F6D2E7  jr NZ,0xf6d31d
 	ld	a, (xiy+4)	; F6D2E9  ld A,(XIY+0x04)
 	ld	(4942:16), a	; F6D2EC  ld (0x134e),A
 	ld	a, (xiy+3)	; F6D2F0  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6D2F3  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6D2F3  ld (0x1259),A
 	ld	a, (xiy+4)	; F6D2F7  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6D2FA  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6D2FA  ld (0x125a),A
 	push	xiy	; F6D2FE  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6D2FF  cp (0x0ef5),0x01
 	jr	z, sub_F6D2CC_Skip	; F6D304  jr Z,0xf6d30f
@@ -14747,16 +14747,16 @@ sub_F6D36C:
 	or	a, w	; F6D377  or A,W
 	cp	a, 31	; F6D379  cp A,0x1f
 	jr	ugt, sub_F6D36C_Skip2	; F6D37C  jr UGT,0xf6d3bd
-	ld	(4696:16), a	; F6D37E  ld (0x1258),A
+	ld	(SongEvent_Byte0:16), a	; F6D37E  ld (0x1258),A
 	ld	a, (xiy+3)	; F6D382  ld A,(XIY+0x03)
 	cp	a, 5:i3	; F6D385  cp A,5
 	jr	nz, sub_F6D36C_Skip2	; F6D387  jr NZ,0xf6d3bd
 	ld	a, (xiy+4)	; F6D389  ld A,(XIY+0x04)
 	ld	(4943:16), a	; F6D38C  ld (0x134f),A
 	ld	a, (xiy+3)	; F6D390  ld A,(XIY+0x03)
-	ld	(4697:16), a	; F6D393  ld (0x1259),A
+	ld	(SongEvent_Byte1:16), a	; F6D393  ld (0x1259),A
 	ld	a, (xiy+4)	; F6D397  ld A,(XIY+0x04)
-	ld	(4698:16), a	; F6D39A  ld (0x125a),A
+	ld	(SongEvent_Byte2:16), a	; F6D39A  ld (0x125a),A
 	push	xiy	; F6D39E  push XIY
 	cp	(UI_StepRecord_SubScreen:16), 0x01	; F6D39F  cp (0x0ef5),0x01
 	jr	z, sub_F6D36C_Skip	; F6D3A4  jr Z,0xf6d3af
@@ -15157,7 +15157,7 @@ MsgLine_TransportState_Plus14:
 	ld	xiy, Text_StartStopFillIn1fillIn2intro1CountInending1	; F6D4C9  ld XIY,0x00f6d66d
 	ld	xix, MsgLine_Text+14	; F6D4CE  ld XIX,0x00000ff2
 	xor	xwa, xwa	; F6D4D3  xor XWA,XWA
-	ld	a, (4800:16)	; F6D4D5  ld A,(0x12c0)
+	ld	a, (StepEvent_RhythmControl:16)	; F6D4D5  ld A,(0x12c0)
 	sla	xwa, 3	; F6D4D9  sla 0x03,XWA
 	add	xiy, xwa	; F6D4DC  add XIY,XWA
 	ldw	bc, 4	; F6D4DE  ld BC,0x0004
@@ -15470,7 +15470,7 @@ sub_F6D5B5:
 ;   and T_F431B4. StepRecordSub16_SoftKeyCol1 calls it after stepping to a measure start; five other message-line
 ;   composers too. Basis: callers + body + sibling. (notes/naming-pilot-2026-10-06/proposals_wave6_v.json)
 MsgLine_PutMeasureDigits:
-	ld	wa, (4786:16)	; F6D5BA  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6D5BA  ld WA,(0x12b2)
 	cp	wa, 1000	; F6D5BE  cp WA,0x03e8
 	jr	c, MsgLine_PutMeasureDigits_Skip	; F6D5C2  jr C,0xf6d5c9
 	calr	MsgLine_SetTextDashes	; F6D5C4  calr 0xf6d5e2
@@ -15602,7 +15602,7 @@ MsgLine_TransportState_Plus4:
 	ld	xiy, Text_StartStopFillIn1fillIn2intro1CountInending1	; F6D60B  ld XIY,0x00f6d66d
 	ld	xix, MsgLine_Text+4	; F6D610  ld XIX,0x00000fe8
 	xor	wa, wa	; F6D615  xor WA,WA
-	ld	a, (4800:16)	; F6D617  ld A,(0x12c0)
+	ld	a, (StepEvent_RhythmControl:16)	; F6D617  ld A,(0x12c0)
 	sla	wa, 3	; F6D61B  sla 0x03,WA
 	lda	xiy, (xiy+wa)	; F6D61E  lda XIY,XIY+WA
 	ldw	wa, 8224	; F6D623  ld WA,0x2020
@@ -15654,7 +15654,7 @@ MsgLine_TransportState_Plus4:
 MsgLine_TransportState_Plus10:
 	ld	xix, MsgLine_Text+10	; F6D642  ld XIX,0x00000fee
 	xor	xhl, xhl	; F6D647  xor XHL,XHL
-	ld	l, (4800:16)	; F6D649  ld L,(0x12c0)
+	ld	l, (StepEvent_RhythmControl:16)	; F6D649  ld L,(0x12c0)
 	sla	xhl, 3	; F6D64D  sla 0x03,XHL
 	ld	xiy, Text_StartStopFillIn1fillIn2intro1CountInending1	; F6D650  ld XIY,0x00f6d66d
 	lda	xiy, (xiy+hl)	; F6D655  lda XIY,XIY+HL
@@ -15757,7 +15757,7 @@ StepRecord_PaintPositionMarker_Call:
 ;   message-line composer. Basis: callers + body + the 0x12B2 writer. (wsa1/notes/naming-
 ;   pilot-2026-10-06/proposals_prom_b.json)
 MsgLine_MeasureNumber:
-	ld	wa, (4786:16)	; F6D6DC  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6D6DC  ld WA,(0x12b2)
 	cp	wa, 1000	; F6D6E0  cp WA,0x03e8
 	jr	c, MsgLine_MeasureNumber_Skip	; F6D6E4  jr C,0xf6d6eb
 	calr	MsgLine_SetTextDashes	; F6D6E6  calr 0xf6d5e2
@@ -15769,7 +15769,7 @@ MsgLine_MeasureNumber_Skip:
 	ld	wa, (xiy)	; F6D6F9  ld WA,(XIY)
 	ld	(xix), wa	; F6D6FB  ld (XIX),WA
 	ld	a, (xiy+2)	; F6D6FD  ld A,(XIY+0x02)
-	ld	w, (4788:16)	; F6D700  ld W,(0x12b4)
+	ld	w, (MsgLine_MeasureSuffix:16)	; F6D700  ld W,(0x12b4)
 	ld	(xix+2), wa	; F6D704  ld (XIX+0x02),WA
 MsgLine_MeasureNumber_Join:
 	call	T_F431B4	; F6D707  call 0xf431b4
@@ -16030,7 +16030,7 @@ MsgLine_ControlTypeAndValue:
 	ld	xiy, Text_PBendMod1ExpPMemAftOnoff	; F6D890  ld XIY,0x00f6d915
 	ld	xix, MsgLine_Text+14	; F6D895  ld XIX,0x00000ff2
 	xor	hl, hl	; F6D89A  xor HL,HL
-	ld	l, (4792:16)	; F6D89C  ld L,(0x12b8)
+	ld	l, (StepEvent_ControlType:16)	; F6D89C  ld L,(0x12b8)
 	and	l, 7	; F6D8A0  and L,0x07
 	sla	hl, 3	; F6D8A3  sla 0x03,HL
 	lda	xiy, (xiy+hl)	; F6D8A6  lda XIY,XIY+HL
@@ -16044,13 +16044,13 @@ MsgLine_ControlTypeAndValue:
 	ld	(xix+6), w	; F6D8BE  ld (XIX+0x06),W
 	cp	l, 0:i3	; F6D8C1  cp L,0
 	jr	z, MsgLine_ControlTypeAndValue_Return	; F6D8C3  jr Z,0xf6d914
-	cp	(0x12b8:16), 0x01	; F6D8C5  cp (0x12b8),0x01
+	cp	(StepEvent_ControlType:16), 0x01	; F6D8C5  cp (0x12b8),0x01
 	jr	nz, MsgLine_ControlTypeAndValue_Skip	; F6D8CA  jr NZ,0xf6d8d2
 	call	MsgLine_PutPitchBendValue	; F6D8CC  call 0xf6d963
 	jr	MsgLine_ControlTypeAndValue_Return	; F6D8D0  jr T,0xf6d914
 MsgLine_ControlTypeAndValue_Skip:
 	ld	xix, MsgLine_Text+21	; F6D8D2  ld XIX,0x00000ff9
-	ld	a, (4793:16)	; F6D8D7  ld A,(0x12b9)
+	ld	a, (StepEvent_ControlValue:16)	; F6D8D7  ld A,(0x12b9)
 	bit	7, a	; F6D8DB  bit 0x07,A
 	jr	z, MsgLine_ControlTypeAndValue_Skip2	; F6D8DE  jr Z,0xf6d8ff
 	and	a, 127	; F6D8E0  and A,0x7f
@@ -16136,8 +16136,8 @@ Text_PBendMod1ExpPMemAftOnoff:
 ;   Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave6_v.json)
 MsgLine_PutPitchBendValue:
 	xor	xwa, xwa	; F6D963  xor XWA,XWA
-	ld	a, (4793:16)	; F6D965  ld A,(0x12b9)
-	ld	w, (4843:16)	; F6D969  ld W,(0x12eb)
+	ld	a, (StepEvent_ControlValue:16)	; F6D965  ld A,(0x12b9)
+	ld	w, (StepEvent_PitchBendMsb:16)	; F6D969  ld W,(0x12eb)
 	and	a, 127	; F6D96D  and A,0x7f
 	and	w, 127	; F6D970  and W,0x7f
 	rrc	w	; F6D973  rrc 0x01,W
@@ -16187,7 +16187,7 @@ MsgLine_PutPitchBendValue:
 ;   / _F6D9CB and StepRecord_SoftKeyCol4 call T_F431B4 after it. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_e.json)
 MsgLine_PutTempoDigits:
-	ld	wa, (4108:16)	; F6D9AE  ld WA,(0x100c)
+	ld	wa, (StepRecord_Tempo:16)	; F6D9AE  ld WA,(0x100c)
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6D9B2  call 0xf41af0
 	ld	xiy, Value_AsciiDigits	; F6D9B6  ld XIY,0x00002661
 	ld	xix, MsgLine_Text+16	; F6D9BB  ld XIX,0x00000ff4
@@ -16372,7 +16372,7 @@ sub_F6DA12_Skip2:
 	ld	(xix), 28	; F6DA6E  ld (XIX),0x1c
 sub_F6DA12_Return:
 	ret	; F6DA71  ret
-	ld	wa, (4786:16)	; F6DA72  ld WA,(0x12b2)
+	ld	wa, (StepRecord_Measure:16)	; F6DA72  ld WA,(0x12b2)
 	cp	wa, 1000	; F6DA76  cp WA,0x03e8
 	jr	c, sub_F6DA12_Skip3	; F6DA7A  jr C,0xf6da81
 	calr	MsgLine_SetTextDashes	; F6DA7C  calr 0xf6d5e2
@@ -16652,7 +16652,7 @@ Data_F6DB7C:
 MsgLine_FormatLengthAndPhrasing:
 	ld	xix, MsgLine_Text+15	; F6DBF9  ld XIX,0x00000ff3
 	xor	hl, hl	; F6DBFE  xor HL,HL
-	ld	l, (4780:16)	; F6DC00  ld L,(0x12ac)
+	ld	l, (StepRecord_Length:16)	; F6DC00  ld L,(0x12ac)
 	and	l, 15	; F6DC04  and L,0x0f
 	sla	hl, 2	; F6DC07  sla 0x02,HL
 	ld	xiy, Data_F6DC77	; F6DC0A  ld XIY,0x00f6dc77
@@ -16663,7 +16663,7 @@ MsgLine_FormatLengthAndPhrasing:
 	ld	(xix+2), w	; F6DC1C  ld (XIX+0x02),W
 	ld	xix, MsgLine_Text+19	; F6DC1F  ld XIX,0x00000ff7
 	xor	hl, hl	; F6DC24  xor HL,HL
-	ld	l, (4781:16)	; F6DC26  ld L,(0x12ad)
+	ld	l, (StepRecord_TieLength:16)	; F6DC26  ld L,(0x12ad)
 	and	l, 15	; F6DC2A  and L,0x0f
 	ld	a, 5:opc	; F6DC2D  ld A,0x05
 	muls	wa, l	; F6DC2F  muls WA,L
@@ -16678,7 +16678,7 @@ MsgLine_FormatLengthAndPhrasing:
 	ld	(xix+4), a	; F6DC4C  ld (XIX+0x04),A
 	ld	xix, MsgLine_Text+25	; F6DC4F  ld XIX,0x00000ffd
 	xor	hl, hl	; F6DC54  xor HL,HL
-	ld	l, (4782:16)	; F6DC56  ld L,(0x12ae)
+	ld	l, (StepRecord_Phrasing:16)	; F6DC56  ld L,(0x12ae)
 	and	l, 3	; F6DC5A  and L,0x03
 	sla	hl, 2	; F6DC5D  sla 0x02,HL
 	ld	xiy, Text_4Tenunormstaccutt + 0xB	; F6DC60  ld XIY,0x00f6dd07
@@ -16784,7 +16784,7 @@ Text_4Tenunormstaccutt:
 ; --------------------------------------------------------------------------
 MsgLine_FormatNoteAndVelocity:
 	ld	xix, MsgLine_Text+5	; F6DD17  ld XIX,0x00000fe9
-	cp	(0x12af:16), 0xff	; F6DD1C  cp (0x12af),0xff
+	cp	(StepEvent_Velocity:16), 0xff	; F6DD1C  cp (0x12af),0xff
 	jr	nz, MsgLine_FormatNoteAndVelocity_HaveValue	; F6DD21  jr NZ,0xf6dd37
 	ldw	wa, 8224	; F6DD23  ld WA,0x2020
 	ld	(xix+0:8), wa	; F6DD26  ld (XIX+0x00),WA
@@ -16795,7 +16795,7 @@ MsgLine_FormatNoteAndVelocity:
 	jr	MsgLine_FormatNoteAndVelocity_Return	; F6DD35  jr T,0xf6dd88
 MsgLine_FormatNoteAndVelocity_HaveValue:
 	xor	wa, wa	; F6DD37  xor WA,WA
-	ld	a, (4784:16)	; F6DD39  ld A,(0x12b0)
+	ld	a, (StepEvent_NoteNumber:16)	; F6DD39  ld A,(0x12b0)
 	ld	l, 12:opc	; F6DD3D  ld L,0x0c
 	divs	wa, l	; F6DD3F  divs WA,L
 	ld	xiy, NoteNames_FlatSharp	; F6DD41  ld XIY,0x00f6dd89
@@ -16813,7 +16813,7 @@ MsgLine_FormatNoteAndVelocity_HaveValue:
 	ld	wa, (xiy)	; F6DD67  ld WA,(XIY)
 	ld	(xix+2), wa	; F6DD69  ld (XIX+0x02),WA
 	xor	wa, wa	; F6DD6C  xor WA,WA
-	ld	a, (4783:16)	; F6DD6E  ld A,(0x12af)
+	ld	a, (StepEvent_Velocity:16)	; F6DD6E  ld A,(0x12af)
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6DD72  call 0xf41af0
 	ld	wa, (Value_AsciiDigits:16)	; F6DD76  ld WA,(0x2661)
 	ld	(xix+6), wa	; F6DD7A  ld (XIX+0x06),WA
@@ -16900,7 +16900,7 @@ MsgLine_PartVolume:
 	call	T_F431B0	; F6DDC3  call 0xf431b0
 OctaveNames_Minus2To8_Code_Skip:
 	calr	MsgLine_ClearTail	; F6DDC7  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6DDCA  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6DDCA  ld L,(0x1258)
 	xor	h, h	; F6DDCE  xor H,H
 	sla	hl, 2	; F6DDD0  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6DDD3  ld XIY,0x00f6de17
@@ -16912,7 +16912,7 @@ OctaveNames_Minus2To8_Code_Skip:
 	inc	1, xix	; F6DDEC  inc 1,XIX
 	ldw	bc, 7	; F6DDEE  ld BC,0x0007
 	ldir85	; F6DDF1  ldir
-	ld	a, (4698:16)	; F6DDF3  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6DDF3  ld A,(0x125a)
 	xor	w, w	; F6DDF7  xor W,W
 	push	xix	; F6DDF9  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6DDFA  call 0xf41af0
@@ -17006,7 +17006,7 @@ MsgLine_PartPanpot:
 	call	T_F431B0	; F6DF03  call 0xf431b0
 MsgLine_PartPanpot_Skip:
 	calr	MsgLine_ClearTail	; F6DF07  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6DF0A  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6DF0A  ld L,(0x1258)
 	xor	h, h	; F6DF0E  xor H,H
 	sla	hl, 2	; F6DF10  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6DF13  ld XIY,0x00f6de17
@@ -17018,7 +17018,7 @@ MsgLine_PartPanpot_Skip:
 	inc	1, xix	; F6DF2C  inc 1,XIX
 	ldw	bc, 7	; F6DF2E  ld BC,0x0007
 	ldir85	; F6DF31  ldir
-	ld	a, (4698:16)	; F6DF33  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6DF33  ld A,(0x125a)
 	xor	w, w	; F6DF37  xor W,W
 	push	xix	; F6DF39  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6DF3A  call 0xf41af0
@@ -17089,7 +17089,7 @@ MsgLine_PartKeyShift:
 	call	T_F431B0	; F6DF63  call 0xf431b0
 MsgLine_PartKeyShift_Skip:
 	calr	MsgLine_ClearTail	; F6DF67  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6DF6A  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6DF6A  ld L,(0x1258)
 	xor	h, h	; F6DF6E  xor H,H
 	sla	hl, 2	; F6DF70  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6DF73  ld XIY,0x00f6de17
@@ -17101,14 +17101,14 @@ MsgLine_PartKeyShift_Skip:
 	inc	1, xix	; F6DF8C  inc 1,XIX
 	ldw	bc, 10	; F6DF8E  ld BC,0x000a
 	ldir85	; F6DF91  ldir
-	ld	a, (4698:16)	; F6DF93  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6DF93  ld A,(0x125a)
 	xor	w, w	; F6DF97  xor W,W
 	ldw	de, 64	; F6DF99  ld DE,0x0040
 	push	xix	; F6DF9C  push XIX
 	call	T_Value_ToSignedAsciiDigits3_RightJustified	; F6DF9D  call 0xf41af8
 	pop	xix	; F6DFA1  pop XIX
 	inc	1, xix	; F6DFA2  inc 1,XIX
-	ld	a, (9824:16)	; F6DFA4  ld A,(0x2660)
+	ld	a, (Value_AsciiSign:16)	; F6DFA4  ld A,(0x2660)
 	ld	(xix+), a	; F6DFA8  ld (XIX+),A
 	ld	xiy, Value_AsciiDigits	; F6DFAB  ld XIY,0x00002661
 	ldw	bc, 3	; F6DFB0  ld BC,0x0003
@@ -17175,7 +17175,7 @@ MsgLine_PartTuning:
 	call	T_F431B0	; F6DFD0  call 0xf431b0
 MsgLine_PartTuning_Skip:
 	calr	MsgLine_ClearTail	; F6DFD4  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6DFD7  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6DFD7  ld L,(0x1258)
 	xor	h, h	; F6DFDB  xor H,H
 	sla	hl, 2	; F6DFDD  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6DFE0  ld XIY,0x00f6de17
@@ -17187,14 +17187,14 @@ MsgLine_PartTuning_Skip:
 	inc	1, xix	; F6DFF9  inc 1,XIX
 	ldw	bc, 7	; F6DFFB  ld BC,0x0007
 	ldir85	; F6DFFE  ldir
-	ld	a, (4698:16)	; F6E000  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E000  ld A,(0x125a)
 	xor	w, w	; F6E004  xor W,W
 	ldw	de, 128	; F6E006  ld DE,0x0080
 	push	xix	; F6E009  push XIX
 	call	T_Value_ToSignedAsciiDigits3_RightJustified	; F6E00A  call 0xf41af8
 	pop	xix	; F6E00E  pop XIX
 	inc	1, xix	; F6E00F  inc 1,XIX
-	ld	a, (9824:16)	; F6E011  ld A,(0x2660)
+	ld	a, (Value_AsciiSign:16)	; F6E011  ld A,(0x2660)
 	ld	(xix+), a	; F6E015  ld (XIX+),A
 	ld	xiy, Value_AsciiDigits	; F6E018  ld XIY,0x00002661
 	ldw	bc, 3	; F6E01D  ld BC,0x0003
@@ -17261,7 +17261,7 @@ MsgLine_PartBendSens:
 	call	T_F431B0	; F6E03A  call 0xf431b0
 MsgLine_PartBendSens_Skip:
 	calr	MsgLine_ClearTail	; F6E03E  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E041  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E041  ld L,(0x1258)
 	xor	h, h	; F6E045  xor H,H
 	sla	hl, 2	; F6E047  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E04A  ld XIY,0x00f6de17
@@ -17273,7 +17273,7 @@ MsgLine_PartBendSens_Skip:
 	inc	1, xix	; F6E063  inc 1,XIX
 	ldw	bc, 10	; F6E065  ld BC,0x000a
 	ldir85	; F6E068  ldir
-	ld	a, (4698:16)	; F6E06A  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E06A  ld A,(0x125a)
 	xor	w, w	; F6E06E  xor W,W
 	push	xix	; F6E070  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E071  call 0xf41af0
@@ -17344,7 +17344,7 @@ MsgLine_PartSustain:
 	call	T_F431B0	; F6E09D  call 0xf431b0
 MsgLine_PartSustain_Skip:
 	calr	MsgLine_ClearTail	; F6E0A1  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E0A4  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E0A4  ld L,(0x1258)
 	xor	h, h	; F6E0A8  xor H,H
 	sla	hl, 2	; F6E0AA  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E0AD  ld XIY,0x00f6de17
@@ -17357,7 +17357,7 @@ MsgLine_PartSustain_Skip:
 	ldw	bc, 8	; F6E0C8  ld BC,0x0008
 	ldir85	; F6E0CB  ldir
 	xor	hl, hl	; F6E0CD  xor HL,HL
-	bit	3, (0x125a:16)	; F6E0CF  bit 3,(0x125a)
+	bit	3, (SongEvent_Byte2:16)	; F6E0CF  bit 3,(0x125a)
 	jr	nz, MsgLine_PartSustain_Skip2	; F6E0D3  jr NZ,0xf6e0d7
 	ld	l, 4:opc	; F6E0D5  ld L,0x04
 MsgLine_PartSustain_Skip2:
@@ -17436,7 +17436,7 @@ MsgLine_PartDspEffect:
 	call	T_F431B0	; F6E15E  call 0xf431b0
 MsgLine_PartDspEffect_Skip:
 	calr	MsgLine_ClearTail	; F6E162  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E165  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E165  ld L,(0x1258)
 	xor	h, h	; F6E169  xor H,H
 	sla	hl, 2	; F6E16B  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E16E  ld XIY,0x00f6de17
@@ -17516,7 +17516,7 @@ MsgLine_PartEffect:
 	call	T_F431B0	; F6E1BD  call 0xf431b0
 MsgLine_PartEffect_Skip:
 	calr	MsgLine_ClearTail	; F6E1C1  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E1C4  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E1C4  ld L,(0x1258)
 	xor	h, h	; F6E1C8  xor H,H
 	sla	hl, 2	; F6E1CA  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E1CD  ld XIY,0x00f6de17
@@ -17529,7 +17529,7 @@ MsgLine_PartEffect_Skip:
 	ldw	bc, 7	; F6E1E8  ld BC,0x0007
 	ldir85	; F6E1EB  ldir
 	xor	hl, hl	; F6E1ED  xor HL,HL
-	bit	6, (0x125a:16)	; F6E1EF  bit 6,(0x125a)
+	bit	6, (SongEvent_Byte2:16)	; F6E1EF  bit 6,(0x125a)
 	jr	nz, MsgLine_PartEffect_Skip2	; F6E1F3  jr NZ,0xf6e1f7
 	ld	l, 4:opc	; F6E1F5  ld L,0x04
 MsgLine_PartEffect_Skip2:
@@ -17595,7 +17595,7 @@ Data_F6E20B:
 ; --------------------------------------------------------------------------
 MsgLine_PartEffect1:
 	calr	MsgLine_ClearTail	; F6E212  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E215  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E215  ld L,(0x1258)
 	xor	h, h	; F6E219  xor H,H
 	sla	hl, 2	; F6E21B  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E21E  ld XIY,0x00f6de17
@@ -17608,7 +17608,7 @@ MsgLine_PartEffect1:
 	ldw	bc, 8	; F6E239  ld BC,0x0008
 	ldir85	; F6E23C  ldir
 	xor	w, w	; F6E23E  xor W,W
-	ld	a, (4698:16)	; F6E240  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E240  ld A,(0x125a)
 	push	xix	; F6E244  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E245  call 0xf41af0
 	pop	xix	; F6E249  pop XIX
@@ -17672,7 +17672,7 @@ Data_F6E259:
 ; --------------------------------------------------------------------------
 MsgLine_PartEffect2:
 	calr	MsgLine_ClearTail	; F6E261  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E264  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E264  ld L,(0x1258)
 	xor	h, h	; F6E268  xor H,H
 	sla	hl, 2	; F6E26A  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E26D  ld XIY,0x00f6de17
@@ -17686,7 +17686,7 @@ MsgLine_PartEffect2:
 	ldir85	; F6E28B  ldir
 	xor	w, w	; F6E28D  xor W,W
 	ld	xiy, Data_F6E2AC + 0x8	; F6E28F  ld XIY,0x00f6e2b4
-	ld	a, (4698:16)	; F6E294  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E294  ld A,(0x125a)
 	cp	a, 64	; F6E298  cp A,0x40
 	jr	nc, MsgLine_PartEffect2_Skip	; F6E29B  jr NC,0xf6e2a2
 	ld	xiy, Data_F6E2AC + 0xB	; F6E29D  ld XIY,0x00f6e2b7
@@ -17751,7 +17751,7 @@ Data_F6E2AC:
 ; --------------------------------------------------------------------------
 MsgLine_PartReverb:
 	calr	MsgLine_ClearTail	; F6E2BA  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E2BD  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E2BD  ld L,(0x1258)
 	xor	h, h	; F6E2C1  xor H,H
 	sla	hl, 2	; F6E2C3  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E2C6  ld XIY,0x00f6de17
@@ -17764,7 +17764,7 @@ MsgLine_PartReverb:
 	ldw	bc, 7	; F6E2E1  ld BC,0x0007
 	ldir85	; F6E2E4  ldir
 	xor	w, w	; F6E2E6  xor W,W
-	ld	a, (4698:16)	; F6E2E8  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E2E8  ld A,(0x125a)
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E2EC  call 0xf41af0
 	ld	xiy, Value_AsciiDigits	; F6E2F0  ld XIY,0x00002661
 	ldw	bc, 3	; F6E2F5  ld BC,0x0003
@@ -18020,7 +18020,7 @@ MsgLine_NoteName_Skip:
 	popw	wa	; F6E479  pop WA
 	ld	(MsgLine_Text+4:16), 32	; F6E47A  ld (0x0fe8),0x20
 	ld	xix, MsgLine_Text+5	; F6E47F  ld XIX,0x00000fe9
-	ld	l, (4698:16)	; F6E484  ld L,(0x125a)
+	ld	l, (SongEvent_Byte2:16)	; F6E484  ld L,(0x125a)
 	and	l, 15	; F6E488  and L,0x0f
 	xor	h, h	; F6E48B  xor H,H
 	sla	hl, 2	; F6E48D  sla 0x02,HL
@@ -18221,7 +18221,7 @@ MsgLine_PartTremolo:
 	call	T_F431B0	; F6E5B1  call 0xf431b0
 MsgLine_PartTremolo_Skip:
 	calr	MsgLine_ClearTail	; F6E5B5  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E5B8  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E5B8  ld L,(0x1258)
 	xor	h, h	; F6E5BC  xor H,H
 	sla	hl, 2	; F6E5BE  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E5C1  ld XIY,0x00f6de17
@@ -18234,7 +18234,7 @@ MsgLine_PartTremolo_Skip:
 	ldw	bc, 8	; F6E5DC  ld BC,0x0008
 	ldir85	; F6E5DF  ldir
 	xor	hl, hl	; F6E5E1  xor HL,HL
-	bit	7, (0x125a:16)	; F6E5E3  bit 7,(0x125a)
+	bit	7, (SongEvent_Byte2:16)	; F6E5E3  bit 7,(0x125a)
 	jr	nz, MsgLine_PartTremolo_Skip2	; F6E5E7  jr NZ,0xf6e5eb
 	ld	l, 4:opc	; F6E5E9  ld L,0x04
 MsgLine_PartTremolo_Skip2:
@@ -18425,7 +18425,7 @@ MsgLine_TotalReverb_Skip:
 	ldw	bc, 13	; F6E647  ld BC,0x000d
 	ldir85	; F6E64A  ldir
 	xor	hl, hl	; F6E64C  xor HL,HL
-	bit	7, (0x125a:16)	; F6E64E  bit 7,(0x125a)
+	bit	7, (SongEvent_Byte2:16)	; F6E64E  bit 7,(0x125a)
 	jr	nz, MsgLine_TotalReverb_Skip2	; F6E652  jr NZ,0xf6e656
 	ld	l, 4:opc	; F6E654  ld L,0x04
 MsgLine_TotalReverb_Skip2:
@@ -18495,7 +18495,7 @@ MsgLine_PartMellowNormalBright:
 	call	T_F431B0	; F6E684  call 0xf431b0
 MsgLine_PartMellowNormalBright_Skip:
 	calr	MsgLine_ClearTail	; F6E688  calr 0xf6d5f1
-	ld	l, (4696:16)	; F6E68B  ld L,(0x1258)
+	ld	l, (SongEvent_Byte0:16)	; F6E68B  ld L,(0x1258)
 	xor	h, h	; F6E68F  xor H,H
 	sla	hl, 2	; F6E691  sla 0x02,HL
 	ld	xiy, Text_VolumeP1P2P3P4P5P6P7P8P9P10P11P12P13P14P15 + 0x7	; F6E694  ld XIY,0x00f6de17
@@ -18504,7 +18504,7 @@ MsgLine_PartMellowNormalBright_Skip:
 	ldw	bc, 4	; F6E6A3  ld BC,0x0004
 	ldir85	; F6E6A6  ldir
 	inc	1, xix	; F6E6A8  inc 1,XIX
-	ld	l, (4698:16)	; F6E6AA  ld L,(0x125a)
+	ld	l, (SongEvent_Byte2:16)	; F6E6AA  ld L,(0x125a)
 	and	l, 192	; F6E6AE  and L,0xc0
 	srl	l, 6	; F6E6B1  srl 0x06,L
 	ld	h, l	; F6E6B4  ld H,L
@@ -18682,7 +18682,7 @@ MsgLine_PartModulation2:
 	bit	0, (UI_ScreenHoldState:16)	; F6E73A  bit 0,(0x2092)
 	jr	nz, MsgLine_PartModulation2_Return	; F6E73E  jr NZ,0xf6e78a
 	calr	MsgLine_ClearTail	; F6E740  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E743  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E743  ld L,(0x1259)
 	ld	h, l	; F6E747  ld H,L
 	sla	l, 1	; F6E749  sla 0x01,L
 	add	l, h	; F6E74C  add L,H
@@ -18697,7 +18697,7 @@ MsgLine_PartModulation2:
 	ldw	bc, 12	; F6E76B  ld BC,0x000c
 	ldir85	; F6E76E  ldir
 	xor	wa, wa	; F6E770  xor WA,WA
-	ld	a, (4698:16)	; F6E772  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E772  ld A,(0x125a)
 	push	xix	; F6E776  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E777  call 0xf41af0
 	pop	xix	; F6E77B  pop XIX
@@ -18764,7 +18764,7 @@ MsgLine_PartCtrlPedal:
 	bit	0, (UI_ScreenHoldState:16)	; F6E797  bit 0,(0x2092)
 	jr	nz, MsgLine_PartCtrlPedal_Return	; F6E79B  jr NZ,0xf6e7e7
 	calr	MsgLine_ClearTail	; F6E79D  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E7A0  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E7A0  ld L,(0x1259)
 	ld	h, l	; F6E7A4  ld H,L
 	sla	l, 1	; F6E7A6  sla 0x01,L
 	add	l, h	; F6E7A9  add L,H
@@ -18779,7 +18779,7 @@ MsgLine_PartCtrlPedal:
 	ldw	bc, 11	; F6E7C8  ld BC,0x000b
 	ldir85	; F6E7CB  ldir
 	xor	wa, wa	; F6E7CD  xor WA,WA
-	ld	a, (4698:16)	; F6E7CF  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E7CF  ld A,(0x125a)
 	push	xix	; F6E7D3  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E7D4  call 0xf41af0
 	pop	xix	; F6E7D8  pop XIX
@@ -18846,7 +18846,7 @@ MsgLine_PartHold:
 	bit	0, (UI_ScreenHoldState:16)	; F6E7F3  bit 0,(0x2092)
 	jr	nz, MsgLine_PartHold_Return	; F6E7F7  jr NZ,0xf6e843
 	calr	MsgLine_ClearTail	; F6E7F9  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E7FC  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E7FC  ld L,(0x1259)
 	ld	h, l	; F6E800  ld H,L
 	sla	l, 1	; F6E802  sla 0x01,L
 	add	l, h	; F6E805  add L,H
@@ -18861,7 +18861,7 @@ MsgLine_PartHold:
 	ldw	bc, 5	; F6E824  ld BC,0x0005
 	ldir85	; F6E827  ldir
 	xor	wa, wa	; F6E829  xor WA,WA
-	ld	a, (4698:16)	; F6E82B  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E82B  ld A,(0x125a)
 	push	xix	; F6E82F  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E830  call 0xf41af0
 	pop	xix	; F6E834  pop XIX
@@ -18929,7 +18929,7 @@ MsgLine_PartRtCreateX:
 	bit	0, (UI_ScreenHoldState:16)	; F6E849  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCreateX_Return	; F6E84D  jr NZ,0xf6e899
 	calr	MsgLine_ClearTail	; F6E84F  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E852  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E852  ld L,(0x1259)
 	ld	h, l	; F6E856  ld H,L
 	sla	l, 1	; F6E858  sla 0x01,L
 	add	l, h	; F6E85B  add L,H
@@ -18944,7 +18944,7 @@ MsgLine_PartRtCreateX:
 	ldw	bc, 12	; F6E87A  ld BC,0x000c
 	ldir85	; F6E87D  ldir
 	xor	wa, wa	; F6E87F  xor WA,WA
-	ld	a, (4698:16)	; F6E881  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E881  ld A,(0x125a)
 	push	xix	; F6E885  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E886  call 0xf41af0
 	pop	xix	; F6E88A  pop XIX
@@ -19012,7 +19012,7 @@ MsgLine_PartRtCreateY:
 	bit	0, (UI_ScreenHoldState:16)	; F6E8A6  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCreateY_Return	; F6E8AA  jr NZ,0xf6e8f6
 	calr	MsgLine_ClearTail	; F6E8AC  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E8AF  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E8AF  ld L,(0x1259)
 	ld	h, l	; F6E8B3  ld H,L
 	sla	l, 1	; F6E8B5  sla 0x01,L
 	add	l, h	; F6E8B8  add L,H
@@ -19027,7 +19027,7 @@ MsgLine_PartRtCreateY:
 	ldw	bc, 12	; F6E8D7  ld BC,0x000c
 	ldir85	; F6E8DA  ldir
 	xor	wa, wa	; F6E8DC  xor WA,WA
-	ld	a, (4698:16)	; F6E8DE  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E8DE  ld A,(0x125a)
 	push	xix	; F6E8E2  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E8E3  call 0xf41af0
 	pop	xix	; F6E8E7  pop XIX
@@ -19095,7 +19095,7 @@ MsgLine_PartRtCtrlX:
 	bit	0, (UI_ScreenHoldState:16)	; F6E903  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCtrlX_Return	; F6E907  jr NZ,0xf6e953
 	calr	MsgLine_ClearTail	; F6E909  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E90C  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E90C  ld L,(0x1259)
 	ld	h, l	; F6E910  ld H,L
 	sla	l, 1	; F6E912  sla 0x01,L
 	add	l, h	; F6E915  add L,H
@@ -19110,7 +19110,7 @@ MsgLine_PartRtCtrlX:
 	ldw	bc, 11	; F6E934  ld BC,0x000b
 	ldir85	; F6E937  ldir
 	xor	wa, wa	; F6E939  xor WA,WA
-	ld	a, (4698:16)	; F6E93B  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E93B  ld A,(0x125a)
 	push	xix	; F6E93F  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E940  call 0xf41af0
 	pop	xix	; F6E944  pop XIX
@@ -19178,7 +19178,7 @@ MsgLine_PartRtCtrlY:
 	bit	0, (UI_ScreenHoldState:16)	; F6E95F  bit 0,(0x2092)
 	jr	nz, MsgLine_PartRtCtrlY_Return	; F6E963  jr NZ,0xf6e9af
 	calr	MsgLine_ClearTail	; F6E965  calr 0xf6d5f1
-	ld	l, (4697:16)	; F6E968  ld L,(0x1259)
+	ld	l, (SongEvent_Byte1:16)	; F6E968  ld L,(0x1259)
 	ld	h, l	; F6E96C  ld H,L
 	sla	l, 1	; F6E96E  sla 0x01,L
 	add	l, h	; F6E971  add L,H
@@ -19193,7 +19193,7 @@ MsgLine_PartRtCtrlY:
 	ldw	bc, 11	; F6E990  ld BC,0x000b
 	ldir85	; F6E993  ldir
 	xor	wa, wa	; F6E995  xor WA,WA
-	ld	a, (4698:16)	; F6E997  ld A,(0x125a)
+	ld	a, (SongEvent_Byte2:16)	; F6E997  ld A,(0x125a)
 	push	xix	; F6E99B  push XIX
 	call	T_Value_ToAsciiDigits3_RightJustified	; F6E99C  call 0xf41af0
 	pop	xix	; F6E9A0  pop XIX

@@ -117,17 +117,17 @@ grave 'u'  0xA3 :  10 08 63 63 63 63 63 63 7f 3f 00 00 00 00
 Seventeen codes of `0xF1B400` match a plain letter this way, and
 `notes/font_layout_check.py` asserts all seventeen:
 
-| code | mark | letter | | code | mark | letter |
-|---|---|---|---|---|---|---|
-| `0x9C` | circumflex | o | | `0xA5` | circumflex | u |
-| `0x9D` | grave | a | | `0xA6` | circumflex | i |
-| `0x9E` | circumflex | a | | `0xB4` | acute | a |
-| `0x9F` | grave | e | | `0xB5` | acute | o |
-| `0xA0` | acute | e | | `0xB6` | acute | u |
-| `0xA1` | diaeresis | e | | `0xB7` | tilde | n |
-| `0xA2` | circumflex | e | | `0xB8` | acute | i |
-| `0xA3` | grave | u | | `0xB9` | grave | o |
-| `0xA4` | diaeresis | u | | | | |
+| code   | mark       | letter |     | code   | mark       | letter |
+|--------|------------|--------|-----|--------|------------|--------|
+| `0x9C` | circumflex | o      |     | `0xA5` | circumflex | u      |
+| `0x9D` | grave      | a      |     | `0xA6` | circumflex | i      |
+| `0x9E` | circumflex | a      |     | `0xB4` | acute      | a      |
+| `0x9F` | grave      | e      |     | `0xB5` | acute      | o      |
+| `0xA0` | acute      | e      |     | `0xB6` | acute      | u      |
+| `0xA1` | diaeresis  | e      |     | `0xB7` | tilde      | n      |
+| `0xA2` | circumflex | e      |     | `0xB8` | acute      | i      |
+| `0xA3` | grave      | u      |     | `0xB9` | grave      | o      |
+| `0xA4` | diaeresis  | u      |     |        |            |        |
 
 Exactly **five distinct accent marks** are used across them, and two of them are
 mirror images of each other: acute is `04 08`, grave is `10 08`.
@@ -211,7 +211,11 @@ voiced and semi-voiced sound marks, carried as **separate characters** because
 there is no room to compose them into an 8-pixel cell. `0x11` is that same ring
 at the **bottom** (the full stop) and `0x12` a tick there (the comma); `0x13`
 and `0x14` are the two corner brackets; `0x16` is the middle dot. ⚠ `0x15`
-(`30 49 06`) is **not identified**.
+(`30 49 06`) is **not identified**. ✅ (2026-10-31) It is the **wave dash 〜**: rows 4-6
+draw one S-shaped stroke across the cell (`..##....` / `.#..#..#` / `.....##.`), and with it
+`0x11`-`0x15` read 。、「」〜 -- the same five punctuation marks, in the same order, as the
+16x16 faces' `0x61`-`0x65` (§4.2).  Read from the rendering
+(`python3 notes/render_font.py 0xF212B0 14 --art 0x15`), so graded as a reading.
 
 ### 4.2 `0xF203B0` hiragana and `0xF21940` katakana, 16 x 16 (services `0x1D`, `0x19`)
 
@@ -225,11 +229,15 @@ Both are 120-cell tables in the **same code space and the same order**:
 | `0x48`-`0x5B` | 20 | the voiced (dakuten) forms |
 | `0x5C`-`0x60` | 5 | the semi-voiced (handakuten) forms |
 | `0x61`-`0x65` | 5 | 。 、 「 」 〜 |
-| `0x66` | 1 | a small filled diamond — **katakana only** |
+| `0x66` | 1 | ・ the katakana middle dot (U+30FB), a 4x4 filled dot at mid-height — **katakana only** |
 
 46 + 9 + 1 + 20 + 5 + 5 = **86**, which is exactly the number of defined cells
 in the hiragana face; the katakana face has **87**, the extra being `0x66`,
-which the hiragana face leaves blank.
+which the hiragana face leaves blank.  ✅ (2026-10-31) `0x66` is ・, the KATAKANA MIDDLE DOT
+(中黒): a 4x4 dot centred in the cell (rows 7-10, `.##.`/`####`/`####`/`.##.`), the full-width
+twin of the half-width face's `0x16`.  It is the mark that separates the words of a foreign
+name written in katakana, which is why only the katakana face has it; Unicode files it in
+the Katakana block for the same reason.
 
 ★ **The cross-check, and it is a good one.** `notes/font_layout_check.py`
 compares the two faces bitmap by bitmap, knowing nothing about kana, and finds
@@ -296,7 +304,13 @@ decoded from anything: every cell was **read by eye** from the lossless contact
 sheets `prom_b/images/fonts/Font_Svc1A_16x16.png` and `Font_Svc1F_16x16.png`.
 
 ⚠ **Grade that for what it is.** This is human OCR of a 16x16 bitmap. One cell
-(set A `0x38`) could not be settled at all and is written `〓`; a handful of
+(set A `0x38`) could not be settled at all and is written `〓`
+(✅ 2026-10-31: re-read as **既** -- a 皀 left component, the box over the hooked foot, and
+旡 on the right, whose long middle stroke and hooked tail are what the first reading took
+for 戈; the transcription now carries it, graded like every other cell.  A machine match
+of all 267 cells against the standard X11 `jiskan16` JIS X 0208 font agrees with the human
+reading on only a few percent of cells (`notes/open4-f-probes/kanji_nearest_jis.py
+--calibrate`), so no machine verdict is available to outrank the eye); a handful of
 others are ranked readings, not facts — `0xDF` is 滅 rather than 減 only because
 the cell has 火 where set B's `0x38` has 口. Treat a single character as a
 proposal. ★ But the errors are **noise, not bias**: a misread character can
@@ -366,6 +380,30 @@ appended after a gap is a block added later. See §5.4.
 The service's header asked *"Unknown: what indexes codes 0xB0-0xBC"*. Rendered,
 they are Á É Ñ á ó ú ñ í ì ¿ and two cells whose reading is not settled — the
 `Ñ`/`ñ` pair and the inverted question mark make the language unambiguous.
+
+✅ **Settled 2026-10-31, by byte identity with the face's own ASCII cells** (the method §2
+used above `0x7E`; `notes/open4-f-probes/latin_b0_bc.py` asserts every row):
+
+| code   | reading | evidence                                                                                |
+|--------|---------|-----------------------------------------------------------------------------------------|
+| `0xB0` | −1      | the `'1'` cell (0x31) moved 2 px right, plus a 3x2 bar at rows 4-5 on the left: a minus |
+| `0xB1` | Á       | (as above)                                                                              |
+| `0xB2` | É       |                                                                                         |
+| `0xB3` | Ñ       |                                                                                         |
+| `0xB4` | á       |                                                                                         |
+| `0xB5` | ó       | `'o'` (0x6F) plus an acute in rows 0-1                                                  |
+| `0xB6` | ú       |                                                                                         |
+| `0xB7` | ñ       |                                                                                         |
+| `0xB8` | í       | `'i'` (0x69) with its dot replaced by an acute in rows 0-1                              |
+| `0xB9` | ò       | identical to `0xB5` except the accent's top pixel, column 3 instead of 5: a grave       |
+| `0xBA` | ¡       | `'!'` (0x21), rows 0-9 upside down                                                      |
+| `0xBB` | ¿       |                                                                                         |
+| `0xBC` | −2      | the `'2'` cell (0x32) narrowed by one column, plus the same 3x2 minus bar on the left   |
+
+⚠ So the list above was wrong in one place: there is no `ì`; `0xB9` is **ò**, the Italian
+grave (the (EF) France/Italy area of §6.2), and `0xBA` is **¡**.  The two "unsettled" cells
+are `0xB0` and `0xBC`, the single-cell negatives −1 and −2: a reverse mapping must map the
+two-character strings "-1" and "-2" onto them, as no single Unicode character is either.
 They are **not** at their latin-1 code points (¿ is `0xBB` here, `0xBF` there;
 Á is `0xB1` here, `0xC1` there) and the offsets are not a constant shift, so
 this is a private extension, appended for a market rather than adopted from a
@@ -473,6 +511,40 @@ is the SX-WSA1. That closes the circle three ways:
 suffix; the shared-source step is the ordinary reading of those facts plus
 §6.1, not a measurement.
 
+### 6.3 ✅ Nor on the nine WSA1R floppies, and there is no compressed span (2026-10-31)
+
+§6.1 left two places open: text loaded from **disk**, and **compressed** text.
+
+* **Disk.**  The nine SX-WSA1R diskettes of MAME's `wsa1_flop` softlist, rebuilt byte-exact by
+  `make -C floppy gate-wsa1` ("All 9 wsa1 floppies reproduced byte-for-byte"), run through the
+  same dictionary test (`python3 scripts/analysis/japanese_text_census.py --dict-test
+  ../floppy/build/wsa1/*.img`; dictionary rebuilt from EDICT2 of 2026-10-31, SHA256
+  `5b7a26df69eefb592527310e8e887ed7d0ea4b4d29d71e7dce160ff53be32bed`, 151,569 kana words):
+
+  | disk    | runs | real map | permuted-map null | permutations >= real |
+  |---------|-----:|---------:|-------------------|---------------------:|
+  | dance   | 1865 | 3        | 9.8 ± 88.9        | 75 / 200             |
+  | demo1   | 2667 | 12       | 13.9 ± 71.5       | 47 / 200             |
+  | etec    | 820  | 0        | 3.0 ± 4.6         | 200 / 200            |
+  | giontop | 1852 | 6        | 15.5 ± 56.5       | 94 / 200             |
+  | gjs1    | 1212 | 0        | 1.2 ± 2.7         | 200 / 200            |
+  | mcompos | 1580 | 3        | 12.5 ± 101.4      | 39 / 200             |
+  | myset   | 1631 | 4        | 8.3 ± 11.1        | 123 / 200            |
+  | qsdisk  | 1759 | 10       | 8.2 ± 15.6        | 43 / 200             |
+  | synth   | 1798 | 3        | 16.5 ± 174.4      | 70 / 200             |
+
+  No disk scores above its null.  The positive control still separates on this data, though
+  more weakly than on the ROMs (the disks' nulls are wide): `--plant 20` lifts myset to 54
+  (9 / 200) and dance to 53 (1 / 200).
+* **Compressed spans.**  None exists: no range of prom_a/b/c/d carries a `census: opaque --
+  compressed` declaration, and the only "compressed" names in the sources are a control curve
+  (`Ctrl_Curve_Compressed`, a dynamics curve) and message texts explicitly marked "no
+  compression".
+
+All nine disks are export-market media (the softlist's), so this closes the search inside
+everything that exists here.  **The text the kanji order was taken from needs a domestic
+SX-WSA1 dump** -- its program ROMs or a domestic disk -- and neither is in the romset.
+
 ---
 
 ## 7. One oddity worth keeping
@@ -498,14 +570,23 @@ problem or is an accident of the build is **not established**.
   are transcribed** (§5.1) and the ordering is established as text-driven
   (§5.2). What is still missing is the **text itself**, and §6.1 shows it is
   not in these four images. Next: the floppy filesystem, and any compressed
-  region of prom_b/c/d.
+  region of prom_b/c/d. (2026-10-31: both done, both empty -- see §6.3.  BLOCKED: the text
+  needs a domestic SX-WSA1 dump (program ROMs or a domestic disk), which is not in the
+  romset; open-items wave 4.)
 * The kana faces' code points are known; the KANJI codes are now known as
   glyphs. A *reverse* mapping (Unicode -> code) good enough to render a
   Japanese string would need the two unsettled cells resolved — set A `0x38`,
-  and `Font_Svc06`'s `0xB0` and `0xBC`.
+  and `Font_Svc06`'s `0xB0` and `0xBC`. (Resolved 2026-10-31: `0xB0`/`0xBC` are −1 and −2
+  and `0xB9` is ò, not ì, by byte identity, §5.4; set A `0x38` reads **既**, by eye, §5.1 --
+  a ranked reading like every other cell of the transcription; a machine match against a
+  standard JIS font was tried and FAILED calibration, so it decides nothing; open-items wave 4.)
 * **Any caller at all.** §6. Until one exists, the `HL` argument of the text
   services still has no established meaning — it is multiplied by `BC` once into
-  `IZ` and never used again.
+  `IZ` and never used again. (Resolved 2026-10-31: `IZ` IS used -- every character is read
+  as `ld r,(XIY+IZ)` -- so `HL` is the ROW NUMBER of a table of `BC`-character strings at
+  `XIY`, in all twelve services; the Latin call sites that pass `HL` /= 0 use it so, and
+  prom_b's DLB_Handler_StringTable already did (FINDINGS-prom_b-for-the-mame-driver.md §4).
+  `notes/open4-f-probes/swi7_text_hl.py`; LCD_Svc_06_DrawText8x14 header; open-items wave 4.)
 * ~~`0xF25590`'s cell count (§1) and the 1200-byte `0x0E` run after it.~~
   ✅ **CLOSED 2026-08-25 from prom_b's side: 128 cells.** The last non-zero
   byte of the whole font region is `0xF26D7C`, and `0xF25590 + 128 x 48 =
@@ -520,7 +601,7 @@ problem or is an accident of the build is **not established**.
   re-derive with `python3 notes/gen_prom_b_fonts.py --selftest` (46 checks)
   and read `notes/FINDINGS-prom_b-fonts-and-dsp-value-lists.md` §1.
 * Code `0x15` of the half-width katakana face (§4.1), and code `0x66` of the
-  katakana face (§4.2).
+  katakana face (§4.2). (Resolved 2026-10-31: 〜 and ・, §4.1/§4.2; open-items wave 4.)
 * The fonts are in prom_b, so their bytes belong to that image's lane; this note
   records only what prom_a's code proves about them. (Resolved: by design: the twelve faces are typed in prom_b/wsa1_prom_b.s from prom_b/images/fonts/*.png, FINDINGS-prom_b-fonts-and-dsp-value-lists.md section 1 (00c2226f1); open-items register 2026-10-31.)
 

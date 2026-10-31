@@ -76,6 +76,10 @@ touch == 0xFF  or  status == 2  ->  note ON  : (0x008517) |= 0x03, return -1, ev
 cannot be given a velocity, a note-off does not need one — but nothing here proves it, and
 `0x008517` is written by that one instruction and read by nothing that names it, so what
 collects the two bits is unknown. Nor is the meaning of status value 2 established.
+(Resolved 2026-10-31, open4/wsa1-b, for the reader: nothing collects them -- the only other
+way to reach `0x8517` is as element 61 of the 61-byte velocity table at `0x84DA`, one past the
+key range; `notes/open4-b-probes/prom_c_ram_cell_census.py`.  Value 2 stays BLOCKED on IC4's
+missing datasheet; gap I of `notes/WSA1-EMULATION-DISASM-GAPS.md`.)
 
 ---
 
@@ -223,9 +227,11 @@ value. The UI is on CPU 1, which is why nothing on CPU 2 could be found.
 ## 7. What the next pass needs
 
 * `0x00E2E1`, the flush counter that makes `KeyEvents_ToLink` throw the keyboard away for a
-  pass. Nothing in converted code writes it.
+  pass. Nothing in converted code writes it. (Resolved 2026-10-31, open4/wsa1-b: only its own
+  `decw` and RESET's RAM-image copy write it; `notes/open4-b-probes/prom_c_ram_cell_census.py`.)
 * `0xFC8B0B`'s two helpers `0xFC8A29` and `0xFC8ADA` are the transport of the calibration
   block. They would name the medium.
-* `0x008517`, and whatever reads the key-state bitmap at `0x0000FFF0` through a pointer.
+* `0x008517` (resolved 2026-10-31: no reader, see section 3), and whatever reads the key-state
+  bitmap at `0x0000FFF0` through a pointer.
 * `Dev108000_Preload_80toBF`'s 64 write pairs: now that the port is known to deliver key
   events, what a *write* to it means is the obvious next question.

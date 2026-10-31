@@ -580,6 +580,23 @@ consumers); **PROVEN** for the arithmetic.
   `PAGE2/2`'s three-way split is graded **STRONG**, not PROVEN. (Resolved: FINDINGS-l7a1429-field-editors.md section 2c (be68cf321): four PAGE2/2 editors pin p16/p17/p18 one field at a time, so the split is PROVEN; open-items register 2026-10-31.)
 * **The eight remaining 43-byte-record parameters** -- p0, p1, p2 (read by the
   MODELING top with count 3), p12 and p20 -- still do nothing this image reads.
+  (Resolved 2026-10-31, lane open4/wsa1-a: **p0, p1, p2 ARE read** -- they are the three
+  VELOCITY-SPLIT thresholds of the four velocity layers. `VelSplit_LayerFromVelocity` (0xFA727D,
+  7 call sites in `VoiceParams_Compute_A`) and its twin `_b` (6 sites in `_C`/`_D`) are handed
+  the element's wave-select pointer, part[+0x8C+41e], and return 0/1/2/3 for velocity <= p0 /
+  p1 / p2 / above (0xFA728C, 0xFA7292, 0xFA7299); the layer picks the element's envelope
+  descriptor part[+0x90+4*layer], i.e. one of wave-select +0x03..+0x0A's four selector pairs.
+  In prom_d's three wave-select tables (directory +0x18, +0x20, +0x3C) the triple is
+  (127,127,127) in 579 of 594 records -- one layer -- and splits such as (60,80,100) in the rest. The MODELING top's count-3 read (0xFDD4B4..0xFDD4C2) stores, per
+  layer, the index of the first threshold equal to 0x7F (bit 7 masked, 0xFDD514..0xFDD545) in
+  Arr27D6, so it is the VELOCITY-LAYER count, not the ON/OFF or DRIVER column; those are
+  `ToneEditPage_A0_SetLayerOnOff`, `_StepDriverGroup` and `_StepDriver`'s (were `ToneEditPage_A0_Op0..2`), and the per-element enable reaches the packer as
+  `Pack104_LoadElementWaveSelRec`'s fourth argument from part word +0x06 (`BitMask_Table_FDE695`).
+  **p12: no reader** -- `notes/open4-a-probes/wavesel_field_readers.py` tracks every register
+  loaded from the three wave-select pointer sources and finds no +0x0C access, the unpacker reads
+  none of +0..+2 or +0x0C, and a p12 write (`ToneMsg_WriteWaveSelectParam` table entry 12 ->
+  0xFBCA3B) has no arm of its own, only the common reload; graded STRONG negative, the tracker's
+  limits are in that README. **p20 is read** (`sub_FC578C` 0xFC588B, packer-routines 4.2).)
 
 ---
 

@@ -18,8 +18,9 @@ for old,new,_ in items:
     assert old in LABELS, "no label "+old
     assert new not in TOKENS, "taken: "+new
 assert len({n for _,n,_ in items})==len(items), "duplicate new name"
-# *.ld: prom_a.ld defines prom_b calr targets by name (2026-10-04)
-files=subprocess.run(["grep","-rlwE","|".join(o for o,_,_ in items),"wsa1","--include=*.s","--include=*.md","--include=*.py","--include=*.ld"],capture_output=True,text=True).stdout.split()
+# *.ld: prom_a.ld defined prom_b calr targets by name (2026-10-04, retired 2026-10-31);
+# *.syms: prom_X/exports.syms lists the labels the joint link exports (wsa1/maincpu/maincpu.ld)
+files=subprocess.run(["grep","-rlwE","|".join(o for o,_,_ in items),"wsa1","--include=*.s","--include=*.md","--include=*.py","--include=*.ld","--include=*.syms"],capture_output=True,text=True).stdout.split()
 files=[f for f in files if "/.image-" not in f]
 # WSA1_RENAME_SKIP=path,...: files left exactly as they are (a historical key that must keep the old name)
 files=[f for f in files if f not in os.environ.get("WSA1_RENAME_SKIP","").split(",")]

@@ -108,7 +108,7 @@ equivalent proof it ran.
   to execute by the `0xF35E` shadow flip), **no I-RAM body upload occurs** — only the boot
   kernel is ever written to I-RAM (words 48..110). Effect changes write C-RAM coefficients;
   the group reload, run with unchanged records, writes nothing.
-- **OPEN:** whether any path feeds `PoolDir_Records[idx]+12` (the op-3 body) to `P7Stream_Run`
+- ~~**OPEN:**~~ (Resolved 2026-10-31, see "The +12 census" below: one caller, ungated.) whether any path feeds `PoolDir_Records[idx]+12` (the op-3 body) to `P7Stream_Run`
   at runtime. `P7Unit_LoadProgramStreams` feeds +0/+8; `P7Units_ReloadForGroup` runs fixed
   canned streams and, when records are unchanged, emits nothing. No caller of the +12 body
   was found, and none fired in the emulator. Remaining ways it *could* still happen: (a) an
@@ -121,3 +121,30 @@ equivalent proof it ran.
 
 Builds on [[wsa1r-dsp-runtime-effects]]; refines `FINDINGS-dsp-runtime-effect-uploads.md`
 (which stands: effect selection is coefficient-driven).
+
+---
+
+## The +12 census, 2026-10-31 (lane open4/wsa1): callers and gates
+
+Static, from prom_c's bytes and `prom_c/p7/p7_module.s`;
+`notes/open4-f-probes/p7_unit_program_paths.py` re-checks every line (18 checks).
+
+| question                                  | answer                                                                                                                               |
+|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| instructions naming `PoolDir_Records`     | 15 (the 24-bit operand `0xFDBFD9` occurs 15 times in the ROM; all 15 spelled symbolically)                                           |
+| of those, the ones adding +12             | ONE: `0xFA3AEA` in `P7Unit_ReloadOnProgramChange` (was `sub_FA3A3C`)                                                                 |
+| what it does with the pointer             | `P7Stream_Run(+12, unit + 1, P7Stream_Data_FD4B85)` at `0xFA3B9C`; no branch from the routine's entry to that call                   |
+| what the +12 stream is                    | for all 56 records one op-3 record, payload `01 00 6e`: command 0x01, address 0x006E relocated by b3                                 |
+| the send                                  | op-3 arm `0xF9AAFB`: `P7Byte_SendCmd(0x01)`, two `P7Byte_SendArg` address bytes, then `P7Byte_SendData`; SendCmd never returns early |
+| callers of `P7Unit_ReloadOnProgramChange` | `P7Units_ResolveProgramsAndReload` only: `0xFA5773` (unit 1), `0xFA581C` (unit 0), `0xFA58CE` (unit 2)                               |
+| the gate at each call                     | the unit block's resolved record (+0x18 of `0x856E + 26*u`) differs from its shadow (+0x18 of `0x85BC + 26*u`)                       |
+| where the body lands                      | unit 0 -> destination 0 (IC6) at 0x006E; unit 1 -> destination 0 (IC6) at 0x00E7; unit 2 -> destination 1 (IC5) at 0x00A8            |
+| IC30 (destination 2)                      | no unit's destination; only `P7Stream_Data_FD4B97` index 4 (boot loader, group reload fixed streams)                                 |
+
+So the 0x6E bodies are uploaded by the **ordinary effect-change path**, for every unit, with no
+firmware condition beyond "the program changed".  No service, test or cold-load mode is needed,
+and none other exists: there is no second reader.  The emulator runs in this note and in
+`FINDINGS-dsp-runtime-effect-uploads.md` drove unit 2 and watched IC30, which per the ROM is
+not where unit 2's bytes go; the correction section at the end of that note gives the
+destination table and the follow-up, which is kn7000_mame-side (its destination routing and
+its `upd6383` device's behaviour for a command-0x01 body sent while /RST2 is high).

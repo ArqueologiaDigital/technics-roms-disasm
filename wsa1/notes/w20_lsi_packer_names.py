@@ -337,7 +337,7 @@ DOCS = {
           then recomputes R's position terms and calls
           Pack104_StageRegs_00C0_0100_0240 with the caller's staging struct
           (0xFC5EE9).
- {STAR}{STAR} WHAT PINS IT: its caller `sub_FAEAF9` (prom_c/midi/midi_controllers.s)
+ {STAR}{STAR} WHAT PINS IT: its caller `CtrlDest29_Position_Apply` (prom_c/midi/midi_controllers.s)
           walks the part's sounding voices from VoiceQuery_Tag00_Part, calls this
           routine at 0xFAEB41 and, when it returns non-zero, calls
           Dev104_SetChanRegs_00C0_0100_0240 at 0xFAEB56 with the SAME staging
@@ -486,7 +486,7 @@ DOCS = {
           (0xFC67EF).  Dev104_PackStagingStruct does NOT do that on the note
           path, so register chan+0x0280 has a low-3-bit field this refresh sets
           and the packer leaves clear.  Recorded, not explained.
- {STAR}{STAR} WHAT PINS IT: its caller `sub_FAECC7` (midi_controllers.s) calls this at
+ {STAR}{STAR} WHAT PINS IT: its caller `CtrlDest37_SubGain_Apply` (midi_controllers.s) calls this at
           0xFAED0F and, on a non-zero return, Dev104_SetChanReg_0280 at 0xFAED24
           with the same staging buffer -- and that writer reads struct offset
           +0x14, which is the word Pack104_StageReg_0280 fills.

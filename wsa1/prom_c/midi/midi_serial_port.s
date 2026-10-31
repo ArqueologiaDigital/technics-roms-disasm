@@ -945,10 +945,17 @@ Queue_FreeSlots:
 ;   0xFF when CPU 1 sends the byte 0xFA on link channel 2.  0xFF is neither 0 nor
 ;   1, so the next P8 transition in either direction will send a message.  All five
 ;   literal-addressed sites of 0x00F328 are accounted for.
-; ⚠ NOT ESTABLISHED: what P8 bit 2 is wired to.  `res 2,(P8)` before reading it is
-;   the shape of driving a line low and sampling it, which is how an open-collector
-;   input is read, but the port direction registers are set in RESET and P8CR's bit
-;   layout is not decoded anywhere in this tree.
+; ★ P8 BIT 2 IS MIDI2SNS (gap K, closed 2026-10-31).  The SX-WSA1R schematic
+;   (page 20, sheet II-9) puts net MIDI2SNS on IC2 pin 13, P82; page 19 (sheet
+;   II-7) draws it as a current sense on the MIDI 2 OUT jack: Q12 (2SB709AR) has
+;   its base-emitter across R71 150 ohm in the +5MI feed to JK3 pin 5, drives Q11
+;   (2SD601AQ) whose emitter is MIDI2SNS (R73 220K to ground, C91 0.1 uF on the
+;   base).  So bit 2 is high while a receiver on MIDI 2 OUT draws loop current,
+;   i.e. while a cable to a powered MIDI IN is plugged in and the line is active;
+;   this routine's own active sensing (arm 1) keeps the line active.  The ROM
+;   then sends START when that appears and STOP when it goes.  Why a cable-sense
+;   edge should start and stop CPU 1's sequencer is not established.
+;   notes/open4-b-probes/wsa1_sch_open4_crops.py (midi2_out_sense.png).
 ; ⚠ NOT ESTABLISHED: the tick rate.  See the timing paragraph in the block comment
 ;   above -- the 135/165-tick pair is consistent with MIDI's 300 ms active-sensing
 ;   rule, but that is an argument from the standard, not from this ROM.

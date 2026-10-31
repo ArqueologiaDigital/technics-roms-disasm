@@ -204,14 +204,17 @@ established is the duplicate, the six bad targets, and the unreachability.
 * **What is at the other end.** No string, databook or schematic in these trees
   names it. Everything is named after the on-chip peripheral (`SC1_`) or
   positionally.
+  (Resolved 2026-10-31, open4/wsa1-b: the control panel. SCK and DATA leave on CN3, "CP1 CN1", pins 3-4, and the driver is the KN5000 control-panel driver's twin, state for state; gaps N, P and R of `notes/WSA1-EMULATION-DISASM-GAPS.md`.)
 * **The seven command bytes** the module ever sends first — `0xDD`, `0xDE`,
   `0xDF`, `0xE0`, `0xE2`, `0xE3`, `0xEF` — and their arguments (`0xD2`, `0x1A`,
   `0x03`, `0x80`, `0x00`, `0x08`, `0x10`). Recorded as the literals the ROM
   sends, in ROM order.
+  (Resolved 2026-10-31 except the reply: each is a KN5000 panel command of the same type, table in gap P of `notes/WSA1-EMULATION-DISASM-GAPS.md`; what the panel answers needs the M37471M2196S mask ROM, not dumped.)
 * **Which pins.** SC1's signals are on port 8 on this part, and the module owns
   bits 3 and 5 of P8CR/P8FC and reads P8 bit 5 and PB bit 4 as inputs — but no
   databook here names the pins, so "P8.5 is the serial clock" is not asserted.
   (P8 is *not* exclusively this module's: prom_a `0xFA7DDF` clears bit 2.)
+  (Resolved 2026-10-31: P8 bit 3 is TXD1 (IC1 pin 14), P8 bit 5 is SCLK1 (pin 16), and PB bit 4 is INT6 (pin 40), driven by the IC9 Schmitt inverter from the same SCK wire; gap N of `notes/WSA1-EMULATION-DISASM-GAPS.md`, `notes/open4-b-probes/wsa1_sch_open4_crops.py`.)
 * **prom_a `0xF89800`**, reached through thunk `0xF405F0` — the module's only
   call out of itself, made twice inside the receive decoder, and its carry
   result decides whether a decoded byte is kept.

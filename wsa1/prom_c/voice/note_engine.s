@@ -5408,9 +5408,18 @@ MidiNote_OffTail__FB385A:
 ; Evidence: `mul BC,0x012c` / `ld XWA,(XBC+0x1523)` / `ld C,(XWA+0x10)` /
 ;          `and C,0xc0` and then compares against 0x00, 0x40, 0x80 and 0xC0, with
 ;          the default falling into the same arm as 0xC0 (`jrl T,0xFB3C0E`).  So
-;          the mode is BITS 6-7 of byte +0x10 of the part record, and there are
-;          four values because two bits have four values -- not because four
-;          compares were counted.
+;          the mode is BITS 6-7 of byte +0x10 of the record the part record's
+;          +0x00 POINTER names, and there are four values because two bits have
+;          four values -- not because four compares were counted.
+;          ★ (lane open4/wsa1-a) THAT RECORD IS THE PART'S TONE RECORD and the byte is
+;          prom_d's tone-head `kind`: Part_LoadToneRecordAndPointers stores
+;          Part_ResolveToneRecord's answer at part +0x00 (0xFB47EE) -- the only
+;          32-bit store to that slot -- and switches on the same `+0x10 & 0xC0`
+;          (0xFB47F3).  Over prom_d's 274 tone heads the byte is 0x10 in 248, 0x00
+;          in 6, 0x80 in the 18 drum kits and 0x71 in the two Drawbar tones, so
+;          mode 0x00 = melodic, 0x40 = DRAWBAR (VoiceRegs_Stage_B, the ROM image),
+;          0x80 = drum kit, and NO factory tone has 0xC0
+;          (notes/open4-a-probes/part_mode_kind.py).
 ;          The arms, from the calr census (prom_c_voice_module_check.py --refs):
 ;              0x00  VoiceParams_Compute_A (0xFB38B7), VoiceRegs_Stage_C (0xFB3948),
 ;                    VoiceRegs_Stage_A (0xFB394D)
@@ -5426,9 +5435,25 @@ MidiNote_OffTail__FB385A:
 ;          VoiceRegs_Stage_A or VoiceRegs_Stage_C on a Z test (0xFB3946).  The
 ;          loop closes with `add L,C` / `cp L,4` / `jrl C,0xFB38DD` at
 ;          0xFB3958-0xFB395C, so FOUR is the bound.
-; Unknown:  ⚠ what part-record byte +0x10 IS.  ⚠ what arm 0xC0 does -- 0xFB3C0E is
-;          inside this routine and was not traced.  ⚠ what the Z test at 0xFB3946
-;          tests, i.e. what makes a voice take Stage_A rather than Stage_C.
+;          ★ ARM 0xC0 AND THE DEFAULT (0xFB3C0E) DO NOTHING BUT THE COMMON EXIT:
+;          `and (part+0x04),0xFFF3` (0xFB3C1B) and return -- no VoiceParams_Compute_*,
+;          no voice allocated, no write to either device.  Every other arm ends in
+;          the same instructions (after PartRec_Word0006_ClearBit13 at 0xFB3C09), so
+;          a note-on always clears bits 2-3 of part word +0x04; bit 3 is set by
+;          the twelve Voice_Restage_Reg0440/0180/04C0_*_ForPart sites (0xFAE3A6..
+;          0xFAEA84), bit 2 by sub_FB8CEC (0xFB8D7A) and sub_FB9AC2 (0xFB9AEC).  A
+;          tone of kind 0xC0 -- none in ROM; only a RAM-staged tone could carry it --
+;          would load its pointers as a melodic one (Part_LoadToneRecordAndPointers
+;          treats 0xC0 like 0x00) and stay SILENT on note-on.
+;          ★ THE Z TEST AT 0xFB3946 tests bit 1 of the voice record's byte +0x01,
+;          the BUILDER TAG each VoiceParams_Compute_* writes into the staging copy
+;          (0x5A53 + 68*element) before MemCopyWords lays it over the voice record:
+;          A (layer << 6) | 0x04, B 0x08, C (layer << 6) | 0x10, D (layer << 6) | 0x12
+;          -- bit 1 is D's alone.  In this arm every voice tested was rebuilt by
+;          Compute_A a few instructions earlier (copy loop k = 10..13 at 0xFB1DA9 /
+;          0xFB1DB4, the same list the arm walks from 0xFB38D1), so the bit is clear
+;          and VoiceRegs_Stage_A is always taken; the Stage_C call at 0xFB3948 is
+;          unreachable from mode 0x00 (notes/open4-a-probes/voice_builder_tag.py).
 MidiNote_OnByPartMode:
 	link	xiz, 0xffe8              ; FB3860  link XIZ,0xffe8
 	pushw	hl                                   ; FB3864  push HL

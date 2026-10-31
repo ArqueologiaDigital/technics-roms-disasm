@@ -121,11 +121,11 @@ SITE_OWNER = {
     0xFB3808: "MidiNote_OffTail",      0xFB3927: "MidiNote_OnByPartMode",
     0xFB3A72: "MidiNote_OnByPartMode", 0xFB3B90: "MidiNote_OnByPartMode",
     0xFC3EA1: "NotePool8_NoteOnOff",   0xFB826B: "Dev10C_ResetAllChannels",
-    0xFACB85: "sub_FACAB7",            0xFAEB56: "sub_FAEAF9",
-    0xFAEBC2: "sub_FAEB65",            0xFACB96: "sub_FACAB7",
+    0xFACB85: "sub_FACAB7",            0xFAEB56: "CtrlDest29_Position_Apply",
+    0xFAEBC2: "CtrlDest30_PosDepth_Apply",            0xFACB96: "sub_FACAB7",
     0xFB373A: "MidiNote_OnTail",       0xFB3847: "MidiNote_OffTail",
     0xFB39D1: "MidiNote_OnByPartMode", 0xFB3AD9: "MidiNote_OnByPartMode",
-    0xFB3BF2: "MidiNote_OnByPartMode", 0xFAED24: "sub_FAECC7",
+    0xFB3BF2: "MidiNote_OnByPartMode", 0xFAED24: "CtrlDest37_SubGain_Apply",
 }
 
 
@@ -472,9 +472,9 @@ def sec9():
 def sec10():
     out("\n=== 10. THE PARAMETER-EDIT ARMS THAT REACH THIS DEVICE ===")
     tbl = 0xFAF08F
-    want = {0xFAF246: "sub_FAEAF9 -> 0x00C0, 0x0100, 0x0240",
-            0xFAF254: "sub_FAEB65 -> 0x00C0, 0x0100, 0x0240",
-            0xFAF29A: "sub_FAECC7 -> 0x0280"}
+    want = {0xFAF246: "CtrlDest29_Position_Apply -> 0x00C0, 0x0100, 0x0240",
+            0xFAF254: "CtrlDest30_PosDepth_Apply -> 0x00C0, 0x0100, 0x0240",
+            0xFAF29A: "CtrlDest37_SubGain_Apply -> 0x0280"}
     found = {}
     for k in range(49):
         a = int.from_bytes(b(tbl + 4 * k, 4), 'little')

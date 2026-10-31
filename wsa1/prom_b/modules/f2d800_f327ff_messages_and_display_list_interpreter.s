@@ -3128,7 +3128,7 @@ DLB_Handler_DecimalSigned:
 	ld	c, (xiy+9)	; F31BE4  ld C,(XIY+0x09)
 	extz	bc	; F31BE7  extz BC
 	inc	1, bc	; F31BE9  inc 1,BC
-	ld	xiy, 9824	; F31BEB  ld XIY,0x00002660
+	ld	xiy, Value_AsciiSign	; F31BEB  ld XIY,0x00002660
 	xor	hl, hl	; F31BF0  xor HL,HL
 	cp	bc, 4:i3	; F31BF2  cp BC,4
 	jr	z, DisplayListB_Run_Join2	; F31BF4  jr Z,0xf31c12
@@ -3212,7 +3212,7 @@ DLB_Handler_DecimalSigned2Words:
 	ld	c, (xiy+11)	; F31C6E  ld C,(XIY+0x0b)
 	extz	bc	; F31C71  extz BC
 	inc	1, bc	; F31C73  inc 1,BC
-	ld	xiy, 9824	; F31C75  ld XIY,0x00002660
+	ld	xiy, Value_AsciiSign	; F31C75  ld XIY,0x00002660
 	xor	hl, hl	; F31C7A  xor HL,HL
 	cp	bc, 4:i3	; F31C7C  cp BC,4
 	jr	z, DisplayListB_Run_Join4	; F31C7E  jr Z,0xf31c9c

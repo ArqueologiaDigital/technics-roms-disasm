@@ -10361,7 +10361,7 @@ sub_F73664_Skip2:
 	ldw	(BStore_CursorOffset:16), 5	; F7369A  ld (0x345e),0x0005
 	calr	SmfWrite_ReadSongByte	; F736A0  calr 0xf74e71
 sub_F73664_Join:
-	ld	(4696:16), a	; F736A3  ld (0x1258),A
+	ld	(SongEvent_Byte0:16), a	; F736A3  ld (0x1258),A
 	cp	a, 130	; F736A7  cp A,0x82
 	jrl	z, sub_F73664_Return	; F736AA  jrl Z,0xf737ea
 	cp	a, 132	; F736AD  cp A,0x84
@@ -10444,7 +10444,7 @@ sub_F73664_Skip11:
 	calr	SmfWrite_ReadSongByte	; F73768  calr 0xf74e71
 	pop	xhl	; F7376B  pop XHL
 	ld	(4699:16), a	; F7376C  ld (0x125b),A
-	ld	w, (4696:16)	; F73770  ld W,(0x1258)
+	ld	w, (SongEvent_Byte0:16)	; F73770  ld W,(0x1258)
 	and	w, 4	; F73774  and W,0x04
 	sla	w, 5	; F73777  sla 0x05,W
 	or	a, w	; F7377A  or A,W

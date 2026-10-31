@@ -842,7 +842,7 @@ Blink_SetupNumberFieldAndDraw_Skip6:
 	ld	(xiz-4), xbc	; F0EB8A  ld (XIZ+0xfc),XBC
 	jr	Blink_SetupNumberFieldAndDraw_Join4	; F0EB8D  jr T,0xf0ebac
 Blink_SetupNumberFieldAndDraw_Skip7:
-	ld	c, (9824:16)	; F0EB8F  ld C,(0x2660)
+	ld	c, (Value_AsciiSign:16)	; F0EB8F  ld C,(0x2660)
 	ld	(xix), c	; F0EB93  ld (XIX),C
 	inc	1, xix	; F0EB95  inc 1,XIX
 	ld	bc, (Blink_BytesPerEntry:16)	; F0EB97  ld BC,(0x28d0)

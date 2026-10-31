@@ -152,7 +152,7 @@ each one:
 | `Pack104_TickPositionMovement_ForVoice` | (calls the stager itself) | `R[+0x21]`, then all three |
 
 ★ **The prepare/write pairing is the strongest single argument in this pass.**
-`sub_FAEAF9` calls `Pack104_RestageRegs_00C0_0100_0240_ForVoice` at `0xFAEB41`
+`CtrlDest29_Position_Apply` calls `Pack104_RestageRegs_00C0_0100_0240_ForVoice` at `0xFAEB41`
 and, on a non-zero return, `Dev104_SetChanRegs_00C0_0100_0240` at `0xFAEB56`
 **with the same staging buffer `0x00D7A2`**. The writer's name comes from its
 own `add rr,0x00C0` operands, so the preparer's name is not an inference about

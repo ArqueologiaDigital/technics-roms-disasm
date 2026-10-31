@@ -118,7 +118,7 @@ MODULE_BANNER = """
 ; ⚠ NOT ESTABLISHED, listed so nothing below quietly assumes it:
 ;   * which bit of the byte written to 0x7B0004 does what.  The driver writes
 ;     0x80, 0x02 and 0x00 there and shadows the value because the register does
-;     not read back (Dev7B_WriteControl_Shadowed);
+;     not read back (Dev7B_WriteDsr_Shadowed);
 ;   * what PA bit 3 -- set by operation 7, cleared by operation 6 -- drives;
 ;   * what (0x605A59) and (0x605AEC) are for: both are written and NEVER read,
 ;     anywhere in prom_a or prom_b (notes/prom_a_addr_census.py 0x605A59 finds
@@ -172,7 +172,7 @@ routine(0xFE5576, "Fdc_PulseControlReset", """
 ;
 ; Called from: {CALLED}
 ; Inputs:  none.
-; Outputs: control register := 0x80 (through Dev7B_WriteControl_Shadowed, so
+; Outputs: control register := 0x80 (through Dev7B_WriteDsr_Shadowed, so
 ;          (0x605B08)/(0x605B09) follow it); (0x605AEE) := 0xFF.
 ; Evidence: (0x605AEE) is the cylinder the head is known to be on --
 ;          Fdc_Op2_SeekToCylinder skips the SEEK when the wanted cylinder
@@ -344,28 +344,28 @@ routine(0xFE5B07, "Fdc_SendParamByte", """
 ;          distinction between a command byte and a byte of a command already
 ;          under way; every parameter-emitting routine below uses this one.
 ; ---------------------------------------------------------------------""")
-routine(0xFE5B16, "Fdc_WriteControlRegister", """
+routine(0xFE5B16, "Fdc_WriteDsr", """
 ; ---------------------------------------------------------------------
-; Fdc_WriteControlRegister -- wait, then write the CONTROL register 0x7B0004
+; Fdc_WriteDsr -- wait, then write the CONTROL register 0x7B0004
 ; Called from: {CALLED}
 ; Inputs:  the byte at (XSP+0x04).
 ; Evidence: same wait as Fdc_SendCommandByte but the store goes through
-;          Dev7B_WriteControl, i.e. to 0x7B0004 rather than 0x7B0005.
+;          Dev7B_WriteDsr, i.e. to 0x7B0004 rather than 0x7B0005.
 ; ---------------------------------------------------------------------""")
-routine(0xFE5B25, "Fdc_WriteControlRegister_IfNoError", """
+routine(0xFE5B25, "Fdc_WriteDsr_IfNoError", """
 ; ---------------------------------------------------------------------
-; Fdc_WriteControlRegister_IfNoError -- as above, skipped when (0x605A15) is set
+; Fdc_WriteDsr_IfNoError -- as above, skipped when (0x605A15) is set
 ; Called from: {CALLED}.  ⚠ NO CALLER HAS BEEN FOUND: neither inside the module
 ;          nor in any converted prom_a code, and `python3 notes/prom_a_xref.py
 ;          0xFE5B25` finds no absolute reference either.  It is reached, if at
 ;          all, from code that is still `.incbin`.  Recorded as a searched
 ;          negative with the searches named, not as "unused".
 ; ---------------------------------------------------------------------""")
-routine(0xFE5B3C, "Fdc_WriteControlRegister_AndReadResult", """
+routine(0xFE5B3C, "Fdc_WriteDsr_AndReadResult", """
 ; ---------------------------------------------------------------------
-; Fdc_WriteControlRegister_AndReadResult -- control write, then take one byte
+; Fdc_WriteDsr_AndReadResult -- control write, then take one byte
 ; Called from: {CALLED}.  ⚠ Same searched negative as
-;          Fdc_WriteControlRegister_IfNoError above.
+;          Fdc_WriteDsr_IfNoError above.
 ; Outputs: (0x605A51) := one byte read from the DATA register after
 ;          Dev7B_WaitStatus_8x_Cx reports the chip has one.
 ; ---------------------------------------------------------------------""")
@@ -637,7 +637,7 @@ routine(0xFE5F14, "Fdc_Delay20Ticks", """
 ; ---------------------------------------------------------------------
 ; Fdc_Delay20Ticks -- Fdc_DelayTicks(0x28), i.e. 20 ticks
 ; Called from: {CALLED}.  ⚠ NO CALLER FOUND, by the same two searches named in
-;          Fdc_WriteControlRegister_IfNoError's header
+;          Fdc_WriteDsr_IfNoError's header
 ;          (notes/prom_a_fdc_callgraph.py and notes/prom_a_xref.py 0xFE5F14).
 ; ---------------------------------------------------------------------""")
 routine(0xFE5F1D, "Fdc_Op0_ResetAndIdentifyMedia", """

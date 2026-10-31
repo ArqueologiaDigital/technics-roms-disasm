@@ -14,8 +14,12 @@
 # over this table is CONSERVATIVE, because a misread character can only break
 # a word that is really there, never invent one.
 #
-# `〓` = one cell whose reading could not be settled (set A 0x38: a 貝/耳-like
-# left component with a 戈-like right one; 賦 / 賊 / 職 all fit badly).
+# Set A 0x38 was written `〓` (unsettled: "a 貝/耳-like left component with a
+# 戈-like right one; 賦 / 賊 / 職 all fit badly").  Re-read 2026-10-31 as 既: the
+# left component is 皀 (box over a hooked foot) and the right one 旡, whose long
+# middle stroke and hooked tail are what looked like 戈.  Same grade as every
+# other cell: a reading by eye.  A machine match against the X11 jiskan16 JIS
+# font fails calibration (notes/open4-f-probes/kanji_nearest_jis.py).
 #
 # Cell counts are the ROM's, and they check out exactly: 224 defined cells in
 # set A (codes 0x10-0xEF) and 43 in set B (0x10-0x3A), per
@@ -24,7 +28,7 @@
 # FORMAT:  <set> <base code, hex> <16 characters, in ascending code order>
 A 10 節消合状態心配数秒接現在故障工場
 A 20 出荷構成行今左右両手再生中最適細
-A 30 作使用方了感簡単〓機器種能完練好
+A 30 作使用方了感簡単既機器種能完練好
 A 40 陥一度演定奏楽音色事何憶面思設押
 A 50 要標不複雑変更保持法豊富本鳴目戻
 A 60 問題矢印優有様離例連選必全体組創

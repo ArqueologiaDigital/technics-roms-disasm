@@ -16,7 +16,7 @@ MEASURED 2026-09-07 (this tool):
 
 So the effect's I-RAM microcode body is field +12 (not +0/+4/+8, which are all
 coefficient streams). This corrects the loose "fields +0 and +4 = coefficient/algorithm
-bytecode pair" reading: only +12 is the program. sub_FA3A3C (prom_c/p7/p7_module.s
+bytecode pair" reading: only +12 is the program. P7Unit_ReloadOnProgramChange (prom_c/p7/p7_module.s
 :16560) emits it via P7Stream_Run(field+12) at 0xFA3B9C. (Confirms the RE agent's trace
 in FINDINGS-dsp-runtime-effect-uploads.md.) The 8 records whose +12 is not opcode 3 are
 coefficient-only effects with no distinct program body.

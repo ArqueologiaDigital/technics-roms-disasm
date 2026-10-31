@@ -322,7 +322,7 @@ DiskFile_CheckSignature_Join6:
 	jrl	c, DiskFile_CheckSignature_Loop3	; F48E63  jrl C,0xf48ceb
 	cp	(UI_ScreenId:16), 0x54	; F48E66  cp (0x207c),0x54
 	jr	nz, DiskFile_CheckSignature_Skip15	; F48E6B  jr NZ,0xf48ebf
-	ld	bc, (LoadSingle_BankB:16)	; F48E6D  ld BC,(0x2736)
+	ld	bc, (LoadSingle_DestBank:16)	; F48E6D  ld BC,(0x2736)
 	extz	bc	; F48E71  extz BC
 	cp	bc, 0:i3	; F48E73  cp BC,0
 	jr	z, DiskFile_CheckSignature_Skip10	; F48E75  jr Z,0xf48e85
@@ -650,7 +650,7 @@ DiskFile_BuildLinkCopyRecords_Loop:
 	jrl	nz, DiskFile_BuildLinkCopyRecords_Skip8	; F49087  jrl NZ,0xf492bd
 	cp	(UI_ScreenPage:16), 0x01	; F4908A  cp (0x2229),0x01
 	jrl	nz, DiskFile_BuildLinkCopyRecords_Skip5	; F4908F  jrl NZ,0xf4920c
-	ld	iy, (LoadSingle_BankA:16)	; F49092  ld IY,(0x2728)
+	ld	iy, (LoadSingle_SourceBank:16)	; F49092  ld IY,(0x2728)
 	extz	iy	; F49096  extz IY
 	cp	iy, 0:i3	; F49098  cp IY,0
 	jr	z, DiskFile_BuildLinkCopyRecords_Skip	; F4909A  jr Z,0xf490ad
@@ -665,7 +665,7 @@ DiskFile_BuildLinkCopyRecords_Skip:
 	push	0	; F490AD  push 0x00
 	push	(0x2727:16)	; F490AF  push (0x2727)
 	push	0	; F490B3  push 0x00
-	push	(LoadSingle_BankA:16)	; F490B5  push (0x2728)
+	push	(LoadSingle_SourceBank:16)	; F490B5  push (0x2728)
 	cp	(0x2727:16), 0x08	; F490B9  cp (0x2727),0x08
 	jr	nc, DiskFile_BuildLinkCopyRecords_Skip2	; F490BE  jr NC,0xf490e2
 	calr	UserSoundBank_RemoteGroupAddr	; F490C0  calr 0xf493fa
@@ -695,7 +695,7 @@ DiskFile_BuildLinkCopyRecords_Join:
 	push	0	; F49103  push 0x00
 	push	(0x2737:16)	; F49105  push (0x2737)
 	push	0	; F49109  push 0x00
-	push	(LoadSingle_BankB:16)	; F4910B  push (0x2736)
+	push	(LoadSingle_DestBank:16)	; F4910B  push (0x2736)
 	cp	(0x2737:16), 0x08	; F4910F  cp (0x2737),0x08
 	jr	nc, DiskFile_BuildLinkCopyRecords_Skip3	; F49114  jr NC,0xf49139
 	calr	UserSoundBank_RemoteGroupAddr	; F49116  calr 0xf493fa
@@ -729,13 +729,13 @@ DiskFile_BuildLinkCopyRecords_Join2:
 	push	0	; F4916C  push 0x00
 	push	(0x2727:16)	; F4916E  push (0x2727)
 	push	0	; F49172  push 0x00
-	push	(LoadSingle_BankA:16)	; F49174  push (0x2728)
+	push	(LoadSingle_SourceBank:16)	; F49174  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F49178  calr 0xf493fa
 	ld	(xix), xiy	; F4917B  ld (XIX),XIY
 	push	0	; F4917D  push 0x00
 	push	(0x2737:16)	; F4917F  push (0x2737)
 	push	0	; F49183  push 0x00
-	push	(LoadSingle_BankB:16)	; F49185  push (0x2736)
+	push	(LoadSingle_DestBank:16)	; F49185  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F49189  calr 0xf493fa
 	ld	(xix+6), xiy	; F4918C  ld (XIX+0x06),XIY
 	ldw	(xix+4), 0x1648	; F4918F  ld (XIX+0x04),0x1648
@@ -744,14 +744,14 @@ DiskFile_BuildLinkCopyRecords_Skip4:
 	push	0	; F49197  push 0x00
 	push	(0x2727:16)	; F49199  push (0x2727)
 	push	0	; F4919D  push 0x00
-	push	(LoadSingle_BankA:16)	; F4919F  push (0x2728)
+	push	(LoadSingle_SourceBank:16)	; F4919F  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F491A3  calr 0xf493fa
 	ld	xbc, (xiz+8)	; F491A6  ld XBC,(XIZ+0x08)
 	ld	(xbc), xiy	; F491A9  ld (XBC),XIY
 	push	0	; F491AB  push 0x00
 	push	(0x2737:16)	; F491AD  push (0x2737)
 	push	0	; F491B1  push 0x00
-	push	(LoadSingle_BankB:16)	; F491B3  push (0x2736)
+	push	(LoadSingle_DestBank:16)	; F491B3  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F491B7  calr 0xf493fa
 	ld	xbc, (xiz+8)	; F491BA  ld XBC,(XIZ+0x08)
 	ld	(xbc+6), xiy	; F491BD  ld (XBC+0x06),XIY
@@ -762,7 +762,7 @@ DiskFile_BuildLinkCopyRecords_Skip4:
 	push	0	; F491D0  push 0x00
 	push	(0x2727:16)	; F491D2  push (0x2727)
 	push	0	; F491D6  push 0x00
-	push	(LoadSingle_BankA:16)	; F491D8  push (0x2728)
+	push	(LoadSingle_SourceBank:16)	; F491D8  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F491DC  calr 0xf493fa
 	add	xiy, 65536	; F491DF  add XIY,0x00010000
 	ld	xbc, (xiz+8)	; F491E5  ld XBC,(XIZ+0x08)
@@ -770,7 +770,7 @@ DiskFile_BuildLinkCopyRecords_Skip4:
 	push	0	; F491EA  push 0x00
 	push	(0x2737:16)	; F491EC  push (0x2737)
 	push	0	; F491F0  push 0x00
-	push	(LoadSingle_BankB:16)	; F491F2  push (0x2736)
+	push	(LoadSingle_DestBank:16)	; F491F2  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F491F6  calr 0xf493fa
 	add	xiy, 65536	; F491F9  add XIY,0x00010000
 	ld	xbc, (xiz+8)	; F491FF  ld XBC,(XIZ+0x08)
@@ -779,7 +779,7 @@ DiskFile_BuildLinkCopyRecords_Skip4:
 	inc	8, xsp	; F49207  inc 0,XSP
 	jrl	DiskFile_BuildLinkCopyRecords_Join4	; F49209  jrl T,0xf492b2
 DiskFile_BuildLinkCopyRecords_Skip5:
-	ld	bc, (LoadSingle_BankA:16)	; F4920C  ld BC,(0x2728)
+	ld	bc, (LoadSingle_SourceBank:16)	; F4920C  ld BC,(0x2728)
 	extz	bc	; F49210  extz BC
 	cp	bc, 0:i3	; F49212  cp BC,0
 	jr	z, DiskFile_BuildLinkCopyRecords_Skip6	; F49214  jr Z,0xf49225
@@ -793,7 +793,7 @@ DiskFile_BuildLinkCopyRecords_Skip5:
 DiskFile_BuildLinkCopyRecords_Skip6:
 	pushw	hl	; F49225  push HL
 	push	0	; F49226  push 0x00
-	push	(LoadSingle_BankA:16)	; F49228  push (0x2728)
+	push	(LoadSingle_SourceBank:16)	; F49228  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F4922C  calr 0xf493fa
 	ld	xix, xiy	; F4922F  ld XIX,XIY
 	ld	c, d	; F49231  ld C,D
@@ -805,7 +805,7 @@ DiskFile_BuildLinkCopyRecords_Skip6:
 	push	0	; F49240  push 0x00
 	push	(0x2737:16)	; F49242  push (0x2737)
 	push	0	; F49246  push 0x00
-	push	(LoadSingle_BankB:16)	; F49248  push (0x2736)
+	push	(LoadSingle_DestBank:16)	; F49248  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F4924C  calr 0xf493fa
 	ld	xix, xiy	; F4924F  ld XIX,XIY
 	ld	bc, (LoadSingle_SelectedItem:16)	; F49251  ld BC,(0x2738)
@@ -822,7 +822,7 @@ DiskFile_BuildLinkCopyRecords_Join3:
 DiskFile_BuildLinkCopyRecords_Skip7:
 	pushw	hl	; F49270  push HL
 	push	0	; F49271  push 0x00
-	push	(LoadSingle_BankA:16)	; F49273  push (0x2728)
+	push	(LoadSingle_SourceBank:16)	; F49273  push (0x2728)
 	calr	UserSoundBank_RemoteGroupAddr	; F49277  calr 0xf493fa
 	ld	xix, xiy	; F4927A  ld XIX,XIY
 	ld	c, d	; F4927C  ld C,D
@@ -835,7 +835,7 @@ DiskFile_BuildLinkCopyRecords_Skip7:
 	push	0	; F4928C  push 0x00
 	push	(0x2737:16)	; F4928E  push (0x2737)
 	push	0	; F49292  push 0x00
-	push	(LoadSingle_BankB:16)	; F49294  push (0x2736)
+	push	(LoadSingle_DestBank:16)	; F49294  push (0x2736)
 	calr	UserSoundBank_RemoteGroupAddr	; F49298  calr 0xf493fa
 	ld	xix, xiy	; F4929B  ld XIX,XIY
 	ld	bc, (LoadSingle_SelectedItem:16)	; F4929D  ld BC,(0x2738)

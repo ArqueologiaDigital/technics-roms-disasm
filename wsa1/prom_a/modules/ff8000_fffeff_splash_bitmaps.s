@@ -64,7 +64,12 @@
 ; SplashImage_DitherA -- 9,600 bytes, 0xFF8000-0xFFA57F
 ;
 ; Blitted by 0xF94131 with IX = 0x0000, i.e. to offset 0 of the layer that
-; (0x2540) selects.  One of the two disjoint dither halves.
+; (0x2540) selects -- layer 0, base 0x0000 (SAD1).  Paint_PowerOnSplash does not
+; write (0x2540) before this blit; it relies on layer 0, the only layer under
+; which this half lands at display RAM 0x0000, where its scroll of layer 0 back
+; to SAD 0 ends (notes/open4-d-probes/splash_layer_and_logo.py).  With
+; SplashImage_DitherB it reads `WSA` in a brush script.  One of the two
+; disjoint dither halves.
 ; Non-empty rows: 72-153.  Preview, OR-downsampled 2x3:
 ; ---------------------------------------------------------------------
 ;                                                                                       ########                 ######
@@ -103,7 +108,8 @@ SplashImage_DitherA:
 ; ---------------------------------------------------------------------
 ; SplashImage_DitherB -- 9,600 bytes, 0xFFA580-0xFFCAFF
 ;
-; Blitted by 0xF94142 with IX = 0x4C00 -- SAD3, the third graphics layer's base
+; Blitted by 0xF94142 with IX = 0x4C00 into the same layer 0 (base 0x0000), so
+; to display RAM 0x4C00 -- SAD3, the third graphics layer's base
 ; (notes/FINDINGS-display-controller.md sec. on SCROLL).  The other dither half:
 ; it shares no set bit with the first and has the same number of them.
 ; Non-empty rows: 72-153.  Preview, OR-downsampled 2x3:

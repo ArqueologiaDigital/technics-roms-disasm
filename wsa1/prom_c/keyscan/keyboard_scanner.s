@@ -173,9 +173,18 @@
 ;          ⚠ "touch byte == 0xFF means no travel time was measured" fits (b) --
 ;          a note-on with no touch value cannot be given a velocity, a note-off
 ;          does not need one -- but nothing here proves it and 0x008517 is
-;          referenced by this one instruction alone in the whole image, so what
-;          collects the two bits is unknown.
-; Unknown:  the meaning of status-word value 2; who reads 0x008517.
+;          referenced by this one instruction alone in the whole image, and
+;          nothing collects the two bits (census below).
+; 0x008517 IS WRITE-ONLY (gap I, 2026-10-31): this `or` is the only instruction
+;          in prom_c that addresses it.  The only other way to reach it is as
+;          element 61 of the 61-byte velocity table at 0x0084DA (0x84DA + 61 =
+;          0x8517), which ToneGen_VelocityFromTouch reads with the key index --
+;          one past the 61-key range, so not a designed reader -- and 0x8518 is
+;          the first byte of the link module's RAM.  RESET zeroes it with the rest
+;          of RAM.  notes/open4-b-probes/prom_c_ram_cell_census.py.
+; Unknown:  the meaning of status-word value 2: the key-scan port is inside IC4
+;          (TC183C230002, no datasheet); it needs that datasheet or a bus capture
+;          on an instrument.
 ; --------------------------------------------------------------------------
 KeyScan_ReadEvent:
 	link	xiz, 0xfffa          ; F9973D  link XIZ,0xfffa   [llvm-mc cannot encode this]
