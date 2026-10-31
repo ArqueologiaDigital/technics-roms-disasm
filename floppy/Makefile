@@ -87,8 +87,17 @@ build/$(1)/$(2).o: $(1)/$(2)/disk.s $(1)/baserom/$(2).img build/$(1)/$(2)/extrac
 		$$(LLVM_MC) $$(wildcard $(1)/$(2)/*.s $(1)/$(2)/files/*.s $(1)/include/*.inc $(1)/$(2)/media/*)
 	@mkdir -p $$(@D)
 	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I tools -I $(1)/include -I $(1)/$(2) \
-	    -I $(1)/baserom -I $(1)/$(2)/media -I build/$(1)/$(2) -o $$@ $$<
+	    -I $(1)/baserom -I $(1)/$(2)/media -I build/$(1)/$(2) -I build -o $$@ $$<
 endef
+
+# The PC boot stub of the WSA1R softlist disks (16-bit x86, tools/pc_boot_stub.s): fat12_to_s.py's boot.s
+# includes it when a disk's boot code is these bytes.
+TOOLS += build/pc_boot_stub.bin
+build/pc_boot_stub.bin: tools/pc_boot_stub.s $(LLVM_MC) $(LLVM_OBJCOPY)
+	@mkdir -p $(@D)
+	$(LLVM_MC) -triple=i386 -filetype=obj -o build/pc_boot_stub.o $<
+	$(LLVM_OBJCOPY) -O binary build/pc_boot_stub.o $@
+
 $(foreach m,$(MODELS),$(eval $(call FLOPPY_MODEL,$(m)))\
   $(foreach d,$($(m)_DISKS),$(eval $(call FLOPPY_DISK,$(m),$(d)))))
 
