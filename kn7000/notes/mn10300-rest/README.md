@@ -21,7 +21,7 @@ environment variable `GEN_DATA_S_OFF`), so `rest_stats.py` measures each against
 | 6    | offset-named fields                                             | CLOSED for the uses the code shows: 630 -> 256 in 941, the siblings alike (section 4)                                                                                                                                                       |
 | 7    | HD-SX3 entry vectors, the 2,625 `calls (aN)`, run-time pointers | CLOSED (section 5)                                                                                                                                                                                                                          |
 | 8    | the zone side bits 0x400 / 0x800; the notes' other open items   | CLOSED: 0x400 MAIN, 0x800 SUB; the rest in section 6                                                                                                                                                                                        |
-| 9    | the opaque `unknown-dump` blocks                                | PARTLY CLOSED: every group searched, readers found for most; 158,859 formerly opaque bytes typed over the eight trees by new passes; the groups with a reader but no typing pass yet, and what stays opaque and why, are listed (section 7) |
+| 9    | the opaque `unknown-dump` blocks                                | PARTLY CLOSED: every group searched, readers found for most; 173,555 formerly opaque bytes typed over the eight trees by new passes; the groups with a reader but no typing pass yet, and what stays opaque and why, are listed (section 7) |
 
 ## 1. The KN2400's effect DSP (items 1 and 2)
 
@@ -150,14 +150,14 @@ Record fields still named only by their offset although a reader touches them
 
 | tree       | before | after | named after |
 |------------|--------|-------|-------------|
-| kn7000-941 | 630    | 256   | 970         |
-| kn7000-942 | 633    | 258   | 971         |
-| kn7000-935 | 639    | 263   | 977         |
-| kn7000-893 | 638    | 263   | 970         |
-| kn6000     | 683    | 264   | 916         |
-| kn6500     | 685    | 263   | 917         |
-| kn2400     | 637    | 204   | 928         |
-| hdsx3      | 43     | 37    | 10          |
+| kn7000-941 | 630    | 256   | 968         |
+| kn7000-942 | 633    | 258   | 969         |
+| kn7000-935 | 639    | 263   | 975         |
+| kn7000-893 | 638    | 263   | 968         |
+| kn6000     | 683    | 264   | 914         |
+| kn6500     | 685    | 263   | 915         |
+| kn2400     | 637    | 208   | 922         |
+| hdsx3      | 43     | 37    | 8           |
 
 The names given most (941, `rest_stats.py`'s two runs): `key` 270 (hash buckets and search loops),
 `index` 67, `param_key`, `kind` and `count` 6 each, then named routines' arguments (`memcpy_d1`,
@@ -216,9 +216,9 @@ language tables (AcLanguageTextProc `cmp 6, d0` / `mov (d0, a3), a0`), the sibli
 (`ResourceIdTrie`, the KN7000's design: KN6000 func_4C02CA6A, KN2400 func_5014A95C), the KN7000 builds' own
 "Technics Pads" copy, the KN2400's alphabetical sound lists (both strap sets).
 
-Opaque bytes per tree (main -> this branch, `typer_stats.text_stats`; the census counts the same): 941
-45,394 -> 35,251, 942 43,654 -> 33,511, 935 46,280 -> 36,137, 893 45,007 -> 34,861, KN6000 54,782 ->
-41,510, KN6500 59,027 -> 45,737, KN2400 155,297 -> 63,594, HD-SX3 2,981 -> 2,962.
+Opaque bytes per tree (main -> this branch, the table under "Measurements"): 941 45,394 -> 33,741, 942 43,654 ->
+31,158, 935 46,280 -> 34,612, 893 45,007 -> 33,339, KN6000 54,782 -> 39,985, KN6500 59,027 -> 44,212, KN2400
+155,297 -> 61,226, HD-SX3 2,981 -> 594: 173,555 bytes over the eight trees.
 
 **Readers found, typing not written in this lane.** Each group below has a traced reader and an exact layout
 in its probe; no pass of the generator writes them yet, so they stay opaque with the census marker. They are
@@ -244,20 +244,25 @@ caption table. Each is listed in its probe's `--left` output.
 
 ## Measurements
 
-Main 43242446d ("before": the figures lane mn10300-typer reports for its final sources, which are main's)
-against this branch's committed sources (`rest_stats.py` and `typer_stats.text_stats`; reader rows and opaque
-pieces are n / bytes):
+Before: main (the lane's base 43242446d; main after its merges, 14867ef84, has the same reader rows, opaque pieces
+and offset-named fields, measured on its committed sources). After: this branch's committed sources after the merge
+with main and the regeneration (typed bytes as gen_data_s.py reports them; reader rows and opaque pieces n / bytes,
+`typer_stats.text_stats`; fields `field_names_census.py`):
 
-| tree   | typed before | typed after | change  | reader rows before | reader rows after | opaque before   | opaque after   |
-|--------|--------------|-------------|---------|--------------------|-------------------|-----------------|----------------|
-| 941    | 2,143,981    | 2,153,992   | +10,011 | 78 / 905           | 78 / 905          | 2,174 / 45,394  | 2,073 / 35,251 |
-| 942    | 2,150,400    | 2,160,411   | +10,011 | 81 / 1,013         | 81 / 1,013        | 2,196 / 43,654  | 2,095 / 33,511 |
-| 935    | 2,144,574    | 2,154,585   | +10,011 | 84 / 1,049         | 84 / 1,049        | 2,192 / 46,280  | 2,091 / 36,137 |
-| 893    | 2,144,470    | 2,154,481   | +10,011 | 79 / 917           | 79 / 917          | 2,177 / 45,007  | 2,076 / 34,861 |
-| kn6000 | 2,436,905    | 2,449,391   | +12,486 | 142 / 9,370        | 136 / 9,310       | 2,347 / 54,782  | 2,176 / 41,510 |
-| kn6500 | 1,948,203    | 1,960,683   | +12,480 | 147 / 9,486        | 141 / 9,426       | 2,364 / 59,027  | 2,190 / 45,737 |
-| kn2400 | 1,688,962    | 1,781,084   | +92,122 | 184 / 8,255        | 171 / 7,098       | 3,419 / 155,297 | 2,887 / 63,594 |
-| hdsx3  | 482,118      | 482,137     | +19     | 34 / 211           | 34 / 211          | 98 / 2,981      | 97 / 2,962     |
+| tree   | typed before | typed after | change  | reader rows before | reader rows after | opaque before   | opaque after   | offset-named fields before | after |
+|--------|--------------|-------------|---------|--------------------|-------------------|-----------------|----------------|----------------------------|-------|
+| 941    | 2,143,981    | 2,154,302   | +10,321 | 78 / 905           | 78 / 905          | 2,174 / 45,394  | 2,073 / 33,741 | 630                        | 256   |
+| 942    | 2,150,400    | 2,161,564   | +11,164 | 81 / 1,013         | 81 / 1,013        | 2,196 / 43,654  | 2,094 / 31,158 | 633                        | 258   |
+| 935    | 2,144,574    | 2,154,908   | +10,334 | 84 / 1,049         | 84 / 1,049        | 2,192 / 46,280  | 2,090 / 34,612 | 639                        | 263   |
+| 893    | 2,144,470    | 2,156,004   | +11,534 | 79 / 917           | 79 / 917          | 2,177 / 45,007  | 2,076 / 33,339 | 638                        | 263   |
+| kn6000 | 2,436,905    | 2,450,916   | +14,011 | 142 / 9,370        | 136 / 9,310       | 2,347 / 54,782  | 2,175 / 39,985 | 683                        | 264   |
+| kn6500 | 1,948,203    | 1,962,208   | +14,005 | 147 / 9,486        | 141 / 9,426       | 2,364 / 59,027  | 2,189 / 44,212 | 685                        | 263   |
+| kn2400 | 1,688,962    | 1,783,452   | +94,490 | 184 / 8,255        | 171 / 7,098       | 3,419 / 155,297 | 2,885 / 61,226 | 637                        | 208   |
+| hdsx3  | 482,118      | 484,505     | +2,387  | 34 / 211           | 34 / 211          | 98 / 2,981      | 95 / 594       | 43                         | 37    |
+
+The typed figure of the KN7000 builds also holds main's own changes since the base (its KN7000 data
+regeneration, db4ea1c3a, and the stale song events lane floppies types with `k5_*`), so it is a little less
+than the opaque bytes this lane typed (941: 11,653).
 
 **Bytes typed before and not after** (`rest_stats.py`'s "typed in the off run only"): 0 in the four KN7000
 builds and the HD-SX3. KN6000 962, KN2400 894 (KN6500 the same shape): the over-long struct arrays
@@ -278,10 +283,14 @@ docs/coverage/doc-quality-2026-10-31-02.json` exits 1 for one figure per sibling
 | kn6000 | (a) routines without a header | 19,021 -> 19,022 | `XaprIsrGroup24` 0x4C172AA2: the interrupt handler only a def_int immediate names, labelled now           |
 | kn6500 | (a) routines without a header | 19,070 -> 19,071 | `XaprIsrGroup24` 0x4C1732A4, the same                                                                     |
 
+(Run again on the final, merged tree: the same three, and two KN5000 rises, v6 7,827 -> 7,828 and v5 7,829 ->
+7,832, which come from main's lanes merged after that snapshot, not from this lane: it changes no KN5000 file.)
 `make dispatch-census` measures no MN10300 image.
 
 **Gates** (worktree, `kn7000/build/*.labels` deleted first): `make gate-kn7000 gate-kn6000 gate-kn6500
-gate-kn2400 gate-hdsx3` and `make -C kn7000 symbols-check`: GATES_RESULT.
+gate-kn2400 gate-hdsx3` and `make -C kn7000 symbols-check`: both exit 0 (52 OK lines, no FAIL), after the merge with main
+(14867ef84) and the regeneration; `make -C kn7000 data-and-code-src` after the builds stopped in round 1 with nothing
+changed.
 
 ## Regenerating
 
