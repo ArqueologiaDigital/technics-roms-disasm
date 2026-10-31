@@ -90,7 +90,9 @@ clone of this branch: no stamp tracked; first build v7, v6, v5 byte-identical; s
 date and every patch step skips every bin; the stamps of the three bins with the most relocations deleted
 (v7 `gui_display_struct_data.bin` 533, v6 and v5 `naka_style_bitmaps.bin` 1,196): exactly those recompiled,
 ROMs byte-identical; every stamp deleted (an older checkout after the pull): all recompiled, ROMs
-byte-identical; `git status` clean.
+byte-identical; negative control: the patcher as it was at 43242446d, run on `naka_style_bitmaps.bin` with its
+stamp missing, changes the bin (patched twice), and the current one restores it; `git status` clean.  `PASS`,
+on a clone of 02319af1d.
 
 ## 3. `src/constants.inc` (kn7000, kn2400, kn6000, kn6500; hdsx3 reads kn6000's)
 
