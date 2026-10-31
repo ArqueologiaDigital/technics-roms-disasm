@@ -120,18 +120,18 @@ InitializeHama:
 FDTest_PrintDiag:
 	jp Debug_PrintString
 
-; TestTitleFunc - Title lifecycle and action handler for FD diagnostic tests
-; Dispatches on two event codes:
-;   0x1c00007 (title lifecycle): xde selects handler from jump table at 0xe1fdfe
-;     0=new, 1=old, 2=activate, 3=inactivate, 4-5=interrupt, 6=TBIOS test
-;   0x1c00013 (user actions): xde selects handler from jump table at 0xe1fe0e
-;     2=STOP, 3=START LOOP, 4=DIR listing, 5-6=debug test
+; TestTitleFunc: Main function of the two FDD test titles (RegTitleHama above). EVT_SW_IN: XDE = switch 0..7
+;   through TestTitleFunc_SwitchCaseTable -- 0 TBIOS test (FDTest_ProbeDiskFormat), 1 stop the test loop, 2
+;   one test pass and re-arm, 3 DIR listing, 4 / 5 format a 2DD / 2HD disk, 6 list A:\HAMA\*.LSW, 7
+;   nothing. EVT_ACTIVATE_STATE: XDE = 2..7 through TestTitleFunc_StateCaseTable prints "Title new", "old",
+;   "Inactivate", "Activate", "INTERUPT", "INTERUPT RETURN". Returns XHL = 0. Basis: callers + body + the
+;   two case tables (factory_test/fd_test_data.s).
 TestTitleFunc:
 	push xiz
 	ld xiz, xwa
 	ld wa, 0:i3
 	cp xbc, EVT_SW_IN
-	jr z, TitleFunc_LifecycleDispatch
+	jr z, TestTitleFunc_SwitchDispatch
 	cp xbc, EVT_ACTIVATE_STATE
 	jrl nz, TitleFunc_Return
 	ld xwa, xde
@@ -141,19 +141,18 @@ TestTitleFunc:
 	cp xwa, 0x5
 	jrl ugt, TitleFunc_Return
 	add xwa, xwa
-	add xwa, TestTitleFunc_CaseTable
+	add xwa, TestTitleFunc_StateCaseTable
 	ld wa, (xwa)
-	lda xix, (TitleFunc_ActionDispatch:24)
+	lda xix, (TestTitleFunc_OnTitleNew:24)
 	jp	t, (xix+wa)
 
-; User action dispatch table (event 0x1c00013, xde=2..6)
-; Each entry loads a string address and calls FDTest_PrintDiag, then exits
-TitleFunc_ActionDispatch:
-	lda xwa, (TitleFunc_ActionDispatch_Str_TitleNew:24)
+; TestTitleFunc_OnTitleNew: EVT_ACTIVATE_STATE phase 2: prints "Title new"; also the base of the phase
+;   switch (TestTitleFunc_StateCaseTable).
+TestTitleFunc_OnTitleNew:
+	lda xwa, (TestTitleFunc_OnTitleNew_Str_TitleNew:24)
 	calr FDTest_PrintDiag
 	jrl TitleFunc_Return
-; TestTitleFunc_OnTitleOld: EVT_ACTIVATE_STATE phases 2..7 print "Title new/old/Inactivate/Activate/INTERUPT/INTERUPT
-;   RETURN"; the comments in test_init.s / fd_test_code.s that give these strings to EVT_SW_IN 0..6 are stale.
+; TestTitleFunc_OnTitleOld: EVT_ACTIVATE_STATE phase 3: prints "Title old".
 TestTitleFunc_OnTitleOld:
 	lda xwa, (TestTitleFunc_OnTitleOld_Str_TitleOld:24)
 	calr FDTest_PrintDiag
@@ -175,29 +174,26 @@ TestTitleFunc_OnTitleInterruptReturn:
 	calr FDTest_PrintDiag
 	jrl TitleFunc_Return
 
-TitleFunc_LifecycleDispatch:
+TestTitleFunc_SwitchDispatch:
 	ld xwa, xde
 	cp xwa, 0x7
 	jrl ugt, TitleFunc_Return
 	add xwa, xwa
-	add xwa, TitleFunc_LifecycleDispatch_CaseTable
+	add xwa, TestTitleFunc_SwitchCaseTable
 	ld wa, (xwa)
-	lda xix, (TitleFunc_LifecycleTable:24)
+	lda xix, (TestTitleFunc_OnTbiosTest:24)
 	jp	t, (xix+wa)
 
-; Title lifecycle dispatch table (event 0x1c00007, xde=0..6)
-; 0=new: print+call 0xf97edb, 1=old: send event+call 0xfaa257
-; 2=activate: run test stats+call 0xfaa135, 3=inactivate: print+DIR listing
-; 4=interrupt: print+call RegHamaTitle1_Entry, 5=interrupt return: print+call RegHamaTitle2_Entry
-; 6=TBIOS test: call ListDir2_Entry
-TitleFunc_LifecycleTable:
-	lda xwa, (TitleFunc_LifecycleTable_Str_TBIOS_Test:24)
+; TestTitleFunc_OnTbiosTest: Switch 0 of the FDD test title: prints "TBIOS Test" and runs
+;   FDTest_ProbeDiskFormat; also the base of the switch (TestTitleFunc_SwitchCaseTable).
+TestTitleFunc_OnTbiosTest:
+	lda xwa, (TestTitleFunc_OnTbiosTest_Str_TBIOS_Test:24)
 	calr FDTest_PrintDiag
 	call FDTest_ProbeDiskFormat
 	jr TitleFunc_Return
-; TitleFunc_LifecycleDispatch_OnStopFddTest: Switch 1 on the FDD test title: stops the switch-2 test loop timer and
+; TestTitleFunc_OnStopFddTest: Switch 1 on the FDD test title: stops the switch-2 test loop timer and
 ;   prints STOP FDD TEST.
-TitleFunc_LifecycleDispatch_OnStopFddTest:
+TestTitleFunc_OnStopFddTest:
 	ld xwa, EVT_SW_IN
 	push xwa
 	ld xwa, 2:i3
@@ -206,14 +202,14 @@ TitleFunc_LifecycleDispatch_OnStopFddTest:
 	ld xwa, 0:i3
 	ld xde, 0xffffffff
 	call KillApTimer
-	lda xwa, (TitleFunc_LifecycleDispatch_OnStopFddTest_Str_STOP_FDD_TEST:24)
+	lda xwa, (TestTitleFunc_OnStopFddTest_Str_STOP_FDD_TEST:24)
 	calr FDTest_PrintDiag
 	ld wa, 0:i3
 	jr TitleFunc_Return
-; TitleFunc_LifecycleDispatch_OnFddTestLoop: Switch 2 on the FDD test title: one FDD test pass, then re-arms a timer
+; TestTitleFunc_OnFddTestLoop: Switch 2 on the FDD test title: one FDD test pass, then re-arms a timer
 ;   that posts switch 2 again.
-TitleFunc_LifecycleDispatch_OnFddTestLoop:
-	lda xwa, (TitleFunc_LifecycleDispatch_OnFddTestLoop_Str_START_FDD_TEST_LOOP:24)
+TestTitleFunc_OnFddTestLoop:
+	lda xwa, (TestTitleFunc_OnFddTestLoop_Str_START_FDD_TEST_LOOP:24)
 	calr FDTest_PrintDiag
 	calr RunTestCounters_Entry
 	ld xwa, EVT_SW_IN
@@ -226,26 +222,26 @@ TitleFunc_LifecycleDispatch_OnFddTestLoop:
 	call SetApTimer
 	ld wa, 1:i3
 	jr TitleFunc_Return
-TitleFunc_LifecycleDispatch_OnListDirectory:
-	lda xwa, (TitleFunc_LifecycleDispatch_OnListDirectory_Str_DIR:24)
+TestTitleFunc_OnListDirectory:
+	lda xwa, (TestTitleFunc_OnListDirectory_Str_DIR:24)
 	calr FDTest_PrintDiag
 	calr FDListDirectory
 	jr TitleFunc_Return
-; TitleFunc_LifecycleDispatch_OnFormat2dd: Switch 4 on the FDD test title: formats a 2DD disk and labels it TEST_HAMA
-;   (RegHamaTitle1_Entry).
-TitleFunc_LifecycleDispatch_OnFormat2dd:
-	lda xwa, (TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test:24)
+; TestTitleFunc_OnFormat2dd: Switch 4 on the FDD test title: formats a 2DD disk and labels it TEST_HAMA
+;   (FDTest_Format2ddAndLabel).
+TestTitleFunc_OnFormat2dd:
+	lda xwa, (TestTitleFunc_OnFormat2dd_Str_Debug_Test:24)
 	calr FDTest_PrintDiag
-	calr RegHamaTitle1_Entry
+	calr FDTest_Format2ddAndLabel
 	jr TitleFunc_Return
-; TitleFunc_LifecycleDispatch_OnFormat2hd: Switch 5 on the FDD test title: formats a 2HD disk and labels it
-;   TESTHAMA2HD (RegHamaTitle2_Entry).
-TitleFunc_LifecycleDispatch_OnFormat2hd:
-	lda xwa, (TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test:24)
+; TestTitleFunc_OnFormat2hd: Switch 5 on the FDD test title: formats a 2HD disk and labels it
+;   TESTHAMA2HD (FDTest_Format2hdAndLabel).
+TestTitleFunc_OnFormat2hd:
+	lda xwa, (TestTitleFunc_OnFormat2hd_Str_Debug_Test:24)
 	calr FDTest_PrintDiag
-	calr RegHamaTitle2_Entry
+	calr FDTest_Format2hdAndLabel
 	jr TitleFunc_Return
-TitleFunc_LifecycleDispatch_OnListLswFiles:
+TestTitleFunc_OnListLswFiles:
 	calr ListDir2_Entry
 
 TitleFunc_Return:
@@ -368,22 +364,22 @@ CreateRunFDOp_Return:
 
 .include "factory_test/fd_test_code.s"
 
-; RegisterHamaTitle1 -- Registers title with widget table 0x7f (FDD/HD test)
-; Calls 0xf51e4f with WA=2, then 0xf5289c with string at 0xe1ff42
-RegHamaTitle1_Entry:
+; FDTest_Format2ddAndLabel: Switch 4 of the FDD test title: format_FD(2) (a 2DD disk), then
+;   FileIO_CheckPathAndVolumeLabel("TEST_HAMA"); HL = 0. Basis: callers + body.
+FDTest_Format2ddAndLabel:
 	ld wa, 2:i3
 	call format_FD
-	lda xwa, (RegHamaTitle1_Entry_Str_TEST_HAMA:24)
+	lda xwa, (FDTest_Format2ddAndLabel_Str_TEST_HAMA:24)
 	call FileIO_CheckPathAndVolumeLabel
 	ld hl, 0:i3
 	ret
 
-; RegisterHamaTitle2 -- Registers title with widget table 0xfc (extension APR test)
-; Calls 0xf51e4f with WA=3, then 0xf5289c with string at 0xe1ff4c
-RegHamaTitle2_Entry:
+; FDTest_Format2hdAndLabel: Switch 5 of the FDD test title: format_FD(3) (a 2HD disk), then
+;   FileIO_CheckPathAndVolumeLabel("TESTHAMA2HD"); HL = 0. Basis: callers + body.
+FDTest_Format2hdAndLabel:
 	ld wa, 3:i3
 	call format_FD
-	lda xwa, (RegHamaTitle2_Entry_Str_TESTHAMA2HD:24)
+	lda xwa, (FDTest_Format2hdAndLabel_Str_TESTHAMA2HD:24)
 	call FileIO_CheckPathAndVolumeLabel
 	ld hl, 0:i3
 	ret

@@ -2528,35 +2528,35 @@ SqplyFunc_FormatRhythmPattern_Str:	.incbin "includes/generated/naka_widget_descr
 SqplyFunc_FormatRhythmPattern_Str_2:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x3C94, 0x6
 SqplyFunc_FormatPatternNumeric_Str_Fmt3d:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3C9A, 0x6	; " %3d "
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] SqplyFunc_FormatIntro_Str
-; SqplyFunc_FormatIntro_Str -- NUL-terminated string(s), 6 bytes, used
-; by SqplyFunc_FormatIntro (v10/v9 0xf3483a, v7 0xf34810) (`ld xwa,
-; SqplyFunc_FormatIntro_Str`).
+; [naka_s_headers] SqplyFunc_FormatPunchIn_Str
+; SqplyFunc_FormatPunchIn_Str -- NUL-terminated string(s), 6 bytes, used
+; by SqplyFunc_FormatPunchIn (v10/v9 0xf3483a, v7 0xf34810) (`ld xwa,
+; SqplyFunc_FormatPunchIn_Str`).
 ;
 ; Typed in naka_widget_descriptors.c as char
-; SqplyFunc_FormatIntro_Str[6].
+; SqplyFunc_FormatPunchIn_Str[6].
 ; -----------------------------------------------------------------------------
-SqplyFunc_FormatIntro_Str:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3CA0, 0x6
+SqplyFunc_FormatPunchIn_Str:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3CA0, 0x6
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] SqplyFunc_FormatEnding_Str
-; SqplyFunc_FormatEnding_Str -- NUL-terminated string(s), 6 bytes, used
-; by SqplyFunc_FormatEnding (v10/v9 0xf3484a, v7 0xf34820) (`ld xwa,
-; SqplyFunc_FormatEnding_Str`).
+; [naka_s_headers] SqplyFunc_FormatPunchOut_Str
+; SqplyFunc_FormatPunchOut_Str -- NUL-terminated string(s), 6 bytes, used
+; by SqplyFunc_FormatPunchOut (v10/v9 0xf3484a, v7 0xf34820) (`ld xwa,
+; SqplyFunc_FormatPunchOut_Str`).
 ;
 ; Typed in naka_widget_descriptors.c as char
-; SqplyFunc_FormatEnding_Str[6].
+; SqplyFunc_FormatPunchOut_Str[6].
 ; -----------------------------------------------------------------------------
-SqplyFunc_FormatEnding_Str:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3CA6, 0x6
+SqplyFunc_FormatPunchOut_Str:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3CA6, 0x6
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] SqplyFunc_FormatFillIn_Str
-; SqplyFunc_FormatFillIn_Str -- NUL-terminated string(s), 6 bytes, used
-; by SqplyFunc_FormatFillIn (v10/v9 0xf34864, v7 0xf3483a) (`ld xwa,
-; SqplyFunc_FormatFillIn_Str`).
+; [naka_s_headers] SqplyFunc_FormatCountIn_Str
+; SqplyFunc_FormatCountIn_Str -- NUL-terminated string(s), 6 bytes, used
+; by SqplyFunc_FormatCountIn (v10/v9 0xf34864, v7 0xf3483a) (`ld xwa,
+; SqplyFunc_FormatCountIn_Str`).
 ;
 ; Typed in naka_widget_descriptors.c as char
-; SqplyFunc_FormatFillIn_Str[6].
+; SqplyFunc_FormatCountIn_Str[6].
 ; -----------------------------------------------------------------------------
-SqplyFunc_FormatFillIn_Str:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3CAC, 0x6
+SqplyFunc_FormatCountIn_Str:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3CAC, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SqplyFunc_HandlePartQuery_CaseTable
 ; SqplyFunc_HandlePartQuery_CaseTable -- jump table of a compiled
@@ -3688,71 +3688,71 @@ PartSubBlkB_WriteLoop32_Table:	.incbin "includes/generated/naka_widget_descripto
 ; -----------------------------------------------------------------------------
 PartSubBlkA_WriteLoop48_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1370A, 0x30
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] SeqVoice_ApplyTableEntry_Table
-; SeqVoice_ApplyTableEntry_Table -- read by SeqVoice_ApplyTableEntry
+; [naka_s_headers] SeqError_MapTableD
+; SeqError_MapTableD -- read by SeqError_MapViaTableD
 ; (v10/v9 0xf3ff42, v7 0xf3ff34) (`ld xwa,
-; SeqVoice_ApplyTableEntry_Table`). 12 bytes to the next
+; SeqError_MapTableD`). 12 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; SeqVoice_ApplyTableEntry_Table[12].
+; SeqError_MapTableD[12].
 ; -----------------------------------------------------------------------------
-SeqVoice_ApplyTableEntry_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1373A, 0xC
+SeqError_MapTableD:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1373A, 0xC
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AppEvent_ExtendedHandler_Table
-; AppEvent_ExtendedHandler_Table -- read by AppEvent_ExtendedHandler
+; [naka_s_headers] SeqError_MapTableE
+; SeqError_MapTableE -- read by SeqError_MapViaTableE
 ; (v10/v9 0xf3ff1f, v7 0xf3ff11) (`ld xwa,
-; AppEvent_ExtendedHandler_Table`). 12 bytes to the next
+; SeqError_MapTableE`). 12 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; AppEvent_ExtendedHandler_Table[12].
+; SeqError_MapTableE[12].
 ; -----------------------------------------------------------------------------
-AppEvent_ExtendedHandler_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13746, 0xC
+SeqError_MapTableE:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13746, 0xC
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AppEvent_ExtendedHandler_Table_2
-; AppEvent_ExtendedHandler_Table_2 -- read by AppEvent_ExtendedHandler
+; [naka_s_headers] SeqError_MapTableF
+; SeqError_MapTableF -- read by SeqError_MapViaTableE
 ; (v10/v9 0xf3ff1f, v7 0xf3ff11) (`ld xwa,
-; AppEvent_ExtendedHandler_Table_2`). 12 bytes to the next
+; SeqError_MapTableF`). 12 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; AppEvent_ExtendedHandler_Table_2[12].
+; SeqError_MapTableF[12].
 ; -----------------------------------------------------------------------------
-AppEvent_ExtendedHandler_Table_2:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13752, 0xC
+SeqError_MapTableF:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13752, 0xC
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] Part_ApplyVoiceTableB_Table
-; Part_ApplyVoiceTableB_Table -- read by Part_ApplyVoiceTableB (v10/v9
+; [naka_s_headers] SeqError_MapTableB
+; SeqError_MapTableB -- read by SeqError_MapViaTableB (v10/v9
 ; 0xf3ff2d, v7 0xf3ff1f) (`ld xwa,
-; Part_ApplyVoiceTableB_Table`). 12 bytes to the next
+; SeqError_MapTableB`). 12 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; Part_ApplyVoiceTableB_Table[12].
+; SeqError_MapTableB[12].
 ; -----------------------------------------------------------------------------
-Part_ApplyVoiceTableB_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1375E, 0xC
+SeqError_MapTableB:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1375E, 0xC
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] Part_ApplyVoiceTableA_Table
-; Part_ApplyVoiceTableA_Table -- read by Part_ApplyVoiceTableA (v10/v9
+; [naka_s_headers] SeqError_MapTableA
+; SeqError_MapTableA -- read by SeqError_MapViaTableA (v10/v9
 ; 0xf3ff34, v7 0xf3ff26) (`ld xwa,
-; Part_ApplyVoiceTableA_Table`). 12 bytes to the next
+; SeqError_MapTableA`). 12 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; Part_ApplyVoiceTableA_Table[12].
+; SeqError_MapTableA[12].
 ; -----------------------------------------------------------------------------
-Part_ApplyVoiceTableA_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1376A, 0xC
+SeqError_MapTableA:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1376A, 0xC
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] Part_ApplyVoiceTableC_Table
-; Part_ApplyVoiceTableC_Table -- read by Part_ApplyVoiceTableC (v10/v9
+; [naka_s_headers] SeqError_MapTableC
+; SeqError_MapTableC -- read by SeqError_MapViaTableC (v10/v9
 ; 0xf3ff3b, v7 0xf3ff2d) (`ld xwa,
-; Part_ApplyVoiceTableC_Table`). 12 bytes to the next
+; SeqError_MapTableC`). 12 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; Part_ApplyVoiceTableC_Table[12].
+; SeqError_MapTableC[12].
 ; -----------------------------------------------------------------------------
-Part_ApplyVoiceTableC_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13776, 0xC
+SeqError_MapTableC:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13776, 0xC
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SeqData_ErrorCodeRemap
 ; SeqData_ErrorCodeRemap -- read by
@@ -5526,7 +5526,7 @@ AccTone_ExtendAndDispatch_PopRet_Table:	.incbin "includes/generated/naka_widget_
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] TimeSig_ProcTable
 ; TimeSig_ProcTable -- 24 u32 code addresses (Tempo_AdjustStartMeasure,
-; Tempo_AdjustEndMeasure, Tempo_AdjustQuantize, Tempo_AdjustEffect,
+; Tempo_AdjustEndMeasure, SeqToComposer_StepTranspose, Tempo_AdjustEffect,
 ; ...). Read by TimeSig_CallProc (v10/v9 0xf6623e, v7 0xf65e3a; reached
 ; until 2026-10-02 only as the alias TimeSig_CallProc): `ld
 ; xde,<this>; add xde,xbc; ld xhl,(xde); call (xhl)`, after `cp de, 23 / ret ugt`
@@ -5539,12 +5539,12 @@ TimeSig_ProcTable:
 	.long	Tempo_AdjustStartMeasure
 	.long	Tempo_AdjustEndMeasure
 	.long	TimeSig_ProcNop
-	.long	Tempo_AdjustQuantize
+	.long	SeqToComposer_StepTranspose
 	.long	TimeSig_ProcNop
 	.long	Tempo_AdjustEffect
 	.long	TimeSig_ProcNop
-	.long	Tempo_IncrementTimeSigNum
-	.long	Tempo_DecrementTimeSigNum
+	.long	SeqToComposer_IncMemoryNo
+	.long	SeqToComposer_DecMemoryNo
 	.long	Tempo_TimeSigCodeBlock
 	.long	Tempo_EditParam84
 	.long	Tempo_EditBPM
@@ -5556,7 +5556,7 @@ TimeSig_ProcTable:
 	.long	Tempo_EditParam92
 	.long	Tempo_EditParam93
 	.long	TimeSig_ProcNop
-	.long	Tempo_AdjustQuantize_WideArg
+	.long	SeqToComposer_StepTranspose_WideArg
 	.long	TimeSig_ProcNop
 	.long	Tempo_AdjustEffect_WideArg
 ; -----------------------------------------------------------------------------
@@ -6284,7 +6284,7 @@ SndArgNmGet_RamPtrsB:	.incbin "includes/generated/naka_widget_descriptors.bin", 
 ; [naka_s_headers] CmpStepTitleFunc_ProcTable
 ; CmpStepTitleFunc_ProcTable (+0x32, ROM 0xe4c104): CmpStepTitleFunc
 ; (v10/v9 0xf6a2e2, v7 0xf69ede): ldirw 8 words to its frame and passes
-; the copy to DirmdEmulator_Entry (v10/v9 0xf9ae97, v7 0xf9aa8a). Four
+; the copy to DirmdEmulator (v10/v9 0xf9ae97, v7 0xf9aa8a). Four
 ; code addresses inside CmpStepTitleFunc's own region (0xf6a2ff =
 ; CmpStepTitle_OnPaint, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
 ; relocates them by -0x404 through v7_c_divergence.json) -- code entry

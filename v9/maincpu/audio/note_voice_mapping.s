@@ -18540,10 +18540,10 @@ SndParam_ApplySystemParam_QueueRotarySpeed:
 SndParam_ApplySystemParam_QueueAcousticIllusionOnOff:
 	ld	(0xcfcc:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-SendEpilogue_Data_Case5:
+SndParam_ApplySystemParam_SendFadeLevel:
 	ldto_berp a, 248
 	extz	wa
-	call	SendPartDataBlock_Block3
+	call	COMM_SendFadeLevel
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_SendEqualizerOnOff: Id 0x4006 (tag 0x60 +1 bit 5, equalizer on/off): sent at once as COMM
 ;   packet 0x25.
@@ -25165,7 +25165,10 @@ LookupTableConverge_Increment:
 	inc 4, xsp
 	ret
 
-Param_SignExtendReturn:
+; SndParam_ValueMapLookup: Zero-extends WA (selector), BC (value) and DE (map row) and tail-jumps to
+;   SndParam_OffsetHandler, the SndParam_ValueMapGrid lookup. Basis: callers + body --
+;   SndParam_ValueMapLookupSel1/Sel2 and three accompaniment-engine sites call it.
+SndParam_ValueMapLookup:
 	extz wa
 	extz bc
 	extz de
@@ -25414,10 +25417,9 @@ Param_SignExtendReturn_Skip5:
 	extz	wa
 	muls	wa, 80
 	extz	xwa
-	.byte 0xf3, 0xe1
-	ld	l, 1:opc
-	ldw	wa, 0x3ab8
-	ldw	wa, 0xf6e8
+	lda	xwa, (xwa+295)
+	lda	xwa, (xwa+58)
+	cp	xiz, xwa
 	jr	c, Param_SignExtendReturn_Skip6
 	ld	xbc, xiz
 	sub	xbc, xwa
@@ -26341,7 +26343,9 @@ SendPartDataBlock_Block2:
 	ld	de, 1:i3
 	call SendCOMM_VariableLengthPacket
 	ret
-SendPartDataBlock_Block3:
+; COMM_SendFadeLevel: Set-if-changed sender of the FADE IN/OUT level: stores A in 0xE353 and sends it as
+;   COMM packet type 6 (sub-CPU DSP_Set_FadeLevel). Basis: callers + body + receiver.
+COMM_SendFadeLevel:
 	cp	(0xe353:16), a
 	ret z
 	ld	(0xe353:16), a
@@ -26824,21 +26828,21 @@ SoundRam_ConvertKn1500Record_Skip:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
-HdaeRom_DataHandler_Helper:
+SoundRam_ConvertSounds_Helper:
 	lda	xhl, (xwa+16)
 	ld	e, (xhl)
 	and	e, 183
 	ld	(xhl), e
 	lda	xbc, (xwa+17)
 	bit	7, (xbc)
-	jr	z, HdaeRom_DataHandler_Helper_Skip
+	jr	z, SoundRam_ConvertSounds_Helper_Skip
 	set	6, e
 	ld	(xhl), e
-HdaeRom_DataHandler_Helper_Skip:
+SoundRam_ConvertSounds_Helper_Skip:
 	bit	1, (xbc)
-	jr	z, HdaeRom_DataHandler_Helper_Skip2
+	jr	z, SoundRam_ConvertSounds_Helper_Skip2
 	set	3, (xhl)
-HdaeRom_DataHandler_Helper_Skip2:
+SoundRam_ConvertSounds_Helper_Skip2:
 	ld	c, (xwa+18)
 	and	c, 240
 	ldfr_berp c, 240
@@ -26950,7 +26954,7 @@ SoundRam_FillDefaultRecord:
 ; SoundRam_ConvertKn2000Record: Converts one 144-byte sound record of a KN2000 / MKA / MKB sound-RAM image (XBC) into
 ;   a 470-byte KN5000 record at XWA: fills it with defaults (SoundRam_FillDefaultRecord), copies the 16-byte
 ;   name, maps the flag bits, packed nibble fields and levels (+0x12 * 127 / 30) to their KN5000 offsets. Basis:
-;   callers + body -- HdaeRom_DataHandler_ConvertKn2000MkaMkb (image ids 1-3) calls it per record with XWA = image +16
+;   callers + body -- SoundRam_ConvertSounds_Kn2000MkaMkb (image ids 1-3) calls it per record with XWA = image +16
 ;   + 470 * n and XBC = the record; the KN1500 counterpart is SoundRam_ConvertKn1500Record.
 SoundRam_ConvertKn2000Record:
 	lda	xsp, (xsp-0x1a)
@@ -27146,37 +27150,37 @@ SendPartDataBlock_Return5_Skip4:
 	ld	(xsp+4), 0
 SoundRam_ConvertKn1500Record_Loop3:
 	bit	7, (xde)
-	jr	z, HdaeRom_DataHandler_Helper2_Entry_Join3
+	jr	z, SoundRam_ConvertSounds_Helper2_Entry_Join3
 	cp	(xsp+4), 0
 	jr	nz, SoundRam_ConvertKn2000Record_Skip5
 	ld	xwa, (xsp+10)
 	set	0, (xwa)
-	jr	HdaeRom_DataHandler_Helper2_Entry_Join3
+	jr	SoundRam_ConvertSounds_Helper2_Entry_Join3
 SoundRam_ConvertKn2000Record_Skip5:
 	cp	(xsp+4), 1
-	jr	nz, HdaeRom_DataHandler_Helper2_Entry
+	jr	nz, SoundRam_ConvertSounds_Helper2_Entry
 	ld	xwa, (xsp+10)
 	set	2, (xwa)
-	jr	HdaeRom_DataHandler_Helper2_Entry_Join3
-HdaeRom_DataHandler_Helper2_Entry:
+	jr	SoundRam_ConvertSounds_Helper2_Entry_Join3
+SoundRam_ConvertSounds_Helper2_Entry:
 	.byte 0x8f, 0x04
 	push	xsp
 	push	sr
-	jr	nz, HdaeRom_DataHandler_Helper2_Entry_Join3
+	jr	nz, SoundRam_ConvertSounds_Helper2_Entry_Join3
 	ld	xwa, (xsp+10)
 	set	4, (xwa)
-HdaeRom_DataHandler_Helper2_Entry_Join3:
+SoundRam_ConvertSounds_Helper2_Entry_Join3:
 	lda	xwa, (xbc+6)
 	ld	(xwa), 0
 	lda	xhl, (xbc+38)
 	ld	(xhl), 0
 	bit	6, (xde)
-	jr	z, HdaeRom_DataHandler_Helper2_Entry_Skip6
+	jr	z, SoundRam_ConvertSounds_Helper2_Entry_Skip6
 	set	5, (xwa)
 	ld	a, (xhl)
 	set	5, a
 	ld	(xhl), a
-HdaeRom_DataHandler_Helper2_Entry_Skip6:
+SoundRam_ConvertSounds_Helper2_Entry_Skip6:
 	ld	a, (xde+1)
 	ld	(xbc+2), a
 	ld	a, (xde+2)
@@ -27351,7 +27355,9 @@ SendPartDataBlock_Return5_Skip10:
 	lda	xsp, (xsp+26)
 	ret
 
-SendPartDataBlock_InitVal4:
+; SoundRam_IdentifyImage: Compares the 16-byte id at XWA with SoundRam_Id_KN5000 / _KN1500 / _KN3000 /
+;   _KN2000 / _MKA / _MKB and returns L = 6, 5, 4, 1, 2, 3, or 0 for none. Basis: body.
+SoundRam_IdentifyImage:
 	ld de, 0:i3
 	lda xhl, (SoundRam_Id_KN5000:24)
 
@@ -27508,51 +27514,58 @@ SendPartDataBlock_ClearByte5:
 	ld l, 0x0:opc
 	ret
 
-SendPartDataBlock_SetWord7:
+; SoundRam_WriteChecksum: Stores the complemented 16-bit sum of the 0x24B8 words from 0x1E0010 at
+;   0x1E72A8 (the image's checksum word); HL = 0. Basis: body + SoundRam_WriteIdAndChecksum.
+SoundRam_WriteChecksum:
 	ldw de, 0x24b8
 	lda xbc, (0x1e0000:24)
 	lda xwa, (xbc + 16)
 	ld hl, 0:i3
 
-SendPartDataBlock_Block11:
+SoundRam_WriteChecksum_Loop:
 	add HL, (xwa+)
-	djnz16 de, SendPartDataBlock_Block11
+	djnz16 de, SoundRam_WriteChecksum_Loop
 	cpl hl
 	ld	(xbc+29352), hl
 	ret
 
-; HDAE ROM data dispatch handler
-HdaeRom_DataHandler:
+; SoundRam_ConvertSounds: Converts the sound records of the SOUND RAM image at 0x1E0000 when it is an older
+;   model's (SoundRam_IdentifyImage): KN2000, MKA and MKB records (SoundRam_ConvertSounds_Kn2000MkaMkb) and
+;   KN1500 records (SoundRam_ConvertSounds_Kn1500); a KN3000 or KN5000 image needs none; an unknown one
+;   returns HL = 0xFF9A. With A = C = 0xFF it walks all 40 sounds (other A, C: not traced). Basis: callers + body -- PostTmLoad,
+;   PostTmLoadEntry and TmFlashWrite_ValidateParams call it before SoundRam_ConvertUserKit and
+;   SoundRam_WriteIdAndChecksum.  (Named HdaeRom_DataHandler until 2026-10-31: it has nothing to do with the
+;   HD-AE5000.)
+SoundRam_ConvertSounds:
 	lda xsp, (xsp-440)
 	push xiz
 	ld	(xsp+440), c
 	ld	(xsp+442), a
 	ld xwa, 0x1e0000
-	calr SendPartDataBlock_InitVal4
+	calr SoundRam_IdentifyImage
 	lda xbc, (0x1e0000:24)
 	extz hl
 	dec 1, hl
 	cp hl, 0:i3
-	jrl lt, HdaeRom_DataDispatch_SetWord
+	jrl lt, SoundRam_ConvertSounds_Unsupported
 	cp hl, 5:i3
-	jrl gt, HdaeRom_DataDispatch_SetWord
+	jrl gt, SoundRam_ConvertSounds_Unsupported
 	add hl, hl
-	lda xix, (HdaeRom_DispatchOffsetTable:24)
+	lda xix, (SoundRam_ConvertSounds_CaseTable:24)
 	ld	hl, (xix+hl)
-	lda xix, (HdaeRom_DataDispatch:24)
+	lda xix, (SoundRam_ConvertSounds_Kn1500:24)
 	jp	t, (xix+hl)
-; HDAE5000 extension ROM data dispatch (6-entry, table HdaeRom_DispatchOffsetTable)
-HdaeRom_DataDispatch:
+SoundRam_ConvertSounds_Kn1500:
 	ld	(xsp+6), xbc
 	cp	(xsp+442), 255
-	jrl	nz, HdaeRom_DataHandler_Skip
+	jrl	nz, SoundRam_ConvertSounds_Skip
 	cp	(xsp+440), 255
-	jrl	nz, HdaeRom_DataHandler_Skip
+	jrl	nz, SoundRam_ConvertSounds_Skip
 	.byte 0xbf, 0x04
 	push	sr
 	pushw	wa
 	nop
-HdaeRom_DataDispatch_Loop2:
+SoundRam_ConvertSounds_Kn1500_Loop2:
 	lda	xwa, (xsp+14)
 	ld	(xsp+10), xwa
 	ld	wa, (xsp+4)
@@ -27578,20 +27591,20 @@ HdaeRom_DataDispatch_Loop2:
 	ld	xbc, (xsp+10)
 	calr	SoundRam_ConvertKn1500Record
 	subw	(xsp+4), 1
-	jr	nz, HdaeRom_DataDispatch_Loop2
-	jrl	HdaeRom_DataHandler_Skip
-; HdaeRom_DataHandler_ConvertKn2000MkaMkb: Image ids 1-3 (KN2000, MKA, MKB): converts the image's 144-byte records
+	jr	nz, SoundRam_ConvertSounds_Kn1500_Loop2
+	jrl	SoundRam_ConvertSounds_Skip
+; SoundRam_ConvertSounds_Kn2000MkaMkb: Image ids 1-3 (KN2000, MKA, MKB): converts the image's 144-byte records
 ;   (base +80) to 470-byte KN5000 records (base +16).
-HdaeRom_DataHandler_ConvertKn2000MkaMkb:	; cases 1, 2, 3
+SoundRam_ConvertSounds_Kn2000MkaMkb:	; cases 1, 2, 3
 	ld	(xsp+6), xbc
 	cp	(xsp+442), 255
-	jr	nz, HdaeRom_DataHandler_Skip2
+	jr	nz, SoundRam_ConvertSounds_Skip2
 	cp	(xsp+440), 255
-	jr	nz, HdaeRom_DataHandler_Skip2
+	jr	nz, SoundRam_ConvertSounds_Skip2
 	.byte 0xbf, 0x04
 	push	sr
 	ld	d, 0:opc
-HdaeRom_DataHandler_Loop3:
+SoundRam_ConvertSounds_Loop3:
 	lda	xwa, (xsp+14)
 	ld	(xsp+10), xwa
 	ld	wa, (xsp+4)
@@ -27615,14 +27628,14 @@ HdaeRom_DataHandler_Loop3:
 	ld	xbc, (xsp+10)
 	calr	SoundRam_ConvertKn2000Record
 	subw	(xsp+4), 1
-	jr	nz, HdaeRom_DataHandler_Loop3
-	jr	HdaeRom_DataHandler_Skip
-HdaeRom_DataHandler_Skip2:
+	jr	nz, SoundRam_ConvertSounds_Loop3
+	jr	SoundRam_ConvertSounds_Skip
+SoundRam_ConvertSounds_Skip2:
 	ld	a, (xsp+440)
 	extz	wa
 	ld	(xsp+4), wa
-	jr	HdaeRom_DataHandler_Join
-HdaeRom_DataHandler_Loop:
+	jr	SoundRam_ConvertSounds_Join
+SoundRam_ConvertSounds_Loop:
 	ld	wa, (xsp+4)
 	extz	xwa
 	ld	xbc, xwa
@@ -27632,7 +27645,7 @@ HdaeRom_DataHandler_Loop:
 	add	xbc, 80
 	add	xbc, (xsp+6)
 	ld	xwa, xbc
-	calr	HdaeRom_DataHandler_Helper
+	calr	SoundRam_ConvertSounds_Helper
 	ld	iz, (xsp+4)
 	extz	xiz
 	ld	xwa, xiz
@@ -27649,28 +27662,28 @@ HdaeRom_DataHandler_Loop:
 	ld	xwa, xhl
 	calr	SoundRam_ConvertKn2000Record
 	incw	1, (xsp+4)
-HdaeRom_DataHandler_Join:
+SoundRam_ConvertSounds_Join:
 	ld	a, (xsp+440)
 	inc	1, a
 	extz	wa
 	cp	(xsp+4), wa
-	jr	c, HdaeRom_DataHandler_Loop
-HdaeRom_DataHandler_Skip:
+	jr	c, SoundRam_ConvertSounds_Loop
+SoundRam_ConvertSounds_Skip:
 	ld	hl, 0:i3
-	jr	HdaeRom_DataHandler_Epilogue
+	jr	SoundRam_ConvertSounds_Epilogue
 
-HdaeRom_DataDispatch_SetWord:
+SoundRam_ConvertSounds_Unsupported:
 	ldw	hl, 0xff9a
-HdaeRom_DataHandler_Epilogue:
+SoundRam_ConvertSounds_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+440)
 	ret
 
 ; SoundRam_WriteIdAndChecksum: Stamps the sound-memory image at 0x1E0000 as a KN5000 one: copies the 16-byte id
-;   "KN5000 SOUND RAM" (SoundRam_Id_KN5000) to 0x1E0000..0x1E000F, then SendPartDataBlock_SetWord7 stores the
+;   "KN5000 SOUND RAM" (SoundRam_Id_KN5000) to 0x1E0000..0x1E000F, then SoundRam_WriteChecksum stores the
 ;   complemented 16-bit sum of the 0x24B8 words from 0x1E0010 at 0x1E72A8; returns HL = 0. Basis: callers + body --
 ;   PostTmLoad, PostTmSave_Success, PostTmLoadEntry and TmFlashWrite_ValidateParams call it right after converting the
-;   loaded data (HdaeRom_DataHandler / HdaeRom_AltHandler) and before bulk-copying the image (0x72AA bytes, checksum
+;   loaded data (SoundRam_ConvertSounds / SoundRam_ConvertUserKit) and before bulk-copying the image (0x72AA bytes, checksum
 ;   word last) to the sub-CPU.
 SoundRam_WriteIdAndChecksum:
 	lda	xde, (0x1e0000:24)
@@ -27678,37 +27691,40 @@ SoundRam_WriteIdAndChecksum:
 	ld	xbc, xwa
 	lda	xhl, (xwa + 16)
 
-HdaeRom_DataDispatch_SetWord_Loop:
+SoundRam_WriteIdAndChecksum_CopyId:
 	ld	A, (xbc+)
 	ld	(xde+), a
 	cp	xbc, xhl
-	jr	c, HdaeRom_DataDispatch_SetWord_Loop
-	jrl	SendPartDataBlock_SetWord7
-HdaeRom_DataDispatch_Block3:
+	jr	c, SoundRam_WriteIdAndChecksum_CopyId
+	jrl	SoundRam_WriteChecksum
+; SoundRam_ConvertKn3000UserKit: KN3000 image at XWA: moves the bytes from +0x4991 up to +0x72A7 one byte
+;   up, then for the 128 kit entries at +0x49A7 sets bits 5..4 of entry byte +1 to 0b10. Basis: body; what the
+;   two fields mean is not established.
+SoundRam_ConvertKn3000UserKit:
 	lda	xhl, (xwa+18833)
 	lda xix, (xwa+29351)
 	dec 1, xix
 	cp xix, xhl
-	jr	c, HdaeRom_DataDispatch_Block3_Skip
+	jr	c, SoundRam_ConvertKn3000UserKit_Skip
 	lda	xde, (xix-1)
-HdaeRom_DataDispatch_Block3_Loop2:
+SoundRam_ConvertKn3000UserKit_Loop2:
 	ld	c, (xde)
 	ld	(xde+1), c
 	dec	1, xde
 	dec	1, xix
 	cp	xix, xhl
-	jr	nc, HdaeRom_DataDispatch_Block3_Loop2
+	jr	nc, SoundRam_ConvertKn3000UserKit_Loop2
 ; For QE = 0..127 and DE = 2*QE: XHL = XWA + 0x49A7 + DE, then bits 5..4 of
 ; the byte at XHL+1 become 0b10 (clear 0x30, set bit 5; XBC = XWA + exts(BC)
 ; reaches the same byte).  Re-framed 2026-10-02 from MAME unidasm's reading
 ; at this label: the source had cut `lda xhl, (xwa+bc)` (f3 07 e0 e4 33) into
 ; `.byte 0xf3 / reti / .byte 0xe0, 0xe4 ...`, and that framing spelled a
 ; rotate whose count byte the CPU reads as 3 as `rrc_i_8 l, 19`.
-HdaeRom_DataDispatch_Block3_Skip:
+SoundRam_ConvertKn3000UserKit_Skip:
 	ld	(xhl), 1
 	ldib_erp	234, 0	; ld QE,0 (the assembler has no byte-register name for QE yet)
 	ld	de, 0:i3
-HdaeRom_DataDispatch_Block3_Loop:
+SoundRam_ConvertKn3000UserKit_Loop:
 	ld	bc, de
 	add	bc, 0x49a7
 	lda	xhl, (xwa+bc)
@@ -27719,48 +27735,50 @@ HdaeRom_DataDispatch_Block3_Loop:
 	incb_erp	234, 1	; inc 1,QE
 	inc	2, de
 	cp_erpb	234, 0x80	; cp QE,0x80
-	jr	c, HdaeRom_DataDispatch_Block3_Loop
+	jr	c, SoundRam_ConvertKn3000UserKit_Loop
 	ret
 
-; HDAE ROM alt dispatch handler
-HdaeRom_AltHandler:
+; SoundRam_ConvertUserKit: Converts the USER KIT part of the SOUND RAM image at 0x1E0000: a KN3000 image
+;   through SoundRam_ConvertKn3000UserKit (result 0), a KN5000 one needs nothing (0), the others have no kit
+;   (0xFF9A); then stamps the KN5000 id and checksum like SoundRam_WriteIdAndChecksum and returns HL = the
+;   result. Basis: callers + body (case table SoundRam_ConvertUserKit_CaseTable).  (Was HdaeRom_AltHandler.)
+SoundRam_ConvertUserKit:
 	pushw iz
 	ld xwa, 0x1e0000
-	calr SendPartDataBlock_InitVal4
+	calr SoundRam_IdentifyImage
 	extz hl
 	dec 1, hl
 	cp hl, 0:i3
-	jr lt, HdaeRom_AltDispatch_SetWord
+	jr lt, SoundRam_ConvertUserKit_Unsupported
 	cp hl, 5:i3
-	jr gt, HdaeRom_AltDispatch_SetWord
+	jr gt, SoundRam_ConvertUserKit_Unsupported
 	add hl, hl
-	lda xix, (HdaeRom_AltDispatchOffsetTable:24)
+	lda xix, (SoundRam_ConvertUserKit_CaseTable:24)
 	ld	hl, (xix+hl)
-	lda xix, (HdaeRom_AltDispatch:24)
+	lda xix, (SoundRam_ConvertUserKit_Kn3000:24)
 	jp	t, (xix+hl)
-; HDAE5000 extension ROM alt dispatch (6-entry, table HdaeRom_AltDispatchOffsetTable)
-HdaeRom_AltDispatch:
+SoundRam_ConvertUserKit_Kn3000:
 	ld	xwa, 0x1e0000
-	calr	HdaeRom_DataDispatch_Block3
-; HdaeRom_AltHandler_Kn5000Image: Image id 6 (KN5000 SOUND RAM): nothing to convert, result 0.
-HdaeRom_AltHandler_Kn5000Image:
+	calr	SoundRam_ConvertKn3000UserKit
+; SoundRam_ConvertUserKit_Kn5000: Image id 6 (KN5000 SOUND RAM): nothing to convert, result 0.
+SoundRam_ConvertUserKit_Kn5000:
 	ld	iz, 0:i3
-	jr	HdaeRom_AltHandler_Join
+	jr	SoundRam_ConvertUserKit_Join
 
-HdaeRom_AltDispatch_SetWord:
+SoundRam_ConvertUserKit_Unsupported:
 	ldw iz, 0xff9a
-HdaeRom_AltHandler_Join:
+SoundRam_ConvertUserKit_Join:
 	lda xde, (0x1e0000:24)
 	lda xwa, (SoundRam_Id_KN5000:24)
 	ld xbc, xwa
 	lda xhl, (xwa + 16)
 
-HdaeRom_AltDispatch_SetWord_Loop:
+SoundRam_ConvertUserKit_CopyId:
 	ld A, (xbc+)
 	ld (xde+), a
 	cp xbc, xhl
-	jr c, HdaeRom_AltDispatch_SetWord_Loop
-	calr SendPartDataBlock_SetWord7
+	jr c, SoundRam_ConvertUserKit_CopyId
+	calr SoundRam_WriteChecksum
 	ld hl, iz
 	popw iz
 	ret
@@ -27773,10 +27791,10 @@ PostTmLoad:
 	jr lt, PostTmLoad_Send
 	ldw wa, 0xff
 	ldw bc, 0xff
-	calr HdaeRom_DataHandler
+	calr SoundRam_ConvertSounds
 	ldw wa, 0xff
 	ldw bc, 0xff
-	calr HdaeRom_AltHandler
+	calr SoundRam_ConvertUserKit
 	calr SoundRam_WriteIdAndChecksum
 	ld xwa, 0x1e0000
 	ldw bc, 0x72aa
@@ -27807,7 +27825,7 @@ PostTmSave:
 	ret
 
 PostTmSave_ByteBlock:
-	calr	SendPartDataBlock_InitVal4
+	calr	SoundRam_IdentifyImage
 	cp	l, 6:i3
 	jr	ugt, PostTmSave_ByteBlock_Skip
 	cp	l, 1:i3
@@ -27823,10 +27841,10 @@ PostTmSave_Success:
 	jr lt, PostTmSave_Failure
 	ldw wa, 0xff
 	ldw bc, 0xff
-	calr HdaeRom_DataHandler
+	calr SoundRam_ConvertSounds
 	ldw wa, 0xff
 	ldw bc, 0xff
-	calr HdaeRom_AltHandler
+	calr SoundRam_ConvertUserKit
 	calr SoundRam_WriteIdAndChecksum
 	ld xwa, 0x1e0000
 	ldw bc, 0x72aa
@@ -27848,7 +27866,7 @@ PostTmSave_JumpToRestore:
 ;   counterpart of PreTmLoad (also a bare ret). Basis: callers + body.
 PreTmLoadEntry:
 	ret
-; PostTmLoadEntry: After a single SOUND MEMORY entry was read: on success converts it (HdaeRom_DataHandler or
+; PostTmLoadEntry: After a single SOUND MEMORY entry was read: on success converts it (SoundRam_ConvertSounds or
 ;   _AltHandler), bulk-copies the 470-byte (A < 64) or 80-byte record to the sub-CPU at 0x7800 + offset and sends
 ;   SubCPU_SendSoundMemUpdated(A, C); on failure the 0x04 message; then refreshes the display. Basis: callers + body.
 PostTmLoadEntry:
@@ -27863,7 +27881,7 @@ PostTmLoadEntry:
 	jr	lt, PostTmLoadEntry_Skip2
 	cp	(xsp+2), 0x40
 	jr	nc, PostTmLoadEntry_Skip
-	calr	HdaeRom_DataHandler
+	calr	SoundRam_ConvertSounds
 	calr	SoundRam_WriteIdAndChecksum
 	ld	c, (xsp)
 	extz	bc
@@ -27881,7 +27899,7 @@ PostTmLoadEntry:
 	ldw	bc, 470
 	jr	PostTmLoadEntry_Join
 PostTmLoadEntry_Skip:
-	calr	HdaeRom_AltHandler
+	calr	SoundRam_ConvertUserKit
 	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp)
 	extz	wa
@@ -27925,7 +27943,7 @@ TmFlashWrite_ValidateParams_Loop:
 	extz	wa
 	ldto_berp c, 248
 	extz	bc
-	calr	HdaeRom_DataHandler
+	calr	SoundRam_ConvertSounds
 	inc	1, iz
 	cp	iz, 20
 	jr	c, TmFlashWrite_ValidateParams_Loop
@@ -27949,7 +27967,7 @@ TmFlashWrite_ValidateParams_Loop2:
 	extz	wa
 	ldto_berp c, 248
 	extz	bc
-	calr	HdaeRom_AltHandler
+	calr	SoundRam_ConvertUserKit
 	inc	1, iz
 	cp	iz, 128
 	jr	c, TmFlashWrite_ValidateParams_Loop2
@@ -28067,26 +28085,35 @@ TmFlash_BulkTransferToSubCPU:
 	ld	xde, 0x7800
 	call	InterCPU_E1_Bulk_Transfer
 	jp	TmFlash_Return
+; SoundRam_CheckKn5000Image: HL = 0 when the image at 0x1E0000 is a KN5000 one,
+;   else 0xFF9A. Basis: body.
+SoundRam_CheckKn5000Image:
 	ld	xwa, 0x1e0000
-	calr	SendPartDataBlock_InitVal4
+	calr	SoundRam_IdentifyImage
 	ldw	wa, 0xff9a
 	cp	l, 6:i3
-	jr	nz, TmFlash_BulkTransferToSubCPU_Skip
+	jr	nz, SoundRam_CheckKn5000Image_Store
 	ld	wa, 0:i3
-TmFlash_BulkTransferToSubCPU_Skip:
+SoundRam_CheckKn5000Image_Store:
 	ld	hl, wa
 	ret
+; SoundRam_CheckKnownImage: HL = 0 when the image at 0x1E0000 has any of the six
+;   known ids, else 0xFF9A. Basis: body.
+SoundRam_CheckKnownImage:
 	ld	xwa, 0x1e0000
-	calr	SendPartDataBlock_InitVal4
+	calr	SoundRam_IdentifyImage
 	cp	l, 6:i3
-	jr	ugt, TmFlash_BulkTransferToSubCPU_Skip2
+	jr	ugt, SoundRam_CheckKnownImage_Fail
 	cp	l, 1:i3
-	jr	c, TmFlash_BulkTransferToSubCPU_Skip2
+	jr	c, SoundRam_CheckKnownImage_Fail
 	ld	hl, 0:i3
 	ret
-TmFlash_BulkTransferToSubCPU_Skip2:
+SoundRam_CheckKnownImage_Fail:
 	ldw	hl, 0xff9a
 	ret
+; SoundRam_GetSoundRecordPtr: XHL = 0x1E0000 + 16 + 470 * WA, sound record WA of
+;   the KN5000 image. Basis: body.
+SoundRam_GetSoundRecordPtr:
 	extz	xwa
 	ld	xbc, 470
 	call	Math_Multiply32
@@ -28095,36 +28122,40 @@ TmFlash_BulkTransferToSubCPU_Skip2:
 	ld	xhl, 0x1e0000
 	add	xhl, xwa
 	ret
+; SoundRam_GetRecordAddress: XHL = address of sound record BC in the image at XWA,
+;   by its model: 16 + 470 * BC (KN5000, KN3000), 16 + 289 * BC (KN1500), 80 + 144 * BC (KN2000, MKA, MKB),
+;   0xFFFFFF9A for an unknown image. Basis: body (case table SoundRam_GetRecordAddress_CaseTable).
+SoundRam_GetRecordAddress:
 	dec	4, xsp
 	pushw	iz
 	ld	iz, bc
 	ld	(xsp+2), xwa
 	ld	xwa, (xsp+2)
-	calr	SendPartDataBlock_InitVal4
+	calr	SoundRam_IdentifyImage
 	ld	wa, iz
 	extz	xwa
 	extz	hl
 	dec	1, hl
 	cp	hl, 0:i3
-	jr	lt, TmFlash_BulkTransferToSubCPU_Skip3
+	jr	lt, SoundRam_GetRecordAddress_Unknown
 	cp	hl, 5:i3
-	jr	gt, TmFlash_BulkTransferToSubCPU_Skip3
+	jr	gt, SoundRam_GetRecordAddress_Unknown
 	add	hl, hl
-	lda	xix, (TmFlashBulkA_SwitchOffsets:24)
+	lda	xix, (SoundRam_GetRecordAddress_CaseTable:24)
 	ld	hl, (xix+hl)
-	lda	xix, (VoiceParam_DispatchTable1:24)
+	lda	xix, (SoundRam_GetRecordAddress_Kn5000Kn3000:24)
 	jp	t, (xix+hl)	; (xix + hl) SRI dispatch
-VoiceParam_DispatchTable1:
+SoundRam_GetRecordAddress_Kn5000Kn3000:
 	ld	xbc, 470
-	jr	TmFlash_BulkTransferToSubCPU_Join
-TmFlash_BulkTransferToSubCPU_Case5:
+	jr	SoundRam_GetRecordAddress_Join
+SoundRam_GetRecordAddress_Kn1500:
 	ld	xbc, 289
-TmFlash_BulkTransferToSubCPU_Join:
+SoundRam_GetRecordAddress_Join:
 	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+2)
-	jr	TmFlash_BulkTransferToSubCPU_Epilogue
-TmFlash_BulkTransferToSubCPU_Case1:	; cases 1, 2, 3
+	jr	SoundRam_GetRecordAddress_Epilogue
+SoundRam_GetRecordAddress_Kn2000MkaMkb:	; cases 1, 2, 3
 	ld	xbc, xwa
 	sll	xbc, 3
 	add	xbc, xwa
@@ -28132,18 +28163,21 @@ TmFlash_BulkTransferToSubCPU_Case1:	; cases 1, 2, 3
 	add	xbc, 80
 	add	xbc, (xsp+2)
 	ld	xhl, xbc
-	jr	TmFlash_BulkTransferToSubCPU_Epilogue
-TmFlash_BulkTransferToSubCPU_Skip3:
+	jr	SoundRam_GetRecordAddress_Epilogue
+SoundRam_GetRecordAddress_Unknown:
 	ld	xhl, 0xffffff9a
-TmFlash_BulkTransferToSubCPU_Epilogue:
+SoundRam_GetRecordAddress_Epilogue:
 	popw	iz
 	inc	4, xsp
 	ret
+; SoundRam_GetSoundSlot: For sound WA < 40 of the KN5000 image: (XBC) = its
+;   address 0x1E0010 + 470 * WA, (XDE) = 470, HL = 0; else HL = 0xFF38. Basis: body.
+SoundRam_GetSoundSlot:
 	dec	4, xsp
 	push	xiz
 	ld	(xsp+4), xde
 	cp	wa, 40
-	jr	nc, TmFlash_BulkTransferToSubCPU_Skip4
+	jr	nc, SoundRam_GetSoundSlot_OutOfRange
 	ld	xiz, xbc
 	extz	xwa
 	ld	xbc, 470
@@ -28155,34 +28189,38 @@ TmFlash_BulkTransferToSubCPU_Epilogue:
 	ld	xwa, (xsp+4)
 	ldw	(xwa), 470
 	ld	hl, 0:i3
-	jr	TmFlash_BulkTransferToSubCPU_Epilogue2
-TmFlash_BulkTransferToSubCPU_Skip4:
+	jr	SoundRam_GetSoundSlot_Epilogue
+SoundRam_GetSoundSlot_OutOfRange:
 	ldw	hl, 0xff38
-TmFlash_BulkTransferToSubCPU_Epilogue2:
+SoundRam_GetSoundSlot_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SoundRam_GetRecordOffsetAndSize: For sound BC of the image at XWA: (XDE) = the record's
+;   offset in the image and (stack word) = its size, by model (470 KN5000 / KN3000, 289 KN1500, 144 KN2000 /
+;   MKA / MKB); HL = 0, or 0xFF9A for an unknown image (retd 4). Basis: body (SoundRam_GetRecordOffsetAndSize_CaseTable).
+SoundRam_GetRecordOffsetAndSize:
 	dec	8, xsp
 	pushw	iz
 	ld	(xsp+0x2), xde
 	ld	iz, bc
 	ld	(xsp+0x6), xwa
 	ld	xwa, (xsp+0x6)
-	calr	SendPartDataBlock_InitVal4
+	calr	SoundRam_IdentifyImage
 	ld	bc, iz
 	extz	xbc
 	extz	hl
 	dec	1, hl
 	cp	hl, 0:i3
-	jrl	lt, TmFlash_BulkTransferToSubCPU_Skip5
+	jrl	lt, SoundRam_GetRecordOffsetAndSize_Unknown
 	cp	hl, 5:i3
-	jrl	gt, TmFlash_BulkTransferToSubCPU_Skip5
+	jrl	gt, SoundRam_GetRecordOffsetAndSize_Unknown
 	add	hl, hl
-	lda	xix, (TmFlashBulkB_SwitchOffsets:24)
+	lda	xix, (SoundRam_GetRecordOffsetAndSize_CaseTable:24)
 	ld	hl, (xix+hl)
-	lda	xix, (VoiceParam_DispatchTable1_Code:24)
+	lda	xix, (SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000:24)
 	jp	t, (xix+hl)
-VoiceParam_DispatchTable1_Code:
+SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000:
 	ld	xwa, xbc
 	ld	xbc, 0x1d6
 	call	Math_Multiply32
@@ -28192,8 +28230,8 @@ VoiceParam_DispatchTable1_Code:
 	ld	xwa, (xsp+0x2)
 	ld	(xwa), xhl
 	ldw	wa, 0x1d6
-	jr	TmFlash_BulkTransferToSubCPU_Join2
-TmFlash_BulkTransferToSubCPU_Switch2_Case5:
+	jr	SoundRam_GetRecordOffsetAndSize_Join
+SoundRam_GetRecordOffsetAndSize_Kn1500:
 	ld	xwa, xbc
 	ld	xbc, 0x121
 	call	Math_Multiply32
@@ -28203,8 +28241,8 @@ TmFlash_BulkTransferToSubCPU_Switch2_Case5:
 	ld	xwa, (xsp+0x2)
 	ld	(xwa), xhl
 	ldw	wa, 0x121
-	jr	TmFlash_BulkTransferToSubCPU_Join2
-TmFlash_BulkTransferToSubCPU_Switch2_Case1:	; cases 1, 2, 3
+	jr	SoundRam_GetRecordOffsetAndSize_Join
+SoundRam_GetRecordOffsetAndSize_Kn2000MkaMkb:	; cases 1, 2, 3
 	ld	xwa, xbc
 	sll	xwa, 3
 	add	xwa, xbc
@@ -28216,14 +28254,14 @@ TmFlash_BulkTransferToSubCPU_Switch2_Case1:	; cases 1, 2, 3
 	ld	xwa, (xsp+0x2)
 	ld	(xwa), xhl
 	ldw	wa, 144
-TmFlash_BulkTransferToSubCPU_Join2:
+SoundRam_GetRecordOffsetAndSize_Join:
 	ld	xbc, (xsp+14)
 	ld	(xbc), wa
 	ld	hl, 0:i3
-	jr	TmFlash_BulkTransferToSubCPU_Epilogue3
-TmFlash_BulkTransferToSubCPU_Skip5:
+	jr	SoundRam_GetRecordOffsetAndSize_Epilogue
+SoundRam_GetRecordOffsetAndSize_Unknown:
 	ldw	hl, 0xff9a
-TmFlash_BulkTransferToSubCPU_Epilogue3:
+SoundRam_GetRecordOffsetAndSize_Epilogue:
 	popw	iz
 	inc	8, xsp
 	retd	4

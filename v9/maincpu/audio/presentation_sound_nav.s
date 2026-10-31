@@ -1294,7 +1294,7 @@ DirmdTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	calr DirmdEmulator_Entry
+	calr DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -1349,9 +1349,8 @@ DirmdTitle_Cur:
 	ld	xwa, DirmdTitleFunc_Str_DirmdTitleCur
 	call	DbMemo_PostString
 	jp	PsMixer_CtlTypeProc8_Return3
-DirmdEmulator_Entry:
-
 DirmdEmulator:
+
 	push xiz
 	ld xiz, xwa
 	sub xbc, EVT_NONE

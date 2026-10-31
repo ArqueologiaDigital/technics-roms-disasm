@@ -2311,7 +2311,7 @@ Reset_Floppy_Disk_Controller:
 	res	0, (PD:8)
 	ldw	wa, 10
 	jrl	SOME_DELAY
-TitleFunc_LifecycleTable_Helper:
+TestTitleFunc_OnTbiosTest_Helper:
 	ld	(PHFC:8), 30:io
 	bit	6, (PD:8)
 	ret	nz

@@ -584,7 +584,7 @@ DisplayMode_Handler_3_Helper2:
 	xor	b, b
 	ld	a, w
 	xor	w, w
-	call	ScoopDisp_BytecodeBlock1_Helper
+	call	SndParam_ValueMapLookupSel1
 	ld	a, l
 	pop	xiz
 	pop	xiy
@@ -594,7 +594,7 @@ DisplayMode_Handler_3_Helper2:
 	pop	xbc
 	ret
 ; PerfMode_LookupValueMapColumn5: Register-preserving value-map lookup with selector 2: with A = value and W = map
-;   row, calls Scoop_CurveUpdate_NextSegment (DE = value, BC = row, WA = 2 -> SndParam_OffsetHandler, column 5 of the
+;   row, calls SndParam_ValueMapLookupSel2 (DE = value, BC = row, WA = 2 -> SndParam_OffsetHandler, column 5 of the
 ;   SndParam_ValueMapGrid row; unmapped rows return the value) and returns the result in A, all other registers kept.
 ;   Basis: callers + body -- PerfMode_MapDisplayNoteToEvent calls it with A = the shown note and W = (0xFB3C) to map
 ;   the note back before writing it; DisplayMode_Handler_3_Helper2 is the selector-1 twin
@@ -610,7 +610,7 @@ PerfMode_LookupValueMapColumn5:
 	xor	b, b
 	ld	a, w
 	xor	w, w
-	call	Scoop_CurveUpdate_NextSegment
+	call	SndParam_ValueMapLookupSel2
 	ld	a, l
 	pop	xiz
 	pop	xiy
@@ -18620,7 +18620,9 @@ Scoop_CurveUpdate_DrawSegment:
 	ld iy, ix
 	andmi8 (xhl), 0x7f
 	jr Scoop_SpecialMode_ValueSend_Part3
-ScoopDisp_BytecodeBlock1_Helper:
+; SndParam_ValueMapLookupSel1: Value-map lookup with selector 1: A = value, C = map row -> BC = value, DE = row,
+;   WA = 1, then SndParam_ValueMapLookup. Basis: callers + body -- DisplayMode_Handler_3_Helper2 wraps it.
+SndParam_ValueMapLookupSel1:
 	ld e, a
 	extz de
 	ld a, c
@@ -18628,8 +18630,11 @@ ScoopDisp_BytecodeBlock1_Helper:
 	ld bc, de
 	ld de, wa
 	ld wa, 1:i3
-	jp Param_SignExtendReturn
-Scoop_CurveUpdate_NextSegment:
+	jp SndParam_ValueMapLookup
+; SndParam_ValueMapLookupSel2: Value-map lookup with selector 2 (column 5 of the SndParam_ValueMapGrid row):
+;   A = value, C = map row -> BC, DE, WA = 2, then SndParam_ValueMapLookup. Basis: callers + body --
+;   PerfMode_LookupValueMapColumn5 wraps it.
+SndParam_ValueMapLookupSel2:
 	ld	e, a
 	extz	de
 	ld	a, c
@@ -18637,7 +18642,7 @@ Scoop_CurveUpdate_NextSegment:
 	ld	bc, de
 	ld	de, wa
 	ld	wa, 2:i3
-	jp	Param_SignExtendReturn
+	jp	SndParam_ValueMapLookup
 
 Scoop_CurveUpdate_SegmentEnd:
 	lda xsp, (xsp-272)

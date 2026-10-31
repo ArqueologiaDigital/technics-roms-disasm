@@ -5185,7 +5185,7 @@ Seq_RingBuf_ReadAheadToCheckpoint:
 Seq_RingBuf_ReadAheadToCheckpoint_Skip:
 	xor	hl, hl
 	ld	l, (xde+ix)
-	.byte	0xdc, 0x38, 0xff, 0x07	; minc1 0x07ff,IX
+	minc1_16	ix, 0x7ff
 	ld	(xde-10), ix
 	ret
 

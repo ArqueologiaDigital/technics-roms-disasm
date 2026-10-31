@@ -867,15 +867,20 @@ DrawLine_Execute:
 	inc 8, xsp
 	retd 0x2
 
-DrawProgressRectH:
+; Arrow_DrawHorizontal: Paints ArrowProc's arrow into the client box at XWA (four words): DE percent of the box width is the
+;   head, a fan of DrawLineHelper lines one pixel apart that widen towards the base, the rest is the
+;   shaft on the box's centre line; BC and the two pushed words go to DrawLineHelper, the first pushed
+;   word also picks the pointing direction (1, 2, 3) (retd 4). Basis: callers + body -- ArrowProc's
+;   EVT_PAINT calls it when view word +24 is 0 with DE = instance +28 and BC = view +22.
+Arrow_DrawHorizontal:
 	lda xsp, (xsp - 30)
 	push xiz
 	ld (xsp + 32), bc
 	ld bc, (xsp + 38)
 	cp bc, 3:i3
-	jr z, DrawProgH_Mode3Setup
+	jr z, Arrow_DrawHorizontal_Mode3Setup
 	cp bc, 2:i3
-	jr z, DrawProgH_Mode2Setup
+	jr z, Arrow_DrawHorizontal_Mode2Setup
 	cp bc, 1:i3
 	scc16 nz, bc
 	ld (xsp + 8), bc
@@ -885,7 +890,7 @@ DrawProgressRectH:
 	ld bc, 4:i3
 	ldirw
 
-DrawProgH_CalcDimensions:
+Arrow_DrawHorizontal_CalcDimensions:
 	lda xhl, (xsp + 24)
 	ld bc, (xhl + 4)
 	ld wa, bc
@@ -909,19 +914,19 @@ DrawProgH_CalcDimensions:
 	ld (xsp + 4), wa
 	sub (xsp + 4), iz
 	cpw (xsp + 8), 0x0
-	jr z, DrawProgH_SetLeftPos
+	jr z, Arrow_DrawHorizontal_SetLeftPos
 	ld (xsp + 20), bc
 	ldw (xsp + 6), 0xffff
-	jr DrawProgH_SetupCenter
+	jr Arrow_DrawHorizontal_SetupCenter
 
-DrawProgH_Mode2Setup:
+Arrow_DrawHorizontal_Mode2Setup:
 	ldw (xsp + 8), 0x1
-	jr DrawProgH_InitFromRect
+	jr Arrow_DrawHorizontal_InitFromRect
 
-DrawProgH_Mode3Setup:
+Arrow_DrawHorizontal_Mode3Setup:
 	ldw (xsp + 8), 0x0
 
-DrawProgH_InitFromRect:
+Arrow_DrawHorizontal_InitFromRect:
 	ldw (xsp + 10), 0x1
 	lda xhl, (xsp + 24)
 	ld bc, (xwa + 2)
@@ -932,14 +937,14 @@ DrawProgH_InitFromRect:
 	ld (xhl + 4), bc
 	ld wa, (xwa + 4)
 	ld (xhl + 6), wa
-	jr DrawProgH_CalcDimensions
+	jr Arrow_DrawHorizontal_CalcDimensions
 
-DrawProgH_SetLeftPos:
+Arrow_DrawHorizontal_SetLeftPos:
 	ld wa, (xhl)
 	ld (xsp + 20), wa
 	ldw (xsp + 6), 0x1
 
-DrawProgH_SetupCenter:
+Arrow_DrawHorizontal_SetupCenter:
 	lda xhl, (xsp + 16)
 	lda xiy, (xsp + 20)
 	ld wa, (xiy)
@@ -966,9 +971,9 @@ DrawProgH_SetupCenter:
 	ld (xhl + 2), bc
 	ldw (xsp + 14), 0x0
 	cp iz, 0:i3
-	jr ule, DrawProgH_AfterLoop1
+	jr ule, Arrow_DrawHorizontal_AfterLoop1
 
-DrawProgH_Loop1:
+Arrow_DrawHorizontal_Loop1:
 	lda xwa, (xsp + 20)
 	lda xbc, (xsp + 16)
 	pushm (xsp + 10)
@@ -979,26 +984,26 @@ DrawProgH_Loop1:
 	add (xsp + 16), wa
 	incw 1, (xsp + 14)
 	cp (xsp + 14), iz
-	jr c, DrawProgH_Loop1
+	jr c, Arrow_DrawHorizontal_Loop1
 
-DrawProgH_AfterLoop1:
+Arrow_DrawHorizontal_AfterLoop1:
 	lda xwa, (xsp + 24)
 	lda xbc, (xsp + 20)
 	cpw (xsp + 8), 0x0
-	jr z, DrawProgH_SkipFill1
+	jr z, Arrow_DrawHorizontal_SkipFill1
 	ld wa, (xwa + 4)
 	sub wa, iz
 	ld (xbc), wa
 	ldw (xsp + 6), 0xffff
-	jr DrawProgH_AfterFill1
+	jr Arrow_DrawHorizontal_AfterFill1
 
-DrawProgH_SkipFill1:
+Arrow_DrawHorizontal_SkipFill1:
 	ld wa, (xwa)
 	add wa, iz
 	ld (xbc), wa
 	ldw (xsp + 6), 0x1
 
-DrawProgH_AfterFill1:
+Arrow_DrawHorizontal_AfterFill1:
 	lda xix, (xsp + 16)
 	lda xhl, (xsp + 20)
 	ld wa, (xhl)
@@ -1016,9 +1021,9 @@ DrawProgH_AfterFill1:
 	ld (xix + 2), bc
 	ldw (xsp + 14), 0x0
 	cpw (xsp + 4), 0x0
-	jr ule, DrawProgH_AfterLoop2
+	jr ule, Arrow_DrawHorizontal_AfterLoop2
 
-DrawProgH_Loop2:
+Arrow_DrawHorizontal_Loop2:
 	lda xwa, (xsp + 20)
 	lda xbc, (xsp + 16)
 	pushm (xsp + 10)
@@ -1029,9 +1034,9 @@ DrawProgH_Loop2:
 	incw 1, (xsp + 14)
 	ld wa, (xsp + 14)
 	cp wa, (xsp + 4)
-	jr c, DrawProgH_Loop2
+	jr c, Arrow_DrawHorizontal_Loop2
 
-DrawProgH_AfterLoop2:
+Arrow_DrawHorizontal_AfterLoop2:
 	lda xix, (xsp + 16)
 	lda xhl, (xsp + 20)
 	ld wa, (xhl)
@@ -1049,9 +1054,9 @@ DrawProgH_AfterLoop2:
 	ld (xix + 2), bc
 	ldw (xsp + 14), 0x0
 	cpw (xsp + 4), 0x0
-	jr ule, DrawProgH_AfterLoop3
+	jr ule, Arrow_DrawHorizontal_AfterLoop3
 
-DrawProgH_Loop3:
+Arrow_DrawHorizontal_Loop3:
 	lda xwa, (xsp + 20)
 	lda xbc, (xsp + 16)
 	pushm (xsp + 10)
@@ -1062,22 +1067,27 @@ DrawProgH_Loop3:
 	incw 1, (xsp + 14)
 	ld wa, (xsp + 14)
 	cp wa, (xsp + 4)
-	jr c, DrawProgH_Loop3
+	jr c, Arrow_DrawHorizontal_Loop3
 
-DrawProgH_AfterLoop3:
+Arrow_DrawHorizontal_AfterLoop3:
 	pop xiz
 	lda xsp, (xsp + 30)
 	retd 0x4
 
-DrawProgressRectV:
+; Arrow_DrawVertical: Paints ArrowProc's arrow into the client box at XWA (four words): DE percent of the box height is the
+;   head, a fan of DrawLineHelper lines one pixel apart that widen towards the base, the rest is the
+;   shaft on the box's centre line; BC and the two pushed words go to DrawLineHelper, the first pushed
+;   word also picks the pointing direction (1, 2, 3) (retd 4). Basis: callers + body -- ArrowProc's
+;   EVT_PAINT calls it when view word +24 is set with DE = instance +28 and BC = view +22.
+Arrow_DrawVertical:
 	lda xsp, (xsp - 32)
 	push xiz
 	ld (xsp + 34), bc
 	ld bc, (xsp + 40)
 	cp bc, 3:i3
-	jr z, DrawProgV_Mode3Setup
+	jr z, Arrow_DrawVertical_Mode3Setup
 	cp bc, 2:i3
-	jr z, DrawProgV_Mode2Setup
+	jr z, Arrow_DrawVertical_Mode2Setup
 	cp bc, 1:i3
 	scc16 nz, bc
 	ld (xsp + 6), bc
@@ -1087,7 +1097,7 @@ DrawProgressRectV:
 	ld bc, 4:i3
 	ldirw
 
-DrawProgV_CalcDimensions:
+Arrow_DrawVertical_CalcDimensions:
 	lda xhl, (xsp + 26)
 	lda xix, (xhl + 4)
 	ld bc, (xix)
@@ -1113,21 +1123,21 @@ DrawProgV_CalcDimensions:
 	ldto_werp WA, 0xfa
 	sub (xsp + 4), wa
 	cpw (xsp + 6), 0x0
-	jr z, DrawProgV_SetTopPos
+	jr z, Arrow_DrawVertical_SetTopPos
 	ld (xsp + 22), bc
 	ld wa, (xix)
 	subw_erp WA, 0xfa
 	ld (xsp + 18), wa
-	jr DrawProgV_SetupCenter
+	jr Arrow_DrawVertical_SetupCenter
 
-DrawProgV_Mode2Setup:
+Arrow_DrawVertical_Mode2Setup:
 	ldw (xsp + 6), 0x1
-	jr DrawProgV_InitFromRect
+	jr Arrow_DrawVertical_InitFromRect
 
-DrawProgV_Mode3Setup:
+Arrow_DrawVertical_Mode3Setup:
 	ldw (xsp + 6), 0x0
 
-DrawProgV_InitFromRect:
+Arrow_DrawVertical_InitFromRect:
 	ldw (xsp + 8), 0x1
 	lda xhl, (xsp + 26)
 	ld bc, (xwa + 2)
@@ -1138,16 +1148,16 @@ DrawProgV_InitFromRect:
 	ld (xhl + 4), bc
 	ld wa, (xwa + 4)
 	ld (xhl + 6), wa
-	jr DrawProgV_CalcDimensions
+	jr Arrow_DrawVertical_CalcDimensions
 
-DrawProgV_SetTopPos:
+Arrow_DrawVertical_SetTopPos:
 	ld wa, (xhl)
 	ld (xsp + 22), wa
 	ld wa, (xhl)
 	addw_erp WA, 0xfa
 	ld (xsp + 18), wa
 
-DrawProgV_SetupCenter:
+Arrow_DrawVertical_SetupCenter:
 	ld bc, (xiy)
 	ld wa, (xde)
 	sub wa, bc
@@ -1228,16 +1238,16 @@ DrawProgV_SetupCenter:
 	lda xbc, (xsp + 22)
 	lda xde, (xsp + 18)
 	cpw (xsp + 6), 0x0
-	jr z, DrawProgV_SkipFill
+	jr z, Arrow_DrawVertical_SkipFill
 	ld wa, (xwa + 4)
 	subw_erp WA, 0xfa
 	ld (xbc), wa
 	sub wa, (xsp + 4)
 	inc 1, wa
 	ld (xde), wa
-	jr DrawProgV_AfterFill
+	jr Arrow_DrawVertical_AfterFill
 
-DrawProgV_SkipFill:
+Arrow_DrawVertical_SkipFill:
 	ld wa, (xwa)
 	addw_erp WA, 0xfa
 	ld (xbc), wa
@@ -1245,7 +1255,7 @@ DrawProgV_SkipFill:
 	dec 1, wa
 	ld (xde), wa
 
-DrawProgV_AfterFill:
+Arrow_DrawVertical_AfterFill:
 	lda xwa, (xsp + 22)
 	lda xhl, (xsp + 26)
 	lda xde, (xhl + 2)
@@ -1287,12 +1297,12 @@ ArrowProc:
 	push xiz
 	ld (xsp + 16), xwa
 	cp xbc, EVT_PAINT
-	jr z, DrawDouble_Inner
+	jr z, ArrowProc_Inner
 	ld xwa, (xsp + 16)
 	call InheritedProc
-	jr DrawDouble_Return
+	jr ArrowProc_Return
 
-DrawDouble_Inner:
+ArrowProc_Inner:
 	ld xwa, (xsp + 16)
 	call InheritedProc
 	ld xwa, (xsp + 16)
@@ -1309,21 +1319,21 @@ DrawDouble_Inner:
 	ld de, (xbc + 28)
 	ld bc, (xiz + 22)
 	cpw (xiz + 24), 0x0
-	jr z, DrawDouble_SkipV
+	jr z, ArrowProc_SkipV
 	pushm (xix)
 	pushm (xhl)
-	calr DrawProgressRectV
-	jr DrawDouble_AfterV
+	calr Arrow_DrawVertical
+	jr ArrowProc_AfterV
 
-DrawDouble_SkipV:
+ArrowProc_SkipV:
 	pushm (xix)
 	pushm (xhl)
-	calr DrawProgressRectH
+	calr Arrow_DrawHorizontal
 
-DrawDouble_AfterV:
+ArrowProc_AfterV:
 	ld xhl, 0:i3
 
-DrawDouble_Return:
+ArrowProc_Return:
 	pop xiz
 	lda xsp, (xsp + 16)
 	ret
@@ -2657,7 +2667,7 @@ MainPmanControl:
 ; scripts/converters/convert_mainpman_switch.py; each case offset is an
 ; instruction boundary and every instruction re-encodes to the ROM bytes.
 MainPmanCtrl_DispatchTable:
-MainPmanCtrl_Case0:
+MainPmanCtrl_OnLswPut:
 	ld xiz, xde
 	ld xwa, (xiz)
 	ld bc, (xiz+4)

@@ -16265,12 +16265,7 @@ AccPatch_InitSlotAlt_Valid:
 ;   every sequencer tick.
 AccPatch_CmpRealTick:
 	jr AccPatch_SeqDispatch_Main
-	adc wa, (xwa)
-	adc wa, (xwa)
-	adc wa, (xwa)
-	adc wa, (xwa)
-	adc wa, (xwa)
-	adc wa, (xwa)
+	.fill	12, 1, 0x90	; filler between the vector's two jumps
 	jrl AccPatch_SeqAdvanceStep
 
 AccPatch_SeqReadByte:
@@ -19996,7 +19991,7 @@ ToneGen_ClassifyMono_WriteNew:
 	ld c, w
 	xor b, b
 	ld wa, 1:i3
-	call Param_SignExtendReturn
+	call SndParam_ValueMapLookup
 	pop xiy
 	pop xix
 	pop xde
@@ -21099,7 +21094,7 @@ ToneGen_AdjustVoiceVelocity:
 	ld c, w
 	xor b, b
 	ld wa, 1:i3
-	call Param_SignExtendReturn
+	call SndParam_ValueMapLookup
 	pop xiy
 	pop xix
 	pop xde
@@ -21138,7 +21133,7 @@ ToneGen_AdjVel_StoreAndParam:
 	ld c, w
 	ld wa, 2:i3
 	xor d, d
-	call Param_SignExtendReturn
+	call SndParam_ValueMapLookup
 	pop xiy
 	pop xix
 	pop xde
@@ -23644,19 +23639,9 @@ AccFill_AdvanceAndCheck_Pad:
 ;   RhythmBuf_FillEmptyPattern multiplies it by the measure count to fill an empty pattern with 0x81 beat codes,
 ;   RhythmROM_ProcessPattern divides by it.
 RhythmBuf_BarQuartersByTimeSig:
-	push	sr
-	.byte 0x04, 0x06
-	ld	(1:8), 2:io
-	pop	sr
-	max
-	halt
-	ei	7
-	ld	(1:8), 2:io
-	pop	sr
-	max
-	halt
-	ei	7
-	.byte 0x08
+	.byte	2, 4, 6, 8	; 1/2 .. 4/2
+	.byte	1, 2, 3, 4, 5, 6, 7, 8	; 1/4 .. 8/4
+	.byte	1, 2, 3, 4, 5, 6, 7, 8	; 2/8 .. 16/8
 
 RhythmBuf_FillEmptyPattern:
 	ld xiy, (RHYTHM_SECTION_PTR:16)
@@ -27339,7 +27324,11 @@ Tempo_EndMeasureReturn:
 	inc 2, xsp
 	ret
 
-Tempo_AdjustQuantize:
+; SeqToComposer_StepTranspose: TRANSPOSE parameter (0x82) of the sequencer-to-composer page: steps RAM 0x398E
+;   up (A = 0, at most 49) or down (at least 1) and sets bit 4 of 0xE3E0. 0x398E is 25 for no transpose
+;   (-24..+24 semitones). Basis: callers + readers -- PsS2cTrans paints PtrTbl_TransposeStrs[(0x398E)], the
+;   0x90 note path adds (0x398E) - 25 to the key, the page's init writes 25.
+SeqToComposer_StepTranspose:
 	dec 2, xsp
 	ld (xsp), a
 	ldw wa, 0x82
@@ -27347,25 +27336,25 @@ Tempo_AdjustQuantize:
 	calr Tempo_DisplayParamCommon
 	ld a, (0x398e:16)
 	cp (xsp), 0x0
-	jr nz, Tempo_QuantizeDec
+	jr nz, SeqToComposer_StepTranspose_Dec
 	ld c, a
 	cp a, 0x31
-	jr nc, Tempo_QuantizeReturn
+	jr nc, SeqToComposer_StepTranspose_Return
 	inc 1, c
 	ld (0x398e:16), c
-	jr Tempo_QuantizeSetDirty
+	jr SeqToComposer_StepTranspose_SetDirty
 
-Tempo_QuantizeDec:
+SeqToComposer_StepTranspose_Dec:
 	ld c, a
 	cp a, 1:i3
-	jr ule, Tempo_QuantizeReturn
+	jr ule, SeqToComposer_StepTranspose_Return
 	dec 1, c
 	ld (0x398e:16), c
 
-Tempo_QuantizeSetDirty:
+SeqToComposer_StepTranspose_SetDirty:
 	set 4, (0xe3e0:16)
 
-Tempo_QuantizeReturn:
+SeqToComposer_StepTranspose_Return:
 	inc 2, xsp
 	ret
 
@@ -27401,7 +27390,11 @@ Tempo_EffectReturn:
 	inc 2, xsp
 	ret
 
-Tempo_IncrementTimeSigNum:
+; SeqToComposer_IncMemoryNo: Only for A = 0: records the change for the display (Tempo_DisplayParamCommon, A
+;   = 9, C = 8) and steps the destination composer memory number 0x398F up, at most to 29, setting bit 4 of
+;   0xE3E0. Basis: callers + readers -- S2cMemNoBox paints (0x398F), SeqRec_ValidateDone and the voice-slot
+;   init read the composer record at 0x94860 + 96 * (0x398F).
+SeqToComposer_IncMemoryNo:
 	cp a, 0:i3
 	ret nz
 	ldw wa, 0x9
@@ -27415,7 +27408,8 @@ Tempo_IncrementTimeSigNum:
 	set 4, (0xe3e0:16)
 	ret
 
-Tempo_DecrementTimeSigNum:
+; SeqToComposer_DecMemoryNo: Only for A = 0: as SeqToComposer_IncMemoryNo, stepping 0x398F down to 0.
+SeqToComposer_DecMemoryNo:
 	cp a, 0:i3
 	ret nz
 	ldw wa, 0x9
@@ -27453,19 +27447,19 @@ Tempo_EditParam84:
 	jr	nz, Tempo_EditParam84_Skip
 	ld	c, a
 	cp	a, 4:i3
-	jr	nc, Tempo_DecrementTimeSigNum_Epilogue
+	jr	nc, SeqToComposer_DecMemoryNo_Epilogue
 	inc	1, c
 	ld	(0x3990:16), c
 	jr	Tempo_EditParam84_Join
 Tempo_EditParam84_Skip:
 	ld	c, a
 	cp	a, 0:i3
-	jr	z, Tempo_DecrementTimeSigNum_Epilogue
+	jr	z, SeqToComposer_DecMemoryNo_Epilogue
 	dec	1, c
 	ld	(0x3990:16), c
 Tempo_EditParam84_Join:
 	set	4, (0xe3e0:16)
-Tempo_DecrementTimeSigNum_Epilogue:
+SeqToComposer_DecMemoryNo_Epilogue:
 	inc	2, xsp
 	ret
 
@@ -27600,9 +27594,9 @@ Tempo_EditParam93_Join:
 Tempo_EditBPM_Epilogue2:
 	inc	2, xsp
 	ret
-Tempo_AdjustQuantize_WideArg:
+SeqToComposer_StepTranspose_WideArg:
 	extz	wa
-	jrl	Tempo_AdjustQuantize
+	jrl	SeqToComposer_StepTranspose
 Tempo_AdjustEffect_WideArg:
 	extz	wa
 	jrl	Tempo_AdjustEffect
@@ -32547,7 +32541,7 @@ CmpEsyTtl_E_Var1_OnTransposeInc:
 	ldw wa, 0x82
 	call UI_PostDialRangeEvent
 	ld wa, 0:i3
-	call Tempo_AdjustQuantize
+	call SeqToComposer_StepTranspose
 	cp (0x3a77:16), 2
 	jr nz, CmpEsy_Quantize_Store
 	ld xwa, 0xb90018
@@ -32585,7 +32579,7 @@ S2cTtl_SecondaryHandler:
 	ldw wa, 0x82
 	call UI_PostDialRangeEvent
 	ld wa, 1:i3
-	call Tempo_AdjustQuantize
+	call SeqToComposer_StepTranspose
 	cp (0x3a77:16), 2
 	jr nz, CmpEsy_SecQuantize_Store
 	ld xwa, 0xb90018
@@ -32615,7 +32609,7 @@ CmpEsyTtl_E_Var1_OnMemoryNumberInc:
 	ld wa, 1:i3
 	call UI_PostEvent_0x6E
 	ld wa, 0:i3
-	call Tempo_IncrementTimeSigNum
+	call SeqToComposer_IncMemoryNo
 	ld xwa, 0xb9001e
 	ld xbc, EVT_REPAINT
 	ld xde, 0:i3
@@ -32624,7 +32618,7 @@ CmpEsyTtl_E_Var1_OnMemoryNumberDec:
 	ld wa, 1:i3
 	call UI_PostEvent_0x6E
 	ld wa, 0:i3
-	call Tempo_DecrementTimeSigNum
+	call SeqToComposer_DecMemoryNo
 	ld xwa, 0xb9001e
 	ld xbc, EVT_REPAINT
 	ld xde, 0:i3
@@ -33798,8 +33792,6 @@ AccBass_EventDeliver:
 AccBass_ReturnZero:
 	ld xhl, 0:i3
 	ret
-; MspMenuTtlFunc case 2
-MspMenuTtl_Case2:
 MspMenuTtlFunc:
 	cp xbc, EVT_ACTIVATE_STATE
 	jr nz, MspNameTtl_ReturnZero
@@ -34287,7 +34279,7 @@ CmpStepTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 

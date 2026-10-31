@@ -2106,7 +2106,7 @@ NoteEventBuffer_CopyToSlot:
 	cp bc, 6:i3
 	jr gt, NoteEvent_CopyCommon
 	add bc, bc
-	lda xix, (MSP_Default_GroupOffsetB:24)
+	lda xix, (NoteEventBuffer_CopyToSlot_CaseTable:24)
 	ld	bc, (xix+bc)
 	lda xix, (NOTE_EVENT_DISPATCH_1:24)
 	jp	t, (xix+bc)
@@ -2161,7 +2161,7 @@ NoteEventBuffer_Store:
 	cp wa, 6:i3
 	jrl gt, NoteEvent_StoreCommon
 	add wa, wa
-	lda xix, (MSP_Default_VarSize:24)
+	lda xix, (NoteEventBuffer_Store_CaseTable:24)
 	ld	wa, (xix+wa)
 	lda xix, (NOTE_EVENT_DISPATCH_2:24)
 	jp	t, (xix+wa)
@@ -7986,8 +7986,6 @@ SndArg_GridBnk_Case2:
 	pop xiz
 	lda xsp, (xsp+260)
 	ret
-; SndArgGridBnk case 3
-SndArg_GridBnk_Case3:
 S2cGridBoxProc:
 	lda xsp, (xsp - 16)
 	push xiz

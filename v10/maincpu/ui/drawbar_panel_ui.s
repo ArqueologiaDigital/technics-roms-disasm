@@ -11255,7 +11255,7 @@ AcWelcomScreen_Select_OpDrawGlyphL:
 	pushw	17
 	pushw	(xde)
 	pushw	247
-	ld	xbc, Bitmap_DigitL
+	ld	xbc, WelcomeGlyph_L
 	ldw	de, 16
 	jr	AcWelcomScreen_RenderBytecode_Join
 AcWelcomScreen_Select_OpDrawGlyphU:
@@ -11266,7 +11266,7 @@ AcWelcomScreen_Select_OpDrawGlyphU:
 	pushw	17
 	pushw	(xde)
 	pushw	247
-	ld	xbc, Bitmap_DigitD
+	ld	xbc, WelcomeGlyph_U
 	ldw	de, 16
 	jr	AcWelcomScreen_RenderBytecode_Join
 AcWelcomScreen_Select_OpDrawGlyphR:
@@ -11277,7 +11277,7 @@ AcWelcomScreen_Select_OpDrawGlyphR:
 	pushw	17
 	pushw	(xde)
 	pushw	247
-	ld	xbc, Bitmap_DigitR
+	ld	xbc, WelcomeGlyph_R
 	ldw	de, 16
 	jr	AcWelcomScreen_RenderBytecode_Join
 ; AcWelcomScreen_Select_OpDrawGlyphsIn: Welcome-script op 8: draws the letters I and N side by side in colour 255.
@@ -11290,7 +11290,7 @@ AcWelcomScreen_Select_OpDrawGlyphsIn:
 	pushw	17
 	pushw	255
 	pushw	247
-	ld	xbc, Bitmap_Digit1
+	ld	xbc, WelcomeGlyph_I
 	ldw	de, 16
 	call	DrawBitmapSP2
 	lda	xwa, (xsp+12)
@@ -11389,7 +11389,7 @@ AcWelcomScreen_Select_OpDrawColorWord_Skip2:
 	add	xde, (0x024786:24)
 	pushw	(xde+10)
 	pushw	247
-	ld	xbc, Bitmap_DigitL
+	ld	xbc, WelcomeGlyph_L
 	ldw	de, 16
 	call	DrawBitmapSP2
 	lda	xwa, (xsp+12)
@@ -11430,7 +11430,7 @@ AcWelcomScreen_Select_OpDrawColorWord_Skip2:
 	add	xde, xbc
 	pushw	(xde+10)
 	pushw	247
-	ld	xbc, Bitmap_DigitD
+	ld	xbc, WelcomeGlyph_U
 	ldw	de, 16
 	call	DrawBitmapSP2
 AcWelcomScreen_Select_OpDrawColorWord_Skip3:
@@ -11446,7 +11446,7 @@ AcWelcomScreen_Select_OpDrawColorWord_Skip3:
 	add	xde, (0x024786:24)
 	pushw	(xde+10)
 	pushw	247
-	ld	xbc, Bitmap_DigitR
+	ld	xbc, WelcomeGlyph_R
 	ldw	de, 16
 	call	DrawBitmapSP2
 	ld	wa, (0x024784:24)
