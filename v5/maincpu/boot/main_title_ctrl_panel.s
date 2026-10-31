@@ -79,7 +79,7 @@ MainTitle_EventLoop:
 	ld xwa, 0:i3
 	ld xbc, EVT_NONE
 	ld xde, 0:i3
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	ld wa, 1:i3
 	call SetNeedUpdate
 	call UpdateScreen

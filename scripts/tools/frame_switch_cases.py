@@ -12,7 +12,10 @@ QUESTION IT ANSWERS / WHAT IT DOES
        (_Skip/_Join/_Loop/_Return/_Code/...);
     2. works out each case's value: table index k plus the bias the code subtracts before the bound
        check (`sub r, X` / `dec n, r`, r the index register or its low byte).  When X is an EVT_*
-       constant the case is named by its event;
+       constant the case is named by its event.  A multi-range switch, where a second path joins the
+       `jp` after the bias (a label between the `sub` and the `jp`), has no single bias: its targets are
+       named <Routine>_Index<k> by table index instead (until 2026-10-31 they got index + the LAST
+       bias, wrong for every entry of the other range);
     3. places `<Routine>_Case<value>` or `<Routine>_On<Event>` at every target that has no label.  A
        target shared by several cases is named by its lowest case and carries a comment listing them.
        An owner's second and later switches (in source order) are <Owner>_Switch<n>_Case<value>.
@@ -139,6 +142,17 @@ def main():
         crow = [i for i in range(max(0, ji - 40), ji) if census.is_insn_row(key, rows[i]) and rows[i][2] == rel][-10:]
         texts = [clean(rows[i][6]) for i in crow]
         btok = bias_of(texts)
+        # A multi-range switch (e.g. `cp wa, 8 / jr le, Dispatch / sub wa, 0x17 / ... / Dispatch:`) reaches the
+        # `jp` both with and without the bias, so table index + that bias is not the case value of every entry.
+        # Such a switch is recognised by a label between the bias instruction and the `jp` (another path joins
+        # after the `sub`); its targets are then named by table index (<Routine>_Index<k>), not by a value.
+        multi = False
+        if btok is not None:
+            brow = next((i for i in reversed(crow) if bias_of([clean(rows[i][6])]) is not None), None)
+            multi = brow is not None and any(rows[i][7] for i in range(brow + 1, ji + 1) if rows[i][2] == rel)
+        if multi:
+            print("multi-range switch at %s: bias %s does not apply to every entry; naming by index" % (t["file"], btok))
+            btok = None
         bval = None
         if btok is not None:
             bval = int(btok, 0) if re.match(r'^(0x|\d)', btok) else m["byname"].get(btok)
@@ -159,6 +173,8 @@ def main():
             k0 = min(ks)
             if btok and btok.startswith("EVT_") and bval is not None and (bval + k0) in evt:
                 nm = "%s_On%s" % (P, "".join(w.capitalize() for w in evt[bval + k0][4:].split("_")))
+            elif multi:
+                nm = "%s_Index%d" % (P, k0)
             else:
                 nm = "%s_Case%d" % (P, (bval or 0) + k0)
             base_nm, n_ = nm, 2

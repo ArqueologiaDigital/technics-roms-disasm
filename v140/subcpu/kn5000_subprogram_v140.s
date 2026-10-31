@@ -2262,10 +2262,11 @@ FIFO1K_PutBytes:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (Payload_Bss_Start+0x1db8:24)
+FIFO1K_PutBytes_Loop:
 	ld	a, (xiy)
 	calr	FIFO_Engine1K_Put
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, FIFO1K_PutBytes_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -2375,10 +2376,11 @@ FIFO256_PutBytes:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (Payload_Bss_Start+0x21c2:24)
+FIFO256_PutBytes_Loop:
 	ld	a, (xiy)
 	calr	FIFO_Engine256_Put
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, FIFO256_PutBytes_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -2485,10 +2487,11 @@ FIFO512_PutBytes:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (Payload_Bss_Start+0x22cc:24)
+FIFO512_PutBytes_Loop:
 	ld	a, (xiy)
 	calr	FIFO_Engine512_Put
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, FIFO512_PutBytes_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -3054,8 +3057,9 @@ E2_Wait_MSTAT1_Set:
 ; ===========================================================================
 ; InterCPU_E1_DMA_Transfer - E1 command bulk data transfer (Sub→Main CPU)
 ; ===========================================================================
-; Entry: XWA = destination address (in main CPU memory)
-;        XDE = source address (in sub CPU memory)
+; Entry: XWA = source address in sub CPU memory (kept at (0x1110): the phase-2 DMA source)
+;        XDE = destination address in main CPU memory (stored at (0x10DE) with BC: the
+;              6-byte header phase 1 sends, DMA channel 2 source register 0x08 = 0x10DE)
 ;        BC = byte count
 ; Exit:  Data transferred to main CPU via two-phase E1 protocol
 ; Notes: Called from Cmd_Check_E2_Pending to send response data.
@@ -17940,12 +17944,13 @@ VoiceCC_DataTable_0280FE_Next:
 	nop
 	pop	xiz
 	ret
-; WA = voice, XBC = source record (always 0x0451CC at the call sites).
-; Writes TG register 0x04 (latch voice+0x0100) from XBC+0x08 and register 0x05
-; (latch voice+0x0140) from XBC+0x0A.  Both call sites (0x028FC6, 0x028FDA) invoke it
-; immediately after TVF_Emit_Registers (0x024444) / _DispatchB (0x024554), which is
-; what identifies registers 4/5 as the stereo pan pair.
-ToneGen_WriteVoice_Pan_Pair:
+; ToneGen_WriteVoice_TvfPair: Writes voice WA's TVF (filter) register pair: TG 0x100 + voice <- (XBC + 8) and
+;   0x140 + voice <- (XBC + 10), each latch / data write with P6.7 low / high and a three-`nop` settling gap.
+;   Basis: callers + body -- TVF_Refresh_Sounding_Voices calls it with XBC = the staging record 0x0451CC right
+;   after TVF_Emit_Registers / Voice_PanReg_WriteDispatchB put the clamped cutoff word and the second filter
+;   word at staging +8 / +10; 0x100 / 0x140 is the filter pair (tone-generator.md).  Was
+;   ToneGen_WriteVoice_Pan_Pair: those registers are not the pan.
+ToneGen_WriteVoice_TvfPair:
 	dec	4, xsp
 	pushw	iz
 	ld	(xsp+2), xbc
@@ -17959,8 +17964,8 @@ ToneGen_WriteVoice_Pan_Pair:
 	ld	xwa, (xsp+2)
 	ld	wa, (xwa+8)
 	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Pan_Pair_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Pan_Pair_Next:
+	jr	ToneGen_WriteVoice_TvfPair_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
+ToneGen_WriteVoice_TvfPair_Next:
 	nop
 	nop
 	nop
@@ -17973,8 +17978,8 @@ ToneGen_WriteVoice_Pan_Pair_Next:
 	ld	xwa, (xsp+2)
 	ld	wa, (xwa+10)
 	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Pan_Pair_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Pan_Pair_Next2:
+	jr	ToneGen_WriteVoice_TvfPair_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
+ToneGen_WriteVoice_TvfPair_Next2:
 	nop
 	nop
 	nop
@@ -19752,10 +19757,10 @@ Voice_AllNotes_SustainRetrigger_Exit:
 ; XWA = part record (voice list at +5).  Walks the list, classifies each voice by
 ; (voice+0x01)&0x3C and calls TVF_Emit_Registers (0x024444) for 4/0x20 or
 ; Voice_PanReg_WriteDispatchB (0x024554) for 0x10, then pushes the result to TG registers
-; 4 and 5 via ToneGen_WriteVoice_Pan_Pair with XBC = the staging record 0x0451CC.
+; 0x100/0x140 + voice (the filter pair) via ToneGen_WriteVoice_TvfPair with XBC = the staging record 0x0451CC.
 ; TVF_Refresh_Sounding_Voices: Re-emits the TVF (filter) registers of every voice in a part's voice list: classes
 ;   (voice+1) & 0x3C = 4 / 0x20 through TVF_Emit_Registers, 0x10 through Voice_PanReg_WriteDispatchB (class 8
-;   skipped), then TG 0x100/0x140 via ToneGen_WriteVoice_Pan_Pair -- the filter counterpart of
+;   skipped), then TG 0x100/0x140 via ToneGen_WriteVoice_TvfPair -- the filter counterpart of
 ;   Pitch_Refresh_Sounding_Voices. Basis: caller + body -- AudioChannel_Handler_Cmd03 calls it after storing the
 ;   part's cutoff offset part+0x1F, which TVF_Emit_Offset_Reg100 adds to the cutoff field.
 ;   (scripts/lanes/verify_mislabel_markers.py lists the old name.)
@@ -19792,7 +19797,7 @@ VoiceCC_DataTable_028F75_Skip:
 	ld	a, (xiz)
 	extz	wa
 	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Pan_Pair
+	calr	ToneGen_WriteVoice_TvfPair
 	jr	VoiceCC_DataTable_028F75_Join
 VoiceCC_DataTable_028F75_Skip2:
 	ld	xwa, xbc
@@ -19800,7 +19805,7 @@ VoiceCC_DataTable_028F75_Skip2:
 	ld	a, (xiz)
 	extz	wa
 	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Pan_Pair
+	calr	ToneGen_WriteVoice_TvfPair
 VoiceCC_DataTable_028F75_Join:
 	inc	1, xiz
 	cp8_imm_ri	xiz, 0x40	; cp (XIZ),0x40
@@ -28129,11 +28134,11 @@ ToneGen_WriteReg0840_Shadow2E_Next:
 ; ** Not present in either symbol source; it lives inside the same misidentified .byte blob. **
 ; WA = channel, XBC = shadow; writes 0x0100 + ch <- +0x08 and 0x0140 + ch <- +0x0A.
 ; Unreferenced in v142.
-; ToneGen_WriteVoice_TvfRegs_Dup: Unreferenced, instruction-for-instruction copy of ToneGen_WriteVoice_Pan_Pair:
+; ToneGen_WriteVoice_TvfRegs_Dup: Unreferenced, instruction-for-instruction copy of ToneGen_WriteVoice_TvfPair:
 ;   writes the voice's TVF (filter) register pair, TG 0x100+ch <- shadow +0x08 and 0x140+ch <- +0x0A. Basis: the live
 ;   twin's callers -- TVF_Refresh_Sounding_Voices (TVF_Refresh_Sounding_Voices) calls the twin right after
 ;   TVF_Emit_Registers / Voice_PanReg_WriteDispatchB have put the clamped cutoff word and the second filter word into
-;   0x0451D4 / 0x0451D6 = staging +0x08 / +0x0A. (The twin's 'Pan' name is contradicted by the same evidence.)
+;   0x0451D4 / 0x0451D6 = staging +0x08 / +0x0A.
 ToneGen_WriteVoice_TvfRegs_Dup:
 	dec	4, xsp
 	pushw iz
@@ -41916,8 +41921,6 @@ DSP_System_Init_Continue:
 	call VoiceSlot_ClearAll
 	ld (Payload_Bss_Start+0x24cc:24), 0x00
 	jp Voice_ResetAllControllers
-; A stray one-byte `ret` immediately after DSP_System_Init's tail-jump.  No caller and no
-; table reference anywhere in the authoritative source -- alignment padding or dead code.
 ; DSP_InitHandler_NullStub: A lone `ret`: the do-nothing handler that entries 1-3 of
 ;   DSP_InitHandler_Pointers point to beside entry 0 = DSP_System_Init -- same shape as DSP2_InitTask_NullStub /
 ;   DSP_ResetTask_NullStub. Basis: table + body; the old header's 'no caller and no table reference' is wrong.

@@ -10,8 +10,10 @@ QUESTION IT ANSWERS
   constant AND call / calr / jp target must agree (a save-registers wrapper of another function is
   not a copy; masking call targets would have said it was).  A still-unnamed routine identical to a named one is
   that routine's copy:
-      <Name>_Copy (then _Copy2, ...), or OldCopy_<Name> inside 0xF6F000-0xF6FFFF, the older build's
-      block the 0xF6F000 banner names.
+      <Name>_Copy (then _Copy2, ...), or OldCopy_<Name> inside 0xF6F000-0xF6F3FF, the older build's
+      block the 0xF6F000 banner names.  (Until 2026-10-31 the range ran to 0xF6FFFF and so named the live
+      SMF module's own copy at 0xF6F476 OldCopy_BStore_Workspace_SaveToBank; it is
+      MidiFile_SaveWorkspaceToBank.)
   REFUSED: a group whose named members have different names (which name is the routine's is not
   said), a routine shorter than --minlen instructions (default 8: short bodies coincide), and the
   0xF00C4D module (notes/prom_b_f00c4d_oldcopy_names.py owns it).
@@ -36,7 +38,7 @@ MINLEN = int(sys.argv[sys.argv.index("--minlen") + 1]) if "--minlen" in sys.argv
 BR = re.compile(r'^((?:jr|jrl|djnz)\b.*?)0x[0-9a-f]+\s*$')   # local branches only: a call / jp target must be EQUAL
 FILES = {"wsa1:a": image_path(ROOT, "prom_a/wsa1_prom_a.s"), "wsa1:b": image_path(ROOT, "prom_b/wsa1_prom_b.s")}
 SKIP = (0xF00C4D, 0xF01800)
-OLD = (0xF6F000, 0xF70000)
+OLD = (0xF6F000, 0xF6F400)   # the older build's block ends where MidiFileL0ad_LcdKeyRow1 starts (the banner)
 LOCAL = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Resume|Nop)\d*$')
 
 

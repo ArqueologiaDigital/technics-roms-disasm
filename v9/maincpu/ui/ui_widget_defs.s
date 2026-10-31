@@ -3500,7 +3500,7 @@ ButtonState_DispatchDSP_CaptionDownTriangle:
 	ld	xwa, ButtonState_DispatchDSP_InlineData_Str_N81
 	jr	ButtonState_PaintProc_Join
 ButtonState_DispatchDSP_CaptionOn:
-	ld	xwa, NakaInst_OK
+	ld	xwa, ButtonState_DispatchDSP_InlineData_Str_ON
 	jr	ButtonState_PaintProc_Join
 ButtonState_DispatchDSP_CaptionOff:
 	ld	xwa, ButtonState_DispatchDSP_InlineData_Str_OFF
@@ -8378,7 +8378,7 @@ TrTransposeBoxProc:
 	jp AcTranspose_ParamData_End
 
 TrChordBoxProc:
-	jp AcChordBoxProc_Entry
+	jp AcChordBoxProc
 
 ObjectProc:
 	lda xsp, (xsp-144)

@@ -10,7 +10,7 @@
 
 /* External symbol declarations (resolved by linker) */
 extern const char AcBkNoBox_Boundary;
-extern const char AcChordBoxProc_Entry;
+extern const char AcChordBoxProc;
 extern const char AcMstStyleAlp_Boundary;
 extern const char AcPmBkNoBox_Boundary;
 extern const char AcTranspose_ParamData_End;
@@ -167,7 +167,7 @@ const master_style_t master_style_data = {
             .name_ptr  = NAKA_ADDR(NakaInst_AcChordBox),
             .inst_ptr  = NAKA_ADDR(NakaDesc_AcChordBox),
             .link_ptr  = NAKA_ADDR(NakaParam_AcChordBox),
-            .proc_addr = NAKA_ADDR(AcChordBoxProc_Entry),
+            .proc_addr = NAKA_ADDR(AcChordBoxProc),
         },
         /* w4 */ {
             .header   = NAKA_HDR(0x12),

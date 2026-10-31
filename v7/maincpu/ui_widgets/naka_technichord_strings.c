@@ -1589,7 +1589,7 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint8_t WelcomeGlyph_C[17][2];
     /* ---------------------------------------------------------------------
-     * Bitmap_Digit1  --  'I', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
+     * WelcomeGlyph_I  --  'I', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
      *
      * What it is: the letter I, read from the bit pictures in the C
      * (upside-down there, because the rows are stored bottom-up). The label
@@ -1603,9 +1603,9 @@ typedef struct __attribute__((packed)) {
      * after AcWelcomScreen_RenderBytecode (v10/v9 0xF7F649, v7 0xF7F245)
      * pass width 0x10 and height 0x11.
      * --------------------------------------------------------------------- */
-    uint8_t Bitmap_Digit1[17][2];
+    uint8_t WelcomeGlyph_I[17][2];
     /* ---------------------------------------------------------------------
-     * Bitmap_DigitL  --  'L', 'N', 'O', 3 glyphs of 16 x 17 pixels, 1 bpp, 102 bytes
+     * WelcomeGlyph_L  --  'L', 'N', 'O', 3 glyphs of 16 x 17 pixels, 1 bpp, 102 bytes
      *
      * What it is: the letters L/N/O, read from the bit pictures in the C
      * (upside-down there, because the rows are stored bottom-up). Glyphs 1
@@ -1620,9 +1620,9 @@ typedef struct __attribute__((packed)) {
      * after AcWelcomScreen_RenderBytecode (v10/v9 0xF7F649, v7 0xF7F245)
      * pass width 0x10 and height 0x11.
      * --------------------------------------------------------------------- */
-    uint8_t Bitmap_DigitL[3][17][2];
+    uint8_t WelcomeGlyph_L[3][17][2];
     /* ---------------------------------------------------------------------
-     * Bitmap_DigitR  --  'R', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
+     * WelcomeGlyph_R  --  'R', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
      *
      * What it is: the letter R, read from the bit pictures in the C
      * (upside-down there, because the rows are stored bottom-up). Drawn by
@@ -1635,13 +1635,13 @@ typedef struct __attribute__((packed)) {
      * after AcWelcomScreen_RenderBytecode (v10/v9 0xF7F649, v7 0xF7F245)
      * pass width 0x10 and height 0x11.
      * --------------------------------------------------------------------- */
-    uint8_t Bitmap_DigitR[17][2];
+    uint8_t WelcomeGlyph_R[17][2];
     /* ---------------------------------------------------------------------
-     * Bitmap_DigitD  --  'U', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
+     * WelcomeGlyph_U  --  'U', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
      *
      * What it is: the letter U, read from the bit pictures in the C
      * (upside-down there, because the rows are stored bottom-up). The old
-     * Bitmap_DigitD slice ran 0x121C bytes: this glyph and the five objects
+     * WelcomeGlyph_U slice ran 0x121C bytes: this glyph and the five objects
      * that follow it, which are split off below. Drawn by the welcome-script
      * op handlers: 'U' by op 11 alone and ops 9/12 only when op == 12
      * (COLOUR).
@@ -1652,7 +1652,7 @@ typedef struct __attribute__((packed)) {
      * after AcWelcomScreen_RenderBytecode (v10/v9 0xF7F649, v7 0xF7F245)
      * pass width 0x10 and height 0x11.
      * --------------------------------------------------------------------- */
-    uint8_t Bitmap_DigitD[17][2];
+    uint8_t WelcomeGlyph_U[17][2];
     /* ---------------------------------------------------------------------
      * WelcomeScript_Steps_A  --  186 welcome_step_t records x 12 bytes = 2232 bytes
      *
@@ -1662,8 +1662,8 @@ typedef struct __attribute__((packed)) {
      *
      * Reader: AcWelcomScreenProc (v10/v9 0xF7F4A6, v7 0xF7F0A2), on its init
      * message (0x1C00001), calls Get_Region_Code and stores the table
-     * address at 0x024786: Bitmap_DigitD+0x22 when the region code is 2,
-     * Bitmap_DigitD+0x8DA otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
+     * address at 0x024786: WelcomeGlyph_U+0x22 when the region code is 2,
+     * WelcomeGlyph_U+0x8DA otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
      * loads; those names are .set in shared/positional_labels.s). The step
      * index lives at 0x024784; a step is table + 12*index (add, add, sll 2).
      * AcWelcomScreen_Select_NextStep (v10/v9 0xF7F9C9, v7 0xF7F5C5)
@@ -1694,8 +1694,8 @@ typedef struct __attribute__((packed)) {
      *
      * Reader: AcWelcomScreenProc (v10/v9 0xF7F4A6, v7 0xF7F0A2), on its init
      * message (0x1C00001), calls Get_Region_Code and stores the table
-     * address at 0x024786: Bitmap_DigitD+0x22 when the region code is 2,
-     * Bitmap_DigitD+0x8DA otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
+     * address at 0x024786: WelcomeGlyph_U+0x22 when the region code is 2,
+     * WelcomeGlyph_U+0x8DA otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
      * loads; those names are .set in shared/positional_labels.s). The step
      * index lives at 0x024784; a step is table + 12*index (add, add, sll 2).
      * AcWelcomScreen_Select_NextStep (v10/v9 0xF7F9C9, v7 0xF7F5C5)
@@ -2462,7 +2462,7 @@ typedef struct __attribute__((packed)) {
     /* FmmSmfFileNameFunc_CaseTable: 6 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
     uint16_t FmmSmfFileNameFunc_CaseTable[6];
     /* Per scan slot 0..3: bit number (1..4) tested in the drive record's flag word and set in the availability mask at RAM 0x89F6 */
-    uint8_t WPScan_SlotFlagBits[4];
+    uint8_t SingleLoad_AreaFlagBits[4];
     uint32_t SingleLoad_MemoryBankNames[3];  /* 3 pointers */
     char MemoryC_str[16];
     char MemoryB_str[16];
@@ -2473,7 +2473,7 @@ typedef struct __attribute__((packed)) {
     /* "" + 0xFF fill: PtrTbl_VariationNames[9], an unnamed variation slot */
     char Str_Variation10_Empty[2];
     /* "" (+ 0xFF alignment byte): entry 8 of PtrTbl_VariationNames (entries 4-9 are empty; 0-3 are "VARI 1".."VARI 4") */
-    char WP_VariationName8_Empty[2];
+    char Str_Variation9_Empty[2];
     /* "" (NUL + 0xFF pad): name of variation slot 8 (PtrTbl_VariationNames[7]) */
     char Str_Variation8_Empty[2];
     /* "" (NUL + 0xFF pad): name of variation slot 7 (PtrTbl_VariationNames[6]) */
@@ -2486,7 +2486,7 @@ typedef struct __attribute__((packed)) {
     char Vari_str_2[8];
     char Vari_str_3[8];
     char Vari_str_4[8];
-    uint32_t WP_SectionNameTable[10];  /* 10 pointers */
+    uint32_t SingleLoad_StyleSectionNames[10];  /* 10 pointers */
     char Ending_str[18];
     char Ending_str_2[18];
     char FillIn_str[18];
@@ -2495,13 +2495,13 @@ typedef struct __attribute__((packed)) {
     char Intro_str_2[18];
     char str_1566[2];
     /* "" + 0xFF pad: ROM name for section index 2 (VARI 3); unused because indices 0-3 take the RAM name path */
-    char WP_SectionName_Vari3Blank[2];
-    /* "" (+ 0xFF alignment byte): entry 1 of WP_GetBankMemName_FromROM_PtrTable; entries 0-3 are "" because DE < 4 is read from RAM */
-    char WP_BankMemName1_Empty[2];
-    /* "" (NUL + 0xFF pad): WP_GetBankMemName_FromROM_PtrTable[0], a memory slot named from RAM instead */
-    char Str_BankMem0_Empty[2];
-    /* WP_GetPresetName3_PtrTable: 10 pointers (cut from ptrs_271 by split_naka_pointer_arrays.py) */
-    uint32_t WP_GetPresetName3_PtrTable[10];
+    char Str_StyleSection2_Empty[2];
+    /* "" (+ 0xFF alignment byte): entry 1 of SingleLoad_GetComposerSectionName_FromROM_PtrTable; entries 0-3 are "" because DE < 4 is read from RAM */
+    char Str_StyleSection1_Empty[2];
+    /* "" (NUL + 0xFF pad): SingleLoad_GetComposerSectionName_FromROM_PtrTable[0], a memory slot named from RAM instead */
+    char Str_StyleSection0_Empty[2];
+    /* SingleLoad_SoundMemBankNames: 10 pointers (cut from ptrs_271 by split_naka_pointer_arrays.py) */
+    uint32_t SingleLoad_SoundMemBankNames[10];
     char UserKit_str[18];
     char MemoryB_str_2[18];
     char MemoryA_str_2[18];
@@ -5450,20 +5450,20 @@ const naka_technichord_strings_t naka_technichord_strings_data
 #include "../includes/generated/pictures/WelcomeGlyph_C.inc"  /* pixels: images/WelcomeGlyph_C.png, written at build time by scripts/build/c_bitmaps.py */
     },
 
-    .Bitmap_Digit1 = {
-#include "../includes/generated/pictures/Bitmap_Digit1.inc"  /* pixels: images/Bitmap_Digit1.png, written at build time by scripts/build/c_bitmaps.py */
+    .WelcomeGlyph_I = {
+#include "../includes/generated/pictures/WelcomeGlyph_I.inc"  /* pixels: images/WelcomeGlyph_I.png, written at build time by scripts/build/c_bitmaps.py */
     },
 
-    .Bitmap_DigitL = {
-#include "../includes/generated/pictures/Bitmap_DigitL.inc"  /* pixels: images/Bitmap_DigitL.png, written at build time by scripts/build/c_bitmaps.py */
+    .WelcomeGlyph_L = {
+#include "../includes/generated/pictures/WelcomeGlyph_L.inc"  /* pixels: images/WelcomeGlyph_L.png, written at build time by scripts/build/c_bitmaps.py */
     },
 
-    .Bitmap_DigitR = {
-#include "../includes/generated/pictures/Bitmap_DigitR.inc"  /* pixels: images/Bitmap_DigitR.png, written at build time by scripts/build/c_bitmaps.py */
+    .WelcomeGlyph_R = {
+#include "../includes/generated/pictures/WelcomeGlyph_R.inc"  /* pixels: images/WelcomeGlyph_R.png, written at build time by scripts/build/c_bitmaps.py */
     },
 
-    .Bitmap_DigitD = {
-#include "../includes/generated/pictures/Bitmap_DigitD.inc"  /* pixels: images/Bitmap_DigitD.png, written at build time by scripts/build/c_bitmaps.py */
+    .WelcomeGlyph_U = {
+#include "../includes/generated/pictures/WelcomeGlyph_U.inc"  /* pixels: images/WelcomeGlyph_U.png, written at build time by scripts/build/c_bitmaps.py */
     },
 
     .WelcomeScript_Steps_A = {
@@ -7263,7 +7263,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
         0x07B5, 0x07E6, 0x0000, 0x07A0, 0x07A7, 0x07AE,
     },
 
-    .WPScan_SlotFlagBits = {
+    .SingleLoad_AreaFlagBits = {
         0x01, 0x02, 0x03, 0x04,
     },
 
@@ -7282,12 +7282,12 @@ const naka_technichord_strings_t naka_technichord_strings_data
     .PtrTbl_VariationNames = {
         SELF(Vari_str_4), SELF(Vari_str_3), SELF(Vari_str_2), SELF(Vari_str),
         SELF(Str_Variation5_Empty), SELF(Str_Variation6_Empty), SELF(Str_Variation7_Empty), SELF(Str_Variation8_Empty),
-        SELF(WP_VariationName8_Empty), SELF(Str_Variation10_Empty),
+        SELF(Str_Variation9_Empty), SELF(Str_Variation10_Empty),
     },
 
     .Str_Variation10_Empty = "\x00\xFF",
 
-    .WP_VariationName8_Empty = "\x00\xFF",
+    .Str_Variation9_Empty = "\x00\xFF",
 
     .Str_Variation8_Empty = "\x00\xFF",
 
@@ -7305,10 +7305,10 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .Vari_str_4 = ALIGNED_STRING("VARI 1"),
 
-    .WP_SectionNameTable = {
-        SELF(Str_BankMem0_Empty),
-        SELF(WP_BankMemName1_Empty),
-        SELF(WP_SectionName_Vari3Blank),
+    .SingleLoad_StyleSectionNames = {
+        SELF(Str_StyleSection0_Empty),
+        SELF(Str_StyleSection1_Empty),
+        SELF(Str_StyleSection2_Empty),
         SELF(str_1566),
         SELF(Intro_str_2),
         SELF(Intro_str),
@@ -7332,13 +7332,13 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .str_1566 = ALIGNED_STRING(""),
 
-    .WP_SectionName_Vari3Blank = "\x00\xFF",
+    .Str_StyleSection2_Empty = "\x00\xFF",
 
-    .WP_BankMemName1_Empty = "\x00\xFF",
+    .Str_StyleSection1_Empty = "\x00\xFF",
 
-    .Str_BankMem0_Empty = "\x00\xFF",
+    .Str_StyleSection0_Empty = "\x00\xFF",
 
-    .WP_GetPresetName3_PtrTable = {
+    .SingleLoad_SoundMemBankNames = {
         SELF(MemoryA_str_2),
         SELF(MemoryB_str_2),
         SELF(UserKit_str),

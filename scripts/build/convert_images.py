@@ -223,10 +223,10 @@ STANDALONE_PNGS = {
     "SeBitmap_RadioOn.png": "Sound edit: radio button, on (16x12, 1-bit)",
     # Pictures held as initializers in the GUI's compiled C (scripts/build/c_bitmaps.py)
     "WelcomeGlyph_C.png": "Welcome screen: letter C (16x17, 1-bit, rows stored bottom-up)",
-    "Bitmap_Digit1.png": "Technichord: digit 1 (16x17, 1-bit)",
-    "Bitmap_DigitD.png": "Technichord: letter D (16x17, 1-bit)",
-    "Bitmap_DigitL.png": "Technichord: letter L, three frames (48x17, 1-bit)",
-    "Bitmap_DigitR.png": "Technichord: letter R (16x17, 1-bit)",
+    "WelcomeGlyph_I.png": "Welcome screen: letter I (16x17, 1-bit, rows stored bottom-up)",
+    "WelcomeGlyph_U.png": "Welcome screen: letter U (16x17, 1-bit, rows stored bottom-up)",
+    "WelcomeGlyph_L.png": "Welcome screen: letters L, N, O (48x17, 1-bit, rows stored bottom-up)",
+    "WelcomeGlyph_R.png": "Welcome screen: letter R (16x17, 1-bit, rows stored bottom-up)",
     "UserBitmapCheck_Bitmap24x24.png": "User-bitmap check mark (24x24, 8-bit), drawn by VwUserBitmap_HandlePaint",
     # HD-AE5000 (scripts/build/hdae5000_images.py)
     "HDAE5000_Bitmap_Button01.png": "HD-AE5000: the STORE button (42x15, 8-bit, its own greyscale palette)",

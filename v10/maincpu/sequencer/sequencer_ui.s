@@ -13517,7 +13517,7 @@ EqOnOffFuncToggleProc:
 	jr z, EqOnOff_HandleToggleOn
 	ld xwa, xiz
 	call InheritedProc
-	jr SqplyFunc_FormatEntry
+	jr EqOnOff_Epilogue
 
 EqOnOff_HandleToggleOn:
 	ld xwa, xiz
@@ -13540,7 +13540,7 @@ EqOnOff_HandleToggleOff:
 EqOnOff_CheckValue:
 	ld xwa, (xde)
 	cp xwa, 0x4006
-	jr nz, SqplyFunc_FormatDispatch
+	jr nz, EqOnOff_ReturnZero
 	cpw (xde + 4), 0x1
 	jr nz, EqOnOff_ToggleResult
 	ld xwa, xiz
@@ -13556,12 +13556,10 @@ EqOnOff_ToggleResult:
 SqEdit_SendEventEpilog:
 	call SendEvent
 
-; SqplyFunc format dispatch
-SqplyFunc_FormatDispatch:
+EqOnOff_ReturnZero:
 	ld xhl, 0:i3
 
-; SqplyFunc format entry
-SqplyFunc_FormatEntry:
+EqOnOff_Epilogue:
 	pop xiz
 	ret
 
@@ -13584,11 +13582,11 @@ SqplyFunc:
 	cp xbc, EVT_GET_RAM_ADDRESS
 	jrl z, SqplyFunc_HandleGetValue
 	cp xbc, EVT_GET_P_CNT_IN_STRING
-	jrl z, SqplyFunc_FormatFillIn
+	jrl z, SqplyFunc_FormatCountIn
 	cp xbc, EVT_GET_P_OUT_MEAS_STRING
-	jrl z, SqplyFunc_FormatEnding
+	jrl z, SqplyFunc_FormatPunchOut
 	cp xbc, EVT_GET_P_IN_MEAS_STRING
-	jrl z, SqplyFunc_FormatIntro
+	jrl z, SqplyFunc_FormatPunchIn
 	ld de, (SEQ_START_MEASURE:16)
 	cp xbc, EVT_GET_P_MEAS_STRING
 	jrl z, SqplyFunc_FormatRhythmPattern
@@ -13751,18 +13749,18 @@ SqplyFunc_FormatPatternNumeric:
 	pushw SqplyFunc_FormatPatternNumeric_Str_Fmt3d@lo16
 	jr SqplyFunc_PushAndFormat
 
-SqplyFunc_FormatIntro:
+SqplyFunc_FormatPunchIn:
 	ld xwa, (xsp + 4)
 	ld (xsp), xwa
 	push_sd16w 0x38, 0xf2
-	ld xwa, SqplyFunc_FormatIntro_Str
+	ld xwa, SqplyFunc_FormatPunchIn_Str
 	jr SqplyFunc_PushFormatAddr
 
-SqplyFunc_FormatEnding:
+SqplyFunc_FormatPunchOut:
 	ld xwa, (xsp + 4)
 	ld (xsp), xwa
 	push_sd16w 0x3a, 0xf2
-	ld xwa, SqplyFunc_FormatEnding_Str
+	ld xwa, SqplyFunc_FormatPunchOut_Str
 	push xwa
 	ld xwa, (xsp + 6)
 	lda xbc, (xwa + 18)
@@ -13772,11 +13770,11 @@ SqplyFunc_PushAndFormat:
 	push xwa
 	jr SqplyFunc_CallAudioSendCmd
 
-SqplyFunc_FormatFillIn:
+SqplyFunc_FormatCountIn:
 	ld xwa, (xsp + 4)
 	ld (xsp), xwa
 	push_sd16w 0x3f, 0xf2
-	ld xwa, SqplyFunc_FormatFillIn_Str
+	ld xwa, SqplyFunc_FormatCountIn_Str
 
 SqplyFunc_PushFormatAddr:
 	push xwa

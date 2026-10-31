@@ -3231,9 +3231,8 @@ UI_EventHandler_PopAndReturn:
 ChordProc_TrailingData:
 	ld	xhl, NAKA_FUNC_AcTransposeBoxProc
 	ret
-AcChordBoxProc_Entry:
-
 AcChordBoxProc:
+
 	lda xsp, (xsp-260)
 	push xiz
 	ld xiz, xde

@@ -25,7 +25,7 @@ FORMATS (the comment above each member in the C, and its readers)
        with the main palette v10/maincpu/images/Palette_8bit_RGBA.bin.  31 items + UserBitmapCheck_Bitmap24x24.
   b1   the welcome-screen letters: 16 x 17, 1 bpp, one big-endian word per row, rows stored BOTTOM-UP
        (DrawBitmapSP2_Impl; the op handlers after AcWelcomScreen_RenderBytecode pass 0x10 x 0x11).  The
-       PNG is mode '1', upright; Bitmap_DigitL holds three letters (L, N, O), side by side in its PNG.
+       PNG is mode '1', upright; WelcomeGlyph_L holds three letters (L, N, O), side by side in its PNG.
        The .inc carries an ASCII-art comment per row.
 
     python3 scripts/build/c_bitmaps.py build [TREE...]  # PNG -> includes/generated/pictures/*.inc (build step)
@@ -53,7 +53,7 @@ P8 = (['Bitmap_Accger16', 'Bitmap_Accita16', 'Bitmap_Bmphk'] +
       ['Bitmap_Ntedt0d', 'Bitmap_Ntedt0k', 'Bitmap_SomeArrows'] +
       [f'Bitmap_SplitPoint_{s}' for s in SPLIT] +
       ['Bitmap_Technics_Logo', 'UserBitmapCheck_Bitmap24x24'])
-B1 = ['WelcomeGlyph_C', 'Bitmap_Digit1', 'Bitmap_DigitR', 'Bitmap_DigitD', 'Bitmap_DigitL']
+B1 = ['WelcomeGlyph_C', 'WelcomeGlyph_I', 'WelcomeGlyph_R', 'WelcomeGlyph_U', 'WelcomeGlyph_L']
 # the C object files whose source holds an item (the Makefile's dependency list says the same)
 C_FILES = ['naka_technichord_strings.c', 'naka_style_bitmaps.c', 'naka_widget_tables_2.c', 'naka_widget_descriptors.c',
            'naka_disk_warning.c']
@@ -152,7 +152,7 @@ def to_png(name, d, raw, path):
 def from_png(name, d, path):
     img = Image.open(path)
     if name in B1:
-        g = 3 if name == 'Bitmap_DigitL' else 1
+        g = 3 if name == 'WelcomeGlyph_L' else 1
         img = img.convert('1')
         assert img.size == (16 * g, 17), f'{path}: {img.size}, expected {(16 * g, 17)}'
         px = img.load()

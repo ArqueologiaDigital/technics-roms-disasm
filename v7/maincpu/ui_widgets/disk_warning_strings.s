@@ -181,7 +181,7 @@ CtrlPanel_SwitchRowBit:	.incbin "includes/generated/naka_disk_warning.bin", 0xCB
 GetSoundName_Str_DashedName:	.incbin "includes/generated/naka_disk_warning.bin", 0xD3A, 0x12
 ; MainPmanControl_CaseTable -- 6 x int16: the case offsets of MainPmanControl's compiled switch, relative to MainPmanCtrl_DispatchTable
 MainPmanControl_CaseTable:
-	.short	MainPmanCtrl_Case0 - MainPmanCtrl_DispatchTable
+	.short	MainPmanCtrl_OnLswPut - MainPmanCtrl_DispatchTable
 	.short	MainPmanCtrl_Case1 - MainPmanCtrl_DispatchTable
 	.short	MainPmanCtrl_OnLswGet - MainPmanCtrl_DispatchTable
 	.short	MainPmanCtrl_OnLswPartPut - MainPmanCtrl_DispatchTable
@@ -671,9 +671,9 @@ ButtonState_DispatchDSP_InlineData_Str_N85:	.incbin "includes/generated/naka_dis
 ; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
 ; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N81`).
 ButtonState_DispatchDSP_InlineData_Str_N81:	.incbin "includes/generated/naka_disk_warning.bin", 0x164A, 0x4	; "~81"
-; [nakarest] NakaInst_OK  +0x164e..+0x166a (0xeaa2fa, 28 B)
-; [nakarest] 28 B at 0xeaa2fa: split since into the labelled pieces below; code or data uses NakaInst_OK, ButtonState_DispatchDSP_InlineData_Str_OFF, ButtonState_DispatchDSP_InlineData_Str_OK, ButtonState_DispatchDSP_InlineData_Str_Lt and 4 more.
-NakaInst_OK:					.incbin "includes/generated/naka_disk_warning.bin", 0x164E, 0x4
+; [nakarest] ButtonState_DispatchDSP_InlineData_Str_ON  +0x164e..+0x166a (0xeaa2fa, 28 B)
+; [nakarest] 28 B at 0xeaa2fa: split since into the labelled pieces below; code or data uses ButtonState_DispatchDSP_InlineData_Str_ON, ButtonState_DispatchDSP_InlineData_Str_OFF, ButtonState_DispatchDSP_InlineData_Str_OK, ButtonState_DispatchDSP_InlineData_Str_Lt and 4 more.
+ButtonState_DispatchDSP_InlineData_Str_ON:					.incbin "includes/generated/naka_disk_warning.bin", 0x164E, 0x4
 ; [nakarest] naka_disk_warning+0x1652  +0x1652..+0x1656 (0xeaa2fe, 4 B)
 ; [nakarest] Text (4 B at 0xeaa2fe), first string "OFF"; no registered NAKA table points into
 ; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData

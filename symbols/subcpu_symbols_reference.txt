@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 5,064
-#   semantic names ........... 5,043 (99.6%)
+#   symbols .................. 5,067
+#   semantic names ........... 5,046 (99.6%)
 #   positional names ......... 21
 #
 PAYLOAD_ENTRY 00000400
@@ -1097,6 +1097,7 @@ TaskSched_Unlock 00020856
 FIFO1K_Get 0002085B
 FIFO1K_Put 00020868
 FIFO1K_PutBytes 0002087E
+FIFO1K_PutBytes_Loop 00020890
 FIFO1K_Is_Empty 000208A0
 FIFO1K_Put_Block_Code_Return 000208B1
 FIFO1K_Free_Space 000208B2
@@ -1109,6 +1110,7 @@ FIFO1K_Set_Commit 000208FC
 FIFO256_Get 00020909
 FIFO256_Put 00020916
 FIFO256_PutBytes 0002092C
+FIFO256_PutBytes_Loop 0002093E
 FIFO256_Is_Empty 0002094E
 FIFO256_Put_Block_Code_Return 0002095F
 FIFO256_Free_Space 00020960
@@ -1121,6 +1123,7 @@ FIFO256_Set_Commit 000209AA
 FIFO512_Get 000209B7
 FIFO512_Put 000209C4
 FIFO512_PutBytes 000209DA
+FIFO512_PutBytes_Loop 000209EC
 FIFO512_Is_Empty 000209FC
 FIFO512_Put_Block_Code_Return 00020A0D
 FIFO512_Free_Space 00020A0E
@@ -2092,9 +2095,9 @@ ToneGen_WriteNote2ch_NopCont1 000280D5
 ToneGen_WriteNote2ch_NopCont2 000280F7
 VoiceCC_DataTable_0280FE 000280FE
 VoiceCC_DataTable_0280FE_Next 0002811B
-ToneGen_WriteVoice_Pan_Pair 00028120
-ToneGen_WriteVoice_Pan_Pair_Next 00028147
-ToneGen_WriteVoice_Pan_Pair_Next2 00028169
+ToneGen_WriteVoice_TvfPair 00028120
+ToneGen_WriteVoice_TvfPair_Next 00028147
+ToneGen_WriteVoice_TvfPair_Next2 00028169
 ToneGen_WriteVoice_Reg21_Reg22 00028170
 ToneGen_WriteVoice_Reg21_Reg22_Next 00028197
 ToneGen_WriteVoice_Reg21_Reg22_Next2 000281B9

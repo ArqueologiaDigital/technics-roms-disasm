@@ -44,7 +44,8 @@ caller, leaving out every earlier refusal: 115 named, 5 refused. Most are the st
 cycle-record, TRACK MERGE and SMF import/export routines whose callers wave 5 named. Batch v reports one wrong old
 label, to fix separately: `OldCopy_BStore_Workspace_SaveToBank` (0xF6F476) is called by this build's MIDI FILE load
 and save, so it is not older-build code. `notes/wsa1_exact_copy_names.py` treats all of 0xF6F000-0xF6FFFF as the
-older build, but the banner limits that to 0xF6F000-0xF6F3FF.
+older build, but the banner limits that to 0xF6F000-0xF6F3FF. (Done 2026-10-31, kn5000-nl6: renamed `MidiFile_SaveWorkspaceToBank`, the script's range fixed;
+`notes/open4-kn5000-b/naming/README.md` at the repository root.)
 
 **Wave 7** (`proposals_wave7_{w,x,y,z}.json`): the next 120, 116 named and 4 refused. Two of the refusals are the
 reviewer's: batch z had named the empty button-table slots sub_F7E750 / sub_F7E758, whose source header deliberately

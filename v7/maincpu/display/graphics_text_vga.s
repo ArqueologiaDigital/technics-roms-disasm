@@ -4935,23 +4935,26 @@ MainSysControl:
 	ld	wa, (xix+wa)
 	lda	xix, (MainSysCtrl_DispatchTable:24)
 	jp	t, (xix+wa)
+; MainSysControl's EVT_SYS_INI cases, in the order of the INITIAL SETTING list (widget 0x410002): 0 PERFORMANCE
+;   (this first block), 1 CURRENT PANEL, 2 PART SETTING, 3 MIDI SETTING, 4 PANEL MEMORY, 5 COMPOSER, 6 SEQUENCER,
+;   7 MSP USER, 8 SOUND MEMORY (MainSysControl_CaseTable).
 MainSysCtrl_DispatchTable:
 	ld	wa, 2:i3
 	call	ScreenGroup_Dispatch
 	jr	MainSysControl_PostDispatchFinalize
-MainSysCtrl_Entry1_AccDemo:
+MainSysCtrl_OnInitComposer:
 	call AccDemo_InitDone
 	jr t, MainSysControl_PostDispatchFinalize
-MainSysCtrl_Entry2_PartInit:
+MainSysCtrl_OnInitSequencer:
 	call Part_InitFromPreset
 	jr t, MainSysControl_PostDispatchFinalize
-MainSysCtrl_Entry3_Misc:
+MainSysCtrl_OnInitSoundMemory:
 	call	SendPartDataBlock_DoGetError
 	jr	MainSysControl_PostDispatchFinalize
-MainSysCtrl_Entry4_CopyBitmaps:
+MainSysCtrl_OnInitPanelMemory:
 	call Display_CopyAndRenderBitmaps
 	jr t, MainSysControl_PostDispatchFinalize
-MainSysCtrl_Entry5_VoiceInit:
+MainSysCtrl_OnInitMspUser:
 	call Voice_InitBankDataSafe
 	jr t, MainSysControl_PostDispatchFinalize
 ; MainSysCtrl_OnInitCurrentPanel: Case 1 of MainSysControl's EVT_SYS_INI switch = item 1 "CURRENT PANEL" of the

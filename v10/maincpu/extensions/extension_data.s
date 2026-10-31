@@ -1153,11 +1153,11 @@ MainSysControl_CaseTable:
 	.short	MainSysCtrl_OnInitCurrentPanel - MainSysCtrl_DispatchTable
 	.short	MainSysCtrl_OnInitPartSetting - MainSysCtrl_DispatchTable
 	.short	MainSysCtrl_OnInitMidiSetting - MainSysCtrl_DispatchTable
-	.short	MainSysCtrl_Entry4_CopyBitmaps - MainSysCtrl_DispatchTable
-	.short	MainSysCtrl_Entry1_AccDemo - MainSysCtrl_DispatchTable
-	.short	MainSysCtrl_Entry2_PartInit - MainSysCtrl_DispatchTable
-	.short	MainSysCtrl_Entry5_VoiceInit - MainSysCtrl_DispatchTable
-	.short	MainSysCtrl_Entry3_Misc - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitPanelMemory - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitComposer - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitSequencer - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitMspUser - MainSysCtrl_DispatchTable
+	.short	MainSysCtrl_OnInitSoundMemory - MainSysCtrl_DispatchTable
 CntIniFunc_CaseTable:
 	.short	CntIniFunc_EventDispatch - CntIniFunc_EventDispatch
 	.short	CntIniFunc_ReturnZero - CntIniFunc_EventDispatch

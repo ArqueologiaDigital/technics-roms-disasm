@@ -666,11 +666,11 @@ ButtonState_DispatchDSP_InlineData_Str_N85:	.incbin "includes/generated/naka_dis
 ; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData
 ; [nakarest] (ui/ui_widget_defs.s: `ld xwa, ButtonState_DispatchDSP_InlineData_Str_N81`).
 ButtonState_DispatchDSP_InlineData_Str_N81:	.incbin "includes/generated/naka_disk_warning.bin", 0x164A, 0x4	; "~81"
-; [nakarest] NakaInst_OK  +0x164e..+0x1652 (0xeaa2fa, 4 B)
+; [nakarest] ButtonState_DispatchDSP_InlineData_Str_ON  +0x164e..+0x1652 (0xeaa2fa, 4 B)
 ; [nakarest] Text (4 B at 0xeaa2fa), first string "ON"; no registered NAKA table points into it;
 ; [nakarest] reached through source references ButtonState_DispatchDSP_InlineData
-; [nakarest] (ui/ui_widget_defs.s: `.long NakaInst_OK`).
-NakaInst_OK:	.incbin "includes/generated/naka_disk_warning.bin", 0x164E, 0x4
+; [nakarest] (ui/ui_widget_defs.s: `.long ButtonState_DispatchDSP_InlineData_Str_ON`).
+ButtonState_DispatchDSP_InlineData_Str_ON:	.incbin "includes/generated/naka_disk_warning.bin", 0x164E, 0x4
 ; [nakarest] naka_disk_warning+0x1652  +0x1652..+0x1656 (0xeaa2fe, 4 B)
 ; [nakarest] Text (4 B at 0xeaa2fe), first string "OFF"; no registered NAKA table points into
 ; [nakarest] it; reached through source references ButtonState_DispatchDSP_InlineData

@@ -516,7 +516,7 @@ MidiFileSave_WriteSeqBankSmf:		; <- T_MidiFileSave_WriteSeqBankSmf
 ; MidiFileL0ad_SelectSeqBankAndReadSmf
 ; Called from: in-module: 0xF6F400
 ; Touches: (0x272B) (0x360A) (0x360B)
-; Calls:   OldCopy_BStore_Workspace_SaveToBank MidiFile_LoadWorkspaceFromBank T_Seq_ApplySongBeatsPerBar Smf_ReadFile_Entry T_Ring601850_Init T_SeqBufRing_Init
+; Calls:   MidiFile_SaveWorkspaceToBank MidiFile_LoadWorkspaceFromBank T_Seq_ApplySongBeatsPerBar Smf_ReadFile_Entry T_Ring601850_Init T_SeqBufRing_Init
 ; Evidence (CALL): an opcode-anchored `call`/`jp addr24` in prom_a or prom_b
 ;                  targets it.  The scan is at every byte offset, so a hit
 ;                  is an upper bound on the CALL COUNT -- but a hit that
@@ -526,7 +526,7 @@ MidiFileSave_WriteSeqBankSmf:		; <- T_MidiFileSave_WriteSeqBankSmf
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MidiFileL0ad_SelectSeqBankAndReadSmf: Saves the workspace to the current bank (OldCopy_BStore_Workspace_SaveToBank);
+; MidiFileL0ad_SelectSeqBankAndReadSmf: Saves the workspace to the current bank (MidiFile_SaveWorkspaceToBank);
 ;   unless Disk_SeqBank is already BStore_CurrentBank, makes it current, loads it (MidiFile_LoadWorkspaceFromBank) and applies its beats
 ;   per bar; then Smf_ReadFile (via Smf_ReadFile_Entry), re-inits the playback rings and clears (0x360B) bit 0. The
 ;   target of MidiFileL0ad_LcdKeyRow1 (`jp`); load-side twin of MidiFileSave_WriteSeqBankSmf's body. Basis: caller +
@@ -536,7 +536,7 @@ MidiFileL0ad_SelectSeqBankAndReadSmf:
 	push	xix	; F6F409  push XIX
 	push	xhl	; F6F40A  push XHL
 	push	xde	; F6F40B  push XDE
-	call	OldCopy_BStore_Workspace_SaveToBank	; F6F40C  call 0xf6f476
+	call	MidiFile_SaveWorkspaceToBank	; F6F40C  call 0xf6f476
 	ld	a, (Disk_SeqBank:16)	; F6F410  ld A,(0x272b)
 	cp	a, (BStore_CurrentBank:16)	; F6F414  cp A,(0x360a)
 	jr	z, MidiFileL0ad_SelectSeqBankAndReadSmf_Skip	; F6F418  jr Z,0xf6f42a
@@ -559,7 +559,7 @@ MidiFileL0ad_SelectSeqBankAndReadSmf_Skip:
 ; MidiFileSave_SelectSeqBankAndWriteSmf
 ; Called from: in-module: 0xF6F404
 ; Touches: (0x272B) (0x360A)
-; Calls:   OldCopy_BStore_Workspace_SaveToBank MidiFile_LoadWorkspaceFromBank Seq_RewindAndApplySongGmAndParams T_Seq_ApplySongBeatsPerBar Smf_WriteFile_Veneer T_Ring601850_Init
+; Calls:   MidiFile_SaveWorkspaceToBank MidiFile_LoadWorkspaceFromBank Seq_RewindAndApplySongGmAndParams T_Seq_ApplySongBeatsPerBar Smf_WriteFile_Veneer T_Ring601850_Init
 ;          T_SeqBufRing_Init
 ; Evidence (CALL): an opcode-anchored `call`/`jp addr24` in prom_a or prom_b
 ;                  targets it.  The scan is at every byte offset, so a hit
@@ -583,7 +583,7 @@ MidiFileSave_SelectSeqBankAndWriteSmf:
 	ld	a, (Disk_SeqBank:16)	; F6F444  ld A,(0x272b)
 	cp	a, (BStore_CurrentBank:16)	; F6F448  cp A,(0x360a)
 	jr	z, MidiFileSave_SelectSeqBankAndWriteSmf_Skip	; F6F44C  jr Z,0xf6f465
-	call	OldCopy_BStore_Workspace_SaveToBank	; F6F44E  call 0xf6f476
+	call	MidiFile_SaveWorkspaceToBank	; F6F44E  call 0xf6f476
 	ld	a, (Disk_SeqBank:16)	; F6F452  ld A,(0x272b)
 	ld	(BStore_CurrentBank:16), a	; F6F456  ld (0x360a),A
 	call	MidiFile_LoadWorkspaceFromBank	; F6F45A  call 0xf6f4a3
@@ -600,7 +600,7 @@ MidiFileSave_SelectSeqBankAndWriteSmf_Skip:
 	ret	; F6F475  ret
 
 ; --------------------------------------------------------------------------
-; OldCopy_BStore_Workspace_SaveToBank
+; MidiFile_SaveWorkspaceToBank
 ; Called from: in-module: 0xF6F40C 0xF6F44E
 ; Touches: (0x360A) (0x360C)  |  0x603400 0x610000
 ; Evidence (CALL): an opcode-anchored `call`/`jp addr24` in prom_a or prom_b
@@ -612,9 +612,13 @@ MidiFileSave_SelectSeqBankAndWriteSmf_Skip:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; OldCopy_BStore_Workspace_SaveToBank: an exact copy of BStore_Workspace_SaveToBank (prom_b 0xF64BE3) -- all 15 instructions equal, operands included,
-;   but the targets of its jr / jrl / djnz (notes/wsa1_exact_copy_names.py).
-OldCopy_BStore_Workspace_SaveToBank:
+; MidiFile_SaveWorkspaceToBank: Saves the 3 KiB sequencer workspace 0x603400 to its bank copy 0x610000 +
+;   BStore_CurrentBank * 3072 (storing (0x360C) at 0x60341E first): the SMF file module's own copy of
+;   BStore_Workspace_SaveToBank (prom_b 0xF64BE3; all 15 instructions equal), the save-side twin of
+;   MidiFile_LoadWorkspaceFromBank. Live: MidiFileL0ad_SelectSeqBankAndReadSmf and its save twin call it, and
+;   0xF6F476 lies past the older build's block 0xF6F000-0xF6F3FF (banner above), so it is not an OldCopy_.
+;   Basis: callers + body + twin.
+MidiFile_SaveWorkspaceToBank:
 	ld	xwa, (13836:16)	; F6F476  ld XWA,(0x360c)
 	ld	(6304798:24), xwa	; F6F47A  ld (0x60341e),XWA
 	ld	xix, 6356992	; F6F47F  ld XIX,0x00610000
