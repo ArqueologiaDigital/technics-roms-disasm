@@ -206,7 +206,7 @@ Census `kn5000-floppy` after this pass: **generic 0**.
 
 ## Open questions
 
-1. What do 0xd4 / 0xd5 do in the style player? The argument count is measured; the meaning is not.
+1. What do 0xd4 / 0xd5 do in the style player? The argument count is measured; the meaning is not. (Resolved: selector = status & 0x0f through SeqPerformance_EventDispatch, 4 = pan (CC 10), 5 = expression (CC 11); notes/rhythm-data-ic14-2026-10-29/README.md event table, rhythm_data/rhythm_macros.inc cc_pan / cc_expr; open-items register 2026-10-31.)
 2. Thirteen style links and seven SQT links are not mutual. Are they edits left behind, or a
    second link convention?
 3. The two style chains that stop at 0x10 / 0x87: is that corruption in the archives, or another

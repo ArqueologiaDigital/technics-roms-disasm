@@ -145,7 +145,7 @@ its passes type most of the pieces listed here; that README lists what is still 
   does not scale (`DrawIcons_PixelPairTable`), the continuation of name / value tables after a NULL
   name (`names_48589D3C`), the 4-byte records after the demo banks (0x48791DDF.., three copies),
   and the conversion-rule pieces after `NoteConvRules` (0x485CC220).  The biggest are in
-  `../data-rest-probes/` (`pieces.py`).
+  `../data-rest-probes/` (`pieces.py`). (Resolved: 4653d696b, `../data-final/README.md` "generic-zero", generic 0 in all four builds; open-items register 2026-10-31.)
 - **Counts that are inferences.**  An array's record count is where its records stop being free,
   its pointer fields stop holding addresses, or another base / name begins, capped by an index
   bound the readers check (`cmp N, rX` before the branch, or a byte index).  Where the readers

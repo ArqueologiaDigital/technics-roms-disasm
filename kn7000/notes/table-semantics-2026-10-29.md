@@ -288,7 +288,7 @@ from table 83's assembled image, so they carry table 83's remaining generic byte
 
 ## Open questions
 
-- The 'JK' voice archive's records (the largest item left).
+- The 'JK' voice archive's records (the largest item left). (Resolved: ab0004a09..dd05c95d3, 0a47d3bdc, section "The 'JK' internal voice archive" above; open-items register 2026-10-31.)
 - ~~The plug-in's widget/descriptor tables (table 83, about 46 KB).~~ Typed 2026-10-30 (`data-final/README.md`).
 - 'ZZZJ': what the 220 records and their eight entries select.
 - The USER HP pictures' true box sizes (the view resources behind `GetBox`).

@@ -274,15 +274,15 @@ Each gap between referenced bases equals count x stride. The strides come from t
 
 ## Spans that remain unexplained
 
-| start      | end (excl.) | size    | what is known                                                                           |
-|------------|-------------|---------|-----------------------------------------------------------------------------------------|
-| 0x5000000C | 0x50000010  | 0x4     | after the two stubs; no reference; no MAME boot write                                   |
-| 0x500214F8 | 0x50021CF8  | 0x800   | boot stack by position below INITIAL_SP; bottom inferred; MAME deepest write 0x50021C98 |
-| 0x5004A5FC | 0x5004A76C  | 0x170   | tail of the 0x3C00 slot holding the 0x3A90 PANEL MEMORY copy; no reference              |
-| 0x5011F080 | 0x5011F880  | 0x800   | after PICTURE_PLANE2; no reference; no MAME boot write                                  |
-| 0x501749E8 | 0x50180000  | 0xB618  | end of .bss after the JPEG blocks; no reference; no MAME boot write                     |
-| 0x50297FFC | 0x50298000  | 0x4     | past the pool end constant; no MAME boot write                                          |
-| 0x50298000 | 0x502B8000  | 0x20000 | only the reset clear touches it in 941; no MAME boot write                              |
+| start      | end (excl.) | size    | what is known                                                                                                                                                                                |
+|------------|-------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x5000000C | 0x50000010  | 0x4     | after the two stubs; no reference; no MAME boot write                                                                                                                                        |
+| 0x500214F8 | 0x50021CF8  | 0x800   | boot stack by position below INITIAL_SP; bottom inferred; MAME deepest write 0x50021C98                                                                                                      |
+| 0x5004A5FC | 0x5004A76C  | 0x170   | tail of the 0x3C00 slot holding the 0x3A90 PANEL MEMORY copy; no reference                                                                                                                   |
+| 0x5011F080 | 0x5011F880  | 0x800   | after PICTURE_PLANE2; no reference; no MAME boot write                                                                                                                                       |
+| 0x501749E8 | 0x50180000  | 0xB618  | end of .bss after the JPEG blocks; no reference; no MAME boot write                                                                                                                          |
+| 0x50297FFC | 0x50298000  | 0x4     | past the pool end constant; no MAME boot write                                                                                                                                               |
+| 0x50298000 | 0x502B8000  | 0x20000 | only the reset clear touches it in 941; no MAME boot write (Resolved: note 8, program 942's plug-in .data / .bss and BASEEXT.XAP at 0x5029B000..0x502B8000; open-items register 2026-10-31.) |
 
 "No MAME boot write" covers only a 40 s idle boot. SD, slideshow, demo and install paths were not exercised at runtime.
 

@@ -82,7 +82,7 @@ v9 194, v7 187, prom_a 35, prom_c 2, HD-AE5000 0).  Gate 13/13.
 ## Still open
 
 * 607 `numfar`: targets inside a line (a multi-string `.ascii`, mid-table), on code lines,
-  data that is neither text nor a pointer table, and the non-pointer pairs above.
+  data that is neither text nor a pointer table, and the non-pointer pairs above. (Resolved: numfar 0 in every tree, semantic_debt_dashboard.py at 1197de217; passes 6ea57208a, 7579ff478, ae1c28cf0; open-items register 2026-10-31.)
 * The C side still types each split run as one member (`char East_ResNames_3EC_Strings[252]`);
   the `.s` names the strings.  Splitting the C members to match is a C-retyping job.
 

@@ -403,9 +403,9 @@ negative that does not say what it looked for cannot be disagreed with:
 * **What `ToneEditPage_ToggleRowFocus` does on screens `0xA6`/`0xA7`**, given
   that it repaints with the literal `0xC5`.
 * **Screen `0xA8`** (table `0xFCFB24`, 8 live slots, selector 0).  It is a real
-  screen with its own paint routines, and this pass says nothing more about it.
+  screen with its own paint routines, and this pass says nothing more about it. (Resolved: fd781ed52 and wsa1/docs/gui-menu-map.md "screen 0xC8": ToneEditPage_A8_SerialParallel, the SERIAL / PARALLEL, EFFECT BLOCK and TONE TEMPLATE LEVEL/KEY/TUNE page; open-items register 2026-10-31.)
 * **What p22 bit 7 (`RESO SCALE`) does to the coefficients.**  Unchanged from
-  the old note: the editor is now known, the consumer is still not.
+  the old note: the editor is now known, the consumer is still not. (Resolved: FINDINGS-l7a1429-reso-scale.md sections 1-2 (d3f9ef977): the consumers are registers chan+0x0040/0x0080, 0xFC4E2B and 0xFC4EDA; open-items register 2026-10-31.)
 * The `MODELING top`'s slots 0, 1, 2 and 12 (`0xFD3FE0`, `0xFD4039`,
   `0xFD40D4`, `0xFD4468`) are a per-layer ON/OFF toggle and two list selectors
   that are not edit-descriptor editors.  They are the `ON/OFF` and `DRIVER`

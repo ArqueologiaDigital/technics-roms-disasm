@@ -244,7 +244,7 @@ ids are named in every GUI C file.
   `feature-demo.md`, `test-modes.md` and `ssf-presentation.md`:
   - `UI_PostModeChangeEvent` is now `UI_ChangeTitleByIndex`;
   - `SoundCtrl_SendCommand` is now `UI_InterruptTitleByIndex`;
-  - `UI_PostPartChangeEvent` is now `UI_ChangeModeByIndex`.
+  - `UI_PostPartChangeEvent` is now `UI_ChangeModeByIndex`. (Resolved: technics-docs 92e54be, the pages now use the new names and quote the old ones only as "named ... until 2026-10-29"; open-items register 2026-10-31.)
 
 ## Website page draft (for `ui-framework.md`, section "Widget records in the C sources")
 

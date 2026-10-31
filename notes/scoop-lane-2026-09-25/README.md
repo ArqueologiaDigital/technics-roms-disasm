@@ -190,7 +190,7 @@ and they belong to lane `sys` to delete.
   into OTHER lanes' files at addresses where no label stands; the shared
   symboliser reported the ones it examined as mid-line targets, i.e. inside a
   data or instruction line there, so those files are misframed or mis-typed
-  at those addresses.
+  at those addresses. (Resolved: every target now has a label in v7, e.g. DrawLineWithMode, Mem_Copy, ScreenGroup_Dispatch (symbols/maincpu_v7_symbols_reference.txt); numbr / numaddr 0, semantic_debt_dashboard.py at 1197de217; open-items register 2026-10-31.)
 * backend has no spelling for `cp BC/IY,(XIX+IZ)` (d3 07 f0 f8 f1/f5) and
   `ldcf/stcf A,RH3` (c7 3d 2b/2c): still `.byte` with unidasm's reading.
 * honest unknowns: the 64-byte second part-name scheme after Str_TuningEq,
@@ -200,10 +200,10 @@ and they belong to lane `sys` to delete.
 * `.long OscScope_DrawWaveform` (sequencer/smf_event_processor.s) and
   `.long OscScope_FinalizeRender` (ui/drawbar_panel_ui.s, ui/ui_mode_handlers.s)
   point into the middle of instructions (now `.set NAME, . + k` here): the
-  referring lines are probably misframed code in those files.
+  referring lines are probably misframed code in those files. (Resolved: 3a9c5d4fa and 6915b60a1 re-framed the referring code; no line names either label now; open-items register 2026-10-31.)
 * ui/drawbar_panel_ui.s loads StringData_APCModeNames_0x160..0x163
   (0xF00001-0xF00004) and hands them to SendEvent: most likely numeric event
-  arguments that a positional-label pass symbolised by accident.
+  arguments that a positional-label pass symbolised by accident. (Resolved: d8e699346, then 695e7284f spells them as NAKA_VIEW_<name> view ids; open-items register 2026-10-31.)
 * naming: handler routines reached through the dispatch tables carry
   `<Table>_Target<k>` names; the sound-editor code (all of
   scoop_editor_data.s, 3,4xx instructions) has only structural labels.
@@ -215,4 +215,4 @@ and they belong to lane `sys` to delete.
   the name `Scoop_SoundEditorData` itself (code, not data), belong to the lane
   that owns `kn5000_v*_program.s` and `shared/positional_labels.s`.
   The file's header, which called it "display data ... parameter bytecode ...
-  configuration tables ... dirty-region data", was corrected in this lane.
+  configuration tables ... dirty-region data", was corrected in this lane. (Resolved: 1813072cd labels the 308 sound-editor switch handlers; the tables are now spelled .long SeAmpAmp1_OnColumn3 ... in kn5000_v10_program.s, and Scoop_SoundEditorData is gone; open-items register 2026-10-31.)

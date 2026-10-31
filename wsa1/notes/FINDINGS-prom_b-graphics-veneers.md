@@ -162,14 +162,14 @@ that width. Which record reads it is not traced.
   certain: it appends a 4-byte record `{DE, WA}` to a `0xFF`-terminated list of
   at most **fifteen** slots, `0x2030-0x206B`. ⚠ That is read out of another
   image's unconverted bytes — evidence for the shape of the call, not a
-  conversion. Re-check it when prom_a's lane arrives.
+  conversion. Re-check it when prom_a's lane arrives. (Resolved: converted, prom_a/modules/f86000_f897ff_panel_task_and_ui_event_lists.s List2030_AppendRegs; open-items register 2026-10-31.)
 * **`(0x27A2)`, `(0x27A4)`, `(0x27F5)`** — read here, written nowhere here.
 * **`0xF0191A`, `0xF01938`, `0xF01956`, `0xF01974`** — the four pointers inside
-  the `0xF02F9A` rows.
+  the `0xF02F9A` rows. (Resolved: they are 12x16 icon cells Bitmap_F0191A..F01974, prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s Data_F0191A (lane promB2, 2026-09-02); open-items register 2026-10-31.)
 * **`T_DLB_Handler_Array8`** — called with `XIY = 0xF02FF7` after `UiPaint_Ordinals`'
-  last paint.
+  last paint. (Resolved: 0xF02FF7 is the interpreter-B record UiPaint_Ordinals_DL3, handed straight to the op-0x03 handler (notes/gen_res02f_spans.py); open-items register 2026-10-31.)
 * The two pointer tables and their four ordinal rows are still `.incbin`; only
-  `0xF02FD9` was converted here.
+  `0xF02FD9` was converted here. (Resolved: DLRecordPtrs_F02F9A is .long rows and 0xF02FB2-0xF02FD8 typed records, notes/promb-2026-09-25/dl_pointer_tables.py; open-items register 2026-10-31.)
 
 ## How the listings were produced
 

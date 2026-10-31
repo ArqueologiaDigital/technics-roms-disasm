@@ -155,7 +155,7 @@ C-RAM empty at boot** (it gets a program block + a few D-RAM-register values onl
 ## Still open (next improvements)
 
 - **Capture effect-load uploads**, not just boot, to fill more I-RAM on all three
-  DSPs and exercise more of the 918-word corpus at runtime.
+  DSPs and exercise more of the 918-word corpus at runtime. (Resolved: FINDINGS-dsp-runtime-effect-uploads.md (all 55 effects captured at runtime: C-RAM only, I-RAM unchanged; 8925a1bc7) and FINDINGS-dsp-group-selector-upload-path.md (b2d6fdc7e); open-items register 2026-10-31.)
 - **Execution** stays held off (ISA not measured-decoded); once coefficients load
   and a decode instrument reads internal state, the device can run the OPEN codes
   — the path to promoting speculative readings to measured.  Output/audio is a
@@ -167,4 +167,4 @@ C-RAM empty at boot** (it gets a program block + a few D-RAM-register values onl
   **68% (7,398 bytes)** are the program-word upload in a framing not yet aligned.
   Aligning it to the statically-extracted 5,777 words (`wsa1_dsp_isa_crossval.py`)
   is the remaining step before an executing device, and it is helped by first
-  fixing the C/D tag (above) so command bytes segment the stream.
+  fixing the C/D tag (above) so command bytes segment the stream. (Resolved: this note, "FRAMING GATE CLOSED for program words" (c251d3fac): cmd 0x01 + 16-bit address + 5-byte words, IC30 63/63 per block against the static corpus; open-items register 2026-10-31.)

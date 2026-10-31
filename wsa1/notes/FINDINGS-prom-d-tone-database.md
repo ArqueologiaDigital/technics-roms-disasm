@@ -350,7 +350,7 @@ Tone indices 0x058 and 0x059, `<<< Drawbar 1>>>` and `<<< Drawbar 2>>>`, live
 apart from the rest at 0x446B4 and are **541 bytes** each. 541 − 217 = 324, which
 is not a multiple of 124. Their element mask is `0x55` — all four slots — and
 217 + 4·124 = 713, so they are 172 bytes short of the layout their own mask
-implies. Emitted as bytes. Left open.
+implies. Emitted as bytes. Left open. (Resolved: 541 = 217 + 4*81, the 81-byte element block, prom_d/tone_database_aux.s DRAWBAR TONE RECORDS header (159da0ed1), notes/prom_d_drawbar_chain.py; open-items register 2026-10-31.)
 
 ---
 

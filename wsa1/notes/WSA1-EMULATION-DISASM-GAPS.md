@@ -251,7 +251,7 @@ drive it -- see the top-three list, gap O and gap V.
 
 ---
 
-### C. Why does CPU 1 stop releasing the link's receiver-busy line? -- PRIORITY 1
+### C. Why does CPU 1 stop releasing the link's receiver-busy line? -- PRIORITY 1 (Resolved: kn7000_mame 9c9d7bb (OVERLAY FIX 6, hdma_owns_vector, and BURST_QUANTUM_US); wsa1/notes/FINDINGS-prom_a-link-receiver-busy.md; open-items register 2026-10-31.)
 
 **Question.** After CPU 2 sends its first packet, CPU 1 leaves P7 bit 1 low forever. Which arm
 of `INT0_LinkByte` (prom_a `0xF8E47F`) drops it, which arm is supposed to raise it, and what
@@ -323,7 +323,7 @@ three `set` sites remain the only other candidates.
 
 ---
 
-### D. Tie prom_d to an instruction -- ★ THE QUESTION AS ASKED IS ANSWERED **NO**; RE-ASK IT
+### D. Tie prom_d to an instruction -- ★ THE QUESTION AS ASKED IS ANSWERED **NO**; RE-ASK IT (Resolved: wsa1/notes/FINDINGS-prom_a-boot-and-version-screen.md sec.1 (22025efc4); the three re-asks in prom_a/modules/fb2000_fb8fff_sysex_module.s: Remote_E80000_Read32Blocks feeds SysExDump_SendSound, 0xEC0000 is the combinations, 0xFB248A is the uncalled SoundOrphan sibling; open-items register 2026-10-31.)
 
 **The old question was:** does any instruction in prom_a/prom_b index prom_d's 44-entry offset
 header at file `0x000000`, or its 274-entry pointer directory at file `0x000B80`, with an address
@@ -402,7 +402,7 @@ bit), **P** (what the seven command bytes mean) and **R** (what states 0x04 / 0x
 
 ---
 
-### F. What does the 0x10C004 read-back actually return? -- PRIORITY 2
+### F. What does the 0x10C004 read-back actually return? -- PRIORITY 2 (Resolved: wsa1/notes/FINDINGS-prom_c-voice-readback.md; modelled in kn7000_mame 028ac91; open-items register 2026-10-31.)
 
 > ★★ **ANSWERED 2026-08-25.** Block `0x0000` is a 16-channel-per-word busy bitmap; `0x0180 + chan`
 > is a magnitude acted on below half scale. See `FINDINGS-prom_c-voice-readback.md` -- and read its
@@ -432,7 +432,7 @@ far" -- it is one routine with two reads, which is worth correcting there.
 
 ---
 
-### G. What does the DSP microcode upload do, and what answers READY? -- PRIORITY 2
+### G. What does the DSP microcode upload do, and what answers READY? -- PRIORITY 2 (Resolved: kn7000_mame 9c9d7bb (P93 = DSPRDY pulled up by R79; P70-P77 = DSPD0-DSPD7); the stream is DSP effect microcode, wsa1/notes/FINDINGS-prom_c-p7-is-dsp-effects.md and FINDINGS-dsp-upload-deframed.md; open-items register 2026-10-31.)
 
 **Question.** CPU 2 polls **P9 bit 3** at eighteen sites (`0xF9A19F ld C,(0x19) / and C,0x08`)
 during a microcode upload. Which port do the microcode *bytes* leave by -- `0x00E00000`, or
@@ -484,7 +484,7 @@ through a pointer.
 
 ---
 
-### J. What is the device at 0x7E0008 on CPU 1? -- ROLE FOUND 2026-08-25, PART STILL UNKNOWN
+### J. What is the device at 0x7E0008 on CPU 1? -- ROLE FOUND 2026-08-25, PART STILL UNKNOWN (Resolved: an ATA hard disk on decode HDCS, wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 1a; open-items register 2026-10-31.)
 
 ★ **It is the machine's SECOND STORAGE UNIT**, driven by the same block-device layer as the floppy.
 `Fdc_Request` (`0xFE66C7`) takes a `unit` field at request+`0x02`; every one of its twelve
@@ -557,7 +557,7 @@ That names one panel button (gap O) if the chord can be found in the boot block.
 
 ---
 
-### M. What does CPU 1 do with link channel 5? -- PRIORITY 4
+### M. What does CPU 1 do with link channel 5? -- PRIORITY 4 (Resolved: link headers 0xA0-0xBF (the keybed sends 0xA2) -> prom_b LinkSelector1_Table[5] = Ring601850_PutBlock_Drop1In3 -> prom_a Ring601850_ProcessNoteEvents -> NoteRouting_ForPart / PartFrame_SendToToneGen; end to end in kn7000_mame 9c9d7bb (wsa1_keybed_note.lua); open-items register 2026-10-31.)
 
 **Question.** CPU 2 sends `{0x90, note, velocity}` triples to CPU 1 on link channel 5
 (`KeyEvents_ToLink`, `0xF98CB9`). What on CPU 1 receives them, and what does it send back on
@@ -651,7 +651,7 @@ what the KN5000's main ROM sends at open time against these seven is the cheapes
 
 ---
 
-### Q. What is on the wire for the DATA ENTRY DIAL (wire 0xD7)? -- PRIORITY 3
+### Q. What is on the wire for the DATA ENTRY DIAL (wire 0xD7)? -- PRIORITY 3 (Resolved: a signed 7-bit relative step, prom_a PanelEvent_Code21_Dial and PanelDial_DeltaToStepIndex (573c68d4a); open-items register 2026-10-31.)
 
 **Question.** The analogue curve dispatcher's slot for `0xD7` (prom_a `0xF89825` entry 31 ->
 `0xF89AAD`) is a bare `scf`: no curve lookup, no compare against the previous value, every packet
@@ -692,7 +692,7 @@ bus-collision check.
 
 ---
 
-### S. Does an SX-WSA1R carry the key-scan device at 0x108000 at all? -- PRIORITY 4
+### S. Does an SX-WSA1R carry the key-scan device at 0x108000 at all? -- PRIORITY 4 (Resolved: yes, 0x108000 is KSCS, a chip select of IC4 TC183C230002 itself (NKSCE), wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 3; open-items register 2026-10-31.)
 
 **Question.** prom_c polls `0x108002` about 34,500 times a second whichever variant the machine is,
 and prom_c contains no PB read, so the keybed path is not strap-gated in software. On a rack with no
@@ -708,7 +708,7 @@ or a key-scan PCB would appear in one or the other. Nothing in the ROMs can answ
 
 ---
 
-### T. What does CPU 1's PA bit 3 drive? -- PRIORITY 1 (NEW), blocks every disk read
+### T. What does CPU 1's PA bit 3 drive? -- PRIORITY 1 (NEW), blocks every disk read (Resolved: the drive motor, active low, net FDMON; wsa1/notes/FINDINGS-prom_a-gap-T-pa3.md and kn7000_mame 8c1820e notes/wsa1-probes/wsa1_sch_cpu_ports.sh; open-items register 2026-10-31.)
 
 > ★★ **ANSWERED 2026-08-25, and the earlier answer here was WRONG.** This entry once concluded the
 > firmware never writes the pin and that gap T was "a hardware question". It is not: four writes
@@ -745,7 +745,7 @@ Failing that, a legible schematic sheet for the FDD connector.
 
 ---
 
-### U. Is PB bit 3 the floppy controller's TC? -- PRIORITY 2 (NEW), confirm or refute an inference
+### U. Is PB bit 3 the floppy controller's TC? -- PRIORITY 2 (NEW), confirm or refute an inference (Resolved: net FDTC on IC1 pin 39, kn7000_mame 8c1820e notes/wsa1-probes/wsa1_sch_cpu_ports.sh; open-items register 2026-10-31.)
 
 **Question.** `PortB3_Pulse` (`0xFE594C`) drives PB bit 3 high for five NOPs and low again, from
 `INTTC0_uDMA0Done` (`0xFE6858`) and from nowhere else, and the programmed-I/O path
@@ -769,7 +769,7 @@ really its only writer. If something else pulses it, the inference is wrong.
 
 ---
 
-### V. How does a user reach `Fdc_Request` at all? -- PRIORITY 2 (NEW)
+### V. How does a user reach `Fdc_Request` at all? -- PRIORITY 2 (NEW) (Resolved: disk menu = screen 0x40, wsa1/notes/FINDINGS-prom_b-disk-and-file-menus.md sec.2 and FINDINGS-prom_a-portb-and-blockdev-entry.md sec.2; MENU DISK opens it in kn7000_mame a060d4f; open-items register 2026-10-31.)
 
 **Question.** `Fdc_Request` (`0xFE66C7`) has exactly eight call sites -- `0xFE3034`, `0xFE30B2`,
 `0xFE3639`, `0xFE37B3`, `0xFE37E2`, `0xFE3868`, `0xFE444A`, `0xFE446E`. What reaches each of them,
@@ -935,8 +935,8 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
   DSPs sit in the main mix. The only handle I have is negative: `0x00E00000` and `0x007F0000`
   carry a 4x32 register file whose driver is byte-identical to the KN5000's, and on the KN5000
   the standing correction is that it is **not** the DSP host interface. So the DSP host interface
-  on this machine has not been located at all, on either processor.
-* **Which of IC1 "MAIN" and IC2 "SUB" fetches which ROM pair.** Affects only naming today.
+  on this machine has not been located at all, on either processor. (Resolved: located: P7 + P5/P2/PB strobes to IC5/IC6/IC30 (kn7000_mame 9c9d7bb), IC3 -> IC4 -> DSPs in wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 3, wsa1/notes/FINDINGS-sound-subsystem-boundary.md; open-items register 2026-10-31.)
+* **Which of IC1 "MAIN" and IC2 "SUB" fetches which ROM pair.** Affects only naming today. (Resolved: IC1 = MAIN with IC12/IC13, IC2 = SUB with IC28/IC21, wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 2; open-items register 2026-10-31.)
 * **Whether CPU 1's `0x7F0000` and CPU 2's `0x00E00000` are one dual-ported chip or two.** The
   driver models two, which is the assumption that fails loudly if it is wrong (values written by
   one processor never appear to the other).
@@ -953,7 +953,7 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
   geometries and formats with the conventional `0xE5` filler, so a disk it writes should be
   readable by ordinary tools -- but no SX-WSA1 or SX-WSA1R disk image exists in these trees, and the
   driver's floppy support has therefore never been tested against real media. I cannot frame this
-  as a ROM question at all; it needs a disk.
+  as a ROM question at all; it needs a disk. (Resolved: the WSA1R softlist disks, floppy/wsa1 (dea047fc1) and the wsa1_flop softlist merged upstream as mamedev/mame #16414; open-items register 2026-10-31.)
 * **Whether the SX-WSA1R has a SECOND drive fitted, or only the port for one.** Gap J establishes
   that `Fdc_Request`'s unit 1 goes to `0x7E0008`, which is *not* the floppy controller. Whether that
   is a second storage device on the board, an option, or a port that is empty on every machine ever
@@ -962,7 +962,7 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
 * **Whether the floppy subsystem works at all on a machine stuck at `ALL INITIAL SETTING!`.** Both
   variants sit on that message with the battery-RAM checksums failed. It is not known whether the
   disk menu is even reachable from that state on real hardware, so gap V's negative measurement may
-  be measuring the wrong machine state rather than the wrong button.
+  be measuring the wrong machine state rather than the wrong button. (Resolved: the emulated machine leaves ALL INITIAL SETTING! since control register 0x3C (appendix item 5) and MENU DISK opens the DISK menu, kn7000_mame a060d4f; open-items register 2026-10-31.)
 * **What `0x00E2E1` is for.** It starts at 1000 (ROM `0xFCB4EC`), and while it is positive
   `KeyEvents_ToLink` throws every key event away. So the keybed is deaf for the first 1000 MAIN
   passes after power-on -- harmless, and measured to clear in well under a second of emulated
@@ -1027,11 +1027,11 @@ Listed so a disassembly wave does not spend effort on something the emulator cou
    so a peer can see RXE) and `sc1_rxd()` (hand the CPU a byte and raise INTRX1). INTRX1 could not
    be raised from outside at all before: `inte_w()` PRESERVES INTES1 bit 3 when a 1 is written to
    it, so a driver could clear the request flag but never set it, and INTRX1 is not a `TLCS900_*`
-   input line. Channel 0 and both channels' bit timing are still unimplemented.
+   input line. Channel 0 and both channels' bit timing are still unimplemented. (Resolved: mamedev/mame tmp95c061_serial, merged with wsa1.cpp as #16204; open-items register 2026-10-31.)
 4. **`tmp95c061::execute_set_input()` implemented neither INT6 nor INT7**, so
    `set_input_line(TLCS900_INT6, ...)` was silently a no-op even though the enum value exists. Both
    are added in this overlay, rising-edge and UNGATED -- see gap N for why they are not gated on a
-   port-B control bit the way INT4 and INT5 are.
+   port-B control bit the way INT4 and INT5 are. (Resolved: in mamedev/mame master, tmp95c061.cpp execute_set_input() case TLCS900_INT6/INT7; open-items register 2026-10-31.)
 2. **~~`tmp95c061`'s 8-bit timer prescaler taps are 16x slow, and its 16-bit timers 4-7 do not
    count~~ -- CLOSED AND IMPLEMENTED 2026-08-25.** Six defects, all in the overlay's
    `src/devices/cpu/tlcs900/tmp95c061.cpp`, each commented at the line with its databook page:
@@ -1087,7 +1087,7 @@ Listed so a disassembly wave does not spend effort on something the emulator cou
    systems and nothing else), so that A/B cannot be run here. `tmp95c063.cpp` carries the identical
    wrong shifts and is deliberately NOT changed.
 3. **`tmp95c061` dispatched writes to P6 (internal address 0x12) to the PORT_7 callback.** Fixed
-   in this overlay's copy; without it the EEPROM never sees chip select.
+   in this overlay's copy; without it the EEPROM never sees chip select. (Resolved: in mamedev/mame master, internal 0x12 maps to port_w<PORT_6>; open-items register 2026-10-31.)
 
 6. **The SX-KN1500's IC15 program dump is HALF BLANK, and that is its whole boot blocker (NEW
    2026-08-25).** Not a WSA1 gap, but it is on this list because kn1500 is the other TMP95C061
