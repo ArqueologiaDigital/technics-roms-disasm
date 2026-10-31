@@ -2024,21 +2024,21 @@ DrawDesignFrame_Skip3:
 	divs	wa, 2
 	lda	xix, (xsp+22)
 	cpw	(xbc), 0
-	jr	nz, DrawDesignFrame_Skip4
+	jr	nz, EditSw_ByteData_Join
 	ldw	(xix), 65534
 	ld	de, (xbc+2)
 	sub	de, wa
 	ld	(xix+2), de
-DrawDesignFrame_Skip4:
+EditSw_ByteData_Join:
 	cpw	(xbc), 319
-	jr	nz, DrawDesignFrame_Skip5
+	jr	nz, EditSw_ByteData_Join2
 	ldw	de, 318
 	sub	de, (xsp+6)	; F9CA23 (sub de,(xsp+0x06))
 	ld	(xix), de
 	ld	de, (xbc+2)
 	sub	de, wa
 	ld	(xix+2), de
-DrawDesignFrame_Skip5:
+EditSw_ByteData_Join2:
 	cpw	(xbc+2), 239
 	jr	nz, DrawDesignFrame_Skip6
 	ld	wa, (xsp+6)

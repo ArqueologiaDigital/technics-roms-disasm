@@ -4384,10 +4384,10 @@ AccPedal_CheckCombined_Skip5:
 	and	a, 3
 	jr	nz, AccPedal_CheckCombined_Join
 	bit	6, (0x3470:16)
-	jr	z, AccPedal_CheckCombined_Skip6
+	jr	z, AccTick_ByteData_Skip
 	or	(0x3309:16), 1
 	jr	AccPedal_CheckCombined_Join
-AccPedal_CheckCombined_Skip6:
+AccTick_ByteData_Skip:
 	bit	7, (0x3470:16)
 	jr	z, AccPedal_CheckCombined_Skip7
 	or	(0x3309:16), 2
@@ -4396,11 +4396,11 @@ AccPedal_CheckCombined_Join:
 AccPedal_CheckCombined_Skip7:
 	ld	a, (0x330b:16)
 	and	a, 3
-	jr	z, AccPedal_CheckCombined_Skip8
+	jr	z, AccTick_ByteData_Join2
 	calr	AccTiming_CallHelper
 	call	AccInit_ResetSongCounter
 	calr	AccVoice_ThirdLayer
-AccPedal_CheckCombined_Skip8:
+AccTick_ByteData_Join2:
 	and	(ACC_LANE_BEAT_POS:16), 240
 	and	(ACC_LANE_BEAT_POS+1:16), 240
 	and	(ACC_LANE_BEAT_POS+2:16), 240
@@ -4409,9 +4409,9 @@ AccPedal_CheckCombined_Skip8:
 	and	(ACC_LANE_BEAT_POS+5:16), 240
 	calr	AccSeq_DualPartScan
 	bit	6, (0x32f4:16)
-	jr	nz, AccPedal_CheckCombined_Skip4
+	jr	nz, AccTick_ByteData_Join3
 	calr	AccSeq_FourChannelScan
-AccPedal_CheckCombined_Skip4:
+AccTick_ByteData_Join3:
 	or	(0x332c:16), 128
 	ret
 
@@ -24074,7 +24074,7 @@ RhythmROM_PatternDispatcher_Join:
 	jr z, RhythmROM_LoadAndInit
 	cp (RHYTHM_LOAD_PART:16), 3
 	jr z, RhythmROM_LoadAndInit
-	calr AccPat_CalcAccentVelocity_Body_Helper
+	calr ToneData_LookupEffectParam_Code
 	calr AccPatch_LoadDualVoiceParamsB
 	calr VoiceSlot_Resolve_Loop
 	jr AccPat_CalcAccent_Return
@@ -24574,10 +24574,10 @@ RhythmROM_LoadKit_Return:
 	nop
 
 ; From the data at (0x3564): byte +0x3d1 into 0x358c..0x3590; 0x35b4 = ToneData_EffectParamWords
-; entry (ToneData_LookupEffectParam_Helper); then, with XIY = (0x3564) + (0x35b4), the words at XIY
+; entry (RhythmROM_LoadKit_CopyReturn_Code); then, with XIY = (0x3564) + (0x35b4), the words at XIY
 ; + 0x26 (XIY + 0 when bit 0 of 0x35b1 is set), + 0x4c, + 0x72, + 0x98 and + 0xbe into 0x356a,
 ; 0x356c, 0x356e, 0x3570 and 0x3572.
-AccPat_CalcAccentVelocity_Body_Helper:
+ToneData_LookupEffectParam_Code:
 	ld xix, (RHYTHM_PATTERN_ALLOC:16)
 	add xix, 0x3d1
 	ld a, (xix)
@@ -24586,7 +24586,7 @@ AccPat_CalcAccentVelocity_Body_Helper:
 	ld (0x358e:16), a
 	ld (0x358f:16), a
 	ld (0x3590:16), a
-	calr ToneData_LookupEffectParam_Helper
+	calr RhythmROM_LoadKit_CopyReturn_Code
 	ld xiy, (RHYTHM_PATTERN_ALLOC:16)
 	xor xhl, xhl
 	ld hl, (0x35b4:16)
@@ -24623,7 +24623,7 @@ RhythmROM_LoadKit_CopyReturn:
 	nop
 
 ; 0x35b4 = ToneData_EffectParamWords[(0x34ef) & 15].
-ToneData_LookupEffectParam_Helper:
+RhythmROM_LoadKit_CopyReturn_Code:
 	ld l, (RHYTHM_LOAD_PART:16)
 	and l, 0xf
 	xor h, h
@@ -24635,7 +24635,7 @@ ToneData_LookupEffectParam_Helper:
 
 	nop
 	nop
-; ToneData_EffectParamWords -- 16 words: ToneData_LookupEffectParam_Helper stores entry [(0x34EF) & 15] to
+; ToneData_EffectParamWords -- 16 words: RhythmROM_LoadKit_CopyReturn_Code stores entry [(0x34EF) & 15] to
 ;          (0x35B4).  Was named VoiceSlot_ResolveIndex and decoded as `.zero 8 / nop / nop / push xwa /
 ;          normal ...`; its reader used the positional alias VoiceSlot_ResolveIndex_0x2.
 ToneData_EffectParamWords:
@@ -28531,11 +28531,11 @@ TimeSig_DisplayStrings_Code_Helper3_Helper:
 	ld	(xix+a), b
 TimeSig_DisplayStrings_Code_Helper3_Skip:
 	bit	2, (0x390d:16)
-	jr	z, TimeSig_DisplayStrings_Code_Helper3_Skip2
+	jr	z, TimeSig_RunSlots0to4_Join2
 	ld	b, 255:opc
 	ld	a, 2:opc
 	ld	(xix+a), b
-TimeSig_DisplayStrings_Code_Helper3_Skip2:
+TimeSig_RunSlots0to4_Join2:
 	bit	3, (0x390d:16)
 	jr	z, TimeSig_DisplayStrings_Code_Helper3_Return
 	ld	b, 255:opc
@@ -31456,22 +31456,22 @@ AccPatch_ResolveEntryAddr:
 	ret
 
 ; For the current drum part (Rhythm_MapChannelToDrumIndex on 0x37c9) with a non-zero byte at
-; 0x37b2 + part: runs AccPatch_ResolveEntryAddr_Helper, AccPatch_SetCursorToChannelStart and
+; 0x37b2 + part: runs AccVoice_SetupSlots_DataBlock_Helper, AccPatch_SetCursorToChannelStart and
 ; AccPatch_ResolveEntryAddr_Helper3.
 AccVoice_SetupSlots_DataBlock:
 	calr	Rhythm_MapChannelToDrumIndex
 	add	xbc, 0x37b2
 	ld	a, (xbc)
 	cp	a, 0:i3
-	jr	z, AccPatch_ResolveEntryAddr_Return
-	calr	AccPatch_ResolveEntryAddr_Helper
+	jr	z, AccVoice_SetupSlots_DataBlock_Return
+	calr	AccVoice_SetupSlots_DataBlock_Helper
 	calr	AccPatch_SetCursorToChannelStart
 	calr	AccPatch_ResolveEntryAddr_Helper3
-AccPatch_ResolveEntryAddr_Return:
+AccVoice_SetupSlots_DataBlock_Return:
 	ret
 ; Copies the 8 bytes of the current part's settings from the current slot record (+24 +
 ; 8 * DrumChannel_MapToIndexA) to 0x37d1 + 8 * part.
-AccPatch_ResolveEntryAddr_Helper:
+AccVoice_SetupSlots_DataBlock_Helper:
 	calr	Rhythm_MapChannelToDrumIndex
 	sll	xbc, 3
 	add	xbc, 0x37d1
@@ -31782,12 +31782,12 @@ Rhythm_EndPattern:
 	; A pattern stream that is only its end code 0x83 (RhythmVoice_WriteToBuffer stops at 0x83);
 	; AccPatch_AppendPatternEndCode stores its address in a slot of 0x3898.  Was `ld a, (xhl)`.
 	.byte	0x83
-	; (0x37C9) := 1, then AccPatch_ResolveEntryAddr_Helper, _Helper10_Helper, _Helper2 and
+	; (0x37C9) := 1, then AccVoice_SetupSlots_DataBlock_Helper, _Helper10_Helper, _Helper2 and
 	; AccVoice_SetupSlots_ForEachSlot.
 AccVoice_SetupSlots_Apply:
 	ld	a, 1:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper
+	calr	AccVoice_SetupSlots_DataBlock_Helper
 	calr	AccPatch_InitEasySlotHeader
 	calr	AccPatch_SetCursorToChannelStart
 	calr	AccVoice_SetupSlots_ForEachSlot

@@ -46,3 +46,18 @@ reports) are left as they were.  The live converters were updated (`panel_button
 Website page draft): `control-panel-protocol.md` (22 names, the encoder table), `memory-map.md` (24),
 `data-wheel-investigation.md` (5), `audio-subsystem.md` (2), `rom-reconstruction.md`, `panel-parameter-keys.md`,
 `swbwr-tone-init.md`, `subcpu-command-format.md` (1 each).
+
+## The v7-harmonize follow-up renames (N-b4e8e54c)
+
+`analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv` (2026-10-24) lists 142 `v10-name-misparented`
+rows: v10's structural label carries another routine's stem while v7's label at the same code (address
+correspondence with a byte proof) has the right parent.  Re-read against the current ELFs: 133 still apply (the
+v10 label is where the tsv says, v7 has a label there that v10 does not define); 8 have v7's current name on
+another v10 label, so they need a person; 1 v10 label is gone.  The 133, plus the two `both-named` rows
+`MasterSetup_HandleDialStop/Turn` -> v7's `AcMstStyleAlp_Boundary_OnHide/OnSwIn` (the dispatcher sends
+EVT_HIDE / EVT_SW_IN there, `ui/ui_mode_handlers.s`), are
+`analysis/kn5000-naming/proposals-2026-10-31-v7-reparent.json`, applied with `carry_v10_renames.py` to v10 (135)
+and v9 (124; v9 does not define the 11 `Voice_FactoryPresetData_*` labels; run log
+`carry-v7-reparent-2026-10-31.txt`).  v6 and v5 already had v7's names.  `sync_names_from_v10.py --tree v9`
+and `--tree v7` then found 6 and 3 same-address same-bytes pairs (v9's `SeScreenData_0x216B..0x2193` are the se3
+batch's `SeFilHpq1_SeFilLpq1_Field1..4_Record`); applied, and v7's 3 carried to v6 / v5 by name.

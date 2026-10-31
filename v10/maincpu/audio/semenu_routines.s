@@ -614,7 +614,7 @@ SeMenu_SetupDisplayObject_Alt2_Continue:
 	calr SeMenu_FlushDisplayObj
 	lda xsp, (xsp + 20)
 	retd 0x2
-SeMenu_CopyWriteUpdate_Step3_Helper2:
+SeMenu_SetupDisplayObject_Alt2_Continue_0x21:
 	lda xsp, (xsp - 14)
 	ld (xsp + 12), a
 	lda xbc, (xsp)
@@ -6037,12 +6037,12 @@ SeMenu_SetMode:
 SeMenu_SetMode_Data:
 	ld	(1712:16), wa
 	ret
-SeMenu_CopyWriteUpdate_Step3_Helper12:
+SeMenu_SetMode_Data_0x5:
 	ldw	(xwa), (0x6b0)
 	ret
 	ld	(1714:16), wa
 	ret
-SeMenu_CopyWriteUpdate_Step3_Helper13:
+SeMenu_SetMode_Data_0xF:
 	ldw	(xwa), (0x6b2)
 	ret
 

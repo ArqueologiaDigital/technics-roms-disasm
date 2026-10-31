@@ -770,10 +770,10 @@ PartFormat_StartPlayback_Return:
 	ret
 PlayModeStop_InitFlagBlock_Helper:
 	cp (PLAYBACK_START_ARMED:16), 0
-	jr	nz, PartFormat_StartPlayback_Return2
+	jr	nz, PlayModeStop_InitFlagBlock_Helper_Return
 	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PlayModeStop_InitFlagBlock_Helper2
-PartFormat_StartPlayback_Return2:
+PlayModeStop_InitFlagBlock_Helper_Return:
 	ret
 PlayModeStop_InitFlagBlock_Helper2:
 	or (10412:16), 4

@@ -630,7 +630,7 @@ Bitmap_FadeOutText:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2A66,
 ;
 ; An alphabetical list of 1000 titles, each with an id. Readers
 ; (ui/ui_mode_handlers.s): the MasterSetup dial handlers
-; (MasterSetup_HandleDialTurn, MasterSetup_DialTurn_ScrollUp,
+; (AcMstStyleAlp_Boundary_OnSwIn, MasterSetup_DialTurn_ScrollUp,
 ; MasterSetup_DialDown_*) index it with 6*k (`muls wa, 0x6`), load +0
 ; and Strcpy the title into the view, and search it with String_Compare;
 ; their bounds are 0x3e8 (1000) -- an index of 1000 wraps to 0 and an

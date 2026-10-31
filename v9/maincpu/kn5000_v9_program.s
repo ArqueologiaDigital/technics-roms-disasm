@@ -1123,7 +1123,7 @@ ToneGen_ParamTable_0x2EE:
 	.short	SeDigEff_OnColumn3_RepeatDelaySustain - SeDigEff_OnColumn3_CelesteChorusDetune
 	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
 	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
-; data read by SeMenu_CopyWriteUpdate_Epilogue35+0x46 (0xF0DD22)
+; data read by SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9+0x46 (0xF0DD22)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0dd36`
 ToneGen_ParamTable_0x306:
 	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
@@ -1136,7 +1136,7 @@ ToneGen_ParamTable_0x306:
 	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
 	.short	SeDigEff_OnColumn4_Balance - SeDigEff_OnColumn4_DelaySpeed2
 	.short	SeDigEff_OnColumn4_RepeatDelayRelease - SeDigEff_OnColumn4_DelaySpeed2
-; data read by SeMenu_CopyWriteUpdate_Epilogue36+0x44 (0xF0DDB3)
+; data read by SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10+0x44 (0xF0DDB3)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0ddc7`
 ToneGen_ParamTable_0x31A:
 	.short	SeDigEff_OnColumn5_CelesteChorusBalance - SeDigEff_OnColumn5_CelesteChorusBalance

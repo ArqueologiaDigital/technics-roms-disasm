@@ -1,0 +1,1352 @@
+[
+ {
+  "old": "DisplayMode_Handler_3_Helper2",
+  "verdict": "name",
+  "new": "ScoopDisp_BytecodeBlock1_0x32",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: DisplayMode_Handler_3_Helper2 -> ScoopDisp_BytecodeBlock1_0x32 (v7 name then: ScoopDisp_BytecodeBlock1_0x32)"
+  ]
+ },
+ {
+  "old": "ToneParam_Evt09_BytecodeHandler_Loop8",
+  "verdict": "name",
+  "new": "ToneParam_HandlerTable_BC_Loop",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: ToneParam_Evt09_BytecodeHandler_Loop8 -> ToneParam_HandlerTable_BC_Loop (v7 name then: ToneParam_HandlerTable_BC_Loop)"
+  ]
+ },
+ {
+  "old": "DisplayMode_Handler_3_Skip32",
+  "verdict": "name",
+  "new": "PerfMode_Evt02_NoteVelocityDial_Skip3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: DisplayMode_Handler_3_Skip32 -> PerfMode_Evt02_NoteVelocityDial_Skip3 (v7 name then: PerfMode_EventTable_0_Target2_Skip3)"
+  ]
+ },
+ {
+  "old": "ToneParam_Evt09_BytecodeHandler_Helper3",
+  "verdict": "name",
+  "new": "PortConfig_Handler_0_Helper2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: ToneParam_Evt09_BytecodeHandler_Helper3 -> PortConfig_Handler_0_Helper2 (v7 name then: PortConfig_Handler_0_Helper2)"
+  ]
+ },
+ {
+  "old": "MemConfig_Handler_1_Code_Loop2",
+  "verdict": "name",
+  "new": "ScoopDisp_SeekBackWrapMarkers_Loop5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: MemConfig_Handler_1_Code_Loop2 -> ScoopDisp_SeekBackWrapMarkers_Loop5 (v7 name then: ScoopDisp_SeekBackWrapMarkers_Loop5)"
+  ]
+ },
+ {
+  "old": "MemConfig_Handler_1_Code_Return",
+  "verdict": "name",
+  "new": "ScoopDisp_SeekBackWrapMarkers_Return2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: MemConfig_Handler_1_Code_Return -> ScoopDisp_SeekBackWrapMarkers_Return2 (v7 name then: ScoopDisp_SeekBackWrapMarkers_Return2)"
+  ]
+ },
+ {
+  "old": "Timer_ModeHandler_0_Helper2",
+  "verdict": "name",
+  "new": "VoiceSlot_FinalRetZ_0x11",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Timer_ModeHandler_0_Helper2 -> VoiceSlot_FinalRetZ_0x11 (v7 name then: VoiceSlot_FinalRetZ_0x11)"
+  ]
+ },
+ {
+  "old": "Timer_ModeHandler_0_Helper3",
+  "verdict": "name",
+  "new": "VoiceSlot_FinalRetZ_0x1E",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Timer_ModeHandler_0_Helper3 -> VoiceSlot_FinalRetZ_0x1E (v7 name then: VoiceSlot_FinalRetZ_0x1E)"
+  ]
+ },
+ {
+  "old": "VoiceState_DataBlock2_Helper2_Skip2",
+  "verdict": "name",
+  "new": "TempoRingBuf_IsEmpty_Skip3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: VoiceState_DataBlock2_Helper2_Skip2 -> TempoRingBuf_IsEmpty_Skip3 (v7 name then: TempoRingBuf_IsEmpty_Skip3)"
+  ]
+ },
+ {
+  "old": "OscScope_RenderBlock_Helper2",
+  "verdict": "name",
+  "new": "OscScope_FinalizeRender_0x79",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: OscScope_RenderBlock_Helper2 -> OscScope_FinalizeRender_0x79 (v7 name then: OscScope_FinalizeRender_0x79)"
+  ]
+ },
+ {
+  "old": "OscScope_RenderBlock_Join",
+  "verdict": "name",
+  "new": "OscScope_FinalizeRender_0x79_Join",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: OscScope_RenderBlock_Join -> OscScope_FinalizeRender_0x79_Join (v7 name then: OscScope_FinalizeRender_0x79_Join)"
+  ]
+ },
+ {
+  "old": "OscScope_RenderBlock_Skip4",
+  "verdict": "name",
+  "new": "OscScope_FinalizeRender_0x79_Skip",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: OscScope_RenderBlock_Skip4 -> OscScope_FinalizeRender_0x79_Skip (v7 name then: OscScope_FinalizeRender_0x79_Skip)"
+  ]
+ },
+ {
+  "old": "OscScope_RenderBlock_Join2",
+  "verdict": "name",
+  "new": "OscScope_FinalizeRender_0x79_Join2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: OscScope_RenderBlock_Join2 -> OscScope_FinalizeRender_0x79_Join2 (v7 name then: OscScope_FinalizeRender_0x79_Join2)"
+  ]
+ },
+ {
+  "old": "OscScope_RenderBlock_Return",
+  "verdict": "name",
+  "new": "OscScope_FinalizeRender_0x79_Return",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: OscScope_RenderBlock_Return -> OscScope_FinalizeRender_0x79_Return (v7 name then: OscScope_FinalizeRender_0x79_Return)"
+  ]
+ },
+ {
+  "old": "OscScope_UpdateDisplay_Helper2",
+  "verdict": "name",
+  "new": "DisplayStr_BytecodeBlock_A_Code_Helper",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: OscScope_UpdateDisplay_Helper2 -> DisplayStr_BytecodeBlock_A_Code_Helper (v7 name then: DisplayStr_BytecodeBlock_A_Code_Helper)"
+  ]
+ },
+ {
+  "old": "ParamPopup_PartPedal_Loop2",
+  "verdict": "name",
+  "new": "Tbl_PedalNames_Loop",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: ParamPopup_PartPedal_Loop2 -> Tbl_PedalNames_Loop (v7 name then: Tbl_PedalNames_Loop)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Step3_Helper2",
+  "verdict": "name",
+  "new": "SeMenu_SetupDisplayObject_Alt2_Continue_0x21",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Step3_Helper2 -> SeMenu_SetupDisplayObject_Alt2_Continue_0x21 (v7 name then: SeMenu_SetupDisplayObject_Alt2_Continue_0x21)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Step3_Helper12",
+  "verdict": "name",
+  "new": "SeMenu_SetMode_Data_0x5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Step3_Helper12 -> SeMenu_SetMode_Data_0x5 (v7 name then: SeMenu_SetMode_Data_0x5)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Step3_Helper13",
+  "verdict": "name",
+  "new": "SeMenu_SetMode_Data_0xF",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Step3_Helper13 -> SeMenu_SetMode_Data_0xF (v7 name then: SeMenu_SetMode_Data_0xF)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Skip7",
+  "verdict": "name",
+  "new": "SeMenuTitleFunc_DispatchSwitch_Skip2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Skip7 -> SeMenuTitleFunc_DispatchSwitch_Skip2 (v7 name then: SeMenuTitleFunc_DispatchSwitch_Skip2)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Skip50",
+  "verdict": "name",
+  "new": "SeMenuTitleFunc_DispatchSwitch_Skip3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Skip50 -> SeMenuTitleFunc_DispatchSwitch_Skip3 (v7 name then: SeMenuTitleFunc_DispatchSwitch_Skip3)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Join20",
+  "verdict": "name",
+  "new": "SeEasy_OnSideRow3_Join6",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Join20 -> SeEasy_OnSideRow3_Join6 (v7 name then: SeEasy_OnSideRow3_Join6)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Epilogue32",
+  "verdict": "name",
+  "new": "SeEasy_OnSideRow3_Epilogue4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Epilogue32 -> SeEasy_OnSideRow3_Epilogue4 (v7 name then: SeEasy_OnSideRow3_Epilogue4)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Join38",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn3_CelesteChorusDetune_Join11",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Join38 -> SeDigEff_OnColumn3_CelesteChorusDetune_Join11 (v7 name then: SeDigEff_OnColumn3_CelesteChorusDetune_Join11)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Join21",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn3_RepeatDelaySustain_Join12",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Join21 -> SeDigEff_OnColumn3_RepeatDelaySustain_Join12 (v7 name then: SeDigEff_OnColumn3_RepeatDelaySustain_Join12)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Epilogue35",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Epilogue35 -> SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9 (v7 name then: SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Join39",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn4_DelaySpeed2_Join13",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Join39 -> SeDigEff_OnColumn4_DelaySpeed2_Join13 (v7 name then: SeDigEff_OnColumn4_DelaySpeed2_Join13)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Epilogue36",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Epilogue36 -> SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10 (v7 name then: SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Join40",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn5_CelesteChorusBalance_Join14",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Join40 -> SeDigEff_OnColumn5_CelesteChorusBalance_Join14 (v7 name then: SeDigEff_OnColumn5_CelesteChorusBalance_Join14)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Epilogue37",
+  "verdict": "name",
+  "new": "SeDigEff_OnColumn5_EnsembleDetune_Epilogue11",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Epilogue37 -> SeDigEff_OnColumn5_EnsembleDetune_Epilogue11 (v7 name then: SeDigEff_OnColumn5_EnsembleDetune_Epilogue11)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Entry6_Code_Loop",
+  "verdict": "name",
+  "new": "SeWrtSnd_SetupNamingPage_Loop5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Entry6_Code_Loop -> SeWrtSnd_SetupNamingPage_Loop5 (v7 name then: SeWrtSnd_SetupNamingPage_Loop5)"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Entry6_Code_Loop3",
+  "verdict": "name",
+  "new": "SeWrtSnd_SetupNamingPage_Loop8",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_CopyWriteUpdate_Entry6_Code_Loop3 -> SeWrtSnd_SetupNamingPage_Loop8 (v7 name then: SeWrtSnd_SetupNamingPage_Loop8)"
+  ]
+ },
+ {
+  "old": "PartFormat_StartPlayback_Return2",
+  "verdict": "name",
+  "new": "PlayModeStop_InitFlagBlock_Helper_Return",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: PartFormat_StartPlayback_Return2 -> PlayModeStop_InitFlagBlock_Helper_Return (v7 name then: PlayModeStop_InitFlagBlock_Helper_Return)"
+  ]
+ },
+ {
+  "old": "SeqStep_FileSectorPopReturn_Skip8",
+  "verdict": "name",
+  "new": "Fat_AllocateClusters_Skip9",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqStep_FileSectorPopReturn_Skip8 -> Fat_AllocateClusters_Skip9 (v7 name then: Fat_AllocateClusters_Skip9)"
+  ]
+ },
+ {
+  "old": "SeqStep_FileSectorPopReturn_Join",
+  "verdict": "name",
+  "new": "NakaData_PerfStyleCode_Join4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqStep_FileSectorPopReturn_Join -> NakaData_PerfStyleCode_Join4 (v7 name then: NakaData_PerfStyleCode_Join4)"
+  ]
+ },
+ {
+  "old": "SeqStep_FileSectorPopReturn_Epilogue2",
+  "verdict": "name",
+  "new": "NakaData_PerfStyleCode_Epilogue2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqStep_FileSectorPopReturn_Epilogue2 -> NakaData_PerfStyleCode_Epilogue2 (v7 name then: NakaData_PerfStyleCode_Epilogue2)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop8",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop -> Fat_LookupPath_Loop8 (v7 name then: Fat_LookupPath_Loop8)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip2",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip19",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip2 -> Fat_LookupPath_Skip19 (v7 name then: Fat_LookupPath_Skip19)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip3",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip20",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip3 -> Fat_LookupPath_Skip20 (v7 name then: Fat_LookupPath_Skip20)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip4",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip21",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip4 -> Fat_LookupPath_Skip21 (v7 name then: Fat_LookupPath_Skip21)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip5",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip22",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip5 -> Fat_LookupPath_Skip22 (v7 name then: Fat_LookupPath_Skip22)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip34",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip23",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip34 -> Fat_LookupPath_Skip23 (v7 name then: Fat_LookupPath_Skip23)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join13",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Join8",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join13 -> Fat_LookupPath_Join8 (v7 name then: Fat_LookupPath_Join8)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop2",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop9",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop2 -> Fat_LookupPath_Loop9 (v7 name then: Fat_LookupPath_Loop9)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip35",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip24",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip35 -> Fat_LookupPath_Skip24 (v7 name then: Fat_LookupPath_Skip24)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop3",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop10",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop3 -> Fat_LookupPath_Loop10 (v7 name then: Fat_LookupPath_Loop10)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop13",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop11",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop13 -> Fat_LookupPath_Loop11 (v7 name then: Fat_LookupPath_Loop11)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip6",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip25",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip6 -> Fat_LookupPath_Skip25 (v7 name then: Fat_LookupPath_Skip25)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join14",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Join9",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join14 -> Fat_LookupPath_Join9 (v7 name then: Fat_LookupPath_Join9)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip36",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip26",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip36 -> Fat_LookupPath_Skip26 (v7 name then: Fat_LookupPath_Skip26)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop14",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop12",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop14 -> Fat_LookupPath_Loop12 (v7 name then: Fat_LookupPath_Loop12)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip37",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip27",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip37 -> Fat_LookupPath_Skip27 (v7 name then: Fat_LookupPath_Skip27)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip38",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip28",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip38 -> Fat_LookupPath_Skip28 (v7 name then: Fat_LookupPath_Skip28)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip39",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip29",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip39 -> Fat_LookupPath_Skip29 (v7 name then: Fat_LookupPath_Skip29)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip40",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip30",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip40 -> Fat_LookupPath_Skip30 (v7 name then: Fat_LookupPath_Skip30)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop4",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop13",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop4 -> Fat_LookupPath_Loop13 (v7 name then: Fat_LookupPath_Loop13)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip41",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip31",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip41 -> Fat_LookupPath_Skip31 (v7 name then: Fat_LookupPath_Skip31)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip42",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip32",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip42 -> Fat_LookupPath_Skip32 (v7 name then: Fat_LookupPath_Skip32)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop15",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop14",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop15 -> Fat_LookupPath_Loop14 (v7 name then: Fat_LookupPath_Loop14)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip7",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip34",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip7 -> Fat_LookupPath_Skip34 (v7 name then: Fat_LookupPath_Skip34)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip43",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip35",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip43 -> Fat_LookupPath_Skip35 (v7 name then: Fat_LookupPath_Skip35)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join15",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Join10",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join15 -> Fat_LookupPath_Join10 (v7 name then: Fat_LookupPath_Join10)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip44",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip36",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip44 -> Fat_LookupPath_Skip36 (v7 name then: Fat_LookupPath_Skip36)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip45",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip37",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip45 -> Fat_LookupPath_Skip37 (v7 name then: Fat_LookupPath_Skip37)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip46",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip38",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip46 -> Fat_LookupPath_Skip38 (v7 name then: Fat_LookupPath_Skip38)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip47",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip39",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip47 -> Fat_LookupPath_Skip39 (v7 name then: Fat_LookupPath_Skip39)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip48",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip40",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip48 -> Fat_LookupPath_Skip40 (v7 name then: Fat_LookupPath_Skip40)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip49",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip41",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip49 -> Fat_LookupPath_Skip41 (v7 name then: Fat_LookupPath_Skip41)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop5",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Loop16",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop5 -> Fat_LookupPath_Loop16 (v7 name then: Fat_LookupPath_Loop16)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip50",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip42",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip50 -> Fat_LookupPath_Skip42 (v7 name then: Fat_LookupPath_Skip42)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip51",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip43",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip51 -> Fat_LookupPath_Skip43 (v7 name then: Fat_LookupPath_Skip43)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip52",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip44",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip52 -> Fat_LookupPath_Skip44 (v7 name then: Fat_LookupPath_Skip44)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip53",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Skip45",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip53 -> Fat_LookupPath_Skip45 (v7 name then: Fat_LookupPath_Skip45)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Epilogue",
+  "verdict": "name",
+  "new": "Fat_LookupPath_Epilogue4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Epilogue -> Fat_LookupPath_Epilogue4 (v7 name then: Fat_LookupPath_Epilogue4)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop6",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Loop18",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop6 -> Fat_CreateDirEntry_Loop18 (v7 name then: Fat_CreateDirEntry_Loop18)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip8",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Skip49",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip8 -> Fat_CreateDirEntry_Skip49 (v7 name then: Fat_CreateDirEntry_Skip49)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip9",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Skip50",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip9 -> Fat_CreateDirEntry_Skip50 (v7 name then: Fat_CreateDirEntry_Skip50)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop7",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Loop20",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop7 -> Fat_CreateDirEntry_Loop20 (v7 name then: Fat_CreateDirEntry_Loop20)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop8",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Loop21",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop8 -> Fat_CreateDirEntry_Loop21 (v7 name then: Fat_CreateDirEntry_Loop21)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop9",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Loop22",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop9 -> Fat_CreateDirEntry_Loop22 (v7 name then: Fat_CreateDirEntry_Loop22)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join2",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Join13",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join2 -> Fat_CreateDirEntry_Join13 (v7 name then: Fat_CreateDirEntry_Join13)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Epilogue2",
+  "verdict": "name",
+  "new": "Fat_CreateDirEntry_Epilogue5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Epilogue2 -> Fat_CreateDirEntry_Epilogue5 (v7 name then: Fat_CreateDirEntry_Epilogue5)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip10",
+  "verdict": "name",
+  "new": "Fat_WriteDirEntry_Skip",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip10 -> Fat_WriteDirEntry_Skip (v7 name then: Fat_WriteDirEntry_Skip)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Epilogue3",
+  "verdict": "name",
+  "new": "Fat_WriteDirEntry_Epilogue",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Epilogue3 -> Fat_WriteDirEntry_Epilogue (v7 name then: Fat_WriteDirEntry_Epilogue)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop10",
+  "verdict": "name",
+  "new": "Fat_FreeFileClusters_Loop",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop10 -> Fat_FreeFileClusters_Loop (v7 name then: Fat_FreeFileClusters_Loop)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join3",
+  "verdict": "name",
+  "new": "Fat_FreeFileClusters_Join",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join3 -> Fat_FreeFileClusters_Join (v7 name then: Fat_FreeFileClusters_Join)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip11",
+  "verdict": "name",
+  "new": "Fat_FreeFileClusters_Skip2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip11 -> Fat_FreeFileClusters_Skip2 (v7 name then: Fat_FreeFileClusters_Skip2)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Loop11",
+  "verdict": "name",
+  "new": "Fat_MountVolume_Loop2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Loop11 -> Fat_MountVolume_Loop2 (v7 name then: Fat_MountVolume_Loop2)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join4",
+  "verdict": "name",
+  "new": "Fat_MountVolume_Join2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join4 -> Fat_MountVolume_Join2 (v7 name then: Fat_MountVolume_Join2)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip14",
+  "verdict": "name",
+  "new": "Fat_MountVolume_Skip12",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip14 -> Fat_MountVolume_Skip12 (v7 name then: Fat_MountVolume_Skip12)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Skip15",
+  "verdict": "name",
+  "new": "Fat_MountVolume_Skip13",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Skip15 -> Fat_MountVolume_Skip13 (v7 name then: Fat_MountVolume_Skip13)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Join5",
+  "verdict": "name",
+  "new": "Fat_MountVolume_Join3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Join5 -> Fat_MountVolume_Join3 (v7 name then: Fat_MountVolume_Join3)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_PathNormalize_Epilogue4",
+  "verdict": "name",
+  "new": "Fat_MountVolume_Epilogue",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeqByteBlock_PathNormalize_Epilogue4 -> Fat_MountVolume_Epilogue (v7 name then: Fat_MountVolume_Epilogue)"
+  ]
+ },
+ {
+  "old": "AccPedal_CheckCombined_Skip6",
+  "verdict": "name",
+  "new": "AccTick_ByteData_Skip",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: AccPedal_CheckCombined_Skip6 -> AccTick_ByteData_Skip (v7 name then: AccTick_ByteData_Skip)"
+  ]
+ },
+ {
+  "old": "AccPedal_CheckCombined_Skip8",
+  "verdict": "name",
+  "new": "AccTick_ByteData_Join2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: AccPedal_CheckCombined_Skip8 -> AccTick_ByteData_Join2 (v7 name then: AccTick_ByteData_Join2)"
+  ]
+ },
+ {
+  "old": "AccPedal_CheckCombined_Skip4",
+  "verdict": "name",
+  "new": "AccTick_ByteData_Join3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: AccPedal_CheckCombined_Skip4 -> AccTick_ByteData_Join3 (v7 name then: AccTick_ByteData_Join3)"
+  ]
+ },
+ {
+  "old": "AccPat_CalcAccentVelocity_Body_Helper",
+  "verdict": "name",
+  "new": "ToneData_LookupEffectParam_Code",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: AccPat_CalcAccentVelocity_Body_Helper -> ToneData_LookupEffectParam_Code (v7 name then: ToneData_LookupEffectParam_Code)"
+  ]
+ },
+ {
+  "old": "ToneData_LookupEffectParam_Helper",
+  "verdict": "name",
+  "new": "RhythmROM_LoadKit_CopyReturn_Code",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: ToneData_LookupEffectParam_Helper -> RhythmROM_LoadKit_CopyReturn_Code (v7 name then: RhythmROM_LoadKit_CopyReturn_Code)"
+  ]
+ },
+ {
+  "old": "TimeSig_DisplayStrings_Code_Helper3_Skip2",
+  "verdict": "name",
+  "new": "TimeSig_RunSlots0to4_Join2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: TimeSig_DisplayStrings_Code_Helper3_Skip2 -> TimeSig_RunSlots0to4_Join2 (v7 name then: TimeSig_RunSlots0to4_Join2)"
+  ]
+ },
+ {
+  "old": "AccPatch_ResolveEntryAddr_Return",
+  "verdict": "name",
+  "new": "AccVoice_SetupSlots_DataBlock_Return",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: AccPatch_ResolveEntryAddr_Return -> AccVoice_SetupSlots_DataBlock_Return (v7 name then: AccVoice_SetupSlots_DataBlock_Return)"
+  ]
+ },
+ {
+  "old": "AccPatch_ResolveEntryAddr_Helper",
+  "verdict": "name",
+  "new": "AccVoice_SetupSlots_DataBlock_Helper",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: AccPatch_ResolveEntryAddr_Helper -> AccVoice_SetupSlots_DataBlock_Helper (v7 name then: AccVoice_SetupSlots_DataBlock_Helper)"
+  ]
+ },
+ {
+  "old": "DrawDesignFrame_Skip4",
+  "verdict": "name",
+  "new": "EditSw_ByteData_Join",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: DrawDesignFrame_Skip4 -> EditSw_ByteData_Join (v7 name then: EditSw_ByteData_Join)"
+  ]
+ },
+ {
+  "old": "DrawDesignFrame_Skip5",
+  "verdict": "name",
+  "new": "EditSw_ByteData_Join2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: DrawDesignFrame_Skip5 -> EditSw_ByteData_Join2 (v7 name then: EditSw_ByteData_Join2)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip28",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip28",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip28 -> DrawDottedLineWithMode_Impl_Skip28 (v7 name then: DrawDottedLineWithMode_Impl_Skip28)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Loop2",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Loop2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Loop2 -> DrawDottedLineWithMode_Impl_Loop2 (v7 name then: DrawDottedLineWithMode_Impl_Loop2)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip30",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip30",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip30 -> DrawDottedLineWithMode_Impl_Skip30 (v7 name then: DrawDottedLineWithMode_Impl_Skip30)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip31",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip31",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip31 -> DrawDottedLineWithMode_Impl_Skip31 (v7 name then: DrawDottedLineWithMode_Impl_Skip31)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip32",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip32",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip32 -> DrawDottedLineWithMode_Impl_Skip32 (v7 name then: DrawDottedLineWithMode_Impl_Skip32)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip33",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip33",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip33 -> DrawDottedLineWithMode_Impl_Skip33 (v7 name then: DrawDottedLineWithMode_Impl_Skip33)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip34",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip34",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip34 -> DrawDottedLineWithMode_Impl_Skip34 (v7 name then: DrawDottedLineWithMode_Impl_Skip34)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip35",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip35",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip35 -> DrawDottedLineWithMode_Impl_Skip35 (v7 name then: DrawDottedLineWithMode_Impl_Skip35)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Skip36",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Skip36",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Skip36 -> DrawDottedLineWithMode_Impl_Skip36 (v7 name then: DrawDottedLineWithMode_Impl_Skip36)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Join9",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Join9",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Join9 -> DrawDottedLineWithMode_Impl_Join9 (v7 name then: DrawDottedLineWithMode_Impl_Join9)"
+  ]
+ },
+ {
+  "old": "Voice_FactoryPresetData_Join10",
+  "verdict": "name",
+  "new": "DrawDottedLineWithMode_Impl_Join10",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: Voice_FactoryPresetData_Join10 -> DrawDottedLineWithMode_Impl_Join10 (v7 name then: DrawDottedLineWithMode_Impl_Join10)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetManager_Save_Helper",
+  "verdict": "name",
+  "new": "Display_DeferOrUpdateScreen_Direct_0xF",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: SeMenu_PresetManager_Save_Helper -> Display_DeferOrUpdateScreen_Direct_0xF (v7 name then: Display_DeferOrUpdateScreen_Direct_0xF)"
+  ]
+ },
+ {
+  "old": "ColorBlit_WithPaletteSave_Skip",
+  "verdict": "name",
+  "new": "ColorBlit_Variant_ByteData_Skip",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: ColorBlit_WithPaletteSave_Skip -> ColorBlit_Variant_ByteData_Skip (v7 name then: ColorBlit_Variant_ByteData_Skip)"
+  ]
+ },
+ {
+  "old": "FSWAss_RefreshAllVoices_Skip14",
+  "verdict": "name",
+  "new": "DispTimeSet_EventDispatch_Skip2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: FSWAss_RefreshAllVoices_Skip14 -> DispTimeSet_EventDispatch_Skip2 (v7 name then: DispTimeSet_EventDispatch_Skip2)"
+  ]
+ },
+ {
+  "old": "FSWAss_RefreshAllVoices_Skip15",
+  "verdict": "name",
+  "new": "DispTimeSet_EventDispatch_Skip4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: FSWAss_RefreshAllVoices_Skip15 -> DispTimeSet_EventDispatch_Skip4 (v7 name then: DispTimeSet_EventDispatch_Skip4)"
+  ]
+ },
+ {
+  "old": "FSWAss_RefreshAllVoices_Skip16",
+  "verdict": "name",
+  "new": "DispTimeSet_EventDispatch_Skip5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: FSWAss_RefreshAllVoices_Skip16 -> DispTimeSet_EventDispatch_Skip5 (v7 name then: DispTimeSet_EventDispatch_Skip5)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Join",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_Block48_Var04_B_Join",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Join -> ExtDev_SndParam_Block48_Var04_B_Join (v7 name then: ExtDev_SndParam_Block48_Var04_B_Join)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip8",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_Block98_Var40_Skip2",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip8 -> ExtDev_SndParam_Block98_Var40_Skip2 (v7 name then: ExtDev_SndParam_Block98_Var40_Skip2)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Join5",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_Block98_Var40_Join3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Join5 -> ExtDev_SndParam_Block98_Var40_Join3 (v7 name then: ExtDev_SndParam_Block98_Var40_Join3)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip9",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_BlockA9_Var02_Skip3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip9 -> ExtDev_SndParam_BlockA9_Var02_Skip3 (v7 name then: ExtDev_SndParam_BlockA9_Var02_Skip3)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Join6",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_BlockA9_Var02_Join4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Join6 -> ExtDev_SndParam_BlockA9_Var02_Join4 (v7 name then: ExtDev_SndParam_BlockA9_Var02_Join4)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip5",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_Block98_Var40_B_Skip4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip5 -> ExtDev_SndParam_Block98_Var40_B_Skip4 (v7 name then: ExtDev_SndParam_Block98_Var40_B_Skip4)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Join4",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_Block98_Var40_B_Join5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Join4 -> ExtDev_SndParam_Block98_Var40_B_Join5 (v7 name then: ExtDev_SndParam_Block98_Var40_B_Join5)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip6",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_ConfigAndWrite_Skip5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip6 -> ExtDev_SndParam_ConfigAndWrite_Skip5 (v7 name then: ExtDev_SndParam_ConfigAndWrite_Skip5)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip3",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_DispatchAndWriteA8_Skip7",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip3 -> ExtDev_SndParam_DispatchAndWriteA8_Skip7 (v7 name then: ExtDev_SndParam_DispatchAndWriteA8_Skip7)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Epilogue3",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_DispatchAndWriteA8_Epilogue3",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Epilogue3 -> ExtDev_SndParam_DispatchAndWriteA8_Epilogue3 (v7 name then: ExtDev_SndParam_DispatchAndWriteA8_Epilogue3)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip4",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_DispatchAndWriteA8_Alt_Skip8",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip4 -> ExtDev_SndParam_DispatchAndWriteA8_Alt_Skip8 (v7 name then: ExtDev_SndParam_DispatchAndWriteA8_Alt_Skip8)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Epilogue4",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Epilogue4 -> ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4 (v7 name then: ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Skip7",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_DispatchComplex_Skip9",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Skip7 -> ExtDev_SndParam_DispatchComplex_Skip9 (v7 name then: ExtDev_SndParam_DispatchComplex_Skip9)"
+  ]
+ },
+ {
+  "old": "NakaData_WidgetInit1_Code_Epilogue6",
+  "verdict": "name",
+  "new": "ExtDev_SndParam_DispatchComplex_Epilogue5",
+  "header": null,
+  "basis": "v7 address correspondence (caller-alignment-v7-final.tsv, v10-name-misparented): v7's label at the same code carries the right parent stem",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/caller-alignment-v7-final.tsv: NakaData_WidgetInit1_Code_Epilogue6 -> ExtDev_SndParam_DispatchComplex_Epilogue5 (v7 name then: ExtDev_SndParam_DispatchComplex_Epilogue5)"
+  ]
+ },
+ {
+  "old": "MasterSetup_HandleDialStop",
+  "verdict": "name",
+  "new": "AcMstStyleAlp_Boundary_OnHide",
+  "header": null,
+  "basis": "both-named row: the dispatcher sends EVT_HIDE here (ui/ui_mode_handlers.s); v7's name says so",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/README.md, both-named"
+  ]
+ },
+ {
+  "old": "MasterSetup_HandleDialTurn",
+  "verdict": "name",
+  "new": "AcMstStyleAlp_Boundary_OnSwIn",
+  "header": null,
+  "basis": "both-named row: the dispatcher sends EVT_SW_IN here; v7's name says so",
+  "evidence": [
+   "analysis/v7-harmonize-2026-10-24/README.md, both-named"
+  ]
+ }
+]

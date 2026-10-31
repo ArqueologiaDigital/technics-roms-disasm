@@ -3283,14 +3283,14 @@ SeMenu_CopyWriteUpdate_Epilogue8:
 	ld	a, (xsp+8)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Skip7
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip2
 	ld	wa, (xsp)
 	dec	1, wa
 	cp	(xsp+2), wa
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue9
 	incw	1, (xsp+2)
 	jr	SeMenu_CopyWriteUpdate_Join5
-SeMenu_CopyWriteUpdate_Skip7:
+SeMenuTitleFunc_DispatchSwitch_Skip2:
 	cpw	(xsp+2), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue9
 	decm	1, (xsp+2)
@@ -3499,7 +3499,7 @@ SeMenu_CopyWriteUpdate_Epilogue49:
 	call	SeMenu_LoadPartParam
 	resm	7, (xsp+6)
 	cpib_erp	251, 0
-	jr	nz, SeMenu_CopyWriteUpdate_Skip50
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip3
 	cp	(xsp+6), 127
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue10
 	ld	a, (xsp+2)
@@ -3508,7 +3508,7 @@ SeMenu_CopyWriteUpdate_Epilogue49:
 	jr	c, SeMenu_CopyWriteUpdate_Skip8
 	ld	(xsp+6), 127
 	jr	SeMenu_CopyWriteUpdate_Skip8
-SeMenu_CopyWriteUpdate_Skip50:
+SeMenuTitleFunc_DispatchSwitch_Skip3:
 	cp	(xsp+6), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue10
 	ld	a, (xsp+6)
@@ -3599,7 +3599,7 @@ SeMenu_CopyWriteUpdate_Epilogue50:
 	cp	(xsp), 0
 	scc8	z, a
 	extz	wa
-	call	SeMenu_CopyWriteUpdate_Step3_Helper2
+	call	SeMenu_SetupDisplayObject_Alt2_Continue_0x21
 	ldw	wa, 16
 	call	SeMenu_RegisterParamDisplay
 	jr	SeMenu_CopyWriteUpdate_Epilogue51
@@ -3618,9 +3618,9 @@ SeMenu_CopyWriteUpdate_Skip10:
 	cp	(xsp+8), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Epilogue51
 	lda	xwa, (xsp+6)
-	call	SeMenu_CopyWriteUpdate_Step3_Helper12
+	call	SeMenu_SetMode_Data_0x5
 	lda	xwa, (xsp+4)
-	call	SeMenu_CopyWriteUpdate_Step3_Helper13
+	call	SeMenu_SetMode_Data_0xF
 	ld	wa, (xsp+4)
 	dec	1, wa
 	cp	(xsp+6), wa
@@ -3669,7 +3669,7 @@ SeMenu_CopyWriteUpdate_Skip53:
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Epilogue11
 	lda	xwa, (xsp+2)
-	call	SeMenu_CopyWriteUpdate_Step3_Helper12
+	call	SeMenu_SetMode_Data_0x5
 	cpw	(xsp+2), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue11
 	decm	1, (xsp+2)
@@ -5881,22 +5881,22 @@ SeEasy_OnSideRow3:
 	cp	(xsp+2), 0
 	jr	nz, SeEasy_OnSideRow3_Skip
 	cp	(xsp), 6
-	jr	z, SeMenu_CopyWriteUpdate_Epilogue32
+	jr	z, SeEasy_OnSideRow3_Epilogue4
 	ld	wa, 0:i3
 	ld	bc, 6:i3
-	jr	SeMenu_CopyWriteUpdate_Join20
+	jr	SeEasy_OnSideRow3_Join6
 SeEasy_OnSideRow3_Skip:
 	cp	(xsp), 2
-	jr	z, SeMenu_CopyWriteUpdate_Epilogue32
+	jr	z, SeEasy_OnSideRow3_Epilogue4
 	ld	wa, 0:i3
 	ld	bc, 2:i3
-SeMenu_CopyWriteUpdate_Join20:
+SeEasy_OnSideRow3_Join6:
 	call	SeMenu_StorePartParam
 	pushw	0
 	pushw	33
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Epilogue32:
+SeEasy_OnSideRow3_Epilogue4:
 	inc	4, xsp
 	ret
 SeEasy_OnSideRow4:
@@ -6097,9 +6097,9 @@ SeDigEff_OnColumn3:
 	ld	a, (xsp+12)
 	extz	wa
 	cp	wa, 0:i3
-	jr	mi, SeMenu_CopyWriteUpdate_Epilogue35
+	jr	mi, SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
 	cp	wa, 11
-	jr	gt, SeMenu_CopyWriteUpdate_Epilogue35
+	jr	gt, SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
 	add	wa, wa
 	lda	xix, (ToneGen_ParamTable_0x2EE:24)
 	ld	wa, (xix+wa)
@@ -6111,7 +6111,7 @@ SeDigEff_OnColumn3_CelesteChorusDetune:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
 	ld	(xwa+9), 206
-SeMenu_CopyWriteUpdate_Join38:
+SeDigEff_OnColumn3_CelesteChorusDetune_Join11:
 	ld	xwa, 2:i3
 	lda	xwa, (xwa+94)
 	extz	wa
@@ -6124,32 +6124,32 @@ SeMenu_CopyWriteUpdate_Join38:
 	call	SeMenu_StepParamFieldAndSend
 	ld	wa, 3:i3
 	call	SeMenu_BindDialToColumn
-	jr	SeMenu_CopyWriteUpdate_Epilogue35
+	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
 ; SeDigEff_OnColumn3_Depth: Types 4/5 ENSEMBLE and 7 ORGAN TREMOLO (DEPTH2), 10/11 SOLO EFFECT (DEPTH): column limits
 ;   50 and 0.
 SeDigEff_OnColumn3_Depth:	; cases 4, 5, 7, 10, 11
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
-	jr	SeMenu_CopyWriteUpdate_Join21
+	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Join12
 ; SeDigEff_OnColumn3_TremoloWave: Type 6 TREMOLO: column 3 is WAVE, limits 3 and 0.
 SeDigEff_OnColumn3_TremoloWave:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 3
-	jr	SeMenu_CopyWriteUpdate_Join21
+	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Join12
 ; SeDigEff_OnColumn3_SingleDelayKey: Type 8 SINGLE DELAY: column 3 is KEY, limits +24 and -24.
 SeDigEff_OnColumn3_SingleDelayKey:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 24
 	ld	(xwa+9), 232
-	jr	SeMenu_CopyWriteUpdate_Join38
+	jr	SeDigEff_OnColumn3_CelesteChorusDetune_Join11
 ; SeDigEff_OnColumn3_RepeatDelaySustain: Type 9 REPEAT DELAY: column 3 is SUSTAIN, limits 30 and 0.
 SeDigEff_OnColumn3_RepeatDelaySustain:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 30
-SeMenu_CopyWriteUpdate_Join21:
+SeDigEff_OnColumn3_RepeatDelaySustain_Join12:
 	ld	(xwa+9), 0
-	jr	SeMenu_CopyWriteUpdate_Join38
-SeMenu_CopyWriteUpdate_Epilogue35:
+	jr	SeDigEff_OnColumn3_CelesteChorusDetune_Join11
+SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9:
 	lda	xsp, (xsp+16)
 	ret
 SeDigEff_OnColumn4:
@@ -6172,9 +6172,9 @@ SeDigEff_OnColumn4:
 	ld	a, (xsp+12)
 	extz	wa
 	cp	wa, 0:i3
-	jr	mi, SeMenu_CopyWriteUpdate_Epilogue36
+	jr	mi, SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
 	cp	wa, 9
-	jr	gt, SeMenu_CopyWriteUpdate_Epilogue36
+	jr	gt, SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
 	add	wa, wa
 	lda	xix, (ToneGen_ParamTable_0x306:24)
 	ld	wa, (xix+wa)
@@ -6185,7 +6185,7 @@ SeDigEff_OnColumn4:
 SeDigEff_OnColumn4_DelaySpeed2:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
-SeMenu_CopyWriteUpdate_Join39:
+SeDigEff_OnColumn4_DelaySpeed2_Join13:
 	ld	(xwa+9), 0
 	ld	xwa, 3:i3
 	lda	xwa, (xwa+94)
@@ -6199,18 +6199,18 @@ SeMenu_CopyWriteUpdate_Join39:
 	call	SeMenu_StepParamFieldAndSend
 	ld	wa, 4:i3
 	call	SeMenu_BindDialToColumn
-	jr	SeMenu_CopyWriteUpdate_Epilogue36
+	jr	SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
 ; SeDigEff_OnColumn4_Balance: Types 6 TREMOLO and 8 SINGLE DELAY: column 4 is BALANCE, limits 100 and 0.
 SeDigEff_OnColumn4_Balance:	; cases 6, 8
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
-	jr	SeMenu_CopyWriteUpdate_Join39
+	jr	SeDigEff_OnColumn4_DelaySpeed2_Join13
 ; SeDigEff_OnColumn4_RepeatDelayRelease: Type 9 REPEAT DELAY: column 4 is RELEASE, limits 30 and 0.
 SeDigEff_OnColumn4_RepeatDelayRelease:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 30
-	jr	SeMenu_CopyWriteUpdate_Join39
-SeMenu_CopyWriteUpdate_Epilogue36:
+	jr	SeDigEff_OnColumn4_DelaySpeed2_Join13
+SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10:
 	lda	xsp, (xsp+16)
 	ret
 SeDigEff_OnColumn5:
@@ -6233,9 +6233,9 @@ SeDigEff_OnColumn5:
 	ld	a, (xsp+12)
 	extz	wa
 	cp	wa, 0:i3
-	jr	mi, SeMenu_CopyWriteUpdate_Epilogue37
+	jr	mi, SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
 	cp	wa, 5:i3
-	jr	gt, SeMenu_CopyWriteUpdate_Epilogue37
+	jr	gt, SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
 	add	wa, wa
 	lda	xix, (ToneGen_ParamTable_0x31A:24)
 	ld	wa, (xix+wa)
@@ -6247,7 +6247,7 @@ SeDigEff_OnColumn5_CelesteChorusBalance:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
 	ld	(xwa+9), 0
-SeMenu_CopyWriteUpdate_Join40:
+SeDigEff_OnColumn5_CelesteChorusBalance_Join14:
 	ld	xwa, 4:i3
 	lda	xwa, (xwa+94)
 	extz	wa
@@ -6260,14 +6260,14 @@ SeMenu_CopyWriteUpdate_Join40:
 	call	SeMenu_StepParamFieldAndSend
 	ld	wa, 5:i3
 	call	SeMenu_BindDialToColumn
-	jr	SeMenu_CopyWriteUpdate_Epilogue37
+	jr	SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
 ; SeDigEff_OnColumn5_EnsembleDetune: Types 4/5 ENSEMBLE: column 5 is DETUNE, limits +50 and -50.
 SeDigEff_OnColumn5_EnsembleDetune:	; cases 4, 5
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
 	ld	(xwa+9), 206
-	jr	SeMenu_CopyWriteUpdate_Join40
-SeMenu_CopyWriteUpdate_Epilogue37:
+	jr	SeDigEff_OnColumn5_CelesteChorusBalance_Join14
+SeDigEff_OnColumn5_EnsembleDetune_Epilogue11:
 	lda	xsp, (xsp+16)
 	ret
 SeDigEff_OnColumn6:
@@ -6912,7 +6912,7 @@ SeWrtSnd_SetupNamingPage_Join8:
 	ld	wa, 2:i3
 	call	SeMenu_LoadPartParam
 	ldib_erp 251, 0
-SeMenu_CopyWriteUpdate_Entry6_Code_Loop:
+SeWrtSnd_SetupNamingPage_Loop5:
 	ldto_berp a, 251
 	extz	wa
 	lda	xbc, (xsp+6)
@@ -6920,7 +6920,7 @@ SeMenu_CopyWriteUpdate_Entry6_Code_Loop:
 	call	SeMenu_GetNameBufferChar
 	inc1b_erp	251
 	cp_erpb	251, 15
-	jr	ule, SeMenu_CopyWriteUpdate_Entry6_Code_Loop
+	jr	ule, SeWrtSnd_SetupNamingPage_Loop5
 	ld	c, (xsp+2)
 	dec	1, c
 	extz	bc
@@ -7015,7 +7015,7 @@ SeWrtSnd_SetupNamingPage_Loop:
 	extz	bc
 	ld	wa, 1:i3
 	add	bc, wa
-SeMenu_CopyWriteUpdate_Entry6_Code_Loop3:
+SeWrtSnd_SetupNamingPage_Loop8:
 	ld	ix, bc
 	ldw	wa, 0xffff
 	add	ix, wa
@@ -7026,7 +7026,7 @@ SeMenu_CopyWriteUpdate_Entry6_Code_Loop3:
 	inc 1, bc
 	ldto_berp a, 251
 	cp	a, l
-	jr	c, SeMenu_CopyWriteUpdate_Entry6_Code_Loop3
+	jr	c, SeWrtSnd_SetupNamingPage_Loop8
 SeWrtSnd_SetupNamingPage_Skip:
 	ld	a, (xsp+2)
 	dec	1, a
@@ -8931,7 +8931,7 @@ SeMenu_PresetManager_Save:
 	ld xiy, SeMenu_PresetManager_Save_Records
 	ld xix, SeMenuTitle_StaticRecords
 	call SeGfx_DrawStaticList
-	call SeMenu_PresetManager_Save_Helper
+	call Display_DeferOrUpdateScreen_Direct_0xF
 	ret
 
 
@@ -9251,7 +9251,7 @@ SeMenu_DrawLfoPartSwitches:
 SeMenu_DrawLfoPartSwitches_Loop:
 	ld	w, (xiy)
 	and	w, 32
-	jrl	z, SeMenu_DrawLfoPartSwitches_Join
+	jrl	z, SeMenu_PresetBrowser_Data_Sub_Join
 	push	w
 	push	c
 	push	xiy
@@ -9319,8 +9319,8 @@ SeMenu_DrawLfoPartSwitches_Loop:
 	call	SeGfx_DrawStaticList
 	pop	xiy
 	pop	c
-	jr	SeMenu_DrawLfoPartSwitches_Join
-SeMenu_DrawLfoPartSwitches_Join:
+	jr	SeMenu_PresetBrowser_Data_Sub_Join
+SeMenu_PresetBrowser_Data_Sub_Join:
 	add	xiy, 1
 	dec	1, c
 	jrl	nz, SeMenu_DrawLfoPartSwitches_Loop
@@ -12383,10 +12383,10 @@ SeValText_FilterTypes:
 ; reader (se_screendata_model.py): bound record list(s) from here, read by GraphicsRender_Start;
 ; evidence: SeFilLpq1_DrawStaticScreen, SeFilHpq1_DrawStaticScreen
 SeFilHpq1_SeFilLpq1_Field0_Record:
-	.set	SeScreenData_0x216B, . + 11
-	.set	SeScreenData_0x2175, . + 21
-	.set	SeScreenData_0x2184, . + 36
-	.set	SeScreenData_0x2193, . + 51
+	.set	SeFilHpq1_SeFilLpq1_Field1_Record, . + 11
+	.set	SeFilHpq1_SeFilLpq1_Field2_Record, . + 21
+	.set	SeFilHpq1_SeFilLpq1_Field3_Record, . + 36
+	.set	SeFilHpq1_SeFilLpq1_Field4_Record, . + 51
 	.incbin "includes/generated/se_general_edit.bin", 0x0, 0x42
 ; SeFilEq_RangeGainRecords: The two bound records of edit parameter 5 (RAM 0x665) on the LPF/HPF -12dB + EQ pages
 ;   (screens 0x30 SeFilLpq1, 0x31 SeFilHpq1): EQ RANGE "LOW "/"HIGH" from bit 7 at (192,221) and EQ GAIN " --","
@@ -12396,13 +12396,13 @@ SeFilEq_RangeGainRecords:	.incbin "includes/generated/se_general_edit.bin", 0x42
 ; evidence: SeFilLpq1_DrawField, SeFilHpq1_DrawField
 SeFilHpq1_SeFilLpq1_FieldRecordPtrs:
 	.long	SeFilHpq1_SeFilLpq1_Field0_Record
-	.long	SeScreenData_0x216B
-	.long	SeScreenData_0x2175
-	.long	SeScreenData_0x2184
-	.long	SeScreenData_0x2193
+	.long	SeFilHpq1_SeFilLpq1_Field1_Record
+	.long	SeFilHpq1_SeFilLpq1_Field2_Record
+	.long	SeFilHpq1_SeFilLpq1_Field3_Record
+	.long	SeFilHpq1_SeFilLpq1_Field4_Record
 ; string table, 2-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 8 by the record's mask; the table holds 6 cells; values >= 6 would read past it)
-; evidence: bound op02 record at SeScreenData_0x2184, bound op02 record at SeFilBpf1_Field3_Record, bound op02 record at SeFilBpf1_Field5_Record
+; evidence: bound op02 record at SeFilHpq1_SeFilLpq1_Field3_Record, bound op02 record at SeFilBpf1_Field3_Record, bound op02 record at SeFilBpf1_Field5_Record
 SeValText_M6_M3_To_P9:
 	.ascii	"-6", "-3", " 0", "+3", "+6", "+9"
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
@@ -13447,7 +13447,7 @@ SeValText_NoteNames:
 	.ascii	"E8 ", "F8 ", "F\2148", "G8 "
 ; string table, 5-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 128 by the record's mask; the table holds 128 cells)
-; evidence: bound op02 record at SeScreenData_0x2175, bound op02 record at SeScreenData_0x2193, bound op02 record at SeFilH241_SeFilL241_Field2_Record, bound op02 record at SeFilBpf1_Field2_Record (+1 more)
+; evidence: bound op02 record at SeFilHpq1_SeFilLpq1_Field2_Record, bound op02 record at SeFilHpq1_SeFilLpq1_Field4_Record, bound op02 record at SeFilH241_SeFilL241_Field2_Record, bound op02 record at SeFilBpf1_Field2_Record (+1 more)
 SeValText_65_4_69_3_To_48K:
 	.ascii	" 65.4"
 	.ascii	" 69.3"

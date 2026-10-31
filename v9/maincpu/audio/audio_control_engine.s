@@ -1573,10 +1573,10 @@ ExtDev_SndParam_Block48_Var04_B:
 	and	c, (xde)
 	jr	z, FileIO_BytecodeData_Code_Skip78
 	ld	(xde), 4
-	jr	NakaData_WidgetInit1_Code_Join
+	jr	ExtDev_SndParam_Block48_Var04_B_Join
 FileIO_BytecodeData_Code_Skip78:
 	ld	(xde), 0
-NakaData_WidgetInit1_Code_Join:
+ExtDev_SndParam_Block48_Var04_B_Join:
 	ld	(xhl), 4
 	jrl	PanelEvent_Post
 ExtDev_SndParam_Write98_Block:
@@ -1615,12 +1615,12 @@ ExtDev_SndParam_Block98_Var40:
 	lda	xhl, (xwa+3)
 	ld	c, (xhl)
 	and	c, (xde)
-	jr	z, NakaData_WidgetInit1_Code_Skip8
+	jr	z, ExtDev_SndParam_Block98_Var40_Skip2
 	ld	(xde), 64
-	jr	NakaData_WidgetInit1_Code_Join5
-NakaData_WidgetInit1_Code_Skip8:
+	jr	ExtDev_SndParam_Block98_Var40_Join3
+ExtDev_SndParam_Block98_Var40_Skip2:
 	ld	(xde), 0
-NakaData_WidgetInit1_Code_Join5:
+ExtDev_SndParam_Block98_Var40_Join3:
 	ld	(xhl), 64
 	jrl	PanelEvent_Post
 ExtDev_SndParam_BlockA9_Var02:
@@ -1633,12 +1633,12 @@ ExtDev_SndParam_BlockA9_Var02:
 	lda	xhl, (xwa+3)
 	ld	c, (xhl)
 	and	c, (xde)
-	jr	z, NakaData_WidgetInit1_Code_Skip9
+	jr	z, ExtDev_SndParam_BlockA9_Var02_Skip3
 	ld	(xde), 2
-	jr	NakaData_WidgetInit1_Code_Join6
-NakaData_WidgetInit1_Code_Skip9:
+	jr	ExtDev_SndParam_BlockA9_Var02_Join4
+ExtDev_SndParam_BlockA9_Var02_Skip3:
 	ld	(xde), 0
-NakaData_WidgetInit1_Code_Join6:
+ExtDev_SndParam_BlockA9_Var02_Join4:
 	ld	(xhl), 2
 	calr	PanelEvent_Post
 	ret
@@ -1666,12 +1666,12 @@ ExtDev_SndParam_Block98_Var40_B:
 	lda	xhl, (xwa+3)
 	ld	c, (xhl)
 	and	c, (xde)
-	jr	z, NakaData_WidgetInit1_Code_Skip5
+	jr	z, ExtDev_SndParam_Block98_Var40_B_Skip4
 	ld	(xde), 64
-	jr	NakaData_WidgetInit1_Code_Join4
-NakaData_WidgetInit1_Code_Skip5:
+	jr	ExtDev_SndParam_Block98_Var40_B_Join5
+ExtDev_SndParam_Block98_Var40_B_Skip4:
 	ld	(xde), 0
-NakaData_WidgetInit1_Code_Join4:
+ExtDev_SndParam_Block98_Var40_B_Join5:
 	ld	(xhl), 64
 	jrl	PanelEvent_Post
 ExtDev_SndParam_ConfigAndWrite:
@@ -1689,7 +1689,7 @@ ExtDev_SndParam_ConfigAndWrite:
 	call	SndParam_LookupViaEncode
 	lda	xbc, (xiz+2)
 	cp	hl, 0:i3
-	jr	nz, NakaData_WidgetInit1_Code_Skip6
+	jr	nz, ExtDev_SndParam_ConfigAndWrite_Skip5
 	ld	a, (PART_SELECT:16)
 	extz	wa
 	lda	xde, (0x918d:16)
@@ -1698,7 +1698,7 @@ ExtDev_SndParam_ConfigAndWrite:
 	ld	a, (xwa)
 	ld	(xbc), a
 	jr	FileIO_BytecodeData_Code_Join24
-NakaData_WidgetInit1_Code_Skip6:
+ExtDev_SndParam_ConfigAndWrite_Skip5:
 	ld	(xbc), 0
 FileIO_BytecodeData_Code_Join24:
 	ld	(xiz+3), 127
@@ -1796,14 +1796,14 @@ ExtDev_SndParam_DispatchAndWriteA8:
 	cp	a, 3:i3
 	jr	z, FileIO_BytecodeData_Code_Skip82
 	cp	a, 19
-	jr	nz, NakaData_WidgetInit1_Code_Skip3
+	jr	nz, ExtDev_SndParam_DispatchAndWriteA8_Skip7
 FileIO_BytecodeData_Code_Skip82:
-	jr	NakaData_WidgetInit1_Code_Epilogue3
-NakaData_WidgetInit1_Code_Skip3:
+	jr	ExtDev_SndParam_DispatchAndWriteA8_Epilogue3
+ExtDev_SndParam_DispatchAndWriteA8_Skip7:
 	ld	xwa, 192
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
-	jr	z, NakaData_WidgetInit1_Code_Epilogue3
+	jr	z, ExtDev_SndParam_DispatchAndWriteA8_Epilogue3
 	set	1, (37113:16)
 	ld	(xiz), 168
 	ld	(xiz+1), 4
@@ -1812,12 +1812,12 @@ NakaData_WidgetInit1_Code_Skip3:
 	ld	c, (xde)
 	ld	a, (xhl)
 	and	a, c
-	jr	z, NakaData_WidgetInit1_Code_Epilogue3
+	jr	z, ExtDev_SndParam_DispatchAndWriteA8_Epilogue3
 	ld	(xde), 2
 	ld	(xhl), 2
 	ld	xwa, xiz
 	calr	PanelEvent_Post
-NakaData_WidgetInit1_Code_Epilogue3:
+ExtDev_SndParam_DispatchAndWriteA8_Epilogue3:
 	pop	xiz
 	ret
 ExtDev_SndParam_DispatchAndWriteA8_Alt:
@@ -1835,14 +1835,14 @@ ExtDev_SndParam_DispatchAndWriteA8_Alt:
 	cp	a, 3:i3
 	jr	z, FileIO_BytecodeData_Code_Skip83
 	cp	a, 19
-	jr	nz, NakaData_WidgetInit1_Code_Skip4
+	jr	nz, ExtDev_SndParam_DispatchAndWriteA8_Alt_Skip8
 FileIO_BytecodeData_Code_Skip83:
-	jr	NakaData_WidgetInit1_Code_Epilogue4
-NakaData_WidgetInit1_Code_Skip4:
+	jr	ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4
+ExtDev_SndParam_DispatchAndWriteA8_Alt_Skip8:
 	ld	xwa, 192
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
-	jr	z, NakaData_WidgetInit1_Code_Epilogue4
+	jr	z, ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4
 	set	1, (37113:16)
 	ld	(xiz), 168
 	ld	(xiz+1), 4
@@ -1851,12 +1851,12 @@ NakaData_WidgetInit1_Code_Skip4:
 	ld	c, (xde)
 	ld	a, (xhl)
 	and	a, c
-	jr	z, NakaData_WidgetInit1_Code_Epilogue4
+	jr	z, ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4
 	ld	(xde), 1
 	ld	(xhl), 1
 	ld	xwa, xiz
 	calr	PanelEvent_Post
-NakaData_WidgetInit1_Code_Epilogue4:
+ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4:
 	pop	xiz
 	ret
 ExtDev_SndParam_MultiReg_Iterate:
@@ -1889,17 +1889,17 @@ ExtDev_SndParam_DispatchComplex:
 	cp	a, 3:i3
 	jr	z, FileIO_BytecodeData_Code_Skip84
 	cp	a, 19
-	jr	nz, NakaData_WidgetInit1_Code_Skip7
+	jr	nz, ExtDev_SndParam_DispatchComplex_Skip9
 FileIO_BytecodeData_Code_Skip84:
-	jr	NakaData_WidgetInit1_Code_Epilogue6
-NakaData_WidgetInit1_Code_Skip7:
+	jr	ExtDev_SndParam_DispatchComplex_Epilogue5
+ExtDev_SndParam_DispatchComplex_Skip9:
 	ld	xwa, 192
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
-	jr	z, NakaData_WidgetInit1_Code_Epilogue6
+	jr	z, ExtDev_SndParam_DispatchComplex_Epilogue5
 	ld	a, (xiz+3)
 	and	a, (xiz+2)
-	jr	z, NakaData_WidgetInit1_Code_Epilogue6
+	jr	z, ExtDev_SndParam_DispatchComplex_Epilogue5
 	set	1, (37113:16)
 	ld	(xiz), 152
 	ld	(xiz+1), 1
@@ -1912,7 +1912,7 @@ NakaData_WidgetInit1_Code_Skip7:
 	ld	(xiz+3), 127
 	ld	xwa, xiz
 	calr	PanelEvent_Post
-NakaData_WidgetInit1_Code_Epilogue6:
+ExtDev_SndParam_DispatchComplex_Epilogue5:
 	pop	xiz
 	inc	2, xsp
 	ret

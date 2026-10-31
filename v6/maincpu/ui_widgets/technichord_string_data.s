@@ -5524,12 +5524,12 @@ SLDstBankList_FuncBody_Str_Colon_3:	.incbin "includes/generated/naka_technichord
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 80 (the byte after it).
 SingleLoadDst_PanelMemBankSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA7A, 0x2
-SLDstBankList_FuncBody_Data_3:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA7C, 0x2
+SingleLoadDst_PanelMemEntryCount:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA7C, 0x2
 ; SLDstMemLabel_ColonSep -- 4 x char: ": " + NUL + 0xFF pad, separator of the destination-memory label "<caption>: <n>"
 ; SLDstBankList_FuncBody_Helper2 copies StorageArea_UnitNames[mode] + 1 (MEMORY / SONG / PATTERN) to RAM 0x89B8, appends
 ; this (FileIO_BuildFilePath = strcat), then the number RAM 0x8A04 + 1.
 SLDstMemLabel_ColonSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA7E, 0x4
-SLDstBankList_FuncBody_Data_5:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA82, 0x2
+SingleLoadDst_SequencerSongCount:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA82, 0x2
 SLDstBankList_FuncBody_Str_Colon_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA84, 0x4	; ": "
 SLDstBankList_FuncBody_Str_Colon_6:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA88, 0x4	; ": "
 SLDstBankList_FuncBody_Str_ALL:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA8C, 0x12	; "      ALL       "
@@ -5538,7 +5538,7 @@ SLDstBankList_FuncBody_Str_ALL:		.incbin "includes/generated/naka_technichord_st
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 30 (the byte after it).
 SingleLoadDst_ComposerBankSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA9E, 0x2
-SLDstBankList_FuncBody_Data_6:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAA0, 0x2
+SingleLoadDst_ComposerEntryCount:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAA0, 0x2
 ; [nakarest] Data_SaveLoadMenuTable  +0x1aaa2..+0x1aaf0 (0xea09f0, 78 B)
 ; [nakarest] 78 B at 0xea09f0: split since into the labelled pieces below; code or data uses Data_SaveLoadMenuTable, SLDstBankList_FuncBody_Str_Colon_7, SLDstBankList_FuncBody_Str_ALL_2, SLDstBankList_FuncBody_Str_Colon_8 and 4 more.
 Data_SaveLoadMenuTable:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAA2, 0x4

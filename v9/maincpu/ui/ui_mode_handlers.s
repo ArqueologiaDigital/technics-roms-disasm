@@ -2602,9 +2602,9 @@ AcMstStyleAlpGridBoxProc:
 	cp xwa, EVT_GET_FIXED_COL_STR
 	jrl z, MasterSetup_GetNameA
 	cp xwa, EVT_SW_IN
-	jrl z, MasterSetup_HandleDialTurn
+	jrl z, AcMstStyleAlp_Boundary_OnSwIn
 	cp xwa, EVT_HIDE
-	jrl z, MasterSetup_HandleDialStop
+	jrl z, AcMstStyleAlp_Boundary_OnHide
 	cp xwa, EVT_SHOW
 	jr z, MasterSetup_EventDispatch
 	sub xbc, EVT_INDEXSW_UP
@@ -2687,7 +2687,7 @@ MasterSetup_EventDispatch:
 	ld xbc, EVT_OTP_CNT_SET
 	jr MasterSetup_CallMainFunc
 
-MasterSetup_HandleDialStop:
+AcMstStyleAlp_Boundary_OnHide:
 	ld xwa, (xsp + 74)
 	ld xbc, (xsp + 70)
 	ld xde, (xsp + 66)
@@ -2700,7 +2700,7 @@ MasterSetup_CallMainFunc:
 	call MainFuncCall
 	jrl SeqFile_ReturnZeroJmp2
 
-MasterSetup_HandleDialTurn:
+AcMstStyleAlp_Boundary_OnSwIn:
 	ld xwa, (xsp + 74)
 	ld xbc, (xsp + 70)
 	ld xde, (xsp + 66)
@@ -9513,9 +9513,9 @@ DispTimeSet_EventDispatch_Skip3:
 	jrl	FSWAss_RefreshAllVoices_Join2
 DispTimeSet_EventDispatch_Skip:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Skip14
+	jr	nz, DispTimeSet_EventDispatch_Skip2
 	cp	de, 4:i3
-	jr	nz, FSWAss_RefreshAllVoices_Skip14
+	jr	nz, DispTimeSet_EventDispatch_Skip2
 	lda	xwa, (xsp+8)
 	lda	xbc, (SURE_CONFIRM:24)
 	ld	(xwa), xbc
@@ -9527,11 +9527,11 @@ DispTimeSet_EventDispatch_Skip:
 	ld	xbc, 0:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Skip14:
+DispTimeSet_EventDispatch_Skip2:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Skip15
+	jr	nz, DispTimeSet_EventDispatch_Skip4
 	cp	de, 5:i3
-	jr	nz, FSWAss_RefreshAllVoices_Skip15
+	jr	nz, DispTimeSet_EventDispatch_Skip4
 	lda	xwa, (xsp+8)
 	lda	xbc, (0x0340ec:24)
 	ld	(xwa), xbc
@@ -9543,11 +9543,11 @@ FSWAss_RefreshAllVoices_Skip14:
 	ld	xbc, 1:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Skip15:
+DispTimeSet_EventDispatch_Skip4:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Skip16
+	jr	nz, DispTimeSet_EventDispatch_Skip5
 	cp	de, 6:i3
-	jr	nz, FSWAss_RefreshAllVoices_Skip16
+	jr	nz, DispTimeSet_EventDispatch_Skip5
 	lda	xwa, (xsp+8)
 	lda	xbc, (0x0340ee:24)
 	ld	(xwa), xbc
@@ -9559,7 +9559,7 @@ FSWAss_RefreshAllVoices_Skip15:
 	ld	xbc, 1:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Skip16:
+DispTimeSet_EventDispatch_Skip5:
 	cpw	(xwa), 1
 	jrl	nz, DispTimeSet_ReturnZero
 	cp	de, 7:i3

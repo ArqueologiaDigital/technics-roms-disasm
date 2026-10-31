@@ -2528,9 +2528,9 @@ typedef struct __attribute__((packed)) {
     char All_str_4[18];
     char SLDstBankList_FuncBody_Str_Colon_3[4];
     uint16_t SingleLoadDst_PanelMemBankSize;
-    uint16_t SLDstBankList_FuncBody_Data_5;
+    uint16_t SingleLoadDst_SequencerSongCount;
     char SLDstMemLabel_ColonSep[4];
-    uint16_t SLDstBankList_FuncBody_Data_6;
+    uint16_t SingleLoadDst_ComposerEntryCount;
     char SLDstBankList_FuncBody_Str_Colon_5[4];
     char SLDstBankList_FuncBody_Str_Colon_6[4];
     char All_str_5[18];
@@ -7409,11 +7409,11 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .SingleLoadDst_PanelMemBankSize = 0xFF08,
 
-    .SLDstBankList_FuncBody_Data_5 = 0xFF50,
+    .SingleLoadDst_SequencerSongCount = 0xFF50,
 
     .SLDstMemLabel_ColonSep = ALIGNED_STRING(": "),
 
-    .SLDstBankList_FuncBody_Data_6 = 0xFF0A,
+    .SingleLoadDst_ComposerEntryCount = 0xFF0A,
 
     .SLDstBankList_FuncBody_Str_Colon_5 = ALIGNED_STRING(": "),
 

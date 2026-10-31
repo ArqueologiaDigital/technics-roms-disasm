@@ -573,7 +573,7 @@ ScoopDisp_BytecodeBlock1_Skip3:
 	ld (4480:16), 32
 ScoopDisp_BytecodeBlock1_Return:
 	ret
-DisplayMode_Handler_3_Helper2:
+ScoopDisp_BytecodeBlock1_0x32:
 	push	xbc
 	push	xde
 	push	xhl
@@ -597,7 +597,7 @@ DisplayMode_Handler_3_Helper2:
 ;   row, calls Scoop_CurveUpdate_NextSegment (DE = value, BC = row, WA = 2 -> SndParam_OffsetHandler, column 5 of the
 ;   SndParam_ValueMapGrid row; unmapped rows return the value) and returns the result in A, all other registers kept.
 ;   Basis: callers + body -- PerfMode_MapDisplayNoteToEvent calls it with A = the shown note and W = (0xFB3C) to map
-;   the note back before writing it; DisplayMode_Handler_3_Helper2 is the selector-1 twin
+;   the note back before writing it; ScoopDisp_BytecodeBlock1_0x32 is the selector-1 twin
 ;   PerfMode_MapEventNoteToDisplay uses.
 PerfMode_LookupValueMapColumn5:
 	push	xbc
@@ -3037,10 +3037,10 @@ Timer_ModeHandler_0_Loop:
 	jrl	nz, Timer_ModeHandler_0_Loop
 	call	VoiceCtrl_SendNoteOffSequence
 	ld	e, (SEQ_CURSOR_TRACK:16)
-	call	Timer_ModeHandler_0_Helper2
+	call	VoiceSlot_FinalRetZ_0x11
 	ld	(3522:16), a
 Timer_ModeHandler_0_Join:
-	call	Timer_ModeHandler_0_Helper2
+	call	VoiceSlot_FinalRetZ_0x11
 	cp	a, (0x0dc2:16)
 	jrl	z, Timer_ModeHandler_0_Skip3
 	jr	Timer_ModeHandler_0_Skip
@@ -3090,7 +3090,7 @@ Timer_ModeHandler_0_Skip3:
 	pop	xbc
 	pop	xhl
 	pop	xwa
-	call	Timer_ModeHandler_0_Helper3
+	call	VoiceSlot_FinalRetZ_0x1E
 	cp	a, 144
 	jr	nz, Timer_ModeHandler_0_Skip
 	jp	Timer_ModeHandler_0_Join
@@ -3817,7 +3817,7 @@ ToneParam_Evt09_BytecodeHandler_Skip2:
 	ld	xhl, (xix+hl)
 	pop xix
 	call	(xhl)
-	call	ToneParam_Evt09_BytecodeHandler_Helper3
+	call	PortConfig_Handler_0_Helper2
 	res	2, (0x0d54:16)
 	or	(0x8d88:16), 1
 ToneParam_Evt09_BytecodeHandler_Loop3:
@@ -4049,7 +4049,7 @@ ToneParam_Evt09_BytecodeHandler_Loop7:
 	call	VoiceSlot_SaveState
 	ld	a, (3647:16)
 	ld	(3650:16), a
-ToneParam_Evt09_BytecodeHandler_Loop8:
+ToneParam_HandlerTable_BC_Loop:
 	call	VoiceSlot_StepCursorBack
 	cp	w, 255
 	jrl	z, ToneParam_Evt09_BytecodeHandler_Skip15
@@ -4058,9 +4058,9 @@ ToneParam_Evt09_BytecodeHandler_Loop8:
 	jrl	z, ToneParam_Evt09_BytecodeHandler_Loop9
 	call	ToneParam_HandlerTable_BC_Helper5
 	cp	w, 0:i3
-	jrl	nz, ToneParam_Evt09_BytecodeHandler_Loop8
+	jrl	nz, ToneParam_HandlerTable_BC_Loop
 	call	SqStep_DeleteEventAtCursor
-	jp	ToneParam_Evt09_BytecodeHandler_Loop8
+	jp	ToneParam_HandlerTable_BC_Loop
 ToneParam_Evt09_BytecodeHandler_Loop9:
 	call	VoiceSlot_DispatchRet
 	cp	w, 255
@@ -4709,7 +4709,7 @@ TempoRingBuf_OnNoteEvent_Loop2:
 	jp	TempoRingBuf_OnNoteEvent_Skip19
 TempoRingBuf_OnNoteEvent_Skip18:
 	ld	w, (PANEL_PART_PT16:16)
-	call	DisplayMode_Handler_3_Helper2
+	call	ScoopDisp_BytecodeBlock1_0x32
 TempoRingBuf_OnNoteEvent_Skip19:
 	ld	(STEP_NOTE:16), a
 	ldfr_lerp xiy, 56
@@ -4987,7 +4987,7 @@ PerfMode_MapEventNoteToDisplay:
 	jp	PerfMode_MapEventNoteToDisplay_Return6
 PerfMode_MapEventNoteToDisplay_Skip29:
 	ld	w, (PANEL_PART_PT16:16)
-	call	DisplayMode_Handler_3_Helper2
+	call	ScoopDisp_BytecodeBlock1_0x32
 PerfMode_MapEventNoteToDisplay_Return6:
 	ret
 ; PerfMode_MapDisplayNoteToEvent: Inverse of PerfMode_MapEventNoteToDisplay: on a track whose TRACK ASSIGN code
@@ -5147,10 +5147,10 @@ DisplayMode_Handler_3_Return9:
 	; Entry 2 of PerfMode_EventTable_0 (a code pointer the table holds).
 PerfMode_Evt02_NoteVelocityDial:
 	bit	7, w
-	jrl	nz, DisplayMode_Handler_3_Skip32
+	jrl	nz, PerfMode_Evt02_NoteVelocityDial_Skip3
 	call	PerfMode_IncNoteVelocity
 	jp	PerfMode_Evt02_NoteVelocityDial_Return
-DisplayMode_Handler_3_Skip32:
+PerfMode_Evt02_NoteVelocityDial_Skip3:
 	call	PerfMode_DecNoteVelocity
 PerfMode_Evt02_NoteVelocityDial_Return:
 	ret
@@ -7577,7 +7577,7 @@ PortConfig_Handler_1:
 	or	(0x0dd3:16), 1
 	call	VoiceSlot_TableSetup
 	call	DisplayMode_Dispatch_Mode1_Helper
-	call	ToneParam_Evt09_BytecodeHandler_Helper3
+	call	PortConfig_Handler_0_Helper2
 	call	Display_UpdateRegions0To4
 	res	2, (0x0d54:16)
 	ret
@@ -7589,7 +7589,7 @@ PortConfig_Handler_3:
 	ld	(DISPLAY_CACHED_VAL2:24), 255
 	call DisplayMode_Handler_3_Helper13
 	call DisplayStr_ShowMeasureNumber
-	call ToneParam_Evt09_BytecodeHandler_Helper3
+	call PortConfig_Handler_0_Helper2
 	call UIState_UpdateMultiRegions
 	call Display_UpdateRegion3
 	call Display_UpdateRegion2
@@ -7647,7 +7647,7 @@ PortConfig_Handler_0_Skip:
 	jp	PortConfig_Handler_0_Join
 PortConfig_Handler_0_Skip2:
 	call	MemConfig_Handler_5_Helper12
-	call	ToneParam_Evt09_BytecodeHandler_Helper3
+	call	PortConfig_Handler_0_Helper2
 	call	MemConfig_Handler_5_Helper11
 PortConfig_Handler_0_Join:
 	call	Display_DeferOrUpdateScreen
@@ -7665,7 +7665,7 @@ PortConfig_Handler_0_Helper6:
 	popw	bc
 	popw	wa
 	ret
-ToneParam_Evt09_BytecodeHandler_Helper3:
+PortConfig_Handler_0_Helper2:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 132
 	jrl	z, PortConfig_Handler_0_Skip3
@@ -8671,29 +8671,29 @@ ScoopDisp_StepMeasureBack_Skip10:
 ;   != 0, again with A = (0x0D5C); its header describes this walk back.
 ScoopDisp_SeekBackWrapMarkers:
 	ld	(3582:16), a
-MemConfig_Handler_1_Code_Loop2:
+ScoopDisp_SeekBackWrapMarkers_Loop5:
 	call	VoiceSlot_CompareAndBranch
 	cp	w, 255
-	jrl	z, MemConfig_Handler_1_Code_Return
+	jrl	z, ScoopDisp_SeekBackWrapMarkers_Return2
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 129
-	jrl	nz, MemConfig_Handler_1_Code_Loop2
+	jrl	nz, ScoopDisp_SeekBackWrapMarkers_Loop5
 	ld	xiy, 3582
 	decm8	1, (xiy)
 	cp	(xiy), 0
-	jrl	nz, MemConfig_Handler_1_Code_Loop2
+	jrl	nz, ScoopDisp_SeekBackWrapMarkers_Loop5
 ScoopDisp_SeekBackWrapMarkers_Loop4:
 	ld	a, 6:opc
 	call	VoiceSlot_SaveState
 	call	VoiceSlot_StepCursorBack
 	cp	w, 255
-	jrl	z, MemConfig_Handler_1_Code_Return
+	jrl	z, ScoopDisp_SeekBackWrapMarkers_Return2
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 129
 	jrl	nz, ScoopDisp_SeekBackWrapMarkers_Loop4
 	ld	a, 6:opc
 	call	VoiceSlot_RestoreState
-MemConfig_Handler_1_Code_Return:
+ScoopDisp_SeekBackWrapMarkers_Return2:
 	ret
 MemConfig_Handler_3:
 	call	MemConfig_SnapshotSongPosition
@@ -10673,7 +10673,7 @@ VoiceSlot_FinalRetZ:
 	popw	wa
 	ld	w, d
 	ret
-Timer_ModeHandler_0_Helper2:
+VoiceSlot_FinalRetZ_0x11:
 	ld	a, e
 	push	xiy
 	push	xiz
@@ -10683,7 +10683,7 @@ Timer_ModeHandler_0_Helper2:
 	pop	xiz
 	pop	xiy
 	ret
-Timer_ModeHandler_0_Helper3:
+VoiceSlot_FinalRetZ_0x1E:
 	push	xhl
 	pushw	de
 	dec	1, e
@@ -11102,7 +11102,7 @@ VoiceSlot_StatusRet_Skip4:
 	jp	VoiceSlot_StatusRet_Skip6
 VoiceSlot_StatusRet_Skip5:
 	ld	w, (PANEL_PART_PT16:16)
-	call	DisplayMode_Handler_3_Helper2
+	call	ScoopDisp_BytecodeBlock1_0x32
 VoiceSlot_StatusRet_Skip6:
 	ld	(STEP_NOTE:16), a
 	call	VoiceSlot_FinalRetZ
@@ -12474,7 +12474,7 @@ SqStep_FindRhythmTrack:
 	cp a, (xix+)
 	jrl z, VoiceState_DataBlock2_Code_Skip16
 	djnz16 bc, -9
-	jp	VoiceState_DataBlock2_Helper2_Skip2
+	jp	TempoRingBuf_IsEmpty_Skip3
 VoiceState_DataBlock2_Code_Skip16:
 	xor	wa, wa
 	ld	a, 16:opc
@@ -12487,7 +12487,7 @@ VoiceState_DataBlock2_Code_Skip16:
 	pop xix
 	and	bc, (SEQ_TRACK_MASK_COPY:24)
 	cp	bc, 0:i3
-	jrl	z, VoiceState_DataBlock2_Helper2_Skip2
+	jrl	z, TempoRingBuf_IsEmpty_Skip3
 	pushw	wa
 	ld	xhl, SEQ_TRACK_TABLE
 	ld	c, 3:opc
@@ -12499,7 +12499,7 @@ VoiceState_DataBlock2_Code_Skip16:
 	jp	VoiceState_DataBlock2_Join3
 VoiceState_DataBlock2_Helper2_Skip:
 	popw	wa
-	jp	VoiceState_DataBlock2_Helper2_Skip2
+	jp	TempoRingBuf_IsEmpty_Skip3
 VoiceState_DataBlock2_Join3:
 	inc	1, a
 	ld	w, a
@@ -12507,7 +12507,7 @@ VoiceState_DataBlock2_Join3:
 	or	(0x0d54:16), 1
 	or	(SEQ_EDIT_FLAGS:16), 4
 	jp	VoiceState_DataBlock2_Return6
-VoiceState_DataBlock2_Helper2_Skip2:
+TempoRingBuf_IsEmpty_Skip3:
 	and	(0x0d54:16), 254
 	and	(SEQ_EDIT_FLAGS:16), 251
 	xor	w, w
@@ -14136,7 +14136,7 @@ OscScope_UpdateDisplay_Skip2:
 	popw	bc
 	djnz16	bc, -9
 OscScope_UpdateDisplay_Skip:
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	ldw	(3778:16), 0
 	ld	(3952:16), 0
 	jp	OscScope_RefreshLoop_Return
@@ -14165,7 +14165,7 @@ OscScope_RefreshLoop_Skip:
 	jrl	z, OscScope_RefreshLoop_Return
 	cp	(0x0f70:16), 48
 	jrl	z, OscScope_RefreshLoop_Return
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 OscScope_RefreshLoop_Return:
 	ret
 MemConfig_Handler_3_Helper:
@@ -14274,7 +14274,7 @@ SubCPU_ToneParamRet_Helper16:
 	ld	c, 1:opc
 	ld	e, (SQSTEP_ROW1_BEATS:16)
 	sla	e, 1
-	call	OscScope_RenderBlock_Helper2
+	call	OscScope_FinalizeRender_0x79
 	cp	(0x117f:16), 0
 	jrl	nz, OscScope_FinalizeRender_Return
 	ld	xiy, 3701
@@ -14282,7 +14282,7 @@ SubCPU_ToneParamRet_Helper16:
 	ld	c, 1:opc
 	ld	e, (SQSTEP_ROW2_BEATS:16)
 	sla	e, 1
-	call	OscScope_RenderBlock_Helper2
+	call	OscScope_FinalizeRender_0x79
 	cp	(0x117f:16), 0
 	jrl	nz, OscScope_FinalizeRender_Return
 	ld	xiy, 3733
@@ -14290,7 +14290,7 @@ SubCPU_ToneParamRet_Helper16:
 	ld	c, 1:opc
 	ld	e, (SQSTEP_ROW3_BEATS:16)
 	sla	e, 1
-	call	OscScope_RenderBlock_Helper2
+	call	OscScope_FinalizeRender_0x79
 	ld	xiy, 3697
 	cp	(xiy), 0
 	jrl	z, OscScope_FinalizeRender_Skip
@@ -14307,13 +14307,13 @@ OscScope_FinalizeRender_Skip2:
 	ormi8	(xiy), 128
 OscScope_FinalizeRender_Return:
 	ret
-OscScope_RenderBlock_Helper2:
+OscScope_FinalizeRender_0x79:
 	ld	(4479:16), 0
 	cp	e, 0:i3
-	jrl	z, OscScope_RenderBlock_Return
-OscScope_RenderBlock_Join:
+	jrl	z, OscScope_FinalizeRender_0x79_Return
+OscScope_FinalizeRender_0x79_Join:
 	cp	c, e
-	jrl	z, OscScope_RenderBlock_Return
+	jrl	z, OscScope_FinalizeRender_0x79_Return
 	ld	a, (xiy+1)
 	cp	a, 6:i3
 	jrl	z, OscScope_FinalizeRender_Skip3
@@ -14321,7 +14321,7 @@ OscScope_RenderBlock_Join:
 	jrl	nz, OscScope_RenderBlock_Skip5
 OscScope_FinalizeRender_Skip3:
 	ld	(4479:16), 255
-	jp	OscScope_RenderBlock_Return
+	jp	OscScope_FinalizeRender_0x79_Return
 OscScope_RenderBlock_Skip5:
 	cp	(xix+1), 0
 	jrl	nz, OscScope_RenderBlock_Join4
@@ -14329,18 +14329,18 @@ OscScope_RenderBlock_Skip5:
 	jrl	z, OscScope_RenderBlock_Join5
 OscScope_RenderBlock_Join4:
 	cp	(xiy+2), 0
-	jrl	nz, OscScope_RenderBlock_Skip4
+	jrl	nz, OscScope_FinalizeRender_0x79_Skip
 OscScope_RenderBlock_Join5:
 	andmi8	(xiy), 127
-	jp	OscScope_RenderBlock_Join2
-OscScope_RenderBlock_Skip4:
+	jp	OscScope_FinalizeRender_0x79_Join2
+OscScope_FinalizeRender_0x79_Skip:
 	ormi8	(xiy), 128
-OscScope_RenderBlock_Join2:
+OscScope_FinalizeRender_0x79_Join2:
 	add	iy, 4
 	add	ix, 4
 	inc	1, c
-	jp	OscScope_RenderBlock_Join
-OscScope_RenderBlock_Return:
+	jp	OscScope_FinalizeRender_0x79_Join
+OscScope_FinalizeRender_0x79_Return:
 	ret
 
 VoiceBank_ProcessCommand:
@@ -14515,10 +14515,10 @@ DisplayStr_BytecodeBlock_A_Skip5:
 	lda	xiy, (xiy+hl)
 	ld	(xiy+2), wa
 	ldto_lerp	xiy, 56
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 DisplayStr_BytecodeBlock_A_Return4:
 	ret
-OscScope_UpdateDisplay_Helper2:
+DisplayStr_BytecodeBlock_A_Code_Helper:
 	ld	(3830:16), 0
 	incw	1, (3780:16)
 	ld	c, (3777:16)
@@ -16886,7 +16886,7 @@ ParamPopup_PartPedal_Skip8:
 	ldw	(3778:16), 0
 	jp	Tbl_PedalNames_Join2
 ParamPopup_PartPedal_Skip9:
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	ld	(3952:16), 48
 	ldw	(3778:16), 0
 	jp	ParamPopup_PartPedal_Return
@@ -16923,10 +16923,10 @@ ParamPopup_PartPedal_Skip10:
 	djnz16	bc, -23
 	cpw	(0x0ec2:16), 48
 	jrl	nz, Tbl_PedalNames_Join2
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	jp	Tbl_PedalNames_Join2
 ParamPopup_PartPedal_Skip11:
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	call	SqStep_PeekNextEvent
 	cp	(0x0ebb:16), 129
 	jrl	nz, ParamPopup_PartPedal_Skip12
@@ -16975,7 +16975,7 @@ ParamPopup_PartPedal_Skip15:
 	cp	w, 48
 	jrl	nz, ParamPopup_PartPedal_Skip16
 	pushw	wa
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	popw	wa
 	cp	(0x0ebb:16), 129
 	jrl	z, ParamPopup_PartPedal_Skip18
@@ -17003,7 +17003,7 @@ Tbl_PedalNames_Skip2:
 	ldw	(3778:16), 0
 	jp	ParamPopup_PartPedal_Return
 ParamPopup_PartPedal_Skip19:
-	call	OscScope_UpdateDisplay_Helper2
+	call	DisplayStr_BytecodeBlock_A_Code_Helper
 	call	SqStep_PeekNextEvent
 	cp	(0x0ebb:16), 129
 	jrl	nz, Tbl_PedalNames_Skip3
@@ -17061,25 +17061,25 @@ ParamPopup_PartPedal_Loop:
 	call	Tbl_PedalNames_Helper6
 	bit	7, a
 	jrl	z, ParamPopup_PartPedal_Loop
-ParamPopup_PartPedal_Loop2:
+Tbl_PedalNames_Loop:
 	call	Tbl_PedalNames_Helper5
 	cp	l, 0:i3
 	jrl	nz, ParamPopup_PartPedal_Epilogue
 	call	Tbl_PedalNames_Helper6
 	bit	7, a
-	jrl	z, ParamPopup_PartPedal_Loop2
+	jrl	z, Tbl_PedalNames_Loop
 	cp	a, 129
 	jrl	nz, ParamPopup_PartPedal_Skip21
 	incw	1, (4468:16)
-	jp	ParamPopup_PartPedal_Loop2
+	jp	Tbl_PedalNames_Loop
 ParamPopup_PartPedal_Skip21:
 	ld	l, 0:opc
 	call	Tbl_PedalNames_Helper7
 	ld	a, (4463:16)
 	cp	a, 47
-	jrl	z, ParamPopup_PartPedal_Loop2
+	jrl	z, Tbl_PedalNames_Loop
 	cp	a, 95
-	jrl	z, ParamPopup_PartPedal_Loop2
+	jrl	z, Tbl_PedalNames_Loop
 ParamPopup_PartPedal_Epilogue:
 	pop	xiy
 	ret

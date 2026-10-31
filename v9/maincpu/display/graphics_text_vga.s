@@ -237,7 +237,7 @@ Display_DeferOrUpdateScreen_Direct:
 	ld wa, 1:i3
 	calr SetNeedUpdate
 	jrl UpdateScreen
-SeMenu_PresetManager_Save_Helper:
+Display_DeferOrUpdateScreen_Direct_0xF:
 	ret
 
 GraphicsRender_RetStub:
@@ -1841,9 +1841,9 @@ ColorBlit_Variant_ByteData:
 	ld	l, a
 	ld	a, e
 	and	a, 15
-	jr	z, ColorBlit_WithPaletteSave_Skip
+	jr	z, ColorBlit_Variant_ByteData_Skip
 	srla l	; srl A,L
-ColorBlit_WithPaletteSave_Skip:
+ColorBlit_Variant_ByteData_Skip:
 	mul	l, 3
 	extz	hl
 	add	hl, hl
