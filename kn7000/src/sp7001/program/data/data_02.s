@@ -17,22 +17,22 @@ AcNoteEditBoxProc_Table_4:
 	.long	loc_4853CF7F
 
 AcNoteEditBoxProc_Records:	# 16 x REC_AcNoteEditBoxProc_Records (8 bytes each); read by AcNoteEditBoxProc 0x4853C0EA `mov (a0), d0`
-	REC_AcNoteEditBoxProc_Records	f0=0xE10010, p4=loc_4853CC9C	# [0]
-	REC_AcNoteEditBoxProc_Records	f0=1, p4=loc_4853C17E
-	REC_AcNoteEditBoxProc_Records	f0=2, p4=loc_4853C237
-	REC_AcNoteEditBoxProc_Records	f0=0x100B2, p4=loc_4853C259
-	REC_AcNoteEditBoxProc_Records	f0=17, p4=loc_4853CE44
-	REC_AcNoteEditBoxProc_Records	f0=15, p4=loc_4853CE44
-	REC_AcNoteEditBoxProc_Records	f0=18, p4=loc_4853CE46
-	REC_AcNoteEditBoxProc_Records	f0=16, p4=loc_4853CE46
-	REC_AcNoteEditBoxProc_Records	p4=loc_4853CF82	# [8]
-	REC_AcNoteEditBoxProc_Records	p4=loc_4853CF82
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000A, p4=loc_4853C6F4
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000B, p4=loc_4853C670
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000C, p4=loc_4853C8CD
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000D, p4=loc_4853C899
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000E, p4=loc_4853C8A5
-	REC_AcNoteEditBoxProc_Records	f0=0xE1000F, p4=loc_4853CAC0
+	REC_AcNoteEditBoxProc_Records	f0=0xE10010, proc=loc_4853CC9C	# [0]
+	REC_AcNoteEditBoxProc_Records	f0=1, proc=loc_4853C17E
+	REC_AcNoteEditBoxProc_Records	f0=2, proc=loc_4853C237
+	REC_AcNoteEditBoxProc_Records	f0=0x100B2, proc=loc_4853C259
+	REC_AcNoteEditBoxProc_Records	f0=17, proc=loc_4853CE44
+	REC_AcNoteEditBoxProc_Records	f0=15, proc=loc_4853CE44
+	REC_AcNoteEditBoxProc_Records	f0=18, proc=loc_4853CE46
+	REC_AcNoteEditBoxProc_Records	f0=16, proc=loc_4853CE46
+	REC_AcNoteEditBoxProc_Records	proc=loc_4853CF82	# [8]
+	REC_AcNoteEditBoxProc_Records	proc=loc_4853CF82
+	REC_AcNoteEditBoxProc_Records	f0=0xE1000A, proc=loc_4853C6F4
+	REC_AcNoteEditBoxProc_Records	f0=0xE1000B, proc=loc_4853C670
+	REC_AcNoteEditBoxProc_Records	f0=0xE1000C, proc=loc_4853C8CD
+	REC_AcNoteEditBoxProc_Records	f0=0xE1000D, proc=loc_4853C899
+	REC_AcNoteEditBoxProc_Records	f0=0xE1000E, proc=loc_4853C8A5
+	REC_AcNoteEditBoxProc_Records	f0=0xE1000F, proc=loc_4853CAC0
 
 AcDrumEditBoxProc_Table:
 	.long	loc_4853DBD2
@@ -48,38 +48,38 @@ AcDrumEditBoxProc_Table:
 	.long	loc_4853DCE0
 
 AcDrumEditBoxProc_Records:	# 32 x REC_AcDrumEditBoxProc_Records (8 bytes each); read by AcDrumEditBoxProc 0x4853D029 `mov (a0), d0`
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4	# [0]
-	REC_AcDrumEditBoxProc_Records	f0=1, p4=loc_4853D082
-	REC_AcDrumEditBoxProc_Records	f0=2, p4=loc_4853D13B
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4	# [8]
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000A, p4=loc_4853D46B
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000B, p4=loc_4853D3ED
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000C, p4=loc_4853D62F
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000D, p4=loc_4853D5FF
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000E, p4=loc_4853D60B
-	REC_AcDrumEditBoxProc_Records	f0=0xE1000F, p4=loc_4853D772
-	REC_AcDrumEditBoxProc_Records	f0=0xE10010, p4=loc_4853D8A0	# [16]
-	REC_AcDrumEditBoxProc_Records	f0=0xE10011, p4=loc_4853DA27
-	REC_AcDrumEditBoxProc_Records	f0=0x100B2, p4=loc_4853D15D
-	REC_AcDrumEditBoxProc_Records	f0=0xE10012, p4=loc_4853DAE8
-	REC_AcDrumEditBoxProc_Records	f0=17, p4=loc_4853DB87
-	REC_AcDrumEditBoxProc_Records	f0=15, p4=loc_4853DB87
-	REC_AcDrumEditBoxProc_Records	f0=18, p4=loc_4853DB89
-	REC_AcDrumEditBoxProc_Records	f0=16, p4=loc_4853DB89
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4	# [24]
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
-	REC_AcDrumEditBoxProc_Records	p4=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4	# [0]
+	REC_AcDrumEditBoxProc_Records	f0=1, proc=loc_4853D082
+	REC_AcDrumEditBoxProc_Records	f0=2, proc=loc_4853D13B
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4	# [8]
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	f0=0xE1000A, proc=loc_4853D46B
+	REC_AcDrumEditBoxProc_Records	f0=0xE1000B, proc=loc_4853D3ED
+	REC_AcDrumEditBoxProc_Records	f0=0xE1000C, proc=loc_4853D62F
+	REC_AcDrumEditBoxProc_Records	f0=0xE1000D, proc=loc_4853D5FF
+	REC_AcDrumEditBoxProc_Records	f0=0xE1000E, proc=loc_4853D60B
+	REC_AcDrumEditBoxProc_Records	f0=0xE1000F, proc=loc_4853D772
+	REC_AcDrumEditBoxProc_Records	f0=0xE10010, proc=loc_4853D8A0	# [16]
+	REC_AcDrumEditBoxProc_Records	f0=0xE10011, proc=loc_4853DA27
+	REC_AcDrumEditBoxProc_Records	f0=0x100B2, proc=loc_4853D15D
+	REC_AcDrumEditBoxProc_Records	f0=0xE10012, proc=loc_4853DAE8
+	REC_AcDrumEditBoxProc_Records	f0=17, proc=loc_4853DB87
+	REC_AcDrumEditBoxProc_Records	f0=15, proc=loc_4853DB87
+	REC_AcDrumEditBoxProc_Records	f0=18, proc=loc_4853DB89
+	REC_AcDrumEditBoxProc_Records	f0=16, proc=loc_4853DB89
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4	# [24]
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
+	REC_AcDrumEditBoxProc_Records	proc=loc_4853DCF4
 
 AcStepRecBoxProc_Table:
 	.long	loc_4853E802
@@ -112,72 +112,72 @@ AcStepRecBoxProc_Table:
 	.long	loc_4853EAF3
 
 AcStepRecBoxProc_Records:	# 32 x REC_AcStepRecBoxProc_Records (8 bytes each); read by AcStepRecBoxProc 0x4853DD28 `mov (a0), d0`
-	REC_AcStepRecBoxProc_Records	f0=0x1710000, p4=loc_4853DF05	# [0]
-	REC_AcStepRecBoxProc_Records	f0=1, p4=loc_4853DD7F
-	REC_AcStepRecBoxProc_Records	f0=2, p4=loc_4853DEBB
-	REC_AcStepRecBoxProc_Records	f0=0x1710001, p4=loc_4853DF6D
-	REC_AcStepRecBoxProc_Records	f0=0x1700001, p4=loc_4853E6D5
-	REC_AcStepRecBoxProc_Records	f0=0x1700002, p4=loc_4853E6D7
-	REC_AcStepRecBoxProc_Records	f0=6, p4=loc_4853DF17
-	REC_AcStepRecBoxProc_Records	f0=7, p4=loc_4853DF17
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C	# [8]
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	f0=15, p4=loc_4853E6D5
-	REC_AcStepRecBoxProc_Records	f0=16, p4=loc_4853E6D7	# [16]
-	REC_AcStepRecBoxProc_Records	f0=17, p4=loc_4853E6D5
-	REC_AcStepRecBoxProc_Records	f0=0x100B2, p4=loc_4853DFAE
-	REC_AcStepRecBoxProc_Records	f0=0xE10013, p4=loc_4853E021
-	REC_AcStepRecBoxProc_Records	f0=0xE10014, p4=loc_4853E047
-	REC_AcStepRecBoxProc_Records	f0=0xE10015, p4=loc_4853E28D
-	REC_AcStepRecBoxProc_Records	f0=22, p4=loc_4853DF52
-	REC_AcStepRecBoxProc_Records	f0=0xE10016, p4=loc_4853E312
-	REC_AcStepRecBoxProc_Records	f0=0xE10017, p4=loc_4853E3B8	# [24]
-	REC_AcStepRecBoxProc_Records	f0=0xE10018, p4=loc_4853E467
-	REC_AcStepRecBoxProc_Records	f0=18, p4=loc_4853E6D7
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
-	REC_AcStepRecBoxProc_Records	p4=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	f0=0x1710000, proc=loc_4853DF05	# [0]
+	REC_AcStepRecBoxProc_Records	f0=1, proc=loc_4853DD7F
+	REC_AcStepRecBoxProc_Records	f0=2, proc=loc_4853DEBB
+	REC_AcStepRecBoxProc_Records	f0=0x1710001, proc=loc_4853DF6D
+	REC_AcStepRecBoxProc_Records	f0=0x1700001, proc=loc_4853E6D5
+	REC_AcStepRecBoxProc_Records	f0=0x1700002, proc=loc_4853E6D7
+	REC_AcStepRecBoxProc_Records	f0=6, proc=loc_4853DF17
+	REC_AcStepRecBoxProc_Records	f0=7, proc=loc_4853DF17
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C	# [8]
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	f0=15, proc=loc_4853E6D5
+	REC_AcStepRecBoxProc_Records	f0=16, proc=loc_4853E6D7	# [16]
+	REC_AcStepRecBoxProc_Records	f0=17, proc=loc_4853E6D5
+	REC_AcStepRecBoxProc_Records	f0=0x100B2, proc=loc_4853DFAE
+	REC_AcStepRecBoxProc_Records	f0=0xE10013, proc=loc_4853E021
+	REC_AcStepRecBoxProc_Records	f0=0xE10014, proc=loc_4853E047
+	REC_AcStepRecBoxProc_Records	f0=0xE10015, proc=loc_4853E28D
+	REC_AcStepRecBoxProc_Records	f0=22, proc=loc_4853DF52
+	REC_AcStepRecBoxProc_Records	f0=0xE10016, proc=loc_4853E312
+	REC_AcStepRecBoxProc_Records	f0=0xE10017, proc=loc_4853E3B8	# [24]
+	REC_AcStepRecBoxProc_Records	f0=0xE10018, proc=loc_4853E467
+	REC_AcStepRecBoxProc_Records	f0=18, proc=loc_4853E6D7
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
+	REC_AcStepRecBoxProc_Records	proc=loc_4853EB0C
 FE_SeqPlaylistSetting_Records:	# 16 x REC_FE_SeqPlaylistSetting_Records (8 bytes each); read by FE_SeqPlaylistSetting 0x4853EFF8 `mov (a0), d0`
-	REC_FE_SeqPlaylistSetting_Records	f0=16, p4=loc_4853F04D	# [0]
-	REC_FE_SeqPlaylistSetting_Records	f0=17, p4=loc_4853F06B
-	REC_FE_SeqPlaylistSetting_Records	f0=2, p4=loc_4853F04B
-	REC_FE_SeqPlaylistSetting_Records	f0=3, p4=loc_4853F04B
-	REC_FE_SeqPlaylistSetting_Records	f0=0x100B3, p4=loc_4853F04B
-	REC_FE_SeqPlaylistSetting_Records	f0=0x100B5, p4=loc_4853F04B
-	REC_FE_SeqPlaylistSetting_Records	f0=18, p4=loc_4853F04D
-	REC_FE_SeqPlaylistSetting_Records	f0=19, p4=loc_4853F06B
-	REC_FE_SeqPlaylistSetting_Records	f0=1, p4=loc_4853F0A2	# [8]
-	REC_FE_SeqPlaylistSetting_Records	p4=loc_4853F0A4
-	REC_FE_SeqPlaylistSetting_Records	p4=loc_4853F0A4
-	REC_FE_SeqPlaylistSetting_Records	f0=0x1003B, p4=loc_4853F089
-	REC_FE_SeqPlaylistSetting_Records	p4=loc_4853F0A4
-	REC_FE_SeqPlaylistSetting_Records	p4=loc_4853F0A4
-	REC_FE_SeqPlaylistSetting_Records	p4=loc_4853F0A4
-	REC_FE_SeqPlaylistSetting_Records	p4=loc_4853F0A4
+	REC_FE_SeqPlaylistSetting_Records	f0=16, proc=loc_4853F04D	# [0]
+	REC_FE_SeqPlaylistSetting_Records	f0=17, proc=loc_4853F06B
+	REC_FE_SeqPlaylistSetting_Records	f0=2, proc=loc_4853F04B
+	REC_FE_SeqPlaylistSetting_Records	f0=3, proc=loc_4853F04B
+	REC_FE_SeqPlaylistSetting_Records	f0=0x100B3, proc=loc_4853F04B
+	REC_FE_SeqPlaylistSetting_Records	f0=0x100B5, proc=loc_4853F04B
+	REC_FE_SeqPlaylistSetting_Records	f0=18, proc=loc_4853F04D
+	REC_FE_SeqPlaylistSetting_Records	f0=19, proc=loc_4853F06B
+	REC_FE_SeqPlaylistSetting_Records	f0=1, proc=loc_4853F0A2	# [8]
+	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0A4
+	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0A4
+	REC_FE_SeqPlaylistSetting_Records	f0=0x1003B, proc=loc_4853F089
+	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0A4
+	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0A4
+	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0A4
+	REC_FE_SeqPlaylistSetting_Records	proc=loc_4853F0A4
 FE_SeqTempoAdjust_Records:	# 16 x REC_FE_SeqTempoAdjust_Records (8 bytes each); read by FE_SeqTempoAdjust 0x4853F0A9 `mov (a0), d0`
-	REC_FE_SeqTempoAdjust_Records	f0=16, p4=loc_4853F0FE	# [0]
-	REC_FE_SeqTempoAdjust_Records	f0=17, p4=loc_4853F11C
-	REC_FE_SeqTempoAdjust_Records	f0=2, p4=loc_4853F0FC
-	REC_FE_SeqTempoAdjust_Records	f0=3, p4=loc_4853F0FC
-	REC_FE_SeqTempoAdjust_Records	f0=0x100B3, p4=loc_4853F0FC
-	REC_FE_SeqTempoAdjust_Records	f0=0x100B5, p4=loc_4853F0FC
-	REC_FE_SeqTempoAdjust_Records	f0=18, p4=loc_4853F0FE
-	REC_FE_SeqTempoAdjust_Records	f0=19, p4=loc_4853F11C
-	REC_FE_SeqTempoAdjust_Records	f0=1, p4=loc_4853F153	# [8]
-	REC_FE_SeqTempoAdjust_Records	p4=loc_4853F155
-	REC_FE_SeqTempoAdjust_Records	p4=loc_4853F155
-	REC_FE_SeqTempoAdjust_Records	f0=0x1003B, p4=loc_4853F13A
-	REC_FE_SeqTempoAdjust_Records	p4=loc_4853F155
-	REC_FE_SeqTempoAdjust_Records	p4=loc_4853F155
-	REC_FE_SeqTempoAdjust_Records	p4=loc_4853F155
-	REC_FE_SeqTempoAdjust_Records	p4=loc_4853F155
+	REC_FE_SeqTempoAdjust_Records	f0=16, proc=loc_4853F0FE	# [0]
+	REC_FE_SeqTempoAdjust_Records	f0=17, proc=loc_4853F11C
+	REC_FE_SeqTempoAdjust_Records	f0=2, proc=loc_4853F0FC
+	REC_FE_SeqTempoAdjust_Records	f0=3, proc=loc_4853F0FC
+	REC_FE_SeqTempoAdjust_Records	f0=0x100B3, proc=loc_4853F0FC
+	REC_FE_SeqTempoAdjust_Records	f0=0x100B5, proc=loc_4853F0FC
+	REC_FE_SeqTempoAdjust_Records	f0=18, proc=loc_4853F0FE
+	REC_FE_SeqTempoAdjust_Records	f0=19, proc=loc_4853F11C
+	REC_FE_SeqTempoAdjust_Records	f0=1, proc=loc_4853F153	# [8]
+	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F155
+	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F155
+	REC_FE_SeqTempoAdjust_Records	f0=0x1003B, proc=loc_4853F13A
+	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F155
+	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F155
+	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F155
+	REC_FE_SeqTempoAdjust_Records	proc=loc_4853F155
 
 Str_2d_4:	.asciz "%2d"
 Str_SONG_2d_16s_3d:	.asciz "SONG%2d : %16s : %3d %%"
@@ -282,22 +282,22 @@ Str_Artist_2:	.asciz "Artist : "
 	.align	4, 0xFF	# pad after Str_Artist_2
 
 SeqLyricsBoxProc_Records:	# 16 x REC_SeqLyricsBoxProc_Records (8 bytes each); read by SeqLyricsBoxProc 0x4854498F `mov (a0), d0`
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF	# [0]
-	REC_SeqLyricsBoxProc_Records	f0=1, p4=loc_485449E3
-	REC_SeqLyricsBoxProc_Records	f0=2, p4=loc_485449FC
-	REC_SeqLyricsBoxProc_Records	f0=0x100B2, p4=loc_48544A13
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF
-	REC_SeqLyricsBoxProc_Records	f0=0xE00006, p4=loc_48544A79
-	REC_SeqLyricsBoxProc_Records	f0=0xE00007, p4=loc_48544AB5
-	REC_SeqLyricsBoxProc_Records	f0=0xE00008, p4=loc_48544D9C	# [8]
-	REC_SeqLyricsBoxProc_Records	f0=0xE00009, p4=loc_48544DD8
-	REC_SeqLyricsBoxProc_Records	f0=0xE0000A, p4=loc_48544A63
-	REC_SeqLyricsBoxProc_Records	f0=0xE0000B, p4=loc_48544E14
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF
-	REC_SeqLyricsBoxProc_Records	p4=loc_48544EEF
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF	# [0]
+	REC_SeqLyricsBoxProc_Records	f0=1, proc=loc_485449E3
+	REC_SeqLyricsBoxProc_Records	f0=2, proc=loc_485449FC
+	REC_SeqLyricsBoxProc_Records	f0=0x100B2, proc=loc_48544A13
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF
+	REC_SeqLyricsBoxProc_Records	f0=0xE00006, proc=loc_48544A79
+	REC_SeqLyricsBoxProc_Records	f0=0xE00007, proc=loc_48544AB5
+	REC_SeqLyricsBoxProc_Records	f0=0xE00008, proc=loc_48544D9C	# [8]
+	REC_SeqLyricsBoxProc_Records	f0=0xE00009, proc=loc_48544DD8
+	REC_SeqLyricsBoxProc_Records	f0=0xE0000A, proc=loc_48544A63
+	REC_SeqLyricsBoxProc_Records	f0=0xE0000B, proc=loc_48544E14
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF
+	REC_SeqLyricsBoxProc_Records	proc=loc_48544EEF
 
 Str_MThd_2:	.asciz "MThd"
 	.align	4, 0xFF	# pad after Str_MThd_2
@@ -327,22 +327,22 @@ func_4854A272_Table_2:	# 8 x u8, 0..255; read by func_4854A272_entry 0x48549FC1:
 	tab_u8	1, 0, 2, 3, 4, 5, 255, 255
 
 func_4854A272_Records:	# 16 x REC_func_4854A272_Records (8 bytes each); read by func_4854A272 0x4854A272 `mov (a0), d0`
-	REC_func_4854A272_Records	p4=loc_4854A3F1	# [0]
-	REC_func_4854A272_Records	f0=81, p4=loc_4854A3AE
-	REC_func_4854A272_Records	f0=2, p4=loc_4854A39A
-	REC_func_4854A272_Records	f0=3, p4=loc_4854A376
-	REC_func_4854A272_Records	f0=82, p4=loc_4854A3B7
-	REC_func_4854A272_Records	f0=5, p4=loc_4854A388
-	REC_func_4854A272_Records	f0=83, p4=loc_4854A3C2
-	REC_func_4854A272_Records	f0=84, p4=loc_4854A3CB
-	REC_func_4854A272_Records	f0=1, p4=loc_4854A3D6	# [8]
-	REC_func_4854A272_Records	f0=6, p4=loc_4854A3DF
-	REC_func_4854A272_Records	f0=7, p4=loc_4854A3E8
-	REC_func_4854A272_Records	p4=loc_4854A3F1
-	REC_func_4854A272_Records	p4=loc_4854A3F1
-	REC_func_4854A272_Records	p4=loc_4854A3F1
-	REC_func_4854A272_Records	p4=loc_4854A3F1
-	REC_func_4854A272_Records	p4=loc_4854A3F1
+	REC_func_4854A272_Records	proc=loc_4854A3F1	# [0]
+	REC_func_4854A272_Records	f0=81, proc=loc_4854A3AE
+	REC_func_4854A272_Records	f0=2, proc=loc_4854A39A
+	REC_func_4854A272_Records	f0=3, proc=loc_4854A376
+	REC_func_4854A272_Records	f0=82, proc=loc_4854A3B7
+	REC_func_4854A272_Records	f0=5, proc=loc_4854A388
+	REC_func_4854A272_Records	f0=83, proc=loc_4854A3C2
+	REC_func_4854A272_Records	f0=84, proc=loc_4854A3CB
+	REC_func_4854A272_Records	f0=1, proc=loc_4854A3D6	# [8]
+	REC_func_4854A272_Records	f0=6, proc=loc_4854A3DF
+	REC_func_4854A272_Records	f0=7, proc=loc_4854A3E8
+	REC_func_4854A272_Records	proc=loc_4854A3F1
+	REC_func_4854A272_Records	proc=loc_4854A3F1
+	REC_func_4854A272_Records	proc=loc_4854A3F1
+	REC_func_4854A272_Records	proc=loc_4854A3F1
+	REC_func_4854A272_Records	proc=loc_4854A3F1
 
 func_4854AC8D_Table:
 	.long	ptrs_48732758
@@ -723,25 +723,25 @@ Str_ACT_4:	.asciz ".ACT"
 	.align	4, 0xFF	# pad after Str_ACT_4
 
 StartFeatureDemo_Table_p0_0:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_a1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_a2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_a3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_a4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_a5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_a6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_a7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_a8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_a9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_a10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_a11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_a12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_a13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_a14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_a15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_a16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_a17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_a18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_a19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_a20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_a21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_a22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_a23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_a24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_a25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_a26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_a27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_a28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_a29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_a30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_a31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_a32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_a1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_a2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_a3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_a4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_a5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_a6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_a7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_a8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_a9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_a10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_a11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_a12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_a13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_a14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_a15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_a16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_a17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_a18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_a19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_a20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_a21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_a22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_a23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_a24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_a25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_a26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_a27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_a28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_a29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_a30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_a31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_a32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_1:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_b1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_b2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_b3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_b4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_b5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_b6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_b7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_b8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_b9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_b10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_b11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_b12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_b13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_b14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_b15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_b16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_b17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_b18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_b19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_b20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_b21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_b22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_b23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_b24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_b25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_b26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_b27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_b28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_b29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_b30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_b31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_b32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_b1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_b2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_b3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_b4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_b5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_b6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_b7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_b8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_b9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_b10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_b11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_b12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_b13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_b14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_b15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_b16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_b17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_b18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_b19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_b20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_b21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_b22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_b23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_b24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_b25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_b26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_b27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_b28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_b29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_b30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_b31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_b32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_2:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_c1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_c2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_c3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_c4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_c5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_c6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_c7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_c8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_c9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_c10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_c11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_c12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_c13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_c14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_c15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_c16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_c17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_c18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_c19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_c20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_c21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_c22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_c23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_c24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_c25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_c26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_c27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_c28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_c29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_c30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_c31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_c32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_c1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_c2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_c3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_c4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_c5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_c6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_c7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_c8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_c9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_c10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_c11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_c12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_c13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_c14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_c15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_c16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_c17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_c18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_c19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_c20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_c21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_c22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_c23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_c24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_c25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_c26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_c27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_c28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_c29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_c30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_c31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_c32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_3:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_d1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_d2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_d3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_d4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_d5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_d6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_d7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_d8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_d9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_d10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_d11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_d12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_d13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_d14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_d15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_d16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_d17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_d18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_d19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_d20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_d21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_d22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_d23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_d24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_d25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_d26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_d27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_d28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_d29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_d30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_d31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_d32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_d1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_d2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_d3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_d4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_d5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_d6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_d7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_d8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_d9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_d10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_d11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_d12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_d13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_d14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_d15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_d16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_d17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_d18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_d19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_d20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_d21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_d22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_d23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_d24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_d25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_d26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_d27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_d28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_d29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_d30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_d31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_d32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_4:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_f1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_f2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_f3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_f4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_f5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_f6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_f7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_f8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_f9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_f10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_f11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_f12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_f13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_f14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_f15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_f16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_f17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_f18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_f19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_f20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_f21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_f22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_f23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_f24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_f25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_f26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_f27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_f28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_f29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_f30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_f31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_f32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_f1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_f2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_f3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_f4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_f5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_f6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_f7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_f8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_f9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_f10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_f11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_f12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_f13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_f14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_f15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_f16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_f17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_f18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_f19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_f20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_f21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_f22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_f23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_f24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_f25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_f26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_f27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_f28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_f29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_f30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_f31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_f32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_5:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_g1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_g2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_g3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_g4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_g5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_g6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_g7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_g8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_g9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_g10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_g11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_g12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_g13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_g14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_g15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_g16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_g17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_g18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_g19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_g20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_g21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_g22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_g23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_g24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_g25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_g26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_g27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_g28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_g29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_g30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_g31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_g32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_g1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_g2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_g3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_g4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_g5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_g6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_g7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_g8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_g9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_g10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_g11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_g12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_g13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_g14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_g15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_g16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_g17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_g18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_g19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_g20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_g21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_g22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_g23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_g24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_g25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_g26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_g27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_g28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_g29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_g30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_g31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_g32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_6:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_i1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_i2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_i3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_i4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_i5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_i6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_i7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_i8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_i9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_i10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_i11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_i12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_i13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_i14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_i15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_i16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_i17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_i18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_i19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_i20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_i21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_i22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_i23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_i24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_i25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_i26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_i27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_i28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_i29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_i30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_i31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_i32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_i1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_i2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_i3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_i4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_i5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_i6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_i7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_i8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_i9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_i10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_i11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_i12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_i13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_i14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_i15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_i16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_i17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_i18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_i19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_i20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_i21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_i22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_i23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_i24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_i25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_i26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_i27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_i28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_i29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_i30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_i31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_i32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_7:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_h1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_h2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_h3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_h4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_h5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_h6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_h7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_h8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_h9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_h10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_h11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_h12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_h13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_h14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_h15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_h16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_h17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_h18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_h19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_h20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_h21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_h22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_h23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_h24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_h25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_h26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_h27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_h28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_h29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_h30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_h31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_h32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_h1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_h2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_h3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_h4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_h5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_h6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_h7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_h8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_h9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_h10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_h11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_h12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_h13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_h14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_h15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_h16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_h17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_h18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_h19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_h20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_h21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_h22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_h23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_h24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_h25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_h26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_h27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_h28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_h29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_h30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_h31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_h32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_8:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_j1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_j2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_j3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_j4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_j5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_j6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_j7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_j8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_j9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_j10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_j11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_j12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_j13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_j14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_j15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_j16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_j17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_j18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_j19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_j20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_j21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_j22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_j23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_j24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_j25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_j26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_j27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_j28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_j29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_j30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_j31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_j32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_j1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_j2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_j3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_j4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_j5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_j6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_j7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_j8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_j9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_j10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_j11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_j12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_j13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_j14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_j15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_j16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_j17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_j18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_j19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_j20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_j21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_j22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_j23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_j24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_j25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_j26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_j27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_j28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_j29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_j30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_j31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_j32\"></ACT></ACTION>\x00"
 StartFeatureDemo_Table_p0_9:	# REC_StartFeatureDemo_Table_p0 (1258 bytes)
-	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", p28=loc_48533C3E, x32="OW OBJ=\"fdemo_e1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_e2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_e3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_e4\"></ACT><ACT NO=4", p176=loc_48533C3E, x180="OW OBJ=\"fdemo_e5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_e6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_e7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_e8\"></ACT><ACT NO=8", p324=loc_48533C3E, x328="OW OBJ=\"fdemo_e9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_e10\"></ACT><ACT NO=10", p400=loc_48533C3E, x404="OW OBJ=\"fdemo_e11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_e12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_e13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_e14\"></ACT><ACT NO=14", p556=loc_48533C3E, x560="OW OBJ=\"fdemo_e15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_e16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_e17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_e18\"></ACT><ACT NO=18", p712=loc_48533C3E, x716="OW OBJ=\"fdemo_e19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_e20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_e21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_e22\"></ACT><ACT NO=22", p868=loc_48533C3E, x872="OW OBJ=\"fdemo_e23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_e24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_e25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_e26\"></ACT><ACT NO=26", p1024=loc_48533C3E, x1028="OW OBJ=\"fdemo_e27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_e28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_e29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_e30\"></ACT><ACT NO=30", p1180=loc_48533C3E, x1184="OW OBJ=\"fdemo_e31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_e32\"></ACT></ACTION>\x00"
+	REC_StartFeatureDemo_Table_p0	f0=83, f1=83, x2="W-ACT-V01<ACTION><ACT NO=0", proc=loc_48533C3E, x32="OW OBJ=\"fdemo_e1\"></ACT><ACT NO=1><SHOW OBJ=\"fdemo_e2\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_e3\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_e4\"></ACT><ACT NO=4", proc_=loc_48533C3E, x180="OW OBJ=\"fdemo_e5\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_e6\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_e7\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_e8\"></ACT><ACT NO=8", proc__=loc_48533C3E, x328="OW OBJ=\"fdemo_e9\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_e10\"></ACT><ACT NO=10", proc___=loc_48533C3E, x404="OW OBJ=\"fdemo_e11\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_e12\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_e13\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_e14\"></ACT><ACT NO=14", proc____=loc_48533C3E, x560="OW OBJ=\"fdemo_e15\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_e16\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_e17\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_e18\"></ACT><ACT NO=18", proc_____=loc_48533C3E, x716="OW OBJ=\"fdemo_e19\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_e20\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_e21\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_e22\"></ACT><ACT NO=22", proc______=loc_48533C3E, x872="OW OBJ=\"fdemo_e23\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_e24\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_e25\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_e26\"></ACT><ACT NO=26", proc_______=loc_48533C3E, x1028="OW OBJ=\"fdemo_e27\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_e28\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_e29\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_e30\"></ACT><ACT NO=30", proc________=loc_48533C3E, x1184="OW OBJ=\"fdemo_e31\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_e32\"></ACT></ACTION>\x00"
 
 Str_SSW_ACT_V01_ACTION_ACTION:	.asciz "SSW-ACT-V01<ACTION></ACTION>"
 	.align	4, 0xFF	# pad after Str_SSW_ACT_V01_ACTION_ACTION
@@ -4323,38 +4323,38 @@ Str_TTJG:	.asciz "TTJG"
 	.align	4, 0xFF	# pad after Str_TTJG
 
 PsFolderFileListBoxProc_Records:	# 32 x REC_PsFolderFileListBoxProc_Records (8 bytes each); read by PsFolderFileListBoxProc 0x48550050 `mov (a0), d0`
-	REC_PsFolderFileListBoxProc_Records	f0=0x2100000, p4=loc_485501E6	# [0]
-	REC_PsFolderFileListBoxProc_Records	f0=1, p4=loc_485500A9
-	REC_PsFolderFileListBoxProc_Records	f0=0x2100001, p4=loc_485501E6
-	REC_PsFolderFileListBoxProc_Records	f0=0x2100002, p4=loc_48550388
-	REC_PsFolderFileListBoxProc_Records	f0=0x2100003, p4=loc_485504F2
-	REC_PsFolderFileListBoxProc_Records	f0=0x2100004, p4=loc_48550509
-	REC_PsFolderFileListBoxProc_Records	f0=0x2100005, p4=loc_48550520
-	REC_PsFolderFileListBoxProc_Records	f0=2, p4=loc_48550625
-	REC_PsFolderFileListBoxProc_Records	f0=0x1400000, p4=loc_48550642	# [8]
-	REC_PsFolderFileListBoxProc_Records	f0=9, p4=loc_485500EC
-	REC_PsFolderFileListBoxProc_Records	f0=0x1400001, p4=loc_4855066B
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	f0=0x210000D, p4=loc_485505F6
-	REC_PsFolderFileListBoxProc_Records	f0=0x210000E, p4=loc_485505F6
-	REC_PsFolderFileListBoxProc_Records	f0=15, p4=loc_48550539
-	REC_PsFolderFileListBoxProc_Records	f0=16, p4=loc_48550539	# [16]
-	REC_PsFolderFileListBoxProc_Records	f0=17, p4=loc_48550599
-	REC_PsFolderFileListBoxProc_Records	f0=18, p4=loc_48550599
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694	# [24]
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
-	REC_PsFolderFileListBoxProc_Records	p4=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	key=0x2100000, proc=loc_485501E6	# [0]
+	REC_PsFolderFileListBoxProc_Records	key=1, proc=loc_485500A9
+	REC_PsFolderFileListBoxProc_Records	key=0x2100001, proc=loc_485501E6
+	REC_PsFolderFileListBoxProc_Records	key=0x2100002, proc=loc_48550388
+	REC_PsFolderFileListBoxProc_Records	key=0x2100003, proc=loc_485504F2
+	REC_PsFolderFileListBoxProc_Records	key=0x2100004, proc=loc_48550509
+	REC_PsFolderFileListBoxProc_Records	key=0x2100005, proc=loc_48550520
+	REC_PsFolderFileListBoxProc_Records	key=2, proc=loc_48550625
+	REC_PsFolderFileListBoxProc_Records	key=0x1400000, proc=loc_48550642	# [8]
+	REC_PsFolderFileListBoxProc_Records	key=9, proc=loc_485500EC
+	REC_PsFolderFileListBoxProc_Records	key=0x1400001, proc=loc_4855066B
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	key=0x210000D, proc=loc_485505F6
+	REC_PsFolderFileListBoxProc_Records	key=0x210000E, proc=loc_485505F6
+	REC_PsFolderFileListBoxProc_Records	key=15, proc=loc_48550539
+	REC_PsFolderFileListBoxProc_Records	key=16, proc=loc_48550539	# [16]
+	REC_PsFolderFileListBoxProc_Records	key=17, proc=loc_48550599
+	REC_PsFolderFileListBoxProc_Records	key=18, proc=loc_48550599
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694	# [24]
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
+	REC_PsFolderFileListBoxProc_Records	proc=loc_48550694
 
 SdStateReset_Table:	# 2 x u8, 0..0; read by SdStateReset_entry 0x485517CF: `movbu  (a0), d0`; SdUnmountCleanup_entry 0x48551861: `movbu  (a0), d0` ...
 	tab_u8	0, 0
@@ -6572,39 +6572,39 @@ Str_ON_21:	.asciz "ON "
 Str_OFF_23:	.asciz "OFF"
 
 AcEffExpGroupProc_Records:	# 16 x REC_AcEffExpGroupProc_Records (8 bytes each); read by AcEffExpGroupProc 0x4856743C `mov (a0), d0`
-	REC_AcEffExpGroupProc_Records	f0=16, p4=loc_48567564	# [0]
-	REC_AcEffExpGroupProc_Records	f0=1, p4=loc_48567493
-	REC_AcEffExpGroupProc_Records	f0=17, p4=loc_48567564
-	REC_AcEffExpGroupProc_Records	f0=0xC00003, p4=loc_4856753F
-	REC_AcEffExpGroupProc_Records	f0=18, p4=loc_48567564
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	f0=8, p4=loc_485674DD	# [8]
-	REC_AcEffExpGroupProc_Records	f0=9, p4=loc_485674DD
-	REC_AcEffExpGroupProc_Records	f0=0x1003A, p4=loc_4856778C
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	p4=loc_485677F9
-	REC_AcEffExpGroupProc_Records	f0=15, p4=loc_48567564
+	REC_AcEffExpGroupProc_Records	key=16, proc=loc_48567564	# [0]
+	REC_AcEffExpGroupProc_Records	key=1, proc=loc_48567493
+	REC_AcEffExpGroupProc_Records	key=17, proc=loc_48567564
+	REC_AcEffExpGroupProc_Records	key=0xC00003, proc=loc_4856753F
+	REC_AcEffExpGroupProc_Records	key=18, proc=loc_48567564
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	key=8, proc=loc_485674DD	# [8]
+	REC_AcEffExpGroupProc_Records	key=9, proc=loc_485674DD
+	REC_AcEffExpGroupProc_Records	key=0x1003A, proc=loc_4856778C
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	proc=loc_485677F9
+	REC_AcEffExpGroupProc_Records	key=15, proc=loc_48567564
 AcEffEditGridBoxProc_Records:	# 16 x REC_AcEffEditGridBoxProc_Records (8 bytes each); read by AcEffEditGridBoxProc 0x4856784F `mov (a0), d0`
-	REC_AcEffEditGridBoxProc_Records	f0=16, p4=loc_48567932	# [0]
-	REC_AcEffEditGridBoxProc_Records	f0=1, p4=loc_485678A5
-	REC_AcEffEditGridBoxProc_Records	f0=17, p4=loc_48567932
-	REC_AcEffEditGridBoxProc_Records	f0=18, p4=loc_48567932
-	REC_AcEffEditGridBoxProc_Records	f0=0x1007F, p4=loc_48567ABD
-	REC_AcEffEditGridBoxProc_Records	f0=0xC00001, p4=loc_48567C11
-	REC_AcEffEditGridBoxProc_Records	f0=0x10081, p4=loc_48567C11
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D	# [8]
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D
-	REC_AcEffEditGridBoxProc_Records	p4=loc_48567C2D
-	REC_AcEffEditGridBoxProc_Records	f0=0x1007E, p4=loc_48567AA3
-	REC_AcEffEditGridBoxProc_Records	f0=15, p4=loc_48567932
+	REC_AcEffEditGridBoxProc_Records	key=16, proc=loc_48567932	# [0]
+	REC_AcEffEditGridBoxProc_Records	key=1, proc=loc_485678A5
+	REC_AcEffEditGridBoxProc_Records	key=17, proc=loc_48567932
+	REC_AcEffEditGridBoxProc_Records	key=18, proc=loc_48567932
+	REC_AcEffEditGridBoxProc_Records	key=0x1007F, proc=loc_48567ABD
+	REC_AcEffEditGridBoxProc_Records	key=0xC00001, proc=loc_48567C11
+	REC_AcEffEditGridBoxProc_Records	key=0x10081, proc=loc_48567C11
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D	# [8]
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D
+	REC_AcEffEditGridBoxProc_Records	proc=loc_48567C2D
+	REC_AcEffEditGridBoxProc_Records	key=0x1007E, proc=loc_48567AA3
+	REC_AcEffEditGridBoxProc_Records	key=15, proc=loc_48567932
 
 EditExitCatchFunc_Table:
 	.long	loc_48567C8E
@@ -6630,22 +6630,22 @@ AcUnitNameProc_Table:
 	.long	loc_485682F9
 
 AcEffDispGridBoxProc_Records:	# 16 x REC_AcEffDispGridBoxProc_Records (8 bytes each); read by AcEffDispGridBoxProc 0x48569346 `mov (a0), d0`
-	REC_AcEffDispGridBoxProc_Records	f0=16, p4=loc_485694E1	# [0]
-	REC_AcEffDispGridBoxProc_Records	f0=1, p4=loc_48569399
-	REC_AcEffDispGridBoxProc_Records	f0=17, p4=loc_48569423
-	REC_AcEffDispGridBoxProc_Records	f0=18, p4=loc_485694E1
-	REC_AcEffDispGridBoxProc_Records	f0=0x1007F, p4=loc_485695B3
-	REC_AcEffDispGridBoxProc_Records	f0=5, p4=loc_48569402
-	REC_AcEffDispGridBoxProc_Records	f0=21, p4=loc_485695CA
-	REC_AcEffDispGridBoxProc_Records	f0=20, p4=loc_485695CD
-	REC_AcEffDispGridBoxProc_Records	f0=0x10081, p4=loc_485695CD	# [8]
-	REC_AcEffDispGridBoxProc_Records	p4=loc_485695E7
-	REC_AcEffDispGridBoxProc_Records	p4=loc_485695E7
-	REC_AcEffDispGridBoxProc_Records	p4=loc_485695E7
-	REC_AcEffDispGridBoxProc_Records	p4=loc_485695E7
-	REC_AcEffDispGridBoxProc_Records	p4=loc_485695E7
-	REC_AcEffDispGridBoxProc_Records	f0=0x1007E, p4=loc_4856959C
-	REC_AcEffDispGridBoxProc_Records	f0=15, p4=loc_48569423
+	REC_AcEffDispGridBoxProc_Records	key=16, proc=loc_485694E1	# [0]
+	REC_AcEffDispGridBoxProc_Records	key=1, proc=loc_48569399
+	REC_AcEffDispGridBoxProc_Records	key=17, proc=loc_48569423
+	REC_AcEffDispGridBoxProc_Records	key=18, proc=loc_485694E1
+	REC_AcEffDispGridBoxProc_Records	key=0x1007F, proc=loc_485695B3
+	REC_AcEffDispGridBoxProc_Records	key=5, proc=loc_48569402
+	REC_AcEffDispGridBoxProc_Records	key=21, proc=loc_485695CA
+	REC_AcEffDispGridBoxProc_Records	key=20, proc=loc_485695CD
+	REC_AcEffDispGridBoxProc_Records	key=0x10081, proc=loc_485695CD	# [8]
+	REC_AcEffDispGridBoxProc_Records	proc=loc_485695E7
+	REC_AcEffDispGridBoxProc_Records	proc=loc_485695E7
+	REC_AcEffDispGridBoxProc_Records	proc=loc_485695E7
+	REC_AcEffDispGridBoxProc_Records	proc=loc_485695E7
+	REC_AcEffDispGridBoxProc_Records	proc=loc_485695E7
+	REC_AcEffDispGridBoxProc_Records	key=0x1007E, proc=loc_4856959C
+	REC_AcEffDispGridBoxProc_Records	key=15, proc=loc_48569423
 
 EffDispGrid_Table_3:
 	.long	loc_4856A6F9
@@ -6704,38 +6704,38 @@ EffDispGrid_Table_7:
 	.long	loc_4856A3C8
 
 EffDispGrid_Records:	# 32 x REC_EffDispGrid_Records (8 bytes each); read by EffDispGrid 0x485695F7 `mov (a0), d0`
-	REC_EffDispGrid_Records	f0=0x1F8040, p4=loc_4856A0B2	# [0]
-	REC_EffDispGrid_Records	f0=12257, p4=loc_48569E31
-	REC_EffDispGrid_Records	f0=12258, p4=loc_48569EC1
-	REC_EffDispGrid_Records	f0=12289, p4=loc_4856A02F
-	REC_EffDispGrid_Records	f0=12321, p4=loc_4856A02F
-	REC_EffDispGrid_Records	f0=12293, p4=loc_4856A119
-	REC_EffDispGrid_Records	f0=12325, p4=loc_4856A119
-	REC_EffDispGrid_Records	f0=8161, p4=loc_4856A1CC
-	REC_EffDispGrid_Records	f0=8417, p4=loc_4856A1CC	# [8]
-	REC_EffDispGrid_Records	f0=12329, p4=loc_48569F51
-	REC_EffDispGrid_Records	f0=8673, p4=loc_4856A1CC
-	REC_EffDispGrid_Records	f0=8929, p4=loc_4856A1CC
-	REC_EffDispGrid_Records	f0=9185, p4=loc_4856A1CC
-	REC_EffDispGrid_Records	f0=1, p4=loc_4856A247
-	REC_EffDispGrid_Records	f0=3, p4=loc_4856A296
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5	# [16]
-	REC_EffDispGrid_Records	f0=12273, p4=loc_4856A02F
-	REC_EffDispGrid_Records	f0=12305, p4=loc_4856A02F
-	REC_EffDispGrid_Records	f0=12337, p4=loc_4856A02F
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	f0=12277, p4=loc_4856A119
-	REC_EffDispGrid_Records	f0=12309, p4=loc_4856A119
-	REC_EffDispGrid_Records	f0=12341, p4=loc_4856A119
-	REC_EffDispGrid_Records	p4=loc_4856A2E5	# [24]
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
-	REC_EffDispGrid_Records	p4=loc_4856A2E5
+	REC_EffDispGrid_Records	f0=0x1F8040, proc=loc_4856A0B2	# [0]
+	REC_EffDispGrid_Records	f0=12257, proc=loc_48569E31
+	REC_EffDispGrid_Records	f0=12258, proc=loc_48569EC1
+	REC_EffDispGrid_Records	f0=12289, proc=loc_4856A02F
+	REC_EffDispGrid_Records	f0=12321, proc=loc_4856A02F
+	REC_EffDispGrid_Records	f0=12293, proc=loc_4856A119
+	REC_EffDispGrid_Records	f0=12325, proc=loc_4856A119
+	REC_EffDispGrid_Records	f0=8161, proc=loc_4856A1CC
+	REC_EffDispGrid_Records	f0=8417, proc=loc_4856A1CC	# [8]
+	REC_EffDispGrid_Records	f0=12329, proc=loc_48569F51
+	REC_EffDispGrid_Records	f0=8673, proc=loc_4856A1CC
+	REC_EffDispGrid_Records	f0=8929, proc=loc_4856A1CC
+	REC_EffDispGrid_Records	f0=9185, proc=loc_4856A1CC
+	REC_EffDispGrid_Records	f0=1, proc=loc_4856A247
+	REC_EffDispGrid_Records	f0=3, proc=loc_4856A296
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5	# [16]
+	REC_EffDispGrid_Records	f0=12273, proc=loc_4856A02F
+	REC_EffDispGrid_Records	f0=12305, proc=loc_4856A02F
+	REC_EffDispGrid_Records	f0=12337, proc=loc_4856A02F
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	f0=12277, proc=loc_4856A119
+	REC_EffDispGrid_Records	f0=12309, proc=loc_4856A119
+	REC_EffDispGrid_Records	f0=12341, proc=loc_4856A119
+	REC_EffDispGrid_Records	proc=loc_4856A2E5	# [24]
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
+	REC_EffDispGrid_Records	proc=loc_4856A2E5
 
 EffDispGrid_Table_8:
 	.long	loc_48569D33
@@ -7976,73 +7976,73 @@ Str_3d_3:	.asciz "%3d"
 Str_3d_2:	.asciz "%3d"
 
 R12OctaveFunc_Records:	# 16 x REC_R12OctaveFunc_Records (8 bytes each); read by R12OctaveFunc 0x4856D46B `mov (a0), d0`
-	REC_R12OctaveFunc_Records	f0=128, p4=loc_4856D564	# [0]
-	REC_R12OctaveFunc_Records	f0=129, p4=loc_4856D57D
-	REC_R12OctaveFunc_Records	f0=1, p4=loc_4856D588
-	REC_R12OctaveFunc_Records	f0=2, p4=loc_4856D58C
-	REC_R12OctaveFunc_Records	f0=109, p4=loc_4856D594
-	REC_R12OctaveFunc_Records	p4=loc_4856D598
-	REC_R12OctaveFunc_Records	p4=loc_4856D598
-	REC_R12OctaveFunc_Records	p4=loc_4856D598
-	REC_R12OctaveFunc_Records	p4=loc_4856D598	# [8]
-	REC_R12OctaveFunc_Records	p4=loc_4856D598
-	REC_R12OctaveFunc_Records	p4=loc_4856D598
-	REC_R12OctaveFunc_Records	p4=loc_4856D598
-	REC_R12OctaveFunc_Records	f0=108, p4=loc_4856D590
-	REC_R12OctaveFunc_Records	f0=125, p4=loc_4856D567
-	REC_R12OctaveFunc_Records	f0=126, p4=loc_4856D4BD
-	REC_R12OctaveFunc_Records	f0=127, p4=loc_4856D55C
+	REC_R12OctaveFunc_Records	f0=128, proc=loc_4856D564	# [0]
+	REC_R12OctaveFunc_Records	f0=129, proc=loc_4856D57D
+	REC_R12OctaveFunc_Records	f0=1, proc=loc_4856D588
+	REC_R12OctaveFunc_Records	f0=2, proc=loc_4856D58C
+	REC_R12OctaveFunc_Records	f0=109, proc=loc_4856D594
+	REC_R12OctaveFunc_Records	proc=loc_4856D598
+	REC_R12OctaveFunc_Records	proc=loc_4856D598
+	REC_R12OctaveFunc_Records	proc=loc_4856D598
+	REC_R12OctaveFunc_Records	proc=loc_4856D598	# [8]
+	REC_R12OctaveFunc_Records	proc=loc_4856D598
+	REC_R12OctaveFunc_Records	proc=loc_4856D598
+	REC_R12OctaveFunc_Records	proc=loc_4856D598
+	REC_R12OctaveFunc_Records	f0=108, proc=loc_4856D590
+	REC_R12OctaveFunc_Records	f0=125, proc=loc_4856D567
+	REC_R12OctaveFunc_Records	f0=126, proc=loc_4856D4BD
+	REC_R12OctaveFunc_Records	f0=127, proc=loc_4856D55C
 ChordFinderROOT_Records:	# 16 x REC_ChordFinderROOT_Records (8 bytes each); read by ChordFinderROOT 0x4856E2F2 `mov (a0), d0`
-	REC_ChordFinderROOT_Records	f0=0x10040, p4=loc_4856E374	# [0]
-	REC_ChordFinderROOT_Records	f0=1, p4=loc_4856E341
-	REC_ChordFinderROOT_Records	f0=0x10041, p4=loc_4856E378
-	REC_ChordFinderROOT_Records	f0=0x10042, p4=loc_4856E37B
-	REC_ChordFinderROOT_Records	f0=0x10044, p4=loc_4856E350
-	REC_ChordFinderROOT_Records	f0=0x10043, p4=loc_4856E383
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	f0=0x10078, p4=loc_4856E387	# [8]
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	p4=loc_4856E38A
-	REC_ChordFinderROOT_Records	f0=0x1003E, p4=loc_4856E36C
-	REC_ChordFinderROOT_Records	f0=0x1003F, p4=loc_4856E370
+	REC_ChordFinderROOT_Records	f0=0x10040, proc=loc_4856E374	# [0]
+	REC_ChordFinderROOT_Records	f0=1, proc=loc_4856E341
+	REC_ChordFinderROOT_Records	f0=0x10041, proc=loc_4856E378
+	REC_ChordFinderROOT_Records	f0=0x10042, proc=loc_4856E37B
+	REC_ChordFinderROOT_Records	f0=0x10044, proc=loc_4856E350
+	REC_ChordFinderROOT_Records	f0=0x10043, proc=loc_4856E383
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	f0=0x10078, proc=loc_4856E387	# [8]
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	proc=loc_4856E38A
+	REC_ChordFinderROOT_Records	f0=0x1003E, proc=loc_4856E36C
+	REC_ChordFinderROOT_Records	f0=0x1003F, proc=loc_4856E370
 INVERSION_Records:	# 16 x REC_INVERSION_Records (8 bytes each); read by INVERSION 0x4856E883 `mov (a0), d0`
-	REC_INVERSION_Records	f0=0x10040, p4=loc_4856E93E	# [0]
-	REC_INVERSION_Records	f0=1, p4=loc_4856E8E9
-	REC_INVERSION_Records	f0=0x10041, p4=loc_4856E959
-	REC_INVERSION_Records	f0=0x10042, p4=loc_4856E95C
-	REC_INVERSION_Records	f0=0x10044, p4=loc_4856E8F9
-	REC_INVERSION_Records	f0=0x10043, p4=loc_4856E964
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	f0=0x10078, p4=loc_4856E968	# [8]
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	p4=loc_4856E96B
-	REC_INVERSION_Records	f0=0x1003E, p4=loc_4856E936
-	REC_INVERSION_Records	f0=0x1003F, p4=loc_4856E93A
+	REC_INVERSION_Records	f0=0x10040, proc=loc_4856E93E	# [0]
+	REC_INVERSION_Records	f0=1, proc=loc_4856E8E9
+	REC_INVERSION_Records	f0=0x10041, proc=loc_4856E959
+	REC_INVERSION_Records	f0=0x10042, proc=loc_4856E95C
+	REC_INVERSION_Records	f0=0x10044, proc=loc_4856E8F9
+	REC_INVERSION_Records	f0=0x10043, proc=loc_4856E964
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	f0=0x10078, proc=loc_4856E968	# [8]
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	proc=loc_4856E96B
+	REC_INVERSION_Records	f0=0x1003E, proc=loc_4856E936
+	REC_INVERSION_Records	f0=0x1003F, proc=loc_4856E93A
 AcChordFinderBoxProc_Records:	# 16 x REC_AcChordFinderBoxProc_Records (8 bytes each); read by AcChordFinderBoxProc 0x4856E96F `mov (a0), d0`
-	REC_AcChordFinderBoxProc_Records	f0=16, p4=loc_4856ECF1	# [0]
-	REC_AcChordFinderBoxProc_Records	f0=1, p4=loc_4856E9DC
-	REC_AcChordFinderBoxProc_Records	f0=2, p4=loc_4856EA2B
-	REC_AcChordFinderBoxProc_Records	f0=0x100B3, p4=loc_4856EA3E
-	REC_AcChordFinderBoxProc_Records	f0=0x100B4, p4=loc_4856EBF5
-	REC_AcChordFinderBoxProc_Records	f0=17, p4=loc_4856ECF1
-	REC_AcChordFinderBoxProc_Records	f0=18, p4=loc_4856ECF1
-	REC_AcChordFinderBoxProc_Records	f0=0x10075, p4=loc_4856EE6A
-	REC_AcChordFinderBoxProc_Records	p4=loc_4856EE8C	# [8]
-	REC_AcChordFinderBoxProc_Records	f0=9, p4=loc_4856E9EF
-	REC_AcChordFinderBoxProc_Records	p4=loc_4856EE8C
-	REC_AcChordFinderBoxProc_Records	p4=loc_4856EE8C
-	REC_AcChordFinderBoxProc_Records	p4=loc_4856EE8C
-	REC_AcChordFinderBoxProc_Records	p4=loc_4856EE8C
-	REC_AcChordFinderBoxProc_Records	p4=loc_4856EE8C
-	REC_AcChordFinderBoxProc_Records	f0=15, p4=loc_4856ECF1
+	REC_AcChordFinderBoxProc_Records	f0=16, proc=loc_4856ECF1	# [0]
+	REC_AcChordFinderBoxProc_Records	f0=1, proc=loc_4856E9DC
+	REC_AcChordFinderBoxProc_Records	f0=2, proc=loc_4856EA2B
+	REC_AcChordFinderBoxProc_Records	f0=0x100B3, proc=loc_4856EA3E
+	REC_AcChordFinderBoxProc_Records	f0=0x100B4, proc=loc_4856EBF5
+	REC_AcChordFinderBoxProc_Records	f0=17, proc=loc_4856ECF1
+	REC_AcChordFinderBoxProc_Records	f0=18, proc=loc_4856ECF1
+	REC_AcChordFinderBoxProc_Records	f0=0x10075, proc=loc_4856EE6A
+	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE8C	# [8]
+	REC_AcChordFinderBoxProc_Records	f0=9, proc=loc_4856E9EF
+	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE8C
+	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE8C
+	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE8C
+	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE8C
+	REC_AcChordFinderBoxProc_Records	proc=loc_4856EE8C
+	REC_AcChordFinderBoxProc_Records	f0=15, proc=loc_4856ECF1
 
 func_485702BB_Table:
 	.long	loc_485702D6
@@ -8102,13 +8102,13 @@ data_486A3364:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3364, 0x2A336C
 
 VoiceDirRemapFind_Table_p0_0:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=768, x6="\x02\x01"
+	REC_VoiceDirRemapFind_Table_p0	key=768, x6="\x02\x01"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3374, 0x2A337C
 VoiceDirRemapFind_Table_p0_1:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=1280, x6="\x03\x01"
+	REC_VoiceDirRemapFind_Table_p0	key=1280, x6="\x03\x01"
 VoiceDirRemapFind_Table_p0_2:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=1284, x6="\x03\x03"
+	REC_VoiceDirRemapFind_Table_p0	key=1284, x6="\x03\x03"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A338C, 0x2A3394
 data_486A3394:
@@ -8133,13 +8133,13 @@ data_486A342C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A342C, 0x2A3434
 VoiceDirRemapFind_Table_p0_3:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=3840, x6="\x0E\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=3840, x6="\x0E\x00"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A343C, 0x2A3444
 VoiceDirRemapFind_Table_p0_4:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=3584, x6="\x0D\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=3584, x6="\x0D\x00"
 VoiceDirRemapFind_Table_p0_5:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=3328, x6="\x0B0"
+	REC_VoiceDirRemapFind_Table_p0	key=3328, x6="\x0B0"
 data_486A3454:
 # census: opaque -- unknown-dump: 64 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3454, 0x2A3494
@@ -8162,11 +8162,11 @@ data_486A34EC:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A34EC, 0x2A34FC
 VoiceDirRemapFind_Table_p0_6:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=25408, x6="b("
+	REC_VoiceDirRemapFind_Table_p0	key=25408, x6="b("
 # census: opaque -- unknown-dump: 48 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3504, 0x2A3534
 VoiceDirRemapFind_Table_p0_7:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=7424, x6="\x14\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=7424, x6="\x14\x00"
 data_486A353C:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A353C, 0x2A3554
@@ -8177,7 +8177,7 @@ data_486A357C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A357C, 0x2A3584
 VoiceDirRemapFind_Table_p0_8:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=7936, x6="\x17\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=7936, x6="\x17\x10"
 data_486A358C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A358C, 0x2A3594
@@ -8185,14 +8185,14 @@ data_486A3594:
 # census: opaque -- unknown-dump: 16 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3594, 0x2A35A4
 VoiceDirRemapFind_Table_p0_9:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=8192, x6="\x18\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=8192, x6="\x18\x00"
 data_486A35AC:
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A35AC, 0x2A35C4
 VoiceDirRemapFind_Table_p0_10:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=17984, x6="i@"
+	REC_VoiceDirRemapFind_Table_p0	key=17984, x6="i@"
 VoiceDirRemapFind_Table_p0_11:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=1792, x6="\x1F\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=1792, x6="\x1F\x00"
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A35D4, 0x2A35EC
 data_486A35EC:
@@ -8223,9 +8223,9 @@ data_486A3694:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3694, 0x2A36A4
 VoiceDirRemapFind_Table_p0_12:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=24577, x6="(\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=24577, x6="(\x10"
 VoiceDirRemapFind_Table_p0_13:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=24833, x6=")\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=24833, x6=")\x00"
 data_486A36B4:
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A36B4, 0x2A36DC
@@ -8239,7 +8239,7 @@ data_486A3734:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3734, 0x2A373C
 VoiceDirRemapFind_Table_p0_14:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=22784, x6="S\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=22784, x6="S\x00"
 data_486A3744:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3744, 0x2A374C
@@ -8247,7 +8247,7 @@ data_486A374C:
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A374C, 0x2A3764
 VoiceDirRemapFind_Table_p0_15:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=23552, x6="T\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=23552, x6="T\x00"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A376C, 0x2A3774
 data_486A3774:
@@ -8275,21 +8275,21 @@ data_486A3804:
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3804, 0x2A3814
 VoiceDirRemapFind_Table_p0_16:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=15104, x6="= "
+	REC_VoiceDirRemapFind_Table_p0	key=15104, x6="= "
 # census: opaque -- unknown-dump: 48 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A381C, 0x2A384C
 data_486A384C:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A384C, 0x2A385C
 VoiceDirRemapFind_Table_p0_17:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=12800, x6=":\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=12800, x6=":\x00"
 # census: opaque -- unknown-dump: 88 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3864, 0x2A38BC
 data_486A38BC:
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A38BC, 0x2A38CC
 VoiceDirRemapFind_Table_p0_18:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=15363, x6="?@"
+	REC_VoiceDirRemapFind_Table_p0	key=15363, x6="?@"
 data_486A38D4:
 # census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A38D4, 0x2A38F4
@@ -8327,7 +8327,7 @@ data_486A3A1C:
 # census: opaque -- unknown-dump: 112 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3A1C, 0x2A3A8C
 VoiceDirRemapFind_Table_p0_19:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A398C, f4=10500, x6="\"\x04"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A398C, key=10500, x6="\"\x04"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3A94, 0x2A3A9C
 data_486A3A9C:
@@ -8385,7 +8385,7 @@ data_486A3C5C:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3C5C, 0x2A3C6C
 VoiceDirRemapFind_Table_p0_20:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=24896, x6="`P"
+	REC_VoiceDirRemapFind_Table_p0	key=24896, x6="`P"
 data_486A3C74:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3C74, 0x2A3C8C
@@ -8400,19 +8400,19 @@ data_486A3CA4:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3CA4, 0x2A3CAC
 
 VoiceDirRemapFind_Table_p0_21:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A37E4, f4=22336, x6="e\x01"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A37E4, key=22336, x6="e\x01"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3CB4, 0x2A3CBC
 VoiceDirRemapFind_Table_p0_22:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=17728, x6="e\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=17728, x6="e\x00"
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3CC4, 0x2A3CDC
 VoiceDirRemapFind_Table_p0_23:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C5C, f4=25664, x6="c "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C5C, key=25664, x6="c "
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3CE4, 0x2A3CEC
 VoiceDirRemapFind_Table_p0_24:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3A1C, f4=3968, x6="b\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3A1C, key=3968, x6="b\x00"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3CF4, 0x2A3CFC
 data_486A3CFC:
@@ -8431,7 +8431,7 @@ data_486A3D1C:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3D1C, 0x2A3D2C
 VoiceDirRemapFind_Table_p0_25:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A391C, f4=5250, x6="b2"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A391C, key=5250, x6="b2"
 data_486A3D34:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3D34, 0x2A3D4C
@@ -8445,7 +8445,7 @@ data_486A3D5C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3D5C, 0x2A3D64
 VoiceDirRemapFind_Table_p0_26:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34AC, f4=25666, x6="b1"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34AC, key=25666, x6="b1"
 data_486A3D6C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3D6C, 0x2A3D74
@@ -8453,7 +8453,7 @@ data_486A3D74:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3D74, 0x2A3D7C
 VoiceDirRemapFind_Table_p0_27:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B7C, f4=25670, x6="b9"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B7C, key=25670, x6="b9"
 data_486A3D84:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3D84, 0x2A3D8C
@@ -8470,7 +8470,7 @@ data_486A3DB4:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3DB4, 0x2A3DC4
 VoiceDirRemapFind_Table_p0_28:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3CFC, f4=32131, x6="}\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3CFC, key=32131, x6="}\x00"
 data_486A3DCC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3DCC, 0x2A3DD4
@@ -8496,7 +8496,7 @@ data_486A3E24:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3E24, 0x2A3E34
 VoiceDirRemapFind_Table_p0_29:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=27200, x6="}\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=27200, x6="}\x00"
 data_486A3E3C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3E3C, 0x2A3E44
@@ -8522,14 +8522,14 @@ data_486A3E84:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3E84, 0x2A3E8C
 VoiceDirRemapFind_Table_p0_30:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A342C, f4=24705, x6="~@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A342C, key=24705, x6="~@"
 data_486A3E94:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3E94, 0x2A3E9C
 VoiceDirRemapFind_Table_p0_31:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=24704, x6="~H"
+	REC_VoiceDirRemapFind_Table_p0	key=24704, x6="~H"
 VoiceDirRemapFind_Table_p0_32:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E84, f4=24961, x6="~I"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E84, key=24961, x6="~I"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3EAC, 0x2A3EB4
 data_486A3EB4:
@@ -8553,7 +8553,7 @@ data_486A3EFC:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3EFC, 0x2A3F04
 
 VoiceDirRemapFind_Table_p0_33:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3594, f4=30337, x6="~\x01"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3594, key=30337, x6="~\x01"
 data_486A3F0C:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F0C, 0x2A3F1C
@@ -8561,7 +8561,7 @@ data_486A3F1C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F1C, 0x2A3F24
 VoiceDirRemapFind_Table_p0_34:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A363C, f4=29312, x6="\x7F\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A363C, key=29312, x6="\x7F\x10"
 data_486A3F2C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F2C, 0x2A3F34
@@ -8569,9 +8569,9 @@ data_486A3F34:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F34, 0x2A3F3C
 VoiceDirRemapFind_Table_p0_35:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34EC, f4=29824, x6="\x7F\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34EC, key=29824, x6="\x7F\x00"
 VoiceDirRemapFind_Table_p0_36:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=28544, x6="\x7F("
+	REC_VoiceDirRemapFind_Table_p0	key=28544, x6="\x7F("
 data_486A3F4C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F4C, 0x2A3F54
@@ -8582,13 +8582,13 @@ data_486A3F5C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F5C, 0x2A3F64
 VoiceDirRemapFind_Table_p0_37:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=25728, x6="~`"
+	REC_VoiceDirRemapFind_Table_p0	key=25728, x6="~`"
 VoiceDirRemapFind_Table_p0_38:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=29568, x6="\x7F\x18"
+	REC_VoiceDirRemapFind_Table_p0	key=29568, x6="\x7F\x18"
 VoiceDirRemapFind_Table_p0_39:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3554, f4=29569, x6="\x7F\x1C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3554, key=29569, x6="\x7F\x1C"
 VoiceDirRemapFind_Table_p0_40:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=30080, x6="\x7F8"
+	REC_VoiceDirRemapFind_Table_p0	key=30080, x6="\x7F8"
 data_486A3F84:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F84, 0x2A3F94
@@ -8596,7 +8596,7 @@ data_486A3F94:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3F94, 0x2A3FA4
 VoiceDirRemapFind_Table_p0_41:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D34, f4=30851, x6="~\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D34, key=30851, x6="~\x18"
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3FAC, 0x2A3FC4
 data_486A3FC4:
@@ -8606,15 +8606,15 @@ data_486A3FCC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3FCC, 0x2A3FD4
 VoiceDirRemapFind_Table_p0_42:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=23616, x6="\x7F\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=23616, x6="\x7F\x10"
 VoiceDirRemapFind_Table_p0_43:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=23360, x6="\x7F "
+	REC_VoiceDirRemapFind_Table_p0	key=23360, x6="\x7F "
 VoiceDirRemapFind_Table_p0_44:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C34, f4=23872, x6="\x7F<"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C34, key=23872, x6="\x7F<"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3FEC, 0x2A3FF4
 VoiceDirRemapFind_Table_p0_45:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=Str_Aa+4, f4=23364, x6="\x7F("
+	REC_VoiceDirRemapFind_Table_p0	p0=Str_Aa+4, key=23364, x6="\x7F("
 data_486A3FFC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A3FFC, 0x2A4004
@@ -8634,26 +8634,26 @@ data_486A402C:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A402C, 0x2A403C
 VoiceDirRemapFind_Table_p0_46:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F34, f4=24385, x6="~\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F34, key=24385, x6="~\x10"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4044, 0x2A404C
 data_486A404C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A404C, 0x2A4054
 VoiceDirRemapFind_Table_p0_47:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A33FC, f4=24386, x6="~\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A33FC, key=24386, x6="~\x18"
 data_486A405C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A405C, 0x2A4064
 VoiceDirRemapFind_Table_p0_48:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=Str_A_I+4, f4=26497, x6="|\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=Str_A_I+4, key=26497, x6="|\x18"
 data_486A406C:
 # census: opaque -- unknown-dump: 48 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A406C, 0x2A409C
 VoiceDirRemapFind_Table_p0_49:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C8C, f4=26752, x6="|\""
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C8C, key=26752, x6="|\""
 VoiceDirRemapFind_Table_p0_50:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=26753, x6="}@"
+	REC_VoiceDirRemapFind_Table_p0	key=26753, x6="}@"
 data_486A40AC:
 # census: opaque -- unknown-dump: 56 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A40AC, 0x2A40E4
@@ -8661,9 +8661,9 @@ data_486A40E4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A40E4, 0x2A40EC
 VoiceDirRemapFind_Table_p0_51:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=25984, x6="}0"
+	REC_VoiceDirRemapFind_Table_p0	key=25984, x6="}0"
 VoiceDirRemapFind_Table_p0_52:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A33F4, f4=25985, x6="}1"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A33F4, key=25985, x6="}1"
 data_486A40FC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A40FC, 0x2A4104
@@ -8681,16 +8681,16 @@ data_486A4134:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4134, 0x2A413C
 
 VoiceDirRemapFind_Table_p0_53:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3644, f4=29248, x6="|\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3644, key=29248, x6="|\x00"
 VoiceDirRemapFind_Table_p0_54:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D0C, f4=29249, x6="|\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D0C, key=29249, x6="|\x18"
 VoiceDirRemapFind_Table_p0_55:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D14, f4=29250, x6="|\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D14, key=29250, x6="|\x08"
 data_486A4154:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4154, 0x2A415C
 VoiceDirRemapFind_Table_p0_56:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=29252, x6="|\n"
+	REC_VoiceDirRemapFind_Table_p0	key=29252, x6="|\n"
 data_486A4164:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4164, 0x2A416C
@@ -8704,9 +8704,9 @@ data_486A417C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A417C, 0x2A4184
 VoiceDirRemapFind_Table_p0_57:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E0C, f4=29505, x6="}@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E0C, key=29505, x6="}@"
 VoiceDirRemapFind_Table_p0_58:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E14, f4=29506, x6="|@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E14, key=29506, x6="|@"
 data_486A4194:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4194, 0x2A419C
@@ -8721,7 +8721,7 @@ Str_Es_C_9jHFs_D:	.asciz "Es|C|9jHFs|D"
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A41B5, 0x2A41BC
 
 VoiceDirRemapFind_Table_p0_59:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3FCC, f4=30016, x6="|F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3FCC, key=30016, x6="|F"
 	.space	4, 0x00
 
 Str_Au_8_5jHBu_0:	.asciz "Au|8\xE45jHBu}0"
@@ -8729,11 +8729,11 @@ Str_Au_8_5jHBu_0:	.asciz "Au|8\xE45jHBu}0"
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A41D5, 0x2A41FC
 
 VoiceDirRemapFind_Table_p0_60:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E1C, f4=30272, x6="}6"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E1C, key=30272, x6="}6"
 VoiceDirRemapFind_Table_p0_61:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E24, f4=30273, x6="}7"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E24, key=30273, x6="}7"
 VoiceDirRemapFind_Table_p0_62:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DB4, f4=30274, x6="|0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DB4, key=30274, x6="|0"
 data_486A4214:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4214, 0x2A421C
@@ -8753,7 +8753,7 @@ data_486A4254:
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4254, 0x2A426C
 VoiceDirRemapFind_Table_p0_63:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B44, f4=9088, x6="hX"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B44, key=9088, x6="hX"
 data_486A4274:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4274, 0x2A427C
@@ -8767,34 +8767,34 @@ data_486A4294:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4294, 0x2A429C
 VoiceDirRemapFind_Table_p0_64:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AF4, f4=320, x6="h\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AF4, key=320, x6="h\x00"
 data_486A42A4:
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A42A4, 0x2A42BC
 VoiceDirRemapFind_Table_p0_65:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=576, x6="h\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=576, x6="h\x10"
 data_486A42C4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A42C4, 0x2A42CC
 VoiceDirRemapFind_Table_p0_66:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3694, f4=832, x6="i\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3694, key=832, x6="i\x00"
 VoiceDirRemapFind_Table_p0_67:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A36B4, f4=1088, x6="h\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A36B4, key=1088, x6="h\x18"
 data_486A42DC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A42DC, 0x2A42E4
 VoiceDirRemapFind_Table_p0_68:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A368C, f4=1600, x6="h0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A368C, key=1600, x6="h0"
 VoiceDirRemapFind_Table_p0_69:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3634, f4=1856, x6="hX"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3634, key=1856, x6="hX"
 VoiceDirRemapFind_Table_p0_70:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3A14, f4=2112, x6="hP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3A14, key=2112, x6="hP"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A42FC, 0x2A4304
 VoiceDirRemapFind_Table_p0_71:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A366C, f4=2624, x6="h@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A366C, key=2624, x6="h@"
 VoiceDirRemapFind_Table_p0_72:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=2880, x6="h\x14"
+	REC_VoiceDirRemapFind_Table_p0	key=2880, x6="h\x14"
 data_486A4314:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4314, 0x2A431C
@@ -8820,9 +8820,9 @@ data_486A4364:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4364, 0x2A4374
 VoiceDirRemapFind_Table_p0_73:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=10369, x6="j<"
+	REC_VoiceDirRemapFind_Table_p0	key=10369, x6="j<"
 VoiceDirRemapFind_Table_p0_74:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A35AC, f4=10624, x6="kP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A35AC, key=10624, x6="kP"
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4384, 0x2A4394
 
@@ -8837,32 +8837,32 @@ data_486A43A4:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A43A4, 0x2A43B4
 
 VoiceDirRemapFind_Table_p0_75:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=10117, x6="jX"
+	REC_VoiceDirRemapFind_Table_p0	key=10117, x6="jX"
 VoiceDirRemapFind_Table_p0_76:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3994, f4=10118, x6="j0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3994, key=10118, x6="j0"
 data_486A43C4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A43C4, 0x2A43CC
 VoiceDirRemapFind_Table_p0_77:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E74, f4=10119, x6="j|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E74, key=10119, x6="j|"
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A43D4, 0x2A43E4
 data_486A43E4:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A43E4, 0x2A43F4
 VoiceDirRemapFind_Table_p0_78:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F94, f4=3398, x6="j\x14"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F94, key=3398, x6="j\x14"
 VoiceDirRemapFind_Table_p0_79:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A39B4, f4=3399, x6="k@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A39B4, key=3399, x6="k@"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4404, 0x2A440C
 data_486A440C:
 # census: opaque -- unknown-dump: 32 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A440C, 0x2A442C
 VoiceDirRemapFind_Table_p0_80:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3934, f4=3648, x6="j "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3934, key=3648, x6="j "
 VoiceDirRemapFind_Table_p0_81:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A406C, f4=6464, x6="j<"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A406C, key=6464, x6="j<"
 data_486A443C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A443C, 0x2A4444
@@ -8870,7 +8870,7 @@ data_486A4444:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4444, 0x2A444C
 VoiceDirRemapFind_Table_p0_82:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A417C, f4=3905, x6="jD"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A417C, key=3905, x6="jD"
 
 ptrs_486A4454:	# 3 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	data_486A36E4
@@ -8880,21 +8880,21 @@ ptrs_486A4454:	# 3 pointers, typed by value (every word 0 or an address of this 
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4460, 0x2A4464
 
 VoiceDirRemapFind_Table_p0_83:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E94, f4=4672, x6="j,"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E94, key=4672, x6="j,"
 VoiceDirRemapFind_Table_p0_84:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A378C, f4=5696, x6="jP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A378C, key=5696, x6="jP"
 data_486A4474:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4474, 0x2A447C
 VoiceDirRemapFind_Table_p0_85:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A40FC, f4=5952, x6="j0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A40FC, key=5952, x6="j0"
 data_486A4484:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4484, 0x2A448C
 VoiceDirRemapFind_Table_p0_86:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3774, f4=5440, x6="j|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3774, key=5440, x6="j|"
 VoiceDirRemapFind_Table_p0_87:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3454, f4=5184, x6="jd"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3454, key=5184, x6="jd"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A449C, 0x2A44A4
 data_486A44A4:
@@ -8904,11 +8904,11 @@ data_486A44AC:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A44AC, 0x2A44B4
 VoiceDirRemapFind_Table_p0_88:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=11141, x6="l1"
+	REC_VoiceDirRemapFind_Table_p0	key=11141, x6="l1"
 VoiceDirRemapFind_Table_p0_89:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=11142, x6="l8"
+	REC_VoiceDirRemapFind_Table_p0	key=11142, x6="l8"
 VoiceDirRemapFind_Table_p0_90:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A384C, f4=11143, x6="l9"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A384C, key=11143, x6="l9"
 data_486A44CC:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A44CC, 0x2A44DC
@@ -8916,12 +8916,12 @@ data_486A44DC:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A44DC, 0x2A44E4
 VoiceDirRemapFind_Table_p0_91:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A357C, f4=11648, x6="ly"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A357C, key=11648, x6="ly"
 data_486A44EC:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A44EC, 0x2A44F4
 VoiceDirRemapFind_Table_p0_92:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=11904, x6="lH"
+	REC_VoiceDirRemapFind_Table_p0	key=11904, x6="lH"
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A44FC, 0x2A4504
 data_486A4504:
@@ -8931,23 +8931,23 @@ data_486A450C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A450C, 0x2A4514
 VoiceDirRemapFind_Table_p0_93:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=9031, x6="l1"
+	REC_VoiceDirRemapFind_Table_p0	key=9031, x6="l1"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A451C, 0x2A4524
 data_486A4524:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4524, 0x2A452C
 VoiceDirRemapFind_Table_p0_94:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AFC, f4=8768, x6="l\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AFC, key=8768, x6="l\x08"
 data_486A4534:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4534, 0x2A453C
 VoiceDirRemapFind_Table_p0_95:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4314, f4=9792, x6="lr"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4314, key=9792, x6="lr"
 VoiceDirRemapFind_Table_p0_96:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F0C, f4=10304, x6="ly"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F0C, key=10304, x6="ly"
 VoiceDirRemapFind_Table_p0_97:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A43E4, f4=10816, x6="l|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A43E4, key=10816, x6="l|"
 
 ptrs_486A4554:	# 3 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	0
@@ -8963,16 +8963,16 @@ data_486A456C:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A456C, 0x2A4574
 
 VoiceDirRemapFind_Table_p0_98:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F84, f4=11905, x6="l@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F84, key=11905, x6="l@"
 VoiceDirRemapFind_Table_p0_99:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A450C, f4=10885, x6="l`"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A450C, key=10885, x6="l`"
 data_486A4584:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4584, 0x2A458C
 VoiceDirRemapFind_Table_p0_100:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=8774, x6="l "
+	REC_VoiceDirRemapFind_Table_p0	key=8774, x6="l "
 VoiceDirRemapFind_Table_p0_101:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=8775, x6="l!"
+	REC_VoiceDirRemapFind_Table_p0	key=8775, x6="l!"
 data_486A459C:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A459C, 0x2A45AC
@@ -8980,15 +8980,15 @@ data_486A45AC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A45AC, 0x2A45B4
 VoiceDirRemapFind_Table_p0_102:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A367C, f4=10048, x6="lp"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A367C, key=10048, x6="lp"
 VoiceDirRemapFind_Table_p0_103:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A41A4, f4=13185, x6="k\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A41A4, key=13185, x6="k\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A45C4, 0x2A45D4
 VoiceDirRemapFind_Table_p0_104:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=13189, x6="k\x11"
+	REC_VoiceDirRemapFind_Table_p0	key=13189, x6="k\x11"
 VoiceDirRemapFind_Table_p0_105:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A419C, f4=13184, x6="k\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A419C, key=13184, x6="k\x18"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A45E4, 0x2A45EC
 data_486A45EC:
@@ -9010,7 +9010,7 @@ data_486A461C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A461C, 0x2A4624
 VoiceDirRemapFind_Table_p0_106:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F54, f4=8512, x6="k,"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F54, key=8512, x6="k,"
 data_486A462C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A462C, 0x2A4634
@@ -9018,7 +9018,7 @@ data_486A4634:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4634, 0x2A463C
 VoiceDirRemapFind_Table_p0_107:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D6C, f4=7488, x6="k0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D6C, key=7488, x6="k0"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4644, 0x2A464C
 data_486A464C:
@@ -9031,29 +9031,29 @@ data_486A465C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A465C, 0x2A4664
 VoiceDirRemapFind_Table_p0_108:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=13957, x6="m\x01"
+	REC_VoiceDirRemapFind_Table_p0	key=13957, x6="m\x01"
 VoiceDirRemapFind_Table_p0_109:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A42DC, f4=13958, x6="m\x04"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A42DC, key=13958, x6="m\x04"
 VoiceDirRemapFind_Table_p0_110:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3CA4, f4=13959, x6="m\x05"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3CA4, key=13959, x6="m\x05"
 data_486A467C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A467C, 0x2A4684
 VoiceDirRemapFind_Table_p0_111:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=14213, x6="ma"
+	REC_VoiceDirRemapFind_Table_p0	key=14213, x6="ma"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A468C, 0x2A4694
 data_486A4694:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4694, 0x2A469C
 VoiceDirRemapFind_Table_p0_112:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DFC, f4=14208, x6="m\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DFC, key=14208, x6="m\x08"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A46A4, 0x2A46AC
 VoiceDirRemapFind_Table_p0_113:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4164, f4=11074, x6="m\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4164, key=11074, x6="m\x00"
 VoiceDirRemapFind_Table_p0_114:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A416C, f4=11075, x6="m\x01"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A416C, key=11075, x6="m\x01"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A46BC, 0x2A46C4
 data_486A46C4:
@@ -9066,7 +9066,7 @@ data_486A46E4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A46E4, 0x2A46EC
 VoiceDirRemapFind_Table_p0_115:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4154, f4=11072, x6="m\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4154, key=11072, x6="m\x08"
 
 ptrs_486A46F4:	# 3 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	data_486A440C
@@ -9088,7 +9088,7 @@ data_486A471C:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A471C, 0x2A4724
 
 VoiceDirRemapFind_Table_p0_116:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A33AC, f4=15493, x6="n\x11"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A33AC, key=15493, x6="n\x11"
 data_486A472C:
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A472C, 0x2A4744
@@ -9122,16 +9122,16 @@ data_486A4794:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4794, 0x2A47A4
 
 VoiceDirRemapFind_Table_p0_117:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D84, f4=14912, x6="nx"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D84, key=14912, x6="nx"
 VoiceDirRemapFind_Table_p0_118:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B5C, f4=14656, x6="n@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B5C, key=14656, x6="n@"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A47B4, 0x2A47BC
 data_486A47BC:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A47BC, 0x2A47D4
 VoiceDirRemapFind_Table_p0_119:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=14981, x6="o0"
+	REC_VoiceDirRemapFind_Table_p0	key=14981, x6="o0"
 data_486A47DC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A47DC, 0x2A47E4
@@ -9148,7 +9148,7 @@ data_486A4804:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4804, 0x2A480C
 VoiceDirRemapFind_Table_p0_120:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47EC, f4=13127, x6="o\x11"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47EC, key=13127, x6="o\x11"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4814, 0x2A481C
 data_486A481C:
@@ -9158,22 +9158,22 @@ data_486A4824:
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4824, 0x2A483C
 VoiceDirRemapFind_Table_p0_121:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DCC, f4=13953, x6="m|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DCC, key=13953, x6="m|"
 VoiceDirRemapFind_Table_p0_122:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A462C, f4=23175, x6="x\x1C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A462C, key=23175, x6="x\x1C"
 data_486A484C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A484C, 0x2A4854
 VoiceDirRemapFind_Table_p0_123:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A42C4, f4=20611, x6="u,"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A42C4, key=20611, x6="u,"
 VoiceDirRemapFind_Table_p0_124:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A358C, f4=11649, x6="lz"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A358C, key=11649, x6="lz"
 VoiceDirRemapFind_Table_p0_125:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F5C, f4=10368, x6="j`"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F5C, key=10368, x6="j`"
 VoiceDirRemapFind_Table_p0_126:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A38BC, f4=10370, x6="ja"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A38BC, key=10370, x6="ja"
 VoiceDirRemapFind_Table_p0_127:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DD4, f4=13954, x6="m~"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DD4, key=13954, x6="m~"
 data_486A487C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A487C, 0x2A4884
@@ -9181,20 +9181,20 @@ data_486A4884:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4884, 0x2A488C
 VoiceDirRemapFind_Table_p0_128:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A353C, f4=15239, x6="ox"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A353C, key=15239, x6="ox"
 VoiceDirRemapFind_Table_p0_129:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4214, f4=12096, x6="mx"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4214, key=12096, x6="mx"
 VoiceDirRemapFind_Table_p0_130:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4194, f4=11328, x6="m|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4194, key=11328, x6="m|"
 VoiceDirRemapFind_Table_p0_131:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EB4, f4=15685, x6="x\x1C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EB4, key=15685, x6="x\x1C"
 data_486A48AC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A48AC, 0x2A48B4
 VoiceDirRemapFind_Table_p0_132:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F2C, f4=19525, x6="u,"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F2C, key=19525, x6="u,"
 VoiceDirRemapFind_Table_p0_133:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4634, f4=10305, x6="lz"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4634, key=10305, x6="lz"
 data_486A48C4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A48C4, 0x2A48CC
@@ -9211,11 +9211,11 @@ data_486A48EC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A48EC, 0x2A48F4
 VoiceDirRemapFind_Table_p0_134:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DA4, f4=16515, x6="qp"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DA4, key=16515, x6="qp"
 VoiceDirRemapFind_Table_p0_135:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A42A4, f4=20355, x6="vL"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A42A4, key=20355, x6="vL"
 VoiceDirRemapFind_Table_p0_136:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48C4, f4=16967, x6="qp"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48C4, key=16967, x6="qp"
 data_486A490C:
 	.space	4, 0x00
 
@@ -9224,21 +9224,21 @@ Str_EIvL_GjH_hb:	.asciz "EIvL\x9CGjH\x83\"hb"
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A491D, 0x2A4924
 
 VoiceDirRemapFind_Table_p0_137:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4584, f4=2118, x6="hb"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4584, key=2118, x6="hb"
 data_486A492C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A492C, 0x2A4934
 VoiceDirRemapFind_Table_p0_138:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D04, f4=9344, x6="hp"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D04, key=9344, x6="hp"
 VoiceDirRemapFind_Table_p0_139:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B54, f4=9089, x6="hR"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B54, key=9089, x6="hR"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4944, 0x2A494C
 data_486A494C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A494C, 0x2A4954
 VoiceDirRemapFind_Table_p0_140:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D74, f4=9345, x6="hr"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D74, key=9345, x6="hr"
 data_486A495C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A495C, 0x2A4964
@@ -9246,32 +9246,32 @@ data_486A4964:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4964, 0x2A496C
 VoiceDirRemapFind_Table_p0_141:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A377C, f4=10374, x6="jh"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A377C, key=10374, x6="jh"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4974, 0x2A497C
 VoiceDirRemapFind_Table_p0_142:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3494, f4=10625, x6="jx"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3494, key=10625, x6="jx"
 data_486A4984:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4984, 0x2A498C
 VoiceDirRemapFind_Table_p0_143:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3804, f4=10626, x6="jy"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3804, key=10626, x6="jy"
 VoiceDirRemapFind_Table_p0_144:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4534, f4=1860, x6="hp"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4534, key=1860, x6="hp"
 VoiceDirRemapFind_Table_p0_145:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4554+8, f4=1861, x6="hR"
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4554+8, key=1861, x6="hR"
 VoiceDirRemapFind_Table_p0_146:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4564, f4=1862, x6="h$"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4564, key=1862, x6="h$"
 VoiceDirRemapFind_Table_p0_147:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4524, f4=1863, x6="hh"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4524, key=1863, x6="hh"
 VoiceDirRemapFind_Table_p0_148:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A45AC, f4=2116, x6="hr"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A45AC, key=2116, x6="hr"
 VoiceDirRemapFind_Table_p0_149:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44DC, f4=2117, x6="h "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44DC, key=2117, x6="h "
 VoiceDirRemapFind_Table_p0_150:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A46F4+8, f4=5188, x6="je"
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A46F4+8, key=5188, x6="je"
 VoiceDirRemapFind_Table_p0_151:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=5189, x6="jh"
+	REC_VoiceDirRemapFind_Table_p0	key=5189, x6="jh"
 data_486A49D4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A49D4, 0x2A49DC
@@ -9288,11 +9288,11 @@ data_486A49F4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A49F4, 0x2A49FC
 VoiceDirRemapFind_Table_p0_152:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A471C, f4=22912, x6="x\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A471C, key=22912, x6="x\x00"
 VoiceDirRemapFind_Table_p0_153:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A465C, f4=21376, x6="z "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A465C, key=21376, x6="z "
 VoiceDirRemapFind_Table_p0_154:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=23168, x6="x\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=23168, x6="x\x10"
 data_486A4A14:
 # census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4A14, 0x2A4A24
@@ -9300,9 +9300,9 @@ data_486A4A24:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4A24, 0x2A4A2C
 VoiceDirRemapFind_Table_p0_155:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D5C, f4=27520, x6="\x0D@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D5C, key=27520, x6="\x0D@"
 VoiceDirRemapFind_Table_p0_156:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EBC, f4=15941, x6="z\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EBC, key=15941, x6="z\x10"
 data_486A4A3C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4A3C, 0x2A4A44
@@ -9313,27 +9313,27 @@ data_486A4A4C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4A4C, 0x2A4A54
 VoiceDirRemapFind_Table_p0_157:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4984, f4=15936, x6="z\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4984, key=15936, x6="z\x00"
 data_486A4A5C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4A5C, 0x2A4A64
 VoiceDirRemapFind_Table_p0_158:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4964, f4=15938, x6="z\x02"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4964, key=15938, x6="z\x02"
 VoiceDirRemapFind_Table_p0_159:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4884, f4=28736, x6="\x0D@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4884, key=28736, x6="\x0D@"
 VoiceDirRemapFind_Table_p0_160:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D8C, f4=31616, x6="q@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D8C, key=31616, x6="q@"
 VoiceDirRemapFind_Table_p0_161:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A35EC, f4=31617, x6="qA"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A35EC, key=31617, x6="qA"
 VoiceDirRemapFind_Table_p0_162:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C4C, f4=31618, x6="qB"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C4C, key=31618, x6="qB"
 data_486A4A8C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4A8C, 0x2A4A94
 VoiceDirRemapFind_Table_p0_163:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A487C, f4=31620, x6="qD"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A487C, key=31620, x6="qD"
 VoiceDirRemapFind_Table_p0_164:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3984, f4=31621, x6="qE"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3984, key=31621, x6="qE"
 data_486A4AA4:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4AA4, 0x2A4AAC
@@ -9344,15 +9344,15 @@ data_486A4AB4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4AB4, 0x2A4ABC
 VoiceDirRemapFind_Table_p0_165:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=Str_Au_8_5jHBu_0+4, f4=31873, x6="qI"
+	REC_VoiceDirRemapFind_Table_p0	p0=Str_Au_8_5jHBu_0+4, key=31873, x6="qI"
 VoiceDirRemapFind_Table_p0_166:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49F4, f4=31874, x6="qJ"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49F4, key=31874, x6="qJ"
 VoiceDirRemapFind_Table_p0_167:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A45EC, f4=31875, x6="qK"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A45EC, key=31875, x6="qK"
 VoiceDirRemapFind_Table_p0_168:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A46DC, f4=31876, x6="qL"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A46DC, key=31876, x6="qL"
 VoiceDirRemapFind_Table_p0_169:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A46E4, f4=31877, x6="qM"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A46E4, key=31877, x6="qM"
 data_486A4AE4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4AE4, 0x2A4AEC
@@ -9360,20 +9360,20 @@ data_486A4AEC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4AEC, 0x2A4AF4
 VoiceDirRemapFind_Table_p0_170:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49D4, f4=32644, x6="qP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49D4, key=32644, x6="qP"
 VoiceDirRemapFind_Table_p0_171:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49DC, f4=32645, x6="qQ"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49DC, key=32645, x6="qQ"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4B04, 0x2A4B14
 data_486A4B14:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4B14, 0x2A4B1C
 VoiceDirRemapFind_Table_p0_172:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4604, f4=17281, x6="q\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4604, key=17281, x6="q\x08"
 VoiceDirRemapFind_Table_p0_173:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A460C, f4=17282, x6="q\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A460C, key=17282, x6="q\x10"
 VoiceDirRemapFind_Table_p0_174:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A43A4, f4=17283, x6="q\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A43A4, key=17283, x6="q\x18"
 data_486A4B34:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4B34, 0x2A4B3C
@@ -9381,15 +9381,15 @@ data_486A4B3C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4B3C, 0x2A4B44
 VoiceDirRemapFind_Table_p0_175:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4254, f4=32322, x6="qB"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4254, key=32322, x6="qB"
 VoiceDirRemapFind_Table_p0_176:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4794, f4=32323, x6="qC"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4794, key=32323, x6="qC"
 VoiceDirRemapFind_Table_p0_177:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A475C, f4=32324, x6="qD"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A475C, key=32324, x6="qD"
 VoiceDirRemapFind_Table_p0_178:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C24, f4=32325, x6="qE"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C24, key=32325, x6="qE"
 VoiceDirRemapFind_Table_p0_179:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A470C, f4=32326, x6="qF"
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A470C, key=32326, x6="qF"
 data_486A4B6C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4B6C, 0x2A4B74
@@ -9399,35 +9399,35 @@ ptrs_486A4B74:
 	.long	data_48717F40
 
 VoiceDirRemapFind_Table_p0_180:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A427C, f4=32577, x6="qI"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A427C, key=32577, x6="qI"
 VoiceDirRemapFind_Table_p0_181:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4274, f4=32578, x6="qJ"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4274, key=32578, x6="qJ"
 VoiceDirRemapFind_Table_p0_182:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=Str_EIvL_GjH_hb+4, f4=32579, x6="qK"
+	REC_VoiceDirRemapFind_Table_p0	p0=Str_EIvL_GjH_hb+4, key=32579, x6="qK"
 VoiceDirRemapFind_Table_p0_183:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4764+8, f4=32580, x6="qL"
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4764+8, key=32580, x6="qL"
 VoiceDirRemapFind_Table_p0_184:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4294, f4=32581, x6="qM"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4294, key=32581, x6="qM"
 VoiceDirRemapFind_Table_p0_185:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A495C, f4=32582, x6="qN"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A495C, key=32582, x6="qN"
 data_486A4BAC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4BAC, 0x2A4BB4
 VoiceDirRemapFind_Table_p0_186:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E54, f4=30528, x6="qP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E54, key=30528, x6="qP"
 VoiceDirRemapFind_Table_p0_187:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E5C, f4=30529, x6="qQ"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E5C, key=30529, x6="qQ"
 VoiceDirRemapFind_Table_p0_188:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E64, f4=30530, x6="qR"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E64, key=30530, x6="qR"
 VoiceDirRemapFind_Table_p0_189:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E6C, f4=30531, x6="qS"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E6C, key=30531, x6="qS"
 VoiceDirRemapFind_Table_p0_190:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3734, f4=16963, x6="q\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3734, key=16963, x6="q\x00"
 data_486A4BDC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4BDC, 0x2A4BE4
 VoiceDirRemapFind_Table_p0_191:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=16960, x6="q\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=16960, x6="q\x10"
 data_486A4BEC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4BEC, 0x2A4BF4
@@ -9435,92 +9435,92 @@ data_486A4BF4:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4BF4, 0x2A4BFC
 VoiceDirRemapFind_Table_p0_192:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34B4, f4=27777, x6="pa"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34B4, key=27777, x6="pa"
 VoiceDirRemapFind_Table_p0_193:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A464C, f4=27778, x6="pb"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A464C, key=27778, x6="pb"
 VoiceDirRemapFind_Table_p0_194:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A431C, f4=27779, x6="pc"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A431C, key=27779, x6="pc"
 VoiceDirRemapFind_Table_p0_195:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4324, f4=27780, x6="pd"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4324, key=27780, x6="pd"
 VoiceDirRemapFind_Table_p0_196:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A432C, f4=27781, x6="pe"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A432C, key=27781, x6="pe"
 VoiceDirRemapFind_Table_p0_197:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A3C, f4=27782, x6="pf"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A3C, key=27782, x6="pf"
 data_486A4C2C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4C2C, 0x2A4C34
 VoiceDirRemapFind_Table_p0_198:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4C2C, f4=17024, x6="p\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4C2C, key=17024, x6="p\x00"
 VoiceDirRemapFind_Table_p0_199:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4354, f4=17025, x6="p\x04"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4354, key=17025, x6="p\x04"
 VoiceDirRemapFind_Table_p0_200:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A435C, f4=17026, x6="p\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A435C, key=17026, x6="p\x08"
 VoiceDirRemapFind_Table_p0_201:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4364, f4=17027, x6="p\x0C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4364, key=17027, x6="p\x0C"
 VoiceDirRemapFind_Table_p0_202:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A490C, f4=28032, x6="ph"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A490C, key=28032, x6="ph"
 VoiceDirRemapFind_Table_p0_203:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34D4, f4=28033, x6="pi"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34D4, key=28033, x6="pi"
 VoiceDirRemapFind_Table_p0_204:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4614, f4=28034, x6="pj"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4614, key=28034, x6="pj"
 VoiceDirRemapFind_Table_p0_205:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A45F4, f4=28035, x6="pk"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A45F4, key=28035, x6="pk"
 data_486A4C74:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4C74, 0x2A4C7C
 VoiceDirRemapFind_Table_p0_206:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4344, f4=28037, x6="pm"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4344, key=28037, x6="pm"
 VoiceDirRemapFind_Table_p0_207:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A44, f4=28038, x6="pn"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A44, key=28038, x6="pn"
 VoiceDirRemapFind_Table_p0_208:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B14, f4=28039, x6="po"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B14, key=28039, x6="po"
 VoiceDirRemapFind_Table_p0_209:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A494C, f4=16512, x6="p\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A494C, key=16512, x6="p\x10"
 data_486A4C9C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4C9C, 0x2A4CA4
 VoiceDirRemapFind_Table_p0_210:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B8C, f4=16768, x6="p\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B8C, key=16768, x6="p\x18"
 data_486A4CAC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4CAC, 0x2A4CB4
 VoiceDirRemapFind_Table_p0_211:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=28288, x6="pp"
+	REC_VoiceDirRemapFind_Table_p0	key=28288, x6="pp"
 VoiceDirRemapFind_Table_p0_212:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34CC, f4=28289, x6="pq"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A34CC, key=28289, x6="pq"
 VoiceDirRemapFind_Table_p0_213:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A461C, f4=28290, x6="pr"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A461C, key=28290, x6="pr"
 VoiceDirRemapFind_Table_p0_214:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48DC, f4=28291, x6="ps"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48DC, key=28291, x6="ps"
 VoiceDirRemapFind_Table_p0_215:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=28292, x6="pt"
+	REC_VoiceDirRemapFind_Table_p0	key=28292, x6="pt"
 VoiceDirRemapFind_Table_p0_216:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A43C4, f4=28293, x6="pu"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A43C4, key=28293, x6="pu"
 VoiceDirRemapFind_Table_p0_217:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A4C, f4=28294, x6="pv"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A4C, key=28294, x6="pv"
 data_486A4CEC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4CEC, 0x2A4CF4
 VoiceDirRemapFind_Table_p0_218:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4784, f4=16513, x6="p "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4784, key=16513, x6="p "
 VoiceDirRemapFind_Table_p0_219:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3414, f4=16517, x6="p$"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3414, key=16517, x6="p$"
 VoiceDirRemapFind_Table_p0_220:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B94, f4=16769, x6="p("
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3B94, key=16769, x6="p("
 VoiceDirRemapFind_Table_p0_221:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A37F4, f4=16773, x6="p,"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A37F4, key=16773, x6="p,"
 VoiceDirRemapFind_Table_p0_222:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E3C, f4=29056, x6="px"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E3C, key=29056, x6="px"
 VoiceDirRemapFind_Table_p0_223:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E44, f4=29057, x6="py"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3E44, key=29057, x6="py"
 VoiceDirRemapFind_Table_p0_224:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A459C, f4=29058, x6="pz"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A459C, key=29058, x6="pz"
 VoiceDirRemapFind_Table_p0_225:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44CC, f4=29059, x6="p{"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44CC, key=29059, x6="p{"
 VoiceDirRemapFind_Table_p0_226:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A456C, f4=29060, x6="p|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A456C, key=29060, x6="p|"
 VoiceDirRemapFind_Table_p0_227:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4504, f4=29061, x6="p}"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4504, key=29061, x6="p}"
 data_486A4D44:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4D44, 0x2A4D4C
@@ -9528,144 +9528,144 @@ data_486A4D4C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4D4C, 0x2A4D54
 VoiceDirRemapFind_Table_p0_228:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A478C, f4=16514, x6="p0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A478C, key=16514, x6="p0"
 VoiceDirRemapFind_Table_p0_229:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4444, f4=16518, x6="p4"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4444, key=16518, x6="p4"
 data_486A4D64:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4D64, 0x2A4D6C
 VoiceDirRemapFind_Table_p0_230:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4454, f4=16774, x6="p<"
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4454, key=16774, x6="p<"
 VoiceDirRemapFind_Table_p0_231:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A14, f4=17028, x6="p\x0F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A14, key=17028, x6="p\x0F"
 data_486A4D7C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4D7C, 0x2A4D84
 VoiceDirRemapFind_Table_p0_232:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A24, f4=17030, x6="p/"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A24, key=17030, x6="p/"
 VoiceDirRemapFind_Table_p0_233:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A401C, f4=31040, x6="p`"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A401C, key=31040, x6="p`"
 VoiceDirRemapFind_Table_p0_234:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4024, f4=31041, x6="pa"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4024, key=31041, x6="pa"
 VoiceDirRemapFind_Table_p0_235:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A402C, f4=31042, x6="pb"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A402C, key=31042, x6="pb"
 VoiceDirRemapFind_Table_p0_236:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49E4, f4=31043, x6="pc"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49E4, key=31043, x6="pc"
 VoiceDirRemapFind_Table_p0_237:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49EC, f4=31044, x6="pd"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A49EC, key=31044, x6="pd"
 VoiceDirRemapFind_Table_p0_238:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A492C, f4=31045, x6="pe"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A492C, key=31045, x6="pe"
 VoiceDirRemapFind_Table_p0_239:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A46C4, f4=31046, x6="pf"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A46C4, key=31046, x6="pf"
 data_486A4DC4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4DC4, 0x2A4DCC
 VoiceDirRemapFind_Table_p0_240:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A374C, f4=17731, x6="p\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A374C, key=17731, x6="p\x00"
 data_486A4DD4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4DD4, 0x2A4DDC
 VoiceDirRemapFind_Table_p0_241:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A405C, f4=17221, x6="p\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A405C, key=17221, x6="p\x08"
 VoiceDirRemapFind_Table_p0_242:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A40E4, f4=17734, x6="p\x0C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A40E4, key=17734, x6="p\x0C"
 VoiceDirRemapFind_Table_p0_243:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3784, f4=31296, x6="ph"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3784, key=31296, x6="ph"
 VoiceDirRemapFind_Table_p0_244:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4474, f4=31297, x6="pi"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4474, key=31297, x6="pi"
 VoiceDirRemapFind_Table_p0_245:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=31298, x6="pj"
+	REC_VoiceDirRemapFind_Table_p0	key=31298, x6="pj"
 VoiceDirRemapFind_Table_p0_246:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47F4, f4=31299, x6="pk"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47F4, key=31299, x6="pk"
 VoiceDirRemapFind_Table_p0_247:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48EC, f4=31300, x6="pl"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48EC, key=31300, x6="pl"
 VoiceDirRemapFind_Table_p0_248:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47BC, f4=31301, x6="pm"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47BC, key=31301, x6="pm"
 VoiceDirRemapFind_Table_p0_249:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4804, f4=31302, x6="pn"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4804, key=31302, x6="pn"
 data_486A4E24:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4E24, 0x2A4E2C
 VoiceDirRemapFind_Table_p0_250:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=17730, x6="p\x10"
+	REC_VoiceDirRemapFind_Table_p0	key=17730, x6="p\x10"
 VoiceDirRemapFind_Table_p0_251:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C74, f4=17732, x6="p\x14"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C74, key=17732, x6="p\x14"
 VoiceDirRemapFind_Table_p0_252:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A484C, f4=17733, x6="p\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A484C, key=17733, x6="p\x18"
 VoiceDirRemapFind_Table_p0_253:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A443C, f4=17735, x6="p\x1C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A443C, key=17735, x6="p\x1C"
 VoiceDirRemapFind_Table_p0_254:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4104, f4=31552, x6="pp"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4104, key=31552, x6="pp"
 VoiceDirRemapFind_Table_p0_255:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A410C, f4=31553, x6="pq"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A410C, key=31553, x6="pq"
 VoiceDirRemapFind_Table_p0_256:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=Str_e_4_jH_e_5+4, f4=31554, x6="pr"
+	REC_VoiceDirRemapFind_Table_p0	p0=Str_e_4_jH_e_5+4, key=31554, x6="pr"
 VoiceDirRemapFind_Table_p0_257:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4824, f4=31555, x6="ps"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4824, key=31555, x6="ps"
 data_486A4E6C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4E6C, 0x2A4E74
 VoiceDirRemapFind_Table_p0_258:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AD4, f4=31557, x6="pu"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AD4, key=31557, x6="pu"
 VoiceDirRemapFind_Table_p0_259:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A39F4, f4=31558, x6="pv"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A39F4, key=31558, x6="pv"
 data_486A4E84:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4E84, 0x2A4E8C
 VoiceDirRemapFind_Table_p0_260:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A421C, f4=32064, x6="p "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A421C, key=32064, x6="p "
 VoiceDirRemapFind_Table_p0_261:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4284, f4=32065, x6="p$"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4284, key=32065, x6="p$"
 VoiceDirRemapFind_Table_p0_262:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4224, f4=32066, x6="p("
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4224, key=32066, x6="p("
 data_486A4EA4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4EA4, 0x2A4EAC
 VoiceDirRemapFind_Table_p0_263:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48CC, f4=31808, x6="px"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48CC, key=31808, x6="px"
 VoiceDirRemapFind_Table_p0_264:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=31809, x6="py"
+	REC_VoiceDirRemapFind_Table_p0	key=31809, x6="py"
 VoiceDirRemapFind_Table_p0_265:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EC4, f4=31810, x6="pz"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EC4, key=31810, x6="pz"
 data_486A4EC4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4EC4, 0x2A4ECC
 VoiceDirRemapFind_Table_p0_266:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A481C, f4=31812, x6="p|"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A481C, key=31812, x6="p|"
 VoiceDirRemapFind_Table_p0_267:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4704, f4=31813, x6="p}"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4704, key=31813, x6="p}"
 VoiceDirRemapFind_Table_p0_268:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A470C+8, f4=31814, x6="p~"
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A470C+8, key=31814, x6="p~"
 data_486A4EE4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4EE4, 0x2A4EEC
 VoiceDirRemapFind_Table_p0_269:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4744, f4=32068, x6="p0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4744, key=32068, x6="p0"
 VoiceDirRemapFind_Table_p0_270:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4234, f4=32069, x6="p4"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4234, key=32069, x6="p4"
 VoiceDirRemapFind_Table_p0_271:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A423C, f4=32070, x6="p8"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A423C, key=32070, x6="p8"
 data_486A4F04:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F04, 0x2A4F0C
 VoiceDirRemapFind_Table_p0_272:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D4C, f4=17989, x6="p\x0F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D4C, key=17989, x6="p\x0F"
 VoiceDirRemapFind_Table_p0_273:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D54, f4=17990, x6="p\x1F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D54, key=17990, x6="p\x1F"
 VoiceDirRemapFind_Table_p0_274:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C44, f4=17991, x6="p/"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3C44, key=17991, x6="p/"
 data_486A4F24:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F24, 0x2A4F2C
 VoiceDirRemapFind_Table_p0_275:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44EC, f4=17217, x6="pi"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44EC, key=17217, x6="pi"
 data_486A4F34:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F34, 0x2A4F3C
 VoiceDirRemapFind_Table_p0_276:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3364, f4=22145, x6="s\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3364, key=22145, x6="s\x08"
 VoiceDirRemapFind_Table_p0_277:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A39DC, f4=18240, x6="s\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A39DC, key=18240, x6="s\x00"
 data_486A4F4C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F4C, 0x2A4F54
@@ -9673,200 +9673,200 @@ data_486A4F54:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F54, 0x2A4F5C
 VoiceDirRemapFind_Table_p0_278:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A467C, f4=21632, x6="w\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A467C, key=21632, x6="w\x18"
 VoiceDirRemapFind_Table_p0_279:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4174, f4=18496, x6="w\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4174, key=18496, x6="w\x10"
 data_486A4F6C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F6C, 0x2A4F74
 VoiceDirRemapFind_Table_p0_280:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F6C, f4=20352, x6="v@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F6C, key=20352, x6="v@"
 VoiceDirRemapFind_Table_p0_281:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=20353, x6="vH"
+	REC_VoiceDirRemapFind_Table_p0	key=20353, x6="vH"
 VoiceDirRemapFind_Table_p0_282:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BF4, f4=20356, x6="vP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BF4, key=20356, x6="vP"
 VoiceDirRemapFind_Table_p0_283:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48D4, f4=18752, x6="v@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48D4, key=18752, x6="v@"
 data_486A4F94:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A4F94, 0x2A4F9C
 VoiceDirRemapFind_Table_p0_284:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D94, f4=29760, x6="vP"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D94, key=29760, x6="vP"
 VoiceDirRemapFind_Table_p0_285:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B3C, f4=8577, x6="i\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B3C, key=8577, x6="i\x10"
 VoiceDirRemapFind_Table_p0_286:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4C74, f4=9857, x6="jL"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4C74, key=9857, x6="jL"
 VoiceDirRemapFind_Table_p0_287:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4E6C, f4=15232, x6="op"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4E6C, key=15232, x6="op"
 VoiceDirRemapFind_Table_p0_288:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4774, f4=23425, x6="t\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4774, key=23425, x6="t\x10"
 VoiceDirRemapFind_Table_p0_289:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AB4, f4=24452, x6="y\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AB4, key=24452, x6="y\x00"
 VoiceDirRemapFind_Table_p0_290:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3394, f4=3136, x6="i\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3394, key=3136, x6="i\x10"
 VoiceDirRemapFind_Table_p0_291:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A40AC, f4=6720, x6="jL"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A40AC, key=6720, x6="jL"
 VoiceDirRemapFind_Table_p0_292:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4EA4, f4=13888, x6="op"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4EA4, key=13888, x6="op"
 VoiceDirRemapFind_Table_p0_293:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4E24, f4=20544, x6="t\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4E24, key=20544, x6="t\x10"
 VoiceDirRemapFind_Table_p0_294:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D1C, f4=28992, x6="y\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3D1C, key=28992, x6="y\x00"
 VoiceDirRemapFind_Table_p0_295:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AEC, f4=21120, x6="u\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AEC, key=21120, x6="u\x00"
 VoiceDirRemapFind_Table_p0_296:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AAC, f4=20864, x6="u\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AAC, key=20864, x6="u\x10"
 VoiceDirRemapFind_Table_p0_297:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F94, f4=20608, x6="u "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F94, key=20608, x6="u "
 VoiceDirRemapFind_Table_p0_298:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AA4, f4=19008, x6="u\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AA4, key=19008, x6="u\x00"
 VoiceDirRemapFind_Table_p0_299:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AE4, f4=19264, x6="u\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4AE4, key=19264, x6="u\x10"
 VoiceDirRemapFind_Table_p0_300:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DDC, f4=19520, x6="u "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3DDC, key=19520, x6="u "
 VoiceDirRemapFind_Table_p0_301:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4CAC, f4=24192, x6="{\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4CAC, key=24192, x6="{\x00"
 VoiceDirRemapFind_Table_p0_302:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3A9C, f4=19776, x6="{\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3A9C, key=19776, x6="{\x00"
 VoiceDirRemapFind_Table_p0_303:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F4C, f4=20096, x6="v0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F4C, key=20096, x6="v0"
 VoiceDirRemapFind_Table_p0_304:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BAC, f4=21824, x6="v0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BAC, key=21824, x6="v0"
 VoiceDirRemapFind_Table_p0_305:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A5C, f4=17792, x6="r\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A5C, key=17792, x6="r\x00"
 data_486A504C:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A504C, 0x2A5054
 VoiceDirRemapFind_Table_p0_306:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A404C, f4=18052, x6="r "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A404C, key=18052, x6="r "
 VoiceDirRemapFind_Table_p0_307:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A339C, f4=23172, x6="x\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A339C, key=23172, x6="x\x18"
 VoiceDirRemapFind_Table_p0_308:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=17472, x6="r\x00"
+	REC_VoiceDirRemapFind_Table_p0	key=17472, x6="r\x00"
 data_486A506C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A506C, 0x2A5074
 VoiceDirRemapFind_Table_p0_309:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A38D4, f4=17474, x6="r "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A38D4, key=17474, x6="r "
 VoiceDirRemapFind_Table_p0_310:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4CEC, f4=15681, x6="x\x18"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4CEC, key=15681, x6="x\x18"
 VoiceDirRemapFind_Table_p0_311:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44AC, f4=18560, x6="t "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44AC, key=18560, x6="t "
 VoiceDirRemapFind_Table_p0_312:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BEC, f4=18816, x6="t("
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BEC, key=18816, x6="t("
 data_486A5094:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5094, 0x2A509C
 VoiceDirRemapFind_Table_p0_313:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F54, f4=20033, x6="t("
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F54, key=20033, x6="t("
 VoiceDirRemapFind_Table_p0_314:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A472C, f4=23424, x6="t\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A472C, key=23424, x6="t\x00"
 data_486A50AC:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A50AC, 0x2A50B4
 VoiceDirRemapFind_Table_p0_315:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4DC4, f4=20288, x6="t\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4DC4, key=20288, x6="t\x00"
 VoiceDirRemapFind_Table_p0_316:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F34, f4=20289, x6="t\x08"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F34, key=20289, x6="t\x08"
 VoiceDirRemapFind_Table_p0_317:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AE4, f4=22656, x6="x "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3AE4, key=22656, x6="x "
 VoiceDirRemapFind_Table_p0_318:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47E4, f4=22400, x6="x("
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47E4, key=22400, x6="x("
 VoiceDirRemapFind_Table_p0_319:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4554, f4=16192, x6="x "
+	REC_VoiceDirRemapFind_Table_p0	p0=ptrs_486A4554, key=16192, x6="x "
 VoiceDirRemapFind_Table_p0_320:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A504C, f4=16193, x6="x("
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A504C, key=16193, x6="x("
 VoiceDirRemapFind_Table_p0_321:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4C9C, f4=23936, x6="w\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4C9C, key=23936, x6="w\x00"
 VoiceDirRemapFind_Table_p0_322:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4E84, f4=20800, x6="w\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4E84, key=20800, x6="w\x00"
 VoiceDirRemapFind_Table_p0_323:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A506C, f4=19328, x6="v\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A506C, key=19328, x6="v\x00"
 VoiceDirRemapFind_Table_p0_324:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=19840, x6="v "
+	REC_VoiceDirRemapFind_Table_p0	key=19840, x6="v "
 VoiceDirRemapFind_Table_p0_325:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4DD4, f4=19584, x6="v\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4DD4, key=19584, x6="v\x10"
 VoiceDirRemapFind_Table_p0_326:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=23680, x6="w "
+	REC_VoiceDirRemapFind_Table_p0	key=23680, x6="w "
 VoiceDirRemapFind_Table_p0_327:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4EE4, f4=21056, x6="v\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4EE4, key=21056, x6="v\x00"
 VoiceDirRemapFind_Table_p0_328:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F04, f4=21312, x6="v "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F04, key=21312, x6="v "
 VoiceDirRemapFind_Table_p0_329:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B6C, f4=21568, x6="v\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B6C, key=21568, x6="v\x10"
 VoiceDirRemapFind_Table_p0_330:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A50AC, f4=21571, x6="w "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A50AC, key=21571, x6="w "
 VoiceDirRemapFind_Table_p0_331:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A8C, f4=6020, x6="f "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4A8C, key=6020, x6="f "
 VoiceDirRemapFind_Table_p0_332:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47DC, f4=27968, x6="f "
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A47DC, key=27968, x6="f "
 VoiceDirRemapFind_Table_p0_333:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3FFC, f4=32640, x6="{@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3FFC, key=32640, x6="{@"
 VoiceDirRemapFind_Table_p0_334:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4004, f4=32641, x6="{H"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4004, key=32641, x6="{H"
 VoiceDirRemapFind_Table_p0_335:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A36DC, f4=28480, x6="{@"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A36DC, key=28480, x6="{@"
 VoiceDirRemapFind_Table_p0_336:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EFC, f4=28481, x6="{H"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3EFC, key=28481, x6="{H"
 VoiceDirRemapFind_Table_p0_337:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3744, f4=64, x6="\x7F\x7F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3744, key=64, x6="\x7F\x7F"
 VoiceDirRemapFind_Table_p0_338:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=Str_G_A+4, f4=17220, x6="p\x10"
+	REC_VoiceDirRemapFind_Table_p0	p0=Str_G_A+4, key=17220, x6="p\x10"
 VoiceDirRemapFind_Table_p0_339:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D4C, f4=16449, x6="\x0F\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D4C, key=16449, x6="\x0F\x00"
 VoiceDirRemapFind_Table_p0_340:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44A4, f4=16704, x6="\x0D\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A44A4, key=16704, x6="\x0D\x00"
 VoiceDirRemapFind_Table_p0_341:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4484, f4=23107, x6="|C"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4484, key=23107, x6="|C"
 VoiceDirRemapFind_Table_p0_342:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D44, f4=16448, x6="\x0F0"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D44, key=16448, x6="\x0F0"
 VoiceDirRemapFind_Table_p0_343:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BDC, f4=24384, x6="`\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4BDC, key=24384, x6="`\x00"
 VoiceDirRemapFind_Table_p0_344:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D7C, f4=2560, x6="\x0B\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D7C, key=2560, x6="\x0B\x00"
 VoiceDirRemapFind_Table_p0_345:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F1C, f4=1031, x6="\x04\x07"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F1C, key=1031, x6="\x04\x07"
 VoiceDirRemapFind_Table_p0_346:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	f4=1287, x6="\x03\x07"
+	REC_VoiceDirRemapFind_Table_p0	key=1287, x6="\x03\x07"
 VoiceDirRemapFind_Table_p0_347:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4654, f4=1285, x6="\x03\x0F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4654, key=1285, x6="\x03\x0F"
 VoiceDirRemapFind_Table_p0_348:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48AC, f4=1539, x6="\x05\x07"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A48AC, key=1539, x6="\x05\x07"
 VoiceDirRemapFind_Table_p0_349:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4694, f4=10759, x6="\"\x07"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4694, key=10759, x6="\"\x07"
 VoiceDirRemapFind_Table_p0_350:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A5094, f4=10757, x6="\"\x17"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A5094, key=10757, x6="\"\x17"
 data_486A51D4:
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A51D4, 0x2A51DC
 VoiceDirRemapFind_Table_p0_351:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F4C, f4=17415, x6="D\x17"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A3F4C, key=17415, x6="D\x17"
 VoiceDirRemapFind_Table_p0_352:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D64, f4=31239, x6="Z\x07"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4D64, key=31239, x6="Z\x07"
 VoiceDirRemapFind_Table_p0_353:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F24, f4=4231, x6="b\x0F"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4F24, key=4231, x6="b\x0F"
 VoiceDirRemapFind_Table_p0_354:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A51D4, f4=3911, x6="jG"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A51D4, key=3911, x6="jG"
 VoiceDirRemapFind_Table_p0_355:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B34, f4=30465, x6="_\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4B34, key=30465, x6="_\x00"
 VoiceDirRemapFind_Table_p0_356:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
-	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4EC4, f4=11777, x6="&\x00"
+	REC_VoiceDirRemapFind_Table_p0	p0=data_486A4EC4, key=11777, x6="&\x00"
 data_486A520C:
 	.space	8, 0x00
 VoiceDirClassFind_Table_p0_0:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1, x6="\x00\x00"
 data_486A521C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A521C, 0x2A5224
 VoiceDirClassFind_Table_p0_1:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_2:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=4, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=4, x6="\x00\x00"
 data_486A5234:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5234, 0x2A523C
 VoiceDirClassFind_Table_p0_3:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6, x6="\x00\x00"
 data_486A5244:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5244, 0x2A524C
@@ -9874,16 +9874,16 @@ data_486A524C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A524C, 0x2A5254
 VoiceDirClassFind_Table_p0_4:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=257, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=257, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_5:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=259, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=259, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_6:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=262, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=262, x6="\x00\x00"
 data_486A526C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A526C, 0x2A5274
 VoiceDirClassFind_Table_p0_7:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=513, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=513, x6="\x00\x00"
 data_486A527C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A527C, 0x2A5284
@@ -9894,7 +9894,7 @@ data_486A528C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A528C, 0x2A5294
 VoiceDirClassFind_Table_p0_8:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=772, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=772, x6="\x00\x00"
 data_486A529C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A529C, 0x2A52A4
@@ -9902,31 +9902,31 @@ data_486A52A4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A52A4, 0x2A52AC
 VoiceDirClassFind_Table_p0_9:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1026, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1026, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_10:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1028, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1028, x6="\x00\x00"
 data_486A52BC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A52BC, 0x2A52C4
 VoiceDirClassFind_Table_p0_11:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1030, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1030, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_12:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1280, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1280, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_13:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1282, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1282, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_14:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1284, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1284, x6="\x00\x00"
 data_486A52E4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A52E4, 0x2A52EC
 VoiceDirClassFind_Table_p0_15:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1286, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1286, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_16:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1536, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1536, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_17:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1539, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1539, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_18:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1540, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1540, x6="\x00\x00"
 data_486A530C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A530C, 0x2A5314
@@ -9937,26 +9937,26 @@ data_486A531C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A531C, 0x2A5324
 VoiceDirClassFind_Table_p0_19:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1794, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1794, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_20:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=1796, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=1796, x6="\x00\x00"
 data_486A5334:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5334, 0x2A533C
 VoiceDirClassFind_Table_p0_21:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=2048, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=2048, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_22:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=2052, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=2052, x6="\x00\x00"
 data_486A534C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A534C, 0x2A5354
 VoiceDirClassFind_Table_p0_23:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=2304, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=2304, x6="\x00\x00"
 data_486A535C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A535C, 0x2A5364
 VoiceDirClassFind_Table_p0_24:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=2308, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=2308, x6="\x00\x00"
 data_486A536C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A536C, 0x2A5374
@@ -9976,14 +9976,14 @@ data_486A5394:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5394, 0x2A539C
 VoiceDirClassFind_Table_p0_25:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3332, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3332, x6="\x00\x00"
 data_486A53A4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A53A4, 0x2A53AC
 VoiceDirClassFind_Table_p0_26:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3334, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3334, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_27:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3335, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3335, x6="\x00\x00"
 data_486A53BC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A53BC, 0x2A53C4
@@ -9997,11 +9997,11 @@ data_486A53D4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A53D4, 0x2A53DC
 VoiceDirClassFind_Table_p0_28:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3588, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3588, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_29:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3590, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3590, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_30:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=3591, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=3591, x6="\x00\x00"
 data_486A53F4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A53F4, 0x2A53FC
@@ -10027,7 +10027,7 @@ data_486A542C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A542C, 0x2A5434
 VoiceDirClassFind_Table_p0_31:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=4356, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=4356, x6="\x00\x00"
 data_486A543C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A543C, 0x2A5444
@@ -10035,12 +10035,12 @@ data_486A5444:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5444, 0x2A544C
 VoiceDirClassFind_Table_p0_32:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=4612, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=4612, x6="\x00\x00"
 data_486A5454:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5454, 0x2A545C
 VoiceDirClassFind_Table_p0_33:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=4868, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=4868, x6="\x00\x00"
 data_486A5464:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5464, 0x2A546C
@@ -10048,7 +10048,7 @@ data_486A546C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A546C, 0x2A5474
 VoiceDirClassFind_Table_p0_34:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=5124, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=5124, x6="\x00\x00"
 data_486A547C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A547C, 0x2A5484
@@ -10083,32 +10083,32 @@ data_486A54CC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A54CC, 0x2A54D4
 VoiceDirClassFind_Table_p0_35:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6657, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6657, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_36:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6659, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6659, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_37:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6660, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6660, x6="\x00\x00"
 data_486A54EC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A54EC, 0x2A54F4
 VoiceDirClassFind_Table_p0_38:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6912, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6912, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_39:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6913, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6913, x6="\x00\x00"
 data_486A5504:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5504, 0x2A550C
 VoiceDirClassFind_Table_p0_40:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6915, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6915, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_41:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=6916, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=6916, x6="\x00\x00"
 data_486A551C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A551C, 0x2A5524
 VoiceDirClassFind_Table_p0_42:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=7170, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=7170, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_43:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=7424, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=7424, x6="\x00\x00"
 data_486A5534:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5534, 0x2A553C
@@ -10128,7 +10128,7 @@ data_486A555C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A555C, 0x2A5564
 VoiceDirClassFind_Table_p0_44:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=7940, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=7940, x6="\x00\x00"
 data_486A556C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A556C, 0x2A5574
@@ -10136,7 +10136,7 @@ data_486A5574:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5574, 0x2A557C
 VoiceDirClassFind_Table_p0_45:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=8196, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=8196, x6="\x00\x00"
 data_486A5584:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5584, 0x2A558C
@@ -10147,7 +10147,7 @@ data_486A5594:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5594, 0x2A559C
 VoiceDirClassFind_Table_p0_46:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=8964, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=8964, x6="\x00\x00"
 data_486A55A4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A55A4, 0x2A55AC
@@ -10167,95 +10167,95 @@ data_486A55CC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A55CC, 0x2A55D4
 VoiceDirClassFind_Table_p0_47:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=9732, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=9732, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_48:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=9984, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=9984, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_49:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=9985, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=9985, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_50:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10240, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10240, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_51:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10241, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10241, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_52:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10242, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10242, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_53:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10243, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10243, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_54:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10244, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10244, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_55:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10496, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10496, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_56:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10497, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10497, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_57:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10500, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10500, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_58:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10752, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10752, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_59:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=10753, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=10753, x6="\x00\x00"
 data_486A563C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A563C, 0x2A5644
 VoiceDirClassFind_Table_p0_60:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11008, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11008, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_61:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11009, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11009, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_62:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11010, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11010, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_63:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11015, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11015, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_64:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11264, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11264, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_65:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11265, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11265, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_66:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11266, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11266, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_67:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11267, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11267, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_68:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11268, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11268, x6="\x00\x00"
 data_486A568C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A568C, 0x2A5694
 VoiceDirClassFind_Table_p0_69:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11270, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11270, x6="\x00\x00"
 data_486A569C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A569C, 0x2A56A4
 VoiceDirClassFind_Table_p0_70:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11520, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11520, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_71:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11523, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11523, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_72:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11524, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11524, x6="\x00\x00"
 data_486A56BC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A56BC, 0x2A56C4
 VoiceDirClassFind_Table_p0_73:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11526, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11526, x6="\x00\x00"
 data_486A56CC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A56CC, 0x2A56D4
 VoiceDirClassFind_Table_p0_74:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11776, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11776, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_75:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11777, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11777, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_76:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11778, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11778, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_77:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11780, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11780, x6="\x00\x00"
 data_486A56F4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A56F4, 0x2A56FC
 VoiceDirClassFind_Table_p0_78:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=11782, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=11782, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_79:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5234, f4=12032, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5234, key=12032, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_80:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5244, f4=12034, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5244, key=12034, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_81:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12035, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12035, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_82:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12036, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12036, x6="\x00\x00"
 data_486A5724:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5724, 0x2A572C
@@ -10263,68 +10263,68 @@ data_486A572C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A572C, 0x2A5734
 VoiceDirClassFind_Table_p0_83:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12039, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12039, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_84:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12288, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12288, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_85:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12290, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12290, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_86:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12291, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12291, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_87:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12292, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12292, x6="\x00\x00"
 data_486A575C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A575C, 0x2A5764
 VoiceDirClassFind_Table_p0_88:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12294, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12294, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_89:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12544, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12544, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_90:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A527C, f4=12545, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A527C, key=12545, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_91:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12546, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12546, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_92:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A529C, f4=12800, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A529C, key=12800, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_93:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=12801, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=12801, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_94:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A52BC, f4=13056, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A52BC, key=13056, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_95:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A52E4, f4=13312, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A52E4, key=13312, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_96:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=13315, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=13315, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_97:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A530C, f4=13568, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A530C, key=13568, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_98:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5314, f4=13569, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5314, key=13569, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_99:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5334, f4=13824, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5334, key=13824, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_100:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=13825, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=13825, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_101:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=13828, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=13828, x6="\x00\x00"
 data_486A57D4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A57D4, 0x2A57DC
 VoiceDirClassFind_Table_p0_102:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=13830, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=13830, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_103:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A534C, f4=14080, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A534C, key=14080, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_104:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14081, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14081, x6="\x00\x00"
 data_486A57F4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A57F4, 0x2A57FC
 VoiceDirClassFind_Table_p0_105:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14336, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14336, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_106:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14337, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14337, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_107:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14338, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14338, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_108:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14339, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14339, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_109:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14340, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14340, x6="\x00\x00"
 data_486A5824:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5824, 0x2A582C
@@ -10335,27 +10335,27 @@ data_486A5834:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5834, 0x2A583C
 VoiceDirClassFind_Table_p0_110:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14592, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14592, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_111:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14593, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14593, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_112:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14594, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14594, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_113:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14596, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14596, x6="\x00\x00"
 data_486A585C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A585C, 0x2A5864
 VoiceDirClassFind_Table_p0_114:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14598, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14598, x6="\x00\x00"
 data_486A586C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A586C, 0x2A5874
 VoiceDirClassFind_Table_p0_115:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5384, f4=14848, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5384, key=14848, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_116:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14851, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14851, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_117:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=14852, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=14852, x6="\x00\x00"
 data_486A588C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A588C, 0x2A5894
@@ -10366,13 +10366,13 @@ data_486A589C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A589C, 0x2A58A4
 VoiceDirClassFind_Table_p0_118:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15104, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15104, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_119:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15105, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15105, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_120:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15106, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15106, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_121:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15108, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15108, x6="\x00\x00"
 data_486A58C4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A58C4, 0x2A58CC
@@ -10380,9 +10380,9 @@ data_486A58CC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A58CC, 0x2A58D4
 VoiceDirClassFind_Table_p0_122:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53A4, f4=15360, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53A4, key=15360, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_123:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15364, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15364, x6="\x00\x00"
 data_486A58E4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A58E4, 0x2A58EC
@@ -10393,35 +10393,35 @@ data_486A58F4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A58F4, 0x2A58FC
 VoiceDirClassFind_Table_p0_124:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15616, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15616, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_125:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15620, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15620, x6="\x00\x00"
 data_486A590C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A590C, 0x2A5914
 VoiceDirClassFind_Table_p0_126:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15622, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15622, x6="\x00\x00"
 data_486A591C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A591C, 0x2A5924
 VoiceDirClassFind_Table_p0_127:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15872, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15872, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_128:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15874, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15874, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_129:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15876, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15876, x6="\x00\x00"
 data_486A593C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A593C, 0x2A5944
 VoiceDirClassFind_Table_p0_130:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=15878, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=15878, x6="\x00\x00"
 data_486A594C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A594C, 0x2A5954
 VoiceDirClassFind_Table_p0_131:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16128, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16128, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_132:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16131, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16131, x6="\x00\x00"
 data_486A5964:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5964, 0x2A596C
@@ -10432,56 +10432,56 @@ data_486A5974:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5974, 0x2A597C
 VoiceDirClassFind_Table_p0_133:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A543C, f4=16384, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A543C, key=16384, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_134:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16385, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16385, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_135:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16387, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16387, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_136:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16640, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16640, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_137:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16641, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16641, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_138:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16642, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16642, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_139:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16644, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16644, x6="\x00\x00"
 data_486A59B4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A59B4, 0x2A59BC
 VoiceDirClassFind_Table_p0_140:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16646, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16646, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_141:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=16896, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=16896, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_142:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A547C, f4=17152, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A547C, key=17152, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_143:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17408, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17408, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_144:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17409, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17409, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_145:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17410, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17410, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_146:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17411, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17411, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_147:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17414, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17414, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_148:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17664, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17664, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_149:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17665, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17665, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_150:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=17920, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=17920, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_151:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18176, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18176, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_152:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18432, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18432, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_153:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18433, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18433, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_154:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18434, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18434, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_155:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18435, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18435, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_156:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18436, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18436, x6="\x00\x00"
 data_486A5A44:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5A44, 0x2A5A4C
@@ -10489,38 +10489,38 @@ data_486A5A4C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5A4C, 0x2A5A54
 VoiceDirClassFind_Table_p0_157:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18688, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18688, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_158:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54EC, f4=18689, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54EC, key=18689, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_159:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18690, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18690, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_160:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18944, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18944, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_161:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18945, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18945, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_162:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=18946, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=18946, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_163:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19200, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19200, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_164:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19201, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19201, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_165:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19204, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19204, x6="\x00\x00"
 data_486A5A9C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5A9C, 0x2A5AA4
 VoiceDirClassFind_Table_p0_166:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19456, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19456, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_167:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5544, f4=19712, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5544, key=19712, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_168:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19713, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19713, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_169:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19714, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19714, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_170:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19715, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19715, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_171:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19716, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19716, x6="\x00\x00"
 data_486A5AD4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5AD4, 0x2A5ADC
@@ -10528,28 +10528,28 @@ data_486A5ADC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5ADC, 0x2A5AE4
 VoiceDirClassFind_Table_p0_172:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19968, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19968, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_173:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19969, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19969, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_174:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19970, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19970, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_175:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19971, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19971, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_176:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=19972, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=19972, x6="\x00\x00"
 data_486A5B0C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5B0C, 0x2A5B14
 VoiceDirClassFind_Table_p0_177:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20224, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20224, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_178:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20225, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20225, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_179:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20226, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20226, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_180:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20227, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20227, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_181:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20228, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20228, x6="\x00\x00"
 data_486A5B3C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5B3C, 0x2A5B44
@@ -10557,15 +10557,15 @@ data_486A5B44:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5B44, 0x2A5B4C
 VoiceDirClassFind_Table_p0_182:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20480, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20480, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_183:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20481, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20481, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_184:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20482, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20482, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_185:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20483, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20483, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_186:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20484, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20484, x6="\x00\x00"
 data_486A5B74:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5B74, 0x2A5B7C
@@ -10576,553 +10576,553 @@ data_486A5B84:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A5B84, 0x2A5B8C
 VoiceDirClassFind_Table_p0_187:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20736, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20736, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_188:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20740, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20740, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_189:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20741, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20741, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_190:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20742, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20742, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_191:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20743, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20743, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_192:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20992, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20992, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_193:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20993, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20993, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_194:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20994, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20994, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_195:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20995, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20995, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_196:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20996, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20996, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_197:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20997, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20997, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_198:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20998, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20998, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_199:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=20999, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=20999, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_200:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21248, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21248, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_201:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21249, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21249, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_202:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21252, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21252, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_203:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21253, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21253, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_204:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21254, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21254, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_205:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21255, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21255, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_206:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21504, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21504, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_207:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=21760, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=21760, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_208:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22016, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22016, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_209:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22018, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22018, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_210:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22020, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22020, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_211:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22021, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22021, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_212:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22272, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22272, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_213:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22274, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22274, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_214:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22275, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22275, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_215:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22276, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22276, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_216:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22277, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22277, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_217:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22528, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22528, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_218:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22532, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22532, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_219:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=22784, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	key=22784, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_220:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A563C, f4=22786, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A563C, key=22786, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_221:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A520C, f4=22788, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A520C, key=22788, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_222:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A521C, f4=22790, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A521C, key=22790, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_223:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=23040, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	key=23040, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_224:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A524C, f4=23044, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A524C, key=23044, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_225:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A568C, f4=23296, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A568C, key=23296, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_226:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A569C, f4=23298, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A569C, key=23298, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_227:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=23299, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=23299, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_228:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A526C, f4=23300, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A526C, key=23300, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_229:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=23302, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=23302, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_230:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A56BC, f4=23552, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A56BC, key=23552, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_231:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A56CC, f4=23554, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A56CC, key=23554, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_232:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5284, f4=23556, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5284, key=23556, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_233:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=23557, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=23557, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_234:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A528C, f4=23558, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A528C, key=23558, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_235:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=23559, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=23559, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_236:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A56F4, f4=23808, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A56F4, key=23808, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_237:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A52A4, f4=23812, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A52A4, key=23812, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_238:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5724, f4=24064, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5724, key=24064, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_239:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A572C, f4=24065, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A572C, key=24065, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_240:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=24069, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=24069, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_241:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A575C, f4=24320, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A575C, key=24320, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_242:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=24576, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=24576, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_243:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=24577, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=24577, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_244:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=24578, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=24578, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_245:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A531C, f4=24580, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A531C, key=24580, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_246:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=24832, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=24832, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_247:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=24834, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=24834, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_248:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25088, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25088, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_249:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25089, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25089, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_250:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25091, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25091, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_251:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25093, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25093, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_252:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A535C, f4=25094, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A535C, key=25094, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_253:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25095, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25095, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_254:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25344, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25344, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_255:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25347, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25347, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_256:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A536C, f4=25348, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A536C, key=25348, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_257:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25600, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25600, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_258:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25601, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25601, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_259:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25602, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25602, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_260:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25603, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25603, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_261:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5374, f4=25604, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5374, key=25604, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_262:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A537C, f4=25605, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A537C, key=25605, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_263:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25606, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25606, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_264:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25607, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25607, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_265:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A57D4, f4=25856, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A57D4, key=25856, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_266:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25858, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25858, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_267:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25859, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25859, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_268:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A538C, f4=25860, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A538C, key=25860, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_269:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25861, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25861, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_270:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25862, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25862, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_271:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=25863, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=25863, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_272:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26112, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26112, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_273:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A57F4, f4=26114, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A57F4, key=26114, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_274:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26115, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26115, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_275:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5394, f4=26116, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5394, key=26116, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_276:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26117, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26117, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_277:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26118, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26118, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_278:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26119, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26119, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_279:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5824, f4=26368, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5824, key=26368, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_280:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A582C, f4=26369, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A582C, key=26369, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_281:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5834, f4=26370, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5834, key=26370, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_282:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53BC, f4=26372, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53BC, key=26372, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_283:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53C4, f4=26373, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53C4, key=26373, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_284:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53CC, f4=26374, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53CC, key=26374, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_285:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53D4, f4=26375, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53D4, key=26375, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_286:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A585C, f4=26624, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A585C, key=26624, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_287:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A586C, f4=26626, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A586C, key=26626, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_288:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26627, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26627, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_289:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53F4, f4=26628, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53F4, key=26628, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_290:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A53FC, f4=26629, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A53FC, key=26629, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_291:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26630, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26630, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_292:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26631, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26631, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_293:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A588C, f4=26880, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A588C, key=26880, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_294:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5894, f4=26881, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5894, key=26881, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_295:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A589C, f4=26882, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A589C, key=26882, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_296:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26883, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26883, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_297:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5404, f4=26884, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5404, key=26884, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_298:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A540C, f4=26885, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A540C, key=26885, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_299:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26886, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26886, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_300:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=26887, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=26887, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_301:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27136, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27136, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_302:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A58C4, f4=27137, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A58C4, key=27137, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_303:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A58CC, f4=27138, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A58CC, key=27138, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_304:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27139, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27139, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_305:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5414, f4=27140, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5414, key=27140, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_306:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A541C, f4=27141, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A541C, key=27141, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_307:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5424, f4=27142, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5424, key=27142, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_308:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A542C, f4=27143, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A542C, key=27143, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_309:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A58E4, f4=27392, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A58E4, key=27392, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_310:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A58EC, f4=27393, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A58EC, key=27393, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_311:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A58F4, f4=27394, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A58F4, key=27394, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_312:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27395, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27395, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_313:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5444, f4=27396, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5444, key=27396, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_314:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27398, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27398, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_315:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27399, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27399, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_316:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A590C, f4=27648, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A590C, key=27648, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_317:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A591C, f4=27650, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A591C, key=27650, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_318:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27651, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27651, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_319:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5454, f4=27652, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5454, key=27652, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_320:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27653, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27653, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_321:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27654, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27654, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_322:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27655, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27655, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_323:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A593C, f4=27904, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A593C, key=27904, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_324:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A594C, f4=27906, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A594C, key=27906, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_325:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27907, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27907, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_326:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5464, f4=27908, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5464, key=27908, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_327:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A546C, f4=27909, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A546C, key=27909, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_328:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27910, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27910, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_329:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=27911, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=27911, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_330:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5964, f4=28160, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5964, key=28160, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_331:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A596C, f4=28161, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A596C, key=28161, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_332:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5974, f4=28162, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5974, key=28162, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_333:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28163, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28163, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_334:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5484, f4=28164, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5484, key=28164, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_335:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28165, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28165, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_336:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28166, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28166, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_337:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A548C, f4=28167, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A548C, key=28167, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_338:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28416, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28416, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_339:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28418, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28418, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_340:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5494, f4=28420, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5494, key=28420, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_341:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28421, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28421, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_342:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28422, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28422, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_343:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A59B4, f4=28672, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A59B4, key=28672, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_344:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28674, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28674, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_345:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28675, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28675, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_346:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A549C, f4=28676, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A549C, key=28676, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_347:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54A4, f4=28677, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54A4, key=28677, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_348:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28678, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28678, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_349:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28679, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28679, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_350:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28928, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28928, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_351:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28929, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28929, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_352:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28930, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28930, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_353:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28931, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28931, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_354:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54AC, f4=28932, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54AC, key=28932, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_355:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28933, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28933, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_356:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28934, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28934, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_357:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=28935, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=28935, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_358:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29184, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29184, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_359:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29187, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29187, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_360:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54B4, f4=29188, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54B4, key=29188, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_361:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29189, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29189, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_362:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54BC, f4=29190, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54BC, key=29190, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_363:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54C4, f4=29191, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54C4, key=29191, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_364:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29440, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29440, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_365:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29443, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29443, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_366:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A54CC, f4=29444, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A54CC, key=29444, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_367:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29446, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29446, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_368:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29696, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29696, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_369:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29697, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29697, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_370:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29698, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29698, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_371:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29699, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29699, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_372:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5504, f4=29702, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5504, key=29702, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_373:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29952, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29952, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_374:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29953, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29953, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_375:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29954, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29954, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_376:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29955, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29955, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_377:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A551C, f4=29956, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A551C, key=29956, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_378:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=29957, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=29957, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_379:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30208, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30208, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_380:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30209, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30209, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_381:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30210, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30210, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_382:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30213, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30213, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_383:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30214, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30214, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_384:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5534, f4=30215, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5534, key=30215, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_385:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5A44, f4=30464, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5A44, key=30464, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_386:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5A4C, f4=30465, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5A4C, key=30465, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_387:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30466, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30466, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_388:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30467, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30467, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_389:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A553C, f4=30468, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A553C, key=30468, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_390:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30469, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30469, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_391:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30470, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30470, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_392:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30471, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30471, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_393:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30720, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30720, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_394:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30721, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30721, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_395:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30722, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30722, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_396:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30723, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30723, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_397:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A554C, f4=30724, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A554C, key=30724, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_398:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5554, f4=30725, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5554, key=30725, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_399:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30726, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30726, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_400:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A555C, f4=30727, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A555C, key=30727, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_401:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30976, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30976, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_402:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30979, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30979, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_403:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A556C, f4=30980, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A556C, key=30980, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_404:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30981, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30981, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_405:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5574, f4=30982, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5574, key=30982, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_406:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=30983, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=30983, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_407:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5A9C, f4=31232, x6="\xF4\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5A9C, key=31232, x6="\xF4\x00"
 VoiceDirClassFind_Table_p0_408:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31233, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31233, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_409:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31234, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31234, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_410:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31235, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31235, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_411:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5584, f4=31236, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5584, key=31236, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_412:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31237, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31237, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_413:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31238, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31238, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_414:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31239, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31239, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_415:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31488, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31488, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_416:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31489, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31489, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_417:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31490, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31490, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_418:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31491, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31491, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_419:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A558C, f4=31492, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A558C, key=31492, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_420:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31493, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31493, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_421:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31494, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31494, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_422:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31495, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31495, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_423:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5AD4, f4=31744, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5AD4, key=31744, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_424:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5ADC, f4=31745, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5ADC, key=31745, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_425:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31746, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31746, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_426:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31747, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31747, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_427:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5594, f4=31748, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5594, key=31748, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_428:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31749, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31749, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_429:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31750, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31750, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_430:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=31751, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=31751, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_431:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B0C, f4=32000, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B0C, key=32000, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_432:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32002, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32002, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_433:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32003, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32003, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_434:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A55A4, f4=32004, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A55A4, key=32004, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_435:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32005, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32005, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_436:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32006, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32006, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_437:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32007, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32007, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_438:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B3C, f4=32256, x6="\x0C\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B3C, key=32256, x6="\x0C\x00"
 VoiceDirClassFind_Table_p0_439:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B44, f4=32257, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B44, key=32257, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_440:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32259, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32259, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_441:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A55AC, f4=32260, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A55AC, key=32260, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_442:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32261, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32261, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_443:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32262, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32262, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_444:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32263, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32263, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_445:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B74, f4=32512, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B74, key=32512, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_446:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B7C, f4=32513, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B7C, key=32513, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_447:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B84, f4=32514, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A5B84, key=32514, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_448:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	f4=32515, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	key=32515, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_449:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A55B4, f4=32516, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A55B4, key=32516, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_450:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A55BC, f4=32517, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A55BC, key=32517, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_451:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A55C4, f4=32518, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A55C4, key=32518, x6="\x00\x00"
 VoiceDirClassFind_Table_p0_452:	# REC_VoiceDirClassFind_Table_p0 (8 bytes)
-	REC_VoiceDirClassFind_Table_p0	p0=data_486A55CC, f4=32519, x6="\x00\x00"
+	REC_VoiceDirClassFind_Table_p0	p0=data_486A55CC, key=32519, x6="\x00\x00"
 data_486A63DC:
 	.space	8, 0x00
 VoiceDirIndexFind_Table_p0_0:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1, x6="\x00\x00"
 data_486A63EC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A63EC, 0x2A63F4
 VoiceDirIndexFind_Table_p0_1:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_2:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=4, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=4, x6="\x00\x00"
 data_486A6404:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6404, 0x2A640C
 VoiceDirIndexFind_Table_p0_3:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6, x6="\x00\x00"
 data_486A6414:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6414, 0x2A641C
@@ -11130,16 +11130,16 @@ data_486A641C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A641C, 0x2A6424
 VoiceDirIndexFind_Table_p0_4:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=257, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=257, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_5:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=259, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=259, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_6:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=262, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=262, x6="\x00\x00"
 data_486A643C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A643C, 0x2A6444
 VoiceDirIndexFind_Table_p0_7:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=513, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=513, x6="\xF4\x00"
 data_486A644C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A644C, 0x2A6454
@@ -11150,7 +11150,7 @@ data_486A645C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A645C, 0x2A6464
 VoiceDirIndexFind_Table_p0_8:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=772, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=772, x6="\x00\x00"
 data_486A646C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A646C, 0x2A6474
@@ -11158,31 +11158,31 @@ data_486A6474:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6474, 0x2A647C
 VoiceDirIndexFind_Table_p0_9:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1026, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1026, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_10:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1028, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1028, x6="\x00\x00"
 data_486A648C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A648C, 0x2A6494
 VoiceDirIndexFind_Table_p0_11:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1030, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1030, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_12:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1280, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1280, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_13:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1282, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1282, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_14:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1284, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1284, x6="\x00\x00"
 data_486A64B4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A64B4, 0x2A64BC
 VoiceDirIndexFind_Table_p0_15:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1286, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1286, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_16:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1536, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1536, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_17:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1539, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1539, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_18:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1540, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1540, x6="\x00\x00"
 data_486A64DC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A64DC, 0x2A64E4
@@ -11193,26 +11193,26 @@ data_486A64EC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A64EC, 0x2A64F4
 VoiceDirIndexFind_Table_p0_19:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1794, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1794, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_20:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=1796, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=1796, x6="\x00\x00"
 data_486A6504:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6504, 0x2A650C
 VoiceDirIndexFind_Table_p0_21:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=2048, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=2048, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_22:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=2052, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=2052, x6="\x00\x00"
 data_486A651C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A651C, 0x2A6524
 VoiceDirIndexFind_Table_p0_23:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=2304, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=2304, x6="\x0C\x00"
 data_486A652C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A652C, 0x2A6534
 VoiceDirIndexFind_Table_p0_24:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=2308, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=2308, x6="\x00\x00"
 data_486A653C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A653C, 0x2A6544
@@ -11232,14 +11232,14 @@ data_486A6564:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6564, 0x2A656C
 VoiceDirIndexFind_Table_p0_25:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3332, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3332, x6="\x00\x00"
 data_486A6574:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6574, 0x2A657C
 VoiceDirIndexFind_Table_p0_26:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3334, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3334, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_27:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3335, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3335, x6="\x00\x00"
 data_486A658C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A658C, 0x2A6594
@@ -11253,11 +11253,11 @@ data_486A65A4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A65A4, 0x2A65AC
 VoiceDirIndexFind_Table_p0_28:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3588, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3588, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_29:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3590, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3590, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_30:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=3591, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=3591, x6="\x00\x00"
 data_486A65C4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A65C4, 0x2A65CC
@@ -11283,7 +11283,7 @@ data_486A65FC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A65FC, 0x2A6604
 VoiceDirIndexFind_Table_p0_31:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=4356, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=4356, x6="\x00\x00"
 data_486A660C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A660C, 0x2A6614
@@ -11291,12 +11291,12 @@ data_486A6614:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6614, 0x2A661C
 VoiceDirIndexFind_Table_p0_32:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=4612, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=4612, x6="\x00\x00"
 data_486A6624:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6624, 0x2A662C
 VoiceDirIndexFind_Table_p0_33:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=4868, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=4868, x6="\x00\x00"
 data_486A6634:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6634, 0x2A663C
@@ -11304,7 +11304,7 @@ data_486A663C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A663C, 0x2A6644
 VoiceDirIndexFind_Table_p0_34:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=5124, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=5124, x6="\x00\x00"
 data_486A664C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A664C, 0x2A6654
@@ -11339,32 +11339,32 @@ data_486A669C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A669C, 0x2A66A4
 VoiceDirIndexFind_Table_p0_35:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6657, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6657, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_36:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6659, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6659, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_37:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6660, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6660, x6="\x00\x00"
 data_486A66BC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A66BC, 0x2A66C4
 VoiceDirIndexFind_Table_p0_38:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6912, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6912, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_39:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6913, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6913, x6="\x00\x00"
 data_486A66D4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A66D4, 0x2A66DC
 VoiceDirIndexFind_Table_p0_40:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6915, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6915, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_41:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=6916, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=6916, x6="\x00\x00"
 data_486A66EC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A66EC, 0x2A66F4
 VoiceDirIndexFind_Table_p0_42:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=7170, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=7170, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_43:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=7424, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=7424, x6="\x00\x00"
 data_486A6704:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6704, 0x2A670C
@@ -11384,7 +11384,7 @@ data_486A672C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A672C, 0x2A6734
 VoiceDirIndexFind_Table_p0_44:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=7940, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=7940, x6="\x00\x00"
 data_486A673C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A673C, 0x2A6744
@@ -11392,7 +11392,7 @@ data_486A6744:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6744, 0x2A674C
 VoiceDirIndexFind_Table_p0_45:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=8196, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=8196, x6="\x00\x00"
 data_486A6754:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6754, 0x2A675C
@@ -11403,7 +11403,7 @@ data_486A6764:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6764, 0x2A676C
 VoiceDirIndexFind_Table_p0_46:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=8964, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=8964, x6="\x00\x00"
 data_486A6774:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6774, 0x2A677C
@@ -11423,95 +11423,95 @@ data_486A679C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A679C, 0x2A67A4
 VoiceDirIndexFind_Table_p0_47:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=9732, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=9732, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_48:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=9984, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=9984, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_49:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=9985, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=9985, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_50:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10240, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10240, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_51:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10241, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10241, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_52:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10242, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10242, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_53:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10243, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10243, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_54:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10244, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10244, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_55:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10496, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10496, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_56:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10497, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10497, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_57:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10500, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10500, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_58:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10752, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10752, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_59:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=10753, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=10753, x6="\xF4\x00"
 data_486A680C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A680C, 0x2A6814
 VoiceDirIndexFind_Table_p0_60:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11008, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11008, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_61:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11009, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11009, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_62:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11010, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11010, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_63:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11015, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11015, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_64:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11264, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11264, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_65:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11265, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11265, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_66:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11266, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11266, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_67:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11267, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11267, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_68:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11268, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11268, x6="\xF4\x00"
 data_486A685C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A685C, 0x2A6864
 VoiceDirIndexFind_Table_p0_69:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11270, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11270, x6="\xF4\x00"
 data_486A686C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A686C, 0x2A6874
 VoiceDirIndexFind_Table_p0_70:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11520, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11520, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_71:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11523, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11523, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_72:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11524, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11524, x6="\xF4\x00"
 data_486A688C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A688C, 0x2A6894
 VoiceDirIndexFind_Table_p0_73:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11526, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11526, x6="\xF4\x00"
 data_486A689C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A689C, 0x2A68A4
 VoiceDirIndexFind_Table_p0_74:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11776, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11776, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_75:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11777, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11777, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_76:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11778, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11778, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_77:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11780, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11780, x6="\xF4\x00"
 data_486A68C4:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A68C4, 0x2A68CC
 VoiceDirIndexFind_Table_p0_78:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=11782, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=11782, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_79:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6404, f4=12032, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6404, key=12032, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_80:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6414, f4=12034, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6414, key=12034, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_81:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12035, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12035, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_82:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12036, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12036, x6="\xF4\x00"
 data_486A68F4:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A68F4, 0x2A68FC
@@ -11519,68 +11519,68 @@ data_486A68FC:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A68FC, 0x2A6904
 VoiceDirIndexFind_Table_p0_83:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12039, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12039, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_84:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12288, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12288, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_85:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12290, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12290, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_86:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12291, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12291, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_87:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12292, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12292, x6="\x00\x00"
 data_486A692C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A692C, 0x2A6934
 VoiceDirIndexFind_Table_p0_88:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12294, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12294, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_89:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12544, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12544, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_90:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A644C, f4=12545, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A644C, key=12545, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_91:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12546, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12546, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_92:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A646C, f4=12800, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A646C, key=12800, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_93:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=12801, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=12801, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_94:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A648C, f4=13056, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A648C, key=13056, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_95:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64B4, f4=13312, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64B4, key=13312, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_96:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=13315, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=13315, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_97:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64DC, f4=13568, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64DC, key=13568, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_98:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64E4, f4=13569, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64E4, key=13569, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_99:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6504, f4=13824, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6504, key=13824, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_100:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=13825, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=13825, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_101:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=13828, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=13828, x6="\x00\x00"
 data_486A69A4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A69A4, 0x2A69AC
 VoiceDirIndexFind_Table_p0_102:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=13830, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=13830, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_103:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A651C, f4=14080, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A651C, key=14080, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_104:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14081, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14081, x6="\xF4\x00"
 data_486A69C4:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A69C4, 0x2A69CC
 VoiceDirIndexFind_Table_p0_105:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14336, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14336, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_106:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14337, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14337, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_107:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14338, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14338, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_108:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14339, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14339, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_109:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14340, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14340, x6="\xF4\x00"
 data_486A69F4:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A69F4, 0x2A69FC
@@ -11591,27 +11591,27 @@ data_486A6A04:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A04, 0x2A6A0C
 VoiceDirIndexFind_Table_p0_110:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14592, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14592, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_111:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14593, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14593, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_112:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14594, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14594, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_113:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14596, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14596, x6="\xF4\x00"
 data_486A6A2C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A2C, 0x2A6A34
 VoiceDirIndexFind_Table_p0_114:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14598, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14598, x6="\xF4\x00"
 data_486A6A3C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A3C, 0x2A6A44
 VoiceDirIndexFind_Table_p0_115:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6554, f4=14848, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6554, key=14848, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_116:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14851, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14851, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_117:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=14852, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=14852, x6="\xF4\x00"
 data_486A6A5C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A5C, 0x2A6A64
@@ -11622,13 +11622,13 @@ data_486A6A6C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A6C, 0x2A6A74
 VoiceDirIndexFind_Table_p0_118:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15104, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15104, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_119:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15105, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15105, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_120:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15106, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15106, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_121:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15108, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15108, x6="\xF4\x00"
 data_486A6A94:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A94, 0x2A6A9C
@@ -11636,9 +11636,9 @@ data_486A6A9C:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6A9C, 0x2A6AA4
 VoiceDirIndexFind_Table_p0_122:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6574, f4=15360, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6574, key=15360, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_123:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15364, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15364, x6="\x00\x00"
 data_486A6AB4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6AB4, 0x2A6ABC
@@ -11649,35 +11649,35 @@ data_486A6AC4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6AC4, 0x2A6ACC
 VoiceDirIndexFind_Table_p0_124:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15616, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15616, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_125:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15620, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15620, x6="\x00\x00"
 data_486A6ADC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6ADC, 0x2A6AE4
 VoiceDirIndexFind_Table_p0_126:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15622, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15622, x6="\x00\x00"
 data_486A6AEC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6AEC, 0x2A6AF4
 VoiceDirIndexFind_Table_p0_127:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15872, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15872, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_128:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15874, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15874, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_129:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15876, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15876, x6="\x00\x00"
 data_486A6B0C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6B0C, 0x2A6B14
 VoiceDirIndexFind_Table_p0_130:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=15878, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=15878, x6="\xF4\x00"
 data_486A6B1C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6B1C, 0x2A6B24
 VoiceDirIndexFind_Table_p0_131:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16128, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16128, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_132:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16131, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16131, x6="\x00\x00"
 data_486A6B34:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6B34, 0x2A6B3C
@@ -11688,56 +11688,56 @@ data_486A6B44:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6B44, 0x2A6B4C
 VoiceDirIndexFind_Table_p0_133:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A660C, f4=16384, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A660C, key=16384, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_134:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16385, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16385, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_135:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16387, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16387, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_136:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16640, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16640, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_137:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16641, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16641, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_138:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16642, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16642, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_139:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16644, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16644, x6="\x00\x00"
 data_486A6B84:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6B84, 0x2A6B8C
 VoiceDirIndexFind_Table_p0_140:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16646, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16646, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_141:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=16896, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=16896, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_142:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A664C, f4=17152, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A664C, key=17152, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_143:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17408, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17408, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_144:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17409, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17409, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_145:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17410, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17410, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_146:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17411, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17411, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_147:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17414, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17414, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_148:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17664, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17664, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_149:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17665, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17665, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_150:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=17920, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=17920, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_151:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18176, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18176, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_152:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18432, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18432, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_153:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18433, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18433, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_154:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18434, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18434, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_155:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18435, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18435, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_156:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18436, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18436, x6="\x00\x00"
 data_486A6C14:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6C14, 0x2A6C1C
@@ -11745,38 +11745,38 @@ data_486A6C1C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6C1C, 0x2A6C24
 VoiceDirIndexFind_Table_p0_157:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18688, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18688, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_158:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A66BC, f4=18689, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A66BC, key=18689, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_159:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18690, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18690, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_160:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18944, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18944, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_161:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18945, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18945, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_162:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=18946, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=18946, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_163:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19200, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19200, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_164:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19201, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19201, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_165:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19204, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19204, x6="\x00\x00"
 data_486A6C6C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6C6C, 0x2A6C74
 VoiceDirIndexFind_Table_p0_166:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19456, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19456, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_167:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6714, f4=19712, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6714, key=19712, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_168:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19713, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19713, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_169:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19714, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19714, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_170:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19715, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19715, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_171:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19716, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19716, x6="\x00\x00"
 data_486A6CA4:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6CA4, 0x2A6CAC
@@ -11784,28 +11784,28 @@ data_486A6CAC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6CAC, 0x2A6CB4
 VoiceDirIndexFind_Table_p0_172:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19968, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19968, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_173:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19969, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19969, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_174:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19970, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19970, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_175:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19971, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19971, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_176:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=19972, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=19972, x6="\x00\x00"
 data_486A6CDC:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6CDC, 0x2A6CE4
 VoiceDirIndexFind_Table_p0_177:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20224, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20224, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_178:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20225, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20225, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_179:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20226, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20226, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_180:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20227, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20227, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_181:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20228, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20228, x6="\x00\x00"
 data_486A6D0C:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6D0C, 0x2A6D14
@@ -11813,15 +11813,15 @@ data_486A6D14:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6D14, 0x2A6D1C
 VoiceDirIndexFind_Table_p0_182:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20480, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20480, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_183:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20481, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20481, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_184:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20482, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20482, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_185:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20483, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20483, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_186:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20484, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20484, x6="\x00\x00"
 data_486A6D44:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6D44, 0x2A6D4C
@@ -11832,537 +11832,537 @@ data_486A6D54:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A6D54, 0x2A6D5C
 VoiceDirIndexFind_Table_p0_187:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20736, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20736, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_188:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20740, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20740, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_189:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20741, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20741, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_190:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20742, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20742, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_191:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20743, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20743, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_192:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20992, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20992, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_193:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20993, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20993, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_194:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20994, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20994, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_195:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20995, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20995, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_196:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20996, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20996, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_197:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20997, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20997, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_198:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20998, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20998, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_199:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=20999, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=20999, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_200:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21248, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21248, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_201:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21249, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21249, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_202:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21252, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21252, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_203:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21253, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21253, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_204:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21254, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21254, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_205:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21255, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21255, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_206:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21504, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21504, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_207:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=21760, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=21760, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_208:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22016, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22016, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_209:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22018, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22018, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_210:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22020, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22020, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_211:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22021, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22021, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_212:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22272, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22272, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_213:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22274, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22274, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_214:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22275, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22275, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_215:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22276, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22276, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_216:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22277, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22277, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_217:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22528, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22528, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_218:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22532, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22532, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_219:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=22784, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=22784, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_220:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A680C, f4=22786, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A680C, key=22786, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_221:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A63DC, f4=22788, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A63DC, key=22788, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_222:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A63EC, f4=22790, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A63EC, key=22790, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_223:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=23040, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=23040, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_224:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A641C, f4=23044, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A641C, key=23044, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_225:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A685C, f4=23296, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A685C, key=23296, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_226:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A686C, f4=23298, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A686C, key=23298, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_227:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=23299, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=23299, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_228:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A643C, f4=23300, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A643C, key=23300, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_229:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=23302, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=23302, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_230:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A688C, f4=23552, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A688C, key=23552, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_231:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A689C, f4=23554, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A689C, key=23554, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_232:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6454, f4=23556, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6454, key=23556, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_233:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=23557, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=23557, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_234:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A645C, f4=23558, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A645C, key=23558, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_235:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=23559, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=23559, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_236:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A68C4, f4=23808, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A68C4, key=23808, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_237:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6474, f4=23812, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6474, key=23812, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_238:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A68F4, f4=24064, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A68F4, key=24064, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_239:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A68FC, f4=24065, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A68FC, key=24065, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_240:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=24069, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=24069, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_241:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A692C, f4=24320, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A692C, key=24320, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_242:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=24576, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=24576, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_243:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=24577, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=24577, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_244:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=24578, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=24578, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_245:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64EC, f4=24580, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A64EC, key=24580, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_246:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=24832, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=24832, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_247:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=24834, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=24834, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_248:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25088, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25088, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_249:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25089, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25089, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_250:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25091, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25091, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_251:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25093, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25093, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_252:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A652C, f4=25094, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A652C, key=25094, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_253:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25095, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25095, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_254:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25344, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25344, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_255:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25347, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25347, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_256:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A653C, f4=25348, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A653C, key=25348, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_257:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25600, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25600, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_258:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25601, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25601, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_259:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25602, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25602, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_260:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25603, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25603, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_261:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6544, f4=25604, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6544, key=25604, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_262:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A654C, f4=25605, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A654C, key=25605, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_263:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25606, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25606, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_264:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25607, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25607, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_265:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69A4, f4=25856, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69A4, key=25856, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_266:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25858, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25858, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_267:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25859, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25859, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_268:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A655C, f4=25860, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A655C, key=25860, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_269:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25861, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25861, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_270:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25862, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25862, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_271:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=25863, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=25863, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_272:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26112, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26112, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_273:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69C4, f4=26114, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69C4, key=26114, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_274:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26115, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26115, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_275:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6564, f4=26116, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6564, key=26116, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_276:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26117, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26117, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_277:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26118, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26118, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_278:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26119, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26119, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_279:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69F4, f4=26368, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69F4, key=26368, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_280:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69FC, f4=26369, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A69FC, key=26369, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_281:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A04, f4=26370, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A04, key=26370, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_282:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A658C, f4=26372, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A658C, key=26372, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_283:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6594, f4=26373, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6594, key=26373, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_284:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A659C, f4=26374, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A659C, key=26374, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_285:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65A4, f4=26375, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65A4, key=26375, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_286:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A2C, f4=26624, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A2C, key=26624, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_287:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A3C, f4=26626, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A3C, key=26626, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_288:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26627, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26627, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_289:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65C4, f4=26628, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65C4, key=26628, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_290:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65CC, f4=26629, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65CC, key=26629, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_291:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26630, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26630, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_292:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26631, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26631, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_293:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A5C, f4=26880, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A5C, key=26880, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_294:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A64, f4=26881, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A64, key=26881, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_295:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A6C, f4=26882, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A6C, key=26882, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_296:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26883, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26883, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_297:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65D4, f4=26884, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65D4, key=26884, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_298:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65DC, f4=26885, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65DC, key=26885, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_299:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26886, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26886, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_300:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=26887, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=26887, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_301:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27136, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27136, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_302:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A94, f4=27137, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A94, key=27137, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_303:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A9C, f4=27138, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6A9C, key=27138, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_304:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27139, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27139, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_305:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65E4, f4=27140, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65E4, key=27140, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_306:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65EC, f4=27141, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65EC, key=27141, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_307:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65F4, f4=27142, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65F4, key=27142, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_308:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65FC, f4=27143, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A65FC, key=27143, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_309:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6AB4, f4=27392, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6AB4, key=27392, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_310:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6ABC, f4=27393, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6ABC, key=27393, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_311:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6AC4, f4=27394, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6AC4, key=27394, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_312:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27395, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27395, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_313:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6614, f4=27396, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6614, key=27396, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_314:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27398, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27398, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_315:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27399, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27399, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_316:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6ADC, f4=27648, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6ADC, key=27648, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_317:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6AEC, f4=27650, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6AEC, key=27650, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_318:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27651, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27651, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_319:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6624, f4=27652, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6624, key=27652, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_320:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27653, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27653, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_321:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27654, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27654, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_322:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27655, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27655, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_323:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B0C, f4=27904, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B0C, key=27904, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_324:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B1C, f4=27906, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B1C, key=27906, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_325:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27907, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27907, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_326:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6634, f4=27908, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6634, key=27908, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_327:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A663C, f4=27909, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A663C, key=27909, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_328:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27910, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27910, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_329:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=27911, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=27911, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_330:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B34, f4=28160, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B34, key=28160, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_331:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B3C, f4=28161, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B3C, key=28161, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_332:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B44, f4=28162, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B44, key=28162, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_333:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28163, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28163, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_334:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6654, f4=28164, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6654, key=28164, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_335:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28165, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28165, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_336:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28166, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28166, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_337:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A665C, f4=28167, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A665C, key=28167, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_338:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28416, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28416, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_339:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28418, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28418, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_340:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6664, f4=28420, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6664, key=28420, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_341:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28421, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28421, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_342:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28422, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28422, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_343:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B84, f4=28672, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6B84, key=28672, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_344:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28674, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28674, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_345:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28675, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28675, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_346:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A666C, f4=28676, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A666C, key=28676, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_347:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6674, f4=28677, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6674, key=28677, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_348:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28678, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28678, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_349:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28679, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28679, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_350:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28928, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28928, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_351:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28929, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28929, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_352:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28930, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28930, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_353:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28931, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28931, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_354:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A667C, f4=28932, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A667C, key=28932, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_355:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28933, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28933, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_356:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28934, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28934, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_357:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=28935, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=28935, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_358:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29184, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29184, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_359:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29187, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29187, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_360:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6684, f4=29188, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6684, key=29188, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_361:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29189, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29189, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_362:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A668C, f4=29190, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A668C, key=29190, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_363:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6694, f4=29191, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6694, key=29191, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_364:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29440, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29440, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_365:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29443, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29443, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_366:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A669C, f4=29444, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A669C, key=29444, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_367:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29446, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29446, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_368:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29696, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29696, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_369:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29697, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29697, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_370:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29698, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29698, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_371:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29699, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29699, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_372:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A66D4, f4=29702, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A66D4, key=29702, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_373:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29952, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29952, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_374:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29953, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29953, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_375:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29954, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29954, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_376:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29955, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29955, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_377:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A66EC, f4=29956, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A66EC, key=29956, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_378:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=29957, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=29957, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_379:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30208, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30208, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_380:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30209, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30209, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_381:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30210, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30210, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_382:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30213, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30213, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_383:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30214, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30214, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_384:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6704, f4=30215, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6704, key=30215, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_385:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6C14, f4=30464, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6C14, key=30464, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_386:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6C1C, f4=30465, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6C1C, key=30465, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_387:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30466, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30466, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_388:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30467, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30467, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_389:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A670C, f4=30468, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A670C, key=30468, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_390:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30469, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30469, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_391:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30470, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30470, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_392:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30471, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30471, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_393:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30720, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30720, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_394:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30721, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30721, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_395:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30722, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30722, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_396:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30723, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30723, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_397:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A671C, f4=30724, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A671C, key=30724, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_398:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6724, f4=30725, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6724, key=30725, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_399:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30726, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30726, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_400:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A672C, f4=30727, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A672C, key=30727, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_401:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30976, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30976, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_402:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30979, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30979, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_403:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A673C, f4=30980, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A673C, key=30980, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_404:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30981, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30981, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_405:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6744, f4=30982, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6744, key=30982, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_406:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=30983, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=30983, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_407:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6C6C, f4=31232, x6="\xF4\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6C6C, key=31232, x6="\xF4\x00"
 VoiceDirIndexFind_Table_p0_408:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31233, x6="\x0C\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31233, x6="\x0C\x00"
 VoiceDirIndexFind_Table_p0_409:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31234, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31234, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_410:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31235, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31235, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_411:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6754, f4=31236, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6754, key=31236, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_412:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31237, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31237, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_413:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31238, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31238, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_414:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31239, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31239, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_415:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31488, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31488, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_416:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31489, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31489, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_417:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31490, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31490, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_418:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31491, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31491, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_419:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A675C, f4=31492, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A675C, key=31492, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_420:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31493, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31493, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_421:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31494, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31494, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_422:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31495, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31495, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_423:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6CA4, f4=31744, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6CA4, key=31744, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_424:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6CAC, f4=31745, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6CAC, key=31745, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_425:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31746, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31746, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_426:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31747, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31747, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_427:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6764, f4=31748, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6764, key=31748, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_428:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31749, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31749, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_429:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31750, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31750, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_430:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=31751, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=31751, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_431:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6CDC, f4=32000, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6CDC, key=32000, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_432:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32002, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32002, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_433:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32003, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32003, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_434:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6774, f4=32004, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6774, key=32004, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_435:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32005, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32005, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_436:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32006, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32006, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_437:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32007, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32007, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_438:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D0C, f4=32256, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D0C, key=32256, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_439:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D14, f4=32257, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D14, key=32257, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_440:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32259, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32259, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_441:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A677C, f4=32260, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A677C, key=32260, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_442:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32261, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32261, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_443:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32262, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32262, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_444:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32263, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32263, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_445:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D44, f4=32512, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D44, key=32512, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_446:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D4C, f4=32513, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D4C, key=32513, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_447:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D54, f4=32514, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6D54, key=32514, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_448:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	f4=32515, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	key=32515, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_449:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6784, f4=32516, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6784, key=32516, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_450:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A678C, f4=32517, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A678C, key=32517, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_451:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6794, f4=32518, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A6794, key=32518, x6="\x00\x00"
 VoiceDirIndexFind_Table_p0_452:	# REC_VoiceDirIndexFind_Table_p0 (8 bytes)
-	REC_VoiceDirIndexFind_Table_p0	p0=data_486A679C, f4=32519, x6="\x00\x00"
+	REC_VoiceDirIndexFind_Table_p0	p0=data_486A679C, key=32519, x6="\x00\x00"
 data_486A75AC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A75AC, 0x2A75B8
@@ -12379,7 +12379,7 @@ data_486A75DC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A75DC, 0x2A75E8
 VoiceDirRefFind_Table_p0_0:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3, x6=" H\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3, x6=" H\x00\x00\x00\x00"
 data_486A75F4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A75F4, 0x2A7600
@@ -12387,23 +12387,23 @@ data_486A7600:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7600, 0x2A760C
 VoiceDirRefFind_Table_p0_1:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=259, x6=" \x10\x03\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=259, x6=" \x10\x03\x00\x00\x00"
 data_486A7618:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7618, 0x2A7624
 VoiceDirRefFind_Table_p0_2:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1280, x6=" \x00\x04\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1280, x6=" \x00\x04\x00\x00\x00"
 VoiceDirRefFind_Table_p0_3:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1282, x6=" \x04\x04\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1282, x6=" \x04\x04\x00\x00\x00"
 VoiceDirRefFind_Table_p0_4:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1026, x6=" \x10\x04\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1026, x6=" \x10\x04\x00\x00\x00"
 VoiceDirRefFind_Table_p0_5:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1028, x6=" @\x04\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1028, x6=" @\x04\x00\x00\x00"
 data_486A7654:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7654, 0x2A7660
 VoiceDirRefFind_Table_p0_6:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1536, x6=" \x00\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1536, x6=" \x00\x05\x00\x00\x00"
 data_486A766C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A766C, 0x2A7678
@@ -12411,28 +12411,28 @@ data_486A7678:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7678, 0x2A7684
 VoiceDirRefFind_Table_p0_7:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1539, x6=" \x10\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1539, x6=" \x10\x05\x00\x00\x00"
 data_486A7690:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7690, 0x2A769C
 VoiceDirRefFind_Table_p0_8:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1794, x6=" \x10\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1794, x6=" \x10\x05\x00\x00\x00"
 VoiceDirRefFind_Table_p0_9:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29696, x6=" \x10\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29696, x6=" \x10\x05\x00\x00\x00"
 VoiceDirRefFind_Table_p0_10:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1540, x6=" \x14\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1540, x6=" \x14\x05\x00\x00\x00"
 data_486A76C0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A76C0, 0x2A76CC
 VoiceDirRefFind_Table_p0_11:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1030, x6=" P\x04\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1030, x6=" P\x04\x00\x00\x00"
 data_486A76D8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A76D8, 0x2A76E4
 VoiceDirRefFind_Table_p0_12:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=4, x6=" 0\x01\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=4, x6=" 0\x01\x00\x00\x00"
 VoiceDirRefFind_Table_p0_13:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=262, x6=" 1\x01\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=262, x6=" 1\x01\x00\x00\x00"
 data_486A76FC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A76FC, 0x2A7708
@@ -12452,11 +12452,11 @@ data_486A7744:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7744, 0x2A7750
 VoiceDirRefFind_Table_p0_14:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=4356, x6=" \x10\x07\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=4356, x6=" \x10\x07\x00\x00\x00"
 VoiceDirRefFind_Table_p0_15:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29440, x6="  \x07\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29440, x6="  \x07\x00\x00\x00"
 VoiceDirRefFind_Table_p0_16:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29184, x6="  \x07\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29184, x6="  \x07\x00\x00\x00"
 data_486A7774:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7774, 0x2A7780
@@ -12464,16 +12464,16 @@ data_486A7780:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7780, 0x2A7798
 VoiceDirRefFind_Table_p0_17:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=2304, x6=" \x00\x09\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=2304, x6=" \x00\x09\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A77A4, 0x2A77B0
 VoiceDirRefFind_Table_p0_18:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=2048, x6=" \x04\x0B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=2048, x6=" \x04\x0B\x00\x00\x00"
 data_486A77BC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A77BC, 0x2A77C8
 VoiceDirRefFind_Table_p0_19:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=2052, x6=" P\x0B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=2052, x6=" P\x0B\x00\x00\x00"
 data_486A77D4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A77D4, 0x2A77E0
@@ -12484,7 +12484,7 @@ data_486A77EC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A77EC, 0x2A77F8
 VoiceDirRefFind_Table_p0_20:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28928, x6=" @\x0C\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28928, x6=" @\x0C\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7804, 0x2A7810
 data_486A7810:
@@ -12494,7 +12494,7 @@ data_486A781C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A781C, 0x2A7828
 VoiceDirRefFind_Table_p0_21:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3588, x6=" \x10\x0E\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3588, x6=" \x10\x0E\x00\x00\x00"
 data_486A7834:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7834, 0x2A7840
@@ -12511,9 +12511,9 @@ data_486A7870:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7870, 0x2A787C
 VoiceDirRefFind_Table_p0_22:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=5124, x6=" \x1C\x18\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=5124, x6=" \x1C\x18\x00\x00\x00"
 VoiceDirRefFind_Table_p0_23:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=6916, x6=" 0\x1F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=6916, x6=" 0\x1F\x00\x00\x00"
 data_486A7894:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7894, 0x2A78A0
@@ -12542,7 +12542,7 @@ data_486A7900:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7900, 0x2A790C
 VoiceDirRefFind_Table_p0_24:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=6659, x6=" \x01\x1B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=6659, x6=" \x01\x1B\x00\x00\x00"
 data_486A7918:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7918, 0x2A7924
@@ -12550,11 +12550,11 @@ data_486A7924:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7924, 0x2A7930
 VoiceDirRefFind_Table_p0_25:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=6660, x6=" \x18\x1B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=6660, x6=" \x18\x1B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_26:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=7170, x6="  \x1B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=7170, x6="  \x1B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_27:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=7424, x6=" \x00\x1C\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=7424, x6=" \x00\x1C\x00\x00\x00"
 data_486A7954:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7954, 0x2A7960
@@ -12571,7 +12571,7 @@ data_486A7984:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7984, 0x2A7990
 VoiceDirRefFind_Table_p0_28:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=6912, x6=" \x00\x1F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=6912, x6=" \x00\x1F\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A799C, 0x2A79A8
 data_486A79A8:
@@ -12581,7 +12581,7 @@ data_486A79B4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A79B4, 0x2A79C0
 VoiceDirRefFind_Table_p0_29:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=7940, x6=" E\x1A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=7940, x6=" E\x1A\x00\x00\x00"
 data_486A79CC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A79CC, 0x2A79D8
@@ -12589,7 +12589,7 @@ data_486A79D8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A79D8, 0x2A79E4
 VoiceDirRefFind_Table_p0_30:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=8964, x6=" P\x19\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=8964, x6=" P\x19\x00\x00\x00"
 data_486A79F0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A79F0, 0x2A79FC
@@ -12609,33 +12609,33 @@ data_486A7A2C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7A2C, 0x2A7A38
 VoiceDirRefFind_Table_p0_31:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=9732, x6=" \x10\x0F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=9732, x6=" \x10\x0F\x00\x00\x00"
 data_486A7A44:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7A44, 0x2A7A50
 VoiceDirRefFind_Table_p0_32:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=9984, x6=" \x00l\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=9984, x6=" \x00l\x00\x00\x00"
 VoiceDirRefFind_Table_p0_33:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=9985, x6=" \x10l\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=9985, x6=" \x10l\x00\x00\x00"
 data_486A7A68:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7A68, 0x2A7A80
 VoiceDirRefFind_Table_p0_34:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3332, x6="  p\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3332, x6="  p\x00\x00\x00"
 data_486A7A8C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7A8C, 0x2A7A98
 VoiceDirRefFind_Table_p0_35:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3591, x6="  p\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3591, x6="  p\x00\x00\x00"
 VoiceDirRefFind_Table_p0_36:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3334, x6=" (p\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3334, x6=" (p\x00\x00\x00"
 data_486A7AB0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7AB0, 0x2A7ABC
 VoiceDirRefFind_Table_p0_37:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3335, x6=" 0p\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3335, x6=" 0p\x00\x00\x00"
 VoiceDirRefFind_Table_p0_38:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A2C, f4=31492, x6=" 0t\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A2C, key=31492, x6=" 0t\x00\x00\x00"
 data_486A7AD4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7AD4, 0x2A7AE0
@@ -12649,16 +12649,16 @@ data_486A7AF8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7AF8, 0x2A7B04
 VoiceDirRefFind_Table_p0_39:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31233, x6=" \x00s\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31233, x6=" \x00s\x00\x00\x00"
 VoiceDirRefFind_Table_p0_40:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31491, x6=" \x00t\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31491, x6=" \x00t\x00\x00\x00"
 VoiceDirRefFind_Table_p0_41:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31234, x6=" \x00u\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31234, x6=" \x00u\x00\x00\x00"
 data_486A7B28:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7B28, 0x2A7B34
 VoiceDirRefFind_Table_p0_42:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31235, x6=" \x00w\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31235, x6=" \x00w\x00\x00\x00"
 data_486A7B40:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7B40, 0x2A7B4C
@@ -12669,51 +12669,51 @@ data_486A7B58:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7B58, 0x2A7B64
 VoiceDirRefFind_Table_p0_43:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7834, f4=24580, x6=" \x04(\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7834, key=24580, x6=" \x04(\x00\x00\x00"
 VoiceDirRefFind_Table_p0_44:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=24576, x6=" \x00(\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=24576, x6=" \x00(\x00\x00\x00"
 VoiceDirRefFind_Table_p0_45:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=24577, x6=" \x10(\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=24577, x6=" \x10(\x00\x00\x00"
 VoiceDirRefFind_Table_p0_46:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=24578, x6=" \x00n\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=24578, x6=" \x00n\x00\x00\x00"
 VoiceDirRefFind_Table_p0_47:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=24834, x6=" \x00)\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=24834, x6=" \x00)\x00\x00\x00"
 VoiceDirRefFind_Table_p0_48:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=24832, x6=" \x00*\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=24832, x6=" \x00*\x00\x00\x00"
 VoiceDirRefFind_Table_p0_49:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25088, x6=" \x00+\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25088, x6=" \x00+\x00\x00\x00"
 VoiceDirRefFind_Table_p0_50:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25603, x6=" \x100\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25603, x6=" \x100\x00\x00\x00"
 VoiceDirRefFind_Table_p0_51:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7810, f4=25860, x6=" \x180\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7810, key=25860, x6=" \x180\x00\x00\x00"
 VoiceDirRefFind_Table_p0_52:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25600, x6=" \x000\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25600, x6=" \x000\x00\x00\x00"
 VoiceDirRefFind_Table_p0_53:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A77D4, f4=25604, x6=" \x080\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A77D4, key=25604, x6=" \x080\x00\x00\x00"
 VoiceDirRefFind_Table_p0_54:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A77EC, f4=26116, x6="  0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A77EC, key=26116, x6="  0\x00\x00\x00"
 data_486A7BF4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7BF4, 0x2A7C00
 VoiceDirRefFind_Table_p0_55:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26118, x6=" 00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26118, x6=" 00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_56:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26119, x6=" 80\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26119, x6=" 80\x00\x00\x00"
 data_486A7C18:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7C18, 0x2A7C24
 VoiceDirRefFind_Table_p0_57:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25601, x6=" \x1C0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25601, x6=" \x1C0\x00\x00\x00"
 VoiceDirRefFind_Table_p0_58:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25858, x6=" \x081\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25858, x6=" \x081\x00\x00\x00"
 VoiceDirRefFind_Table_p0_59:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26112, x6=" @0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26112, x6=" @0\x00\x00\x00"
 VoiceDirRefFind_Table_p0_60:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25089, x6=" 90\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25089, x6=" 90\x00\x00\x00"
 VoiceDirRefFind_Table_p0_61:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25602, x6=" \x00,\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25602, x6=" \x00,\x00\x00\x00"
 VoiceDirRefFind_Table_p0_62:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25344, x6=" \x00-\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25344, x6=" \x00-\x00\x00\x00"
 data_486A7C6C:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7C6C, 0x2A7C84
@@ -12724,7 +12724,7 @@ data_486A7C90:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7C90, 0x2A7C9C
 VoiceDirRefFind_Table_p0_63:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26627, x6=" \x014\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26627, x6=" \x014\x00\x00\x00"
 data_486A7CA8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7CA8, 0x2A7CB4
@@ -12732,11 +12732,11 @@ data_486A7CB4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7CB4, 0x2A7CC0
 VoiceDirRefFind_Table_p0_64:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A68, f4=26628, x6=" \x0C4\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A68, key=26628, x6=" \x0C4\x00\x00\x00"
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7CCC, 0x2A7CE4
 VoiceDirRefFind_Table_p0_65:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26630, x6=" $4\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26630, x6=" $4\x00\x00\x00"
 data_486A7CF0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7CF0, 0x2A7CFC
@@ -12744,24 +12744,24 @@ data_486A7CFC:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7CFC, 0x2A7D14
 VoiceDirRefFind_Table_p0_66:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26887, x6=" $5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26887, x6=" $5\x00\x00\x00"
 data_486A7D20:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7D20, 0x2A7D2C
 VoiceDirRefFind_Table_p0_67:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26886, x6=" (5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26886, x6=" (5\x00\x00\x00"
 data_486A7D38:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7D38, 0x2A7D44
 VoiceDirRefFind_Table_p0_68:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7744, f4=27143, x6=" *5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7744, key=27143, x6=" *5\x00\x00\x00"
 VoiceDirRefFind_Table_p0_69:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A772C, f4=27396, x6=" &5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A772C, key=27396, x6=" &5\x00\x00\x00"
 data_486A7D5C:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7D5C, 0x2A7D74
 VoiceDirRefFind_Table_p0_70:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A784C, f4=27908, x6=" P5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A784C, key=27908, x6=" P5\x00\x00\x00"
 data_486A7D80:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7D80, 0x2A7D8C
@@ -12769,58 +12769,58 @@ data_486A7D8C:
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7D8C, 0x2A7D98
 VoiceDirRefFind_Table_p0_71:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27910, x6=" @5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27910, x6=" @5\x00\x00\x00"
 VoiceDirRefFind_Table_p0_72:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27911, x6=" H5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27911, x6=" H5\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7DB0, 0x2A7DBC
 data_486A7DBC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7DBC, 0x2A7DC8
 VoiceDirRefFind_Table_p0_73:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7864, f4=28164, x6=" I5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7864, key=28164, x6=" I5\x00\x00\x00"
 data_486A7DD4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7DD4, 0x2A7DE0
 VoiceDirRefFind_Table_p0_74:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28166, x6=" D5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28166, x6=" D5\x00\x00\x00"
 VoiceDirRefFind_Table_p0_75:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A14, f4=32518, x6=" M5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A14, key=32518, x6=" M5\x00\x00\x00"
 data_486A7DF8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7DF8, 0x2A7E04
 VoiceDirRefFind_Table_p0_76:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22528, x6=" \x00\x11\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22528, x6=" \x00\x11\x00\x00\x00"
 VoiceDirRefFind_Table_p0_77:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22532, x6=" \x04\x11\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22532, x6=" \x04\x11\x00\x00\x00"
 VoiceDirRefFind_Table_p0_78:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22784, x6=" \x00\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22784, x6=" \x00\x10\x00\x00\x00"
 VoiceDirRefFind_Table_p0_79:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A75AC, f4=22788, x6=" \x04\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A75AC, key=22788, x6=" \x04\x10\x00\x00\x00"
 data_486A7E34:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7E34, 0x2A7E40
 VoiceDirRefFind_Table_p0_80:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7678, f4=23812, x6=" \x14\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7678, key=23812, x6=" \x14\x10\x00\x00\x00"
 data_486A7E4C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7E4C, 0x2A7E58
 VoiceDirRefFind_Table_p0_81:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A75C4, f4=23300, x6=" \x0C\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A75C4, key=23300, x6=" \x0C\x10\x00\x00\x00"
 data_486A7E64:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7E64, 0x2A7E70
 VoiceDirRefFind_Table_p0_82:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=23302, x6=" \x1C\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=23302, x6=" \x1C\x10\x00\x00\x00"
 VoiceDirRefFind_Table_p0_83:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=23040, x6=" \x08\x11\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=23040, x6=" \x08\x11\x00\x00\x00"
 VoiceDirRefFind_Table_p0_84:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A75B8, f4=23044, x6=" \x0C\x11\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A75B8, key=23044, x6=" \x0C\x11\x00\x00\x00"
 data_486A7E94:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7E94, 0x2A7EA0
 VoiceDirRefFind_Table_p0_85:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A76D8, f4=22790, x6=" $\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A76D8, key=22790, x6=" $\x10\x00\x00\x00"
 data_486A7EAC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7EAC, 0x2A7EB8
@@ -12828,16 +12828,16 @@ data_486A7EB8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7EB8, 0x2A7EC4
 VoiceDirRefFind_Table_p0_86:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=23559, x6=" \x04\x12\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=23559, x6=" \x04\x12\x00\x00\x00"
 VoiceDirRefFind_Table_p0_87:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=23299, x6="  \x12\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=23299, x6="  \x12\x00\x00\x00"
 VoiceDirRefFind_Table_p0_88:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7618, f4=23556, x6=" \x10\x12\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7618, key=23556, x6=" \x10\x12\x00\x00\x00"
 data_486A7EE8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7EE8, 0x2A7EF4
 VoiceDirRefFind_Table_p0_89:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A75F4, f4=23558, x6=" (\x12\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A75F4, key=23558, x6=" (\x12\x00\x00\x00"
 data_486A7F00:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7F00, 0x2A7F0C
@@ -12845,76 +12845,76 @@ data_486A7F0C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7F0C, 0x2A7F18
 VoiceDirRefFind_Table_p0_90:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21760, x6=" \x10\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21760, x6=" \x10\x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_91:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21504, x6=" \x00\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21504, x6=" \x00\x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_92:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22020, x6="  \x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22020, x6="  \x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_93:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22274, x6=" @\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22274, x6=" @\x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_94:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22272, x6=" @\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22272, x6=" @\x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_95:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22275, x6=" H\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22275, x6=" H\x13\x00\x00\x00"
 data_486A7F60:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7F60, 0x2A7F6C
 VoiceDirRefFind_Table_p0_96:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22276, x6=" P\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22276, x6=" P\x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_97:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22018, x6=" \x00\x14\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22018, x6=" \x00\x14\x00\x00\x00"
 VoiceDirRefFind_Table_p0_98:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=22016, x6=" \x00\x14\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=22016, x6=" \x00\x14\x00\x00\x00"
 VoiceDirRefFind_Table_p0_99:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20480, x6=" \x00\x15\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20480, x6=" \x00\x15\x00\x00\x00"
 VoiceDirRefFind_Table_p0_100:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20736, x6=" \x10\x15\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20736, x6=" \x10\x15\x00\x00\x00"
 VoiceDirRefFind_Table_p0_101:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20992, x6=" @\x15\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20992, x6=" @\x15\x00\x00\x00"
 VoiceDirRefFind_Table_p0_102:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20481, x6=" \x00\x17\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20481, x6=" \x00\x17\x00\x00\x00"
 VoiceDirRefFind_Table_p0_103:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20996, x6=" H\x15\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20996, x6=" H\x15\x00\x00\x00"
 VoiceDirRefFind_Table_p0_104:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20993, x6="$\x08\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20993, x6="$\x08\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_105:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20994, x6="$(\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20994, x6="$(\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_106:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20995, x6="$ \x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20995, x6="$ \x00\x00\x00\x00"
 data_486A7FF0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A7FF0, 0x2A7FFC
 VoiceDirRefFind_Table_p0_107:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20998, x6="$`\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20998, x6="$`\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_108:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20999, x6="$P\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20999, x6="$P\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_109:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21254, x6="$X\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21254, x6="$X\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_110:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21255, x6="$@\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21255, x6="$@\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_111:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20742, x6="$,\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20742, x6="$,\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_112:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20743, x6="$.\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20743, x6="$.\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_113:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20482, x6="$\x00\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20482, x6="$\x00\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_114:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20483, x6="$\x08\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20483, x6="$\x08\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_115:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20484, x6="$ \x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20484, x6="$ \x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_116:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B58, f4=20485, x6="$0\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B58, key=20485, x6="$0\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_117:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B40, f4=20486, x6="$`\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B40, key=20486, x6="$`\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_118:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B4C, f4=20487, x6="$H\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B4C, key=20487, x6="$H\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_119:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21252, x6="$X\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21252, x6="$X\x08\x00\x00\x00"
 data_486A8098:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8098, 0x2A80A4
 VoiceDirRefFind_Table_p0_120:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20740, x6="$,\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20740, x6="$,\x08\x00\x00\x00"
 data_486A80B0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A80B0, 0x2A80BC
@@ -12922,116 +12922,116 @@ data_486A80BC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A80BC, 0x2A80C8
 VoiceDirRefFind_Table_p0_121:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12291, x6=" \x048\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12291, x6=" \x048\x00\x00\x00"
 VoiceDirRefFind_Table_p0_122:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12288, x6=" \x008\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12288, x6=" \x008\x00\x00\x00"
 VoiceDirRefFind_Table_p0_123:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12292, x6=" \x108\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12292, x6=" \x108\x00\x00\x00"
 VoiceDirRefFind_Table_p0_124:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12294, x6="  8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12294, x6="  8\x00\x00\x00"
 VoiceDirRefFind_Table_p0_125:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12290, x6=" \x088\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12290, x6=" \x088\x00\x00\x00"
 data_486A8104:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8104, 0x2A811C
 VoiceDirRefFind_Table_p0_126:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14851, x6=" d8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14851, x6=" d8\x00\x00\x00"
 VoiceDirRefFind_Table_p0_127:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A76FC, f4=12800, x6=" \x00;\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A76FC, key=12800, x6=" \x00;\x00\x00\x00"
 VoiceDirRefFind_Table_p0_128:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12801, x6=" \x10;\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12801, x6=" \x10;\x00\x00\x00"
 VoiceDirRefFind_Table_p0_129:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12546, x6=" D8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12546, x6=" D8\x00\x00\x00"
 data_486A814C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A814C, 0x2A8158
 VoiceDirRefFind_Table_p0_130:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12544, x6=" @8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12544, x6=" @8\x00\x00\x00"
 VoiceDirRefFind_Table_p0_131:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7654, f4=13056, x6=" 08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7654, key=13056, x6=" 08\x00\x00\x00"
 data_486A8170:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8170, 0x2A817C
 VoiceDirRefFind_Table_p0_132:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A766C, f4=13568, x6=" \x109\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A766C, key=13568, x6=" \x109\x00\x00\x00"
 VoiceDirRefFind_Table_p0_133:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A76C0, f4=13569, x6=" \x189\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A76C0, key=13569, x6=" \x189\x00\x00\x00"
 VoiceDirRefFind_Table_p0_134:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=13315, x6="  ;\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=13315, x6="  ;\x00\x00\x00"
 data_486A81A0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A81A0, 0x2A81AC
 VoiceDirRefFind_Table_p0_135:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=13825, x6=" \x00<\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=13825, x6=" \x00<\x00\x00\x00"
 VoiceDirRefFind_Table_p0_136:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=13828, x6=" @<\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=13828, x6=" @<\x00\x00\x00"
 VoiceDirRefFind_Table_p0_137:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14081, x6="  :\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14081, x6="  :\x00\x00\x00"
 VoiceDirRefFind_Table_p0_138:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A77BC, f4=14080, x6=" \x00:\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A77BC, key=14080, x6=" \x00:\x00\x00\x00"
 VoiceDirRefFind_Table_p0_139:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14336, x6=" \x00=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14336, x6=" \x00=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_140:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14596, x6=" \x00=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14596, x6=" \x00=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_141:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14592, x6=" \x00=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14592, x6=" \x00=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_142:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14340, x6=" \x08=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14340, x6=" \x08=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_143:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14337, x6=" @=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14337, x6=" @=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_144:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14338, x6=" Q;\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14338, x6=" Q;\x00\x00\x00"
 VoiceDirRefFind_Table_p0_145:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15104, x6=" H=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15104, x6=" H=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_146:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15105, x6=" L=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15105, x6=" L=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_147:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14593, x6=" P8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14593, x6=" P8\x00\x00\x00"
 VoiceDirRefFind_Table_p0_148:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15108, x6=" T8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15108, x6=" T8\x00\x00\x00"
 VoiceDirRefFind_Table_p0_149:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C84, f4=14342, x6=" X8\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C84, key=14342, x6=" X8\x00\x00\x00"
 VoiceDirRefFind_Table_p0_150:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C6C, f4=14341, x6=" 0=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C6C, key=14341, x6=" 0=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_151:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C90, f4=14343, x6=" \x18=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C90, key=14343, x6=" \x18=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_152:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15106, x6=" P=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15106, x6=" P=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_153:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14852, x6=" `=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14852, x6=" `=\x00\x00\x00"
 data_486A8290:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8290, 0x2A829C
 VoiceDirRefFind_Table_p0_154:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CF0, f4=14853, x6=" a=\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CF0, key=14853, x6=" a=\x00\x00\x00"
 VoiceDirRefFind_Table_p0_155:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CB4, f4=14597, x6=" P;\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CB4, key=14597, x6=" P;\x00\x00\x00"
 data_486A82B4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A82B4, 0x2A82C0
 VoiceDirRefFind_Table_p0_156:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14339, x6="  =\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14339, x6="  =\x00\x00\x00"
 VoiceDirRefFind_Table_p0_157:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16131, x6=" \x00?\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16131, x6=" \x00?\x00\x00\x00"
 VoiceDirRefFind_Table_p0_158:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16128, x6=" \x00?\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16128, x6=" \x00?\x00\x00\x00"
 VoiceDirRefFind_Table_p0_159:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AB0, f4=15360, x6=" \x00>\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AB0, key=15360, x6=" \x00>\x00\x00\x00"
 VoiceDirRefFind_Table_p0_160:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15616, x6=" \x00>\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15616, x6=" \x00>\x00\x00\x00"
 VoiceDirRefFind_Table_p0_161:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15872, x6=" \x00>\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15872, x6=" \x00>\x00\x00\x00"
 VoiceDirRefFind_Table_p0_162:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15876, x6=" \x08>\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15876, x6=" \x08>\x00\x00\x00"
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8314, 0x2A832C
 data_486A832C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A832C, 0x2A8338
 VoiceDirRefFind_Table_p0_163:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27399, x6=" \x10?\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27399, x6=" \x10?\x00\x00\x00"
 VoiceDirRefFind_Table_p0_164:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CFC, f4=16133, x6="  >\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CFC, key=16133, x6="  >\x00\x00\x00"
 data_486A8350:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8350, 0x2A835C
@@ -13039,79 +13039,79 @@ data_486A835C:
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A835C, 0x2A8380
 VoiceDirRefFind_Table_p0_165:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19456, x6=" \x00@\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19456, x6=" \x00@\x00\x00\x00"
 VoiceDirRefFind_Table_p0_166:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B28, f4=19717, x6=" \x04A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7B28, key=19717, x6=" \x04A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_167:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19714, x6=" \x00A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19714, x6=" \x00A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_168:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A796C, f4=19712, x6=" \x08A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A796C, key=19712, x6=" \x08A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_169:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19713, x6=" \x18A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19713, x6=" \x18A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_170:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19715, x6=" 0A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19715, x6=" 0A\x00\x00\x00"
 data_486A83C8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A83C8, 0x2A83D4
 VoiceDirRefFind_Table_p0_171:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19716, x6=" 8A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19716, x6=" 8A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_172:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AE0, f4=19973, x6=" \x14B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AE0, key=19973, x6=" \x14B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_173:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19971, x6=" \x00B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19971, x6=" \x00B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_174:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20227, x6=" \x00B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20227, x6=" \x00B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_175:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19972, x6=" \x00B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19972, x6=" \x00B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_176:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19969, x6=" \x10B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19969, x6=" \x10B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_177:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19968, x6=" \x10B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19968, x6=" \x10B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_178:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20224, x6=" 0B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20224, x6=" 0B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_179:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AEC, f4=20230, x6=" 4B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AEC, key=20230, x6=" 4B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_180:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AD4, f4=20229, x6=" 8B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AD4, key=20229, x6=" 8B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_181:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20225, x6=" \x00C\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20225, x6=" \x00C\x00\x00\x00"
 VoiceDirRefFind_Table_p0_182:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19970, x6=" PB\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19970, x6=" PB\x00\x00\x00"
 VoiceDirRefFind_Table_p0_183:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20226, x6=" PC\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20226, x6=" PC\x00\x00\x00"
 VoiceDirRefFind_Table_p0_184:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=20228, x6=" XC\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=20228, x6=" XC\x00\x00\x00"
 VoiceDirRefFind_Table_p0_185:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17408, x6=" \x00G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17408, x6=" \x00G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_186:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18176, x6=" \x00G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18176, x6=" \x00G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_187:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17410, x6=" \x08G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17410, x6=" \x08G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_188:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17411, x6=" \x10G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17411, x6=" \x10G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_189:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17409, x6=" \x18G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17409, x6=" \x18G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_190:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17664, x6="  G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17664, x6="  G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_191:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17665, x6=" 0G\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17665, x6=" 0G\x00\x00\x00"
 VoiceDirRefFind_Table_p0_192:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16896, x6=" \x00D\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16896, x6=" \x00D\x00\x00\x00"
 VoiceDirRefFind_Table_p0_193:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7870, f4=17152, x6=" \x00E\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7870, key=17152, x6=" \x00E\x00\x00\x00"
 VoiceDirRefFind_Table_p0_194:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=17920, x6=" \x00F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=17920, x6=" \x00F\x00\x00\x00"
 VoiceDirRefFind_Table_p0_195:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21248, x6=" \x00\x16\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21248, x6=" \x00\x16\x00\x00\x00"
 VoiceDirRefFind_Table_p0_196:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=21249, x6=" \x08\x16\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=21249, x6=" \x08\x16\x00\x00\x00"
 VoiceDirRefFind_Table_p0_197:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18688, x6=" \x00m\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18688, x6=" \x00m\x00\x00\x00"
 data_486A8518:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8518, 0x2A8524
 VoiceDirRefFind_Table_p0_198:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7780, f4=16384, x6=" \x00H\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7780, key=16384, x6=" \x00H\x00\x00\x00"
 data_486A8530:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8530, 0x2A853C
@@ -13119,152 +13119,152 @@ data_486A853C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A853C, 0x2A8548
 VoiceDirRefFind_Table_p0_199:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16640, x6=" \x00I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16640, x6=" \x00I\x00\x00\x00"
 VoiceDirRefFind_Table_p0_200:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16642, x6=" \x00I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16642, x6=" \x00I\x00\x00\x00"
 VoiceDirRefFind_Table_p0_201:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16641, x6="  I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16641, x6="  I\x00\x00\x00"
 VoiceDirRefFind_Table_p0_202:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16644, x6=" \x10I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16644, x6=" \x10I\x00\x00\x00"
 VoiceDirRefFind_Table_p0_203:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16385, x6=" 0I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16385, x6=" 0I\x00\x00\x00"
 VoiceDirRefFind_Table_p0_204:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=16387, x6=" PI\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=16387, x6=" PI\x00\x00\x00"
 VoiceDirRefFind_Table_p0_205:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AF8, f4=19205, x6=" @I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7AF8, key=19205, x6=" @I\x00\x00\x00"
 VoiceDirRefFind_Table_p0_206:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19204, x6=" @I\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19204, x6=" @I\x00\x00\x00"
 data_486A85A8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A85A8, 0x2A85B4
 VoiceDirRefFind_Table_p0_207:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18432, x6=" \x00K\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18432, x6=" \x00K\x00\x00\x00"
 VoiceDirRefFind_Table_p0_208:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18433, x6=" \x08K\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18433, x6=" \x08K\x00\x00\x00"
 VoiceDirRefFind_Table_p0_209:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18436, x6="  O\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18436, x6="  O\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A85D8, 0x2A85E4
 VoiceDirRefFind_Table_p0_210:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18944, x6=" \x00J\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18944, x6=" \x00J\x00\x00\x00"
 VoiceDirRefFind_Table_p0_211:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18946, x6=" \x00J\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18946, x6=" \x00J\x00\x00\x00"
 VoiceDirRefFind_Table_p0_212:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18945, x6=" \x00O\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18945, x6=" \x00O\x00\x00\x00"
 VoiceDirRefFind_Table_p0_213:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18434, x6=" \x00L\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18434, x6=" \x00L\x00\x00\x00"
 VoiceDirRefFind_Table_p0_214:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28416, x6=" \x00N\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28416, x6=" \x00N\x00\x00\x00"
 data_486A8620:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8620, 0x2A862C
 VoiceDirRefFind_Table_p0_215:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7894, f4=28420, x6=" 0N\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7894, key=28420, x6=" 0N\x00\x00\x00"
 VoiceDirRefFind_Table_p0_216:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19200, x6=" \x00M\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19200, x6=" \x00M\x00\x00\x00"
 VoiceDirRefFind_Table_p0_217:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=19201, x6=" @K\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=19201, x6=" @K\x00\x00\x00"
 VoiceDirRefFind_Table_p0_218:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18690, x6=" HK\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18690, x6=" HK\x00\x00\x00"
 VoiceDirRefFind_Table_p0_219:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11008, x6=" \x00 \x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11008, x6=" \x00 \x00\x00\x00"
 VoiceDirRefFind_Table_p0_220:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11009, x6=" \x10 \x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11009, x6=" \x10 \x00\x00\x00"
 VoiceDirRefFind_Table_p0_221:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10240, x6=" \x00!\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10240, x6=" \x00!\x00\x00\x00"
 VoiceDirRefFind_Table_p0_222:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11264, x6=" \x00!\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11264, x6=" \x00!\x00\x00\x00"
 VoiceDirRefFind_Table_p0_223:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E94, f4=10759, x6="  !\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E94, key=10759, x6="  !\x00\x00\x00"
 VoiceDirRefFind_Table_p0_224:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10241, x6=" \x10!\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10241, x6=" \x10!\x00\x00\x00"
 VoiceDirRefFind_Table_p0_225:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10244, x6=" 0!\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10244, x6=" 0!\x00\x00\x00"
 data_486A86B0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A86B0, 0x2A86BC
 VoiceDirRefFind_Table_p0_226:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10242, x6=" \x00#\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10242, x6=" \x00#\x00\x00\x00"
 VoiceDirRefFind_Table_p0_227:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10752, x6=" \x00\"\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10752, x6=" \x00\"\x00\x00\x00"
 data_486A86D4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A86D4, 0x2A86E0
 VoiceDirRefFind_Table_p0_228:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10496, x6=" \x00$\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10496, x6=" \x00$\x00\x00\x00"
 VoiceDirRefFind_Table_p0_229:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10497, x6=" \x00%\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10497, x6=" \x00%\x00\x00\x00"
 VoiceDirRefFind_Table_p0_230:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11777, x6="  '\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11777, x6="  '\x00\x00\x00"
 data_486A8704:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8704, 0x2A8710
 VoiceDirRefFind_Table_p0_231:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12035, x6=" \x10&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12035, x6=" \x10&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_232:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11524, x6=" \x08'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11524, x6=" \x08'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_233:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11520, x6=" \x08'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11520, x6=" \x08'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_234:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10753, x6=" \x08&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10753, x6=" \x08&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_235:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E34, f4=11781, x6=" \x00'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E34, key=11781, x6=" \x00'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_236:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11782, x6=" \x00'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11782, x6=" \x00'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_237:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11776, x6=" \x00&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11776, x6=" \x00&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_238:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11780, x6=" \x00&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11780, x6=" \x00&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_239:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7EAC, f4=11527, x6=" \x0C&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7EAC, key=11527, x6=" \x0C&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_240:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12036, x6=" \x18&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12036, x6=" \x18&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_241:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11015, x6=" X&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11015, x6=" X&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_242:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E64, f4=11271, x6=" (&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E64, key=11271, x6=" (&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_243:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E4C, f4=11269, x6=" \x10'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7E4C, key=11269, x6=" \x10'\x00\x00\x00"
 data_486A87AC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A87AC, 0x2A87B8
 VoiceDirRefFind_Table_p0_244:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11268, x6=" 8'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11268, x6=" 8'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_245:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11010, x6=" 0'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11010, x6=" 0'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_246:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7EB8, f4=11525, x6=" 0&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7EB8, key=11525, x6=" 0&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_247:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11526, x6=" 1&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11526, x6=" 1&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_248:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=12039, x6=" 4'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=12039, x6=" 4'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_249:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11265, x6=" @&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11265, x6=" @&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_250:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7F00, f4=12038, x6=" H&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7F00, key=12038, x6=" H&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_251:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11523, x6=" J&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11523, x6=" J&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_252:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11266, x6=" P&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11266, x6=" P&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_253:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11267, x6=" `&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11267, x6=" `&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_254:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11270, x6=" \\&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11270, x6=" \\&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_255:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=10500, x6=" @x\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=10500, x6=" @x\x00\x00\x00"
 VoiceDirRefFind_Table_p0_256:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=26115, x6=" P0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=26115, x6=" P0\x00\x00\x00"
 VoiceDirRefFind_Table_p0_257:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25606, x6=" X0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25606, x6=" X0\x00\x00\x00"
 data_486A8860:
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8860, 0x2A886C
 VoiceDirRefFind_Table_p0_258:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A77E0, f4=25348, x6=" `0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A77E0, key=25348, x6=" `0\x00\x00\x00"
 VoiceDirRefFind_Table_p0_259:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27398, x6=" \x102\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27398, x6=" \x102\x00\x00\x00"
 VoiceDirRefFind_Table_p0_260:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=4612, x6=" P\x06\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=4612, x6=" P\x06\x00\x00\x00"
 data_486A8890:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8890, 0x2A889C
@@ -13272,22 +13272,22 @@ data_486A889C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A889C, 0x2A88A8
 VoiceDirRefFind_Table_p0_261:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C18, f4=13829, x6=" X<\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7C18, key=13829, x6=" X<\x00\x00\x00"
 VoiceDirRefFind_Table_p0_262:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A781C, f4=26372, x6="  3\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A781C, key=26372, x6="  3\x00\x00\x00"
 data_486A88C0:
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A88C0, 0x2A88CC
 VoiceDirRefFind_Table_p0_263:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7720, f4=27652, x6="  X\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7720, key=27652, x6="  X\x00\x00\x00"
 VoiceDirRefFind_Table_p0_264:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25347, x6=" P-\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25347, x6=" P-\x00\x00\x00"
 VoiceDirRefFind_Table_p0_265:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A8C, f4=26375, x6=" P3\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A8C, key=26375, x6=" P3\x00\x00\x00"
 VoiceDirRefFind_Table_p0_266:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25862, x6=" H0\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25862, x6=" H0\x00\x00\x00"
 VoiceDirRefFind_Table_p0_267:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25607, x6=" P1\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25607, x6=" P1\x00\x00\x00"
 data_486A8908:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8908, 0x2A8914
@@ -13295,34 +13295,34 @@ data_486A8914:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8914, 0x2A8920
 VoiceDirRefFind_Table_p0_268:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25095, x6=" \x184\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25095, x6=" \x184\x00\x00\x00"
 VoiceDirRefFind_Table_p0_269:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=13830, x6=" P<\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=13830, x6=" P<\x00\x00\x00"
 data_486A8938:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8938, 0x2A8944
 VoiceDirRefFind_Table_p0_270:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A86D4, f4=5, x6=" P\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A86D4, key=5, x6=" P\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_271:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8704, f4=7, x6=" Q\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8704, key=7, x6=" Q\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_272:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=6, x6=" R\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=6, x6=" R\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_273:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A81A0, f4=1797, x6=" P\x01\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A81A0, key=1797, x6=" P\x01\x00\x00\x00"
 VoiceDirRefFind_Table_p0_274:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1796, x6=" @\x01\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1796, x6=" @\x01\x00\x00\x00"
 VoiceDirRefFind_Table_p0_275:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=772, x6=" @\x02\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=772, x6=" @\x02\x00\x00\x00"
 VoiceDirRefFind_Table_p0_276:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1286, x6=" @\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1286, x6=" @\x05\x00\x00\x00"
 VoiceDirRefFind_Table_p0_277:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8170, f4=1285, x6=" A\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8170, key=1285, x6=" A\x05\x00\x00\x00"
 VoiceDirRefFind_Table_p0_278:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=1284, x6=" B\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=1284, x6=" B\x05\x00\x00\x00"
 VoiceDirRefFind_Table_p0_279:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A814C, f4=518, x6=" X\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A814C, key=518, x6=" X\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_280:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29699, x6=" \x00X\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29699, x6=" \x00X\x00\x00\x00"
 data_486A89C8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A89C8, 0x2A89D4
@@ -13330,11 +13330,11 @@ data_486A89D4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A89D4, 0x2A89E0
 VoiceDirRefFind_Table_p0_281:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A832C, f4=27648, x6=" \x10X\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A832C, key=27648, x6=" \x10X\x00\x00\x00"
 VoiceDirRefFind_Table_p0_282:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29698, x6=" 0X\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29698, x6=" 0X\x00\x00\x00"
 VoiceDirRefFind_Table_p0_283:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31749, x6=" @X\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31749, x6=" @X\x00\x00\x00"
 data_486A8A04:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8A04, 0x2A8A10
@@ -13342,30 +13342,30 @@ data_486A8A10:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8A10, 0x2A8A1C
 VoiceDirRefFind_Table_p0_284:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28679, x6=" \x14Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28679, x6=" \x14Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_285:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25859, x6=" \x106\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25859, x6=" \x106\x00\x00\x00"
 VoiceDirRefFind_Table_p0_286:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7708, f4=26884, x6=" P4\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7708, key=26884, x6=" P4\x00\x00\x00"
 VoiceDirRefFind_Table_p0_287:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7840, f4=26374, x6=" \x18Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7840, key=26374, x6=" \x18Y\x00\x00\x00"
 data_486A8A4C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8A4C, 0x2A8A58
 VoiceDirRefFind_Table_p0_288:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D5C, f4=15877, x6="  Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D5C, key=15877, x6="  Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_289:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7774, f4=27142, x6="  Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7774, key=27142, x6="  Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_290:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=14594, x6="  Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=14594, x6="  Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_291:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25863, x6=" \"Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25863, x6=" \"Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_292:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27654, x6=" $Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27654, x6=" $Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_293:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28678, x6=" &Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28678, x6=" &Y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_294:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=25091, x6=" (Y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=25091, x6=" (Y\x00\x00\x00"
 data_486A8AAC:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8AAC, 0x2A8AB8
@@ -13373,24 +13373,24 @@ data_486A8AB8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8AB8, 0x2A8AC4
 VoiceDirRefFind_Table_p0_295:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30720, x6=" \x00\\\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30720, x6=" \x00\\\x00\x00\x00"
 VoiceDirRefFind_Table_p0_296:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28422, x6=" \x10\\\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28422, x6=" \x10\\\x00\x00\x00"
 data_486A8ADC:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8ADC, 0x2A8AE8
 VoiceDirRefFind_Table_p0_297:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78B8, f4=29190, x6=" @]\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78B8, key=29190, x6=" @]\x00\x00\x00"
 data_486A8AF4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8AF4, 0x2A8B00
 VoiceDirRefFind_Table_p0_298:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15874, x6=" \x00_\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15874, x6=" \x00_\x00\x00\x00"
 data_486A8B0C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8B0C, 0x2A8B18
 VoiceDirRefFind_Table_p0_299:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31751, x6=" \x10_\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31751, x6=" \x10_\x00\x00\x00"
 data_486A8B24:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8B24, 0x2A8B30
@@ -13398,15 +13398,15 @@ data_486A8B30:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8B30, 0x2A8B3C
 VoiceDirRefFind_Table_p0_300:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27655, x6="  f\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27655, x6="  f\x00\x00\x00"
 VoiceDirRefFind_Table_p0_301:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30721, x6=" \x00g\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30721, x6=" \x00g\x00\x00\x00"
 VoiceDirRefFind_Table_p0_302:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78C4, f4=29191, x6="  g\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78C4, key=29191, x6="  g\x00\x00\x00"
 VoiceDirRefFind_Table_p0_303:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29952, x6=" \x00P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29952, x6=" \x00P\x00\x00\x00"
 VoiceDirRefFind_Table_p0_304:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30976, x6=" \x00P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30976, x6=" \x00P\x00\x00\x00"
 data_486A8B78:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8B78, 0x2A8B84
@@ -13414,55 +13414,55 @@ data_486A8B84:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8B84, 0x2A8B90
 VoiceDirRefFind_Table_p0_305:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30467, x6=" \x0CP\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30467, x6=" \x0CP\x00\x00\x00"
 data_486A8B9C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8B9C, 0x2A8BA8
 VoiceDirRefFind_Table_p0_306:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A79A8, f4=30727, x6=" \x14P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A79A8, key=30727, x6=" \x14P\x00\x00\x00"
 VoiceDirRefFind_Table_p0_307:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30470, x6=" \x18P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30470, x6=" \x18P\x00\x00\x00"
 VoiceDirRefFind_Table_p0_308:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28934, x6="  P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28934, x6="  P\x00\x00\x00"
 VoiceDirRefFind_Table_p0_309:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30214, x6=" 0P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30214, x6=" 0P\x00\x00\x00"
 VoiceDirRefFind_Table_p0_310:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A87AC, f4=24064, x6=" @P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A87AC, key=24064, x6=" @P\x00\x00\x00"
 VoiceDirRefFind_Table_p0_311:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A80BC, f4=24320, x6=" @P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A80BC, key=24320, x6=" @P\x00\x00\x00"
 data_486A8BF0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8BF0, 0x2A8BFC
 VoiceDirRefFind_Table_p0_312:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7918, f4=29956, x6=" HP\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7918, key=29956, x6=" HP\x00\x00\x00"
 VoiceDirRefFind_Table_p0_313:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31239, x6=" `P\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31239, x6=" `P\x00\x00\x00"
 data_486A8C14:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8C14, 0x2A8C20
 VoiceDirRefFind_Table_p0_314:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30208, x6=" \x00Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30208, x6=" \x00Q\x00\x00\x00"
 VoiceDirRefFind_Table_p0_315:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32006, x6=" \x04Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32006, x6=" \x04Q\x00\x00\x00"
 VoiceDirRefFind_Table_p0_316:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29955, x6=" \x08Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29955, x6=" \x08Q\x00\x00\x00"
 VoiceDirRefFind_Table_p0_317:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7960, f4=30468, x6=" \x08Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7960, key=30468, x6=" \x08Q\x00\x00\x00"
 VoiceDirRefFind_Table_p0_318:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30726, x6=" \x0CQ\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30726, x6=" \x0CQ\x00\x00\x00"
 VoiceDirRefFind_Table_p0_319:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7954, f4=30215, x6=" \x10Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7954, key=30215, x6=" \x10Q\x00\x00\x00"
 data_486A8C68:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8C68, 0x2A8C74
 VoiceDirRefFind_Table_p0_320:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32007, x6=" 0Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32007, x6=" 0Q\x00\x00\x00"
 VoiceDirRefFind_Table_p0_321:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30983, x6=" hQ\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30983, x6=" hQ\x00\x00\x00"
 VoiceDirRefFind_Table_p0_322:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A79CC, f4=31236, x6=" hQ\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A79CC, key=31236, x6=" hQ\x00\x00\x00"
 VoiceDirRefFind_Table_p0_323:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78A0, f4=28676, x6=" `Q\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78A0, key=28676, x6=" `Q\x00\x00\x00"
 data_486A8CA4:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8CA4, 0x2A8CB0
@@ -13470,50 +13470,50 @@ data_486A8CB0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8CB0, 0x2A8CBC
 VoiceDirRefFind_Table_p0_324:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B24, f4=28167, x6=" xQ\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B24, key=28167, x6=" xQ\x00\x00\x00"
 data_486A8CC8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8CC8, 0x2A8CD4
 VoiceDirRefFind_Table_p0_325:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78D0, f4=30980, x6=" \x10Z\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78D0, key=30980, x6=" \x10Z\x00\x00\x00"
 VoiceDirRefFind_Table_p0_326:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31750, x6="  Z\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31750, x6="  Z\x00\x00\x00"
 VoiceDirRefFind_Table_p0_327:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31493, x6=" 0Z\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31493, x6=" 0Z\x00\x00\x00"
 VoiceDirRefFind_Table_p0_328:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31494, x6=" 8Z\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31494, x6=" 8Z\x00\x00\x00"
 VoiceDirRefFind_Table_p0_329:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15364, x6=" @Z\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15364, x6=" @Z\x00\x00\x00"
 VoiceDirRefFind_Table_p0_330:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=18435, x6=" \x00R\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=18435, x6=" \x00R\x00\x00\x00"
 VoiceDirRefFind_Table_p0_331:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28675, x6=" \x00R\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28675, x6=" \x00R\x00\x00\x00"
 VoiceDirRefFind_Table_p0_332:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29954, x6=" \x00S\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29954, x6=" \x00S\x00\x00\x00"
 VoiceDirRefFind_Table_p0_333:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8530, f4=28672, x6=" \x00S\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8530, key=28672, x6=" \x00S\x00\x00\x00"
 VoiceDirRefFind_Table_p0_334:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7DF8, f4=15365, x6="  S\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7DF8, key=15365, x6="  S\x00\x00\x00"
 data_486A8D4C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8D4C, 0x2A8D58
 VoiceDirRefFind_Table_p0_335:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30210, x6=" 0S\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30210, x6=" 0S\x00\x00\x00"
 data_486A8D64:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8D64, 0x2A8D70
 VoiceDirRefFind_Table_p0_336:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=6915, x6=" \x00T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=6915, x6=" \x00T\x00\x00\x00"
 VoiceDirRefFind_Table_p0_337:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32262, x6="  T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32262, x6="  T\x00\x00\x00"
 VoiceDirRefFind_Table_p0_338:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28935, x6=" (T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28935, x6=" (T\x00\x00\x00"
 VoiceDirRefFind_Table_p0_339:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8CC8, f4=14087, x6=" 0T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8CC8, key=14087, x6=" 0T\x00\x00\x00"
 VoiceDirRefFind_Table_p0_340:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8518, f4=6662, x6=" 8T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8518, key=6662, x6=" 8T\x00\x00\x00"
 VoiceDirRefFind_Table_p0_341:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78E8, f4=29188, x6=" `T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78E8, key=29188, x6=" `T\x00\x00\x00"
 data_486A8DB8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8DB8, 0x2A8DC4
@@ -13521,90 +13521,90 @@ data_486A8DC4:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8DC4, 0x2A8DD0
 VoiceDirRefFind_Table_p0_342:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A85A8, f4=30464, x6=" \x00V\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A85A8, key=30464, x6=" \x00V\x00\x00\x00"
 VoiceDirRefFind_Table_p0_343:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30723, x6=" \x08V\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30723, x6=" \x08V\x00\x00\x00"
 VoiceDirRefFind_Table_p0_344:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30981, x6="  V\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30981, x6="  V\x00\x00\x00"
 VoiceDirRefFind_Table_p0_345:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30466, x6=" @V\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30466, x6=" @V\x00\x00\x00"
 VoiceDirRefFind_Table_p0_346:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=11778, x6=" \x00W\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=11778, x6=" \x00W\x00\x00\x00"
 VoiceDirRefFind_Table_p0_347:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7900, f4=29444, x6="  W\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7900, key=29444, x6="  W\x00\x00\x00"
 VoiceDirRefFind_Table_p0_348:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32263, x6=" 0W\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32263, x6=" 0W\x00\x00\x00"
 VoiceDirRefFind_Table_p0_349:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29446, x6=" @W\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29446, x6=" @W\x00\x00\x00"
 VoiceDirRefFind_Table_p0_350:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31495, x6=" HW\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31495, x6=" HW\x00\x00\x00"
 VoiceDirRefFind_Table_p0_351:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31238, x6=" \x10c\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31238, x6=" \x10c\x00\x00\x00"
 VoiceDirRefFind_Table_p0_352:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32005, x6=" LT\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32005, x6=" LT\x00\x00\x00"
 VoiceDirRefFind_Table_p0_353:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7978, f4=29702, x6=" \x10g\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7978, key=29702, x6=" \x10g\x00\x00\x00"
 VoiceDirRefFind_Table_p0_354:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=15620, x6=" \x10g\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=15620, x6=" \x10g\x00\x00\x00"
 VoiceDirRefFind_Table_p0_355:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29443, x6=" 0g\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29443, x6=" 0g\x00\x00\x00"
 VoiceDirRefFind_Table_p0_356:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30722, x6=" @2\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30722, x6=" @2\x00\x00\x00"
 VoiceDirRefFind_Table_p0_357:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A79B4, f4=30724, x6="  a\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A79B4, key=30724, x6="  a\x00\x00\x00"
 VoiceDirRefFind_Table_p0_358:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32261, x6=" \x10d\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32261, x6=" \x10d\x00\x00\x00"
 VoiceDirRefFind_Table_p0_359:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=29187, x6=" @d\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=29187, x6=" @d\x00\x00\x00"
 VoiceDirRefFind_Table_p0_360:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8914, f4=2306, x6=" \x00b\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8914, key=2306, x6=" \x00b\x00\x00\x00"
 VoiceDirRefFind_Table_p0_361:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=3590, x6=" \x08b\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=3590, x6=" \x08b\x00\x00\x00"
 VoiceDirRefFind_Table_p0_362:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=2308, x6=" \x10b\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=2308, x6=" \x10b\x00\x00\x00"
 VoiceDirRefFind_Table_p0_363:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=4868, x6="  d\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=4868, x6="  d\x00\x00\x00"
 data_486A8ED8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8ED8, 0x2A8EE4
 VoiceDirRefFind_Table_p0_364:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31237, x6=" TT\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31237, x6=" TT\x00\x00\x00"
 VoiceDirRefFind_Table_p0_365:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78F4, f4=28932, x6=" PT\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78F4, key=28932, x6=" PT\x00\x00\x00"
 VoiceDirRefFind_Table_p0_366:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32515, x6=" @T\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32515, x6=" @T\x00\x00\x00"
 VoiceDirRefFind_Table_p0_367:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A20, f4=32519, x6=" DT\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A20, key=32519, x6=" DT\x00\x00\x00"
 VoiceDirRefFind_Table_p0_368:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28930, x6=" AT\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28930, x6=" AT\x00\x00\x00"
 VoiceDirRefFind_Table_p0_369:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=28931, x6=" BT\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=28931, x6=" BT\x00\x00\x00"
 data_486A8F2C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8F2C, 0x2A8F38
 VoiceDirRefFind_Table_p0_370:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=8196, x6=" @.\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=8196, x6=" @.\x00\x00\x00"
 VoiceDirRefFind_Table_p0_371:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8290, f4=2821, x6=" @r\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8290, key=2821, x6=" @r\x00\x00\x00"
 VoiceDirRefFind_Table_p0_372:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32259, x6=" C5\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32259, x6=" C5\x00\x00\x00"
 VoiceDirRefFind_Table_p0_373:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A79F0, f4=32260, x6=" \x10y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A79F0, key=32260, x6=" \x10y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_374:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A44, f4=32517, x6=" 07\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A44, key=32517, x6=" 07\x00\x00\x00"
 VoiceDirRefFind_Table_p0_375:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A08, f4=32516, x6=" 07\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7A08, key=32516, x6=" 07\x00\x00\x00"
 VoiceDirRefFind_Table_p0_376:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A79D8, f4=31748, x6=" @v\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A79D8, key=31748, x6=" @v\x00\x00\x00"
 VoiceDirRefFind_Table_p0_377:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30979, x6=" \x00`\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30979, x6=" \x00`\x00\x00\x00"
 data_486A8F98:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8F98, 0x2A8FA4
 VoiceDirRefFind_Table_p0_378:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=27136, x6=" \x00e\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=27136, x6=" \x00e\x00\x00\x00"
 VoiceDirRefFind_Table_p0_379:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7738, f4=27140, x6=" \x00e\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7738, key=27140, x6=" \x00e\x00\x00\x00"
 data_486A8FBC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8FBC, 0x2A8FC8
@@ -13615,192 +13615,192 @@ data_486A8FD4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A8FD4, 0x2A8FE0
 VoiceDirRefFind_Table_p0_380:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A79FC, f4=32004, x6=" HV\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A79FC, key=32004, x6=" HV\x00\x00\x00"
 VoiceDirRefFind_Table_p0_381:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A78DC, f4=30982, x6=" XQ\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A78DC, key=30982, x6=" XQ\x00\x00\x00"
 VoiceDirRefFind_Table_p0_382:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=30471, x6=" \x11}\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=30471, x6=" \x11}\x00\x00\x00"
 VoiceDirRefFind_Table_p0_383:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A83C8, f4=31745, x6=" \x00x\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A83C8, key=31745, x6=" \x00x\x00\x00\x00"
 VoiceDirRefFind_Table_p0_384:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31746, x6=" \x00y\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31746, x6=" \x00y\x00\x00\x00"
 VoiceDirRefFind_Table_p0_385:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31747, x6=" \x00z\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31747, x6=" \x00z\x00\x00\x00"
 VoiceDirRefFind_Table_p0_386:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32002, x6=" \x00{\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32002, x6=" \x00{\x00\x00\x00"
 VoiceDirRefFind_Table_p0_387:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31488, x6=" \x00|\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31488, x6=" \x00|\x00\x00\x00"
 VoiceDirRefFind_Table_p0_388:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31489, x6=" \x00}\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31489, x6=" \x00}\x00\x00\x00"
 VoiceDirRefFind_Table_p0_389:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32003, x6=" \x00~\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32003, x6=" \x00~\x00\x00\x00"
 VoiceDirRefFind_Table_p0_390:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=31490, x6=" \x00\x7F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=31490, x6=" \x00\x7F\x00\x00\x00"
 VoiceDirRefFind_Table_p0_391:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A82B4, f4=61440, x6="&\x00\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A82B4, key=61440, x6="&\x00\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_392:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8AF4, f4=62210, x6="&\x00\x01\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8AF4, key=62210, x6="&\x00\x01\x00\x00\x00"
 VoiceDirRefFind_Table_p0_393:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8FD4, f4=61954, x6="&\x00\x09\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8FD4, key=61954, x6="&\x00\x09\x00\x00\x00"
 VoiceDirRefFind_Table_p0_394:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=63234, x6="&\x00\x03\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=63234, x6="&\x00\x03\x00\x00\x00"
 VoiceDirRefFind_Table_p0_395:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8A04, f4=62208, x6="&\x00\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8A04, key=62208, x6="&\x00\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_396:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8C14, f4=65024, x6="&\x00\x02\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8C14, key=65024, x6="&\x00\x02\x00\x00\x00"
 VoiceDirRefFind_Table_p0_397:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=63232, x6="&\x00\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=63232, x6="&\x00\x10\x00\x00\x00"
 VoiceDirRefFind_Table_p0_398:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A853C, f4=63488, x6="&\x00\x11\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A853C, key=63488, x6="&\x00\x11\x00\x00\x00"
 VoiceDirRefFind_Table_p0_399:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8DB8, f4=61952, x6="&\x00\x18\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8DB8, key=61952, x6="&\x00\x18\x00\x00\x00"
 VoiceDirRefFind_Table_p0_400:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A835C, f4=62976, x6="&\x00!\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A835C, key=62976, x6="&\x00!\x00\x00\x00"
 VoiceDirRefFind_Table_p0_401:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8104, f4=61696, x6="&\x00 \x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8104, key=61696, x6="&\x00 \x00\x00\x00"
 VoiceDirRefFind_Table_p0_402:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B0C, f4=62720, x6="&\x00(\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B0C, key=62720, x6="&\x00(\x00\x00\x00"
 VoiceDirRefFind_Table_p0_403:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B30, f4=62466, x6="&\x00\x19\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B30, key=62466, x6="&\x00\x19\x00\x00\x00"
 VoiceDirRefFind_Table_p0_404:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D80, f4=62722, x6="&\x00\x1A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D80, key=62722, x6="&\x00\x1A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_405:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8F2C, f4=63744, x6="&\x00\x1B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8F2C, key=63744, x6="&\x00\x1B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_406:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=64000, x6="&\x00\x1D\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=64000, x6="&\x00\x1D\x00\x00\x00"
 VoiceDirRefFind_Table_p0_407:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8938, f4=64256, x6="&\x00\x1C\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8938, key=64256, x6="&\x00\x1C\x00\x00\x00"
 VoiceDirRefFind_Table_p0_408:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A89D4, f4=62464, x6="&\x00\x1F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A89D4, key=62464, x6="&\x00\x1F\x00\x00\x00"
 VoiceDirRefFind_Table_p0_409:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8F98, f4=65280, x6="&\x00\x1F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8F98, key=65280, x6="&\x00\x1F\x00\x00\x00"
 VoiceDirRefFind_Table_p0_410:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7DBC, f4=62978, x6="&\x00\x1E\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7DBC, key=62978, x6="&\x00\x1E\x00\x00\x00"
 VoiceDirRefFind_Table_p0_411:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D38, f4=61698, x6="&\x00H\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D38, key=61698, x6="&\x00H\x00\x00\x00"
 VoiceDirRefFind_Table_p0_412:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7690, f4=64512, x6="&\x004\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7690, key=64512, x6="&\x004\x00\x00\x00"
 VoiceDirRefFind_Table_p0_413:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B84, f4=64768, x6="&\x008\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B84, key=64768, x6="&\x008\x00\x00\x00"
 VoiceDirRefFind_Table_p0_414:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=32775, x6="\"\x00\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=32775, x6="\"\x00\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_415:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A86B0, f4=33031, x6="\"\x00\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A86B0, key=33031, x6="\"\x00\x10\x00\x00\x00"
 VoiceDirRefFind_Table_p0_416:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CA8, f4=61446, x6="\x11\x00\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7CA8, key=61446, x6="\x11\x00\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_417:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A80B0, f4=32768, x6="\x10\x00\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A80B0, key=32768, x6="\x10\x00\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_418:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7FF0, f4=33024, x6="\x10\x00\x01\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7FF0, key=33024, x6="\x10\x00\x01\x00\x00\x00"
 VoiceDirRefFind_Table_p0_419:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8098, f4=33280, x6="\x10\x00\x02\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8098, key=33280, x6="\x10\x00\x02\x00\x00\x00"
 VoiceDirRefFind_Table_p0_420:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=33536, x6="\x10\x00\x03\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=33536, x6="\x10\x00\x03\x00\x00\x00"
 VoiceDirRefFind_Table_p0_421:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=33792, x6="\x10\x00\x04\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=33792, x6="\x10\x00\x04\x00\x00\x00"
 VoiceDirRefFind_Table_p0_422:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8890, f4=34048, x6="\x10\x00\x05\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8890, key=34048, x6="\x10\x00\x05\x00\x00\x00"
 VoiceDirRefFind_Table_p0_423:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7F60, f4=34304, x6="\x10\x00\x06\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7F60, key=34304, x6="\x10\x00\x06\x00\x00\x00"
 VoiceDirRefFind_Table_p0_424:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=34560, x6="\x10\x00\x07\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=34560, x6="\x10\x00\x07\x00\x00\x00"
 VoiceDirRefFind_Table_p0_425:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A75D0, f4=34816, x6="\x10\x00\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A75D0, key=34816, x6="\x10\x00\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_426:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7600, f4=35072, x6="\x10\x00\x09\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7600, key=35072, x6="\x10\x00\x09\x00\x00\x00"
 VoiceDirRefFind_Table_p0_427:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A75DC, f4=35328, x6="\x10\x00\n\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A75DC, key=35328, x6="\x10\x00\n\x00\x00\x00"
 VoiceDirRefFind_Table_p0_428:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7EE8, f4=35584, x6="\x10\x00\x0B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7EE8, key=35584, x6="\x10\x00\x0B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_429:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=35840, x6="\x10\x00\x0C\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=35840, x6="\x10\x00\x0C\x00\x00\x00"
 VoiceDirRefFind_Table_p0_430:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7F0C, f4=36096, x6="\x10\x00\x0D\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7F0C, key=36096, x6="\x10\x00\x0D\x00\x00\x00"
 VoiceDirRefFind_Table_p0_431:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=36352, x6="\x10\x00\x0E\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=36352, x6="\x10\x00\x0E\x00\x00\x00"
 VoiceDirRefFind_Table_p0_432:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=36608, x6="\x10\x00\x0F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=36608, x6="\x10\x00\x0F\x00\x00\x00"
 VoiceDirRefFind_Table_p0_433:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=36864, x6="\x10\x00\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=36864, x6="\x10\x00\x10\x00\x00\x00"
 VoiceDirRefFind_Table_p0_434:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8FBC, f4=37120, x6="\x10\x00\x11\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8FBC, key=37120, x6="\x10\x00\x11\x00\x00\x00"
 VoiceDirRefFind_Table_p0_435:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=37376, x6="\x10\x00\x12\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=37376, x6="\x10\x00\x12\x00\x00\x00"
 VoiceDirRefFind_Table_p0_436:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A889C, f4=37632, x6="\x10\x00\x13\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A889C, key=37632, x6="\x10\x00\x13\x00\x00\x00"
 VoiceDirRefFind_Table_p0_437:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8908, f4=37888, x6="\x10\x00\x14\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8908, key=37888, x6="\x10\x00\x14\x00\x00\x00"
 VoiceDirRefFind_Table_p0_438:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7BF4, f4=38144, x6="\x10\x00\x15\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7BF4, key=38144, x6="\x10\x00\x15\x00\x00\x00"
 VoiceDirRefFind_Table_p0_439:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8AAC, f4=38400, x6="\x10\x00\x16\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8AAC, key=38400, x6="\x10\x00\x16\x00\x00\x00"
 VoiceDirRefFind_Table_p0_440:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8860, f4=38656, x6="\x10\x00\x17\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8860, key=38656, x6="\x10\x00\x17\x00\x00\x00"
 VoiceDirRefFind_Table_p0_441:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D20, f4=38912, x6="\x10\x00\x18\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D20, key=38912, x6="\x10\x00\x18\x00\x00\x00"
 VoiceDirRefFind_Table_p0_442:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8DC4, f4=39168, x6="\x10\x00\x19\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8DC4, key=39168, x6="\x10\x00\x19\x00\x00\x00"
 VoiceDirRefFind_Table_p0_443:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	f4=39424, x6="\x10\x00\x1A\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	key=39424, x6="\x10\x00\x1A\x00\x00\x00"
 VoiceDirRefFind_Table_p0_444:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8FC8, f4=39680, x6="\x10\x00\x1B\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8FC8, key=39680, x6="\x10\x00\x1B\x00\x00\x00"
 VoiceDirRefFind_Table_p0_445:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D8C, f4=39936, x6="\x10\x00\x1C\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7D8C, key=39936, x6="\x10\x00\x1C\x00\x00\x00"
 VoiceDirRefFind_Table_p0_446:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7DD4, f4=40192, x6="\x10\x00\x1D\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7DD4, key=40192, x6="\x10\x00\x1D\x00\x00\x00"
 VoiceDirRefFind_Table_p0_447:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8BF0, f4=40448, x6="\x10\x00\x1E\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8BF0, key=40448, x6="\x10\x00\x1E\x00\x00\x00"
 VoiceDirRefFind_Table_p0_448:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8CA4, f4=40704, x6="\x10\x00\x1F\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8CA4, key=40704, x6="\x10\x00\x1F\x00\x00\x00"
 VoiceDirRefFind_Table_p0_449:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B78, f4=40960, x6="\x10\x00 \x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B78, key=40960, x6="\x10\x00 \x00\x00\x00"
 VoiceDirRefFind_Table_p0_450:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8ED8, f4=41216, x6="\x10\x00!\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8ED8, key=41216, x6="\x10\x00!\x00\x00\x00"
 VoiceDirRefFind_Table_p0_451:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7924, f4=41472, x6="\x10\x00\"\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7924, key=41472, x6="\x10\x00\"\x00\x00\x00"
 VoiceDirRefFind_Table_p0_452:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A7984, f4=41728, x6="\x10\x00#\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A7984, key=41728, x6="\x10\x00#\x00\x00\x00"
 VoiceDirRefFind_Table_p0_453:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8D4C, f4=41984, x6="\x10\x00$\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8D4C, key=41984, x6="\x10\x00$\x00\x00\x00"
 VoiceDirRefFind_Table_p0_454:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B9C, f4=42240, x6="\x10\x00%\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8B9C, key=42240, x6="\x10\x00%\x00\x00\x00"
 VoiceDirRefFind_Table_p0_455:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8CB0, f4=42496, x6="\x10\x00&\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8CB0, key=42496, x6="\x10\x00&\x00\x00\x00"
 VoiceDirRefFind_Table_p0_456:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8C68, f4=42752, x6="\x10\x00'\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8C68, key=42752, x6="\x10\x00'\x00\x00\x00"
 VoiceDirRefFind_Table_p0_457:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8350, f4=61441, x6="x\x00\x00\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8350, key=61441, x6="x\x00\x00\x00\x00\x00"
 VoiceDirRefFind_Table_p0_458:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8A10, f4=61697, x6="x\x00\x08\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8A10, key=61697, x6="x\x00\x08\x00\x00\x00"
 VoiceDirRefFind_Table_p0_459:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8ADC, f4=61953, x6="x\x00\x10\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8ADC, key=61953, x6="x\x00\x10\x00\x00\x00"
 VoiceDirRefFind_Table_p0_460:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8AB8, f4=62209, x6="x\x00\x18\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8AB8, key=62209, x6="x\x00\x18\x00\x00\x00"
 VoiceDirRefFind_Table_p0_461:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A89C8, f4=62465, x6="x\x00\x19\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A89C8, key=62465, x6="x\x00\x19\x00\x00\x00"
 VoiceDirRefFind_Table_p0_462:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A88C0, f4=62721, x6="x\x00 \x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A88C0, key=62721, x6="x\x00 \x00\x00\x00"
 VoiceDirRefFind_Table_p0_463:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8A4C, f4=62977, x6="x\x00(\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8A4C, key=62977, x6="x\x00(\x00\x00\x00"
 VoiceDirRefFind_Table_p0_464:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8620, f4=63233, x6="x\x000\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8620, key=63233, x6="x\x000\x00\x00\x00"
 VoiceDirRefFind_Table_p0_465:	# REC_VoiceDirRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirRefFind_Table_p0	p0=data_486A8D64, f4=63489, x6="x\x008\x00\x00\x00"
+	REC_VoiceDirRefFind_Table_p0	p0=data_486A8D64, key=63489, x6="x\x008\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_0:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200000, x8="\x00\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200000, x8="\x00\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_1:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202000, x8="\x02\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202000, x8="\x02\x02\x00\x00"
 data_486A9400:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9400, 0x2A940C
 VoiceDirPartRefFind_Table_p0_2:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203000, x8="\x02\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203000, x8="\x02\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_3:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204000, x8="\x00\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204000, x8="\x00\x01\x00\x00"
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9424, 0x2A943C
 VoiceDirPartRefFind_Table_p0_4:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205100, x8="\x00\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205100, x8="\x00\x07\x00\x00"
 data_486A9448:
 # census: opaque -- unknown-dump: 48 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9448, 0x2A9478
@@ -13817,39 +13817,39 @@ data_486A949C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A949C, 0x2A94A8
 VoiceDirPartRefFind_Table_p0_5:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205001, x8="\x07\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205001, x8="\x07\x05\x00\x00"
 data_486A94B4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A94B4, 0x2A94C0
 VoiceDirPartRefFind_Table_p0_6:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204002, x8="\x03\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204002, x8="\x03\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_7:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205002, x8="\x03\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205002, x8="\x03\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_8:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200003, x8="\x01\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200003, x8="\x01\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_9:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201003, x8="\x01\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201003, x8="\x01\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_10:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200004, x8="\x05\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200004, x8="\x05\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_11:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200404, x8="\x05\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200404, x8="\x05\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_12:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201004, x8="\x04\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201004, x8="\x04\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_13:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202004, x8="\x04\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202004, x8="\x04\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_14:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204004, x8="\x04\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204004, x8="\x04\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_15:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205004, x8="\x04\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205004, x8="\x04\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_16:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200005, x8="\x06\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200005, x8="\x06\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_17:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201005, x8="\x04\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201005, x8="\x04\x00\x00\x00"
 data_486A9550:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9550, 0x2A955C
 VoiceDirPartRefFind_Table_p0_18:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201805, x8="\x06\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201805, x8="\x06\x05\x00\x00"
 data_486A9568:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9568, 0x2A9574
@@ -13869,12 +13869,12 @@ data_486A95B0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A95B0, 0x2A95BC
 VoiceDirPartRefFind_Table_p0_19:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203006, x8="\x12\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203006, x8="\x12\x00\x00\x00"
 data_486A95C8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A95C8, 0x2A95D4
 VoiceDirPartRefFind_Table_p0_20:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200007, x8="\x11\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200007, x8="\x11\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A95E0, 0x2A95EC
 data_486A95EC:
@@ -13884,7 +13884,7 @@ data_486A9610:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9610, 0x2A961C
 VoiceDirPartRefFind_Table_p0_21:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204007, x8="\x11\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204007, x8="\x11\x01\x00\x00"
 data_486A9628:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9628, 0x2A9640
@@ -13892,7 +13892,7 @@ data_486A9640:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9640, 0x2A964C
 VoiceDirPartRefFind_Table_p0_22:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20040B, x8="\x08\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20040B, x8="\x08\x00\x00\x00"
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9658, 0x2A9670
 data_486A9670:
@@ -13902,12 +13902,12 @@ data_486A967C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A967C, 0x2A9688
 VoiceDirPartRefFind_Table_p0_23:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20400C, x8="q\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20400C, x8="q\x00\x00\x00"
 data_486A9694:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9694, 0x2A96A0
 VoiceDirPartRefFind_Table_p0_24:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20400D, x8="\x0B\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20400D, x8="\x0B\x01\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A96AC, 0x2A96B8
 data_486A96B8:
@@ -13923,7 +13923,7 @@ data_486A96E8:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A96E8, 0x2A9700
 VoiceDirPartRefFind_Table_p0_25:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200C10, x8="[\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200C10, x8="[\x04\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A970C, 0x2A9718
 data_486A9718:
@@ -13933,56 +13933,56 @@ data_486A9724:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9724, 0x2A9730
 VoiceDirPartRefFind_Table_p0_26:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201C10, x8="[\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201C10, x8="[\x06\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A973C, 0x2A9748
 data_486A9748:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9748, 0x2A9754
 VoiceDirPartRefFind_Table_p0_27:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204010, x8="^\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204010, x8="^\x01\x00\x00"
 data_486A9760:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9760, 0x2A976C
 VoiceDirPartRefFind_Table_p0_28:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200011, x8="X\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200011, x8="X\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_29:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200411, x8="X\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200411, x8="X\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_30:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200811, x8="Z\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200811, x8="Z\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_31:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200C11, x8="Z\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200C11, x8="Z\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_32:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200012, x8="\\\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200012, x8="\\\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_33:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200412, x8="\\\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200412, x8="\\\x07\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A97B4, 0x2A97C0
 data_486A97C0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A97C0, 0x2A97CC
 VoiceDirPartRefFind_Table_p0_34:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202012, x8="[\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202012, x8="[\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_35:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202812, x8="\\\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202812, x8="\\\x06\x00\x00"
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A97E4, 0x2A97FC
 data_486A97FC:
 # census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A97FC, 0x2A9820
 VoiceDirPartRefFind_Table_p0_36:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205013, x8="W\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205013, x8="W\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_37:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x206013, x8="V\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x206013, x8="V\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_38:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200014, x8="V\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200014, x8="V\x02\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9844, 0x2A9850
 data_486A9850:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9850, 0x2A985C
 VoiceDirPartRefFind_Table_p0_39:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204015, x8="R\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204015, x8="R\x00\x00\x00"
 data_486A9868:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9868, 0x2A9874
@@ -13990,14 +13990,14 @@ data_486A9874:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9874, 0x2A9880
 VoiceDirPartRefFind_Table_p0_40:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200816, x8="S\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200816, x8="S\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_41:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200017, x8="P\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200017, x8="P\x01\x00\x00"
 data_486A9898:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9898, 0x2A98A4
 VoiceDirPartRefFind_Table_p0_42:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200818, x8="\x14\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200818, x8="\x14\x01\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A98B0, 0x2A98BC
 data_486A98BC:
@@ -14019,47 +14019,47 @@ data_486A98F8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A98F8, 0x2A9904
 VoiceDirPartRefFind_Table_p0_43:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204019, x8="#\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204019, x8="#\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_44:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205019, x8="#\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205019, x8="#\x04\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A991C, 0x2A9928
 data_486A9928:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9928, 0x2A9934
 VoiceDirPartRefFind_Table_p0_45:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20301A, x8="\x19\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20301A, x8="\x19\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_46:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20381A, x8="\x19\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20381A, x8="\x19\x02\x00\x00"
 data_486A994C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A994C, 0x2A9958
 VoiceDirPartRefFind_Table_p0_47:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20411A, x8="\x1F\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20411A, x8="\x1F\x03\x00\x00"
 data_486A9964:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9964, 0x2A9970
 VoiceDirPartRefFind_Table_p0_48:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20451A, x8="\x1F\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20451A, x8="\x1F\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_49:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20001B, x8="\x1A\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001B, x8="\x1A\x00\x00\x00"
 data_486A9988:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9988, 0x2A9994
 VoiceDirPartRefFind_Table_p0_50:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20181B, x8="\x1A\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20181B, x8="\x1A\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_51:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20201B, x8="\x1C\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20201B, x8="\x1C\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_52:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20401B, x8="\x1C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20401B, x8="\x1C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_53:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20001C, x8="\x1D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001C, x8="\x1D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_54:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20201C, x8="\x1D\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20201C, x8="\x1D\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_55:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20001D, x8="\x1B\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001D, x8="\x1B\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_56:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20001E, x8="\x1E\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20001E, x8="\x1E\x00\x00\x00"
 data_486A99E8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A99E8, 0x2A99F4
@@ -14067,9 +14067,9 @@ data_486A99F4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A99F4, 0x2A9A00
 VoiceDirPartRefFind_Table_p0_57:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20301F, x8="\x1B\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20301F, x8="\x1B\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_58:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200020, x8="+\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200020, x8="+\x00\x00\x00"
 data_486A9A18:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9A18, 0x2A9A24
@@ -14080,7 +14080,7 @@ data_486A9A30:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9A30, 0x2A9A3C
 VoiceDirPartRefFind_Table_p0_59:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202021, x8="*\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202021, x8="*\x07\x00\x00"
 data_486A9A48:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9A48, 0x2A9A54
@@ -14091,71 +14091,71 @@ data_486A9A60:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9A60, 0x2A9A6C
 VoiceDirPartRefFind_Table_p0_60:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202022, x8="/\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202022, x8="/\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_61:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200023, x8="(\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200023, x8="(\x02\x00\x00"
 data_486A9A84:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9A84, 0x2A9A90
 VoiceDirPartRefFind_Table_p0_62:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200025, x8=")\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200025, x8=")\x01\x00\x00"
 data_486A9A9C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9A9C, 0x2A9AA8
 VoiceDirPartRefFind_Table_p0_63:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9574, f4=0x200826, x8="*\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9574, key=0x200826, x8="*\x01\x00\x00"
 data_486A9AB4:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9AB4, 0x2A9ACC
 VoiceDirPartRefFind_Table_p0_64:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201826, x8="/\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201826, x8="/\x04\x00\x00"
 data_486A9AD8:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9AD8, 0x2A9AF0
 VoiceDirPartRefFind_Table_p0_65:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203026, x8="-\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203026, x8="-\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_66:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203126, x8="-\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203126, x8="-\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_67:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9478, f4=0x204026, x8=",\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9478, key=0x204026, x8=",\x01\x00\x00"
 data_486A9B14:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9B14, 0x2A9B20
 VoiceDirPartRefFind_Table_p0_68:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204A26, x8="-\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204A26, x8="-\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_69:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9484, f4=0x205026, x8=",\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9484, key=0x205026, x8=",\x02\x00\x00"
 data_486A9B38:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9B38, 0x2A9B44
 VoiceDirPartRefFind_Table_p0_70:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205C26, x8=",\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205C26, x8=",\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_71:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A949C, f4=0x206026, x8=",\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A949C, key=0x206026, x8=",\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_72:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200027, x8=".\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200027, x8=".\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_73:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200827, x8="-\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200827, x8="-\x04\x00\x00"
 data_486A9B74:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9B74, 0x2A9B80
 VoiceDirPartRefFind_Table_p0_74:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A94B4, f4=0x202027, x8=".\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A94B4, key=0x202027, x8=".\x01\x00\x00"
 data_486A9B8C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9B8C, 0x2A9B98
 VoiceDirPartRefFind_Table_p0_75:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203027, x8="+\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203027, x8="+\x02\x00\x00"
 data_486A9BA4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9BA4, 0x2A9BB0
 VoiceDirPartRefFind_Table_p0_76:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203827, x8=",\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203827, x8=",\x04\x00\x00"
 data_486A9BBC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9BBC, 0x2A9BC8
 VoiceDirPartRefFind_Table_p0_77:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200428, x8="`\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200428, x8="`\x04\x00\x00"
 data_486A9BD4:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9BD4, 0x2A9BEC
@@ -14169,11 +14169,11 @@ data_486A9C10:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9C10, 0x2A9C1C
 VoiceDirPartRefFind_Table_p0_78:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20502D, x8="c\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20502D, x8="c\x03\x00\x00"
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9C28, 0x2A9C4C
 VoiceDirPartRefFind_Table_p0_79:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20402E, x8=" \x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20402E, x8=" \x04\x00\x00"
 data_486A9C58:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9C58, 0x2A9C64
@@ -14181,27 +14181,27 @@ data_486A9C64:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9C64, 0x2A9C70
 VoiceDirPartRefFind_Table_p0_80:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200830, x8="d\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200830, x8="d\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_81:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201030, x8="d\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201030, x8="d\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_82:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201830, x8="e\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201830, x8="e\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_83:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201C30, x8="d\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201C30, x8="d\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_84:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202030, x8="f\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202030, x8="f\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_85:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202830, x8="f\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202830, x8="f\x05\x00\x00"
 data_486A9CB8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9CB8, 0x2A9CC4
 VoiceDirPartRefFind_Table_p0_86:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203830, x8="f\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203830, x8="f\x07\x00\x00"
 data_486A9CD0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9CD0, 0x2A9CDC
 VoiceDirPartRefFind_Table_p0_87:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204030, x8="f\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204030, x8="f\x00\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9CE8, 0x2A9CF4
 data_486A9CF4:
@@ -14217,13 +14217,13 @@ data_486A9D18:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9D18, 0x2A9D24
 VoiceDirPartRefFind_Table_p0_88:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200831, x8="e\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200831, x8="e\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_89:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A967C, f4=0x204031, x8="e\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A967C, key=0x204031, x8="e\x05\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9D3C, 0x2A9D48
 VoiceDirPartRefFind_Table_p0_90:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205031, x8="d\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205031, x8="d\x07\x00\x00"
 data_486A9D54:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9D54, 0x2A9D60
@@ -14231,7 +14231,7 @@ data_486A9D60:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9D60, 0x2A9D6C
 VoiceDirPartRefFind_Table_p0_91:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204032, x8="x\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204032, x8="x\x02\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9D78, 0x2A9D84
 data_486A9D84:
@@ -14241,7 +14241,7 @@ data_486A9D90:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9D90, 0x2A9D9C
 VoiceDirPartRefFind_Table_p0_92:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205033, x8="g\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205033, x8="g\x07\x00\x00"
 data_486A9DA8:
 # census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9DA8, 0x2A9DC0
@@ -14249,39 +14249,39 @@ data_486A9DC0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9DC0, 0x2A9DCC
 VoiceDirPartRefFind_Table_p0_93:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A54, f4=0x200C34, x8="h\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A54, key=0x200C34, x8="h\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_94:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201034, x8="i\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201034, x8="i\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_95:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201834, x8="b\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201834, x8="b\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_96:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96C4, f4=0x202034, x8="h\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96C4, key=0x202034, x8="h\x02\x00\x00"
 data_486A9DFC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9DFC, 0x2A9E08
 VoiceDirPartRefFind_Table_p0_97:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203834, x8="b\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203834, x8="b\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_98:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204034, x8="i\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204034, x8="i\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_99:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205034, x8="i\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205034, x8="i\x04\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9E2C, 0x2A9E38
 VoiceDirPartRefFind_Table_p0_100:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200835, x8="m\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200835, x8="m\x02\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9E44, 0x2A9E50
 VoiceDirPartRefFind_Table_p0_101:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9CF4, f4=0x202135, x8="i\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9CF4, key=0x202135, x8="i\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_102:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96E8, f4=0x202435, x8="i\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96E8, key=0x202435, x8="i\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_103:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202635, x8="k\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202635, x8="k\x04\x00\x00"
 data_486A9E74:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9E74, 0x2A9E80
 VoiceDirPartRefFind_Table_p0_104:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D00, f4=0x202935, x8="i\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D00, key=0x202935, x8="i\x05\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9E8C, 0x2A9E98
 data_486A9E98:
@@ -14291,44 +14291,44 @@ data_486A9EA4:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9EA4, 0x2A9EB0
 VoiceDirPartRefFind_Table_p0_105:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204235, x8="n\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204235, x8="n\x05\x00\x00"
 data_486A9EBC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9EBC, 0x2A9EC8
 VoiceDirPartRefFind_Table_p0_106:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9748, f4=0x204435, x8="n\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9748, key=0x204435, x8="n\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_107:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204835, x8="m\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204835, x8="m\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_108:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204935, x8="n\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204935, x8="n\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_109:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204C35, x8="n\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204C35, x8="n\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_110:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204D35, x8="\x7F\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204D35, x8="\x7F\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_111:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205035, x8="m\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205035, x8="m\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_112:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205135, x8="m\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205135, x8="m\x05\x00\x00"
 data_486A9F1C:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9F1C, 0x2A9F28
 VoiceDirPartRefFind_Table_p0_113:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200036, x8="k\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200036, x8="k\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_114:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201036, x8="e\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201036, x8="e\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_115:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200037, x8="\x7F\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200037, x8="\x7F\x01\x00\x00"
 data_486A9F4C:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9F4C, 0x2A9F58
 VoiceDirPartRefFind_Table_p0_116:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200038, x8="0\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200038, x8="0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_117:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200438, x8="0\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200438, x8="0\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_118:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200838, x8="0\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200838, x8="0\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_119:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201038, x8="0\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201038, x8="0\x04\x00\x00"
 data_486A9F88:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9F88, 0x2A9F94
@@ -14336,18 +14336,18 @@ data_486A9F94:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9F94, 0x2A9FA0
 VoiceDirPartRefFind_Table_p0_120:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A97FC, f4=0x204038, x8="1\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A97FC, key=0x204038, x8="1\x01\x00\x00"
 data_486A9FAC:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9FAC, 0x2A9FB8
 VoiceDirPartRefFind_Table_p0_121:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205038, x8="9\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205038, x8="9\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_122:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A9C, f4=0x205438, x8=";\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A9C, key=0x205438, x8=";\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_123:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205838, x8="8\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205838, x8="8\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_124:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9AB4, f4=0x206038, x8=":\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9AB4, key=0x206038, x8=":\x06\x00\x00"
 data_486A9FE8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2A9FE8, 0x2A9FF4
@@ -14358,43 +14358,43 @@ data_486AA000:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA000, 0x2AA00C
 VoiceDirPartRefFind_Table_p0_125:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201039, x8="5\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201039, x8="5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_126:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201839, x8="5\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201839, x8="5\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_127:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BA4, f4=0x20003A, x8="7\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BA4, key=0x20003A, x8="7\x00\x00\x00"
 data_486AA030:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA030, 0x2AA03C
 VoiceDirPartRefFind_Table_p0_128:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20003B, x8="2\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20003B, x8="2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_129:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20103B, x8="2\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103B, x8="2\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_130:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9874, f4=0x20203B, x8="4\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9874, key=0x20203B, x8="4\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_131:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20503B, x8="9\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20503B, x8="9\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_132:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20513B, x8="9\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20513B, x8="9\x06\x00\x00"
 data_486AA078:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA078, 0x2AA084
 VoiceDirPartRefFind_Table_p0_133:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20103C, x8="6\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103C, x8="6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_134:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20403C, x8="6\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20403C, x8="6\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_135:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20503C, x8="6\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20503C, x8="6\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_136:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20583C, x8="6\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20583C, x8="6\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_137:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9550, f4=0x20003D, x8="8\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9550, key=0x20003D, x8="8\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_138:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20083D, x8="8\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20083D, x8="8\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_139:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20183D, x8="8\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20183D, x8="8\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_140:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9898, f4=0x20203D, x8="8\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9898, key=0x20203D, x8="8\x03\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA0E4, 0x2AA0F0
 data_486AA0F0:
@@ -14407,19 +14407,19 @@ data_486AA108:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA108, 0x2AA114
 VoiceDirPartRefFind_Table_p0_141:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20503D, x8=";\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20503D, x8=";\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_142:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98D4, f4=0x20603D, x8=":\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98D4, key=0x20603D, x8=":\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_143:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20613D, x8=":\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20613D, x8=":\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_144:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20003E, x8="<\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20003E, x8="<\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_145:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20083E, x8=">\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20083E, x8=">\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_146:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20103E, x8="<\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103E, x8="<\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_147:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98E0, f4=0x20203E, x8="?\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98E0, key=0x20203E, x8="?\x05\x00\x00"
 data_486AA168:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA168, 0x2AA174
@@ -14430,12 +14430,12 @@ data_486AA180:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA180, 0x2AA18C
 VoiceDirPartRefFind_Table_p0_148:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20083F, x8="=\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20083F, x8="=\x05\x00\x00"
 data_486AA198:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA198, 0x2AA1A4
 VoiceDirPartRefFind_Table_p0_149:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20103F, x8="k\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20103F, x8="k\x07\x00\x00"
 data_486AA1B0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA1B0, 0x2AA1BC
@@ -14443,11 +14443,11 @@ data_486AA1BC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA1BC, 0x2AA1C8
 VoiceDirPartRefFind_Table_p0_150:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200441, x8="M\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200441, x8="M\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_151:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200841, x8="M\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200841, x8="M\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_152:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201841, x8="M\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201841, x8="M\x01\x00\x00"
 data_486AA1EC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA1EC, 0x2AA1F8
@@ -14455,7 +14455,7 @@ data_486AA1F8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA1F8, 0x2AA204
 VoiceDirPartRefFind_Table_p0_153:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203841, x8="M\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203841, x8="M\x04\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA210, 0x2AA21C
 data_486AA21C:
@@ -14468,69 +14468,69 @@ data_486AA240:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA240, 0x2AA24C
 VoiceDirPartRefFind_Table_p0_154:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203842, x8="O\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203842, x8="O\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_155:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205042, x8="N\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205042, x8="N\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_156:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200043, x8="O\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200043, x8="O\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_157:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205043, x8="O\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205043, x8="O\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_158:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205843, x8="O\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205843, x8="O\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_159:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200044, x8="B\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200044, x8="B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_160:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200045, x8="C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200045, x8="C\x00\x00\x00"
 data_486AA2A0:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA2A0, 0x2AA2AC
 VoiceDirPartRefFind_Table_p0_161:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200047, x8="D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200047, x8="D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_162:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200847, x8="D\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200847, x8="D\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_163:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201047, x8="D\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201047, x8="D\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_164:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9490, f4=0x201847, x8="D\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9490, key=0x201847, x8="D\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_165:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A60, f4=0x202047, x8="E\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A60, key=0x202047, x8="E\x00\x00\x00"
 data_486AA2E8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA2E8, 0x2AA2F4
 VoiceDirPartRefFind_Table_p0_166:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205047, x8="D\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205047, x8="D\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_167:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9718, f4=0x200048, x8="@\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9718, key=0x200048, x8="@\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_168:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200049, x8="A\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200049, x8="A\x00\x00\x00"
 data_486AA318:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA318, 0x2AA324
 VoiceDirPartRefFind_Table_p0_169:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201049, x8="A\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201049, x8="A\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_170:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201449, x8="A\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201449, x8="A\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_171:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A84, f4=0x202049, x8="A\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A84, key=0x202049, x8="A\x01\x00\x00"
 data_486AA348:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA348, 0x2AA354
 VoiceDirPartRefFind_Table_p0_172:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204049, x8="K\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204049, x8="K\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_173:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205049, x8="@\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205049, x8="@\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_174:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A97C0, f4=0x20004A, x8="J\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A97C0, key=0x20004A, x8="J\x00\x00\x00"
 data_486AA378:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA378, 0x2AA384
 VoiceDirPartRefFind_Table_p0_175:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20044B, x8="H\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20044B, x8="H\x05\x00\x00"
 data_486AA390:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA390, 0x2AA39C
 VoiceDirPartRefFind_Table_p0_176:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9AD8, f4=0x20404B, x8="K\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9AD8, key=0x20404B, x8="K\x01\x00\x00"
 data_486AA3A8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA3A8, 0x2AA3B4
@@ -14538,9 +14538,9 @@ data_486AA3B4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA3B4, 0x2AA3C0
 VoiceDirPartRefFind_Table_p0_177:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20004D, x8="K\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004D, x8="K\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_178:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20004E, x8="o\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004E, x8="o\x00\x00\x00"
 data_486AA3D8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA3D8, 0x2AA3E4
@@ -14548,33 +14548,33 @@ data_486AA3E4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA3E4, 0x2AA3F0
 VoiceDirPartRefFind_Table_p0_179:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20004F, x8="J\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20004F, x8="J\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_180:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BEC, f4=0x20204F, x8="H\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BEC, key=0x20204F, x8="H\x04\x00\x00"
 data_486AA408:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA408, 0x2AA414
 VoiceDirPartRefFind_Table_p0_181:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200050, x8="u\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200050, x8="u\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_182:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98BC, f4=0x200450, x8="q\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98BC, key=0x200450, x8="q\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_183:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98C8, f4=0x200850, x8="u\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98C8, key=0x200850, x8="u\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_184:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA0F0, f4=0x200C50, x8="w\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA0F0, key=0x200C50, x8="w\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_185:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9598, f4=0x201050, x8="v\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9598, key=0x201050, x8="v\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_186:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA0FC, f4=0x201450, x8="x\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA0FC, key=0x201450, x8="x\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_187:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA108, f4=0x201850, x8="w\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA108, key=0x201850, x8="w\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_188:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BF8, f4=0x202050, x8="q\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BF8, key=0x202050, x8="q\x06\x00\x00"
 data_486AA474:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA474, 0x2AA480
 VoiceDirPartRefFind_Table_p0_189:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95A4, f4=0x204050, x8="^\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95A4, key=0x204050, x8="^\x00\x00\x00"
 data_486AA48C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA48C, 0x2AA498
@@ -14582,17 +14582,17 @@ data_486AA498:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA498, 0x2AA4A4
 VoiceDirPartRefFind_Table_p0_190:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95B0, f4=0x206050, x8="z\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95B0, key=0x206050, x8="z\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_191:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9CD0, f4=0x200051, x8="v\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9CD0, key=0x200051, x8="v\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_192:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA174, f4=0x200451, x8="}\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA174, key=0x200451, x8="}\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_193:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95C8, f4=0x200851, x8="u\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95C8, key=0x200851, x8="u\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_194:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98EC, f4=0x200C51, x8="x\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98EC, key=0x200C51, x8="x\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_195:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201051, x8="v\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201051, x8="v\x07\x00\x00"
 data_486AA4EC:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA4EC, 0x2AA4F8
@@ -14600,27 +14600,27 @@ data_486AA4F8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA4F8, 0x2AA504
 VoiceDirPartRefFind_Table_p0_196:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x205851, x8="y\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x205851, x8="y\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_197:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA198, f4=0x206051, x8="p\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA198, key=0x206051, x8="p\x04\x00\x00"
 data_486AA51C:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA51C, 0x2AA528
 VoiceDirPartRefFind_Table_p0_198:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9610, f4=0x207051, x8="p\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9610, key=0x207051, x8="p\x05\x00\x00"
 data_486AA534:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA534, 0x2AA540
 VoiceDirPartRefFind_Table_p0_199:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x207851, x8="n\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x207851, x8="n\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_200:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200052, x8="H\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200052, x8="H\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_201:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200053, x8="u\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200053, x8="u\x02\x00\x00"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA564, 0x2AA570
 VoiceDirPartRefFind_Table_p0_202:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202853, x8="u\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202853, x8="u\x05\x00\x00"
 data_486AA57C:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA57C, 0x2AA588
@@ -14628,19 +14628,19 @@ data_486AA588:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA588, 0x2AA594
 VoiceDirPartRefFind_Table_p0_203:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1F8, f4=0x200054, x8="\x1B\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1F8, key=0x200054, x8="\x1B\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_204:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9C58, f4=0x202054, x8="~\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9C58, key=0x202054, x8="~\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_205:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x202854, x8="q\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x202854, x8="q\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_206:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203054, x8="7\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203054, x8="7\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_207:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203854, x8="\x1A\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203854, x8="\x1A\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_208:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9640, f4=0x204054, x8="\x7F\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9640, key=0x204054, x8="\x7F\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_209:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204154, x8="q\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204154, x8="q\x02\x00\x00"
 data_486AA5E8:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA5E8, 0x2AA5F4
@@ -14648,9 +14648,9 @@ data_486AA5F4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA5F4, 0x2AA600
 VoiceDirPartRefFind_Table_p0_210:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204854, x8="q\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204854, x8="q\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_211:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204C54, x8="}\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204C54, x8="}\x05\x00\x00"
 data_486AA618:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA618, 0x2AA624
@@ -14658,65 +14658,65 @@ data_486AA624:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA624, 0x2AA630
 VoiceDirPartRefFind_Table_p0_212:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x206054, x8="r\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x206054, x8="r\x04\x00\x00"
 data_486AA63C:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA63C, 0x2AA648
 VoiceDirPartRefFind_Table_p0_213:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA240, f4=0x200055, x8="j\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA240, key=0x200055, x8="j\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_214:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9C64, f4=0x202055, x8="j\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9C64, key=0x202055, x8="j\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_215:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200056, x8="w\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200056, x8="w\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_216:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9EA4, f4=0x200856, x8="x\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9EA4, key=0x200856, x8="x\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_217:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D18, f4=0x202056, x8="y\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D18, key=0x202056, x8="y\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_218:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9670, f4=0x204056, x8="w\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9670, key=0x204056, x8="w\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_219:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204856, x8="}\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204856, x8="}\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_220:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200057, x8=".\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200057, x8=".\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_221:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D54, f4=0x202057, x8="s\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D54, key=0x202057, x8="s\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_222:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D60, f4=0x203057, x8="~\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D60, key=0x203057, x8="~\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_223:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9694, f4=0x204057, x8="s\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9694, key=0x204057, x8="s\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_224:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x204857, x8="{\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x204857, x8="{\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_225:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200058, x8="t\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200058, x8="t\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_226:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201058, x8="l\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201058, x8="l\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_227:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D84, f4=0x202058, x8="l\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D84, key=0x202058, x8="l\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_228:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203058, x8="t\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203058, x8="t\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_229:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D90, f4=0x204058, x8="|\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D90, key=0x204058, x8="|\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_230:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200059, x8="k\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200059, x8="k\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_231:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201059, x8="i\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201059, x8="i\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_232:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201459, x8="p\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201459, x8="p\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_233:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201859, x8="g\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201859, x8="g\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_234:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A48, f4=0x201C59, x8="?\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A48, key=0x201C59, x8="?\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_235:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9DA8, f4=0x202059, x8="9\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9DA8, key=0x202059, x8="9\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_236:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9568, f4=0x202259, x8="e\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9568, key=0x202259, x8="e\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_237:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9580, f4=0x202459, x8="l\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9580, key=0x202459, x8="l\x06\x00\x00"
 data_486AA774:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA774, 0x2AA780
 VoiceDirPartRefFind_Table_p0_238:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9DC0, f4=0x202859, x8="b\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9DC0, key=0x202859, x8="b\x03\x00\x00"
 data_486AA78C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA78C, 0x2AA798
@@ -14724,7 +14724,7 @@ data_486AA798:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA798, 0x2AA7A4
 VoiceDirPartRefFind_Table_p0_239:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20105A, x8="y\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20105A, x8="y\x04\x00\x00"
 data_486AA7B0:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA7B0, 0x2AA7BC
@@ -14732,7 +14732,7 @@ data_486AA7BC:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA7BC, 0x2AA7C8
 VoiceDirPartRefFind_Table_p0_240:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98F8, f4=0x20385A, x8="{\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A98F8, key=0x20385A, x8="{\x06\x00\x00"
 data_486AA7D4:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA7D4, 0x2AA7E0
@@ -14740,137 +14740,137 @@ data_486AA7E0:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA7E0, 0x2AA7EC
 VoiceDirPartRefFind_Table_p0_241:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D0C, f4=0x20515A, x8=";\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9D0C, key=0x20515A, x8=";\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_242:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20005B, x8="k\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005B, x8="k\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_243:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20005C, x8="x\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005C, x8="x\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_244:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20105C, x8="o\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20105C, x8="o\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_245:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20005D, x8="j\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005D, x8="j\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_246:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F88, f4=0x20405D, x8="r\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F88, key=0x20405D, x8="r\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_247:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9FF4, f4=0x20005E, x8="k\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9FF4, key=0x20005E, x8="k\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_248:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20005F, x8=">\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20005F, x8=">\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_249:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20085F, x8=">\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20085F, x8=">\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_250:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20105F, x8="|\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20105F, x8="|\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_251:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA030, f4=0x20405F, x8=">\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA030, key=0x20405F, x8=">\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_252:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9868, f4=0x200060, x8="y\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9868, key=0x200060, x8="y\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_253:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200061, x8="w\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200061, x8="w\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_254:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA078, f4=0x202061, x8="x\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA078, key=0x202061, x8="x\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_255:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200062, x8="\x09\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200062, x8="\x09\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_256:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201062, x8="\x09\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201062, x8="\x09\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_257:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200063, x8="\x15\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200063, x8="\x15\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_258:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA48C, f4=0x201063, x8="z\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA48C, key=0x201063, x8="z\x06\x00\x00"
 data_486AA8C4:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AA8C4, 0x2AA8D0
 VoiceDirPartRefFind_Table_p0_259:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201064, x8="~\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201064, x8="~\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_260:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA180, f4=0x202064, x8="\x13\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA180, key=0x202064, x8="\x13\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_261:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA534, f4=0x204064, x8="r\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA534, key=0x204064, x8="r\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_262:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200065, x8="j\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200065, x8="j\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_263:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201065, x8="b\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201065, x8="b\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_264:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1B0, f4=0x202065, x8="l\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1B0, key=0x202065, x8="l\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_265:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200066, x8="j\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200066, x8="j\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_266:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1BC, f4=0x202066, x8="l\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1BC, key=0x202066, x8="l\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_267:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9448, f4=0x200067, x8="x\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9448, key=0x200067, x8="x\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_268:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA5F4, f4=0x201067, x8="t\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA5F4, key=0x201067, x8="t\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_269:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA624, f4=0x202067, x8="r\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA624, key=0x202067, x8="r\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_270:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA21C, f4=0x203067, x8="s\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA21C, key=0x203067, x8="s\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_271:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200068, x8="&\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200068, x8="&\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_272:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200069, x8="!\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200069, x8="!\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_273:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A99E8, f4=0x204069, x8="&\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A99E8, key=0x204069, x8="&\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_274:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20006A, x8="$\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006A, x8="$\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_275:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20006B, x8="%\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006B, x8="%\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_276:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA2A0, f4=0x20206B, x8="%\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA2A0, key=0x20206B, x8="%\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_277:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A24, f4=0x20406B, x8="&\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A24, key=0x20406B, x8="&\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_278:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20006C, x8="'\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006C, x8="'\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_279:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9DFC, f4=0x20106C, x8="'\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9DFC, key=0x20106C, x8="'\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_280:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20006D, x8="I\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006D, x8="I\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_281:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20006E, x8="`\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006E, x8="`\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_282:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20006F, x8="I\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20006F, x8="I\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_283:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9400, f4=0x200070, x8="\x0E\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9400, key=0x200070, x8="\x0E\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_284:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA378, f4=0x202070, x8="\x0D\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA378, key=0x202070, x8="\x0D\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_285:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA390, f4=0x202870, x8="\x0D\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA390, key=0x202870, x8="\x0D\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_286:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9FAC, f4=0x203070, x8="\x0D\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9FAC, key=0x203070, x8="\x0D\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_287:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA5E8, f4=0x203870, x8="\x0D\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA5E8, key=0x203870, x8="\x0D\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_288:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B14, f4=0x200071, x8="z\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B14, key=0x200071, x8="z\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_289:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B38, f4=0x201071, x8="}\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B38, key=0x201071, x8="}\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_290:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3B4, f4=0x202071, x8="~\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3B4, key=0x202071, x8="~\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_291:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9EBC, f4=0x200072, x8="\x0F\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9EBC, key=0x200072, x8="\x0F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_292:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BBC, f4=0x204072, x8="\x0B\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BBC, key=0x204072, x8="\x0B\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_293:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200073, x8="z\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200073, x8="z\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_294:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200074, x8="{\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200074, x8="{\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_295:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x203074, x8="{\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x203074, x8="{\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_296:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200075, x8="z\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200075, x8="z\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_297:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200076, x8="|\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200076, x8="|\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_298:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA4EC, f4=0x204076, x8="|\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA4EC, key=0x204076, x8="|\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_299:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA51C, f4=0x200077, x8="z\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA51C, key=0x200077, x8="z\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_300:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200078, x8="|\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200078, x8="|\x01\x00\x00"
 data_486AAAC8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AAAC8, 0x2AAAD4
 VoiceDirPartRefFind_Table_p0_301:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x200079, x8="|\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x200079, x8="|\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_302:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x201079, x8="~\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x201079, x8="~\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_303:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA63C, f4=0x20007A, x8="|\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA63C, key=0x20007A, x8="|\x03\x00\x00"
 data_486AAAF8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AAAF8, 0x2AAB04
@@ -14881,181 +14881,181 @@ data_486AAB10:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AAB10, 0x2AAB1C
 VoiceDirPartRefFind_Table_p0_304:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAAC8, f4=0x20117D, x8="w\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAAC8, key=0x20117D, x8="w\x07\x00\x00"
 data_486AAB28:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AAB28, 0x2AAB34
 VoiceDirPartRefFind_Table_p0_305:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x20007F, x8="{\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x20007F, x8="{\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_306:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x240800, x8="R\x01\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x240800, x8="R\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_307:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x242800, x8="R\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x242800, x8="R\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_308:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9C10, f4=0x242000, x8="R\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9C10, key=0x242000, x8="R\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_309:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x243800, x8="R\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x243800, x8="R\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_310:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x246000, x8="R\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x246000, x8="R\x06\x00\x00"
 data_486AAB7C:
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2AAB7C, 0x2AAB88
 VoiceDirPartRefFind_Table_p0_311:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x245800, x8="S\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x245800, x8="S\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_312:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9628, f4=0x244000, x8="S\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9628, key=0x244000, x8="S\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_313:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A994C, f4=0x242C00, x8="Q\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A994C, key=0x242C00, x8="Q\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_314:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA318, f4=0x242E00, x8="Q\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA318, key=0x242E00, x8="Q\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_315:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA78C, f4=0x240008, x8="P\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA78C, key=0x240008, x8="P\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_316:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA798, f4=0x240808, x8="P\x03\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA798, key=0x240808, x8="P\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_317:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7B0, f4=0x242008, x8="P\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7B0, key=0x242008, x8="P\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_318:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7BC, f4=0x243008, x8="P\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7BC, key=0x243008, x8="P\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_319:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9E98, f4=0x246008, x8="P\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9E98, key=0x246008, x8="P\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_320:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9E74, f4=0x244808, x8="P\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9E74, key=0x244808, x8="P\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_321:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9724, f4=0x245808, x8="S\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9724, key=0x245808, x8="S\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_322:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7D4, f4=0x244008, x8="S\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7D4, key=0x244008, x8="S\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_323:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x242C08, x8="Q\x04\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x242C08, x8="Q\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_324:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA8C4, f4=0x245E08, x8="Q\x05\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA8C4, key=0x245E08, x8="Q\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_325:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAAF8, f4=0x260000, x8="\xF0\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAAF8, key=0x260000, x8="\xF0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_326:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB04, f4=0x260001, x8="\xF3\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB04, key=0x260001, x8="\xF3\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_327:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260009, x8="\xF2\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260009, x8="\xF2\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_328:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB28, f4=0x260003, x8="\xF7\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB28, key=0x260003, x8="\xF7\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_329:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260008, x8="\xF3\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260008, x8="\xF3\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_330:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB10, f4=0x260002, x8="\xFE\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB10, key=0x260002, x8="\xFE\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_331:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260010, x8="\xF7\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260010, x8="\xF7\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_332:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260011, x8="\xF8\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260011, x8="\xF8\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_333:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260018, x8="\xF2\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260018, x8="\xF2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_334:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F1C, f4=0x260021, x8="\xF6\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F1C, key=0x260021, x8="\xF6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_335:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA498, f4=0x260020, x8="\xF1\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA498, key=0x260020, x8="\xF1\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_336:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260028, x8="\xF5\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260028, x8="\xF5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_337:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260019, x8="\xF4\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260019, x8="\xF4\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_338:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x26001A, x8="\xF5\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001A, x8="\xF5\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_339:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3A8, f4=0x26001B, x8="\xF9\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3A8, key=0x26001B, x8="\xF9\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_340:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x26001D, x8="\xFA\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001D, x8="\xFA\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_341:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B8C, f4=0x26001C, x8="\xFB\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B8C, key=0x26001C, x8="\xFB\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_342:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x26001F, x8="\xFF\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001F, x8="\xFF\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_343:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x26001E, x8="\xF6\x02\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x26001E, x8="\xF6\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_344:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9928, f4=0x260034, x8="\xFC\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9928, key=0x260034, x8="\xFC\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_345:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x260038, x8="\xFD\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x260038, x8="\xFD\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_346:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3D8, f4=0x220000, x8="\x80\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3D8, key=0x220000, x8="\x80\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_347:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA000, f4=0x220010, x8="\x81\x07\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA000, key=0x220010, x8="\x81\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_348:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA588, f4=0x110000, x8="\xF0\x06\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA588, key=0x110000, x8="\xF0\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_349:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95EC, f4=0x100000, x8="\x80\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A95EC, key=0x100000, x8="\x80\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_350:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB7C, f4=0x100001, x8="\x81\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AAB7C, key=0x100001, x8="\x81\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_351:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x100002, x8="\x82\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100002, x8="\x82\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_352:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA618, f4=0x100003, x8="\x83\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA618, key=0x100003, x8="\x83\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_353:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9CB8, f4=0x100004, x8="\x84\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9CB8, key=0x100004, x8="\x84\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_354:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x100005, x8="\x85\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100005, x8="\x85\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_355:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x100006, x8="\x86\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100006, x8="\x86\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_356:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96B8, f4=0x100007, x8="\x87\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96B8, key=0x100007, x8="\x87\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_357:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96D0, f4=0x100008, x8="\x88\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A96D0, key=0x100008, x8="\x88\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_358:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7E0, f4=0x100009, x8="\x89\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA7E0, key=0x100009, x8="\x89\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_359:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x10000A, x8="\x8A\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10000A, x8="\x8A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_360:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F4C, f4=0x10000B, x8="\x8B\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F4C, key=0x10000B, x8="\x8B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_361:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F94, f4=0x10000C, x8="\x8C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9F94, key=0x10000C, x8="\x8C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_362:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x10000D, x8="\x8D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10000D, x8="\x8D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_363:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9850, f4=0x10000E, x8="\x8E\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9850, key=0x10000E, x8="\x8E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_364:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x10000F, x8="\x8F\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10000F, x8="\x8F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_365:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x100010, x8="\x90\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100010, x8="\x90\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_366:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA774, f4=0x100011, x8="\x91\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA774, key=0x100011, x8="\x91\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_367:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA168, f4=0x100012, x8="\x92\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA168, key=0x100012, x8="\x92\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_368:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x100013, x8="\x93\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100013, x8="\x93\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_369:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9988, f4=0x100014, x8="\x94\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9988, key=0x100014, x8="\x94\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_370:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1EC, f4=0x100015, x8="\x95\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA1EC, key=0x100015, x8="\x95\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_371:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA234, f4=0x100016, x8="\x96\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA234, key=0x100016, x8="\x96\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_372:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x100017, x8="\x97\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x100017, x8="\x97\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_373:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A99F4, f4=0x100018, x8="\x98\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A99F4, key=0x100018, x8="\x98\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_374:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A18, f4=0x100019, x8="\x99\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A18, key=0x100019, x8="\x99\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_375:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A30, f4=0x10001A, x8="\x9A\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9A30, key=0x10001A, x8="\x9A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_376:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA2E8, f4=0x10001B, x8="\x9B\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA2E8, key=0x10001B, x8="\x9B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_377:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9760, f4=0x10001C, x8="\x9C\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9760, key=0x10001C, x8="\x9C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_378:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA348, f4=0x10001D, x8="\x9D\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA348, key=0x10001D, x8="\x9D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_379:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	f4=0x10001E, x8="\x9E\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	key=0x10001E, x8="\x9E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_380:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9FE8, f4=0x10001F, x8="\x9F\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9FE8, key=0x10001F, x8="\x9F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_381:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B74, f4=0x100020, x8="\xA0\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9B74, key=0x100020, x8="\xA0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_382:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BD4, f4=0x100021, x8="\xA1\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9BD4, key=0x100021, x8="\xA1\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_383:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3E4, f4=0x100022, x8="\xA2\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA3E4, key=0x100022, x8="\xA2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_384:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA408, f4=0x100023, x8="\xA3\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA408, key=0x100023, x8="\xA3\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_385:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA474, f4=0x100024, x8="\xA4\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA474, key=0x100024, x8="\xA4\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_386:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA4F8, f4=0x100025, x8="\xA5\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA4F8, key=0x100025, x8="\xA5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_387:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9964, f4=0x100026, x8="\xA6\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486A9964, key=0x100026, x8="\xA6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_388:	# REC_VoiceDirPartRefFind_Table_p0 (12 bytes)
-	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA57C, f4=0x100027, x8="\xA7\x00\x00\x00"
+	REC_VoiceDirPartRefFind_Table_p0	p0=data_486AA57C, key=0x100027, x8="\xA7\x00\x00\x00"
 
 Str_y:	.asciz "y"
 
@@ -16363,39 +16363,39 @@ Str_02d_s:	.asciz "%02d: %s"
 	.align	4, 0xFF	# pad after Str_02d_s
 
 func_4857DF74_Records:	# 16 x REC_func_4857DF74_Records (8 bytes each); read by func_4857DF74 0x4857DF74 `mov (a0), d1`
-	REC_func_4857DF74_Records	f0=207, p4=loc_4857E052	# [0]
-	REC_func_4857DF74_Records	f0=1, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=129, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=175, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=291, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=3, p4=loc_4857E054
-	REC_func_4857DF74_Records	f0=294, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=295, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=296, p4=loc_4857E052	# [8]
-	REC_func_4857DF74_Records	f0=297, p4=loc_4857E052
-	REC_func_4857DF74_Records	p4=loc_4857E07A
-	REC_func_4857DF74_Records	p4=loc_4857E07A
-	REC_func_4857DF74_Records	p4=loc_4857E07A
-	REC_func_4857DF74_Records	p4=loc_4857E07A
-	REC_func_4857DF74_Records	f0=174, p4=loc_4857E052
-	REC_func_4857DF74_Records	f0=95, p4=loc_4857E03D
+	REC_func_4857DF74_Records	f0=207, proc=loc_4857E052	# [0]
+	REC_func_4857DF74_Records	f0=1, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=129, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=175, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=291, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=3, proc=loc_4857E054
+	REC_func_4857DF74_Records	f0=294, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=295, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=296, proc=loc_4857E052	# [8]
+	REC_func_4857DF74_Records	f0=297, proc=loc_4857E052
+	REC_func_4857DF74_Records	proc=loc_4857E07A
+	REC_func_4857DF74_Records	proc=loc_4857E07A
+	REC_func_4857DF74_Records	proc=loc_4857E07A
+	REC_func_4857DF74_Records	proc=loc_4857E07A
+	REC_func_4857DF74_Records	f0=174, proc=loc_4857E052
+	REC_func_4857DF74_Records	f0=95, proc=loc_4857E03D
 AcSswScreenProc_Records:	# 16 x REC_AcSswScreenProc_Records (8 bytes each); read by AcSswScreenProc 0x4857E0A4 `mov (a0), d0`
-	REC_AcSswScreenProc_Records	f0=0x2300000, p4=loc_4857E3ED	# [0]
-	REC_AcSswScreenProc_Records	f0=1, p4=loc_4857E0F9
-	REC_AcSswScreenProc_Records	f0=2, p4=loc_4857E175
-	REC_AcSswScreenProc_Records	f0=0x100B2, p4=loc_4857E1CA
-	REC_AcSswScreenProc_Records	f0=0x100B4, p4=loc_4857E1D9
-	REC_AcSswScreenProc_Records	f0=0x10051, p4=loc_4857E22D
-	REC_AcSswScreenProc_Records	f0=5, p4=loc_4857E251
-	REC_AcSswScreenProc_Records	f0=0x2300006, p4=loc_4857E2FF
-	REC_AcSswScreenProc_Records	f0=0x2300005, p4=loc_4857E351	# [8]
-	REC_AcSswScreenProc_Records	f0=9, p4=loc_4857E141
-	REC_AcSswScreenProc_Records	f0=0x2300001, p4=loc_4857E3A1
-	REC_AcSswScreenProc_Records	f0=0x2300004, p4=loc_4857E411
-	REC_AcSswScreenProc_Records	p4=loc_4857E41D
-	REC_AcSswScreenProc_Records	p4=loc_4857E41D
-	REC_AcSswScreenProc_Records	p4=loc_4857E41D
-	REC_AcSswScreenProc_Records	p4=loc_4857E41D
+	REC_AcSswScreenProc_Records	key=0x2300000, proc=loc_4857E3ED	# [0]
+	REC_AcSswScreenProc_Records	key=1, proc=loc_4857E0F9
+	REC_AcSswScreenProc_Records	key=2, proc=loc_4857E175
+	REC_AcSswScreenProc_Records	key=0x100B2, proc=loc_4857E1CA
+	REC_AcSswScreenProc_Records	key=0x100B4, proc=loc_4857E1D9
+	REC_AcSswScreenProc_Records	key=0x10051, proc=loc_4857E22D
+	REC_AcSswScreenProc_Records	key=5, proc=loc_4857E251
+	REC_AcSswScreenProc_Records	key=0x2300006, proc=loc_4857E2FF
+	REC_AcSswScreenProc_Records	key=0x2300005, proc=loc_4857E351	# [8]
+	REC_AcSswScreenProc_Records	key=9, proc=loc_4857E141
+	REC_AcSswScreenProc_Records	key=0x2300001, proc=loc_4857E3A1
+	REC_AcSswScreenProc_Records	key=0x2300004, proc=loc_4857E411
+	REC_AcSswScreenProc_Records	proc=loc_4857E41D
+	REC_AcSswScreenProc_Records	proc=loc_4857E41D
+	REC_AcSswScreenProc_Records	proc=loc_4857E41D
+	REC_AcSswScreenProc_Records	proc=loc_4857E41D
 AcSswImgListProc_Records:	# 19 x REC_AcSswImgListProc_Records (8 bytes each); read by AcSswImgListProc 0x4857E976 `mov (a0), d0`
 	REC_AcSswImgListProc_Records	f0=16, x4="\xB6\xECWH"	# [0]
 	REC_AcSswImgListProc_Records	f0=1, x4="\xC9\xE9WH"
@@ -16801,19 +16801,19 @@ Str_rb_2:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_2
 
 func_485819DF_Table_p0_0:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=60, x1="~\xFF\xFF\xFF\xFF~<"
+	REC_func_485819DF_Table_p0	flags=60, x1="~\xFF\xFF\xFF\xFF~<"
 func_485819DF_Table_p0_1:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=32, x1="08<<80 "
+	REC_func_485819DF_Table_p0	flags=32, x1="08<<80 "
 func_485819DF_Table_p0_2:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=60, x1="N\x8F\x8F\xF1\xF1r<"
+	REC_func_485819DF_Table_p0	flags=60, x1="N\x8F\x8F\xF1\xF1r<"
 func_485819DF_Table_p0_3:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=60, x1="B\xE3\xF7\xEF\xC7B<"
+	REC_func_485819DF_Table_p0	flags=60, x1="B\xE3\xF7\xEF\xC7B<"
 func_485819DF_Table_p0_4:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=60, x1="r\xF1\xF1\x8F\x8FN<"
+	REC_func_485819DF_Table_p0	flags=60, x1="r\xF1\xF1\x8F\x8FN<"
 func_485819DF_Table_p0_5:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=60, x1="~\x9D\x89\x91\xB9~<"
+	REC_func_485819DF_Table_p0	flags=60, x1="~\x9D\x89\x91\xB9~<"
 func_485819DF_Table_p0_6:	# REC_func_485819DF_Table_p0 (8 bytes)
-	REC_func_485819DF_Table_p0	f0=60, x1="~\xFF\xFF\xFF\xFF~<"
+	REC_func_485819DF_Table_p0	flags=60, x1="~\xFF\xFF\xFF\xFF~<"
 func_485819DF_Table_p0_7:	# REC_func_485819DF_Table_p0 (8 bytes)
 	REC_func_485819DF_Table_p0	x1="\x18<~~<\x18\x00"
 func_485819DF_Table_p0_8:	# REC_func_485819DF_Table_p0 (8 bytes)
@@ -17139,134 +17139,134 @@ func_48582CDF_Table:
 	.long	loc_48582EA3
 
 func_48582CDF_Records:	# 128 x REC_func_48582CDF_Records (8 bytes each); read by func_48582CDF 0x48582CDF `mov (a0), d0`
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [0]
-	REC_func_48582CDF_Records	f0=4097, p4=loc_48582FB6
-	REC_func_48582CDF_Records	f0=4098, p4=loc_48582FC0
-	REC_func_48582CDF_Records	f0=4099, p4=loc_48582FCA
-	REC_func_48582CDF_Records	f0=4100, p4=loc_48582FD4
-	REC_func_48582CDF_Records	f0=4225, p4=loc_485830A1
-	REC_func_48582CDF_Records	f0=4226, p4=loc_485830AB
-	REC_func_48582CDF_Records	f0=4227, p4=loc_485830B5
-	REC_func_48582CDF_Records	f0=4228, p4=loc_485830BF	# [8]
-	REC_func_48582CDF_Records	f0=4233, p4=loc_48582EAD
-	REC_func_48582CDF_Records	f0=4229, p4=loc_485830C9
-	REC_func_48582CDF_Records	f0=4231, p4=loc_485830D3
-	REC_func_48582CDF_Records	f0=4232, p4=loc_485830DD
-	REC_func_48582CDF_Records	f0=4234, p4=loc_485830E7
-	REC_func_48582CDF_Records	f0=4235, p4=loc_485830F1
-	REC_func_48582CDF_Records	f0=4236, p4=loc_485830FB
-	REC_func_48582CDF_Records	f0=4237, p4=loc_48583105	# [16]
-	REC_func_48582CDF_Records	f0=4113, p4=loc_48582FDE
-	REC_func_48582CDF_Records	f0=4114, p4=loc_48582FE8
-	REC_func_48582CDF_Records	f0=4115, p4=loc_48582FF2
-	REC_func_48582CDF_Records	f0=4116, p4=loc_48582FFC
-	REC_func_48582CDF_Records	f0=4238, p4=loc_4858310F
-	REC_func_48582CDF_Records	f0=4239, p4=loc_48583119
-	REC_func_48582CDF_Records	f0=4240, p4=loc_48583122
-	REC_func_48582CDF_Records	f0=4241, p4=loc_48583127	# [24]
-	REC_func_48582CDF_Records	f0=4242, p4=loc_4858312C
-	REC_func_48582CDF_Records	f0=4243, p4=loc_48583131
-	REC_func_48582CDF_Records	f0=4244, p4=loc_48583136
-	REC_func_48582CDF_Records	f0=4245, p4=loc_4858313B
-	REC_func_48582CDF_Records	f0=4246, p4=loc_48583140
-	REC_func_48582CDF_Records	f0=4247, p4=loc_48583149
-	REC_func_48582CDF_Records	f0=4248, p4=loc_48583152
-	REC_func_48582CDF_Records	f0=4249, p4=loc_4858315B	# [32]
-	REC_func_48582CDF_Records	f0=4129, p4=loc_48582E12
-	REC_func_48582CDF_Records	f0=4250, p4=loc_48583164
-	REC_func_48582CDF_Records	f0=4251, p4=loc_4858316D
-	REC_func_48582CDF_Records	f0=4252, p4=loc_48583176
-	REC_func_48582CDF_Records	f0=4253, p4=loc_4858317A
-	REC_func_48582CDF_Records	f0=4254, p4=loc_4858317E
-	REC_func_48582CDF_Records	f0=1, p4=loc_48583182
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [40]
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [48]
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [56]
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [64]
-	REC_func_48582CDF_Records	f0=4161, p4=loc_48583006
-	REC_func_48582CDF_Records	f0=4162, p4=loc_48583010
-	REC_func_48582CDF_Records	f0=4163, p4=loc_4858301A
-	REC_func_48582CDF_Records	f0=4164, p4=loc_48583024
-	REC_func_48582CDF_Records	f0=4165, p4=loc_4858302E
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [72]
-	REC_func_48582CDF_Records	f0=4169, p4=loc_48583033
-	REC_func_48582CDF_Records	f0=4170, p4=loc_4858303D
-	REC_func_48582CDF_Records	f0=4171, p4=loc_48583047
-	REC_func_48582CDF_Records	f0=4172, p4=loc_4858304C
-	REC_func_48582CDF_Records	f0=4173, p4=loc_48583051
-	REC_func_48582CDF_Records	f0=4174, p4=loc_48583056
-	REC_func_48582CDF_Records	f0=4175, p4=loc_4858305B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [80]
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [88]
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [96]
-	REC_func_48582CDF_Records	f0=4065, p4=loc_48582DCE
-	REC_func_48582CDF_Records	f0=4066, p4=loc_48582DF7
-	REC_func_48582CDF_Records	f0=4193, p4=loc_48583060
-	REC_func_48582CDF_Records	f0=4194, p4=loc_48583065
-	REC_func_48582CDF_Records	f0=4069, p4=loc_48582ECA
-	REC_func_48582CDF_Records	f0=4070, p4=loc_48582F34
-	REC_func_48582CDF_Records	f0=4195, p4=loc_4858306F
-	REC_func_48582CDF_Records	f0=4196, p4=loc_48583079	# [104]
-	REC_func_48582CDF_Records	f0=4073, p4=loc_48582F66
-	REC_func_48582CDF_Records	f0=4074, p4=loc_48582F70
-	REC_func_48582CDF_Records	f0=4197, p4=loc_48583083
-	REC_func_48582CDF_Records	f0=4198, p4=loc_4858308D
-	REC_func_48582CDF_Records	f0=4199, p4=loc_48583097
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [112]
-	REC_func_48582CDF_Records	f0=4081, p4=loc_48582F7A
-	REC_func_48582CDF_Records	f0=4082, p4=loc_48582F84
-	REC_func_48582CDF_Records	f0=4083, p4=loc_48582F8E
-	REC_func_48582CDF_Records	f0=4084, p4=loc_48582F98
-	REC_func_48582CDF_Records	f0=4085, p4=loc_48582FA2
-	REC_func_48582CDF_Records	f0=4086, p4=loc_48582FA7
-	REC_func_48582CDF_Records	f0=4087, p4=loc_48582FAC
-	REC_func_48582CDF_Records	p4=loc_4858318B	# [120]
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
-	REC_func_48582CDF_Records	p4=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [0]
+	REC_func_48582CDF_Records	f0=4097, proc=loc_48582FB6
+	REC_func_48582CDF_Records	f0=4098, proc=loc_48582FC0
+	REC_func_48582CDF_Records	f0=4099, proc=loc_48582FCA
+	REC_func_48582CDF_Records	f0=4100, proc=loc_48582FD4
+	REC_func_48582CDF_Records	f0=4225, proc=loc_485830A1
+	REC_func_48582CDF_Records	f0=4226, proc=loc_485830AB
+	REC_func_48582CDF_Records	f0=4227, proc=loc_485830B5
+	REC_func_48582CDF_Records	f0=4228, proc=loc_485830BF	# [8]
+	REC_func_48582CDF_Records	f0=4233, proc=loc_48582EAD
+	REC_func_48582CDF_Records	f0=4229, proc=loc_485830C9
+	REC_func_48582CDF_Records	f0=4231, proc=loc_485830D3
+	REC_func_48582CDF_Records	f0=4232, proc=loc_485830DD
+	REC_func_48582CDF_Records	f0=4234, proc=loc_485830E7
+	REC_func_48582CDF_Records	f0=4235, proc=loc_485830F1
+	REC_func_48582CDF_Records	f0=4236, proc=loc_485830FB
+	REC_func_48582CDF_Records	f0=4237, proc=loc_48583105	# [16]
+	REC_func_48582CDF_Records	f0=4113, proc=loc_48582FDE
+	REC_func_48582CDF_Records	f0=4114, proc=loc_48582FE8
+	REC_func_48582CDF_Records	f0=4115, proc=loc_48582FF2
+	REC_func_48582CDF_Records	f0=4116, proc=loc_48582FFC
+	REC_func_48582CDF_Records	f0=4238, proc=loc_4858310F
+	REC_func_48582CDF_Records	f0=4239, proc=loc_48583119
+	REC_func_48582CDF_Records	f0=4240, proc=loc_48583122
+	REC_func_48582CDF_Records	f0=4241, proc=loc_48583127	# [24]
+	REC_func_48582CDF_Records	f0=4242, proc=loc_4858312C
+	REC_func_48582CDF_Records	f0=4243, proc=loc_48583131
+	REC_func_48582CDF_Records	f0=4244, proc=loc_48583136
+	REC_func_48582CDF_Records	f0=4245, proc=loc_4858313B
+	REC_func_48582CDF_Records	f0=4246, proc=loc_48583140
+	REC_func_48582CDF_Records	f0=4247, proc=loc_48583149
+	REC_func_48582CDF_Records	f0=4248, proc=loc_48583152
+	REC_func_48582CDF_Records	f0=4249, proc=loc_4858315B	# [32]
+	REC_func_48582CDF_Records	f0=4129, proc=loc_48582E12
+	REC_func_48582CDF_Records	f0=4250, proc=loc_48583164
+	REC_func_48582CDF_Records	f0=4251, proc=loc_4858316D
+	REC_func_48582CDF_Records	f0=4252, proc=loc_48583176
+	REC_func_48582CDF_Records	f0=4253, proc=loc_4858317A
+	REC_func_48582CDF_Records	f0=4254, proc=loc_4858317E
+	REC_func_48582CDF_Records	f0=1, proc=loc_48583182
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [40]
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [48]
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [56]
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [64]
+	REC_func_48582CDF_Records	f0=4161, proc=loc_48583006
+	REC_func_48582CDF_Records	f0=4162, proc=loc_48583010
+	REC_func_48582CDF_Records	f0=4163, proc=loc_4858301A
+	REC_func_48582CDF_Records	f0=4164, proc=loc_48583024
+	REC_func_48582CDF_Records	f0=4165, proc=loc_4858302E
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [72]
+	REC_func_48582CDF_Records	f0=4169, proc=loc_48583033
+	REC_func_48582CDF_Records	f0=4170, proc=loc_4858303D
+	REC_func_48582CDF_Records	f0=4171, proc=loc_48583047
+	REC_func_48582CDF_Records	f0=4172, proc=loc_4858304C
+	REC_func_48582CDF_Records	f0=4173, proc=loc_48583051
+	REC_func_48582CDF_Records	f0=4174, proc=loc_48583056
+	REC_func_48582CDF_Records	f0=4175, proc=loc_4858305B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [80]
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [88]
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [96]
+	REC_func_48582CDF_Records	f0=4065, proc=loc_48582DCE
+	REC_func_48582CDF_Records	f0=4066, proc=loc_48582DF7
+	REC_func_48582CDF_Records	f0=4193, proc=loc_48583060
+	REC_func_48582CDF_Records	f0=4194, proc=loc_48583065
+	REC_func_48582CDF_Records	f0=4069, proc=loc_48582ECA
+	REC_func_48582CDF_Records	f0=4070, proc=loc_48582F34
+	REC_func_48582CDF_Records	f0=4195, proc=loc_4858306F
+	REC_func_48582CDF_Records	f0=4196, proc=loc_48583079	# [104]
+	REC_func_48582CDF_Records	f0=4073, proc=loc_48582F66
+	REC_func_48582CDF_Records	f0=4074, proc=loc_48582F70
+	REC_func_48582CDF_Records	f0=4197, proc=loc_48583083
+	REC_func_48582CDF_Records	f0=4198, proc=loc_4858308D
+	REC_func_48582CDF_Records	f0=4199, proc=loc_48583097
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [112]
+	REC_func_48582CDF_Records	f0=4081, proc=loc_48582F7A
+	REC_func_48582CDF_Records	f0=4082, proc=loc_48582F84
+	REC_func_48582CDF_Records	f0=4083, proc=loc_48582F8E
+	REC_func_48582CDF_Records	f0=4084, proc=loc_48582F98
+	REC_func_48582CDF_Records	f0=4085, proc=loc_48582FA2
+	REC_func_48582CDF_Records	f0=4086, proc=loc_48582FA7
+	REC_func_48582CDF_Records	f0=4087, proc=loc_48582FAC
+	REC_func_48582CDF_Records	proc=loc_4858318B	# [120]
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
+	REC_func_48582CDF_Records	proc=loc_4858318B
 data_486B16AC:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2B16AC, 0x2B16B0
@@ -33619,9 +33619,9 @@ FileRenameFunc_Var:	# u32, a constant; read / written by FileRenameFunc 0x4851C4
 	.long	0x485866fc
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00206A `mov (0x10, a1), a0`; localeconv 0x4C00206A `mov (0x14, a1), a0`; localeconv 0x4C00206A `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	p0=PfParseSpec_Records+128, p4=PfParseSpec_Records+130, p8=PfParseSpec_Records+131, p12=PfParseSpec_Records+132, p16=PfParseSpec_Records+133, p20=PfParseSpec_Records+134, p24=PfParseSpec_Records+135, p28=PfParseSpec_Records+136, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	text=PfParseSpec_Records+128, p4=PfParseSpec_Records+130, p8=PfParseSpec_Records+131, p12=PfParseSpec_Records+132, p16=PfParseSpec_Records+133, p20=PfParseSpec_Records+134, p24=PfParseSpec_Records+135, p28=PfParseSpec_Records+136, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00206A `mov (0xc, a1), a0`; localeconv 0x4C00206A `mov (4, a1), a0`; localeconv 0x4C00206A `mov (8, a1), a0`
-	REC_localeconv_Records_2	p0=PfParseSpec_Records+140, p4=PfParseSpec_Records+142, p8=PfParseSpec_Records+144, p12=PfParseSpec_Records+145
+	REC_localeconv_Records_2	text=PfParseSpec_Records+140, text_=PfParseSpec_Records+142, p8=PfParseSpec_Records+144, p12=PfParseSpec_Records+145
 	REC_localeconv_Records_2	
 
 doubles_486D16E0:	# IEEE-754 doubles (lo word, hi word)
@@ -33685,13 +33685,13 @@ func_4C00AFF3_Table:	# 1 x u16, 65535..65535; read by func_4C00AFF3 0x4C00AFF3: 
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2D2130, 0x2D21F8
 
 TgGlobalRegsB0LoadA_Var:	# REC_TgGlobalRegsB0LoadA_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadA 0x4C0380BE reads through its argument a0 (passed by func_4848385F 0x4848385F `call TgGlobalRegsB0LoadA_entry, [a2], 0x18`, +2 more calls)
-	REC_TgGlobalRegsB0LoadA_ArgA0	f0=4, f2=2, f4=128, f6=12, f8=32, f10=37, f12=943, f14=1
+	REC_TgGlobalRegsB0LoadA_ArgA0	TgVoiceRegWrite_d0=4, TgVoiceRegWrite_d0_=2, TgVoiceRegWrite_d0__=128, TgVoiceRegWrite_d0___=12, TgVoiceRegWrite_d0____=32, TgVoiceRegWrite_d0_____=37, TgVoiceRegWrite_d0______=943, TgVoiceRegWrite_d0_______=1
 TgGlobalRegsB0LoadB_Var:	# REC_TgGlobalRegsB0LoadB_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadB 0x4C03815B reads through its argument a0 (passed by TgChipResetSideB 0x4C038394 `call TgGlobalRegsB0LoadB_entry, [a2], 0x18`)
-	REC_TgGlobalRegsB0LoadB_ArgA0	f0=4, f2=2, f4=128, f6=12, f8=32, f10=37, f12=815, f14=1
+	REC_TgGlobalRegsB0LoadB_ArgA0	TgVoiceRegWriteB_d0=4, TgVoiceRegWriteB_d0_=2, TgVoiceRegWriteB_d0__=128, TgVoiceRegWriteB_d0___=12, TgVoiceRegWriteB_d0____=32, TgVoiceRegWriteB_d0_____=37, TgVoiceRegWriteB_d0______=815, TgVoiceRegWriteB_d0_______=1
 TgGlobalRegsA0LoadA_Var:	# REC_TgGlobalRegsA0LoadA_ArgA0 (20 bytes): the layout TgGlobalRegsA0LoadA 0x4C037FAF reads through its argument a0 (passed by func_4848385F 0x4848385F `call TgGlobalRegsA0LoadA_entry, [a2], 0x18`, +2 more calls)
-	REC_TgGlobalRegsA0LoadA_ArgA0	f0=51602, f4=806, f16=32, x18="\x00\x00"
+	REC_TgGlobalRegsA0LoadA_ArgA0	TgVoiceRegWrite_d0=51602, TgVoiceRegWrite_d0_=806, TgVoiceRegWrite_d0____=32, x18="\x00\x00"
 TgGlobalRegsA0LoadB_ArgA0_0:	# REC_TgGlobalRegsA0LoadB_ArgA0 (20 bytes): the layout TgGlobalRegsA0LoadB 0x4C038015 reads through its argument a0 (passed by TgChipResetSideB 0x4C038394 `call TgGlobalRegsA0LoadB_entry, [a2], 0x18`)
-	REC_TgGlobalRegsA0LoadB_ArgA0	x0="\x00\x80\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00", f16=32, x18="\x00\x00"
+	REC_TgGlobalRegsA0LoadB_ArgA0	x0="\x00\x80\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00", TgVoiceRegWriteB_d0=32, x18="\x00\x00"
 
 TgPartModRetrigger_Table:	# 4 x u8, 1..64; read by TgPartModRetrigger_entry 0x4C02CACE: `movbu  (d3, a0), d0`
 	tab_u8	1, 4, 16, 64
@@ -33951,14 +33951,14 @@ func_4C007249_Table:	# 123 x u16, 65281..65534; read by func_4C007249 0x4C007249
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2D39A0, 0x2D39AA
 
 TgPartEgRampBuild_Records:	# 8 x REC_TgPartEgRampBuild_Records (6 bytes each); read by TgPartEgRampBuild 0x4C039DD8 `movbu (1, a0), d3`; TgPartEgRampBuild 0x4C039DD8 `movbu (4, a0), d1`; TgPartEgRampBuild 0x4C039DD8 `movbu (5, a0), d2` (+1)
-	REC_TgPartEgRampBuild_Records	a0="\x01\x02\x00\x00", f4=255, f5=255
-	REC_TgPartEgRampBuild_Records	a0="\x01\x03\x00\x00", f4=255, f5=255
-	REC_TgPartEgRampBuild_Records	a0="\x01\x04\x00\x00", f4=255, f5=255
-	REC_TgPartEgRampBuild_Records	a0="\x01\x03\x00\x01", f4=255, f5=255
-	REC_TgPartEgRampBuild_Records	a0="\x00\x00\x00\x03", f4=255, f5=255
-	REC_TgPartEgRampBuild_Records	a0="\x00\x00\x00\x03", f4=255, f5=255
-	REC_TgPartEgRampBuild_Records	a0="\xFF\xFF\xFF\xFF", f5=3
-	REC_TgPartEgRampBuild_Records	a0="\x00\x05\x00\x06", f5=5
+	REC_TgPartEgRampBuild_Records	a0="\x01\x02\x00\x00", f4=255, index=255
+	REC_TgPartEgRampBuild_Records	a0="\x01\x03\x00\x00", f4=255, index=255
+	REC_TgPartEgRampBuild_Records	a0="\x01\x04\x00\x00", f4=255, index=255
+	REC_TgPartEgRampBuild_Records	a0="\x01\x03\x00\x01", f4=255, index=255
+	REC_TgPartEgRampBuild_Records	a0="\x00\x00\x00\x03", f4=255, index=255
+	REC_TgPartEgRampBuild_Records	a0="\x00\x00\x00\x03", f4=255, index=255
+	REC_TgPartEgRampBuild_Records	a0="\xFF\xFF\xFF\xFF", index=3
+	REC_TgPartEgRampBuild_Records	a0="\x00\x05\x00\x06", index=5
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x2D39DA, 0x2D39FE
 
@@ -34002,18 +34002,18 @@ TgElemStageFresh_Table:	# 51 x u8, 0..127; read by TgElemStageFresh_entry 0x4C03
 	tab_u8	113, 120, 127	# [48]
 
 TgPartEditLfoLoadA_Records:	# 14 x REC_TgPartEditLfoLoadA_Records (39 bytes each); read by TgPartEditLfoLoadA 0x4C00CD14 `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C00CD14 `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C00CD14 `movbu (1, a2), d1` (+85)
-	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x15="\x00\x00\x00", f19=68, x22="\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x15="\x00\x00\x00", f19=196, x22="\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x15="\x00\x00\x00", f19=68, x22="\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x15="\x00\x00\x00", f19=200, x22="\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x15="\x00\x00\x00", f19=136, x22="\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x15="\x00\x00\x00", f19=200, x22="\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f6=40, f7=24, x15="\x00\x00\x00", f19=32, x22="\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, f6=25, x15="\x00\x00\x00", f19=228, x22="\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x15="\x00\x00\x00", flags___=68, x22="\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x15="\x00\x00\x00", flags___=196, x22="\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x15="\x00\x00\x00", flags___=68, x22="\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x15="\x00\x00\x00", flags___=200, x22="\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x15="\x00\x00\x00", flags___=136, x22="\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x15="\x00\x00\x00", flags___=200, x22="\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	index=40, f7=24, x15="\x00\x00\x00", flags___=32, x22="\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, index=25, x15="\x00\x00\x00", flags___=228, x22="\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x15="\x00\x00\x00", x22="\x00\x00\x00", f27=80, f28=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
 	REC_TgPartEditLfoLoadA_Records	f9=27, f10=20, f11=22, x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, f2=178, x15="\x00\x00\x00", f18=30, f19=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, f2=178, f14=5, x15="\x00\x00\x00", f18=30, f19=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x15="\x00\x00\x00", f18=30, flags___=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, f14=5, x15="\x00\x00\x00", f18=30, flags___=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
@@ -39282,8 +39282,8 @@ func_4840E651_Table:	# 512 x u8, 0..250; read by func_4840DE66 0x4840DE66: `movb
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [496]
 
 func_4840D7B5_Records:	# 2 x REC_func_4840D7B5_Records (64 bytes each); read by func_4840D7B5 0x4840D7B5 `movbu (a1), d0`
-	REC_func_4840D7B5_Records	f0=16, x1="\x0B\n\x10\x18(3=\x0C\x0C\x0E\x13\x1A:<7\x0E\x0D\x10\x18(9E8\x0E\x11\x16\x1D3WP>\x12\x16%8DmgM\x18#7@Qhq\\1@NWgyxeH\\_bpdgc"
-	REC_func_4840D7B5_Records	f0=17, x1="\x12\x18/cccc\x12\x15\x1ABcccc\x18\x1A8ccccc/Bcccccccccccccccccccccccccccccccccccccc"
+	REC_func_4840D7B5_Records	index=16, x1="\x0B\n\x10\x18(3=\x0C\x0C\x0E\x13\x1A:<7\x0E\x0D\x10\x18(9E8\x0E\x11\x16\x1D3WP>\x12\x16%8DmgM\x18#7@Qhq\\1@NWgyxeH\\_bpdgc"
+	REC_func_4840D7B5_Records	index=17, x1="\x12\x18/cccc\x12\x15\x1ABcccc\x18\x1A8ccccc/Bcccccccccccccccccccccccccccccccccccccc"
 
 ptrs_4870456C:
 	.long	func_4841023B

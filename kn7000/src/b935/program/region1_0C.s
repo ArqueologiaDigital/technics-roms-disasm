@@ -4809,10 +4809,10 @@ loc_48583173:
     mov     -1, d0
 loc_48583175:
     ret     [d3,a2,a3], 0x1c
-
-func_48583178:
+# SoundAlphaListGet  (CPU 0x48583178)
+SoundAlphaListGet:
     movm    [d2], (sp)
-func_48583178_entry:
+SoundAlphaListGet_entry:
     mov     d1, d2
     mov     d0, d1
     extbu   d1
@@ -4832,14 +4832,14 @@ loc_48583189:
     add     d2, d1
     add     d0, d1
     asl2    d1
-    mov     func_48583178_Table, a0
+    mov     SoundAlphaListTable, a0
     mov     (d1, a0), a0
     retf    [d2], 4
-
-func_4858319A:
+# SoundAlphaIndexBuild  (CPU 0x4858319a)
+SoundAlphaIndexBuild:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
-func_4858319A_entry:
+SoundAlphaIndexBuild_entry:
     mov     d1, d3
     mov     d0, d2
     extbu   d2
@@ -4851,7 +4851,7 @@ func_4858319A_entry:
     call    memset_entry, [a2], 4
     mov     d3, d1
     mov     d2, d0
-    call    func_48583178_entry, [d2], 4
+    call    SoundAlphaListGet_entry, [d2], 4
     mov     a0, (0x5009e72c)
     clr     d0
     movhu   d0, (0x5009e730)
@@ -5202,11 +5202,11 @@ loc_48583475:
     llt
 loc_4858347B:
     ret     [d2,d3,a2], 0x20
-
-func_4858347E:
+# SoundAlphaInitialGet  (CPU 0x4858347e)
+SoundAlphaInitialGet:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xc, sp
-func_4858347E_entry:
+SoundAlphaInitialGet_entry:
     mov     a0, a3
     clr     d0
     movbu   d0, (a3)

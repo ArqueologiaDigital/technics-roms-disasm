@@ -468,7 +468,7 @@ Str_KssBg:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	SelDir, sub=SelDir_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=SelDir_window, image_id=32872, title=Str_KssBg, icon=1	# title "KssBg"
+	KssBgScreen	SelDir, sub=SelDir_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=SelDir_window, image_id=32872, title=Str_KssBg, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		AcIndexWideES	SelDir_IndexWideES1, super=SelDir, next=SelDir_EditSwLine1, flag=VF_Const, X=204, Y=217, W=152, H=22, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom9, style=3
 		VwEditSwLine	SelDir_EditSwLine1, super=SelDir, next=_2ALPHA_KEY, prev=SelDir_IndexWideES1, flag=VF_Const, X=633, Y=52, W=1, H=32, color=CL_FireRed, linemode=1, editsw=ES_None
 
@@ -523,7 +523,7 @@ Str_KssBg_2:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	SelSong, sub=SelSong_ScreenMenu1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=SelSong_window, image_id=32872, title=Str_KssBg_2, icon=1	# title "KssBg"
+	KssBgScreen	SelSong, sub=SelSong_ScreenMenu1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=SelSong_window, image_id=32872, title=Str_KssBg_2, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 
 Str_empty_7:	.asciz ""
 
@@ -838,7 +838,7 @@ Str_KssBg_3:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	AlphaSort, sub=AlphaSort_ScreenMenu1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=AlphaSort_window, image_id=32872, title=Str_KssBg_3, icon=1	# title "KssBg"
+	KssBgScreen	AlphaSort, sub=AlphaSort_ScreenMenu1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=AlphaSort_window, image_id=32872, title=Str_KssBg_3, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 
 Str_empty_14:	.asciz ""
 
@@ -907,7 +907,7 @@ Str_KssBg_4:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	Lbn, sub=Lbn_ScreenMenu1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Lbn_window, image_id=32872, title=Str_KssBg_4, icon=1	# title "KssBg"
+	KssBgScreen	Lbn, sub=Lbn_ScreenMenu1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Lbn_window, image_id=32872, title=Str_KssBg_4, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 
 Str_empty_16:	.asciz ""
 
@@ -1042,7 +1042,7 @@ Str_KssBg_5:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	HELP_WORKSHOP_SEL, sub=HELP_WORKSHOP_SEL_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=HELP_WORKSHOP_SEL_window, image_id=32872, title=Str_KssBg_5, icon=1	# title "KssBg"
+	KssBgScreen	HELP_WORKSHOP_SEL, sub=HELP_WORKSHOP_SEL_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=HELP_WORKSHOP_SEL_window, image_id=32872, title=Str_KssBg_5, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		AcIndexWideES	HELP_WORKSHOP_SEL_IndexWideES1, super=HELP_WORKSHOP_SEL, next=HELP_WORKSHOP_SEL_ScreenMenu_OK, flag=VF_Const, X=204, Y=216, W=232, H=23, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom11, style=3
 
 Str_OK_2:	.asciz "OK"
@@ -1070,7 +1070,7 @@ Str_KssBg_6:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	HELP_WORKSHOP_CONTENT, sub=HELP_WORKSHOP_CONTENT_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=HELP_WORKSHOP_CONTENT_window, image_id=32872, title=Str_KssBg_6, icon=1	# title "KssBg"
+	KssBgScreen	HELP_WORKSHOP_CONTENT, sub=HELP_WORKSHOP_CONTENT_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=HELP_WORKSHOP_CONTENT_window, image_id=32872, title=Str_KssBg_6, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		AcIndexWideES	HELP_WORKSHOP_CONTENT_IndexWideES1, super=HELP_WORKSHOP_CONTENT, next=HELP_WORKSHOP_CONTENT_ScreenMenu_OK, flag=VF_Const, X=204, Y=216, W=232, H=23, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom11, style=3
 
 Str_OK_3:	.asciz "OK"
@@ -1098,7 +1098,7 @@ Str_KssBg_7:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	Lyrics, sub=Lyrics_KssTextBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Silver, index=0xFFFF, exit=TT_PS, window=Lyrics_window, title=Str_KssBg_7, icon=1	# title "KssBg"
+	KssBgScreen	Lyrics, sub=Lyrics_KssTextBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Silver, index=0xFFFF, exit=TT_PS, window=Lyrics_window, title=Str_KssBg_7, icon=1	# title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 
 Str_COPY_TLX_TO_SD:	.asciz "COPY TLX TO SD"
 
@@ -1173,7 +1173,7 @@ Str_KssBg_8:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	PLUG_IN, sub=PLUG_IN_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Olive, index=0xFFFF, exit=TT_PS, window=PLUG_IN_window, image_id=32872, title=Str_KssBg_8, icon=1	# title "KssBg"
+	KssBgScreen	PLUG_IN, sub=PLUG_IN_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Olive, index=0xFFFF, exit=TT_PS, window=PLUG_IN_window, image_id=32872, title=Str_KssBg_8, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		AcIndexWideES	PLUG_IN_IndexWideES1, super=PLUG_IN, next=PLUG_IN_ScreenMenu_OK, flag=VF_Const, X=164, Y=212, W=312, H=23, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom12, style=3
 
 Str_OK_4:	.asciz "OK"
@@ -1206,7 +1206,7 @@ Str_KssBg_9:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	JukeBox, sub=JukeBox_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Maroon, index=0xFFFF, exit=TT_PS, window=JukeBox_window, image_id=32872, title=Str_KssBg_9, icon=1	# title "KssBg"
+	KssBgScreen	JukeBox, sub=JukeBox_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Maroon, index=0xFFFF, exit=TT_PS, window=JukeBox_window, image_id=32872, title=Str_KssBg_9, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		IvExitScreen	JukeBox_ExitScreen1, super=JukeBox, next=JukeBox_KssTextBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, screen=Main_id
 
 Str_SD_JUKE_BOX_2:	.asciz "SD JUKE BOX"
@@ -1297,7 +1297,7 @@ Str_KssBg_10:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	Settings, sub=Settings_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Settings_window, image_id=32872, title=Str_KssBg_10, icon=1	# title "KssBg"
+	KssBgScreen	Settings, sub=Settings_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Settings_window, image_id=32872, title=Str_KssBg_10, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		IvExitScreen	Settings_ExitScreen1, super=Settings, next=Settings_TrackSwitch1, flag=VF_Const|VF_InvisibleBox, X=376, Y=0, W=32, H=32, screen=Main_id
 		AcTrackSwitch	Settings_TrackSwitch1, super=Settings, next=Settings_TrackSwitch2, prev=Settings_ExitScreen1, flag=VF_Const, X=4, Y=164, W=32, H=29, onoff=Settings_TrackSwitch1_onoff, part=Settings_TrackSwitch1_part, recplay=Settings_TrackSwitch1_part+2
 		AcTrackSwitch	Settings_TrackSwitch2, super=Settings, next=Settings_KssTextBox1, prev=Settings_TrackSwitch1, flag=VF_Const, X=4, Y=164, W=32, H=29, onoff=Settings_TrackSwitch2_onoff, part=Settings_TrackSwitch2_part, recplay=Settings_TrackSwitch2_part+2
@@ -1414,7 +1414,7 @@ Str_KssBg_11:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	Debug, sub=Memo_Debug, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=Debug_window, title=Str_KssBg_11, icon=1	# title "KssBg"
+	KssBgScreen	Debug, sub=Memo_Debug, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=Debug_window, title=Str_KssBg_11, icon=1	# title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		DbKssMemo	Memo_Debug, super=Debug, next=Debug_IndexWideES1, flag=VF_Const, X=28, Y=0, W=584, H=208, color=CL_Silver, border=BD_3D_UP2, ap_func=FN_DefaultFunction, extension=Memo_Debug_extension
 		AcIndexWideES	Debug_IndexWideES1, super=Debug, next=Debug_IndexEditSw1, prev=Memo_Debug, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
 		AcIndexEditSw	Debug_IndexEditSw1, super=Debug, next=Debug_IndexEditSw2, prev=Debug_IndexWideES1, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, fontcolor=CL_Black, editsw=ES_Bottom4, style=7
@@ -1429,7 +1429,7 @@ Str_KssBg_12:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	ClsDir, sub=ClsDir_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=ClsDir_window, image_id=32872, title=Str_KssBg_12, icon=1	# title "KssBg"
+	KssBgScreen	ClsDir, sub=ClsDir_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=ClsDir_window, image_id=32872, title=Str_KssBg_12, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		AcIndexWideES	ClsDir_IndexWideES1, super=ClsDir, next=ClsDir_ScreenMenu_OK, flag=VF_Const, X=204, Y=216, W=152, H=23, color=CL_Silver, border=BD_3D_UP1, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom9, style=3
 
 Str_OK_6:	.asciz "OK"
@@ -1463,7 +1463,7 @@ Str_KssBg_13:	.asciz "KssBg"
 
 	.space	3, 0xFF
 
-	KssBgScreen	Dialog, sub=Tb_Dialog_Caption, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=Dialog_window, image_id=8224, title=Str_KssBg_13, icon=1	# title "KssBg"
+	KssBgScreen	Dialog, sub=Tb_Dialog_Caption, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=Dialog_window, image_id=8224, title=Str_KssBg_13, icon=1	# image_id 0x2020: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 
 Str_text_5:	.asciz "text"
 Str_text_6:	.asciz "text"
@@ -1479,7 +1479,7 @@ Str_KssBg_14:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	StartUp, sub=Ce_StartUp, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=StartUp_window, image_id=8224, title=Str_KssBg_14, icon=1	# title "KssBg"
+	KssBgScreen	StartUp, sub=Ce_StartUp, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=StartUp_window, image_id=8224, title=Str_KssBg_14, icon=1	# image_id 0x2020: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		IvCatchEvent	Ce_StartUp, super=StartUp, next=StartUp_Box1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_Ap_Ce_StartUp
 		VwBox	StartUp_Box1, super=StartUp, sub=StartUp_Label_Initializing_PLUG_iN, prev=Ce_StartUp, flag=VF_Const, X=150, Y=82, W=340, H=80, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
 
@@ -1500,7 +1500,7 @@ Str_KssBg_15:	.asciz "KssBg"
 
 	.space	1, 0xFF
 
-	KssBgScreen	Naming, sub=Naming_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Naming_window, image_id=32872, title=Str_KssBg_15, icon=1	# title "KssBg"
+	KssBgScreen	Naming, sub=Naming_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Naming_window, image_id=32872, title=Str_KssBg_15, icon=1	# image_id 0x8068: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		IvPageControl	Naming_PageControl1, super=Naming, next=Naming_PageControl2, flag=VF_Const|VF_InvisibleBox, X=220, Y=0, W=32, H=32, page=2, window=WinSfxSelect_id
 		IvPageControl	Naming_PageControl2, super=Naming, next=Wp_Naming, prev=Naming_PageControl1, flag=VF_Const|VF_InvisibleBox, X=184, Y=0, W=32, H=32, page=1, window=WinNaming_id
 		IvKssNaming	Naming_KssNaming1, super=Naming, prev=Wp_Naming, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_NamingCheck
@@ -1622,7 +1622,7 @@ Str_KssBg_16:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	Fd2Sd, sub=Lst_Fd2Sd, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Fd2Sd_window, image_id=28257, title=Str_KssBg_16, icon=1	# title "KssBg"
+	KssBgScreen	Fd2Sd, sub=Lst_Fd2Sd, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Fd2Sd_window, image_id=28257, title=Str_KssBg_16, icon=1	# image_id 0x6E61: no routine of the plug-in reads it (942's Screen ends at +0x28); not a resource-trie id; title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 		AcKssList	Lst_Fd2Sd, super=Fd2Sd, sub=Spec_Fd2Sd_Line1, next=Fd2Sd_IndexWideES1, flag=VF_Const, X=130, Y=58, W=380, H=154, color=CL_Silver, border=BD_3D_UP1, ap_func=FN_Ap_Lst_Fd2Sd, is_big=1, font=3, columns=2, rows=16, big_columns=2, big_rows=10, font_color=CL_Black, font_align=1, row_sep_color=CL_Black, column_sep_thickness=1, column_sep_color=CL_Black, sel_frame_color=CL_Red, sel_bg_color=CL_White, sel_font_color=CL_Black, num_items=40, enum_type=2, is_ringlist=1, dial=1, auto_inc=1, extension=Lst_Fd2Sd_extension
 			VwLine	Spec_Fd2Sd_Line1, super=Lst_Fd2Sd, next=Spec_Fd2Sd_Line2, flag=VF_Const, X=292, Y=59, W=1, H=152, color=CL_Gray, linemode=1
 			VwLine	Spec_Fd2Sd_Line2, super=Lst_Fd2Sd, next=Tb_Fd2Sd_NoValidFiles, prev=Spec_Fd2Sd_Line1, flag=VF_Const, X=485, Y=59, W=1, H=152, color=CL_Gray, linemode=1
@@ -1734,7 +1734,7 @@ Str_KssBg_17:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	Cls, sub=Tb_Cls_ScreenName, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=Cls_window, title=Str_KssBg_17, icon=1	# title "KssBg"
+	KssBgScreen	Cls, sub=Tb_Cls_ScreenName, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Navy, index=0xFFFF, exit=TT_PS, window=Cls_window, title=Str_KssBg_17, icon=1	# title "KssBg"; icon 1: the host's ResIconTable[1] (table flash, src/table/gui/icon_001.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon
 
 Str_C_L_S_SONG_SELECT:	.asciz "C.L.S. SONG SELECT"
 
