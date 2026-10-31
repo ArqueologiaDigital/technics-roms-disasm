@@ -111,8 +111,12 @@ The `func_` count is the number of function labels that no symbol file names:
   the same.
 - 893's `func_` labels and the SD-card code that 941 reworked (the `SdSnd*` index accessors
   that have no counterpart) are named only where 941's names port.
-- `scripts/analysis/semantic_score.py` and `doc_quality_census.py` list the kn7000 images they
-  measure by hand and include neither 942 nor these builds.
+- ~~`scripts/analysis/semantic_score.py` and `doc_quality_census.py` include neither 942 nor these
+  builds.~~ **CLOSED 2026-10-31** (lane open4/misc): 942 has been rated since rules 4 (2026-10-24), and
+  both scripts now list `program935` and `program893` as well (semantic score rules 6).  At the lane's
+  base (`130735749`) they rate: bytes 4,148,024 / 4,194,304 (98.90 %) and 4,149,297 / 4,194,304
+  (98.93 %) source; names 12,540 / 19,328 and 12,534 / 19,318 semantic (64.88 % each).  The integrator
+  writes the badges and the ledger snapshots.
 
 ## Program 893 (v1.3)
 
