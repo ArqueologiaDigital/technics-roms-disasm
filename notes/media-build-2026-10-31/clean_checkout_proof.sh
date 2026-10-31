@@ -93,7 +93,15 @@ rm -f -- v*/maincpu/includes/generated/pictures/.stamp waveform/build/pcm/.built
   kn7000/build/ic18_png/.stamp kn7000/build/bitmaps/*/.stamp kn7000/build/wav_pcm/*.done \
   kn2400/build/bitmaps/.stamp kn6000/build/bitmaps/.stamp kn6500/build/bitmaps/.stamp hdsx3/build/bitmaps/.stamp
 left=$(hash_outputs | wc -l); [ "$left" -eq 0 ] || fail "phase D: $left outputs survived the delete"
-git ls-files -z | xargs -0 chmod a-w
+# Every tracked file read-only, except two pre-existing kinds of tracked build state that are not media
+# conversions (both listed in the lane README's open items):
+#  - the MN10300 trees' src/constants.inc, which their Makefiles regenerate from the reference ROM
+#    (gen_constants.py) whenever the reference copy is newer -- always, in a fresh clone;
+#  - */maincpu/includes/generated/*.patched, apply_c_divergence.py's idempotency stamps (80, swept into git
+#    by an unrelated commit).  Untracking them would make git delete them in every existing checkout, and a
+#    patched bin without its stamp is patched a second time.
+git ls-files -z | grep -zv '^\(kn7000\|kn2400\|kn6000\|kn6500\|hdsx3\)/src/constants\.inc$' \
+  | grep -zv '/maincpu/includes/generated/.*\.patched$' | xargs -0 chmod a-w
 gates D; rcD=$?
 git ls-files -z | xargs -0 chmod u+w
 [ $rcD -eq 0 ] || fail "phase D gates (a converter writing a tracked file fails here)"
