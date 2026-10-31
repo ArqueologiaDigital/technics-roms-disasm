@@ -2309,8 +2309,11 @@ INT4_ExitRestore:
 	pop	xiy
 	pop	xiz
 	reti
-Reset_Floppy_Disk_Controller:
-	; reset FDC by toggling Port D bit 0
+; FDC_PulseResetLine: holds the floppy controller in hardware reset for 10 ticks: Port D bit 0 is the
+;   FDCRST line (service manual p. 32, CPU SECTION (A): IC5 TMP94C241F pin 12 PD0 -> FDCRST to the FDC;
+;   notes/kn5000-a-2026-10-31/probes/sm_pd0_net.py renders the crop), set, SOME_DELAY 10, cleared, SOME_DELAY 10.
+;   Twin of the boot loader's FDC_PulseResetLine (table_data/boot_disk_probe.s).
+FDC_PulseResetLine:
 	set	0, (PD:8)
 	ldw	wa, 10
 	calr	SOME_DELAY

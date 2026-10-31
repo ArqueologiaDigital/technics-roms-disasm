@@ -41707,7 +41707,7 @@ INT4_StoreResultBase 00F97991
 INT4_ReadResultLoop 00F97997
 INT4_WaitResultReady 00F979A0
 INT4_ExitRestore 00F979BA
-Reset_Floppy_Disk_Controller 00F979C7
+FDC_PulseResetLine 00F979C7
 TitleFunc_LifecycleTable_Helper 00F979D9
 FDC_Reset_SetDD_SectorCount 00F97A01
 FDC_Reset_BuildParams 00F97A07

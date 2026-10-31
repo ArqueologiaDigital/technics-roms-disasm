@@ -4558,7 +4558,7 @@ DSPCfg_ReturnValueTable:
 ScreenGroup_ReInit:
 	call	MidiParam_ForceResync
 	call	Audio_UpdateLEDsAndChannels
-	call	Reset_Floppy_Disk_Controller
+	call	FDC_PulseResetLine
 	call	SndParam_Init
 	call	MainTitle_InitGraphicsAndEvents
 	jp	Xapr_DetectAndCallBootInit

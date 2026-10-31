@@ -9252,7 +9252,7 @@ FdcOp_Epilogue20:
 GetMediaType:
 	lda xsp, (xsp - 20)
 	pushw_erp 0xfa
-	call Reset_Floppy_Disk_Controller
+	call FDC_PulseResetLine
 	pushw 0x400
 	call Malloc
 	inc 2, xsp

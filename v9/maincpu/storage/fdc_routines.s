@@ -2362,10 +2362,11 @@ INT4_ExitRestore:
 	reti
 
 
-Reset_Floppy_Disk_Controller:
-; I am not entirely sure yet, but it looks like FDC initialization code...
-
-	; reset FDC by toggling Port D bit 0
+; FDC_PulseResetLine: holds the floppy controller in hardware reset for 10 ticks: Port D bit 0 is the
+;   FDCRST line (service manual p. 32, CPU SECTION (A): IC5 TMP94C241F pin 12 PD0 -> FDCRST to the FDC;
+;   notes/kn5000-a-2026-10-31/probes/sm_pd0_net.py renders the crop), set, SOME_DELAY 10, cleared, SOME_DELAY 10.
+;   Twin of the boot loader's FDC_PulseResetLine (table_data/boot_disk_probe.s).
+FDC_PulseResetLine:
 	set	0, (PD:8)
 	ldw wa, 0xa
 	calr SOME_DELAY
@@ -2373,7 +2374,6 @@ Reset_Floppy_Disk_Controller:
 	ldw wa, 0xa
 	jrl SOME_DELAY
 
-	; then do a lot of other stuff I still don't undertsand:
 
 ; FDTest_ProbeDiskFormat: Main-CPU twin of the bootloader's FDC_ProbeDiskFormat (table_data/boot_disk_probe.s): sets
 ;   PHFC = 0x1E, returns when Port D bit 6 is set (no disk), else submits through FDC_CommandEntry the request block

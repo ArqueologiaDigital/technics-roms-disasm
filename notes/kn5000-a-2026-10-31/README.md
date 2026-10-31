@@ -93,3 +93,58 @@ The meaning of the C-family's index (sound group) stays the [INFERENCE] that not
 `scripts/tools/respell_ram_quotes_in_comments.py` names the parenthesised RAM quotes of comments, "(0x0D57)" ->
 "(SQSTEP_CLOCK)", when exactly one `.equ` of the tree has the value: 728 in v10, 527 in v9 (their RAM equates
 agree, 574 of 574).  v7 / v6 / v5 are not run: their headers often carry v10's text and v10's addresses.
+
+## Port D bit 0 is FDCRST (T-kn5000-tabledata-todo-identify-what)
+
+The service manual's CPU SECTION (A) diagram (p. 32) wires IC5 TMP94C241F pin 12 PD0 to the sheet label FDCRST,
+pin 13 INT4 to FDCINT, pin 14 INT5 to FDCDRQ and pin 17 PD6 to FD.I/O (`probes/sm_pd0_net.py` renders the
+crops; the scan has no text layer, so the reading is by eye, recorded in its docstring).  So the 10-tick pulse is
+the floppy controller's hardware reset: table_data's `Boot_PulsePD0` and the main CPU's
+`Reset_Floppy_Disk_Controller` (whose comment said "I am not entirely sure") are both `FDC_PulseResetLine` now,
+with headers saying so (`rename_fdc_pulse_reset_line.sed`).
+
+## FDC_CmdSenseDriveStatus, the NMI header, the 0x01EA comments (N-99d09c1a, N-edecc6e4, N-b6dceb67, N-42c40102)
+
+- `FDC_INTERRUPT_HANDLER` was FDC command 11, SENSE DRIVE STATUS (uPD72068 command byte 0x04, ST3 bits 7 / 5 / 6
+  -> 0x32 / 0x31 / 0x2f, technics-docs fdc-subsystem.md's error codes); no `ei` / `di` in it.  Named after its
+  table_data twin.  v6 / v5 also had `cp (FDC_ERROR_CODE:16), 0` split into `.byte` + a mid-instruction label;
+  respelled.
+- `NMI_StorePayloadChecksums`'s header names BOOT_STAGE and its writers.
+- HD-AE5000, all four trees: the SEL_DIR screen comments now say the 0x01EA codes are the module's own ResMethod
+  ids (HDAE5000_Handler_Registration, ResMethodProc), the arms are `.Lfd_select_ok` / `.Lfd_select_save`
+  (MT_SelectOK / OK2 / SAVE), and the filesystem / MT_SetStrAdr / init_data comments follow.  The v1.15i replay
+  edits that match those lines were updated (`port-edits-v1_15i/04g_no_select_all.py`, `94b_v1_prose.py`).
+- `NAKA_TYPE_*`: every class index carries its firmware class name (all 109 root classes), in macros.s,
+  naka_types.h and the converters.
+- `port-edits/00_filepanel_picture.py` keeps quoting the comment it replaced: it is the record of a one-off edit
+  and nothing replays that directory; its docstring now says so.
+
+## Smaller renames and answers
+
+| item                       | what                                                                                                       |
+|----------------------------|------------------------------------------------------------------------------------------------------------|
+| N-ec33691a                 | `AccStyle_VelocityTable*` -> `AccStyle_PanelRhythmTable*`, `AccStyle_LookupPanelRhythm` with a header      |
+| N-830904fd                 | RectX2Proc's `TabDraw_*` locals take RectY2Proc's case names                                              |
+| T-kn5000-v10-todo-the-name | `MidiThru_Enable/Disable` -> `MidiIn_IgnoreClockTransport` / `MidiIn_AcceptClockTransport`                |
+| N-bc8cf677                 | the last 21 `<Table>_Target<k>` handlers named (Scoop bound ops, panel-LED handlers, display events)      |
+| N-d4782271                 | FONTID_NAME_TABLE is never written after boot (`probes/fontid_table_writers.py`)                           |
+| N-ef0b5633                 | `TEST3.fontcolor = 0x0043` has no firmware name and is never read; the C says so                          |
+| N-94f26143                 | AcLanguageTextProc adds `4 * HELP_LANGUAGE` back; its borrowed `AcTrkSw_ShowHide*` labels renamed          |
+
+## Website page draft
+
+For the docs lane (technics-docs is not edited here):
+
+- `memory-map.md`, I/O table, row `0x34 PD`: "bit 0=sub ready" is wrong for the main CPU.  Port D bit 0 is FDCRST
+  (the floppy controller's hardware reset, pulsed by `FDC_PulseResetLine`), bit 6 is FD.I/O (disk change); INT4
+  is FDCINT and INT5 FDCDRQ (service manual p. 32).
+- `fdc-subsystem.md`: replace "the neighbouring `Boot_PulsePD0` ..., whose Port D bit 0 line is not yet
+  identified" with "`FDC_PulseResetLine` pulses FDCRST (Port D bit 0) for 10 ticks"; command 11 is
+  `FDC_CmdSenseDriveStatus` in both images.
+- The encoder / panel pages quote the old c2 names; replace by the map in
+  `scripts/renaming/rename_kn5000_naming_w4_v10.sed` (e.g. `Encoder_ProcessModwheel` ->
+  `Encoder_ProcessExpressionPedal`, `ENCODER_STATE_BASE` -> `PANEL_LED_IMAGE`, `CompIface_*` -> `Fade_*`,
+  `Timer7_DisableInterrupt` -> `Demo_ReleaseGlidePedal`): control-panel-protocol.md, memory-map.md,
+  data-wheel-investigation.md, audio-subsystem.md, rom-reconstruction.md, panel-parameter-keys.md,
+  swbwr-tone-init.md, subcpu-command-format.md.
+- `hdae5000-homebrew.md`: the 0x01EA ids are private to the module (no main-CPU code uses one).

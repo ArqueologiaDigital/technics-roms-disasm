@@ -41944,7 +41944,7 @@ INT4_StoreResultBase 00F97E93
 INT4_ReadResultLoop 00F97E99
 INT4_WaitResultReady 00F97EA2
 INT4_ExitRestore 00F97EBC
-Reset_Floppy_Disk_Controller 00F97EC9
+FDC_PulseResetLine 00F97EC9
 FDTest_ProbeDiskFormat 00F97EDB
 FDC_Reset_SetDD_SectorCount 00F97F03
 FDC_Reset_BuildParams 00F97F09
