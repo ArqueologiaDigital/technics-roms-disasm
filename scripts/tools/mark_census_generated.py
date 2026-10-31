@@ -31,7 +31,7 @@ RULES = [
     (rb'includes/demo_presets/demo_preset_(\d\d)_compressed\.bin$',
      b'midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)'),
     (rb'includes/help_databases/help_db_\w+_compressed\.bin$',
-     b'help_db_text.py + compress_slide8k.py --strict, from help_db_<lang>.txt (encoder decisions replayed from original_ROMs/help_db_<lang>_compressed.original.bin)'),
+     b'help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt'),
     (rb'includes/help_databases/stale_\w+\.bin$',
      b'scripts/generators/gen_stale_help_duplicate.py, from the live English+German SLIDE8K build products'),
     (rb'includes/section_\w+\.bin$',

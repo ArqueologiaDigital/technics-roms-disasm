@@ -1739,8 +1739,21 @@ $(HELP_DB_PLAIN) &: $(HELP_DB_PLAIN:.bin=.txt) scripts/build/help_db_text.py
 verify-help-db-text:
 	python3 scripts/build/help_db_text.py verify
 
-$(HELP_DB_DIR)/help_db_%_compressed.bin: $(HELP_DB_DIR)/help_db_%.bin original_ROMs/help_db_%_compressed.original.bin
-	python3 scripts/build/compress_slide8k.py $< $@ --strict --reference original_ROMs/help_db_$*_compressed.original.bin
+# The five live streams are encoded from source with the factory encoder (compress_slide8k.py: lzss_j.encode,
+# Okumura's LZSS.C, which notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py shows makes every factory decision);
+# no reference is read.  HELP_DB_PAD_<lang> is the alignment byte after each stream, which the decoder never reads
+# (its value is the factory image's; nothing derives it).  verify-help-databases compares with the factory slices.
+HELP_DB_PAD_english    := 0x20
+HELP_DB_PAD_german     := 0x7f
+HELP_DB_PAD_french     := 0xcf
+HELP_DB_PAD_spanish    := 0xcd
+HELP_DB_PAD_indonesian := 0xce
+$(HELP_DB_COMPRESSED): $(HELP_DB_DIR)/help_db_%_compressed.bin: $(HELP_DB_DIR)/help_db_%.bin scripts/build/compress_slide8k.py floppy/tools/kd/lzss_j.py
+	python3 scripts/build/compress_slide8k.py $< $@ --pad $(HELP_DB_PAD_$*)
+# german_stale is cut at output 0x55E0 (help_databases.s), so its stream past that point encodes no source:
+# it is replayed from the factory slice, for verify-help-databases only.
+$(HELP_DB_STALE_COMPRESSED): $(HELP_DB_DIR)/help_db_german_stale.bin original_ROMs/help_db_german_stale_compressed.original.bin
+	python3 scripts/build/compress_slide8k.py $< $@ --strict --reference original_ROMs/help_db_german_stale_compressed.original.bin
 
 rebuild-help-databases: $(HELP_DB_COMPRESSED) $(HELP_DB_STALE_COMPRESSED)
 	@echo "Help databases recompressed (byte-identical via --strict --reference)."

@@ -54,9 +54,10 @@ The first byte of the magic names the model: `I` is the KN6000, `J` the KN7000. 
   - no end marker.
 
   Okumura's LZSS.C binary-tree encoder with N = 8192 and F = 10 reproduces every stream with no reference
-  (`floppy/tools/kd/lzss_j.py`). [INFERENCE] The KN5000's SLIDE8K is probably the same coder. Its current
-  compressor replays reference decisions (`scripts/build/compress_slide8k.py`), so trying `lzss_j.encode` on it
-  is cheap.
+  (`floppy/tools/kd/lzss_j.py`). The KN5000's SLIDE8K is the same coder, encoder included (measured 2026-10-31,
+  `notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py`: the five live help databases re-encode to every factory
+  decision and stream byte), so `scripts/build/compress_slide8k.py` now builds them with `lzss_j.encode` and no
+  reference.
 - **'I K\1' / 'J K\1'** (.AST, .CST). A u32 inflated size, then one deflate part.
   - .AST: the two u32 at +8/+0xC are not read back by any routine found. On the KN7000 they look like a
     program-ROM address and a RAM address (0x48582CD3, 0x5006F220), so [INFERENCE] they are left-over stack
@@ -214,8 +215,8 @@ No byte is generic any more, but many fields have only a neutral name: an offset
 - The KN6000 .TM tail word: it is the KN5000's checksum, ~(LE16 sum of the 40 sound records), in only 13 of
   the 50 files.
 - What the 8 lines at the start of each WSA1R sound bank are. SoundRam_ClearFourBanks does not write them.
-- Whether 'J KD' is the KN5000's SLIDE8K. If so, `scripts/build/compress_slide8k.py` could use `lzss_j.encode`
-  instead of replaying reference decisions.
+- ~~Whether 'J KD' is the KN5000's SLIDE8K.~~ **CLOSED 2026-10-31** (lane open4/misc,
+  `notes/misc-2026-10-31/README.md`): it is, encoder included; `compress_slide8k.py` uses `lzss_j.encode`.
 - **Macro strings across the two assemblers.** llvm-mc strips the quotes from a quoted macro argument, and
   kn7asm keeps them. So no `.ascii \name` macro serves both. The shared includes therefore leave names out of
   the macros (VOICE_HEAD_TAIL, SOUND_HEAD, PMR_NAME_HEAD / _TAIL), and the floppy sources write `.ascii`
