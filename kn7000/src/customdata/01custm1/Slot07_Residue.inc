@@ -1776,8 +1776,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm1.ic21", 0x2caef, 0x2caf3	# stale bytes of an earlier write
+	.byte 0x59, 0x0b, 0x00, 0x00	# [INFERENCE] the last 4 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	1
 	ev_note	0, 51, 80, 17, 0, 0
@@ -2223,9 +2222,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm1.ic21", 0x2d15c, 0x2d160	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 19, 0x806	# stale start of a stream of an earlier write, cut after 0x7fb of its 0x806 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	0, 57, 89, 13, 0, 0
 	ev_at	1
@@ -2778,10 +2775,12 @@
 	ev_beat
 	ev_at	1
 	ev_note	3, 60, 72, 83, 2, 1
+	# stale events of an earlier write between two typed pieces: they parse exactly as events
 	ev_at	12
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_note	3, 67, 72, 72, 2, 1
-	ev_beat	# stale tail of an earlier write; same bytes as 01ctmini Stale26 +0x9bb6..+0x9fd0
 	ev_beat
+	ev_beat	# stale tail of an earlier write; same bytes as 01ctmini Stale26 +0x9bb7..+0x9fd0
 	ev_beat
 	ev_end
 	TPAD_HEADER 0x416

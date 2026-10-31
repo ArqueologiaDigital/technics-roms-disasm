@@ -4190,8 +4190,16 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/04custm8.ic21", 0x66e44, 0x66e52	# stale bytes of an earlier write
+	.byte 0x38	# [INFERENCE] the last 1 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
+	# stale events of an earlier write: no record holds them; they parse as events
+	ev_at	45
+	ev_bend	0, 0, 55
+	ev_at	50
+	ev_bend	0, 0, 54
+	ev_at	87
+	# stale events of an earlier write, at an event boundary of the donor record: 03custm7 Stale20 +0x7036..
+	ev_bend	0, 0, 64
+	ev_end
 	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 03custm7 Stale20 +0x703a..+0x8130; bytes 4..5 of `ev_note`
 	ev_note 2, 55, 126, 14, 0, 1
 	ev_beat

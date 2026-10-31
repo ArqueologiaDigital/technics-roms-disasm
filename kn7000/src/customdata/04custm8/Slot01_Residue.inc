@@ -7,8 +7,7 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/04custm8.ic21", 0x16c5e, 0x16c63	# stale bytes of an earlier write
+	.byte 0x3a, 0x50, 0x18, 0x04, 0x01	# [INFERENCE] the last 5 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	48
 	ev_note	0, 51, 80, 10, 0, 0
@@ -250,10 +249,11 @@
 	ev_cc	4, 11, 91
 	ev_at	76
 	ev_cc	4, 11, 90
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_at	88
 	ev_cc	4, 11, 89
-	ev_end	# stale tail of an earlier write; same bytes as 01ctmini Slot11 +0x4f08..+0x5bbc
-	TPAD_HEADER 0xcb3
+	ev_end
+	TPAD_HEADER 0xcb3	# stale tail of an earlier write; same bytes as 01ctmini Slot11 +0x4f09..+0x5bbc
 	TPAD_BANK "  User Bank 1   "
 	TPAD_PAD "   Voice Loop   ", 0x71, 0x02, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x00, 0x03, 0x03, 0x00, 0x00, 0x2e0
 	PART_SETUP 0x08, 127, 0x40, 0x00, 0x26, 64, 0, 0, 64, 12, 60, 68, 92, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

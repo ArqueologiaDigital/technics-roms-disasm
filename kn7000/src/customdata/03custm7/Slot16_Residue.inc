@@ -2386,10 +2386,11 @@
 	ev_beat
 	ev_beat
 	ev_beat
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x6c97d, 0x6c984	# stale bytes of an earlier write
-	ev_end	# stale tail of an earlier write; same bytes as 04custm8 Slot04 +0x4976..+0x6e44
-	STREAM_HEADER 16, 0x5ec
+	# stale events of an earlier write, at an event boundary of the donor record: 04custm8 Slot04 +0x4976..
+	ev_at	92
+	ev_note	0, 49, 108, 3, 0, 0
+	ev_end
+	STREAM_HEADER 16, 0x5ec	# stale tail of an earlier write; same bytes as 04custm8 Slot04 +0x4977..+0x6e44
 	ev_beat
 	ev_note 0, 64, 55, 12, 0, 0
 	ev_note 0, 111, 95, 12, 0, 0

@@ -24,14 +24,17 @@
 #     0x04280-0x04A6F  the CUSTOM PANEL ("a special Panel Memory in which you can store your favorite
 #                      Panel Memory settings", HelpTextEn35_0): 2,032 bytes, the live panel state
 #                      (0x84000020) as func_4C021903 stores it, a PANEL MEMORY record of 43 tag/length
-#                      records and a second list of 7.  1,935 of its bytes equal the firmware's default
+#                      records and a second list of 7: the panel state outside a panel memory (tags
+#                      0x52, 0x50, 0x51, 0x60-0x62, 0x68), which CUSTOM PANEL MODE "ALL PANEL"
+#                      (cus_mem_mode 1, as here) adds.  1,935 of its bytes equal the firmware's default
 #                      (Str_empty_1431): this unit's custom panel.
 #     0x04A70-0x04AA3  26 halfwords of system settings (language, display times, data protect, ...);
 #                      42 of the 52 bytes equal the default the boot check writes.
 #   0x04AA4-0x05FFF  erased.
 #   0x06000-0x07FFF  A5 A5 5A 5A fill: the pattern the ROM test's flash test writes itself
 #                    (func_4849FCF2; the constant at 941 0x4849FD19 / 893 0x4849FB0C, the address
-#                    0x96806000 at 941 0x4849FD35 / 893 0x4849FB28).  So that test has run on this unit.
+#                    0x96806000 at 941 0x4849FD35 / 893 0x4849FB28).  So that test has run on this unit,
+#                    in its long form (0x2000 bytes): page 1, ROM DEVICE TEST, of the service TEST MENU.
 #   0x08000-0x0FFFF  erased.
 #   0x10000-0x10197  FAVORITES: all 408 bytes equal 03FAVINI.FAV, and the firmware's default (program
 #                    893 0x48604390).
@@ -41,20 +44,27 @@
 #                    the 17,078-byte BMP after it equals 04HPGINI.HMP's and program 893's default picture.
 #   0x15442-0x1FFFF  erased.
 #   0x20000-0x1FFFFF the CUSTOM STYLE bank (the factory banks' format, kn7000/notes/custom-data-ic21.md):
-#                    20 styles with their ONE TOUCH SETTING panel memories in blocks 1-21, then residue of
-#                    earlier writes in free blocks 22 and 24-27; used up to 0xF8F16, erased after.  Only
+#                    20 styles with their ONE TOUCH SETTING panel memories in blocks 1-21, then in free
+#                    blocks 22, 24-25 and 26-27 three complete records in the KN6000 layout (the records of
+#                    a KN6000 file as loaded, before func_48485B52 rebuilt them for the KN7000) and their
+#                    residue; used up to 0xF8F16, erased after.  Only
 #                    969 of its 3,472 256-byte chunks (27.9%) occur in any of the nine factory banks, and
 #                    none of its used 64 KB sectors equals one of theirs.
 #
-# THE CUSTOM STYLES ARE KN5000 STYLES.  Of the 340 name fields of the 20 records (style, one touch
+# THE CUSTOM STYLES ARE KN5000 STYLES, LOADED FROM A KN6000 FILE.  Of the 340 name fields of the 20 records (style, one touch
 # settings, the TCMP style and variation names, the pad bank and pads), 208 are KN5000 program names
 # (116 distinct, e.g. "16Bt Soul", "BigBand Slow1", "40's Dance Band", "Harry J.& Co") and 127 standard
 # KN7000 names every custom set carries (18 distinct: intros, endings, "Voice Drum 1" ...); none is a
 # name of the nine factory KN7000 sets.  Five are not found as they are: "Jazz At 3.00am" is the
-# KN5000's "Jazz At 3:00am", and "3/4 Played By 4", "Disco - Techni" and "Sentimntal Solo" are its
-# "3/4 Played by 4", "Disco-Techni" and "Sentimental Solo" respelled; "Metallic Dance" matches no image
-# this repository reads (name_fields.py).  So someone loaded KN5000 styles into this unit; besides
-# those five, no name of anyone's own typing was found.  (A plain text-run search, names_kn5000.py,
+# KN5000's "Jazz At 3:00am", and "3/4 Played By 4", "Disco - Techni", "Sentimntal Solo" and
+# "Metallic Dance" are its "3/4 Played by 4", "Disco-Techni", "Sentimental Solo" and "Metalic Dance"
+# respelled.  Each slot's four ONE TOUCH SETTING names are the titles of the KN5000's four MUSIC
+# DATABASE records of that style, in the KN5000 table's order (kn5000_table_data.rom, e.g.
+# "Metalic Dance" at 0x15DA09; name_origin.py); no other image, floppy or installer we hold has the
+# respelled forms (name_search.py).  All 80 settings have the shape func_48485B52 gives a KN6000
+# setting when AstLoadHandler or LoadCst load a KN6000 file (ots_origin.py), and three records in the
+# KN6000 layout survive in free blocks.  So someone made a KN6000 CUSTOM file of KN5000 styles, retyping
+# their names, and this unit loaded it.  (A plain text-run search, names_kn5000.py,
 # finds 39 KN5000 and 17 KN7000 names.)  The owner's manual (p.120) says CUSTOM holds 20 styles copied
 # from COMPOSER MEMORY; the Initial Data Disk resets it to the factory set (p.137).
 #
