@@ -79,7 +79,9 @@ objects generically, 7 files differ).  With it, at 43242446d:
   lines in, 122 out: v1.10i's own quoted addresses and counts, no FilePanel labels).  That output is
   now the committed tree (symbols 6,692 -> 6,690, menu map unchanged).
 
-After item 4 both replays were run again at 7d4d44a63 (see the end of this file for the result).
+After item 4 both replays were run again at 7d4d44a63 (`make all` first, scratch worktree): each
+reproduces its committed tree exactly, byte for byte and line for line (`git status` clean; the
+v1.10i run's 94b reports "0 comments corrected, 25 already").
 
 ## 4. v2.x prose in the v1 trees
 
