@@ -47,6 +47,7 @@ import argparse
 import collections
 import os
 import re
+import struct
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -1658,6 +1659,57 @@ class Gen:
                  [f"\t.long\t{g.ref(v)}\t# [{i}]" for i, v in enumerate(ents)])
         print(f"gen_data_s: fx descriptors: {len(descs)} descriptors, {sum(c for _a, c, _p, _s, _n in descs)} parameter"
               f" records, FxDescTable {n} entries")
+
+    # (lane mn10300-formats) zlib 1.0.4's static tables, named in the symbol files where their contents
+    # are found (notes/mn10300-formats-probes/zlib_tables.py): name -> (element, count, source)
+    ZLIB_TABLES = {
+        "configuration_table": ("config", 10, "deflate.c: per level {good_length, max_lazy, nice_length, max_chain; func}"),
+        "extra_lbits": (4, 29, "trees.c: the extra bits of each length code"),
+        "extra_dbits": (4, 30, "trees.c: the extra bits of each distance code"),
+        "extra_blbits": (4, 19, "trees.c: the extra bits of each bit-length code"),
+        "bl_order": (1, 19, "trees.c: the order the bit-length code lengths are sent in"),
+        "static_l_desc": ("desc", 1, "trees.c: {static_tree, extra_bits, extra_base, elems, max_length}"),
+        "static_d_desc": ("desc", 1, "trees.c: {static_tree, extra_bits, extra_base, elems, max_length}"),
+        "static_bl_desc": ("desc", 1, "trees.c: {static_tree, extra_bits, extra_base, elems, max_length}"),
+        "border": (4, 19, "infblock.c: the order of the bit-length code lengths"),
+        "cplens": (4, 31, "inftrees.c: the copy lengths of literal codes 257..285"),
+        "cplext": (4, 31, "inftrees.c: the extra bits of literal codes 257..285 (192: invalid)"),
+        "cpdist": (4, 30, "inftrees.c: the copy offsets of distance codes 0..29"),
+        "cpdext": (4, 30, "inftrees.c: the extra bits of distance codes 0..29"),
+        "inflate_mask": (4, 17, "infutil.c: the masks of the low n bits, n = 0..16"),
+    }
+
+    def zlib_tables(self):
+        """zlib 1.0.4's static tables (ZLIB_TABLES, the names the symbol files give them): each one that
+        no earlier pass typed, as rows of its element type (the configuration table and the tree
+        descriptors as their records), with the zlib source it comes from."""
+        for name, (el, n, what) in self.ZLIB_TABLES.items():
+            a = self.m.sym_by_name.get(name)
+            if a is None or not self.in_data(a):
+                continue
+            size = {"config": 12, "desc": 20}.get(el, el) * n
+            if not self.free(a, size):
+                continue
+
+            def render(g, it, el=el, n=n, what=what, name=name):
+                o = g.off(it.start)
+                out = [f"{it.label}:\t# zlib 1.0.4 {what} ({n} x {el if isinstance(el, str) else 8 * el}"
+                       f"{'' if isinstance(el, str) else '-bit'}; found by its contents, zlib_tables.py)"]
+                if el == "config":
+                    for k in range(n):
+                        w = struct.unpack_from("<4H", g.rom, o + 12 * k)
+                        out.append(f"\t.word\t{w[0]}, {w[1]}, {w[2]}, {w[3]}\t# level {k}")
+                        out.append(f"\t.long\t{g.ref(int.from_bytes(g.rom[o + 12 * k + 8:o + 12 * k + 12], 'little'))}")
+                elif el == "desc":
+                    t, eb, base_, elems, ml = struct.unpack_from("<5I", g.rom, o)
+                    out += [f"\t.long\t{g.ref(t) if t else 0}, {g.ref(eb)}", f"\t.long\t{base_}, {elems}, {ml}"]
+                else:
+                    vals = [int.from_bytes(g.rom[o + el * k:o + el * k + el], "little") for k in range(n)]
+                    fmt = (lambda v: f"0x{v:x}") if name == "inflate_mask" else str
+                    for k in range(0, n, 16):
+                        out.append(f"\ttab_u{8 * el}\t" + ", ".join(fmt(v) for v in vals[k:k + 16]) + f"\t# [{k}]")
+                return out
+            self.add(a, size, self.name_at(a, name), "zlib table", render)
 
     # (lane mn10300-formats) the payload layouts of the KN6000's hash tables, from their readers
     # (src/include/data_tables.inc has the macros and each field's reader): table name -> (macro,
@@ -4156,6 +4208,7 @@ class Gen:
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
             self.sound_alpha_lists()
             self.fx_descriptors()
+            self.zlib_tables()
             self.hash_tables()
             self.name_value_tables()
             self.panel_memories()
