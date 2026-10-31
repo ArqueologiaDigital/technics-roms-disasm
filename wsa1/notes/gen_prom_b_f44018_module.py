@@ -36,7 +36,8 @@ THE TWO DATA OBJECTS
               blocks' lengths are established; see the header the emitter writes.
 
 RUN
-    python3 notes/gen_prom_b_f44018_module.py            # the assembly
+    python3 notes/gen_prom_b_f44018_module.py --stale-emit   # the original assembly (REFUSED
+                                                         # without the flag: the source is ahead)
     python3 notes/gen_prom_b_f44018_module.py --layout   # the segment table
     python3 notes/gen_prom_b_f44018_module.py --checks   # the assertions only
     python3 notes/gen_prom_b_f44018_module.py --copies   # every `ld XIX,0x00F460xx` site
@@ -609,6 +610,13 @@ def main():
         for s, v in copy_sites():
             print("  site 0x%06X  src 0x%06X" % (s, v))
         return 0
+    if "--stale-emit" not in sys.argv:
+        # The module source (prom_b/modules/f44018_f477ff_sequencer_core.s) has been edited by hand
+        # since this emitter's output was pasted: naming waves, and the WorkspaceDefaults partition
+        # of 2026-10-31 (notes/open4-d-probes/workspace_defaults_partition.py).  Re-emitting would
+        # undo all of it, so the plain emit is refused; --stale-emit prints the old text for study.
+        raise SystemExit("refusing to emit: the source is authoritative now; pass --stale-emit "
+                         "to print this emitter's original (pre-naming) text")
     if not checks(verbose=False):
         checks()
         raise SystemExit("refusing to emit: a check failed (see above)")
