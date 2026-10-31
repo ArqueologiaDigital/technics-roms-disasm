@@ -221701,7 +221701,7 @@ func_4C07BA76_entry_L3d:
 	mov	sp, a1
 	add	0x1c, a1
 	mov	d2, d1
-	call	func_4C09B065_entry, [d2,a2], 0x20
+	call	SoundToneIndexGet_entry, [d2,a2], 0x20
 	exth	d0
 	cmp	0, d0
 	mov	Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er+16, a0
@@ -221863,7 +221863,7 @@ func_4C07BBDD_entry:
 	mov	sp, a0
 	add	0x18, a0
 	mov	d2, d0
-	call	func_4C09B03B_entry, [d2,a2], 0x24
+	call	SoundIconGet_entry, [d2,a2], 0x24
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07BBDD_entry_L1c
@@ -222428,7 +222428,7 @@ func_4C07BFD0:
 	mov	a2, (0x1c, sp)
 	mov	d2, a1
 	mov	d3, d1
-	call	func_4C09AFB0_entry, [d2,a2,a3], 0x28
+	call	SoundSwNoGet_entry, [d2,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07BFD0_L46
@@ -222479,7 +222479,7 @@ func_4C07C027_entry:
 	mov	d3, d1
 	mov	5, a0
 	add	d2, a0
-	call	func_4C09AFB0_entry, [d2,a2,a3], 0x28
+	call	SoundSwNoGet_entry, [d2,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07C027_entry_L3e
@@ -222531,7 +222531,7 @@ func_4C07C07B:
 	mov	d2, (0x1c, sp)
 	mov	a3, a1
 	clr	d0
-	call	func_4C09B200_entry, [d2,a2,a3], 0x18
+	call	SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07C07B_L4d
@@ -222588,7 +222588,7 @@ func_4C07C0DB_entry:
 	add	4, d2
 	mov	d2, (0x1c, sp)
 	mov	a3, a1
-	call	func_4C09B200_entry, [d2,a2,a3], 0x18
+	call	SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07C0DB_entry_L47
@@ -222796,7 +222796,7 @@ func_4C07C26A_entry:
 	add	0x24, a0
 	mov	sp, a1
 	add	0x20, a1
-	call	func_4C09B065_entry, [d2,a2], 0x20
+	call	SoundToneIndexGet_entry, [d2,a2], 0x20
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07C26A_entry_L1d
@@ -222980,7 +222980,7 @@ func_4C07C3D4_entry:
 	mov	sp, a1
 	add	0x20, a1
 	mov	d2, d1
-	call	func_4C09BCFA_entry, [d2,d3,a2,a3], 0x1c
+	call	SoundBankIndexGet_entry, [d2,d3,a2,a3], 0x1c
 	movbu	(0x20, sp), d0
 	cmp	0, d0
 	beq	func_4C07C3D4_entry_L29
@@ -282263,11 +282263,11 @@ TgVoiceListBuild_entry_L155:
 TgVoiceListBuild_entry_L15a:
 	ret	[d2,d3,a2,a3], 0x3c
 
-func_4C09ACF3:
+ToneKeyFind:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C09ACF3_entry:
+ToneKeyFind_entry:
 	mov	a0, a2
 	mov	d1, d3
 	movbu	d0, (0x2c, sp)
@@ -282275,7 +282275,7 @@ func_4C09ACF3_entry:
 	call	func_4C07B96D_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09ACF3_entry_L34
+	bne	ToneKeyFind_entry_L34
 	movbu	(0x2c, sp), d0
 	mov	d3, d1
 	asl	16, d0
@@ -282287,16 +282287,16 @@ func_4C09ACF3_entry:
 	mov	d1, d0
 	call	func_4C09B0FF_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L34
+	beq	ToneKeyFind_entry_L34
 	mov	1, d0
 	movbu	d0, (a2)
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L34:
+ToneKeyFind_entry_L34:
 	mov	2, d0
 	call	func_4C07B96D_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09ACF3_entry_L62
+	bne	ToneKeyFind_entry_L62
 	movbu	(0x2c, sp), d1
 	mov	d3, d0
 	asl	16, d1
@@ -282307,11 +282307,11 @@ func_4C09ACF3_entry_L34:
 	add	d1, d0
 	call	func_4C09B170_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L62
+	beq	ToneKeyFind_entry_L62
 	mov	2, d0
 	movbu	d0, (a2)
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L62:
+ToneKeyFind_entry_L62:
 	clr	d0
 	movbu	d0, (a2)
 	movbu	(0x2c, sp), d2
@@ -282330,66 +282330,66 @@ func_4C09ACF3_entry_L62:
 	add	d0, d3
 	add	d3, a0
 	mov	a0, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L91
+	beq	ToneKeyFind_entry_L91
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L91:
+ToneKeyFind_entry_L91:
 	cmp	0x28, d2
-	bge	func_4C09ACF3_entry_L98
-	jmp	func_4C09ACF3_entry_L113
-func_4C09ACF3_entry_L98:
+	bge	ToneKeyFind_entry_L98
+	jmp	ToneKeyFind_entry_L113
+ToneKeyFind_entry_L98:
 	cmp	0x2f, d2
-	bgt	func_4C09ACF3_entry_L113
+	bgt	ToneKeyFind_entry_L113
 	cmp	0x28, d2
-	beq	func_4C09ACF3_entry_Lbe
+	beq	ToneKeyFind_entry_Lbe
 	cmp	0x29, d2
-	beq	func_4C09ACF3_entry_Lc5
+	beq	ToneKeyFind_entry_Lc5
 	cmp	0x2a, d2
-	beq	func_4C09ACF3_entry_Lcc
+	beq	ToneKeyFind_entry_Lcc
 	cmp	0x2b, d2
-	beq	func_4C09ACF3_entry_Ld3
+	beq	ToneKeyFind_entry_Ld3
 	cmp	0x2c, d2
-	beq	func_4C09ACF3_entry_Lda
+	beq	ToneKeyFind_entry_Lda
 	cmp	0x2d, d2
-	beq	func_4C09ACF3_entry_Le1
+	beq	ToneKeyFind_entry_Le1
 	cmp	0x2e, d2
-	beq	func_4C09ACF3_entry_Le8
+	beq	ToneKeyFind_entry_Le8
 	cmp	0x2f, d2
-	beq	func_4C09ACF3_entry_Lef
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Lbe:
+	beq	ToneKeyFind_entry_Lef
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lbe:
 	mov	0x20, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Lc5:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lc5:
 	mov	0x21, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Lcc:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lcc:
 	mov	0x22, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Ld3:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Ld3:
 	mov	0x23, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Lda:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lda:
 	mov	0x24, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Le1:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Le1:
 	mov	0x25, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Le8:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Le8:
 	mov	0x26, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_Lf4
-func_4C09ACF3_entry_Lef:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lef:
 	mov	0x27, d0
 	movbu	d0, (0x2c, sp)
-func_4C09ACF3_entry_Lf4:
+ToneKeyFind_entry_Lf4:
 	mov	(0x10, sp), d1
 	movbu	(0x2c, sp), d2
 	mov	d2, d0
@@ -282399,24 +282399,24 @@ func_4C09ACF3_entry_Lf4:
 	add	a3, d3
 	add	d3, d1
 	mov	d1, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	bne	func_4C09ACF3_entry_L110
-	jmp	func_4C09ACF3_entry_L19c
-func_4C09ACF3_entry_L110:
+	bne	ToneKeyFind_entry_L110
+	jmp	ToneKeyFind_entry_L19c
+ToneKeyFind_entry_L110:
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L113:
+ToneKeyFind_entry_L113:
 	cmp	0x4d, d2
-	bne	func_4C09ACF3_entry_L125
+	bne	ToneKeyFind_entry_L125
 	mov	0x00207f7f, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L125:
+ToneKeyFind_entry_L125:
 	cmp	0x4e, d2
-	beq	func_4C09ACF3_entry_L12d
+	beq	ToneKeyFind_entry_L12d
 	cmp	0x4f, d2
-	bne	func_4C09ACF3_entry_L162
-func_4C09ACF3_entry_L12d:
+	bne	ToneKeyFind_entry_L162
+ToneKeyFind_entry_L12d:
 	mov	0x26, d0
 	movbu	d0, (0x2c, sp)
 	mov	(0xc, sp), d0
@@ -282436,15 +282436,15 @@ func_4C09ACF3_entry_L12d:
 	add	d0, d3
 	add	d3, d1
 	mov	d1, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L19c
+	beq	ToneKeyFind_entry_L19c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L162:
+ToneKeyFind_entry_L162:
 	cmp	0x50, d2
-	blt	func_4C09ACF3_entry_L19c
+	blt	ToneKeyFind_entry_L19c
 	cmp	0x5f, d2
-	bgt	func_4C09ACF3_entry_L19c
+	bgt	ToneKeyFind_entry_L19c
 	mov	0x20, d0
 	movbu	d0, (0x2c, sp)
 	mov	(0xc, sp), d0
@@ -282464,29 +282464,29 @@ func_4C09ACF3_entry_L162:
 	add	d0, d3
 	add	d3, d1
 	mov	d1, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L19c
+	beq	ToneKeyFind_entry_L19c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L19c:
+ToneKeyFind_entry_L19c:
 	cmp	0x21, d2
-	beq	func_4C09ACF3_entry_L1a4
+	beq	ToneKeyFind_entry_L1a4
 	cmp	0x23, d2
-	bne	func_4C09ACF3_entry_L1d6
-func_4C09ACF3_entry_L1a4:
+	bne	ToneKeyFind_entry_L1d6
+ToneKeyFind_entry_L1a4:
 	cmp	0x21, d2
-	beq	func_4C09ACF3_entry_L1ae
+	beq	ToneKeyFind_entry_L1ae
 	cmp	0x23, d2
-	beq	func_4C09ACF3_entry_L1b5
-	bra	func_4C09ACF3_entry_L1ba
-func_4C09ACF3_entry_L1ae:
+	beq	ToneKeyFind_entry_L1b5
+	bra	ToneKeyFind_entry_L1ba
+ToneKeyFind_entry_L1ae:
 	mov	0x20, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ACF3_entry_L1ba
-func_4C09ACF3_entry_L1b5:
+	bra	ToneKeyFind_entry_L1ba
+ToneKeyFind_entry_L1b5:
 	mov	0x22, d0
 	movbu	d0, (0x2c, sp)
-func_4C09ACF3_entry_L1ba:
+ToneKeyFind_entry_L1ba:
 	mov	(0x10, sp), d1
 	movbu	(0x2c, sp), d2
 	mov	d2, d0
@@ -282496,68 +282496,68 @@ func_4C09ACF3_entry_L1ba:
 	add	a3, d3
 	add	d3, d1
 	mov	d1, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L1d6
+	beq	ToneKeyFind_entry_L1d6
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L1d6:
+ToneKeyFind_entry_L1d6:
 	cmp	0x24, d2
-	bne	func_4C09ACF3_entry_L210
+	bne	ToneKeyFind_entry_L210
 	mov	(0x10, sp), d0
 	mov	d3, d1
 	and	0xfffffff8, d0
 	extbu	d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L1f2
+	beq	ToneKeyFind_entry_L1f2
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L1f2:
+ToneKeyFind_entry_L1f2:
 	mov	d3, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L1ff
+	beq	ToneKeyFind_entry_L1ff
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L1ff:
+ToneKeyFind_entry_L1ff:
 	mov	a2, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	bne	func_4C09ACF3_entry_L20d
-	jmp	func_4C09ACF3_entry_L2aa
-func_4C09ACF3_entry_L20d:
+	bne	ToneKeyFind_entry_L20d
+	jmp	ToneKeyFind_entry_L2aa
+ToneKeyFind_entry_L20d:
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L210:
+ToneKeyFind_entry_L210:
 	cmp	0x27, d2
-	beq	func_4C09ACF3_entry_L21c
+	beq	ToneKeyFind_entry_L21c
 	cmp	0x69, d2
-	beq	func_4C09ACF3_entry_L21c
+	beq	ToneKeyFind_entry_L21c
 	cmp	0x6b, d2
-	bne	func_4C09ACF3_entry_L22a
-func_4C09ACF3_entry_L21c:
+	bne	ToneKeyFind_entry_L22a
+ToneKeyFind_entry_L21c:
 	mov	0x00207f7f, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L22a:
+ToneKeyFind_entry_L22a:
 	cmp	0x68, d2
-	bne	func_4C09ACF3_entry_L240
+	bne	ToneKeyFind_entry_L240
 	mov	(0x10, sp), d0
 	add	d0, a2
 	mov	a2, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L2aa
+	beq	ToneKeyFind_entry_L2aa
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L240:
+ToneKeyFind_entry_L240:
 	cmp	0x20, d2
-	bne	func_4C09ACF3_entry_L258
+	bne	ToneKeyFind_entry_L258
 	mov	(0x10, sp), d0
 	cmp	0x78, d0
-	blt	func_4C09ACF3_entry_L258
+	blt	ToneKeyFind_entry_L258
 	mov	0x00207f7f, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ACF3_entry_L258:
+ToneKeyFind_entry_L258:
 	mov	(0xc, sp), d0
 	mov	(0x10, sp), a0
 	and	0xfffffff8, d0
@@ -282566,44 +282566,44 @@ func_4C09ACF3_entry_L258:
 	add	a2, d0
 	add	d0, a0
 	mov	a0, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L277
-	bra	func_4C09ACF3_entry_L2b5
-func_4C09ACF3_entry_L277:
+	beq	ToneKeyFind_entry_L277
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L277:
 	mov	(0x10, sp), d1
 	add	a2, d1
 	mov	d1, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L287
-	bra	func_4C09ACF3_entry_L2b5
-func_4C09ACF3_entry_L287:
+	beq	ToneKeyFind_entry_L287
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L287:
 	mov	(0x10, sp), d0
 	and	0xfffffff8, d0
 	extbu	d0
 	add	a2, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L29d
-	bra	func_4C09ACF3_entry_L2b5
-func_4C09ACF3_entry_L29d:
+	beq	ToneKeyFind_entry_L29d
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L29d:
 	mov	a2, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09ACF3_entry_L2aa
-	bra	func_4C09ACF3_entry_L2b5
-func_4C09ACF3_entry_L2aa:
+	beq	ToneKeyFind_entry_L2aa
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L2aa:
 	mov	0x00207f7f, d0
-	call	func_4C09B08C_entry, [d2,a2], 0x1c
-func_4C09ACF3_entry_L2b5:
+	call	ToneKeyLookup_entry, [d2,a2], 0x1c
+ToneKeyFind_entry_L2b5:
 	ret	[d2,d3,a2,a3], 0x24
 
-func_4C09AFB0:
+SoundSwNoGet:
 	movm	[d2,a2,a3], (sp)
 	add	-0x1c, sp
 
-func_4C09AFB0_entry:
+SoundSwNoGet_entry:
 	mov	a1, a2
 	mov	a0, a3
 	mov	d1, d2
@@ -282614,39 +282614,39 @@ func_4C09AFB0_entry:
 	mov	sp, a0
 	add	0x18, a0
 	mov	d2, d1
-	call	func_4C09ACF3_entry, [d2,d3,a2,a3], 0x24
+	call	ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
 	cmp	0, a0
-	bne	func_4C09AFB0_entry_L1b
+	bne	SoundSwNoGet_entry_L1b
 	clr	d0
 	ret	[d2,a2,a3], 0x28
-func_4C09AFB0_entry_L1b:
+SoundSwNoGet_entry_L1b:
 	movbu	(a3), d0
 	cmp	0, d0
-	beq	func_4C09AFB0_entry_L2f
+	beq	SoundSwNoGet_entry_L2f
 	cmp	1, d0
-	beq	func_4C09AFB0_entry_L3f
+	beq	SoundSwNoGet_entry_L3f
 	cmp	2, d0
-	beq	func_4C09AFB0_entry_L4f
+	beq	SoundSwNoGet_entry_L4f
 	cmp	3, d0
-	beq	func_4C09AFB0_entry_L69
-	bra	func_4C09AFB0_entry_L82
-func_4C09AFB0_entry_L2f:
+	beq	SoundSwNoGet_entry_L69
+	bra	SoundSwNoGet_entry_L82
+SoundSwNoGet_entry_L2f:
 	movbu	(3, a0), d0
 	movbu	d0, (a2)
 	movbu	(5, a0), d0
 	mov	(0x44, sp), a0
 	movbu	d0, (a0)
 	mov	1, d0
-	bra	func_4C09AFB0_entry_L83
-func_4C09AFB0_entry_L3f:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L3f:
 	movbu	(3, a0), d0
 	movbu	d0, (a2)
 	movbu	(6, a0), d0
 	mov	(0x44, sp), a0
 	movbu	d0, (a0)
 	mov	1, d0
-	bra	func_4C09AFB0_entry_L83
-func_4C09AFB0_entry_L4f:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L4f:
 	movbu	(4, a0), d0
 	movbu	d0, (a2)
 	movbu	(7, a0), d0
@@ -282659,8 +282659,8 @@ func_4C09AFB0_entry_L4f:
 	add	d2, d0
 	movbu	d0, (a3)
 	mov	1, d0
-	bra	func_4C09AFB0_entry_L83
-func_4C09AFB0_entry_L69:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L69:
 	movbu	(4, a0), d0
 	movbu	d0, (a2)
 	movbu	(8, a0), d0
@@ -282672,17 +282672,17 @@ func_4C09AFB0_entry_L69:
 	add	d0, d1
 	movbu	d1, (a3)
 	mov	1, d0
-	bra	func_4C09AFB0_entry_L83
-func_4C09AFB0_entry_L82:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L82:
 	clr	d0
-func_4C09AFB0_entry_L83:
+SoundSwNoGet_entry_L83:
 	ret	[d2,a2,a3], 0x28
 
-func_4C09B03B:
+SoundIconGet:
 	movm	[d2,a2], (sp)
 	add	-0x1c, sp
 
-func_4C09B03B_entry:
+SoundIconGet_entry:
 	mov	a0, a2
 	mov	d1, d2
 	mov	d0, d1
@@ -282694,23 +282694,23 @@ func_4C09B03B_entry:
 	mov	sp, a0
 	add	0x18, a0
 	mov	d2, d1
-	call	func_4C09ACF3_entry, [d2,d3,a2,a3], 0x24
+	call	ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
 	cmp	0, a0
-	bne	func_4C09B03B_entry_L1b
+	bne	SoundIconGet_entry_L1b
 	clr	d0
-	bra	func_4C09B03B_entry_L22
-func_4C09B03B_entry_L1b:
+	bra	SoundIconGet_entry_L22
+SoundIconGet_entry_L1b:
 	movbu	(2, a0), d0
 	movbu	d0, (a2)
 	mov	1, d0
-func_4C09B03B_entry_L22:
+SoundIconGet_entry_L22:
 	ret	[d2,a2], 0x24
 
-func_4C09B065:
+SoundToneIndexGet:
 	movm	[d2,a2], (sp)
 	add	-0x18, sp
 
-func_4C09B065_entry:
+SoundToneIndexGet_entry:
 	mov	a0, a2
 	mov	d1, d2
 	mov	d0, d1
@@ -282721,42 +282721,42 @@ func_4C09B065_entry:
 	extbu	d2
 	mov	a1, a0
 	mov	d2, d1
-	call	func_4C09ACF3_entry, [d2,d3,a2,a3], 0x24
+	call	ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
 	cmp	0, a0
-	bne	func_4C09B065_entry_L19
+	bne	SoundToneIndexGet_entry_L19
 	clr	d0
-	bra	func_4C09B065_entry_L1f
-func_4C09B065_entry_L19:
+	bra	SoundToneIndexGet_entry_L1f
+SoundToneIndexGet_entry_L19:
 	movhu	(a0), d0
 	movhu	d0, (a2)
 	mov	1, d0
-func_4C09B065_entry_L1f:
+SoundToneIndexGet_entry_L1f:
 	ret	[d2,a2], 0x20
 
-func_4C09B08C:
+ToneKeyLookup:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 
-func_4C09B08C_entry:
+ToneKeyLookup_entry:
 	mov	d0, d2
 	mov	1, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B08C_entry_L17
+	bne	ToneKeyLookup_entry_L17
 	mov	d2, d0
 	call	func_4C09B0FF_entry, [d2,d3,a2], 0x20
-	bra	func_4C09B08C_entry_L6b
-func_4C09B08C_entry_L17:
+	bra	ToneKeyLookup_entry_L6b
+ToneKeyLookup_entry_L17:
 	mov	2, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B08C_entry_L2d
+	bne	ToneKeyLookup_entry_L2d
 	mov	d2, d0
 	call	func_4C09B170_entry, [d2,d3,a2], 0x20
-	bra	func_4C09B08C_entry_L6b
-func_4C09B08C_entry_L2d:
+	bra	ToneKeyLookup_entry_L6b
+ToneKeyLookup_entry_L2d:
 	movhu	(ToneKeyHashDesc), d1
 	movhu	(ToneKeyHashDesc+2), d0
 	exthu	d1
@@ -282768,23 +282768,23 @@ func_4C09B08C_entry_L2d:
 	mov	ToneKeyHashBuckets, a0
 	mov	(d0, a0), a2
 	cmp	0, a2
-	beq	func_4C09B08C_entry_L69
-func_4C09B08C_entry_L50:
+	beq	ToneKeyLookup_entry_L69
+ToneKeyLookup_entry_L50:
 	mov	(4, a2), d1
 	mov	d2, d0
 	call	func_4C09B1E1, 0, 0
 	cmp	0, d0
-	beq	func_4C09B08C_entry_L63
+	beq	ToneKeyLookup_entry_L63
 	mov	8, a0
 	add	a2, a0
-	bra	func_4C09B08C_entry_L6b
-func_4C09B08C_entry_L63:
+	bra	ToneKeyLookup_entry_L6b
+ToneKeyLookup_entry_L63:
 	mov	(a2), a2
 	cmp	0, a2
-	bne	func_4C09B08C_entry_L50
-func_4C09B08C_entry_L69:
+	bne	ToneKeyLookup_entry_L50
+ToneKeyLookup_entry_L69:
 	mov	0, a0
-func_4C09B08C_entry_L6b:
+ToneKeyLookup_entry_L6b:
 	ret	[d2,a2], 0x1c
 
 func_4C09B0FF:
@@ -282936,105 +282936,105 @@ func_4C09B1EC_entry:
 	mov	mdr, d0
 	ret	[d2], 4
 
-func_4C09B200:
+SoundSwNoBankGet:
 	movm	[d2,a2,a3], (sp)
 	add	-0xc, sp
 
-func_4C09B200_entry:
+SoundSwNoBankGet_entry:
 	mov	a1, a2
 	mov	a0, a3
 	mov	d1, d2
 	extbu	d0
 	clr	d1
 	cmp	d1, d0
-	beq	func_4C09B200_entry_L55
+	beq	SoundSwNoBankGet_entry_L55
 	cmp	1, d0
-	beq	func_4C09B200_entry_L26
+	beq	SoundSwNoBankGet_entry_L26
 	cmp	2, d0
-	beq	func_4C09B200_entry_L2b
+	beq	SoundSwNoBankGet_entry_L2b
 	cmp	3, d0
-	beq	func_4C09B200_entry_L30
+	beq	SoundSwNoBankGet_entry_L30
 	cmp	4, d0
-	beq	func_4C09B200_entry_L35
+	beq	SoundSwNoBankGet_entry_L35
 	cmp	5, d0
-	beq	func_4C09B200_entry_L3c
+	beq	SoundSwNoBankGet_entry_L3c
 	cmp	6, d0
-	beq	func_4C09B200_entry_L43
+	beq	SoundSwNoBankGet_entry_L43
 	cmp	7, d0
-	beq	func_4C09B200_entry_L4a
-	bra	func_4C09B200_entry_L51
-func_4C09B200_entry_L26:
+	beq	SoundSwNoBankGet_entry_L4a
+	bra	SoundSwNoBankGet_entry_L51
+SoundSwNoBankGet_entry_L26:
 	extbu	d2
 	add	0x10, d2
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L2b:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L2b:
 	extbu	d2
 	add	0x40, d2
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L30:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L30:
 	extbu	d2
 	add	0x60, d2
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L35:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L35:
 	extbu	d2
 	add	0x40, d2
 	mov	1, d1
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L3c:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L3c:
 	extbu	d2
 	add	0x60, d2
 	mov	1, d1
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L43:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L43:
 	extbu	d2
 	add	0x40, d2
 	mov	2, d1
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L4a:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L4a:
 	extbu	d2
 	add	0x60, d2
 	mov	2, d1
-	bra	func_4C09B200_entry_L55
-func_4C09B200_entry_L51:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L51:
 	clr	d0
 	ret	[d2,a2,a3], 0x18
-func_4C09B200_entry_L55:
+SoundSwNoBankGet_entry_L55:
 	mov	d2, d0
 	extbu	d0
 	cmp	0x80, d0
-	blt	func_4C09B200_entry_L60
+	blt	SoundSwNoBankGet_entry_L60
 	clr	d0
-	bra	func_4C09B200_entry_La6
-func_4C09B200_entry_L60:
+	bra	SoundSwNoBankGet_entry_La6
+SoundSwNoBankGet_entry_L60:
 	movbu	(0x28, sp), d2
 	asl	8, d0
 	add	d0, d2
 	mov	d2, d0
 	extbu	d1
 	cmp	0, d1
-	beq	func_4C09B200_entry_L77
+	beq	SoundSwNoBankGet_entry_L77
 	cmp	1, d1
-	beq	func_4C09B200_entry_L7f
+	beq	SoundSwNoBankGet_entry_L7f
 	cmp	2, d1
-	beq	func_4C09B200_entry_L87
-	bra	func_4C09B200_entry_L8d
-func_4C09B200_entry_L77:
+	beq	SoundSwNoBankGet_entry_L87
+	bra	SoundSwNoBankGet_entry_L8d
+SoundSwNoBankGet_entry_L77:
 	exthu	d0
-	call	func_4C09B2AE_entry, [d2,a2], 0x1c
-	bra	func_4C09B200_entry_L8d
-func_4C09B200_entry_L7f:
+	call	ShortKeyLookup_entry, [d2,a2], 0x1c
+	bra	SoundSwNoBankGet_entry_L8d
+SoundSwNoBankGet_entry_L7f:
 	exthu	d0
 	call	func_4C09B324_entry, [d2,d3,a2,a3], 0x24
-	bra	func_4C09B200_entry_L8d
-func_4C09B200_entry_L87:
+	bra	SoundSwNoBankGet_entry_L8d
+SoundSwNoBankGet_entry_L87:
 	exthu	d0
 	call	func_4C09B39A_entry, [d2,d3,a2,a3], 0x24
-func_4C09B200_entry_L8d:
+SoundSwNoBankGet_entry_L8d:
 	cmp	0, a0
-	bne	func_4C09B200_entry_L94
+	bne	SoundSwNoBankGet_entry_L94
 	clr	d0
-	bra	func_4C09B200_entry_La6
-func_4C09B200_entry_L94:
+	bra	SoundSwNoBankGet_entry_La6
+SoundSwNoBankGet_entry_L94:
 	movbu	(a0), d0
 	movbu	d0, (a3)
 	movbu	(1, a0), d0
@@ -283043,35 +283043,35 @@ func_4C09B200_entry_L94:
 	mov	(0x34, sp), a0
 	movbu	d0, (a0)
 	mov	1, d0
-func_4C09B200_entry_La6:
+SoundSwNoBankGet_entry_La6:
 	ret	[d2,a2,a3], 0x18
 
-func_4C09B2AE:
+ShortKeyLookup:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 
-func_4C09B2AE_entry:
+ShortKeyLookup_entry:
 	mov	d0, d2
 	mov	1, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B2AE_entry_L18
+	bne	ShortKeyLookup_entry_L18
 	exthu	d2
 	mov	d2, d0
 	call	func_4C09B324_entry, [d2,d3,a2,a3], 0x24
-	bra	func_4C09B2AE_entry_L6e
-func_4C09B2AE_entry_L18:
+	bra	ShortKeyLookup_entry_L6e
+ShortKeyLookup_entry_L18:
 	mov	2, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09B2AE_entry_L2f
+	bne	ShortKeyLookup_entry_L2f
 	exthu	d2
 	mov	d2, d0
 	call	func_4C09B39A_entry, [d2,d3,a2,a3], 0x24
-	bra	func_4C09B2AE_entry_L6e
-func_4C09B2AE_entry_L2f:
+	bra	ShortKeyLookup_entry_L6e
+ShortKeyLookup_entry_L2f:
 	movhu	(ShortKeyHashDesc), d1
 	movhu	(ShortKeyHashDesc+2), d0
 	exthu	d2
@@ -283084,23 +283084,23 @@ func_4C09B2AE_entry_L2f:
 	mov	ShortKeyHashBuckets, a0
 	mov	(d0, a0), a2
 	cmp	0, a2
-	beq	func_4C09B2AE_entry_L6c
-func_4C09B2AE_entry_L53:
+	beq	ShortKeyLookup_entry_L6c
+ShortKeyLookup_entry_L53:
 	movhu	(4, a2), d1
 	mov	d2, d0
 	call	func_4C09B410, 0, 0
 	cmp	0, d0
-	beq	func_4C09B2AE_entry_L66
+	beq	ShortKeyLookup_entry_L66
 	mov	6, a0
 	add	a2, a0
-	bra	func_4C09B2AE_entry_L6e
-func_4C09B2AE_entry_L66:
+	bra	ShortKeyLookup_entry_L6e
+ShortKeyLookup_entry_L66:
 	mov	(a2), a2
 	cmp	0, a2
-	bne	func_4C09B2AE_entry_L53
-func_4C09B2AE_entry_L6c:
+	bne	ShortKeyLookup_entry_L53
+ShortKeyLookup_entry_L6c:
 	mov	0, a0
-func_4C09B2AE_entry_L6e:
+ShortKeyLookup_entry_L6e:
 	ret	[d2,a2], 0x1c
 
 func_4C09B324:
@@ -284411,25 +284411,25 @@ func_4C09BCE6_entry:
 	mov	mdr, d0
 	ret	[d2], 4
 
-func_4C09BCFA:
+SoundBankIndexGet:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0xc, sp
 
-func_4C09BCFA_entry:
+SoundBankIndexGet_entry:
 	movbu	(0x2c, sp), d3
 	mov	a1, a2
 	mov	a0, a3
 	movbu	d0, (0x24, sp)
 	mov	d1, d2
 	cmp	0, d3
-	bne	func_4C09BCFA_entry_Lf
-	bra	func_4C09BCFA_entry_L86
-func_4C09BCFA_entry_Lf:
+	bne	SoundBankIndexGet_entry_Lf
+	bra	SoundBankIndexGet_entry_L86
+SoundBankIndexGet_entry_Lf:
 	mov	1, d0
 	call	func_4C07B96D_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09BCFA_entry_L40
+	bne	SoundBankIndexGet_entry_L40
 	movbu	(0x24, sp), d1
 	mov	d2, d0
 	extbu	d0
@@ -284441,18 +284441,18 @@ func_4C09BCFA_entry_Lf:
 	mov	d1, d0
 	call	func_4C09BE25_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09BCFA_entry_L40
+	beq	SoundBankIndexGet_entry_L40
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	1, d0
 	movbu	d0, (a2)
 	ret	[d2,d3,a2,a3], 0x1c
-func_4C09BCFA_entry_L40:
+SoundBankIndexGet_entry_L40:
 	mov	2, d0
 	call	func_4C07B96D_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09BCFA_entry_L75
+	bne	SoundBankIndexGet_entry_L75
 	movbu	(0x24, sp), d0
 	extbu	d2
 	asl	8, d2
@@ -284463,23 +284463,23 @@ func_4C09BCFA_entry_L40:
 	mov	a0, d0
 	call	func_4C09BE98_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09BCFA_entry_L75
+	beq	SoundBankIndexGet_entry_L75
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	2, d0
 	movbu	d0, (a2)
 	mov	1, d0
-	bra	func_4C09BCFA_entry_Lb0
-func_4C09BCFA_entry_L75:
+	bra	SoundBankIndexGet_entry_Lb0
+SoundBankIndexGet_entry_L75:
 	clr	d0
-	call	func_4C09BDB2_entry, [d2,a2], 0x1c
+	call	BankKeyLookup_entry, [d2,a2], 0x1c
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	clr	d0
 	movbu	d0, (a2)
 	mov	1, d0
-	bra	func_4C09BCFA_entry_Lb0
-func_4C09BCFA_entry_L86:
+	bra	SoundBankIndexGet_entry_Lb0
+SoundBankIndexGet_entry_L86:
 	clr	d0
 	movbu	d0, (a2)
 	movbu	(0x24, sp), d0
@@ -284488,46 +284488,46 @@ func_4C09BCFA_entry_L86:
 	mov	d0, d1
 	add	d2, d1
 	mov	d1, d0
-	call	func_4C09BDB2_entry, [d2,a2], 0x1c
+	call	BankKeyLookup_entry, [d2,a2], 0x1c
 	cmp	0, a0
-	beq	func_4C09BCFA_entry_La4
+	beq	SoundBankIndexGet_entry_La4
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	1, d0
-	bra	func_4C09BCFA_entry_Lb0
-func_4C09BCFA_entry_La4:
+	bra	SoundBankIndexGet_entry_Lb0
+SoundBankIndexGet_entry_La4:
 	clr	d0
-	call	func_4C09BDB2_entry, [d2,a2], 0x1c
+	call	BankKeyLookup_entry, [d2,a2], 0x1c
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	1, d0
-func_4C09BCFA_entry_Lb0:
+SoundBankIndexGet_entry_Lb0:
 	ret	[d2,d3,a2,a3], 0x1c
 
-func_4C09BDB2:
+BankKeyLookup:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 
-func_4C09BDB2_entry:
+BankKeyLookup_entry:
 	mov	d0, d2
 	mov	1, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09BDB2_entry_L17
+	bne	BankKeyLookup_entry_L17
 	mov	d2, d0
 	call	func_4C09BE25_entry, [d2,d3,a2], 0x20
-	bra	func_4C09BDB2_entry_L6b
-func_4C09BDB2_entry_L17:
+	bra	BankKeyLookup_entry_L6b
+BankKeyLookup_entry_L17:
 	mov	2, d0
 	call	func_4C07B982_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09BDB2_entry_L2d
+	bne	BankKeyLookup_entry_L2d
 	mov	d2, d0
 	call	func_4C09BE98_entry, [d2,d3,a2], 0x20
-	bra	func_4C09BDB2_entry_L6b
-func_4C09BDB2_entry_L2d:
+	bra	BankKeyLookup_entry_L6b
+BankKeyLookup_entry_L2d:
 	movhu	(BankKeyHashDesc), d1
 	movhu	(BankKeyHashDesc+2), d0
 	exthu	d1
@@ -284539,23 +284539,23 @@ func_4C09BDB2_entry_L2d:
 	mov	BankKeyHashBuckets, a0
 	mov	(d0, a0), a2
 	cmp	0, a2
-	beq	func_4C09BDB2_entry_L69
-func_4C09BDB2_entry_L50:
+	beq	BankKeyLookup_entry_L69
+BankKeyLookup_entry_L50:
 	mov	(4, a2), d1
 	mov	d2, d0
 	call	func_4C09BF0B, 0, 0
 	cmp	0, d0
-	beq	func_4C09BDB2_entry_L63
+	beq	BankKeyLookup_entry_L63
 	mov	8, a0
 	add	a2, a0
-	bra	func_4C09BDB2_entry_L6b
-func_4C09BDB2_entry_L63:
+	bra	BankKeyLookup_entry_L6b
+BankKeyLookup_entry_L63:
 	mov	(a2), a2
 	cmp	0, a2
-	bne	func_4C09BDB2_entry_L50
-func_4C09BDB2_entry_L69:
+	bne	BankKeyLookup_entry_L50
+BankKeyLookup_entry_L69:
 	mov	0, a0
-func_4C09BDB2_entry_L6b:
+BankKeyLookup_entry_L6b:
 	ret	[d2,a2], 0x1c
 
 func_4C09BE25:
@@ -539976,7 +539976,7 @@ deflateInit2__entry_Lc6:
 	bne	deflateInit2__entry_L1a8
 deflateInit2__entry_L194:
 	mov	(0x20, sp), a0
-	mov	(inflate_blocks_entry_L767_Table+92), d0
+	mov	(deflateInit2__entry_L194_Var), d0
 	mov	d0, (a0)
 	mov	(0x40, sp), a0
 	call	deflateEnd_entry, [d2,d3,a2,a3], 0x20
@@ -540254,7 +540254,7 @@ deflateParams_L37:
 	bra	deflateParams_La2
 deflateParams_L3b:
 	mov	(0x10, sp), a3
-	mov	deflateParams_L3b_Records, d1
+	mov	configuration_table, d1
 	add	0x78, a3
 	mov	(a3), d0
 	mov	0xc, d2
@@ -540432,7 +540432,7 @@ deflate_entry_L34:
 	beq	deflate_entry_L56
 deflate_entry_L46:
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+84), a0
+	mov	(ptrs_50005D74), a0
 	mov	-2, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540445,7 +540445,7 @@ deflate_entry_L56:
 	cmp	0, d0
 	bne	deflate_entry_L73
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+96), a0
+	mov	(ptrs_50005D80), a0
 	mov	-5, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540552,7 +540552,7 @@ deflate_entry_L123:
 	cmp	4, a3
 	beq	deflate_entry_L146
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+96), a0
+	mov	(ptrs_50005D80), a0
 	mov	-5, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540566,7 +540566,7 @@ deflate_entry_L146:
 	cmp	0, d0
 	beq	deflate_entry_L168
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+96), a0
+	mov	(ptrs_50005D80), a0
 	mov	-5, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540595,7 +540595,7 @@ deflate_entry_L18d:
 	nop
 	nop
 	mul	d1, d0
-	add	deflateParams_L3b_Records, d0
+	add	configuration_table, d0
 	mov	d0, a0
 	mov	(8, a0), a1
 	mov	d3, a0
@@ -540899,7 +540899,7 @@ lm_init_entry:
 	mov	0x78, a1
 	add	a3, a1
 	mov	(a1), d0
-	mov	deflateParams_L3b_Records, a2
+	mov	configuration_table, a2
 	mov	0xc, d1
 	nop
 	nop
@@ -542321,7 +542321,7 @@ tr_static_init:
 	add	-0x3c, sp
 
 tr_static_init_entry:
-	mov	(tr_static_init_Var), d0
+	mov	(static_init_done), d0
 	cmp	0, d0
 	beq	tr_static_init_entry_Ld
 	ret	[d2,d3,a2,a3], 0x4c
@@ -542336,7 +542336,7 @@ tr_static_init_entry_L17:
 	mov	d3, (d0, a0)
 	clr	d1
 	mov	a1, a0
-	add	compress_block_entry_L155_Table, a0
+	add	extra_lbits, a0
 	mov	(a0), d0
 	mov	d3, (0x14, sp)
 	mov	1, d3
@@ -542377,7 +542377,7 @@ tr_static_init_entry_L62:
 	mov	d3, (d0, a0)
 	clr	d1
 	mov	a1, a0
-	add	_tr_tally_entry_L77_Table, a0
+	add	extra_dbits, a0
 	mov	(a0), d0
 	mov	d3, (0x18, sp)
 	mov	1, d3
@@ -542423,7 +542423,7 @@ tr_static_init_entry_Lb6:
 	mov	0x5005e670, a0
 	mov	a3, (d0, a0)
 	mov	a2, a0
-	add	_tr_tally_entry_L77_Table, a0
+	add	extra_dbits, a0
 	mov	(a0), d0
 	clr	d1
 	add	-7, d0
@@ -542549,7 +542549,7 @@ tr_static_init_entry_L195:
 	cmp	0x1e, a3
 	blt	tr_static_init_entry_L195
 	mov	1, d0
-	mov	d0, (tr_static_init_Var)
+	mov	d0, (static_init_done)
 	ret	[d2,d3,a2,a3], 0x4c
 
 _tr_init:
@@ -542566,21 +542566,21 @@ _tr_init_entry:
 	mov	0x88, d0
 	add	a2, d0
 	mov	d0, (a1)
-	mov	data_50004DB8, d0
+	mov	static_l_desc, d0
 	mov	d0, (8, a1)
 	mov	0xb18, a1
 	add	a2, a1
 	mov	0x97c, d0
 	add	a2, d0
 	mov	d0, (a1)
-	mov	data_50004DCC, d0
+	mov	static_d_desc, d0
 	mov	d0, (8, a1)
 	mov	0xb24, a1
 	add	a2, a1
 	mov	0xa70, d0
 	add	a2, d0
 	mov	d0, (a1)
-	mov	data_50004DE0, d0
+	mov	static_bl_desc, d0
 	mov	d0, (8, a1)
 	clr	d0
 	movhu	d0, (0x16b0, a2)
@@ -544145,7 +544145,7 @@ build_bl_tree_entry:
 	mov	0x12, d1
 	mov	0xa70, a3
 	add	a2, a3
-	mov	build_bl_tree_Table, a1
+	mov	bl_order+18, a1
 	setlb
 	movbu	(a1), d0
 	asl2	d0
@@ -544373,7 +544373,7 @@ send_all_trees_entry_L142:
 	jmp	send_all_trees_entry_L1f4
 send_all_trees_entry_L14b:
 	mov	(0x48, sp), d1
-	mov	send_all_trees_entry_L14b_Table, d0
+	mov	bl_order, d0
 	add	0xa70, d1
 	mov	d1, (0x20, sp)
 	mov	(0x48, sp), d1
@@ -545177,7 +545177,7 @@ _tr_tally_entry_L77:
 	clr	d1
 	setlb
 	movhu	(d1, a1), d2
-	mov	_tr_tally_entry_L77_Table, a0
+	mov	extra_dbits, a0
 	mov	(d1, a0), d0
 	mov	5, a0
 	add	d0, a0
@@ -545409,7 +545409,7 @@ compress_block_entry_L144:
 	mov	d0, (a2)
 compress_block_entry_L155:
 	mov	(4, sp), d0
-	mov	compress_block_entry_L155_Table, a0
+	mov	extra_lbits, a0
 	mov	(d0, a0), a3
 	cmp	0, a3
 	beq	compress_block_entry_L1cd
@@ -545557,7 +545557,7 @@ compress_block_entry_L24d:
 	mov	d0, (a2)
 compress_block_entry_L25c:
 	mov	(8, sp), d0
-	mov	_tr_tally_entry_L77_Table, a0
+	mov	extra_dbits, a0
 	mov	(d0, a0), a3
 	cmp	0, a3
 	beq	compress_block_entry_L2d5
@@ -547872,7 +547872,7 @@ inflate_blocks_entry_L61f:
 	mov	(a1), d0
 	mov	(8, a0), a0
 	asl2	d0
-	mov	inflate_blocks_entry_L61f_Table, a1
+	mov	border, a1
 	mov	(d0, a1), d1
 	mov	a2, d0
 	asl2	d1
@@ -547907,7 +547907,7 @@ inflate_blocks_entry_L659:
 	mov	(a1), d0
 	mov	(8, a0), a0
 	asl2	d0
-	mov	inflate_blocks_entry_L61f_Table, a1
+	mov	border, a1
 	mov	(d0, a1), d0
 	clr	d1
 	asl2	d0
@@ -548054,7 +548054,7 @@ inflate_blocks_entry_L767:
 	mov	(0x38, sp), a0
 	asl2	d1
 	mov	(0x10, a0), a0
-	mov	inflate_blocks_entry_L767_Table, a1
+	mov	inflate_mask, a1
 	mov	(d1, a1), d0
 	mov	a2, d1
 	and	d1, d0
@@ -548158,7 +548158,7 @@ inflate_blocks_entry_L808:
 	cmp	d1, d3
 	lcs
 inflate_blocks_entry_L829:
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	a1, d0
 	mov	a2, d1
 	lsr	d0, d1
@@ -549293,7 +549293,7 @@ inflate_trees_dynamic:
 inflate_trees_dynamic_entry:
 	mov	d1, (0x44, sp)
 	mov	d0, d2
-	mov	huft_build_entry_L2e4_Table_2, d0
+	mov	cplext, d0
 	mov	d0, (0x18, sp)
 	mov	(0x54, sp), d0
 	mov	a0, d3
@@ -549303,7 +549303,7 @@ inflate_trees_dynamic_entry:
 	mov	d2, d0
 	mov	a2, (0x24, sp)
 	mov	0x101, d1
-	mov	huft_build_entry_L2e4_Table, a1
+	mov	cplens, a1
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	d0, d1
 	cmp	0, d0
@@ -549328,7 +549328,7 @@ inflate_trees_dynamic_entry_L54:
 	mov	d1, d0
 	bra	inflate_trees_dynamic_entry_Lb6
 inflate_trees_dynamic_entry_L57:
-	mov	huft_build_entry_L2e4_Table_4, d0
+	mov	cpdext, d0
 	mov	d0, (0x18, sp)
 	mov	(0x58, sp), a3
 	asl2	d2
@@ -549340,7 +549340,7 @@ inflate_trees_dynamic_entry_L57:
 	mov	d3, a0
 	mov	(0x44, sp), d0
 	clr	d1
-	mov	huft_build_entry_L2e4_Table_3, a1
+	mov	cpdist, a1
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	d0, d2
 	cmp	0, d0
@@ -549392,7 +549392,7 @@ inflate_trees_fixed_entry:
 	mov	a0, a3
 	mov	d1, (0x508, sp)
 	mov	d0, (0x504, sp)
-	mov	(inflate_trees_fixed_Var), d0
+	mov	(fixed_built), d0
 	mov	a1, (0x500, sp)
 	cmp	0, d0
 	beq	inflate_trees_fixed_entry_L1e
@@ -549473,7 +549473,7 @@ inflate_trees_fixed_entry_L95:
 	mov	d0, (0x5005f778)
 	mov	sp, a2
 	add	0x64, a2
-	mov	huft_build_entry_L2e4_Table_2, d0
+	mov	cplext, d0
 	mov	d0, (0x18, sp)
 	mov	0x5005f780, d0
 	mov	d0, (0x1c, sp)
@@ -549483,7 +549483,7 @@ inflate_trees_fixed_entry_L95:
 	mov	a2, a0
 	mov	0x120, d0
 	mov	0x101, d1
-	mov	huft_build_entry_L2e4_Table, a1
+	mov	cplens, a1
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0
 	mov	0x78, a1
@@ -549495,7 +549495,7 @@ inflate_trees_fixed_entry_L95:
 	cmp	a1, a0
 	lcs
 	mov	d0, (0x5005f77c)
-	mov	huft_build_entry_L2e4_Table_4, d0
+	mov	cpdext, d0
 	mov	d0, (0x18, sp)
 	mov	0x5005f784, d0
 	mov	d0, (0x1c, sp)
@@ -549504,11 +549504,11 @@ inflate_trees_fixed_entry_L95:
 	mov	d3, (0x24, sp)
 	mov	0x1e, d0
 	clr	d1
-	mov	huft_build_entry_L2e4_Table_3, a1
+	mov	cpdist, a1
 	mov	a2, a0
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	1, d0
-	mov	d0, (inflate_trees_fixed_Var)
+	mov	d0, (fixed_built)
 inflate_trees_fixed_entry_L10f:
 	mov	(0x5005f778), d0
 	mov	d0, (a3)
@@ -549838,7 +549838,7 @@ inflate_codes_entry_L1b3:
 	mov	a0, d0
 	mov	(a1), d1
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	and	d3, d0
 	asl	3, d0
@@ -549971,7 +549971,7 @@ inflate_codes_entry_L29f:
 	lcs
 inflate_codes_entry_L2af:
 	mov	a0, d0
-	mov	inflate_blocks_entry_L767_Table, a1
+	mov	inflate_mask, a1
 	asl2	d0
 	mov	(d0, a1), d0
 	mov	(0x54, sp), a1
@@ -550048,7 +550048,7 @@ inflate_codes_entry_L333:
 	mov	a0, d0
 	mov	(a1), d1
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	and	d3, d0
 	asl	3, d0
@@ -550162,7 +550162,7 @@ inflate_codes_entry_L3fe:
 	cmp	a0, d2
 	lcs
 inflate_codes_entry_L40e:
-	mov	inflate_blocks_entry_L767_Table, a1
+	mov	inflate_mask, a1
 	mov	a0, d0
 	asl2	d0
 	mov	(d0, a1), d0
@@ -550876,7 +550876,7 @@ inflate_fast_entry_L43:
 inflate_fast_entry_L4a:
 	asl2	d1
 	mov	d0, (0xc, sp)
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d1, a0), d0
 	asl2	d2
 	mov	d0, (0x24, sp)
@@ -550949,7 +550949,7 @@ inflate_fast_entry_Lcf:
 	and	0x0f, d1
 	mov	d1, d0
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	mov	(4, a1), d2
 	mov	d3, (0x2c, sp)
@@ -551024,7 +551024,7 @@ inflate_fast_entry_L13b:
 	cmp	d2, d3
 	lcs
 inflate_fast_entry_L160:
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	d2, d0
 	asl2	d0
 	mov	(d0, a0), d0
@@ -551108,7 +551108,7 @@ inflate_fast_entry_L1eb:
 	bne	inflate_fast_entry_L209
 	mov	(4, a1), d2
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	mov	a2, d1
 	and	d1, d0
@@ -551155,7 +551155,7 @@ inflate_fast_entry_L247:
 	bne	inflate_fast_entry_L286
 	asl2	d1
 	mov	(4, a1), d2
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d1, a0), d0
 	mov	a2, d1
 	and	d1, d0
@@ -596604,10 +596604,10 @@ func_4C1566B3_entry_Lb3:
 func_4C1566B3_entry_Lc2:
 	mov	(0x500b69c0), d0
 	mov	d0, (0x34, sp)
-	mov	d0, (inflate_blocks_entry_L767_Table+108)
+	mov	d0, (func_4C1566B3_entry_Lc2_Var)
 	bra	func_4C1566B3_entry_Lda
 func_4C1566B3_entry_Ld2:
-	mov	(inflate_blocks_entry_L767_Table+108), d0
+	mov	(func_4C1566B3_entry_Lc2_Var), d0
 	mov	d0, (0x34, sp)
 func_4C1566B3_entry_Lda:
 	mov	(0x34, sp), d0

@@ -9,14 +9,14 @@
 
 # REC_func_9780836B_entry_L10_Records: 8-byte records (func_9780836B_entry_L10_Records, 17 records); fields, and what reads them:
 #   +0   f0           u32            func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`
-#   +4   p4           ptr            func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
-.macro REC_func_9780836B_entry_L10_Records f0=0, p4=0
+#   +4   proc         ptr            func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
+.macro REC_func_9780836B_entry_L10_Records f0=0, proc=0
 	.long	\f0
-	.long	\p4
+	.long	\proc
 .endm
 
 # REC_localeconv_Records: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
-#   +0   p0           ptr            no reader seen
+#   +0   text         ptr            no reader seen
 #   +4   p4           ptr            localeconv 0x9780851A `mov (4, a1), a0`
 #   +8   p8           ptr            localeconv 0x9780851A `mov (8, a1), a0`
 #   +12  p12          ptr            localeconv 0x9780851A `mov (0xc, a1), a0`
@@ -32,8 +32,8 @@
 #   +37  f37          u8             localeconv 0x9780851A `movbu (0x25, a1), d0`
 #   +38  f38          u8             localeconv 0x9780851A `movbu (0x26, a1), d0`
 #   +39  f39          u8             localeconv 0x9780851A `movbu (0x27, a1), d0`
-.macro REC_localeconv_Records p0=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, f32=0, f33=0, f34=0, f35=0, f36=0, f37=0, f38=0, f39=0
-	.long	\p0
+.macro REC_localeconv_Records text=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, f32=0, f33=0, f34=0, f35=0, f36=0, f37=0, f38=0, f39=0
+	.long	\text
 	.long	\p4
 	.long	\p8
 	.long	\p12
@@ -52,13 +52,13 @@
 .endm
 
 # REC_localeconv_Records_2: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
-#   +0   p0           ptr            no reader seen
-#   +4   p4           ptr            localeconv 0x9780851A `mov (4, a1), a0`
+#   +0   text         ptr            no reader seen
+#   +4   text_        ptr            localeconv 0x9780851A `mov (4, a1), a0`
 #   +8   p8           ptr            localeconv 0x9780851A `mov (8, a1), a0`
 #   +12  p12          ptr            localeconv 0x9780851A `mov (0xc, a1), a0`
-.macro REC_localeconv_Records_2 p0=0, p4=0, p8=0, p12=0
-	.long	\p0
-	.long	\p4
+.macro REC_localeconv_Records_2 text=0, text_=0, p8=0, p12=0
+	.long	\text
+	.long	\text_
 	.long	\p8
 	.long	\p12
 .endm
@@ -90,11 +90,11 @@
 # REC_func_97834719_Table: 12-byte records (func_97834719_Table, 12 records); fields, and what reads them:
 #   +0   p0           ptr            func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`
 #   +4   x4           u8[4]          no reader seen
-#   +8   p8           ptr            no reader seen
-.macro REC_func_97834719_Table p0=0, x4, p8=0
+#   +8   proc         ptr            no reader seen
+.macro REC_func_97834719_Table p0=0, x4, proc=0
 	.long	\p0
 	.ascii	\x4
-	.long	\p8
+	.long	\proc
 .endm
 
 # REC_data_978AFD7C_p0: 4-byte records (data_978AFD7C_p0, 1 records); fields, and what reads them:
@@ -120,21 +120,21 @@
 .endm
 
 # REC_KssSetSfx_DISPProc_L822_Table_p0: 4-byte records (KssSetSfx_DISPProc_L822_Table_p0, 4 records); fields, and what reads them:
-#   +0   p0           ptr            KssSetSfx_DISPProc_La1d 0x9781FAB3 `mov (a0), d0`
-.macro REC_KssSetSfx_DISPProc_L822_Table_p0 p0=0
-	.long	\p0
+#   +0   text         ptr            KssSetSfx_DISPProc_La1d 0x9781FAB3 `mov (a0), d0`
+.macro REC_KssSetSfx_DISPProc_L822_Table_p0 text=0
+	.long	\text
 .endm
 
 # REC_KssCopyFdToHD_DISPProc_L709_Table_p0: 4-byte records (KssCopyFdToHD_DISPProc_L709_Table_p0, 1 records); fields, and what reads them:
-#   +0   p0           ptr            no reader seen
-.macro REC_KssCopyFdToHD_DISPProc_L709_Table_p0 p0=0
-	.long	\p0
+#   +0   text         ptr            no reader seen
+.macro REC_KssCopyFdToHD_DISPProc_L709_Table_p0 text=0
+	.long	\text
 .endm
 
 # REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0: 4-byte records (KssCopySmfFdToHD_DISPProc_L47a_Table_p0, 1 records); fields, and what reads them:
-#   +0   p0           ptr            no reader seen
-.macro REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 p0=0
-	.long	\p0
+#   +0   text         ptr            no reader seen
+.macro REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 text=0
+	.long	\text
 .endm
 
 # REC_func_97833B38_entry_L34_Records_p0: 6433-byte records (func_97833B38_entry_L34_Records_p0, 3 records); fields, and what reads them:

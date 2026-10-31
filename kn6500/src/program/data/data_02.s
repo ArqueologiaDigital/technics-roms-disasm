@@ -16740,70 +16740,70 @@ func_4C16FAD1_entry_L6b_Table:
 	.long	loc_4C16FE08
 
 func_4C16FAD1_entry_L2a_Records:	# 64 x REC_func_4C16FAD1_entry_L2a_Records (8 bytes each); read by func_4C16FAD1_entry_L2a 0x4C16FB00 `mov (a0), d0`; func_4C16FAD1_entry_L52 0x4C16FB28 `mov (a0), d0`; func_4C16FAD1_entry_L55 0x4C16FB2B `mov (4, a0), a0`
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13	# [0]
-	REC_func_4C16FAD1_entry_L2a_Records	f0=1, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=2, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=3, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=4, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=5, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=6, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=7, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=8, p4=loc_4C16FB30	# [8]
-	REC_func_4C16FAD1_entry_L2a_Records	f0=9, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=10, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=11, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=12, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=13, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=14, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=15, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=16, p4=loc_4C16FB30	# [16]
-	REC_func_4C16FAD1_entry_L2a_Records	f0=17, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=18, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=19, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=20, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=21, p4=loc_4C16FB30
-	REC_func_4C16FAD1_entry_L2a_Records	f0=69, p4=loc_4C16FEBC
-	REC_func_4C16FAD1_entry_L2a_Records	f0=70, p4=loc_4C16FEBC
-	REC_func_4C16FAD1_entry_L2a_Records	f0=24, p4=loc_4C16FE97	# [24]
-	REC_func_4C16FAD1_entry_L2a_Records	f0=71, p4=loc_4C16FEBC
-	REC_func_4C16FAD1_entry_L2a_Records	f0=73, p4=loc_4C1700ED
-	REC_func_4C16FAD1_entry_L2a_Records	f0=145, p4=loc_4C1703EE
-	REC_func_4C16FAD1_entry_L2a_Records	f0=153, p4=loc_4C1704DD
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13	# [32]
-	REC_func_4C16FAD1_entry_L2a_Records	f0=97, p4=loc_4C170324
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13	# [40]
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	f0=174, p4=loc_4C1705D2
-	REC_func_4C16FAD1_entry_L2a_Records	f0=175, p4=loc_4C1705EC
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13	# [48]
-	REC_func_4C16FAD1_entry_L2a_Records	f0=113, p4=loc_4C170353
-	REC_func_4C16FAD1_entry_L2a_Records	f0=177, p4=loc_4C170606
-	REC_func_4C16FAD1_entry_L2a_Records	f0=115, p4=loc_4C1703C5
-	REC_func_4C16FAD1_entry_L2a_Records	f0=178, p4=loc_4C17062F
-	REC_func_4C16FAD1_entry_L2a_Records	f0=179, p4=loc_4C170654
-	REC_func_4C16FAD1_entry_L2a_Records	f0=180, p4=loc_4C170674
-	REC_func_4C16FAD1_entry_L2a_Records	f0=181, p4=loc_4C1706CA
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13	# [56]
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
-	REC_func_4C16FAD1_entry_L2a_Records	p4=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13	# [0]
+	REC_func_4C16FAD1_entry_L2a_Records	f0=1, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=2, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=3, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=4, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=5, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=6, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=7, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=8, proc=loc_4C16FB30	# [8]
+	REC_func_4C16FAD1_entry_L2a_Records	f0=9, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=10, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=11, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=12, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=13, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=14, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=15, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=16, proc=loc_4C16FB30	# [16]
+	REC_func_4C16FAD1_entry_L2a_Records	f0=17, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=18, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=19, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=20, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=21, proc=loc_4C16FB30
+	REC_func_4C16FAD1_entry_L2a_Records	f0=69, proc=loc_4C16FEBC
+	REC_func_4C16FAD1_entry_L2a_Records	f0=70, proc=loc_4C16FEBC
+	REC_func_4C16FAD1_entry_L2a_Records	f0=24, proc=loc_4C16FE97	# [24]
+	REC_func_4C16FAD1_entry_L2a_Records	f0=71, proc=loc_4C16FEBC
+	REC_func_4C16FAD1_entry_L2a_Records	f0=73, proc=loc_4C1700ED
+	REC_func_4C16FAD1_entry_L2a_Records	f0=145, proc=loc_4C1703EE
+	REC_func_4C16FAD1_entry_L2a_Records	f0=153, proc=loc_4C1704DD
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13	# [32]
+	REC_func_4C16FAD1_entry_L2a_Records	f0=97, proc=loc_4C170324
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13	# [40]
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	f0=174, proc=loc_4C1705D2
+	REC_func_4C16FAD1_entry_L2a_Records	f0=175, proc=loc_4C1705EC
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13	# [48]
+	REC_func_4C16FAD1_entry_L2a_Records	f0=113, proc=loc_4C170353
+	REC_func_4C16FAD1_entry_L2a_Records	f0=177, proc=loc_4C170606
+	REC_func_4C16FAD1_entry_L2a_Records	f0=115, proc=loc_4C1703C5
+	REC_func_4C16FAD1_entry_L2a_Records	f0=178, proc=loc_4C17062F
+	REC_func_4C16FAD1_entry_L2a_Records	f0=179, proc=loc_4C170654
+	REC_func_4C16FAD1_entry_L2a_Records	f0=180, proc=loc_4C170674
+	REC_func_4C16FAD1_entry_L2a_Records	f0=181, proc=loc_4C1706CA
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13	# [56]
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
+	REC_func_4C16FAD1_entry_L2a_Records	proc=func_4C16FAD1_entry_Lc13
 
 func_4C170700_entry_L8b4_Table:	# 8 x u8, 0..5; read by func_4C170700_entry : `movbu	(d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -16826,70 +16826,70 @@ func_4C170700_entry_L6c_Table:
 	.long	loc_4C170992
 
 func_4C170700_entry_L2a_Records:	# 64 x REC_func_4C170700_entry_L2a_Records (8 bytes each); read by func_4C170700_entry_L2a 0x4C17072F `mov (a0), d0`; func_4C170700_entry_L53 0x4C170758 `mov (a0), d0`; func_4C170700_entry_L56 0x4C17075B `mov (4, a0), a0`
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88	# [0]
-	REC_func_4C170700_entry_L2a_Records	f0=1, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=2, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=3, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=4, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=5, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=6, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=7, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=8, p4=loc_4C170760	# [8]
-	REC_func_4C170700_entry_L2a_Records	f0=9, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=10, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=11, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=12, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=13, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=14, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=15, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=16, p4=loc_4C170760	# [16]
-	REC_func_4C170700_entry_L2a_Records	f0=17, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=18, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=19, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=20, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=21, p4=loc_4C170760
-	REC_func_4C170700_entry_L2a_Records	f0=69, p4=loc_4C170A42
-	REC_func_4C170700_entry_L2a_Records	f0=70, p4=loc_4C170A42
-	REC_func_4C170700_entry_L2a_Records	f0=24, p4=loc_4C170A1D	# [24]
-	REC_func_4C170700_entry_L2a_Records	f0=71, p4=loc_4C170A42
-	REC_func_4C170700_entry_L2a_Records	f0=73, p4=loc_4C170C74
-	REC_func_4C170700_entry_L2a_Records	f0=145, p4=loc_4C170F75
-	REC_func_4C170700_entry_L2a_Records	f0=153, p4=loc_4C171066
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88	# [32]
-	REC_func_4C170700_entry_L2a_Records	f0=97, p4=loc_4C170EAB
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88	# [40]
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	f0=174, p4=loc_4C171176
-	REC_func_4C170700_entry_L2a_Records	f0=175, p4=loc_4C171190
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88	# [48]
-	REC_func_4C170700_entry_L2a_Records	f0=113, p4=loc_4C170EDA
-	REC_func_4C170700_entry_L2a_Records	f0=177, p4=loc_4C1711AA
-	REC_func_4C170700_entry_L2a_Records	f0=115, p4=loc_4C170F4C
-	REC_func_4C170700_entry_L2a_Records	f0=178, p4=loc_4C1711D3
-	REC_func_4C170700_entry_L2a_Records	f0=179, p4=loc_4C1711F8
-	REC_func_4C170700_entry_L2a_Records	f0=180, p4=loc_4C171219
-	REC_func_4C170700_entry_L2a_Records	f0=181, p4=loc_4C17126F
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88	# [56]
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
-	REC_func_4C170700_entry_L2a_Records	p4=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88	# [0]
+	REC_func_4C170700_entry_L2a_Records	f0=1, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=2, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=3, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=4, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=5, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=6, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=7, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=8, proc=loc_4C170760	# [8]
+	REC_func_4C170700_entry_L2a_Records	f0=9, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=10, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=11, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=12, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=13, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=14, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=15, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=16, proc=loc_4C170760	# [16]
+	REC_func_4C170700_entry_L2a_Records	f0=17, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=18, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=19, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=20, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=21, proc=loc_4C170760
+	REC_func_4C170700_entry_L2a_Records	f0=69, proc=loc_4C170A42
+	REC_func_4C170700_entry_L2a_Records	f0=70, proc=loc_4C170A42
+	REC_func_4C170700_entry_L2a_Records	f0=24, proc=loc_4C170A1D	# [24]
+	REC_func_4C170700_entry_L2a_Records	f0=71, proc=loc_4C170A42
+	REC_func_4C170700_entry_L2a_Records	f0=73, proc=loc_4C170C74
+	REC_func_4C170700_entry_L2a_Records	f0=145, proc=loc_4C170F75
+	REC_func_4C170700_entry_L2a_Records	f0=153, proc=loc_4C171066
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88	# [32]
+	REC_func_4C170700_entry_L2a_Records	f0=97, proc=loc_4C170EAB
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88	# [40]
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	f0=174, proc=loc_4C171176
+	REC_func_4C170700_entry_L2a_Records	f0=175, proc=loc_4C171190
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88	# [48]
+	REC_func_4C170700_entry_L2a_Records	f0=113, proc=loc_4C170EDA
+	REC_func_4C170700_entry_L2a_Records	f0=177, proc=loc_4C1711AA
+	REC_func_4C170700_entry_L2a_Records	f0=115, proc=loc_4C170F4C
+	REC_func_4C170700_entry_L2a_Records	f0=178, proc=loc_4C1711D3
+	REC_func_4C170700_entry_L2a_Records	f0=179, proc=loc_4C1711F8
+	REC_func_4C170700_entry_L2a_Records	f0=180, proc=loc_4C171219
+	REC_func_4C170700_entry_L2a_Records	f0=181, proc=loc_4C17126F
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88	# [56]
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
+	REC_func_4C170700_entry_L2a_Records	proc=func_4C170700_entry_Lb88
 
 func_4C1712A4_entry_L87f_Table:	# 8 x u8, 0..5; read by func_4C1712A4_entry : `movbu	(d0, a2), d0`; func_4C1712A4_entry : `movbu	(d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -16912,70 +16912,70 @@ func_4C1712A4_entry_L68_Table:
 	.long	loc_4C171506
 
 func_4C1712A4_entry_L28_Records:	# 64 x REC_func_4C1712A4_entry_L28_Records (8 bytes each); read by func_4C1712A4_entry_L28 0x4C1712D1 `mov (a0), d0`; func_4C1712A4_entry_L50 0x4C1712F9 `mov (a0), d0`; func_4C1712A4_entry_L53 0x4C1712FC `mov (4, a0), a0`
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6	# [0]
-	REC_func_4C1712A4_entry_L28_Records	f0=1, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=2, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=3, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=4, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=5, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=6, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=7, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=8, p4=loc_4C171301	# [8]
-	REC_func_4C1712A4_entry_L28_Records	f0=9, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=10, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=11, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=12, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=13, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=14, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=15, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=16, p4=loc_4C171301	# [16]
-	REC_func_4C1712A4_entry_L28_Records	f0=17, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=18, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=19, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=20, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=21, p4=loc_4C171301
-	REC_func_4C1712A4_entry_L28_Records	f0=69, p4=loc_4C1715B7
-	REC_func_4C1712A4_entry_L28_Records	f0=70, p4=loc_4C1715B7
-	REC_func_4C1712A4_entry_L28_Records	f0=24, p4=loc_4C171593	# [24]
-	REC_func_4C1712A4_entry_L28_Records	f0=71, p4=loc_4C1715B7
-	REC_func_4C1712A4_entry_L28_Records	f0=73, p4=loc_4C1717F3
-	REC_func_4C1712A4_entry_L28_Records	f0=145, p4=loc_4C171AE5
-	REC_func_4C1712A4_entry_L28_Records	f0=153, p4=loc_4C171BD5
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6	# [32]
-	REC_func_4C1712A4_entry_L28_Records	f0=97, p4=loc_4C171A1E
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6	# [40]
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	f0=174, p4=loc_4C171C49
-	REC_func_4C1712A4_entry_L28_Records	f0=175, p4=loc_4C171C63
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6	# [48]
-	REC_func_4C1712A4_entry_L28_Records	f0=113, p4=loc_4C171A4D
-	REC_func_4C1712A4_entry_L28_Records	f0=177, p4=loc_4C171C7D
-	REC_func_4C1712A4_entry_L28_Records	f0=115, p4=loc_4C171ABC
-	REC_func_4C1712A4_entry_L28_Records	f0=178, p4=loc_4C171CA6
-	REC_func_4C1712A4_entry_L28_Records	f0=179, p4=loc_4C171CCB
-	REC_func_4C1712A4_entry_L28_Records	f0=180, p4=loc_4C171CEB
-	REC_func_4C1712A4_entry_L28_Records	f0=181, p4=loc_4C171D40
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6	# [56]
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
-	REC_func_4C1712A4_entry_L28_Records	p4=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6	# [0]
+	REC_func_4C1712A4_entry_L28_Records	f0=1, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=2, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=3, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=4, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=5, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=6, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=7, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=8, proc=loc_4C171301	# [8]
+	REC_func_4C1712A4_entry_L28_Records	f0=9, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=10, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=11, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=12, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=13, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=14, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=15, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=16, proc=loc_4C171301	# [16]
+	REC_func_4C1712A4_entry_L28_Records	f0=17, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=18, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=19, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=20, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=21, proc=loc_4C171301
+	REC_func_4C1712A4_entry_L28_Records	f0=69, proc=loc_4C1715B7
+	REC_func_4C1712A4_entry_L28_Records	f0=70, proc=loc_4C1715B7
+	REC_func_4C1712A4_entry_L28_Records	f0=24, proc=loc_4C171593	# [24]
+	REC_func_4C1712A4_entry_L28_Records	f0=71, proc=loc_4C1715B7
+	REC_func_4C1712A4_entry_L28_Records	f0=73, proc=loc_4C1717F3
+	REC_func_4C1712A4_entry_L28_Records	f0=145, proc=loc_4C171AE5
+	REC_func_4C1712A4_entry_L28_Records	f0=153, proc=loc_4C171BD5
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6	# [32]
+	REC_func_4C1712A4_entry_L28_Records	f0=97, proc=loc_4C171A1E
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6	# [40]
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	f0=174, proc=loc_4C171C49
+	REC_func_4C1712A4_entry_L28_Records	f0=175, proc=loc_4C171C63
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6	# [48]
+	REC_func_4C1712A4_entry_L28_Records	f0=113, proc=loc_4C171A4D
+	REC_func_4C1712A4_entry_L28_Records	f0=177, proc=loc_4C171C7D
+	REC_func_4C1712A4_entry_L28_Records	f0=115, proc=loc_4C171ABC
+	REC_func_4C1712A4_entry_L28_Records	f0=178, proc=loc_4C171CA6
+	REC_func_4C1712A4_entry_L28_Records	f0=179, proc=loc_4C171CCB
+	REC_func_4C1712A4_entry_L28_Records	f0=180, proc=loc_4C171CEB
+	REC_func_4C1712A4_entry_L28_Records	f0=181, proc=loc_4C171D40
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6	# [56]
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
+	REC_func_4C1712A4_entry_L28_Records	proc=func_4C1712A4_entry_Lab6
 
 func_4C171D76_entry_L442_Table:	# 8 x u8, 0..5; read by func_4C171D76_entry : `movbu	(d0, a3), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -17664,9 +17664,9 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 	.long	0x4c1768ac
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	p0=Str_C_21, p4=data_4C176A82, p8=data_4C176A83, p12=data_4C176A84, p16=data_4C176A85, p20=data_4C176A86, p24=data_4C176A87, p28=data_4C176A88, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	text=Str_C_21, p4=data_4C176A82, p8=data_4C176A83, p12=data_4C176A84, p16=data_4C176A85, p20=data_4C176A86, p24=data_4C176A87, p28=data_4C176A88, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	p0=Str_C_20, p4=Str_empty_936, p8=data_4C176A90, p12=data_4C176A91
+	REC_localeconv_Records_2	text=Str_C_20, text_=Str_empty_936, p8=data_4C176A90, p12=data_4C176A91
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -25148,11 +25148,11 @@ func_4C051A0B_Table:	# 15 x u16, 496..4638; read by func_4C051A0B 0x4C051A0B: `m
 	.space	4, 0xFF
 
 func_4C050837_entry_L4_Records:	# 3 x REC_func_4C050837_entry_L4_Records (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
-	REC_func_4C050837_entry_L4_Records	f0=0x50000000, f4=0x80000, x8="\x01\x02\x00\x00"
-	REC_func_4C050837_entry_L4_Records	f0=0x58000000, f4=0x5040100, x8="\x01\x00\x00\x00"
-	REC_func_4C050837_entry_L4_Records	f0=0x54000000, f4=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
 func_4C0508F7_entry_L4_Records:	# 1 x REC_func_4C0508F7_entry_L4_Records (12 bytes each); read by func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`; func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`; func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
-	REC_func_4C0508F7_entry_L4_Records	f0=0x44000000, f4=32768, f8=4, x9="\x00\x00\x00"
+	REC_func_4C0508F7_entry_L4_Records	f0=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
 ptrs_4C2E5170:
 	.long	loc_4C05A723
@@ -33381,9 +33381,9 @@ data_4C2ECD6C:
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# +192
 
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_1:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
 	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_entry_L3a_Selected_1
 
 ptrs_4C2ECE50:
@@ -36834,14 +36834,14 @@ func_4C08592E_Table:	# 123 x u16, 65281..65534; read by func_4C08592E 0x4C08592E
 .incbin_range "baserom/kn6500_program.rom", 0x2F69EC, 0x2F69F6
 
 func_4C099343_Records:	# 8 x REC_func_4C099343_Records (6 bytes each); read by func_4C099343 0x4C099343 `movbu (d1, a0), d0`; func_4C099429 0x4C099429 `movbu (1, a0), d3`; func_4C09950E 0x4C09950E `movbu (4, a0), d3` (+1)
-	REC_func_4C099343_Records	a0="\x01\x02\x00\x00", f4=255, f5=255
-	REC_func_4C099343_Records	a0="\x01\x03\x00\x00", f4=255, f5=255
-	REC_func_4C099343_Records	a0="\x01\x04\x00\x00", f4=255, f5=255
-	REC_func_4C099343_Records	a0="\x01\x03\x00\x01", f4=255, f5=255
-	REC_func_4C099343_Records	a0="\x00\x00\x00\x03", f4=255, f5=255
-	REC_func_4C099343_Records	a0="\x00\x00\x00\x03", f4=255, f5=255
-	REC_func_4C099343_Records	a0="\xFF\xFF\xFF\xFF", f5=3
-	REC_func_4C099343_Records	a0="\x00\x05\x00\x06", f5=5
+	REC_func_4C099343_Records	a0="\x01\x02\x00\x00", f4=255, index=255
+	REC_func_4C099343_Records	a0="\x01\x03\x00\x00", f4=255, index=255
+	REC_func_4C099343_Records	a0="\x01\x04\x00\x00", f4=255, index=255
+	REC_func_4C099343_Records	a0="\x01\x03\x00\x01", f4=255, index=255
+	REC_func_4C099343_Records	a0="\x00\x00\x00\x03", f4=255, index=255
+	REC_func_4C099343_Records	a0="\x00\x00\x00\x03", f4=255, index=255
+	REC_func_4C099343_Records	a0="\xFF\xFF\xFF\xFF", index=3
+	REC_func_4C099343_Records	a0="\x00\x05\x00\x06", index=5
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F6A26, 0x2F6A4A
 func_4C099429_entry_L46_Records:	# 8 x REC_func_4C099429_entry_L46_Records (102 bytes each); read by func_4C099429_entry_L46 0x4C099471 `movhu (d1, a0), d0`; func_4C099429_entry_L8c 0x4C0994B7 `movhu (d0, a0), d0`; func_4C099589_entry_L23 0x4C0995AE `movhu (d1, a0), d0`
@@ -36867,18 +36867,18 @@ func_4C099C6D_entry_L47_Table:	# 51 x u8, 0..127; read by func_4C099C6D_entry : 
 	tab_u8	113, 120, 127	# [48]
 
 TgPartEditLfoLoadA_Records:	# 14 x REC_TgPartEditLfoLoadA_Records (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D08A `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D08A `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D08A `movbu (1, a2), d1` (+62)
-	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x5="\x00", x15="\x00\x00\x00", f19=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", f19=196, x20="\x00\x00\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", f19=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x5="\x00", x15="\x00\x00\x00", f19=200, x20="\x00\x00\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x5="\x00", x15="\x00\x00\x00", f19=136, x20="\x00\x00\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x5="\x00", x15="\x00\x00\x00", f19=200, x20="\x00\x00\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", f6=40, f7=24, x15="\x00\x00\x00", f19=32, x20="\x00\x00\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, x5="\x00", f6=25, x15="\x00\x00\x00", f19=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=196, x20="\x00\x00\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x5="\x00", x15="\x00\x00\x00", flags__=136, x20="\x00\x00\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", index=40, f7=24, x15="\x00\x00\x00", flags__=32, x20="\x00\x00\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, x5="\x00", index=25, x15="\x00\x00\x00", flags__=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", f27=80, f28=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", f9=27, f10=20, f11=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, f2=178, x5="\x00", x15="\x00\x00\x00", f18=30, f19=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, f2=178, x5="\x00", f14=5, x15="\x00\x00\x00", f18=30, f19=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", f14=5, x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
@@ -37040,7 +37040,7 @@ func_4C09A4C2_Table:	# 8 x u8, 0..255; read by func_4C09A4C2 : `movbu	(a1), d0`
 	tab_u8	6, 5, 2, 4, 3, 1, 0, 255
 
 func_4C09A4F0_entry_L65_Records_p0_0:	# REC_func_4C09A4F0_entry_L65_Records_p0 (29 bytes)
-	REC_func_4C09A4F0_entry_L65_Records_p0	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
+	REC_func_4C09A4F0_entry_L65_Records_p0	f0=134, count=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
 data_4C2F78D1:
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x2F78D1, 0x2F78DC
@@ -37048,18 +37048,18 @@ data_4C2F78DC:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x2F78DC, 0x2F78E8
 func_4C03CDDE_entry_L8c_Selected_0:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CDDE_entry_L8c_Selected	f0=65280, f4=53248, p8=TempoSyncSetDispatch
+	REC_func_4C03CDDE_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
 	.space	12, 0x00
 func_4C03CDDE_entry_L8c_Selected_1:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CDDE_entry_L8c_Selected	
 func_4C03CDDE_entry_L8c_Selected_2:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CDDE_entry_L8c_Selected	
 func_4C03CDDE_entry_L8c_Selected_3:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CDDE_entry_L8c_Selected	f0=0xFF0000, f4=0x700000, p8=func_4C174427
+	REC_func_4C03CDDE_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=func_4C174427
 # census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F7924, 0x2F796C
 func_4C03CDDE_entry_L8c_Selected_4:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CDDE_entry_L8c_Selected	f0=255, f4=121, p8=func_4C02DEA8
+	REC_func_4C03CDDE_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DEA8
 	.space	12, 0x00
 func_4C03CDDE_entry_L8c_Selected_5:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CDDE_entry_L8c_Selected	
@@ -37068,30 +37068,30 @@ func_4C03CDDE_entry_L8c_Selected_6:	# REC_func_4C03CDDE_entry_L8c_Selected (12 b
 func_4C03CDDE_entry_L8c_Selected_7:	# REC_func_4C03CDDE_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CDDE_entry_L8c_Selected	
 func_4C03CE9C_entry_L9d_Selected_0:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFFFF00, f4=8192, p8=loc_4C0670FD
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFF00, key_=8192, proc=loc_4C0670FD
 # census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F79B4, 0x2F7A38
 func_4C03CE9C_entry_L9d_Selected_1:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFFFF00, f4=0x204000, p8=func_4C02F659
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFF00, key_=0x204000, proc=func_4C02F659
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F7A44, 0x2F7A68
 func_4C03CE9C_entry_L9d_Selected_2:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFF0000, f4=0x600000, p8=func_4C02F659
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFF0000, key_=0x600000, proc=func_4C02F659
 # census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F7A74, 0x2F7AC8
 func_4C03CE9C_entry_L9d_Selected_3:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFFFFFF, f4=0x701011, p8=loc_4C05186C
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0x701011, proc=loc_4C05186C
 # census: opaque -- unknown-dump: 276 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F7AD4, 0x2F7BE8
 func_4C03CE9C_entry_L9d_Selected_4:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFFFFFF, f4=0x900000, p8=func_4C0524FF
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0x900000, proc=func_4C0524FF
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F7BF4, 0x2F7C18
 func_4C03CE9C_entry_L9d_Selected_5:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFFFFFF, f4=0xB0007E, p8=func_4C0D961C
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0xB0007E, proc=func_4C0D961C
 	.space	12, 0x00
 func_4C03CE9C_entry_L9d_Selected_6:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	f0=0xFFFFFF, f4=0xC00000, p8=loc_4C09D0AC
+	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0xC00000, proc=loc_4C09D0AC
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2F7C3C, 0x2F7C54
 func_4C03CE9C_entry_L9d_Selected_7:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)

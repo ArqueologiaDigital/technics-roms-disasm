@@ -171,22 +171,22 @@ vsprintf_core_entry_Lc8_Table:
 	.long	loc_978080B1
 
 func_9780836B_entry_L10_Records:	# 17 x REC_func_9780836B_entry_L10_Records (8 bytes each); read by func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`; func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f	# [0]
-	REC_func_9780836B_entry_L10_Records	f0=49, p4=loc_978083C3
-	REC_func_9780836B_entry_L10_Records	f0=33, p4=loc_978083F3
-	REC_func_9780836B_entry_L10_Records	f0=1, p4=loc_978083FB
-	REC_func_9780836B_entry_L10_Records	f0=36, p4=loc_978083CB
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f	# [8]
-	REC_func_9780836B_entry_L10_Records	f0=105, p4=loc_978083DB
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	f0=44, p4=loc_978083D3
-	REC_func_9780836B_entry_L10_Records	f0=109, p4=loc_978083E3
-	REC_func_9780836B_entry_L10_Records	f0=46, p4=loc_978083BB
-	REC_func_9780836B_entry_L10_Records	f0=77, p4=loc_978083EB
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f	# [0]
+	REC_func_9780836B_entry_L10_Records	f0=49, proc=loc_978083C3
+	REC_func_9780836B_entry_L10_Records	f0=33, proc=loc_978083F3
+	REC_func_9780836B_entry_L10_Records	f0=1, proc=loc_978083FB
+	REC_func_9780836B_entry_L10_Records	f0=36, proc=loc_978083CB
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f	# [8]
+	REC_func_9780836B_entry_L10_Records	f0=105, proc=loc_978083DB
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	f0=44, proc=loc_978083D3
+	REC_func_9780836B_entry_L10_Records	f0=109, proc=loc_978083E3
+	REC_func_9780836B_entry_L10_Records	f0=46, proc=loc_978083BB
+	REC_func_9780836B_entry_L10_Records	f0=77, proc=loc_978083EB
 	REC_func_9780836B_entry_L10_Records	f0=67	# [16]
 data_9783E564:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
@@ -8163,7 +8163,7 @@ Str_ALL:	.asciz "ALL"
 	.align	4, 0xFF	# pad after Str_ALL
 
 KssSetSfx_DISPProc_L822_Table_p0_0:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A31BC_p0_0+676
+	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A31BC_p0_0+676
 
 names_978A30FC:
 	.long	Str_YES_19, Str_NO_23
@@ -8180,7 +8180,7 @@ Str_3BK_2:	.asciz "3BK"
 Str_ALL_2:	.asciz "ALL"
 
 KssSetSfx_DISPProc_L822_Table_p0_1:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A30FC+28
+	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A30FC+28
 
 names_978A313C:
 	.long	Str_YES_20, Str_NO_24
@@ -8197,7 +8197,7 @@ Str_3BK_3:	.asciz "3BK"
 Str_ALL_3:	.asciz "ALL"
 
 KssSetSfx_DISPProc_L822_Table_p0_2:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A313C+28
+	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A313C+28
 
 names_978A317C:
 	.long	Str_YES_21, Str_NO_25
@@ -8226,7 +8226,7 @@ Str_BK:	.asciz "BK"
 Str_ALL_4:	.asciz "ALL"
 
 KssSetSfx_DISPProc_L822_Table_p0_3:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A317C+28
+	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A317C+28
 
 names_978A31BC:
 	.long	Str_YES_22, names_978A31BC_p0_1
@@ -8297,7 +8297,7 @@ Str_2_COPY_FD_TO_HDD_TECH_FORMAT_2:	.asciz "\x842\x8A\x97COPY FD TO HDD: TECH-FO
 Str_2_COPY_FD_TO_HDD_TECH_FORMAT:	.asciz "\xAC2\x8A\x97COPY FD TO HDD: TECH-FORMAT"
 
 KssCopyFdToHD_DISPProc_L709_Table_p0_0:	# REC_KssCopyFdToHD_DISPProc_L709_Table_p0 (4 bytes)
-	REC_KssCopyFdToHD_DISPProc_L709_Table_p0	p0=Str_2_COPY_FD_TO_HDD_TECH_FORMAT+4
+	REC_KssCopyFdToHD_DISPProc_L709_Table_p0	text=Str_2_COPY_FD_TO_HDD_TECH_FORMAT+4
 
 Str_SAVE_FSB_OK_3:	.asciz "SAVE FSB OK!"
 Str_SAVE_SONG_TO_HDD_OK_3:	.asciz "SAVE SONG TO HDD OK!"
@@ -8498,7 +8498,7 @@ Str_8_COPY_FD_TO_HDD_SMF:	.asciz "\x988\x8A\x97COPY FD TO HDD SMF"
 	.align	4, 0xFF	# pad after Str_8_COPY_FD_TO_HDD_SMF
 
 KssCopySmfFdToHD_DISPProc_L47a_Table_p0_0:	# REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 (4 bytes)
-	REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0	p0=Str_8_COPY_FD_TO_HDD_SMF+4
+	REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0	text=Str_8_COPY_FD_TO_HDD_SMF+4
 
 Str_Save_FSB_OK_3:	.asciz "Save FSB = OK"
 Str_Save_Song_to_HD_OK_3:	.asciz "Save Song to HD = OK"
@@ -10327,9 +10327,9 @@ Str_rb:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x9780851A `mov (0x10, a1), a0`; localeconv 0x9780851A `mov (0x14, a1), a0`; localeconv 0x9780851A `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	p0=func_9780836B_entry_L10_Records+128, p4=func_9780836B_entry_L10_Records+130, p8=func_9780836B_entry_L10_Records+131, p12=func_9780836B_entry_L10_Records+132, p16=func_9780836B_entry_L10_Records+133, p20=func_9780836B_entry_L10_Records+134, p24=func_9780836B_entry_L10_Records+135, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	text=func_9780836B_entry_L10_Records+128, p4=func_9780836B_entry_L10_Records+130, p8=func_9780836B_entry_L10_Records+131, p12=func_9780836B_entry_L10_Records+132, p16=func_9780836B_entry_L10_Records+133, p20=func_9780836B_entry_L10_Records+134, p24=func_9780836B_entry_L10_Records+135, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x9780851A `mov (0xc, a1), a0`; localeconv 0x9780851A `mov (4, a1), a0`; localeconv 0x9780851A `mov (8, a1), a0`
-	REC_localeconv_Records_2	p0=Str_C, p4=Str_empty_441, p8=data_9783E56C, p12=data_9783E56D
+	REC_localeconv_Records_2	text=Str_C, text_=Str_empty_441, p8=data_9783E56C, p12=data_9783E56D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 5 x u32, 0..2542003825; read by localeconv 0x9780851A: `mov (localeconv_Table), d0`
@@ -13624,16 +13624,16 @@ func_978341C0_Var:	# u32, initial value of a RAM variable; read / written by fun
 	.long	0
 
 func_97834719_Table:	# 12 x REC_func_97834719_Table (12 bytes each); read by func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`; func_9783403D 0x9783403D `call func_97834109_entry, 0, 0x18` (+1)
-	REC_func_97834719_Table	p0=Str_FONT, x4="\x03\x00\x00\x00", p8=func_978343AC	# [0]
-	REC_func_97834719_Table	p0=Str_P_4, x4="\x01\x00\x00\x00", p8=loc_9783439E
-	REC_func_97834719_Table	p0=Str_BR, x4="\x02\x00\x00\x00", p8=loc_97834382
-	REC_func_97834719_Table	p0=Str_H1, x4="\x00\x00\x00\x00", p8=loc_97834289
-	REC_func_97834719_Table	p0=Str_H2, x4="\x00\x00\x00\x00", p8=loc_97834289
-	REC_func_97834719_Table	p0=Str_H3, x4="\x00\x00\x00\x00", p8=loc_97834289
-	REC_func_97834719_Table	p0=Str_H4, x4="\x00\x00\x00\x00", p8=loc_97834289
-	REC_func_97834719_Table	p0=Str_H5, x4="\x00\x00\x00\x00", p8=loc_97834289
-	REC_func_97834719_Table	p0=Str_H6, x4="\x00\x00\x00\x00", p8=loc_97834289	# [8]
-	REC_func_97834719_Table	p0=func_97834719_Table_p0_0, x4="\x03\x00\x00\x00", p8=loc_97834285
+	REC_func_97834719_Table	p0=Str_FONT, x4="\x03\x00\x00\x00", proc=func_978343AC	# [0]
+	REC_func_97834719_Table	p0=Str_P_4, x4="\x01\x00\x00\x00", proc=loc_9783439E
+	REC_func_97834719_Table	p0=Str_BR, x4="\x02\x00\x00\x00", proc=loc_97834382
+	REC_func_97834719_Table	p0=Str_H1, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	p0=Str_H2, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	p0=Str_H3, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	p0=Str_H4, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	p0=Str_H5, x4="\x00\x00\x00\x00", proc=loc_97834289
+	REC_func_97834719_Table	p0=Str_H6, x4="\x00\x00\x00\x00", proc=loc_97834289	# [8]
+	REC_func_97834719_Table	p0=func_97834719_Table_p0_0, x4="\x03\x00\x00\x00", proc=loc_97834285
 	REC_func_97834719_Table	p0=Str_empty_395, x4="\x00\x00\x00\x00"
 	REC_func_97834719_Table	x4="\x18\xF4\x8A\x97"
 
