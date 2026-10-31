@@ -174,7 +174,14 @@ The issue gets a comment and stays open.
 
 ## Gates
 
-Run in the worktree at the end of the lane. The results are in the lane's report.
+Run in the worktree at efa438902 (2026-10-31), with `kn7000/build/*.labels` deleted first and the absolute
+overrides (`ROMSET_DIR`, `CA_MIRROR`, `SOFTLIST_DIR`, `SP7001_UPDATES`): `make gate gate-kn7000` exit 0.
+- `assert_byte_identical.py`: "PASS: every rebuilt ROM is byte-identical", 21 images, `kn5000_waveform_ic307`
+  among them, built from the retagged WAVs.
+- `verify-wave`: IC203, IC204, IC207 and IC208 are each 100% byte-identical to the instrument's wave ROM.
+- `pcm_wav.py verify` (round trip): 1,413 / 2,251 / 1,431 of 1,413 / 2,251 / 1,431.
+- `data_incbin_census.py`, read-only: kn7000-wave 3682 generated / 66,319,584 B and generic 0, unchanged. No
+  `.s` file changed, so the census and doc-quality figures cannot move.
 
 ## Website page drafts
 
