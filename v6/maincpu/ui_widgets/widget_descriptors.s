@@ -4177,39 +4177,39 @@ AppEvent_ChainDispatch1_CaseTable:
 ; AppEvent_SubDispatch_CaseTable -- jump table of a compiled `switch` in
 ; AppEvent_SubDispatch (v10/v9 0xf448a4, v7 0xf44896) (`add xwa,
 ; AppEvent_SubDispatch_CaseTable`): case k jumps to
-; AppEvent_SubDispatch_Code_2_Code2 + entry[k] (`lda
-; xix,(AppEvent_SubDispatch_Code_2_Code2); jp t, (xrr+rr)`). 6 u16 offsets; the
+; AppEvent_InlineHandler_DecMinsTrackA + entry[k] (`lda
+; xix,(AppEvent_InlineHandler_DecMinsTrackA); jp t, (xrr+rr)`). 6 u16 offsets; the
 ; reader's bound `cp ..., 5` pins 6 cases.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; AppEvent_SubDispatch_CaseTable[6].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_CaseTable:
-	.short	AppEvent_SubDispatch_Code_2_Code2 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case22 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case23 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case24 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case25 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case26 - AppEvent_SubDispatch_Code_2_Code2
+	.short	AppEvent_InlineHandler_DecMinsTrackA - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case22 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case23 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case24 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case25 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case26 - AppEvent_InlineHandler_DecMinsTrackA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_CaseTable_2
 ; AppEvent_SubDispatch_CaseTable_2 -- jump table of a compiled `switch`
 ; in AppEvent_SubDispatch (v10/v9 0xf448a4, v7 0xf44896) (`add xwa,
 ; AppEvent_SubDispatch_CaseTable_2`): case k jumps to
-; AppEvent_SubDispatch_Code_2_Code + entry[k] (`lda
-; xix,(AppEvent_SubDispatch_Code_2_Code); jp t, (xrr+rr)`). 6 u16 offsets; the
+; AppEvent_InlineHandler_DecMcpTrackA + entry[k] (`lda
+; xix,(AppEvent_InlineHandler_DecMcpTrackA); jp t, (xrr+rr)`). 6 u16 offsets; the
 ; reader's bound `cp ..., 5` pins 6 cases.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; AppEvent_SubDispatch_CaseTable_2[6].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_CaseTable_2:
-	.short	AppEvent_SubDispatch_Code_2_Code - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case16 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case17 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case18 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case19 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case20 - AppEvent_SubDispatch_Code_2_Code
+	.short	AppEvent_InlineHandler_DecMcpTrackA - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case16 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case17 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case18 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case19 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case20 - AppEvent_InlineHandler_DecMcpTrackA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_Table
 ; AppEvent_SubDispatch_Table -- read by AppEvent_SubDispatch (v10/v9
@@ -6264,7 +6264,7 @@ SndArgNmGet_RamPtrsB:	.incbin "includes/generated/naka_widget_descriptors.bin", 
 ; (v10/v9 0xf6a2e2, v7 0xf69ede): ldirw 8 words to its frame and passes
 ; the copy to DirmdEmulator_Entry (v10/v9 0xf9ae97, v7 0xf9aa8a). Four
 ; code addresses inside CmpStepTitleFunc's own region (0xf6a2ff =
-; CmpStep_DataBlock, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
+; CmpStepTitle_OnPaint, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
 ; relocates them by -0x404 through v7_c_divergence.json) -- code entry
 ; points that the accompaniment_engine.s framing does not yet show as
 ; code.

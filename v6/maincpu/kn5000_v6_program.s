@@ -1151,9 +1151,9 @@ ToneGen_ParamTable_0x31A:
 ; evidence: `lda xbc, (this)` then `ld XHL,(XBC+WA) / call T,XHL`
 ToneGen_ParamTable_0x326:
 	.long	UpdSeSel_ProcessStep
-	.long	UpdSeSel_ExtendedOps_Data
+	.long	SeEasy_DrawPage
 	.long	SeMenu_AltUpdate
-	.long	SeMenu_AltUpdate_Data
+	.long	SeTonTon2_DrawPage
 	.long	SeMenu_AltUpdate_Step3Plus_Join
 	.long	SeMenu_AltUpdate_Step3Plus_Join2
 	.long	SeMenu_ControllerUpdate
@@ -1176,12 +1176,12 @@ ToneGen_ParamTable_0x326:
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join19
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join20
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join21
-	.long	SeMenu_CopyWriteUpdate_Step3_Join
+	.long	SeMenu_CopyWriteUpdate_Step3_Join2
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join10
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join11
-	.long	SeMenu_CopyWriteUpdate_Step3_Join2
-	.long	SeMenu_CopyWriteUpdate_Data
-	.long	SeMenu_CopyWriteUpdate_Join
+	.long	SeMenu_CopyWriteUpdate_Step3_Join3
+	.long	SeWrtMem_DrawPage
+	.long	SeMenu_CopyWriteUpdate_Step3_Join
 	.incbin "includes/generated/tonegen_param_table.bin", 0x3a6, 0x1
 ; parameter block of object 0x12b (class 0x01600002, proc ApFunctionProc), registered by InitializeNaka+0x91
 ; (+10 data field of a RegisterObjectTable descriptor, registry 0x27ED2 + 14*index); the slice runs to the next boundary, 76 B; the proc's read length was not measured

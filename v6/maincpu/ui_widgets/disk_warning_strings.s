@@ -217,7 +217,7 @@ CtrlPanel_DispatchByIndex_CaseTable:
 	.short	GetClientBox2_RightOnOffTab16 - CtrlPanel_FrameDispatchTable
 	.short	GetClientBox2_Case50 - CtrlPanel_FrameDispatchTable
 	.short	GetClientBox2_RightOnOffTab32 - CtrlPanel_FrameDispatchTable
-	.short	GetClientBox2_Case52 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightOnOffTab48 - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
@@ -1351,7 +1351,7 @@ GraphicsRender_Start_PtrTable:
 	.long	ColorBlit_WithPaletteSave
 	.long	ColorBlit_Variant_ByteData
 	.long	DrawFunc_Init_Variant1
-	.long	AccDraw_Secondary_Helper20
+	.long	SeGfx_BoundOp06_PrintWord
 	.long	DrawText_ExtLayout_Variant1
 	.long	SeGfx_BoundOp08_ColorBlit
 	.long	SeGfx_BoundOp09_FormatNumber
@@ -1456,17 +1456,17 @@ DrawFunc_Init_Entry_Str_Fmt4d:		.incbin "includes/generated/naka_disk_warning.bi
 SeGfx_BoundOp06_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x24AC, 0x8
 ; [nakarest] naka_disk_warning+0x24b4  +0x24b4..+0x24b8 (0xeab160, 4 B)
 ; [nakarest] Text (4 B at 0xeab160), first string "%1d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry_Str_Fmt1d`).
 DrawFunc_Init_Entry_Str_Fmt1d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B4, 0x4	; "%1d"
 ; [nakarest] naka_disk_warning+0x24b8  +0x24b8..+0x24bc (0xeab164, 4 B)
 ; [nakarest] Text (4 B at 0xeab164), first string "%2d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry2_Str_Fmt2d`).
 DrawFunc_Init_Entry2_Str_Fmt2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B8, 0x4	; "%2d"
 ; [nakarest] naka_disk_warning+0x24bc  +0x24bc..+0x24f4 (0xeab168, 56 B)
 ; [nakarest] Text (56 B at 0xeab168), first string "%3d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry3_Str_Fmt3d`).
 DrawFunc_Init_Entry3_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24BC, 0x4	; "%3d"
 ; SeGfx_BoundOp09_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen

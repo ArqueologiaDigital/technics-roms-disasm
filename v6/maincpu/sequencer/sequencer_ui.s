@@ -3266,12 +3266,12 @@ TrAsGridCheck_OnIndexswDown_Skip5:
 	dec	2, e
 	extz	de
 	ld	wa, de
-	jr	TrAsGrid_CheckTrackType_Join3
+	jr	TrAsGridCheck_OnIndexswDown_Join3
 TrAsGridCheck_OnIndexswDown_Skip6:
 	inc	6, e
 	extz	de
 	ld	wa, de
-TrAsGrid_CheckTrackType_Join3:
+TrAsGridCheck_OnIndexswDown_Join3:
 	calr	TrAsGrid_LookupTable
 	cpl	hl
 	and (61904:16), hl

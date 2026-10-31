@@ -4700,7 +4700,7 @@ SeqBuf_NoteEvent_SaveWritePtr:
 
 ; SeqBuf_DmaChan0_WriteByte: Writes the byte argument into the ring buffer at descriptor 0x203D5 (256 bytes), the one
 ;   inter-CPU DMA channel 0 fills (header bits 7:5 = 0). Not the note-event buffer 0x202CB; the 0x203D5 helpers are
-;   named SeqBuf_SoundEdit_* (Flush, SaveWritePtr, ...) although SeqDMA_MultiWrite_SoundEdit writes 0x204DF, so the
+;   named SeqBuf_SoundEdit_* (Flush, SaveWritePtr, ...) although SeqDMA_MultiWrite_DspSysEx writes 0x204DF, so the
 ;   channel number is the only settled name. Basis: callers + body.
 SeqBuf_DmaChan0_WriteByte:
 	link	xiz, 0
@@ -5239,7 +5239,7 @@ SeqDMA_MultiWrite_NoteEvent:
 	ld a, (xsp + 6)
 	extz wa
 	cp wa, 0:i3
-	jr	ule, SeqDMA_MultiWrite_VoiceMap_Done
+	jr	ule, SeqDMA_MultiWrite_NoteEvent_Done
 
 SeqDMA_MultiWrite_NoteEvent_Loop:
 	ld xwa, (xsp + 2)
@@ -5249,12 +5249,7 @@ SeqDMA_MultiWrite_NoteEvent_Loop:
 	pushw bc
 	call SeqBuf_DmaChan0_WriteByte
 
-; port: v7's label SeqDMA_MultiWrite_NoteEvent_Done is not in v6 -- no v6 bytes correspond to what it named
 
-
-; port: v7's label SeqDMA_MultiWrite_VoiceMap is not in v6 -- no v6 bytes correspond to what it named
-
-; port: v7's label SeqDMA_MultiWrite_VoiceMap_Loop is not in v6 -- no v6 bytes correspond to what it named
 	inc 2, xsp
 	inc 1, iz
 	ld a, (xsp + 6)
@@ -5262,12 +5257,12 @@ SeqDMA_MultiWrite_NoteEvent_Loop:
 	cp iz, wa
 	jr	c, SeqDMA_MultiWrite_NoteEvent_Loop
 
-SeqDMA_MultiWrite_VoiceMap_Done:
+SeqDMA_MultiWrite_NoteEvent_Done:
 	popw iz
 	inc 6, xsp
 	ret
 
-SeqDMA_MultiWrite_DspSysEx:
+SeqDMA_MultiWrite_VoiceMap:
 	dec 6, xsp
 	pushw iz
 	ld (xsp + 2), xbc
@@ -5276,9 +5271,9 @@ SeqDMA_MultiWrite_DspSysEx:
 	ld a, (xsp + 6)
 	extz wa
 	cp wa, 0:i3
-	jr ule, SeqDMA_MultiWrite_DspSysEx_Done
+	jr ule, SeqDMA_MultiWrite_VoiceMap_Done
 
-SeqDMA_MultiWrite_DspSysEx_Loop:
+SeqDMA_MultiWrite_VoiceMap_Loop:
 	ld xwa, (xsp + 2)
 	ld C, (xwa+)
 	ld (xsp + 2), xwa
@@ -5290,15 +5285,15 @@ SeqDMA_MultiWrite_DspSysEx_Loop:
 	ld a, (xsp + 6)
 	extz wa
 	cp iz, wa
-	jr c, SeqDMA_MultiWrite_DspSysEx_Loop
+	jr c, SeqDMA_MultiWrite_VoiceMap_Loop
 
-SeqDMA_MultiWrite_DspSysEx_Done:
+SeqDMA_MultiWrite_VoiceMap_Done:
 	popw iz
 	inc 6, xsp
 	ret
 
 
-SeqDMA_MultiWrite_SoundEdit:
+SeqDMA_MultiWrite_DspSysEx:
 	dec 6, xsp
 	pushw iz
 	ld (xsp + 2), xbc
@@ -5307,9 +5302,9 @@ SeqDMA_MultiWrite_SoundEdit:
 	ld a, (xsp + 6)
 	extz wa
 	cp wa, 0:i3
-	jr	ule, SeqDMA_MultiWrite_SoundEdit_Skip
+	jr	ule, SeqDMA_MultiWrite_DspSysEx_Done
 
-SeqDMA_MultiWrite_SoundEdit_Loop:
+SeqDMA_MultiWrite_DspSysEx_Loop:
 	ld xwa, (xsp + 2)
 	ld C, (xwa+)
 	ld (xsp + 2), xwa
@@ -5321,12 +5316,12 @@ SeqDMA_MultiWrite_SoundEdit_Loop:
 	ld	a, (xsp+6)
 	extz	wa
 	cp	iz, wa
-	jr	c, SeqDMA_MultiWrite_SoundEdit_Loop
-SeqDMA_MultiWrite_SoundEdit_Skip:
+	jr	c, SeqDMA_MultiWrite_DspSysEx_Loop
+SeqDMA_MultiWrite_DspSysEx_Done:
 	popw	iz
 	inc	6, xsp
 	ret
-SeqDMA_MultiWrite_SoundEdit_Data:
+SeqDMA_MultiWrite_SoundEdit:
 	dec	6, xsp
 	pushw	iz
 	ld	(xsp+2), xbc

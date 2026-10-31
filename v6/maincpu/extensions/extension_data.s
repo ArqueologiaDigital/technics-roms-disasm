@@ -418,7 +418,7 @@ Str_Attention_DE:
 	aligned_string "ACHTUNG!"
 Str_Attention_EN:
 	aligned_string "ATTENTION!"
-LngTable_InitSettingWarn:	; returned by SysSureLngCheck
+LngTable_InitSettingWarn:	; returned by SureLngCheck
 	.long Str_InitSettingWarn_EN	; EN
 	.long Str_InitSettingWarn_DE	; DE
 	.long Str_InitSettingWarn_FR	; FR
@@ -1329,8 +1329,8 @@ Toshi_ApFunction_Table:
 	.long SysIniYesFunc
 	.long SysSureShowHideFunc
 	.long AttnLngCheck
-	.long	AttnLngCheck_Data
 	.long	SysSureLngCheck
+	.long	SureLngCheck
 	.long TchSensGridCheck
 	.long FSWAssGridCheck
 	.long PmExpFilterGridCheck

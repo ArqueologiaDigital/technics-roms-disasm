@@ -22,7 +22,7 @@ Scoop_EnvCalc_Handler3 = 0x00F01C0F;
 
 /* Scoop Glide Parameter handlers */
 Scoop_GlideParam_Setup = 0x00F01C82;
-Scoop_GlideParam_Data  = 0x00F01E89;
+Scoop_GlideParam_Data  = 0x00F01D60;
 
 /* Scoop Glide Calculation handlers (inside Scoop_GlideParam_Data) */
 Scoop_GlideCalc_Handler0 = 0x00F01DFD;
@@ -30,6 +30,6 @@ Scoop_GlideCalc_Handler1 = 0x00F01E8E;
 Scoop_GlideCalc_Handler2 = 0x00F01EB4;
 
 /* Scoop Dispatch handlers */
-Scoop_Dispatch_Nop         = 0x00F020D6;
-Scoop_Dispatch_CallFAA98A  = 0x00F020D7;
-Scoop_Dispatch_CallFAB273  = 0x00F02106;
+Scoop_Dispatch_Nop         = 0x00F01FAD;
+Scoop_Dispatch_CallFAA98A  = 0x00F01FAE;
+Scoop_Dispatch_CallFAB273  = 0x00F01FDD;

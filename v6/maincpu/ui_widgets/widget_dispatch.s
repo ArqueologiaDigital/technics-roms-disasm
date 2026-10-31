@@ -1375,7 +1375,7 @@ SeqData_ReadFieldByIndex_CaseTable:
 	.short	SeqData_ReadFieldByIndex_Case14 - SeqData_FieldDispatch
 	.short	SeqData_ReadFieldByIndex_Case15 - SeqData_FieldDispatch
 ArpQueue_ComputeAndEnqueue_Data:	.incbin "includes/generated/sound_config_lookup.bin", 0x17F6, 0x2
-; 39 x u32 routine pointers; SeqChan_StepCmd_Field6_Data + 29 (0xFD773E): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
+; 39 x u32 routine pointers; SeqChan_XferStep_StyleImageBlock1 + 29 (0xFD773E): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
 ; Extent: to the next object's base (loaded by its own reader).
 SeqChan_CommandHandlers:
 	.set SeqChan_CommandDispatch_Table, SeqChan_CommandHandlers
@@ -1428,19 +1428,19 @@ SeqChan_StepCmdHandlers:
 	.long SeqChan_StepCmd_Field4to5
 	.long SeqChan_StepCmd_Field5to6
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field6_Data
+	.long SeqChan_XferStep_StyleImageBlock1
 	.long SeqChan_StepCmd_Field8to9
 	.long SeqChan_StepCmd_Field9to10
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field11_Data
-	.long SeqChan_StepCmd_Field12_Data
+	.long SeqChan_XferStep_CurrentSong
+	.long SeqChan_XferStep_SongSlots
 	.long SeqChan_StepCmd_Field13Write
 	.long SeqChan_ProcessStepCmd
 	.long SeqChan_RetStub_A
 	.long SeqChan_RetStub_B
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field10_Data
-	.long SeqChan_StepCmd_Field13_Data
+	.long SeqChan_XferStep_AccompBlock1
+	.long SeqChan_XferStep_AccompBlock2
 	.long SeqChan_StepCmd_Field20to21
 	.long SeqChan_ProcessStepCmd
 ; 22 x u32 routine pointers; SeqChan_DispatchByType_Data (0xFD78E1): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
@@ -1573,7 +1573,7 @@ SeqData_Handlers:
 	.long MidiPkt_DispatchData_Chan2
 	.long MidiPkt_DispatchData_Chan5
 	.long MidiPkt_DispatchData_Chan6
-	.long MidiPkt_SysExValidator_Data
+	.long SysEx_OnGmSystemOn
 	.long MidiPkt_SysExProcessor_Data
 	.long MidiPkt_SysExBulkTransfer_Data
 ; 4-byte template: SeqData_DispatchLoop_Done (0xFD862C) copies it into its frame (`ld xiy,<this>; ld xix,xsp; ldi85; ldiw` -- 3 bytes).
@@ -8479,13 +8479,13 @@ KeyEvent_SwitchOffsets:
 ; 8 x s16 switch offsets.  HdaeRom_TableEntry2 (0xFEA40A): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEAC14); jp_rr 8,xix,wa` -- targets 0xFEAC14 + offset (no labels yet).
 HdaeRomEntry2_SwitchOffsets:
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_Volume - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_ReverbSend - PanelTag72_ApplyPartMix_Volume
 ; 15 x s16 switch offsets.  SndParam_ApplySystemParam_SendEqualizerOnOff_Skip14 (0xFEACF7): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEB4EE); jp_rr 8,xix,wa` -- targets 0xFEB4EE + offset (no labels yet).
@@ -9368,7 +9368,7 @@ TmFlash_ByteMap:
 ; SoundData_InitFuncTable; kn5000_v10_program.s's absolute .set
 ; COMM_InitFuncTable names the same address).
 COMM_InitFuncTable:
-	.long CommParam_SetComplete_Block
+	.long COMM_ResetSentValues
 	.long COMM_ResetSentValues_Phase1
 	.long CommParam_SetComplete_Return2
 	.long CommParam_SetComplete_Return3

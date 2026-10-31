@@ -689,10 +689,10 @@ Bitmap_Accger16:	.incbin "includes/generated/naka_technichord_strings.bin", 0x33
 ;
 ; What it shows (render): A 294 x 6 strip of red slanted wedge marks on
 ; the green background, spaced unevenly across the width. What it marks
-; on screen was not traced (the instance that uses BitmapDrawsw was not
+; on screen was not traced (the instance that uses BitmapAccita16 was not
 ; followed); the label name Bitmap_SomeArrows predates this header.
 ;
-; Reader: BitmapDrawsw (v10/v9 0xf7b4c7, v7 0xf7b0c3) answers 0x1e000a1
+; Reader: BitmapAccita16 (v10/v9 0xf7b4c7, v7 0xf7b0c3) answers 0x1e000a1
 ; with this address, 0x1e000a2 with 0x126 (width 294) and 0x1e000a3 with
 ; 0x6 (height 6). The routine is one entry of the 44-entry ApFunction
 ; table that InitializeMurai (v10/v9 0xf7ad77, v7 0xf7a973) registers

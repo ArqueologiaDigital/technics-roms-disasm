@@ -43,10 +43,10 @@ LED_pattern_test_data:
 ;   MidiOut    (0x01f785) -> midi_serial_routines  (not in this table)
 SeqRingBuf_WriteDispatch_Table:
 	.long SeqDMA_MultiWrite_NoteEvent	; 0: -> NoteEvent buffer (block writes)
-	.long	SeqDMA_MultiWrite_SoundEdit_Data	; 1: -> SoundEdit buffer
+	.long	SeqDMA_MultiWrite_SoundEdit	; 1: -> SoundEdit buffer
 	.long SeqDMA_WriteMidi_NoteOn		; 2: -> NoteEvent buffer (MIDI 0x90 Note On)
-	.long	SeqDMA_MultiWrite_DspSysEx	; 3: -> VoiceMap buffer
-	.long	SeqDMA_MultiWrite_SoundEdit	; 4: -> DspSysEx buffer
+	.long	SeqDMA_MultiWrite_VoiceMap	; 3: -> VoiceMap buffer
+	.long	SeqDMA_MultiWrite_DspSysEx	; 4: -> DspSysEx buffer
 	.long SeqDMA_Nop			; 5: unused
 	.long SeqDMA_Nop			; 6: unused
 	.long SeqDMA_Nop			; 7: unused

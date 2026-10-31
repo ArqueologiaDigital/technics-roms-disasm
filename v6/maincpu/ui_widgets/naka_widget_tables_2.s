@@ -3071,7 +3071,7 @@ PmemOutLGridCheck_Row0_Str_OFF:	.incbin "includes/generated/naka_widget_tables_2
 PmemOutLGridCheck_OnRamData_Str_Fmt3d:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB2, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_2:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB8, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_OFF:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DBE, 0x6	; " OFF "
-PmemOutLGridCheck_OnRamData_Str_Fmt3d_3:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DC4, 0x6	; " %3d "
+PmemOutLGridCheck_OnRamData_Str_Fmt3d_4:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DC4, 0x6	; " %3d "
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] NakaInst_ON
 ; NakaInst_ON -- label kept because other files use it; 82 bytes
@@ -3082,7 +3082,7 @@ PmemOutLGridCheck_OnRamData_Str_Fmt3d_3:	.incbin "includes/generated/naka_widget
 NakaInst_ON:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DCA, 0x6
 PmemOutLGridCheck_OnRamData_Str_OFF_6:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DD0, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_OFF_2:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DD6, 0x6	; " OFF "
-PmemOutLGridCheck_OnRamData_Str_Fmt3d_4:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DDC, 0x6	; " %3d "
+PmemOutLGridCheck_OnRamData_Str_Fmt3d_10:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DDC, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_5:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DE2, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_OFF_3:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DE8, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_6:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DEE, 0x6	; " %3d "
@@ -3626,12 +3626,12 @@ Murai_ApFuncTable_121:
 	.long LswLocalControl
 	.long LswMidiChannel
 	.long BitmapAccger16
-	.long	BitmapDrawsw
+	.long	BitmapAccita16
 	.long LswPercDecay
 	.long LswPercLevel
 	.long LswDrawAttack
 	.long LswDrawRelease
-	.long	BitmapAccger16_Data
+	.long	BitmapDrawsw
 	.long LswSound
 	.long ApPreControl
 	.long BitmapTechnics
