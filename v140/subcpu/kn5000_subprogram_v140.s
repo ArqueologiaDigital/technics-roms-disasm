@@ -11152,7 +11152,7 @@ Voice_PortaLevel_ScaleAndPack:
 ; 0x0451EE, 0x0451F0, 0x0451F2, 0x0451F4, 0x0451F6, 0x0451DC, 0x0451DE (TG regs 0x8C0,
 ; 0x500, 0x900, 0x940, 0x980, 0x9C0, 0xA00, 0xA40, 0x440, 0x480).
 ; In: XWA = per-voice record, XHL = its tone record. Then it selects the reg-0x180 value
-; from the per-voice routing byte at 0x04138E + channel*0x11F: value 1 -> voice+43 = 0,
+; from the part's TG pan mode byte (CC 0x9D) at 0x04138E + channel*0x11F: value 1 -> voice+43 = 0,
 ; value 2 -> voice+43 = 0x7F, anything else -> voice+43 = tonerec[0]. voice+43 is stored to
 ; 0x0451D8 (TG reg 0x180) and 0x0451E0 (TG reg 0x4C0) is zeroed.
 ; NOT teardown-only, and "silence" is not established. The only two callers are
@@ -12004,7 +12004,7 @@ Voice1_UpdatePitch_WriteAltFreq:
 	call ToneGen_WriteExtParams_15
 
 ; Shared tail (also the no-slot bail-out target of Voice_SubVoice_ResolveSlot). Reads the
-; per-voice routing byte at 0x04138E + channel*0x11F to pick the reg-0x180 value.
+; part's TG pan mode byte (CC 0x9D) at 0x04138E + channel*0x11F to pick the reg-0x180 value.
 Voice1_UpdatePitch_WriteStereoField:
 	ld xwa, (xsp + 22)
 	ld a, (xwa + 4)
@@ -12434,6 +12434,8 @@ Voice_ComputePitchBend2_Write:
 	ld (Payload_Bss_Start+0x635c:24), de
 	ret
 
+; A = channel (part), BC = a voice's gate/control word.  Returns HL = BC patched by the part's gate routing
+; mode byte (CC 0x9B, 0x04138D + part*0x11F): see Voice_CC_SetGateRoutingMode.
 Voice_Apply_GateRouting:
 	ld e, a
 	extz de
@@ -19029,10 +19031,13 @@ Voice_CC_SetModWheelRange_Else:
 	andw	(xbc+wa), 0xfffd
 	ret
 
-; Voice_CC_SetReverbDepth -- CC 0x91: Store reverb depth
-; Stores value at voice + 0x7F (base 0x04137F). Range 0x00-0x7F.
-; WA = part, C = CC 0x91 value 0..0x7F.  Stores the byte at 0x04137F + part*0x11F (part+0x17).
-Voice_CC_SetReverbDepth:
+; WA = part, C = CC 0x91 value.  Stores the byte at 0x04137F + part*0x11F (part+0x17): the part's own
+; velocity-switch configuration, the per-part twin of the global byte 0x04134B (Voice_SetVelSwitchConfig,
+; F0 50 91).  Its only readers are the Voice_Env_ApplyVelocity_Type0/_Type2 dispatchers (sub-cases 2 and 3):
+; bit 3 (type 0/1) or bit 4 (type 2) set = do nothing, else bit 0 (case 2) or bit 0 with bit 1 clear
+; (case 3) installs the patch's +0x2A octave-shift nibble.  Main-CPU sender: SwbtB2_Code9A_Listener (parts
+; 0..2).  Was called "reverb depth" (no reader supports that), renamed 2026-10-31.
+Voice_CC_SetVelSwitchConfig:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (Payload_Bss_Start+0x2509:24)
@@ -19067,9 +19072,12 @@ Voice_CC_SetSustainLength:
 	ld	(xde+wa), c
 	ret
 
-; Voice_CC_SetDelayDepth -- CC 0x9B: Store delay depth at voice+0x25
-; WA = part, C = CC 0x9B value.  Stores the byte at 0x04138D + part*0x11F (part+0x25).
-Voice_CC_SetDelayDepth:
+; WA = part, C = CC 0x9B value.  Stores the byte at 0x04138D + part*0x11F (part+0x25).  Its only reader is
+; Voice_Apply_GateRouting, which patches the gate/control word of every voice of the part: low nibble 0 = force
+; bits [11:9] to 7, 1 = leave them, 2 = force them to 1; high nibble 0x00 / 0x10 / 0x20 does the same to
+; [14:12].  Reset value 1.  No main-CPU sender was found in v10 (the CC numbers above 0x7F cannot arrive
+; from MIDI IN).  Was called "delay depth", renamed 2026-10-31.
+Voice_CC_SetGateRoutingMode:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (Payload_Bss_Start+0x2517:24)
@@ -19096,9 +19104,12 @@ VoiceCC_SetKeyScaling_ClearBit:
 	andw	(xbc+wa), 0xfeff
 	ret
 
-; Voice_CC_SetDelayFeedback -- CC 0x9D: Store delay feedback at voice+0x26
-; WA = part, C = CC 0x9D value.  Stores the byte at 0x04138E + part*0x11F (part+0x26).
-Voice_CC_SetDelayFeedback:
+; WA = part, C = CC 0x9D value.  Stores the byte at 0x04138E + part*0x11F (part+0x26).  Its readers
+; (Voice_Level_ClearAllOutputRegs, Voice1_UpdatePitch_WriteStereoField, Voice_Step_ExprRamp) choose the low 7
+; bits of the voice's TG register 0x180 (pan on technics-docs/tone-generator.md, 0x40 = centre): 1 = 0x00,
+; 2 = 0x7F, anything else = the voice's own value.  Reset value 0.  No main-CPU sender was found in v10.
+; Was called "delay feedback", renamed 2026-10-31.
+Voice_CC_SetTgPanMode:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (Payload_Bss_Start+0x2518:24)
@@ -21824,8 +21835,9 @@ Voice_PortamentoSlots_WriteHW_Exit:
 ; Notes: Handles standard MIDI CCs: Mod Wheel(1), Volume(7), Pan(10),
 ;        Expression(11), Sustain(64), and the KN5000 part parameters the main CPU's SndPart_SetParam sends
 ;        as the controller of their Lsw number: 0x5B reverb send, 0x5D DSP-effect send, 0x80 bend range,
-;        0x81 tuning, 0x82 key shift, 0x95 glide pedal, 0x97 sustain length, 0x9C key scaling (0x5E, 0x91,
-;        0x9B and 0x9D are not sent by SndPart_SetParam; their meaning is not established)
+;        0x81 tuning, 0x82 key shift, 0x95 glide pedal, 0x97 sustain length, 0x9C key scaling.  0x91 (the
+;        part's velocity-switch configuration) comes from SwbtB2_Code9A_Listener; 0x9B (gate routing override)
+;        and 0x9D (TG pan override) are read by the voice code but no main-CPU sender was found in v10
 ; ===========================================================================
 ; MIDI Control Change entry point, called from MIDI_Dispatch (0x034D93 family).
 ; XWA -> 4-byte message: +0 status, +1 part 0..0x19, +2 controller, +3 value.
@@ -21843,17 +21855,17 @@ Voice_CtrlChange:
 	jrl nc, Voice_CC_Exit
 	ld a, (xiz + 2)
 	cp a, 0x9D
-	jrl z, Voice_CC_9D
+	jrl z, Voice_CC_TgPanMode
 	cp a, 0x9C
 	jrl z, Voice_CC_KeyScaling
 	cp a, 0x9B
-	jrl z, Voice_CC_9B
+	jrl z, Voice_CC_GateRoutingMode
 	cp a, 0x97
 	jrl z, Voice_CC_SustainLength
 	cp a, 0x95
 	jrl z, Voice_CC_GlidePedal
 	cp a, 0x91
-	jrl z, Voice_CC_91
+	jrl z, Voice_CC_VelSwitchConfig
 	cp a, 0x5E
 	jrl z, Voice_CC_Portamento
 	cp a, 0x5D
@@ -22054,8 +22066,8 @@ Voice_CC_KeyShift:
 	calr Voice_CC_SetKeyShift
 	jr Voice_CC_Exit
 
-; CC 0x91 (proprietary): reverb depth -> Voice_CC_SetReverbDepth.
-Voice_CC_91:
+; CC 0x91 (proprietary): the part's velocity-switch configuration -> Voice_CC_SetVelSwitchConfig.
+Voice_CC_VelSwitchConfig:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22063,7 +22075,7 @@ Voice_CC_91:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetReverbDepth
+	calr Voice_CC_SetVelSwitchConfig
 	jr Voice_CC_Exit
 
 ; CC 0x95: the part's GLIDE PEDAL switch (main-CPU Lsw 0x603, sent as 0 / 0x7F) -> Voice_CC_SetGlidePedal.
@@ -22090,8 +22102,8 @@ Voice_CC_SustainLength:
 	calr Voice_CC_SetSustainLength
 	jr Voice_CC_Exit
 
-; CC 0x9B: delay depth -> Voice_CC_SetDelayDepth.
-Voice_CC_9B:
+; CC 0x9B (proprietary): the part's gate-word routing override -> Voice_CC_SetGateRoutingMode.
+Voice_CC_GateRoutingMode:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22099,7 +22111,7 @@ Voice_CC_9B:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetDelayDepth
+	calr Voice_CC_SetGateRoutingMode
 	jr Voice_CC_Exit
 
 ; CC 0x9C: the part's KEY SCALING switch (main-CPU Lsw 0x602, sent as 0 / 0x7F) -> Voice_CC_SetKeyScaling.
@@ -22114,8 +22126,8 @@ Voice_CC_KeyScaling:
 	calr Voice_CC_SetKeyScaling
 	jr Voice_CC_Exit
 
-; CC 0x9D: delay feedback -> Voice_CC_SetDelayFeedback.
-Voice_CC_9D:
+; CC 0x9D (proprietary): the part's TG register 0x180 (pan) override -> Voice_CC_SetTgPanMode.
+Voice_CC_TgPanMode:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22123,7 +22135,7 @@ Voice_CC_9D:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetDelayFeedback
+	calr Voice_CC_SetTgPanMode
 
 ; Common exit: pop XIZ, ret.  Also the landing pad for the five ignored channel-mode CCs.
 Voice_CC_Exit:
@@ -22689,10 +22701,10 @@ Voice_SystemMsg_Ignore:
 ; DSP_Config_Init, DSP_Reset, Voice_Reset_Engine(0), DSP_ResetWriteBufferPtr,
 ; VoiceSlot_ClearAll and `0x041342 = 0`), and from CC 0x79.
 ; Per part 0..0x19 it applies, in order: mod wheel 0, volume 0x7F, pan 0x40, expression 0x7F,
-; sustain 0, sostenuto 0, soft 0, portamento 0, Voice_PortamentoSlots_WriteHW,
-; Voice_NoteState_Clear, Voice_SetLFO_ActiveFlag, portamento rate 2, portamento depth 0x80,
-; portamento time 0x40, reverb depth 0, chorus enable 0, chorus depth 6, delay depth 1,
-; delay enable 0, delay feedback 0.
+; sustain 0, reverb send 0, DSP-effect send 0, portamento 0, Voice_PortamentoSlots_WriteHW,
+; Voice_NoteState_Clear, Voice_SetLFO_ActiveFlag, bend range 2, tuning 0x80 (centre),
+; key shift 0x40 (none), velocity-switch configuration 0, glide pedal 0, sustain length 6, gate routing
+; mode 1, key scaling 0, TG pan mode 0.
 ; Then globally: Voice_SetPolyphonyMode(2), the two ret-stubs with 0x7F,
 ; Voice_SetMasterTuneAndApply(0x40), Voice_SetPitchBendRange(0), Voice_SetKeyShiftEnable(0),
 ; ScaleTune_Set_Global_Mode(0), Voice_SetRhythmMode(0), Voice_SetVelSwitchConfig(0),
@@ -22765,7 +22777,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetReverbDepth
+	calr Voice_CC_SetVelSwitchConfig
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
@@ -22777,7 +22789,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 1:i3
-	calr Voice_CC_SetDelayDepth
+	calr Voice_CC_SetGateRoutingMode
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
@@ -22785,7 +22797,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetDelayFeedback
+	calr Voice_CC_SetTgPanMode
 	inc1b_erp 0xFB
 	cp_erpb 0xFB, 0x1A
 	jrl c, Voice_ResetAllControllers_LoopBody
