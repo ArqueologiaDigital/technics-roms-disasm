@@ -3235,7 +3235,7 @@ class Gen:
                 found[t].add((c["d0"], fn, re.sub(r"_entry$", "", acc.func or "?"), acc.cpu or 0))
         n = 0
         for a in sorted(found):
-            uses = sorted(found[a], key=lambda u: (u[3], u[2]))
+            uses = sorted(found[a], key=lambda u: (u[3], u[2], u[1], u[0]))   # (a full key: a set's order varies)
             size = min(u[0] for u in uses)
             if not 0 < size <= 4096 or not self.in_data(a) or not self.free(a, size):
                 continue
