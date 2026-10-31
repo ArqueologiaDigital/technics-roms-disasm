@@ -2,6 +2,10 @@
 
 **Status: FOR REVIEW. Nothing below has been done.**
 
+⚠ Superseded as a status line: the plan was approved (§10) and is being carried out; the
+operational state, phase by phase, is `notes/HANDOFF-join-split-kernel.md` (2026-10-31: A1, A2, A4 and B3
+done, A3 waiting on an owner decision).
+
 Written after measuring the tree rather than from assumption; every number here has a command
 beside it.
 

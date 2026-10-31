@@ -10,6 +10,7 @@ that did A4 and B3 (they live beside the code they rewrite, not here).
 | `kernel_a3_shareability.py`                              | A3: could `.equ` alone (a third `kernel_*.inc`) make `kernel/kernel.s` emit the KN5000 sub-CPU's kernel byte for byte? | `UNIDASM=/home/fsanches/compartilhado/mame-sony-video/unidasm python3 notes/open4-e-probes/kernel_a3_shareability.py --selftest` (in `wsa1/`) |
 | `../../scripts/tools/join_maincpu_link.py`               | B3: are prom_b and prom_a one link, with no cross-image name held as a number, and did the rewrite move any value?    | `python3 scripts/tools/join_maincpu_link.py --selftest` and `--proof 130735749` (in `wsa1/`, after `make all`)                  |
 | `../../../scripts/tools/split_v142_subcpu_core.py`       | A4: is the split v142 sub-CPU core the same text, moved, and does every cut fall between routines?                    | `python3 scripts/tools/split_v142_subcpu_core.py --check 130735749` (repo root)                                              |
+| `census_battery.sh`                                      | A4: did any census silently stop seeing a moved file?  Run before and after, diff the two directories                 | `bash wsa1/notes/open4-e-probes/census_battery.sh OUTDIR` (repo root, on a built tree)                                        |
 
 ## What the A3 measurement says (2026-10-31)
 
@@ -31,3 +32,17 @@ unpaired KN5000 instruction inside its span, the class the script calls not robu
 second shareable routine.  Either way, extending the shared source to the KN5000 needs `.if/.else`
 round instructions or a second spelling per CPU, which the A1 design (`HANDOFF-join-split-kernel.md`, "symbolic `.equ` per CPU,
 NOT `.if/.else`") excluded -- an owner decision, recorded as the blocker in the handoff.
+
+## What the A4 census battery showed (2026-10-31)
+
+Before (`a93482432`) and after (`b5a4eb87f`) the split, on a built tree:
+`kn5000_source_coverage.py`, `data_incbin_census.py`, `data_range_census.py --images
+v142,v141,v140,subboot` and the dispatch census (`build_maps.py` + `census.py --report`) printed the
+same figures.  `doc_quality_census.py` moved for v142, v141 and v140 alike: files 5 -> 19, routines
+957 -> 964, routines without a header 155 -> 157.  That is its routine rule, not a lost file: a label
+that another FILE jumps to counts as a routine, and the cuts made seven such labels per tree --
+`Audio_System_Init`, `DSP_State_ApplyTask`, `TaskSem_Release`, `Voice_Build_OutputLevel`,
+`Voice_ResetAllControllers` (with headers) and `RingBuf_Init_512`, `TaskSched_Wait` (without).
+⚠ The census only sees git-TRACKED files: run it after `git add`, or the new files are skipped and
+v142 shows 122 routines.  `claims_lint.py` is left out: it crashes on a directory before any change
+(IsADirectoryError, on main at ba1ed48f4 as well).
