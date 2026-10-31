@@ -95,6 +95,7 @@ TREES = {
     "kn7000-picture":    ["kn7000/src/picture", "kn7000/src/picture.s"],
     "kn7000-wave":       ["kn7000/src/wave"],
     "kn7000-customdata": ["kn7000/src/customdata"],
+    "kn7000-ic21own":    ["kn7000/src/ic21own"],
     "kn6000-customdata": ["kn6000/src/customdata"],
     "kn7000-floppy":     ["floppy/kn7000"],
     "kn6000-floppy":     ["floppy/kn6000"],
