@@ -19,7 +19,11 @@ own offset, the whole bank tiled exactly by Font5_KernTable (verified: the 224 e
 monotonic, gapless, and sum to 0xE70). Its widths are read from the kern table already typed
 out in table_data/fonts.s, so the source of truth stays in one place.
 
-    python3 scripts/build/font_images.py export   # blob -> 9 sheets (run once)
+The bank offsets below are into the ROM range 0x944D78.. that `includes/icons_to_strings.bin` used to
+hold; `export` / `verify` read it from the tracked reference image (scripts/build/retired_blobs.py,
+lane media-cleanup 2026-10-31).  `build` reads only the PNG sheets and fonts.s.
+
+    python3 scripts/build/font_images.py export   # reference image -> 10 sheets (maintenance only)
     python3 scripts/build/font_images.py build    # sheets -> bins (build step)
     python3 scripts/build/font_images.py verify   # assert the round trip is exact
 """
@@ -29,7 +33,8 @@ import sys
 from PIL import Image
 
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
-BLOB = REPO / 'table_data' / 'includes' / 'icons_to_strings.bin'
+sys.path.insert(0, str(REPO / 'scripts' / 'build'))
+import retired_blobs  # noqa: E402
 IMG = REPO / 'table_data' / 'images' / 'fonts'
 GEN = REPO / 'table_data' / 'includes' / 'generated'
 NGLYPH = 224
@@ -106,7 +111,7 @@ def cell(width):
 
 def export():
     IMG.mkdir(parents=True, exist_ok=True)
-    blob = BLOB.read_bytes()
+    blob = retired_blobs.read('icons_to_strings')   # ROM 0x944D78..
     for label, off, ln, w, h in BANKS:
         cw = cell(w)
         ncol = cw // 8
@@ -163,7 +168,7 @@ def build():
 
 
 def verify():
-    blob = BLOB.read_bytes()
+    blob = retired_blobs.read('icons_to_strings')   # ROM 0x944D78..
     bad = 0
     for label, off, ln, w, h in BANKS:
         want = blob[off:off + ln]

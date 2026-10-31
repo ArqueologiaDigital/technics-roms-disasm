@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Audit which bytes of table_data/includes/icons_to_strings.bin are still live.
 
-The file is a verbatim slice of the factory Table Data dump: file offset 0 is
+That file was deleted on 2026-10-31 (lane media-cleanup): this audit had shown that no LLVM
+`.incbin` reads any byte of it ("LLVM slices: 0 directives, 0 bytes"), only the archived ASL
+mirror, which no longer builds for other reasons.  The range is now read from the tracked
+reference image through scripts/build/retired_blobs.py (SHA-256 checked), so the audit still
+answers the same question: does any live source read ROM 0x944D78-0x9F9FFF verbatim?
+
+The file was a verbatim slice of the factory Table Data dump: file offset 0 is
 ROM 0x944D78 and the last byte is ROM 0x9F9FFF (742,024 bytes).  It predates
 the source conversion, so most of the region it covers is now emitted from
 real source and only a handful of sized `.incbin` slices still read from it.
@@ -34,8 +40,8 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 
-BLOB_PATH = os.path.join(PROJECT_DIR, "table_data", "includes",
-                         "icons_to_strings.bin")
+sys.path.insert(0, os.path.join(PROJECT_DIR, "scripts", "build"))
+import retired_blobs  # noqa: E402
 ROM_PATH = os.path.join(PROJECT_DIR, "original_ROMs", "kn5000_table_data.rom")
 ASL_PATH = os.path.join(PROJECT_DIR, "archive", "asl", "table_data",
                         "kn5000_table_data.asm")
@@ -115,7 +121,7 @@ def main():
                         help="list every unreferenced run, not just the tail")
     args = parser.parse_args()
 
-    blob = open(BLOB_PATH, "rb").read()
+    blob = retired_blobs.read("icons_to_strings")
     rom = open(ROM_PATH, "rb").read()
     errors = []
 

@@ -15,7 +15,8 @@ These are emitted as .byte sequences after the ASCII portion.
 import re
 import sys
 
-BINARY_FILE = 'hdae5000/includes/code_29af2d_2fffff.bin'
+# The blob it read (hdae5000/includes/code_29af2d_2fffff.bin) was deleted on 2026-10-31; the same
+# range comes from the tracked reference image (scripts/build/retired_blobs.py).
 SOURCE_FILE = 'hdae5000/hd-ae5000_v2_06i.s'
 BIN_START = 0x29AF2D
 
@@ -81,8 +82,10 @@ CONVERT_ADDRS = {
 
 
 def load_binary():
-    with open(BINARY_FILE, 'rb') as f:
-        return f.read()
+    import os
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'build'))
+    import retired_blobs
+    return retired_blobs.read('code_29af2d_2fffff')
 
 
 def is_printable(b):

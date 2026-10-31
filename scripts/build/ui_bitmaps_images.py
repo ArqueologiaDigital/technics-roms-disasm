@@ -17,7 +17,11 @@ rule that made the HD-AE5000 icon decode one byte wide for months.
 The PNGs store palette INDICES, not colours (PIL mode 'P'), so a pixel byte is the ROM byte.
 Row padding is preserved in `ui_bitmaps_padding.json` because it is not always zero.
 
-    python3 scripts/build/ui_bitmaps_images.py export   # blob -> 87 PNGs (run once)
+The manifest's `src` / `off` still name that blob and the offset into it; the blob itself is gone
+(lane media-cleanup, 2026-10-31) and `export` / `verify` read the same ROM range, 0x912C00.., from the
+tracked reference image through scripts/build/retired_blobs.py.  `build` reads only the PNGs.
+
+    python3 scripts/build/ui_bitmaps_images.py export   # reference image -> 87 PNGs (maintenance only)
     python3 scripts/build/ui_bitmaps_images.py build    # PNGs -> bins (build step)
     python3 scripts/build/ui_bitmaps_images.py verify   # assert round trip is byte-exact
 """
@@ -28,6 +32,8 @@ import sys
 from PIL import Image
 
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO / 'scripts' / 'build'))
+import retired_blobs  # noqa: E402
 IMG = REPO / 'table_data' / 'images' / 'ui_bitmaps'
 GEN = REPO / 'table_data' / 'includes' / 'generated'
 MANIFEST = REPO / 'table_data' / 'images' / 'ui_bitmaps_manifest.json'
@@ -37,6 +43,11 @@ PALETTE = REPO / 'v10' / 'maincpu' / 'images' / 'Palette_8bit_RGBA.bin'
 
 def manifest():
     return json.loads(MANIFEST.read_text())
+
+
+def source(e):
+    """The ROM bytes a manifest entry's `src` named (maintenance only: export and verify)."""
+    return retired_blobs.read(pathlib.Path(e['src']).stem)
 
 
 def rgb_palette():
@@ -49,7 +60,7 @@ def export():
     pal = rgb_palette()
     pads = {}
     for e in manifest():
-        blob = (REPO / 'table_data' / e['src']).read_bytes()
+        blob = source(e)
         data = blob[e['off']:e['off'] + e['len']]
         w, h, st = e['w'], e['h'], e['stride']
         img = Image.new('P', (w, h))
@@ -90,7 +101,7 @@ def verify():
     pads = json.loads(PADS.read_text())
     bad = 0
     for e in manifest():
-        blob = (REPO / 'table_data' / e['src']).read_bytes()
+        blob = source(e)
         want = blob[e['off']:e['off'] + e['len']]
         if rebuild(e, pads) != want:
             bad += 1

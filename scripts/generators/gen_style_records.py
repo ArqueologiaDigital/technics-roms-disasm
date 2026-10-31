@@ -15,7 +15,10 @@ Reads the original KN5000 table-data ROM and emits two .s fragments:
                             plus the 96-byte leftover residue of each 4KB page.
 
 The OUTPUT files are the authoritative sources; this script is the one-time
-generator kept for provenance.  It verifies every structural invariant it
+generator kept for provenance.  They have been edited by hand since (headers,
+names), so re-running it does not reproduce them.  Its residue line emits the
+current form (2026-10-31): the residue was a slice of the deleted
+includes/icons_to_strings.bin and is now derived by gen_stale_help_duplicate.py.  It verifies every structural invariant it
 relies on and byte-verifies its own output against the ROM before writing.
 """
 import os
@@ -38,7 +41,6 @@ TBL_C2C5 = 0x986000
 TBL_DEFAULT = 0x987000
 TBL_ENTRIES = 1000
 TBL_RESIDUE = 96        # bytes left of each 4KB page after the 1000 entries
-BLOB_BASE = 0x944D78    # table_data/includes/icons_to_strings.bin ROM base
 
 rom = open(ROM_PATH, "rb").read()
 
@@ -208,7 +210,7 @@ out.append("""\
 ; Byte-exact slice of the dump; do not rebuild.
 ; -----------------------------------------------------------------------------
 StyleRecords_Residue:
-\t.incbin\t"includes/icons_to_strings.bin", 0x%x, 0x%x
+\t.incbin\t"includes/help_databases/stale_style_records_residue.bin"\t; census: generated -- scripts/generators/gen_stale_help_duplicate.py, from the live English+German SLIDE8K build products
 
 ; -----------------------------------------------------------------------------
 ; Ramp remnant: 16-bit LE values, low byte +10 mod 256, high byte +8 on every
@@ -216,7 +218,8 @@ StyleRecords_Residue:
 ; 0xa74b to 0x7fe9 and is cut off by the stale help DB at 0x983B3A.
 ; -----------------------------------------------------------------------------
 StyleRecords_ResidueRamp:
-""" % (GRID_END - BLOB_BASE, residue_len))
+""")
+assert residue_len == 0x983557 - 0x981570   # the 8,167 B gen_stale_help_duplicate.py derives
 verify += rd(GRID_END, residue_len)
 
 def ramp_step(v):
