@@ -445,3 +445,13 @@ are not a slide animation, and no widget record uses them."
 - `PsMenuBox_Paint` / `_Confirm` / `_HitTest` handle EVT_DRAW / EVT_PARA_DRAW / EVT_CHECK_EDIT_SW (same naming problem
   as PsGridBox, not renamed here).
 - `VGA_Initialize` reads its 256-entry palette from the 16-bit address 0xE3E8, spelled as a number.
+
+## Gates and censuses (2026-10-31)
+
+- `make -j3 gate`: exit 0 at 3a20d0b7c (symbol files regenerated, `l2_symbol_reference.py --check` PASS).  The
+  view-link headers added after it are comments only (v10 and v5 rebuilt and compared).
+- `doc_quality_census.py --compare` (read-only): every touched figure fell (v10 routines without a header
+  5471 -> 5469, numeric operands 18421 -> 18409; the same in v9, v7, v6) except **v5 routines without a header,
+  7829 -> 7830, which is not this lane's**: the base commit 130735749 already measures 7832 (`--routines v5`, NO-HEADER
+  count), and this lane takes it to 7830 (VGA_ConfigExtSequencer and VGA_WritePalette256_Unterminated gained headers;
+  the new VGA_ConfigExtSequencer_AltA has one).  The committed snapshot doc-quality-2026-10-31-02 predates a merge.

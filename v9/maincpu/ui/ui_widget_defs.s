@@ -11729,6 +11729,9 @@ DrawWidget_Hline_4_Draw:
 	pop xiz
 	ret
 
+; Returns in XHL the id of view XWA's next sibling: the same object table with the index in the
+; instance's +8 word, or 0xffffffff when that word is 0xffff (last sibling).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
 GetNextView:
 	push xiz
 	ld xiz, xwa
@@ -11781,6 +11784,9 @@ DrawWidget_Hline_6_Draw:
 	pop xiz
 	ret
 
+; Returns in XHL the id of view XWA's previous sibling: the same object table with the index in the
+; instance's +10 word, or 0xffffffff when that word is 0xffff (first sibling).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
 GetPrevView:
 	push xiz
 	ld xiz, xwa
@@ -11833,6 +11839,9 @@ DrawWidget_Hline_8_Draw:
 	pop xiz
 	ret
 
+; Returns in XHL the id of view XWA's superview: the same object table with the index in the
+; instance's +4 word, or 0xffffffff when that word is 0xffff (no superview).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
 GetSuperView:
 	push xiz
 	ld xiz, xwa
@@ -11885,6 +11894,9 @@ DrawWidget_Hline_10_Draw:
 	pop xiz
 	ret
 
+; Returns in XHL the id of view XWA's first subview: the same object table with the index in the
+; instance's +6 word, or 0xffffffff when that word is 0xffff (no subview).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
 GetSubView:
 	push xiz
 	ld xiz, xwa
