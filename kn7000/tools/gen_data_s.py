@@ -912,7 +912,7 @@ class Gen:
                 lid, typ, knd = int.from_bytes(r[o:o + 4], "little"), int.from_bytes(r[o + 4:o + 6], "little"), \
                     int.from_bytes(r[o + 6:o + 8], "little")
                 out = [f"{it.label}:\t# a parameter-id trie leaf (ResourceIdFind): id 0x{lid:06X}, type {typ}, kind {knd}",
-                       f"\t.long\t0x{lid:06X}", f"\t.short\t{typ}, {knd}"]
+                       f"\t.long\t0x{lid:06X}", f"\t.word\t{typ}, {knd}"]
                 for k in range(8, n, 16):
                     out.append("\t.byte\t" + ", ".join(f"0x{x:02x}" for x in r[o + k:o + min(n, k + 16)]) + f"\t# +{k}")
                 return out
@@ -2088,7 +2088,8 @@ class Gen:
                 lo, hi = struct.unpack_from("<II", g.rom, g.off(it.start) + 8 * k)
                 out.append(f"\t.long\t0x{lo:08X}, 0x{hi:08X}\t# 1e{k}")
             return out
-        self.add(a, 8 * 309, self.rename_at(a, "Pow10Table"), "double table", render)
+        lab = self.name_at(a, "Pow10Table") if self.fixed.get(a) == "Pow10Table" else self.rename_at(a, "Pow10Table")
+        self.add(a, 8 * 309, lab, "double table", render)
 
     def render_fx(self, it, kind, recs, head, end, entries):
         rom = self.rom
