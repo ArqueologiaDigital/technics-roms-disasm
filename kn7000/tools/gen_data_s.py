@@ -190,7 +190,15 @@ PROFILE = "941"
 #   loop_index   (walk) an index register a loop steps is an induction variable, not its first value
 #   step_arrays  a loop stepping a parameter pointer by N >= 2 over a bounded block: N-byte records
 #   deep_records records a typed pointer field leads to are followed again, depth-guarded
-FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records")}
+# (lane mn10300-rest, 2026-10-31; kn7000/notes/mn10300-rest/README.md)
+#   top_tested   (walk) a pointer loop that compares at its head (`L: cmp End, aN` / exit / ... / `bra L`)
+#                ends its array too, as array_end's bottom-tested loops do
+#   fld_slots    (walk, with mem_ptrs) a pointer loaded from a typed field and stored to a memory slot,
+#                the only thing ever stored there, is that field's pointer again where the slot is loaded
+#   field_*      (tools/data_field_uses.py, read there) the field-use walk's new rules: field_pos,
+#                field_slots, field_bra, field_keyloop, field_merge, field_screen
+FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
+                              "top_tested", "fld_slots")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -354,6 +362,8 @@ class Gen:
         self.readers_ext = bool(P.get("readers_ext"))   # tools/data_readers.py Reader(ext=)
         self.readers_callee = bool(P.get("readers_callee"))   # Reader(callee=), lane callee-walk
         self.array_end = FEATURES["array_end"]                # Reader(array_end=), lane mn10300-typer
+        self.top_tested = FEATURES["top_tested"]              # Reader(top_tested=), lane mn10300-rest
+        self.fld_slots = FEATURES["fld_slots"]                # Reader(fld_slots=), lane mn10300-rest
         self.mem_ptrs = FEATURES["mem_ptrs"]                  # Reader(mem_ptrs=)
         self.loop_index = FEATURES["loop_index"]              # Reader(loop_index=)
         self.deep_records = FEATURES["deep_records"]          # Reader(chains=), field_targets' closure
