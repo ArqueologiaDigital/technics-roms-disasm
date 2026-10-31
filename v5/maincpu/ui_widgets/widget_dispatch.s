@@ -8233,7 +8233,10 @@ Harmony_HandlerTable:
 ; ld a,(xiz); ld w,(xiz+1)`: +0 = code (0 = no match, the scan then tries the
 ; next lowest note), +1 = bit 7 flag, bits 0-6 value (`and w,0x7f`).
 ; 4096 bytes = 2048 x 2 exactly up to the next referenced object.
-; [INFERENCE] the fingered-chord recognition table (chord type, root offset).
+; The fingered-chord recognition table: +0 = chord type (1-based row of ChordTables_TypeIntervals),
+; +1 bits 0-6 = root offset in semitones above the reference note, bit 7 = accept without trying
+; fewer notes.  Checked on all 292 non-zero entries by
+; notes/open4-kn5000-b/engine/probes/chord_table_check.py (types 31-39 have no voicing row).
 ChordRecog_IntervalMaskTable:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00

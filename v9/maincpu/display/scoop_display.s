@@ -1995,7 +1995,7 @@ VoiceSlot_ReadParamsWithSaveRestore:
 	call VoiceSlot_SaveState
 	ld	e, (PERF_STEP_FIELD:16)
 	xor d, d
-	call VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call SeqTrack_AdvanceCursor
 	call VoiceSlot_ReadCurrentParams
 	ld	w, (POPUP_VALUE:16)
 	call VoiceSlot_WriteCurrentParam
@@ -2019,7 +2019,7 @@ VoiceParam_BitManipHelper:
 	call VoiceSlot_WriteCurrentParam
 	ld	e, (PERF_STEP_FIELD:16)
 	xor d, d
-	call VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call SeqTrack_AdvanceCursor
 	call VoiceSlot_ReadCurrentParams
 	ld	w, (POPUP_VALUE:16)
 	and w, 0x7f
@@ -3062,7 +3062,7 @@ Timer_ModeHandler_0_Skip3:
 	push	xiy
 	push	xiz
 	ld	de, 3:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -3129,7 +3129,7 @@ Timer_ModeHandler_0_Return2:
 	ret
 Timer_ModeHandler_0_Helper:
 	push	xhl
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xhl
 	ret
 Timer_ParamLoadAndCompare:
@@ -3576,7 +3576,7 @@ MemConfig_Handler_5_Helper4:
 	xor	a, a
 	call	VoiceSlot_SaveState
 	ld	de, 4:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	(3575:16), a
 	call	VoiceSlot_FlagCheck
@@ -3756,7 +3756,7 @@ MemConfig_Handler_5_Skip11:
 	jp	MemConfig_Handler_5_Skip7
 MemConfig_Handler_5_Helper9:
 	pushw	wa
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	wa
 	call	VoiceSlot_WriteCurrentParam
 MemConfig_Handler_5_Return3:
@@ -4064,7 +4064,7 @@ ToneParam_HandlerTable_BC_Helper5:
 	push	xiy
 	ld	a, 2:opc
 	call	VoiceSlot_SaveState
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(3528:16), a
 	and	a, 240
 	cp	a, 192
@@ -4072,7 +4072,7 @@ ToneParam_HandlerTable_BC_Helper5:
 	call	VoiceSlot_SkipByteAndRead
 	cp	a, 72
 	jrl	nz, ToneParam_Evt09_BytecodeHandler_Skip19
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldfr_berp a, 60
 	and a, 31
 	ldto_berp a, 60
@@ -4905,7 +4905,7 @@ PerfMode_StepNoteNumber:
 	xor a, a
 	call	VoiceSlot_SaveState
 	ld	de, 2:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	call	PerfMode_MapEventNoteToDisplay
 	ld	w, a
@@ -5018,7 +5018,7 @@ PerfMode_EventTable_0_Target1_Helper7:
 	call	VoiceSlot_SaveState
 	ld	e, (PERF_STEP_FIELD:16)
 	xor	d, d
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	c, a
 	pushw	bc
@@ -5049,7 +5049,7 @@ DisplayMode_Handler_3_Skip10:
 	ld	w, a
 	pushw	bc
 	call	VoiceSlot_WriteCurrentParam
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	a, c
 	and	a, 128
@@ -5202,7 +5202,7 @@ PerfMode_StepCursorEventByte:
 	call	VoiceSlot_SaveState
 	ld	e, (PERF_STEP_FIELD:16)
 	xor	d, d
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	w, a
 	add	a, (PERF_STEP_AMOUNT:16)
@@ -5226,7 +5226,7 @@ PerfMode_EventTable_0_Target1_Helper9:
 	call	VoiceSlot_SaveState
 	ld	e, (PERF_STEP_FIELD:16)
 	xor	d, d
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	(CONTROL_LINE_VALUE:16), a
 	call	VoiceSlot_FlagCheck
@@ -5265,7 +5265,7 @@ DisplayMode_Handler_3_Skip13:
 	ld	w, a
 	pushw	bc
 	call	VoiceSlot_WriteCurrentParam
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	w, c
 	call	VoiceSlot_WriteCurrentParam
@@ -5992,27 +5992,27 @@ VoiceCtrl_BytecodeHandler:
 	and	a, 240
 	cp	a, 176
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	and	a, 3
 	ld	(3528:16), a
-	call	VoiceSlot_FinalRetZ
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 72
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldfr_berp a, 56
 	cp a, 6:i3
 	jrl	z, VoiceCtrl_BytecodeHandler_Skip2
 	cp	a, 5:i3
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
 VoiceCtrl_BytecodeHandler_Skip2:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(3527:16), a
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceCtrl_BytecodeHandler_Skip3
 	or	(0x0dc7:16), 128
 VoiceCtrl_BytecodeHandler_Skip3:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	bit	1, (0x0dc8:16)
 	jrl	z, VoiceCtrl_BytecodeHandler_Skip4
 	or	a, 128
@@ -8353,7 +8353,7 @@ MemConfig_Handler_0_Join:
 	ld	w, 129:opc
 	call	VoiceSlot_WriteCurrentParam
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	ld	w, 130:opc
 	call	VoiceSlot_WriteCurrentParam
 	xor	a, a
@@ -8404,7 +8404,7 @@ MemConfig_Handler_1_Code_Skip:
 MemConfig_Handler_1_Join2:
 	call	VoiceSlot_WriteCurrentParam
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	ld	w, 132:opc
 	call	VoiceSlot_WriteCurrentParam
 	xor	a, a
@@ -9088,7 +9088,7 @@ SndDispatch_ProcessCommand_Skip18:
 	exts	wa
 	add (SQSTEP_WRAP_COUNT:16), wa
 	ld de, wa
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 130
 	jrl	z, SndDispatch_ProcessCommand_Skip23
@@ -9138,8 +9138,8 @@ SndDispatch_ProcessCommand_Helper:
 	xor	a, a
 	call	VoiceSlot_SaveState
 	ld	de, 4:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_AdvanceCursor
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(3575:16), a
 	call	VoiceSlot_ReadCurrentParams
 	ld	(3576:16), a
@@ -9709,7 +9709,7 @@ ClockConfig_Handler_0_Tbl2_Helper2_Skip:
 	ld	w, 132:opc
 	call	VoiceSlot_WriteCurrentParam
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	ld	w, 132:opc
 	call	VoiceSlot_WriteCurrentParam
 	xor	a, a
@@ -9785,7 +9785,7 @@ SystemInit_StepHandler_0_Skip14:
 	ld	a, 2:opc
 	call	VoiceSlot_SaveState
 	ld	de, 4:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	or	a, (3528:16)
 	cp	a, 0:i3
@@ -9793,7 +9793,7 @@ SystemInit_StepHandler_0_Skip14:
 	ld	a, 2:opc
 	call	VoiceSlot_RestoreState
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	dec	1, a
 	ld	w, a
@@ -9837,7 +9837,7 @@ SystemInit_StepHandler_0_Loop3:
 SystemInit_StepHandler_0_Skip19:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	xiy, 3471
 	ld	(SQSTEP_RECORD_LENGTH:16), 0
 	ld	(xiy), a
@@ -9845,7 +9845,7 @@ SysEx_BytecodeDispatcher_Tbl2_Join6:
 	inc	1, xiy
 	inc	1, (SQSTEP_RECORD_LENGTH:16)
 	push	xiy
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xiy
 	bit	7, a
 	jrl	nz, SystemInit_StepHandler_0_Skip20
@@ -10580,11 +10580,15 @@ VoiceSlot_FinalDone:
 VoiceSlot_FinalRetNZ:
 	ret
 
-VoiceSlot_FinalRetZ:
+; SeqTrack_ReadByteAndAdvance: reads the byte at the current track's song-data cursor
+;   (VoiceSlot_ReadCurrentParams) and moves the cursor one byte on (SeqTrack_AdvanceCursor, DE = 1).
+;   Out: A = the byte, W = 0 when the cursor moved, 0xff when it was at the end of the track.
+;   Basis: body + SeqTrack_AdvanceCursor.
+SeqTrack_ReadByteAndAdvance:
 	call	VoiceSlot_ReadCurrentParams
 	pushw	wa
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	ld	d, w
 	popw	wa
 	ld	w, d
@@ -10638,7 +10642,7 @@ Timer_ModeHandler_0_Helper4:
 	ld	w, d
 	ld	a, e
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -10668,7 +10672,13 @@ VoiceSlot_WriteCurrentParam:
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+iy), w
 	ret
-VoiceSlot_ReadParamsWithSaveRestore_Helper2:
+; SeqTrack_AdvanceCursor: moves the current track's song-data cursor DE bytes on.  The cursor is a
+;   block number and an offset 5..255 into a 256-byte song block (5 header bytes: flags, prev, next;
+;   251 data bytes); past offset 255 it follows the next link (+3) once per 251 bytes.  When the
+;   cursor is in the track's tail block (the song record's per-track tail-block table) it may not pass
+;   the track's write offset (the per-track offset table 32 bytes after it).  Out: W = 0 when moved,
+;   0xff when the chain or the write offset stopped it (cursor unchanged).  Basis: body.
+SeqTrack_AdvanceCursor:
 	ld a, (SEQ_CURSOR_TRACK:16)
 	dec 1, a
 	ld (3566:16), a
@@ -10685,27 +10695,27 @@ VoiceSlot_ReadParamsWithSaveRestore_Helper2:
 	ldto_lerp	xix, 56
 	adc	d, 0
 	cp	de, 255
-	jrl	ugt, VoiceSlot_FinalRetZ_Skip2
+	jrl	ugt, SeqBlockChain_Skip2
 	ld	bc, (xix+iz)
 	ld xix, 61944
 	cp	bc, (xix+iz)
-	jrl	z, VoiceSlot_FinalRetZ_Skip
-VoiceSlot_FinalRetZ_Loop:
+	jrl	z, SeqBlockChain_Skip
+SeqBlockChain_Loop:
 	push	xwa
 	ld	xwa, 3262
 	ld	(xwa+hl), e
 	pop xwa
 	ld w, 0:opc
 	ret
-VoiceSlot_FinalRetZ_Skip:
+SeqBlockChain_Skip:
 	ldfr_lerp	xix, 56
 	lda	xix, (xix+hl)
 	cp	e, (xix+32)
 	ldto_lerp	xix, 56
-	jrl	ule, VoiceSlot_FinalRetZ_Loop
+	jrl	ule, SeqBlockChain_Loop
 	ld	w, 255:opc
-	jp	VoiceSlot_FinalRetZ_Return
-VoiceSlot_FinalRetZ_Skip2:
+	jp	SeqBlockChain_Return
+SeqBlockChain_Skip2:
 	sub	de, 256
 	ld	wa, de
 	xor	de, de
@@ -10722,14 +10732,14 @@ VoiceSlot_FinalRetZ_Skip2:
 	ldb_d8	l, (0x0dee)
 	xor	h, h
 	cp	iy, 0xffff
-	jrl	z, VoiceSlot_FinalRetZ_Skip3
-VoiceSlot_FinalRetZ_Loop2:
+	jrl	z, SeqBlockChain_Skip3
+SeqBlockChain_Loop2:
 	djnz16	bc, -27
 	add	de, 5
 	ld	xix, 0xf1f8
 	cp	iy, (xix+iz)
-	jrl	z, VoiceSlot_FinalRetZ_Skip4
-VoiceSlot_FinalRetZ_Loop3:
+	jrl	z, SeqBlockChain_Skip4
+SeqBlockChain_Loop3:
 	ld	xix, 3230
 	ld	(xix+iz), iy
 	srl	iz, 1
@@ -10739,17 +10749,17 @@ VoiceSlot_FinalRetZ_Loop3:
 	ldto_lerp	xix, 56
 	sla	iz, 1
 	xor	w, w
-	jp	VoiceSlot_FinalRetZ_Return
-VoiceSlot_FinalRetZ_Skip3:
+	jp	SeqBlockChain_Return
+SeqBlockChain_Skip3:
 	cp	bc, 1:i3
-	jrl	z, VoiceSlot_FinalRetZ_Loop2
+	jrl	z, SeqBlockChain_Loop2
 	ld	w, 255:opc
-	jp	VoiceSlot_FinalRetZ_Return
-VoiceSlot_FinalRetZ_Skip4:
+	jp	SeqBlockChain_Return
+SeqBlockChain_Skip4:
 	cp	wa, (xix+hl)
-	jrl	ule, VoiceSlot_FinalRetZ_Loop3
+	jrl	ule, SeqBlockChain_Loop3
 	ld	w, 255:opc
-VoiceSlot_FinalRetZ_Return:
+SeqBlockChain_Return:
 	ret
 	ld	xhl, SEQ_BLOCK_POOL_COPY
 	ld	xwa, (SEQ_BLOCK_POOL:16)
@@ -10770,41 +10780,41 @@ MemConfig_Handler_1_Helper5:
 	ld	ix, (xhl+1)
 	ld	de, ix
 	cp	ix, 0:i3
-	jrl	z, VoiceSlot_FinalRetZ_Skip7
+	jrl	z, SeqBlockChain_Skip7
 	ld	iy, ix
 	ldw	(xhl+1), 0
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
-VoiceSlot_FinalRetZ_Loop4:
+SeqBlockChain_Loop4:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 	cp	iy, 0xffff
-	jrl	z, VoiceSlot_FinalRetZ_Skip5
+	jrl	z, SeqBlockChain_Skip5
 VoiceSlot_WriteCurrentParam_Loop:
 	andmi8	(xhl), 127
 	ld	(xhl+5), 130
 	inc	1, wa
 	cp	wa, (0x0ce6:16)
-	jrl	nz, VoiceSlot_FinalRetZ_Loop4
+	jrl	nz, SeqBlockChain_Loop4
 	dec	1, wa
-VoiceSlot_FinalRetZ_Join:
+SeqBlockChain_Join:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+1), de
-VoiceSlot_FinalRetZ_Skip5:
+SeqBlockChain_Skip5:
 	cp	de, 0:i3
-	jrl	z, VoiceSlot_FinalRetZ_Skip6
+	jrl	z, SeqBlockChain_Skip6
 	push	xiy
 	ld	iy, de
 	call	VoiceSlot_UpdateCurrentPointer
 	pop	xiy
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+3), iy
-VoiceSlot_FinalRetZ_Skip6:
+SeqBlockChain_Skip6:
 	ld	iy, ix
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
@@ -10817,8 +10827,8 @@ VoiceSlot_FinalRetZ_Skip6:
 	ld	(xhl+1), ix
 	inc	1, wa
 	add (SEQ_FREE_BLOCKS:16), wa
-	jp	VoiceSlot_FinalRetZ_Return2
-VoiceSlot_FinalRetZ_Skip7:
+	jp	SeqBlockChain_Return2
+SeqBlockChain_Skip7:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	ix, iy
 	ld	xhl, (SEQ_BLOCK_PTR:16)
@@ -10828,8 +10838,8 @@ VoiceSlot_FinalRetZ_Skip7:
 	ldw	(3302:16), 0
 	ld	iy, ix
 	andmi8	(xhl), 127
-	jp	VoiceSlot_FinalRetZ_Join
-VoiceSlot_FinalRetZ_Return2:
+	jp	SeqBlockChain_Join
+SeqBlockChain_Return2:
 	ret
 
 VoiceSlot_UpdateCurrentPointer:
@@ -10875,7 +10885,7 @@ VoiceSlot_IndexDone_Join:
 	cp	a, 129
 	jrl	nz, VoiceSlot_IndexDone_Skip
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	incw	1, (3426:16)
 	jp	VoiceSlot_IndexDone_Join
 VoiceSlot_IndexDone_Skip:
@@ -10998,7 +11008,7 @@ VoiceSlot_StatusRet_Skip3:
 VoiceSlot_StatusRet_Skip4:
 	cp	(SQSTEP_DISPLAY_MODE:16), 0
 	jrl	z, VoiceSlot_StatusRet_Skip8
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	pushw	wa
 	call	VoiceSlot_ComputeWordIndex
@@ -11017,7 +11027,7 @@ VoiceSlot_StatusRet_Skip5:
 	call	DisplayMode_Handler_3_Helper2
 VoiceSlot_StatusRet_Skip6:
 	ld	(STEP_NOTE:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(STEP_VELOCITY:16), a
 	cp	(STATUS_POPUP_ID:16), 0
 	jrl	nz, VoiceSlot_StatusRet_Skip7
@@ -11030,7 +11040,7 @@ VoiceSlot_StatusRet_Join:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip8:
 	call	VoiceSlot_StatusRet_Helper
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	call	VoiceSlot_SkipByteAndRead
 	and	a, 32
@@ -11046,16 +11056,16 @@ VoiceSlot_StatusRet_Skip8:
 	call	SNS_Init_Startup
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip9:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	cp	a, 72
 	jrl	z, VoiceSlot_StatusRet_Skip11
 	ld	(4539:16), a
 	ld	(PROGRAM_CHANGE_PART:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	h, a
 	push	xhl
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip10
 	or	a, 128
@@ -11063,7 +11073,7 @@ VoiceSlot_StatusRet_Skip10:
 	pop	xhl
 	ld	(4541:16), a
 	ld	l, a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(4540:16), a
 	ld	h, a
 	call	PartCtrl_WriteProgramChange
@@ -11072,16 +11082,16 @@ VoiceSlot_StatusRet_Skip10:
 	call	DisplayStr_ShowPartSoundLine
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip11:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 0:i3
 	jrl	nz, VoiceSlot_StatusRet_Loop
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip12
 	or	a, 128
 VoiceSlot_StatusRet_Skip12:
 	ld	(0x3722:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(0x3723:16), a
 	bit	1, (0x0ef4:16)
 	jrl	z, VoiceSlot_StatusRet_Skip13
@@ -11100,7 +11110,7 @@ VoiceSlot_StatusRet_Code_Skip:
 VoiceSlot_StatusRet_Code_Loop:
 	jp	VoiceSlot_StatusRet_Loop
 VoiceSlot_StatusRet_Skip14:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	and	a, 127
 	ld	h, (3528:16)
@@ -11110,7 +11120,7 @@ VoiceSlot_StatusRet_Skip14:
 	ld	(POPUP_PART:16), a
 	cp	a, 72
 	jrl	nz, VoiceSlot_StatusRet_Code_Skip13
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 5:i3
 	jrl	z, VoiceSlot_StatusRet_Code_Skip10
 	cp	a, 6:i3
@@ -11123,10 +11133,10 @@ VoiceSlot_StatusRet_Skip14:
 	jrl	z, VoiceSlot_StatusRet_Code_Skip9
 	jp	VoiceSlot_StatusRet_Code_Loop
 VoiceSlot_StatusRet_Code_Skip2:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	c, a
 	pushw	bc
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	a, (SQSTEP_DISPLAY_MODE:16)
 	cp	a, 3:i3
@@ -11149,9 +11159,9 @@ VoiceSlot_StatusRet_Code_Skip4:
 	call	DisplayStr_ShowRhythmVariationLine
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip5:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(POPUP_VALUE:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	l, (3528:16)
 	ld	h, l
 	and	l, 1
@@ -11183,9 +11193,9 @@ VoiceSlot_StatusRet_Code_Skip7:
 VoiceSlot_StatusRet_Code_Skip8:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip9:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(POPUP_VALUE:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	l, (3528:16)
 	ld	h, l
 	and	l, 1
@@ -11211,14 +11221,14 @@ VoiceSlot_StatusRet_Skip16:
 VoiceSlot_StatusRet_Code_Skip10:
 	ldfr_berp a, 56
 	ld	(4338:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	c, a
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip17
 	or	c, 128
 VoiceSlot_StatusRet_Skip17:
 	pushw	bc
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	bit	1, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip18
@@ -11280,9 +11290,9 @@ VoiceSlot_StatusRet_Code_Skip12:
 	call	Display_ModePopupDispatch
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip13:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(4338:16), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	l, (3528:16)
 	ld	h, l
 	and	l, 1
@@ -11290,7 +11300,7 @@ VoiceSlot_StatusRet_Code_Skip13:
 	or	a, l
 	ld	(POPUP_VALUE:16), a
 	push	xhl
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xhl
 	and	h, 2
 	rrc h, 2	; rrc 0x02,H
@@ -11583,7 +11593,7 @@ VoiceSlot_StatusRet_Code_Skip39:
 	jrl	nz, VoiceSlot_StatusRet_Code_Loop
 	jp	VoiceSlot_StatusRet_Code_Loop
 VoiceSlot_StatusRet_Skip30:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	xiy, SQSTEP_STYLE_SECTION
 	cp	a, 128
 	jrl	z, VoiceSlot_StatusRet_Code_Skip41
@@ -11639,7 +11649,7 @@ VoiceSlot_StatusRet_Skip44:
 VoiceSlot_StatusRet_Code_Skip45:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Join4:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 208
 	jrl	z, VoiceSlot_StatusRet_Skip31
 	cp	a, 209
@@ -11677,7 +11687,7 @@ VoiceSlot_StatusRet_Skip35:
 	call	VoiceSlot_SkipByteAndRead
 	ld	(CONTROL_LINE_VALUE:16), a
 	ld	(CONTROL_LINE_KIND:16), 1
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(4370:16), a
 	cp	(STATUS_POPUP_ID:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip36
@@ -11700,14 +11710,14 @@ VoiceSlot_StatusRet_Skip38:
 	call	DisplayStr_BytecodeBlock_B
 VoiceSlot_StatusRet_Return:
 	ret
-; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with VoiceSlot_FinalRetZ (read the cursor byte,
+; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with SeqTrack_ReadByteAndAdvance (read the cursor byte,
 ;   advance one) and returns the second in A (W = the advance status), so it skips one byte. Basis: callers + body --
 ;   VoiceSlot_StatusRet calls it right after consuming a stored event's status byte, skipping the clock byte +1 to
 ;   fetch data byte +2 (the 0xDn value that goes to 0x3721, the 0xBn tag compared with 72, the 0xCn part), and twice
 ;   in a row to reach byte +4.
 VoiceSlot_SkipByteAndRead:
-	call	VoiceSlot_FinalRetZ
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
+	call	SeqTrack_ReadByteAndAdvance
 	ret
 ; Display_ModePopupDispatch -- the pop-up id for the display mode (0x0D65), from
 ; Display_ModePopupIds, goes to (0x0DEF) before Display_UpdateRegion0; then a call
@@ -11994,7 +12004,7 @@ VoiceSlot_CheckCursorAtTrackStart_Loop2:
 	push	xiy
 	push	xix
 	push	xiz
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xiz
 	pop	xix
 	pop	xiy
@@ -14094,7 +14104,7 @@ OscScope_RefreshLoop_Loop:
 	push	xiy
 	push	xix
 	push	xiz
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xiz
 	pop	xix
 	pop	xiy
