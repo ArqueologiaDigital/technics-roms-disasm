@@ -996,6 +996,7 @@ ic21-own-src: tools/gen_ic21own_s.py tools/gen_customdata_s.py $(IC21_OWN_REF) $
 	    --corpus $(foreach m,$(CUSTOMDATA),$(m)=baserom/customdata/$(m).ic21) \
 	    --ref $(IC21_OWN_REF) --out src/ic21own/custom.s --inc-dir src/ic21own/custom --model kn7000 \
 	    --include src/customdata/customdata.inc \
+	    --opaque-why "unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)" \
 	    --title "Felipe's KN7000 IC21, the CUSTOM STYLE bank at chip 0x20000 (CPU 0x96820000); part of src/ic21own/ic21.s."
 
 # The probes behind the figures in src/ic21own/ic21.s and notes/ic21-own/README.md.
