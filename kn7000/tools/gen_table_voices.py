@@ -42,11 +42,30 @@ for _f in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..
         if _m:
             WAVE.add(_m.group(1).decode())
 
+def zone_rec(page, flags, ent):
+    """A zone's recording: the wave directory entry of the tone generator its side bits name (halfword +0
+    bits 10 / 11 = flags bits 2 / 3; TgVoiceSideSelect 0x4C02BECB, TgElemRequestFlags, TgVoiceNodePick,
+    TgVoiceRegWrite 0x4C036F98: 0x400 -> the slots below 0x40, the MAIN TG at 0x98050000 (IC203 / IC204),
+    0x800 -> the SUB TG at 0x98040000 (IC207 / IC208); lane mn10300-rest,
+    notes/mn10300-rest-probes/tg_side_bits.py: all 5,215 zones name an existing entry that way)."""
+    sides = [tg for bit, tg in ((0x04, "Main"), (0x08, "Sub")) if flags & bit]
+    names = [f"{tg}_P{page:02X}_E{ent:03X}" for tg in sides if f"{tg}_P{page:02X}_E{ent:03X}" in WAVE]
+    if names:
+        return " / ".join(names)
+    return f"page 0x{page:02x} entry 0x{ent:03x}: no such wave entry on the {'/'.join(sides) or 'no'} side"
+
+
 HASHES = [  # (D offset of buckets, D offset of descriptor, label, key bytes, payload bytes, reader)
-    (0x00, 0x18, "Tone", 4, 12, "func_4856FC51 / func_48570078 (dir + 0x18): key (MSB<<16 | LSB<<8 | program); "
-                               "the u16 at entry+8 is the tone-record index func_48449525 looks up through "
-                               "the descriptor's +0x04; the other 10 payload bytes are not traced"),
-    (0x04, 0x1C, "Dir1", 4, 4, "a seventh table of the same shape; its reader is not traced"),
+    (0x00, 0x18, "Tone", 4, 12, "ToneKeyFind 0x4856FC51 / ToneKeyLookup 0x48570078 (dir + 0x18): key (MSB<<16 | "
+                               "LSB<<8 | program); payload (jk_tone_key, lane mn10300-rest): the u16 tone-record index "
+                               "(SoundToneIndexGet; ToneRecordFind 0x48449525 looks it up through the descriptor's "
+                               "+0x04), the icon (SoundIconGet), the switch {group, number} of each switch state "
+                               "(SoundSwNoGet 0x4856FF75: panel 0 / 1, SOUND EXPLORER 2 / 3, the even one for a part "
+                               "with a DSP unit), 3 bytes no routine reads"),
+    (0x04, 0x1C, "SwKey", 2, 6, "ShortKeyLookup 0x485703A5 (dir + 0x1C; lane mn10300-rest): u16 key (key group << 8 "
+                                "| number; the key group is the switch's group + 0, 0x12, 0x40 or 0x60 by its state, "
+                                "SoundSwNoBankGet 0x485702CC), payload (jk_sw_key) the bank MSB, LSB and program the "
+                                "switch selects, 3 bytes no routine reads"),
     (0x08, 0x20, "ParamBank", 4, 4, "VoiceParamBankLookupInternal 0x48570DF8: key (MSB<<16 | LSB<<8 | program), "
                                     "payload u16 = parameter record index (bit 15 = invalid)"),
     (0x0C, 0x24, "VoiceBank", 4, 4, "VoiceBankLookupInternal 0x4857150D: key (MSB<<16 | LSB<<8 | program), "
@@ -198,9 +217,15 @@ def internal_voice_archive(d, s, e, label, ref):
             if kb == 4:
                 el.append(f"    .long\t0x{key:06x}\t# key: MSB 0x{key >> 16:02x}, LSB 0x{(key >> 8) & 0xFF:02x}, "
                           f"program {key & 0xFF}")
+            elif nm == "SwKey":
+                el.append(f"    .word\t0x{key:04x}\t# key: key group 0x{key >> 8:02x}, number {key & 0xFF}")
             else:
                 el.append(f"    .word\t0x{key:04x}\t# key")
-            if nm == "ListIndex":
+            if nm == "Tone" and not any(pay[9:]):
+                el.append(f"    jk_tone_key\t{u16(c, p + 8)}, {', '.join(str(x) for x in pay[2:9])}")
+            elif nm == "SwKey" and not any(pay[3:]):
+                el.append(f"    jk_sw_key\t0x{pay[0]:02x}, 0x{pay[1]:02x}, {pay[2]}")
+            elif nm == "ListIndex":
                 el.append(f"    .byte\t{hexrow(pay[:2])}")
                 el.append(f"    .ascii\t{asc(pay[2:14])}")
                 el.append(f"    .byte\t{hexrow(pay[14:])}")
@@ -250,8 +275,7 @@ def internal_voice_archive(d, s, e, label, ref):
         for k in range(nz):
             z = b + zs * k
             page, fb, ent, b4, b5 = c[z], c[z + 1], u16(c, z + 2), c[z + 4], c[z + 5]
-            names = [f"{tg}_P{page:02X}_E{ent:03X}" for tg in ("Main", "Sub") if f"{tg}_P{page:02X}_E{ent:03X}" in WAVE]
-            rec = " / ".join(names) if names else f"page 0x{page:02x} entry 0x{ent:03x}: no such wave entry"
+            rec = zone_rec(page, fb, ent)
             if zs == 8:
                 zl.append(f"    jk_zone8\t0x{page:02x}, 0x{fb:02x}, 0x{ent:03x}, {b4}, {b5}, "
                           f"{struct.unpack_from('<h', c, z + 6)[0]}\t# zone {k}: {rec}")
@@ -344,11 +368,13 @@ def internal_voice_archive(d, s, e, label, ref):
     # the sound directory's +0x10 / +0x14: 128 sixteen-character names and a 128-byte table
     o = u32(c, D + 0x10)
     labels[o] = "JkGroupNames"
-    put(o, 0x800, ["JkGroupNames:\t\t# sound directory +0x10: 128 names of 16 characters (PIANO, GUITAR ...)"] +
+    put(o, 0x800, ["JkGroupNames:\t\t# sound directory +0x10: 128 names of 16 characters (PIANO, GUITAR ...), the key "
+                   "groups' (SoundGroupNameGet 0x48570611: + 16 x key group)"] +
         [f"    .ascii\t{asc(c[o + 16 * k:o + 16 * k + 16])}\t# {k}" for k in range(128)])
     o = u32(c, D + 0x14)
-    labels[o] = "JkGroupTable"
-    rows(o, 0x80, 16, "JkGroupTable", "sound directory +0x14: 128 bytes, reader not traced")
+    labels[o] = "JkGroupSizes"
+    rows(o, 0x80, 16, "JkGroupSizes", "sound directory +0x14: the number of switches of each key group, "
+         "SoundGroupSizeGet 0x485707A5 (`movbu (d2, a0), d0`)")
     # descriptor +0x30 .. +0x44 (T + 0x3C .. 0x50) and T + 0x08
     o = t(0x3C)
     labels[o] = "JkDesc30Records"
@@ -393,14 +419,11 @@ def internal_voice_archive(d, s, e, label, ref):
     if (t(0x00) - o) % 0x2C8:
         sl.append(f"    .byte\t{hexrow(c[o + 0x2C8 * n_se:t(0x00)])}\t# after the last row")
     put(o, t(0x00) - o, sl)
-    # the zones the tone-key table's entries point at (entry +14), 8 bytes each
-
     # an array of 8-byte zones after the multisample data (labels only where an aligned offset to it exists)
     ms_end = max(max(b + zs * nz, a + 4 + ng) for i, r, a, b, fl, km, ng, nz, zs in recs)
     zone_hi = min(x for x in items if x > ms_end)
-    tz = sorted({u32(c, p_ + 14) for p_ in chains[0][7] if ms_end <= u32(c, p_ + 14) < zone_hi})
     z0 = ms_end + (2 if c[ms_end:ms_end + 2] == b"\xff\xff" else 0)
-    tz = [x for x in tz if (x - z0) % 8 == 0]
+    tz = []   # (no offset to the kit zones is known: the Tone payload's bytes, once read as one, are switch numbers)
     if (zone_hi - z0) % 8 == 0:
         zend = zone_hi
         if z0 > ms_end:
@@ -410,8 +433,7 @@ def internal_voice_archive(d, s, e, label, ref):
         for k in range((zend - z0) // 8):
             z = z0 + 8 * k
             page, fb, ent, b4, b5 = c[z], c[z + 1], u16(c, z + 2), c[z + 4], c[z + 5]
-            names = [f"{tg}_P{page:02X}_E{ent:03X}" for tg in ("Main", "Sub") if f"{tg}_P{page:02X}_E{ent:03X}" in WAVE]
-            rec = " / ".join(names) if names else f"page 0x{page:02x} entry 0x{ent:03x}: no such wave entry"
+            rec = zone_rec(page, fb, ent)
             if z in tz:
                 zl.append(f"JkKitZone{z:06x}:")
             zl.append(f"    jk_zone8\t0x{page:02x}, 0x{fb:02x}, 0x{ent:03x}, {b4}, {b5}, "

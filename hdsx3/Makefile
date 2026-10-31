@@ -51,6 +51,8 @@ FN_SYM   := $(wildcard $(DATA_DIR)/functions.sym)
 # the MILK ids the data defines (gen_data_s.py gui_code_ids.inc): the code's mov / cmp
 # immediates equal to one are spelled with its name
 IDS      := $(if $(wildcard $(DATA_DIR)/gui_code_ids.inc),--ids $(DATA_DIR)/gui_code_ids.inc)
+# (lane mn10300-rest) the host routine of each `calls (aN)` through the host's registry, as a comment
+IDS      += $(if $(wildcard $(DATA_DIR)/host_calls.tsv),--host-calls $(DATA_DIR)/host_calls.tsv)
 # The bitmap resources are indexed PNGs in $(DATA_DIR)/media/ (gen_data_s.py bitmaps());
 # ../kn7000/tools/table_png.py turns them back into the bytes the data .incbins from build/bitmaps/.
 BITMAP_PNGS := $(wildcard $(DATA_DIR)/media/*.png)

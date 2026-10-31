@@ -650,9 +650,9 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
 
 ## Titles
 
-| title       | screen | led to from                         |
-|-------------|--------|-------------------------------------|
-| TT_PLUGIN   | Main   |                                     |
-| TT_PS       |        |                                     |
-| TT_SDAUDPLY |        | Main_TitleMenu_SD_AUDIO_PLAY        |
-| TT_SDCCUS   |        | Main_TitleMenu_CUSTOM_STYLE_LOAD_SA |
+| title       | screen                            | led to from                         |
+|-------------|-----------------------------------|-------------------------------------|
+| TT_PLUGIN   | Main                              |                                     |
+| TT_PS       | PanelSimulator (the host's)       |                                     |
+| TT_SDAUDPLY | SDAudPlayScreen (the host's)      | Main_TitleMenu_SD_AUDIO_PLAY        |
+| TT_SDCCUS   | SdCardCustomLoadSave (the host's) | Main_TitleMenu_CUSTOM_STYLE_LOAD_SA |

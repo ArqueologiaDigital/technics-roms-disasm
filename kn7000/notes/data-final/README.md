@@ -89,15 +89,15 @@ the line says whether a typed pointer or a code immediate still holds their addr
 `opaque_holders.py` searched the whole image for any 32-bit word (any alignment: data pointers and the
 imm32 of every `mov`) holding an address in the piece or up to 64 bytes before it.  The biggest, 941:
 
-| piece                                   | bytes | holders | what the bytes look like, and the reader search                                                        |
-|-----------------------------------------|-------|---------|--------------------------------------------------------------------------------------------------------|
-| 0x48730AB3 after `Str_I_J`              | 2,101 | 0       | 7-byte groups `xx 90 xx xx xx 00 00`; no word anywhere points in or just before it                     |
-| 0x486D0A8F after `Str_a9X_B`            | 1,525 | 0       | high-entropy bytes (a compressed or scrambled blob, [INFERENCE]); nothing points at it                 |
-| 0x486CFC43                              | 641   | 17      | held by the tone generator's tables (data_02) but read through no instruction the walk follows         |
-| 0x48715746 (func_48412A17)              | 458   | 0       | rows `NN 00 NN 01 ..` then 0xFF: more of func_48412A17's 128-byte records' tails, past its index bound |
-| 0x48733632 / 0x48733428                 | 774   | 0       | after `ChordRecogTable2`: chord-recognition rows the reader indexes from a computed base [INFERENCE]   |
-| 0x485ED01C / 0x485ECDA0                 | 824   | 20      | `01 00 0N 00 43 00 02 00 ..` records with pointers; held by typed records, read by none the walk sees  |
-| 0x485F95E0 (HpFlashWriteDefaults_Table) | 304   | 0       | `ffff ffff 3100` rows: the table's tail past the bound its reader checks                               |
+| piece                                   | bytes | holders | what the bytes look like, and the reader search                                                                                                                                                        |
+|-----------------------------------------|-------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x48730AB3 after `Str_I_J`              | 2,101 | 0       | 7-byte groups `xx 90 xx xx xx 00 00`; no word anywhere points in or just before it                                                                                                                     |
+| 0x486D0A8F after `Str_a9X_B`            | 1,525 | 0       | high-entropy bytes (a compressed or scrambled blob, [INFERENCE]); nothing points at it. Corrected (lane mn10300-rest): the tail of the C library's powers of ten, `Pow10Table` 0x486D06DC, 309 doubles |
+| 0x486CFC43                              | 641   | 17      | held by the tone generator's tables (data_02) but read through no instruction the walk follows                                                                                                         |
+| 0x48715746 (func_48412A17)              | 458   | 0       | rows `NN 00 NN 01 ..` then 0xFF: more of func_48412A17's 128-byte records' tails, past its index bound                                                                                                 |
+| 0x48733632 / 0x48733428                 | 774   | 0       | after `ChordRecogTable2`: chord-recognition rows the reader indexes from a computed base [INFERENCE]                                                                                                   |
+| 0x485ED01C / 0x485ECDA0                 | 824   | 20      | `01 00 0N 00 43 00 02 00 ..` records with pointers; held by typed records, read by none the walk sees                                                                                                  |
+| 0x485F95E0 (HpFlashWriteDefaults_Table) | 304   | 0       | `ffff ffff 3100` rows: the table's tail past the bound its reader checks                                                                                                                               |
 
 These are the walk's limits ([INFERENCE] on what they are): an address computed from a pointer the walk
 does not carry across a loop iteration (a record walked with a stepped pointer), a RAM pointer set at

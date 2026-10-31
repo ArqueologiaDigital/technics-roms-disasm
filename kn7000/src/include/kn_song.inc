@@ -62,3 +62,16 @@
 .macro sq_sys tick, status, data:vararg
 	.byte	\tick, \status, \data
 .endm
+# Stale events in the KN5000's order, status first (floppy/kn5000/events.py), as cells still hold them past the
+# end of a track and in free cells (kn_sqt.py stale_tokens; floppy/tools/kn_song.inc, the llvm-mc twin, has the
+# notes): 0x9n {status, tick, key, velocity, duration ticks and beats}; a further note under the same status;
+# any other KN5000 status with its data bytes.
+.macro k5_note status, tick, key, velocity, dur_ticks, dur_beats
+	.byte	\status, \tick, \key, \velocity, \dur_ticks, \dur_beats
+.endm
+.macro k5_run tick, key, velocity, dur_ticks, dur_beats
+	.byte	\tick, \key, \velocity, \dur_ticks, \dur_beats
+.endm
+.macro k5_ev status, data:vararg
+	.byte	\status, \data
+.endm

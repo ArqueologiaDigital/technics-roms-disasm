@@ -112,7 +112,10 @@ LIBC = re.compile(r"(str|mem|sprintf|vsprintf|Lib(Div|Mul|Mod))")
 LOCAL = re.compile(r"^loc_|_L[0-9a-f]+_*$")
 SIB_LOCAL = re.compile(r"_L[0-9a-f]+_*$")
 
-Access = collections.namedtuple("Access", "key off width signed rw func cpu insn extra inner bound")
+# pos (lane mn10300-rest): where the instruction is, (file index in the sorted code glob, line index in
+# that file), so tools/data_field_uses.py follows the loaded register from that very place
+Access = collections.namedtuple("Access", "key off width signed rw func cpu insn extra inner bound pos",
+                                defaults=(None,))
 
 
 def C(c):
@@ -197,7 +200,8 @@ class Reader:
     DYN_STRIDE = False       # (loop_index) a pointer plus a scaled index keeps the scale (add())
 
     def __init__(self, src_glob, labels, in_data, distinct=False, ext=False, callee=False, array_end=False,
-                 mem_ptrs=False, loop_index=False, chains=False, word=None):
+                 mem_ptrs=False, loop_index=False, chains=False, word=None, top_tested=False,
+                 fld_slots=False):
         self.in_data = in_data          # CPU address -> bool
         self.distinct = distinct
         self.labels = labels            # name -> CPU address (data and code)
@@ -220,10 +224,15 @@ class Reader:
         # (callee) the steps a loop adds to a parameter pointer: {(function, slot): {step}}
         self.param_steps = collections.defaultdict(set)
         self._lab_line, self._psteps, self._line = {}, [], 0
+        self._pos = (0, 0)            # (file index, line index) of the instruction being walked
         # (array_end) the address registers at each label / setlb of the function, and a pending
         # `cmp Addr, aN` (register, Addr, aN's address) for the instruction after it
         self.array_end = array_end
         self._lab_state, self._cmpa = {}, None
+        # (top_tested, lane mn10300-rest; gen_data_s.FEATURES) a pointer loop that tests at its head
+        # ends its array too: {head label: (register, End, B, the compare)} of the function
+        self.top_tested = array_end and top_tested
+        self._toptest = {}
         # (lane mn10300-typer) mem_ptrs: a data address stored to a RAM global, a zero-initialised data
         # word or a field of a record reached from one, and loaded back (memslots below); loop_index: a
         # constant in a data register the loop writes is its induction variable at the loop head, not
@@ -232,6 +241,11 @@ class Reader:
         self.mem_ptrs, self.loop_index, self.chains, self.word = mem_ptrs, loop_index, chains, word
         Reader.DYN_STRIDE = loop_index
         self.mem_ptr = {}             # slot -> frozenset of the data addresses stored there
+        # (fld_slots, lane mn10300-rest) slot -> the pointer every store put there, when that is one
+        # pointer loaded from a typed field (P(("fld", key, off))): a load gives the field's targets back
+        self.mem_fld = {}
+        self.fld_slots = mem_ptrs and fld_slots
+        self._mfld, self._mbad_nf = collections.defaultdict(set), set()
         self.field_stores = {}        # a pointer field ("fld", key, off) -> the data addresses stored in it
         self._mstore, self._mbad = collections.defaultdict(set), set()
         self._mparam, self._pvals = collections.defaultdict(set), collections.defaultdict(set)
@@ -247,7 +261,7 @@ class Reader:
         self.funcs = set()
         if callee:
             cx = re.compile(r"^\s+calls?\s+([A-Za-z_]\w*)|^# (\S+)\s+\((?:lib )?CPU 0x", re.M)
-            for lines in files:
+            for self._fidx, lines in enumerate(files):
                 for mo in cx.finditer("\n".join(lines)):
                     self.funcs.add(re.sub(r"_entry$", "", mo.group(1) or mo.group(2)))
         # (two collecting walks: a wrapper returns what the function it calls returns)
@@ -257,11 +271,17 @@ class Reader:
             self._ret, self._retbad = collections.defaultdict(set), set()
             self._retv = collections.defaultdict(set)
             self._mstore, self._mbad, self._mfunc = collections.defaultdict(set), set(), {}
+            self._mfld, self._mbad_nf = collections.defaultdict(set), set()
             self._mparam, self._pvals = collections.defaultdict(set), collections.defaultdict(set)
-            for lines in files:
+            for self._fidx, lines in enumerate(files):
                 self.walk(lines)
             if self.mem_ptrs:
                 self.mem_ptr = self.memory_slots()
+                if self.fld_slots:
+                    # every store a pointer from one and the same typed field, and nothing else
+                    self.mem_fld = {k: next(iter(v)) for k, v in self._mfld.items()
+                                    if len(v) == 1 and k not in self._mbad_nf and k not in self._mstore
+                                    and k not in self._mparam}
                 # a slot that is a field the walk keys (a data word, a field of a record a pointer leads
                 # to): its stored addresses are more targets of that field (gen_data_s field_targets)
                 self.field_stores = {}
@@ -281,7 +301,7 @@ class Reader:
             self.tgt_origin = {frozenset(a): f for f, a in sorted(self.returns.items())}
             self.returns_p = {f: next(iter(vs)) for f, vs in self._retv.items()
                               if len(vs) == 1 and None not in vs and f not in self.returns}
-        for lines in files:
+        for self._fidx, lines in enumerate(files):
             self.walk(lines)
         if distinct:
             # (siblings) a function that returns the same record address in a0 on every path
@@ -296,7 +316,7 @@ class Reader:
                     self.ret_val[f] = alts[0] if len(alts) == 1 else ("U", alts)
             if self.ret_val:
                 self.accesses, self.calls = [], collections.Counter()
-                for lines in files:
+                for self._fidx, lines in enumerate(files):
                     self.walk(lines)
         if distinct:
             self.resolve_params_distinct()
@@ -582,6 +602,7 @@ class Reader:
         heads = self.loop_scan(lines) if (self.loop_index or self.callee) else {}
         for k_line, ln in enumerate(lines):
             self._line += 1
+            self._pos = (getattr(self, "_fidx", 0), k_line)
             code = ln.split("#", 1)[0].rstrip()
             mh = re.match(r"# (\S+)\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
             if mh:
@@ -613,6 +634,7 @@ class Reader:
                     self._spd, self._frame = 0, None
                     self._lab_line, self._psteps = {}, []
                     self._lab_state, self._cmpa = {}, None
+                    self._toptest = {}
                     # the arguments: a pointer in a0 / a1 / d0 / d1 is followed into the
                     # callers (resolve_params)
                     # (a data register may as well hold an index: "D", a pointer only when used as one)
@@ -654,6 +676,7 @@ class Reader:
                 self._lab_line[n] = self._line
                 if self.array_end or self.chains:
                     self._lab_state[n] = {r: st.get(r) for r in REGS if r[0] == "a"}
+                    self._last_lab, self._since_lab = n, 0
                 if k_line in heads:
                     self.loop_head(n, heads[k_line], st)
                 code = code[ml.end():].strip()
@@ -920,8 +943,16 @@ class Reader:
                             and (v[0] == "D" or not v[3]):
                         self._mparam[sk].add(v[1][1:])        # the storing function's own parameter
                         self._mfunc.setdefault(sk, func)
+                    elif self.fld_slots and op == "mov" and v is not None and v[0] == "P" and v[1][0] == "fld" \
+                            and not v[2] and not v[3] and sk[0] != "p":
+                        # (fld_slots) a pointer the code loaded from a typed field (a table entry); for
+                        # mem_ptr's data-address slots it spoils the slot, as before
+                        self._mfld[sk].add(v)
+                        self._mfunc.setdefault(sk, func)
+                        self._mbad.add(sk)
                     else:
                         self._mbad.add(sk)
+                        self._mbad_nf.add(sk)
         self._step(op, args, st, last_load, func, cpu, insn)
         if msk is not None and msk[1] is not None:
             dst, sk = msk
@@ -931,11 +962,15 @@ class Reader:
                 pass                     # a field the walk keys: field_stores gives gen_data_s its targets
             elif vs is not None and cur is None:
                 st[dst] = T(vs)
+            elif cur is None and sk in self.mem_fld:
+                st[dst] = self.mem_fld[sk]    # (fld_slots) the field's targets, as if loaded from it
             elif cur is None and dst[0] == "a":
                 st[dst] = ("M", sk)
 
     # the branches that repeat a loop while the stepped pointer is below (or not at) the address compared
     LOOP_WHILE_BELOW = {"bcs", "blt", "bne", "lcs", "llt", "lne"}
+    # (top_tested) the branches that leave a loop once the pointer reaches the address compared
+    LOOP_EXIT_AT_END = {"bcc", "bge", "beq"}
 
     def loop_bound(self, op, args, st, func, cpu, insn):
         """(array_end, lane mn10300-typer) A pointer loop proven to end at an address: `cmp End, aN`
@@ -948,6 +983,18 @@ class Reader:
         seen before the compare [the KernelWaitRelease probe loop and the MainMmmControl loops are the
         bottom-tested kind]."""
         pend, self._cmpa = self._cmpa, None
+        self._since_lab = getattr(self, "_since_lab", 99) + 1
+        if self.top_tested and self.BRANCH_OP.match(op) and op in ("bra", "jmp") and args and \
+                args[0] in self._toptest and args[0] in self._lab_state:
+            # (lane mn10300-rest) the branch back of a loop that tests at its head: the pointer has
+            # stepped by s since the compare saw it at B
+            reg, end, b, cmp_insn = self._toptest[args[0]]
+            h, c = self._lab_state[args[0]].get(reg), st.get(reg)
+            if h is not None and c is not None and h[0] == c[0] == "A" and h[1] == b:
+                step = c[1] - b
+                if 1 <= step <= 4096 and end > b and (end - b) % step == 0 and (end - b) // step >= 2:
+                    self.record(("bound", b), end - b, step, "bound", func, cpu, cmp_insn)
+            return
         if op == "setlb":
             self._lab_state["#setlb"] = {r: st.get(r) for r in REGS if r[0] == "a"}
             return
@@ -959,6 +1006,18 @@ class Reader:
                     and not v[3] and not p[3]:
                 # (a parameter's block: the end the loop compares with is the parameter plus a constant)
                 self._cmpa = (args[1], ("param", v[1], v[2]), p[2], insn)
+            return
+        if self.top_tested and pend is not None and op in self.LOOP_EXIT_AT_END and args and \
+                args[0] not in self._lab_line and not isinstance(pend[1], tuple) and \
+                getattr(self, "_last_lab", None) in self._lab_state and self._since_lab <= 4:
+            # (lane mn10300-rest) a loop that tests before its body: `L: cmp End, aN` / an exit forward
+            # taken once aN reaches End / ... / `add s, aN` / `bra L`; the bound is recorded at the
+            # branch back, where the step shows
+            lab = self._last_lab
+            reg, end, p, cmp_insn = pend
+            h = self._lab_state[lab].get(reg)
+            if h is not None and h[0] == "A" and h[1] == p:
+                self._toptest[lab] = (reg, end, p, cmp_insn)
             return
         if pend is None or op not in self.LOOP_WHILE_BELOW or not (args or op.startswith("l")):
             return
@@ -1073,7 +1132,7 @@ class Reader:
     def record(self, key, off, w, rw, func, cpu, insn, extra=None, inner=None, bound=None):
         if key[0] == "abs":
             key, off = ("abs", key[1] + off), 0
-        self.accesses.append(Access(key, off, w, False, rw, func, cpu, insn, extra, inner, bound))
+        self.accesses.append(Access(key, off, w, False, rw, func, cpu, insn, extra, inner, bound, self._pos))
         return len(self.accesses) - 1
 
     LESS = {"blt": 0, "bcs": 0, "bge": 0, "bcc": 0, "llt": 0, "lcs": 0, "lge": 0, "lcc": 0,

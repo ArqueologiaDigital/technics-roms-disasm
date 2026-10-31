@@ -36603,7 +36603,7 @@ loc_48416002:
     extbu   d0
     extbu   d2
     mov     d2, d1
-    call    func_48448D15_entry, [d2,a2], 0x2c
+    call    SoundNameGet_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x10, a3)
     mov     a2, (0x10, sp)
@@ -36642,7 +36642,7 @@ loc_48416093:
     extbu   d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    call    func_48448E7C_entry, [d2], 0x20
+    call    SoundIconFetch_entry, [d2], 0x20
     extbu   d0
     bra     loc_48416145
 loc_484160D5:
@@ -36671,7 +36671,7 @@ loc_484160D5:
     movbu   d0, (0x21, sp)
     mov     d2, d0
     exthu   d0
-    call    func_484161BE_entry, [d2,d3,a2,a3], 0x20
+    call    PartHasDspUnit_entry, [d2,d3,a2,a3], 0x20
     cmp     0, d0
     bne     loc_48416128
     movbu   (0x21, sp), d0
@@ -36679,7 +36679,7 @@ loc_484160D5:
     movbu   d0, (0x21, sp)
 loc_48416128:
     mov     a2, a0
-    call    func_484492E2_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1c, sp), d0
     movbu   (0x1d, sp), d1
     asl     8, d0
@@ -36720,7 +36720,7 @@ GetSoundDev_entry:
     lsr     24, d0
     extbu   d0
     exthu   d0
-    call    func_484161BE_entry, [d2,d3,a2,a3], 0x20
+    call    PartHasDspUnit_entry, [d2,d3,a2,a3], 0x20
     cmp     d2, d0
     beq     loc_48416190
     mov     2, d0
@@ -36731,7 +36731,7 @@ loc_48416190:
     movbu   d0, (0x15, sp)
 loc_48416195:
     mov     a2, a0
-    call    func_484492E2_entry, [d2,d3,a2,a3], 0x38
+    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x15, sp), d0
     cmp     2, d0
     blt     loc_484161BA
@@ -36746,11 +36746,11 @@ loc_48416195:
 loc_484161BA:
     mov     d2, d0
     ret     [d2,a2], 0x20
-
-func_484161BE:
+# PartHasDspUnit  (CPU 0x484161be)
+PartHasDspUnit:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-func_484161BE_entry:
+PartHasDspUnit_entry:
     exthu   d0
     mov     d0, a3
     cmp     0x12, a3

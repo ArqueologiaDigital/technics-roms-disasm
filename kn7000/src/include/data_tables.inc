@@ -84,17 +84,20 @@
 # mn10300-formats; kn7000/notes/mn10300-formats/README.md).  The bytes no routine reads are 0 in every
 # entry (notes/mn10300-formats-probes/hash_payloads.py), written as the trailing .space.
 # ToneKeyHash (key bank MSB << 16 | LSB << 8 | program): SoundToneIndexGet (0x4C09B065) answers `tone` (the tone
-# record's index; func_4C07BA76 names the sound from it), SoundIconGet (0x4C09B03B) answers `icon` (MainGetSoundName,
-# MT_GetSoundIcon), SoundSwNoGet (0x4C09AFB0) answers the sound's panel switch {group, number} for the reference's
-# state 0..3: {swgroup01, swno0}, {swgroup01, swno1}, {swgroup23, swno2}, {swgroup23, swno3}
-# (MainGetSoundName, MT_GetSoundSwNo).
-.macro TONE_KEY_PAYLOAD tone=0, icon=0, swgroup01=0, swgroup23=0, swno0=0, swno1=0, swno2=0, swno3=0
+# record's index; SoundNameGet 0x4C07BA76 names the sound from it), SoundIconGet (0x4C09B03B) answers `icon`
+# (MainGetSoundName, MT_GetSoundIcon), SoundSwNoGet (0x4C09AFB0) the sound's switch {group, number} for the switch
+# state (lane mn10300-rest, kn7000/notes/mn10300-rest/README.md): 0 {panel_group, panel_no_dsp}, 1 {panel_group,
+# panel_no}, 2 {explorer_group, explorer_no_dsp}, 3 {explorer_group, explorer_no}.  The panel states are the SOUND
+# GROUP buttons (group 0..15, MT_GetSoundSwNo), the explorer ones the 32 SOUND EXPLORER categories (GetSoundDev);
+# the even state is for a part that has a DSP unit (PartHasDspUnit 0x4C007A5B), the odd one for a part that has none.
+.macro TONE_KEY_PAYLOAD tone=0, icon=0, panel_group=0, explorer_group=0, panel_no_dsp=0, panel_no=0, explorer_no_dsp=0, explorer_no=0
 	.word	\tone
-	.byte	\icon, \swgroup01, \swgroup23, \swno0, \swno1, \swno2, \swno3
+	.byte	\icon, \panel_group, \explorer_group, \panel_no_dsp, \panel_no, \explorer_no_dsp, \explorer_no
 	.space	3, 0x00
 .endm
-# ShortKeyHash (key: a panel switch, group << 8 | number, SoundSwNoBankGet 0x4C09B200): the bank MSB, LSB and program
-# change that switch selects (SoundSwNoBankGet copies +0, +1, +2 to its three outputs).
+# ShortKeyHash (key: a switch, key group << 8 | number, SoundSwNoBankGet 0x4C09B200; the key group is the group + 0,
+# 0x10, 0x40 or 0x60 by the switch state): the bank MSB, LSB and program change that switch selects
+# (SoundSwNoBankGet copies +0, +1, +2 to its three outputs).
 .macro SHORT_KEY_PAYLOAD msb=0, lsb=0, program=0
 	.byte	\msb, \lsb, \program
 	.space	3, 0x00
@@ -108,26 +111,114 @@
 # The SX-KN2400's DSP-effect descriptors (tools/gen_data_s.py fx_descriptors, lane mn10300-formats; the
 # routines are kn2400_manual.sym's Fx*, the probe notes/mn10300-formats-probes/kn2400_fx_desc.py).
 # FX_DESC: FxDescGet's 16-byte record: `count` FX_PARAM records at `params` (right before it), `nparams`
-# parameter numbers (FxDescNParamsGet), `mode` (FxDescModeGet; SndUnitDbGroupQuery searches the
-# parameters for 1 and 2), pnum9 / pnum10 / pnum11 (a parameter number or -1; roles not traced) and
-# `send_param`, the REVERB SEND parameter's number (-1 in the reverbs).
-.macro FX_DESC params, count=0, nparams=0, mode=0, pnum9=-1, pnum10=-1, pnum11=-1, send_param=-1
+# parameter numbers (FxDescNParamsGet), `connection` (FxDescModeGet; FxConnectionGet 0x4863BA0B maps it to the
+# unit's connection message, kind 9; SndUnitDbGroupQuery and FxDepthApply act for 1 and 2: 0 the reverbs,
+# choruses and gates, 1 the depth effects, 2 rotary / amp / wah / pitch, 3 Dry/Wet [INFERENCE: a connection
+# type]), three parameter numbers or -1 (lane mn10300-rest, probe notes/mn10300-rest-probes/kn2400_fx_pnums.py):
+# `speed_param` (FxDescPnum9Get; FxSpeedNudge 0x4863B51E moves that parameter by a value - 0x40, clamped:
+# LFO SPEED, SLOW LFO SPEED or PEDAL in the 27 descriptors that set it), `tempo_param` (FxDescPnum10Get;
+# FxParamValueGet 0x4863DF3E answers GetM3Em id 4, the TEMPO, for it: the two "TEMPO" effects), `drive_param`
+# (FxDescPnum11Get; func_4863B2B6 / func_4863B3CF test it for -1 before reloading an effect of the same
+# type: the DRIVE of the 9 rotary / amp twins), and `send_param`, the REVERB SEND parameter's number (-1 in
+# the reverbs).
+.macro FX_DESC params, count=0, nparams=0, connection=0, speed_param=-1, tempo_param=-1, drive_param=-1, send_param=-1
 	.byte	\count, \nparams
 	.word	0
 	.long	\params
-	.byte	\mode, \pnum9, \pnum10, \pnum11, \send_param
+	.byte	\connection, \speed_param, \tempo_param, \drive_param, \send_param
 	.space	3, 0x00
 .endm
 # FX_PARAM: one 36-byte parameter record (FxParamGet): its name, NUL-padded to 20 bytes (`pad` NULs
 # after the text), parameter number (FxParamNumberGet), minimum and maximum (FxParamMinGet /
 # FxParamMaxGet), EQ band and sub-parameter (FxParamBandGet / FxParamSubGet), `variant` (0 / 1: two
-# alternative records of one number, 0xFF: always; FxParamVariantGet), x29 (FxParamX29Get) and the
+# alternative records of one number, 0xFF: always; FxParamVariantGet), `depth_link` (0: the parameter
+# follows the panel's depth control, 0xFF: it does not; FxParamNextDepthLinked 0x4863D5E0 finds the next
+# such record, FxDepthApply 0x4863BA75 scales it by the control / 0x50; lane mn10300-rest) and the
 # value texts (FxParamValuesGet).
-.macro FX_PARAM name, pad, number=0, min=0, max=0, band=0xFF, sub=0, variant=0xFF, x29=0xFF, values=0
+.macro FX_PARAM name, pad, number=0, min=0, max=0, band=0xFF, sub=0, variant=0xFF, depth_link=0xFF, values=0
 	.ascii	"\name"
 	.space	\pad, 0x00
 	.word	\number, \min, \max
-	.byte	\band, \sub, \variant, \x29
+	.byte	\band, \sub, \variant, \depth_link
 	.word	0
 	.long	\values
+.endm
+# The SX-KN2400's effect-DSP streams (tools/gen_data_s.py fx_streams, lane mn10300-rest; the routines are
+# kn2400_manual.sym's FxDsp* / FxParam*, the probe kn7000/notes/mn10300-rest-probes/kn2400_fx_streams.py).
+# A program stream (FxDspStreamExec 0x5018A345) is records of one kind byte and a 12-bit length that counts the
+# whole record: 0xFB n raw bytes, 0xFC n 4-byte program words (word i to step FxUnitProgramBase[unit] + i),
+# 0xFD / 0xF7 n big-endian u24 coefficients from address `start` (0xFD as one burst, 0xF7 each after
+# register 0xFF = its address), 0xFE {u16 register, u24 value} pairs up to the next kind byte, 0xFF the end.
+.macro FXP_RAW n
+	.byte	0xfb, ((\n + 3) >> 8) & 0x0f, (\n + 3) & 0xff
+.endm
+.macro FXP_STEPS n
+	.byte	0xfc, ((4 * \n + 3) >> 8) & 0x0f, (4 * \n + 3) & 0xff
+.endm
+.macro FXP_COEF start, n
+	.byte	0xfd, ((3 * \n + 5) >> 8) & 0x0f, (3 * \n + 5) & 0xff, (\start >> 8) & 0xff, \start & 0xff
+.endm
+.macro FXP_COEF_EACH start, n
+	.byte	0xf7, ((3 * \n + 5) >> 8) & 0x0f, (3 * \n + 5) & 0xff, (\start >> 8) & 0xff, \start & 0xff
+.endm
+.macro FXP_U24 v
+	.byte	(\v >> 16) & 0xff, (\v >> 8) & 0xff, \v & 0xff
+.endm
+.macro FXP_U24x4 a, b, c, d
+	FXP_U24	\a
+	FXP_U24	\b
+	FXP_U24	\c
+	FXP_U24	\d
+.endm
+.macro FXP_REGS
+	.byte	0xfe
+.endm
+.macro FXP_REG reg, value
+	.byte	(\reg >> 8) & 0xff, \reg & 0xff
+	FXP_U24	\value
+.endm
+.macro FXP_END
+	.byte	0xff
+.endm
+# A parameter script (FxParamScriptRun 0x5018A724, FxScriptGroupFind, FxParamEntryExec 0x5018A7B8): a group per
+# parameter number, `len` the group's bytes with the length itself (big-endian), entries {kind, index into the
+# kind's address-map group, operands} and FXS_NEXT (0x7A) after each run, FXS_END (0xFF) after the last group.
+# The operand bytes per kind are each converter's (gen_data_s.FX_OPS); FXS_OP6 is two u24 operands (kinds 0x21 /
+# 0x64 / 0x66: lo, hi; 0x6B / 0x6C / 0x73 the same byte count [INFERENCE: the same layout]), FXS_OP3 one.
+.macro FXS_GROUP len
+	.byte	(\len >> 8) & 0xff, \len & 0xff
+.endm
+.macro FXS_OP kind, index
+	.byte	\kind, \index
+.endm
+.macro FXS_OP3 kind, index, v
+	.byte	\kind, \index
+	FXP_U24	\v
+.endm
+.macro FXS_OP6 kind, index, lo, hi
+	.byte	\kind, \index
+	FXP_U24	\lo
+	FXP_U24	\hi
+.endm
+.macro FXS_NEXT
+	.byte	0x7a
+.endm
+.macro FXS_END
+	.byte	0xff
+.endm
+# An address map (FxMapAddrFind 0x5018AE27): groups {u16 BE len, kind, u16 BE DSP addresses}, 0xFF after the last.
+.macro FXM_GROUP len, kind
+	.byte	(\len >> 8) & 0xff, \len & 0xff, \kind
+.endm
+.macro FXM_END
+	.byte	0xff
+.endm
+.macro FXM_ADDR a
+	.byte	(\a >> 8) & 0xff, \a & 0xff
+.endm
+.macro FXM_ADDR4 a, b, c, d
+	FXM_ADDR	\a
+	FXM_ADDR	\b
+	FXM_ADDR	\c
+	FXM_ADDR	\d
 .endm

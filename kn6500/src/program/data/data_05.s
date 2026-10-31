@@ -625,20 +625,92 @@
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	130, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 130, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 12	# cell 11: song 1 track 2, 1 of 7
 	sq_beat
 	sq_beat
@@ -1098,17 +1170,34 @@
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	129, 129, 129, 129, 129, 130, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 130, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 19	# cell 18: song 1 track 5, 1 of 4
 	sq_sys	0, 0xf1, 2, 0, 80, 1, 2
 	sq_note	0, 0, 60, 64, 0, 16
@@ -1378,8 +1467,8 @@
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	64, 0, 1, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	64, 0, 1, 0	# data bytes of an event cut at the start
 	sq_cell	0x80, 0, 65535	# cell 22: song 1 track 6, 1 of 1
 	sq_sys	0, 0x85
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
@@ -1522,8 +1611,14 @@
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	129, 129, 129, 130, 75, 144, 36, 67, 7, 0, 79, 144, 106, 63, 5, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_note	75, 0, 36, 67, 7, 0
+	sq_note	79, 0, 106, 63, 5, 0
+	# not events: stale cell bytes that neither event order explains (left over)
 	.byte	94, 144, 54, 64, 13
 	sq_cell	0x80, 0, 65535	# cell 23: song 1 track 8, 1 of 1
 	sq_8n	0, 0, 27, 1
@@ -1654,15 +1749,59 @@
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	130, 72, 144, 65, 85, 11, 0, 129, 0, 144, 67, 100, 14, 0, 48, 144
-	.byte	76, 108, 16, 0, 129, 0, 144, 76, 106, 16, 0, 24, 144, 67, 87, 17
-	.byte	0, 48, 144, 64, 73, 17, 0, 72, 144, 65, 81, 16, 0, 129, 0, 144
-	.byte	67, 97, 15, 0, 24, 144, 64, 83, 15, 0, 48, 144, 65, 92, 45, 0
-	.byte	129, 0, 144, 64, 94, 16, 0, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129, 129
-	.byte	129, 129, 129, 129, 129, 129, 129, 129, 1, 144, 64, 112, 14, 0, 24, 144
-	.byte	65, 76
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_end
+	sq_note	72, 0, 65, 85, 11, 0
+	sq_beat
+	sq_note	0, 0, 67, 100, 14, 0
+	sq_note	48, 0, 76, 108, 16, 0
+	sq_beat
+	sq_note	0, 0, 76, 106, 16, 0
+	sq_note	24, 0, 67, 87, 17, 0
+	sq_note	48, 0, 64, 73, 17, 0
+	sq_note	72, 0, 65, 81, 16, 0
+	sq_beat
+	sq_note	0, 0, 67, 97, 15, 0
+	sq_note	24, 0, 64, 83, 15, 0
+	sq_note	48, 0, 65, 92, 45, 0
+	sq_beat
+	sq_note	0, 0, 64, 94, 16, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 64, 112, 14, 0
+	# not events: stale cell bytes that neither event order explains (left over)
+	.byte	24, 144, 65, 76
 	sq_cell	0x80, 0, 65535	# cell 24: song 1 track 15, 1 of 1
 	sq_cc	0, 0, 14, 10, 1
 	sq_beat
@@ -1796,13 +1935,35 @@
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	130, 129, 129, 129, 129, 129, 130, 74, 144, 76, 91, 14, 0, 129, 0, 144
-	.byte	77, 97, 21, 0, 27, 144, 80, 106, 15, 0, 48, 144, 82, 111, 18, 0
-	.byte	78, 224, 65, 13, 80, 224, 92, 15, 82, 224, 119, 17, 84, 224, 18, 20
-	.byte	86, 224, 46, 22, 88, 224, 73, 24, 90, 224, 100, 26, 92, 224, 127, 28
-	.byte	94, 224, 26, 31, 129, 0, 224, 53, 33, 0, 144, 77, 110, 59, 0, 2
-	.byte	224, 81, 35, 2, 144, 85, 109, 57, 0, 4, 224
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_note	74, 0, 76, 91, 14, 0
+	sq_beat
+	sq_note	0, 0, 77, 97, 21, 0
+	sq_note	27, 0, 80, 106, 15, 0
+	sq_note	48, 0, 82, 111, 18, 0
+	sq_bend	78, 0, 65, 13
+	sq_bend	80, 0, 92, 15
+	sq_bend	82, 0, 119, 17
+	sq_bend	84, 0, 18, 20
+	sq_bend	86, 0, 46, 22
+	sq_bend	88, 0, 73, 24
+	sq_bend	90, 0, 100, 26
+	sq_bend	92, 0, 127, 28
+	sq_bend	94, 0, 26, 31
+	sq_beat
+	sq_bend	0, 0, 53, 33
+	sq_note	0, 0, 77, 110, 59, 0
+	sq_bend	2, 0, 81, 35
+	sq_note	2, 0, 85, 109, 57, 0
+	# not events: stale cell bytes that neither event order explains (left over)
+	.byte	4, 224
 	.endzlib
 zlib_4C35F59C:	# DemoSong10: its event memory, 37888 bytes, stored as a zlib stream of 21140 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
@@ -10048,10 +10209,14 @@ zlib_4C35F59C:	# DemoSong10: its event memory, 37888 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	129, 129, 129, 129, 129, 130, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 137	# cell 136: song 1 track 16, 1 of 13
 	sq_beat
 	sq_beat
@@ -13319,17 +13484,9 @@ zlib_4C364830:	# DemoSong11: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	130, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_4C364830
 zlib_4C365CAC:	# DemoSong12: its event memory, 25600 bytes, stored as a zlib stream of 7611 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -19175,12 +19332,14 @@ zlib_4C365CAC:	# DemoSong12: its event memory, 25600 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: cell bytes after the end of track (left over)
-	.byte	129, 129, 129, 129, 129, 130, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+# after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 100	# cell 99: song 1 track 16, 1 of 2
 	sq_beat
 	sq_beat
@@ -38458,7 +38617,7 @@ USBTEST_SW_onoff:
 	.space	4, 0x00
 HDDTEST_SW_onoff:
 	.space	4, 0x00
-func_4C17321A_Table:	# 4 x u8, 0..255; read by func_4C17321A 0x4C17321A: `movbu d1, (func_4C17321A_Table)`; func_4C17321A_L3a 0x4C173254: `movbu d0, (func_4C17321A_Table)` ...
+XaprBoardPresent:	# 4 x u8, 0..255; read by XaprBoardDetect 0x4C17321A: `movbu d1, (XaprBoardPresent)`; XaprBoardDetect_L3a 0x4C173254: `movbu d0, (XaprBoardPresent)` ...
 	tab_u8	0, 255, 255, 255
 
 HDD_COMM_TEST_L60c_Var:	# u32, initial value of a RAM variable; read / written by HDD_COMM_TEST_L60c 0x4C173BE5: `mov (HDD_COMM_TEST_L60c_Var), d0`; HDD_COMM_TEST_L60c 0x4C173BE5: `mov d0, (HDD_COMM_TEST_L60c_Var)`
@@ -38480,10 +38639,10 @@ func_4C0064C6_entry_L7d_Table_2:	# 2 x s16, -1..255; read by func_4C0064C6_entry
 	tab_s16	255, -1
 
 func_4C01B47B_Table:	# 4 x REC_func_4C01B47B_Table (56 bytes each); read by func_4C0065B1_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0`; func_4C01465E_L26 0x4C014684 `movhu (6, a0), d0` (+893)
-	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012358, f48=-1, f50=1, f52=0x50015F70
-	REC_func_4C01B47B_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012364, f48=-1, f50=128, f52=0x50015F88
-	REC_func_4C01B47B_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012F64, f48=-1, f50=128, f52=0x50016B88
-	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50015F64, f48=-1, f50=1, f52=0x50017788
+	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012358, key___=-1, count=1, index__=0x50015F70
+	REC_func_4C01B47B_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012364, key___=-1, count=128, index__=0x50015F88
+	REC_func_4C01B47B_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012F64, key___=-1, count=128, index__=0x50016B88
+	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50015F64, key___=-1, count=1, index__=0x50017788
 
 names_50005794:
 	.long	Str_CHARA1, Str_CHARA2
@@ -38717,8 +38876,8 @@ func_4C123C73_Records:	# 65 x REC_func_4C123C73_Records (4 bytes each); read by 
 	REC_func_4C123C73_Records	f0=11940, f2=19, f3=76
 	REC_func_4C123C73_Records	f0=11946, f2=19, f3=76	# [64]
 func_4C130418_entry_Ld1_Records:	# 2 x REC_func_4C130418_entry_Ld1_Records (40 bytes each); read by func_4C130418_entry_Ld1 0x4C1304EE `mov (func_4C130418_entry_Ld1_Records+40), d0`; func_4C130418_entry_L103 0x4C130520 `mov (a2), a1`; func_4C130418_entry_L103 0x4C130520 `mov (func_4C130418_entry_Ld1_Records+40), d0` (+13)
-	REC_func_4C130418_entry_Ld1_Records	f0=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_4, x32=",[\x00P\x00\x00\x00\x00"
-	REC_func_4C130418_entry_Ld1_Records	f0=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
+	REC_func_4C130418_entry_Ld1_Records	count=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_4, x32=",[\x00P\x00\x00\x00\x00"
+	REC_func_4C130418_entry_Ld1_Records	count=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x37D168, 0x37D16C
 
@@ -39190,66 +39349,66 @@ func_4C15562E_Table:
 	.long	0
 
 func_4C15839E_entry_L1b41_Records:	# 27 x REC_func_4C15839E_entry_L1b41_Records (8 bytes each); read by func_4C15839E_entry_L1b41 0x4C159EE1 `mov (4, a1), d2`; func_4C15839E_entry_L1b41 0x4C159EE1 `mov (a1), d1`; func_4C15839E_entry_L1f71 0x4C15A311 `mov (4, a1), d2` (+16)
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40440000	# [0]
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40490000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x404F8000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40540000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40590000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x405F4000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40640000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40690000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x406F4000	# [8]
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x4073B000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40790000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x407F4000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x4083B000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40890000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x408F4000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40938800
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40990000	# [16]
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x409F4000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40A38800
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40A89C00
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40AF4000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40B38800
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40B89C00
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40BF4000
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40C38800	# [24]
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40C86A00
-	REC_func_4C15839E_entry_L1b41_Records	f4=0x40CF4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40440000	# [0]
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40490000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x404F8000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40540000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40590000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x405F4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40640000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40690000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x406F4000	# [8]
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x4073B000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40790000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x407F4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x4083B000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40890000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x408F4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40938800
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40990000	# [16]
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x409F4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40A38800
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40A89C00
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40AF4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40B38800
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40B89C00
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40BF4000
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40C38800	# [24]
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40C86A00
+	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40CF4000
 func_4C15839E_entry_L1b41_Records_2:	# 32 x REC_func_4C15839E_entry_L1b41_Records_2 (8 bytes each); read by func_4C15839E_entry_L1b41 0x4C159EE1 `mov (4, a1), d2`; func_4C15839E_entry_L1b41 0x4C159EE1 `mov (a1), d1`; func_4C15839E_entry_L2188 0x4C15A528 `mov (4, a1), d2` (+3)
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FB99999	# [0]
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FC99999
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x33333333, f4=0x3FD33333
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FD99999
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x3FE00000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x33333333, f4=0x3FE33333
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x66666666, f4=0x3FE66666
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FE99999
-	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0xCCCCCCCD, f4=0x3FECCCCC	# [8]
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x3FF00000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x3FF80000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40000000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40040000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40080000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x400C0000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40100000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40140000	# [16]
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40180000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x401C0000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40200000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40220000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40240000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40260000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40280000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x402A0000	# [24]
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x402C0000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x402E0000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40300000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40310000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40320000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40330000
-	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40340000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FB99999	# [0]
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FC99999
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x33333333, LibF64Mul_d1=0x3FD33333
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FD99999
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x3FE00000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x33333333, LibF64Mul_d1=0x3FE33333
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x66666666, LibF64Mul_d1=0x3FE66666
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FE99999
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0xCCCCCCCD, LibF64Mul_d1=0x3FECCCCC	# [8]
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x3FF00000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x3FF80000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40000000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40040000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40080000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x400C0000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40100000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40140000	# [16]
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40180000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x401C0000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40200000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40220000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40240000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40260000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40280000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x402A0000	# [24]
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x402C0000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x402E0000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40300000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40310000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40320000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40330000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40340000
 
 func_4C15839E_entry_L2ad7_Table:	# 132 x u32, 1635..1580427; read by func_4C15839E_entry_L2ad7 0x4C15AE77: `mov	(d0, a0), d1`
 	tab_u32	1635, 1635, 1635, 1635, 1635, 1635, 1635, 1635	# [0]

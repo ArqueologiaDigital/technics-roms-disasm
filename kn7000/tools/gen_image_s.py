@@ -262,6 +262,60 @@ def target_of(mnem, ops):
     return None
 
 
+def annotate_host_calls(body, tsv, registry):
+    """(lane mn10300-rest) Name the host routine of every `calls (aN)` that goes through the host's registry:
+    `mov (REGISTRY), aX` (the base the host passed XaprEntryInit), `mov (0x1SSC, aX), aX` (+0xC of registry
+    slot 0x1SS's 16-byte record: its table), `mov (OFF, aX), aN` (entry OFF / 4), each found by walking back
+    from the call over straight-line code, where a call clobbers only a0 / a1 / d0 / d1.  The names are the
+    host's Function tables (`tsv`: slot, OFF, name; slot 0x100 block 0, 0x107 block 7)."""
+    names = {}
+    for ln in open(tsv, encoding="latin-1"):
+        f = ln.rstrip("\n").split("\t")
+        if len(f) == 3 and not ln.startswith("#"):
+            names[(int(f[0], 0), int(f[1], 0))] = f[2]
+    movld = re.compile(r"\tmov\t\((0x[0-9a-f]+|\d+), (a\d)\), (a\d)$")
+
+    def defof(i, reg):
+        for j in range(i - 1, max(0, i - 80), -1):
+            t = body[j]
+            if not t.startswith("\t"):
+                m = re.match(r"^(\w+):", t)
+                if m and not re.search(r"_L[0-9a-f]+$", m.group(1)):
+                    return None
+                continue
+            p = t.split("#", 1)[0].rstrip().split("\t")
+            if len(p) < 2:
+                continue
+            if p[1] in ("call", "calls"):
+                if reg in ("a0", "a1", "d0", "d1"):
+                    return None
+                continue
+            if len(p) >= 3 and re.search(r"(^|,\s*)%s$" % reg, p[2]) and p[1] not in ("cmp", "btst"):
+                return j
+        return None
+
+    out = list(body)
+    for i, t in enumerate(body):
+        m = re.match(r"\tcalls\t\((a\d)\)$", t)
+        if not m:
+            continue
+        j = defof(i, m.group(1))
+        m1 = movld.match(body[j].split("#", 1)[0].rstrip()) if j is not None else None
+        k = defof(j, m1.group(2)) if m1 else None
+        m2 = movld.match(body[k].split("#", 1)[0].rstrip()) if k is not None else None
+        r = defof(k, m2.group(2)) if m2 else None
+        if r is None or body[r].split("#", 1)[0].rstrip() != f"\tmov\t({registry}), {m2.group(2)}":
+            continue
+        so = int(m2.group(1), 0)
+        if so & 0xF != 0xC:
+            continue
+        slot, off = (so - 0xC) // 16, int(m1.group(1), 0)
+        nm = names.get((slot, off))
+        if nm:
+            out[i] = f"{t}\t# host {nm} (registry slot 0x{slot:x}, entry {off // 4})"
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -302,6 +356,13 @@ def main():
                     help="an .equ include of MILK ids (gen_data_s.py gui_code_ids.inc, as the source "
                          "includes it): included ahead of the code, whose mov / cmp immediates "
                          "equal to one are spelled with its name")
+    ap.add_argument("--host-calls", metavar="FILE",
+                    help="(a plug-in) a TSV of the host's Function tables, `slot<TAB>OFF<TAB>name` "
+                         "(gen_data_s.py writes it beside the data); each `calls (aN)` whose register "
+                         "comes from `mov (REG), aX / mov (0x1SSC, aX), aX / mov (OFF, aX), aN`, REG the "
+                         "--host-registry variable, gets the host routine's name as a comment")
+    ap.add_argument("--host-registry", default="XaprHostRegistry",
+                    help="the plug-in's variable that holds the host's registry base")
     ap.add_argument("--reflection-tables", action="store_true",
                     help="emit the code-pointer half of every MILK reflection table "
                          "gen_symbols.py finds as .long rows of names")
@@ -816,6 +877,8 @@ def main():
           "# reference in one pass; each label must land on its .equ.",
           ""] + [f".equ {n}, 0x{rev[n]:08x}" for n in eq]
     open(a.labels_inc, "w").write("\n".join(LI) + "\n")
+    if a.host_calls and os.path.exists(a.host_calls):
+        body = annotate_host_calls(body, a.host_calls, a.host_registry)
     L.extend(body)
     open(a.out, "w").write("\n".join(L) + "\n")
 

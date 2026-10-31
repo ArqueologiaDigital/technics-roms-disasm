@@ -6,4 +6,32 @@
 0x97800080  XaprEmptySlot   ; a bare rets: the ten header words at +0x58..+0x7C all point here
 ;
 ; ---- end of the image --------------------------------------------------------
-0x978B655C  XaprTrailerSignature ; the second "XAPR", the image's last bytes before the erased tail (file 0xb655c); header word +0x04 holds its address. No code in the image reads it; the firmware's use of it is not traced
+0x978B655C  XaprTrailerSignature ; the second "XAPR", the image's last bytes before the erased tail (file 0xb655c): header +0x04 points at it, and the host's XaprBoardDetect 0x4C172A18 (`mov (0x97800004), a0` 0x4C172A31, then strncmp(a0, "XAPR", 4)) accepts the board only when it reads "XAPR" too [INFERENCE: the whole flash was written]
+;
+; ---- the header's entry vectors and what the host does with them (lane mn10300-rest, 2026-10-31;
+;      kn7000/notes/mn10300-rest/README.md, probe kn7000/notes/mn10300-rest-probes/hdsx3_entry_vectors.py).
+;      The KN6000's XaprBoardDetect 0x4C172A18 accepts the board when both 0x97800000 and the word header
+;      +0x04 points at read "XAPR"; each Xapr* stub of the host tests that result before it calls its vector ----
+0x9783DBC9  XaprEntryInit          ; header +0x08, called once at boot by the host's XaprInit 0x4C172A7A (phase 0 of its init dispatcher) with a0 = the host's registry base: XaprRamInit, stores a0 to XaprHostRegistry, makes the 11 registrations (func_9780A414), ScreenOn and RegisterEasySet (EV_CHANGE_TITLE / 0x77)
+0x97800082  XaprRamInit            ; clears 0x927F8 bytes at 0x979126D8 and copies the 0x26D8-byte initialised RAM image 0x978B3E84 -> 0x97910000
+0x979126B4  XaprHostRegistry       ; the host's registry base XaprEntryInit stores (`mov d0, (...)` 0x9783DBD7); every call of a host routine loads it (`mov (XaprHostRegistry), aX / mov (0x1SSC, aX), aX / mov (OFF, aX), aN`)
+0x9783DC78  XaprEntryIdle          ; header +0x0C, called by the host's XaprCallIdle 0x4C172A62 at the end of every pass of its main task loop: every 10th call reads GetBeatSeq and posts EV_INITLYRICPARAM to the lyrics box, watches IsRunningSeq, checks GetTitleNow == TT_HDDEXT
+0x97837743  XaprEntryIsrGroup24    ; header +0x10, called by the host's interrupt handler XaprIsrGroup24 (interrupt 0xE, group 0x18, ICR 0x34000160, level 3): services the chip at 0x98068000.. (the host's HDD test calls it the "USB chip")
+0x97839372  XaprEntryIsrGroup27    ; header +0x14, called by XaprIsrGroup27 (interrupt 0xF, group 0x1B, ICR 0x3400016C): a byte receiver on 0x98064010, sync byte 0x5A (the host's "PPORT chip")
+0x9783384D  XaprEntryM3Hook        ; header +0x18, called by the host's XaprCallM3Hook 0x4C173C25 from the group-0x70 row of its PutM3Em hook list (M3HookDispatch): d0 = message, d1 = parameter; a result other than -1 means consumed (message 0x1?7020A1 shows BigFont_DirSelect / HDD_DIR_SELECT)
+0x9783BB0D  XaprExtDiskFreeSpace   ; header +0x1C: the host's file layer calls +0x1C..+0x54 while its ExtMode flag (0x500622B2, SetExtMode, which the plug-in sets) is on; this one answers the free space
+0x9783BB23  XaprExtCstFileName     ; header +0x20: a0 = the name, "TMPNAME.DAT"
+0x9783BB2C  XaprExtCstEntryName    ; header +0x24: a0 = the name of entry d0
+0x9783BB35  XaprExtSmfFileName     ; header +0x28: a0 = the name, "SMFDATA1.MID"
+0x9783BB3E  XaprExtFileError       ; header +0x2C: d0 = the last error
+0x9783BB6D  XaprExtFileOpen        ; header +0x30: (a0 = path, a1 = mode) -> 0 / -1; keeps only the mode (strcpy to 0x97941E0C)
+0x9783BBD3  XaprExtFileClose       ; header +0x34: -> 0 / -1
+0x9783BC09  XaprExtFileRemove      ; header +0x38: counts the call, -> 0
+0x9783BC1A  XaprExtFileGetc        ; header +0x3C: -> a byte
+0x9783BE17  XaprExtFilePutc        ; header +0x40: d0 = the byte
+0x9783BC7F  XaprExtFileRead        ; header +0x44: (a0 = buffer, d0 = length) -> count
+0x9783BE85  XaprExtFileWrite       ; header +0x48: (a0 = buffer, d0 = length) -> count
+0x9783BD14  XaprExtFileSeek        ; header +0x4C: (d0 = offset, d1 = whence 0 / 1 / 2) -> the position or -1 / -2
+0x9783BDFF  XaprExtFileRewind      ; header +0x50: -> 0
+0x9783BDE9  XaprExtFileTell        ; header +0x54: -> the position
+0x9783B816  XaprExtFileCommand     ; (d0 = 6 open, 7 data, 8 close) the one transfer channel the file vectors run through [INFERENCE]

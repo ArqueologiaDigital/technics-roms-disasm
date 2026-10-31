@@ -333,6 +333,7 @@
 0x48000000  TableRomDirectory      ; directory of LE u32 chunk offsets (rel to 0x48000000); first chunk @0x48000200
 0x48040674  FactoryMemPadContainer ; table ROM segment 3 (0x1d18): the factory 'TPAD' PERFORMANCE PAD user memory; copied to 0x501F91A0 (0xA000 area) by MemPadAreaLoadFactory when it starts with 'TPAD' (src/table.s)
 0x4804238C  TechnicsPadsResource   ; "Technics Pads" resource (0x142f0): accompaniment pad patterns
+0x4872E590  TechnicsPadsResourceBuiltin ; the program's own copy of the "Technics Pads" bank (6 pads, to 0x487312E8): TechnicsPadsResourceInit stores it (`mov a0, (TechnicsPadsResourceInit_Var)`) and calls TechnicsPadsResourceParse when the table flash's copy does not check (lane mn10300-rest; probe notes/mn10300-rest-probes/opaque_readers_941.py, "pads")
 ; UNPORTED (table bytes not present in new build): 0x483E828C  TechnicsRhythmsTable   ; "Technics Rhythms" resource in the table ROM (style/rhythm index)
 ; Loaders of table-ROM segments 1, 3 and 4 (src/table.s segment headers).
 0x4843FB23  SramRecordsLoadFactory ; (d0 = first, d1 = last record) both < 0xDC and first <= last, else -1: if table-ROM segment 1 (TableRomSeg01PtrSize) starts with the 8-byte 'ZZZJ',0,'K',0,0xDC signature of 0x485B7370, copy records first..last (0x18 bytes each, from segment+0x10) over the battery-SRAM table at 0x84030FF8; otherwise fall back to a program-ROM default record
@@ -903,9 +904,9 @@
 0x4C00F039  TgSoundEditFlag51LowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
 0x4C00F08D  TgSoundEditByte52Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
 0x4C00F0D1  TgSoundEditByte53Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
-0x4C02BE32  TgVoiceRoutePtrCalc     ; (a0 staging rec) rec+0x34 := per-note routing-entry ptr: kit tables via maincpu 0x48449DAA/0x48449DF8(rec+0x18) indexed by note (rec+0x0A hi7); when the note byte's bit7 is set also sets bit15 of rec+2 and re-reads via 0x48449E46 -- *(rec+0x34) halfword bits 10/11 = the note's allowed TG sides (read by TgVoiceSideSelect)
+0x4C02BE32  TgVoiceRoutePtrCalc     ; (a0 staging rec) rec+0x34 := per-note routing-entry ptr: kit tables via maincpu 0x48449DAA/0x48449DF8(rec+0x18) indexed by note (rec+0x0A hi7); when the note byte's bit7 is set also sets bit15 of rec+2 and re-reads via 0x48449E46 -- *(rec+0x34) halfword bits 10/11 = the note's allowed TG sides, 0x400 MAIN / 0x800 SUB (read by TgVoiceSideSelect)
 0x4C02BE37  TgVoiceRoutePtrCalc_entry
-0x4C02BEB8  TgVoiceSideSelect       ; (a0 staging rec) -> TG side word for the request: rec+0x18 kit class 1/2 -> 0x400 (TG A), 3/4 -> 0x800 (TG B); class 0 -> mode 0x484D7751(): 1/2/3 -> *(rec+0x34) & 0x0C00 (the note's routing entry), 5 -> table 0x48586514, 4 -> 0; TgElemRequestFlags folds 0x400/0x800 into request bits 0x08/0x10 (= TgVoiceNodePick's side policy)
+0x4C02BEB8  TgVoiceSideSelect       ; (a0 staging rec) -> TG side word for the request: rec+0x18 kit class 1/2 -> 0x400 (the MAIN TG 0x98050000, IC203 / IC204), 3/4 -> 0x800 (the SUB TG 0x98040000, IC207 / IC208; TgVoiceRegWrite sends slots below 0x40 to 0x98050000, TgNodeScanSideA keeps the slots below 0x40; lane mn10300-rest, notes/mn10300-rest-probes/tg_side_bits.py); class 0 -> mode 0x484D7751(): 1/2/3 -> *(rec+0x34) & 0x0C00 (the note's routing entry), 5 -> table 0x48586514, 4 -> 0; TgElemRequestFlags folds 0x400/0x800 into request bits 0x08/0x10 (= TgVoiceNodePick's side policy)
 0x4C02BEBD  TgVoiceSideSelect_entry
 0x4C02BF1F  TgPartPitchWordCalc     ; (d0 part, d1 note) halfword 0x500AD5A8+part*0x10C := part coarse tune (partrec+0x1A)<<8 + master tune 0x500C075E + (partrec flags bit14: per-degree SCALE TUNING partrec+0x4A[note%12]) -- the part pitch word TgPitchNoteResolve folds in
 0x4C02BF21  TgPartPitchWordCalc_entry
@@ -2883,6 +2884,41 @@
 0x48482A91  SmfHeaderNormalize      ; (a0 = buffer) finds "MThd" at offset 0, or at 0x80 behind a 128-byte prefix, else -> d0 = -1; copies the 0x16 bytes from there to 0x5006AA20 and back to the buffer start -> d0 = 0
 0x4852FDF6  MidFileNamesPageFill    ; clears the 60 name slots of 0x4F bytes at 0x5006F669, then walks "*.MID" (_findfirst / _findnext) and copies the names whose index lies between the words 0x500708F2 and 0x500708F4 into slot index - first [the visible page of a file list, inferred]
 0x485307A7  CstFileNamesPageFill    ; the same for "*.CST" into 60 slots of 0x1E bytes at 0x5007093F, window words 0x5007104C / 0x5007104E
+;
+; ---- the sound lookups of the table flash's 'Tone' and switch-key hashes (lane mn10300-rest, 2026-10-31;
+;      kn7000/notes/mn10300-rest/README.md, probe notes/mn10300-rest-probes/kn7000_tone_hash_readers.py;
+;      the SX-KN6000's routines of the same names, kn6000/kn6000_manual.sym, with four archive sources) ----
+0x4856EECB  ToneKeyFind             ; (d0 = MSB, d1 = LSB, (0x10, sp) = program, a0 = &source) -> a0 = the 'Tone' payload of the sound (jk_tone_key): archive sources 1..4 first (ToneKeyLookupSrc1..4, each gated by VoiceBankSourcePresent), then the internal table (ToneKeyLookup) and the KN6000's MSB / LSB fallbacks; *source = 0..4
+0x4856F1EF  SoundSwNoGet            ; (d0 = MSB, d1 = LSB, program, a0 = &state, a1 = &group, (0x44, sp) = &number) -> the sound's switch {group, number} for the switch state: 0 / 1 {panel_group (+3, `movbu (3, a2), d0` 0x4856FFAD; VoiceBankIdToAlias when the source is an archive), panel_no_dsp / panel_no (+5 / +6)}, 2 / 3 {explorer_group (+4), explorer_no_dsp / explorer_no (+7 / +8)}, and then state += 2 x source
+0x4856F2A1  SoundIconGet            ; payload +2, the sound's icon (`movbu (2, a0), d0` 0x48570047)
+0x4856F2CB  SoundToneIndexGet       ; payload +0, the u16 tone-record index (`movhu (a0), d0` 0x4857006F), and the source
+0x4856F2F2  ToneKeyLookup           ; (d0 = key MSB << 16 | LSB << 8 | program) -> a0 = entry + 8 of the internal 'Tone' hash's entry (sound directory +0x00 buckets, +0x18 descriptor), or 0
+0x4856F363  ToneKeyLookupSrc1       ; ToneKeyLookup in the voice archive at 0x57000000 (source 1)
+0x4856F3D4  ToneKeyLookupSrc2       ; ... at 0x56000000 (source 2)
+0x4856F445  ToneKeyLookupSrc3       ; ... at 0x41000000 (source 3)
+0x4856F4B6  ToneKeyLookupSrc4       ; ... at 0x41800000 (source 4)
+0x4856F527  ToneKeyEqual            ; (d0, d1) -> 1 when the keys match (a `retf` leaf)
+0x4856F532  ToneKeyHashIndex        ; key x mult % nbuckets (`mulu`, `divu`): the bucket of a key
+0x4856F546  SoundSwNoBankGet        ; (d0 = switch state 0..11, d1 = group, (0x28, sp) = number, a0 / a1 / (0x34, sp) = &MSB / &LSB / &program) -> the bank MSB, LSB and program the switch selects, the switch-key payload's +0 / +1 / +2; the key group is the group + 0 (state 0), + 0x12 (1, `add 0x12, d1` 0x485702EB: the KN7000 has 18 panel groups), + 0x40 (even states from 2) or + 0x60 (odd), the source (state - 2) / 2
+0x4856F61F  ShortKeyLookup          ; (d0 = key group << 8 | number) -> a0 = entry + 6 of the internal switch-key hash (sound directory +0x04 buckets, +0x1C descriptor; u16 key at +4), or 0
+0x4856F695  ShortKeyLookupSrc1      ; ShortKeyLookup in the archive at 0x57000000
+0x4856F70B  ShortKeyLookupSrc2      ; ... at 0x56000000
+0x4856F781  ShortKeyLookupSrc3      ; ... at 0x41000000
+0x4856F7F7  ShortKeyLookupSrc4      ; ... at 0x41800000
+0x4856F86D  ShortKeyEqual           ; (d0, d1) -> 1 when the u16 keys match
+0x4856F87A  ShortKeyHashIndex       ; key x mult % nbuckets
+0x4856F88B  SoundGroupNameGet       ; (d0 = switch state, d1 = group, a0 = &name) -> the key group's 16-character name: the sound directory's +0x10 (JkGroupNames) + 16 x key group (`mov (0x10, a1), d1`, `asl 4, d2` 0x4857078F)
+0x4856FA1F  SoundGroupSizeGet       ; (d0 = switch state, d1 = group, a0 = &u8) -> the number of switches of the key group: (sound directory +0x14, JkGroupSizes)[key group] (`movbu (d2, a0), d0`)
+0x48448C24  SoundGroupSizeFetch     ; (d0 = group, d1 = state) -> SoundGroupSizeGet's answer, or 0
+0x4841617C  PartHasDspUnit          ; (d0 = part) -> 1 when GetM3EmVal(0xB050 .. 0xB010), a DSP unit's part, is the part (0 for the parts above 0x12): the even or odd switch state (MainGetSoundName 0x48416118 / `inc` 0x48416124; GetSoundDev 0x48416148)
+0x484492A0  SoundSwFromBank         ; (a0 = SOUND_SW {group, number, msb, lsb, program, state}) fills group / number from msb / lsb / program through SoundSwNoGet for the record's state
+0x48449249  SoundSwFromBankState0   ; the same with the state forced to 0; no direct call found
+0x48449354  SoundSwToBank           ; (a0 = SOUND_SW) msb / lsb / program := SoundSwNoBankGet(state = +5, group, number)
+0x484492F4  SoundSwToBankState0     ; the same with state 0
+0x484494E3  ToneRecordFind          ; (MSB, LSB, program) -> the tone record: SoundToneIndexGet's index through the source's descriptor (0x5003A5A4 + 4 x source) +0x04, the tone directory
+0x484495EE  ToneNameGet             ; (d0 = tone index, d1 = source) -> the tone record through 0x5003A5A4 / 0x5003A554[source]
+0x48448CD3  SoundNameGet            ; the sound's 16-character name (MSB 0x10 / 0x11 / 0x18 / 0x19 named apart), else "Sound Name Error"
+0x48448E3A  SoundIconFetch          ; SoundIconGet's icon, 0 when the sound is not found
 ;
 ; ==== BEGIN GENERATED by tools/port_sibling_names.py -- do not edit by hand ====
 ; Names carried from other MN10300 images where a routine is the same code, linked

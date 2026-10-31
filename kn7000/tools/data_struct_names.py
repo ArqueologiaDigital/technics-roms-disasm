@@ -197,8 +197,9 @@ OPTIONS = {
 # that is clear (tools/data_field_uses.py has the rules and the evidence each name stands for):
 #   proc        called through (`calls (aN)` / `jmp (aN)`), or a pointer every record points into code
 #   text        a pointer every record points at a NUL-terminated string
-#   key         compared with a value the reading routine was given, then beq / bne (a lookup key)
-#   count       compared with a register before a backward branch (a loop bound)
+#   key         compared with a value the reading routine was given, then beq / bne (a lookup key);
+#               also before a backward beq / bne (a search loop: go on until the key matches)
+#   count       compared with a register before a backward ordered branch (blt, bcs ...: a loop bound)
 #   index       scaled (asl / mulu) or used as an index register: an index into a table
 #   flags       bits tested or masked with constants
 #   kind        compared with several constants (a switch on it)
@@ -206,6 +207,12 @@ OPTIONS = {
 #               event, object, icon, size, flag, param_key ...)
 #   <F>_<reg>   handed to the named routine F in register reg (its own code says no more)
 #   <prefix>    compared with a symbolic constant: event (EV_*), message (MT_*), title (TT_*) ...
+#   x / y       compared only with the LCD's width (640, 639) / height (240, 239): a column / row
+#   addr        a number field (not every value a data address) the code uses as a pointer
+# Lane mn10300-rest (2026-10-31) made the use walk follow the reading instruction's own place
+# (tools/data_readers.py Access.pos), a value parked in the frame to its reloads, and an
+# unconditional branch to its target; where the places of a field's readers still disagree, the uses
+# of all of them name it together by the precedence above (data_field_uses.name_for_all).
 AUTO_NAMES = True
 _CI = {}
 
@@ -252,7 +259,7 @@ def auto_name(g, f):
     occ = []
     for a in f.accs:
         if a.width and a.rw == "ld" and a.func and a.insn:
-            occ += ci.uses(a.func, a.insn, near=near)
+            occ += ci.uses(a.func, a.insn, near=near, pos=getattr(a, "pos", None))
     return DFU.name_for_all(occ, f.kind)
 
 

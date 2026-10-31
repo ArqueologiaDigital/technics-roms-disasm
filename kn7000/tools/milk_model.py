@@ -239,6 +239,7 @@ def parse_calls(src_glob, by_name, mem=None):
     for f in sorted(glob.glob(src_glob)):
         regval, stack, func = {}, {}, None
         for i, l in enumerate(open(f, encoding="latin-1").read().split("\n")):
+            l = l.split("#", 1)[0].rstrip()      # (a plug-in's `calls (aN)  # host ...` comments)
             m = re.match(r"^([A-Za-z_]\w*):", l)
             # a function label resets the tracker; a branch label (loc_..., and
             # gen_image_s.py's <entry>_L<hex>) does not
@@ -269,9 +270,21 @@ def parse_calls(src_glob, by_name, mem=None):
                 regval[m.group(2)] = stack.get(int(m.group(1), 0))
                 continue
             # (a plug-in) a host routine loaded from the host's Function table
-            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), a\d\), (a\d)$", l) if HOST_CALLS else None
+            # (lane mn10300-rest) only through registry slot 0x100's table (`mov (0x100c, aX), aY` first):
+            # the plug-in calls slot 0x107's (block 7) entries the same way, and their offsets name other routines
+            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), (a\d)\), (a\d)$", l) if HOST_CALLS else None
             if m:
-                regval[m.group(2)] = ("host", HOST_CALLS.get(int(m.group(1), 0)))
+                off = int(m.group(1), 0)
+                # the Function table's record: slot 1 in the KN7000 scheme (+0x1C), 0x100 in the NAKA one
+                home = 0x1C if SCHEME == "kn7000" else 0x100C
+                if off == home:
+                    regval[m.group(3)] = ("hosttab", 0x100)
+                elif off >= 0x1000 and off & 0xF == 0xC:
+                    regval[m.group(3)] = ("hosttab", (off - 0xC) // 16)
+                elif regval.get(m.group(2)) == ("hosttab", 0x100):
+                    regval[m.group(3)] = ("host", HOST_CALLS.get(off))
+                else:
+                    regval[m.group(3)] = None
                 continue
             m = re.match(r"\s+calls\s+\((a\d)\)$", l) if HOST_CALLS else None
             if m and isinstance(regval.get(m.group(1)), tuple) and regval[m.group(1)][0] == "host" \

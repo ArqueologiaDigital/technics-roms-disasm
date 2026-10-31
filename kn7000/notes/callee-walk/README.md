@@ -199,7 +199,9 @@ the new records' pointer fields name 6 more code addresses (`code_refs.txt`: +6,
   address in memory, and whoever loads it from there later reads the block.  Lane mn10300-typer's `mem_ptrs`
   follows a store to memory and a load back (`../mn10300-typer/README.md`, 3a); it finds SetApTimer's message
   field, but the only load of it, in ApTimer, hands it to ProcCall, a dispatch through a function pointer, so
-  these blocks still stay rows, with the reason in their header.
+  these blocks still stay rows, with the reason in their header.  (Lane mn10300-rest,
+  `../mn10300-rest/README.md` section 3: ProcCall takes the procedure from the RAM table 0x5011FAAC that a
+  window fills when it registers: a run-time dispatch, so this stays.)
 - **Library routines.**  memcpy / strcpy / LibStrlen and the like: the bytes are copied or measured, the
   layout is the copy's reader's.  Kept as rows (or `copied_blocks()`'s typed copies).
 - ~~**Arrays indexed by a loop counter.**~~ (resolved by lane mn10300-typer, `loop_index`: the counter is an

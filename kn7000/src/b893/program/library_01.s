@@ -31937,7 +31937,7 @@ func_4C036174_entry:
     extbu   d0
     asr     8, d1
     extbu   d1
-    call    func_484494E3_entry, [d2,d3], 0x2c
+    call    ToneRecordFind_entry, [d2,d3], 0x2c
     add     0xb, a2
     movbu   (a2), d0
     movbu   (0x5c, sp), d3
@@ -32119,7 +32119,7 @@ func_4C0362FA_entry:
     extbu   d1
     mov     0x26, d2
     mov     d2, (0x10, sp)
-    call    func_484494E3_entry, [d2,d3], 0x2c
+    call    ToneRecordFind_entry, [d2,d3], 0x2c
     mov     0xb, a2
     add     d3, a2
     movbu   (a2), d0
@@ -37497,7 +37497,7 @@ loc_4C0390F2:
     mov     d0, (0x10, sp)
     movbu   (0x5c, sp), d0
     movbu   (0x58, sp), d1
-    call    func_484494E3_entry, [d2,d3], 0x2c
+    call    ToneRecordFind_entry, [d2,d3], 0x2c
     mov     0x130, d0
     nop
     nop
@@ -37826,7 +37826,7 @@ loc_4C039399:
     mov     d0, (0x10, sp)
     movbu   (0x5c, sp), d0
     movbu   (0x58, sp), d1
-    call    func_484494E3_entry, [d2,d3], 0x2c
+    call    ToneRecordFind_entry, [d2,d3], 0x2c
     mov     0x130, d0
     nop
     nop
