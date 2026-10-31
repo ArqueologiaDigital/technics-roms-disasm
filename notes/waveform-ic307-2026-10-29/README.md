@@ -148,7 +148,8 @@ What is proven and what is inferred:
   exceed those pages' directories.
 - **Inferred: page = class & 3, and classes 4-7 are IC307.** The chip-select is IC303's. It is consistent with the
   sources and tones the walk finds, for example page 3 = "Piano L/R" and page 1 = the drum kit sounds. Which
-  socket holds classes 0-3 waits on dumps of IC304-IC306.
+  socket holds classes 0-3 waits on dumps of IC304-IC306. **2026-10-31:** class bit 2 is IC303's chip set, so
+  classes 0-3 are IC304 + IC305 and 4-7 IC306 + IC307 (`../sound-2026-10-31/README.md`, section 3).
 - **Not walked:**
   - the alternate StageA2 maps (+0x9C / +0xA0 / +0xA4), which alias the standard ones in the factory data;
   - the RAM user-tone banks;
@@ -198,7 +199,11 @@ waves, 958 of the named ones `_Drawbar`.
   be IC303's own business. Since 2026-10-30, the likelier answer: on the X chip. In the KN7000 the loop marks
   are in the records' odd words and the format flag in the directory's P word, which are X-chip words; IC307's
   "sequence words" would be the even words of such records.
-- The base sample rate, and which socket holds classes 0-3 (and the X chip of each pair).
+- ~~The base sample rate, and which socket holds classes 0-3 (and the X chip of each pair).~~ **Answered
+  2026-10-31** (`../sound-2026-10-31/README.md`): IC307's partner is **IC306** and classes 0-3 are IC304 + IC305
+  (service manual I-20 and II-15/16: two chip sets, one chip on each of IC303's address buses). 1,339 items carry
+  a real rate (half the KN7000 counterpart's); the other 74, the P/Q words and the loops are **BLOCKED** on a dump
+  of IC306, classes 0-3 on dumps of IC304 and IC305.
 - Why page 1 entries 77, 80, 83 and 85, page 0 entries 152 and 159, and 65 page-2 entries have no selector.
   Possibly older-build leftovers, or users reached only through the RAM user-tone banks.
 

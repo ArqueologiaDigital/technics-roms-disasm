@@ -86,8 +86,8 @@ of two 8-bit samples per word.
 | 16-bit      | two's complement, little-endian (the stream's words)         | `pcm_encoding_probe.py`: s16le has the fewest full-scale jumps in 2,632 of 2,723; the other 91 tie (silence)   |
 | 8-bit       | two's complement, low byte first, two per word               | the same probe: s8 wins in 925 of 959, the rest tie; byte correlation > 0.5 in 917 of 959 (16-bit: 0 of 2,720) |
 | companding  | none found; samples are written as stored (linear)           | not proven: the 8-bit segments have a gain code (below) that the WAV does not apply                            |
-| sample rate | 44,100 Hz in the header, **nominal**                         | the rate at which the tone generator steps one source sample per output sample (output 44.1 kHz)               |
-| unity note  | `96 + 12 (log2(44100 / 2093.0045) - (E - 9))`                | the pitch law fitted in emulation (kn7000_mame `notes/g13-waves-2026-10-20`, 478 of 556 voices): an inference  |
+| sample rate | the TG's read rate at the root key (since 2026-10-31)        | `../sound-2026-10-31/README.md`: pitch law, E, zone correction, key map; until then 44,100 Hz nominal          |
+| unity note  | the root key from the tone database (since 2026-10-31)       | `../sound-2026-10-31/README.md`; until then `96 + 12 (log2(44100 / 2093.0045) - (E - 9))`, the g13 pitch law   |
 | loops       | `smpl` loop = the record's LOOP_START..LOOP_END segment ends | `wave-roms-probes/loop_probe.py`: 945 of 954 marked loops repeat; end written inclusive (end sample - 1)       |
 
 - A recording's sample rate is not stored: the firmware folds each zone's tuning into the pitch it writes.
@@ -120,16 +120,17 @@ chip: [flags:2][code:6][value:8], a value of 0x80 or more a segment of (256 - va
 KN7000 LOOP_END / REC_END bit and bit 6 its LOOP_START bit, the code the 8-bit gain. The directory's P word
 (pitch exponent, 8-bit flag, loop granule), its Q word and every other record word are on the undumped
 partner chip. The MAME driver maps IC304-IC307 as one linear 16 MB region; this says the four chips are two
-word-interleaved pairs instead. Which socket is IC307's partner is not known.
+word-interleaved pairs instead. Which socket is IC307's partner is not known. **Answered 2026-10-31: IC306**
+(`../sound-2026-10-31/README.md`, section 3).
 
-| field              | value                                                                                           | evidence                                                                                           |
-|--------------------|-------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| word               | two's complement, little-endian                                                                 | `pcm_encoding_probe.py`: s16le has the fewest jumps in 1,165 of 1,391 IC307 items, ties 169        |
-| what an item holds | every other word of a recording (the Y half)                                                    | the three matches above                                                                            |
-| 8-bit or 16-bit    | from the KN7000 recording with the same audio: 1,173 16-bit, 169 8-bit                          | `ic307_kn7000_match.py`; the P word with the flag is on the partner chip                           |
-| the 71 others      | byte correlation > 0.5: 8-bit (31); else 16-bit (40)                                            | calibrated on the matched items: > 0.5 in 0 of 1,170 16-bit ones, 152 of 169 8-bit ones; inference |
-| sample rate        | 22,050 Hz in the header, **nominal**: half the KN7000 rate, the chip holding every other sample | no rate is stored (technics-docs `waveform-rom-format.md`)                                         |
-| loops              | none in the WAV: the loop marks are on the partner chip                                         | the record finding above                                                                           |
+| field              | value                                                                         | evidence                                                                                           |
+|--------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| word               | two's complement, little-endian                                               | `pcm_encoding_probe.py`: s16le has the fewest jumps in 1,165 of 1,391 IC307 items, ties 169        |
+| what an item holds | every other word of a recording (the Y half)                                  | the three matches above                                                                            |
+| 8-bit or 16-bit    | from the KN7000 recording with the same audio: 1,173 16-bit, 169 8-bit        | `ic307_kn7000_match.py`; the P word with the flag is on the partner chip                           |
+| the 71 others      | byte correlation > 0.5: 8-bit (31); else 16-bit (40)                          | calibrated on the matched items: > 0.5 in 0 of 1,170 16-bit ones, 152 of 169 8-bit ones; inference |
+| sample rate        | half the KN7000 counterpart's read rate (1,339 items); else 22,050 Hz nominal | `../sound-2026-10-31/README.md` (since 2026-10-31; until then 22,050 Hz for all)                   |
+| loops              | none in the WAV: the loop marks are on the partner chip                       | the record finding above                                                                           |
 
 An IC307 WAV is therefore the Y half of a recording: a 16-bit one sounds like the recording at half the
 rate, without anti-alias filtering; an 8-bit one holds the sample pairs (4i, 4i+1). For the 1,327 waves
@@ -274,12 +275,13 @@ hand).
 
 ## Open questions
 
-- **Sample rates.** Neither ROM stores one. The headers are nominal: 44.1 kHz for the KN7000 and 22.05 kHz
-  for an IC307 half.
-- **The 8-bit gain law** (KN7000; and IC307's code fields): fitted in emulation, not derived. A line-out
-  recording of an 8-bit sound would settle it, and whether the WAVs should apply it.
-- **IC307's partner chip.** Which socket (IC304, IC305 or IC306) is the X half of IC307's pair, and what the
-  other pair holds (classes 0-3). Until it is dumped, an IC307 WAV is half of each recording.
+- ~~**Sample rates.**~~ **CLOSED 2026-10-31** (`../sound-2026-10-31/README.md`): every KN7000 WAV but one
+  and 1,339 IC307 WAVs carry the TG's read rate at a root key; IC307's other 74 are BLOCKED on IC306.
+- **The 8-bit gain law**: **BLOCKED** on a hardware measurement or a TG datasheet (`../sound-2026-10-31/README.md`,
+  section 2: no firmware reader, no 16-bit copy to calibrate against). The fit 2^(-b/2) is recorded there.
+- ~~**IC307's partner chip.**~~ **Decided 2026-10-31: IC306** (service manual I-20 and II-15/16: IC306 and IC307
+  share output-enable index 1 on IC303's two address buses). The other half of each recording is **BLOCKED** on
+  a dump of IC306; classes 0-3 on dumps of IC304 and IC305.
 - **The 71 IC307 waves with no KN7000 counterpart**: their format is the byte-correlation inference.
 - **WSA1R ranges that wsa1_bitmaps.py refuses** (section "Inventory"): pictures whose geometry is not
   established, so they stay rows.

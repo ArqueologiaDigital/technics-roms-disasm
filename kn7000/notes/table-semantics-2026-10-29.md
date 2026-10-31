@@ -180,6 +180,9 @@ little-endian. The macros (`jk_param`, `jk_zone6`, `jk_zone8`, `tone_head`, `ton
    into the select word. `TgVoiceSideSelect` takes the TG side from bits 10/11 of the halfword
    +0. Which TG, MAIN or SUB, each side bit means was not traced, so a zone's comment names both
    `Main_Ppp_Eeee` / `Sub_Ppp_Eeee`, keeping those that exist in `src/wave/`.
+   **Measured 2026-10-31** (`../../notes/sound-probes/kn7000_zone_side.py`): 0x400 is MAIN and 0x800 SUB; of
+   the zones whose entry exists on one TG only, 242 of 242 and 416 of 416 agree. The 1,462 kit zones all carry
+   0x400, but the kit path takes the side from the kit class (+0x18), not from the zone.
 
 **Static cross-check** (the open item of `wave-roms-2026-10-29.md`): all 3,753 zones of the 864
 zone lists and all 1,462 zones of the trailing zone array name an existing wave directory entry.
