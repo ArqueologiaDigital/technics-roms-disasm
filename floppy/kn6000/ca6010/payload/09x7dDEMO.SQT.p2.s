@@ -1088,8 +1088,9 @@ P_09x7dDEMO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09x7dDEMO.sqt.p2.ref", 0x13f6, 10
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 45, 72, 93, 36, 0
+	.byte	144, 45, 77, 99	; the first 4 bytes of a KN5000-order event, cut by the end
 	sq_cell	0xff, 0, 22	; cell 21: song 1 track 2, 1 of 12
 	sq_beat
 	sq_beat
@@ -1817,8 +1818,19 @@ P_09x7dDEMO_SQT_p2:
 	sq_note	3, 0, 65, 94, 30, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09x7dDEMO.sqt.p2.ref", 0x1fc4, 60
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	67, 96, 23, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 48, 68, 107, 22, 0
+	k5_note	0x90, 70, 69, 102, 26, 0
+	k5_note	0x90, 93, 65, 102, 24, 0
+	sq_beat
+	k5_note	0x90, 23, 62, 108, 22, 0
+	k5_note	0x90, 45, 60, 111, 18, 0
+	k5_note	0x90, 74, 72, 103, 28, 0
+	sq_beat
+	k5_note	0x90, 26, 72, 108, 21, 0
+	k5_note	0x90, 48, 70, 110, 20, 0
+	k5_note	0x90, 67, 72, 91, 19, 0
 	sq_cell	0x80, 0, 34	; cell 33: song 1 track 3, 1 of 10
 	sq_beat
 	sq_beat
@@ -2447,8 +2459,32 @@ P_09x7dDEMO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09x7dDEMO.sqt.p2.ref", 0x2984, 124
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	31, 70, 96, 18, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 77, 70, 101, 19, 0
+	k5_note	0x90, 77, 62, 93, 19, 0
+	sq_beat
+	k5_note	0x90, 27, 62, 90, 11, 0
+	k5_note	0x90, 27, 70, 104, 9, 0
+	k5_note	0x90, 50, 60, 93, 78, 0
+	k5_note	0x90, 51, 70, 105, 75, 0
+	sq_beat
+	k5_note	0x90, 47, 65, 96, 22, 0
+	k5_note	0x90, 47, 69, 105, 25, 0
+	sq_beat
+	k5_note	0x90, 0, 65, 97, 25, 0
+	k5_note	0x90, 0, 69, 111, 25, 0
+	k5_note	0x90, 51, 64, 104, 14, 0
+	k5_note	0x90, 51, 69, 112, 13, 0
+	k5_note	0x90, 75, 69, 93, 23, 0
+	k5_note	0x90, 76, 64, 99, 21, 0
+	sq_beat
+	k5_note	0x90, 28, 62, 99, 18, 0
+	k5_note	0x90, 28, 69, 103, 19, 0
+	k5_note	0x90, 73, 62, 97, 21, 0
+	k5_note	0x90, 73, 69, 98, 21, 0
+	sq_beat
+	k5_note	0x90, 24, 62, 100, 10, 0
 	sq_cell	0x80, 0, 44	; cell 43: song 1 track 4, 1 of 2
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	48, 0, 36, 90, 46, 0
@@ -3079,8 +3115,35 @@ P_09x7dDEMO_SQT_p2:
 	sq_sys	71, 0x86
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09x7dDEMO.sqt.p2.ref", 0x2ddf, 33
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xc1, 0, 72, 0, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 
 	.if	(. - P_09x7dDEMO_SQT_p2) - 11776
 	.error	"09}DEMO.SQT part 2: the payload is not 11776 bytes"

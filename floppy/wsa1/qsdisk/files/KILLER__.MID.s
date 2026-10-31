@@ -7,7 +7,8 @@
 F_KILLER___MID:	.incbin	"KILLER__.mid.smf.mid"
 ; The rest of the last 1024-byte output window.  The SMF writer flushes whole windows
 ; (SmfOut_WindowsFlushed 0x126C counts them; the track length at 0xF7789A is computed from
-; it), so the file is a multiple of 1024 bytes and these bytes are what the window buffer
-; still held from earlier output.
-; census: opaque -- unknown-dump: stale SMF output-window bytes past the end of the file's last track
-	.incbin	"qsdisk.img", 0x146a7b, 901
+; it), so the file is a multiple of 1024 bytes, and the window buffer is reused for each
+; window: past the end of the last track it still holds the previous window's bytes at
+; the same offsets.  So these 901 bytes are a copy of the SMF's bytes 0x807b..0x83ff, 1024 earlier
+; (measured on all 13 padded files: notes/open-items/probes/stale_tails.py, "prev-1024 match").
+	.incbin	"KILLER__.mid.smf.mid", 0x807b, 901	; = the previous window's bytes

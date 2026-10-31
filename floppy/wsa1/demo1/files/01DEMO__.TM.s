@@ -14,15 +14,19 @@ F_01DEMO___TM:
 
 F_01DEMO___TM_Bank0:
 	.ascii	"WSA SOUND RAM S0"	; SoundRam_BankName_S0, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"SWEEP PAD       "
-	.ascii	"EFFECT PAD 1    "
-	.ascii	"EFFECT PAD 2    "
-	.ascii	"STRAIGHT PAD    "
-	.ascii	"ENSEMBLE PAD    "
-	.ascii	"ATTACK PAD      "
-	.ascii	"PERCUSSIVE PAD  "
-	.ascii	"SYNTH PERC 1    "
+; the names of USER 1 sound groups 0-7, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DEMO___TM_Bank0_GroupNames:
+	.ascii	"SWEEP PAD       "	; USER 1 group 0
+	.ascii	"EFFECT PAD 1    "	; USER 1 group 1
+	.ascii	"EFFECT PAD 2    "	; USER 1 group 2
+	.ascii	"STRAIGHT PAD    "	; USER 1 group 3
+	.ascii	"ENSEMBLE PAD    "	; USER 1 group 4
+	.ascii	"ATTACK PAD      "	; USER 1 group 5
+	.ascii	"PERCUSSIVE PAD  "	; USER 1 group 6
+	.ascii	"SYNTH PERC 1    "	; USER 1 group 7
 	.include	"tm/tone_13a45175dca8.s"	; tone 1: Imperial Sweep
 	.include	"tm/tone_fac30dbcbb82.s"	; tone 2: Big Wave
 	.include	"tm/tone_656ce847d409.s"	; tone 3: Mysterious
@@ -239,15 +243,19 @@ F_01DEMO___TM_Bank0_Kit:
 
 F_01DEMO___TM_Bank1:
 	.ascii	"WSA SOUND RAM S1"	; SoundRam_BankName_S1, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"SYNTH PERC 2    "
-	.ascii	"SYNTH MALLET    "
-	.ascii	"ETHNO SYNTH     "
-	.ascii	"ANALOG SYNTH    "
-	.ascii	"SYNTH BRASS     "
-	.ascii	"SYNTH STACK     "
-	.ascii	"PERCUSSIVE SHOT "
-	.ascii	"EFFECTIVE SHOT  "
+; the names of USER 1 sound groups 8-15, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DEMO___TM_Bank1_GroupNames:
+	.ascii	"SYNTH PERC 2    "	; USER 1 group 8
+	.ascii	"SYNTH MALLET    "	; USER 1 group 9
+	.ascii	"ETHNO SYNTH     "	; USER 1 group 10
+	.ascii	"ANALOG SYNTH    "	; USER 1 group 11
+	.ascii	"SYNTH BRASS     "	; USER 1 group 12
+	.ascii	"SYNTH STACK     "	; USER 1 group 13
+	.ascii	"PERCUSSIVE SHOT "	; USER 1 group 14
+	.ascii	"EFFECTIVE SHOT  "	; USER 1 group 15
 	.include	"tm/tone_685652ec2288.s"	; tone 1: 80`s Fusion
 	.include	"tm/tone_0310766ce00a.s"	; tone 2: Sharp Saw
 	.include	"tm/tone_5ba57caf7ea6.s"	; tone 3: Timpbel
@@ -464,15 +472,19 @@ F_01DEMO___TM_Bank1_Kit:
 
 F_01DEMO___TM_Bank2:
 	.ascii	"WSA SOUND RAM S2"	; SoundRam_BankName_S2, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"PIANO & PNO PAD "
-	.ascii	"E.PIANO         "
-	.ascii	"ACOUSTIC GUITAR "
-	.ascii	"ELECTRIC GUITAR "
-	.ascii	"FUNK STAFF      "
-	.ascii	"STRINGS         "
-	.ascii	"ORGAN           "
-	.ascii	"VOCAL & REED    "
+; the names of USER 2 sound groups 0-7, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DEMO___TM_Bank2_GroupNames:
+	.ascii	"PIANO & PNO PAD "	; USER 2 group 0
+	.ascii	"E.PIANO         "	; USER 2 group 1
+	.ascii	"ACOUSTIC GUITAR "	; USER 2 group 2
+	.ascii	"ELECTRIC GUITAR "	; USER 2 group 3
+	.ascii	"FUNK STAFF      "	; USER 2 group 4
+	.ascii	"STRINGS         "	; USER 2 group 5
+	.ascii	"ORGAN           "	; USER 2 group 6
+	.ascii	"VOCAL & REED    "	; USER 2 group 7
 	.include	"tm/tone_604b0259e830.s"	; tone 1: Modeling Piano
 	.include	"tm/tone_03c034598e50.s"	; tone 2: AdultContemPiano
 	.include	"tm/tone_8326a9139ef1.s"	; tone 3: New Movie Score
@@ -689,15 +701,19 @@ F_01DEMO___TM_Bank2_Kit:
 
 F_01DEMO___TM_Bank3:
 	.ascii	"WSA SOUND RAM S3"	; SoundRam_BankName_S3, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"BRASS           "
-	.ascii	"SAX & FLUTE     "
-	.ascii	"BASS            "
-	.ascii	"ANALOG BASS     "
-	.ascii	"DIGITAL BASS    "
-	.ascii	"PERCUSSION      "
-	.ascii	"EFFECT          "
-	.ascii	"SPLIT&PEFORMANCE"
+; the names of USER 2 sound groups 8-15, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DEMO___TM_Bank3_GroupNames:
+	.ascii	"BRASS           "	; USER 2 group 8
+	.ascii	"SAX & FLUTE     "	; USER 2 group 9
+	.ascii	"BASS            "	; USER 2 group 10
+	.ascii	"ANALOG BASS     "	; USER 2 group 11
+	.ascii	"DIGITAL BASS    "	; USER 2 group 12
+	.ascii	"PERCUSSION      "	; USER 2 group 13
+	.ascii	"EFFECT          "	; USER 2 group 14
+	.ascii	"SPLIT&PEFORMANCE"	; USER 2 group 15
 	.include	"tm/tone_077fcacec152.s"	; tone 1: Big Band Unison
 	.include	"tm/tone_f470503be438.s"	; tone 2: Many Horns
 	.include	"tm/tone_e227b27b26a0.s"	; tone 3: Mellow Flares

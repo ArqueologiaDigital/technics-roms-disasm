@@ -544,8 +544,55 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x956, 170
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	72, 59, 88, 6, 74	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x95b, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_note	6, 0, 64, 100, 61, 0
+	sq_note	6, 0, 67, 91, 59, 0
+	sq_beat
+	sq_note	6, 0, 60, 96, 59, 0
+	sq_note	6, 0, 64, 96, 59, 0
+	sq_note	6, 0, 67, 86, 63, 0
+	sq_beat
+	sq_note	6, 0, 60, 86, 59, 0
+	sq_note	6, 0, 64, 98, 59, 0
+	sq_note	6, 0, 67, 90, 59, 0
+	sq_beat
+	sq_note	6, 0, 60, 89, 64, 0
+	sq_note	6, 0, 67, 97, 66, 0
+	sq_note	6, 0, 64, 97, 64, 0
+	sq_beat
+	sq_note	6, 0, 59, 81, 58, 0
+	sq_note	6, 0, 64, 93, 55, 0
+	sq_note	6, 0, 68, 96, 55, 0
+	sq_beat
+	sq_note	6, 0, 59, 90, 63, 0
+	sq_note	6, 0, 64, 93, 63, 0
+	sq_note	6, 0, 68, 93, 61, 0
+	sq_beat
+	sq_note	6, 0, 68, 96, 60, 0
+	sq_note	6, 0, 64, 95, 60, 0
+	sq_note	6, 0, 59, 88, 60, 0
+	sq_beat
+	sq_note	6, 0, 68, 95, 63, 0
+	sq_note	6, 0, 59, 85, 61, 0
+	sq_note	6, 0, 64, 95, 64, 0
+	sq_beat
 	sq_cell	0xff, 0, 12	; cell 11: song 1 track 2, 1 of 3
 	sq_beat
 	sq_beat
@@ -788,8 +835,32 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0xc8c, 116
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	6, 0, 72, 83, 56, 0
+	sq_beat
+	sq_note	6, 0, 62, 85, 58, 0
+	sq_note	6, 0, 65, 91, 56, 0
+	sq_note	6, 0, 72, 81, 56, 0
+	sq_note	6, 0, 70, 93, 56, 0
+	sq_beat
+	sq_note	6, 0, 62, 89, 58, 0
+	sq_note	6, 0, 65, 95, 55, 0
+	sq_note	6, 0, 70, 91, 58, 0
+	sq_note	6, 0, 72, 80, 58, 0
+	sq_beat
+	sq_note	6, 0, 60, 84, 58, 0
+	sq_note	6, 0, 65, 89, 55, 0
+	sq_note	6, 0, 67, 88, 58, 0
+	sq_note	6, 0, 72, 80, 58, 0
+	sq_beat
+	sq_note	6, 0, 60, 91, 66, 0
+	sq_note	6, 0, 65, 91, 59, 0
+	sq_note	6, 0, 67, 90, 64, 0
+	sq_note	6, 0, 72, 83, 63, 0
+	sq_beat
+	sq_note	6, 0, 65, 94, 56, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0xcfd, 3
 	sq_cell	0x80, 0, 15	; cell 14: song 1 track 3, 1 of 5
 	sq_beat
 	sq_beat
@@ -1107,8 +1178,46 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x114c, 180
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	69, 90, 69, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	7, 0, 60, 89, 64, 0
+	sq_note	7, 0, 67, 90, 64, 0
+	sq_note	7, 0, 62, 99, 62, 0
+	sq_beat
+	sq_note	7, 0, 60, 105, 70, 0
+	sq_note	7, 0, 62, 103, 70, 0
+	sq_note	7, 0, 67, 89, 65, 0
+	sq_beat
+	sq_note	7, 0, 59, 99, 65, 0
+	sq_note	7, 0, 62, 96, 64, 0
+	sq_note	7, 0, 67, 92, 64, 0
+	sq_beat
+	sq_note	7, 0, 59, 101, 65, 0
+	sq_note	7, 0, 62, 100, 64, 0
+	sq_note	7, 0, 67, 91, 67, 0
+	sq_beat
+	sq_note	7, 0, 60, 91, 53, 0
+	sq_note	7, 0, 64, 92, 53, 0
+	sq_note	7, 0, 67, 84, 49, 0
+	sq_beat
+	sq_note	7, 0, 60, 93, 61, 0
+	sq_note	7, 0, 64, 94, 61, 0
+	sq_note	7, 0, 67, 88, 59, 0
+	sq_beat
+	sq_note	7, 0, 59, 81, 57, 0
+	sq_note	7, 0, 60, 93, 56, 0
+	sq_note	7, 0, 64, 94, 57, 0
+	sq_note	7, 0, 67, 83, 56, 0
+	sq_beat
+	sq_note	7, 0, 59, 83, 57, 0
+	sq_note	7, 0, 64, 93, 59, 0
+	sq_note	7, 0, 60, 94, 56, 0
+	sq_note	7, 0, 67, 83, 56, 0
+	sq_beat
+	sq_note	5, 0, 57, 85, 58, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x11fb, 5
 	sq_cell	0x80, 0, 20	; cell 19: song 1 track 4, 1 of 2
 	sq_beat
 	sq_beat
@@ -1287,8 +1396,65 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x1314, 236
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	67, 0, 50, 89, 9, 0
+	sq_note	68, 0, 46, 74, 9, 0
+	sq_beat
+	sq_sys	5, 0xf1, 2, 0, 80, 2, 2
+	sq_sys	15, 0xf2, 0, 112, 32, 35, 0, 1
+	sq_note	85, 0, 43, 77, 6, 0
+	sq_note	85, 0, 46, 82, 8, 0
+	sq_note	86, 0, 48, 83, 5, 0
+	sq_note	86, 0, 52, 73, 7, 0
+	sq_beat
+	sq_beat
+	sq_note	9, 0, 46, 62, 8, 0
+	sq_note	9, 0, 48, 79, 47, 5
+	sq_note	9, 0, 50, 87, 7, 0
+	sq_note	10, 0, 52, 83, 68, 3
+	sq_note	10, 0, 45, 63, 61, 3
+	sq_note	10, 0, 53, 80, 5, 0
+	sq_note	18, 0, 41, 17, 56, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 46, 62, 66, 1
+	sq_note	94, 0, 51, 67, 62, 1
+	sq_beat
+	sq_note	0, 0, 43, 66, 65, 1
+	sq_beat
+	sq_note	94, 0, 45, 69, 71, 5
+	sq_note	94, 0, 51, 66, 78, 1
+	sq_note	95, 0, 53, 66, 71, 9
+	sq_note	95, 0, 48, 75, 77, 1
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 46, 74, 81, 7
+	sq_note	95, 0, 50, 85, 70, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	93, 0, 44, 73, 82, 3
+	sq_note	93, 0, 49, 64, 76, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	91, 0, 43, 20, 86, 1
+	sq_note	92, 0, 45, 71, 86, 1
+	sq_note	92, 0, 52, 65, 88, 1
+	sq_note	94, 0, 48, 70, 88, 3
+	sq_beat
+	sq_beat
+	sq_note	95, 0, 53, 80, 76, 5
+	sq_beat
+	sq_note	0, 0, 50, 70, 64, 3
+	sq_note	1, 0, 45, 75, 83, 1
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 43, 71, 64, 1
+	sq_note	2, 0, 46, 60, 68, 3
 	sq_cell	0x80, 0, 65535	; cell 21: song 1 track 6, 1 of 1
 	sq_beat
 	sq_beat
@@ -1449,8 +1615,64 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x14ad, 83
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	25, 0xf2, 0, 112, 32, 35, 0, 1
+	sq_sys	60, 0xf1, 2, 0, 64, 4, 2
+	sq_beat
+	sq_sys	14, 0xf1, 2, 0, 0, 64, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	30, 0xf2, 0, 112, 32, 35, 0, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 23	; cell 22: song 1 track 8, 1 of 4
 	sq_beat
 	sq_beat
@@ -1713,8 +1935,64 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x1812, 238
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_note	92, 0, 43, 30, 84, 1
+	sq_note	92, 0, 45, 73, 84, 1
+	sq_note	93, 0, 52, 60, 83, 1
+	sq_note	93, 0, 48, 68, 83, 3
+	sq_beat
+	sq_beat
+	sq_note	93, 0, 50, 69, 76, 3
+	sq_note	94, 0, 53, 75, 76, 3
+	sq_note	95, 0, 45, 75, 80, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 43, 73, 86, 1
+	sq_note	5, 0, 46, 70, 86, 1
+	sq_beat
+	sq_note	84, 0, 48, 76, 7, 0
+	sq_note	84, 0, 52, 87, 8, 0
+	sq_beat
+	sq_sys	16, 0xf1, 2, 0, 80, 2, 2
+	sq_sys	25, 0xf2, 0, 112, 32, 35, 0, 1
+	sq_beat
+	sq_note	95, 0, 41, 50, 85, 0
+	sq_beat
+	sq_note	0, 0, 45, 67, 49, 1
+	sq_note	0, 0, 48, 69, 55, 1
+	sq_note	0, 0, 52, 61, 58, 1
+	sq_beat
+	sq_note	1, 0, 43, 78, 80, 2
+	sq_note	72, 0, 50, 70, 15, 1
+	sq_note	72, 0, 53, 66, 9, 2
+	sq_note	73, 0, 46, 60, 10, 2
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 48, 69, 63, 2
+	sq_beat
+	sq_note	0, 0, 41, 65, 81, 0
+	sq_note	0, 0, 52, 66, 65, 1
+	sq_note	0, 0, 45, 65, 57, 1
+	sq_beat
+	sq_note	0, 0, 43, 79, 81, 2
+	sq_note	81, 0, 50, 73, 1, 1
+	sq_note	81, 0, 53, 61, 5, 2
+	sq_note	82, 0, 46, 52, 3, 2
+	sq_beat
+	sq_note	92, 0, 48, 70, 65, 2
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 41, 70, 80, 0
+	sq_note	1, 0, 45, 70, 59, 1
+	sq_note	2, 0, 52, 65, 61, 1
+	sq_note	94, 0, 43, 78, 77, 2
+	sq_beat
+	sq_note	79, 0, 50, 81, 6, 1
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x18fb, 5
 	sq_cell	0xff, 0, 27	; cell 26: song 1 track 9, 1 of 9
 	sq_beat
 	sq_beat
@@ -2223,8 +2501,39 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x21a5, 91
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 41, 64, 13, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	k5_note	0x90, 33, 107, 52, 0, 54
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x21bd, 5
+	sq_beat
+	sq_note	6, 0, 34, 105, 54, 0
+	sq_note	54, 0, 46, 103, 51, 0
+	sq_beat
+	sq_note	6, 0, 34, 107, 56, 0
+	sq_note	54, 0, 46, 105, 48, 0
+	sq_beat
+	sq_note	6, 0, 36, 107, 49, 0
+	sq_note	54, 0, 48, 103, 53, 0
+	sq_beat
+	sq_note	6, 0, 40, 103, 53, 0
+	sq_note	54, 0, 52, 105, 45, 0
+	sq_beat
+	sq_note	6, 0, 41, 105, 49, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x21fd, 3
 	sq_cell	0xff, 0, 36	; cell 35: song 1 track 10, 1 of 50
 	sq_beat
 	sq_beat
@@ -4525,8 +4834,24 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x53af, 81
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	46, 3, 0, 75	; data bytes of an event cut at the start
+	k5_note	0x90, 46, 52, 3, 0, 83
+	k5_note	0x90, 57, 51, 9, 0, 83
+	k5_note	0x90, 89, 7, 11, 0, 91
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x53c5, 5
+	sq_beat
+	sq_note	3, 0, 57, 15, 3, 0
+	sq_note	11, 0, 57, 12, 3, 0
+	sq_note	19, 0, 57, 9, 3, 0
+	sq_note	27, 0, 57, 7, 3, 0
+	sq_note	35, 0, 57, 5, 3, 0
+	sq_note	43, 0, 57, 5, 3, 0
+	sq_note	50, 0, 57, 3, 4, 0
+	sq_note	59, 0, 57, 2, 3, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x53fb, 5
 	sq_cell	0xff, 0, 86	; cell 85: song 1 track 11, 1 of 14
 	sq_beat
 	sq_beat
@@ -5244,8 +5569,55 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x6161, 159
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	61, 0, 60, 50, 39, 0
+	sq_cc	63, 0, 6, 64, 127
+	sq_beat
+	sq_note	9, 0, 61, 63, 50, 0
+	sq_note	10, 0, 56, 47, 55, 0
+	sq_note	10, 0, 66, 77, 48, 0
+	sq_cc	16, 0, 6, 64, 0
+	sq_note	69, 0, 57, 66, 61, 0
+	sq_note	69, 0, 62, 62, 82, 0
+	sq_note	69, 0, 67, 72, 83, 0
+	sq_beat
+	sq_cc	0, 0, 6, 64, 127
+	sq_note	89, 0, 41, 52, 10, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_cc	20, 0, 6, 64, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x61b5, 2
+	sq_beat
+	sq_note	7, 0, 40, 105, 53, 0
+	sq_note	55, 0, 52, 109, 56, 0
+	sq_beat
+	sq_note	7, 0, 41, 83, 45, 0
+	sq_note	55, 0, 53, 90, 51, 0
+	sq_beat
+	sq_note	5, 0, 41, 81, 60, 0
+	sq_note	55, 0, 53, 87, 51, 0
+	sq_beat
+	sq_note	7, 0, 33, 101, 53, 0
+	sq_note	55, 0, 45, 91, 46, 0
+	sq_beat
+	sq_note	7, 0, 33, 95, 51, 0
+	sq_note	53, 0, 45, 96, 50, 0
+	sq_beat
+	sq_note	7, 0, 34, 103, 54, 0
+	.byte	53	; data bytes of an event cut by the end
 	sq_cell	0xff, 0, 100	; cell 99: song 1 track 12, 1 of 17
 	sq_beat
 	sq_beat
@@ -6138,8 +6510,12 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x72e7, 25
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	64, 0, 64, 61, 18, 0
+	sq_note	85, 0, 69, 60, 19, 0
+	sq_beat
+	sq_note	8, 0, 72, 59, 11, 0
+	sq_note	29, 0, 76, 69, 17, 0
 	sq_cell	0xff, 0, 117	; cell 116: song 1 track 13, 1 of 16
 	sq_beat
 	sq_beat
@@ -6940,8 +7316,57 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x8263, 157
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0, 61	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x8265, 5
+	sq_beat
+	sq_note	8, 0, 66, 34, 40, 0
+	sq_note	8, 0, 71, 54, 40, 0
+	sq_note	8, 0, 75, 35, 42, 0
+	sq_note	9, 0, 56, 33, 55, 0
+	sq_note	67, 0, 57, 50, 21, 8
+	sq_note	69, 0, 67, 43, 30, 8
+	sq_note	74, 0, 72, 60, 29, 8
+	sq_note	80, 0, 76, 56, 26, 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 53, 25, 12, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x82b0, 2
+	sq_beat
+	sq_note	51, 0, 76, 99, 23, 0
+	sq_note	73, 0, 75, 102, 22, 0
+	sq_beat
+	sq_note	4, 0, 74, 76, 57, 0
+	sq_beat
+	sq_note	1, 0, 74, 109, 44, 0
+	sq_note	50, 0, 70, 91, 46, 0
+	sq_beat
+	sq_note	1, 0, 74, 100, 47, 0
+	sq_note	49, 0, 75, 90, 50, 0
+	sq_beat
+	sq_note	3, 0, 77, 95, 44, 0
+	sq_note	48, 0, 74, 107, 16, 1
+	sq_bend	62, 0, 0, 62
+	sq_bend	65, 0, 0, 59
+	sq_bend	65, 0, 64, 55
+	sq_bend	68, 0, 0, 53
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"LETSGE.sqt.p2.ref", 0x82fd, 3
 	sq_cell	0x80, 0, 65535	; cell 132: song 1 track 15, 1 of 1
 	sq_cc	0, 0, 14, 10, 0
 	sq_beat
@@ -7107,8 +7532,15 @@ P_LETSGE_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"LETSGE.sqt.p2.ref", 0x83f1, 15
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	14, 10, 18	; data bytes of an event cut at the start
+	sq_beat
+	sq_end
+	sq_beat
+	sq_cc	0, 0, 14, 10, 18
+	sq_beat
+	sq_end
+	.byte	14, 10	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 134	; cell 133: song 1 track 16, 1 of 3
 	sq_beat
 	sq_beat

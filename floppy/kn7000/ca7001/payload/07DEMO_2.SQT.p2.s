@@ -194,8 +194,21 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07DEMO_2.sqt.p2.ref", 0x253, 173
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07DEMO_2.sqt.p2.ref", 0x25f, 161
 	sq_cell	0x9c, 0, 5	; cell 4: song 1 track 2, 1 of 5
 	sq_beat
 	sq_beat
@@ -480,8 +493,10 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07DEMO_2.sqt.p2.ref", 0x77f, 129
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	69	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07DEMO_2.sqt.p2.ref", 0x780, 128
 	sq_cell	0xe0, 0, 65535	; cell 9: song 1 track 3, 1 of 1
 	sq_beat
 	sq_beat
@@ -589,8 +604,32 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07DEMO_2.sqt.p2.ref", 0x86f, 145
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07DEMO_2.sqt.p2.ref", 0x886, 122
 	sq_cell	0x85, 0, 65535	; cell 10: song 1 track 4, 1 of 1
 	sq_beat
 	sq_beat
@@ -698,8 +737,32 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07DEMO_2.sqt.p2.ref", 0x96f, 145
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07DEMO_2.sqt.p2.ref", 0x986, 122
 	sq_cell	0x81, 0, 12	; cell 11: song 1 track 5, 1 of 3
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 52, 90, 86, 0
@@ -896,7 +959,8 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"07DEMO_2.sqt.p2.ref", 0xc8b, 117
 	sq_cell	0xa4, 0, 65535	; cell 14: song 1 track 6, 1 of 1
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
@@ -1022,7 +1086,8 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"07DEMO_2.sqt.p2.ref", 0xde5, 27
 
 	.if	(. - P_07DEMO_2_SQT_p2) - 3584

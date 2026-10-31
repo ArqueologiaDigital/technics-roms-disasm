@@ -3358,8 +3358,21 @@ F_02WOW_2__CMB_C127:		; bank 15 memory 7
 	cmb_key_scaling	0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	cmb_common	64, 216, 2, 88, 4, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0xff, 0xff
-; The rest of the file's last kilobyte.  [INFERENCE] the disk code moves the file in whole kilobytes
-; (Disk_SetWindowLengthToKilobyte), and DiskLoad_Combination takes 0x16300 bytes of the 89 KB.  These 0x100
-; bytes are what the staging buffer still held.
-; census: opaque -- unknown-dump: stale staging-buffer bytes past the 0x16300-byte bank
-	.incbin	"qsdisk.img", 0xafd00, 256
+; The rest of the file's last kilobyte, 0x16300..0x163FF: a stale copy of bytes 0x13700..0x137FF, the
+; first 0x100 bytes of combination 112 (C112 above).  DiskSave_StreamLinkRamToFile (prom_a 0xFE2AA9, mode 1)
+; fetches the bank from link RAM 0xEC0000 into the staging window in 8 chunks of 0x2C00 and a last one of
+; 0x300, and writes each window to the file 0x400 bytes at a time.  The last chunk fills only window
+; +0..+0x2FF, so the last 0x400 write carries window +0x300..+0x3FF from the chunk before, file
+; 0x13400 + 0x300 = 0x13700.  Measured: true in all 13 .CMB files (notes/open-items/probes/stale_tails.py,
+; notes/floppy-leftovers-2026-10-31/probes/wsa1_leftovers.py).  Typed below as the records it repeats.
+F_02WOW_2__CMB_StaleCopyOfC112:
+	cmb_name
+	.ascii	"Hitchcock Movie "
+	cmb_effect_common	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x61, 1, 99, 30, 6, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x62, 39, 80, 33, 16, 34, 192, 34, 128, 34, 160, 36, 104, 37, 84, 0, 0, 0, 0, 0, 0, 0, 60, 18, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x63, 21, 55, 60, 18, 80, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 218, 2, 88, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_a	0, 47, 9, 0, 127, 0, 0, 0, 90, 0, 64, 128, 2, 0, 192, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x20, 0, 0, 0, 1, 0, 34, 0, 0, 127, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 1, 1, 1, 5, 7, 9
+	cmb_part_a	1, 47, 9, 0, 108, 0, 0, 0, 90, 34, 61, 128, 2, 0, 193, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x21, 0, 0, 0, 1, 0, 24, 0, 0, 127, 0, 127, 96, 3, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 1, 1, 1, 5, 7, 9

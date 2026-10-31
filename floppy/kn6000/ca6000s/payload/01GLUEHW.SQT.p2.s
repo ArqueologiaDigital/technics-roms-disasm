@@ -1137,8 +1137,42 @@ P_01GLUEHW_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"01GLUEHW.sqt.p2.ref", 0x1362, 158
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	98, 18, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 91, 76, 102, 20, 0
+	sq_beat
+	k5_note	0x90, 45, 84, 98, 18, 0
+	k5_note	0x90, 94, 75, 107, 68, 0
+	sq_beat
+	k5_note	0x90, 71, 74, 93, 20, 0
+	k5_note	0x90, 88, 75, 93, 20, 0
+	sq_beat
+	k5_note	0x90, 45, 82, 104, 12, 0
+	k5_note	0x90, 90, 75, 104, 16, 0
+	sq_beat
+	k5_note	0x90, 44, 82, 105, 13, 0
+	k5_note	0x90, 92, 74, 99, 21, 0
+	sq_beat
+	k5_note	0x90, 45, 82, 105, 15, 0
+	k5_note	0x90, 92, 73, 114, 25, 0
+	sq_beat
+	k5_note	0x90, 91, 74, 109, 23, 0
+	sq_beat
+	k5_note	0x90, 88, 74, 114, 26, 0
+	k5_note	0x90, 89, 79, 102, 33, 0
+	k5_note	0x90, 89, 71, 96, 25, 0
+	k5_note	0x90, 89, 76, 107, 28, 0
+	sq_beat
+	k5_note	0x90, 90, 84, 57, 7, 0
+	k5_note	0x90, 94, 83, 85, 9, 0
+	sq_beat
+	k5_note	0x90, 5, 81, 85, 9, 0
+	k5_note	0x90, 11, 79, 86, 10, 0
+	k5_note	0x90, 18, 77, 89, 11, 0
+	k5_note	0x90, 25, 76, 82, 11, 0
+	k5_note	0x90, 33, 74, 90, 10, 0
+	k5_note	0x90, 41, 72, 87, 10, 0
+	.byte	144, 48	; the first 2 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 22	; cell 21: song 1 track 2, 1 of 10
 	sq_beat
 	sq_beat
@@ -1816,8 +1850,102 @@ P_01GLUEHW_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"01GLUEHW.sqt.p2.ref", 0x1d09, 247
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	2, 127	; data bytes of an event cut at the start
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 93, 77, 104, 76, 0
+	k5_note	0x90, 93, 80, 107, 78, 0
+	k5_note	0x90, 93, 74, 90, 71, 0
+	sq_beat
+	k5_note	0x90, 89, 81, 114, 35, 0
+	k5_note	0x90, 89, 74, 92, 33, 0
+	k5_note	0x90, 90, 77, 103, 31, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 94, 76, 95, 76, 0
+	k5_note	0x90, 94, 83, 109, 81, 0
+	k5_note	0x90, 94, 79, 111, 83, 0
+	sq_beat
+	k5_note	0x90, 93, 79, 104, 74, 0
+	k5_note	0x90, 93, 76, 93, 74, 0
+	k5_note	0x90, 93, 84, 102, 76, 0
+	k5_note	0x90, 93, 81, 106, 74, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 92, 77, 112, 75, 0
+	k5_note	0x90, 93, 74, 93, 71, 0
+	k5_note	0x90, 93, 80, 110, 77, 0
+	sq_beat
+	k5_note	0x90, 89, 81, 116, 52, 0
+	k5_note	0x90, 91, 74, 96, 48, 0
+	k5_note	0x90, 91, 77, 103, 49, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 2, 76, 96, 70, 0
+	k5_note	0x90, 2, 83, 110, 76, 0
+	k5_note	0x90, 3, 79, 110, 73, 0
+	k5_note	0x90, 93, 79, 110, 91, 0
+	k5_note	0x90, 93, 76, 95, 67, 0
+	k5_note	0x90, 93, 81, 105, 86, 0
+	k5_note	0x90, 94, 84, 105, 68, 0
+	sq_beat
+	k5_note	0x90, 0, 77, 85, 2, 0
+	k5_note	0x90, 70, 83, 59, 7, 0
+	k5_note	0x90, 82, 77, 39, 12, 0
+	k5_note	0x90, 87, 76, 26, 12, 0
+	.byte	144, 93	; the first 2 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 32	; cell 31: song 1 track 4, 1 of 2
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 52, 61, 4, 1
@@ -2702,8 +2830,22 @@ P_01GLUEHW_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"01GLUEHW.sqt.p2.ref", 0x23c3, 61
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	77, 108, 20, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 0, 77, 107, 78, 0
+	k5_note	0x90, 0, 74, 91, 73, 0
+	k5_note	0x90, 1, 83, 93, 80, 0
+	k5_note	0x90, 91, 81, 100, 15, 0
+	k5_note	0x90, 92, 74, 78, 14, 0
+	k5_note	0x90, 92, 77, 90, 13, 0
+	sq_beat
+	k5_note	0x90, 45, 81, 105, 15, 0
+	k5_note	0x90, 45, 74, 78, 14, 0
+	.byte	144, 46, 77, 95	; the first 4 bytes of a KN5000-order event, cut by the end
 
 	.if	(. - P_01GLUEHW_SQT_p2) - 9216
 	.error	"01GLUEHW.SQT part 2: the payload is not 9216 bytes"

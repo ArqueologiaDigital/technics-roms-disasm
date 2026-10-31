@@ -26,10 +26,12 @@
 	.macro	sq_end
 	.byte	0x82
 	.endm
-; 0x9n: note, velocity, u16 duration; n = 8 when recorded from MIDI IN (the classifier posts it as source 5).
-; A note's dur_hi and a bend's msb are the only data bytes seen with bit 7 set (5 on the disks).
-	.macro	sq_note tick, n, key, velocity, dur_lo, dur_hi
-	.byte	\tick, 0x90 + \n, \key, \velocity, \dur_lo, \dur_hi
+; 0x9n: note, velocity, duration in ticks (0..0x5F) and in beats (0..255): the note handler func_48459B49
+; reads +3 and +4 through func_48459032 (unsigned) and sets the note-off at beat + dur_beats (+1 when tick +
+; dur_ticks >= 0x60; 0x48459BEA..0x48459C1D; KN6000 func_4C11938E).  So the 4 notes with dur_beats 141 / 216
+; are held that long, not flagged.  n = 8 when recorded from MIDI IN (the classifier posts it as source 5).
+	.macro	sq_note tick, n, key, velocity, dur_ticks, dur_beats
+	.byte	\tick, 0x90 + \n, \key, \velocity, \dur_ticks, \dur_beats
 	.endm
 ; 0x80: tempo = lo7 + (hi7 << 7) BPM (parameter 0x000004); 0x8A: PIC = lo7 + ((hi7 & 0x3F) << 7), bit 6 of hi7
 ; = USER (parameter 0x600014).  0x84 (bar), 0x85 / 0x86 (rhythm start / stop) take no data: sq_sys.
@@ -53,7 +55,8 @@
 	.macro	sq_press tick, n, value
 	.byte	\tick, 0xd0 + \n, \value
 	.endm
-; 0xE0: pitch bend (0xE00000).
+; 0xE0: pitch bend (0xE00000): {lsb, msb} are the two low bytes of the 16-bit M3 value, whole bytes (encoder
+; func_484586AC, classifier func_484588DE), so msb can have bit 7 set (one event on the disks, 0xBF).
 	.macro	sq_bend tick, n, lsb, msb
 	.byte	\tick, 0xe0 + \n, \lsb, \msb
 	.endm
@@ -64,6 +67,22 @@
 	.else
 	.byte	\tick, \status, \data
 	.endif
+	.endm
+
+; Stale events in the KN5000's order, status first (floppy/kn5000/events.py, the demo-song grammar), as cells
+; still hold them past the end of a track and in free cells: [INFERENCE] the songs were converted in place
+; from KN5000 song files (kn_sqt.py stale_tokens; notes/floppy-leftovers-2026-10-31/README.md).
+; 0x9n: tick, key, velocity, duration ticks and beats (the live sq_note's, measured equal).
+	.macro	k5_note status, tick, key, velocity, dur_ticks, dur_beats
+	.byte	\status, \tick, \key, \velocity, \dur_ticks, \dur_beats
+	.endm
+; a further note under the same status (running status)
+	.macro	k5_run tick, key, velocity, dur_ticks, dur_beats
+	.byte	\tick, \key, \velocity, \dur_ticks, \dur_beats
+	.endm
+; any other KN5000 status with its data bytes (lengths: kn_sqt.py K5_LENGTHS)
+	.macro	k5_ev status, data:vararg
+	.byte	\status, \data
 	.endm
 
 	.endif

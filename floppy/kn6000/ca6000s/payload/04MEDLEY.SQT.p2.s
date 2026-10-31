@@ -1757,8 +1757,31 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x1eb0, 80
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0, 83	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04MEDLEY.sqt.p2.ref", 0x1eb2, 3
+	sq_bend	85, 0, 64, 42
+	sq_bend	88, 0, 0, 41
+	sq_bend	90, 0, 64, 40
+	sq_beat
+	sq_bend	2, 0, 0, 39
+	sq_bend	2, 0, 64, 38
+	sq_bend	18, 0, 64, 40
+	sq_bend	18, 0, 0, 41
+	sq_bend	22, 0, 0, 44
+	sq_bend	24, 0, 0, 46
+	sq_bend	27, 0, 0, 48
+	sq_bend	29, 0, 0, 52
+	sq_bend	29, 0, 64, 54
+	sq_bend	31, 0, 0, 57
+	sq_bend	33, 0, 64, 59
+	sq_bend	35, 0, 64, 62
+	sq_bend	38, 0, 0, 64
+	sq_note	59, 0, 62, 102, 59, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04MEDLEY.sqt.p2.ref", 0x1efd, 3
 	sq_cell	0x88, 0, 33	; cell 32: song 1 track 2, 1 of 20
 	sq_beat
 	sq_beat
@@ -3011,8 +3034,63 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x322d, 211
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04MEDLEY.sqt.p2.ref", 0x322d, 3
+	sq_bend	88, 0, 0, 55
+	sq_bend	90, 0, 0, 54
+	sq_bend	90, 0, 0, 53
+	sq_bend	93, 0, 64, 50
+	sq_note	94, 0, 60, 114, 4, 2
+	sq_bend	95, 0, 64, 48
+	sq_beat
+	sq_bend	2, 0, 64, 46
+	sq_bend	2, 0, 0, 45
+	sq_bend	5, 0, 0, 44
+	sq_bend	7, 0, 0, 42
+	sq_bend	9, 0, 64, 40
+	sq_bend	9, 0, 0, 40
+	sq_bend	31, 0, 64, 42
+	sq_bend	34, 0, 64, 44
+	sq_bend	36, 0, 64, 45
+	sq_bend	38, 0, 64, 46
+	sq_bend	40, 0, 64, 47
+	sq_bend	40, 0, 64, 48
+	sq_bend	43, 0, 0, 50
+	sq_bend	45, 0, 0, 51
+	sq_bend	47, 0, 64, 52
+	sq_bend	49, 0, 0, 53
+	sq_bend	52, 0, 0, 54
+	sq_bend	54, 0, 64, 54
+	sq_bend	56, 0, 0, 55
+	sq_bend	58, 0, 0, 56
+	sq_bend	61, 0, 64, 56
+	sq_bend	61, 0, 64, 57
+	sq_bend	63, 0, 0, 59
+	sq_bend	65, 0, 64, 59
+	sq_bend	67, 0, 64, 60
+	sq_bend	69, 0, 0, 61
+	sq_bend	72, 0, 64, 61
+	sq_bend	72, 0, 64, 62
+	sq_bend	74, 0, 0, 63
+	sq_bend	76, 0, 64, 63
+	sq_bend	78, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_note	15, 0, 62, 105, 62, 0
+	sq_note	87, 0, 65, 109, 58, 0
+	sq_beat
+	sq_note	50, 0, 64, 114, 43, 0
+	sq_beat
+	sq_note	1, 0, 60, 102, 19, 2
+	sq_bend	6, 0, 0, 62
+	sq_bend	6, 0, 0, 60
+	sq_bend	8, 0, 0, 58
+	sq_bend	10, 0, 0, 56
+	sq_bend	13, 0, 0, 54
+	sq_bend	15, 0, 64, 52
+	sq_bend	15, 0, 0, 50
+	.byte	17	; data bytes of an event cut by the end
 	sq_cell	0xfd, 0, 53	; cell 52: song 1 track 3, 1 of 11
 	sq_beat
 	sq_beat
@@ -3877,8 +3955,80 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x3d4e, 178
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04MEDLEY.sqt.p2.ref", 0x3d4e, 5
+	sq_beat
+	sq_beat
+	sq_note	92, 0, 50, 108, 92, 1
+	sq_beat
+	sq_beat
+	sq_note	89, 0, 52, 100, 86, 1
+	sq_beat
+	sq_beat
+	sq_note	89, 0, 53, 109, 14, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	93, 0, 48, 120, 51, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	88, 0, 48, 120, 63, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	88, 0, 50, 109, 73, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	91, 0, 48, 109, 64, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	85, 0, 48, 105, 74, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	81, 0, 50, 108, 81, 1
+	sq_beat
+	sq_beat
+	sq_note	85, 0, 52, 108, 80, 1
+	sq_beat
+	sq_beat
+	sq_note	84, 0, 53, 114, 0, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	20, 0, 48, 109, 4, 1
+	sq_beat
+	sq_note	31, 0, 60, 102, 43, 0
+	sq_note	90, 0, 60, 93, 57, 0
+	sq_beat
+	sq_note	60, 0, 58, 102, 49, 0
+	sq_beat
+	sq_note	25, 0, 57, 111, 44, 0
+	sq_bend	70, 0, 0, 63
+	sq_bend	73, 0, 64, 60
+	sq_bend	75, 0, 0, 58
+	sq_bend	75, 0, 64, 55
+	sq_bend	77, 0, 64, 53
+	sq_bend	79, 0, 0, 51
+	sq_bend	82, 0, 64, 47
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04MEDLEY.sqt.p2.ref", 0x3dfd, 3
 	sq_cell	0x88, 0, 64	; cell 63: song 1 track 4, 1 of 3
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 36, 90, 9, 0
@@ -4959,8 +5109,161 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x444d, 179
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xb4, 0, 24, 1, 1, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xb4, 62, 24, 1, 2, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xb4, 95, 24, 1, 3, 127
+	sq_beat
+	k5_ev	0xc1, 39, 72, 0, 9, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xb4, 65, 24, 1, 4, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x00, 0, 65535	; cell 70: in no track's chain
 	.fill	251, 1, 0x00
 
