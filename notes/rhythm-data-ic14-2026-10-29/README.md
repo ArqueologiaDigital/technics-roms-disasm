@@ -129,7 +129,7 @@ signature (2,424 of 2,424 per slot). Slots 16 and 18 hold 1..8 bars.
 | 0..7   | the section map: pick p -> slot p (`AccPart_LookupBoundVoiceParam`)                                                                                                                   | the sections' bars                             |
 | 8..11  | no reader traced (in record 0 they equal slots 12..15)                                                                                                                                | open                                           |
 | 12..15 | `AccVoice_ComputeParamAddr`: 0x18/0x1a for section slots < 15, 0x1c/0x1e for < 20, the same +0x400 in half 1; the second of a pair when RAM 0x3309 bit 0 is 0 (`AccPedal_DirectionA`) | [INFERENCE] fill-ins                           |
-| 16..18 | `AccVoice_SelectPartOffset` (0x20 / 0x22 / 0x420 on RAM 0x32ff bits 0, 1), `AccVoice_Reset_SelectMode` (RAM 0x330a), `AccVoice_ThirdLayer_SelectMode` (0x24 / 0x424, RAM 0x330b)      | [INFERENCE] 16 / 18 intro / ending, 17 one bar |
+| 16..18 | `AccVoice_SelectPartOffset` (0x20 / 0x22 / 0x420 on RAM 0x32ff bits 0, 1), `AccSection_StartIntro_SelectMode` (RAM 0x330a), `AccSection_StartEnding_SelectMode` (0x24 / 0x424, RAM 0x330b)      | [INFERENCE] 16 / 18 intro / ending, 17 one bar |
 
 Track labels are `Trk_<id>_<N|V>_<part>_S<slot>`, named after the first slot that refers to them (in record,
 half, part and slot order). Tracks are shared: 46,056 slot references name 28,400 tracks, and every track is

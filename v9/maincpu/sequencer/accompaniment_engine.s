@@ -265,7 +265,7 @@ AccStyle_Compare_SplitADone:
 	or (0x333b:16), 1
 
 AccStyle_Compare_LayerA:
-	ld a, (ACC_SECTION_REQUEST:16)
+	ld a, (ACC_VARIATION_REQUEST:16)
 	cp a, (0x3306:16)
 	jr z, AccStyle_Compare_LayerADone
 	or (0x333b:16), 1
@@ -374,7 +374,7 @@ AccStyle_ResetAllVoiceState:
 	ret
 
 AccStyle_ApplyStandardStyle:
-	ld a, (ACC_SECTION_REQUEST:16)
+	ld a, (ACC_VARIATION_REQUEST:16)
 	and a, 0x3
 	ld (0x3338:16), a
 	ld (0x333a:16), a
@@ -3731,7 +3731,7 @@ AccTick_Main:
 	calr AccTempo_BarCompare
 	bit 6, (0x32f4:16)
 	jrl nz, AccTick_Return
-	calr AccPedal_CheckCombined
+	calr AccSection_SwitchNowUnlessDeferred
 	bit 6, (0x32f4:16)
 	jrl nz, AccTick_Return
 	call AccTuning_ApplyChange
@@ -3784,7 +3784,7 @@ AccTick_CheckNoteOn:
 	jr z, AccTick_FlushAndRepeat
 
 AccTick_DispatchNoteOn:
-	call AccFlags_Aggregate
+	call AccSection_SwitchAtBarLine
 
 AccTick_FlushAndRepeat:
 	call AccNote_FlushAll
@@ -3948,35 +3948,35 @@ AccVoice_InitCh4_D6:
 	popw hl
 	ret
 
-AccPedal_CheckCombined:
+AccSection_SwitchNowUnlessDeferred:
 	bit 0, (0x330c:16)
-	jr nz, AccPedal_CheckFlags
+	jr nz, AccSection_SwitchNowUnlessDeferred_CheckEndingDefer
 	ld a, (0x330b:16)
 	and a, 0x3
-	jr z, AccPedal_CheckDirection
+	jr z, AccSection_SwitchNowUnlessDeferred_CheckIntroFill
 
-AccPedal_CheckFlags:
+AccSection_SwitchNowUnlessDeferred_CheckEndingDefer:
 	ld a, (0x3326:16)
 	and a, 0x3f
-	jr z, AccPedal_TriggerReInit
+	jr z, AccSection_SwitchNowUnlessDeferred_Switch
 
-AccPedal_CheckDirection:
+AccSection_SwitchNowUnlessDeferred_CheckIntroFill:
 	ld a, (0x330a:16)
 	and a, 0xd
-	jr nz, AccPedal_CheckCounter
+	jr nz, AccSection_SwitchNowUnlessDeferred_CheckDefer
 	ld a, (0x3309:16)
 	and a, 0x3
-	jr z, AccPedal_CombinedReturn
+	jr z, AccSection_SwitchNowUnlessDeferred_Return
 
-AccPedal_CheckCounter:
+AccSection_SwitchNowUnlessDeferred_CheckDefer:
 	ld a, (0x3327:16)
 	and a, 0x3f
-	jr nz, AccPedal_CombinedReturn
+	jr nz, AccSection_SwitchNowUnlessDeferred_Return
 
-AccPedal_TriggerReInit:
-	calr AccInit_FullReInit
+AccSection_SwitchNowUnlessDeferred_Switch:
+	calr AccSection_SwitchNow
 
-AccPedal_CombinedReturn:
+AccSection_SwitchNowUnlessDeferred_Return:
 	ret
 
 AccTick_ByteData:
@@ -4020,7 +4020,7 @@ AccPedal_CheckCombined_Skip3:
 	ld	a, (0x330a:16)
 	and	a, 13
 	jr	z, AccPedal_CheckCombined_Skip5
-	calr	AccVoice_ResetAll
+	calr	AccSection_StartIntro
 AccPedal_CheckCombined_Skip5:
 	ld	a, (0x3309:16)
 	and	a, 3
@@ -4034,14 +4034,14 @@ AccPedal_CheckCombined_Skip6:
 	jr	z, AccPedal_CheckCombined_Skip7
 	or	(0x3309:16), 2
 AccPedal_CheckCombined_Join:
-	calr	AccVoice_SplitPointSetup
+	calr	AccSection_StartFillIn
 AccPedal_CheckCombined_Skip7:
 	ld	a, (0x330b:16)
 	and	a, 3
 	jr	z, AccPedal_CheckCombined_Skip8
 	calr	AccTiming_CallHelper
 	call	AccInit_ResetSongCounter
-	calr	AccVoice_ThirdLayer
+	calr	AccSection_StartEnding
 AccPedal_CheckCombined_Skip8:
 	and	(ACC_LANE_BEAT_POS:16), 240
 	and	(ACC_LANE_BEAT_POS+1:16), 240
@@ -4616,7 +4616,7 @@ AccVoice_SetupAcc4_Free:
 AccVoice_SetupAcc4_Return:
 	ret
 
-AccVoice_ResetAll:
+AccSection_StartIntro:
 	and (ACC_LANE_BEAT_POS:16), 15
 	and (ACC_LANE_BEAT_POS+1:16), 15
 	and (ACC_LANE_BEAT_POS+2:16), 15
@@ -4624,55 +4624,55 @@ AccVoice_ResetAll:
 	and (ACC_LANE_BEAT_POS+4:16), 15
 	and (ACC_LANE_BEAT_POS+5:16), 15
 	cp (ACC_STYLE_NUMBER:16), 128
-	jr c, AccVoice_Reset_UseStyle
+	jr c, AccSection_StartIntro_UseStyle
 	bit 0, (0x3363:16)
-	jr z, AccVoice_Reset_UseSecondary
-	calr AccVoice_Reassign
-	jr AccVoice_Reset_SetMasks
+	jr z, AccSection_StartIntro_UseSecondary
+	calr AccSection_StartComposerIntro
+	jr AccSection_StartIntro_SetMasks
 
-AccVoice_Reset_UseSecondary:
+AccSection_StartIntro_UseSecondary:
 	ld xiy, (0x32d3:16)
-	jr AccVoice_Reset_SelectMode
+	jr AccSection_StartIntro_SelectMode
 
-AccVoice_Reset_UseStyle:
+AccSection_StartIntro_UseStyle:
 	ld xiy, (ACC_STYLE_RECORD:16)
 
-AccVoice_Reset_SelectMode:
+AccSection_StartIntro_SelectMode:
 	ldw hl, 0x20
 	bit 0, (0x330a:16)
-	jr nz, AccVoice_Reset_LoadParams
+	jr nz, AccSection_StartIntro_LoadParams
 	ldw hl, 0x22
 	bit 2, (0x330a:16)
-	jr nz, AccVoice_Reset_LoadParams
+	jr nz, AccSection_StartIntro_LoadParams
 	ldw hl, 0x420
 
-AccVoice_Reset_LoadParams:
+AccSection_StartIntro_LoadParams:
 	calr AccVoice_LoadAllParts
 	cp (ACC_STYLE_NUMBER:16), 128
-	jr c, AccVoice_Reset_Extended
+	jr c, AccSection_StartIntro_Extended
 	ld xiy, (ACC_STYLE_RECORD:16)
 	call AccTuning_CopyAllPartsFromStyle
-	jr AccVoice_Reset_ApplyAll
+	jr AccSection_StartIntro_ApplyAll
 
-AccVoice_Reset_Extended:
+AccSection_StartIntro_Extended:
 	ld a, (ACC_LANE_SECTION:16)
 	ld w, 0x3:opc
 	bit 3, (0x330a:16)
-	jr z, AccVoice_Reset_SetMode
+	jr z, AccSection_StartIntro_SetMode
 	ld w, 0x4:opc
 
-AccVoice_Reset_SetMode:
+AccSection_StartIntro_SetMode:
 	call AccPart_GetVoiceParamOffsetTable
 	call AccVoice_LoadTuningBlock
 
-AccVoice_Reset_ApplyAll:
+AccSection_StartIntro_ApplyAll:
 	or (0x332c:16), 63
 
-AccVoice_Reset_SetMasks:
+AccSection_StartIntro_SetMasks:
 	bit 3, (0x330a:16)
-	jrl nz, AccVoice_Reset_Mode3
+	jrl nz, AccSection_StartIntro_Mode3
 	bit 2, (0x330a:16)
-	jr nz, AccVoice_Reset_Mode2
+	jr nz, AccSection_StartIntro_Mode2
 	and (0x330a:16), 254
 	or (0x3316:16), 63
 	xor a, a
@@ -4686,9 +4686,9 @@ AccVoice_Reset_SetMasks:
 	ld (0x3328:16), a
 	ld (0x332a:16), a
 	and (0x3283:16), 251
-	jrl AccVoice_Reset_Return
+	jrl AccSection_StartIntro_Return
 
-AccVoice_Reset_Mode2:
+AccSection_StartIntro_Mode2:
 	and (0x330a:16), 251
 	or (0x3317:16), 63
 	xor a, a
@@ -4702,9 +4702,9 @@ AccVoice_Reset_Mode2:
 	ld (0x3328:16), a
 	ld (0x332a:16), a
 	and (0x3283:16), 251
-	jr AccVoice_Reset_Return
+	jr AccSection_StartIntro_Return
 
-AccVoice_Reset_Mode3:
+AccSection_StartIntro_Mode3:
 	and (0x330a:16), 247
 	or (0x3318:16), 63
 	xor a, a
@@ -4719,19 +4719,19 @@ AccVoice_Reset_Mode3:
 	ld (0x332a:16), a
 	and (0x3283:16), 251
 
-AccVoice_Reset_Return:
+AccSection_StartIntro_Return:
 	ret
 
-AccVoice_Reassign:
+AccSection_StartComposerIntro:
 	bit 3, (0x330a:16)
-	jrl nz, AccVoice_Reassign_Mode3
+	jrl nz, AccSection_StartComposerIntro_Mode3
 	bit 2, (0x330a:16)
-	jr nz, AccVoice_Reassign_Mode2
+	jr nz, AccSection_StartComposerIntro_Mode2
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	cp a, (0x3364:16)
-	jr z, AccVoice_Reassign_MatchA
+	jr z, AccSection_StartComposerIntro_MatchA
 	and (PANEL_STYLE+5:16), 251
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -4739,20 +4739,20 @@ AccVoice_Reassign:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_Reassign_Apply
+	jr AccSection_StartComposerIntro_Apply
 
-AccVoice_Reassign_MatchA:
+AccSection_StartComposerIntro_MatchA:
 	ld a, (0x3365:16)
 	call AccVoice_ResolveParamAddr
-	jr AccVoice_Reassign_Apply
+	jr AccSection_StartComposerIntro_Apply
 
-AccVoice_Reassign_Mode2:
+AccSection_StartComposerIntro_Mode2:
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
 	bit_dri 1, 0x03, 0xec, 0xe0
-	jr z, AccVoice_Reassign_Fallback
+	jr z, AccSection_StartComposerIntro_Fallback
 	and (PANEL_STYLE+5:16), 247
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -4760,14 +4760,14 @@ AccVoice_Reassign_Mode2:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_Reassign_Apply
+	jr AccSection_StartComposerIntro_Apply
 
-AccVoice_Reassign_Mode3:
+AccSection_StartComposerIntro_Mode3:
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	cp a, (0x3366:16)
-	jr z, AccVoice_Reassign_MatchB
+	jr z, AccSection_StartComposerIntro_MatchB
 	and (PANEL_STYLE+6:16), 251
 	ld e, 0x48:opc
 	ld d, 0x6:opc
@@ -4775,19 +4775,19 @@ AccVoice_Reassign_Mode3:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_Reassign_Apply
+	jr AccSection_StartComposerIntro_Apply
 
-AccVoice_Reassign_MatchB:
+AccSection_StartComposerIntro_MatchB:
 	ld a, (0x3367:16)
 	call AccVoice_ResolveParamAddr
 
-AccVoice_Reassign_Apply:
+AccSection_StartComposerIntro_Apply:
 	calr AccInit_AllPartPositions
 	call AccTuning_CopyAllPartsFromStyle
 	or (0x332c:16), 63
-	jr AccVoice_Reassign_Return
+	jr AccSection_StartComposerIntro_Return
 
-AccVoice_Reassign_Fallback:
+AccSection_StartComposerIntro_Fallback:
 	ld xiy, (0x32d3:16)
 	ldw hl, 0x22
 	calr AccVoice_LoadAllParts
@@ -4796,10 +4796,10 @@ AccVoice_Reassign_Fallback:
 	call AccVoice_LoadTuningBlock
 	or (0x332c:16), 63
 
-AccVoice_Reassign_Return:
+AccSection_StartComposerIntro_Return:
 	ret
 
-AccVoice_SplitPointSetup:
+AccSection_StartFillIn:
 	and (ACC_LANE_BEAT_POS:16), 15
 	and (ACC_LANE_BEAT_POS+1:16), 15
 	and (ACC_LANE_BEAT_POS+2:16), 15
@@ -4807,43 +4807,43 @@ AccVoice_SplitPointSetup:
 	and (ACC_LANE_BEAT_POS+4:16), 15
 	and (ACC_LANE_BEAT_POS+5:16), 15
 	cp (ACC_STYLE_NUMBER:16), 128
-	jr c, AccVoice_Split_UseStyle
+	jr c, AccSection_StartFillIn_UseStyle
 	bit 0, (0x3363:16)
-	jr z, AccVoice_Split_UseSecondary
-	calr AccVoice_SplitReassign
-	jr AccVoice_Split_SetForward
+	jr z, AccSection_StartFillIn_UseSecondary
+	calr AccSection_StartComposerFillIn
+	jr AccSection_StartFillIn_SetForward
 
-AccVoice_Split_UseSecondary:
+AccSection_StartFillIn_UseSecondary:
 	ld xiy, (0x32d3:16)
-	jr AccVoice_Split_LoadAndApply
+	jr AccSection_StartFillIn_LoadAndApply
 
-AccVoice_Split_UseStyle:
+AccSection_StartFillIn_UseStyle:
 	ld xiy, (ACC_STYLE_RECORD:16)
 
-AccVoice_Split_LoadAndApply:
+AccSection_StartFillIn_LoadAndApply:
 	ld a, (ACC_LANE_SECTION:16)
 	call AccVoice_ComputeParamAddr
 	calr AccVoice_LoadAllParts
 	ld a, (ACC_LANE_SECTION:16)
 	call AccTuning_SetAllFromLookup
 	cp (ACC_STYLE_NUMBER:16), 128
-	jr c, AccVoice_Split_StyleMode
+	jr c, AccSection_StartFillIn_StyleMode
 	ld xiy, (ACC_STYLE_RECORD:16)
 	call AccTuning_CopyAllPartsFromStyle
-	jr AccVoice_Split_Apply63
+	jr AccSection_StartFillIn_Apply63
 
-AccVoice_Split_StyleMode:
+AccSection_StartFillIn_StyleMode:
 	ld a, (ACC_LANE_SECTION:16)
 	ld w, 0x2:opc
 	call AccPart_GetVoiceParamOffsetTable
 	call AccVoice_LoadTuningBlock
 
-AccVoice_Split_Apply63:
+AccSection_StartFillIn_Apply63:
 	or (0x332c:16), 63
 
-AccVoice_Split_SetForward:
+AccSection_StartFillIn_SetForward:
 	bit 0, (0x3309:16)
-	jr z, AccVoice_Split_SetReverse
+	jr z, AccSection_StartFillIn_SetReverse
 	and (0x3309:16), 254
 	or (0x3312:16), 63
 	xor a, a
@@ -4857,9 +4857,9 @@ AccVoice_Split_SetForward:
 	ld (0x3328:16), a
 	ld (0x332a:16), a
 	and (0x3283:16), 251
-	jr AccVoice_Split_Return
+	jr AccSection_StartFillIn_Return
 
-AccVoice_Split_SetReverse:
+AccSection_StartFillIn_SetReverse:
 	and (0x3309:16), 253
 	or (0x3313:16), 63
 	xor a, a
@@ -4874,17 +4874,17 @@ AccVoice_Split_SetReverse:
 	ld (0x332a:16), a
 	and (0x3283:16), 251
 
-AccVoice_Split_Return:
+AccSection_StartFillIn_Return:
 	ret
 
-AccVoice_SplitReassign:
+AccSection_StartComposerFillIn:
 	bit 0, (0x3309:16)
-	jr z, AccVoice_SplitReassign_Reverse
+	jr z, AccSection_StartComposerFillIn_Reverse
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	cp a, (0x3368:16)
-	jr z, AccVoice_SplitReassign_MatchFwd
+	jr z, AccSection_StartComposerFillIn_MatchFwd
 	and (PANEL_STYLE+5:16), 191
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -4892,19 +4892,19 @@ AccVoice_SplitReassign:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_SplitReassign_Apply
+	jr AccSection_StartComposerFillIn_Apply
 
-AccVoice_SplitReassign_MatchFwd:
+AccSection_StartComposerFillIn_MatchFwd:
 	ld a, (0x3369:16)
 	call AccVoice_ResolveParamAddr
-	jr AccVoice_SplitReassign_Apply
+	jr AccSection_StartComposerFillIn_Apply
 
-AccVoice_SplitReassign_Reverse:
+AccSection_StartComposerFillIn_Reverse:
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	cp a, (0x336a:16)
-	jr z, AccVoice_SplitReassign_MatchRev
+	jr z, AccSection_StartComposerFillIn_MatchRev
 	and (PANEL_STYLE+5:16), 127
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -4912,13 +4912,13 @@ AccVoice_SplitReassign_Reverse:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_SplitReassign_Apply
+	jr AccSection_StartComposerFillIn_Apply
 
-AccVoice_SplitReassign_MatchRev:
+AccSection_StartComposerFillIn_MatchRev:
 	ld a, (0x336b:16)
 	call AccVoice_ResolveParamAddr
 
-AccVoice_SplitReassign_Apply:
+AccSection_StartComposerFillIn_Apply:
 	calr AccInit_AllPartPositions
 	call AccTuning_CopyAllPartsFromStyle
 	or (0x332c:16), 63
@@ -4980,7 +4980,7 @@ AccInit_AllPartPositions:
 	ldw (ACC_LANE_READ_POS+2:16), 6
 	ret
 
-AccVoice_ThirdLayer:
+AccSection_StartEnding:
 	and (ACC_LANE_BEAT_POS:16), 15
 	and (ACC_LANE_BEAT_POS+1:16), 15
 	and (ACC_LANE_BEAT_POS+2:16), 15
@@ -4988,52 +4988,52 @@ AccVoice_ThirdLayer:
 	and (ACC_LANE_BEAT_POS+4:16), 15
 	and (ACC_LANE_BEAT_POS+5:16), 15
 	cp (ACC_STYLE_NUMBER:16), 128
-	jr c, AccVoice_ThirdLayer_Style
+	jr c, AccSection_StartEnding_Style
 	bit 0, (0x3363:16)
-	jr z, AccVoice_ThirdLayer_Secondary
-	calr AccVoice_ThirdLayerReassign
-	jr AccVoice_ThirdLayer_SetMasks
+	jr z, AccSection_StartEnding_Secondary
+	calr AccSection_StartComposerEnding
+	jr AccSection_StartEnding_SetMasks
 
-AccVoice_ThirdLayer_Secondary:
+AccSection_StartEnding_Secondary:
 	ld xiy, (0x32d3:16)
-	jr AccVoice_ThirdLayer_SelectMode
+	jr AccSection_StartEnding_SelectMode
 
-AccVoice_ThirdLayer_Style:
+AccSection_StartEnding_Style:
 	ld xiy, (ACC_STYLE_RECORD:16)
 
-AccVoice_ThirdLayer_SelectMode:
+AccSection_StartEnding_SelectMode:
 	ldw hl, 0x24
 	bit 0, (0x330b:16)
-	jr nz, AccVoice_ThirdLayer_LoadParams
+	jr nz, AccSection_StartEnding_LoadParams
 	ldw hl, 0x424
 
-AccVoice_ThirdLayer_LoadParams:
+AccSection_StartEnding_LoadParams:
 	calr AccVoice_LoadAllParts
 	ld a, (ACC_LANE_SECTION:16)
 	call AccTuning_SetAllFromLookup
 	cp (ACC_STYLE_NUMBER:16), 128
-	jr c, AccVoice_ThirdLayer_StyleMode
+	jr c, AccSection_StartEnding_StyleMode
 	ld xiy, (ACC_STYLE_RECORD:16)
 	call AccTuning_CopyAllPartsFromStyle
-	jr AccVoice_ThirdLayer_Apply
+	jr AccSection_StartEnding_Apply
 
-AccVoice_ThirdLayer_StyleMode:
+AccSection_StartEnding_StyleMode:
 	ld a, (ACC_LANE_SECTION:16)
 	ld w, 0x5:opc
 	bit 1, (0x330b:16)
-	jr z, AccVoice_ThirdLayer_SetModeW
+	jr z, AccSection_StartEnding_SetModeW
 	ld w, 0x6:opc
 
-AccVoice_ThirdLayer_SetModeW:
+AccSection_StartEnding_SetModeW:
 	call AccPart_GetVoiceParamOffsetTable
 	call AccVoice_LoadTuningBlock
 
-AccVoice_ThirdLayer_Apply:
+AccSection_StartEnding_Apply:
 	or (0x332c:16), 63
 
-AccVoice_ThirdLayer_SetMasks:
+AccSection_StartEnding_SetMasks:
 	bit 0, (0x330b:16)
-	jr z, AccVoice_ThirdLayer_Reverse
+	jr z, AccSection_StartEnding_Reverse
 	and (0x330b:16), 254
 	or (0x3314:16), 63
 	xor a, a
@@ -5044,9 +5044,9 @@ AccVoice_ThirdLayer_SetMasks:
 	ld (0x3313:16), a
 	ld (0x3315:16), a
 	ld (0x335d:16), a
-	jr AccVoice_ThirdLayer_Return
+	jr AccSection_StartEnding_Return
 
-AccVoice_ThirdLayer_Reverse:
+AccSection_StartEnding_Reverse:
 	and (0x330b:16), 253
 	or (0x3315:16), 63
 	xor a, a
@@ -5058,17 +5058,17 @@ AccVoice_ThirdLayer_Reverse:
 	ld (0x3314:16), a
 	ld (0x335d:16), a
 
-AccVoice_ThirdLayer_Return:
+AccSection_StartEnding_Return:
 	ret
 
-AccVoice_ThirdLayerReassign:
+AccSection_StartComposerEnding:
 	bit 0, (0x330b:16)
-	jr z, AccVoice_ThirdReassign_Reverse
+	jr z, AccSection_StartComposerEnding_Reverse
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	cp a, (0x336c:16)
-	jr z, AccVoice_ThirdReassign_MatchFwd
+	jr z, AccSection_StartComposerEnding_MatchFwd
 	and (PANEL_STYLE+5:16), 239
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -5076,19 +5076,19 @@ AccVoice_ThirdLayerReassign:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_ThirdReassign_Apply
+	jr AccSection_StartComposerEnding_Apply
 
-AccVoice_ThirdReassign_MatchFwd:
+AccSection_StartComposerEnding_MatchFwd:
 	ld a, (0x336d:16)
 	call AccVoice_ResolveParamAddr
-	jr AccVoice_ThirdReassign_Apply
+	jr AccSection_StartComposerEnding_Apply
 
-AccVoice_ThirdReassign_Reverse:
+AccSection_StartComposerEnding_Reverse:
 	ld a, (ACC_STYLE_NUMBER:16)
 	and a, 0x7f
 	call AccPatch_SetVoiceParam
 	cp a, (0x336e:16)
-	jr z, AccVoice_ThirdReassign_MatchRev
+	jr z, AccSection_StartComposerEnding_MatchRev
 	and (PANEL_STYLE+5:16), 223
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -5096,13 +5096,13 @@ AccVoice_ThirdReassign_Reverse:
 	ld a, 0x0:opc
 	call Rhythm_QueuePartChangeEvent
 	ld xiy, (ACC_STYLE_RECORD:16)
-	jr AccVoice_ThirdReassign_Apply
+	jr AccSection_StartComposerEnding_Apply
 
-AccVoice_ThirdReassign_MatchRev:
+AccSection_StartComposerEnding_MatchRev:
 	ld a, (0x336f:16)
 	call AccVoice_ResolveParamAddr
 
-AccVoice_ThirdReassign_Apply:
+AccSection_StartComposerEnding_Apply:
 	calr AccInit_AllPartPositions
 	call AccTuning_CopyAllPartsFromStyle
 	or (0x332c:16), 63
@@ -5566,95 +5566,95 @@ AccVoice_SetupByteData_Return4:
 	ld	(ACC_LANE_READ_POS+10:16), wa
 	ret
 
-AccFlags_Aggregate:
+AccSection_SwitchAtBarLine:
 	and (0x3326:16), 192
 	and (0x3327:16), 192
 	calr AccBuf_ResetAll4Positions
 	bit 0, (0x330e:16)
-	jr z, AccFlags_BuildIndex
+	jr z, AccSection_SwitchAtBarLine_BuildIndex
 	or (0x330d:16), 1
 	bit 1, (0x330e:16)
-	jr z, AccFlags_CheckDecay
+	jr z, AccSection_SwitchAtBarLine_VariationUp
 	cp (0x333a:16), 0
-	jr z, AccFlags_BuildIndex
+	jr z, AccSection_SwitchAtBarLine_BuildIndex
 	dec 1, (0x333a:16)
-	jr AccFlags_BuildIndex
+	jr AccSection_SwitchAtBarLine_BuildIndex
 
-AccFlags_CheckDecay:
+AccSection_SwitchAtBarLine_VariationUp:
 	cp (0x333a:16), 3
-	jr z, AccFlags_BuildIndex
+	jr z, AccSection_SwitchAtBarLine_BuildIndex
 	inc 1, (0x333a:16)
 
-AccFlags_BuildIndex:
+AccSection_SwitchAtBarLine_BuildIndex:
 	xor w, w
 	ld a, (0x330a:16)
 	and a, 0xd
-	jr z, AccFlags_CheckDir65
+	jr z, AccSection_SwitchAtBarLine_CheckFillIn
 	or w, 0x1
 
-AccFlags_CheckDir65:
+AccSection_SwitchAtBarLine_CheckFillIn:
 	ld a, (0x3309:16)
 	and a, 0x3
-	jr z, AccFlags_CheckDir67
+	jr z, AccSection_SwitchAtBarLine_CheckEnding
 	or w, 0x2
 
-AccFlags_CheckDir67:
+AccSection_SwitchAtBarLine_CheckEnding:
 	ld a, (0x330b:16)
 	and a, 0x3
-	jr z, AccFlags_CheckNoteOn
+	jr z, AccSection_SwitchAtBarLine_CheckArrangerStep
 	or w, 0x4
 
-AccFlags_CheckNoteOn:
+AccSection_SwitchAtBarLine_CheckArrangerStep:
 	bit 0, (0x330c:16)
-	jr z, AccFlags_CheckSync69
+	jr z, AccSection_SwitchAtBarLine_CheckVariation
 	or w, 0x8
 	bit 6, (0x3470:16)
-	jr z, AccFlags_PedalBit7
+	jr z, AccSection_SwitchAtBarLine_CheckFillIn2Held
 	or w, 0x2
 	or (0x3309:16), 1
 
-AccFlags_PedalBit7:
+AccSection_SwitchAtBarLine_CheckFillIn2Held:
 	bit 7, (0x3470:16)
-	jr z, AccFlags_CheckSync69
+	jr z, AccSection_SwitchAtBarLine_CheckVariation
 	or w, 0x2
 	or (0x3309:16), 2
 
-AccFlags_CheckSync69:
+AccSection_SwitchAtBarLine_CheckVariation:
 	bit 0, (0x330d:16)
-	jr z, AccFlags_CheckSync71
+	jr z, AccSection_SwitchAtBarLine_CheckRestart
 	or w, 0x8
 
-AccFlags_CheckSync71:
+AccSection_SwitchAtBarLine_CheckRestart:
 	bit 0, (0x330f:16)
-	jr z, AccFlags_Dispatch
+	jr z, AccSection_SwitchAtBarLine_Dispatch
 	or w, 0x8
 
-AccFlags_Dispatch:
+AccSection_SwitchAtBarLine_Dispatch:
 	and w, 0xf
 	sla w, 2
-	ld xhl, AccFlags_JumpTable
+	ld xhl, AccSection_BarLineSwitchTable
 	ld	xwa, (xhl+w)
 	jp (xwa)
 
 
-AccFlags_JumpTable:
-	.long AccFlags_Handler0
-	.long AccFlags_Handler1
-	.long AccFlags_Handler2
-	.long AccFlags_Handler2
-	.long AccFlags_Handler4
-	.long AccFlags_Handler4
-	.long AccFlags_Handler4
-	.long AccFlags_Handler4
-	.long AccFlags_Handler0
-	.long AccFlags_Handler9
-	.long AccFlags_Handler10
-	.long AccFlags_Handler10
-	.long AccFlags_Handler8
-	.long AccFlags_Handler8
-	.long AccFlags_Handler8
-	.long AccFlags_Handler8
-AccFlags_Handler0:
+AccSection_BarLineSwitchTable:
+	.long AccSection_ToVariation
+	.long AccSection_ToIntro
+	.long AccSection_ToFillIn
+	.long AccSection_ToFillIn
+	.long AccSection_ToEnding
+	.long AccSection_ToEnding
+	.long AccSection_ToEnding
+	.long AccSection_ToEnding
+	.long AccSection_ToVariation
+	.long AccSection_ToNewVariationIntro
+	.long AccSection_ToNewVariationFillIn
+	.long AccSection_ToNewVariationFillIn
+	.long AccSection_ToNewVariationEnding
+	.long AccSection_ToNewVariationEnding
+	.long AccSection_ToNewVariationEnding
+	.long AccSection_ToNewVariationEnding
+AccSection_ToVariation:
 	call	AccStyle_Init
 	call	AccVoice_SetupAllParts
 	and	(0x3316:16), 192
@@ -5662,32 +5662,32 @@ AccFlags_Handler0:
 	and	(0x3318:16), 192
 	and	(0x3312:16), 192
 	and	(0x3313:16), 192
-	jr	AccFlags_Handler9_Join
-AccFlags_Handler4:
+	jr	AccSection_Switch_Common
+AccSection_ToEnding:
 	call	AccTiming_CallHelper
 	call	AccInit_ResetSongCounter
-	call	AccVoice_ThirdLayer
-	jr	AccFlags_Handler9_Join
-AccFlags_Handler8:
+	call	AccSection_StartEnding
+	jr	AccSection_Switch_Common
+AccSection_ToNewVariationEnding:
 	call	AccStyle_Init
 	call	AccTiming_CallHelper
 	call	AccInit_ResetSongCounter
-	call	AccVoice_ThirdLayer
-	jr	t, AccFlags_Handler9_Join
-AccFlags_Handler2:
-	call	AccVoice_SplitPointSetup
-	jr	AccFlags_Handler9_Join
-AccFlags_Handler10:
+	call	AccSection_StartEnding
+	jr	t, AccSection_Switch_Common
+AccSection_ToFillIn:
+	call	AccSection_StartFillIn
+	jr	AccSection_Switch_Common
+AccSection_ToNewVariationFillIn:
 	call	AccStyle_Init
-	call	AccVoice_SplitPointSetup
-	jr	t, AccFlags_Handler9_Join
-AccFlags_Handler1:
-	call	AccVoice_ResetAll
-	jr	AccFlags_Handler9_Join
-AccFlags_Handler9:
+	call	AccSection_StartFillIn
+	jr	t, AccSection_Switch_Common
+AccSection_ToIntro:
+	call	AccSection_StartIntro
+	jr	AccSection_Switch_Common
+AccSection_ToNewVariationIntro:
 	call	AccStyle_Init
-	call	AccVoice_ResetAll
-AccFlags_Handler9_Join:
+	call	AccSection_StartIntro
+AccSection_Switch_Common:
 	call	Rhythm_Send_Ch90_7F_7E
 	call	Rhythm_SendChanPressure
 	calr	AccBuf_ResetByteData
@@ -5777,7 +5777,7 @@ AccTempo_CalcPosition:
 	ld (0x32ea:16), a
 	ret
 
-AccInit_FullReInit:
+AccSection_SwitchNow:
 	call Rhythm_SendNoteOnMax
 	call AccompVoice_BulkReadRegisters
 	calr AccBuf_WriteAllNotesOff
@@ -5786,66 +5786,66 @@ AccInit_FullReInit:
 	ld a, (0x3312:16)
 	or a, (0x3313:16)
 	and a, 0x3f
-	jr z, AccInit_ReInit_CheckNoteOn
+	jr z, AccSection_SwitchNow_CheckNoteOn
 	bit 0, (0x3301:16)
-	jr z, AccInit_ReInit_CheckNoteOn
+	jr z, AccSection_SwitchNow_CheckNoteOn
 	or (0x330c:16), 1
 	ld a, (0x3312:16)
 	and a, 0x3f
-	jr z, AccInit_ReInit_AdjustDecay
+	jr z, AccSection_SwitchNow_AdjustDecay
 	cp (0x333a:16), 0
-	jr z, AccInit_ReInit_CheckNoteOn
+	jr z, AccSection_SwitchNow_CheckNoteOn
 	dec 1, (0x333a:16)
-	jr AccInit_ReInit_CheckNoteOn
+	jr AccSection_SwitchNow_CheckNoteOn
 
-AccInit_ReInit_AdjustDecay:
+AccSection_SwitchNow_AdjustDecay:
 	cp (0x333a:16), 3
-	jr z, AccInit_ReInit_CheckNoteOn
+	jr z, AccSection_SwitchNow_CheckNoteOn
 	inc 1, (0x333a:16)
 
-AccInit_ReInit_CheckNoteOn:
+AccSection_SwitchNow_CheckNoteOn:
 	bit 0, (0x330c:16)
-	jr z, AccInit_ReInit_CheckModes
+	jr z, AccSection_SwitchNow_CheckModes
 	ld a, (0x3326:16)
 	and a, 0x3f
-	jr nz, AccInit_ReInit_CheckModes
+	jr nz, AccSection_SwitchNow_CheckModes
 	calr AccStyle_Init
 	calr AccVoice_SetupAllParts
 	ld a, (ACC_BEATS_PER_BAR:16)
 	ld (1112:16), a
 
-AccInit_ReInit_CheckModes:
+AccSection_SwitchNow_CheckModes:
 	ld a, (0x330a:16)
 	and a, 0xd
-	jr z, AccInit_ReInit_CheckSplit
-	calr AccVoice_ResetAll
+	jr z, AccSection_SwitchNow_CheckSplit
+	calr AccSection_StartIntro
 
-AccInit_ReInit_CheckSplit:
+AccSection_SwitchNow_CheckSplit:
 	ld a, (0x3309:16)
 	and a, 0x3
-	jr nz, AccInit_ReInit_ApplySplit
+	jr nz, AccSection_SwitchNow_ApplySplit
 	bit 6, (0x3470:16)
-	jr z, AccInit_ReInit_CheckPedalBit7
+	jr z, AccSection_SwitchNow_CheckPedalBit7
 	or (0x3309:16), 1
-	jr AccInit_ReInit_ApplySplit
+	jr AccSection_SwitchNow_ApplySplit
 
-AccInit_ReInit_CheckPedalBit7:
+AccSection_SwitchNow_CheckPedalBit7:
 	bit 7, (0x3470:16)
-	jr z, AccInit_ReInit_CheckThird
+	jr z, AccSection_SwitchNow_CheckThird
 	or (0x3309:16), 2
 
-AccInit_ReInit_ApplySplit:
-	calr AccVoice_SplitPointSetup
+AccSection_SwitchNow_ApplySplit:
+	calr AccSection_StartFillIn
 
-AccInit_ReInit_CheckThird:
+AccSection_SwitchNow_CheckThird:
 	ld a, (0x330b:16)
 	and a, 0x3
-	jr z, AccInit_ReInit_ClearHighBits
+	jr z, AccSection_SwitchNow_ClearHighBits
 	calr AccTiming_CallHelper
 	call AccInit_ResetSongCounter
-	calr AccVoice_ThirdLayer
+	calr AccSection_StartEnding
 
-AccInit_ReInit_ClearHighBits:
+AccSection_SwitchNow_ClearHighBits:
 	and (ACC_LANE_BEAT_POS:16), 240
 	and (ACC_LANE_BEAT_POS+1:16), 240
 	and (ACC_LANE_BEAT_POS+2:16), 240
@@ -5854,10 +5854,10 @@ AccInit_ReInit_ClearHighBits:
 	and (ACC_LANE_BEAT_POS+5:16), 240
 	calr AccSeq_DualPartScan
 	bit 6, (0x32f4:16)
-	jr nz, AccInit_ReInit_SetDirty
+	jr nz, AccSection_SwitchNow_SetDirty
 	calr AccSeq_FourChannelScan
 
-AccInit_ReInit_SetDirty:
+AccSection_SwitchNow_SetDirty:
 	or (0x332c:16), 128
 	ret
 
@@ -6199,7 +6199,7 @@ AccWrap_JumpTable_Return:
 AccWrap_JumpTable_Return2:
 	ret
 AccWrap_ReplayStop:
-	jp	AccPedal_EventDispatch
+	jp	AccStyleCtl_OnSwitchEvent
 AccWrap_ReplayStopAlt:
 	jp	AccPedal_RawHandler_Join
 
@@ -6304,44 +6304,44 @@ AccWrap_AutoPlayByteData:
 	pop	xiz
 	ret
 
-AccPedal_EventDispatch:
+AccStyleCtl_OnSwitchEvent:
 	ld a, (SWBTWR_PAYLOAD_1:16)
 	ld (0x348a:16), a
 	cp a, 5:i3
-	jr z, AccPedal_TypeSustainOrExpr
+	jr z, AccStyleCtl_OnSwitchEvent_Field5or6
 	cp a, 6:i3
-	jr z, AccPedal_TypeSustainOrExpr
-	jr AccPedal_CheckType0
+	jr z, AccStyleCtl_OnSwitchEvent_Field5or6
+	jr AccStyleCtl_OnSwitchEvent_CheckField0
 
-AccPedal_TypeSustainOrExpr:
+AccStyleCtl_OnSwitchEvent_Field5or6:
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	ld (0x347e:16), a
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	cp a, 0xff
-	jr nz, AccPedal_ParseValue
+	jr nz, AccStyleCtl_OnSwitchEvent_StoreMask
 	xor a, a
 
-AccPedal_ParseValue:
+AccStyleCtl_OnSwitchEvent_StoreMask:
 	ld (0x347f:16), a
-	calr AccPedal_SustainHandler
-	calr AccPedal_ExprToggle
-	calr AccPedal_DistributeParams
+	calr AccStyleCtl_StartStopButton
+	calr AccStyleCtl_SynchroButton
+	calr AccStyleCtl_SectionButtons
 
-AccPedal_CheckType0:
+AccStyleCtl_OnSwitchEvent_CheckField0:
 	ld a, (SWBTWR_PAYLOAD_1:16)
 	cp a, 0:i3
-	jr z, AccPedal_SavePosition
+	jr z, AccStyleCtl_OnSwitchEvent_SavePos
 	cp a, 7:i3
-	jr nz, AccPedal_EventReturn
+	jr nz, AccStyleCtl_OnSwitchEvent_Return
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	and a, 0x30
 	cp a, 0:i3
-	jr z, AccPedal_EventReturn
+	jr z, AccStyleCtl_OnSwitchEvent_Return
 
-AccPedal_SavePosition:
+AccStyleCtl_OnSwitchEvent_SavePos:
 	calr AccPos_SaveOnStop
 
-AccPedal_EventReturn:
+AccStyleCtl_OnSwitchEvent_Return:
 	ret
 
 AccPedal_RawHandler:
@@ -6363,16 +6363,16 @@ AccPedal_RawHandler_Return:
 	nop
 	nop
 
-AccPedal_SustainHandler:
+AccStyleCtl_StartStopButton:
 	cp (0x348a:16), 5
-	jrl nz, AccPedal_SustainReturn
+	jrl nz, AccStyleCtl_StartStop_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 0, a
-	jr nz, AccPedal_Sustain_CallReset
-	jp AccPedal_SustainReturn
+	jr nz, AccStyleCtl_StartStop_CallReset
+	jp AccStyleCtl_StartStop_Return
 
-AccPedal_Sustain_CallReset:
+AccStyleCtl_StartStop_CallReset:
 	push xwa
 	push xhl
 	push xbc
@@ -6389,146 +6389,146 @@ AccPedal_Sustain_CallReset:
 	pop xhl
 	pop xwa
 	cp (0x7f0b:16), 0
-	jr z, AccPedal_Sustain_CheckStyle
+	jr z, AccStyleCtl_StartStop_CheckStyle
 	call AccPlay_ToggleEntry
-	jrl AccPedal_SustainReturn
+	jrl AccStyleCtl_StartStop_Return
 
-AccPedal_Sustain_CheckStyle:
+AccStyleCtl_StartStop_CheckStyle:
 	cp (CURRENT_TITLE:16), 111
-	jr z, AccPedal_Sustain_SpecialStyle
+	jr z, AccStyleCtl_StartStop_SpecialStyle
 	cp (CURRENT_TITLE:16), 112
-	jr z, AccPedal_Sustain_SpecialStyle
+	jr z, AccStyleCtl_StartStop_SpecialStyle
 	cp (CURRENT_TITLE:16), 113
-	jr z, AccPedal_Sustain_SpecialStyle
+	jr z, AccStyleCtl_StartStop_SpecialStyle
 	cp (CURRENT_TITLE:16), 114
-	jr nz, AccPedal_Sustain_CheckPlay
+	jr nz, AccStyleCtl_StartStop_CheckPlay
 
-AccPedal_Sustain_SpecialStyle:
+AccStyleCtl_StartStop_SpecialStyle:
 	or (3381:16), 1
-	jrl AccPedal_SustainReturn
+	jrl AccStyleCtl_StartStop_Return
 
-AccPedal_Sustain_CheckPlay:
+AccStyleCtl_StartStop_CheckPlay:
 	bit 2, (SEQ_RTMCFG:16)
-	jr z, AccPedal_Sustain_CheckMultiStyle
+	jr z, AccStyleCtl_StartStop_CheckMultiStyle
 	calr AccPlayMode_Dispatch
 	bit 3, (3411:16)
-	jr z, AccPedal_Sustain_PlayJump
+	jr z, AccStyleCtl_StartStop_PlayJump
 	cp (SQSTEP_DISPLAY_MODE:16), 0
-	jr z, AccPedal_Sustain_PlayJump
+	jr z, AccStyleCtl_StartStop_PlayJump
 	call AccPedal_ScanVoiceSlots
 	ld a, 0x86:opc
 	bit 1, (3411:16)
-	jr nz, AccPedal_Sustain_WriteTempo
+	jr nz, AccStyleCtl_StartStop_WriteTempo
 	ld a, 0x85:opc
 
-AccPedal_Sustain_WriteTempo:
+AccStyleCtl_StartStop_WriteTempo:
 	calr AccTempo_WriteStopMarker
 
-AccPedal_Sustain_PlayJump:
-	jrl AccPedal_SustainReturn
+AccStyleCtl_StartStop_PlayJump:
+	jrl AccStyleCtl_StartStop_Return
 
-AccPedal_Sustain_CheckMultiStyle:
+AccStyleCtl_StartStop_CheckMultiStyle:
 	cp (CURRENT_TITLE:16), 120
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 122
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 115
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 116
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 117
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 118
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 119
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 121
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 108
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 109
-	jr z, AccPedal_Sustain_MultiMatch
+	jr z, AccStyleCtl_StartStop_MultiMatch
 	cp (CURRENT_TITLE:16), 110
-	jr nz, AccPedal_Sustain_Normal
+	jr nz, AccStyleCtl_StartStop_Normal
 
-AccPedal_Sustain_MultiMatch:
+AccStyleCtl_StartStop_MultiMatch:
 	or (3381:16), 1
-	jr AccPedal_SustainReturn
+	jr AccStyleCtl_StartStop_Return
 
-AccPedal_Sustain_Normal:
+AccStyleCtl_StartStop_Normal:
 	bit 2, (0x28b2:16)
-	jr nz, AccPedal_SustainReturn
+	jr nz, AccStyleCtl_StartStop_Return
 	pushw wa
-	calr AccPedal_StyleCheck
+	calr AccStyleCtl_IsStartStopBlocked
 	cp a, 1:i3
 	popw wa
-	jr z, AccPedal_SustainReturn
+	jr z, AccStyleCtl_StartStop_Return
 	ei 6
 	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 2, a
-	jr nz, AccPedal_Sustain_CallPlayMode
+	jr nz, AccStyleCtl_StartStop_CallPlayMode
 	bit 0, a
-	jr z, AccPedal_Sustain_CallPlayMode
+	jr z, AccStyleCtl_StartStop_CallPlayMode
 	xor a, a
 	ld (PLAY_TRANSPORT_STATE:16), a
 	ld (ACC_TRANSPORT_STATE:16), a
 	ld (SEQ_TRANSPORT_STATE:16), a
 	ei 0
-	jr AccPedal_SustainReturn
+	jr AccStyleCtl_StartStop_Return
 
-AccPedal_Sustain_CallPlayMode:
+AccStyleCtl_StartStop_CallPlayMode:
 	ei 0
 	calr AccPlayMode_TransitionRouter
 
-AccPedal_SustainReturn:
+AccStyleCtl_StartStop_Return:
 	ret
 
-AccPedal_SustainPadding:
+AccStyleCtl_StartStop_Padding:
 	nop
 	nop
 
-AccPedal_StyleCheck:
+AccStyleCtl_IsStartStopBlocked:
 	cp (CURRENT_TITLE:16), 111
-	jr z, AccPedal_StyleCheck_Ineligible
+	jr z, AccStyleCtl_IsStartStopBlocked_Ineligible
 	cp (CURRENT_TITLE:16), 108
-	jr c, AccPedal_StyleCheck_Extended
+	jr c, AccStyleCtl_IsStartStopBlocked_Extended
 	cp (CURRENT_TITLE:16), 122
-	jr ugt, AccPedal_StyleCheck_Extended
-	jr AccPedal_StyleCheck_Ineligible
+	jr ugt, AccStyleCtl_IsStartStopBlocked_Extended
+	jr AccStyleCtl_IsStartStopBlocked_Ineligible
 
-AccPedal_StyleCheck_Extended:
+AccStyleCtl_IsStartStopBlocked_Extended:
 	cp (CURRENT_MODE:16), 19
-	jr z, AccPedal_StyleCheck_Ineligible
+	jr z, AccStyleCtl_IsStartStopBlocked_Ineligible
 	cp (CURRENT_TITLE:16), 120
-	jr z, AccPedal_StyleCheck_Match120
-	jr AccPedal_StyleCheck_Eligible
+	jr z, AccStyleCtl_IsStartStopBlocked_Match120
+	jr AccStyleCtl_IsStartStopBlocked_Eligible
 
-AccPedal_StyleCheck_Match120:
-	jr AccPedal_StyleCheck_Ineligible
+AccStyleCtl_IsStartStopBlocked_Match120:
+	jr AccStyleCtl_IsStartStopBlocked_Ineligible
 
-AccPedal_StyleCheck_Eligible:
+AccStyleCtl_IsStartStopBlocked_Eligible:
 	ld a, 0x0:opc
-	jr AccPedal_StyleCheckReturn
+	jr AccStyleCtl_IsStartStopBlocked_Return
 
-AccPedal_StyleCheck_Ineligible:
+AccStyleCtl_IsStartStopBlocked_Ineligible:
 	ld a, 0x1:opc
 
-AccPedal_StyleCheckReturn:
+AccStyleCtl_IsStartStopBlocked_Return:
 	ret
 
-AccPedal_ExprToggle:
+AccStyleCtl_SynchroButton:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_ExprReturn
+	jr nz, AccStyleCtl_SynchroButton_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 1, a
-	jr z, AccPedal_ExprReturn
+	jr z, AccStyleCtl_SynchroButton_Return
 	ld a, 0x2:opc
 	xor (PANEL_STYLE+5:16), a
 	cp (0x90f8:16), 255
-	jr z, AccPedal_ExprReturn
+	jr z, AccStyleCtl_SynchroButton_Return
 	bit 3, (PANEL_MIDI+6:16)
-	jr z, AccPedal_ExprReturn
+	jr z, AccStyleCtl_SynchroButton_Return
 	ld e, (PANEL_STYLE+5:16)
 	and e, 0x2
 	ld xix, 0x38e8
@@ -6540,23 +6540,23 @@ AccPedal_ExprToggle:
 	call MidiPkt_DispatchViaTable_4DCE
 	inc 4, xsp
 
-AccPedal_ExprReturn:
+AccStyleCtl_SynchroButton_Return:
 	ret
 
-AccPedal_ExprPadding:
+AccStyleCtl_SynchroButton_Padding:
 	nop
 	nop
 
-AccPedal_DistributeParams:
+AccStyleCtl_SectionButtons:
 	cp (CURRENT_MODE:16), 14
-	jr z, AccPedal_Distribute_JumpMain
+	jr z, AccStyleCtl_SectionButtons_JumpMain
 	bit 0, (0x28a6:16)
-	jr z, AccPedal_Distribute_ClearAll
+	jr z, AccStyleCtl_SectionButtons_ClearAll
 
-AccPedal_Distribute_JumpMain:
-	jp AccPedal_DistributeReturn
+AccStyleCtl_SectionButtons_JumpMain:
+	jp AccStyleCtl_SectionButtons_Return
 
-AccPedal_Distribute_ClearAll:
+AccStyleCtl_SectionButtons_ClearAll:
 	xor wa, wa
 	ld (0x3480:16), a
 	ld (0x3481:16), a
@@ -6566,330 +6566,330 @@ AccPedal_Distribute_ClearAll:
 	ld (0x3485:16), a
 	ld (0x3486:16), a
 	ld (0x3487:16), a
-	calr AccPedal_ProcessAllBits
+	calr AccStyleCtl_DispatchSectionButtons
 	bit 3, (3411:16)
-	jr z, AccPedal_Distribute_CheckRecord
+	jr z, AccStyleCtl_SectionButtons_CheckRecord
 	and (PANEL_STYLE+5:16), 15
 	ld (0x3481:16), 0
 	ld (0x3483:16), 0
 	ld (0x3485:16), 0
 	ld (0x3487:16), 0
 
-AccPedal_Distribute_CheckRecord:
-	calr AccPedal_StateSync
+AccStyleCtl_SectionButtons_CheckRecord:
+	calr AccStyleCtl_SyncSectionEvents
 	bit 3, (3411:16)
-	jr z, AccPedal_DistributeReturn
+	jr z, AccStyleCtl_SectionButtons_Return
 	cp (SQSTEP_DISPLAY_MODE:16), 0
-	jr z, AccPedal_DistributeReturn
+	jr z, AccStyleCtl_SectionButtons_Return
 	xor wa, wa
 	ld (0x3480:16), a
 	ld (0x3481:16), a
 	ld (0x3484:16), a
 	ld (0x3485:16), a
 	calr AccPedal_MapToAcc
-	calr AccPedal_SendEvents
+	calr AccStyleCtl_SendSectionEvents
 
-AccPedal_DistributeReturn:
+AccStyleCtl_SectionButtons_Return:
 	ret
 
-AccPedal_DistributePadding:
+AccStyleCtl_SectionButtons_Padding:
 	nop
 	nop
 
-AccPedal_SendEvents:
+AccStyleCtl_SendSectionEvents:
 	ld a, (0x3480:16)
 	xor a, 0xff
 	and a, (0x3481:16)
 	cp a, 0:i3
-	jr z, AccPedal_SendEvents_Group2
+	jr z, AccStyleCtl_SendSectionEvents_Pass2
 	ld b, 0x5:opc
 	ld c, 0x48:opc
 	ld d, a
 	ld e, (0x3480:16)
 	call MIDI_TransmitTempoCC
 
-AccPedal_SendEvents_Group2:
+AccStyleCtl_SendSectionEvents_Pass2:
 	ld a, (0x3484:16)
 	xor a, 0xff
 	and a, (0x3485:16)
 	cp a, 0:i3
-	jr z, AccPedal_SendEvents_OnSustain
+	jr z, AccStyleCtl_SendSectionEvents_Pass3
 	ld b, 0x6:opc
 	ld c, 0x48:opc
 	ld d, a
 	ld e, (0x3484:16)
 	call MIDI_TransmitTempoCC
 
-AccPedal_SendEvents_OnSustain:
+AccStyleCtl_SendSectionEvents_Pass3:
 	ld a, (0x3480:16)
 	and a, (0x3481:16)
 	cp a, 0:i3
-	jr z, AccPedal_SendEvents_OnExpr
+	jr z, AccStyleCtl_SendSectionEvents_Pass4
 	ld b, 0x5:opc
 	ld c, 0x48:opc
 	ld d, a
 	ld e, (0x3480:16)
 	call MIDI_TransmitTempoCC
 
-AccPedal_SendEvents_OnExpr:
+AccStyleCtl_SendSectionEvents_Pass4:
 	ld a, (0x3484:16)
 	and a, (0x3485:16)
 	cp a, 0:i3
-	jr z, AccPedal_SendEventsReturn
+	jr z, AccStyleCtl_SendSectionEvents_Return
 	ld b, 0x6:opc
 	ld c, 0x48:opc
 	ld d, a
 	ld e, (0x3484:16)
 	call MIDI_TransmitTempoCC
 
-AccPedal_SendEventsReturn:
+AccStyleCtl_SendSectionEvents_Return:
 	ret
 
-AccPedal_ProcessAllBits:
-	calr AccPedal_Bit2_Sustain
-	calr AccPedal_Bit2_Expression
-	calr AccPedal_Bit7_Portamento
-	calr AccPedal_Bit6_Hold
-	calr AccPedal_Bit4_Sostenuto
-	calr AccPedal_Bit5_Soft
-	calr AccPedal_Bit3_Damper
+AccStyleCtl_DispatchSectionButtons:
+	calr AccStyleCtl_IntroEnding1Button
+	calr AccStyleCtl_IntroEnding2Button
+	calr AccStyleCtl_FillIn2Button
+	calr AccStyleCtl_FillIn1Button
+	calr AccStyleCtl_Ending1Bit
+	calr AccStyleCtl_Ending2Bit
+	calr AccStyleCtl_CountInBit
 	ret
 
-AccPedal_ProcessBitsPadding:
+AccStyleCtl_DispatchSectionButtons_Padding:
 	nop
 	nop
 
-AccPedal_Bit2_Sustain:
+AccStyleCtl_IntroEnding1Button:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_Bit2_Return
+	jr nz, AccStyleCtl_IntroEnding1_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 2, a
-	jr z, AccPedal_Bit2_Off
+	jr z, AccStyleCtl_IntroEnding1_Release
 	orw (4360:16), 4
 	cp (0x90f8:16), 127
-	jr z, AccPedal_Bit2_CheckPlay
-	calr AccPedal_SustainOn
-	jr AccPedal_Bit2_Off
+	jr z, AccStyleCtl_IntroEnding1_CheckRunning
+	calr AccSection_RequestIntro1
+	jr AccStyleCtl_IntroEnding1_Release
 
-AccPedal_Bit2_CheckPlay:
+AccStyleCtl_IntroEnding1_CheckRunning:
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, AccPedal_Bit2_Sostenuto
-	calr AccPedal_SustainOn
-	jr AccPedal_Bit2_Off
+	jr nz, AccStyleCtl_IntroEnding1_Ending
+	calr AccSection_RequestIntro1
+	jr AccStyleCtl_IntroEnding1_Release
 
-AccPedal_Bit2_Sostenuto:
-	calr AccPedal_SostenutoOn
+AccStyleCtl_IntroEnding1_Ending:
+	calr AccSection_RequestEnding1
 
-AccPedal_Bit2_Off:
+AccStyleCtl_IntroEnding1_Release:
 	bit 2, (0x347f:16)
-	jr z, AccPedal_Bit2_Return
+	jr z, AccStyleCtl_IntroEnding1_Return
 	bit 2, (0x347e:16)
-	jr nz, AccPedal_Bit2_Return
+	jr nz, AccStyleCtl_IntroEnding1_Return
 	cp (0x90f8:16), 127
-	jr z, AccPedal_Bit2_OffPlay
-	calr AccPedal_SustainOff
-	jr AccPedal_Bit2_Return
+	jr z, AccStyleCtl_IntroEnding1_ReleaseCheckRunning
+	calr AccSection_ReleaseIntro1
+	jr AccStyleCtl_IntroEnding1_Return
 
-AccPedal_Bit2_OffPlay:
+AccStyleCtl_IntroEnding1_ReleaseCheckRunning:
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, AccPedal_Bit2_OffSostenuto
-	calr AccPedal_SustainOff
-	jr AccPedal_Bit2_Return
+	jr nz, AccStyleCtl_IntroEnding1_ReleaseEnding
+	calr AccSection_ReleaseIntro1
+	jr AccStyleCtl_IntroEnding1_Return
 
-AccPedal_Bit2_OffSostenuto:
-	calr AccPedal_SostenutoOff
+AccStyleCtl_IntroEnding1_ReleaseEnding:
+	calr AccSection_ReleaseEnding1
 
-AccPedal_Bit2_Return:
+AccStyleCtl_IntroEnding1_Return:
 	ret
 
-AccPedal_Bit2_Expression:
+AccStyleCtl_IntroEnding2Button:
 	cp (0x348a:16), 6
-	jr nz, AccPedal_Expr_Return
+	jr nz, AccStyleCtl_IntroEnding2_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 2, a
-	jr z, AccPedal_Expr_Off
+	jr z, AccStyleCtl_IntroEnding2_Release
 	ld de, 4:i3
 	sla de, 8
 	or (4360:16), de
 	cp (0x90f8:16), 127
-	jr z, AccPedal_Expr_CheckPlay
-	calr AccPedal_ExprOn
-	jr AccPedal_Expr_Off
+	jr z, AccStyleCtl_IntroEnding2_CheckRunning
+	calr AccSection_RequestIntro2
+	jr AccStyleCtl_IntroEnding2_Release
 
-AccPedal_Expr_CheckPlay:
+AccStyleCtl_IntroEnding2_CheckRunning:
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, AccPedal_Expr_Soft
-	calr AccPedal_ExprOn
-	jr AccPedal_Expr_Off
+	jr nz, AccStyleCtl_IntroEnding2_Ending
+	calr AccSection_RequestIntro2
+	jr AccStyleCtl_IntroEnding2_Release
 
-AccPedal_Expr_Soft:
-	calr AccPedal_SoftOn
+AccStyleCtl_IntroEnding2_Ending:
+	calr AccSection_RequestEnding2
 
-AccPedal_Expr_Off:
+AccStyleCtl_IntroEnding2_Release:
 	bit 2, (0x347f:16)
-	jr z, AccPedal_Expr_Return
+	jr z, AccStyleCtl_IntroEnding2_Return
 	bit 2, (0x347e:16)
-	jr nz, AccPedal_Expr_Return
+	jr nz, AccStyleCtl_IntroEnding2_Return
 	cp (0x90f8:16), 127
-	jr z, AccPedal_Expr_OffPlay
-	calr AccPedal_ExprOff
-	jr AccPedal_Expr_Return
+	jr z, AccStyleCtl_IntroEnding2_ReleaseCheckRunning
+	calr AccSection_ReleaseIntro2
+	jr AccStyleCtl_IntroEnding2_Return
 
-AccPedal_Expr_OffPlay:
+AccStyleCtl_IntroEnding2_ReleaseCheckRunning:
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, AccPedal_Expr_OffSoft
-	calr AccPedal_ExprOff
-	jr AccPedal_Expr_Return
+	jr nz, AccStyleCtl_IntroEnding2_ReleaseEnding
+	calr AccSection_ReleaseIntro2
+	jr AccStyleCtl_IntroEnding2_Return
 
-AccPedal_Expr_OffSoft:
-	calr AccPedal_SoftOff
+AccStyleCtl_IntroEnding2_ReleaseEnding:
+	calr AccSection_ReleaseEnding2
 
-AccPedal_Expr_Return:
+AccStyleCtl_IntroEnding2_Return:
 	ret
 
-AccPedal_Bit7_Portamento:
+AccStyleCtl_FillIn2Button:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_Bit7_Return
+	jr nz, AccStyleCtl_FillIn2_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 7, a
-	jr z, AccPedal_Bit7_Off
+	jr z, AccStyleCtl_FillIn2_Release
 	orw (4360:16), 128
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit7_Damper
-	calr AccPedal_PortamentoOn
-	jr AccPedal_Bit7_Off
+	jr z, AccStyleCtl_FillIn2_CountIn
+	calr AccSection_RequestFillIn2
+	jr AccStyleCtl_FillIn2_Release
 
-AccPedal_Bit7_Damper:
-	calr AccPedal_DamperOn
+AccStyleCtl_FillIn2_CountIn:
+	calr AccSection_RequestCountIn
 
-AccPedal_Bit7_Off:
+AccStyleCtl_FillIn2_Release:
 	bit 7, (0x347f:16)
-	jr z, AccPedal_Bit7_Return
+	jr z, AccStyleCtl_FillIn2_Return
 	bit 7, (0x347e:16)
-	jr nz, AccPedal_Bit7_Return
+	jr nz, AccStyleCtl_FillIn2_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit7_OffDamper
-	calr AccPedal_PortamentoOff
-	jr AccPedal_Bit7_Return
+	jr z, AccStyleCtl_FillIn2_ReleaseCountIn
+	calr AccSection_ReleaseFillIn2
+	jr AccStyleCtl_FillIn2_Return
 
-AccPedal_Bit7_OffDamper:
-	calr AccPedal_DamperOff
+AccStyleCtl_FillIn2_ReleaseCountIn:
+	calr AccSection_ReleaseCountIn
 
-AccPedal_Bit7_Return:
+AccStyleCtl_FillIn2_Return:
 	ret
 
-AccPedal_Bit6_Hold:
+AccStyleCtl_FillIn1Button:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_Bit6_Return
+	jr nz, AccStyleCtl_FillIn1_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 6, a
-	jr z, AccPedal_Bit6_HoldOff
+	jr z, AccStyleCtl_FillIn1_Release
 	orw (4360:16), 64
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit6_HoldOff
-	calr AccPedal_HoldOn
-	jr AccPedal_Bit6_HoldOff
+	jr z, AccStyleCtl_FillIn1_Release
+	calr AccSection_RequestFillIn1
+	jr AccStyleCtl_FillIn1_Release
 
-AccPedal_Bit6_HoldOff:
+AccStyleCtl_FillIn1_Release:
 	bit 6, (0x347f:16)
-	jr z, AccPedal_Bit6_Return
+	jr z, AccStyleCtl_FillIn1_Return
 	bit 6, (0x347e:16)
-	jr nz, AccPedal_Bit6_Return
+	jr nz, AccStyleCtl_FillIn1_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit6_Return
-	calr AccPedal_HoldOff
-	jr AccPedal_Bit6_Return
+	jr z, AccStyleCtl_FillIn1_Return
+	calr AccSection_ReleaseFillIn1
+	jr AccStyleCtl_FillIn1_Return
 
-AccPedal_Bit6_Return:
+AccStyleCtl_FillIn1_Return:
 	ret
 
-AccPedal_Bit4_Sostenuto:
+AccStyleCtl_Ending1Bit:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_Bit4_Return
+	jr nz, AccStyleCtl_Ending1Bit_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 4, a
-	jr z, AccPedal_Bit4_Off
+	jr z, AccStyleCtl_Ending1Bit_Release
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit4_Off
-	calr AccPedal_SostenutoOn
+	jr z, AccStyleCtl_Ending1Bit_Release
+	calr AccSection_RequestEnding1
 
-AccPedal_Bit4_Off:
+AccStyleCtl_Ending1Bit_Release:
 	bit 4, (0x347f:16)
-	jr z, AccPedal_Bit4_Return
+	jr z, AccStyleCtl_Ending1Bit_Return
 	bit 4, (0x347e:16)
-	jr nz, AccPedal_Bit4_Return
+	jr nz, AccStyleCtl_Ending1Bit_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit4_Return
-	calr AccPedal_SostenutoOff
+	jr z, AccStyleCtl_Ending1Bit_Return
+	calr AccSection_ReleaseEnding1
 
-AccPedal_Bit4_Return:
+AccStyleCtl_Ending1Bit_Return:
 	ret
 
-AccPedal_Bit5_Soft:
+AccStyleCtl_Ending2Bit:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_Bit5_Return
+	jr nz, AccStyleCtl_Ending2Bit_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 5, a
-	jr z, AccPedal_Bit5_Off
+	jr z, AccStyleCtl_Ending2Bit_Release
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit5_Off
-	calr AccPedal_SoftOn
+	jr z, AccStyleCtl_Ending2Bit_Release
+	calr AccSection_RequestEnding2
 
-AccPedal_Bit5_Off:
+AccStyleCtl_Ending2Bit_Release:
 	bit 5, (0x347f:16)
-	jr z, AccPedal_Bit5_Return
+	jr z, AccStyleCtl_Ending2Bit_Return
 	bit 5, (0x347e:16)
-	jr nz, AccPedal_Bit5_Return
+	jr nz, AccStyleCtl_Ending2Bit_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccPedal_Bit5_Return
-	calr AccPedal_SoftOff
+	jr z, AccStyleCtl_Ending2Bit_Return
+	calr AccSection_ReleaseEnding2
 
-AccPedal_Bit5_Return:
+AccStyleCtl_Ending2Bit_Return:
 	ret
 
-AccPedal_Bit3_Damper:
+AccStyleCtl_CountInBit:
 	cp (0x348a:16), 5
-	jr nz, AccPedal_Bit3_Return
+	jr nz, AccStyleCtl_CountInBit_Return
 	ld a, (0x347e:16)
 	and a, (0x347f:16)
 	bit 3, a
-	jr z, AccPedal_Bit3_Off
-	calr AccPedal_DamperOn
+	jr z, AccStyleCtl_CountInBit_Release
+	calr AccSection_RequestCountIn
 
-AccPedal_Bit3_Off:
+AccStyleCtl_CountInBit_Release:
 	bit 3, (0x347f:16)
-	jr z, AccPedal_Bit3_Return
+	jr z, AccStyleCtl_CountInBit_Return
 	bit 3, (0x347e:16)
-	jr nz, AccPedal_Bit3_Return
-	calr AccPedal_DamperOff
+	jr nz, AccStyleCtl_CountInBit_Return
+	calr AccSection_ReleaseCountIn
 
-AccPedal_Bit3_Return:
+AccStyleCtl_CountInBit_Return:
 	ret
 
-AccPedal_StateSync:
+AccStyleCtl_SyncSectionEvents:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_Sync_SendEvents
+	jr z, AccStyleCtl_SyncSectionEvents_SendEvents
 	cp (0x90f8:16), 255
-	jr nz, AccPedal_Sync_DispatchAll
+	jr nz, AccStyleCtl_SyncSectionEvents_DispatchAll
 
-AccPedal_Sync_SendEvents:
-	calr AccPedal_SendEvents
+AccStyleCtl_SyncSectionEvents_SendEvents:
+	calr AccStyleCtl_SendSectionEvents
 
-AccPedal_Sync_DispatchAll:
+AccStyleCtl_SyncSectionEvents_DispatchAll:
 	cp (0x90f8:16), 255
-	jr z, AccPedal_Sync_Return
+	jr z, AccStyleCtl_SyncSectionEvents_Return
 	call AccPedal_SendCtrl1
 	call AccPedal_SendCtrl2
 	call AccPedal_SendCtrl3
 	call AccPedal_SendCtrl4
 
-AccPedal_Sync_Return:
+AccStyleCtl_SyncSectionEvents_Return:
 	ret
 
 AccPedal_SendCtrl1:
@@ -7148,163 +7148,163 @@ AccPedal_MapPadding2:
 	nop
 	nop
 
-AccPedal_SustainOn:
+AccSection_RequestIntro1:
 	bit 2, (0x3470:16)
-	jrl nz, AccPedal_SustainOn_AltRoute
+	jrl nz, AccSection_RequestIntro1_AltRoute
 	or (0x3470:16), 4
 	bit 2, (PANEL_STYLE+5:16)
-	jr nz, AccPedal_SustainOn_SetMask
+	jr nz, AccSection_RequestIntro1_SetMask
 	or (PANEL_STYLE+5:16), 4
 	or (0x3482:16), 4
 	or (0x3480:16), 4
-	jr AccPedal_SustainOn_Update64607
+	jr AccSection_RequestIntro1_Update64607
 
-AccPedal_SustainOn_SetMask:
+AccSection_RequestIntro1_SetMask:
 	cp (0x90f8:16), 127
-	jr nz, AccPedal_SustainOn_Update64607
+	jr nz, AccSection_RequestIntro1_Update64607
 	and (PANEL_STYLE+5:16), 251
 	and (0x3482:16), 251
 	and (0x3480:16), 251
 
-AccPedal_SustainOn_Update64607:
+AccSection_RequestIntro1_Update64607:
 	or (0x3481:16), 4
 	or (0x3483:16), 4
 	bit 3, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SustainOn_Post
+	jr z, AccSection_RequestIntro1_Post
 	and (PANEL_STYLE+5:16), 247
 	and (0x3480:16), 247
 	or (0x3481:16), 8
 	and (0x3482:16), 247
 	or (0x3483:16), 8
 
-AccPedal_SustainOn_Post:
+AccSection_RequestIntro1_Post:
 	bit 2, (PANEL_STYLE+6:16)
-	jr z, AccPedal_SustainOn_Finalize
+	jr z, AccSection_RequestIntro1_Finalize
 	and (PANEL_STYLE+6:16), 251
 	and (0x3484:16), 251
 	or (0x3485:16), 4
 	and (0x3486:16), 251
 	or (0x3487:16), 4
 
-AccPedal_SustainOn_Finalize:
+AccSection_RequestIntro1_Finalize:
 	bit 6, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SustainOn_CheckAlt
+	jr z, AccSection_RequestIntro1_CheckAlt
 	and (PANEL_STYLE+5:16), 191
 
-AccPedal_SustainOn_CheckAlt:
+AccSection_RequestIntro1_CheckAlt:
 	bit 7, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SustainOn_AltRoute
+	jr z, AccSection_RequestIntro1_AltRoute
 	and (PANEL_STYLE+5:16), 127
 
-AccPedal_SustainOn_AltRoute:
+AccSection_RequestIntro1_AltRoute:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_SustainOn_Return
+	jr z, AccSection_RequestIntro1_Return
 	and (0x3470:16), 251
 
-AccPedal_SustainOn_Return:
+AccSection_RequestIntro1_Return:
 	ret
 
-AccPedal_SustainOff_Padding:
+AccSection_ReleaseIntro1_Padding:
 	nop
 	nop
 
-AccPedal_SustainOff:
+AccSection_ReleaseIntro1:
 	bit 2, (0x3470:16)
-	jr z, AccPedal_SustainOff_Clear
+	jr z, AccSection_ReleaseIntro1_Clear
 	and (0x3470:16), 251
 
-AccPedal_SustainOff_Clear:
+AccSection_ReleaseIntro1_Clear:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_SustainOff_Return
+	jr z, AccSection_ReleaseIntro1_Return
 	and (PANEL_STYLE+5:16), 251
 
-AccPedal_SustainOff_Return:
+AccSection_ReleaseIntro1_Return:
 	ret
 
-AccPedal_ExprOn_Padding:
+AccSection_RequestIntro2_Padding:
 	nop
 	nop
 
-AccPedal_ExprOn:
+AccSection_RequestIntro2:
 	bit 0, (0x3470:16)
-	jrl nz, AccPedal_ExprOn_AltRoute
+	jrl nz, AccSection_RequestIntro2_AltRoute
 	or (0x3470:16), 1
 	bit 2, (PANEL_STYLE+6:16)
-	jr nz, AccPedal_ExprOn_SetMask
+	jr nz, AccSection_RequestIntro2_SetMask
 	or (PANEL_STYLE+6:16), 4
 	or (0x3486:16), 4
 	or (0x3484:16), 4
-	jr AccPedal_ExprOn_Update64607
+	jr AccSection_RequestIntro2_Update64607
 
-AccPedal_ExprOn_SetMask:
+AccSection_RequestIntro2_SetMask:
 	cp (0x90f8:16), 127
-	jr nz, AccPedal_ExprOn_Update64607
+	jr nz, AccSection_RequestIntro2_Update64607
 	and (PANEL_STYLE+6:16), 251
 	and (0x3486:16), 251
 	and (0x3484:16), 251
 
-AccPedal_ExprOn_Update64607:
+AccSection_RequestIntro2_Update64607:
 	or (0x3485:16), 4
 	or (0x3487:16), 4
 	bit 3, (PANEL_STYLE+5:16)
-	jr z, AccPedal_ExprOn_Post
+	jr z, AccSection_RequestIntro2_Post
 	and (PANEL_STYLE+5:16), 247
 	and (0x3480:16), 247
 	or (0x3481:16), 8
 	and (0x3482:16), 247
 	or (0x3483:16), 8
 
-AccPedal_ExprOn_Post:
+AccSection_RequestIntro2_Post:
 	bit 2, (PANEL_STYLE+5:16)
-	jr z, AccPedal_ExprOn_Finalize
+	jr z, AccSection_RequestIntro2_Finalize
 	and (PANEL_STYLE+5:16), 251
 	and (0x3480:16), 251
 	or (0x3481:16), 4
 	and (0x3482:16), 251
 	or (0x3483:16), 4
 
-AccPedal_ExprOn_Finalize:
+AccSection_RequestIntro2_Finalize:
 	bit 6, (PANEL_STYLE+5:16)
-	jr z, AccPedal_ExprOn_CheckAlt
+	jr z, AccSection_RequestIntro2_CheckAlt
 	and (PANEL_STYLE+5:16), 191
 
-AccPedal_ExprOn_CheckAlt:
+AccSection_RequestIntro2_CheckAlt:
 	bit 7, (PANEL_STYLE+5:16)
-	jr z, AccPedal_ExprOn_AltRoute
+	jr z, AccSection_RequestIntro2_AltRoute
 	and (PANEL_STYLE+5:16), 127
 
-AccPedal_ExprOn_AltRoute:
+AccSection_RequestIntro2_AltRoute:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_ExprOn_Return
+	jr z, AccSection_RequestIntro2_Return
 	and (0x3470:16), 254
 
-AccPedal_ExprOn_Return:
+AccSection_RequestIntro2_Return:
 	ret
 
-AccPedal_ExprOff_Padding:
+AccSection_ReleaseIntro2_Padding:
 	nop
 	nop
 
-AccPedal_ExprOff:
+AccSection_ReleaseIntro2:
 	bit 0, (0x3470:16)
-	jr z, AccPedal_ExprOff_Clear
+	jr z, AccSection_ReleaseIntro2_Clear
 	and (0x3470:16), 254
 
-AccPedal_ExprOff_Clear:
+AccSection_ReleaseIntro2_Clear:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_ExprOff_Return
+	jr z, AccSection_ReleaseIntro2_Return
 	and (PANEL_STYLE+6:16), 251
 
-AccPedal_ExprOff_Return:
+AccSection_ReleaseIntro2_Return:
 	ret
 
-AccPedal_SostenutoOn_Padding:
+AccSection_RequestEnding1_Padding:
 	nop
 	nop
 
-AccPedal_SostenutoOn:
+AccSection_RequestEnding1:
 	bit 4, (0x3470:16)
-	jrl nz, AccPedal_SostenutoOn_Return
+	jrl nz, AccSection_RequestEnding1_Return
 	or (0x3470:16), 16
 	or (PANEL_STYLE+5:16), 16
 	or (0x3481:16), 16
@@ -7312,72 +7312,72 @@ AccPedal_SostenutoOn:
 	or (0x3483:16), 16
 	or (0x3482:16), 16
 	bit 5, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SostenutoOn_SetMask
+	jr z, AccSection_RequestEnding1_SetMask
 	and (PANEL_STYLE+5:16), 223
 
-AccPedal_SostenutoOn_SetMask:
+AccSection_RequestEnding1_SetMask:
 	bit 6, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SostenutoOn_Update
+	jr z, AccSection_RequestEnding1_Update
 	and (PANEL_STYLE+5:16), 191
 
-AccPedal_SostenutoOn_Update:
+AccSection_RequestEnding1_Update:
 	bit 7, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SostenutoOn_Post
+	jr z, AccSection_RequestEnding1_Post
 	and (PANEL_STYLE+5:16), 127
 
-AccPedal_SostenutoOn_Post:
+AccSection_RequestEnding1_Post:
 	bit 2, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SostenutoOn_Finalize
+	jr z, AccSection_RequestEnding1_Finalize
 	and (PANEL_STYLE+5:16), 251
 	or (0x3483:16), 4
 	and (0x3482:16), 251
 	or (0x3481:16), 4
 	and (0x3480:16), 251
 
-AccPedal_SostenutoOn_Finalize:
+AccSection_RequestEnding1_Finalize:
 	bit 3, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SostenutoOn_CheckAlt
+	jr z, AccSection_RequestEnding1_CheckAlt
 	and (PANEL_STYLE+5:16), 247
 	or (0x3483:16), 8
 	and (0x3482:16), 247
 	or (0x3481:16), 8
 	and (0x3480:16), 247
 
-AccPedal_SostenutoOn_CheckAlt:
+AccSection_RequestEnding1_CheckAlt:
 	bit 2, (PANEL_STYLE+6:16)
-	jr z, AccPedal_SostenutoOn_Return
+	jr z, AccSection_RequestEnding1_Return
 	and (PANEL_STYLE+6:16), 251
 	or (0x3487:16), 4
 	and (0x3486:16), 251
 	or (0x3485:16), 4
 	and (0x3484:16), 251
 
-AccPedal_SostenutoOn_Return:
+AccSection_RequestEnding1_Return:
 	ret
 
-AccPedal_SostenutoOff_Padding:
+AccSection_ReleaseEnding1_Padding:
 	nop
 	nop
 
-AccPedal_SostenutoOff:
+AccSection_ReleaseEnding1:
 	bit 4, (0x3470:16)
-	jr z, AccPedal_SostenutoOff_Return
+	jr z, AccSection_ReleaseEnding1_Return
 	and (0x3470:16), 239
 	or (0x3481:16), 16
 	and (0x3480:16), 239
 	or (0x3483:16), 16
 	and (0x3482:16), 239
 
-AccPedal_SostenutoOff_Return:
+AccSection_ReleaseEnding1_Return:
 	ret
 
-AccPedal_SostenutoOff_Padding2:
+AccSection_ReleaseEnding1_Padding2:
 	nop
 	nop
 
-AccPedal_SoftOn:
+AccSection_RequestEnding2:
 	bit 5, (0x3470:16)
-	jrl nz, AccPedal_SoftOn_Return
+	jrl nz, AccSection_RequestEnding2_Return
 	or (0x3470:16), 32
 	or (PANEL_STYLE+5:16), 32
 	or (0x3481:16), 32
@@ -7385,72 +7385,72 @@ AccPedal_SoftOn:
 	or (0x3483:16), 32
 	or (0x3482:16), 32
 	bit 4, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SoftOn_SetMask
+	jr z, AccSection_RequestEnding2_SetMask
 	and (PANEL_STYLE+5:16), 239
 
-AccPedal_SoftOn_SetMask:
+AccSection_RequestEnding2_SetMask:
 	bit 6, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SoftOn_Update
+	jr z, AccSection_RequestEnding2_Update
 	and (PANEL_STYLE+5:16), 191
 
-AccPedal_SoftOn_Update:
+AccSection_RequestEnding2_Update:
 	bit 7, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SoftOn_Post
+	jr z, AccSection_RequestEnding2_Post
 	and (PANEL_STYLE+5:16), 127
 
-AccPedal_SoftOn_Post:
+AccSection_RequestEnding2_Post:
 	bit 2, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SoftOn_Finalize
+	jr z, AccSection_RequestEnding2_Finalize
 	and (PANEL_STYLE+5:16), 251
 	or (0x3483:16), 4
 	and (0x3482:16), 251
 	or (0x3481:16), 4
 	and (0x3480:16), 251
 
-AccPedal_SoftOn_Finalize:
+AccSection_RequestEnding2_Finalize:
 	bit 3, (PANEL_STYLE+5:16)
-	jr z, AccPedal_SoftOn_CheckAlt
+	jr z, AccSection_RequestEnding2_CheckAlt
 	and (PANEL_STYLE+5:16), 247
 	or (0x3483:16), 8
 	and (0x3482:16), 247
 	or (0x3481:16), 8
 	and (0x3480:16), 247
 
-AccPedal_SoftOn_CheckAlt:
+AccSection_RequestEnding2_CheckAlt:
 	bit 2, (PANEL_STYLE+6:16)
-	jr z, AccPedal_SoftOn_Return
+	jr z, AccSection_RequestEnding2_Return
 	and (PANEL_STYLE+6:16), 251
 	or (0x3487:16), 4
 	and (0x3486:16), 251
 	or (0x3485:16), 4
 	and (0x3484:16), 251
 
-AccPedal_SoftOn_Return:
+AccSection_RequestEnding2_Return:
 	ret
 
-AccPedal_SoftOff_Padding:
+AccSection_ReleaseEnding2_Padding:
 	nop
 	nop
 
-AccPedal_SoftOff:
+AccSection_ReleaseEnding2:
 	bit 5, (0x3470:16)
-	jr z, AccPedal_SoftOff_Return
+	jr z, AccSection_ReleaseEnding2_Return
 	and (0x3470:16), 223
 	or (0x3481:16), 32
 	and (0x3480:16), 223
 	or (0x3483:16), 32
 	and (0x3482:16), 223
 
-AccPedal_SoftOff_Return:
+AccSection_ReleaseEnding2_Return:
 	ret
 
-AccPedal_HoldOn_Padding:
+AccSection_RequestFillIn1_Padding:
 	nop
 	nop
 
-AccPedal_HoldOn:
+AccSection_RequestFillIn1:
 	bit 6, (0x3470:16)
-	jrl nz, AccPedal_HoldOn_Return
+	jrl nz, AccSection_RequestFillIn1_Return
 	or (0x3470:16), 64
 	or (PANEL_STYLE+5:16), 64
 	or (0x3481:16), 64
@@ -7458,159 +7458,159 @@ AccPedal_HoldOn:
 	or (0x3483:16), 64
 	or (0x3482:16), 64
 	bit 4, (PANEL_STYLE+5:16)
-	jr z, AccPedal_HoldOn_SetMask
+	jr z, AccSection_RequestFillIn1_SetMask
 	and (PANEL_STYLE+5:16), 239
 
-AccPedal_HoldOn_SetMask:
+AccSection_RequestFillIn1_SetMask:
 	bit 5, (PANEL_STYLE+5:16)
-	jr z, AccPedal_HoldOn_Update
+	jr z, AccSection_RequestFillIn1_Update
 	and (PANEL_STYLE+5:16), 223
 
-AccPedal_HoldOn_Update:
+AccSection_RequestFillIn1_Update:
 	bit 2, (PANEL_STYLE+5:16)
-	jr z, AccPedal_HoldOn_Post
+	jr z, AccSection_RequestFillIn1_Post
 	and (PANEL_STYLE+5:16), 251
 	or (0x3483:16), 4
 	and (0x3482:16), 251
 	or (0x3481:16), 4
 	and (0x3480:16), 251
 
-AccPedal_HoldOn_Post:
+AccSection_RequestFillIn1_Post:
 	bit 3, (PANEL_STYLE+5:16)
-	jr z, AccPedal_HoldOn_Finalize
+	jr z, AccSection_RequestFillIn1_Finalize
 	and (PANEL_STYLE+5:16), 247
 	or (0x3483:16), 8
 	and (0x3482:16), 247
 	or (0x3481:16), 8
 	and (0x3480:16), 247
 
-AccPedal_HoldOn_Finalize:
+AccSection_RequestFillIn1_Finalize:
 	bit 2, (PANEL_STYLE+6:16)
-	jr z, AccPedal_HoldOn_CheckAlt
+	jr z, AccSection_RequestFillIn1_CheckAlt
 	and (PANEL_STYLE+6:16), 251
 	or (0x3487:16), 4
 	and (0x3486:16), 251
 	or (0x3485:16), 4
 	and (0x3484:16), 251
 
-AccPedal_HoldOn_CheckAlt:
+AccSection_RequestFillIn1_CheckAlt:
 	bit 7, (PANEL_STYLE+5:16)
-	jr z, AccPedal_HoldOn_Return
+	jr z, AccSection_RequestFillIn1_Return
 	and (PANEL_STYLE+5:16), 127
 
-AccPedal_HoldOn_Return:
+AccSection_RequestFillIn1_Return:
 	ret
 
-AccPedal_HoldOff_Padding:
+AccSection_ReleaseFillIn1_Padding:
 	nop
 	nop
 
-AccPedal_HoldOff:
+AccSection_ReleaseFillIn1:
 	bit 6, (0x3470:16)
-	jr z, AccPedal_HoldOff_Return
+	jr z, AccSection_ReleaseFillIn1_Return
 	and (0x3470:16), 191
 	or (0x3481:16), 64
 	and (0x3480:16), 191
 	or (0x3483:16), 64
 	and (0x3482:16), 191
 
-AccPedal_HoldOff_Return:
+AccSection_ReleaseFillIn1_Return:
 	ret
 
-AccPedal_HoldOff_Padding2:
+AccSection_ReleaseFillIn1_Padding2:
 	nop
 	nop
 
-AccPedal_DamperOn:
+AccSection_RequestCountIn:
 	bit 3, (0x3470:16)
-	jrl nz, AccPedal_DamperOn_FinalCheck
+	jrl nz, AccSection_RequestCountIn_FinalCheck
 	or (0x3470:16), 8
 	bit 3, (PANEL_STYLE+5:16)
-	jr nz, AccPedal_DamperOn_SetMask
+	jr nz, AccSection_RequestCountIn_SetMask
 	or (PANEL_STYLE+5:16), 8
 	or (0x3482:16), 8
 	or (0x3480:16), 8
-	jr AccPedal_DamperOn_Update
+	jr AccSection_RequestCountIn_Update
 
-AccPedal_DamperOn_SetMask:
+AccSection_RequestCountIn_SetMask:
 	cp (0x90f8:16), 127
-	jr nz, AccPedal_DamperOn_Update
+	jr nz, AccSection_RequestCountIn_Update
 	and (PANEL_STYLE+5:16), 247
 	and (0x3482:16), 247
 	and (0x3480:16), 247
 
-AccPedal_DamperOn_Update:
+AccSection_RequestCountIn_Update:
 	or (0x3481:16), 8
 	or (0x3483:16), 8
 	bit 2, (PANEL_STYLE+5:16)
-	jr z, AccPedal_DamperOn_Post
+	jr z, AccSection_RequestCountIn_Post
 	and (PANEL_STYLE+5:16), 251
 	and (0x3480:16), 251
 	or (0x3481:16), 4
 	and (0x3482:16), 251
 	or (0x3483:16), 4
 
-AccPedal_DamperOn_Post:
+AccSection_RequestCountIn_Post:
 	bit 2, (PANEL_STYLE+6:16)
-	jr z, AccPedal_DamperOn_Finalize
+	jr z, AccSection_RequestCountIn_Finalize
 	and (PANEL_STYLE+6:16), 251
 	and (0x3484:16), 251
 	or (0x3485:16), 4
 	and (0x3486:16), 251
 	or (0x3487:16), 4
 
-AccPedal_DamperOn_Finalize:
+AccSection_RequestCountIn_Finalize:
 	bit 6, (PANEL_STYLE+5:16)
-	jr z, AccPedal_DamperOn_CheckAlt
+	jr z, AccSection_RequestCountIn_CheckAlt
 	and (PANEL_STYLE+5:16), 191
 
-AccPedal_DamperOn_CheckAlt:
+AccSection_RequestCountIn_CheckAlt:
 	bit 7, (PANEL_STYLE+5:16)
-	jr z, AccPedal_DamperOn_AltRoute
+	jr z, AccSection_RequestCountIn_AltRoute
 	and (PANEL_STYLE+5:16), 127
 
-AccPedal_DamperOn_AltRoute:
+AccSection_RequestCountIn_AltRoute:
 	bit 4, (PANEL_STYLE+5:16)
-	jr z, AccPedal_DamperOn_Apply
+	jr z, AccSection_RequestCountIn_Apply
 	and (PANEL_STYLE+5:16), 239
 
-AccPedal_DamperOn_Apply:
+AccSection_RequestCountIn_Apply:
 	bit 5, (PANEL_STYLE+5:16)
-	jr z, AccPedal_DamperOn_FinalCheck
+	jr z, AccSection_RequestCountIn_FinalCheck
 	and (PANEL_STYLE+5:16), 223
 
-AccPedal_DamperOn_FinalCheck:
+AccSection_RequestCountIn_FinalCheck:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_DamperOn_Return
+	jr z, AccSection_RequestCountIn_Return
 	and (0x3470:16), 247
 
-AccPedal_DamperOn_Return:
+AccSection_RequestCountIn_Return:
 	ret
 
-AccPedal_DamperOff_Padding:
+AccSection_ReleaseCountIn_Padding:
 	nop
 	nop
 
-AccPedal_DamperOff:
+AccSection_ReleaseCountIn:
 	bit 3, (0x3470:16)
-	jr z, AccPedal_DamperOff_Clear
+	jr z, AccSection_ReleaseCountIn_Clear
 	and (0x3470:16), 247
 
-AccPedal_DamperOff_Clear:
+AccSection_ReleaseCountIn_Clear:
 	cp (0x90f8:16), 127
-	jr z, AccPedal_DamperOff_Return
+	jr z, AccSection_ReleaseCountIn_Return
 	and (PANEL_STYLE+5:16), 247
 
-AccPedal_DamperOff_Return:
+AccSection_ReleaseCountIn_Return:
 	ret
 
-AccPedal_DamperOff_Padding2:
+AccSection_ReleaseCountIn_Padding2:
 	nop
 	nop
 
-AccPedal_PortamentoOn:
+AccSection_RequestFillIn2:
 	bit 7, (0x3470:16)
-	jrl nz, AccPedal_PortamentoOn_Return
+	jrl nz, AccSection_RequestFillIn2_Return
 	or (0x3470:16), 128
 	or (PANEL_STYLE+5:16), 128
 	or (0x3481:16), 128
@@ -7618,66 +7618,66 @@ AccPedal_PortamentoOn:
 	or (0x3483:16), 128
 	or (0x3482:16), 128
 	bit 4, (PANEL_STYLE+5:16)
-	jr z, AccPedal_PortamentoOn_SetMask
+	jr z, AccSection_RequestFillIn2_SetMask
 	and (PANEL_STYLE+5:16), 239
 
-AccPedal_PortamentoOn_SetMask:
+AccSection_RequestFillIn2_SetMask:
 	bit 5, (PANEL_STYLE+5:16)
-	jr z, AccPedal_PortamentoOn_Update
+	jr z, AccSection_RequestFillIn2_Update
 	and (PANEL_STYLE+5:16), 223
 
-AccPedal_PortamentoOn_Update:
+AccSection_RequestFillIn2_Update:
 	bit 2, (PANEL_STYLE+5:16)
-	jr z, AccPedal_PortamentoOn_Post
+	jr z, AccSection_RequestFillIn2_Post
 	and (PANEL_STYLE+5:16), 251
 	or (0x3483:16), 4
 	and (0x3482:16), 251
 	or (0x3481:16), 4
 	and (0x3480:16), 251
 
-AccPedal_PortamentoOn_Post:
+AccSection_RequestFillIn2_Post:
 	bit 3, (PANEL_STYLE+5:16)
-	jr z, AccPedal_PortamentoOn_Finalize
+	jr z, AccSection_RequestFillIn2_Finalize
 	and (PANEL_STYLE+5:16), 247
 	or (0x3483:16), 8
 	and (0x3482:16), 247
 	or (0x3481:16), 8
 	and (0x3480:16), 247
 
-AccPedal_PortamentoOn_Finalize:
+AccSection_RequestFillIn2_Finalize:
 	bit 2, (PANEL_STYLE+6:16)
-	jr z, AccPedal_PortamentoOn_CheckAlt
+	jr z, AccSection_RequestFillIn2_CheckAlt
 	and (PANEL_STYLE+6:16), 251
 	or (0x3487:16), 4
 	and (0x3486:16), 251
 	or (0x3485:16), 4
 	and (0x3484:16), 251
 
-AccPedal_PortamentoOn_CheckAlt:
+AccSection_RequestFillIn2_CheckAlt:
 	bit 6, (PANEL_STYLE+5:16)
-	jr z, AccPedal_PortamentoOn_Return
+	jr z, AccSection_RequestFillIn2_Return
 	and (PANEL_STYLE+5:16), 191
 
-AccPedal_PortamentoOn_Return:
+AccSection_RequestFillIn2_Return:
 	ret
 
-AccPedal_PortamentoOff_Padding:
+AccSection_ReleaseFillIn2_Padding:
 	nop
 	nop
 
-AccPedal_PortamentoOff:
+AccSection_ReleaseFillIn2:
 	bit 7, (0x3470:16)
-	jr z, AccPedal_PortamentoOff_Return
+	jr z, AccSection_ReleaseFillIn2_Return
 	and (0x3470:16), 127
 	or (0x3481:16), 128
 	and (0x3480:16), 127
 	or (0x3483:16), 128
 	and (0x3482:16), 127
 
-AccPedal_PortamentoOff_Return:
+AccSection_ReleaseFillIn2_Return:
 	ret
 
-AccPedal_PortamentoOff_Padding2:
+AccSection_ReleaseFillIn2_Padding2:
 	nop
 	nop
 
@@ -7687,7 +7687,7 @@ AccAutoPlay_NoteDispatch:
 	cp (0x7f0b:16), 0
 	jr nz, AccAutoPlay_NoteDispatch_Process
 	pushw wa
-	calr AccPedal_StyleCheck
+	calr AccStyleCtl_IsStartStopBlocked
 	cp a, 1:i3
 	popw wa
 	jr z, AccAutoPlay_NoteDispatch_Process
@@ -7820,7 +7820,7 @@ AccAutoPlay_ZoneTrack:
 	cp (0x7f0b:16), 0
 	jr nz, AccAutoPlay_ZoneTrack_Update
 	pushw wa
-	calr AccPedal_StyleCheck
+	calr AccStyleCtl_IsStartStopBlocked
 	cp a, 1:i3
 	popw wa
 	jr z, AccAutoPlay_ZoneTrack_Update
@@ -8940,7 +8940,7 @@ AccReplay_SavedPedal:
 	ld a, (0x90f8:16)
 	pushw wa
 	ld (0x90f8:16), 0
-	calr AccPedal_EventDispatch
+	calr AccStyleCtl_OnSwitchEvent
 	popw wa
 	ld (0x90f8:16), a
 	popw wa
@@ -8996,7 +8996,7 @@ AccReplay_SendPedal_Dispatch:
 	ld a, (0x90f8:16)
 	pushw wa
 	ld (0x90f8:16), 0
-	calr AccPedal_EventDispatch
+	calr AccStyleCtl_OnSwitchEvent
 	popw wa
 	ld (0x90f8:16), a
 	popw wa
@@ -9034,7 +9034,7 @@ AccReplay_SavedExpression:
 	ld a, (0x90f8:16)
 	pushw wa
 	ld (0x90f8:16), 255
-	calr AccPedal_EventDispatch
+	calr AccStyleCtl_OnSwitchEvent
 	popw wa
 	ld (0x90f8:16), a
 	popw wa
