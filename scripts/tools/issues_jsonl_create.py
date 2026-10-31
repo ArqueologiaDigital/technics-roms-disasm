@@ -10,9 +10,10 @@ WHAT IT DOES
 
   This script reads one or more such files and appends one issue per "new-issues" entry, with a fresh
   id kn5000-<3 base-36 characters> (deterministic: derived from the title's SHA-1, re-drawn on a
-  collision), status "open", priority from the entry or its parent's, issue_type "task", and a
-  dependency {"type": "blocks"} saying the parent depends on it (the shape the file's 17 existing
-  dependencies have).  Existing lines are written back BYTE-IDENTICAL.  An entry whose title already
+  collision), status "open", priority from the entry or its parent's, issue_type "task".  No
+  dependency is added: a split-off issue carries work its parent no longer claims, so it must not
+  block the parent's closure; its description says "Split from <parent>" and the parent's comment
+  (issues_jsonl_update.py) names the new id.  Existing lines are written back BYTE-IDENTICAL.  An entry whose title already
   exists in the file is skipped, so a run cannot be applied twice by accident.  It prints
   "<new id>  <parent>  <title>" per issue, which is what the lane report quotes.
 
@@ -61,22 +62,18 @@ def main():
                 print("skip (exists):", e["title"])
                 continue
             parent = e.get("parent")
+            desc = e.get("description", "")
+            if parent and parent not in desc:
+                desc = f"Split from {parent}. " + desc
             assert parent is None or parent in byid, f"{f}: unknown parent {parent}"
             nid = new_id(e["title"], taken)
             taken.add(nid)
             titles.add(e["title"])
             prio = e.get("priority", objs[byid[parent]].get("priority", 2) if parent else 2)
-            d = {"id": nid, "title": e["title"], "description": e.get("description", ""),
+            d = {"id": nid, "title": e["title"], "description": desc,
                  "status": "open", "priority": prio, "issue_type": e.get("issue_type", "task"),
                  "created_at": now, "created_by": a.author, "updated_at": now}
             out_new.append(d)
-            if parent:
-                p = objs[byid[parent]]
-                deps = p.get("dependencies") or []
-                deps.append({"issue_id": parent, "depends_on_id": nid, "type": "blocks",
-                             "created_at": now, "created_by": a.author})
-                p["dependencies"] = deps
-                lines[byid[parent]] = json.dumps(p, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
             print(f"{nid}  {parent or '-'}  {e['title']}")
     for d in out_new:
         lines.append(json.dumps(d, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
