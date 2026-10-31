@@ -3168,8 +3168,8 @@ HDAE5000_LanguageTextReturn:
 
 ; ---------------------------------------------------------------------------
 ; Bitmap resource descriptor of the boot splash screen (it allocates nothing:
-; a constant lookup, the fifth of five alike -- Logo, DriveMech, FilePanel,
-; Icon and this one).  320 x 240 at 8 bpp is 76,800 bytes, which agrees with
+; a constant lookup, the fourth of four alike -- Logo, DriveMech, Icon and this
+; one; v1.x has no FilePanel picture).  320 x 240 at 8 bpp is 76,800 bytes, which agrees with
 ; the two 0x9600-byte VRAM copies in HDAE5000_Boot_Init and with the extent
 ; of HDAE5000_Bitmap_BootSplash.
 ; In:  XBC = EVT_GET_BITMAP_DATA / _WIDTH / _HEIGHT
@@ -3241,8 +3241,8 @@ HDAE5000_Get_Init_Flag:
 	; (EQU→inline label) HDAE5000_RECORD_COUNT = 0x29D97E
 	; (EQU→inline label) HDAE5000_RECORD_TABLE = 0x29C0AA
 					; Records: SelectList, DbMemoCl, TtlScreenR, AcHddNamingWindow,
-					; IvHddNaming, HDTitleMenu, TtlScreenR2, TtlScreenR3,
-					; AcWindowPage1, IvScreenR2, AcLanguageText1, LyricBox, FDFileSelect
+					; IvHddNaming, HDTitleMenu, TtlScreenR2,
+					; AcWindowPage1, IvScreenR2, AcLanguageText1
 ; The RAM tables registered by HDAE5000_Handler_Registration (and the other image labels the
 ; code reaches) are HDAE5000_RAM_<label>, defined at the end of hdae5000_init_data.s from the
 ; labels themselves.  (The .equs that used to stand here, HDAE5000_RAM_DATA_A_SIZE ...
@@ -4958,7 +4958,7 @@ HDAE5000_Song_IsUsed:
 
 ; ---------------------------------------------------------------------------
 ; The mask of the parts a song holds: bit k for part k (LSW PMT SQT CMP TM MSP
-; RCM MD TLX) whose first-cluster slot is not 0xFFFFFFFF.
+; RCM MD) whose first-cluster slot is not 0xFFFFFFFF.
 ; In:  WA = directory, BC = song
 ; Out: HL = the mask, or 0xFFFF when the song holds no part.
 ; ---------------------------------------------------------------------------
@@ -7111,7 +7111,7 @@ HDAE5000_SaveSong_Md:
 ; Does file data carry a part's signature?  HDAE5000_PartSignatureTable has
 ; 8-byte records {long string; u16 offset; u16 length} indexed by part: "HK"
 ; at +4 (LSW), "HK" (PMT), 01 08 at +5 (SQT), "H\0K" (CMP), "KN5000 SOUND RAM"
-; (TM), "H\0K" (MSP, RCM), "HK" (MD), "TLhd" (TLX); compared with
+; (TM), "H\0K" (MSP, RCM), "HK" (MD); compared with
 ; HDAE5000_StrNCmp.  Caller: HDAE5000_FdSong_CheckFiles.
 ; In:  WA = part, XBC = the file's first bytes
 ; Out: HL = 0 when it matches, else 0xFFFF.
@@ -9797,7 +9797,7 @@ HDAE5000_DeleteSongPart_Md:
 ; ---------------------------------------------------------------------------
 ; Do the parts of a mask fit on the disk?  Sums their sizes as the main CPU
 ; reports them (HamaFn_GetResouceInfo per area, HamaFn_SeqSavePre,
-; _cmp_sv_mae, _msp_sv_mae; TM counts 0x72AA bytes, TLX 0x5000), converts each
+; _cmp_sv_mae, _msp_sv_mae; TM counts 0x72AA bytes; parts 0-7), converts each
 ; to clusters (HDAE5000_HD_ClusterCount) and compares the total with the free
 ; clusters (HDAE5000_HD_CountFreeClusters_Status).
 ; In:  WA = part mask
@@ -11033,8 +11033,8 @@ HDAE5000_PPORT_Svc12_WriteFlsBlockToHd_Join:
 ; address; long size; byte present} out of HamaFn_GetResouceInfo(part) --
 ; with the sizes of parts 3, 5 and 7 taken from HamaFn_SeqSavePre (added),
 ; HamaFn_cmp_sv_mae and HamaFn_msp_sv_mae, 0x72AA for part 6, 0xAD000 for
-; part 8, and HDAE5000_TlxPart_Describe for the lyrics (+0xBF).  When
-; HDAE5000_HD_GetSongInfo finds the song, the mask, both names and the nine
+; part 8 (v1.x has no lyrics part, so no TLX description).  When
+; HDAE5000_HD_GetSongInfo finds the song, the mask, both names and the eight
 ; present bytes come from it.
 ; In:  WA = directory, BC = song
 ; Out: HL = 0 when the song exists, 1 when it does not.  XIZ preserved.
@@ -15142,8 +15142,9 @@ HDAE5000_HD_Init:	; (1902 bytes)
 	;   7  HDAE5000_HD_CountFreeClusters failed
 	;   8  HDAE5000_HD_ReadTables failed
 	; Between those: HDAE5000_HD_ParseIdentify (via HDAE5000_ATA_IdentifyDevice's
-	; data), six setting bytes copied from sector 1's image (0x2006A0) to
-	; 0x229DA9..AE, blank tables (HDAE5000_HD_InitTables).  Always ends with
+	; data), three setting bytes copied from sector 1's image
+	; (HDAE5000_RAM_HdSettingsSector+120) to QuickLoadMode, LoadByNumberMode,
+	; JumpAfterLoad, blank tables (HDAE5000_HD_InitTables).  Always ends with
 	; HDAE5000_ATA_Standby.  0 in 0x229D92 = drive ready and formatted.
 	; RAM test: fill/verify 32KB at 0x230F1C-0x238F1C with 0x5A5A pattern
 ; LRT: 0x2971B7 (1902 bytes)
@@ -17121,8 +17122,8 @@ HDAE5000_HD_Format:	; (cross-reference from Display_Init)
 ; 3. Build the settings sector (HDAE5000_HD_BuildSettingsSector) and write
 ;    it to sector 1 (error 5).
 ; 4. Remount as HDAE5000_HD_Init does: soft reset (11), IDENTIFY (6), read
-;    sector 1 (7), signature (8), its six setting bytes to QuickLoadMode ..
-;    LyricBackColor, free clusters (9), tables (10).
+;    sector 1 (7), signature (8), its three setting bytes to QuickLoadMode,
+;    LoadByNumberMode, JumpAfterLoad, free clusters (9), tables (10).
 ; Always ends with HDAE5000_ATA_Standby.  All registers kept.
 ; RAM: HDAE5000_RAM_HdFormatSector, _HdFormatCount, _HdSectorBuffer,
 ;      _HdVerifyBuffer, _HdSettingsSector
@@ -17303,8 +17304,8 @@ HDAE5000_HD_ZeroSector_Loop:
 
 ; ---------------------------------------------------------------------------
 ; Build a fresh sector-1 image in HDAE5000_RAM_HdSettingsSector: zeroed, the
-; signature AA55AA55 F4F1F2F3, the 112-byte HDAE5000_Version_Info, the six
-; setting bytes = 1 (also stored to QuickLoadMode .. LyricBackColor), then
+; signature AA55AA55 F4F1F2F3, the 112-byte HDAE5000_Version_Info, the three
+; setting bytes = 1 (also stored to QuickLoadMode, LoadByNumberMode, JumpAfterLoad), then
 ; 0xFFFFFFFF.  The format's counterpart of HDAE5000_HD_SaveSettings, which
 ; writes the current settings instead of 1s.
 ; Out: clobbers XWA, XIX, XIY, XIZ.
@@ -19095,8 +19096,8 @@ HDAE5000_DecimalDigits:
 	.ascii	"0123456789 "
 
 ; ---------------------------------------------------------------------------
-; Read sector 1 into HDAE5000_RAM_HdSettingsSector and restore the six setting
-; bytes it carries at +120 into QuickLoadMode .. LyricBackColor -- the
+; Read sector 1 into HDAE5000_RAM_HdSettingsSector and restore the three setting
+; bytes it carries at +120 into QuickLoadMode, LoadByNumberMode, JumpAfterLoad -- the
 ; mirror image of HDAE5000_HD_SaveSettings.  Only caller:
 ; HDAE5000_HD_RestoreSettings, itself unreachable.  XIZ preserved.
 ; ---------------------------------------------------------------------------
@@ -19120,7 +19121,7 @@ HDAE5000_HD_LoadSettings:
 ; Build and write the signature sector: in HDAE5000_RAM_HdSettingsSector,
 ; after HDAE5000_HD_ZeroSector, the longs 0xAA55AA55 and 0xF4F1F2F3 (what
 ; HDAE5000_HD_CheckSignature looks for), the 112-byte HDAE5000_Version_Info,
-; the six setting bytes QuickLoadMode .. LyricBackColor at +120, a
+; the three setting bytes QuickLoadMode, LoadByNumberMode, JumpAfterLoad at +120, a
 ; 0xFFFFFFFF long, then HDAE5000_ATA_WriteSector(1).
 ; ---------------------------------------------------------------------------
 HDAE5000_HD_SaveSettings:

@@ -1059,10 +1059,13 @@ WidgetName_PtrBlock_B2:	.incbin "includes/generated/naka_widget_names_charmap.bi
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1313 of its 1408
 ; [nakarest] bytes are here or later).
+	.long	Str_InitializeUser14
+	.long	Str_InitializeUser15
+	.long	Str_InitializeUser16
+	.long	Str_InitializeUser17
+	.long	Str_InitializeUser18
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x4a, 0x17, 0xeb, 0x00, 0x38, 0x17, 0xeb, 0x00
-	.byte	0x26, 0x17, 0xeb, 0x00, 0x14, 0x17, 0xeb, 0x00
-	.byte	0x02, 0x17, 0xeb, 0x00, 0xf0, 0x16
+	.byte	0xf0, 0x16
 ; port: v7's label WidgetName_PtrBlock_D is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] WidgetName_PtrBlock_E  +0x2c08..+0x2c2c (0xeb0078, 36 B)
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
@@ -1148,14 +1151,20 @@ WidgetName_PtrBlock_O:	.incbin "includes/generated/naka_widget_names_charmap.bin
 ; Root_FunctionNameTable_400_EndName -- 2 x char: "" + 0xFF fill, end-of-table name of Function name slot 0x400
 ; Word [352] of WidgetName_InitPtrTable, one past the 352 names registered by RegObjTabl ... 0x160, WidgetName_InitPtrTable, 0x400
 ; (InitializeRoot). The note's 'SoundEffect_Dispatch_Table' reader is stale: the word lies in the WidgetName_PtrBlock_O slice.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2c, 0x05, 0xeb, 0x00, 0x14, 0x05, 0xeb, 0x00
-	.byte	0x04, 0x05, 0xeb, 0x00, 0xfc, 0x04, 0xeb, 0x00
-	.byte	0xf6, 0x04, 0xeb, 0x00, 0xe6, 0x04, 0xeb, 0x00
-	.byte	0xd8, 0x04, 0xeb, 0x00, 0xca, 0x04, 0xeb, 0x00
-	.byte	0xbc, 0x04, 0xeb, 0x00, 0xb2, 0x04, 0xeb, 0x00
-	.byte	0x9a, 0x04, 0xeb, 0x00, 0x8a, 0x04, 0xeb, 0x00
-	.byte	0x7c, 0x04, 0xeb, 0x00, 0x7a, 0x04, 0xeb, 0x00
+	.long	NakaInst_ApDeliveryEvent
+	.long	NakaInst_VwUserBitmapByNameProc
+	.long	NakaInst_DrawBitmapFile
+	.long	NakaInst_LcdOff
+	.long	NakaInst_LcdOn
+	.long	NakaInst_RefreshSwEvent
+	.long	NakaInst_InitDrawTask
+	.long	NakaInst_SetRootEvent
+	.long	NakaInst_SetRootParam
+	.long	NakaInst_DrawFunc
+	.long	NakaInst_MainDeleteSpecificEvent
+	.long	NakaInst_MainDeleteEvent
+	.long	NakaInst_DrawBitmapSP2
+	.long	Root_FunctionNameTable_400_EndName
 Root_FunctionNameTable_400_EndName:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x3106, 0x2
 ; [nakarest] NakaInst_DrawBitmapSP2  +0x3108..+0x3116 (0xeb0578, 14 B)
 ; [nakarest] name string, entry 351 of Function slot 0x400 (table 0xeafff2, 352 entries,

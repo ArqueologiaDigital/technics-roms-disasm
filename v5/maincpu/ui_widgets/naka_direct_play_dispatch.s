@@ -285,10 +285,7 @@ MtName_PtrTable:
 	.byte 0x00			; padding
 	.byte 0x00			; padding
 MtName_GetComporserName:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x4d, 0x54, 0x5f, 0x47, 0x65, 0x74, 0x43, 0x6f
-	.byte	0x6d, 0x70, 0x6f, 0x72, 0x73, 0x65, 0x72, 0x4e
-	.byte	0x61, 0x6d, 0x65, 0x00
+	.asciz	"MT_GetComporserName"
 MtName_GetLyricsSongName:	aligned_string "MT_GetLyricsSongName"
 MtName_LyricsCharaReq:		aligned_string "MT_LyricsCharaReq"
 MtName_GetToggleSw:		aligned_string "MT_GetToggleSw"
@@ -304,10 +301,7 @@ MtName_GetDiskFileName:		aligned_string "MT_GetDiskFileName"
 MtName_GetCurSongName:		aligned_string "MT_GetCurSongName"
 ; port: v6's label MtName_TrackMidiCall is not in v5 -- no v5 bytes correspond to what it named
 MtName_DirectPlayMute:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x4d, 0x54, 0x5f, 0x44, 0x69, 0x72, 0x65, 0x63
-	.byte	0x74, 0x50, 0x6c, 0x61, 0x79, 0x4d, 0x75, 0x74
-	.byte	0x65, 0x00
+	.asciz	"MT_DirectPlayMute"
 MtName_AmdCall:			aligned_string "MT_AmdCall"
 MtName_TrAsPageDec:		aligned_string "MT_TrAsPageDec"
 MtName_TrAsPageInc:		aligned_string "MT_TrAsPageInc"

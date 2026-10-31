@@ -45,7 +45,10 @@ never edited by hand.  Regenerate v6 first (its README), then:
         PerfMode_ParamHandler_4_Data SndDispatch_Handler_1_Data
     sed -i -f scripts/renaming/rename_v5_langcheck_shift.sed v5/maincpu/sequencer/sequencer_ui.s \
         v5/maincpu/port_dropped_labels.txt
+    python3 scripts/converters/port_todo_typed.py --tree v5
+    python3 scripts/tools/port_fix_label_shifts.py --tree v5
     python3 scripts/tools/port_symbolize_pointers.py relink --tree v5
+    python3 notes/kn5000-ports-probes/ported_label_probe.py --tree v5        # must print MISMATCH rows: 0
 
 v5 inherits v6's hand edits through the port (`FIRMWARE_VERSION` is `.byte FW_VERSION_BYTE`,
 the porter moves its default to 0x05; `AccTone_JumpTableData` is already code), so
@@ -55,8 +58,17 @@ the porter moves its default to 0x05; `AccTone_JumpTableData` is already code), 
 as numbers: three code-pointer tables the porter left as `; TODO(port)` `.byte` rows (`rows`), and
 the C link scripts' v7 addresses, which made `apply_c_divergence.py` patch this tree's pointers in
 as raw bytes (`relink`: each script gets this tree's own label addresses, and the divergence json is
-recomputed).  `style_ui/ctlonly_link.ld` is left as it is: its four Scoop_* names are not at the
-addresses the C data holds in v7 either, so relinking it would add patched bytes.
+recomputed).  Since 2026-10-31 only the bytes some `.incbin` of the tree puts in the image count
+(the rest are don't-care), so `style_ui/ctlonly_link.ld` relinks too: its handler words are not in
+the image (the tree spells Scoop_StaticOpHandlerTable as `.long` lines), and its four Scoop_* lines
+had kept v10's addresses.  `notes/kn5000-ports-probes/link_script_names.py` checks every line.
+
+`port_todo_typed.py` (2026-10-31) writes the pointers (`.long Label`) and NUL-terminated text
+(`.asciz`, `aligned_string`) inside the `; TODO(port)` rows; the bytes nothing explains stay rows.
+`port_fix_label_shifts.py` (2026-10-31) puts the names the port left on the wrong thing back
+(the firmware's registration and name tables, its pointer tables, the bodies that name a label;
+its HAND lists are the edits read by hand), and `ported_label_probe.py` shows 0 MISMATCH rows
+afterwards: `notes/kn5000-ports-2026-10-31/README.md`.
 
 The sed step (2026-10-31; once, before `relink`) moves the Yoko ApFunction language checks'
 labels back one procedure: the port had put each of v6's names (PartSelLangCheck ...

@@ -917,6 +917,10 @@ rebuilt_ROMs/kn5000_v8_program.llvm.rom: rebuilt_ROMs/kn5000_v8_program.llvm.elf
 v7-extract-bins: $(V7_C_DATA_BINS)
 	python3 scripts/build/apply_v7_c_divergence.py
 
+# the compiled bins before the json patches them (scripts/tools/port_symbolize_pointers.py relink --tree v7)
+v7-c-bins-raw: $(V7_C_DATA_BINS)
+v7-c-bins: v7-extract-bins
+
 rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v7/maincpu -o $@ v7/maincpu/kn5000_v7_program.s

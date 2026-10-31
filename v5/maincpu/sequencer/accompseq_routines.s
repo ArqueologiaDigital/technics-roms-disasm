@@ -562,7 +562,7 @@ AccompSeq_InlineCodeBlock:
 	inc	1, xiy
 	ld	a, (xiy)
 	cp	a, 135
-	jr	nz, AccompSeq_ResetCounters_Return
+	jr	nz, AccompSeq_InlineCodeBlock_Return
 	xor	xhl, xhl
 	ld	hl, (xhl+3)
 	ld	(32138:16), hl
@@ -570,7 +570,7 @@ AccompSeq_InlineCodeBlock:
 	calr	AccompSeq_VRAMHelperData
 	pop	xhl
 	ld	iy, 6:i3
-AccompSeq_ResetCounters_Return:
+AccompSeq_InlineCodeBlock_Return:
 	ret
 AccompSeq_ProcessNoteOn6:
 	ld	a, (0x7d9c:16)
@@ -931,14 +931,14 @@ AccompSeq_LargeCodeBlock1:
 	ld	(xhl+3), a
 	ld	a, (32160:16)
 	ld	(xhl+4), a
-	calr	AccompSeq_ManualMidi_ClearFlags_Code_Helper
+	calr	AccompSeq_PortaFadeOut_Helper
 	ret
-AccompSeq_ManualMidi_ClearFlags_Code_Helper:
+AccompSeq_PortaFadeOut_Helper:
 	bit	7, e
-	jr	z, AccompSeq_ManualMidi_ClearFlags_Code_Return
+	jr	z, AccompSeq_PortaFadeOut_Return
 	or	d, 16
 	and	e, 127
-AccompSeq_ManualMidi_ClearFlags_Code_Return:
+AccompSeq_PortaFadeOut_Return:
 	ret
 	ld	a, 159:opc
 	ld	w, 127:opc
@@ -1460,9 +1460,9 @@ AccompSeq_WriteMidiToBuffer:
 AccompSeq_WriteMidi_CodeBlock:
 	inc	1, iy
 	cp	iy, bc
-	jr	ule, AccompSeq_WriteMidiToBuffer_Return
+	jr	ule, AccompSeq_WriteMidi_CodeBlock_Return
 	ld	iy, (xhl+0:8)
-AccompSeq_WriteMidiToBuffer_Return:
+AccompSeq_WriteMidi_CodeBlock_Return:
 	ret
 AccompSeq_ProcessAfterNote_Helper:
 	ld a, (SWBTWR_PAYLOAD_2:16)

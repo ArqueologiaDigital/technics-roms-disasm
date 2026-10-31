@@ -24,7 +24,11 @@ TWO EDITS
           changed script are recompiled (make TREE-c-bins-raw), and their divergence json entries are
           recomputed against the bytes the image needs (the bins as the build patched them before),
           with the porter's rule (port_maincpu_version.py c_divergence): an aligned word that is a ROM
-          address on both sides is a pointer relocation, any other differing byte a raw byte.  The
+          address on both sides is a pointer relocation, any other differing byte a raw byte.  Only the
+          bytes some `.incbin "includes/generated/<bin>", off, len` of the tree puts in the image count;
+          the rest are don't-care and take the relinked bin's value (2026-10-31: ctlonly.c's 36 handler
+          words are such bytes, the tree spells Scoop_StaticOpHandlerTable as `.long` lines, so its
+          link script could not be relinked before).  The
           scripts are taken one at a time, and one whose bins would carry more patched entries
           afterwards is put back as it was and reported (REFUSED).  A script whose bins would carry
           more patched bytes afterwards is put back (none did on 2026-10-31).
@@ -34,10 +38,12 @@ RUN (repository root, a built tree: rebuilt_ROMs/kn5000_TREE_program.llvm.elf mu
     python3 scripts/tools/port_symbolize_pointers.py rows --tree v6 InitializeMurai_PtrTable_5 \
         PerfMode_ParamHandler_4_Data SndDispatch_Handler_1_Data
     python3 scripts/tools/port_symbolize_pointers.py relink --tree v6
-    (and the same with --tree v5).  Each is skipped where the tree has the edit already, so both can
+    (and the same with --tree v5; relink also takes --tree v7, whose C link scripts were v10's copies
+    in places: v7-c-bins-raw / v7-c-bins in the Makefile).  Each is skipped where the tree has the edit already, so both can
     run again on a regenerated tree; the tree READMEs list them after port_hand_edits.py.
 """
 import argparse
+import collections
 import glob
 import json
 import os
@@ -181,8 +187,19 @@ def relink(tree):
     old_json = open(jpath).read()
     cdiv = json.loads(old_json)
     bins = sorted(glob.glob(os.path.join(gen, "*.bin")))
-    # the bytes the image needs: each bin as the build left it (patched where the json says so)
-    needed = {}
+    # the bytes the image needs: each bin as the build left it (patched where the json says so), but
+    # only where a `.incbin "includes/generated/<bin>", off, len` of the tree puts them in the image;
+    # a byte no .incbin takes is don't-care (ctlonly.c's 36 handler words: the tree spells
+    # Scoop_StaticOpHandlerTable as `.long` lines), so it takes whatever the relinked bin holds
+    needed, used = {}, collections.defaultdict(set)
+    inc = re.compile(r'\.incbin\s+"includes/generated/([^"]+)"\s*(?:,\s*(0x[0-9A-Fa-f]+|\d+)\s*(?:,\s*(0x[0-9A-Fa-f]+|\d+))?)?')
+    for f in tree_files(tree):
+        for m in inc.finditer(rd(f)):
+            b = m.group(1)
+            p_ = os.path.join(gen, b)
+            off = int(m.group(2), 0) if m.group(2) else 0
+            ln = int(m.group(3), 0) if m.group(3) else (os.path.getsize(p_) - off if os.path.exists(p_) else 0)
+            used[b].update(range(off, off + ln))
     for p in bins:
         b = os.path.basename(p)
         d = open(p, "rb").read()
@@ -225,7 +242,12 @@ def relink(tree):
         new = {}
         for b in rebuilt:
             e = cdiv.get(b, dict(size=len(needed[b]), reloc=[], raw={}))
-            new[b] = (debt(e), divergence(open(os.path.join(gen, b), "rb").read(), needed[b], e["size"]))
+            raw1 = open(os.path.join(gen, b), "rb").read()
+            need = bytearray(needed[b])
+            for o in range(min(len(need), len(raw1))):
+                if o not in used[b]:
+                    need[o] = raw1[o]
+            new[b] = (debt(e), divergence(raw1, bytes(need), e["size"]))
         rel = os.path.relpath(p, ROOT)
         if any(debt(d) > o for o, d in new.values()):
             wr(p, s)                       # this script's names would make a bin worse: keep it as it was
@@ -261,8 +283,8 @@ def main():
     ap.add_argument("--tree", required=True, help="v6 or v5")
     ap.add_argument("labels", nargs="*")
     a = ap.parse_args()
-    if a.tree not in ("v6", "v5"):
-        sys.exit("--tree v6 or v5")
+    if a.tree not in ("v6", "v5") and not (a.tree == "v7" and a.what == "relink"):
+        sys.exit("--tree v6 or v5 (relink also v7, whose json apply_v7_c_divergence.py applies)")
     rows(a.tree, a.labels) if a.what == "rows" else relink(a.tree)
 
 

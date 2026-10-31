@@ -1266,10 +1266,10 @@ FDC_DRIVE_STATUS:
 	ret
 FDC_DRIVE_STATUS_Skip8:
 	cpw	(FDC_COMMAND_INDEX:16), 0
-	jr	z, FDC_DRIVE_STATUS_Skip
+	jr	z, FDC_DRIVE_STATUS_Skip9
 	ld	hl, 0:i3
 	ret
-FDC_DRIVE_STATUS_Skip:
+FDC_DRIVE_STATUS_Skip9:
 	ldw HL, 0xffff
 	ret
 FDC_PRE_OP_CHECK:
@@ -1497,10 +1497,10 @@ FDC_CMD_EXEC_Join:
 	cp	(0x89b4:16), 2
 	jr	nz, FDC_CMD_EXEC_Skip5
 	ldw	(0x8966:16), 1024
-	jr	FDC_CMD_EXEC_Join3
+	jr	FDC_CMD_EXEC_Join7
 FDC_CMD_EXEC_Skip5:
 	ldw	(0x8966:16), 512
-FDC_CMD_EXEC_Join3:
+FDC_CMD_EXEC_Join7:
 	ldmm16	0x8a5a, 0x8992
 	ld	iz, 1:i3
 FDC_CMD_EXEC_Join2:
@@ -1531,11 +1531,11 @@ FDC_CMD_EXEC_Skip6:
 FDC_CMD_EXEC_Skip7:
 	calr	FDC_DRIVE_DETECT
 	cp	hl, 0xffff
-	jr	z, FDC_CMD_EXEC_Join6
+	jr	z, FDC_CMD_EXEC_Join3
 	calr	FDC_CONFIG_VERIFY
 	ld	(0x8a4c:16), 255
 	calr	FDC_CmdSeek
-FDC_CMD_EXEC_Join6:
+FDC_CMD_EXEC_Join3:
 	ldmm16	0x8992, 0x8a5a
 	dec	1, (0x89b0:16)
 	ldb_d8	a, (0x89b0)

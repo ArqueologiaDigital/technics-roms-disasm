@@ -1375,7 +1375,7 @@ SeqData_ReadFieldByIndex_CaseTable:
 	.short	SeqData_ReadFieldByIndex_Case14 - SeqData_FieldDispatch
 	.short	SeqData_ReadFieldByIndex_Case15 - SeqData_FieldDispatch
 ArpQueue_ComputeAndEnqueue_Data:	.incbin "includes/generated/sound_config_lookup.bin", 0x17F6, 0x2
-; 39 x u32 routine pointers; SeqChan_StepCmd_Field6_Data + 29 (0xFD773E): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
+; 39 x u32 routine pointers; SeqChan_XferStep_StyleImageBlock1 + 29 (0xFD773E): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
 ; Extent: to the next object's base (loaded by its own reader).
 SeqChan_CommandHandlers:
 	.set SeqChan_CommandDispatch_Table, SeqChan_CommandHandlers
@@ -1428,19 +1428,19 @@ SeqChan_StepCmdHandlers:
 	.long SeqChan_StepCmd_Field4to5
 	.long SeqChan_StepCmd_Field5to6
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field6_Data
+	.long SeqChan_XferStep_StyleImageBlock1
 	.long SeqChan_StepCmd_Field8to9
 	.long SeqChan_StepCmd_Field9to10
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field11_Data
-	.long SeqChan_StepCmd_Field12_Data
+	.long SeqChan_XferStep_CurrentSong
+	.long SeqChan_XferStep_SongSlots
 	.long SeqChan_StepCmd_Field13Write
 	.long SeqChan_ProcessStepCmd
 	.long SeqChan_RetStub_A
 	.long SeqChan_RetStub_B
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field10_Data
-	.long SeqChan_StepCmd_Field13_Data
+	.long SeqChan_XferStep_AccompBlock1
+	.long SeqChan_XferStep_AccompBlock2
 	.long SeqChan_StepCmd_Field20to21
 	.long SeqChan_ProcessStepCmd
 ; 22 x u32 routine pointers; SeqChan_DispatchByType_Data (0xFD78E1): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
@@ -1573,7 +1573,7 @@ SeqData_Handlers:
 	.long MidiPkt_DispatchData_Chan2
 	.long MidiPkt_DispatchData_Chan5
 	.long MidiPkt_DispatchData_Chan6
-	.long MidiPkt_SysExValidator_Data
+	.long SysEx_OnGmSystemOn
 	.long MidiPkt_SysExProcessor_Data
 	.long MidiPkt_SysExBulkTransfer_Data
 ; 4-byte template: SeqData_DispatchLoop_Done (0xFD862C) copies it into its frame (`ld xiy,<this>; ld xix,xsp; ldi85; ldiw` -- 3 bytes).
@@ -5663,17 +5663,18 @@ SwbtBank1_ListenerTable:
 	.long SwbtB1_Code46_Listeners	; 0x46
 	.long SwbtB1_Code47_Listeners	; 0x47
 	.long SwbtB1_Code48_Listeners	; 0x48
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x9b, 0x7a, 0xee, 0x00
+	.long	SwbtB1_Code49_Listeners
 	.long	UIState_DefaultConfig_A	; 0x50
 	.long	UIState_DefaultConfig_A	; 0x51
 	.long	UIState_DefaultConfig_A	; 0x52
 	.long	UIState_DefaultConfig_A	; 0x53
 	.long	UIState_DefaultConfig_A	; 0x54
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x9f, 0x7a, 0xee, 0x00
-	.byte	0xa3, 0x7a, 0xee, 0x00, 0xa7, 0x7a, 0xee, 0x00
-	.byte	0xab, 0x7a, 0xee, 0x00, 0xaf, 0x7a, 0xee, 0x00
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_Code50_Listeners
+	.long	SwbtB1_Code51_Listeners
+	.long	SwbtB1_Code52_Listeners
+	.long	SwbtB1_Code53_Listeners
+	.long	SwbtB1_Code54_Listeners
 	.long	UIState_DefaultConfig_A	; 0x60
 	.long	UIState_DefaultConfig_A	; 0x61
 	.long	UIState_DefaultConfig_A	; 0x62
@@ -5692,8 +5693,7 @@ SwbtBank1_ListenerTable:
 	.long	SwbtB1_Code64_Listeners	; 0xB5
 	.long	SwbtB1_Code65_Listeners	; 0xB6
 	.long	SwbtB1_Code66_Listeners	; 0xB7
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8b, 0x7b, 0xee, 0x00
+	.long	UIState_DefaultConfig_A
 	.long	SwbtB1_Code68_Listeners	; 0xB8
 	.long	SwbtB1_Code69_Listeners	; 0xB9
 	.long	SwbtB1_Code6A_Listeners	; 0xBA
@@ -5701,50 +5701,87 @@ SwbtBank1_ListenerTable:
 	.long	SwbtB1_Code6C_Listeners	; 0xBC
 	.long	SwbtB1_Code6D_Listeners	; 0xBD
 	.long	SwbtB1_Code6E_Listeners	; 0xBE
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0xeb, 0x7a, 0xee, 0x00
-	.byte	0xef, 0x7a, 0xee, 0x00, 0xf3, 0x7a, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0xf7, 0x7a, 0xee, 0x00
-	.byte	0xfb, 0x7a, 0xee, 0x00, 0xff, 0x7a, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x03, 0x7b, 0xee, 0x00
-	.byte	0x07, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x0b, 0x7b, 0xee, 0x00
-	.byte	0x0f, 0x7b, 0xee, 0x00, 0x17, 0x7b, 0xee, 0x00
-	.byte	0x1b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x1f, 0x7b, 0xee, 0x00
-	.byte	0x2f, 0x7b, 0xee, 0x00, 0x33, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x37, 0x7b, 0xee, 0x00
-	.byte	0x3f, 0x7b, 0xee, 0x00, 0x43, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x47, 0x7b, 0xee, 0x00
-	.byte	0x4b, 0x7b, 0xee, 0x00, 0x4f, 0x7b, 0xee, 0x00
-	.byte	0x8b, 0x7b, 0xee, 0x00, 0x53, 0x7b, 0xee, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x57, 0x7b, 0xee, 0x00, 0x5b, 0x7b, 0xee, 0x00
-	.byte	0x5f, 0x7b, 0xee, 0x00, 0x63, 0x7b, 0xee, 0x00
-	.byte	0x67, 0x7b, 0xee, 0x00, 0x6b, 0x7b, 0xee, 0x00
-	.byte	0x6f, 0x7b, 0xee, 0x00, 0x73, 0x7b, 0xee, 0x00
-	.byte	0x77, 0x7b, 0xee, 0x00, 0x7b, 0x7b, 0xee, 0x00
-	.byte	0x7f, 0x7b, 0xee, 0x00, 0x83, 0x7b, 0xee, 0x00
-	.byte	0x87, 0x7b, 0xee, 0x00, 0x8b, 0x7b, 0xee, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x8b, 0x7b, 0xee, 0x00
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_Code70_Listeners
+	.long	SwbtB1_Code71_Listeners
+	.long	SwbtB1_Code72_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_Code78_Listeners
+	.long	SwbtB1_Code79_Listeners
+	.long	SwbtB1_Code7A_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_Code80_Listeners
+	.long	SwbtB1_Code81_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_Code90_Listeners
+	.long	SwbtB1_Code91_Listeners
+	.long	SwbtB1_Code92_Listeners
+	.long	SwbtB1_Code93_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_Code98_Listeners
+	.long	SwbtB1_Code99_Listeners
+	.long	SwbtB1_Code9A_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_CodeA8_Listeners
+	.long	SwbtB1_CodeA9_Listeners
+	.long	SwbtB1_CodeAA_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_CodeAC_Listeners
+	.long	SwbtB1_CodeAD_Listeners
+	.long	SwbtB1_CodeAE_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	SwbtB1_CodeB0_Listeners
+	.long	SwbtB1_CodeB1_Listeners
+	.long	SwbtB1_CodeB2_Listeners
+	.long	SwbtB1_CodeB3_Listeners
+	.long	SwbtB1_CodeB4_Listeners
+	.long	SwbtB1_CodeB5_Listeners
+	.long	SwbtB1_CodeB6_Listeners
+	.long	SwbtB1_CodeB7_Listeners
+	.long	SwbtB1_CodeB8_Listeners
+	.long	SwbtB1_CodeB9_Listeners
+	.long	SwbtB1_CodeBA_Listeners
+	.long	SwbtB1_CodeBB_Listeners
+	.long	SwbtB1_CodeBC_Listeners
+	.long	SwbtB1_CodeBD_Listeners
+	.long	UIState_DefaultConfig_A
+	.long	UIState_DefaultConfig_A
 	.byte 0xff				; separator (read by nothing)
 SwbtB1_Code00_Listeners:	.long 0xffffffff
 SwbtB1_Code01_Listeners:	.long 0xffffffff
@@ -6728,46 +6765,71 @@ Naka_EventHandler_Table:
 	.long SwbtB3_Code1C_Listeners	; 0x1C
 	.long SwbtB3_Code1D_Listeners	; 0x1D
 	.long SwbtB3_Code1E_Listeners	; 0x1E
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xb5, 0x89, 0xee, 0x00, 0xbd, 0x89, 0xee, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xc1, 0x89, 0xee, 0x00, 0xc5, 0x89, 0xee, 0x00
-	.byte	0xc9, 0x89, 0xee, 0x00, 0xcd, 0x89, 0xee, 0x00
-	.byte	0xd1, 0x89, 0xee, 0x00, 0xd5, 0x89, 0xee, 0x00
-	.byte	0xd9, 0x89, 0xee, 0x00, 0xdd, 0x89, 0xee, 0x00
-	.byte	0xe1, 0x89, 0xee, 0x00, 0xe5, 0x89, 0xee, 0x00
-	.byte	0xe9, 0x89, 0xee, 0x00, 0xed, 0x89, 0xee, 0x00
-	.byte	0xf1, 0x89, 0xee, 0x00, 0xf5, 0x89, 0xee, 0x00
-	.byte	0xf9, 0x89, 0xee, 0x00, 0xfd, 0x89, 0xee, 0x00
-	.byte	0x01, 0x8a, 0xee, 0x00, 0x05, 0x8a, 0xee, 0x00
-	.byte	0x09, 0x8a, 0xee, 0x00, 0x0d, 0x8a, 0xee, 0x00
-	.byte	0x11, 0x8a, 0xee, 0x00, 0x15, 0x8a, 0xee, 0x00
-	.byte	0x19, 0x8a, 0xee, 0x00, 0x1d, 0x8a, 0xee, 0x00
-	.byte	0x21, 0x8a, 0xee, 0x00, 0x25, 0x8a, 0xee, 0x00
-	.byte	0x29, 0x8a, 0xee, 0x00, 0x2d, 0x8a, 0xee, 0x00
-	.byte	0x31, 0x8a, 0xee, 0x00, 0x35, 0x8a, 0xee, 0x00
-	.byte	0x39, 0x8a, 0xee, 0x00, 0x3d, 0x8a, 0xee, 0x00
-	.byte	0x41, 0x8a, 0xee, 0x00, 0x45, 0x8a, 0xee, 0x00
-	.byte	0x49, 0x8a, 0xee, 0x00, 0x4d, 0x8a, 0xee, 0x00
-	.byte	0x51, 0x8a, 0xee, 0x00, 0x55, 0x8a, 0xee, 0x00
-	.byte	0x59, 0x8a, 0xee, 0x00, 0x5d, 0x8a, 0xee, 0x00
+	.long	SwbtB3_Code1F_Listeners
+	.long	SwbtB3_Code20_Listeners
+	.long	SwbtB3_Code21_Listeners
+	.long	SwbtB3_Code22_Listeners
+	.long	SwbtB3_Code23_Listeners
+	.long	SwbtB3_Code24_Listeners
+	.long	SwbtB3_Code25_Listeners
+	.long	SwbtB3_Code26_Listeners
+	.long	SwbtB3_Code27_Listeners
+	.long	SwbtB3_Code28_Listeners
+	.long	SwbtB3_Code29_Listeners
+	.long	SwbtB3_Code2A_Listeners
+	.long	SwbtB3_Code2B_Listeners
+	.long	SwbtB3_Code2C_Listeners
+	.long	SwbtB3_Code2D_Listeners
+	.long	SwbtB3_Code2E_Listeners
+	.long	SwbtB3_Code2F_Listeners
+	.long	SwbtB3_Code30_Listeners
+	.long	SwbtB3_Code31_Listeners
+	.long	SwbtB3_Code32_Listeners
+	.long	SwbtB3_Code33_Listeners
+	.long	SwbtB3_Code34_Listeners
+	.long	SwbtB3_Code35_Listeners
+	.long	SwbtB3_Code36_Listeners
+	.long	SwbtB3_Code37_Listeners
+	.long	SwbtB3_Code38_Listeners
+	.long	SwbtB3_Code39_Listeners
+	.long	SwbtB3_Code3A_Listeners
+	.long	SwbtB3_Code3B_Listeners
+	.long	SwbtB3_Code3C_Listeners
+	.long	SwbtB3_Code3D_Listeners
+	.long	SwbtB3_Code3E_Listeners
+	.long	SwbtB3_Code3F_Listeners
+	.long	SwbtB3_Code40_Listeners
+	.long	SwbtB3_Code41_Listeners
+	.long	SwbtB3_Code42_Listeners
+	.long	SwbtB3_Code43_Listeners
+	.long	SwbtB3_Code44_Listeners
+	.long	SwbtB3_Code45_Listeners
+	.long	SwbtB3_Code46_Listeners
+	.long	SwbtB3_Code47_Listeners
+	.long	SwbtB3_Code48_Listeners
 	.long	SwbtB3_Code49_Listeners	; 0x20
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code50_Listeners	; 0x21
 	.long	SwbtB3_Code51_Listeners	; 0x22
 	.long	SwbtB3_Code52_Listeners	; 0x23
 	.long	SwbtB3_Code53_Listeners	; 0x24
 	.long	SwbtB3_Code54_Listeners	; 0x25
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code60_Listeners	; 0x26
 	.long	SwbtB3_Code61_Listeners	; 0x27
 	.long	SwbtB3_Code62_Listeners	; 0x28
@@ -6775,8 +6837,7 @@ Naka_EventHandler_Table:
 	.long	SwbtB3_Code64_Listeners	; 0x2A
 	.long	SwbtB3_Code65_Listeners	; 0x2B
 	.long	SwbtB3_Code66_Listeners	; 0x2C
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code68_Listeners	; 0x2D
 	.long	SwbtB3_Code69_Listeners	; 0x2E
 	.long	SwbtB3_Code6A_Listeners	; 0x2F
@@ -6784,32 +6845,39 @@ Naka_EventHandler_Table:
 	.long	SwbtB3_Code6C_Listeners	; 0x31
 	.long	SwbtB3_Code6D_Listeners	; 0x32
 	.long	SwbtB3_Code6E_Listeners	; 0x33
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code70_Listeners	; 0x34
 	.long	SwbtB3_Code71_Listeners	; 0x35
 	.long	SwbtB3_Code72_Listeners	; 0x36
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code78_Listeners	; 0x37
 	.long	SwbtB3_Code79_Listeners	; 0x38
 	.long	SwbtB3_Code7A_Listeners	; 0x39
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code80_Listeners	; 0x3A
 	.long	SwbtB3_Code81_Listeners	; 0x3B
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
-	.byte	0x61, 0x8b, 0xee, 0x00, 0x61, 0x8b, 0xee, 0x00
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
+	.long	UIState_DefaultConfig_C
 	.long	SwbtB3_Code90_Listeners	; 0x3C
 	.long	SwbtB3_Code91_Listeners	; 0x3D
 	.long	SwbtB3_Code92_Listeners	; 0x3E
@@ -6818,9 +6886,9 @@ Naka_EventHandler_Table:
 	.long UIState_DefaultConfig_C	; 0x4B
 	.long UIState_DefaultConfig_C	; 0x4C
 	.long UIState_DefaultConfig_C	; 0x4D
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe5, 0x8a, 0xee, 0x00, 0xe9, 0x8a, 0xee, 0x00
-	.byte	0xed, 0x8a, 0xee, 0x00
+	.long	SwbtB3_Code98_Listeners
+	.long	SwbtB3_Code99_Listeners
+	.long	SwbtB3_Code9A_Listeners
 	.long UIState_DefaultConfig_C	; 0x83
 	.long UIState_DefaultConfig_C	; 0x84
 	.long UIState_DefaultConfig_C	; 0x85
@@ -6836,8 +6904,7 @@ Naka_EventHandler_Table:
 	.long UIState_DefaultConfig_C	; 0x8F
 	.long	SwbtB3_CodeA8_Listeners	; 0x90
 	.long	SwbtB3_CodeA9_Listeners	; 0x91
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x15, 0x8b, 0xee, 0x00
+	.long	SwbtB3_CodeAA_Listeners
 	.long UIState_DefaultConfig_C	; 0xAB
 	.long SwbtB3_CodeAC_Listeners	; 0xAC
 	.long SwbtB3_CodeAD_Listeners	; 0xAD
@@ -8481,13 +8548,13 @@ KeyEvent_SwitchOffsets:
 ; 8 x s16 switch offsets.  HdaeRom_TableEntry2 (0xFEA40A): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEAC14); jp_rr 8,xix,wa` -- targets 0xFEAC14 + offset (no labels yet).
 HdaeRomEntry2_SwitchOffsets:
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_Volume - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_ReverbSend - PanelTag72_ApplyPartMix_Volume
 ; 15 x s16 switch offsets.  SndParam_ApplySystemParam_SendEqualizerOnOff_Skip14 (0xFEACF7): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEB4EE); jp_rr 8,xix,wa` -- targets 0xFEB4EE + offset (no labels yet).
@@ -9370,7 +9437,7 @@ TmFlash_ByteMap:
 ; SoundData_InitFuncTable; kn5000_v10_program.s's absolute .set
 ; COMM_InitFuncTable names the same address).
 COMM_InitFuncTable:
-	.long CommParam_SetComplete_Block
+	.long COMM_ResetSentValues
 	.long COMM_ResetSentValues_Phase1
 	.long CommParam_SetComplete_Return2
 	.long CommParam_SetComplete_Return3

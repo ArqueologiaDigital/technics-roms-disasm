@@ -110,7 +110,7 @@ MiddleFuncCall_OnTrAsPartDec:
 	push	xhl
 	push	xix
 	push	xiz
-	call	MiddleFuncCall_DispatchData_Code_Helper3
+	call	MiddleFuncCall_DispatchData_Helper
 	pop	xiz
 	pop	xix
 	pop	xhl

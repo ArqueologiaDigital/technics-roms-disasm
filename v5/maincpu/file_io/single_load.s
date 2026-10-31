@@ -900,12 +900,12 @@ SingleLoad_SyncSoundMemCursorGroup:
 	cp	(xde), l
 	jr	nc, SingleLoad_SyncSoundMemCursorGroup_Skip21
 	cp	(xix), l
-	jr	c, SLSrcBankList_FuncBody_Return
+	jr	c, SingleLoad_SyncSoundMemCursorGroup_Return
 SingleLoad_SyncSoundMemCursorGroup_Skip21:
 	cp	(xde), l
 	jr	c, SingleLoad_SyncSoundMemCursorGroup_Skip22
 	cp	(xix), l
-	jr	nc, SLSrcBankList_FuncBody_Return
+	jr	nc, SingleLoad_SyncSoundMemCursorGroup_Return
 SingleLoad_SyncSoundMemCursorGroup_Skip22:
 	cp	xwa, 8
 	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip24
@@ -914,7 +914,7 @@ SingleLoad_SyncSoundMemCursorGroup_Skip22:
 	cp	xwa, 6
 	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip23
 	cp	xwa, 5
-	jr	nz, SLSrcBankList_FuncBody_Return
+	jr	nz, SingleLoad_SyncSoundMemCursorGroup_Return
 SingleLoad_SyncSoundMemCursorGroup_Skip23:
 	ld	a, (xde)
 	ld	(xix), a
@@ -922,7 +922,7 @@ SingleLoad_SyncSoundMemCursorGroup_Skip23:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
 	calr	SingleLoadDstFunc
-	jr	SLSrcBankList_FuncBody_Return
+	jr	SingleLoad_SyncSoundMemCursorGroup_Return
 SingleLoad_SyncSoundMemCursorGroup_Skip24:
 	ld	a, (xix)
 	ld	(xde), a
@@ -930,7 +930,7 @@ SingleLoad_SyncSoundMemCursorGroup_Skip24:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	calr	SingleLoadSrcFunc
-SLSrcBankList_FuncBody_Return:
+SingleLoad_SyncSoundMemCursorGroup_Return:
 	retd	0x0004
 SLSrcBankList_FuncBody_Helper15:
 	dec	6, xsp
@@ -1087,7 +1087,7 @@ SLSrcBankList_FuncBody_Helper18:
 	jr	c, SLSrcBankList_FuncBody_Skip30
 	sub	a, e
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper7
+	call	SingleLoadSrc_ReadTmUserKitEntryName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	jr	SLSrcBankList_FuncBody_Join12
@@ -1970,7 +1970,7 @@ SingleLoadDst_SequencerListProc_Join5:
 	calr	SLDstBankList_FuncBody_Helper7
 SingleLoadDst_SequencerListProc_Loop2:
 	ld	xhl, 0:i3
-	jr	SLDstBankList_FuncBody_Epilogue2
+	jr	SingleLoadDst_SequencerListProc_Epilogue2
 SingleLoadDst_SequencerListProc_Skip11:
 	cp	xde, EVT_INDEXSW_DOWN
 	jr	nz, SingleLoadDst_SequencerListProc_Skip12
@@ -2004,7 +2004,7 @@ SLDstBankList_FuncBody_Skip16:
 	extz	wa
 	call	SingleLoad_LoadSong
 	exts	xhl
-SLDstBankList_FuncBody_Epilogue2:
+SingleLoadDst_SequencerListProc_Epilogue2:
 	pop	xiz
 	ret
 SLDstBankList_FuncBody_Helper8:
@@ -2513,7 +2513,7 @@ SingleLoadDst_SoundMemListProc_Join12:
 	pushw	35152
 	ld	xwa, (xsp+8)
 	ld	xde, 35144
-	jr	SLDstBankList_FuncBody_Join16
+	jr	SingleLoadDst_SoundMemListProc_Join14
 SingleLoadDst_SoundMemListProc_Skip26:
 	cp	xde, EVT_INDEXSW_DOWN
 	jr	nz, SLDstBankList_FuncBody_Skip36
@@ -2544,7 +2544,7 @@ SingleLoadDst_SoundMemListProc_Join13:
 	pushw	35152
 	ld	xwa, (xsp+8)
 	ld	xde, 35144
-SLDstBankList_FuncBody_Join16:
+SingleLoadDst_SoundMemListProc_Join14:
 	calr	SingleLoad_SyncSoundMemCursorGroup
 SLDstBankList_FuncBody_Skip36:
 	ld	xwa, (33076:16)

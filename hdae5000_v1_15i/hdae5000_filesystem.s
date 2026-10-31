@@ -4083,7 +4083,7 @@ HDAE5000_WrConfirmEventCatch:
 	ret
 
 ; ---------------------------------------------------------------------------
-; Show the nine delete-option flags (HDAE5000_RAM_DeleteOptions+2..+10) as the
+; Show the eight delete-option flags (HDAE5000_RAM_DeleteOptions+2..+9) as the
 ; texts of the pointer table HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL ("---",
 ; "OFF", "DEL") in objects HDAE5000_OBJ_DEL_EDIT_LSW.. (RootFn_PostEvent,
 ; EVT_PARA_DRAW).

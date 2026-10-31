@@ -2137,7 +2137,7 @@ EditSw_ByteData_Join:
 	ld	(xix+2), de
 EditSw_ByteData_Join2:
 	cpw	(xbc+2), 239
-	jr	nz, DrawDesignFrame_Skip4
+	jr	nz, DrawDesignFrame_Skip6
 	ld	wa, (xsp+6)
 	exts	xwa
 	divs	wa, 2
@@ -2148,7 +2148,7 @@ EditSw_ByteData_Join2:
 	ldw	wa, 245
 	sub	wa, hl
 	ld	(xix+2), wa
-DrawDesignFrame_Skip4:
+DrawDesignFrame_Skip6:
 	lda	xde, (xix+4)
 	ld	wa, (xsp+6)
 	add	wa, (xix)

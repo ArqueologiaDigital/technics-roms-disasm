@@ -16419,9 +16419,9 @@ HdaeRom_TableEntry2:
 	ld	a, (xsp+0x1)
 	extz	wa
 	cp	wa, 0:i3
-	jrl	mi, HdaeRom_TableEntry2_Epilogue
+	jrl	mi, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	cp	wa, 7:i3
-	jrl	gt, HdaeRom_TableEntry2_Epilogue
+	jrl	gt, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	add	wa, wa
 	lda	xix, (HdaeRomEntry2_SwitchOffsets:24)
 	ld	wa, (xix+wa)
@@ -16432,7 +16432,7 @@ HdaeRom_TableEntry2:
 PanelTag72_ApplyPartMix_Volume:
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_TableEntry2_Epilogue
+	jr	z, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	lda	xbc, (xsp+0x2)
 	ld	a, 0:opc
 	bitm	7, (xsp+0x2)
@@ -16453,13 +16453,13 @@ PanelTag72_ApplyPartMix_Volume_Skip:
 	ldw	wa, 24
 	ld	bc, 7:i3
 	calr	MIDI_SendControlChange
-	jr	HdaeRom_TableEntry2_Epilogue
+	jr	PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 ; PanelTag72_ApplyPartMix_ReverbSend: Payload +7: sent to parts 0x17 and 0x18 as CC 91 (reverb send).
 PanelTag72_ApplyPartMix_ReverbSend:
 	ld	a, (xsp+0x3)
 	res	7, a
 	cp	a, 0:i3
-	jr	z, HdaeRom_TableEntry2_Epilogue
+	jr	z, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	ld	a, (xsp+0x2)
 	res	7, a
 	extz	wa
@@ -16474,7 +16474,7 @@ PanelTag72_ApplyPartMix_ReverbSend:
 	ldw	wa, 24
 	ldw	bc, 91
 	calr	MIDI_SendControlChange
-HdaeRom_TableEntry2_Epilogue:
+PanelTag72_ApplyPartMix_ReverbSend_Epilogue:
 	inc	4, xsp
 	ret
 	ret
@@ -16677,9 +16677,9 @@ SwbtB2_Code9A_Listener:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 19
-	jr	ugt, HdaeRom_AltCheckResult_Epilogue2
+	jr	ugt, SwbtB2_Code9A_Listener_Epilogue2
 	cp	a, 4:i3
-	jr	c, HdaeRom_AltCheckResult_Epilogue2
+	jr	c, SwbtB2_Code9A_Listener_Epilogue2
 	ld	a, (xsp+0x1)
 	dec	4, a
 	extz	wa
@@ -16696,7 +16696,7 @@ SwbtB2_Code9A_Listener:
 	cp	a, 2:i3
 	jr	z, SwbtB2_Code9A_Listener_Skip
 	cp	a, 0:i3
-	jr	nz, HdaeRom_AltCheckResult_Epilogue2
+	jr	nz, SwbtB2_Code9A_Listener_Epilogue2
 SwbtB2_Code9A_Listener_Skip:
 	extz	de
 	ld	a, (xsp+0x3)
@@ -16707,7 +16707,7 @@ SwbtB2_Code9A_Listener_Skip:
 	ld	de, bc
 	ldw	bc, 145
 	calr	MIDI_SendControlChange
-HdaeRom_AltCheckResult_Epilogue2:
+SwbtB2_Code9A_Listener_Epilogue2:
 	inc	4, xsp
 	ret
 HdaeRom_AltTableEntry0:
@@ -24328,7 +24328,7 @@ CommParam_SetComplete_Return:
 	pop	xiz
 	inc	6, xsp
 	ret
-CommParam_SetComplete_Block:
+COMM_ResetSentValues:
 	ld	(0xe296:16), 1
 	ld	(0xe297:16), 255
 	ld	(0xe298:16), 255
@@ -24342,7 +24342,7 @@ CommParam_SetComplete_Block:
 	ld	(0xe29c:16), 255
 	ret
 COMM_ResetSentValues_Phase1:
-	jr	CommParam_SetComplete_Block
+	jr	COMM_ResetSentValues
 CommParam_SetComplete_Return2:
 	ret
 CommParam_SetComplete_Return3:

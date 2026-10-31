@@ -1087,8 +1087,8 @@ HDAE5000_SEL_DIR_Screen:
 
 ; ---------------------------------------------------------------------------
 ; Fill the part list of a song's list object: HDAE5000_RAM_PartListText gets
-; the nine 14-byte names of HDAE5000_PartNames_Text ("CURRENT PANEL" ...
-; "LYRICS", parts LSW..TLX), each part whose bit is clear in the mask is
+; the eight 14-byte names of HDAE5000_PartNames_Text ("CURRENT PANEL" ...,
+; parts LSW..MD; v1.x has no LYRICS part), each part whose bit is clear in the mask is
 ; overwritten with HDAE5000_PartName_Blank, and the whole text is blank when
 ; BC or DE is 0xFFFF or the mask is 0xFFFF.  Then RootFn_ApPostEvent posts
 ; EVT_HDAE_SET_STR_ADR (XDE = the text) and EVT_PARA_DRAW to the object.
@@ -2562,7 +2562,7 @@ HDAE5000_PC_DATA_LINK_PAGE:
 	ld xhl, (xhl + WS_RootFnTable)             ; (XHL+0x0E0A)
 	ld_sril xhl, (xhl + RootFn_InheritedProc)             ; (XHL+0x00DC) — callback
 	call (xhl)
-	lda xwa, (HDAE5000_Str_PCLK:24); 0x2E1E72 — status buffer
+	lda xwa, (HDAE5000_Str_PCLK:24); 0x2CAC70 — status buffer
 	ld xbc, xwa
 	ld xwa, (xsp + 8)
 	ld xde, xbc
@@ -2591,13 +2591,13 @@ HDAE5000_PC_DATA_LINK_PAGE:
 	or xhl, xhl			; sub-code 0?
 	jr nz, .Lhd_cleanup
 .Lhd_err7_minor:
-	lda xwa, (HDAE5000_Str_PORTISACTIVE:24); 0x2E1E78 — error string
+	lda xwa, (HDAE5000_Str_PORTISACTIVE:24); 0x2CAC76 — error string
 	calr HDAE5000_PcLink_ShowStatus	; recursive: display error
 	call HDAE5000_PPORT_StartLink
 	jr .Lhd_cleanup
 .Lhd_err7_display:
 	call HDAE5000_PPORT_Reset
-	lda xwa, (HDAE5000_Str_Blank14:24); 0x2E1E88 — error string
+	lda xwa, (HDAE5000_Str_Blank14:24); 0x2CAC86 — error string
 	calr HDAE5000_PcLink_ShowStatus	; recursive: display error
 	; Reinit display handler
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -3006,7 +3006,7 @@ HDAE5000_SeparateBassPartCheck:
 ; Initialise a 12-byte part-selection record from a template: copy the 12
 ; bytes (6 words, LDIRW), store BC as its mask word, and set the flag byte
 ; (+2+k) of every part k whose bit is set in BC to the stacked value.  Flags:
-; 0 "---", 1 "NO ", 2 "YES"; parts LSW..TLX.  Records: HDAE5000_RAM_SaveOptions
+; 0 "---", 1 "NO ", 2 "YES"; parts LSW..MD.  Records: HDAE5000_RAM_SaveOptions
 ; and HDAE5000_RAM_DeleteOptions.
 ; In:  XWA = record, XDE = template, BC = part mask, (xsp+4) = flag value
 ;      (low byte of the stacked word; retd pops it)
@@ -3115,7 +3115,7 @@ HDAE5000_SaveOptNameCheck:
 	add xwa, xwa			; index * 2 (table has 16-bit entries)
 	add xwa, HDAE5000_SaveOptNameCheck_CaseTable		; jump table base
 	ld wa, (xwa + 0)		; load offset from table
-	lda xix, (.Lhbi_case0:24); base of case handlers (0x284FF7)
+	lda xix, (.Lhbi_case0:24); base of case handlers (0x284E54)
 	jp	t, (xix+wa)
 .Lhbi_case0:
 	; Case 0: PPI block copy from device
@@ -3161,8 +3161,8 @@ HDAE5000_SaveOptNameCheck:
 
 ; --- HD Configuration Manager and CHS Geometry ---
 HDAE5000_TypeSel_ShowSaveFlags:	; (3728 bytes)
-	; Show the nine save-option flags (0x22AA4E..56) as "---"/"NO "/"YES"
-	; (pointer table 0x2E2922) in the objects "RAM_EDIT_LSW".."RAM_EDIT_TLX"
+	; Show the eight save-option flags (HDAE5000_RAM_SaveOptions+2..+9) as "---"/"NO "/"YES"
+	; (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES) in the objects "RAM_EDIT_LSW".."RAM_EDIT_MD"
 	; (0x7F0196.., names from HDAE5000_UiObjectName_PtrTable), event
 	; 0x01C0000F.  (Was HD_Config_Manager.)
 ; LHCM: 0x28541C (3728 bytes)
@@ -4097,8 +4097,8 @@ HDAE5000_WriteProtectEditCheck_Epilogue:
 	ret
 
 
-; v2.01i has no LyricForeColorCheck / LyricBackColorCheck (the lyric colour
-; settings of v2.06i): WriteConfirmEditCheck follows LyricJumpEditCheck.
+; v1.x has none of the lyric settings (LyricJumpEditCheck; v2.06i's LyricForeColorCheck /
+; LyricBackColorCheck): WriteConfirmEditCheck follows WriteProtectEditCheck.
 HDAE5000_WriteConfirmEditCheck:
 	; registered as "WriteConfirmEditCheck" in HDAE5000_ObjHandler_Table
 	push xiz

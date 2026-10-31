@@ -9,17 +9,11 @@ ClassProps_IvSoftver	0xe80bb8	ui_widgets/naka_widget_tables_2.s
 NakaClass_VwWideESBox_PropNames	0xeac510	ui_widgets/disk_warning_strings.s
 NakaClass_VwWideESBox_PropNameText	0xeac51c	ui_widgets/disk_warning_strings.s
 WidgetCharMap_DataEntry2	0xeb000b	ui_widgets/widget_names_charmap.s
-Scoop_ConditionalCurveUpdate	0xef5c2d	display/scoop_display.s
-Scoop_ConditionalCurveUpdate_Body	0xef5c35	display/scoop_display.s
-Scoop_ConditionalGlideSetup_Body	0xef5c4f	display/scoop_display.s
-UIRender_ConditionalFBCall_Body	0xef5c60	display/scoop_display.s
-SeGfx_StaticOp05_FromBuf	0xf0eb40	audio/sound_editor_ui.s
 SeGfx_StaticOp06_Text	0xf0eb52	audio/sound_editor_ui.s
 SeGfx_StaticOp0E	0xf0eb76	audio/sound_editor_ui.s
 SeScreenData_0x0D24	0xf11801	audio/sound_editor_ui.s
 SeScreenData_0x0D39	0xf11816	audio/sound_editor_ui.s
 SeMenu_DrawTwoPartRadioButtons_Records2	0xf1182b	audio/sound_editor_ui.s
-MiddleFuncCall_OnLyricsCharaReq	0xf224f8	demo/demo_seq_bridge.s
 SoundBank_InitPlaybackFlags	0xf230aa	sequencer/smf_playback.s
 SoundBank_InitFlags_Loop	0xf230b0	sequencer/smf_playback.s
 SoundBank_InitFlags_Type1	0xf230d4	sequencer/smf_playback.s
@@ -27,8 +21,6 @@ SoundBank_InitFlags_Type2	0xf230e2	sequencer/smf_playback.s
 SoundBank_InitFlags_Type4	0xf230f0	sequencer/smf_playback.s
 SoundBank_StoreChParam	0xf230f8	sequencer/smf_playback.s
 SoundBank_NextEntry3	0xf23109	sequencer/smf_playback.s
-StsAtPunchCheck	0xf2ee07	sequencer/sequencer_ui.s
-StsAtPunchCheck_ReturnZero	0xf2ee15	sequencer/sequencer_ui.s
 SeqPlay_ProcessTempoVoiceEvent	0xf395d2	sequencer/sequencer_engine.s
 SeqPlay_TempoVoice_ReadLoop	0xf3960d	sequencer/sequencer_engine.s
 SeqPlay_TempoVoice_CheckB0	0xf39651	sequencer/sequencer_engine.s
@@ -43,8 +35,6 @@ SeqPlay_TempoVoice_ParseCtrl48_Got3	0xf3970c	sequencer/sequencer_engine.s
 SeqData_EventParseExit	0xf39724	sequencer/sequencer_engine.s
 SeqPlay_TempoVoice_ParseCtrl48_Return	0xf39726	sequencer/sequencer_engine.s
 MainExe_DispatchEntry	0xf46be1	sequencer/sequencer_engine.s
-SeqLoad_ProcessReturn	0xf47e37	sequencer/sequencer_engine.s
-SeqLoad_ProcessCopyLoop	0xf47e4f	sequencer/sequencer_engine.s
 SeqLoad_ProcessDataBlock_Helper3	0xf47eec	sequencer/sequencer_engine.s
 .Lc_f483a7	0xf47ef2	sequencer/sequencer_engine.s
 .Lc_f483e8	0xf47f33	sequencer/sequencer_engine.s

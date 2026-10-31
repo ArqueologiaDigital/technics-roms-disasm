@@ -483,11 +483,14 @@ StrTable_WelcomVersion:
 ; StrTable_WelcomVersion is ResName slot 0x3ef (11 entries, InitializeMurai): the element names ("Welcom",
 ; "AllInitial", "MPVersion", "MPver", ...) of Viewable slot 0xef, whose table Murai_ViewableTable_0EF has its NULL
 ; end at the same index 11.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x24, 0x64, 0xe8, 0x00, 0x22, 0x64, 0xe8, 0x00
-	.byte	0x20, 0x64, 0xe8, 0x00, 0x1e, 0x64, 0xe8, 0x00
-	.byte	0x12, 0x64, 0xe8, 0x00, 0x10, 0x64, 0xe8, 0x00
-	.byte	0x0e, 0x64, 0xe8, 0x00, 0x0c, 0x64, 0xe8, 0x00
+	.long	Str_Version_Welcom
+	.long	Str_Version_Empty8
+	.long	Str_Version_Empty7
+	.long	Str_Version_Empty6
+	.long	Str_Version_AllInitial
+	.long	Str_Version_Empty5
+	.long	Str_Version_Empty4
+	.long	WelcomVersion_NameListEnd
 WelcomVersion_NameListEnd:	.incbin "includes/generated/naka_technichord_strings.bin", 0x5B2, 0x2
 ; [nakarest] Str_Version_MPver  +0x5b4..+0x5ba (0xe86502, 6 B)
 ; [nakarest] name string, entry 10 of ResName slot 0x3ef (table 0xe864d0, 11 entries,
@@ -689,10 +692,10 @@ Bitmap_Accger16:	.incbin "includes/generated/naka_technichord_strings.bin", 0x33
 ;
 ; What it shows (render): A 294 x 6 strip of red slanted wedge marks on
 ; the green background, spaced unevenly across the width. What it marks
-; on screen was not traced (the instance that uses BitmapDrawsw was not
+; on screen was not traced (the instance that uses BitmapAccita16 was not
 ; followed); the label name Bitmap_SomeArrows predates this header.
 ;
-; Reader: BitmapDrawsw (v10/v9 0xf7b4c7, v7 0xf7b0c3) answers 0x1e000a1
+; Reader: BitmapAccita16 (v10/v9 0xf7b4c7, v7 0xf7b0c3) answers 0x1e000a1
 ; with this address, 0x1e000a2 with 0x126 (width 294) and 0x1e000a3 with
 ; 0x6 (height 6). The routine is one entry of the 44-entry ApFunction
 ; table that InitializeMurai (v10/v9 0xf7ad77, v7 0xf7a973) registers
@@ -2803,13 +2806,18 @@ LswScalingShift_ValueNames:
 ; [nakarest] Scale_Arabic2_Plus11  +0x17df8..+0x17dfc (0xe9dd46, 4 B)
 ; [nakarest] Text (4 B at 0xe9dd46), first string "+11"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in LswScalingShift_ValueNames (at 0xe9dd42).
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x6a, 0xdc, 0xe9, 0x00, 0x66, 0xdc, 0xe9, 0x00
-	.byte	0x62, 0xdc, 0xe9, 0x00, 0x5e, 0xdc, 0xe9, 0x00
-	.byte	0x5a, 0xdc, 0xe9, 0x00, 0x56, 0xdc, 0xe9, 0x00
-	.byte	0x52, 0xdc, 0xe9, 0x00, 0x4e, 0xdc, 0xe9, 0x00
-	.byte	0x4a, 0xdc, 0xe9, 0x00, 0x46, 0xdc, 0xe9, 0x00
-	.byte	0x42, 0xdc, 0xe9, 0x00, 0x3e, 0xdc, 0xe9, 0x00
+	.long	Scale_Arabic2_Zero
+	.long	Scale_Arabic2_Plus1
+	.long	Scale_Arabic2_Plus2
+	.long	Scale_Arabic2_Plus3
+	.long	Scale_Arabic2_Plus4
+	.long	Scale_Arabic2_Plus5
+	.long	Scale_Arabic2_Plus6
+	.long	Scale_Arabic2_Plus7
+	.long	Scale_Arabic2_Plus8
+	.long	Scale_Arabic2_Plus9
+	.long	Scale_Arabic2_Plus10
+	.long	Scale_Arabic2_Plus11
 Scale_Arabic2_Plus11:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17DF8, 0x4
 ; [nakarest] Scale_Arabic2_Plus10  +0x17dfc..+0x17e00 (0xe9dd4a, 4 B)
 ; [nakarest] Text (4 B at 0xe9dd4a), first string "+10"; no registered NAKA table points into
@@ -4059,15 +4067,22 @@ LswDrawbar_Signed4BitNames:
 ; [nakarest] KeyShiftStr_Minus1  +0x1999c..+0x199a0 (0xe9f8ea, 4 B)
 ; [nakarest] Text (4 B at 0xe9f8ea), first string "-1"; no registered NAKA table points into it;
 ; [nakarest] reached through 1 data word in LswDrawbar_Signed4BitNames (at 0xe9f8e6).
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x12, 0xf8, 0xe9, 0x00, 0x0e, 0xf8, 0xe9, 0x00
-	.byte	0x0a, 0xf8, 0xe9, 0x00, 0x06, 0xf8, 0xe9, 0x00
-	.byte	0x02, 0xf8, 0xe9, 0x00, 0xfe, 0xf7, 0xe9, 0x00
-	.byte	0xfa, 0xf7, 0xe9, 0x00, 0xf6, 0xf7, 0xe9, 0x00
-	.byte	0xf2, 0xf7, 0xe9, 0x00, 0xee, 0xf7, 0xe9, 0x00
-	.byte	0xea, 0xf7, 0xe9, 0x00, 0xe6, 0xf7, 0xe9, 0x00
-	.byte	0xe2, 0xf7, 0xe9, 0x00, 0xde, 0xf7, 0xe9, 0x00
-	.byte	0xda, 0xf7, 0xe9, 0x00, 0xd6, 0xf7, 0xe9, 0x00
+	.long	KeyShiftStr_Zero
+	.long	KeyShiftStr_Plus1
+	.long	KeyShiftStr_Plus2
+	.long	KeyShiftStr_Plus3
+	.long	KeyShiftStr_Plus4
+	.long	KeyShiftStr_Plus5
+	.long	KeyShiftStr_Plus6
+	.long	KeyShiftStr_Plus7
+	.long	KeyShiftStr_Minus8
+	.long	KeyShiftStr_Minus7
+	.long	KeyShiftStr_Minus6
+	.long	KeyShiftStr_Minus5
+	.long	KeyShiftStr_Minus4
+	.long	KeyShiftStr_Minus3
+	.long	KeyShiftStr_Minus2
+	.long	KeyShiftStr_Minus1
 KeyShiftStr_Minus1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1999C, 0x4
 ; [nakarest] KeyShiftStr_Minus2  +0x199a0..+0x199a4 (0xe9f8ee, 4 B)
 ; [nakarest] Text (4 B at 0xe9f8ee), first string "-2"; no registered NAKA table points into it;
@@ -4776,12 +4791,16 @@ FileIO_TypeExtensions:
 ; [nakarest] read by FileIO_ReadHeader (demo/file_demo_proc.s: `lda xbc,
 ; [nakarest] (FileIO_TypeExtensions:24)`), ParseFileExt_MatchLoop (demo/file_demo_proc.s: `lda
 ; [nakarest] xbc, (FileIO_TypeExtensions:24)`).
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x78, 0x02, 0xea, 0x00, 0x74, 0x02, 0xea, 0x00
-	.byte	0x70, 0x02, 0xea, 0x00, 0x6c, 0x02, 0xea, 0x00
-	.byte	0x68, 0x02, 0xea, 0x00, 0x64, 0x02, 0xea, 0x00
-	.byte	0x60, 0x02, 0xea, 0x00, 0x5c, 0x02, 0xea, 0x00
-	.byte	0x58, 0x02, 0xea, 0x00, 0x54, 0x02, 0xea, 0x00
+	.long	SeqFileTypeCode_Lsw
+	.long	SeqFileTypeCode_Pmt
+	.long	SeqFileTypeCode_Sqt
+	.long	SeqFileTypeCode_Cmp
+	.long	SeqFileTypeCode_Tm
+	.long	SeqFileTypeCode_Msp
+	.long	SeqFileTypeCode_Rcm
+	.long	SeqFileTypeCode_Md
+	.long	SeqFileTypeCode_Sqf
+	.long	SeqFileTypeCode_Seq
 SeqFileTypeCode_Seq:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A41A, 0x4
 ; [nakarest] SeqFileTypeCode_Sqf  +0x1a41e..+0x1a422 (0xea036c, 4 B)
 ; [nakarest] Text (4 B at 0xea036c), first string "SQF"; no registered NAKA table points into

@@ -2597,14 +2597,14 @@ Sprintf_DecExp_CheckRemainder:
 	dec	1, xiz
 Sprintf_DecExp_ApplySign:
 	cpw	(xsp + 16), 0x0
-	jr	ge, Sprintf_DecExp_Positive_Return
+	jr	ge, Sprintf_DecExp_ApplySign_Return
 	ld	xwa, xiz
 	cpl	wa
 	cplw_erp	0xe2
 	inc	1, xwa
 	ld	xhl, xwa
 	jr	Sprintf_DecExp_Return
-Sprintf_DecExp_Positive_Return:
+Sprintf_DecExp_ApplySign_Return:
 	ld	xhl, xiz
 Sprintf_DecExp_Return:
 	pop	xiz
