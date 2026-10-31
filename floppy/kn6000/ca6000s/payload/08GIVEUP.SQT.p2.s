@@ -894,8 +894,125 @@ P_08GIVEUP_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08GIVEUP.sqt.p2.ref", 0xd1b, 229
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 72, 80, 94, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 71, 81, 46, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 37, 74, 83, 95, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 41, 69, 83, 50, 1
+	sq_beat
+	k5_note	0x90, 90, 71, 92, 94, 0
+	sq_beat
+	k5_note	0x90, 87, 72, 80, 47, 0
+	sq_beat
+	k5_note	0x90, 90, 79, 96, 28, 0
+	k5_note	0x90, 90, 76, 81, 28, 0
+	sq_beat
+	k5_note	0x90, 41, 76, 79, 33, 0
+	k5_note	0x90, 42, 79, 78, 33, 0
+	k5_note	0x90, 87, 77, 92, 43, 0
+	k5_note	0x90, 87, 74, 79, 45, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 39, 81, 98, 65, 0
+	k5_note	0x90, 39, 77, 92, 63, 0
+	sq_beat
+	k5_note	0x90, 41, 81, 88, 42, 0
+	k5_note	0x90, 41, 77, 83, 38, 0
+	k5_note	0x90, 84, 76, 81, 51, 0
+	k5_note	0x90, 88, 79, 83, 40, 0
+	sq_beat
+	k5_note	0x90, 37, 77, 92, 29, 0
+	k5_note	0x90, 38, 74, 71, 32, 0
+	k5_note	0x90, 88, 91, 71, 23, 0
+	k5_note	0x90, 88, 88, 86, 23, 0
+	.byte	144, 88	; the first 2 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 16	; cell 15: song 1 track 2, 1 of 3
 	sq_sys	0, 0x85
 	sq_beat
@@ -1376,8 +1493,12 @@ P_08GIVEUP_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08GIVEUP.sqt.p2.ref", 0x10f1, 15
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	90, 67, 108, 14, 0	; data bytes of an event cut at the start
+	sq_beat
+	k5_note	0x90, 71, 65, 100, 14, 0
+	sq_beat
+	.byte	144, 47	; the first 2 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 19	; cell 18: song 1 track 3, 1 of 9
 	sq_sys	0, 0x85
 	sq_beat
@@ -2106,8 +2227,77 @@ P_08GIVEUP_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08GIVEUP.sqt.p2.ref", 0x1970, 144
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08GIVEUP.sqt.p2.ref", 0x199d, 2
+	sq_note	0, 0, 26, 60, 103, 13
+	sq_note	0, 0, 71, 60, 108, 11
+	sq_note	0, 0, 95, 60, 108, 12
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08GIVEUP.sqt.p2.ref", 0x19b1, 1
+	sq_beat
+	k5_note	0x90, 46, 60, 112, 12, 0
+	k5_note	0x90, 73, 60, 103, 12, 0
+	sq_beat
+	k5_note	0x90, 25, 60, 105, 11, 0
+	k5_note	0x90, 51, 60, 105, 12, 0
+	k5_note	0x90, 95, 60, 112, 11, 0
+	sq_beat
+	k5_note	0x90, 47, 60, 116, 12, 0
+	k5_note	0x90, 94, 60, 116, 44, 0
+	sq_beat
+	k5_note	0x90, 44, 57, 108, 33, 0
+	sq_beat
+	k5_note	0x90, 95, 57, 112, 28, 0
+	sq_beat
+	k5_note	0x90, 2, 53, 96, 24, 0
+	k5_note	0x90, 46, 57, 103, 32, 0
+	k5_note	0x90, 49, 53, 88, 28, 0
 	sq_cell	0x80, 0, 28	; cell 27: song 1 track 4, 1 of 2
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 48, 60, 46, 0
@@ -2981,8 +3171,83 @@ P_08GIVEUP_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08GIVEUP.sqt.p2.ref", 0x1ea4, 92
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08GIVEUP.sqt.p2.ref", 0x1ec1, 5
+	sq_beat
+	k5_ev	0xb0, 3, 32, 1, 3, 31
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08GIVEUP.sqt.p2.ref", 0x1eec, 5
+	sq_beat
+	k5_ev	0xb0, 36, 32, 1, 2, 31
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 
 	.if	(. - P_08GIVEUP_SQT_p2) - 7936
 	.error	"08GIVEUP.SQT part 2: the payload is not 7936 bytes"

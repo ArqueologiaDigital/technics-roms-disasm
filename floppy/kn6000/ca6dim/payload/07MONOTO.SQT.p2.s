@@ -703,8 +703,24 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x8bd, 67
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x8bd, 4
+	sq_cc	67, 0, 16, 74, 34
+	sq_cc	69, 0, 16, 74, 28
+	sq_beat
+	sq_note	2, 0, 79, 103, 15, 0
+	sq_note	76, 0, 79, 101, 15, 0
+	sq_cc	89, 0, 16, 10, 62
+	sq_beat
+	sq_cc	2, 0, 16, 10, 60
+	sq_cc	6, 0, 16, 10, 59
+	sq_cc	10, 0, 16, 10, 58
+	sq_cc	17, 0, 16, 10, 57
+	sq_cc	25, 0, 16, 10, 56
+	sq_cc	34, 0, 16, 10, 55
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x8fc, 4
 	sq_cell	0xff, 0, 11	; cell 10: song 1 track 2, 1 of 2
 	sq_beat
 	sq_beat
@@ -1087,8 +1103,38 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0xa86, 122
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_note	3, 0, 79, 101, 19, 0
+	sq_note	25, 0, 80, 85, 28, 0
+	sq_note	49, 0, 79, 90, 23, 0
+	sq_note	70, 0, 75, 82, 24, 0
+	sq_beat
+	sq_note	0, 0, 77, 93, 17, 0
+	sq_note	73, 0, 77, 103, 13, 0
+	sq_beat
+	sq_note	50, 0, 77, 100, 16, 0
+	sq_beat
+	sq_beat
+	sq_note	29, 0, 75, 97, 14, 0
+	sq_note	51, 0, 77, 73, 23, 0
+	sq_note	72, 0, 75, 89, 21, 0
+	sq_beat
+	sq_note	0, 0, 79, 92, 73, 0
+	sq_note	75, 0, 72, 93, 18, 0
+	sq_beat
+	sq_note	51, 0, 72, 101, 15, 0
+	sq_beat
+	sq_beat
+	sq_note	73, 0, 72, 89, 23, 0
+	sq_note	95, 0, 70, 96, 23, 0
+	sq_beat
+	sq_note	25, 0, 72, 89, 14, 0
+	sq_note	47, 0, 72, 96, 15, 0
+	sq_note	94, 0, 72, 98, 17, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0xafd, 3
 	sq_cell	0xff, 0, 13	; cell 12: song 1 track 3, 1 of 2
 	sq_beat
 	sq_beat
@@ -1471,8 +1517,39 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0xc86, 122
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_note	23, 0, 75, 97, 30, 0
+	sq_note	50, 0, 77, 85, 24, 0
+	sq_note	71, 0, 75, 90, 22, 0
+	sq_note	95, 0, 79, 100, 17, 0
+	sq_beat
+	sq_note	72, 0, 72, 99, 17, 0
+	sq_beat
+	sq_note	52, 0, 72, 108, 16, 0
+	sq_beat
+	sq_beat
+	sq_note	75, 0, 72, 88, 26, 0
+	sq_beat
+	sq_note	2, 0, 70, 91, 23, 0
+	sq_note	27, 0, 72, 91, 15, 0
+	sq_note	50, 0, 72, 103, 15, 0
+	sq_beat
+	sq_note	1, 0, 72, 101, 17, 0
+	sq_note	75, 0, 72, 109, 16, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 79, 105, 15, 0
+	sq_note	76, 0, 79, 101, 15, 0
+	sq_beat
+	sq_note	49, 0, 79, 105, 16, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 79, 101, 21, 0
+	sq_note	24, 0, 80, 82, 27, 0
+	sq_note	47, 0, 79, 89, 22, 0
 	sq_cell	0xd6, 0, 15	; cell 14: song 1 track 4, 1 of 2
 	sq_beat
 	sq_beat
@@ -2249,8 +2326,23 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x10d0, 48
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x10d2, 3
+	sq_cc	70, 0, 16, 10, 4
+	sq_note	74, 0, 72, 91, 16, 0
+	sq_cc	75, 0, 16, 10, 12
+	sq_cc	76, 0, 16, 10, 0
+	sq_beat
+	sq_note	49, 0, 72, 101, 18, 0
+	sq_beat
+	sq_beat
+	sq_cc	53, 0, 16, 74, 30
+	sq_cc	53, 0, 16, 74, 32
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x10fd, 3
 	sq_cell	0x80, 0, 19	; cell 18: song 1 track 8, 1 of 36
 	sq_note	4, 0, 107, 98, 39, 0
 	sq_note	4, 0, 75, 66, 8, 0
@@ -4127,8 +4219,28 @@ P_07MONOTO_SQT_p2:
 	sq_note	3, 0, 107, 105, 40, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x34c0, 64
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 71, 105, 87, 0
+	sq_beat
+	sq_note	3, 0, 69, 106, 81, 0
+	sq_beat
+	sq_note	2, 0, 67, 108, 65, 0
+	sq_beat
+	sq_note	7, 0, 67, 108, 59, 0
+	sq_beat
+	sq_note	5, 0, 67, 105, 42, 0
+	sq_note	51, 0, 69, 105, 45, 0
+	sq_beat
+	sq_note	6, 0, 71, 99, 42, 0
+	sq_note	53, 0, 67, 103, 22, 1
+	sq_beat
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x34fb, 5
 	sq_cell	0x80, 0, 55	; cell 54: song 1 track 9, 1 of 5
 	sq_beat
 	sq_beat
@@ -4626,8 +4738,60 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x3923, 221
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	74, 92, 29, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 42, 70, 98, 27, 0
+	k5_note	0x90, 42, 67, 92, 27, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 16, 67, 93, 16, 0
+	k5_note	0x90, 16, 70, 104, 15, 0
+	k5_note	0x90, 16, 74, 104, 18, 0
+	k5_note	0x90, 92, 77, 93, 39, 0
+	k5_note	0x90, 93, 70, 98, 32, 0
+	k5_note	0x90, 93, 74, 99, 35, 0
+	sq_beat
+	k5_note	0x90, 42, 76, 83, 34, 0
+	k5_note	0x90, 43, 69, 94, 33, 0
+	k5_note	0x90, 43, 72, 96, 32, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 40, 74, 103, 22, 0
+	k5_note	0x90, 40, 67, 96, 25, 0
+	k5_note	0x90, 40, 70, 100, 24, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 91, 74, 104, 20, 0
+	k5_note	0x90, 91, 67, 93, 21, 0
+	k5_note	0x90, 91, 70, 104, 21, 0
+	sq_beat
+	k5_note	0x90, 66, 76, 99, 57, 0
+	k5_note	0x90, 67, 72, 96, 55, 0
+	k5_note	0x90, 67, 69, 88, 58, 0
+	sq_beat
+	k5_note	0x90, 40, 70, 96, 27, 0
+	k5_note	0x90, 41, 74, 96, 29, 0
+	k5_note	0x90, 41, 77, 86, 29, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 91, 70, 100, 19, 0
+	k5_note	0x90, 91, 74, 96, 19, 0
+	k5_note	0x90, 91, 77, 75, 18, 0
+	sq_beat
+	k5_note	0x90, 69, 69, 87, 53, 0
+	k5_note	0x90, 70, 72, 99, 55, 0
+	k5_note	0x90, 70, 76, 85, 59, 0
+	sq_beat
+	k5_note	0x90, 40, 74, 93, 28, 0
+	k5_note	0x90, 41, 70, 96, 26, 0
+	k5_note	0x90, 41, 67, 90, 28, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 92, 74, 103, 19, 0
+	.byte	144	; the first 1 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 60	; cell 59: song 1 track 10, 1 of 35
 	sq_note	4, 0, 36, 85, 24, 0
 	sq_note	4, 0, 42, 94, 11, 0
@@ -6452,8 +6616,37 @@ P_07MONOTO_SQT_p2:
 	sq_note	3, 0, 42, 95, 12, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x5c95, 107
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	75, 106, 38, 0, 49	; data bytes of an event cut at the start
+	k5_note	0x90, 77, 100, 36, 0, 95
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x5ca0, 5
+	sq_beat
+	sq_note	52, 0, 79, 113, 0, 1
+	sq_beat
+	sq_note	59, 0, 77, 104, 92, 0
+	sq_note	60, 0, 78, 73, 7, 0
+	sq_beat
+	sq_note	58, 0, 80, 112, 77, 0
+	sq_beat
+	sq_note	57, 0, 79, 113, 4, 1
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 70, 107, 57, 0
+	sq_beat
+	sq_note	3, 0, 70, 107, 53, 0
+	sq_beat
+	sq_note	7, 0, 70, 111, 46, 0
+	sq_note	55, 0, 72, 96, 39, 0
+	sq_beat
+	sq_note	5, 0, 74, 91, 41, 0
+	sq_note	55, 0, 70, 105, 92, 0
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 70, 111, 53, 0
+	sq_beat
+	sq_note	7, 0, 70, 109, 44, 0
+	.byte	54	; data bytes of an event cut by the end
 	sq_cell	0xff, 0, 95	; cell 94: song 1 track 11, 1 of 19
 	sq_cc	0, 0, 6, 11, 127
 	sq_beat
@@ -7691,8 +7884,44 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x6f78, 136
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x6f78, 5
+	sq_beat
+	sq_note	6, 0, 76, 97, 62, 0
+	sq_note	68, 0, 74, 100, 69, 0
+	sq_beat
+	sq_note	39, 0, 76, 100, 33, 0
+	sq_beat
+	sq_note	2, 0, 67, 87, 20, 0
+	sq_note	3, 0, 71, 93, 17, 0
+	sq_note	3, 0, 76, 89, 22, 0
+	sq_note	50, 0, 71, 95, 23, 3
+	sq_note	50, 0, 76, 92, 64, 0
+	sq_note	51, 0, 67, 92, 22, 3
+	sq_beat
+	sq_note	54, 0, 76, 110, 77, 0
+	sq_beat
+	sq_note	58, 0, 77, 95, 46, 0
+	sq_beat
+	sq_note	37, 0, 79, 94, 37, 0
+	sq_beat
+	sq_note	5, 0, 65, 96, 49, 5
+	sq_note	8, 0, 69, 90, 63, 5
+	sq_note	8, 0, 72, 96, 17, 1
+	sq_note	9, 0, 79, 93, 73, 5
+	sq_beat
+	sq_note	53, 0, 72, 106, 20, 0
+	sq_beat
+	sq_note	5, 0, 72, 110, 56, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	54, 0, 76, 115, 52, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x6ffd, 3
 	sq_cell	0xff, 0, 114	; cell 113: song 1 track 12, 1 of 9
 	sq_cc	0, 0, 7, 11, 127
 	sq_beat
@@ -8365,8 +8594,68 @@ P_07MONOTO_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x7832, 206
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0, 54	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x7834, 5
+	sq_beat
+	sq_note	56, 0, 71, 110, 94, 0
+	sq_beat
+	sq_note	54, 0, 69, 107, 88, 0
+	sq_beat
+	sq_note	52, 0, 71, 107, 35, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 67, 108, 55, 0
+	sq_beat
+	sq_note	4, 0, 67, 103, 57, 0
+	sq_beat
+	sq_note	1, 0, 67, 104, 46, 0
+	sq_note	49, 0, 69, 104, 45, 0
+	sq_beat
+	sq_note	3, 0, 71, 96, 43, 0
+	sq_note	51, 0, 67, 103, 95, 0
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 67, 103, 54, 0
+	sq_beat
+	sq_note	6, 0, 67, 103, 40, 0
+	sq_note	50, 0, 69, 101, 46, 0
+	sq_beat
+	sq_note	1, 0, 71, 99, 46, 0
+	sq_note	49, 0, 69, 105, 69, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	58, 0, 71, 110, 39, 0
+	sq_beat
+	sq_note	6, 0, 72, 101, 18, 0
+	sq_note	55, 0, 72, 109, 85, 0
+	sq_beat
+	sq_note	55, 0, 71, 106, 19, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	9, 0, 74, 109, 9, 1
+	sq_beat
+	sq_note	25, 0, 74, 90, 47, 0
+	sq_note	95, 0, 74, 106, 41, 0
+	sq_beat
+	sq_note	45, 0, 75, 104, 41, 0
+	sq_note	93, 0, 77, 103, 44, 0
+	sq_beat
+	sq_note	48, 0, 74, 107, 13, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 74, 111, 55, 0
+	sq_beat
+	sq_note	7, 0, 74, 110, 38, 0
+	sq_note	50, 0, 75, 101, 41, 0
+	sq_beat
+	sq_note	1, 0, 77, 100, 43, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x78fd, 3
 	sq_cell	0xff, 0, 123	; cell 122: song 1 track 13, 1 of 25
 	sq_cc	0, 0, 8, 11, 127
 	sq_beat
@@ -9746,8 +10035,58 @@ P_07MONOTO_SQT_p2:
 	sq_note	3, 0, 82, 87, 30, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0x9148, 184
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	57, 0, 74, 105, 80, 0
+	sq_beat
+	sq_note	51, 0, 70, 96, 1, 1
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 70, 111, 55, 0
+	sq_beat
+	sq_note	6, 0, 70, 109, 48, 0
+	sq_note	55, 0, 72, 97, 37, 0
+	sq_beat
+	sq_note	1, 0, 74, 99, 45, 0
+	sq_note	52, 0, 70, 105, 3, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 70, 109, 52, 0
+	sq_beat
+	sq_note	3, 0, 70, 111, 48, 0
+	sq_note	49, 0, 72, 97, 43, 0
+	sq_note	95, 0, 74, 100, 45, 0
+	sq_beat
+	sq_note	50, 0, 72, 113, 89, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 72, 113, 47, 0
+	sq_beat
+	sq_note	3, 0, 72, 107, 41, 0
+	sq_note	51, 0, 74, 103, 39, 0
+	sq_beat
+	sq_note	2, 0, 75, 106, 18, 0
+	sq_note	51, 0, 75, 112, 89, 0
+	sq_beat
+	sq_note	54, 0, 74, 113, 95, 0
+	sq_beat
+	sq_note	55, 0, 77, 110, 0, 1
+	sq_beat
+	sq_note	57, 0, 75, 106, 32, 1
+	sq_beat
+	sq_note	92, 0, 70, 105, 56, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 70, 109, 55, 0
+	sq_beat
+	sq_note	4, 0, 70, 107, 48, 0
+	sq_note	51, 0, 72, 100, 43, 0
+	sq_beat
+	sq_note	1, 0, 74, 98, 43, 0
+	sq_note	52, 0, 70, 104, 90, 0
+	sq_beat
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0x91fb, 5
 	sq_cell	0xff, 0, 148	; cell 147: song 1 track 14, 1 of 16
 	sq_cc	0, 0, 10, 11, 127
 	sq_beat
@@ -10747,8 +11086,25 @@ P_07MONOTO_SQT_p2:
 	sq_note	3, 0, 75, 101, 35, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0xa1b1, 79
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 76, 100, 40, 0, 2
+	k5_note	0x90, 69, 93, 30, 2, 3
+	k5_note	0x90, 72, 96, 35, 1, 51
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0xa1c3, 5
+	sq_beat
+	sq_note	4, 0, 76, 100, 90, 0
+	sq_note	55, 0, 74, 88, 54, 0
+	sq_beat
+	sq_note	5, 0, 72, 106, 37, 0
+	sq_note	52, 0, 67, 93, 67, 0
+	sq_note	52, 0, 76, 103, 79, 0
+	sq_note	53, 0, 71, 97, 73, 0
+	sq_beat
+	sq_note	55, 0, 71, 93, 16, 3
+	sq_note	55, 0, 67, 96, 18, 3
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0xa1fb, 5
 	sq_cell	0xff, 0, 164	; cell 163: song 1 track 15, 1 of 20
 	sq_cc	0, 0, 11, 11, 127
 	sq_beat
@@ -11969,8 +12325,33 @@ P_07MONOTO_SQT_p2:
 	sq_note	3, 0, 75, 97, 27, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07MONOTO.sqt.p2.ref", 0xb5a9, 87
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	42, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	4, 0, 72, 100, 20, 0
+	sq_note	54, 0, 72, 110, 0, 1
+	sq_beat
+	sq_note	59, 0, 71, 107, 94, 0
+	sq_beat
+	sq_note	62, 0, 74, 111, 86, 0
+	sq_beat
+	sq_note	59, 0, 72, 115, 32, 1
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 67, 110, 61, 0
+	sq_beat
+	sq_note	2, 0, 67, 106, 59, 0
+	sq_beat
+	sq_note	1, 0, 67, 105, 43, 0
+	sq_note	47, 0, 69, 105, 48, 0
+	sq_beat
+	sq_note	2, 0, 71, 103, 41, 0
+	sq_note	48, 0, 67, 103, 10, 1
+	sq_beat
+	sq_beat
+	sq_note	8, 0, 67, 110, 44, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"07MONOTO.sqt.p2.ref", 0xb5fe, 2
 	sq_cell	0xff, 0, 184	; cell 183: song 1 track 16, 1 of 16
 	sq_cc	0, 0, 12, 11, 127
 	sq_beat

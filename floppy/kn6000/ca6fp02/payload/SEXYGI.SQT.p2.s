@@ -221,8 +221,37 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x16e, 146
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	13, 0, 72	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x171, 5
+	sq_beat
+	sq_note	0, 0, 54, 108, 15, 0
+	sq_note	25, 0, 54, 82, 15, 0
+	sq_note	48, 0, 18, 108, 17, 0
+	sq_note	48, 0, 96, 105, 11, 0
+	sq_note	48, 0, 54, 82, 12, 0
+	sq_note	72, 0, 96, 92, 10, 0
+	sq_note	72, 0, 54, 84, 16, 0
+	sq_beat
+	sq_note	0, 0, 36, 120, 64, 0
+	sq_note	0, 0, 38, 116, 10, 1
+	sq_note	0, 0, 63, 100, 8, 0
+	sq_note	0, 0, 54, 108, 16, 0
+	sq_note	24, 0, 54, 67, 10, 0
+	sq_note	48, 0, 18, 103, 17, 0
+	sq_note	48, 0, 64, 92, 10, 0
+	sq_note	48, 0, 54, 80, 10, 0
+	sq_note	72, 0, 64, 81, 11, 0
+	sq_note	72, 0, 54, 77, 16, 0
+	sq_beat
+	sq_note	0, 0, 36, 116, 59, 0
+	sq_note	0, 0, 54, 108, 15, 0
+	sq_note	25, 0, 54, 74, 14, 0
+	sq_note	48, 0, 18, 103, 19, 0
+	sq_note	48, 0, 96, 105, 8, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x1fd, 3
 	sq_cell	0xff, 14, 2	; cell 3: song 1 track 10, 64 of 65
 	.byte	0x24, 0x78, 0x39, 0x00	; bytes 3..6 of `sq_note	0, 0, 36, 120, 57, 0` (the event spans two cells)
 	sq_note	0, 0, 54, 113, 14, 0
@@ -307,8 +336,29 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x3a2, 94
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	53, 55, 10, 0, 72	; data bytes of an event cut at the start
+	k5_note	0x90, 60, 84, 16, 0, 72
+	k5_note	0x90, 63, 92, 19, 0, 72
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x3b3, 5
+	sq_beat
+	sq_note	25, 0, 60, 93, 71, 1
+	sq_note	48, 0, 65, 75, 58, 1
+	sq_note	72, 0, 70, 92, 32, 1
+	sq_beat
+	sq_note	0, 0, 75, 108, 6, 1
+	sq_beat
+	sq_note	0, 0, 56, 100, 36, 0
+	sq_note	0, 0, 51, 87, 33, 0
+	sq_note	0, 0, 60, 96, 35, 0
+	sq_note	48, 0, 58, 87, 13, 0
+	sq_note	48, 0, 62, 90, 13, 0
+	sq_note	48, 0, 53, 78, 14, 0
+	sq_beat
+	sq_note	0, 0, 55, 88, 13, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x3fe, 2
 	sq_cell	0xff, 15, 65535	; cell 5: song 1 track 11, 32 of 32
 	sq_note	48, 0, 55, 96, 9, 0
 	sq_beat
@@ -360,8 +410,10 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x4f5, 11
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	113, 14, 0, 24	; data bytes of an event cut at the start
+	k5_note	0x90, 54, 92, 14, 0, 48
+	.byte	144	; the first 1 bytes of a KN5000-order event, cut by the end
 	sq_cell	0xff, 140, 65535	; cell 6: song 1 track 9, 13 of 13
 	sq_note	72, 0, 36, 105, 42, 0
 	sq_beat
@@ -389,8 +441,42 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x565, 155
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	50, 98, 17, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	0, 0, 51, 100, 49, 0
+	sq_note	48, 0, 50, 96, 26, 0
+	sq_note	72, 0, 51, 104, 21, 0
+	sq_beat
+	sq_beat
+	sq_note	72, 0, 60, 100, 69, 0
+	sq_note	72, 0, 48, 120, 64, 0
+	sq_beat
+	sq_note	48, 0, 62, 105, 14, 0
+	sq_note	48, 0, 50, 103, 14, 0
+	sq_beat
+	sq_note	0, 0, 63, 108, 13, 0
+	sq_note	0, 0, 51, 113, 16, 0
+	sq_note	48, 0, 62, 105, 15, 0
+	sq_note	48, 0, 50, 116, 17, 0
+	sq_beat
+	sq_note	0, 0, 63, 108, 17, 0
+	sq_note	0, 0, 51, 120, 20, 0
+	sq_note	72, 0, 62, 105, 23, 0
+	sq_note	72, 0, 50, 124, 17, 0
+	sq_beat
+	sq_note	48, 0, 60, 108, 93, 0
+	sq_note	48, 0, 48, 116, 91, 0
+	sq_beat
+	sq_note	48, 0, 62, 105, 16, 0
+	sq_note	48, 0, 50, 112, 16, 0
+	sq_beat
+	sq_note	0, 0, 63, 108, 51, 0
+	sq_note	0, 0, 51, 120, 49, 0
+	sq_note	48, 0, 62, 98, 24, 0
+	sq_note	48, 0, 50, 112, 30, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x5fc, 4
 	sq_cell	0xff, 149, 65535	; cell 7: song 1 track 12, 20 of 20
 	.byte	0x90, 0x2c, 0x6c, 0x16, 0x00	; bytes 2..6 of `sq_note	0, 0, 44, 108, 22, 0` (the event spans two cells)
 	sq_note	49, 0, 62, 100, 30, 0
@@ -434,8 +520,22 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x6bf, 65
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	13, 0, 72	; data bytes of an event cut at the start
+	k5_note	0x90, 54, 77, 15, 0, 95
+	k5_note	0x90, 36, 116, 51, 0, 95
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x6ce, 5
+	sq_beat
+	sq_note	25, 0, 54, 87, 15, 0
+	sq_note	48, 0, 18, 105, 19, 0
+	sq_note	48, 0, 96, 116, 10, 0
+	sq_note	48, 0, 54, 84, 10, 0
+	sq_note	72, 0, 54, 74, 13, 0
+	sq_beat
+	sq_note	0, 0, 36, 116, 45, 0
+	sq_note	0, 0, 63, 100, 9, 0
+	.byte	0	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 146	; cell 8: song 1 track 8, 1 of 2
 	sq_8n	0, 0, 98, 0
 	sq_beat
@@ -7803,8 +7903,32 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x9122, 222
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0, 48	; data bytes of an event cut at the start
+	k5_note	0x90, 18, 112, 15, 0, 48
+	k5_note	0x90, 96, 116, 10, 0, 48
+	k5_note	0x90, 54, 82, 11, 0, 72
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"SEXYGI.sqt.p2.ref", 0x9136, 5
+	sq_beat
+	sq_note	0, 0, 36, 120, 38, 0
+	sq_note	0, 0, 63, 100, 10, 0
+	sq_note	0, 0, 114, 105, 6, 0
+	sq_note	0, 0, 54, 108, 13, 0
+	sq_note	0, 0, 38, 116, 2, 1
+	sq_note	25, 0, 54, 76, 13, 0
+	sq_note	49, 0, 36, 116, 5, 0
+	sq_note	49, 0, 36, 103, 7, 0
+	sq_note	49, 0, 18, 108, 15, 0
+	sq_note	49, 0, 64, 93, 10, 0
+	sq_note	49, 0, 54, 82, 10, 0
+	sq_note	72, 0, 36, 116, 26, 0
+	sq_note	72, 0, 64, 105, 13, 0
+	sq_note	72, 0, 54, 80, 14, 0
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
 	sq_cell	0x80, 145, 150	; cell 147: song 1 track 10, 60 of 65
 	sq_note	48, 0, 96, 112, 9, 0
 	sq_note	48, 0, 54, 82, 10, 0
@@ -8097,8 +8221,11 @@ P_SEXYGI_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"SEXYGI.sqt.p2.ref", 0x9679, 135
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	14, 10, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 153	; cell 152: song 1 track 16, 1 of 2
 	sq_beat
 	sq_beat

@@ -3460,8 +3460,18 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x206f, 145
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x2078, 136
 	sq_cell	0x80, 0, 35	; cell 34: song 1 track 8, 1 of 27
 	sq_beat
 	sq_beat
@@ -5039,8 +5049,60 @@ P_06FEELIN_SQT_p2:
 	sq_note	54, 0, 82, 62, 18, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x3b18, 232
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	59, 72	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x3b1a, 3
+	sq_cc	82, 0, 16, 1, 10
+	sq_cc	85, 0, 16, 1, 21
+	sq_cc	86, 0, 16, 1, 30
+	sq_cc	89, 0, 16, 1, 37
+	sq_cc	89, 0, 16, 1, 44
+	sq_cc	92, 0, 16, 1, 50
+	sq_cc	95, 0, 16, 1, 56
+	sq_beat
+	sq_cc	0, 0, 16, 1, 60
+	sq_cc	2, 0, 16, 1, 65
+	sq_cc	3, 0, 16, 1, 68
+	sq_cc	6, 0, 16, 1, 71
+	sq_cc	9, 0, 16, 1, 73
+	sq_cc	16, 0, 16, 1, 69
+	sq_cc	19, 0, 16, 1, 66
+	sq_cc	19, 0, 16, 1, 61
+	sq_cc	22, 0, 16, 1, 56
+	sq_cc	25, 0, 16, 1, 51
+	sq_cc	26, 0, 16, 1, 44
+	sq_cc	29, 0, 16, 1, 36
+	sq_cc	32, 0, 16, 1, 27
+	sq_cc	32, 0, 16, 1, 18
+	sq_cc	35, 0, 16, 1, 8
+	sq_cc	36, 0, 16, 1, 0
+	sq_note	56, 0, 77, 105, 86, 0
+	sq_beat
+	sq_bend	38, 0, 64, 60
+	sq_bend	38, 0, 0, 57
+	sq_bend	41, 0, 0, 53
+	sq_bend	44, 0, 0, 46
+	sq_bend	44, 0, 64, 37
+	sq_bend	47, 0, 0, 28
+	sq_bend	48, 0, 0, 18
+	sq_note	51, 0, 80, 102, 90, 0
+	sq_bend	51, 0, 0, 7
+	sq_bend	55, 0, 0, 1
+	sq_bend	55, 0, 0, 0
+	sq_bend	60, 0, 0, 6
+	sq_bend	64, 0, 0, 18
+	sq_bend	64, 0, 0, 30
+	sq_bend	67, 0, 0, 42
+	sq_bend	70, 0, 64, 53
+	sq_bend	71, 0, 0, 61
+	sq_bend	74, 0, 0, 64
+	sq_cc	77, 0, 16, 1, 11
+	sq_cc	80, 0, 16, 1, 20
+	sq_cc	80, 0, 16, 1, 28
+	sq_cc	83, 0, 16, 1, 37
+	sq_cc	87, 0, 16, 1, 44
+	sq_cc	87, 0, 16, 1, 51
 	sq_cell	0x80, 0, 62	; cell 61: song 1 track 9, 1 of 5
 	sq_beat
 	sq_beat
@@ -8039,8 +8101,18 @@ P_06FEELIN_SQT_p2:
 	sq_note	54, 0, 42, 102, 14, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x6cd7, 41
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x6cd7, 4
+	sq_cc	32, 0, 16, 1, 63
+	sq_cc	35, 0, 16, 1, 57
+	sq_cc	36, 0, 16, 1, 51
+	sq_cc	39, 0, 16, 1, 43
+	sq_cc	42, 0, 16, 1, 35
+	sq_cc	42, 0, 16, 1, 26
+	sq_cc	45, 0, 16, 1, 16
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x6cfe, 2
 	sq_cell	0x80, 0, 111	; cell 110: song 1 track 11, 1 of 25
 	sq_cc	0, 0, 6, 11, 127
 	sq_beat
@@ -9548,8 +9620,38 @@ P_06FEELIN_SQT_p2:
 	sq_note	54, 0, 46, 105, 18, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x8581, 127
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	16, 1, 52, 14	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x8585, 4
+	sq_cc	17, 0, 16, 1, 41
+	sq_cc	17, 0, 16, 1, 35
+	sq_cc	20, 0, 16, 1, 27
+	sq_cc	21, 0, 16, 1, 19
+	sq_cc	24, 0, 16, 1, 10
+	sq_cc	27, 0, 16, 1, 1
+	sq_cc	27, 0, 16, 1, 0
+	sq_note	55, 0, 77, 98, 4, 1
+	sq_beat
+	sq_note	51, 0, 76, 99, 23, 0
+	sq_note	73, 0, 75, 102, 22, 0
+	sq_beat
+	sq_note	4, 0, 74, 76, 57, 0
+	sq_beat
+	sq_note	1, 0, 74, 109, 44, 0
+	sq_note	50, 0, 70, 91, 46, 0
+	sq_beat
+	sq_note	1, 0, 74, 100, 47, 0
+	sq_note	49, 0, 75, 90, 50, 0
+	sq_beat
+	sq_note	3, 0, 77, 95, 44, 0
+	sq_note	48, 0, 74, 107, 16, 1
+	sq_bend	62, 0, 0, 62
+	sq_bend	65, 0, 0, 59
+	sq_bend	65, 0, 64, 55
+	sq_bend	68, 0, 0, 53
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x85fd, 3
 	sq_cell	0x80, 0, 136	; cell 135: song 1 track 12, 1 of 3
 	sq_cc	0, 0, 7, 11, 127
 	sq_beat
@@ -10117,8 +10219,9 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x88f5, 11
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 36, 96, 44, 0, 3
+	.byte	144, 42, 93, 13, 0	; the first 5 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 139	; cell 138: song 1 track 13, 1 of 9
 	sq_cc	0, 0, 8, 11, 127
 	sq_note	8, 0, 96, 90, 95, 1
@@ -10941,8 +11044,29 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x91b5, 75
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	51, 0, 75, 112, 89, 0
+	sq_beat
+	sq_note	54, 0, 74, 113, 95, 0
+	sq_beat
+	sq_note	55, 0, 77, 110, 0, 1
+	sq_beat
+	sq_note	57, 0, 75, 106, 32, 1
+	sq_beat
+	sq_note	92, 0, 70, 105, 56, 0
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 70, 109, 55, 0
+	sq_beat
+	sq_note	4, 0, 70, 107, 48, 0
+	sq_note	51, 0, 72, 100, 43, 0
+	sq_beat
+	sq_note	1, 0, 74, 98, 43, 0
+	sq_note	52, 0, 70, 104, 90, 0
+	sq_beat
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x91fb, 5
 	sq_cell	0x80, 0, 148	; cell 147: song 1 track 14, 1 of 3
 	sq_cc	0, 0, 10, 11, 127
 	sq_beat
@@ -11480,8 +11604,51 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x9447, 185
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_cc	27, 0, 16, 1, 22
+	sq_cc	27, 0, 16, 1, 14
+	sq_cc	30, 0, 16, 1, 4
+	sq_cc	33, 0, 16, 1, 0
+	sq_note	48, 0, 79, 103, 19, 1
+	sq_beat
+	sq_note	59, 0, 77, 103, 23, 0
+	sq_note	80, 0, 75, 99, 16, 0
+	sq_beat
+	sq_note	8, 0, 74, 100, 55, 0
+	sq_note	95, 0, 74, 107, 48, 0
+	sq_beat
+	sq_note	50, 0, 70, 95, 44, 0
+	sq_beat
+	sq_note	0, 0, 74, 96, 46, 0
+	sq_note	46, 0, 75, 86, 49, 0
+	sq_note	95, 0, 77, 91, 35, 0
+	sq_beat
+	sq_bend	30, 0, 64, 59
+	sq_bend	34, 0, 0, 56
+	sq_bend	37, 0, 64, 52
+	sq_bend	37, 0, 0, 47
+	sq_bend	40, 0, 0, 41
+	sq_note	43, 0, 74, 100, 18, 1
+	sq_bend	44, 0, 64, 34
+	sq_bend	44, 0, 0, 27
+	sq_bend	47, 0, 0, 23
+	sq_bend	47, 0, 0, 20
+	sq_bend	50, 0, 0, 18
+	sq_bend	57, 0, 64, 26
+	sq_bend	60, 0, 64, 34
+	sq_bend	60, 0, 0, 42
+	sq_bend	63, 0, 0, 50
+	sq_bend	63, 0, 0, 56
+	sq_bend	66, 0, 0, 63
+	sq_bend	70, 0, 0, 64
+	sq_cc	76, 0, 16, 1, 10
+	sq_cc	80, 0, 16, 1, 16
+	sq_cc	80, 0, 16, 1, 21
+	sq_cc	83, 0, 16, 1, 26
+	sq_cc	86, 0, 16, 1, 30
+	sq_cc	86, 0, 16, 1, 33
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0x94fe, 2
 	sq_cell	0x80, 0, 151	; cell 150: song 1 track 15, 1 of 11
 	sq_cc	0, 0, 11, 11, 127
 	sq_beat
@@ -14948,8 +15115,41 @@ P_06FEELIN_SQT_p2:
 	sq_note	6, 0, 72, 83, 59, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0xd081, 127
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_bend	1, 0, 0, 61
+	sq_bend	1, 0, 0, 59
+	sq_bend	5, 0, 0, 57
+	sq_bend	10, 0, 0, 55
+	sq_bend	10, 0, 0, 53
+	sq_bend	10, 0, 0, 50
+	sq_bend	13, 0, 0, 47
+	sq_bend	16, 0, 64, 42
+	sq_bend	16, 0, 64, 38
+	sq_bend	20, 0, 64, 34
+	sq_bend	20, 0, 0, 29
+	sq_bend	23, 0, 0, 24
+	sq_bend	26, 0, 0, 18
+	sq_bend	26, 0, 0, 13
+	sq_bend	29, 0, 0, 6
+	sq_bend	32, 0, 0, 3
+	sq_bend	33, 0, 0, 0
+	sq_bend	42, 0, 0, 33
+	sq_bend	45, 0, 64, 59
+	sq_bend	49, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 75, 106, 44, 0
+	sq_note	49, 0, 77, 95, 47, 0
+	sq_beat
+	sq_note	0, 0, 79, 95, 21, 0
+	sq_bend	31, 0, 64, 60
+	sq_bend	34, 0, 64, 56
+	sq_bend	38, 0, 0, 53
+	sq_bend	38, 0, 0, 47
+	sq_bend	41, 0, 0, 39
+	sq_bend	44, 0, 0, 28
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06FEELIN.sqt.p2.ref", 0xd0fe, 2
 
 	.if	(. - P_06FEELIN_SQT_p2) - 53504
 	.error	"06FEELIN.SQT part 2: the payload is not 53504 bytes"
