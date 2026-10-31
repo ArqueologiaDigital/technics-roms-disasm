@@ -185,3 +185,12 @@ part_sound +5 / +6, above), `ACC_CH_CC3[4]` 0x332f and `ACC_CUR_CC3` 0x3333 (the
 value of the pattern, sent as `0xdn 0x03 v`).  The headers that call them "program" (AccVoice_SendProgChange) and
 "volume" (Rhythm_SendVolume_Dn) are not settled by this lane: the bytes come from 0xD3 events, which the IC19
 analysis reads as damper [INFERENCE]; the names stay neutral.  v6 / v5 have no ram_variables_by_use.s yet.
+
+## Scoop unknowns (N-1fe9a5df, split)
+
+`probes/scoop_unknown_readers.py`: the 64 bytes after Str_TuningEq's "TUNING=", Str_ExtTabEffectEnDis,
+Unref_EF6BD3_Tbl, Unref_EFA7C5_Tbl and ClockConfig_Select_Table have no instruction operand inside them in the
+linear listing, and every 3-byte occurrence of their addresses lies inside other instructions; ParamPopup_PartTuning
+copies exactly 7 bytes.  No reader: closed for these five.  Left: the 0x09 bytes of Tbl_AccompPartNames are
+printed as character code 9 by ParamPopup_AccompPart; what glyph the status font has at 9 was not looked up
+(the region-0 renderer's font must be traced first).
