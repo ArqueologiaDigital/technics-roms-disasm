@@ -64,9 +64,7 @@ MenuStr_PartSetting:
 ;MenuItem     ENDSTRUCT
 
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x50, 0x41, 0x52, 0x54, 0x20, 0x53, 0x45, 0x54
-	.byte	0x54, 0x49, 0x4e, 0x47, 0x00, 0xff
+	aligned_string "PART SETTING"
 NakaMenuItem_Mixer:
 			;     and the text seems to disappear
 			;    with mirror and offset on the x axis

@@ -179,7 +179,7 @@ NakaObj_MidiComputerConn_Table:
 	.byte	0x06, 0xaa, 0xe5, 0x00, 0x04, 0xaa, 0xe5, 0x00
 	.byte	0x02, 0xaa, 0xe5, 0x00, 0x00, 0xaa, 0xe5, 0x00
 	.byte	0xfe, 0xa9, 0xe5, 0x00, 0xfc, 0xa9, 0xe5, 0x00
-	.byte	0xfa, 0xa9, 0xe5, 0x00
+	.long	East_ResNames_35A
 East_ResNames_35A:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x66E, 0x24
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] NakaObj_MidiPmemOutput_Table
@@ -209,7 +209,8 @@ NakaObj_MidiPmemOutput_Table:
 	.byte	0x74, 0xaa, 0xe5, 0x00, 0x72, 0xaa, 0xe5, 0x00
 	.byte	0x70, 0xaa, 0xe5, 0x00, 0x6e, 0xaa, 0xe5, 0x00
 	.byte	0x6c, 0xaa, 0xe5, 0x00, 0x6a, 0xaa, 0xe5, 0x00
-	.byte	0x68, 0xaa, 0xe5, 0x00, 0x66, 0xaa, 0xe5, 0x00
+	.byte	0x68, 0xaa, 0xe5, 0x00
+	.long	East_ResNames_35B
 East_ResNames_35B:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x6DA, 0x4E
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] East_ResNameTable_35C
@@ -290,7 +291,7 @@ East_ResNameTable_3EC:
 	.byte	0x70, 0xac, 0xe5, 0x00, 0x6e, 0xac, 0xe5, 0x00
 	.byte	0x6c, 0xac, 0xe5, 0x00, 0x6a, 0xac, 0xe5, 0x00
 	.byte	0x68, 0xac, 0xe5, 0x00, 0x66, 0xac, 0xe5, 0x00
-	.byte	0x64, 0xac, 0xe5, 0x00
+	.long	East_ResNames_3EC
 East_ResNames_3EC:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x8D8, 0x1A
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] East_ResNames_3EC_Strings
@@ -1134,13 +1135,14 @@ MidiPart_OctaveTable:
 ; Typed in naka_widget_tables_2.c as char
 ; MidiPart_OctaveTable_Strings[44].
 ; -----------------------------------------------------------------------------
+	.long	MidiPart_OctaveStr_m2
 ; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x4a, 0xee, 0xe7, 0x00, 0x46, 0xee, 0xe7, 0x00
-	.byte	0x42, 0xee, 0xe7, 0x00, 0x3e, 0xee, 0xe7, 0x00
-	.byte	0x3a, 0xee, 0xe7, 0x00, 0x36, 0xee, 0xe7, 0x00
-	.byte	0x32, 0xee, 0xe7, 0x00, 0x2e, 0xee, 0xe7, 0x00
-	.byte	0x2a, 0xee, 0xe7, 0x00, 0x26, 0xee, 0xe7, 0x00
-	.byte	0x22, 0xee, 0xe7, 0x00
+	.byte	0x46, 0xee, 0xe7, 0x00, 0x42, 0xee, 0xe7, 0x00
+	.byte	0x3e, 0xee, 0xe7, 0x00, 0x3a, 0xee, 0xe7, 0x00
+	.byte	0x36, 0xee, 0xe7, 0x00, 0x32, 0xee, 0xe7, 0x00
+	.byte	0x2e, 0xee, 0xe7, 0x00, 0x2a, 0xee, 0xe7, 0x00
+	.byte	0x26, 0xee, 0xe7, 0x00
+	.long	MidiPart_OctaveTable_Strings
 MidiPart_OctaveTable_Strings:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x24A96, 0x28
 MidiPart_OctaveStr_m2:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x24ABE, 0x4
 ; -----------------------------------------------------------------------------
@@ -3078,7 +3080,7 @@ PmemOutLGridCheck_Row0_Str_OFF:	.incbin "includes/generated/naka_widget_tables_2
 PmemOutLGridCheck_OnRamData_Str_Fmt3d:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB2, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_2:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB8, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_OFF:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DBE, 0x6	; " OFF "
-PmemOutLGridCheck_OnRamData_Str_Fmt3d_3:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DC4, 0x6	; " %3d "
+PmemOutLGridCheck_OnRamData_Str_Fmt3d_4:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DC4, 0x6	; " %3d "
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] NakaInst_ON
 ; NakaInst_ON -- label kept because other files use it; 82 bytes
@@ -3089,7 +3091,7 @@ PmemOutLGridCheck_OnRamData_Str_Fmt3d_3:	.incbin "includes/generated/naka_widget
 NakaInst_ON:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DCA, 0x6
 PmemOutLGridCheck_OnRamData_Str_OFF_6:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DD0, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_OFF_2:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DD6, 0x6	; " OFF "
-PmemOutLGridCheck_OnRamData_Str_Fmt3d_4:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DDC, 0x6	; " %3d "
+PmemOutLGridCheck_OnRamData_Str_Fmt3d_10:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DDC, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_5:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DE2, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_OFF_3:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DE8, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_6:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DEE, 0x6	; " %3d "
@@ -3513,12 +3515,16 @@ Transpose_ValueDisplay_Table:
 ; Typed in naka_widget_tables_2.c as char
 ; Transpose_ValueDisplay_Table_Strings[48].
 ; -----------------------------------------------------------------------------
+	.long	Transpose_String_Zero
+	.long	Transpose_String_Plus1
+	.long	Transpose_String_Plus2
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x98, 0x06, 0xe8, 0x00, 0x92, 0x06, 0xe8, 0x00
-	.byte	0x8c, 0x06, 0xe8, 0x00, 0x86, 0x06, 0xe8, 0x00
+	.byte	0x86, 0x06, 0xe8, 0x00
+	.long	Transpose_String_Error
+	.long	Transpose_String_Minus3
 ; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x80, 0x06, 0xe8, 0x00, 0x7a, 0x06, 0xe8, 0x00
-	.byte	0x74, 0x06, 0xe8, 0x00, 0x6e, 0x06, 0xe8, 0x00
+	.byte	0x74, 0x06, 0xe8, 0x00
+	.long	Transpose_ValueDisplay_Table_Strings
 Transpose_ValueDisplay_Table_Strings:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262E2, 0xC
 Transpose_String_Minus3:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x262EE, 0x6
 Transpose_String_Error:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x262F4, 0xC
@@ -3634,12 +3640,12 @@ Murai_ApFuncTable_121:
 	.long LswLocalControl
 	.long LswMidiChannel
 	.long BitmapAccger16
-	.long	BitmapDrawsw
+	.long	BitmapAccita16
 	.long LswPercDecay
 	.long LswPercLevel
 	.long LswDrawAttack
 	.long LswDrawRelease
-	.long	BitmapAccger16_Data
+	.long	BitmapDrawsw
 	.long LswSound
 	.long ApPreControl
 	.long BitmapTechnics

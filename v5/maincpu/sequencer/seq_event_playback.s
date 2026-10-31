@@ -3674,10 +3674,10 @@ VocalistGridCheck_OnIndexswDown:	; cases 29360152, 29360154
 	ld	bc, de
 	ld	(xhl+2), bc
 	cpw	(xhl), 1
-	jr	z, VocalistGridCheck_Skip2
+	jr	z, VocalistGridCheck_Skip15
 	cpw	(xhl), 2
 	jrl	nz, AcVocalist_ReturnZero
-VocalistGridCheck_Skip2:
+VocalistGridCheck_Skip15:
 	ld	wa, (xhl)
 	sla	wa, 2
 	dec	4, wa
@@ -3981,7 +3981,7 @@ VocalistGrid_CheckDispData:
 	cp	hl, 16
 	jr	z, VocalistGridCheck_Skip14	; -> 0xF73901
 	cp	hl, 17
-	jr	nz, VocalistGridCheck_Skip15	; -> 0xF73913
+	jr	nz, VocalistGridCheck_Skip23	; -> 0xF73913
 	ld	xwa, VocalistGrid_DispatchData_Str_10
 	jr	VocalistGridCheck_Join10	; -> 0xF73906
 VocalistGridCheck_Skip14:
@@ -3993,7 +3993,7 @@ VocalistGridCheck_Join10:
 	call	Strcpy
 	inc	8, xsp
 	jr	VocalistGridCheck_Join11	; -> 0xF73930
-VocalistGridCheck_Skip15:
+VocalistGridCheck_Skip23:
 	ld	xwa, 11520
 	call	SndParam_LookupReadOnly
 	inc	1, hl
@@ -4466,14 +4466,14 @@ VocalistPage1OKFunc_Join:
 
 VocalistPage2OKFunc:
 	cp xbc, EVT_SW_IN
-	jr nz, VocalistPage2OKFunc_Join5
+	jr nz, VocalistPage2OKFunc_Join2
 	ld xwa, NAKA_MAINFUNC_MainVocalistPage2OKFunc
 	ld xbc, EVT_VST_SEND_OK
 	ld xde, 0:i3
 	call MainFuncCall
 
 ; VocalistPage1OK case 1
-VocalistPage2OKFunc_Join5:
+VocalistPage2OKFunc_Join2:
 	ld xhl, 0:i3
 	ret
 
@@ -4507,18 +4507,18 @@ VocalistPage1OK_Dispatch:
 	ld	xwa, 119808
 	ld	bc, 1:i3
 	ld	de, 2:i3
-	jr	VocalistPage2OKFunc_Join
+	jr	VocalistPage2OKFunc_Join6
 VocalistPage2OKFunc_Skip:
 	ld	xwa, 119808
 	ld	bc, 0:i3
 	ld	de, 2:i3
-VocalistPage2OKFunc_Join:
+VocalistPage2OKFunc_Join6:
 	call	SoundParam_NotifyChange
 	ld	(GLOBAL_ERROR_CODE:16), 35
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-VocalistPage2OKFunc_Join2:
+VocalistPage2OKFunc_Join:
 	call	ApPostEvent
 	ld	(32392:16), 1
 	call	MidiSysEx_SendAllParams
@@ -4552,7 +4552,7 @@ VocalistPage2OKFunc_Join3:
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-	jr	VocalistPage2OKFunc_Join2
+	jr	VocalistPage2OKFunc_Join
 MainVocalistPage1OKFunc_Case4:
 	ld	wa, bc
 	call	MidiSysEx_CopyParamToBuffer
@@ -4582,7 +4582,7 @@ VocalistPage2OKFunc_Join4:
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-	jrl	VocalistPage2OKFunc_Join2
+	jrl	VocalistPage2OKFunc_Join
 MainVocalistPage1OKFunc_Case5:
 	ld	wa, bc
 	call	MidiSysEx_CopyParamToBuffer
@@ -4595,7 +4595,7 @@ MainVocalistPage1OKFunc_Case5:
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-	jrl	VocalistPage2OKFunc_Join2
+	jrl	VocalistPage2OKFunc_Join
 MainVocalistPage2OKFunc:
 	cp	xbc, EVT_VST_SEND_OK
 	jr	nz, VocalistPage2_ReturnZero

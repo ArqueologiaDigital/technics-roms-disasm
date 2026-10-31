@@ -788,16 +788,16 @@ MidiPkt_SendBankSelect_Send:
 	call	SeqOut_FlushTimedBuffer
 	call	ArpQueue_SwapBuffers
 	ret
-MidiPkt_SysExValidator_Data:
+SysEx_OnGmSystemOn:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 108
-	jr	c, MidiPkt_SysExValidator_Data_Skip
+	jr	c, SysEx_OnGmSystemOn_Skip
 	cp	a, 118
-	jr	ule, MidiPkt_SysExValidator_Data_Skip2
-MidiPkt_SysExValidator_Data_Skip:
+	jr	ule, SysEx_OnGmSystemOn_Skip2
+SysEx_OnGmSystemOn_Skip:
 	bit	4, (0xfd50:16)
 	ret	nz
-MidiPkt_SysExValidator_Data_Skip2:
+SysEx_OnGmSystemOn_Skip2:
 	cp	a, 153
 	jr	ugt, MidiPkt_SysExValidator_Data_Skip3
 	cp	a, 148
@@ -867,7 +867,7 @@ MidiPkt_SysExBulkTransfer_Data:
 SysEx_OnRolandGs_UseForRhythmPart:
 	jr	MidiPkt_SysExBulkTransfer_Data_Join
 MidiPkt_SysExBulkTransfer_Data_Case2:
-	jrl	MidiPkt_SysExBulkTransfer_Data_Join3
+	jrl	MidiPkt_SysExBulkTransfer_Data_Helper2_Join3
 MidiPkt_SysExBulkTransfer_Data_Case3:
 	jrl	MidiPkt_SysExBulkTransfer_Data_Join4
 MidiPkt_SysExBulkTransfer_Data_Case4:
@@ -1021,8 +1021,8 @@ MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue:
 	pop	qiz
 	lda	xsp, (xsp+12)
 	ret
-MidiPkt_SysExBulkTransfer_Data_Join3:
-	jrl	MidiPkt_SysExValidator_Data
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join3:
+	jrl	SysEx_OnGmSystemOn
 MidiPkt_SysExBulkTransfer_Data_Join4:
 	dec	2, xsp
 	push	xiz

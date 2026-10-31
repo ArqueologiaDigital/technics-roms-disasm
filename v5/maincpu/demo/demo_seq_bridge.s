@@ -11,7 +11,7 @@
 MiddleFuncCall:
 	ld xwa, xbc
 	cp xbc, EVT_LYRICS_CHARA_REQ
-	jrl	z, MiddleFuncCall_OnTrackMidiCall
+	jrl	z, MiddleFuncCall_OnLyricsCharaReq
 	sub xwa, EVT_DEMO_SONG_SEL
 	cp xwa, 0x0
 	jrl lt, SqTrSel_CaseC
@@ -110,7 +110,7 @@ MiddleFuncCall_OnTrAsPartDec:
 	push	xhl
 	push	xix
 	push	xiz
-	call	MiddleFuncCall_DispatchData_Code_Helper3
+	call	MiddleFuncCall_DispatchData_Helper
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -122,10 +122,9 @@ MiddleFuncCall_OnAmdCall:
 MiddleFuncCall_OnDirectPlayMute:
 	calr	DisplayMode_RefreshState
 	jr	SqTrSel_CaseC
-MiddleFuncCall_OnTrackMidiCall:
+MiddleFuncCall_OnLyricsCharaReq:
 	call	SeqFile_ParseHeader
 ; SqTrSelTtl case B
-; port: v6's label MiddleFuncCall_OnLyricsCharaReq is not in v5 -- no v5 bytes correspond to what it named
 ; SqTrSelTtl case C
 SqTrSel_CaseC:
 	ld xhl, 0:i3

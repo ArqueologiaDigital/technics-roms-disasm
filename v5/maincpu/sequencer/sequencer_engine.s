@@ -1518,8 +1518,8 @@ SeqPlay_RestartWithVoiceConfig_Skip7:
 	and	de, (0xf19e:16)
 	jrl	z, SeqPlay_PopIzSkip6Ret
 	cp	(CURRENT_MODE:16), 19
-	jr	z, SeqPlay_RestartWithVoiceConfig_Skip9
-SeqPlay_RestartWithVoiceConfig_Skip8:
+	jr	z, SeqPlay_RestartWithVoiceConfig_Skip8
+SeqPlay_RestartWithVoiceConfig_Skip10:
 	ld	a, c
 	extz	wa
 	sla	wa, 3
@@ -1538,7 +1538,7 @@ SeqPlay_RestartWithVoiceConfig_Skip8:
 	jr	nz, SeqPlay_ProcessCh_ReadData
 	cp	(xbc+3), 0
 	jr	nz, SeqPlay_ProcessCh_SkipToReturn
-SeqPlay_RestartWithVoiceConfig_Skip9:
+SeqPlay_RestartWithVoiceConfig_Skip8:
 	set	0, (1115:16)
 ; === end v7 block ===
 SeqPlay_ProcessCh_SkipToReturn:
@@ -4898,9 +4898,7 @@ SeqNotePos_CheckInterruptFlag:
 	cp a, (8988:16)
 	jr	z, SeqNotePos_IncrementTick
 	cp a, (8990:16)
-	jr	nz, SeqNotePos_StoreTick_Skip
-
-; port: v7's label SeqNotePos_CheckMainChannel is not in v6 -- no v6 bytes correspond to what it named
+	jr	nz, SeqNotePos_CheckMainChannel
 
 ; port: v7's label SeqNotePos_ClampAndWrite is not in v6 -- no v6 bytes correspond to what it named
 
@@ -4915,7 +4913,7 @@ SeqNotePos_StoreTick:
 	ld (1071:16), a
 
 	jr	SeqNotePos_SetUpdateFlag
-SeqNotePos_StoreTick_Skip:
+SeqNotePos_CheckMainChannel:
 	ld	xwa, (xsp+2)
 	inc	1, xwa
 	cp	(xwa), 0
@@ -8669,11 +8667,11 @@ SeqTimer_SetPlaybackFlags:
 SeqTimerFlags_CheckSysFlag:
 	ldb_d8	a, (SEQ_TRANSPORT_STATE)
 	bit	0, a
-	jr	z, SeqTimer_SetPlaybackFlags_Skip
+	jr	z, SeqTimerFlags_Done
 	set	1, a
 	set	2, a
 	ld	(SEQ_TRANSPORT_STATE:16), a
-SeqTimer_SetPlaybackFlags_Skip:
+SeqTimerFlags_Done:
 	ei	0x00
 	ret
 	dec	6, xsp
@@ -20771,14 +20769,14 @@ AppEvent_InlineHandler_Skip4:
 	ld	bc, (xiz)
 	ld	xwa, (xsp+4)
 	cp	bc, (xwa)
-	jr	ule, AppEvent_InlineHandler_Skip5
+	jr	ule, AppEvent_InlineHandler_Skip21
 	ld	bc, (xiz)
 	ld	(xwa), bc
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 2:i3
 	call	ApDeliveryEvent
-AppEvent_InlineHandler_Skip5:
+AppEvent_InlineHandler_Skip21:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 163
 	jrl	z, AppEvent_InlineHandler_Skip9
@@ -20849,14 +20847,14 @@ AppEvent_InlineHandler_Skip7:
 AppEvent_InlineHandler_Skip8:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 163
-	jr	nz, AppEvent_InlineHandler_Skip10
+	jr	nz, AppEvent_InlineHandler_Skip5
 AppEvent_InlineHandler_Skip9:
 	ld	wa, (9746:16)
 	sub wa, (61911:16)
 	inc	1, wa
 	ld	(61913:16), wa
 	jrl	SeqState_DispatchEntry
-AppEvent_InlineHandler_Skip10:
+AppEvent_InlineHandler_Skip5:
 	cp	a, 161
 	jrl	nz, SeqState_DispatchEntry
 AppEvent_InlineHandler_Skip11:
@@ -21024,9 +21022,9 @@ AppEvent_InlineHandler_Case15:	; cases 15, 16, 17, 18, 19, 20
 	add	xwa, xwa
 	add	xwa, AppEvent_SubDispatch_CaseTable_2
 	ld	wa, (xwa)
-	lda	xix, (AppEvent_SubDispatch_Code_2_Code:24)
+	lda	xix, (AppEvent_InlineHandler_DecMcpTrackA:24)
 	jp	t, (xix+wa)
-AppEvent_SubDispatch_Code_2_Code:
+AppEvent_InlineHandler_DecMcpTrackA:
 	ld	a, (61929:16)
 	cp	a, 1:i3
 	jrl	ule, AppEvent_InlineHandler_Join8
@@ -21117,9 +21115,9 @@ AppEvent_InlineHandler_Case21:	; cases 21, 22, 23, 24, 25, 26
 	add	xwa, xwa
 	add	xwa, AppEvent_SubDispatch_CaseTable
 	ld	wa, (xwa)
-	lda	xix, (AppEvent_SubDispatch_Code_2_Code2:24)
+	lda	xix, (AppEvent_InlineHandler_DecMinsTrackA:24)
 	jp	t, (xix+wa)
-AppEvent_SubDispatch_Code_2_Code2:
+AppEvent_InlineHandler_DecMinsTrackA:
 	ld	a, (61921:16)
 	cp	a, 1:i3
 	jrl	ule, AppEvent_InlineHandler_Join10
@@ -22736,7 +22734,7 @@ SeqAccomp_SubHandlerA:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
-	jrl	ApPlaySyori_Join9
+	jrl	SeqAccomp_SubHandlerB_Code_Join
 ; SeqAccomp_ParamDelivery_IncCycleEnable: Cycle on: TT_SQCYCPLY sets 0x28B1 bit 0; TT_SQCYCREC assigns the parts, sets
 ;   bit 1 and moves the measure to the cycle start.
 SeqAccomp_ParamDelivery_IncCycleEnable:
@@ -22769,7 +22767,7 @@ SeqAccomp_ParamDelivery_IncCycleEnable_Join9:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 4:i3
-	jrl	ApPlaySyori_Join9
+	jrl	SeqAccomp_SubHandlerB_Code_Join
 SeqAccomp_ParamDelivery_Case5:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -22808,7 +22806,7 @@ ApPlaySyori_Skip3:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 5:i3
-	jrl	ApPlaySyori_Join9
+	jrl	SeqAccomp_SubHandlerB_Code_Join
 SeqAccomp_ParamDelivery_Case6:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -22833,7 +22831,7 @@ ApPlaySyori_Join3:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 6:i3
-	jrl	ApPlaySyori_Join9
+	jrl	SeqAccomp_SubHandlerB_Code_Join
 ; SeqAccomp_ParamDelivery_IncPInPOutPCntIn: Parameters 8, 9 and 10 (P in-measure 0xF238, P out-measure 0xF23A, P
 ;   count-in 0xF23F) share this body; an inner compare picks the field.
 SeqAccomp_ParamDelivery_IncPInPOutPCntIn:	; cases 8, 9, 10
@@ -22907,7 +22905,7 @@ SeqAccomp_SubHandlerB:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
-	jrl	ApPlaySyori_Join9
+	jrl	SeqAccomp_SubHandlerB_Code_Join
 SeqAccomp_SubChain_Case4:
 	ldto_berp	c, 239	; ld c,qh
 	ldb_d8	a, (10389)
@@ -22975,7 +22973,7 @@ ApPlaySyori_Join7:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 5:i3
-	jr	ApPlaySyori_Join9
+	jr	SeqAccomp_SubHandlerB_Code_Join
 SeqAccomp_SubChain_Case6:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -23016,7 +23014,7 @@ ApPlaySyori_Join8:
 	ld	xwa, (10582:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 6:i3
-ApPlaySyori_Join9:
+SeqAccomp_SubHandlerB_Code_Join:
 	call	ApDeliveryEvent
 	jrl	SeqAccomp_InitAndReturn
 SeqAccomp_SubChain_Case8:	; cases 8, 9, 10
@@ -25529,9 +25527,9 @@ SeqLoad_ProcessDataBlock_Loop4:
 	call	Part_ReadVoiceWord
 	ld	iz, hl
 	cp	iz, 0:i3
-	jr	z, SeqLoad_ProcessDataBlock_Skip4
+	jr	z, SeqLoad_ProcessDataBlock_Skip5
 	cp	iz, 65535
-	jr	z, SeqLoad_ProcessDataBlock_Skip4
+	jr	z, SeqLoad_ProcessDataBlock_Skip5
 	add	iz, (xsp+6)
 	ldto_berp	c, 251
 	extz	bc
@@ -25549,7 +25547,7 @@ SeqLoad_ProcessDataBlock_Loop4:
 	ld	wa, 0:i3
 	ld	de, iz
 	call	Part_WriteWord_Indexed
-SeqLoad_ProcessDataBlock_Skip4:
+SeqLoad_ProcessDataBlock_Skip5:
 	inc1b_erp	251
 	cp_erpb	251, 16
 	jr	ule, SeqLoad_ProcessDataBlock_Loop4
@@ -25567,27 +25565,27 @@ SeqLoad_ProcessDataBlock_Loop5:
 	call	PartCtrl_ReadWord_Off1
 	ld	bc, hl
 	cp	bc, 65535
-	jr	z, SeqLoad_ProcessDataBlock_Skip5
+	jr	z, SeqLoad_ProcessDataBlock_Skip6
 	cp	bc, 0:i3
-	jr	z, SeqLoad_ProcessDataBlock_Skip5
+	jr	z, SeqLoad_ProcessDataBlock_Skip6
 	add	bc, (xsp+6)
 	ld	wa, iz
 	add	wa, (xsp+4)
 	call	PartCtrl_WriteWord_Off1
-SeqLoad_ProcessDataBlock_Skip5:
+SeqLoad_ProcessDataBlock_Skip6:
 	ld	wa, iz
 	add	wa, (xsp+4)
 	call	PartCtrl_ReadWord
 	ld	bc, hl
 	cp	bc, 65535
-	jr	z, SeqLoad_ProcessDataBlock_Skip6
+	jr	z, SeqLoad_ProcessDataBlock_Skip4
 	cp	bc, 0:i3
-	jr	z, SeqLoad_ProcessDataBlock_Skip6
+	jr	z, SeqLoad_ProcessDataBlock_Skip4
 	add	bc, (xsp+6)
 	ld	wa, iz
 	add	wa, (xsp+4)
 	call	PartCtrl_WriteWord
-SeqLoad_ProcessDataBlock_Skip6:
+SeqLoad_ProcessDataBlock_Skip4:
 	incw	1, (xsp+4)
 	ld	wa, (xsp+4)
 	cp	wa, (xsp+8)
@@ -26395,7 +26393,7 @@ SeqLoad_ProcessVoiceFound:
 	cpw (xsp + 8), 0x1
 	jr z, VoiceData_ProcessLoop
 	cpw (xsp + 8), 0x2
-	jrl	nz, VoiceData_NextWord_Skip
+	jrl	nz, VoiceData_NextWord
 
 VoiceData_ProcessLoop:
 	call Part_ProcessAndDecrementVoice
@@ -26439,7 +26437,7 @@ SeqLoad_ProcessNextInner:
 	jr z, SeqLoad_ProcessNextOuter
 	ld bc, (xsp + 10)
 	call PartCtrl_WriteWord
-	jr	VoiceData_NextWord
+	jr	SeqLoad_ProcessReturn
 
 SeqLoad_ProcessNextOuter:
 	ld a, (xsp + 4)
@@ -26449,29 +26447,26 @@ SeqLoad_ProcessNextOuter:
 	ld de, (xsp + 10)
 	call Part_WriteVoiceWord
 
-; port: v6's label SeqLoad_ProcessReturn is not in v5 -- no v5 bytes correspond to what it named
-
-; port: v6's label SeqLoad_ProcessCopyLoop is not in v5 -- no v5 bytes correspond to what it named
 	ld a, (xsp + 4)
 	dec 1, a
 	cp a, (0xffe3:24)
-	jr nz, VoiceData_NextWord
+	jr nz, SeqLoad_ProcessReturn
 	ld c, (xsp + 6)
 	extz bc
 	ld wa, 0:i3
 	ld de, (xsp + 10)
 	call	Part_WriteVoiceWord
 
-VoiceData_NextWord:
+SeqLoad_ProcessReturn:
 	ld wa, (xsp + 8)
 	call PartCtrl_ReadWord
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr	z, VoiceData_NextWord_Skip2
+	jr	z, SeqLoad_ProcessCopyLoop
 	ld	bc, (xsp+10)
 	call	PartCtrl_WriteWord_Off1
-	jr	VoiceData_NextWord_Skip
-VoiceData_NextWord_Skip2:
+	jr	VoiceData_NextWord
+SeqLoad_ProcessCopyLoop:
 	ld	a, (xsp+4)
 	extz	wa
 	ld	c, (xsp+6)
@@ -26481,13 +26476,13 @@ VoiceData_NextWord_Skip2:
 	ld	a, (xsp+4)
 	dec	1, a
 	cp	a, (0xffe3:24)
-	jr	nz, VoiceData_NextWord_Skip
+	jr	nz, VoiceData_NextWord
 	ld	c, (xsp+6)
 	extz	bc
 	ld	wa, 0:i3
 	ld	de, (xsp+10)
 	call	Part_WriteWord_Indexed
-VoiceData_NextWord_Skip:
+VoiceData_NextWord:
 	ld	wa, (xsp+8)
 	call	PartCtrl_ReadWord
 	ld (xsp + 8), hl

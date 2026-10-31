@@ -5822,25 +5822,16 @@ AcIndexToggleFunc_CheckMatch:
 
 AttAreYouSureCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr	nz, AttAreYouSureCheck_Skip
+	jr	nz, AttModePreCheck_ReturnZero
 	lda xhl, (AttAreYouSureCheck_PtrTable:24)
 	ret
-AttAreYouSureCheck_Skip:
+AttModePreCheck_ReturnZero:
 	ld	xhl, 0:i3
 	ret
-	cp	xbc, 0x1e0009f
-	jr	nz, AttModePreCheck_ReturnZero
-	lda	xhl, (AttAttentionCheck_PtrTable:24)
-	ret
-
-AttModePreCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
 AttAttentionCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, AttAttentionCheck_ReturnZero
-	lda	xhl, (StsSeqMenu1Check_PtrTable:24)
+	cp	xbc, 0x1e0009f
+	jr	nz, AttAttentionCheck_ReturnZero
+	lda	xhl, (AttAttentionCheck_PtrTable:24)
 	ret
 
 AttAttentionCheck_ReturnZero:
@@ -5850,7 +5841,7 @@ AttAttentionCheck_ReturnZero:
 StsSeqMenu1Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsSeqMenu1Check_ReturnZero
-	lda	xhl, (StsSeqMenu2Check_PtrTable:24)
+	lda	xhl, (StsSeqMenu1Check_PtrTable:24)
 	ret
 
 StsSeqMenu1Check_ReturnZero:
@@ -5860,7 +5851,7 @@ StsSeqMenu1Check_ReturnZero:
 StsSeqMenu2Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsSeqMenu2Check_ReturnZero
-	lda	xhl, (StsEasyRec1Check_PtrTable:24)
+	lda	xhl, (StsSeqMenu2Check_PtrTable:24)
 	ret
 
 StsSeqMenu2Check_ReturnZero:
@@ -5870,7 +5861,7 @@ StsSeqMenu2Check_ReturnZero:
 StsEasyRec1Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsEasyRec1Check_ReturnZero
-	lda	xhl, (StsEasyRec2Check_PtrTable:24)
+	lda	xhl, (StsEasyRec1Check_PtrTable:24)
 	ret
 
 StsEasyRec1Check_ReturnZero:
@@ -5880,7 +5871,7 @@ StsEasyRec1Check_ReturnZero:
 StsEasyRec2Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsEasyRec2Check_ReturnZero
-	lda	xhl, (StsPnlWrtCheck_PtrTable:24)
+	lda	xhl, (StsEasyRec2Check_PtrTable:24)
 	ret
 
 StsEasyRec2Check_ReturnZero:
@@ -5890,7 +5881,7 @@ StsEasyRec2Check_ReturnZero:
 StsPnlWrtCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsPnlWrtCheck_ReturnZero
-	lda	xhl, (StsTrkClr1Check_PtrTable:24)
+	lda	xhl, (StsPnlWrtCheck_PtrTable:24)
 	ret
 
 StsPnlWrtCheck_ReturnZero:
@@ -5900,7 +5891,7 @@ StsPnlWrtCheck_ReturnZero:
 StsTrkClr1Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsTrkClr1Check_ReturnZero
-	lda	xhl, (StsTrkClr2Check_PtrTable:24)
+	lda	xhl, (StsTrkClr1Check_PtrTable:24)
 	ret
 
 StsTrkClr1Check_ReturnZero:
@@ -5910,7 +5901,7 @@ StsTrkClr1Check_ReturnZero:
 StsTrkClr2Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsTrkClr2Check_ReturnZero
-	lda	xhl, (StsNtDrEditCheck_PtrTable:24)
+	lda	xhl, (StsTrkClr2Check_PtrTable:24)
 	ret
 
 StsTrkClr2Check_ReturnZero:
@@ -5920,7 +5911,7 @@ StsTrkClr2Check_ReturnZero:
 StsNtDrEditCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StsNtDrEditCheck_ReturnZero
-	lda	xhl, (AttTrkClrCheck_PtrTable:24)
+	lda	xhl, (StsNtDrEditCheck_PtrTable:24)
 	ret
 
 StsNtDrEditCheck_ReturnZero:
@@ -5930,7 +5921,7 @@ StsNtDrEditCheck_ReturnZero:
 AttTrkClrCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, AttTrkClrCheck_ReturnZero
-	lda	xhl, (AttSongClrCheck_PtrTable:24)
+	lda	xhl, (AttTrkClrCheck_PtrTable:24)
 	ret
 
 AttTrkClrCheck_ReturnZero:
@@ -5940,16 +5931,22 @@ AttTrkClrCheck_ReturnZero:
 AttSongClrCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, AttSongClrCheck_ReturnZero
-	lda	xhl, (StsAtPunchCheck_PtrTable:24)
+	lda	xhl, (AttSongClrCheck_PtrTable:24)
 	ret
 
 AttSongClrCheck_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-; port: v6's label StsAtPunchCheck is not in v5 -- no v5 bytes correspond to what it named
+StsAtPunchCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, StsAtPunchCheck_ReturnZero
+	lda	xhl, (StsAtPunchCheck_PtrTable:24)
+	ret
 
-; port: v6's label StsAtPunchCheck_ReturnZero is not in v5 -- no v5 bytes correspond to what it named
+StsAtPunchCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
 
 MsgToTtlProc:
 	cp xbc, EVT_SHOW

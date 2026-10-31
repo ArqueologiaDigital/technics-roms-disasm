@@ -824,7 +824,7 @@ PlayModeStop_ClearFlagBlock:
 	ret
 	ret
 	ret
-DpMdlySmfLyrTtlFunc_Helper2:
+DpMdlySmfLyrTtl_NullRet:
 	ret
 DpMdlySmfLyrTtlFunc_Helper3:
 	cp (CURRENT_TITLE:16), 0x6c
@@ -2092,7 +2092,7 @@ DpMdlySmfLyrTtl_Dispatch_Skip2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper2
+	call	DpMdlySmfLyrTtl_NullRet
 	pop	xiz
 	pop	xix
 	pop	xhl

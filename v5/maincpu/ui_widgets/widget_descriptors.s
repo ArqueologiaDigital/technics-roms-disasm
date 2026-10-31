@@ -1282,7 +1282,7 @@ ExtDevice_ModeDispatch_Table:	.incbin "includes/generated/naka_widget_descriptor
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AttAttentionCheck_PtrTable
 ; AttAttentionCheck_PtrTable -- 6 u32 addresses, read by
-; AttAttentionCheck (v10/v9 0xf2ef2e, v7 0xf2ef04) (`lda xhl,
+; StsSeqMenu1Check (v10/v9 0xf2ef2e, v7 0xf2ef04) (`lda xhl,
 ; (AttAttentionCheck_PtrTable:24)`).
 ;
 ; Typed in naka_widget_descriptors.c as uint32_t
@@ -1291,7 +1291,7 @@ ExtDevice_ModeDispatch_Table:	.incbin "includes/generated/naka_widget_descriptor
 AttAttentionCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x368C, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsSeqMenu1Check_PtrTable
-; StsSeqMenu1Check_PtrTable -- 6 u32 addresses, read by StsSeqMenu1Check
+; StsSeqMenu1Check_PtrTable -- 6 u32 addresses, read by StsSeqMenu2Check
 ; (v10/v9 0xf2ef3f, v7 0xf2ef15) (`lda xhl,
 ; (StsSeqMenu1Check_PtrTable:24)`).
 ;
@@ -1301,7 +1301,7 @@ AttAttentionCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.
 StsSeqMenu1Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x36A4, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsSeqMenu2Check_PtrTable
-; StsSeqMenu2Check_PtrTable -- 6 u32 addresses, read by StsSeqMenu2Check
+; StsSeqMenu2Check_PtrTable -- 6 u32 addresses, read by StsEasyRec1Check
 ; (v10/v9 0xf2ef50, v7 0xf2ef26) (`lda xhl,
 ; (StsSeqMenu2Check_PtrTable:24)`).
 ;
@@ -1311,7 +1311,7 @@ StsSeqMenu1Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.b
 StsSeqMenu2Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x36BC, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsEasyRec1Check_PtrTable
-; StsEasyRec1Check_PtrTable -- 6 u32 addresses, read by StsEasyRec1Check
+; StsEasyRec1Check_PtrTable -- 6 u32 addresses, read by StsEasyRec2Check
 ; (v10/v9 0xf2ef61, v7 0xf2ef37) (`lda xhl,
 ; (StsEasyRec1Check_PtrTable:24)`).
 ;
@@ -1321,7 +1321,7 @@ StsSeqMenu2Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.b
 StsEasyRec1Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x36D4, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsEasyRec2Check_PtrTable
-; StsEasyRec2Check_PtrTable -- 6 u32 addresses, read by StsEasyRec2Check
+; StsEasyRec2Check_PtrTable -- 6 u32 addresses, read by StsPnlWrtCheck
 ; (v10/v9 0xf2ef72, v7 0xf2ef48) (`lda xhl,
 ; (StsEasyRec2Check_PtrTable:24)`).
 ;
@@ -1331,7 +1331,7 @@ StsEasyRec1Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.b
 StsEasyRec2Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x36EC, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsPnlWrtCheck_PtrTable
-; StsPnlWrtCheck_PtrTable -- 6 u32 addresses, read by StsPnlWrtCheck
+; StsPnlWrtCheck_PtrTable -- 6 u32 addresses, read by StsTrkClr1Check
 ; (v10/v9 0xf2ef83, v7 0xf2ef59) (`lda xhl,
 ; (StsPnlWrtCheck_PtrTable:24)`).
 ;
@@ -1341,7 +1341,7 @@ StsEasyRec2Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.b
 StsPnlWrtCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3704, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsTrkClr1Check_PtrTable
-; StsTrkClr1Check_PtrTable -- 6 u32 addresses, read by StsTrkClr1Check
+; StsTrkClr1Check_PtrTable -- 6 u32 addresses, read by StsTrkClr2Check
 ; (v10/v9 0xf2ef94, v7 0xf2ef6a) (`lda xhl,
 ; (StsTrkClr1Check_PtrTable:24)`).
 ;
@@ -1351,7 +1351,7 @@ StsPnlWrtCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin
 StsTrkClr1Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x371C, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsTrkClr2Check_PtrTable
-; StsTrkClr2Check_PtrTable -- 6 u32 addresses, read by StsTrkClr2Check
+; StsTrkClr2Check_PtrTable -- 6 u32 addresses, read by StsNtDrEditCheck
 ; (v10/v9 0xf2efa5, v7 0xf2ef7b) (`lda xhl,
 ; (StsTrkClr2Check_PtrTable:24)`).
 ;
@@ -1361,7 +1361,7 @@ StsTrkClr1Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bi
 StsTrkClr2Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3734, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] StsNtDrEditCheck_PtrTable
-; StsNtDrEditCheck_PtrTable -- 6 u32 addresses, read by StsNtDrEditCheck
+; StsNtDrEditCheck_PtrTable -- 6 u32 addresses, read by AttTrkClrCheck
 ; (v10/v9 0xf2efb6, v7 0xf2ef8c) (`lda xhl,
 ; (StsNtDrEditCheck_PtrTable:24)`).
 ;
@@ -1371,7 +1371,7 @@ StsTrkClr2Check_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bi
 StsNtDrEditCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x374C, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AttTrkClrCheck_PtrTable
-; AttTrkClrCheck_PtrTable -- 6 u32 addresses, read by AttTrkClrCheck
+; AttTrkClrCheck_PtrTable -- 6 u32 addresses, read by AttSongClrCheck
 ; (v10/v9 0xf2efc7, v7 0xf2ef9d) (`lda xhl,
 ; (AttTrkClrCheck_PtrTable:24)`).
 ;
@@ -1381,7 +1381,7 @@ StsNtDrEditCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.b
 AttTrkClrCheck_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3764, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AttSongClrCheck_PtrTable
-; AttSongClrCheck_PtrTable -- 6 u32 addresses, read by AttSongClrCheck
+; AttSongClrCheck_PtrTable -- 6 u32 addresses, read by StsAtPunchCheck
 ; (v10/v9 0xf2efd8, v7 0xf2efae) (`lda xhl,
 ; (AttSongClrCheck_PtrTable:24)`).
 ;
@@ -4177,39 +4177,39 @@ AppEvent_ChainDispatch1_CaseTable:
 ; AppEvent_SubDispatch_CaseTable -- jump table of a compiled `switch` in
 ; AppEvent_SubDispatch (v10/v9 0xf448a4, v7 0xf44896) (`add xwa,
 ; AppEvent_SubDispatch_CaseTable`): case k jumps to
-; AppEvent_SubDispatch_Code_2_Code2 + entry[k] (`lda
-; xix,(AppEvent_SubDispatch_Code_2_Code2); jp t, (xrr+rr)`). 6 u16 offsets; the
+; AppEvent_InlineHandler_DecMinsTrackA + entry[k] (`lda
+; xix,(AppEvent_InlineHandler_DecMinsTrackA); jp t, (xrr+rr)`). 6 u16 offsets; the
 ; reader's bound `cp ..., 5` pins 6 cases.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; AppEvent_SubDispatch_CaseTable[6].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_CaseTable:
-	.short	AppEvent_SubDispatch_Code_2_Code2 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case22 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case23 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case24 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case25 - AppEvent_SubDispatch_Code_2_Code2
-	.short	AppEvent_SubDispatch_Case26 - AppEvent_SubDispatch_Code_2_Code2
+	.short	AppEvent_InlineHandler_DecMinsTrackA - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case22 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case23 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case24 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case25 - AppEvent_InlineHandler_DecMinsTrackA
+	.short	AppEvent_SubDispatch_Case26 - AppEvent_InlineHandler_DecMinsTrackA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_CaseTable_2
 ; AppEvent_SubDispatch_CaseTable_2 -- jump table of a compiled `switch`
 ; in AppEvent_SubDispatch (v10/v9 0xf448a4, v7 0xf44896) (`add xwa,
 ; AppEvent_SubDispatch_CaseTable_2`): case k jumps to
-; AppEvent_SubDispatch_Code_2_Code + entry[k] (`lda
-; xix,(AppEvent_SubDispatch_Code_2_Code); jp t, (xrr+rr)`). 6 u16 offsets; the
+; AppEvent_InlineHandler_DecMcpTrackA + entry[k] (`lda
+; xix,(AppEvent_InlineHandler_DecMcpTrackA); jp t, (xrr+rr)`). 6 u16 offsets; the
 ; reader's bound `cp ..., 5` pins 6 cases.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
 ; AppEvent_SubDispatch_CaseTable_2[6].
 ; -----------------------------------------------------------------------------
 AppEvent_SubDispatch_CaseTable_2:
-	.short	AppEvent_SubDispatch_Code_2_Code - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case16 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case17 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case18 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case19 - AppEvent_SubDispatch_Code_2_Code
-	.short	AppEvent_InlineHandler_Switch4_Case20 - AppEvent_SubDispatch_Code_2_Code
+	.short	AppEvent_InlineHandler_DecMcpTrackA - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case16 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case17 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case18 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case19 - AppEvent_InlineHandler_DecMcpTrackA
+	.short	AppEvent_InlineHandler_Switch4_Case20 - AppEvent_InlineHandler_DecMcpTrackA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AppEvent_SubDispatch_Table
 ; AppEvent_SubDispatch_Table -- read by AppEvent_SubDispatch (v10/v9
@@ -6264,7 +6264,7 @@ SndArgNmGet_RamPtrsB:	.incbin "includes/generated/naka_widget_descriptors.bin", 
 ; (v10/v9 0xf6a2e2, v7 0xf69ede): ldirw 8 words to its frame and passes
 ; the copy to DirmdEmulator_Entry (v10/v9 0xf9ae97, v7 0xf9aa8a). Four
 ; code addresses inside CmpStepTitleFunc's own region (0xf6a2ff =
-; CmpStep_DataBlock, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
+; CmpStepTitle_OnPaint, 0xf6a32c, 0xf6a339, 0xf6a346 in v10/v9; v7
 ; relocates them by -0x404 through v7_c_divergence.json) -- code entry
 ; points that the accompaniment_engine.s framing does not yet show as
 ; code.

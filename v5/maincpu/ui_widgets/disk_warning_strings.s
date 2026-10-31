@@ -217,7 +217,7 @@ CtrlPanel_DispatchByIndex_CaseTable:
 	.short	GetClientBox2_RightOnOffTab16 - CtrlPanel_FrameDispatchTable
 	.short	GetClientBox2_Case50 - CtrlPanel_FrameDispatchTable
 	.short	GetClientBox2_RightOnOffTab32 - CtrlPanel_FrameDispatchTable
-	.short	GetClientBox2_Case52 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightOnOffTab48 - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
@@ -393,7 +393,8 @@ WndScroll_LowerCharTable:
 	.byte	0xac, 0x9c, 0xea, 0x00, 0xaa, 0x9c, 0xea, 0x00
 	.byte	0xa8, 0x9c, 0xea, 0x00, 0xa6, 0x9c, 0xea, 0x00
 	.byte	0xa4, 0x9c, 0xea, 0x00, 0xa2, 0x9c, 0xea, 0x00
-	.byte	0x9e, 0x9c, 0xea, 0x00, 0x9c, 0x9c, 0xea, 0x00
+	.byte	0x9e, 0x9c, 0xea, 0x00
+	.long	WndScroll_LowerCharText
 WndScroll_LowerCharText:	.incbin "includes/generated/naka_disk_warning.bin", 0x1104, 0x50
 ; WndScroll_SymbolPageChars -- 33 x u32: page 2 (symbols) of the name-entry character pages; [i] = symbol i as text,
 ; "~XX" meaning character code 0xXX (ConvertStrings).  Entry 2 of AcNaming_PageCharLists (one table per page,
@@ -873,7 +874,8 @@ PsTrkSw_AssignNamePtrs:
 	.byte	0xa8, 0xa6, 0xea, 0x00, 0xa4, 0xa6, 0xea, 0x00
 	.byte	0xa0, 0xa6, 0xea, 0x00, 0x9c, 0xa6, 0xea, 0x00
 	.byte	0x98, 0xa6, 0xea, 0x00, 0x94, 0xa6, 0xea, 0x00
-	.byte	0x90, 0xa6, 0xea, 0x00, 0x8c, 0xa6, 0xea, 0x00
+	.byte	0x90, 0xa6, 0xea, 0x00
+	.long	PsTrkSw_AssignNames
 PsTrkSw_AssignNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x1AF4, 0x50
 ; PsTrkSw_SelectStateLabels -- 5 x u32: track-switch label per select state 0-4: "", "REC", "PLAY", "MUTE", "CLR"
 ; PsTrackSwitchProc (ui/ui_widget_defs.s) copies it (10 words) to a local; on EVT_SELE_DRAW it indexes the copy by the
@@ -1363,7 +1365,7 @@ GraphicsRender_Start_PtrTable:
 	.long	ColorBlit_WithPaletteSave
 	.long	ColorBlit_Variant_ByteData
 	.long	DrawFunc_Init_Variant1
-	.long	AccDraw_Secondary_Helper20
+	.long	SeGfx_BoundOp06_PrintWord
 	.long	DrawText_ExtLayout_Variant1
 	.long	SeGfx_BoundOp08_ColorBlit
 	.long	SeGfx_BoundOp09_FormatNumber
@@ -1468,17 +1470,17 @@ DrawFunc_Init_Entry_Str_Fmt4d:		.incbin "includes/generated/naka_disk_warning.bi
 SeGfx_BoundOp06_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x24AC, 0x8
 ; [nakarest] naka_disk_warning+0x24b4  +0x24b4..+0x24b8 (0xeab160, 4 B)
 ; [nakarest] Text (4 B at 0xeab160), first string "%1d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry_Str_Fmt1d`).
 DrawFunc_Init_Entry_Str_Fmt1d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B4, 0x4	; "%1d"
 ; [nakarest] naka_disk_warning+0x24b8  +0x24b8..+0x24bc (0xeab164, 4 B)
 ; [nakarest] Text (4 B at 0xeab164), first string "%2d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry2_Str_Fmt2d`).
 DrawFunc_Init_Entry2_Str_Fmt2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B8, 0x4	; "%2d"
 ; [nakarest] naka_disk_warning+0x24bc  +0x24bc..+0x24f4 (0xeab168, 56 B)
 ; [nakarest] Text (56 B at 0xeab168), first string "%3d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry3_Str_Fmt3d`).
 DrawFunc_Init_Entry3_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24BC, 0x4	; "%3d"
 ; SeGfx_BoundOp09_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen
@@ -1936,7 +1938,8 @@ NakaClass_VwMenuBox_PropNameText:	.incbin "includes/generated/naka_disk_warning.
 ; TODO(port): v5 bytes with no v6 line -- disassemble
 	.byte	0xf2, 0xc4, 0xea, 0x00, 0xee, 0xc4, 0xea, 0x00
 	.byte	0xec, 0xc4, 0xea, 0x00, 0x00, 0xff, 0x73, 0x74
-	.byte	0x72, 0x00, 0x73, 0x74, 0x79, 0x6c, 0x65, 0x00
+	.byte	0x72, 0x00
+	.asciz	"style"
 NakaClass_VwEditSwBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x3948, 0xC
 ; NakaClass_VwEditSwBox_PropNameText -- 12 x char: the property-name strings NakaClass_VwEditSwBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
 NakaClass_VwEditSwBox_PropNameText:	.incbin "includes/generated/naka_disk_warning.bin", 0x3954, 0xC
@@ -1965,17 +1968,19 @@ NakaClass_AcWindowMenu_PropNameText:	.incbin "includes/generated/naka_disk_warni
 NakaClass_AcBitEditBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x39E2, 0xC
 ; NakaClass_AcBitEditBox_PropNameText -- 14 x char: the property-name strings NakaClass_AcBitEditBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff, 0x64, 0x61, 0x74, 0x61, 0x00, 0xff
-	.byte	0x66, 0x75, 0x6e, 0x63, 0x00, 0xff
+	.byte	0x00, 0xff
+	aligned_string "data"
+	aligned_string "func"
 NakaClass_AcFuncToggle_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x9e, 0xc5, 0xea, 0x00, 0x9c, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff, 0x66, 0x75, 0x6e, 0x63, 0x00, 0xff
+	.byte	0x00, 0xff
+	aligned_string "func"
 NakaClass_PsWideToggle_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xae, 0xc5, 0xea, 0x00, 0xac, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff, 0x65, 0x64, 0x69, 0x74, 0x73, 0x77
-	.byte	0x32, 0x00
+	.byte	0x00, 0xff
+	.asciz	"editsw2"
 NakaClass_DbMemo_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xba, 0xc5, 0xea, 0x00, 0x00, 0xff
@@ -1985,38 +1990,41 @@ NakaClass_IvExit_PropNames:
 NakaClass_IvExitMode_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xcc, 0xc5, 0xea, 0x00, 0xca, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff, 0x6d, 0x6f, 0x64, 0x65, 0x00, 0xff
+	.byte	0x00, 0xff
+	aligned_string "mode"
 NakaClass_IvExitScreen_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xdc, 0xc5, 0xea, 0x00, 0xda, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff, 0x73, 0x63, 0x72, 0x65, 0x65, 0x6e
 	.byte	0x00, 0xff
+	aligned_string "screen"
 NakaClass_IvFixWin_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xee, 0xc5, 0xea, 0x00, 0xec, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff, 0x77, 0x69, 0x6e, 0x64, 0x6f, 0x77
 	.byte	0x00, 0xff
+	aligned_string "window"
 NakaClass_AcNamingWindow_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xfa, 0xc5, 0xea, 0x00, 0x00, 0xff
 NakaClass_PsCursorBox_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x06, 0xc6, 0xea, 0x00, 0x04, 0xc6, 0xea, 0x00
-	.byte	0x00, 0xff, 0x63, 0x75, 0x72, 0x73, 0x6f, 0x72
 	.byte	0x00, 0xff
+	aligned_string "cursor"
 NakaClass_IvNaming_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x18, 0xc6, 0xea, 0x00, 0x16, 0xc6, 0xea, 0x00
-	.byte	0x00, 0xff, 0x66, 0x75, 0x6e, 0x63, 0x00, 0xff
+	.byte	0x00, 0xff
+	aligned_string "func"
 NakaClass_AcIndexToggle_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x30, 0xc6, 0xea, 0x00, 0x2c, 0xc6, 0xea, 0x00
 	.byte	0x2a, 0xc6, 0xea, 0x00, 0x00, 0xff, 0x74, 0x61
-	.byte	0x67, 0x00, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x00
+	.byte	0x67, 0x00
+	.asciz	"index"
 NakaClass_AcRamBox_PropNames:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x4a, 0xc6, 0xea, 0x00, 0x44, 0xc6, 0xea, 0x00
-	.byte	0x42, 0xc6, 0xea, 0x00
+	.long	NakaClass_AcBitEditBox_PropNameText
 NakaClass_AcBitEditBox_PropNameText:	.incbin "includes/generated/naka_disk_warning.bin", 0x39EE, 0xE
 ; NakaClass_AcFuncToggle_PropNames -- 2 x u32: name pointers of class AcFuncToggle (0x1600044)'s own properties, one per letter of its propdata "j":
 ; "func", ended by "". +20 (propname) of entry 68 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].

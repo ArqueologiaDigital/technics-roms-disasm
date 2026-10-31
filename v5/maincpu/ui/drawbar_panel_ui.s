@@ -1375,10 +1375,10 @@ PmemOutLGridCheck_OnRamData:
 	add	xwa, xbc
 	add	xwa, xde
 	bit	1, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip5
+	jr	z, PmemOutLGridCheck_OnRamData_Skip4
 	ld	xwa, PmemOutLGrid_Str_ON
 	jr	PmemOutLGridCheck_OnRamData_Join3
-PmemOutLGridCheck_OnRamData_Skip5:
+PmemOutLGridCheck_OnRamData_Skip4:
 	ld	xwa, PmemOutLGrid_Str_OFF
 PmemOutLGridCheck_OnRamData_Join3:
 	push	xwa
@@ -1411,7 +1411,7 @@ PmemOutLGridCheck_OnRamData_Join3:
 	add	xwa, xhl
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip6
+	jr	z, PmemOutLGridCheck_OnRamData_Skip18
 	pushw	PmemOutLGridCheck_Row0_Str_OFF@hi16
 	pushw	PmemOutLGridCheck_Row0_Str_OFF@lo16
 	lda	xwa, (xsp+48)
@@ -1419,7 +1419,7 @@ PmemOutLGridCheck_OnRamData_Join3:
 	call	Strcpy
 	inc	8, xsp
 	jr	PmemOutLGridCheck_OnRamData_Join4
-PmemOutLGridCheck_OnRamData_Skip6:
+PmemOutLGridCheck_OnRamData_Skip18:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
@@ -1496,8 +1496,8 @@ PmemOutLGridCheck_OnRamData_Skip7:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_3@hi16
-	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_3@lo16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_4@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_4@lo16
 	lda	xwa, (xsp+50)
 	push	xwa
 	call	Sprintf_Locked
@@ -1529,10 +1529,10 @@ PmemOutLGridCheck_OnRamData_Skip8:
 	ld	xwa, (xsp+28)
 	ld	xwa, (xwa)
 	bit	1, wa
-	jr	z, PmemOutLGridCheck_OnRamData_Skip9
+	jr	z, PmemOutLGridCheck_OnRamData_Skip6
 	ld	xwa, NakaInst_ON
 	jr	PmemOutLGridCheck_OnRamData_Join6
-PmemOutLGridCheck_OnRamData_Skip9:
+PmemOutLGridCheck_OnRamData_Skip6:
 	ld	xwa, PmemOutLGridCheck_OnRamData_Str_OFF_6
 PmemOutLGridCheck_OnRamData_Join6:
 	push	xwa
@@ -1599,8 +1599,8 @@ PmemOutLGridCheck_OnRamData_Skip11:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
-	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_4@hi16
-	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_4@lo16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_10@hi16
+	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_10@lo16
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
@@ -3224,7 +3224,7 @@ CtlMsgGridCheck_OnIndexswUp:
 	ld	xwa, (xwa+de)
 	ld	bc, 1:i3
 	ld	de, 2:i3
-	jr	CtlMsgGridCheck_Join
+	jr	CtlMsgGridCheck_Entry
 CtlMsgGridCheck_OnIndexswDown:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -3252,7 +3252,7 @@ CtlMsgGridCheck_OnIndexswDown:
 	ld	xwa, (xwa+de)
 	ldw	bc, 65535
 	ld	de, 2:i3
-CtlMsgGridCheck_Join:
+CtlMsgGridCheck_Entry:
 	call	MainLswAdd
 	jrl	CtlMsgGrid_ReturnZero
 CtlMsgGridCheck_OnLswData:
@@ -3266,7 +3266,7 @@ CtlMsgGridCheck_OnLswData:
 	ld	ix, wa
 	ld	xhl, (xsp+8)
 	ld	xiz, (xsp+30)
-	jr	CtlMsgGridCheck_Join2
+	jr	CtlMsgGridCheck_Join
 CtlMsgGridCheck_Loop:
 	ld	wa, bc
 	sla	wa, 2
@@ -3297,7 +3297,7 @@ CtlMsgGridCheck_Skip:
 CtlMsgGridCheck_Skip2:
 	inc	1, bc
 	ld	(xde), bc
-CtlMsgGridCheck_Join2:
+CtlMsgGridCheck_Join:
 	ld	bc, (xde)
 	cp	bc, 9
 	jr	lt, CtlMsgGridCheck_Loop
@@ -4958,69 +4958,56 @@ InitializeMurai:
 	ld	xde, NAKA_VIEW_Softver
 	call	RegisterTitle
 	lda	xsp, (xsp+14)
-; port: v7's label BitmapAccita16 is not in v6 -- no v6 bytes correspond to what it named
 
-; port: v7's label BitmapAccita16_DataPtr is not in v6 -- no v6 bytes correspond to what it named
-
-; port: v7's label BitmapAccita16_Width is not in v6 -- no v6 bytes correspond to what it named
-
-; port: v7's label BitmapAccita16_Height is not in v6 -- no v6 bytes correspond to what it named
-
-
-; port: v7's label BitmapAccger16_DataPtr is not in v6 -- no v6 bytes correspond to what it named
-
-; port: v7's label BitmapAccger16_Width is not in v6 -- no v6 bytes correspond to what it named
-
-; port: v7's label BitmapAccger16_Height is not in v6 -- no v6 bytes correspond to what it named
 	ret
 
-BitmapDrawsw:
+BitmapAccita16:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr	z, BitmapDrawsw_DataPtr_Skip2
+	jr	z, BitmapAccita16_Height
 	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr	z, BitmapDrawsw_DataPtr_Skip
+	jr	z, BitmapAccita16_Width
 	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, BitmapDrawsw_DataPtr
+	jr z, BitmapAccita16_DataPtr
 	ld xhl, 0:i3
 	ret
 
-BitmapDrawsw_DataPtr:
+BitmapAccita16_DataPtr:
 	lda	xhl, (Bitmap_Accita16:24)
 	ret
-BitmapDrawsw_DataPtr_Skip:
+BitmapAccita16_Width:
 	ld	xhl, 120
 	ret
-BitmapDrawsw_DataPtr_Skip2:
+BitmapAccita16_Height:
 	ld	xhl, 95
 	ret
 BitmapAccger16:
 	cp	xbc, 0x1e000a3
-	jr	z, BitmapAccger16_Skip
+	jr	z, BitmapAccger16_Height
 	cp	xbc, 0x1e000a2
-	jr	z, BitmapAccger16_Skip2
+	jr	z, BitmapAccger16_Width
 	cp	xbc, 0x1e000a1
-	jr	z, BitmapAccger16_Skip3
+	jr	z, BitmapAccger16_DataPtr
 	ld	xhl, 0:i3
 	ret
-BitmapAccger16_Skip3:
+BitmapAccger16_DataPtr:
 	lda	xhl, (Bitmap_Accger16:24)
 	ret
-BitmapAccger16_Skip2:
+BitmapAccger16_Width:
 	ld	xhl, 120
 	ret
-BitmapAccger16_Skip:
+BitmapAccger16_Height:
 	ld	xhl, 95
 	ret
-BitmapAccger16_Data:
+BitmapDrawsw:
 	cp	xbc, 0x1e000a3
 	jr	z, BitmapDrawsw_Height
 	cp	xbc, 0x1e000a2
 	jr	z, BitmapDrawsw_Width
 	cp	xbc, 0x1e000a1
-	jr	z, BitmapAccger16_Skip4
+	jr	z, BitmapDrawsw_DataPtr
 	ld	xhl, 0:i3
 	ret
-BitmapAccger16_Skip4:
+BitmapDrawsw_DataPtr:
 	lda	xhl, (Bitmap_SomeArrows:24)
 	ret
 
@@ -11242,7 +11229,7 @@ IvSoftverProc:
 	jr z, Softver_ShowHide
 	ld xwa, xiz
 	call InheritedProc
-	jrl	MPver_Epilogue
+	jrl	Softver_Epilogue
 
 Softver_ShowHide:
 	ld	xwa, xiz
@@ -11303,17 +11290,13 @@ Softver_Paint:
 
 Softver_SendEvent:
 	call SendEvent
-	jr	MPver_ReturnZero
+	jr	Softver_ReturnZero
 
 Softver_GetText:
 	pushw	Softver_GetText_Str_Soft@hi16
 	pushw	Softver_GetText_Str_Soft@lo16
 	push	xde
 	call	Strcpy
-; port: v7's label Softver_ReturnZero is not in v6 -- no v6 bytes correspond to what it named
-
-; port: v7's label Softver_Epilogue is not in v6 -- no v6 bytes correspond to what it named
-
 ; port: v7's label IvMPverProc is not in v6 -- no v6 bytes correspond to what it named
 
 ; port: v7's label MPver_ShowHide is not in v6 -- no v6 bytes correspond to what it named
@@ -11323,10 +11306,10 @@ Softver_GetText:
 
 ; port: v7's label MPver_GetText is not in v6 -- no v6 bytes correspond to what it named
 	inc	8, xsp
-MPver_ReturnZero:
+Softver_ReturnZero:
 	ld xhl, 0:i3
 
-MPver_Epilogue:
+Softver_Epilogue:
 	pop xiz
 	lda xsp, (xsp + 10)
 	ret
