@@ -34,7 +34,9 @@ TRIAGE
   notes/open-items/triage.json maps id -> {status, area, title, plan, blocker, size, owner, evidence}.
   status is one of RESOLVED / ACTIONABLE / BLOCKED (see README.md).  The script joins the collected items
   with it; an item with no triage row is UNTRIAGED, a triage row whose item is no longer collected is
-  ORPHAN (it is still written to the register, from the triage row, when it is RESOLVED).
+  ORPHAN (it is still written to the register, from the triage row, when it is RESOLVED).  A triage row
+  with a "source" of its own (id L-...) is an item no source above holds -- an item a lane brief names, or
+  text outside an open-items heading -- and is written to the register as it is.
 
 OUTPUT
   notes/open-items/REGISTER.md (with --write), the counts on stdout.  --check exits 1 on any UNTRIAGED item or
@@ -484,6 +486,9 @@ def main():
     by_id = {it["id"]: it for it in items}
     untriaged = [it for it in items if it["id"] not in triage]
     orphans = [k for k in triage if k not in by_id]
+    # triage rows with a "source" of their own are items no collector source holds (L- ids: items a lane
+    # brief names, or text outside an open-items heading); they are rendered, not reported
+    errors = [k for k in orphans if triage[k].get("status") != "RESOLVED" and not triage[k].get("source")]
     bad = [k for k, v in triage.items() if v.get("status") not in STATUSES or
            (v.get("area") and v["area"] not in AREAS)]
 
@@ -497,12 +502,13 @@ def main():
                          note=t.get("plan") or t.get("blocker") or t.get("evidence") or "", size=t.get("size", "")))
     for k in orphans:
         t = triage[k]
-        if t.get("status") == "RESOLVED":
+        if t.get("status") == "RESOLVED" or t.get("source"):
             rows.append(dict(area=t.get("area", "KN5000"), id=k, source=t.get("source", "(updated note)"),
-                             kind=k[0], item=t.get("title", ""), status="RESOLVED", owner=t.get("owner", ""),
-                             note=t.get("evidence", ""), size=""))
+                             kind=k[0], item=t.get("title", ""), status=t["status"], owner=t.get("owner", ""),
+                             note=t.get("plan") or t.get("blocker") or t.get("evidence", ""),
+                             size=t.get("size", "")))
 
-    kinds = {"N": "notes", "k": "issues", "T": "TODO groups", "O": "opaque groups"}
+    kinds = {"N": "notes", "k": "issues", "T": "TODO groups", "O": "opaque groups", "L": "listed by hand"}
     st_all = Counter(r["status"] for r in rows)
     by_kind = Counter(kinds.get(r["kind"], "issues") for r in rows)
     print("items:", len(rows), dict(by_kind))
@@ -510,7 +516,7 @@ def main():
     print("TODO markers:", sum(todo_per_tree.values()), "in", len(todo_per_tree), "trees;",
           "opaque groups:", len(opaque), "covering", sum(i["count"] for i in opaque), "declarations")
     print("untriaged:", len(untriaged), " orphan triage rows:", len(orphans),
-          "(non-RESOLVED:", sum(1 for k in orphans if triage[k].get("status") != "RESOLVED"), ")",
+          "(listed by hand:", sum(1 for k in orphans if triage[k].get("source")), "; in error:", len(errors), ")",
           " bad rows:", len(bad))
 
     if a.write:
@@ -518,12 +524,11 @@ def main():
     if a.check:
         for it in untriaged[:50]:
             print("UNTRIAGED", it["id"], it["source"], short(it["text"], 100))
-        for k in orphans:
-            if triage[k].get("status") != "RESOLVED":
-                print("ORPHAN", k, triage[k].get("title", ""))
+        for k in errors:
+            print("ORPHAN", k, triage[k].get("title", ""))
         for k in bad:
             print("BAD", k, triage[k])
-        if untriaged or bad or any(triage[k].get("status") != "RESOLVED" for k in orphans):
+        if untriaged or bad or errors:
             sys.exit(1)
 
 
@@ -548,10 +553,11 @@ def render(rows, todo_per_tree, opaque):
     tab.append(["**all**"] + [f"**{c.get(s, 0)}**" for s in statuses] + [f"**{len(rows)}**"])
     out.append(md_table(hdr, tab))
     out.append("")
-    kinds = [("N", "notes items"), ("k", "tracker issues"), ("T", "TODO-marker groups"), ("O", "opaque groups")]
+    kinds = [("N", "notes items"), ("k", "tracker issues"), ("T", "TODO-marker groups"), ("O", "opaque groups"),
+             ("L", "listed by hand")]
     tab = []
     for k, name in kinds:
-        rs = [r for r in rows if (r["kind"] == k if k != "k" else r["kind"] not in "NTO")]
+        rs = [r for r in rows if (r["kind"] == k if k != "k" else r["kind"] not in "NTOL")]
         c = Counter(r["status"] for r in rs)
         tab.append([name] + [str(c.get(s, 0)) for s in statuses] + [str(len(rs))])
     out.append(md_table(["source"] + statuses + ["total"], tab))
@@ -569,6 +575,19 @@ def render(rows, todo_per_tree, opaque):
     out.append(f"TODO markers in the sources: {sum(todo_per_tree.values())} in {len(todo_per_tree)} trees "
                f"(grouped below as T- rows).  Opaque unknown-dump / code declarations: "
                f"{sum(i['count'] for i in opaque)} in {len(opaque)} groups (O- rows).")
+    out.append("")
+    out.append("## Next wave: the ACTIONABLE items no lane owns")
+    out.append("")
+    out.append("The work list for the next wave, by area and size (S first).  The per-area tables below give each "
+               "item's plan.")
+    out.append("")
+    tab = []
+    for ar in AREAS:
+        rs = sorted([r for r in rows if r["area"] == ar and r["status"] == "ACTIONABLE" and not r["owner"]],
+                    key=lambda r: ("SML".index(r["size"]) if r["size"] in ("S", "M", "L") else 3, r["id"]))
+        for r in rs:
+            tab.append([ar, r["size"], r["id"], short(r["item"], 110)])
+    out.append(md_table(["area", "size", "id", "item"], tab))
     out.append("")
     order = {s: k for k, s in enumerate(["BLOCKED", "ACTIONABLE", "UNTRIAGED", "RESOLVED"])}
     for ar in AREAS:

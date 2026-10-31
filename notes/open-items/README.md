@@ -9,6 +9,7 @@ where those items are tracked.
 | `triage.json`           | the hand triage: one row per item id (status, plan or blocker, size, owner, evidence)         |
 | `REGISTER.md`           | the generated register: summary counts, then one table per area                               |
 | `opaque-groups.json`    | cache of the opaque-declaration groups, written by every run that does not pass `--no-census` |
+| `probes/`               | the scripts behind the measurements the triage quotes (their README says what each answers)   |
 
 ## `collect_open_items.py`
 
