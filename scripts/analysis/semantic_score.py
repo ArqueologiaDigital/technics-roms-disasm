@@ -9,7 +9,7 @@ QUESTION IT ANSWERS
 
   bytes   L1  bytes whose purpose the source states with evidence: (CODE + DATA-KNOWN-A + FILLER) / all bytes.
               Source: scripts/analysis/data_range_census.py --json (its "strict" figure).
-  names   L2  symbols in the linked ELFs (.text, all 13 images) with a semantic name / all rated symbols.
+  names   L2  symbols in the linked ELFs (.text, all 20 images) with a semantic name / all rated symbols.
               Rated = semantic + generic + positional.  Not rated: local branch labels, in every style the
               trees use -- _Skip/_Join/_Loop/_Return/..., and prom_c's Parent__F9A123 / Parent__loop -- whatever
               their parent is called, so a routine is rated once, by its own name, not once per branch inside
@@ -89,6 +89,14 @@ QUESTION IT ANSWERS
   KN7000 names figure falls accordingly.  The local-label test was added in review of wave2/metrics-2, before
   any rules-4 figure reached a snapshot; without it program and program942 each rated 197 more semantic names.
 
+  THE KN5000 IMAGES (rules 5, 2026-10-31).  Besides v10, v9, v7, v142, v141, subboot, tabledata, customdata and
+  hdae5000, the kn5000 model rates v8 (the v9 tree assembled with FW_VERSION_BYTE=0x08, so its bytes, names and
+  entry figures repeat v9's, image for image, as the hardware has both ROMs), v6 and v5 (trees ported from v7 and
+  v6), v140 (the sub-CPU payload generated from v141) and the three older HD-AE5000 ROMs hdae_v201, hdae_v115 and
+  hdae_v110.  Every one is a byte-identical image of its own in the data census and the dispatch census.  fields
+  counts each C tree once: v8 has no tree of its own, so its C is v9's and is not counted again; the HD-AE5000
+  and sub-CPU trees have no C.
+
   score = the mean of the components a model has.  "all" pools the models component by component, then
   averages.  So "all" bytes adds the strict L1 count of KN5000 and WSA1 to the MN10300 models' source-share upper
   bound (since rules 4 kn7000 and the siblings are most of the pooled denominator): the pooled bytes badge mixes
@@ -132,7 +140,8 @@ NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
 OUT = os.path.join(ROOT, "docs", "badges")
 
 MODELS = {
-    "kn5000": ["v10", "v9", "v7", "v142", "v141", "subboot", "tabledata", "customdata", "hdae5000"],
+    "kn5000": ["v10", "v9", "v8", "v7", "v6", "v5", "v142", "v141", "v140", "subboot", "tabledata", "customdata",
+               "hdae5000", "hdae_v201", "hdae_v115", "hdae_v110"],
     "wsa1": ["prom_a", "prom_b", "prom_c", "prom_d"],
     "kn7000": ["program", "table", "cnv", "program942"],
     "mn10300-siblings": ["kn2400", "kn6000", "kn6500", "hdsx3"],
@@ -157,13 +166,19 @@ ELF = {
     "v10": "rebuilt_ROMs/kn5000_v10_program.llvm.elf", "v9": "rebuilt_ROMs/kn5000_v9_program.llvm.elf",
     "v7": "rebuilt_ROMs/kn5000_v7_program.llvm.elf", "v142": "rebuilt_ROMs/kn5000_subprogram_v142.llvm.elf",
     "v141": "rebuilt_ROMs/kn5000_subprogram_v141.llvm.elf",
+    "v140": "rebuilt_ROMs/kn5000_subprogram_v140.llvm.elf",
+    "v8": "rebuilt_ROMs/kn5000_v8_program.llvm.elf", "v6": "rebuilt_ROMs/kn5000_v6_program.llvm.elf",
+    "v5": "rebuilt_ROMs/kn5000_v5_program.llvm.elf",
+    "hdae_v201": "rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf", "hdae_v115": "rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf",
+    "hdae_v110": "rebuilt_ROMs/hd-ae5000_v1_10i.llvm.elf",
     "subboot": "rebuilt_ROMs/kn5000_subcpu_boot.llvm.elf", "tabledata": "rebuilt_ROMs/kn5000_table_data.llvm.elf",
     "customdata": "rebuilt_ROMs/kn5000_custom_data.llvm.elf", "hdae5000": "rebuilt_ROMs/hd-ae5000_v2_06i.llvm.elf",
     "prom_a": "wsa1/rebuilt_ROMs/wsa1_prom_a.llvm.elf", "prom_b": "wsa1/rebuilt_ROMs/wsa1_prom_b.llvm.elf",
     "prom_c": "wsa1/rebuilt_ROMs/wsa1_prom_c.llvm.elf", "prom_d": "wsa1/rebuilt_ROMs/wsa1_prom_d.llvm.elf",
 }
 C_TREES = {
-    "kn5000": ["v10/maincpu", "v9/maincpu", "v7/maincpu", "v142/subcpu", "v141/subcpu", "subcpu/boot", "table_data",
+    "kn5000": ["v10/maincpu", "v9/maincpu", "v7/maincpu", "v6/maincpu", "v5/maincpu", "v142/subcpu", "v141/subcpu",
+               "v140/subcpu", "subcpu/boot", "table_data",
                "custom_data", "hdae5000"],
     "wsa1": ["wsa1"],
     "kn7000": [],
@@ -172,7 +187,7 @@ C_TREES = {
 POSITIONAL = [re.compile(p) for p in (r'_0x[0-9A-Fa-f]+$', r'_[0-9A-F]{4,}$', r'^LABEL_', r'^(loc|sub|unk)_', r'^\.L')]
 CONTINUATION = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Done|Next|Exit|Cont|End|Default|Resume|Nop)\d*$'
                           r'|__[0-9A-Fa-f]{4,6}$|__[a-z]\w*$')
-RULES = 4       # 1: first release; 2 (2026-10-06): local branch labels are not rated whatever their parent;
+RULES = 5       # 1: first release; 2 (2026-10-06): local branch labels are not rated whatever their parent;
                 # 3 (2026-10-24): the SX-KN7000 model (program, table, cnv) is added and pooled into "all".  The
                 #   KN5000 and WSA1 figures are computed exactly as under 2; "all" and the pooled component badges
                 #   move because the kn7000 bytes and names join their numerators and denominators.
@@ -180,6 +195,9 @@ RULES = 4       # 1: first release; 2 (2026-10-06): local branch labels are not 
                 #   mn10300-siblings model (kn2400, kn6000, kn6500, hdsx3), pooled into "all"; the generated-
                 #   source routine rule for kn7000 program (see the docstring).  WSA1 is computed exactly as
                 #   under 3; KN5000 moves only by v141's figures, kn7000 by program942's and the new rule.
+                # 5 (2026-10-31, lane hdae-ledgers): KN5000 images v8, v6, v5, v140, hdae_v201, hdae_v115 and
+                #   hdae_v110 (THE KN5000 IMAGES in the docstring).  Every other model is computed exactly as
+                #   under 4; KN5000 and "all" move by the new images' figures.
 GENERIC = re.compile(r'_(Helper|Data|Code|Block|Branch|Stub|Part|Case|Entry|Sub|Thunk|Wrapper|Body|Chunk|Tail|Frag'
                      r'|Fragment)\d*(_\d+)*$|_Switch\d+_Case\d+$')
 GENERIC_WORDS = {"field", "unk", "unknown", "pad", "padding", "reserved", "res", "str", "ptr", "ptrs", "entry",

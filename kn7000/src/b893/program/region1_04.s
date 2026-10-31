@@ -36097,7 +36097,7 @@ loc_4849847D:
     mov     2, d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
-    call    func_48581F27_entry, [d2,d3,a2,a3], 0x38
+    call    SoundAlphaIndexBuild_entry, [d2,d3,a2,a3], 0x38
     bra     loc_484984C2
 loc_48498494:
     cmp     0x13, d0
@@ -36107,14 +36107,14 @@ loc_48498494:
     movhu   (0x5006b800), d1
     mov     1, d0
     extbu   d1
-    call    func_48581F27_entry, [d2,d3,a2,a3], 0x38
+    call    SoundAlphaIndexBuild_entry, [d2,d3,a2,a3], 0x38
     bra     loc_484984C2
 loc_484984AE:
     movhu   (0x5006b800), d1
     clr     d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
-    call    func_48581F27_entry, [d2,d3,a2,a3], 0x38
+    call    SoundAlphaIndexBuild_entry, [d2,d3,a2,a3], 0x38
 loc_484984C2:
     movhu   (0x5006b7e8), d0
     mov     a2, a0
@@ -36217,7 +36217,7 @@ loc_484985CF:
     cmp     0, d0
     beq     loc_484985FE
     mov     a2, a0
-    call    func_4858220B_entry, [d2,d3,a2,a3], 0x1c
+    call    SoundAlphaInitialGet_entry, [d2,d3,a2,a3], 0x1c
     bra     loc_48498606
 loc_484985FE:
     mov     a2, a0

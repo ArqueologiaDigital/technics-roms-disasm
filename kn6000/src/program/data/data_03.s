@@ -7,9 +7,9 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 	.long	0x4c1760a8
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	p0=Str_C_20, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	text=Str_C_21, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	p0=Str_C_18, p4=Str_empty_989, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	text=Str_C_20, text_=Str_empty_989, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -7483,11 +7483,11 @@ func_4C051751_Table:	# 15 x u16, 496..4638; read by func_4C051751 0x4C051751: `m
 	.space	4, 0xFF
 
 func_4C0506C7_entry_L4_Records:	# 3 x REC_func_4C0506C7_entry_L4_Records (12 bytes each); read by func_4C0506C7_entry_L4 0x4C0506D0 `mov (4, a0), d3`; func_4C0506C7_entry_L4 0x4C0506D0 `mov (a0), a2`
-	REC_func_4C0506C7_entry_L4_Records	f0=0x50000000, f4=0x80000, x8="\x01\x02\x00\x00"
-	REC_func_4C0506C7_entry_L4_Records	f0=0x58000000, f4=0x5040100, x8="\x01\x00\x00\x00"
-	REC_func_4C0506C7_entry_L4_Records	f0=0x54000000, f4=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C0506C7_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
+	REC_func_4C0506C7_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C0506C7_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
 func_4C050787_entry_L4_Records:	# 1 x REC_func_4C050787_entry_L4_Records (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
-	REC_func_4C050787_entry_L4_Records	f0=0x44000000, f4=32768, f8=4, x9="\x00\x00\x00"
+	REC_func_4C050787_entry_L4_Records	f0=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
 ptrs_4C35992C:
 	.long	loc_4C05A425
@@ -7524,16 +7524,14 @@ func_4C05B884_Table_2:	# 2 x u16, 0..60; read by func_4C05B884 0x4C05B884: `movh
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
-
-func_4C05A1F2_Block:	# 3 bytes, copied whole by func_4C05A1F2 0x4C05A1F2: memcpy(.., 3)
-	tab_u8	0, 160, 0	# [0]
-# census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3599A3, 0x3599A6
-func_4C05A1F2_Block_2:	# 26 bytes, copied whole by func_4C05A1F2 0x4C05A1F2: memcpy(.., 26)
-	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+data_4C3599A0:
+	# 6 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A0, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	0, 160, 0, 0, 8, 32	# +0
+data_4C3599A6:
+	# 26 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A6, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# +0
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
-
 Str_compile_bank_0:	.asciz " compile bank 0 "
 # census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x359A11, 0x359A30
@@ -15680,23 +15678,20 @@ Pad_PopSynth_2_Events:		# 4 bars of 4 beats, 354 bytes
 
 Str_TCMP:	.asciz "TCMP"
 	.space	11, 0x00
-
-MemStyleAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemStyleAreaHeaderRestamp 0x4C057310: memcpy(.., 3)
-	tab_u8	2, 88, 0	# [0]
-# census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x361433, 0x361436
-MemStyleAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemStyleAreaHeaderRestamp 0x4C057310: memcpy(.., 26)
-	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# [0]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
+data_4C361430:
+	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361430, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	2, 88, 0, 0, 54, 112	# +0
+data_4C361436:
+	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361436, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# +0
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
-
 Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36149E, 0x361500
-
-func_4C05E846_Block:	# 4 bytes, copied whole by func_4C05E846 0x4C05E846: memcpy(.., 4)
-	tab_u8	16, 0, 35, 0	# [0]
-	.space	12, 0x00
+data_4C361500:
+	# 16 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361500, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u32	0x230010, 0x0, 0x0, 0x0	# +0
 
 MemStyleVarRecInit_Table_2:	# 4 x u8, 0..0; read by MemStyleVarRecInit_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0
@@ -15704,16 +15699,26 @@ data_4C361514:
 	# 20 bytes the code takes the address of: func_4C060E4A_entry_L37 0x4C060E86 `add data_4C361514, d0` (+0, as a base); func_4C060E4A_entry_L6c 0x4C060EBB `call func_4C125048_entry, [d2,d3,a2,a3], 0x38` (+0, arg sp36); func_4C060E4A_entry_L103 0x4C060F52 `call func_4C06104C_entry, [d2], 4` (+0, arg sp36) (+6 more); byte rows (u8); the callee walk: func_4C05E81A (sp36) reads nothing through it the walk sees; func_4C05E82B (sp36) reads nothing through it the walk sees; func_4C06104C (sp36) reads nothing through it the walk sees (+2 more)
 	tab_u8	0, 16, 17, 17, 17, 17, 17, 0, 0, 0, 0, 0, 0, 3, 0, 0	# +0
 	tab_u8	0, 0, 0, 0	# +16
-
-func_4C05E846_Block_2:	# 2 bytes, copied whole by func_4C05E846 0x4C05E846: memcpy(.., 2)
-	tab_u8	255, 255	# [0]
-# census: opaque -- unknown-dump: 198 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36152A, 0x3615F0
+data_4C361528:
+	# 200 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361528, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	255, 255, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 38, 64, 40, 0	# +0
+	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
+	tab_u8	6, 127, 33, 0, 32, 64, 0, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +32
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0	# +48
+	tab_u8	12, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +64
+	tab_u8	6, 127, 48, 0, 32, 64, 40, 0, 116, 2, 28, 64, 108, 64, 0, 0	# +80
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 73, 0, 32, 64, 40, 0	# +96
+	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +112
+	tab_u8	6, 127, 88, 0, 32, 64, 40, 0, 38, 2, 28, 64, 108, 64, 0, 0	# +128
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 25, 0, 32, 64, 40, 0	# +144
+	tab_u8	90, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +160
+	tab_u8	6, 127, 0, 0, 38, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +176
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# +192
 
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_1:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
 	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_entry_L3a_Selected_1
 
 ptrs_4C36160C:
@@ -19163,14 +19168,14 @@ func_4C085A64_Table:	# 123 x u16, 65281..65534; read by func_4C085A64 0x4C085A64
 .incbin_range "baserom/kn6000_program.rom", 0x36B1A4, 0x36B1AE
 
 func_4C09948D_Records:	# 8 x REC_func_4C09948D_Records (6 bytes each); read by func_4C09948D 0x4C09948D `movbu (d1, a0), d0`; func_4C099573 0x4C099573 `movbu (1, a0), d3`; func_4C099658 0x4C099658 `movbu (4, a0), d3` (+1)
-	REC_func_4C09948D_Records	a0="\x01\x02\x00\x00", f4=255, f5=255
-	REC_func_4C09948D_Records	a0="\x01\x03\x00\x00", f4=255, f5=255
-	REC_func_4C09948D_Records	a0="\x01\x04\x00\x00", f4=255, f5=255
-	REC_func_4C09948D_Records	a0="\x01\x03\x00\x01", f4=255, f5=255
-	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, f5=255
-	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, f5=255
-	REC_func_4C09948D_Records	a0="\xFF\xFF\xFF\xFF", f5=3
-	REC_func_4C09948D_Records	a0="\x00\x05\x00\x06", f5=5
+	REC_func_4C09948D_Records	a0="\x01\x02\x00\x00", f4=255, index=255
+	REC_func_4C09948D_Records	a0="\x01\x03\x00\x00", f4=255, index=255
+	REC_func_4C09948D_Records	a0="\x01\x04\x00\x00", f4=255, index=255
+	REC_func_4C09948D_Records	a0="\x01\x03\x00\x01", f4=255, index=255
+	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, index=255
+	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, index=255
+	REC_func_4C09948D_Records	a0="\xFF\xFF\xFF\xFF", index=3
+	REC_func_4C09948D_Records	a0="\x00\x05\x00\x06", index=5
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36B1DE, 0x36B202
 func_4C099573_entry_L46_Records:	# 8 x REC_func_4C099573_entry_L46_Records (102 bytes each); read by func_4C099573_entry_L46 0x4C0995BB `movhu (d1, a0), d0`; func_4C099573_entry_L8c 0x4C099601 `movhu (d0, a0), d0`; func_4C0996D3_entry_L23 0x4C0996F8 `movhu (d1, a0), d0`
@@ -19196,18 +19201,18 @@ func_4C099DB7_entry_L47_Table:	# 51 x u8, 0..127; read by func_4C099DB7_entry : 
 	tab_u8	113, 120, 127	# [48]
 
 TgPartEditLfoLoadA_Records:	# 14 x REC_TgPartEditLfoLoadA_Records (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (1, a2), d1` (+62)
-	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x5="\x00", x15="\x00\x00\x00", f19=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", f19=196, x20="\x00\x00\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", f19=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x5="\x00", x15="\x00\x00\x00", f19=200, x20="\x00\x00\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x5="\x00", x15="\x00\x00\x00", f19=136, x20="\x00\x00\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x5="\x00", x15="\x00\x00\x00", f19=200, x20="\x00\x00\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", f6=40, f7=24, x15="\x00\x00\x00", f19=32, x20="\x00\x00\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, x5="\x00", f6=25, x15="\x00\x00\x00", f19=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=196, x20="\x00\x00\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x5="\x00", x15="\x00\x00\x00", flags__=136, x20="\x00\x00\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", index=40, f7=24, x15="\x00\x00\x00", flags__=32, x20="\x00\x00\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, x5="\x00", index=25, x15="\x00\x00\x00", flags__=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", f27=80, f28=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", f9=27, f10=20, f11=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, f2=178, x5="\x00", x15="\x00\x00\x00", f18=30, f19=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, f2=178, x5="\x00", f14=5, x15="\x00\x00\x00", f18=30, f19=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", f14=5, x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
@@ -19359,7 +19364,7 @@ func_4C081D83_entry_L37_Records:	# 128 x REC_func_4C081D83_entry_L37_Records (12
 func_4C09A372_entry_L2a_Table:	# 20 x u8, 0..255; read by func_4C09A372_entry : `movbu	(d0, a0), d1`
 	tab_u8	16, 16, 8, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	64, 64, 255, 255	# [16]
-func_4C09A372_entry_L5c_Table:	# 35 x u32, 1342479452..1342479996; read by func_4C09A372_entry_L5c 0x4C09A3D3: `mov	(d0, a0), d0`
+func_4C09A372_entry_L5c_Table:	# 35 x u32, 1342479452..1342479996; read by func_4C09A372_entry : `mov	(d0, a0), d0`
 	tab_u32	1342479548, 1342479580, 1342479612, 1342479644, 1342479676, 1342479708, 1342479452, 1342479452	# [0]
 	tab_u32	1342479452, 1342479516, 1342479452, 1342479452, 1342479452, 1342479452, 1342479452, 1342479452	# [8]
 	tab_u32	1342479452, 1342479452, 1342479452, 1342479484, 1342479484, 1342479484, 1342479484, 1342479484	# [16]
@@ -19369,7 +19374,7 @@ func_4C09A60C_Table:	# 8 x u8, 0..255; read by func_4C09A60C : `movbu	(a1), d0`
 	tab_u8	6, 5, 2, 4, 3, 1, 0, 255
 
 func_4C09A63A_entry_L65_Records_p0_0:	# REC_func_4C09A63A_entry_L65_Records_p0 (29 bytes)
-	REC_func_4C09A63A_entry_L65_Records_p0	f0=134, f1=133, x2="\x06\x05", f4=33668, x6="\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
+	REC_func_4C09A63A_entry_L65_Records_p0	f0=134, count=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
 data_4C36C089:
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C089, 0x36C094
@@ -19377,18 +19382,18 @@ data_4C36C094:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C094, 0x36C0A0
 func_4C03CC6E_entry_L8c_Selected_0:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	f0=65280, f4=53248, p8=TempoSyncSetDispatch
+	REC_func_4C03CC6E_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
 	.space	12, 0x00
 func_4C03CC6E_entry_L8c_Selected_1:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CC6E_entry_L8c_Selected	
 func_4C03CC6E_entry_L8c_Selected_2:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CC6E_entry_L8c_Selected	
 func_4C03CC6E_entry_L8c_Selected_3:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	f0=0xFF0000, f4=0x700000, p8=func_4C173C25
+	REC_func_4C03CC6E_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=func_4C173C25
 # census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C0DC, 0x36C124
 func_4C03CC6E_entry_L8c_Selected_4:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	f0=255, f4=121, p8=func_4C02DD38
+	REC_func_4C03CC6E_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DD38
 	.space	12, 0x00
 func_4C03CC6E_entry_L8c_Selected_5:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CC6E_entry_L8c_Selected	
@@ -19397,30 +19402,30 @@ func_4C03CC6E_entry_L8c_Selected_6:	# REC_func_4C03CC6E_entry_L8c_Selected (12 b
 func_4C03CC6E_entry_L8c_Selected_7:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
 	REC_func_4C03CC6E_entry_L8c_Selected	
 func_4C03CD2C_entry_L9d_Selected_0:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFF00, f4=8192, p8=loc_4C066D29
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFF00, key_=8192, proc=loc_4C066D29
 # census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C16C, 0x36C1F0
 func_4C03CD2C_entry_L9d_Selected_1:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFF00, f4=0x204000, p8=func_4C02F4E9
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFF00, key_=0x204000, proc=func_4C02F4E9
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C1FC, 0x36C220
 func_4C03CD2C_entry_L9d_Selected_2:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFF0000, f4=0x600000, p8=func_4C02F4E9
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFF0000, key_=0x600000, proc=func_4C02F4E9
 # census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C22C, 0x36C280
 func_4C03CD2C_entry_L9d_Selected_3:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0x701011, p8=loc_4C0515B2
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0x701011, proc=loc_4C0515B2
 # census: opaque -- unknown-dump: 276 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C28C, 0x36C3A0
 func_4C03CD2C_entry_L9d_Selected_4:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0x900000, p8=func_4C05222C
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0x900000, proc=func_4C05222C
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C3AC, 0x36C3D0
 func_4C03CD2C_entry_L9d_Selected_5:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0xB0007E, p8=func_4C0D9876
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0xB0007E, proc=func_4C0D9876
 	.space	12, 0x00
 func_4C03CD2C_entry_L9d_Selected_6:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0xC00000, p8=loc_4C09D32B
+	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0xC00000, proc=loc_4C09D32B
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C3F4, 0x36C40C
 func_4C03CD2C_entry_L9d_Selected_7:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
@@ -21133,638 +21138,638 @@ func_4C09CF34_Var_2:	# u16, a constant; read / written by func_4C09CF34 0x4C09CF
 	.word	633
 
 func_4C09CF34_Table:
-	.long	func_4C09CF34_Table_p0_179
-	.long	func_4C09CF34_Table_p0_602
-	.long	func_4C09CF34_Table_p0_189
+	.long	func_4C09CF34_Table_p0_79
+	.long	func_4C09CF34_Table_p0_425
+	.long	func_4C09CF34_Table_p0_85
+	.long	func_4C09CF34_Table_p0_0
+	.long	func_4C09CF34_Table_p0_12
+	.long	func_4C09CF34_Table_p0_270
+	.long	func_4C09CF34_Table_p0_272
+	.long	func_4C09CF34_Table_p0_271
+	.long	func_4C09CF34_Table_p0_231
+	.long	func_4C09CF34_Table_p0_240
+	.long	func_4C09CF34_Table_p0_310
+	.long	func_4C09CF34_Table_p0_250
+	.long	func_4C09CF34_Table_p0_248
+	.long	0
+	.long	func_4C09CF34_Table_p0_2
+	.long	func_4C09CF34_Table_p0_430
 	.long	func_4C09CF34_Table_p0_3
-	.long	func_4C09CF34_Table_p0_24
-	.long	func_4C09CF34_Table_p0_416
-	.long	func_4C09CF34_Table_p0_418
-	.long	func_4C09CF34_Table_p0_417
-	.long	func_4C09CF34_Table_p0_369
-	.long	func_4C09CF34_Table_p0_378
-	.long	func_4C09CF34_Table_p0_471
-	.long	func_4C09CF34_Table_p0_389
-	.long	func_4C09CF34_Table_p0_387
 	.long	0
-	.long	func_4C09CF34_Table_p0_8
-	.long	func_4C09CF34_Table_p0_607
-	.long	func_4C09CF34_Table_p0_9
+	.long	func_4C09CF34_Table_p0_278
+	.long	func_4C09CF34_Table_p0_277
+	.long	func_4C09CF34_Table_p0_276
 	.long	0
-	.long	func_4C09CF34_Table_p0_424
-	.long	func_4C09CF34_Table_p0_423
-	.long	func_4C09CF34_Table_p0_422
+	.long	func_4C09CF34_Table_p0_134
 	.long	0
-	.long	func_4C09CF34_Table_p0_252
+	.long	func_4C09CF34_Table_p0_62
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_264
+	.long	func_4C09CF34_Table_p0_258
+	.long	func_4C09CF34_Table_p0_435
+	.long	0
+	.long	0
 	.long	0
 	.long	func_4C09CF34_Table_p0_141
+	.long	func_4C09CF34_Table_p0_147
+	.long	func_4C09CF34_Table_p0_290
 	.long	0
+	.long	func_4C09CF34_Table_p0_140
+	.long	func_4C09CF34_Table_p0_155
+	.long	func_4C09CF34_Table_p0_391
+	.long	func_4C09CF34_Table_p0_457
+	.long	func_4C09CF34_Table_p0_63
+	.long	func_4C09CF34_Table_p0_64
+	.long	func_4C09CF34_Table_p0_440
+	.long	func_4C09CF34_Table_p0_65
+	.long	func_4C09CF34_Table_p0_416
 	.long	0
-	.long	func_4C09CF34_Table_p0_407
-	.long	func_4C09CF34_Table_p0_398
-	.long	func_4C09CF34_Table_p0_612
+	.long	func_4C09CF34_Table_p0_161
 	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_260
-	.long	func_4C09CF34_Table_p0_266
-	.long	func_4C09CF34_Table_p0_441
-	.long	0
-	.long	func_4C09CF34_Table_p0_259
-	.long	func_4C09CF34_Table_p0_275
-	.long	func_4C09CF34_Table_p0_568
-	.long	func_4C09CF34_Table_p0_634
-	.long	func_4C09CF34_Table_p0_146
-	.long	func_4C09CF34_Table_p0_149
-	.long	func_4C09CF34_Table_p0_617
-	.long	func_4C09CF34_Table_p0_152
-	.long	func_4C09CF34_Table_p0_593
-	.long	0
-	.long	func_4C09CF34_Table_p0_282
-	.long	0
-	.long	func_4C09CF34_Table_p0_453
-	.long	0
-	.long	func_4C09CF34_Table_p0_283
-	.long	func_4C09CF34_Table_p0_439
-	.long	func_4C09CF34_Table_p0_579
-	.long	func_4C09CF34_Table_p0_639
-	.long	func_4C09CF34_Table_p0_581
-	.long	func_4C09CF34_Table_p0_164
-	.long	func_4C09CF34_Table_p0_622
-	.long	func_4C09CF34_Table_p0_167
-	.long	func_4C09CF34_Table_p0_168
-	.long	func_4C09CF34_Table_p0_58
-	.long	func_4C09CF34_Table_p0_322
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_35
-	.long	func_4C09CF34_Table_p0_583
-	.long	0
-	.long	func_4C09CF34_Table_p0_530
-	.long	func_4C09CF34_Table_p0_510
-	.long	func_4C09CF34_Table_p0_627
-	.long	func_4C09CF34_Table_p0_451
-	.long	func_4C09CF34_Table_p0_460
-	.long	0
-	.long	func_4C09CF34_Table_p0_340
-	.long	func_4C09CF34_Table_p0_341
-	.long	func_4C09CF34_Table_p0_347
-	.long	func_4C09CF34_Table_p0_497
-	.long	func_4C09CF34_Table_p0_342
-	.long	func_4C09CF34_Table_p0_513
-	.long	func_4C09CF34_Table_p0_586
-	.long	func_4C09CF34_Table_p0_516
-	.long	func_4C09CF34_Table_p0_465
-	.long	func_4C09CF34_Table_p0_480
-	.long	func_4C09CF34_Table_p0_632
-	.long	func_4C09CF34_Table_p0_468
-	.long	func_4C09CF34_Table_p0_559
-	.long	0
-	.long	func_4C09CF34_Table_p0_296
-	.long	func_4C09CF34_Table_p0_297
-	.long	func_4C09CF34_Table_p0_295
 	.long	func_4C09CF34_Table_p0_298
-	.long	func_4C09CF34_Table_p0_300
-	.long	func_4C09CF34_Table_p0_294
-	.long	func_4C09CF34_Table_p0_560
-	.long	func_4C09CF34_Table_p0_561
-	.long	func_4C09CF34_Table_p0_562
-	.long	func_4C09CF34_Table_p0_549
-	.long	func_4C09CF34_Table_p0_431
-	.long	func_4C09CF34_Table_p0_493
-	.long	func_4C09CF34_Table_p0_455
-	.long	func_4C09CF34_Table_p0_88
-	.long	func_4C09CF34_Table_p0_211
-	.long	func_4C09CF34_Table_p0_214
-	.long	func_4C09CF34_Table_p0_215
-	.long	func_4C09CF34_Table_p0_216
-	.long	func_4C09CF34_Table_p0_213
-	.long	func_4C09CF34_Table_p0_595
-	.long	func_4C09CF34_Table_p0_218
-	.long	func_4C09CF34_Table_p0_219
 	.long	0
-	.long	func_4C09CF34_Table_p0_356
+	.long	func_4C09CF34_Table_p0_162
+	.long	func_4C09CF34_Table_p0_288
+	.long	func_4C09CF34_Table_p0_402
+	.long	func_4C09CF34_Table_p0_462
+	.long	func_4C09CF34_Table_p0_404
+	.long	func_4C09CF34_Table_p0_70
+	.long	func_4C09CF34_Table_p0_445
+	.long	func_4C09CF34_Table_p0_71
+	.long	func_4C09CF34_Table_p0_72
+	.long	func_4C09CF34_Table_p0_22
+	.long	func_4C09CF34_Table_p0_193
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_16
+	.long	func_4C09CF34_Table_p0_406
+	.long	0
 	.long	func_4C09CF34_Table_p0_359
-	.long	func_4C09CF34_Table_p0_362
-	.long	func_4C09CF34_Table_p0_592
-	.long	func_4C09CF34_Table_p0_360
-	.long	func_4C09CF34_Table_p0_203
+	.long	func_4C09CF34_Table_p0_341
+	.long	func_4C09CF34_Table_p0_450
+	.long	func_4C09CF34_Table_p0_297
+	.long	func_4C09CF34_Table_p0_302
+	.long	0
+	.long	func_4C09CF34_Table_p0_207
+	.long	func_4C09CF34_Table_p0_208
+	.long	func_4C09CF34_Table_p0_213
+	.long	func_4C09CF34_Table_p0_330
+	.long	func_4C09CF34_Table_p0_209
+	.long	func_4C09CF34_Table_p0_342
+	.long	func_4C09CF34_Table_p0_409
+	.long	func_4C09CF34_Table_p0_345
+	.long	func_4C09CF34_Table_p0_305
+	.long	func_4C09CF34_Table_p0_317
+	.long	func_4C09CF34_Table_p0_455
+	.long	func_4C09CF34_Table_p0_307
+	.long	func_4C09CF34_Table_p0_382
+	.long	0
+	.long	func_4C09CF34_Table_p0_168
+	.long	func_4C09CF34_Table_p0_169
+	.long	func_4C09CF34_Table_p0_167
+	.long	func_4C09CF34_Table_p0_170
+	.long	func_4C09CF34_Table_p0_171
+	.long	func_4C09CF34_Table_p0_166
+	.long	func_4C09CF34_Table_p0_383
+	.long	func_4C09CF34_Table_p0_384
+	.long	func_4C09CF34_Table_p0_385
+	.long	func_4C09CF34_Table_p0_376
+	.long	func_4C09CF34_Table_p0_283
+	.long	func_4C09CF34_Table_p0_326
+	.long	func_4C09CF34_Table_p0_299
+	.long	func_4C09CF34_Table_p0_30
+	.long	func_4C09CF34_Table_p0_101
+	.long	func_4C09CF34_Table_p0_104
+	.long	func_4C09CF34_Table_p0_105
+	.long	func_4C09CF34_Table_p0_106
+	.long	func_4C09CF34_Table_p0_103
+	.long	func_4C09CF34_Table_p0_418
+	.long	func_4C09CF34_Table_p0_107
+	.long	func_4C09CF34_Table_p0_108
+	.long	0
+	.long	func_4C09CF34_Table_p0_221
+	.long	func_4C09CF34_Table_p0_224
+	.long	func_4C09CF34_Table_p0_226
+	.long	func_4C09CF34_Table_p0_415
+	.long	func_4C09CF34_Table_p0_225
+	.long	func_4C09CF34_Table_p0_94
+	.long	0
+	.long	func_4C09CF34_Table_p0_93
+	.long	func_4C09CF34_Table_p0_95
+	.long	func_4C09CF34_Table_p0_96
+	.long	func_4C09CF34_Table_p0_423
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_233
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_251
+	.long	func_4C09CF34_Table_p0_232
+	.long	func_4C09CF34_Table_p0_246
+	.long	func_4C09CF34_Table_p0_247
+	.long	func_4C09CF34_Table_p0_239
+	.long	0
+	.long	func_4C09CF34_Table_p0_88
+	.long	func_4C09CF34_Table_p0_428
+	.long	func_4C09CF34_Table_p0_89
+	.long	func_4C09CF34_Table_p0_86
+	.long	func_4C09CF34_Table_p0_275
+	.long	func_4C09CF34_Table_p0_127
+	.long	func_4C09CF34_Table_p0_128
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_48
+	.long	0
+	.long	func_4C09CF34_Table_p0_47
+	.long	0
+	.long	func_4C09CF34_Table_p0_18
+	.long	func_4C09CF34_Table_p0_433
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_19
+	.long	func_4C09CF34_Table_p0_138
+	.long	func_4C09CF34_Table_p0_137
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_59
+	.long	0
+	.long	func_4C09CF34_Table_p0_339
+	.long	func_4C09CF34_Table_p0_256
+	.long	func_4C09CF34_Table_p0_54
+	.long	func_4C09CF34_Table_p0_438
+	.long	func_4C09CF34_Table_p0_55
+	.long	func_4C09CF34_Table_p0_56
+	.long	func_4C09CF34_Table_p0_34
+	.long	func_4C09CF34_Table_p0_159
+	.long	func_4C09CF34_Table_p0_36
+	.long	func_4C09CF34_Table_p0_37
+	.long	0
+	.long	func_4C09CF34_Table_p0_329
+	.long	func_4C09CF34_Table_p0_334
+	.long	func_4C09CF34_Table_p0_395
+	.long	func_4C09CF34_Table_p0_460
+	.long	func_4C09CF34_Table_p0_392
+	.long	func_4C09CF34_Table_p0_69
+	.long	func_4C09CF34_Table_p0_443
+	.long	func_4C09CF34_Table_p0_259
+	.long	func_4C09CF34_Table_p0_163
+	.long	func_4C09CF34_Table_p0_260
+	.long	func_4C09CF34_Table_p0_199
+	.long	func_4C09CF34_Table_p0_201
+	.long	func_4C09CF34_Table_p0_200
 	.long	0
 	.long	func_4C09CF34_Table_p0_202
-	.long	func_4C09CF34_Table_p0_204
+	.long	func_4C09CF34_Table_p0_333
+	.long	func_4C09CF34_Table_p0_398
+	.long	func_4C09CF34_Table_p0_465
+	.long	func_4C09CF34_Table_p0_331
+	.long	func_4C09CF34_Table_p0_323
+	.long	func_4C09CF34_Table_p0_448
+	.long	func_4C09CF34_Table_p0_293
+	.long	func_4C09CF34_Table_p0_284
+	.long	0
+	.long	func_4C09CF34_Table_p0_194
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_303
+	.long	func_4C09CF34_Table_p0_413
+	.long	func_4C09CF34_Table_p0_332
+	.long	func_4C09CF34_Table_p0_316
+	.long	func_4C09CF34_Table_p0_312
+	.long	func_4C09CF34_Table_p0_453
+	.long	func_4C09CF34_Table_p0_26
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_216
+	.long	func_4C09CF34_Table_p0_217
+	.long	0
+	.long	0
 	.long	func_4C09CF34_Table_p0_206
-	.long	func_4C09CF34_Table_p0_600
+	.long	func_4C09CF34_Table_p0_205
+	.long	func_4C09CF34_Table_p0_39
+	.long	func_4C09CF34_Table_p0_41
+	.long	func_4C09CF34_Table_p0_42
+	.long	func_4C09CF34_Table_p0_322
+	.long	func_4C09CF34_Table_p0_364
+	.long	func_4C09CF34_Table_p0_351
+	.long	func_4C09CF34_Table_p0_313
+	.long	0
+	.long	func_4C09CF34_Table_p0_99
+	.long	func_4C09CF34_Table_p0_102
+	.long	func_4C09CF34_Table_p0_113
+	.long	func_4C09CF34_Table_p0_114
+	.long	func_4C09CF34_Table_p0_115
+	.long	func_4C09CF34_Table_p0_116
+	.long	func_4C09CF34_Table_p0_117
+	.long	func_4C09CF34_Table_p0_118
+	.long	func_4C09CF34_Table_p0_366
+	.long	func_4C09CF34_Table_p0_375
+	.long	func_4C09CF34_Table_p0_374
+	.long	func_4C09CF34_Table_p0_75
+	.long	func_4C09CF34_Table_p0_367
+	.long	func_4C09CF34_Table_p0_31
+	.long	func_4C09CF34_Table_p0_90
 	.long	0
 	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_421
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_219
+	.long	func_4C09CF34_Table_p0_220
+	.long	func_4C09CF34_Table_p0_245
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_83
+	.long	0
+	.long	func_4C09CF34_Table_p0_241
+	.long	0
+	.long	func_4C09CF34_Table_p0_84
+	.long	func_4C09CF34_Table_p0_426
+	.long	0
+	.long	func_4C09CF34_Table_p0_1
+	.long	0
+	.long	func_4C09CF34_Table_p0_122
+	.long	func_4C09CF34_Table_p0_13
+	.long	func_4C09CF34_Table_p0_125
+	.long	func_4C09CF34_Table_p0_121
+	.long	func_4C09CF34_Table_p0_123
+	.long	func_4C09CF34_Table_p0_311
+	.long	func_4C09CF34_Table_p0_124
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_6
+	.long	func_4C09CF34_Table_p0_431
+	.long	0
+	.long	func_4C09CF34_Table_p0_7
+	.long	func_4C09CF34_Table_p0_10
+	.long	func_4C09CF34_Table_p0_132
+	.long	func_4C09CF34_Table_p0_133
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_52
+	.long	func_4C09CF34_Table_p0_57
+	.long	func_4C09CF34_Table_p0_61
+	.long	func_4C09CF34_Table_p0_50
+	.long	func_4C09CF34_Table_p0_53
+	.long	func_4C09CF34_Table_p0_436
+	.long	func_4C09CF34_Table_p0_257
+	.long	func_4C09CF34_Table_p0_267
 	.long	0
 	.long	func_4C09CF34_Table_p0_371
 	.long	0
 	.long	0
-	.long	func_4C09CF34_Table_p0_390
-	.long	func_4C09CF34_Table_p0_370
-	.long	func_4C09CF34_Table_p0_385
-	.long	func_4C09CF34_Table_p0_386
-	.long	func_4C09CF34_Table_p0_377
+	.long	func_4C09CF34_Table_p0_126
+	.long	func_4C09CF34_Table_p0_153
+	.long	func_4C09CF34_Table_p0_154
+	.long	func_4C09CF34_Table_p0_401
+	.long	func_4C09CF34_Table_p0_458
+	.long	func_4C09CF34_Table_p0_411
+	.long	func_4C09CF34_Table_p0_286
+	.long	func_4C09CF34_Table_p0_441
+	.long	func_4C09CF34_Table_p0_67
+	.long	func_4C09CF34_Table_p0_66
 	.long	0
-	.long	func_4C09CF34_Table_p0_194
-	.long	func_4C09CF34_Table_p0_605
-	.long	func_4C09CF34_Table_p0_196
-	.long	func_4C09CF34_Table_p0_192
-	.long	func_4C09CF34_Table_p0_421
-	.long	func_4C09CF34_Table_p0_243
-	.long	func_4C09CF34_Table_p0_244
-	.long	0
+	.long	func_4C09CF34_Table_p0_158
 	.long	0
 	.long	0
-	.long	func_4C09CF34_Table_p0_125
+	.long	func_4C09CF34_Table_p0_157
 	.long	0
-	.long	func_4C09CF34_Table_p0_124
-	.long	0
-	.long	func_4C09CF34_Table_p0_41
-	.long	func_4C09CF34_Table_p0_610
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_43
-	.long	func_4C09CF34_Table_p0_257
-	.long	func_4C09CF34_Table_p0_256
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_138
-	.long	0
-	.long	func_4C09CF34_Table_p0_508
-	.long	func_4C09CF34_Table_p0_395
-	.long	func_4C09CF34_Table_p0_131
-	.long	func_4C09CF34_Table_p0_615
-	.long	func_4C09CF34_Table_p0_133
-	.long	func_4C09CF34_Table_p0_134
-	.long	func_4C09CF34_Table_p0_101
-	.long	func_4C09CF34_Table_p0_280
-	.long	func_4C09CF34_Table_p0_104
-	.long	func_4C09CF34_Table_p0_106
-	.long	0
-	.long	func_4C09CF34_Table_p0_496
-	.long	func_4C09CF34_Table_p0_501
-	.long	func_4C09CF34_Table_p0_572
-	.long	func_4C09CF34_Table_p0_637
-	.long	func_4C09CF34_Table_p0_569
-	.long	func_4C09CF34_Table_p0_161
-	.long	func_4C09CF34_Table_p0_620
-	.long	func_4C09CF34_Table_p0_399
-	.long	func_4C09CF34_Table_p0_287
+	.long	func_4C09CF34_Table_p0_164
 	.long	func_4C09CF34_Table_p0_400
-	.long	func_4C09CF34_Table_p0_331
-	.long	func_4C09CF34_Table_p0_333
-	.long	func_4C09CF34_Table_p0_332
-	.long	0
-	.long	func_4C09CF34_Table_p0_334
-	.long	func_4C09CF34_Table_p0_500
-	.long	func_4C09CF34_Table_p0_575
-	.long	func_4C09CF34_Table_p0_642
-	.long	func_4C09CF34_Table_p0_498
-	.long	func_4C09CF34_Table_p0_487
-	.long	func_4C09CF34_Table_p0_625
-	.long	func_4C09CF34_Table_p0_444
-	.long	func_4C09CF34_Table_p0_434
-	.long	0
-	.long	func_4C09CF34_Table_p0_323
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_461
-	.long	func_4C09CF34_Table_p0_590
-	.long	func_4C09CF34_Table_p0_499
-	.long	func_4C09CF34_Table_p0_479
-	.long	func_4C09CF34_Table_p0_474
-	.long	func_4C09CF34_Table_p0_630
+	.long	func_4C09CF34_Table_p0_463
+	.long	func_4C09CF34_Table_p0_410
+	.long	func_4C09CF34_Table_p0_73
+	.long	func_4C09CF34_Table_p0_446
 	.long	func_4C09CF34_Table_p0_74
+	.long	func_4C09CF34_Table_p0_324
+	.long	0
+	.long	func_4C09CF34_Table_p0_185
+	.long	func_4C09CF34_Table_p0_189
+	.long	func_4C09CF34_Table_p0_187
+	.long	func_4C09CF34_Table_p0_188
+	.long	0
+	.long	func_4C09CF34_Table_p0_15
+	.long	func_4C09CF34_Table_p0_407
+	.long	0
+	.long	func_4C09CF34_Table_p0_355
+	.long	func_4C09CF34_Table_p0_347
+	.long	func_4C09CF34_Table_p0_451
+	.long	func_4C09CF34_Table_p0_349
+	.long	func_4C09CF34_Table_p0_24
+	.long	func_4C09CF34_Table_p0_25
+	.long	func_4C09CF34_Table_p0_197
+	.long	func_4C09CF34_Table_p0_340
+	.long	func_4C09CF34_Table_p0_218
 	.long	0
 	.long	0
-	.long	func_4C09CF34_Table_p0_351
+	.long	func_4C09CF34_Table_p0_295
+	.long	func_4C09CF34_Table_p0_301
+	.long	func_4C09CF34_Table_p0_356
+	.long	func_4C09CF34_Table_p0_343
+	.long	func_4C09CF34_Table_p0_357
+	.long	func_4C09CF34_Table_p0_456
+	.long	func_4C09CF34_Table_p0_318
+	.long	func_4C09CF34_Table_p0_306
+	.long	func_4C09CF34_Table_p0_29
+	.long	func_4C09CF34_Table_p0_177
+	.long	func_4C09CF34_Table_p0_176
+	.long	func_4C09CF34_Table_p0_182
+	.long	func_4C09CF34_Table_p0_173
+	.long	func_4C09CF34_Table_p0_175
+	.long	func_4C09CF34_Table_p0_172
+	.long	0
+	.long	func_4C09CF34_Table_p0_386
+	.long	func_4C09CF34_Table_p0_389
+	.long	func_4C09CF34_Table_p0_380
 	.long	func_4C09CF34_Table_p0_352
+	.long	func_4C09CF34_Table_p0_315
+	.long	func_4C09CF34_Table_p0_320
+	.long	0
+	.long	func_4C09CF34_Table_p0_195
+	.long	func_4C09CF34_Table_p0_196
 	.long	0
 	.long	0
-	.long	func_4C09CF34_Table_p0_338
-	.long	func_4C09CF34_Table_p0_337
-	.long	func_4C09CF34_Table_p0_112
-	.long	func_4C09CF34_Table_p0_114
-	.long	func_4C09CF34_Table_p0_116
-	.long	func_4C09CF34_Table_p0_486
-	.long	func_4C09CF34_Table_p0_536
-	.long	func_4C09CF34_Table_p0_522
-	.long	func_4C09CF34_Table_p0_475
+	.long	func_4C09CF34_Table_p0_119
+	.long	func_4C09CF34_Table_p0_419
+	.long	func_4C09CF34_Table_p0_109
+	.long	func_4C09CF34_Table_p0_110
 	.long	0
-	.long	func_4C09CF34_Table_p0_209
-	.long	func_4C09CF34_Table_p0_212
-	.long	func_4C09CF34_Table_p0_224
-	.long	func_4C09CF34_Table_p0_225
-	.long	func_4C09CF34_Table_p0_226
-	.long	func_4C09CF34_Table_p0_227
 	.long	func_4C09CF34_Table_p0_228
 	.long	func_4C09CF34_Table_p0_229
-	.long	func_4C09CF34_Table_p0_538
-	.long	func_4C09CF34_Table_p0_548
-	.long	func_4C09CF34_Table_p0_547
-	.long	func_4C09CF34_Table_p0_174
-	.long	func_4C09CF34_Table_p0_539
-	.long	func_4C09CF34_Table_p0_95
-	.long	func_4C09CF34_Table_p0_199
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_598
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_354
-	.long	func_4C09CF34_Table_p0_355
-	.long	func_4C09CF34_Table_p0_384
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_186
-	.long	0
-	.long	func_4C09CF34_Table_p0_379
-	.long	0
-	.long	func_4C09CF34_Table_p0_187
-	.long	func_4C09CF34_Table_p0_603
-	.long	0
-	.long	func_4C09CF34_Table_p0_6
-	.long	0
-	.long	func_4C09CF34_Table_p0_236
-	.long	func_4C09CF34_Table_p0_25
-	.long	func_4C09CF34_Table_p0_239
-	.long	func_4C09CF34_Table_p0_235
-	.long	func_4C09CF34_Table_p0_237
-	.long	func_4C09CF34_Table_p0_472
-	.long	func_4C09CF34_Table_p0_238
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_13
-	.long	func_4C09CF34_Table_p0_608
-	.long	0
-	.long	func_4C09CF34_Table_p0_16
-	.long	func_4C09CF34_Table_p0_20
-	.long	func_4C09CF34_Table_p0_250
-	.long	func_4C09CF34_Table_p0_251
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_129
-	.long	func_4C09CF34_Table_p0_136
-	.long	func_4C09CF34_Table_p0_140
-	.long	func_4C09CF34_Table_p0_127
-	.long	func_4C09CF34_Table_p0_130
-	.long	func_4C09CF34_Table_p0_613
-	.long	func_4C09CF34_Table_p0_396
-	.long	func_4C09CF34_Table_p0_410
-	.long	0
-	.long	func_4C09CF34_Table_p0_544
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_242
-	.long	func_4C09CF34_Table_p0_272
-	.long	func_4C09CF34_Table_p0_274
-	.long	func_4C09CF34_Table_p0_578
-	.long	func_4C09CF34_Table_p0_635
-	.long	func_4C09CF34_Table_p0_588
-	.long	func_4C09CF34_Table_p0_436
-	.long	func_4C09CF34_Table_p0_618
-	.long	func_4C09CF34_Table_p0_158
-	.long	func_4C09CF34_Table_p0_156
-	.long	0
-	.long	func_4C09CF34_Table_p0_279
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_278
-	.long	0
-	.long	func_4C09CF34_Table_p0_288
-	.long	func_4C09CF34_Table_p0_577
-	.long	func_4C09CF34_Table_p0_640
-	.long	func_4C09CF34_Table_p0_587
-	.long	func_4C09CF34_Table_p0_171
-	.long	func_4C09CF34_Table_p0_623
-	.long	func_4C09CF34_Table_p0_173
-	.long	func_4C09CF34_Table_p0_490
-	.long	0
-	.long	func_4C09CF34_Table_p0_314
-	.long	func_4C09CF34_Table_p0_318
-	.long	func_4C09CF34_Table_p0_316
-	.long	func_4C09CF34_Table_p0_317
-	.long	0
-	.long	func_4C09CF34_Table_p0_34
-	.long	func_4C09CF34_Table_p0_584
-	.long	0
-	.long	func_4C09CF34_Table_p0_526
-	.long	func_4C09CF34_Table_p0_518
-	.long	func_4C09CF34_Table_p0_628
-	.long	func_4C09CF34_Table_p0_520
-	.long	func_4C09CF34_Table_p0_70
-	.long	func_4C09CF34_Table_p0_73
-	.long	func_4C09CF34_Table_p0_326
-	.long	func_4C09CF34_Table_p0_509
-	.long	func_4C09CF34_Table_p0_353
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_448
-	.long	func_4C09CF34_Table_p0_459
-	.long	func_4C09CF34_Table_p0_527
-	.long	func_4C09CF34_Table_p0_514
-	.long	func_4C09CF34_Table_p0_528
-	.long	func_4C09CF34_Table_p0_633
-	.long	func_4C09CF34_Table_p0_481
-	.long	func_4C09CF34_Table_p0_467
-	.long	func_4C09CF34_Table_p0_85
-	.long	func_4C09CF34_Table_p0_306
-	.long	func_4C09CF34_Table_p0_305
-	.long	func_4C09CF34_Table_p0_311
-	.long	func_4C09CF34_Table_p0_302
-	.long	func_4C09CF34_Table_p0_304
-	.long	func_4C09CF34_Table_p0_301
-	.long	0
-	.long	func_4C09CF34_Table_p0_563
-	.long	func_4C09CF34_Table_p0_566
-	.long	func_4C09CF34_Table_p0_557
-	.long	func_4C09CF34_Table_p0_523
-	.long	func_4C09CF34_Table_p0_478
-	.long	func_4C09CF34_Table_p0_484
-	.long	0
-	.long	func_4C09CF34_Table_p0_324
-	.long	func_4C09CF34_Table_p0_325
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_230
-	.long	func_4C09CF34_Table_p0_596
-	.long	func_4C09CF34_Table_p0_220
-	.long	func_4C09CF34_Table_p0_221
-	.long	0
-	.long	func_4C09CF34_Table_p0_365
-	.long	func_4C09CF34_Table_p0_366
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_394
-	.long	func_4C09CF34_Table_p0_176
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_177
-	.long	func_4C09CF34_Table_p0_601
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_375
-	.long	func_4C09CF34_Table_p0_367
-	.long	func_4C09CF34_Table_p0_517
-	.long	0
-	.long	func_4C09CF34_Table_p0_376
-	.long	func_4C09CF34_Table_p0_373
-	.long	func_4C09CF34_Table_p0_374
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_181
-	.long	func_4C09CF34_Table_p0_606
-	.long	func_4C09CF34_Table_p0_10
-	.long	0
-	.long	func_4C09CF34_Table_p0_11
-	.long	func_4C09CF34_Table_p0_248
-	.long	func_4C09CF34_Table_p0_22
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_126
-	.long	func_4C09CF34_Table_p0_139
-	.long	0
-	.long	func_4C09CF34_Table_p0_445
-	.long	func_4C09CF34_Table_p0_39
-	.long	func_4C09CF34_Table_p0_611
-	.long	func_4C09CF34_Table_p0_531
-	.long	func_4C09CF34_Table_p0_413
-	.long	func_4C09CF34_Table_p0_533
-	.long	func_4C09CF34_Table_p0_258
-	.long	func_4C09CF34_Table_p0_262
-	.long	func_4C09CF34_Table_p0_263
-	.long	func_4C09CF34_Table_p0_277
-	.long	func_4C09CF34_Table_p0_261
-	.long	func_4C09CF34_Table_p0_269
-	.long	func_4C09CF34_Table_p0_268
-	.long	func_4C09CF34_Table_p0_270
-	.long	0
-	.long	func_4C09CF34_Table_p0_404
-	.long	func_4C09CF34_Table_p0_616
-	.long	func_4C09CF34_Table_p0_437
-	.long	func_4C09CF34_Table_p0_408
-	.long	func_4C09CF34_Table_p0_51
-	.long	func_4C09CF34_Table_p0_281
-	.long	func_4C09CF34_Table_p0_532
-	.long	func_4C09CF34_Table_p0_103
-	.long	0
-	.long	func_4C09CF34_Table_p0_525
-	.long	func_4C09CF34_Table_p0_429
-	.long	func_4C09CF34_Table_p0_585
-	.long	func_4C09CF34_Table_p0_638
-	.long	func_4C09CF34_Table_p0_580
-	.long	func_4C09CF34_Table_p0_406
-	.long	func_4C09CF34_Table_p0_621
-	.long	func_4C09CF34_Table_p0_443
-	.long	func_4C09CF34_Table_p0_458
-	.long	func_4C09CF34_Table_p0_534
-	.long	func_4C09CF34_Table_p0_321
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_47
-	.long	func_4C09CF34_Table_p0_582
-	.long	func_4C09CF34_Table_p0_540
-	.long	func_4C09CF34_Table_p0_541
-	.long	func_4C09CF34_Table_p0_537
-	.long	func_4C09CF34_Table_p0_626
-	.long	func_4C09CF34_Table_p0_469
-	.long	func_4C09CF34_Table_p0_507
-	.long	0
-	.long	func_4C09CF34_Table_p0_315
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_477
-	.long	func_4C09CF34_Table_p0_573
-	.long	func_4C09CF34_Table_p0_503
-	.long	0
-	.long	func_4C09CF34_Table_p0_75
-	.long	func_4C09CF34_Table_p0_631
-	.long	func_4C09CF34_Table_p0_470
-	.long	func_4C09CF34_Table_p0_482
-	.long	0
-	.long	func_4C09CF34_Table_p0_293
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_564
-	.long	func_4C09CF34_Table_p0_565
-	.long	func_4C09CF34_Table_p0_567
-	.long	func_4C09CF34_Table_p0_113
-	.long	func_4C09CF34_Table_p0_107
-	.long	func_4C09CF34_Table_p0_494
-	.long	func_4C09CF34_Table_p0_495
-	.long	func_4C09CF34_Table_p0_521
-	.long	0
-	.long	func_4C09CF34_Table_p0_210
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_232
-	.long	func_4C09CF34_Table_p0_594
-	.long	func_4C09CF34_Table_p0_222
-	.long	func_4C09CF34_Table_p0_223
-	.long	0
-	.long	func_4C09CF34_Table_p0_97
-	.long	func_4C09CF34_Table_p0_98
-	.long	0
-	.long	func_4C09CF34_Table_p0_591
-	.long	0
-	.long	func_4C09CF34_Table_p0_208
-	.long	0
-	.long	func_4C09CF34_Table_p0_207
-	.long	0
-	.long	func_4C09CF34_Table_p0_201
-	.long	func_4C09CF34_Table_p0_599
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_357
-	.long	func_4C09CF34_Table_p0_388
-	.long	func_4C09CF34_Table_p0_391
-	.long	func_4C09CF34_Table_p0_392
-	.long	func_4C09CF34_Table_p0_383
-	.long	func_4C09CF34_Table_p0_381
-	.long	func_4C09CF34_Table_p0_393
-	.long	func_4C09CF34_Table_p0_380
-	.long	func_4C09CF34_Table_p0_193
-	.long	func_4C09CF34_Table_p0_183
-	.long	func_4C09CF34_Table_p0_604
-	.long	func_4C09CF34_Table_p0_185
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_247
-	.long	func_4C09CF34_Table_p0_425
-	.long	func_4C09CF34_Table_p0_245
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_121
-	.long	func_4C09CF34_Table_p0_122
-	.long	func_4C09CF34_Table_p0_123
-	.long	0
-	.long	func_4C09CF34_Table_p0_120
-	.long	func_4C09CF34_Table_p0_609
-	.long	func_4C09CF34_Table_p0_18
-	.long	0
-	.long	func_4C09CF34_Table_p0_420
-	.long	func_4C09CF34_Table_p0_419
-	.long	func_4C09CF34_Table_p0_254
 	.long	0
 	.long	0
 	.long	func_4C09CF34_Table_p0_255
-	.long	func_4C09CF34_Table_p0_403
-	.long	func_4C09CF34_Table_p0_414
-	.long	func_4C09CF34_Table_p0_137
-	.long	func_4C09CF34_Table_p0_435
-	.long	func_4C09CF34_Table_p0_128
-	.long	func_4C09CF34_Table_p0_614
-	.long	func_4C09CF34_Table_p0_409
-	.long	func_4C09CF34_Table_p0_442
+	.long	func_4C09CF34_Table_p0_76
 	.long	0
-	.long	func_4C09CF34_Table_p0_264
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_77
+	.long	func_4C09CF34_Table_p0_424
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_237
+	.long	func_4C09CF34_Table_p0_230
+	.long	func_4C09CF34_Table_p0_346
+	.long	0
+	.long	func_4C09CF34_Table_p0_238
+	.long	func_4C09CF34_Table_p0_235
+	.long	func_4C09CF34_Table_p0_236
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_80
+	.long	func_4C09CF34_Table_p0_429
+	.long	func_4C09CF34_Table_p0_4
+	.long	0
+	.long	func_4C09CF34_Table_p0_5
+	.long	func_4C09CF34_Table_p0_131
+	.long	func_4C09CF34_Table_p0_11
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_49
+	.long	func_4C09CF34_Table_p0_60
+	.long	0
+	.long	func_4C09CF34_Table_p0_294
+	.long	func_4C09CF34_Table_p0_17
+	.long	func_4C09CF34_Table_p0_434
+	.long	func_4C09CF34_Table_p0_360
+	.long	func_4C09CF34_Table_p0_268
+	.long	func_4C09CF34_Table_p0_362
+	.long	func_4C09CF34_Table_p0_139
+	.long	func_4C09CF34_Table_p0_143
+	.long	func_4C09CF34_Table_p0_144
+	.long	func_4C09CF34_Table_p0_156
+	.long	func_4C09CF34_Table_p0_142
+	.long	func_4C09CF34_Table_p0_150
+	.long	func_4C09CF34_Table_p0_149
+	.long	func_4C09CF34_Table_p0_151
+	.long	0
+	.long	func_4C09CF34_Table_p0_262
+	.long	func_4C09CF34_Table_p0_439
+	.long	func_4C09CF34_Table_p0_287
 	.long	func_4C09CF34_Table_p0_265
-	.long	func_4C09CF34_Table_p0_271
-	.long	0
-	.long	func_4C09CF34_Table_p0_267
-	.long	func_4C09CF34_Table_p0_552
-	.long	func_4C09CF34_Table_p0_576
-	.long	func_4C09CF34_Table_p0_636
-	.long	func_4C09CF34_Table_p0_570
-	.long	func_4C09CF34_Table_p0_553
-	.long	func_4C09CF34_Table_p0_619
-	.long	func_4C09CF34_Table_p0_440
+	.long	func_4C09CF34_Table_p0_21
 	.long	func_4C09CF34_Table_p0_160
-	.long	func_4C09CF34_Table_p0_33
-	.long	func_4C09CF34_Table_p0_328
+	.long	func_4C09CF34_Table_p0_361
+	.long	func_4C09CF34_Table_p0_35
+	.long	0
+	.long	func_4C09CF34_Table_p0_354
+	.long	func_4C09CF34_Table_p0_281
+	.long	func_4C09CF34_Table_p0_408
+	.long	func_4C09CF34_Table_p0_461
+	.long	func_4C09CF34_Table_p0_403
+	.long	func_4C09CF34_Table_p0_263
+	.long	func_4C09CF34_Table_p0_444
+	.long	func_4C09CF34_Table_p0_292
+	.long	func_4C09CF34_Table_p0_300
+	.long	func_4C09CF34_Table_p0_363
+	.long	func_4C09CF34_Table_p0_192
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_20
+	.long	func_4C09CF34_Table_p0_405
+	.long	func_4C09CF34_Table_p0_368
+	.long	func_4C09CF34_Table_p0_369
+	.long	func_4C09CF34_Table_p0_365
+	.long	func_4C09CF34_Table_p0_449
+	.long	func_4C09CF34_Table_p0_308
+	.long	func_4C09CF34_Table_p0_338
+	.long	0
+	.long	func_4C09CF34_Table_p0_186
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_314
+	.long	func_4C09CF34_Table_p0_396
 	.long	func_4C09CF34_Table_p0_335
 	.long	0
-	.long	func_4C09CF34_Table_p0_336
-	.long	0
-	.long	func_4C09CF34_Table_p0_348
-	.long	func_4C09CF34_Table_p0_574
-	.long	func_4C09CF34_Table_p0_641
-	.long	func_4C09CF34_Table_p0_571
-	.long	func_4C09CF34_Table_p0_350
-	.long	func_4C09CF34_Table_p0_624
-	.long	func_4C09CF34_Table_p0_449
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_319
-	.long	func_4C09CF34_Table_p0_320
-	.long	0
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_19
-	.long	func_4C09CF34_Table_p0_589
-	.long	func_4C09CF34_Table_p0_430
-	.long	func_4C09CF34_Table_p0_426
-	.long	func_4C09CF34_Table_p0_81
-	.long	func_4C09CF34_Table_p0_629
-	.long	func_4C09CF34_Table_p0_524
-	.long	func_4C09CF34_Table_p0_505
-	.long	func_4C09CF34_Table_p0_59
-	.long	func_4C09CF34_Table_p0_344
-	.long	func_4C09CF34_Table_p0_346
-	.long	func_4C09CF34_Table_p0_345
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_462
-	.long	0
-	.long	0
-	.long	func_4C09CF34_Table_p0_550
-	.long	func_4C09CF34_Table_p0_492
-	.long	func_4C09CF34_Table_p0_515
-	.long	func_4C09CF34_Table_p0_558
-	.long	func_4C09CF34_Table_p0_485
-	.long	func_4C09CF34_Table_p0_543
-	.long	func_4C09CF34_Table_p0_307
-	.long	func_4C09CF34_Table_p0_310
-	.long	func_4C09CF34_Table_p0_312
-	.long	func_4C09CF34_Table_p0_303
-	.long	func_4C09CF34_Table_p0_313
+	.long	func_4C09CF34_Table_p0_27
+	.long	func_4C09CF34_Table_p0_454
 	.long	func_4C09CF34_Table_p0_309
-	.long	func_4C09CF34_Table_p0_308
+	.long	func_4C09CF34_Table_p0_319
 	.long	0
-	.long	func_4C09CF34_Table_p0_545
-	.long	func_4C09CF34_Table_p0_546
-	.long	func_4C09CF34_Table_p0_529
-	.long	func_4C09CF34_Table_p0_506
-	.long	func_4C09CF34_Table_p0_519
-	.long	0
-	.long	func_4C09CF34_Table_p0_200
+	.long	func_4C09CF34_Table_p0_165
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	func_4C09CF34_Table_p0_597
+	.long	func_4C09CF34_Table_p0_387
+	.long	func_4C09CF34_Table_p0_388
+	.long	func_4C09CF34_Table_p0_390
+	.long	func_4C09CF34_Table_p0_40
+	.long	func_4C09CF34_Table_p0_38
+	.long	func_4C09CF34_Table_p0_327
+	.long	func_4C09CF34_Table_p0_328
+	.long	func_4C09CF34_Table_p0_350
+	.long	0
+	.long	func_4C09CF34_Table_p0_100
 	.long	0
 	.long	0
 	.long	0
-	.long	func_4C09CF34_Table_p0_363
-	.long	func_4C09CF34_Table_p0_372
+	.long	func_4C09CF34_Table_p0_120
+	.long	func_4C09CF34_Table_p0_417
+	.long	func_4C09CF34_Table_p0_111
+	.long	func_4C09CF34_Table_p0_112
+	.long	0
+	.long	func_4C09CF34_Table_p0_32
+	.long	func_4C09CF34_Table_p0_33
+	.long	0
+	.long	func_4C09CF34_Table_p0_414
+	.long	0
+	.long	func_4C09CF34_Table_p0_98
+	.long	0
+	.long	func_4C09CF34_Table_p0_97
+	.long	0
+	.long	func_4C09CF34_Table_p0_92
+	.long	func_4C09CF34_Table_p0_422
 	.long	0
 	.long	0
 	.long	0
+	.long	func_4C09CF34_Table_p0_222
+	.long	func_4C09CF34_Table_p0_249
+	.long	func_4C09CF34_Table_p0_252
+	.long	func_4C09CF34_Table_p0_253
+	.long	func_4C09CF34_Table_p0_244
+	.long	func_4C09CF34_Table_p0_243
+	.long	func_4C09CF34_Table_p0_254
+	.long	func_4C09CF34_Table_p0_242
+	.long	func_4C09CF34_Table_p0_87
+	.long	func_4C09CF34_Table_p0_81
+	.long	func_4C09CF34_Table_p0_427
+	.long	func_4C09CF34_Table_p0_82
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_130
+	.long	func_4C09CF34_Table_p0_279
+	.long	func_4C09CF34_Table_p0_129
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_44
+	.long	func_4C09CF34_Table_p0_45
+	.long	func_4C09CF34_Table_p0_46
+	.long	0
+	.long	func_4C09CF34_Table_p0_43
+	.long	func_4C09CF34_Table_p0_432
+	.long	func_4C09CF34_Table_p0_8
+	.long	0
+	.long	func_4C09CF34_Table_p0_274
+	.long	func_4C09CF34_Table_p0_273
+	.long	func_4C09CF34_Table_p0_135
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_136
+	.long	func_4C09CF34_Table_p0_261
+	.long	func_4C09CF34_Table_p0_269
+	.long	func_4C09CF34_Table_p0_58
+	.long	func_4C09CF34_Table_p0_285
+	.long	func_4C09CF34_Table_p0_51
+	.long	func_4C09CF34_Table_p0_437
+	.long	func_4C09CF34_Table_p0_266
+	.long	func_4C09CF34_Table_p0_291
+	.long	0
+	.long	func_4C09CF34_Table_p0_145
+	.long	func_4C09CF34_Table_p0_146
+	.long	func_4C09CF34_Table_p0_152
+	.long	0
+	.long	func_4C09CF34_Table_p0_148
+	.long	func_4C09CF34_Table_p0_378
+	.long	func_4C09CF34_Table_p0_399
+	.long	func_4C09CF34_Table_p0_459
+	.long	func_4C09CF34_Table_p0_393
+	.long	func_4C09CF34_Table_p0_379
+	.long	func_4C09CF34_Table_p0_442
+	.long	func_4C09CF34_Table_p0_289
+	.long	func_4C09CF34_Table_p0_68
+	.long	func_4C09CF34_Table_p0_14
+	.long	func_4C09CF34_Table_p0_198
+	.long	func_4C09CF34_Table_p0_203
+	.long	0
+	.long	func_4C09CF34_Table_p0_204
+	.long	0
+	.long	func_4C09CF34_Table_p0_214
+	.long	func_4C09CF34_Table_p0_397
+	.long	func_4C09CF34_Table_p0_464
+	.long	func_4C09CF34_Table_p0_394
+	.long	func_4C09CF34_Table_p0_215
+	.long	func_4C09CF34_Table_p0_447
+	.long	func_4C09CF34_Table_p0_296
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_190
+	.long	func_4C09CF34_Table_p0_191
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_9
+	.long	func_4C09CF34_Table_p0_412
+	.long	func_4C09CF34_Table_p0_282
+	.long	func_4C09CF34_Table_p0_280
+	.long	func_4C09CF34_Table_p0_28
+	.long	func_4C09CF34_Table_p0_452
+	.long	func_4C09CF34_Table_p0_353
+	.long	func_4C09CF34_Table_p0_336
+	.long	func_4C09CF34_Table_p0_23
+	.long	func_4C09CF34_Table_p0_210
+	.long	func_4C09CF34_Table_p0_212
+	.long	func_4C09CF34_Table_p0_211
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_304
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_377
+	.long	func_4C09CF34_Table_p0_325
+	.long	func_4C09CF34_Table_p0_344
+	.long	func_4C09CF34_Table_p0_381
+	.long	func_4C09CF34_Table_p0_321
+	.long	func_4C09CF34_Table_p0_370
 	.long	func_4C09CF34_Table_p0_178
+	.long	func_4C09CF34_Table_p0_181
+	.long	func_4C09CF34_Table_p0_183
+	.long	func_4C09CF34_Table_p0_174
+	.long	func_4C09CF34_Table_p0_184
+	.long	func_4C09CF34_Table_p0_180
+	.long	func_4C09CF34_Table_p0_179
 	.long	0
+	.long	func_4C09CF34_Table_p0_372
+	.long	func_4C09CF34_Table_p0_373
 	.long	func_4C09CF34_Table_p0_358
+	.long	func_4C09CF34_Table_p0_337
+	.long	func_4C09CF34_Table_p0_348
+	.long	0
+	.long	func_4C09CF34_Table_p0_91
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_420
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_227
+	.long	func_4C09CF34_Table_p0_234
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09CF34_Table_p0_78
+	.long	0
+	.long	func_4C09CF34_Table_p0_223
 	.long	0
 
 VoiceDirPartRefFind_Var:	# u16, a constant; read / written by VoiceDirPartRefFind 0x4C09D290: `movhu (VoiceDirPartRefFind_Var), d1`
@@ -21774,638 +21779,638 @@ VoiceDirPartRefFind_Var_2:	# u16, a constant; read / written by VoiceDirPartRefF
 
 VoiceDirPartRefFind_Table:
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_217
-	.long	VoiceDirPartRefFind_Table_p0_512
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_83
-	.long	VoiceDirPartRefFind_Table_p0_250
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_270
-	.long	VoiceDirPartRefFind_Table_p0_348
-	.long	VoiceDirPartRefFind_Table_p0_361
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_122
-	.long	VoiceDirPartRefFind_Table_p0_125
-	.long	VoiceDirPartRefFind_Table_p0_154
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_135
-	.long	VoiceDirPartRefFind_Table_p0_139
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_329
-	.long	VoiceDirPartRefFind_Table_p0_0
-	.long	VoiceDirPartRefFind_Table_p0_335
-	.long	VoiceDirPartRefFind_Table_p0_162
-	.long	VoiceDirPartRefFind_Table_p0_20
-	.long	VoiceDirPartRefFind_Table_p0_22
-	.long	VoiceDirPartRefFind_Table_p0_28
-	.long	VoiceDirPartRefFind_Table_p0_354
-	.long	VoiceDirPartRefFind_Table_p0_41
-	.long	VoiceDirPartRefFind_Table_p0_505
-	.long	VoiceDirPartRefFind_Table_p0_541
-	.long	VoiceDirPartRefFind_Table_p0_382
-	.long	VoiceDirPartRefFind_Table_p0_186
-	.long	VoiceDirPartRefFind_Table_p0_397
-	.long	VoiceDirPartRefFind_Table_p0_402
-	.long	VoiceDirPartRefFind_Table_p0_408
-	.long	VoiceDirPartRefFind_Table_p0_214
-	.long	VoiceDirPartRefFind_Table_p0_515
-	.long	VoiceDirPartRefFind_Table_p0_75
-	.long	VoiceDirPartRefFind_Table_p0_79
-	.long	VoiceDirPartRefFind_Table_p0_432
-	.long	VoiceDirPartRefFind_Table_p0_92
-	.long	VoiceDirPartRefFind_Table_p0_437
-	.long	VoiceDirPartRefFind_Table_p0_265
-	.long	VoiceDirPartRefFind_Table_p0_99
-	.long	VoiceDirPartRefFind_Table_p0_276
-	.long	VoiceDirPartRefFind_Table_p0_287
-	.long	VoiceDirPartRefFind_Table_p0_448
-	.long	VoiceDirPartRefFind_Table_p0_119
-	.long	VoiceDirPartRefFind_Table_p0_124
-	.long	VoiceDirPartRefFind_Table_p0_126
-	.long	VoiceDirPartRefFind_Table_p0_127
-	.long	VoiceDirPartRefFind_Table_p0_460
-	.long	VoiceDirPartRefFind_Table_p0_131
-	.long	VoiceDirPartRefFind_Table_p0_464
-	.long	VoiceDirPartRefFind_Table_p0_319
-	.long	VoiceDirPartRefFind_Table_p0_140
-	.long	VoiceDirPartRefFind_Table_p0_327
-	.long	VoiceDirPartRefFind_Table_p0_142
-	.long	VoiceDirPartRefFind_Table_p0_253
-	.long	VoiceDirPartRefFind_Table_p0_159
-	.long	VoiceDirPartRefFind_Table_p0_479
-	.long	VoiceDirPartRefFind_Table_p0_539
-	.long	VoiceDirPartRefFind_Table_p0_343
-	.long	VoiceDirPartRefFind_Table_p0_352
-	.long	VoiceDirPartRefFind_Table_p0_485
-	.long	VoiceDirPartRefFind_Table_p0_500
-	.long	VoiceDirPartRefFind_Table_p0_495
-	.long	VoiceDirPartRefFind_Table_p0_378
-	.long	VoiceDirPartRefFind_Table_p0_393
-	.long	VoiceDirPartRefFind_Table_p0_396
-	.long	VoiceDirPartRefFind_Table_p0_400
-	.long	VoiceDirPartRefFind_Table_p0_406
-	.long	VoiceDirPartRefFind_Table_p0_414
-	.long	VoiceDirPartRefFind_Table_p0_510
-	.long	VoiceDirPartRefFind_Table_p0_240
-	.long	VoiceDirPartRefFind_Table_p0_242
-	.long	VoiceDirPartRefFind_Table_p0_244
-	.long	VoiceDirPartRefFind_Table_p0_540
-	.long	VoiceDirPartRefFind_Table_p0_261
-	.long	VoiceDirPartRefFind_Table_p0_263
-	.long	VoiceDirPartRefFind_Table_p0_440
-	.long	VoiceDirPartRefFind_Table_p0_273
-	.long	VoiceDirPartRefFind_Table_p0_284
-	.long	VoiceDirPartRefFind_Table_p0_447
-	.long	VoiceDirPartRefFind_Table_p0_451
-	.long	VoiceDirPartRefFind_Table_p0_453
-	.long	VoiceDirPartRefFind_Table_p0_456
-	.long	VoiceDirPartRefFind_Table_p0_309
-	.long	VoiceDirPartRefFind_Table_p0_312
-	.long	VoiceDirPartRefFind_Table_p0_313
-	.long	VoiceDirPartRefFind_Table_p0_463
-	.long	VoiceDirPartRefFind_Table_p0_315
-	.long	VoiceDirPartRefFind_Table_p0_322
-	.long	VoiceDirPartRefFind_Table_p0_323
-	.long	VoiceDirPartRefFind_Table_p0_331
-	.long	VoiceDirPartRefFind_Table_p0_471
-	.long	VoiceDirPartRefFind_Table_p0_477
-	.long	VoiceDirPartRefFind_Table_p0_338
-	.long	VoiceDirPartRefFind_Table_p0_339
-	.long	VoiceDirPartRefFind_Table_p0_342
-	.long	VoiceDirPartRefFind_Table_p0_345
-	.long	VoiceDirPartRefFind_Table_p0_358
-	.long	VoiceDirPartRefFind_Table_p0_371
-	.long	VoiceDirPartRefFind_Table_p0_372
-	.long	VoiceDirPartRefFind_Table_p0_377
-	.long	VoiceDirPartRefFind_Table_p0_392
-	.long	VoiceDirPartRefFind_Table_p0_394
-	.long	VoiceDirPartRefFind_Table_p0_399
-	.long	VoiceDirPartRefFind_Table_p0_404
-	.long	VoiceDirPartRefFind_Table_p0_409
-	.long	VoiceDirPartRefFind_Table_p0_508
-	.long	VoiceDirPartRefFind_Table_p0_428
-	.long	VoiceDirPartRefFind_Table_p0_429
-	.long	VoiceDirPartRefFind_Table_p0_431
-	.long	VoiceDirPartRefFind_Table_p0_433
-	.long	VoiceDirPartRefFind_Table_p0_434
-	.long	VoiceDirPartRefFind_Table_p0_438
-	.long	VoiceDirPartRefFind_Table_p0_439
-	.long	VoiceDirPartRefFind_Table_p0_441
-	.long	VoiceDirPartRefFind_Table_p0_443
-	.long	VoiceDirPartRefFind_Table_p0_517
-	.long	VoiceDirPartRefFind_Table_p0_449
-	.long	VoiceDirPartRefFind_Table_p0_452
-	.long	VoiceDirPartRefFind_Table_p0_454
-	.long	VoiceDirPartRefFind_Table_p0_458
-	.long	VoiceDirPartRefFind_Table_p0_459
-	.long	VoiceDirPartRefFind_Table_p0_461
-	.long	VoiceDirPartRefFind_Table_p0_462
-	.long	VoiceDirPartRefFind_Table_p0_465
-	.long	VoiceDirPartRefFind_Table_p0_467
-	.long	VoiceDirPartRefFind_Table_p0_468
-	.long	VoiceDirPartRefFind_Table_p0_469
-	.long	VoiceDirPartRefFind_Table_p0_470
-	.long	VoiceDirPartRefFind_Table_p0_475
-	.long	VoiceDirPartRefFind_Table_p0_478
-	.long	VoiceDirPartRefFind_Table_p0_480
-	.long	VoiceDirPartRefFind_Table_p0_481
-	.long	VoiceDirPartRefFind_Table_p0_483
-	.long	VoiceDirPartRefFind_Table_p0_484
-	.long	VoiceDirPartRefFind_Table_p0_486
-	.long	VoiceDirPartRefFind_Table_p0_487
-	.long	VoiceDirPartRefFind_Table_p0_489
-	.long	VoiceDirPartRefFind_Table_p0_491
-	.long	VoiceDirPartRefFind_Table_p0_518
-	.long	VoiceDirPartRefFind_Table_p0_519
-	.long	VoiceDirPartRefFind_Table_p0_523
-	.long	VoiceDirPartRefFind_Table_p0_521
-	.long	VoiceDirPartRefFind_Table_p0_497
-	.long	VoiceDirPartRefFind_Table_p0_233
-	.long	VoiceDirPartRefFind_Table_p0_326
-	.long	VoiceDirPartRefFind_Table_p0_84
-	.long	VoiceDirPartRefFind_Table_p0_522
-	.long	VoiceDirPartRefFind_Table_p0_520
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_350
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_524
-	.long	VoiceDirPartRefFind_Table_p0_525
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_236
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_411
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_526
-	.long	VoiceDirPartRefFind_Table_p0_530
-	.long	VoiceDirPartRefFind_Table_p0_531
-	.long	VoiceDirPartRefFind_Table_p0_532
-	.long	VoiceDirPartRefFind_Table_p0_534
-	.long	VoiceDirPartRefFind_Table_p0_533
-	.long	VoiceDirPartRefFind_Table_p0_536
-	.long	VoiceDirPartRefFind_Table_p0_535
-	.long	VoiceDirPartRefFind_Table_p0_528
-	.long	VoiceDirPartRefFind_Table_p0_527
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_386
-	.long	VoiceDirPartRefFind_Table_p0_187
-	.long	VoiceDirPartRefFind_Table_p0_398
-	.long	VoiceDirPartRefFind_Table_p0_403
-	.long	VoiceDirPartRefFind_Table_p0_529
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_513
-	.long	VoiceDirPartRefFind_Table_p0_77
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_157
-	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_98
+	.long	VoiceDirPartRefFind_Table_p0_319
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_101
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_537
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_538
+	.long	VoiceDirPartRefFind_Table_p0_34
+	.long	VoiceDirPartRefFind_Table_p0_120
 	.long	0
 	.long	0
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_134
+	.long	VoiceDirPartRefFind_Table_p0_184
+	.long	VoiceDirPartRefFind_Table_p0_194
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_51
+	.long	VoiceDirPartRefFind_Table_p0_54
+	.long	VoiceDirPartRefFind_Table_p0_68
 	.long	0
 	.long	0
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_59
+	.long	VoiceDirPartRefFind_Table_p0_60
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_144
-	.long	VoiceDirPartRefFind_Table_p0_160
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_499
-	.long	VoiceDirPartRefFind_Table_p0_374
-	.long	VoiceDirPartRefFind_Table_p0_379
-	.long	VoiceDirPartRefFind_Table_p0_182
-	.long	VoiceDirPartRefFind_Table_p0_197
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_418
-	.long	VoiceDirPartRefFind_Table_p0_220
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_246
-	.long	VoiceDirPartRefFind_Table_p0_283
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_116
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_274
-	.long	VoiceDirPartRefFind_Table_p0_285
-	.long	VoiceDirPartRefFind_Table_p0_291
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_297
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_316
-	.long	VoiceDirPartRefFind_Table_p0_70
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_472
+	.long	VoiceDirPartRefFind_Table_p0_172
+	.long	VoiceDirPartRefFind_Table_p0_0
+	.long	VoiceDirPartRefFind_Table_p0_176
+	.long	VoiceDirPartRefFind_Table_p0_74
+	.long	VoiceDirPartRefFind_Table_p0_8
+	.long	VoiceDirPartRefFind_Table_p0_10
 	.long	VoiceDirPartRefFind_Table_p0_16
-	.long	VoiceDirPartRefFind_Table_p0_19
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_27
+	.long	VoiceDirPartRefFind_Table_p0_189
+	.long	VoiceDirPartRefFind_Table_p0_20
+	.long	VoiceDirPartRefFind_Table_p0_312
+	.long	VoiceDirPartRefFind_Table_p0_348
+	.long	VoiceDirPartRefFind_Table_p0_208
+	.long	VoiceDirPartRefFind_Table_p0_84
+	.long	VoiceDirPartRefFind_Table_p0_218
+	.long	VoiceDirPartRefFind_Table_p0_223
+	.long	VoiceDirPartRefFind_Table_p0_229
+	.long	VoiceDirPartRefFind_Table_p0_96
+	.long	VoiceDirPartRefFind_Table_p0_322
+	.long	VoiceDirPartRefFind_Table_p0_28
+	.long	VoiceDirPartRefFind_Table_p0_32
+	.long	VoiceDirPartRefFind_Table_p0_246
+	.long	VoiceDirPartRefFind_Table_p0_38
+	.long	VoiceDirPartRefFind_Table_p0_251
+	.long	VoiceDirPartRefFind_Table_p0_130
+	.long	VoiceDirPartRefFind_Table_p0_41
+	.long	VoiceDirPartRefFind_Table_p0_140
+	.long	VoiceDirPartRefFind_Table_p0_147
+	.long	VoiceDirPartRefFind_Table_p0_261
+	.long	VoiceDirPartRefFind_Table_p0_49
+	.long	VoiceDirPartRefFind_Table_p0_53
+	.long	VoiceDirPartRefFind_Table_p0_55
+	.long	VoiceDirPartRefFind_Table_p0_56
+	.long	VoiceDirPartRefFind_Table_p0_273
+	.long	VoiceDirPartRefFind_Table_p0_58
+	.long	VoiceDirPartRefFind_Table_p0_277
+	.long	VoiceDirPartRefFind_Table_p0_165
+	.long	VoiceDirPartRefFind_Table_p0_61
+	.long	VoiceDirPartRefFind_Table_p0_171
+	.long	VoiceDirPartRefFind_Table_p0_62
+	.long	VoiceDirPartRefFind_Table_p0_122
+	.long	VoiceDirPartRefFind_Table_p0_72
+	.long	VoiceDirPartRefFind_Table_p0_292
+	.long	VoiceDirPartRefFind_Table_p0_346
+	.long	VoiceDirPartRefFind_Table_p0_180
+	.long	VoiceDirPartRefFind_Table_p0_188
+	.long	VoiceDirPartRefFind_Table_p0_298
+	.long	VoiceDirPartRefFind_Table_p0_308
+	.long	VoiceDirPartRefFind_Table_p0_304
+	.long	VoiceDirPartRefFind_Table_p0_204
+	.long	VoiceDirPartRefFind_Table_p0_214
+	.long	VoiceDirPartRefFind_Table_p0_217
+	.long	VoiceDirPartRefFind_Table_p0_221
+	.long	VoiceDirPartRefFind_Table_p0_227
+	.long	VoiceDirPartRefFind_Table_p0_235
+	.long	VoiceDirPartRefFind_Table_p0_317
+	.long	VoiceDirPartRefFind_Table_p0_113
+	.long	VoiceDirPartRefFind_Table_p0_115
+	.long	VoiceDirPartRefFind_Table_p0_116
 	.long	VoiceDirPartRefFind_Table_p0_347
-	.long	VoiceDirPartRefFind_Table_p0_360
-	.long	VoiceDirPartRefFind_Table_p0_498
+	.long	VoiceDirPartRefFind_Table_p0_127
+	.long	VoiceDirPartRefFind_Table_p0_128
+	.long	VoiceDirPartRefFind_Table_p0_254
+	.long	VoiceDirPartRefFind_Table_p0_137
+	.long	VoiceDirPartRefFind_Table_p0_144
+	.long	VoiceDirPartRefFind_Table_p0_260
+	.long	VoiceDirPartRefFind_Table_p0_264
+	.long	VoiceDirPartRefFind_Table_p0_266
+	.long	VoiceDirPartRefFind_Table_p0_269
+	.long	VoiceDirPartRefFind_Table_p0_156
+	.long	VoiceDirPartRefFind_Table_p0_159
+	.long	VoiceDirPartRefFind_Table_p0_160
+	.long	VoiceDirPartRefFind_Table_p0_276
+	.long	VoiceDirPartRefFind_Table_p0_161
+	.long	VoiceDirPartRefFind_Table_p0_167
+	.long	VoiceDirPartRefFind_Table_p0_168
+	.long	VoiceDirPartRefFind_Table_p0_174
+	.long	VoiceDirPartRefFind_Table_p0_284
+	.long	VoiceDirPartRefFind_Table_p0_290
+	.long	VoiceDirPartRefFind_Table_p0_177
+	.long	VoiceDirPartRefFind_Table_p0_178
+	.long	VoiceDirPartRefFind_Table_p0_179
+	.long	VoiceDirPartRefFind_Table_p0_181
+	.long	VoiceDirPartRefFind_Table_p0_191
+	.long	VoiceDirPartRefFind_Table_p0_200
+	.long	VoiceDirPartRefFind_Table_p0_201
+	.long	VoiceDirPartRefFind_Table_p0_203
+	.long	VoiceDirPartRefFind_Table_p0_213
+	.long	VoiceDirPartRefFind_Table_p0_215
+	.long	VoiceDirPartRefFind_Table_p0_220
+	.long	VoiceDirPartRefFind_Table_p0_225
+	.long	VoiceDirPartRefFind_Table_p0_230
+	.long	VoiceDirPartRefFind_Table_p0_315
+	.long	VoiceDirPartRefFind_Table_p0_242
+	.long	VoiceDirPartRefFind_Table_p0_243
+	.long	VoiceDirPartRefFind_Table_p0_245
+	.long	VoiceDirPartRefFind_Table_p0_247
+	.long	VoiceDirPartRefFind_Table_p0_248
+	.long	VoiceDirPartRefFind_Table_p0_252
+	.long	VoiceDirPartRefFind_Table_p0_253
+	.long	VoiceDirPartRefFind_Table_p0_255
+	.long	VoiceDirPartRefFind_Table_p0_257
+	.long	VoiceDirPartRefFind_Table_p0_324
+	.long	VoiceDirPartRefFind_Table_p0_262
+	.long	VoiceDirPartRefFind_Table_p0_265
+	.long	VoiceDirPartRefFind_Table_p0_267
+	.long	VoiceDirPartRefFind_Table_p0_271
+	.long	VoiceDirPartRefFind_Table_p0_272
+	.long	VoiceDirPartRefFind_Table_p0_274
+	.long	VoiceDirPartRefFind_Table_p0_275
+	.long	VoiceDirPartRefFind_Table_p0_278
+	.long	VoiceDirPartRefFind_Table_p0_280
+	.long	VoiceDirPartRefFind_Table_p0_281
+	.long	VoiceDirPartRefFind_Table_p0_282
+	.long	VoiceDirPartRefFind_Table_p0_283
+	.long	VoiceDirPartRefFind_Table_p0_288
+	.long	VoiceDirPartRefFind_Table_p0_291
+	.long	VoiceDirPartRefFind_Table_p0_293
+	.long	VoiceDirPartRefFind_Table_p0_294
+	.long	VoiceDirPartRefFind_Table_p0_296
+	.long	VoiceDirPartRefFind_Table_p0_297
+	.long	VoiceDirPartRefFind_Table_p0_299
+	.long	VoiceDirPartRefFind_Table_p0_300
+	.long	VoiceDirPartRefFind_Table_p0_301
+	.long	VoiceDirPartRefFind_Table_p0_303
+	.long	VoiceDirPartRefFind_Table_p0_325
+	.long	VoiceDirPartRefFind_Table_p0_326
+	.long	VoiceDirPartRefFind_Table_p0_330
+	.long	VoiceDirPartRefFind_Table_p0_328
+	.long	VoiceDirPartRefFind_Table_p0_305
+	.long	VoiceDirPartRefFind_Table_p0_107
+	.long	VoiceDirPartRefFind_Table_p0_170
+	.long	VoiceDirPartRefFind_Table_p0_35
+	.long	VoiceDirPartRefFind_Table_p0_329
+	.long	VoiceDirPartRefFind_Table_p0_327
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_395
+	.long	VoiceDirPartRefFind_Table_p0_186
 	.long	0
 	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_509
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_90
-	.long	VoiceDirPartRefFind_Table_p0_435
-	.long	0
-	.long	0
-	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_331
+	.long	VoiceDirPartRefFind_Table_p0_332
 	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_110
 	.long	0
 	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_185
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_3
-	.long	VoiceDirPartRefFind_Table_p0_155
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_383
-	.long	VoiceDirPartRefFind_Table_p0_39
-	.long	VoiceDirPartRefFind_Table_p0_368
-	.long	VoiceDirPartRefFind_Table_p0_175
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_222
-	.long	VoiceDirPartRefFind_Table_p0_200
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_207
-	.long	VoiceDirPartRefFind_Table_p0_218
-	.long	VoiceDirPartRefFind_Table_p0_237
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_252
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_266
-	.long	VoiceDirPartRefFind_Table_p0_271
-	.long	VoiceDirPartRefFind_Table_p0_281
-	.long	VoiceDirPartRefFind_Table_p0_224
-	.long	VoiceDirPartRefFind_Table_p0_113
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_308
-	.long	VoiceDirPartRefFind_Table_p0_310
-	.long	VoiceDirPartRefFind_Table_p0_130
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_413
-	.long	VoiceDirPartRefFind_Table_p0_321
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_330
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_150
-	.long	VoiceDirPartRefFind_Table_p0_164
-	.long	VoiceDirPartRefFind_Table_p0_21
-	.long	VoiceDirPartRefFind_Table_p0_24
-	.long	VoiceDirPartRefFind_Table_p0_29
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_542
-	.long	VoiceDirPartRefFind_Table_p0_543
-	.long	VoiceDirPartRefFind_Table_p0_544
-	.long	VoiceDirPartRefFind_Table_p0_545
-	.long	VoiceDirPartRefFind_Table_p0_546
-	.long	VoiceDirPartRefFind_Table_p0_547
-	.long	VoiceDirPartRefFind_Table_p0_548
-	.long	VoiceDirPartRefFind_Table_p0_549
-	.long	VoiceDirPartRefFind_Table_p0_550
-	.long	VoiceDirPartRefFind_Table_p0_551
-	.long	VoiceDirPartRefFind_Table_p0_552
-	.long	VoiceDirPartRefFind_Table_p0_553
-	.long	VoiceDirPartRefFind_Table_p0_554
-	.long	VoiceDirPartRefFind_Table_p0_555
-	.long	VoiceDirPartRefFind_Table_p0_556
-	.long	VoiceDirPartRefFind_Table_p0_557
-	.long	VoiceDirPartRefFind_Table_p0_558
-	.long	VoiceDirPartRefFind_Table_p0_559
-	.long	VoiceDirPartRefFind_Table_p0_560
-	.long	VoiceDirPartRefFind_Table_p0_561
-	.long	VoiceDirPartRefFind_Table_p0_562
-	.long	VoiceDirPartRefFind_Table_p0_563
-	.long	VoiceDirPartRefFind_Table_p0_564
-	.long	VoiceDirPartRefFind_Table_p0_565
-	.long	VoiceDirPartRefFind_Table_p0_566
-	.long	VoiceDirPartRefFind_Table_p0_567
-	.long	VoiceDirPartRefFind_Table_p0_568
-	.long	VoiceDirPartRefFind_Table_p0_569
-	.long	VoiceDirPartRefFind_Table_p0_570
-	.long	VoiceDirPartRefFind_Table_p0_571
-	.long	VoiceDirPartRefFind_Table_p0_572
-	.long	VoiceDirPartRefFind_Table_p0_573
-	.long	VoiceDirPartRefFind_Table_p0_574
-	.long	VoiceDirPartRefFind_Table_p0_575
-	.long	VoiceDirPartRefFind_Table_p0_576
-	.long	VoiceDirPartRefFind_Table_p0_577
-	.long	VoiceDirPartRefFind_Table_p0_578
-	.long	VoiceDirPartRefFind_Table_p0_579
-	.long	VoiceDirPartRefFind_Table_p0_580
-	.long	VoiceDirPartRefFind_Table_p0_581
-	.long	VoiceDirPartRefFind_Table_p0_380
-	.long	VoiceDirPartRefFind_Table_p0_183
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_401
-	.long	VoiceDirPartRefFind_Table_p0_407
-	.long	VoiceDirPartRefFind_Table_p0_212
-	.long	VoiceDirPartRefFind_Table_p0_511
-	.long	VoiceDirPartRefFind_Table_p0_241
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_247
-	.long	VoiceDirPartRefFind_Table_p0_259
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_264
-	.long	VoiceDirPartRefFind_Table_p0_269
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_286
-	.long	VoiceDirPartRefFind_Table_p0_293
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_457
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_317
 	.long	VoiceDirPartRefFind_Table_p0_232
-	.long	VoiceDirPartRefFind_Table_p0_325
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_473
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_482
-	.long	VoiceDirPartRefFind_Table_p0_349
-	.long	VoiceDirPartRefFind_Table_p0_362
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_234
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_405
-	.long	VoiceDirPartRefFind_Table_p0_410
-	.long	VoiceDirPartRefFind_Table_p0_421
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_430
+	.long	VoiceDirPartRefFind_Table_p0_333
+	.long	VoiceDirPartRefFind_Table_p0_337
+	.long	VoiceDirPartRefFind_Table_p0_338
+	.long	VoiceDirPartRefFind_Table_p0_339
+	.long	VoiceDirPartRefFind_Table_p0_341
+	.long	VoiceDirPartRefFind_Table_p0_340
+	.long	VoiceDirPartRefFind_Table_p0_343
+	.long	VoiceDirPartRefFind_Table_p0_342
+	.long	VoiceDirPartRefFind_Table_p0_335
+	.long	VoiceDirPartRefFind_Table_p0_334
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_436
+	.long	VoiceDirPartRefFind_Table_p0_210
+	.long	VoiceDirPartRefFind_Table_p0_85
+	.long	VoiceDirPartRefFind_Table_p0_219
+	.long	VoiceDirPartRefFind_Table_p0_224
+	.long	VoiceDirPartRefFind_Table_p0_336
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_23
-	.long	VoiceDirPartRefFind_Table_p0_442
-	.long	VoiceDirPartRefFind_Table_p0_444
-	.long	VoiceDirPartRefFind_Table_p0_446
-	.long	VoiceDirPartRefFind_Table_p0_450
+	.long	VoiceDirPartRefFind_Table_p0_320
+	.long	VoiceDirPartRefFind_Table_p0_30
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_455
-	.long	VoiceDirPartRefFind_Table_p0_51
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_70
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_40
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_42
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_344
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_466
-	.long	VoiceDirPartRefFind_Table_p0_223
-	.long	VoiceDirPartRefFind_Table_p0_76
+	.long	VoiceDirPartRefFind_Table_p0_345
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_63
+	.long	VoiceDirPartRefFind_Table_p0_73
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_307
+	.long	VoiceDirPartRefFind_Table_p0_202
+	.long	VoiceDirPartRefFind_Table_p0_205
 	.long	VoiceDirPartRefFind_Table_p0_80
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_476
-	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_88
 	.long	0
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_238
+	.long	VoiceDirPartRefFind_Table_p0_100
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_370
+	.long	VoiceDirPartRefFind_Table_p0_118
+	.long	VoiceDirPartRefFind_Table_p0_143
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_490
+	.long	VoiceDirPartRefFind_Table_p0_47
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_226
+	.long	VoiceDirPartRefFind_Table_p0_138
+	.long	VoiceDirPartRefFind_Table_p0_145
+	.long	VoiceDirPartRefFind_Table_p0_148
 	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_254
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_168
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_272
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_114
+	.long	VoiceDirPartRefFind_Table_p0_151
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_311
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_416
+	.long	VoiceDirPartRefFind_Table_p0_162
+	.long	VoiceDirPartRefFind_Table_p0_26
 	.long	0
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_285
+	.long	VoiceDirPartRefFind_Table_p0_5
+	.long	VoiceDirPartRefFind_Table_p0_7
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_245
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_166
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_31
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_365
-	.long	VoiceDirPartRefFind_Table_p0_504
-	.long	VoiceDirPartRefFind_Table_p0_296
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_189
+	.long	VoiceDirPartRefFind_Table_p0_15
+	.long	VoiceDirPartRefFind_Table_p0_183
+	.long	VoiceDirPartRefFind_Table_p0_193
+	.long	VoiceDirPartRefFind_Table_p0_306
 	.long	0
 	.long	0
 	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_216
-	.long	VoiceDirPartRefFind_Table_p0_514
-	.long	VoiceDirPartRefFind_Table_p0_507
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_333
 	.long	0
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_316
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_346
-	.long	VoiceDirPartRefFind_Table_p0_359
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_121
-	.long	VoiceDirPartRefFind_Table_p0_301
-	.long	VoiceDirPartRefFind_Table_p0_307
+	.long	VoiceDirPartRefFind_Table_p0_36
+	.long	VoiceDirPartRefFind_Table_p0_249
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_7
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_44
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_147
+	.long	VoiceDirPartRefFind_Table_p0_83
 	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_230
-	.long	VoiceDirPartRefFind_Table_p0_501
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_381
-	.long	VoiceDirPartRefFind_Table_p0_184
 	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_2
+	.long	VoiceDirPartRefFind_Table_p0_69
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_213
-	.long	VoiceDirPartRefFind_Table_p0_424
 	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_260
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_275
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_298
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_318
-	.long	VoiceDirPartRefFind_Table_p0_235
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_474
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_351
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_238
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_412
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_267
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_91
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_387
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_151
-	.long	VoiceDirPartRefFind_Table_p0_66
+	.long	VoiceDirPartRefFind_Table_p0_209
+	.long	VoiceDirPartRefFind_Table_p0_19
+	.long	VoiceDirPartRefFind_Table_p0_198
 	.long	VoiceDirPartRefFind_Table_p0_78
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_4
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_101
+	.long	VoiceDirPartRefFind_Table_p0_90
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_92
+	.long	VoiceDirPartRefFind_Table_p0_99
+	.long	VoiceDirPartRefFind_Table_p0_111
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_121
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_131
+	.long	VoiceDirPartRefFind_Table_p0_135
+	.long	VoiceDirPartRefFind_Table_p0_141
+	.long	VoiceDirPartRefFind_Table_p0_103
+	.long	VoiceDirPartRefFind_Table_p0_45
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_155
+	.long	VoiceDirPartRefFind_Table_p0_157
+	.long	VoiceDirPartRefFind_Table_p0_57
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_234
+	.long	VoiceDirPartRefFind_Table_p0_166
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_173
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_65
+	.long	VoiceDirPartRefFind_Table_p0_75
+	.long	VoiceDirPartRefFind_Table_p0_9
+	.long	VoiceDirPartRefFind_Table_p0_12
+	.long	VoiceDirPartRefFind_Table_p0_17
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_349
+	.long	VoiceDirPartRefFind_Table_p0_350
+	.long	VoiceDirPartRefFind_Table_p0_351
+	.long	VoiceDirPartRefFind_Table_p0_352
+	.long	VoiceDirPartRefFind_Table_p0_353
+	.long	VoiceDirPartRefFind_Table_p0_354
+	.long	VoiceDirPartRefFind_Table_p0_355
+	.long	VoiceDirPartRefFind_Table_p0_356
+	.long	VoiceDirPartRefFind_Table_p0_357
+	.long	VoiceDirPartRefFind_Table_p0_358
+	.long	VoiceDirPartRefFind_Table_p0_359
+	.long	VoiceDirPartRefFind_Table_p0_360
+	.long	VoiceDirPartRefFind_Table_p0_361
+	.long	VoiceDirPartRefFind_Table_p0_362
+	.long	VoiceDirPartRefFind_Table_p0_363
+	.long	VoiceDirPartRefFind_Table_p0_364
+	.long	VoiceDirPartRefFind_Table_p0_365
+	.long	VoiceDirPartRefFind_Table_p0_366
+	.long	VoiceDirPartRefFind_Table_p0_367
+	.long	VoiceDirPartRefFind_Table_p0_368
+	.long	VoiceDirPartRefFind_Table_p0_369
+	.long	VoiceDirPartRefFind_Table_p0_370
+	.long	VoiceDirPartRefFind_Table_p0_371
+	.long	VoiceDirPartRefFind_Table_p0_372
+	.long	VoiceDirPartRefFind_Table_p0_373
+	.long	VoiceDirPartRefFind_Table_p0_374
+	.long	VoiceDirPartRefFind_Table_p0_375
+	.long	VoiceDirPartRefFind_Table_p0_376
+	.long	VoiceDirPartRefFind_Table_p0_377
+	.long	VoiceDirPartRefFind_Table_p0_378
+	.long	VoiceDirPartRefFind_Table_p0_379
+	.long	VoiceDirPartRefFind_Table_p0_380
+	.long	VoiceDirPartRefFind_Table_p0_381
+	.long	VoiceDirPartRefFind_Table_p0_382
+	.long	VoiceDirPartRefFind_Table_p0_383
+	.long	VoiceDirPartRefFind_Table_p0_384
+	.long	VoiceDirPartRefFind_Table_p0_385
+	.long	VoiceDirPartRefFind_Table_p0_386
+	.long	VoiceDirPartRefFind_Table_p0_387
+	.long	VoiceDirPartRefFind_Table_p0_388
+	.long	VoiceDirPartRefFind_Table_p0_206
+	.long	VoiceDirPartRefFind_Table_p0_81
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_222
+	.long	VoiceDirPartRefFind_Table_p0_228
+	.long	VoiceDirPartRefFind_Table_p0_94
+	.long	VoiceDirPartRefFind_Table_p0_318
+	.long	VoiceDirPartRefFind_Table_p0_114
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_119
+	.long	VoiceDirPartRefFind_Table_p0_125
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_129
+	.long	VoiceDirPartRefFind_Table_p0_133
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_146
+	.long	VoiceDirPartRefFind_Table_p0_149
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_270
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_163
+	.long	VoiceDirPartRefFind_Table_p0_106
+	.long	VoiceDirPartRefFind_Table_p0_169
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_286
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_295
+	.long	VoiceDirPartRefFind_Table_p0_185
+	.long	VoiceDirPartRefFind_Table_p0_195
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_108
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_226
+	.long	VoiceDirPartRefFind_Table_p0_231
+	.long	VoiceDirPartRefFind_Table_p0_239
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_244
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_250
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_11
+	.long	VoiceDirPartRefFind_Table_p0_256
+	.long	VoiceDirPartRefFind_Table_p0_258
+	.long	VoiceDirPartRefFind_Table_p0_259
+	.long	VoiceDirPartRefFind_Table_p0_263
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_268
+	.long	VoiceDirPartRefFind_Table_p0_22
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_279
+	.long	VoiceDirPartRefFind_Table_p0_102
+	.long	VoiceDirPartRefFind_Table_p0_29
+	.long	VoiceDirPartRefFind_Table_p0_33
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_289
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_199
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_302
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_104
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_123
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_77
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_136
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_46
+	.long	0
+	.long	0
+	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_158
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_237
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_117
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_76
+	.long	0
+	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_18
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_26
-	.long	VoiceDirPartRefFind_Table_p0_415
+	.long	VoiceDirPartRefFind_Table_p0_196
+	.long	VoiceDirPartRefFind_Table_p0_311
+	.long	VoiceDirPartRefFind_Table_p0_150
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_47
-	.long	0
-	.long	0
-	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_427
-	.long	VoiceDirPartRefFind_Table_p0_56
-	.long	VoiceDirPartRefFind_Table_p0_58
+	.long	VoiceDirPartRefFind_Table_p0_86
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_73
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_97
+	.long	VoiceDirPartRefFind_Table_p0_321
+	.long	VoiceDirPartRefFind_Table_p0_314
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_175
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_255
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_182
+	.long	VoiceDirPartRefFind_Table_p0_192
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_50
+	.long	VoiceDirPartRefFind_Table_p0_153
+	.long	VoiceDirPartRefFind_Table_p0_154
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_4
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_64
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_105
+	.long	VoiceDirPartRefFind_Table_p0_309
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_207
+	.long	VoiceDirPartRefFind_Table_p0_82
+	.long	0
+	.long	0
 	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_95
+	.long	VoiceDirPartRefFind_Table_p0_240
 	.long	0
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_282
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_126
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_139
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_152
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_164
 	.long	VoiceDirPartRefFind_Table_p0_109
-	.long	VoiceDirPartRefFind_Table_p0_506
-	.long	VoiceDirPartRefFind_Table_p0_123
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_287
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_187
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_112
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_233
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_132
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_37
+	.long	0
+	.long	0
+	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_211
-	.long	VoiceDirPartRefFind_Table_p0_516
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_66
+	.long	VoiceDirPartRefFind_Table_p0_25
+	.long	VoiceDirPartRefFind_Table_p0_31
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_3
+	.long	VoiceDirPartRefFind_Table_p0_71
+	.long	VoiceDirPartRefFind_Table_p0_6
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_14
+	.long	VoiceDirPartRefFind_Table_p0_236
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_21
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_241
+	.long	VoiceDirPartRefFind_Table_p0_23
+	.long	VoiceDirPartRefFind_Table_p0_24
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_27
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_124
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_39
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_142
+	.long	VoiceDirPartRefFind_Table_p0_43
+	.long	VoiceDirPartRefFind_Table_p0_313
+	.long	VoiceDirPartRefFind_Table_p0_52
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	VoiceDirPartRefFind_Table_p0_93
+	.long	VoiceDirPartRefFind_Table_p0_323
 	.long	0
 	.long	0
 	.long	VoiceDirPartRefFind_Table_p0_1
-	.long	VoiceDirPartRefFind_Table_p0_152
+	.long	VoiceDirPartRefFind_Table_p0_67
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_118
-	.long	VoiceDirPartRefFind_Table_p0_25
+	.long	VoiceDirPartRefFind_Table_p0_48
+	.long	VoiceDirPartRefFind_Table_p0_13
 	.long	0
-	.long	VoiceDirPartRefFind_Table_p0_357
-	.long	VoiceDirPartRefFind_Table_p0_366
-	.long	VoiceDirPartRefFind_Table_p0_502
-	.long	VoiceDirPartRefFind_Table_p0_179
-	.long	VoiceDirPartRefFind_Table_p0_390
-	.long	VoiceDirPartRefFind_Table_p0_191
-	.long	VoiceDirPartRefFind_Table_p0_198
-	.long	VoiceDirPartRefFind_Table_p0_203
+	.long	VoiceDirPartRefFind_Table_p0_190
+	.long	VoiceDirPartRefFind_Table_p0_197
+	.long	VoiceDirPartRefFind_Table_p0_310
+	.long	VoiceDirPartRefFind_Table_p0_79
+	.long	VoiceDirPartRefFind_Table_p0_212
+	.long	VoiceDirPartRefFind_Table_p0_87
+	.long	VoiceDirPartRefFind_Table_p0_89
+	.long	VoiceDirPartRefFind_Table_p0_91
 
 func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 bytes each); read by func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
 	REC_func_4C09D6E7_entry_L4b_Table		# [0]
@@ -22428,11 +22433,11 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, f1=144
+	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=144
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, f1=128	# [24]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=128	# [24]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22442,13 +22447,13 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table		# [32]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=13, f1=96
+	REC_func_4C09D6E7_entry_L4b_Table	f0=13, index=96
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=20, f1=96
+	REC_func_4C09D6E7_entry_L4b_Table	f0=20, index=96
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, f1=128	# [40]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=128	# [40]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22474,13 +22479,13 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table		# [64]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=23, f1=80
+	REC_func_4C09D6E7_entry_L4b_Table	f0=23, index=80
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=1, f1=80
+	REC_func_4C09D6E7_entry_L4b_Table	f0=1, index=80
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=5, f1=80	# [72]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=5, index=80	# [72]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22492,11 +22497,11 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	f0=10
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40, f1=80
+	REC_func_4C09D6E7_entry_L4b_Table	f0=40, index=80
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41, f1=80	# [88]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=41, index=80	# [88]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22506,9 +22511,9 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table		# [96]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25, f1=96
+	REC_func_4C09D6E7_entry_L4b_Table	f0=25, index=96
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27, f1=96
+	REC_func_4C09D6E7_entry_L4b_Table	f0=27, index=96
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22540,15 +22545,15 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	f0=3
 	REC_func_4C09D6E7_entry_L4b_Table	f0=2
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=5, f1=144
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41, f1=144
+	REC_func_4C09D6E7_entry_L4b_Table	f0=5, index=144
+	REC_func_4C09D6E7_entry_L4b_Table	f0=41, index=144
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	f0=4	# [136]
 	REC_func_4C09D6E7_entry_L4b_Table	f0=26
 	REC_func_4C09D6E7_entry_L4b_Table	f0=12
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9, f1=144
+	REC_func_4C09D6E7_entry_L4b_Table	f0=9, index=144
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22556,11 +22561,11 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	f0=3
 	REC_func_4C09D6E7_entry_L4b_Table	f0=2
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=11, f1=1
+	REC_func_4C09D6E7_entry_L4b_Table	f0=11, index=1
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26, f1=128	# [152]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=26, index=128	# [152]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22572,11 +22577,11 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	f0=25
 	REC_func_4C09D6E7_entry_L4b_Table	f0=14
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=8, f1=96
+	REC_func_4C09D6E7_entry_L4b_Table	f0=8, index=96
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12, f1=128	# [168]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=12, index=128	# [168]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22604,11 +22609,11 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, f1=80
+	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=80
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9, f1=80	# [200]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=9, index=80	# [200]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22668,15 +22673,15 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	f0=6
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=20, f1=144
+	REC_func_4C09D6E7_entry_L4b_Table	f0=20, index=144
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=1, f1=128	# [264]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=1, index=128	# [264]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40, f1=128
+	REC_func_4C09D6E7_entry_L4b_Table	f0=40, index=128
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27, f1=144
+	REC_func_4C09D6E7_entry_L4b_Table	f0=27, index=144
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22684,11 +22689,11 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	f0=9
 	REC_func_4C09D6E7_entry_L4b_Table	f0=6
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=19, f1=1
+	REC_func_4C09D6E7_entry_L4b_Table	f0=19, index=1
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, f1=128	# [280]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=128	# [280]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22704,7 +22709,7 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, f1=128	# [296]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=128	# [296]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22730,13 +22735,13 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table		# [320]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10, f1=80
+	REC_func_4C09D6E7_entry_L4b_Table	f0=10, index=80
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, f1=80
+	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=80
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, f1=80	# [328]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=80	# [328]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22800,7 +22805,7 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26, f1=64	# [392]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=26, index=64	# [392]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22928,7 +22933,7 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=13, f1=128	# [520]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=13, index=128	# [520]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22936,15 +22941,15 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=23, f1=112	# [528]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=23, index=112	# [528]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10, f1=32
+	REC_func_4C09D6E7_entry_L4b_Table	f0=10, index=32
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25, f1=128	# [536]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=25, index=128	# [536]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22952,15 +22957,15 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, f1=32	# [544]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=32	# [544]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12, f1=32
+	REC_func_4C09D6E7_entry_L4b_Table	f0=12, index=32
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, f1=32
+	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=32
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=14, f1=128	# [552]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=14, index=128	# [552]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -22984,23 +22989,23 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, f1=32	# [576]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=32	# [576]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40, f1=160
+	REC_func_4C09D6E7_entry_L4b_Table	f0=40, index=160
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, f1=32
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=8, f1=32	# [584]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=32
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	f0=8, index=32	# [584]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10, f1=112	# [592]
+	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	f0=10, index=112	# [592]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -23056,7 +23061,7 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12, f1=64	# [648]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=12, index=64	# [648]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -23496,23 +23501,23 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, f1=16	# [1088]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=16	# [1088]
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41, f1=160
+	REC_func_4C09D6E7_entry_L4b_Table	f0=41, index=160
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26, f1=16
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, f1=16	# [1096]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=26, index=16
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=16	# [1096]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25, f1=16	# [1104]
+	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	
+	REC_func_4C09D6E7_entry_L4b_Table	f0=25, index=16	# [1104]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -23568,7 +23573,7 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9, f1=16	# [1160]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=9, index=16	# [1160]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -23576,7 +23581,7 @@ func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 byt
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27, f1=16	# [1168]
+	REC_func_4C09D6E7_entry_L4b_Table	f0=27, index=16	# [1168]
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
 	REC_func_4C09D6E7_entry_L4b_Table	
@@ -31821,12 +31826,13 @@ User15_MainFunctionNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37B814, 0x37B818
 
-GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes), then 49 x u32 the code indexes from +0 (read by func_4C0BB259_entry_L27 0x4C0BB285 `movbu (d1, a0), d0`; func_4C0BB259_entry_L4d 0x4C0BB2AB `movbu (d1, a1), d0` (+22))
-	REC_GetFocusObject_Records_p4	f0=16, x1="\x00\x00\x00", p4=Str_Basic, x8="\x11\x00\x00\x00"
-	tab_u32	1277176541, 18, 1277176558, 19, 1277176575, 20, 1277176588, 21, 1277176601, 22, 1277176616, 23, 1277176629, 24, 1277176642, 25	# [0]
-	tab_u32	1277176655, 255, 0, 80, 1277176668, 83, 1277176681, 96, 1277176694, 97, 1277176707, 98, 1277176720, 100, 1277176733, 101	# [16]
-	tab_u32	1277176746, 102, 1277176759, 103, 1277176772, 255, 0, 82, 1277176788, 0, 1277176801, 1, 1277176814, 2, 1277176827, 255	# [32]
-	tab_u32	0	# [48]
+GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes)
+	REC_GetFocusObject_Records_p4	f0=16, x1="\x00\x00\x00", text=Str_Basic, f8=17, x9="\x00\x00\x00"
+
+GetFocusObject_Records_p4_0_Tail:	# 1 pointers after GetFocusObject_Records_p4_0: the array its kind's computed-offset read indexes (func_4C0BB2CF_entry_L1d 0x4C0BB2F1 `movbu (d0, a0), d0`; FE_CmpRecChdModTyp_entry_L185 0x4C0BB733 `mov (4, a0), d0` (+16)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
+	.long	Str_In_7th_G_8dB_a0
+# census: opaque -- unknown-dump: 192 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x37B828, 0x37B8E8
 
 GetFocusObject_Records:
 	.long	Str_Melody
@@ -33341,22 +33347,22 @@ func_4C057A6A_Table:	# 2048 x u16, 0..34687; read by func_4C057A6A 0x4C057A6A: `
 	tab_u16	33400, 33145, 33018, 33531, 33916, 33533, 33918, 1293	# [2040]
 
 GetGenreName_entry_L14_Records:	# 16 x REC_GetGenreName_entry_L14_Records (24 bytes each); read by GetGenreStyleCount_entry_Lf 0x4C057A23 `movbu (0x11, a0), d0`; func_4C057A38_entry_Ld 0x4C057A47 `movbu (0x11, a0), d2`; func_4C057A38_entry_L25 0x4C057A5F `mov (0x14, a0), a0` (+4)
-	REC_GetGenreName_entry_L14_Records	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", p20=data_4C210798	# [0]
-	REC_GetGenreName_entry_L14_Records	s0="      POP       ", x16="\x00", f17=12, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_0
-	REC_GetGenreName_entry_L14_Records	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_1
-	REC_GetGenreName_entry_L14_Records	s0=" R&ROLL & BLUES ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_2
-	REC_GetGenreName_entry_L14_Records	s0="  SOUL & FUNK   ", x16="\x00", f17=16, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_3
-	REC_GetGenreName_entry_L14_Records	s0="  MODERN DANCE  ", x16="\x00", f17=17, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_4
-	REC_GetGenreName_entry_L14_Records	s0="   U.S. TRAD    ", x16="\x00", f17=9, x18="\x00\x00", p20=data_4C210904
-	REC_GetGenreName_entry_L14_Records	s0="    COUNTRY     ", x16="\x00", f17=12, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_5
-	REC_GetGenreName_entry_L14_Records	s0="BIG BAND & SWING", x16="\x00", f17=12, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_6	# [8]
-	REC_GetGenreName_entry_L14_Records	s0="   JAZZ COMBO   ", x16="\x00", f17=16, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_7
-	REC_GetGenreName_entry_L14_Records	s0=" MARCH & WALTZ  ", x16="\x00", f17=10, x18="\x00\x00", p20=data_4C2109C8
-	REC_GetGenreName_entry_L14_Records	s0="BALLROOM & SHOW ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_8
-	REC_GetGenreName_entry_L14_Records	s0="     LATIN      ", x16="\x00", f17=17, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_9
-	REC_GetGenreName_entry_L14_Records	s0="     WORLD      ", x16="\x00", f17=13, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_10
-	REC_GetGenreName_entry_L14_Records	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_11
-	REC_GetGenreName_entry_L14_Records	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_12
+	REC_GetGenreName_entry_L14_Records	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=data_4C210798	# [0]
+	REC_GetGenreName_entry_L14_Records	s0="      POP       ", x16="\x00", f17=12, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_0
+	REC_GetGenreName_entry_L14_Records	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_1
+	REC_GetGenreName_entry_L14_Records	s0=" R&ROLL & BLUES ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_2
+	REC_GetGenreName_entry_L14_Records	s0="  SOUL & FUNK   ", x16="\x00", f17=16, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_3
+	REC_GetGenreName_entry_L14_Records	s0="  MODERN DANCE  ", x16="\x00", f17=17, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_4
+	REC_GetGenreName_entry_L14_Records	s0="   U.S. TRAD    ", x16="\x00", f17=9, x18="\x00\x00", index=data_4C210904
+	REC_GetGenreName_entry_L14_Records	s0="    COUNTRY     ", x16="\x00", f17=12, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_5
+	REC_GetGenreName_entry_L14_Records	s0="BIG BAND & SWING", x16="\x00", f17=12, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_6	# [8]
+	REC_GetGenreName_entry_L14_Records	s0="   JAZZ COMBO   ", x16="\x00", f17=16, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_7
+	REC_GetGenreName_entry_L14_Records	s0=" MARCH & WALTZ  ", x16="\x00", f17=10, x18="\x00\x00", index=data_4C2109C8
+	REC_GetGenreName_entry_L14_Records	s0="BALLROOM & SHOW ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_8
+	REC_GetGenreName_entry_L14_Records	s0="     LATIN      ", x16="\x00", f17=17, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_9
+	REC_GetGenreName_entry_L14_Records	s0="     WORLD      ", x16="\x00", f17=13, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_10
+	REC_GetGenreName_entry_L14_Records	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_11
+	REC_GetGenreName_entry_L14_Records	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_12
 
 GetGenreName_Var:	# u16, a constant; read / written by GetGenreName 0x4C0579D8: `movhu (GetGenreName_Var), d3`; GetGenreStyleCount 0x4C057A12: `movhu (GetGenreName_Var), d2` ...
 	.word	16
@@ -39649,17 +39655,15 @@ ptrs_4C385064:
 Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x385080, 0x385094
-
-func_4C132BF7_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132BF7_entry_L9e 0x4C132C9A: memcpy(.., 3); func_4C132BF7_entry_L149 0x4C132D45: memcpy(.., 3)
-	tab_u8	249, 255, 255	# [0]
-
+data_4C385094:
+	# 3 bytes the code takes the address of: func_4C132BF7_entry_L9e 0x4C132C9A `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132BF7_entry_L9e 0x4C132C9A `mov data_4C385094, d2` (+0, as a base); func_4C132BF7_entry_L149 0x4C132D45 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	249, 255, 255	# +0
 Str_Technics:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3850A3, 0x3850B7
-
-func_4C132EC1_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132EC1_entry_L9e 0x4C132F64: memcpy(.., 3); func_4C132EC1_entry_L11b 0x4C132FE1: memcpy(.., 3)
-	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_4C132EC1_entry_L9e_Block
+data_4C3850B7:
+	# 5 bytes the code takes the address of: func_4C132EC1_entry_L9e 0x4C132F64 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132EC1_entry_L9e 0x4C132F64 `mov data_4C3850B7, d2` (+0, as a base); func_4C132EC1_entry_L11b 0x4C132FE1 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	240, 255, 255, 255, 255	# +0
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_4C05800B_L9 0x4C058014 `movbu (1, a0), d0`; func_4C058026_L9 0x4C05802F `movbu (2, a0), d0`; func_4C058041_L9 0x4C05804A `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]

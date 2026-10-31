@@ -28,8 +28,10 @@ KN7000 program builds only; the siblings' and the plug-in's walks are unchanged)
 accesses, the extended one 26,677 (4,416 new, 111 of the old ones gone: what a joined state no
 longer agrees on); 2,358 accesses go through a T value (146 distinct sets); 126 functions return one
 of a set of data addresses, the largest func_484C01F1 (260 switch descriptors), func_484ADFC8 (42)
-and func_484BFE61 (29); func_4C01BB1A (the resource-id trie walk) and func_485831BA (a demo stream
-of func_485831BA_Table) return a pointer loaded from a typed field.
+and func_484BFE61 (29); func_4C01BB1A (the resource-id trie walk) and func_485831BA (one of the lists
+of func_485831BA_Table) return a pointer loaded from a typed field.  (Corrected 2026-10-31, lane
+mn10300-formats: those lists are the alphabetical sound lists, `SoundAlphaListGet` / `SoundAlphaListTable`,
+not demo-song streams.)
 
 ### New passes (gen_data_s.py, `readers_ext` profiles)
 
@@ -229,16 +231,24 @@ the record starts are records now.
 ## Open questions
 
 - The `KssBgScreen` `image_id` / `icon` numbers of the plug-in (a host resource id: not traced).
+  Resolved 2026-10-31 (lane mn10300-formats, `../mn10300-formats/README.md`): `icon` is 942's icon index
+  (KssBgScreenProc answers it for MT_GetIcon, 942's DrawTitleBar draws ResIconTable[1]); `image_id` is read
+  by nothing and is no id of 942's resource-id trie.
 - Recursive structures besides the resource-id trie are typed one level deep: the walk sees one loop
   iteration; a "same kind" closure (a field of kind K pointing at kind K) would type the rest.
 - 4-byte demo-stream events (func_485831BA_Table's three streams) are u8 rows: the reader indexes +0 of
   every 4-byte step (`asl2`), the other three bytes' readers were not traced.
+  Resolved 2026-10-31 (lane mn10300-formats): they are the alphabetical sound lists, {char initial; u8 bank
+  MSB, LSB, program} entries ended by a zero entry (SoundAlphaIndexBuild reads +0, SoundAlphaInitialGet
+  +1..+3), typed `SOUND_ALPHA` by `gen_data_s.py sound_alpha_lists()`.
 - Records whose pointer fields point into their own tail (the switch descriptors, 30-byte pieces) want a
   "record + inline payload" representation.  (generic-zero: the KN7000's were short strings in the way,
   now records; the KN2400's twins, reached only as a base, are u8 rows with `.long data_X+20`.)
 - The reader rows of pieces whose address is only passed on: their layout is the callee's (the walk does
   not carry an argument into a library routine).  Naming zlib's `cplext` / `cpdext` / `static_*_desc`
   in the symbol files would need the ported 935 / 893 / 942 symbol files regenerated (symbols-check).
+  zlib: done 2026-10-31 (lane mn10300-formats): 19 tables per build, in kn7000_manual.sym and the ported
+  manual symbol files, and in the KN6000 / KN6500 / KN2400 ones (`../mn10300-formats-probes/zlib_tables.py`).
 
 ## Shared files touched
 

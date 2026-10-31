@@ -15292,11 +15292,11 @@ func_4C007A69:
 
 func_4C007A69_entry:
 	mov	d0, d3
-	mov	(func_4C007A69_entry_L14_Table), d0
+	mov	(Str_P_25), d0
 	clr	d2
 	clr	d1
 	cmp	-1, d0
-	mov	func_4C007A69_entry_L14_Table, a2
+	mov	Str_P_25, a2
 	beq	func_4C007A69_entry_L33
 	exthu	d3
 func_4C007A69_entry_L14:
@@ -15429,12 +15429,12 @@ MainGetEffName:
 	beq	MainGetEffName_L54
 	cmp	MT_GetPartSoundDSP, d1
 	bne	MainGetEffName_L54
-	mov	(MainGetEffName_L2d_Table), d1
+	mov	(Str_P_24), d1
 	clr	d2
 	mov	0xffffffff, a3
 	clr	d0
 	cmp	-1, d1
-	mov	MainGetEffName_L2d_Table, a2
+	mov	Str_P_24, a2
 	beq	MainGetEffName_L50
 MainGetEffName_L2d:
 	asl2	d0
@@ -15572,7 +15572,7 @@ MainMmmControl_entry_Le5:
 	bra	MainMmmControl_entry_L147
 MainMmmControl_entry_L100:
 	inc4	a1
-	cmp	Str_z, a1
+	cmp	MainMmmControl_entry_Le5_Table+1024, a1
 	lcs
 	bra	MainMmmControl_entry_L147
 MainMmmControl_entry_L10a:
@@ -15590,7 +15590,7 @@ MainMmmControl_entry_L120:
 	cmp	a0, d0
 	beq	MainMmmControl_entry_L147
 	inc4	a1
-	cmp	Str_z, a1
+	cmp	MainMmmControl_entry_Le5_Table+1024, a1
 	lcs
 	bra	MainMmmControl_entry_L147
 MainMmmControl_entry_L131:
@@ -15599,7 +15599,7 @@ MainMmmControl_entry_L131:
 	mov	0xff000000, d0
 	mov	d0, (a0)
 	inc4	a0
-	cmp	Str_z, a0
+	cmp	MainMmmControl_entry_Le5_Table+1024, a0
 	lcs
 MainMmmControl_entry_L147:
 	mov	d3, d0
@@ -15772,22 +15772,22 @@ func_4C007EBA:
 	mov	d0, d1
 	cmp	0, d1
 	bne	func_4C007EBA_Ld
-	mov	(func_4C007EBA_Var), a0
+	mov	(MainMmmControl_entry_Le5_Table+1028), a0
 	bra	func_4C007EBA_L3c
 func_4C007EBA_Ld:
-	mov	(func_4C007EBA_Var), a0
+	mov	(MainMmmControl_entry_Le5_Table+1028), a0
 	cmp	d0, a0
 	bcc	func_4C007EBA_L1f
 	mov	0xffffffff, a0
 	bra	func_4C007EBA_L3c
 func_4C007EBA_L1f:
-	mov	(Str_z), a0
-	mov	(func_4C007EBA_Var), d0
+	mov	(MainMmmControl_entry_Le5_Table+1024), a0
+	mov	(MainMmmControl_entry_Le5_Table+1028), d0
 	sub	d1, d0
-	mov	d0, (func_4C007EBA_Var)
+	mov	d0, (MainMmmControl_entry_Le5_Table+1028)
 	mov	a0, d0
 	add	d1, d0
-	mov	d0, (Str_z)
+	mov	d0, (MainMmmControl_entry_Le5_Table+1024)
 func_4C007EBA_L3c:
 	retf	0, 0
 
@@ -15807,7 +15807,7 @@ Malloc_entry:
 	lsr	2, d2
 	exth	d0
 	call	func_4C37F6C6, 0, 0
-	mov	(Malloc_Var), a2
+	mov	(MainMmmControl_entry_Le5_Table+1032), a2
 	asl2	d2
 	cmp	0, a2
 	beq	Malloc_entry_L35
@@ -15842,11 +15842,11 @@ Malloc_entry_L35:
 	mov	a0, (a2)
 	mov	d2, (a1)
 Malloc_entry_L58:
-	mov	(Malloc_Var), a0
+	mov	(MainMmmControl_entry_Le5_Table+1032), a0
 	cmp	a0, a2
 	bne	Malloc_entry_L6a
 	mov	(a2), d0
-	mov	d0, (Malloc_Var)
+	mov	d0, (MainMmmControl_entry_Le5_Table+1032)
 	bra	Malloc_entry_L98
 Malloc_entry_L6a:
 	mov	(a2), d0
@@ -15897,7 +15897,7 @@ Free_entry_L9:
 	exth	d0
 	mov	1, d1
 	call	func_4C37F6C6, 0, 0
-	mov	(Malloc_Var), a2
+	mov	(MainMmmControl_entry_Le5_Table+1032), a2
 	mov	8, d0
 	sub	d0, d2
 	cmp	0, a2
@@ -15905,7 +15905,7 @@ Free_entry_L9:
 	mov	d2, a0
 	clr	d0
 	mov	d0, (a0)
-	mov	a0, (Malloc_Var)
+	mov	a0, (MainMmmControl_entry_Le5_Table+1032)
 	movhu	(0x5000fab0), d0
 	mov	1, d1
 	exth	d0
@@ -15946,7 +15946,7 @@ Free_entry_L73:
 	mov	(a2), d0
 	mov	d2, a0
 	mov	d0, (a0)
-	mov	(Malloc_Var), a0
+	mov	(MainMmmControl_entry_Le5_Table+1032), a0
 	mov	(4, a0), d0
 	mov	d3, a0
 	mov	(a0), d1
@@ -15959,7 +15959,7 @@ Free_entry_L9d:
 	mov	d2, a0
 	mov	a2, (a0)
 Free_entry_La1:
-	mov	d2, (Malloc_Var)
+	mov	d2, (MainMmmControl_entry_Le5_Table+1032)
 	movhu	(0x5000fab0), d0
 	mov	1, d1
 	exth	d0
@@ -16933,7 +16933,7 @@ loc_4C00880E:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x38
 loc_4C008824:
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	0, d0
 	beq	GroupBoxProc_L1bd
 	mov	(0x48, sp), a0
@@ -17134,7 +17134,7 @@ GroupBoxProc_L371:
 	call	SendEvent_entry, [d2,d3], 0x24
 	jmp	GroupBoxProc_L422
 GroupBoxProc_L38b:
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	0, d0
 	beq	GroupBoxProc_L3c7
 	mov	(GroupBoxProc_L18b_Var_3), d0
@@ -17151,7 +17151,7 @@ GroupBoxProc_L3c7:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x38
 GroupBoxProc_L3cb:
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	0, d0
 	beq	GroupBoxProc_L407
 	mov	(GroupBoxProc_L104_Var_3), d0
@@ -17184,7 +17184,7 @@ loc_4C008AEC:
 	beq	GroupBoxProc_L473
 	jmp	GroupBoxProc_L4b3
 GroupBoxProc_L433:
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	0, d0
 	beq	GroupBoxProc_L46f
 	mov	(GroupBoxProc_L18b_Var_3), d0
@@ -17201,7 +17201,7 @@ GroupBoxProc_L46f:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x38
 GroupBoxProc_L473:
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	0, d0
 	beq	GroupBoxProc_L4af
 	mov	(GroupBoxProc_L104_Var_3), d0
@@ -17302,7 +17302,7 @@ GroupBoxProc_L569:
 	mov	a3, d0
 	mov	EV_SWOFF, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	0, d0
 	beq	GroupBoxProc_L60a
 	mov	(GroupBoxProc_L18b_Var_2), d0
@@ -17458,10 +17458,10 @@ SetDialEnable:
 
 SetDialEnable_entry:
 	mov	d0, d2
-	mov	(GroupBoxProc_L104_Var_5), d0
+	mov	(MainMmmControl_entry_Le5_Table+1036), d0
 	cmp	d2, d0
 	beq	SetDialEnable_entry_L5e
-	mov	d2, (GroupBoxProc_L104_Var_5)
+	mov	d2, (MainMmmControl_entry_Le5_Table+1036)
 	cmp	0, d2
 	bne	SetDialEnable_entry_L37
 	mov	(SetDialEnable_Var), d0
@@ -17497,7 +17497,7 @@ SetDialFocus_entry:
 	mov	(GroupBoxProc_L104_Var_4), d1
 	cmp	d0, d1
 	beq	SetDialFocus_entry_L39
-	mov	(GroupBoxProc_L104_Var_5), d1
+	mov	(MainMmmControl_entry_Le5_Table+1036), d1
 	mov	d0, (GroupBoxProc_L104_Var_4)
 	cmp	0, d1
 	beq	SetDialFocus_entry_L39
@@ -88700,7 +88700,7 @@ func_4C02FD75_entry:
 	movbu	(func_4C02FD75_Table_5), d0
 	mov	0x84000710, a0
 	movbu	d0, (0x84000678)
-	mov	func_4C02FD75_Block, a1
+	mov	data_4C195DFC, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
 	call	func_4C030743, 0, 0
@@ -88816,7 +88816,7 @@ func_4C02FD75_entry_Lf2:
 	movbu	d0, (0x678, a2)
 	add	0x710, a2
 	mov	a2, a0
-	mov	func_4C02FD75_Block, a1
+	mov	data_4C195DFC, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
 	cmp	0x68, a3
@@ -92632,77 +92632,77 @@ func_4C0321C2_L6:
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x4c, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block, a1
+	mov	data_4C19590E, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x96, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_2, a1
+	mov	data_4C195958, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x12a, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_3, a1
+	mov	data_4C1959EC, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x174, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_4, a1
+	mov	data_4C195A36, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x1be, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_5, a1
+	mov	data_4C195A80, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x208, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_6, a1
+	mov	data_4C195ACA, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x252, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_7, a1
+	mov	data_4C195B14, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x29c, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_8, a1
+	mov	data_4C195B5E, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x2e6, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_9, a1
+	mov	data_4C195BA8, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x330, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_10, a1
+	mov	data_4C195BF2, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x37a, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_11, a1
+	mov	data_4C195C3C, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x3c4, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_12, a1
+	mov	data_4C195C86, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x40e, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_13, a1
+	mov	data_4C195CD0, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x458, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_14, a1
+	mov	data_4C195D1A, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x6f0, a0
 	add	a2, a0
-	mov	func_4C02FD75_Block, a1
+	mov	data_4C195DFC, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x5b, d0
@@ -94018,7 +94018,7 @@ func_4C03317C_entry_L36:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L36_Block, a1
+	mov	data_4C196160, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94040,7 +94040,7 @@ func_4C03317C_entry_L76:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L36_Block, a1
+	mov	data_4C196160, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	movbu	(0x5002022d), d0
@@ -94068,7 +94068,7 @@ func_4C03317C_entry_Lce:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_Lce_Block, a1
+	mov	data_4C196173, a1
 	mov	3, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94098,7 +94098,7 @@ func_4C03317C_entry_L11e:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L11e_Block, a1
+	mov	data_4C19616F, a1
 	mov	4, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94128,7 +94128,7 @@ func_4C03317C_entry_L16e:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L11e_Block, a1
+	mov	data_4C19616F, a1
 	mov	4, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94159,7 +94159,7 @@ func_4C03317C_entry_L1c0:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L36_Block, a1
+	mov	data_4C196160, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94183,7 +94183,7 @@ func_4C03317C_entry_L209:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L36_Block, a1
+	mov	data_4C196160, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94213,7 +94213,7 @@ func_4C03317C_entry_L261:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L36_Block, a1
+	mov	data_4C196160, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94245,7 +94245,7 @@ func_4C03317C_entry_L2c3:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
-	mov	func_4C03317C_entry_L36_Block, a1
+	mov	data_4C196160, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x7000, d0
@@ -94281,7 +94281,7 @@ func_4C0334A9_entry:
 	add	0x14, a2
 func_4C0334A9_entry_L4:
 	mov	a2, a0
-	mov	func_4C0334A9_entry_L4_Block, a1
+	mov	data_4C196178, a1
 	mov	0xf, d0
 	call	memcpy_entry, [a2,a3], 8
 	movbu	d2, (0x18, sp)
@@ -107493,7 +107493,7 @@ func_4C039ADF_L12a:
 	bne	func_4C039ADF_L16a
 	mov	(0x50, sp), a2
 	mov	(0x1c, sp), d0
-	mov	func_4C037E2F_entry_L4b_Block_7, a1
+	mov	data_4C196E98, a1
 	add	d0, a2
 	mov	a2, a0
 	mov	0x16, d0
@@ -110827,7 +110827,7 @@ func_4C03B50C_entry_L49:
 func_4C03B50C_entry_L66:
 	add	8, a2
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block, a3
+	mov	data_4C196DD4, a3
 	mov	d1, a0
 	mov	a3, a1
 	mov	7, d0
@@ -111045,7 +111045,7 @@ func_4C03B6DB_entry_L4b:
 	mov	8, a2
 	add	a3, a2
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_62, a1
+	mov	data_4C1975A4, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111062,7 +111062,7 @@ func_4C03B6DB_entry_L4b:
 	mov	(0x14, sp), a1
 	calls	(a1)
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_63, a1
+	mov	data_4C1975C4, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111077,7 +111077,7 @@ func_4C03B6DB_entry_L4b:
 	mov	(a2), a0
 	calls	(a1)
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_64, a1
+	mov	data_4C1975E4, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111134,7 +111134,7 @@ func_4C03B7AC_entry_L3a:
 	mov	8, a2
 	add	a3, a2
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_75, a1
+	mov	data_4C197744, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111537,7 +111537,7 @@ func_4C03BAED_entry_L4b:
 	mov	8, a2
 	add	a3, a2
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_76, a1
+	mov	data_4C197764, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111554,7 +111554,7 @@ func_4C03BAED_entry_L4b:
 	mov	(0x14, sp), a1
 	calls	(a1)
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_77, a1
+	mov	data_4C197784, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111569,7 +111569,7 @@ func_4C03BAED_entry_L4b:
 	mov	(a2), a0
 	calls	(a1)
 	mov	(a2), d1
-	mov	func_4C037E2F_entry_L4b_Block_78, a1
+	mov	data_4C1977A4, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111620,7 +111620,7 @@ func_4C03BBBE_entry_L38:
 	mov	8, a3
 	add	a2, a3
 	mov	(a3), d1
-	mov	func_4C037E2F_entry_L4b_Block_79, a1
+	mov	data_4C1977C4, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111638,7 +111638,7 @@ func_4C03BBBE_entry_L38:
 	mov	d0, a0
 	calls	(a1)
 	mov	(a3), d1
-	mov	func_4C037E2F_entry_L4b_Block_80, a1
+	mov	data_4C1977E4, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -111654,7 +111654,7 @@ func_4C03BBBE_entry_L38:
 	mov	d0, a0
 	calls	(a1)
 	mov	(a3), d1
-	mov	func_4C037E2F_entry_L4b_Block_81, a1
+	mov	data_4C197804, a1
 	mov	d1, a0
 	mov	0xc, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -144804,7 +144804,6 @@ func_4C04F3C9_L32:
 	bclr	0x04, (0x5025035c)
 func_4C04F3C9_L39:
 	ret	[d2], 0x14
-loc_4C04F405:
 	add	-0x1c, sp
 	mov	sp, a0
 	add	0x14, a0
@@ -145113,7 +145112,6 @@ func_4C04F76A_L69:
 	bset	0x01, (0x50250350)
 func_4C04F76A_L70:
 	ret	0, 0x10
-loc_4C04F7DD:
 	add	-0x10, sp
 	mov	0x80, d0
 	clr	d1
@@ -145467,7 +145465,6 @@ func_4C04FAB0_Le8:
 	movbu	d0, (0x50250354)
 func_4C04FAB0_Lfd:
 	ret	0, 0x10
-loc_4C04FBB0:
 	retf	0, 0
 	add	-0x10, sp
 	mov	0x0000e004, d0
@@ -145713,7 +145710,6 @@ func_4C04FDF9_entry_L4c:
 	bclr	0xf0, (0x50250356)
 func_4C04FDF9_entry_L53:
 	ret	0, 0xc
-loc_4C04FE52:
 	add	-0xc, sp
 	movbu	(0x5002dc75), d0
 	call	func_4C04FED6, 0, 0
@@ -157001,7 +156997,7 @@ func_4C056947:
 
 func_4C056947_entry:
 	mov	a0, a2
-	mov	func_4C056947_Block, a1
+	mov	data_4C1A2D1D, a1
 	mov	3, d0
 	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
@@ -158747,11 +158743,11 @@ MemStyleAreaHeaderRestamp_entry:
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x10, a0
 	add	a2, a0
-	mov	MemStyleAreaHeaderRestamp_Block, a1
+	mov	data_4C2ECC74, a1
 	mov	3, d0
 	call	memcpy_entry, [a2,a3], 8
 	add	0x16, a2
-	mov	MemStyleAreaHeaderRestamp_Block_2, a1
+	mov	data_4C2ECC7A, a1
 	mov	0x1a, d0
 	mov	a2, a0
 	call	memcpy_entry, [a2,a3], 8
@@ -164209,11 +164205,11 @@ func_4C05A4F0_entry:
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x10, a0
 	add	a2, a0
-	mov	func_4C05A4F0_Block, a1
+	mov	data_4C2E51E4, a1
 	mov	3, d0
 	call	memcpy_entry, [a2,a3], 8
 	add	0x16, a2
-	mov	func_4C05A4F0_Block_2, a1
+	mov	data_4C2E51EA, a1
 	mov	0x1a, d0
 	mov	a2, a0
 	call	memcpy_entry, [a2,a3], 8
@@ -173161,10 +173157,10 @@ func_4C05EB46_entry:
 	mov	4, d0
 	mov	0x70, a0
 	add	d3, a0
-	mov	func_4C05EB46_Block, a1
+	mov	data_4C2ECD44, a1
 	call	memcpy_entry, [a2,a3], 8
 	mov	a2, a0
-	mov	func_4C05EB46_Block_2, a1
+	mov	data_4C2ECD6C, a1
 	mov	2, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	1, d0
@@ -179276,7 +179272,7 @@ func_4C061B4B_entry_L3e:
 	mulu	d0, d1
 	mov	d1, a0
 	add	0x8402e0f4, a0
-	mov	func_4C061B4B_entry_L3e_Block, a1
+	mov	data_4C1A3428, a1
 	call	memcpy_entry, [a2,a3], 8
 	inc	d2
 	mov	d2, d1
@@ -179840,7 +179836,7 @@ func_4C061F86_entry_L5c:
 	mulu	d2, d1
 	mov	d1, a0
 	add	0x8402e0f4, a0
-	mov	func_4C061B4B_entry_L3e_Block, a1
+	mov	data_4C1A3428, a1
 	mov	0x18, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0, a2
@@ -179954,7 +179950,7 @@ func_4C0620A4_entry_L36:
 	mulu	d1, d0
 	mov	d0, a0
 	add	0x8402e0f4, a0
-	mov	func_4C061B4B_entry_L3e_Block, a1
+	mov	data_4C1A3428, a1
 	mov	d1, d0
 	call	memcpy_entry, [a2,a3], 8
 	inc	d2
@@ -180649,7 +180645,7 @@ func_4C0624CD_entry_L103:
 
 func_4C0625D5:
 	extbu	d0
-	mov	func_4C0627F1_entry_L48_Table+24, a0
+	mov	func_4C0625D5_Table, a0
 	movbu	(d0, a0), d0
 	retf	0, 0
 
@@ -181082,7 +181078,7 @@ func_4C0628D3:
 
 func_4C0628D3_entry:
 	mov	a0, a2
-	mov	func_4C0628D3_Block, a1
+	mov	func_4C062DC9_entry_Lcd_Records+58, a1
 	mov	3, d0
 	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
@@ -181091,7 +181087,7 @@ func_4C0628D3_entry:
 	bra	func_4C0628D3_entry_L49
 func_4C0628D3_entry_L17:
 	mov	a2, a0
-	mov	Str_H_3, a1
+	mov	func_4C062DC9_entry_Lcd_Records+55, a1
 	mov	3, d0
 	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
@@ -181099,7 +181095,7 @@ func_4C0628D3_entry_L17:
 	mov	1, d0
 	bra	func_4C0628D3_entry_L49
 func_4C0628D3_entry_L2f:
-	mov	Str_G_10, a1
+	mov	func_4C062DC9_entry_Lcd_Records+52, a1
 	mov	3, d0
 	mov	a2, a0
 	call	memcmp_entry, [d2,a2], 8
@@ -181761,7 +181757,7 @@ func_4C062DC9_entry_L1b:
 	call	memset_entry, [a2], 4
 	mov	0x20, a0
 	add	d3, a0
-	mov	Str_KN3000_Phrase, a1
+	mov	func_4C062DC9_entry_Lcd_Records+64, a1
 	mov	0x10, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	a3, a0
@@ -181918,7 +181914,7 @@ func_4C062EC7_entry_L84:
 	call	memset_entry, [a2], 4
 	mov	0x20, a0
 	add	d3, a0
-	mov	Str_KN5000_Phrase, a1
+	mov	func_4C062DC9_entry_Lcd_Records+84, a1
 	mov	0x10, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	a2, a0
@@ -193738,8 +193734,8 @@ func_4C06A742_entry:
 func_4C06A742_entry_La:
 	clr	d2
 	clr	d1
-	mov	func_4C06A742_entry_L1e_Table, a2
-	mov	(func_4C06A742_entry_L1e_Table), a0
+	mov	Str_P_11, a2
+	mov	(Str_P_11), a0
 	mov	-1, d3
 	cmp	d3, a0
 	beq	func_4C06A742_entry_L3d
@@ -210164,25 +210160,25 @@ TtSqmixer_L102:
 	ret	[d2,d3], 0x18
 
 func_4C0749B9:
-	mov	(func_4C0749B9_Var), a0
+	mov	(TtSqmixer_L64_Table+100), a0
 	exth	d0
 	asl	4, d0
 	add	d0, a0
 	retf	0, 0
 
 func_4C0749C8:
-	mov	a0, (func_4C0749B9_Var)
+	mov	a0, (TtSqmixer_L64_Table+100)
 	retf	0, 0
 
 func_4C0749D1:
 	exth	d0
-	mov	(func_4C0749D1_Var), a0
+	mov	(TtSqmixer_L64_Table+104), a0
 	add	d0, d0
 	movhu	(d0, a0), d0
 	retf	0, 0
 
 func_4C0749DE:
-	mov	a0, (func_4C0749D1_Var)
+	mov	a0, (TtSqmixer_L64_Table+104)
 	retf	0, 0
 
 AcMixerScreenProc:
@@ -294996,7 +294992,7 @@ PmemBankViewCatch_L135:
 	bra	PmemBankViewCatch_L18d
 PmemBankViewCatch_L141:
 	call	GetNamingWindowID, 0, 0
-	mov	func_4C03D237_Block, a2
+	mov	data_500022BC, a2
 	mov	a2, (0x10, sp)
 	mov	MT_GetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
@@ -295027,7 +295023,7 @@ PmemBankViewCatch_L191:
 	bra	PmemBankViewCatch_L1eb
 PmemBankViewCatch_L19d:
 	call	GetNamingWindowID, 0, 0
-	mov	func_4C03D237_Block, a2
+	mov	data_500022BC, a2
 	mov	a2, (0x10, sp)
 	mov	MT_GetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
@@ -308723,10 +308719,10 @@ func_4C0AB86E_entry_L12:
 	beq	func_4C0AB86E_entry_L1b
 	jmp	func_4C0AB86E_entry_L163
 func_4C0AB86E_entry_L1b:
-	mov	(func_4C0AB86E_entry_L33_Records), a0
+	mov	(ptrs_4C2019D4), a0
 	clr	d2
 	cmp	0, a0
-	mov	func_4C0AB86E_entry_L33_Records, a2
+	mov	ptrs_4C2019D4, a2
 	bne	func_4C0AB86E_entry_L2f
 	jmp	func_4C0AB86E_entry_L148
 func_4C0AB86E_entry_L2f:
@@ -309091,7 +309087,7 @@ func_4C0ABAE6_L41:
 	mov	d0, (0x18, sp)
 	mov	sp, a2
 	add	0xbc, a2
-	mov	func_4C0ABAE6_L69_Table, a3
+	mov	ptrs_4C201AC0, a3
 func_4C0ABAE6_L53:
 	mov	d3, d0
 	mov	(0x11c, sp), a0
@@ -309252,7 +309248,7 @@ func_4C0ABCAF_L19:
 	mov	d0, (0x18, sp)
 	inc	d0
 	mov	d0, (0x1c, sp)
-	mov	func_4C0ABCAF_L44_Table, a3
+	mov	ptrs_4C201B30, a3
 func_4C0ABCAF_L2f:
 	mov	a2, d0
 	mov	(0xcc, sp), a0
@@ -309509,7 +309505,7 @@ func_4C0ABEBC_L3a:
 	mov	d0, (0x18, sp)
 	mov	sp, a3
 	add	0x6c, a3
-	mov	func_4C0ABEBC_L5e_Table, a2
+	mov	ptrs_4C201B48, a2
 func_4C0ABEBC_L4a:
 	mov	d3, d0
 	mov	(0xcc, sp), a0
@@ -309814,7 +309810,7 @@ func_4C0AC13D:
 	mov	d0, (0x18, sp)
 	mov	sp, a3
 	add	0xa8, a3
-	mov	func_4C0AC13D_L51_Table, a2
+	mov	ptrs_4C201C78, a2
 func_4C0AC13D_L3b:
 	mov	d3, d0
 	mov	(0x108, sp), a0
@@ -346535,7 +346531,7 @@ func_4C0C30E7_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqSongCopyFSong_L4d_Table, a2
+	cmp	func_4C0C30E7_Table+8, a2
 	bcs	func_4C0C30E7_entry_Lb
 	cmp	1, d3
 	beq	func_4C0C30E7_entry_L38
@@ -346635,14 +346631,14 @@ loc_4C0C3201:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3205:
-	movhu	(FE_SeqSongCopyFSong_L4d_Table), d1
+	movhu	(func_4C0C30E7_Table+8), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C30E7_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3217:
-	movhu	(FE_SeqSongCopyFSong_L4d_Table), d1
+	movhu	(func_4C0C30E7_Table+8), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C30E7_entry, [d2,d3,a2,a3], 0x28
@@ -346650,7 +346646,7 @@ loc_4C0C3217:
 	bra	FE_SeqSongCopyFSong_Ld1
 loc_4C0C3229:
 	call	GetFocusObject_entry, 0, 0x10
-	movhu	(FE_SeqSongCopyFSong_L4d_Table), d2
+	movhu	(func_4C0C30E7_Table+8), d2
 	mov	d0, d1
 	mov	d2, (0x10, sp)
 	mov	FN_MainSEQ_TrackCopySongParaDraw, d0
@@ -346658,14 +346654,14 @@ loc_4C0C3229:
 	clr	d0
 	bra	FE_SeqSongCopyFSong_Ld1
 loc_4C0C3249:
-	movhu	(FE_SeqSongCopyFSong_L4d_Table), d0
+	movhu	(func_4C0C30E7_Table+8), d0
 	bra	FE_SeqSongCopyFSong_Ld1
 loc_4C0C3251:
 	mov	(0x2c, sp), d1
-	movhu	(FE_SeqSongCopyFSong_L4d_Table), d0
+	movhu	(func_4C0C30E7_Table+8), d0
 	cmp	d1, d0
 	beq	FE_SeqSongCopyFSong_Lca
-	movhu	d1, (FE_SeqSongCopyFSong_L4d_Table)
+	movhu	d1, (func_4C0C30E7_Table+8)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -346725,14 +346721,14 @@ loc_4C0C32D5:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C32D9:
-	movhu	(FE_SeqSongCopyTSong_L4d_Table), d1
+	movhu	(func_4C0C30E7_Table+12), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C30E7_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C32EB:
-	movhu	(FE_SeqSongCopyTSong_L4d_Table), d1
+	movhu	(func_4C0C30E7_Table+12), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C30E7_entry, [d2,d3,a2,a3], 0x28
@@ -346740,7 +346736,7 @@ loc_4C0C32EB:
 	bra	FE_SeqSongCopyTSong_Ld1
 loc_4C0C32FD:
 	call	GetFocusObject_entry, 0, 0x10
-	movhu	(FE_SeqSongCopyTSong_L4d_Table), d2
+	movhu	(func_4C0C30E7_Table+12), d2
 	mov	d0, d1
 	mov	d2, (0x10, sp)
 	mov	FN_MainSEQ_TrackCopySongParaDraw, d0
@@ -346748,14 +346744,14 @@ loc_4C0C32FD:
 	clr	d0
 	bra	FE_SeqSongCopyTSong_Ld1
 loc_4C0C331D:
-	movhu	(FE_SeqSongCopyTSong_L4d_Table), d0
+	movhu	(func_4C0C30E7_Table+12), d0
 	bra	FE_SeqSongCopyTSong_Ld1
 loc_4C0C3325:
 	mov	(0x2c, sp), d1
-	movhu	(FE_SeqSongCopyTSong_L4d_Table), d0
+	movhu	(func_4C0C30E7_Table+12), d0
 	cmp	d1, d0
 	beq	FE_SeqSongCopyTSong_Lca
-	movhu	d1, (FE_SeqSongCopyTSong_L4d_Table)
+	movhu	d1, (func_4C0C30E7_Table+12)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -346819,7 +346815,7 @@ func_4C0C3393_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqTrackCopyFTrack_L4e_Table, a2
+	cmp	func_4C0C3393_Table+16, a2
 	bcs	func_4C0C3393_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C3393_entry_L49
@@ -347007,21 +347003,21 @@ loc_4C0C359F:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C35A3:
-	movbu	(FE_SeqTrackCopyFTrack_L4e_Table), d1
+	movbu	(func_4C0C3393_Table+16), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C35B5:
-	movbu	(FE_SeqTrackCopyFTrack_L4e_Table), d1
+	movbu	(func_4C0C3393_Table+16), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C35C8:
-	movbu	(FE_SeqTrackCopyFTrack_L4e_Table), d0
+	movbu	(func_4C0C3393_Table+16), d0
 	cmp	0x11, d0
 	bne	FE_SeqTrackCopyFTrack_L97
 	mov	(0x2c, sp), a0
@@ -347039,14 +347035,14 @@ FE_SeqTrackCopyFTrack_Lac:
 	clr	d0
 	bra	FE_SeqTrackCopyFTrack_Le6
 loc_4C0C35FB:
-	movbu	(FE_SeqTrackCopyFTrack_L4e_Table), d0
+	movbu	(func_4C0C3393_Table+16), d0
 	bra	FE_SeqTrackCopyFTrack_Le6
 loc_4C0C3603:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqTrackCopyFTrack_L4e_Table), d0
+	movbu	(func_4C0C3393_Table+16), d0
 	cmp	d1, d0
 	beq	FE_SeqTrackCopyFTrack_Ldf
-	movbu	d1, (FE_SeqTrackCopyFTrack_L4e_Table)
+	movbu	d1, (func_4C0C3393_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347106,21 +347102,21 @@ loc_4C0C3688:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C368C:
-	movbu	(FE_SeqTrackCopyTTrack_L4e_Table), d1
+	movbu	(func_4C0C3393_Table+20), d1
 	mov	4, d0
 	inc	d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C369E:
-	movbu	(FE_SeqTrackCopyTTrack_L4e_Table), d1
+	movbu	(func_4C0C3393_Table+20), d1
 	mov	4, d0
 	add	-1, d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C36B1:
-	movbu	(FE_SeqTrackCopyTTrack_L4e_Table), d0
+	movbu	(func_4C0C3393_Table+20), d0
 	cmp	0x11, d0
 	bne	FE_SeqTrackCopyTTrack_L97
 	mov	(0x2c, sp), a0
@@ -347138,14 +347134,14 @@ FE_SeqTrackCopyTTrack_Lac:
 	clr	d0
 	bra	FE_SeqTrackCopyTTrack_Le6
 loc_4C0C36E4:
-	movbu	(FE_SeqTrackCopyTTrack_L4e_Table), d0
+	movbu	(func_4C0C3393_Table+20), d0
 	bra	FE_SeqTrackCopyTTrack_Le6
 loc_4C0C36EC:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqTrackCopyTTrack_L4e_Table), d0
+	movbu	(func_4C0C3393_Table+20), d0
 	cmp	d1, d0
 	beq	FE_SeqTrackCopyTTrack_Ldf
-	movbu	d1, (FE_SeqTrackCopyTTrack_L4e_Table)
+	movbu	d1, (func_4C0C3393_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347205,14 +347201,14 @@ loc_4C0C3770:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3774:
-	movhu	(FE_SeqTrackCopyFSong_L4d_Table), d1
+	movhu	(func_4C0C3393_Table+24), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3786:
-	movhu	(FE_SeqTrackCopyFSong_L4d_Table), d1
+	movhu	(func_4C0C3393_Table+24), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
@@ -347220,7 +347216,7 @@ loc_4C0C3786:
 	bra	FE_SeqTrackCopyFSong_Ld1
 loc_4C0C3798:
 	call	GetFocusObject_entry, 0, 0x10
-	movhu	(FE_SeqTrackCopyFSong_L4d_Table), d2
+	movhu	(func_4C0C3393_Table+24), d2
 	mov	d0, d1
 	mov	d2, (0x10, sp)
 	mov	FN_MainSEQ_TrackCopySongParaDraw, d0
@@ -347228,14 +347224,14 @@ loc_4C0C3798:
 	clr	d0
 	bra	FE_SeqTrackCopyFSong_Ld1
 loc_4C0C37B8:
-	movhu	(FE_SeqTrackCopyFSong_L4d_Table), d0
+	movhu	(func_4C0C3393_Table+24), d0
 	bra	FE_SeqTrackCopyFSong_Ld1
 loc_4C0C37C0:
 	mov	(0x2c, sp), d1
-	movhu	(FE_SeqTrackCopyFSong_L4d_Table), d0
+	movhu	(func_4C0C3393_Table+24), d0
 	cmp	d1, d0
 	beq	FE_SeqTrackCopyFSong_Lca
-	movhu	d1, (FE_SeqTrackCopyFSong_L4d_Table)
+	movhu	d1, (func_4C0C3393_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347295,14 +347291,14 @@ loc_4C0C3844:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3848:
-	movhu	(FE_SeqTrackCopyTSong_L4d_Table), d1
+	movhu	(func_4C0C3393_Table+28), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C385A:
-	movhu	(FE_SeqTrackCopyTSong_L4d_Table), d1
+	movhu	(func_4C0C3393_Table+28), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C3393_entry, [d2,d3,a2,a3], 0x2c
@@ -347310,7 +347306,7 @@ loc_4C0C385A:
 	bra	FE_SeqTrackCopyTSong_Ld1
 loc_4C0C386C:
 	call	GetFocusObject_entry, 0, 0x10
-	movhu	(FE_SeqTrackCopyTSong_L4d_Table), d2
+	movhu	(func_4C0C3393_Table+28), d2
 	mov	d0, d1
 	mov	d2, (0x10, sp)
 	mov	FN_MainSEQ_TrackCopySongParaDraw, d0
@@ -347318,14 +347314,14 @@ loc_4C0C386C:
 	clr	d0
 	bra	FE_SeqTrackCopyTSong_Ld1
 loc_4C0C388C:
-	movhu	(FE_SeqTrackCopyTSong_L4d_Table), d0
+	movhu	(func_4C0C3393_Table+28), d0
 	bra	FE_SeqTrackCopyTSong_Ld1
 loc_4C0C3894:
 	mov	(0x2c, sp), d1
-	movhu	(FE_SeqTrackCopyTSong_L4d_Table), d0
+	movhu	(func_4C0C3393_Table+28), d0
 	cmp	d1, d0
 	beq	FE_SeqTrackCopyTSong_Lca
-	movhu	d1, (FE_SeqTrackCopyTSong_L4d_Table)
+	movhu	d1, (func_4C0C3393_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347389,7 +347385,7 @@ func_4C0C3902_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqVeloCngTrack_L4e_Table, a2
+	cmp	func_4C0C3902_Table+16, a2
 	bcs	func_4C0C3902_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C3902_entry_L49
@@ -347552,21 +347548,21 @@ loc_4C0C3AC5:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3AC9:
-	movbu	(FE_SeqVeloCngTrack_L4e_Table), d1
+	movbu	(func_4C0C3902_Table+16), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C3902_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3ADB:
-	movbu	(FE_SeqVeloCngTrack_L4e_Table), d1
+	movbu	(func_4C0C3902_Table+16), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C3902_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3AEE:
-	movbu	(FE_SeqVeloCngTrack_L4e_Table), d0
+	movbu	(func_4C0C3902_Table+16), d0
 	cmp	0x11, d0
 	bne	FE_SeqVeloCngTrack_L97
 	mov	(0x2c, sp), a0
@@ -347584,14 +347580,14 @@ FE_SeqVeloCngTrack_Lac:
 	clr	d0
 	bra	FE_SeqVeloCngTrack_Le6
 loc_4C0C3B21:
-	movbu	(FE_SeqVeloCngTrack_L4e_Table), d0
+	movbu	(func_4C0C3902_Table+16), d0
 	bra	FE_SeqVeloCngTrack_Le6
 loc_4C0C3B29:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqVeloCngTrack_L4e_Table), d0
+	movbu	(func_4C0C3902_Table+16), d0
 	cmp	d1, d0
 	beq	FE_SeqVeloCngTrack_Ldf
-	movbu	d1, (FE_SeqVeloCngTrack_L4e_Table)
+	movbu	d1, (func_4C0C3902_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347651,14 +347647,14 @@ loc_4C0C3BAE:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3BB2:
-	movhu	(FE_SeqVeloCngFstMeas_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+20), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C3902_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3BC4:
-	movhu	(FE_SeqVeloCngFstMeas_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+20), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C3902_entry, [d2,d3,a2,a3], 0x2c
@@ -347669,20 +347665,20 @@ loc_4C0C3BD6:
 	mov	Str_3d_172, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqVeloCngFstMeas_L4e_Table), d0
+	movhu	(func_4C0C3902_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqVeloCngFstMeas_Ld0
 loc_4C0C3BF4:
-	movhu	(FE_SeqVeloCngFstMeas_L4e_Table), d0
+	movhu	(func_4C0C3902_Table+20), d0
 	bra	FE_SeqVeloCngFstMeas_Ld0
 loc_4C0C3BFC:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqVeloCngFstMeas_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+20), d1
 	cmp	d0, d1
 	beq	FE_SeqVeloCngFstMeas_Lc9
-	movhu	d0, (FE_SeqVeloCngFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C3902_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347742,14 +347738,14 @@ loc_4C0C3C81:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3C85:
-	movhu	(FE_SeqVeloCngLstMeas_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+24), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C3902_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3C97:
-	movhu	(FE_SeqVeloCngLstMeas_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+24), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C3902_entry, [d2,d3,a2,a3], 0x2c
@@ -347760,20 +347756,20 @@ loc_4C0C3CA9:
 	mov	Str_3d_171, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqVeloCngLstMeas_L4e_Table), d0
+	movhu	(func_4C0C3902_Table+24), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqVeloCngLstMeas_Ld0
 loc_4C0C3CC7:
-	movhu	(FE_SeqVeloCngLstMeas_L4e_Table), d0
+	movhu	(func_4C0C3902_Table+24), d0
 	bra	FE_SeqVeloCngLstMeas_Ld0
 loc_4C0C3CCF:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqVeloCngLstMeas_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+24), d1
 	cmp	d0, d1
 	beq	FE_SeqVeloCngLstMeas_Lc9
-	movhu	d0, (FE_SeqVeloCngLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C3902_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347833,7 +347829,7 @@ loc_4C0C3D54:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C3D58:
-	movhu	(FE_SeqVeloCngVelo_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+28), d1
 	mov	4, d0
 	exth	d1
 	inc	d1
@@ -347841,7 +347837,7 @@ loc_4C0C3D58:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C3D6B:
-	movhu	(FE_SeqVeloCngVelo_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+28), d1
 	mov	4, d0
 	exth	d1
 	add	-1, d1
@@ -347849,7 +347845,7 @@ loc_4C0C3D6B:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C3D7F:
-	movhu	(FE_SeqVeloCngVelo_L4e_Table), d0
+	movhu	(func_4C0C3902_Table+28), d0
 	mov	0x2b, d1
 	exth	d0
 	cmp	0, d0
@@ -347870,16 +347866,16 @@ FE_SeqVeloCngVelo_L93:
 	clr	d0
 	bra	FE_SeqVeloCngVelo_Led
 loc_4C0C3DB5:
-	movhu	(FE_SeqVeloCngVelo_L4e_Table), d0
+	movhu	(func_4C0C3902_Table+28), d0
 	exth	d0
 	bra	FE_SeqVeloCngVelo_Led
 loc_4C0C3DBE:
 	mov	(0x34, sp), d0
-	movhu	(FE_SeqVeloCngVelo_L4e_Table), d1
+	movhu	(func_4C0C3902_Table+28), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqVeloCngVelo_Le6
-	movhu	d0, (FE_SeqVeloCngVelo_L4e_Table)
+	movhu	d0, (func_4C0C3902_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -347943,7 +347939,7 @@ func_4C0C3E2D_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqAdvDlyTrack_L4e_Table, a2
+	cmp	func_4C0C3E2D_Table+16, a2
 	bcs	func_4C0C3E2D_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C3E2D_entry_L49
@@ -348106,21 +348102,21 @@ loc_4C0C3FF0:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C3FF4:
-	movbu	(FE_SeqAdvDlyTrack_L4e_Table), d1
+	movbu	(func_4C0C3E2D_Table+16), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C3E2D_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4006:
-	movbu	(FE_SeqAdvDlyTrack_L4e_Table), d1
+	movbu	(func_4C0C3E2D_Table+16), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C3E2D_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4019:
-	movbu	(FE_SeqAdvDlyTrack_L4e_Table), d0
+	movbu	(func_4C0C3E2D_Table+16), d0
 	cmp	0x11, d0
 	bne	FE_SeqAdvDlyTrack_L97
 	mov	(0x2c, sp), a0
@@ -348138,14 +348134,14 @@ FE_SeqAdvDlyTrack_Lac:
 	clr	d0
 	bra	FE_SeqAdvDlyTrack_Le6
 loc_4C0C404C:
-	movbu	(FE_SeqAdvDlyTrack_L4e_Table), d0
+	movbu	(func_4C0C3E2D_Table+16), d0
 	bra	FE_SeqAdvDlyTrack_Le6
 loc_4C0C4054:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqAdvDlyTrack_L4e_Table), d0
+	movbu	(func_4C0C3E2D_Table+16), d0
 	cmp	d1, d0
 	beq	FE_SeqAdvDlyTrack_Ldf
-	movbu	d1, (FE_SeqAdvDlyTrack_L4e_Table)
+	movbu	d1, (func_4C0C3E2D_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348205,14 +348201,14 @@ loc_4C0C40D9:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C40DD:
-	movhu	(FE_SeqAdvDlyFstMeas_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+20), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C3E2D_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C40EF:
-	movhu	(FE_SeqAdvDlyFstMeas_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+20), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C3E2D_entry, [d2,d3,a2,a3], 0x2c
@@ -348223,20 +348219,20 @@ loc_4C0C4101:
 	mov	Str_3d_170, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqAdvDlyFstMeas_L4e_Table), d0
+	movhu	(func_4C0C3E2D_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqAdvDlyFstMeas_Ld0
 loc_4C0C411F:
-	movhu	(FE_SeqAdvDlyFstMeas_L4e_Table), d0
+	movhu	(func_4C0C3E2D_Table+20), d0
 	bra	FE_SeqAdvDlyFstMeas_Ld0
 loc_4C0C4127:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqAdvDlyFstMeas_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+20), d1
 	cmp	d0, d1
 	beq	FE_SeqAdvDlyFstMeas_Lc9
-	movhu	d0, (FE_SeqAdvDlyFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C3E2D_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348296,14 +348292,14 @@ loc_4C0C41AC:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C41B0:
-	movhu	(FE_SeqAdvDlyLstMeas_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+24), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C3E2D_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C41C2:
-	movhu	(FE_SeqAdvDlyLstMeas_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+24), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C3E2D_entry, [d2,d3,a2,a3], 0x2c
@@ -348314,20 +348310,20 @@ loc_4C0C41D4:
 	mov	Str_3d_169, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqAdvDlyLstMeas_L4e_Table), d0
+	movhu	(func_4C0C3E2D_Table+24), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqAdvDlyLstMeas_Ld0
 loc_4C0C41F2:
-	movhu	(FE_SeqAdvDlyLstMeas_L4e_Table), d0
+	movhu	(func_4C0C3E2D_Table+24), d0
 	bra	FE_SeqAdvDlyLstMeas_Ld0
 loc_4C0C41FA:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqAdvDlyLstMeas_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+24), d1
 	cmp	d0, d1
 	beq	FE_SeqAdvDlyLstMeas_Lc9
-	movhu	d0, (FE_SeqAdvDlyLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C3E2D_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348387,7 +348383,7 @@ loc_4C0C427F:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C4283:
-	movhu	(FE_SeqAdvDlyAdvDly_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+28), d1
 	mov	4, d0
 	exth	d1
 	inc	d1
@@ -348395,7 +348391,7 @@ loc_4C0C4283:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C4296:
-	movhu	(FE_SeqAdvDlyAdvDly_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+28), d1
 	mov	4, d0
 	exth	d1
 	add	-1, d1
@@ -348403,7 +348399,7 @@ loc_4C0C4296:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C42AA:
-	movhu	(FE_SeqAdvDlyAdvDly_L4e_Table), d0
+	movhu	(func_4C0C3E2D_Table+28), d0
 	mov	0x2b, d1
 	exth	d0
 	cmp	0, d0
@@ -348424,16 +348420,16 @@ FE_SeqAdvDlyAdvDly_L93:
 	clr	d0
 	bra	FE_SeqAdvDlyAdvDly_Led
 loc_4C0C42E0:
-	movhu	(FE_SeqAdvDlyAdvDly_L4e_Table), d0
+	movhu	(func_4C0C3E2D_Table+28), d0
 	exth	d0
 	bra	FE_SeqAdvDlyAdvDly_Led
 loc_4C0C42E9:
 	mov	(0x34, sp), d0
-	movhu	(FE_SeqAdvDlyAdvDly_L4e_Table), d1
+	movhu	(func_4C0C3E2D_Table+28), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqAdvDlyAdvDly_Le6
-	movhu	d0, (FE_SeqAdvDlyAdvDly_L4e_Table)
+	movhu	d0, (func_4C0C3E2D_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348497,7 +348493,7 @@ func_4C0C4358_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqTransTrack_L4e_Table, a2
+	cmp	func_4C0C4358_Table+16, a2
 	bcs	func_4C0C4358_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C4358_entry_L49
@@ -348660,21 +348656,21 @@ loc_4C0C451B:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C451F:
-	movbu	(FE_SeqTransTrack_L4e_Table), d1
+	movbu	(func_4C0C4358_Table+16), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C4358_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4531:
-	movbu	(FE_SeqTransTrack_L4e_Table), d1
+	movbu	(func_4C0C4358_Table+16), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C4358_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4544:
-	movbu	(FE_SeqTransTrack_L4e_Table), d0
+	movbu	(func_4C0C4358_Table+16), d0
 	cmp	0x11, d0
 	bne	FE_SeqTransTrack_L97
 	mov	(0x2c, sp), a0
@@ -348692,14 +348688,14 @@ FE_SeqTransTrack_Lac:
 	clr	d0
 	bra	FE_SeqTransTrack_Le6
 loc_4C0C4577:
-	movbu	(FE_SeqTransTrack_L4e_Table), d0
+	movbu	(func_4C0C4358_Table+16), d0
 	bra	FE_SeqTransTrack_Le6
 loc_4C0C457F:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqTransTrack_L4e_Table), d0
+	movbu	(func_4C0C4358_Table+16), d0
 	cmp	d1, d0
 	beq	FE_SeqTransTrack_Ldf
-	movbu	d1, (FE_SeqTransTrack_L4e_Table)
+	movbu	d1, (func_4C0C4358_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348759,14 +348755,14 @@ loc_4C0C4604:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4608:
-	movhu	(FE_SeqTransFstMeas_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+20), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C4358_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C461A:
-	movhu	(FE_SeqTransFstMeas_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+20), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C4358_entry, [d2,d3,a2,a3], 0x2c
@@ -348777,20 +348773,20 @@ loc_4C0C462C:
 	mov	Str_3d_168, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqTransFstMeas_L4e_Table), d0
+	movhu	(func_4C0C4358_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqTransFstMeas_Ld0
 loc_4C0C464A:
-	movhu	(FE_SeqTransFstMeas_L4e_Table), d0
+	movhu	(func_4C0C4358_Table+20), d0
 	bra	FE_SeqTransFstMeas_Ld0
 loc_4C0C4652:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqTransFstMeas_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+20), d1
 	cmp	d0, d1
 	beq	FE_SeqTransFstMeas_Lc9
-	movhu	d0, (FE_SeqTransFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C4358_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348850,14 +348846,14 @@ loc_4C0C46D7:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C46DB:
-	movhu	(FE_SeqTransLstMeas_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+24), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C4358_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C46ED:
-	movhu	(FE_SeqTransLstMeas_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+24), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C4358_entry, [d2,d3,a2,a3], 0x2c
@@ -348868,20 +348864,20 @@ loc_4C0C46FF:
 	mov	Str_3d_167, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqTransLstMeas_L4e_Table), d0
+	movhu	(func_4C0C4358_Table+24), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqTransLstMeas_Ld0
 loc_4C0C471D:
-	movhu	(FE_SeqTransLstMeas_L4e_Table), d0
+	movhu	(func_4C0C4358_Table+24), d0
 	bra	FE_SeqTransLstMeas_Ld0
 loc_4C0C4725:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqTransLstMeas_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+24), d1
 	cmp	d0, d1
 	beq	FE_SeqTransLstMeas_Lc9
-	movhu	d0, (FE_SeqTransLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C4358_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -348941,7 +348937,7 @@ loc_4C0C47AA:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C47AE:
-	movhu	(FE_SeqTransTrans_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+28), d1
 	mov	4, d0
 	exth	d1
 	inc	d1
@@ -348949,7 +348945,7 @@ loc_4C0C47AE:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C47C1:
-	movhu	(FE_SeqTransTrans_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+28), d1
 	mov	4, d0
 	exth	d1
 	add	-1, d1
@@ -348957,7 +348953,7 @@ loc_4C0C47C1:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C47D5:
-	movhu	(FE_SeqTransTrans_L4e_Table), d0
+	movhu	(func_4C0C4358_Table+28), d0
 	mov	0x2b, d1
 	exth	d0
 	cmp	0, d0
@@ -348978,16 +348974,16 @@ FE_SeqTransTrans_L93:
 	clr	d0
 	bra	FE_SeqTransTrans_Led
 loc_4C0C480B:
-	movhu	(FE_SeqTransTrans_L4e_Table), d0
+	movhu	(func_4C0C4358_Table+28), d0
 	exth	d0
 	bra	FE_SeqTransTrans_Led
 loc_4C0C4814:
 	mov	(0x34, sp), d0
-	movhu	(FE_SeqTransTrans_L4e_Table), d1
+	movhu	(func_4C0C4358_Table+28), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqTransTrans_Le6
-	movhu	d0, (FE_SeqTransTrans_L4e_Table)
+	movhu	d0, (func_4C0C4358_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349051,7 +349047,7 @@ func_4C0C4883_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqQtzTrack_L4e_Table, a2
+	cmp	func_4C0C4883_Table+24, a2
 	bcs	func_4C0C4883_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C4883_entry_L57
@@ -349253,21 +349249,21 @@ loc_4C0C4AAB:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4AAF:
-	movbu	(FE_SeqQtzTrack_L4e_Table), d1
+	movbu	(func_4C0C4883_Table+24), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C4883_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4AC1:
-	movbu	(FE_SeqQtzTrack_L4e_Table), d1
+	movbu	(func_4C0C4883_Table+24), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C4883_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4AD4:
-	movbu	(FE_SeqQtzTrack_L4e_Table), d0
+	movbu	(func_4C0C4883_Table+24), d0
 	cmp	0x11, d0
 	bne	FE_SeqQtzTrack_L97
 	mov	(0x2c, sp), a0
@@ -349285,14 +349281,14 @@ FE_SeqQtzTrack_Lac:
 	clr	d0
 	bra	FE_SeqQtzTrack_Le6
 loc_4C0C4B07:
-	movbu	(FE_SeqQtzTrack_L4e_Table), d0
+	movbu	(func_4C0C4883_Table+24), d0
 	bra	FE_SeqQtzTrack_Le6
 loc_4C0C4B0F:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqQtzTrack_L4e_Table), d0
+	movbu	(func_4C0C4883_Table+24), d0
 	cmp	d1, d0
 	beq	FE_SeqQtzTrack_Ldf
-	movbu	d1, (FE_SeqQtzTrack_L4e_Table)
+	movbu	d1, (func_4C0C4883_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349352,14 +349348,14 @@ loc_4C0C4B94:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4B98:
-	movhu	(FE_SeqQtzFstMeas_L4e_Table), d1
+	movhu	(func_4C0C4883_Table+28), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C4883_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4BAA:
-	movhu	(FE_SeqQtzFstMeas_L4e_Table), d1
+	movhu	(func_4C0C4883_Table+28), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C4883_entry, [d2,d3,a2,a3], 0x30
@@ -349370,20 +349366,20 @@ loc_4C0C4BBC:
 	mov	Str_3d_166, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqQtzFstMeas_L4e_Table), d0
+	movhu	(func_4C0C4883_Table+28), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqQtzFstMeas_Ld0
 loc_4C0C4BDA:
-	movhu	(FE_SeqQtzFstMeas_L4e_Table), d0
+	movhu	(func_4C0C4883_Table+28), d0
 	bra	FE_SeqQtzFstMeas_Ld0
 loc_4C0C4BE2:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqQtzFstMeas_L4e_Table), d1
+	movhu	(func_4C0C4883_Table+28), d1
 	cmp	d0, d1
 	beq	FE_SeqQtzFstMeas_Lc9
-	movhu	d0, (FE_SeqQtzFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C4883_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349443,14 +349439,14 @@ loc_4C0C4C67:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4C6B:
-	movhu	(FE_SeqQtzLstMeas_L4e_Table), d1
+	movhu	(func_4C0C4883_Table+32), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C4883_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4C7D:
-	movhu	(FE_SeqQtzLstMeas_L4e_Table), d1
+	movhu	(func_4C0C4883_Table+32), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C4883_entry, [d2,d3,a2,a3], 0x30
@@ -349461,20 +349457,20 @@ loc_4C0C4C8F:
 	mov	Str_3d_165, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqQtzLstMeas_L4e_Table), d0
+	movhu	(func_4C0C4883_Table+32), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqQtzLstMeas_Ld0
 loc_4C0C4CAD:
-	movhu	(FE_SeqQtzLstMeas_L4e_Table), d0
+	movhu	(func_4C0C4883_Table+32), d0
 	bra	FE_SeqQtzLstMeas_Ld0
 loc_4C0C4CB5:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqQtzLstMeas_L4e_Table), d1
+	movhu	(func_4C0C4883_Table+32), d1
 	cmp	d0, d1
 	beq	FE_SeqQtzLstMeas_Lc9
-	movhu	d0, (FE_SeqQtzLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C4883_Table+32)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349534,7 +349530,7 @@ loc_4C0C4D39:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C4D3D:
-	movhu	(FE_SeqQtzValue_L4d_Table), d1
+	movhu	(func_4C0C4883_Table+36), d1
 	mov	4, d0
 	exth	d1
 	inc	d1
@@ -349542,7 +349538,7 @@ loc_4C0C4D3D:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C4D50:
-	movhu	(FE_SeqQtzValue_L4d_Table), d1
+	movhu	(func_4C0C4883_Table+36), d1
 	mov	4, d0
 	exth	d1
 	add	-1, d1
@@ -349550,7 +349546,7 @@ loc_4C0C4D50:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C4D64:
-	movhu	(FE_SeqQtzValue_L4d_Table), d0
+	movhu	(func_4C0C4883_Table+36), d0
 	exth	d0
 	cmp	0, d0
 	beq	FE_SeqQtzValue_La2
@@ -349610,16 +349606,16 @@ FE_SeqQtzValue_L128:
 	clr	d0
 	bra	FE_SeqQtzValue_L164
 loc_4C0C4E12:
-	movhu	(FE_SeqQtzValue_L4d_Table), d0
+	movhu	(func_4C0C4883_Table+36), d0
 	exth	d0
 	bra	FE_SeqQtzValue_L164
 loc_4C0C4E1B:
 	mov	(0x30, sp), d0
-	movhu	(FE_SeqQtzValue_L4d_Table), d1
+	movhu	(func_4C0C4883_Table+36), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqQtzValue_L15d
-	movhu	d0, (FE_SeqQtzValue_L4d_Table)
+	movhu	d0, (func_4C0C4883_Table+36)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349679,7 +349675,7 @@ loc_4C0C4EA1:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4EA5:
-	movhu	(Str_d_3), d1
+	movhu	(func_4C0C4883_Table+40), d1
 	mov	5, d0
 	exth	d1
 	inc	d1
@@ -349687,7 +349683,7 @@ loc_4C0C4EA5:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C4EB8:
-	movhu	(Str_d_3), d1
+	movhu	(func_4C0C4883_Table+40), d1
 	mov	5, d0
 	exth	d1
 	add	-1, d1
@@ -349699,23 +349695,23 @@ loc_4C0C4ECB:
 	mov	Str_3d_164, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(Str_d_3), d0
+	movhu	(func_4C0C4883_Table+40), d0
 	exth	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqQtzStrength_Ld5
 loc_4C0C4EEA:
-	movhu	(Str_d_3), d0
+	movhu	(func_4C0C4883_Table+40), d0
 	exth	d0
 	bra	FE_SeqQtzStrength_Ld5
 loc_4C0C4EF3:
 	mov	(0x2c, sp), d0
-	movhu	(Str_d_3), d1
+	movhu	(func_4C0C4883_Table+40), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqQtzStrength_Lce
-	movhu	d0, (Str_d_3)
+	movhu	d0, (func_4C0C4883_Table+40)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349775,7 +349771,7 @@ loc_4C0C4F79:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C4F7D:
-	movhu	(Str_d_2), d1
+	movhu	(func_4C0C4883_Table+44), d1
 	mov	6, d0
 	exth	d1
 	inc	d1
@@ -349783,7 +349779,7 @@ loc_4C0C4F7D:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C4F90:
-	movhu	(Str_d_2), d1
+	movhu	(func_4C0C4883_Table+44), d1
 	mov	6, d0
 	exth	d1
 	add	-1, d1
@@ -349791,7 +349787,7 @@ loc_4C0C4F90:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C4FA4:
-	movhu	(Str_d_2), d0
+	movhu	(func_4C0C4883_Table+44), d0
 	mov	0x2b, d1
 	exth	d0
 	cmp	0, d0
@@ -349812,16 +349808,16 @@ FE_SeqQtzWindow_L93:
 	clr	d0
 	bra	FE_SeqQtzWindow_Led
 loc_4C0C4FDA:
-	movhu	(Str_d_2), d0
+	movhu	(func_4C0C4883_Table+44), d0
 	exth	d0
 	bra	FE_SeqQtzWindow_Led
 loc_4C0C4FE3:
 	mov	(0x34, sp), d0
-	movhu	(Str_d_2), d1
+	movhu	(func_4C0C4883_Table+44), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqQtzWindow_Le6
-	movhu	d0, (Str_d_2)
+	movhu	d0, (func_4C0C4883_Table+44)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -349885,7 +349881,7 @@ func_4C0C5052_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqNoteChangeTrack_L4e_Table, a2
+	cmp	func_4C0C5052_Table+20, a2
 	bcs	func_4C0C5052_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C5052_entry_L50
@@ -350067,21 +350063,21 @@ loc_4C0C5247:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C524B:
-	movbu	(FE_SeqNoteChangeTrack_L4e_Table), d1
+	movbu	(func_4C0C5052_Table+20), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C525D:
-	movbu	(FE_SeqNoteChangeTrack_L4e_Table), d1
+	movbu	(func_4C0C5052_Table+20), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5270:
-	movbu	(FE_SeqNoteChangeTrack_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+20), d0
 	cmp	0x11, d0
 	bne	FE_SeqNoteChangeTrack_L97
 	mov	(0x2c, sp), a0
@@ -350099,14 +350095,14 @@ FE_SeqNoteChangeTrack_Lac:
 	clr	d0
 	bra	FE_SeqNoteChangeTrack_Le6
 loc_4C0C52A3:
-	movbu	(FE_SeqNoteChangeTrack_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+20), d0
 	bra	FE_SeqNoteChangeTrack_Le6
 loc_4C0C52AB:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqNoteChangeTrack_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+20), d0
 	cmp	d1, d0
 	beq	FE_SeqNoteChangeTrack_Ldf
-	movbu	d1, (FE_SeqNoteChangeTrack_L4e_Table)
+	movbu	d1, (func_4C0C5052_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350166,14 +350162,14 @@ loc_4C0C5330:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5334:
-	movhu	(FE_SeqNoteChangeFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5052_Table+24), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5346:
-	movhu	(FE_SeqNoteChangeFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5052_Table+24), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
@@ -350184,20 +350180,20 @@ loc_4C0C5358:
 	mov	Str_3d_163, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqNoteChangeFstMeas_L4e_Table), d0
+	movhu	(func_4C0C5052_Table+24), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqNoteChangeFstMeas_Ld0
 loc_4C0C5376:
-	movhu	(FE_SeqNoteChangeFstMeas_L4e_Table), d0
+	movhu	(func_4C0C5052_Table+24), d0
 	bra	FE_SeqNoteChangeFstMeas_Ld0
 loc_4C0C537E:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqNoteChangeFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5052_Table+24), d1
 	cmp	d0, d1
 	beq	FE_SeqNoteChangeFstMeas_Lc9
-	movhu	d0, (FE_SeqNoteChangeFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C5052_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350257,14 +350253,14 @@ loc_4C0C5403:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5407:
-	movhu	(FE_SeqNoteChangeLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5052_Table+28), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5419:
-	movhu	(FE_SeqNoteChangeLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5052_Table+28), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
@@ -350275,20 +350271,20 @@ loc_4C0C542B:
 	mov	Str_3d_162, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqNoteChangeLstMeas_L4e_Table), d0
+	movhu	(func_4C0C5052_Table+28), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqNoteChangeLstMeas_Ld0
 loc_4C0C5449:
-	movhu	(FE_SeqNoteChangeLstMeas_L4e_Table), d0
+	movhu	(func_4C0C5052_Table+28), d0
 	bra	FE_SeqNoteChangeLstMeas_Ld0
 loc_4C0C5451:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqNoteChangeLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5052_Table+28), d1
 	cmp	d0, d1
 	beq	FE_SeqNoteChangeLstMeas_Lc9
-	movhu	d0, (FE_SeqNoteChangeLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C5052_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350348,14 +350344,14 @@ loc_4C0C54D6:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C54DA:
-	movbu	(FE_SeqNoteChangeSrcNt_L4e_Table), d1
+	movbu	(func_4C0C5052_Table+32), d1
 	mov	4, d0
 	inc	d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C54EC:
-	movbu	(FE_SeqNoteChangeSrcNt_L4e_Table), d1
+	movbu	(func_4C0C5052_Table+32), d1
 	mov	4, d0
 	add	-1, d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
@@ -350365,24 +350361,24 @@ loc_4C0C54FE:
 	mov	(0x34, sp), a2
 	mov	Str_s_3d_2, d0
 	mov	d0, (0xc, sp)
-	movbu	(FE_SeqNoteChangeSrcNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+32), d0
 	call	func_4C0BFB3C_entry, [d2], 4
 	mov	a0, (0x10, sp)
-	movbu	(FE_SeqNoteChangeSrcNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+32), d0
 	mov	d0, (0x14, sp)
 	mov	a2, (8, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqNoteChangeSrcNt_Ldd
 loc_4C0C5529:
-	movbu	(FE_SeqNoteChangeSrcNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+32), d0
 	bra	FE_SeqNoteChangeSrcNt_Ldd
 loc_4C0C5531:
 	mov	(0x34, sp), d1
-	movbu	(FE_SeqNoteChangeSrcNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+32), d0
 	cmp	d1, d0
 	beq	FE_SeqNoteChangeSrcNt_Ld6
-	movbu	d1, (FE_SeqNoteChangeSrcNt_L4e_Table)
+	movbu	d1, (func_4C0C5052_Table+32)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350442,14 +350438,14 @@ loc_4C0C55B6:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C55BA:
-	movbu	(FE_SeqNoteChangeDstNt_L4e_Table), d1
+	movbu	(func_4C0C5052_Table+36), d1
 	mov	5, d0
 	inc	d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C55CC:
-	movbu	(FE_SeqNoteChangeDstNt_L4e_Table), d1
+	movbu	(func_4C0C5052_Table+36), d1
 	mov	5, d0
 	add	-1, d1
 	call	func_4C0C5052_entry, [d2,d3,a2,a3], 0x30
@@ -350459,24 +350455,24 @@ loc_4C0C55DE:
 	mov	(0x34, sp), a2
 	mov	Str_s_3d, d0
 	mov	d0, (0xc, sp)
-	movbu	(FE_SeqNoteChangeDstNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+36), d0
 	call	func_4C0BFB3C_entry, [d2], 4
 	mov	a0, (0x10, sp)
-	movbu	(FE_SeqNoteChangeDstNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+36), d0
 	mov	d0, (0x14, sp)
 	mov	a2, (8, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqNoteChangeDstNt_Ldd
 loc_4C0C5609:
-	movbu	(FE_SeqNoteChangeDstNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+36), d0
 	bra	FE_SeqNoteChangeDstNt_Ldd
 loc_4C0C5611:
 	mov	(0x34, sp), d1
-	movbu	(FE_SeqNoteChangeDstNt_L4e_Table), d0
+	movbu	(func_4C0C5052_Table+36), d0
 	cmp	d1, d0
 	beq	FE_SeqNoteChangeDstNt_Ld6
-	movbu	d1, (FE_SeqNoteChangeDstNt_L4e_Table)
+	movbu	d1, (func_4C0C5052_Table+36)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350540,7 +350536,7 @@ func_4C0C567F_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqMsDelTrack_L4e_Table, a2
+	cmp	func_4C0C567F_Table+12, a2
 	bcs	func_4C0C567F_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C567F_entry_L3f
@@ -350685,21 +350681,21 @@ loc_4C0C5812:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5816:
-	movbu	(FE_SeqMsDelTrack_L4e_Table), d1
+	movbu	(func_4C0C567F_Table+12), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C567F_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5828:
-	movbu	(FE_SeqMsDelTrack_L4e_Table), d1
+	movbu	(func_4C0C567F_Table+12), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C567F_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C583B:
-	movbu	(FE_SeqMsDelTrack_L4e_Table), d0
+	movbu	(func_4C0C567F_Table+12), d0
 	cmp	0x11, d0
 	bne	FE_SeqMsDelTrack_L97
 	mov	(0x2c, sp), a0
@@ -350717,14 +350713,14 @@ FE_SeqMsDelTrack_Lac:
 	clr	d0
 	bra	FE_SeqMsDelTrack_Le6
 loc_4C0C586E:
-	movbu	(FE_SeqMsDelTrack_L4e_Table), d0
+	movbu	(func_4C0C567F_Table+12), d0
 	bra	FE_SeqMsDelTrack_Le6
 loc_4C0C5876:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqMsDelTrack_L4e_Table), d0
+	movbu	(func_4C0C567F_Table+12), d0
 	cmp	d1, d0
 	beq	FE_SeqMsDelTrack_Ldf
-	movbu	d1, (FE_SeqMsDelTrack_L4e_Table)
+	movbu	d1, (func_4C0C567F_Table+12)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350784,14 +350780,14 @@ loc_4C0C58FB:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C58FF:
-	movhu	(FE_SeqMsDelFstMeas_L4e_Table), d1
+	movhu	(func_4C0C567F_Table+16), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C567F_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5911:
-	movhu	(FE_SeqMsDelFstMeas_L4e_Table), d1
+	movhu	(func_4C0C567F_Table+16), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C567F_entry, [d2,d3,a2,a3], 0x2c
@@ -350802,20 +350798,20 @@ loc_4C0C5923:
 	mov	Str_3d_161, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsDelFstMeas_L4e_Table), d0
+	movhu	(func_4C0C567F_Table+16), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsDelFstMeas_Ld0
 loc_4C0C5941:
-	movhu	(FE_SeqMsDelFstMeas_L4e_Table), d0
+	movhu	(func_4C0C567F_Table+16), d0
 	bra	FE_SeqMsDelFstMeas_Ld0
 loc_4C0C5949:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsDelFstMeas_L4e_Table), d1
+	movhu	(func_4C0C567F_Table+16), d1
 	cmp	d0, d1
 	beq	FE_SeqMsDelFstMeas_Lc9
-	movhu	d0, (FE_SeqMsDelFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C567F_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350875,14 +350871,14 @@ loc_4C0C59CE:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C59D2:
-	movhu	(FE_SeqMsDelLstMeas_L4e_Table), d1
+	movhu	(func_4C0C567F_Table+20), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C567F_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C59E4:
-	movhu	(FE_SeqMsDelLstMeas_L4e_Table), d1
+	movhu	(func_4C0C567F_Table+20), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C567F_entry, [d2,d3,a2,a3], 0x2c
@@ -350893,20 +350889,20 @@ loc_4C0C59F6:
 	mov	Str_3d_160, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsDelLstMeas_L4e_Table), d0
+	movhu	(func_4C0C567F_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsDelLstMeas_Ld0
 loc_4C0C5A14:
-	movhu	(FE_SeqMsDelLstMeas_L4e_Table), d0
+	movhu	(func_4C0C567F_Table+20), d0
 	bra	FE_SeqMsDelLstMeas_Ld0
 loc_4C0C5A1C:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsDelLstMeas_L4e_Table), d1
+	movhu	(func_4C0C567F_Table+20), d1
 	cmp	d0, d1
 	beq	FE_SeqMsDelLstMeas_Lc9
-	movhu	d0, (FE_SeqMsDelLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C567F_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -350970,7 +350966,7 @@ func_4C0C5A8A_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqMsErsTrack_L4e_Table, a2
+	cmp	func_4C0C5A8A_Table+16, a2
 	bcs	func_4C0C5A8A_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C5A8A_entry_L49
@@ -351133,21 +351129,21 @@ loc_4C0C5C4D:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5C51:
-	movbu	(FE_SeqMsErsTrack_L4e_Table), d1
+	movbu	(func_4C0C5A8A_Table+16), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C5A8A_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5C63:
-	movbu	(FE_SeqMsErsTrack_L4e_Table), d1
+	movbu	(func_4C0C5A8A_Table+16), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C5A8A_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5C76:
-	movbu	(FE_SeqMsErsTrack_L4e_Table), d0
+	movbu	(func_4C0C5A8A_Table+16), d0
 	cmp	0x11, d0
 	bne	FE_SeqMsErsTrack_L97
 	mov	(0x2c, sp), a0
@@ -351165,14 +351161,14 @@ FE_SeqMsErsTrack_Lac:
 	clr	d0
 	bra	FE_SeqMsErsTrack_Le6
 loc_4C0C5CA9:
-	movbu	(FE_SeqMsErsTrack_L4e_Table), d0
+	movbu	(func_4C0C5A8A_Table+16), d0
 	bra	FE_SeqMsErsTrack_Le6
 loc_4C0C5CB1:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqMsErsTrack_L4e_Table), d0
+	movbu	(func_4C0C5A8A_Table+16), d0
 	cmp	d1, d0
 	beq	FE_SeqMsErsTrack_Ldf
-	movbu	d1, (FE_SeqMsErsTrack_L4e_Table)
+	movbu	d1, (func_4C0C5A8A_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -351232,14 +351228,14 @@ loc_4C0C5D36:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5D3A:
-	movhu	(FE_SeqMsErsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5A8A_Table+20), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C5A8A_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5D4C:
-	movhu	(FE_SeqMsErsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5A8A_Table+20), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C5A8A_entry, [d2,d3,a2,a3], 0x2c
@@ -351250,20 +351246,20 @@ loc_4C0C5D5E:
 	mov	Str_3d_159, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsErsFstMeas_L4e_Table), d0
+	movhu	(func_4C0C5A8A_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsErsFstMeas_Ld0
 loc_4C0C5D7C:
-	movhu	(FE_SeqMsErsFstMeas_L4e_Table), d0
+	movhu	(func_4C0C5A8A_Table+20), d0
 	bra	FE_SeqMsErsFstMeas_Ld0
 loc_4C0C5D84:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsErsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5A8A_Table+20), d1
 	cmp	d0, d1
 	beq	FE_SeqMsErsFstMeas_Lc9
-	movhu	d0, (FE_SeqMsErsFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C5A8A_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -351323,14 +351319,14 @@ loc_4C0C5E09:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5E0D:
-	movhu	(FE_SeqMsErsLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5A8A_Table+24), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C5A8A_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C5E1F:
-	movhu	(FE_SeqMsErsLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5A8A_Table+24), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C5A8A_entry, [d2,d3,a2,a3], 0x2c
@@ -351341,20 +351337,20 @@ loc_4C0C5E31:
 	mov	Str_3d_158, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsErsLstMeas_L4e_Table), d0
+	movhu	(func_4C0C5A8A_Table+24), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsErsLstMeas_Ld0
 loc_4C0C5E4F:
-	movhu	(FE_SeqMsErsLstMeas_L4e_Table), d0
+	movhu	(func_4C0C5A8A_Table+24), d0
 	bra	FE_SeqMsErsLstMeas_Ld0
 loc_4C0C5E57:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsErsLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5A8A_Table+24), d1
 	cmp	d0, d1
 	beq	FE_SeqMsErsLstMeas_Lc9
-	movhu	d0, (FE_SeqMsErsLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C5A8A_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -351414,7 +351410,7 @@ loc_4C0C5EDB:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C5EDF:
-	movhu	(FE_SeqMsErsData_L4d_Table), d1
+	movhu	(func_4C0C5A8A_Table+28), d1
 	mov	4, d0
 	exth	d1
 	inc	d1
@@ -351422,7 +351418,7 @@ loc_4C0C5EDF:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C5EF2:
-	movhu	(FE_SeqMsErsData_L4d_Table), d1
+	movhu	(func_4C0C5A8A_Table+28), d1
 	mov	4, d0
 	exth	d1
 	add	-1, d1
@@ -351430,7 +351426,7 @@ loc_4C0C5EF2:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C5F06:
-	movhu	(FE_SeqMsErsData_L4d_Table), d0
+	movhu	(func_4C0C5A8A_Table+28), d0
 	exth	d0
 	cmp	0, d0
 	beq	FE_SeqMsErsData_L92
@@ -351457,16 +351453,16 @@ FE_SeqMsErsData_Lc3:
 	clr	d0
 	bra	FE_SeqMsErsData_Lff
 loc_4C0C5F4F:
-	movhu	(FE_SeqMsErsData_L4d_Table), d0
+	movhu	(func_4C0C5A8A_Table+28), d0
 	exth	d0
 	bra	FE_SeqMsErsData_Lff
 loc_4C0C5F58:
 	mov	(0x30, sp), d1
-	movhu	(FE_SeqMsErsData_L4d_Table), d0
+	movhu	(func_4C0C5A8A_Table+28), d0
 	exth	d0
 	cmp	d1, d0
 	beq	FE_SeqMsErsData_Lf8
-	movhu	d1, (FE_SeqMsErsData_L4d_Table)
+	movhu	d1, (func_4C0C5A8A_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -351530,7 +351526,7 @@ func_4C0C5FC7_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqMsCpFTrack_L4e_Table, a2
+	cmp	func_4C0C5FC7_Table+24, a2
 	bcs	func_4C0C5FC7_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C5FC7_entry_L5a
@@ -351782,21 +351778,21 @@ loc_4C0C6282:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6286:
-	movbu	(FE_SeqMsCpFTrack_L4e_Table), d1
+	movbu	(func_4C0C5FC7_Table+24), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6298:
-	movbu	(FE_SeqMsCpFTrack_L4e_Table), d1
+	movbu	(func_4C0C5FC7_Table+24), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C62AB:
-	movbu	(FE_SeqMsCpFTrack_L4e_Table), d0
+	movbu	(func_4C0C5FC7_Table+24), d0
 	cmp	0x11, d0
 	bne	FE_SeqMsCpFTrack_L97
 	mov	(0x2c, sp), a0
@@ -351814,14 +351810,14 @@ FE_SeqMsCpFTrack_Lac:
 	clr	d0
 	bra	FE_SeqMsCpFTrack_Le6
 loc_4C0C62DE:
-	movbu	(FE_SeqMsCpFTrack_L4e_Table), d0
+	movbu	(func_4C0C5FC7_Table+24), d0
 	bra	FE_SeqMsCpFTrack_Le6
 loc_4C0C62E6:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqMsCpFTrack_L4e_Table), d0
+	movbu	(func_4C0C5FC7_Table+24), d0
 	cmp	d1, d0
 	beq	FE_SeqMsCpFTrack_Ldf
-	movbu	d1, (FE_SeqMsCpFTrack_L4e_Table)
+	movbu	d1, (func_4C0C5FC7_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -351881,21 +351877,21 @@ loc_4C0C636B:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C636F:
-	movbu	(FE_SeqMsCpTTrack_L4e_Table), d1
+	movbu	(func_4C0C5FC7_Table+28), d1
 	mov	4, d0
 	inc	d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6381:
-	movbu	(FE_SeqMsCpTTrack_L4e_Table), d1
+	movbu	(func_4C0C5FC7_Table+28), d1
 	mov	4, d0
 	add	-1, d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6394:
-	movbu	(FE_SeqMsCpTTrack_L4e_Table), d0
+	movbu	(func_4C0C5FC7_Table+28), d0
 	cmp	0x11, d0
 	bne	FE_SeqMsCpTTrack_L97
 	mov	(0x2c, sp), a0
@@ -351913,14 +351909,14 @@ FE_SeqMsCpTTrack_Lac:
 	clr	d0
 	bra	FE_SeqMsCpTTrack_Le6
 loc_4C0C63C7:
-	movbu	(FE_SeqMsCpTTrack_L4e_Table), d0
+	movbu	(func_4C0C5FC7_Table+28), d0
 	bra	FE_SeqMsCpTTrack_Le6
 loc_4C0C63CF:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqMsCpTTrack_L4e_Table), d0
+	movbu	(func_4C0C5FC7_Table+28), d0
 	cmp	d1, d0
 	beq	FE_SeqMsCpTTrack_Ldf
-	movbu	d1, (FE_SeqMsCpTTrack_L4e_Table)
+	movbu	d1, (func_4C0C5FC7_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -351980,14 +351976,14 @@ loc_4C0C6454:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6458:
-	movhu	(FE_SeqMsCpFFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+32), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C646A:
-	movhu	(FE_SeqMsCpFFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+32), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
@@ -351998,20 +351994,20 @@ loc_4C0C647C:
 	mov	Str_3d_157, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsCpFFstMeas_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+32), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsCpFFstMeas_Ld0
 loc_4C0C649A:
-	movhu	(FE_SeqMsCpFFstMeas_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+32), d0
 	bra	FE_SeqMsCpFFstMeas_Ld0
 loc_4C0C64A2:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsCpFFstMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+32), d1
 	cmp	d0, d1
 	beq	FE_SeqMsCpFFstMeas_Lc9
-	movhu	d0, (FE_SeqMsCpFFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C5FC7_Table+32)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352071,14 +352067,14 @@ loc_4C0C6527:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C652B:
-	movhu	(FE_SeqMsCpFLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+36), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C653D:
-	movhu	(FE_SeqMsCpFLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+36), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
@@ -352089,20 +352085,20 @@ loc_4C0C654F:
 	mov	Str_3d_156, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsCpFLstMeas_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+36), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsCpFLstMeas_Ld0
 loc_4C0C656D:
-	movhu	(FE_SeqMsCpFLstMeas_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+36), d0
 	bra	FE_SeqMsCpFLstMeas_Ld0
 loc_4C0C6575:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsCpFLstMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+36), d1
 	cmp	d0, d1
 	beq	FE_SeqMsCpFLstMeas_Lc9
-	movhu	d0, (FE_SeqMsCpFLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C5FC7_Table+36)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352162,14 +352158,14 @@ loc_4C0C65FA:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C65FE:
-	movhu	(FE_SeqMsCpTSrtMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+40), d1
 	mov	5, d0
 	inc	d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6610:
-	movhu	(FE_SeqMsCpTSrtMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+40), d1
 	mov	5, d0
 	add	-1, d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
@@ -352180,20 +352176,20 @@ loc_4C0C6622:
 	mov	Str_3d_155, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsCpTSrtMeas_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+40), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsCpTSrtMeas_Ld0
 loc_4C0C6640:
-	movhu	(FE_SeqMsCpTSrtMeas_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+40), d0
 	bra	FE_SeqMsCpTSrtMeas_Ld0
 loc_4C0C6648:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsCpTSrtMeas_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+40), d1
 	cmp	d0, d1
 	beq	FE_SeqMsCpTSrtMeas_Lc9
-	movhu	d0, (FE_SeqMsCpTSrtMeas_L4e_Table)
+	movhu	d0, (func_4C0C5FC7_Table+40)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352253,14 +352249,14 @@ loc_4C0C66CD:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C66D1:
-	movhu	(FE_SeqMsCpTRep_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+44), d1
 	mov	6, d0
 	inc	d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C66E3:
-	movhu	(FE_SeqMsCpTRep_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+44), d1
 	mov	6, d0
 	add	-1, d1
 	call	func_4C0C5FC7_entry, [d2,d3,a2,a3], 0x30
@@ -352271,20 +352267,20 @@ loc_4C0C66F5:
 	mov	Str_3d_154, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsCpTRep_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+44), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsCpTRep_Ld0
 loc_4C0C6713:
-	movhu	(FE_SeqMsCpTRep_L4e_Table), d0
+	movhu	(func_4C0C5FC7_Table+44), d0
 	bra	FE_SeqMsCpTRep_Ld0
 loc_4C0C671B:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsCpTRep_L4e_Table), d1
+	movhu	(func_4C0C5FC7_Table+44), d1
 	cmp	d0, d1
 	beq	FE_SeqMsCpTRep_Lc9
-	movhu	d0, (FE_SeqMsCpTRep_L4e_Table)
+	movhu	d0, (func_4C0C5FC7_Table+44)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352348,7 +352344,7 @@ func_4C0C6789_entry_Lb:
 	movhu	d0, (a3)
 	add	2, a3
 	inc4	a2
-	cmp	FE_SeqMsInsFTrack_L4e_Table, a2
+	cmp	func_4C0C6789_Table+24, a2
 	bcs	func_4C0C6789_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C6789_entry_L5a
@@ -352600,21 +352596,21 @@ loc_4C0C6A44:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6A48:
-	movbu	(FE_SeqMsInsFTrack_L4e_Table), d1
+	movbu	(func_4C0C6789_Table+24), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6A5A:
-	movbu	(FE_SeqMsInsFTrack_L4e_Table), d1
+	movbu	(func_4C0C6789_Table+24), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6A6D:
-	movbu	(FE_SeqMsInsFTrack_L4e_Table), d0
+	movbu	(func_4C0C6789_Table+24), d0
 	cmp	0x11, d0
 	bne	FE_SeqMsInsFTrack_L97
 	mov	(0x2c, sp), a0
@@ -352632,14 +352628,14 @@ FE_SeqMsInsFTrack_Lac:
 	clr	d0
 	bra	FE_SeqMsInsFTrack_Le6
 loc_4C0C6AA0:
-	movbu	(FE_SeqMsInsFTrack_L4e_Table), d0
+	movbu	(func_4C0C6789_Table+24), d0
 	bra	FE_SeqMsInsFTrack_Le6
 loc_4C0C6AA8:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqMsInsFTrack_L4e_Table), d0
+	movbu	(func_4C0C6789_Table+24), d0
 	cmp	d1, d0
 	beq	FE_SeqMsInsFTrack_Ldf
-	movbu	d1, (FE_SeqMsInsFTrack_L4e_Table)
+	movbu	d1, (func_4C0C6789_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352699,21 +352695,21 @@ loc_4C0C6B2D:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6B31:
-	movbu	(FE_SeqMsInsTTrack_L4e_Table), d1
+	movbu	(func_4C0C6789_Table+28), d1
 	mov	4, d0
 	inc	d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6B43:
-	movbu	(FE_SeqMsInsTTrack_L4e_Table), d1
+	movbu	(func_4C0C6789_Table+28), d1
 	mov	4, d0
 	add	-1, d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6B56:
-	movbu	(FE_SeqMsInsTTrack_L4e_Table), d0
+	movbu	(func_4C0C6789_Table+28), d0
 	cmp	0x11, d0
 	bne	FE_SeqMsInsTTrack_L97
 	mov	(0x2c, sp), a0
@@ -352731,14 +352727,14 @@ FE_SeqMsInsTTrack_Lac:
 	clr	d0
 	bra	FE_SeqMsInsTTrack_Le6
 loc_4C0C6B89:
-	movbu	(FE_SeqMsInsTTrack_L4e_Table), d0
+	movbu	(func_4C0C6789_Table+28), d0
 	bra	FE_SeqMsInsTTrack_Le6
 loc_4C0C6B91:
 	mov	(0x2c, sp), d1
-	movbu	(FE_SeqMsInsTTrack_L4e_Table), d0
+	movbu	(func_4C0C6789_Table+28), d0
 	cmp	d1, d0
 	beq	FE_SeqMsInsTTrack_Ldf
-	movbu	d1, (FE_SeqMsInsTTrack_L4e_Table)
+	movbu	d1, (func_4C0C6789_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352798,14 +352794,14 @@ loc_4C0C6C16:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6C1A:
-	movhu	(FE_SeqMsInsFFstMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+32), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6C2C:
-	movhu	(FE_SeqMsInsFFstMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+32), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
@@ -352816,20 +352812,20 @@ loc_4C0C6C3E:
 	mov	Str_3d_153, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsInsFFstMeas_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+32), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsInsFFstMeas_Ld0
 loc_4C0C6C5C:
-	movhu	(FE_SeqMsInsFFstMeas_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+32), d0
 	bra	FE_SeqMsInsFFstMeas_Ld0
 loc_4C0C6C64:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsInsFFstMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+32), d1
 	cmp	d0, d1
 	beq	FE_SeqMsInsFFstMeas_Lc9
-	movhu	d0, (FE_SeqMsInsFFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C6789_Table+32)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352889,14 +352885,14 @@ loc_4C0C6CE9:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6CED:
-	movhu	(FE_SeqMsInsFLstMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+36), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6CFF:
-	movhu	(FE_SeqMsInsFLstMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+36), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
@@ -352907,20 +352903,20 @@ loc_4C0C6D11:
 	mov	Str_3d_152, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsInsFLstMeas_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+36), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsInsFLstMeas_Ld0
 loc_4C0C6D2F:
-	movhu	(FE_SeqMsInsFLstMeas_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+36), d0
 	bra	FE_SeqMsInsFLstMeas_Ld0
 loc_4C0C6D37:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsInsFLstMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+36), d1
 	cmp	d0, d1
 	beq	FE_SeqMsInsFLstMeas_Lc9
-	movhu	d0, (FE_SeqMsInsFLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C6789_Table+36)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -352980,14 +352976,14 @@ loc_4C0C6DBC:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6DC0:
-	movhu	(FE_SeqMsInsTSrtMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+40), d1
 	mov	5, d0
 	inc	d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6DD2:
-	movhu	(FE_SeqMsInsTSrtMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+40), d1
 	mov	5, d0
 	add	-1, d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
@@ -352998,20 +352994,20 @@ loc_4C0C6DE4:
 	mov	Str_3d_151, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsInsTSrtMeas_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+40), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsInsTSrtMeas_Ld0
 loc_4C0C6E02:
-	movhu	(FE_SeqMsInsTSrtMeas_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+40), d0
 	bra	FE_SeqMsInsTSrtMeas_Ld0
 loc_4C0C6E0A:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsInsTSrtMeas_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+40), d1
 	cmp	d0, d1
 	beq	FE_SeqMsInsTSrtMeas_Lc9
-	movhu	d0, (FE_SeqMsInsTSrtMeas_L4e_Table)
+	movhu	d0, (func_4C0C6789_Table+40)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -353071,14 +353067,14 @@ loc_4C0C6E8F:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6E93:
-	movhu	(FE_SeqMsInsTRep_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+44), d1
 	mov	6, d0
 	inc	d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C6EA5:
-	movhu	(FE_SeqMsInsTRep_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+44), d1
 	mov	6, d0
 	add	-1, d1
 	call	func_4C0C6789_entry, [d2,d3,a2,a3], 0x30
@@ -353089,20 +353085,20 @@ loc_4C0C6EB7:
 	mov	Str_3d_150, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqMsInsTRep_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+44), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqMsInsTRep_Ld0
 loc_4C0C6ED5:
-	movhu	(FE_SeqMsInsTRep_L4e_Table), d0
+	movhu	(func_4C0C6789_Table+44), d0
 	bra	FE_SeqMsInsTRep_Ld0
 loc_4C0C6EDD:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqMsInsTRep_L4e_Table), d1
+	movhu	(func_4C0C6789_Table+44), d1
 	cmp	d0, d1
 	beq	FE_SeqMsInsTRep_Lc9
-	movhu	d0, (FE_SeqMsInsTRep_L4e_Table)
+	movhu	d0, (func_4C0C6789_Table+44)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -355211,7 +355207,7 @@ func_4C0C8344_entry_Lb:
 	movbu	d0, (a3)
 	inc	a3
 	inc4	a2
-	cmp	FE_CmpMCopySPart_L4e_Table, a2
+	cmp	func_4C0C8344_Table+20, a2
 	bcs	func_4C0C8344_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C8344_entry_L59
@@ -355621,14 +355617,14 @@ loc_4C0C8768:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C876C:
-	movbu	(FE_CmpMCopySPart_L4e_Table), d1
+	movbu	(func_4C0C8344_Table+20), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C877E:
-	movbu	(FE_CmpMCopySPart_L4e_Table), d1
+	movbu	(func_4C0C8344_Table+20), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
@@ -355636,7 +355632,7 @@ loc_4C0C877E:
 	bra	FE_CmpMCopySPart_Ld1
 loc_4C0C8790:
 	mov	(0x30, sp), a2
-	movbu	(FE_CmpMCopySPart_L4e_Table), d0
+	movbu	(func_4C0C8344_Table+20), d0
 	call	func_4C0C82DC, 0, 0
 	extbu	d0
 	call	func_4C0C8325, 0, 0
@@ -355646,14 +355642,14 @@ loc_4C0C8790:
 	clr	d0
 	bra	FE_CmpMCopySPart_Ld1
 loc_4C0C87AF:
-	movbu	(FE_CmpMCopySPart_L4e_Table), d0
+	movbu	(func_4C0C8344_Table+20), d0
 	bra	FE_CmpMCopySPart_Ld1
 loc_4C0C87B7:
 	mov	(0x30, sp), d0
-	movbu	(FE_CmpMCopySPart_L4e_Table), d1
+	movbu	(func_4C0C8344_Table+20), d1
 	cmp	d0, d1
 	beq	FE_CmpMCopySPart_Lca
-	movbu	d0, (FE_CmpMCopySPart_L4e_Table)
+	movbu	d0, (func_4C0C8344_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -355713,14 +355709,14 @@ loc_4C0C883C:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C8840:
-	movbu	(FE_CmpMCopyDPart_L4e_Table), d1
+	movbu	(func_4C0C8344_Table+24), d1
 	mov	4, d0
 	inc	d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C8852:
-	movbu	(FE_CmpMCopyDPart_L4e_Table), d1
+	movbu	(func_4C0C8344_Table+24), d1
 	mov	4, d0
 	add	-1, d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
@@ -355728,7 +355724,7 @@ loc_4C0C8852:
 	bra	FE_CmpMCopyDPart_Ld1
 loc_4C0C8864:
 	mov	(0x30, sp), a2
-	movbu	(FE_CmpMCopyDPart_L4e_Table), d0
+	movbu	(func_4C0C8344_Table+24), d0
 	call	func_4C0C82DC, 0, 0
 	extbu	d0
 	call	func_4C0C8325, 0, 0
@@ -355738,14 +355734,14 @@ loc_4C0C8864:
 	clr	d0
 	bra	FE_CmpMCopyDPart_Ld1
 loc_4C0C8883:
-	movbu	(FE_CmpMCopyDPart_L4e_Table), d0
+	movbu	(func_4C0C8344_Table+24), d0
 	bra	FE_CmpMCopyDPart_Ld1
 loc_4C0C888B:
 	mov	(0x30, sp), d0
-	movbu	(FE_CmpMCopyDPart_L4e_Table), d1
+	movbu	(func_4C0C8344_Table+24), d1
 	cmp	d0, d1
 	beq	FE_CmpMCopyDPart_Lca
-	movbu	d0, (FE_CmpMCopyDPart_L4e_Table)
+	movbu	d0, (func_4C0C8344_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -355805,14 +355801,14 @@ loc_4C0C8910:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8914:
-	movhu	(FE_CmpMCopyFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+28), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8926:
-	movhu	(FE_CmpMCopyFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+28), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
@@ -355823,20 +355819,20 @@ loc_4C0C8938:
 	mov	Str_2d_27, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMCopyFstMeas_L4e_Table), d0
+	movhu	(func_4C0C8344_Table+28), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMCopyFstMeas_Ld0
 loc_4C0C8956:
-	movhu	(FE_CmpMCopyFstMeas_L4e_Table), d0
+	movhu	(func_4C0C8344_Table+28), d0
 	bra	FE_CmpMCopyFstMeas_Ld0
 loc_4C0C895E:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMCopyFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+28), d1
 	cmp	d0, d1
 	beq	FE_CmpMCopyFstMeas_Lc9
-	movhu	d0, (FE_CmpMCopyFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C8344_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -355896,14 +355892,14 @@ loc_4C0C89E3:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C89E7:
-	movhu	(FE_CmpMCopyLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+32), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C89F9:
-	movhu	(FE_CmpMCopyLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+32), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
@@ -355914,20 +355910,20 @@ loc_4C0C8A0B:
 	mov	Str_2d_26, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMCopyLstMeas_L4e_Table), d0
+	movhu	(func_4C0C8344_Table+32), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMCopyLstMeas_Ld0
 loc_4C0C8A29:
-	movhu	(FE_CmpMCopyLstMeas_L4e_Table), d0
+	movhu	(func_4C0C8344_Table+32), d0
 	bra	FE_CmpMCopyLstMeas_Ld0
 loc_4C0C8A31:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMCopyLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+32), d1
 	cmp	d0, d1
 	beq	FE_CmpMCopyLstMeas_Lc9
-	movhu	d0, (FE_CmpMCopyLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C8344_Table+32)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -355987,14 +355983,14 @@ loc_4C0C8AB6:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8ABA:
-	movhu	(FE_CmpMCopySrtMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+36), d1
 	mov	5, d0
 	inc	d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8ACC:
-	movhu	(FE_CmpMCopySrtMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+36), d1
 	mov	5, d0
 	add	-1, d1
 	call	func_4C0C8344_entry, [d2,d3,a2,a3], 0x30
@@ -356005,20 +356001,20 @@ loc_4C0C8ADE:
 	mov	Str_2d_25, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMCopySrtMeas_L4e_Table), d0
+	movhu	(func_4C0C8344_Table+36), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMCopySrtMeas_Ld0
 loc_4C0C8AFC:
-	movhu	(FE_CmpMCopySrtMeas_L4e_Table), d0
+	movhu	(func_4C0C8344_Table+36), d0
 	bra	FE_CmpMCopySrtMeas_Ld0
 loc_4C0C8B04:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMCopySrtMeas_L4e_Table), d1
+	movhu	(func_4C0C8344_Table+36), d1
 	cmp	d0, d1
 	beq	FE_CmpMCopySrtMeas_Lc9
-	movhu	d0, (FE_CmpMCopySrtMeas_L4e_Table)
+	movhu	d0, (func_4C0C8344_Table+36)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -356105,7 +356101,7 @@ func_4C0C8B9D_entry_Lb:
 	movbu	d0, (a3)
 	inc	a3
 	inc4	a2
-	cmp	FE_CmpMErsSPart_L4e_Table, a2
+	cmp	func_4C0C8B9D_entry_Lb_Table+12, a2
 	bcs	func_4C0C8B9D_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C8B9D_entry_L41
@@ -356274,14 +356270,14 @@ loc_4C0C8D5E:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C8D62:
-	movbu	(FE_CmpMErsSPart_L4e_Table), d1
+	movbu	(func_4C0C8B9D_entry_Lb_Table+12), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C8B9D_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C8D74:
-	movbu	(FE_CmpMErsSPart_L4e_Table), d1
+	movbu	(func_4C0C8B9D_entry_Lb_Table+12), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C8B9D_entry, [d2,d3,a2,a3], 0x28
@@ -356289,7 +356285,7 @@ loc_4C0C8D74:
 	bra	FE_CmpMErsSPart_Ld1
 loc_4C0C8D86:
 	mov	(0x30, sp), a2
-	movbu	(FE_CmpMErsSPart_L4e_Table), d0
+	movbu	(func_4C0C8B9D_entry_Lb_Table+12), d0
 	call	func_4C0C82DC, 0, 0
 	extbu	d0
 	call	func_4C0C8325, 0, 0
@@ -356299,14 +356295,14 @@ loc_4C0C8D86:
 	clr	d0
 	bra	FE_CmpMErsSPart_Ld1
 loc_4C0C8DA5:
-	movbu	(FE_CmpMErsSPart_L4e_Table), d0
+	movbu	(func_4C0C8B9D_entry_Lb_Table+12), d0
 	bra	FE_CmpMErsSPart_Ld1
 loc_4C0C8DAD:
 	mov	(0x30, sp), d0
-	movbu	(FE_CmpMErsSPart_L4e_Table), d1
+	movbu	(func_4C0C8B9D_entry_Lb_Table+12), d1
 	cmp	d0, d1
 	beq	FE_CmpMErsSPart_Lca
-	movbu	d0, (FE_CmpMErsSPart_L4e_Table)
+	movbu	d0, (func_4C0C8B9D_entry_Lb_Table+12)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -356366,14 +356362,14 @@ loc_4C0C8E32:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8E36:
-	movhu	(FE_CmpMErsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8B9D_entry_Lb_Table+16), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C8B9D_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8E48:
-	movhu	(FE_CmpMErsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8B9D_entry_Lb_Table+16), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C8B9D_entry, [d2,d3,a2,a3], 0x28
@@ -356384,20 +356380,20 @@ loc_4C0C8E5A:
 	mov	Str_2d_24, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMErsFstMeas_L4e_Table), d0
+	movhu	(func_4C0C8B9D_entry_Lb_Table+16), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMErsFstMeas_Ld0
 loc_4C0C8E78:
-	movhu	(FE_CmpMErsFstMeas_L4e_Table), d0
+	movhu	(func_4C0C8B9D_entry_Lb_Table+16), d0
 	bra	FE_CmpMErsFstMeas_Ld0
 loc_4C0C8E80:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMErsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8B9D_entry_Lb_Table+16), d1
 	cmp	d0, d1
 	beq	FE_CmpMErsFstMeas_Lc9
-	movhu	d0, (FE_CmpMErsFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C8B9D_entry_Lb_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -356457,14 +356453,14 @@ loc_4C0C8F05:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8F09:
-	movhu	(FE_CmpMErsLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8B9D_entry_Lb_Table+20), d1
 	mov	3, d0
 	inc	d1
 	call	func_4C0C8B9D_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C8F1B:
-	movhu	(FE_CmpMErsLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8B9D_entry_Lb_Table+20), d1
 	mov	3, d0
 	add	-1, d1
 	call	func_4C0C8B9D_entry, [d2,d3,a2,a3], 0x28
@@ -356475,20 +356471,20 @@ loc_4C0C8F2D:
 	mov	Str_2d_23, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMErsLstMeas_L4e_Table), d0
+	movhu	(func_4C0C8B9D_entry_Lb_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMErsLstMeas_Ld0
 loc_4C0C8F4B:
-	movhu	(FE_CmpMErsLstMeas_L4e_Table), d0
+	movhu	(func_4C0C8B9D_entry_Lb_Table+20), d0
 	bra	FE_CmpMErsLstMeas_Ld0
 loc_4C0C8F53:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMErsLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8B9D_entry_Lb_Table+20), d1
 	cmp	d0, d1
 	beq	FE_CmpMErsLstMeas_Lc9
-	movhu	d0, (FE_CmpMErsLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C8B9D_entry_Lb_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -356552,7 +356548,7 @@ func_4C0C8FC1_entry_Lb:
 	movbu	d0, (a3)
 	inc	a3
 	inc4	a2
-	cmp	FE_CmpMDelFstMeas_L4e_Table, a2
+	cmp	func_4C0C8FC1_entry_Lb_Table+8, a2
 	bcs	func_4C0C8FC1_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C8FC1_entry_L44
@@ -356813,14 +356809,14 @@ loc_4C0C928E:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9292:
-	movhu	(FE_CmpMDelFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8FC1_entry_Lb_Table+8), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C8FC1_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C92A4:
-	movhu	(FE_CmpMDelFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8FC1_entry_Lb_Table+8), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C8FC1_entry, [d2,d3,a2,a3], 0x28
@@ -356831,20 +356827,20 @@ loc_4C0C92B6:
 	mov	Str_2d_22, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMDelFstMeas_L4e_Table), d0
+	movhu	(func_4C0C8FC1_entry_Lb_Table+8), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMDelFstMeas_Ld0
 loc_4C0C92D4:
-	movhu	(FE_CmpMDelFstMeas_L4e_Table), d0
+	movhu	(func_4C0C8FC1_entry_Lb_Table+8), d0
 	bra	FE_CmpMDelFstMeas_Ld0
 loc_4C0C92DC:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMDelFstMeas_L4e_Table), d1
+	movhu	(func_4C0C8FC1_entry_Lb_Table+8), d1
 	cmp	d0, d1
 	beq	FE_CmpMDelFstMeas_Lc9
-	movhu	d0, (FE_CmpMDelFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C8FC1_entry_Lb_Table+8)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -356904,14 +356900,14 @@ loc_4C0C9361:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9365:
-	movhu	(FE_CmpMDelLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8FC1_entry_Lb_Table+12), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C8FC1_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9377:
-	movhu	(FE_CmpMDelLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8FC1_entry_Lb_Table+12), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C8FC1_entry, [d2,d3,a2,a3], 0x28
@@ -356922,20 +356918,20 @@ loc_4C0C9389:
 	mov	Str_2d_21, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMDelLstMeas_L4e_Table), d0
+	movhu	(func_4C0C8FC1_entry_Lb_Table+12), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMDelLstMeas_Ld0
 loc_4C0C93A7:
-	movhu	(FE_CmpMDelLstMeas_L4e_Table), d0
+	movhu	(func_4C0C8FC1_entry_Lb_Table+12), d0
 	bra	FE_CmpMDelLstMeas_Ld0
 loc_4C0C93AF:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMDelLstMeas_L4e_Table), d1
+	movhu	(func_4C0C8FC1_entry_Lb_Table+12), d1
 	cmp	d0, d1
 	beq	FE_CmpMDelLstMeas_Lc9
-	movhu	d0, (FE_CmpMDelLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C8FC1_entry_Lb_Table+12)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -357022,7 +357018,7 @@ func_4C0C9448_entry_Lb:
 	movbu	d0, (a3)
 	inc	a3
 	inc4	a2
-	cmp	FE_CmpMInsFstMeas_L4e_Table, a2
+	cmp	func_4C0C9448_entry_Lb_Table+8, a2
 	bcs	func_4C0C9448_entry_Lb
 	cmp	1, d2
 	beq	func_4C0C9448_entry_L3e
@@ -357188,14 +357184,14 @@ loc_4C0C9614:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9618:
-	movhu	(FE_CmpMInsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+8), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C9448_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C962A:
-	movhu	(FE_CmpMInsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+8), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C9448_entry, [d2,d3,a2,a3], 0x28
@@ -357206,20 +357202,20 @@ loc_4C0C963C:
 	mov	Str_2d_20, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMInsFstMeas_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+8), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMInsFstMeas_Ld0
 loc_4C0C965A:
-	movhu	(FE_CmpMInsFstMeas_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+8), d0
 	bra	FE_CmpMInsFstMeas_Ld0
 loc_4C0C9662:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMInsFstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+8), d1
 	cmp	d0, d1
 	beq	FE_CmpMInsFstMeas_Lc9
-	movhu	d0, (FE_CmpMInsFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C9448_entry_Lb_Table+8)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -357279,14 +357275,14 @@ loc_4C0C96E7:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C96EB:
-	movhu	(FE_CmpMInsMeasNum_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+12), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C9448_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C96FD:
-	movhu	(FE_CmpMInsMeasNum_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+12), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C9448_entry, [d2,d3,a2,a3], 0x28
@@ -357297,20 +357293,20 @@ loc_4C0C970F:
 	mov	Str_2d_19, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_CmpMInsMeasNum_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+12), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_CmpMInsMeasNum_Ld0
 loc_4C0C972D:
-	movhu	(FE_CmpMInsMeasNum_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+12), d0
 	bra	FE_CmpMInsMeasNum_Ld0
 loc_4C0C9735:
 	mov	(0x2c, sp), d0
-	movhu	(FE_CmpMInsMeasNum_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+12), d1
 	cmp	d0, d1
 	beq	FE_CmpMInsMeasNum_Lc9
-	movhu	d0, (FE_CmpMInsMeasNum_L4e_Table)
+	movhu	d0, (func_4C0C9448_entry_Lb_Table+12)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -357726,14 +357722,14 @@ loc_4C0C9B3E:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9B42:
-	movhu	(FE_SeqToCmpFstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+16), d1
 	mov	1, d0
 	inc	d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9B54:
-	movhu	(FE_SeqToCmpFstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+16), d1
 	mov	1, d0
 	add	-1, d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
@@ -357744,20 +357740,20 @@ loc_4C0C9B66:
 	mov	Str_3d_149, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqToCmpFstMeas_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+16), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqToCmpFstMeas_Ld0
 loc_4C0C9B84:
-	movhu	(FE_SeqToCmpFstMeas_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+16), d0
 	bra	FE_SeqToCmpFstMeas_Ld0
 loc_4C0C9B8C:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqToCmpFstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+16), d1
 	cmp	d0, d1
 	beq	FE_SeqToCmpFstMeas_Lc9
-	movhu	d0, (FE_SeqToCmpFstMeas_L4e_Table)
+	movhu	d0, (func_4C0C9448_entry_Lb_Table+16)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -357817,14 +357813,14 @@ loc_4C0C9C11:
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9C15:
-	movhu	(FE_SeqToCmpLstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+20), d1
 	mov	2, d0
 	inc	d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x1c
 loc_4C0C9C27:
-	movhu	(FE_SeqToCmpLstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+20), d1
 	mov	2, d0
 	add	-1, d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
@@ -357835,20 +357831,20 @@ loc_4C0C9C39:
 	mov	Str_3d_148, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqToCmpLstMeas_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+20), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	bra	FE_SeqToCmpLstMeas_Ld0
 loc_4C0C9C57:
-	movhu	(FE_SeqToCmpLstMeas_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+20), d0
 	bra	FE_SeqToCmpLstMeas_Ld0
 loc_4C0C9C5F:
 	mov	(0x2c, sp), d0
-	movhu	(FE_SeqToCmpLstMeas_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+20), d1
 	cmp	d0, d1
 	beq	FE_SeqToCmpLstMeas_Lc9
-	movhu	d0, (FE_SeqToCmpLstMeas_L4e_Table)
+	movhu	d0, (func_4C0C9448_entry_Lb_Table+20)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -357908,7 +357904,7 @@ loc_4C0C9CE4:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C9CE8:
-	movhu	(FE_SeqToCmpTrans_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+24), d1
 	mov	3, d0
 	exth	d1
 	inc	d1
@@ -357916,7 +357912,7 @@ loc_4C0C9CE8:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C9CFB:
-	movhu	(FE_SeqToCmpTrans_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+24), d1
 	mov	3, d0
 	exth	d1
 	add	-1, d1
@@ -357924,7 +357920,7 @@ loc_4C0C9CFB:
 	clr	d0
 	ret	[d2,d3,a2], 0x24
 loc_4C0C9D0F:
-	movhu	(FE_SeqToCmpTrans_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+24), d0
 	mov	0x2b, d1
 	exth	d0
 	cmp	0, d0
@@ -357945,16 +357941,16 @@ FE_SeqToCmpTrans_L93:
 	clr	d0
 	bra	FE_SeqToCmpTrans_Led
 loc_4C0C9D45:
-	movhu	(FE_SeqToCmpTrans_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+24), d0
 	exth	d0
 	bra	FE_SeqToCmpTrans_Led
 loc_4C0C9D4E:
 	mov	(0x34, sp), d0
-	movhu	(FE_SeqToCmpTrans_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+24), d1
 	exth	d1
 	cmp	d0, d1
 	beq	FE_SeqToCmpTrans_Le6
-	movhu	d0, (FE_SeqToCmpTrans_L4e_Table)
+	movhu	d0, (func_4C0C9448_entry_Lb_Table+24)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -358014,14 +358010,14 @@ loc_4C0C9DD4:
 	clr	d0
 	ret	[d2,d3], 0x20
 loc_4C0C9DD8:
-	movhu	(FE_SeqToCmpMemory_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+28), d1
 	mov	4, d0
 	inc	d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3], 0x20
 loc_4C0C9DEA:
-	movhu	(FE_SeqToCmpMemory_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+28), d1
 	mov	4, d0
 	add	-1, d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
@@ -358032,12 +358028,12 @@ loc_4C0C9DFD:
 	mov	Str_1c_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
-	movhu	(FE_SeqToCmpMemory_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+28), d0
 	add	0x41, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	movhu	(func_4C057D61_entry_L4d_Var), d0
-	movhu	(FE_SeqToCmpMemory_L4e_Table), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+28), d1
 	extbu	d0
 	movbu	d1, (0x14, sp)
 	movbu	(0x14, sp), d1
@@ -358048,14 +358044,14 @@ loc_4C0C9DFD:
 	clr	d0
 	bra	FE_SeqToCmpMemory_Lfb
 loc_4C0C9E45:
-	movhu	(FE_SeqToCmpMemory_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+28), d0
 	bra	FE_SeqToCmpMemory_Lfb
 loc_4C0C9E4D:
 	mov	(0x30, sp), d1
-	movhu	(FE_SeqToCmpMemory_L4e_Table), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+28), d0
 	cmp	d1, d0
 	beq	FE_SeqToCmpMemory_Lf4
-	movhu	d1, (FE_SeqToCmpMemory_L4e_Table)
+	movhu	d1, (func_4C0C9448_entry_Lb_Table+28)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -358115,26 +358111,26 @@ loc_4C0C9ED1:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C9ED5:
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d1
 	mov	5, d0
 	inc	d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C9EE7:
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d1
 	mov	5, d0
 	add	-1, d1
 	call	func_4C0C9802_entry, [d2,d3,a2,a3], 0x30
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 loc_4C0C9EFA:
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d0
 	cmp	0, d0
 	blt	FE_SeqToCmpPattern_Ld8
 	cmp	0x13, d0
 	bgt	FE_SeqToCmpPattern_Ld8
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d0
 	mov	FE_SeqToCmpPattern_L4d_Table, a2
 	movbu	(d0, a2), d1
 	mov	(0x30, sp), a0
@@ -358142,7 +358138,7 @@ loc_4C0C9EFA:
 	mov	d1, d0
 	clr	d1
 	call	func_4C0B8A66_entry, [d2], 0x14
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d1
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d1
 	movbu	(d1, a2), d0
 	cmp	0xc, d0
 	blt	FE_SeqToCmpPattern_Lbf
@@ -358161,14 +358157,14 @@ FE_SeqToCmpPattern_Ld8:
 	clr	d0
 	bra	FE_SeqToCmpPattern_L112
 loc_4C0C9F5A:
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d0
 	bra	FE_SeqToCmpPattern_L112
 loc_4C0C9F62:
 	mov	(0x30, sp), d1
-	movhu	(FE_SeqToCmpPattern_L4d_Table_2), d0
+	movhu	(func_4C0C9448_entry_Lb_Table+32), d0
 	cmp	d1, d0
 	beq	FE_SeqToCmpPattern_L10b
-	movhu	d1, (FE_SeqToCmpPattern_L4d_Table_2)
+	movhu	d1, (func_4C0C9448_entry_Lb_Table+32)
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -365311,7 +365307,7 @@ AcStepRecBoxProc_L1a7:
 	mov	d0, (a2)
 AcStepRecBoxProc_L1b8:
 	inc4	a2
-	cmp	LyricsBoxProc_L3a_Table, a2
+	cmp	AcStepRecBoxProc_L349_Table+12, a2
 	bcs	AcStepRecBoxProc_L1a7
 	mov	-1, d0
 	mov	d0, (0x5004b8c0)
@@ -369890,7 +369886,7 @@ loc_4C0D16D6:
 	mov	d3, d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	mov	1, d0
-	movbu	d0, (LyricsBoxProc_L3a_Table)
+	movbu	d0, (AcStepRecBoxProc_L349_Table+12)
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x78
 loc_4C0D16EF:
@@ -369900,10 +369896,10 @@ loc_4C0D16EF:
 	mov	d3, d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
-	movbu	d0, (LyricsBoxProc_L3a_Table)
+	movbu	d0, (AcStepRecBoxProc_L349_Table+12)
 	ret	[d2,d3,a2,a3], 0x78
 loc_4C0D1706:
-	movbu	(LyricsBoxProc_L3a_Table), d0
+	movbu	(AcStepRecBoxProc_L349_Table+12), d0
 	cmp	0, d0
 	bne	LyricsBoxProc_L7d
 	clr	d0
@@ -369941,7 +369937,7 @@ loc_4C0D1756:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x78
 loc_4C0D176C:
-	movbu	(LyricsBoxProc_L3a_Table), d0
+	movbu	(AcStepRecBoxProc_L349_Table+12), d0
 	cmp	0, d0
 	beq	LyricsBoxProc_Lf1
 	mov	(0x88, sp), a0
@@ -369975,7 +369971,7 @@ loc_4C0D17A8:
 	mov	d3, d0
 	call	GetViewInstance, 0, 0
 	mov	a0, (0x2c, sp)
-	movbu	(LyricsBoxProc_L3a_Table), d0
+	movbu	(AcStepRecBoxProc_L349_Table+12), d0
 	cmp	0, d0
 	bne	LyricsBoxProc_L135
 	jmp	LyricsBoxProc_L3f4
@@ -370318,7 +370314,7 @@ loc_4C0D1B07:
 	mov	a0, (0x10, sp)
 	mov	d2, d1
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-	movbu	(LyricsBoxProc_L3a_Table), d0
+	movbu	(AcStepRecBoxProc_L349_Table+12), d0
 	cmp	0, d0
 	bne	LyricsBoxProc_L48a
 	jmp	LyricsBoxProc_L548
@@ -471751,7 +471747,7 @@ InOutTestWindowProc_L9f4:
 	mov	a2, (8, sp)
 	mov	Str_s_3, d0
 	mov	d0, (0xc, sp)
-	mov	(InOutTestWindowProc_L9f4_Table+56), a0
+	mov	(InOutTestWindowProc_L9f4_Var_3), a0
 	extbu	d2
 	mov	a0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -535659,7 +535655,7 @@ func_4C132F88_entry_L9e:
 	clr	d0
 	mov	0x200, d1
 	call	memset_entry, [a2], 4
-	mov	func_4C132F88_entry_L9e_Block, d2
+	mov	data_4C3108D0, d2
 	mov	a2, a0
 	mov	d2, a1
 	mov	3, d0
@@ -535947,7 +535943,7 @@ func_4C133252_entry_L9e:
 	clr	d0
 	mov	0x200, d1
 	call	memset_entry, [a2], 4
-	mov	func_4C133252_entry_L9e_Block, d2
+	mov	data_4C3108F3, d2
 	mov	a2, a0
 	mov	d2, a1
 	mov	3, d0
@@ -537898,7 +537894,7 @@ func_4C13442E_entry_L12:
 	ret	[a2], 0x14
 func_4C13442E_entry_L25:
 	movhu	(func_4C13442E_entry_L25_Table_2), d0
-	mov	func_4C13442E_entry_L25_Var_4, a1
+	mov	func_4C13442E_entry_L25_Table_2+38, a1
 	movhu	d0, (func_4C13442E_entry_L25_Var)
 	movbu	(a1), d0
 	mov	func_4C13442E_entry_L25_Var_3, a0
@@ -537952,7 +537948,7 @@ func_4C13442E_entry_L9c:
 	ret	[a2], 0x14
 func_4C13442E_entry_Lb6:
 	movhu	(func_4C13442E_entry_L25_Table_2), d0
-	mov	func_4C13442E_entry_L25_Var_4, a0
+	mov	func_4C13442E_entry_L25_Table_2+38, a0
 	movhu	d0, (func_4C13442E_entry_L25_Var)
 	movbu	(a0), d0
 	mov	func_4C13442E_entry_L25_Var_3, a1
@@ -537991,7 +537987,7 @@ func_4C13442E_entry_L118:
 	bne	func_4C13442E_entry_L12b
 	ret	[a2], 0x14
 func_4C13442E_entry_L12b:
-	movbu	(func_4C13442E_entry_L25_Var_4), d1
+	movbu	(func_4C13442E_entry_L25_Table_2+38), d1
 	movbu	(func_4C13442E_entry_L25_Var_3), d0
 	extb	d1
 	extb	d0
@@ -538000,7 +537996,7 @@ func_4C13442E_entry_L12b:
 	ret	[a2], 0x14
 func_4C13442E_entry_L13f:
 	movhu	(func_4C13442E_entry_L25_Table_2), d0
-	mov	func_4C13442E_entry_L25_Var_4, a1
+	mov	func_4C13442E_entry_L25_Table_2+38, a1
 	movhu	d0, (func_4C13442E_entry_L25_Var)
 	movbu	(a1), d0
 	mov	func_4C13442E_entry_L25_Var_3, a0
@@ -538035,7 +538031,7 @@ func_4C13442E_entry_L1a0:
 	mov	func_4C13442E_entry_L25_Table_2, a0
 	call	func_4C134640_entry, [d2,d3,a2,a3], 0x10
 	movhu	(func_4C13442E_entry_L25_Table_2), d0
-	mov	func_4C13442E_entry_L25_Var_4, a0
+	mov	func_4C13442E_entry_L25_Table_2+38, a0
 	movhu	d0, (func_4C13442E_entry_L25_Var)
 	movbu	(a0), d0
 	mov	func_4C13442E_entry_L25_Var_3, a1
@@ -540280,7 +540276,7 @@ deflateInit2__entry_Lc6:
 	bne	deflateInit2__entry_L1a8
 deflateInit2__entry_L194:
 	mov	(0x20, sp), a0
-	mov	(inflate_blocks_entry_L767_Table+92), d0
+	mov	(deflateInit2__entry_L194_Var), d0
 	mov	d0, (a0)
 	mov	(0x40, sp), a0
 	call	deflateEnd_entry, [d2,d3,a2,a3], 0x20
@@ -540558,7 +540554,7 @@ deflateParams_L37:
 	bra	deflateParams_La2
 deflateParams_L3b:
 	mov	(0x10, sp), a3
-	mov	deflateParams_L3b_Records, d1
+	mov	configuration_table, d1
 	add	0x78, a3
 	mov	(a3), d0
 	mov	0xc, d2
@@ -540736,7 +540732,7 @@ deflate_entry_L34:
 	beq	deflate_entry_L56
 deflate_entry_L46:
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+84), a0
+	mov	(ptrs_50005D20), a0
 	mov	-2, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540749,7 +540745,7 @@ deflate_entry_L56:
 	cmp	0, d0
 	bne	deflate_entry_L73
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+96), a0
+	mov	(ptrs_50005D2C), a0
 	mov	-5, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540856,7 +540852,7 @@ deflate_entry_L123:
 	cmp	4, a3
 	beq	deflate_entry_L146
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+96), a0
+	mov	(ptrs_50005D2C), a0
 	mov	-5, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540870,7 +540866,7 @@ deflate_entry_L146:
 	cmp	0, d0
 	beq	deflate_entry_L168
 	mov	(0x44, sp), a1
-	mov	(inflate_blocks_entry_L767_Table+96), a0
+	mov	(ptrs_50005D2C), a0
 	mov	-5, d0
 	mov	a0, (0x18, a1)
 	ret	[d2,d3,a2,a3], 0x3c
@@ -540899,7 +540895,7 @@ deflate_entry_L18d:
 	nop
 	nop
 	mul	d1, d0
-	add	deflateParams_L3b_Records, d0
+	add	configuration_table, d0
 	mov	d0, a0
 	mov	(8, a0), a1
 	mov	d3, a0
@@ -541203,7 +541199,7 @@ lm_init_entry:
 	mov	0x78, a1
 	add	a3, a1
 	mov	(a1), d0
-	mov	deflateParams_L3b_Records, a2
+	mov	configuration_table, a2
 	mov	0xc, d1
 	nop
 	nop
@@ -542625,7 +542621,7 @@ tr_static_init:
 	add	-0x3c, sp
 
 tr_static_init_entry:
-	mov	(tr_static_init_Var), d0
+	mov	(static_init_done), d0
 	cmp	0, d0
 	beq	tr_static_init_entry_Ld
 	ret	[d2,d3,a2,a3], 0x4c
@@ -542640,7 +542636,7 @@ tr_static_init_entry_L17:
 	mov	d3, (d0, a0)
 	clr	d1
 	mov	a1, a0
-	add	compress_block_entry_L155_Table, a0
+	add	extra_lbits, a0
 	mov	(a0), d0
 	mov	d3, (0x14, sp)
 	mov	1, d3
@@ -542681,7 +542677,7 @@ tr_static_init_entry_L62:
 	mov	d3, (d0, a0)
 	clr	d1
 	mov	a1, a0
-	add	_tr_tally_entry_L77_Table, a0
+	add	extra_dbits, a0
 	mov	(a0), d0
 	mov	d3, (0x18, sp)
 	mov	1, d3
@@ -542727,7 +542723,7 @@ tr_static_init_entry_Lb6:
 	mov	0x5005f2bc, a0
 	mov	a3, (d0, a0)
 	mov	a2, a0
-	add	_tr_tally_entry_L77_Table, a0
+	add	extra_dbits, a0
 	mov	(a0), d0
 	clr	d1
 	add	-7, d0
@@ -542853,7 +542849,7 @@ tr_static_init_entry_L195:
 	cmp	0x1e, a3
 	blt	tr_static_init_entry_L195
 	mov	1, d0
-	mov	d0, (tr_static_init_Var)
+	mov	d0, (static_init_done)
 	ret	[d2,d3,a2,a3], 0x4c
 
 _tr_init:
@@ -542870,21 +542866,21 @@ _tr_init_entry:
 	mov	0x88, d0
 	add	a2, d0
 	mov	d0, (a1)
-	mov	data_50004D2C, d0
+	mov	static_l_desc, d0
 	mov	d0, (8, a1)
 	mov	0xb18, a1
 	add	a2, a1
 	mov	0x97c, d0
 	add	a2, d0
 	mov	d0, (a1)
-	mov	data_50004D40, d0
+	mov	static_d_desc, d0
 	mov	d0, (8, a1)
 	mov	0xb24, a1
 	add	a2, a1
 	mov	0xa70, d0
 	add	a2, d0
 	mov	d0, (a1)
-	mov	data_50004D54, d0
+	mov	static_bl_desc, d0
 	mov	d0, (8, a1)
 	clr	d0
 	movhu	d0, (0x16b0, a2)
@@ -544449,7 +544445,7 @@ build_bl_tree_entry:
 	mov	0x12, d1
 	mov	0xa70, a3
 	add	a2, a3
-	mov	build_bl_tree_Table, a1
+	mov	bl_order+18, a1
 	setlb
 	movbu	(a1), d0
 	asl2	d0
@@ -544677,7 +544673,7 @@ send_all_trees_entry_L142:
 	jmp	send_all_trees_entry_L1f4
 send_all_trees_entry_L14b:
 	mov	(0x48, sp), d1
-	mov	send_all_trees_entry_L14b_Table, d0
+	mov	bl_order, d0
 	add	0xa70, d1
 	mov	d1, (0x20, sp)
 	mov	(0x48, sp), d1
@@ -545481,7 +545477,7 @@ _tr_tally_entry_L77:
 	clr	d1
 	setlb
 	movhu	(d1, a1), d2
-	mov	_tr_tally_entry_L77_Table, a0
+	mov	extra_dbits, a0
 	mov	(d1, a0), d0
 	mov	5, a0
 	add	d0, a0
@@ -545713,7 +545709,7 @@ compress_block_entry_L144:
 	mov	d0, (a2)
 compress_block_entry_L155:
 	mov	(4, sp), d0
-	mov	compress_block_entry_L155_Table, a0
+	mov	extra_lbits, a0
 	mov	(d0, a0), a3
 	cmp	0, a3
 	beq	compress_block_entry_L1cd
@@ -545861,7 +545857,7 @@ compress_block_entry_L24d:
 	mov	d0, (a2)
 compress_block_entry_L25c:
 	mov	(8, sp), d0
-	mov	_tr_tally_entry_L77_Table, a0
+	mov	extra_dbits, a0
 	mov	(d0, a0), a3
 	cmp	0, a3
 	beq	compress_block_entry_L2d5
@@ -548176,7 +548172,7 @@ inflate_blocks_entry_L61f:
 	mov	(a1), d0
 	mov	(8, a0), a0
 	asl2	d0
-	mov	inflate_blocks_entry_L61f_Table, a1
+	mov	border, a1
 	mov	(d0, a1), d1
 	mov	a2, d0
 	asl2	d1
@@ -548211,7 +548207,7 @@ inflate_blocks_entry_L659:
 	mov	(a1), d0
 	mov	(8, a0), a0
 	asl2	d0
-	mov	inflate_blocks_entry_L61f_Table, a1
+	mov	border, a1
 	mov	(d0, a1), d0
 	clr	d1
 	asl2	d0
@@ -548358,7 +548354,7 @@ inflate_blocks_entry_L767:
 	mov	(0x38, sp), a0
 	asl2	d1
 	mov	(0x10, a0), a0
-	mov	inflate_blocks_entry_L767_Table, a1
+	mov	inflate_mask, a1
 	mov	(d1, a1), d0
 	mov	a2, d1
 	and	d1, d0
@@ -548462,7 +548458,7 @@ inflate_blocks_entry_L808:
 	cmp	d1, d3
 	lcs
 inflate_blocks_entry_L829:
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	a1, d0
 	mov	a2, d1
 	lsr	d0, d1
@@ -549597,7 +549593,7 @@ inflate_trees_dynamic:
 inflate_trees_dynamic_entry:
 	mov	d1, (0x44, sp)
 	mov	d0, d2
-	mov	huft_build_entry_L2e4_Table_2, d0
+	mov	cplext, d0
 	mov	d0, (0x18, sp)
 	mov	(0x54, sp), d0
 	mov	a0, d3
@@ -549607,7 +549603,7 @@ inflate_trees_dynamic_entry:
 	mov	d2, d0
 	mov	a2, (0x24, sp)
 	mov	0x101, d1
-	mov	huft_build_entry_L2e4_Table, a1
+	mov	cplens, a1
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	d0, d1
 	cmp	0, d0
@@ -549632,7 +549628,7 @@ inflate_trees_dynamic_entry_L54:
 	mov	d1, d0
 	bra	inflate_trees_dynamic_entry_Lb6
 inflate_trees_dynamic_entry_L57:
-	mov	huft_build_entry_L2e4_Table_4, d0
+	mov	cpdext, d0
 	mov	d0, (0x18, sp)
 	mov	(0x58, sp), a3
 	asl2	d2
@@ -549644,7 +549640,7 @@ inflate_trees_dynamic_entry_L57:
 	mov	d3, a0
 	mov	(0x44, sp), d0
 	clr	d1
-	mov	huft_build_entry_L2e4_Table_3, a1
+	mov	cpdist, a1
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	d0, d2
 	cmp	0, d0
@@ -549697,7 +549693,7 @@ inflate_trees_fixed_entry:
 	mov	a0, a3
 	mov	d1, (0x508, sp)
 	mov	d0, (0x504, sp)
-	mov	(inflate_trees_fixed_Var), d0
+	mov	(fixed_built), d0
 	mov	a1, (0x500, sp)
 	cmp	0, d0
 	beq	inflate_trees_fixed_entry_L1e
@@ -549778,7 +549774,7 @@ inflate_trees_fixed_entry_L95:
 	mov	d0, (0x500603c4)
 	mov	sp, a2
 	add	0x64, a2
-	mov	huft_build_entry_L2e4_Table_2, d0
+	mov	cplext, d0
 	mov	d0, (0x18, sp)
 	mov	0x500603cc, d0
 	mov	d0, (0x1c, sp)
@@ -549788,7 +549784,7 @@ inflate_trees_fixed_entry_L95:
 	mov	a2, a0
 	mov	0x120, d0
 	mov	0x101, d1
-	mov	huft_build_entry_L2e4_Table, a1
+	mov	cplens, a1
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0
 	mov	0x78, a1
@@ -549800,7 +549796,7 @@ inflate_trees_fixed_entry_L95:
 	cmp	a1, a0
 	lcs
 	mov	d0, (0x500603c8)
-	mov	huft_build_entry_L2e4_Table_4, d0
+	mov	cpdext, d0
 	mov	d0, (0x18, sp)
 	mov	0x500603d0, d0
 	mov	d0, (0x1c, sp)
@@ -549809,11 +549805,11 @@ inflate_trees_fixed_entry_L95:
 	mov	d3, (0x24, sp)
 	mov	0x1e, d0
 	clr	d1
-	mov	huft_build_entry_L2e4_Table_3, a1
+	mov	cpdist, a1
 	mov	a2, a0
 	call	huft_build_entry, [d2,d3,a2,a3], 0x10
 	mov	1, d0
-	mov	d0, (inflate_trees_fixed_Var)
+	mov	d0, (fixed_built)
 inflate_trees_fixed_entry_L10f:
 	mov	(0x500603c4), d0
 	mov	d0, (a3)
@@ -550143,7 +550139,7 @@ inflate_codes_entry_L1b3:
 	mov	a0, d0
 	mov	(a1), d1
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	and	d3, d0
 	asl	3, d0
@@ -550276,7 +550272,7 @@ inflate_codes_entry_L29f:
 	lcs
 inflate_codes_entry_L2af:
 	mov	a0, d0
-	mov	inflate_blocks_entry_L767_Table, a1
+	mov	inflate_mask, a1
 	asl2	d0
 	mov	(d0, a1), d0
 	mov	(0x54, sp), a1
@@ -550353,7 +550349,7 @@ inflate_codes_entry_L333:
 	mov	a0, d0
 	mov	(a1), d1
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	and	d3, d0
 	asl	3, d0
@@ -550467,7 +550463,7 @@ inflate_codes_entry_L3fe:
 	cmp	a0, d2
 	lcs
 inflate_codes_entry_L40e:
-	mov	inflate_blocks_entry_L767_Table, a1
+	mov	inflate_mask, a1
 	mov	a0, d0
 	asl2	d0
 	mov	(d0, a1), d0
@@ -551181,7 +551177,7 @@ inflate_fast_entry_L43:
 inflate_fast_entry_L4a:
 	asl2	d1
 	mov	d0, (0xc, sp)
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d1, a0), d0
 	asl2	d2
 	mov	d0, (0x24, sp)
@@ -551254,7 +551250,7 @@ inflate_fast_entry_Lcf:
 	and	0x0f, d1
 	mov	d1, d0
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	mov	(4, a1), d2
 	mov	d3, (0x2c, sp)
@@ -551329,7 +551325,7 @@ inflate_fast_entry_L13b:
 	cmp	d2, d3
 	lcs
 inflate_fast_entry_L160:
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	d2, d0
 	asl2	d0
 	mov	(d0, a0), d0
@@ -551413,7 +551409,7 @@ inflate_fast_entry_L1eb:
 	bne	inflate_fast_entry_L209
 	mov	(4, a1), d2
 	asl2	d0
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d0, a0), d0
 	mov	a2, d1
 	and	d1, d0
@@ -551460,7 +551456,7 @@ inflate_fast_entry_L247:
 	bne	inflate_fast_entry_L286
 	asl2	d1
 	mov	(4, a1), d2
-	mov	inflate_blocks_entry_L767_Table, a0
+	mov	inflate_mask, a0
 	mov	(d1, a0), d0
 	mov	a2, d1
 	and	d1, d0
@@ -597138,10 +597134,10 @@ func_4C156C6F_entry_Lb3:
 func_4C156C6F_entry_Lc2:
 	mov	(0x500b760c), d0
 	mov	d0, (0x34, sp)
-	mov	d0, (inflate_blocks_entry_L767_Table+108)
+	mov	d0, (func_4C156C6F_entry_Lc2_Var)
 	bra	func_4C156C6F_entry_Lda
 func_4C156C6F_entry_Ld2:
-	mov	(inflate_blocks_entry_L767_Table+108), d0
+	mov	(func_4C156C6F_entry_Lc2_Var), d0
 	mov	d0, (0x34, sp)
 func_4C156C6F_entry_Lda:
 	mov	(0x34, sp), d0
@@ -645896,7 +645892,7 @@ func_4C172AFB_entry:
 	clr	d0
 	mov	0x20, d1
 	call	memset_entry, [a2], 4
-	mov	func_4C172AFB_Block, a2
+	mov	data_4C2B1D90, a2
 	mov	a3, a0
 	mov	a2, a1
 	mov	0x20, d0
@@ -656586,34 +656582,33 @@ get_tid_entry_L4c:
 
 func_4C380ED2:
 	add	-0xc, sp
-
-func_4C380ED2_entry:
+func_4C380ED2_L3:
 	mov	(0x50180000), a0
 	movhu	(0xe, a0), d0
 	cmp	8, d0
-	bne	func_4C380ED2_entry_L11
+	bne	func_4C380ED2_L14
 	mov	-0x3f, d0
-	bra	func_4C380ED2_entry_L32
-func_4C380ED2_entry_L11:
+	bra	func_4C380ED2_L35
+func_4C380ED2_L14:
 	mov	0x10, a1
 	add	a0, a1
 	movhu	(a1), d0
 	exth	d0
 	cmp	0x7fff, d0
-	bne	func_4C380ED2_entry_L22
+	bne	func_4C380ED2_L25
 	mov	-0x49, d0
-	bra	func_4C380ED2_entry_L32
-func_4C380ED2_entry_L22:
+	bra	func_4C380ED2_L35
+func_4C380ED2_L25:
 	movhu	(a1), d0
 	exth	d0
 	cmp	0, d0
-	bge	func_4C380ED2_entry_L31
+	bge	func_4C380ED2_L34
 	clr	d0
 	movhu	d0, (a1)
 	call	func_4C37E9B1_entry, [a2,a3], 0x18
-func_4C380ED2_entry_L31:
+func_4C380ED2_L34:
 	clr	d0
-func_4C380ED2_entry_L32:
+func_4C380ED2_L35:
 	ret	0, 0xc
 
 func_4C380F0A:
@@ -657201,13 +657196,12 @@ KernelStart:
 
 KernelInitHook:
 	ret	0, 0
-
-KernelTickIsrDefault:
+# KernelInitHook + 0x3: no traced path reaches what follows (--decode-gaps)
 	movhu	(0x34000118), d0
 	and	0xff0f, d0
 	movhu	d0, (0x34000118)
 	add	-4, sp
-	call	func_4C380ED2_entry, 0, 0xc
+	call	func_4C380ED2_L3, 0, 0xc
 	add	4, sp
 	rets
 

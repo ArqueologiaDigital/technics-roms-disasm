@@ -98,11 +98,12 @@ changed.
 
 - KN6000: 1,000 records at 0x4C3DF8EC
 - KN6500: 1,080 records at 0x4C36F724
-- KN2400: 720 records at 0x48571564, and `StyleRecordTableAlt`, 680 records at 0x48577738
+- KN2400: 720 records at 0x48571564, and `StyleRecordTableAlt` (since 2026-10-31 `StyleRecordTableKN2400`), 680 records at 0x48577738
 
 The KN2400's `func_48641CCD` returns `&StyleRecordTableAlt[i]` when `func_487055C4` answers 1, and
 `&StyleRecordTable[i]` otherwise. `func_487055C4` reads bits 0 and 1 of 0x98070000. [INFERENCE] The two
-lists are the KN2400's and the KN2600's; both point at the same one-touch settings.
+lists are the KN2400's and the KN2600's; both point at the same one-touch settings. (Confirmed 2026-10-31,
+lane mn10300-formats: `func_487055C4` is `KnprModelGet`, 1 = KN2400; `func_48641CCD` is `MssSetupGet`.)
 
 The field readers (KN6000 v7.1):
 
@@ -319,9 +320,15 @@ its opaque bytes fall by 726 (pieces split at labels the new records and reader 
 - The siblings' reader rows of address-only pieces: the walk does not carry a register argument into the
   routine that reads it (the KN7000 profiles' extended walk, `readers_ext`, made the KN2400 worse: 78.1% typed
   instead of 82.6%, bitmaps lost, tried 2026-10-30 and not applied).
-- [INFERENCE] The KN2400's two setup lists by model (the 0x98070000 bits).
-- The hash tables' payloads past their first field, and ShortKeyHash's key.
+- [INFERENCE] The KN2400's two setup lists by model (the 0x98070000 bits). Resolved 2026-10-31 (lane
+  mn10300-formats, `../../kn7000/notes/mn10300-formats/README.md`): `KnprModelGet` 0x487055C4, 0 KN2600,
+  1 KN2400, 2 PR54; `StyleRecordTableAlt` is now `StyleRecordTableKN2400`.
+- The hash tables' payloads past their first field, and ShortKeyHash's key. Resolved 2026-10-31 (same
+  lane): ShortKeyHash's key is a panel switch (group << 8 | number) and its payload the bank MSB / LSB /
+  program it selects; ToneKeyHash's payload {tone, icon, switch groups and numbers}.
 - The KN2400's effect-program blocks: 0x4853C5BE.., 20 KB, and 0x48537CDC.. (`7c aa aa 7d 55 55 ...`).
+  Still open: lane mn10300-formats typed the KN2400's effect *parameter* records at 0x48439000..0x48440898
+  (`FX_DESC`, `FX_PARAM`), not these streams.
   Opaque, with no reader seen; their format is not the KN7000's SHARC download records.
 - The one-touch bytes the macros keep as hex (PM_PART fields are named in panel_memory.inc).
 

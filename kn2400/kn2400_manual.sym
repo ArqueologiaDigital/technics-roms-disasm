@@ -17,8 +17,16 @@
 ;
 ; ---- data ----------------------------------------------------------------------
 0x4852BD9C  TechnicsRhythmsResource ; built-in rhythm style resource in IC18's format, one style (as the KN7000's at 0x48729988, typed by kn7000/tools/program_rhythm.py); its name string "Technics Rhythms" is also at 0x4852BC20
-0x48571564  StyleRecordTable           ; the built-in Music Stylist setups, 720 x 24 bytes (the KN7000's / KN6000's layout): func_48641CCD returns &StyleRecordTable[i] unless func_487055C4 (the 0x98070000 bits) answers 1; +0 -> a 160-byte one-touch setting (kn6000/notes/siblings-data-final/README.md)
-0x48577738  StyleRecordTableAlt        ; the other list of Music Stylist setups, 680 x 24 bytes, over the same one-touch settings: func_48641CCD returns &StyleRecordTableAlt[i] when func_487055C4 answers 1 [INFERENCE: the other model's list, KN2400 / KN2600]
+0x48571564  StyleRecordTable           ; the KN2600's and PR54's built-in Music Stylist setups, 720 x 24 bytes (the KN7000's / KN6000's layout): MssSetupGet returns &StyleRecordTable[i] unless KnprModelGet answers 1 (KN2400); +0 -> a 160-byte one-touch setting (kn6000/notes/siblings-data-final/README.md; kn7000/notes/mn10300-formats/README.md)
+0x48577738  StyleRecordTableKN2400     ; the KN2400's Music Stylist setups, 680 x 24 bytes, over the same one-touch settings: MssSetupGet returns &StyleRecordTableKN2400[i] when KnprModelGet answers 1 (was StyleRecordTableAlt)
+0x4856F5E4  StyleSetupIndexTable       ; 720 x u16, the record index of setup number n + 1 (here n itself) for the KN2600 / PR54: MssSetupIndexGet reads [n] unless KnprModelGet answers 1; MssNameFunc then takes MssSetupGet of the answer
+0x4857595C  StyleSetupIndexTableKN2400 ; 684 x u16 (0..679, then four more), the KN2400's: MssSetupIndexGet reads [n] when KnprModelGet answers 1
+0x4857087C  StyleGenreTable            ; the KN2600 / PR54 genre list, 11 x {name, setup list}: MssGenreGet returns &[i] unless KnprModelGet answers 1 (the KN6000's StyleGenreTable)
+0x48576AF0  StyleGenreTableKN2400      ; the KN2400's genre list, 11 x {name, setup list}: MssGenreGet returns &[i] when KnprModelGet answers 1
+0x48570EB8  StyleAlphabetTable         ; the KN2600 / PR54 alphabet index, 34 x {letter string, setup list}: MssLetterGet returns &[i] unless KnprModelGet answers 1 (the KN6000's StyleAlphabetTable)
+0x485770DC  StyleAlphabetTableKN2400   ; the KN2400's alphabet index, 34 x {letter string, setup list}: MssLetterGet returns &[i] when KnprModelGet answers 1
+0x485758E4  StyleEraTable              ; the KN2600 / PR54 era list, 10 x {name, setup list, u16 era}: MssEraGet returns &[i] unless KnprModelGet answers 1 (the KN6000's StyleEraTable)
+0x4857B6F8  StyleEraTableKN2400        ; the KN2400's era list, 10 x {name, setup list, u16 era}: MssEraGet returns &[i] when KnprModelGet answers 1
 0x48532260  TechnicsPadsResource       ; the built-in "Technics Pads" PERFORMANCE PAD bank (the table flash's segment 4 format): TechnicsPadsResourceInit stores it when the table flash's resource does not check; typed by ../kn7000/tools/gen_data_s.py pads()
 0x4854B24C  NoteConvRules              ; 128 x 8-byte note-conversion rules {is_melody, alt_chord, no_third_adj, no_transpose, table}: func_50173F49 (RAM-linked code; the KN7000's func_48436229), +1 / +2 / +3 answered by func_50173EF8 / func_50173F13 / func_50173F2E
 ; ---- the MILK kernel's tail routines (lane code-island, 2026-10-30; the KN7000's names,
@@ -35,3 +43,58 @@
 0x4872859C  KernelInitHook               ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
 0x4872859F  KernelTickIsrDefault         ; the kernel's default system-tick interrupt handler, after KernelInitHook: clears bits 4..7 of G6ICR 0x34000118 (acknowledges interrupt group 6), calls func_5018DD6C_L3 (the kernel's wake-up of the task (0x50380000) points at) and returns with `rets` (LibIrqScheduler enters handlers with `calls (a2)` through the RAM table 0x50380B64). Nothing enters it: no word of the image holds its address, and the application start-up (through the def_int service) installs 0x5018B5FD for the same interrupt (number 1, G6ICR) [INFERENCE: the kernel configuration's default tick handler, replaced by the application's; lane mn10300-typer]
 ;
+; ---- the model strap: one image for three instruments (lane mn10300-formats, 2026-10-31,
+;      kn7000/notes/mn10300-formats/README.md) ----------------------------------------
+0x487055C4  KnprModelGet               ; -> d0 = the instrument this image runs on, from the board strap halfword 0x98070000: bit 1 (mask 0x02) and bit 0 (mask 0x01) both set = 0 (KN2600), one of them set = 1 (KN2400), neither = 2 (PR54); 61 call sites in 51 routines. The numbering is IvKNPRWinProc's: model 0 / 1 / 2 picks the IvKNPRWin field at +0x18 / +0x1C / +0x20, whose names are KN2600 / KN2400 / PR54 (ClassFields_IvKNPRWin)
+0x48641CCD  MssSetupGet                ; (d0 = i) -> a0 = &StyleRecordTableKN2400[i] when KnprModelGet answers 1, else &StyleRecordTable[i] (24-byte records: mulu 0x18)
+0x48641D02  MssSetupIndexGet           ; (d0 = n) -> d0 = StyleSetupIndexTableKN2400[n] when KnprModelGet answers 1, else StyleSetupIndexTable[n] (u16)
+0x48641D2F  MssGenreGet                ; (d0 = i) -> a0 = &StyleGenreTableKN2400[i] when KnprModelGet answers 1, else &StyleGenreTable[i] (8-byte records)
+0x48641D5E  MssLetterGet               ; (d0 = i) -> a0 = &StyleAlphabetTableKN2400[i] when KnprModelGet answers 1, else &StyleAlphabetTable[i] (8-byte records)
+0x48641D8D  MssEraGet                  ; (d0 = i) -> a0 = &StyleEraTableKN2400[i] when KnprModelGet answers 1, else &StyleEraTable[i] (12-byte records)
+;
+; ---- zlib 1.0.4's data tables (lane mn10300-formats, 2026-10-31): found by their contents, which are
+;      the zlib sources' own, and laid out in the sources' order (deflate.c, trees.c, infblock.c,
+;      inftrees.c, then infutil.c's inflate_mask and zutil.c's z_errmsg after the copyright strings);
+;      kn7000/notes/mn10300-formats-probes/zlib_tables.py finds them in every build ----------------
+0x50000D58  configuration_table     ; zlib 1.0.4 deflate.c: per-level {good_length, max_lazy, nice_length, max_chain, func} (10 x 12 bytes) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000DD0  extra_lbits             ; zlib 1.0.4 trees.c: extra bits of each length code (29 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000E44  extra_dbits             ; zlib 1.0.4 trees.c: extra bits of each distance code (30 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000EBC  extra_blbits            ; zlib 1.0.4 trees.c: extra bits of each bit-length code (19 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F08  bl_order                ; zlib 1.0.4 trees.c: the order the bit-length code lengths are sent in (19 bytes) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F1C  static_l_desc           ; zlib 1.0.4 trees.c: {tree, extra_lbits, 257, 286, 15} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F30  static_d_desc           ; zlib 1.0.4 trees.c: {tree, extra_dbits, 0, 30, 15} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F44  static_bl_desc          ; zlib 1.0.4 trees.c: {tree, extra_blbits, 0, 19, 7} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F58  static_init_done        ; zlib 1.0.4 trees.c: non-zero once tr_static_init has run (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F5C  border                  ; zlib 1.0.4 infblock.c: the order of the bit-length code lengths (19 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000FA8  cplens                  ; zlib 1.0.4 inftrees.c: copy lengths for literal codes 257..285 (31 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50001024  cplext                  ; zlib 1.0.4 inftrees.c: extra bits for literal codes 257..285; 192 = invalid (31 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x500010A0  cpdist                  ; zlib 1.0.4 inftrees.c: copy offsets for distance codes 0..29 (30 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50001118  cpdext                  ; zlib 1.0.4 inftrees.c: extra bits for distance codes (30 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50001190  fixed_built             ; zlib 1.0.4 inftrees.c: non-zero once inflate_trees_fixed has built the fixed tables (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50006668  deflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x500066A0  inflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x500066D0  inflate_mask            ; zlib 1.0.4 infutil.c: masks of the low n bits, n = 0..16 (17 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50006714  z_errmsg                ; zlib 1.0.4 zutil.c: the error texts, indexed 2 - err (10 pointers) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+;
+; ---- the DSP effects' descriptors and parameter records (lane mn10300-formats, 2026-10-31;
+;      kn7000/notes/mn10300-formats/README.md, gen_data_s.py fx_descriptors, probe
+;      kn7000/notes/mn10300-formats-probes/kn2400_fx_desc.py) --------------------------------
+0x4856C74C  FxDescTable                ; 260 pointers to effect descriptors (107 distinct): FxDescGet answers [FxDescIndexGet(d0)]
+0x4863CDEF  FxDescGet                  ; (d0 = effect code) -> a0 = FxDescTable[FxDescIndexGet(d0)], a 16-byte descriptor {u8 count, u8 nparams, u16 0, params, s8 mode, pnum9, pnum10, pnum11, send_param, 3 x 0}
+0x4863D2E0  FxDescNParamsGet           ; (d0 = effect code) -> descriptor +1, the number of parameter numbers (-1 for a category its jump table rejects)
+0x4863D30F  FxDescPnum10Get            ; (d0) -> descriptor +10 (s8): a parameter number or -1; func_4863DF3E reads it
+0x4863D33F  FxDescPnum9Get             ; (d0) -> descriptor +9 (s8): a parameter number or -1 (no call site reaches this routine)
+0x4863D36F  FxDescModeGet              ; (d0) -> descriptor +8 (s8): SndUnitDbGroupQuery searches the parameters when it is 1 or 2
+0x4863D39F  FxDescSendParamGet         ; (d0) -> descriptor +12 (s8): the number of the effect's REVERB SEND parameter, -1 for the reverbs (kn2400_fx_desc.py: 106 of 106)
+0x4863D3CF  FxDescPnum11Get            ; (d0) -> descriptor +11 (s8): a parameter number or -1; func_4863B2B6 compares it with -1
+0x4863D3FF  FxDescIndexGet             ; (d0 = effect code) -> the FxDescTable index: FxCategoryGet picks the case, which reads +0x12 of the record func_4863CDB5 / func_4863CDD8 / func_4863DCF4 answers, or asks func_4863AB58
+0x4863D4F1  FxParamGet                 ; (d0 = effect code, d1 = i) -> a0 = &params[i] (36-byte records: mulu 0x24)
+0x4863D52C  FxParamMinGet              ; (d0, d1 = i) -> params[i] +0x16, s16 minimum
+0x4863D568  FxParamMaxGet              ; (d0, d1 = i) -> params[i] +0x18, s16 maximum
+0x4863D5A4  FxParamNumberGet           ; (d0, d1 = i) -> params[i] +0x14, u16 parameter number (records of one number are alternatives, chosen by +0x1C)
+0x4863D5E0  FxParamX29Get              ; (d0, d1 = i) -> params[i] +0x1D (0 or 0xFF)
+0x4863D692  FxParamBandGet             ; (d0, d1 = i) -> params[i] +0x1A (0..4 in the EQ effects' band parameters, else 0xFF)
+0x4863D6CF  FxParamSubGet              ; (d0, d1 = i) -> params[i] +0x1B (0..2: within an EQ band, frequency / Q / gain)
+0x4863D70C  FxParamVariantGet          ; (d0, d1 = i) -> params[i] +0x1C: 0 or 1 for the two alternative records of one parameter number ("DEPTH" / "DEPTH (V)", "SPEED FAST" / "SLOW"), 0xFF for a record that is always shown
+0x4863D749  FxParamValuesGet           ; (d0, d1 = i) -> params[i] +0x20, the parameter's value texts ("    0 ms", ...) or 0
+0x4863DC81  FxCategoryGet              ; (d0 = effect code) -> its category 0..14: codes 0x00..0x6F are category 0, 0x70..0xC0 are looked up in func_4863DC81_Ld_Records (8-byte records)

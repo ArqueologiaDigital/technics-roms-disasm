@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 6,709
-#   semantic names ........... 6,709 (100.0%)
+#   symbols .................. 6,703
+#   semantic names ........... 6,703 (100.0%)
 #   positional names ......... 0
 #
 HDAE5000_ROM_HEADER 00280000
@@ -291,7 +291,7 @@ HDAE5000_SaveOptSwEventCatch_OnSwIn 00285083
 HDAE5000_SaveOptSwEventCatch_Skip 0028511F
 HDAE5000_SaveOptSwEventCatch_Join 00285140
 HDAE5000_SaveOptSwEventCatch_Skip2 00285149
-HDAE5000_SaveOptSwEventCatch_Skip7 00285161
+HDAE5000_SaveOptSwEventCatch_Skip3 00285161
 HDAE5000_SaveOptSwEventCatch_Skip4 00285179
 HDAE5000_SaveOptSwEventCatch_Done 0028518E
 HDAE5000_SaveOptSwEventCatch_Epilogue 00285190
@@ -1264,9 +1264,6 @@ HDAE5000_CopyFdSongToHd_Skip3 0028EAEA
 HDAE5000_CopyFdSongToHd_Done 0028EAEF
 HDAE5000_CopyFdSongToHd_Lsw 0028EAF9
 HDAE5000_CopyFdSongToHd_Pmt 0028EC60
-HDAE5000_CopyFdSongToHd_Pmt_Skip3 0028ECAF
-HDAE5000_CopyFdSongToHd_Pmt_Skip2 0028ED9B
-HDAE5000_CopyFdSongToHd_Pmt_Skip 0028EDCB
 HDAE5000_CopyFdSongToHd_Sqt 0028EDE4
 HDAE5000_CopyFdSongToHd_Cmp 0028EF80
 HDAE5000_CopyFdSongToHd_Tm 0028F11C
@@ -1428,9 +1425,6 @@ HDAE5000_PPORT_Cmd06_WriteFsbToHd 00291BDA
 HDAE5000_PPORT_Cmd07_LoadHdToMemory 00291C18
 HDAE5000_PPORT_Cmd08_SendDataToPc 00291CCC
 HDAE5000_PPORT_Cmd09_SendFilesToPc 00291F9C
-HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip 002920AA
-HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2 00292148
-HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3 002921B4
 HDAE5000_PPORT_Cmd10_RcvDataFromPc 00292224
 HDAE5000_PPORT_Cmd11_SaveMemoryToHd 00292410
 HDAE5000_PPORT_Cmd12_Nothing 0029249C

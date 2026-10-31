@@ -2792,6 +2792,30 @@
 0x48478C36  zcalloc                 ; the default zalloc inflateInit2_ installs: ZArenaAllocArray(items, size)
 0x48478C4E  zcfree                  ; the default zfree: ZArenaFree
 ;
+; ---- zlib 1.0.4's data tables (lane mn10300-formats, 2026-10-31): found by their contents, which are
+;      the zlib sources' own, and laid out in the sources' order (deflate.c, trees.c, infblock.c,
+;      inftrees.c, then infutil.c's inflate_mask and zutil.c's z_errmsg after the copyright strings);
+;      kn7000/notes/mn10300-formats-probes/zlib_tables.py finds them in every build ----------------
+0x50000D68  configuration_table     ; zlib 1.0.4 deflate.c: per-level {good_length, max_lazy, nice_length, max_chain, func} (10 x 12 bytes) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000DE0  extra_lbits             ; zlib 1.0.4 trees.c: extra bits of each length code (29 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000E54  extra_dbits             ; zlib 1.0.4 trees.c: extra bits of each distance code (30 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000ECC  extra_blbits            ; zlib 1.0.4 trees.c: extra bits of each bit-length code (19 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F18  bl_order                ; zlib 1.0.4 trees.c: the order the bit-length code lengths are sent in (19 bytes) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F2C  static_l_desc           ; zlib 1.0.4 trees.c: {tree, extra_lbits, 257, 286, 15} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F40  static_d_desc           ; zlib 1.0.4 trees.c: {tree, extra_dbits, 0, 30, 15} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F54  static_bl_desc          ; zlib 1.0.4 trees.c: {tree, extra_blbits, 0, 19, 7} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F68  static_init_done        ; zlib 1.0.4 trees.c: non-zero once tr_static_init has run (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000F6C  border                  ; zlib 1.0.4 infblock.c: the order of the bit-length code lengths (19 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50000FB8  cplens                  ; zlib 1.0.4 inftrees.c: copy lengths for literal codes 257..285 (31 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50001034  cplext                  ; zlib 1.0.4 inftrees.c: extra bits for literal codes 257..285; 192 = invalid (31 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x500010B0  cpdist                  ; zlib 1.0.4 inftrees.c: copy offsets for distance codes 0..29 (30 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50001128  cpdext                  ; zlib 1.0.4 inftrees.c: extra bits for distance codes (30 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x500011A0  fixed_built             ; zlib 1.0.4 inftrees.c: non-zero once inflate_trees_fixed has built the fixed tables (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50007AAC  deflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50007AE4  inflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50007B14  inflate_mask            ; zlib 1.0.4 infutil.c: masks of the low n bits, n = 0..16 (17 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50007B58  z_errmsg                ; zlib 1.0.4 zutil.c: the error texts, indexed 2 - err (10 pointers) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+;
 0x4854E132  FeatureDemoSqtLoad      ; (a0 = .SQT name) fmmopen 'rb', loads its song data (length from func_4852F482_entry, read by func_4852F4C8_entry) to 0x502C0000 (0x5008294C; length 0x50082950) and records the demo pool after it: base 0x50082954 = 0x502C0000 + round4(len), size 0x50082958 = 0xC0000 - round4(len), ending at 0x50380000 -> d0 = 0, -0xC8 on an empty or short read, or fmmopen's error. The pool itself is created by FeatureDemoActLoad
 0x4854E137  FeatureDemoSqtLoad_entry
 0x4854E1B9  FeatureDemoActLoad      ; (a0 = .ACT name) SswPoolInit + SswPoolSelect on the demo pool FeatureDemoSqtLoad recorded (0x50082954 base, 0x50082958 size), then SswActOpen(a0) -> its result
@@ -2834,6 +2858,13 @@
 0x4858115A  SswNamedImageAdd        ; (a0 = record) copies the 0x20-byte {name, ptr, size} record into the first named-image entry whose pointer (+0x10) is 0 -> d0 = 1, or 0 when all 64 are in use
 0x4858115C  SswNamedImageAdd_entry
 0x485811A2  SswRecordClear          ; (a0 = record) zeroes a 0x20-byte slot/named-image record: name[16], +0x10, +0x14, +0x18, +0x1C
+0x485831A9  SoundAlphaListGet       ; (d0 = kind 0..2, d1 = variant 0..1; either out of range counts as 0) -> a0 = SoundAlphaListTable[2 * kind + variant], an alphabetical sound list (lane mn10300-formats; was read as "demo-song streams")
+0x485831AB  SoundAlphaListGet_entry
+0x485831CB  SoundAlphaIndexBuild    ; (d0 = kind, d1 = variant) takes SoundAlphaListGet's list into 0x5009E72C and groups its 4-byte entries by their initial (+0; letters first, then digits, by the ctype table at FileRenameFunc_Var + 1, bits 0x03 / 0x04) into 8-byte records {u16 group, u16 count, u16 first entry, u8 initial} at 0x5009E732, their number at 0x5009E730
+0x485831D0  SoundAlphaIndexBuild_entry
+0x485834AF  SoundAlphaInitialGet    ; (a0 = 5-byte sound reference, +2 bank MSB, +3 LSB, +4 program) finds the entry of the current list (0x5009E72C) with that MSB / LSB / program (+1 / +2 / +3) and answers its initial (+0), or '_' when it is no letter or digit
+0x485834B4  SoundAlphaInitialGet_entry
+0x487929D0  SoundAlphaListTable     ; 6 pointers to the alphabetical sound lists, [2 * kind + variant]: kind 0 (sound groups 0..0x12 and 0x1F) variants 0 / 1, kind 1 (groups 0x13..0x1E) twice, kind 2 (groups 0x19 / 0x1A, the drum kits) twice; each list is {char initial; u8 bank MSB, LSB, program} entries ended by a zero entry (gen_data_s.py sound_alpha_lists)
 0x48581237  SswSlotRecordGet        ; (d0 = slot k) -> a0 = its 0x20-byte record at pool + 0x230 + k*0x20, or 0 when the slot is empty (data pointer +0x10 == 0)
 0x48581239  SswSlotRecordGet_entry
 0x48581260  SswSlotRecordSet        ; (a0 = record, d0 = slot k) frees the slot's current picture (SswSlotFree) and copies the 0x20-byte {name, ptr, size} record into slot k -> d0 = 1

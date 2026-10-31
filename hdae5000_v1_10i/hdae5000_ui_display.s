@@ -4752,7 +4752,7 @@ HDAE5000_FlsItem_SetByte112_Epilogue:
 
 
 ; ---------------------------------------------------------------------------
-; Does a song hold any part?  Tests the nine first-cluster slots (+36.. of the
+; Does a song hold any part?  Tests the eight first-cluster slots (+36.. of the
 ; song record; 0xFFFFFFFF = part absent).
 ; In:  WA = directory, BC = song
 ; Out: HL = 0 when at least one part is present, 0xFFFF when none is.
@@ -4918,11 +4918,10 @@ HDAE5000_Song_IsUsed:
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xffffffff
-	jr z, .Ltco_slot8
+	jr z, .Ltco_none
 	ld hl, 0:i3
 	jr	t, .Ltco_exit
-	; --- Slot 8: base 0x201676 ---
-.Ltco_slot8:
+.Ltco_none:
 	ldw	hl, 0xffff
 .Ltco_exit:
 	pop xiz
@@ -5098,8 +5097,6 @@ HDAE5000_Song_PartMask:
 	cp xwa, 0xffffffff
 	jr	z, .Ltl_bitmask_done
 	setm 7, (xsp + 4)		; bit 7
-	; --- Check slot 8: 0x201676 ---
-.Ltl_chk8:
 	jr .Ltl_bitmask_done
 .Ltl_all_free:
 	ldw (xsp + 4), 0xFFFF		; all free marker
@@ -7864,14 +7861,14 @@ HDAE5000_CopyFdSongToHd_Pmt:
 	call (xix)
 	; Check result
 	cp hl, 0:i3
-	jr	ge, HDAE5000_CopyFdSongToHd_Pmt_Skip3
+	jr	ge, .Lts925_1
 	ldw hl, 0xffff
 	jrl	t, .Lts925_exit
-HDAE5000_CopyFdSongToHd_Pmt_Skip3:
+.Lts925_1:
 	lda	xwa, (HDAE5000_RAM_HdStreamBuffer:24)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + 0xe88)
-	ld_sril	xhl, (xbc + 0xa8)
+	ld	xbc, (xbc + WS_HamaFnTable)
+	ld_sril	xhl, (xbc + HamaFn_fread_ext)
 	ld	xbc, 0x10000
 	call	(xhl)
 	lda	xwa, (HDAE5000_RAM_HdStreamBuffer:24)
@@ -7887,7 +7884,7 @@ HDAE5000_CopyFdSongToHd_Pmt_Skip3:
 	call	HDAE5000_Multiply
 	add	xhl, 0x780
 	add	xhl, xiz
-	lda	xwa, (0x20165a:24)
+	lda	xwa, (HDAE5000_RAM_SongRecords-0x780+40:24)
 	add	xwa, xhl
 	ld	xbc, xwa
 	ld	xwa, (xsp + 0x0c)
@@ -7897,8 +7894,8 @@ HDAE5000_CopyFdSongToHd_Pmt_Skip3:
 	ld	(xsp + 0x0e), hl
 	ld	wa, (xsp+14)
 	cp	wa, 0xffff
-	jrl	z, HDAE5000_CopyFdSongToHd_Pmt_Skip
-.Lts925_1:
+	jrl	z, .Lts925_close
+.Lts925_loop:
 	; Second workspace dispatch
 	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -7934,16 +7931,15 @@ HDAE5000_CopyFdSongToHd_Pmt_Skip3:
 	ld (xsp + 14), hl	; store result
 	ld wa, (xsp + 14)	; reload for compare
 	cp wa, 0xffff
-	jr	z, HDAE5000_CopyFdSongToHd_Pmt_Skip2
-.Lts925_2:
+	jr	z, .Lts925_5
+.Lts925_4:
 	; Check if dispatch returned 0x8000
 	ld xwa, (xsp + 4)
 	cp xwa, 0x00010000
-.Lts925_loop:
 	; Re-dispatch
 	; Retry with new params
-	jr	z, .Lts925_1
-HDAE5000_CopyFdSongToHd_Pmt_Skip2:
+	jr	z, .Lts925_loop
+.Lts925_5:
 	ld wa, (xsp + 30)
 	extz xwa
 	ld xbc, 0x0000004c
@@ -7953,7 +7949,6 @@ HDAE5000_CopyFdSongToHd_Pmt_Skip2:
 	extz xwa
 	ld xbc, 0x000004c0
 	call HDAE5000_Multiply
-.Lts925_4:
 	; Post-processing: set flag
 	add xhl, 0x780
 	add xhl, xiz
@@ -7961,7 +7956,7 @@ HDAE5000_CopyFdSongToHd_Pmt_Skip2:
 	add xwa, xhl
 	ld (xwa), 0x01
 	; Final workspace dispatch
-HDAE5000_CopyFdSongToHd_Pmt_Skip:
+.Lts925_close:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_HamaFnTable)             ; (XWA+0x0E88)
 	ld_sril xhl, (xwa + HamaFn_fclose_ext)             ; (XWA+0x00AC)
@@ -8850,7 +8845,7 @@ HDAE5000_Fls_ForgetSong:
 	; Part 2: Main workspace handler entry (0x29320D)
 	; Called by firmware — saves regs, dispatches through handler chain
 HDAE5000_DeleteDirectory:
-	; Delete directory WA: every used song of it loses its nine parts
+	; Delete directory WA: every used song of it loses its eight parts
 	; (HDAE5000_DeleteSongPart_*) and its FLS references
 	; (HDAE5000_Fls_ForgetSong) and gets a blank name (26 spaces); the
 	; directory name is blanked (16 spaces); tables written
@@ -9850,7 +9845,7 @@ HDAE5000_Song_CheckFreeSpace:
 .Lcv_bit7:
 	ld wa, (xsp + 14)
 	bit 7, wa
-	jr z, .Lcv_bit8
+	jr z, .Lcv_validate
 	lda xwa, (xsp + 6)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -9859,8 +9854,7 @@ HDAE5000_Song_CheckFreeSpace:
 	ldw wa, 9			; param = 9
 	call (xhl)
 	add xiz, (xsp + 10)
-	; --- Bit 8: fixed constant 0x5000 ---
-.Lcv_bit8:
+.Lcv_validate:
 	; --- Final validation ---
 	ld xwa, xiz			; total accumulated size
 	call HDAE5000_HD_ClusterCount			; validate total
@@ -12738,7 +12732,7 @@ HDAE5000_PPORT_Cmd07_LoadHdToMemory:	; (226 bytes)
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; abort
 	nop
 .Lce_check_head:
-	cp (HDAE5000_RAM_PportPartMaskHi:24), 0x00
+	cp (HDAE5000_RAM_PportPartMask:24), 0x00
 	jp z, (.LPPORT_Cmd07_LoadHdToMemory_Skip1:24)			; skip to end
 	nop
 .Lce_continue:
@@ -12809,7 +12803,7 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; (838 bytes)
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
 	nop
 .Lrfsb_check_head:
-	cp (HDAE5000_RAM_PportPartMaskHi:24), 0x00
+	cp (HDAE5000_RAM_PportPartMask:24), 0x00
 	jp z, (.Lrfsb_exit:24)			; jp Z, skip to end
 	nop
 .Lrfsb_continue:
@@ -13044,9 +13038,9 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	; status record "09>Sending files to PC" (HDAE5000_PPORT_Strings + 192, service 26).
 	; The description lines below predate this name and are not re-verified.
 	; Handler: Send FSB to PC — display status, read sector/head masks,
-	; build transfer buffer (masked bytes + 9 region descriptors),
+	; build transfer buffer (masked bytes + 8 region descriptors),
 	; send to PC via PPORT, then conditionally send each region
-	; based on flag bits (8 bits from byte 1 + 1 bit from byte 2)
+	; based on part bits 0-7 of HDAE5000_RAM_PportPartMask (v1.x has no ninth part)
 	ldw wa, 0x001a				; display command
 	nop
 	lda xbc, (HDAE5000_PPORT_Cmd09_SendFilesToPc_Str_N09_Sending_files_to_PC:24); lda XBC, 0x294E0C — status string
@@ -13063,7 +13057,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	ld w, (HDAE5000_RAM_PportArg4:24)
 	nop
 	and w, a				; W = mask AND data
-	ld (HDAE5000_RAM_PportPartMaskHi:24), w
+	ld (HDAE5000_RAM_PportPartMask:24), w
 	nop
 	call HDAE5000_PPORT_InitRegionDescriptors
 	call HDAE5000_PPORT_RequestSongInfo
@@ -13083,7 +13077,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	nop
 	ld (xix), a				; store to buffer[0]
 	add xix, 44				; advance XIX by 0x2C (44 bytes)
-	; Copy 9 × 32-bit region descriptors to buffer
+	; Copy 8 × 32-bit region descriptors to buffer
 	ld xwa, (HDAE5000_RAM_PportRegions+4:24)	; region 1
 	nop
 	ld	(xix), xwa
@@ -13130,7 +13124,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	and a, 0x01
 	nop
 	cp a, 1:i3
-	jp nz, (HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:24)			; jp NZ, .Lsfsb_bit1
+	jp nz, (.Lsfsb_bit1:24)
 	nop
 	ld xwa, (HDAE5000_RAM_PportRegions+4:24)	; region 0
 	nop
@@ -13141,13 +13135,13 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	cp	(HDAE5000_RAM_PportError:24), 0x01
 	jp	z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:
-	ld	a, (0x23c4e4:24)
+.Lsfsb_bit1:				; — Bit 1 (0x02)
+	ld	a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and	a, 0x02
 	nop
 	cp	a, 2:i3
-	jp	nz, (.Lsfsb_bit1:24)
+	jp	nz, (.Lsfsb_bit2:24)
 	nop
 	ld	xwa, (HDAE5000_RAM_PportRegions+20:24)
 	nop
@@ -13158,19 +13152,18 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
 	nop
-.Lsfsb_bit1:				; — Bit 1 (0x02)
+.Lsfsb_bit2:				; — Bit 2 (0x04)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x04
 	nop
 	cp	a, 4:i3
-	jp nz, (.Lsfsb_bit3:24)			; jp NZ, .Lsfsb_bit2
+	jp nz, (.Lsfsb_bit3:24)
 	nop
-	ld xwa, (HDAE5000_RAM_PportRegions+28:24)	; region 1
+	ld xwa, (HDAE5000_RAM_PportRegions+28:24)	; region 2
 	nop
 	ld (HDAE5000_RAM_PportBytesLeft:24), xwa
 	nop
-.Lsfsb_bit2:				; — Bit 2 (0x04)
 	ld	(HDAE5000_RAM_PportSendMaskLo), 0x04
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
@@ -13183,7 +13176,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:
 	nop
 	cp a, 0x08
 	nop
-	jp nz, (HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2:24)			; jp NZ, .Lsfsb_bit4
+	jp nz, (.Lsfsb_bit4:24)
 	nop
 	ld xwa, (HDAE5000_RAM_PportRegions+36:24)	; region 3
 	nop
@@ -13194,14 +13187,14 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:
 	cp	(HDAE5000_RAM_PportError:24), 0x01
 	jp	z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2:
-	ld	a, (0x23c4e4:24)
+.Lsfsb_bit4:				; — Bit 4 (0x10)
+	ld	a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and	a, 0x10
 	nop
 	cp	a, 0x10
 	nop
-	jp	nz, (.Lsfsb_bit4:24)
+	jp	nz, (.Lsfsb_bit5:24)
 	nop
 	ld	xwa, (HDAE5000_RAM_PportRegions+44:24)
 	nop
@@ -13212,16 +13205,16 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2:
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit4:				; — Bit 4 (0x10)
+.Lsfsb_bit5:				; — Bit 5 (0x20)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x20
 	nop
 	cp a, 0x20
 	nop
-	jp nz, (HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3:24)			; jp NZ, .Lsfsb_bit5
+	jp nz, (.Lsfsb_bit6:24)
 	nop
-	ld xwa, (HDAE5000_RAM_PportRegions+52:24)	; region 4
+	ld xwa, (HDAE5000_RAM_PportRegions+52:24)	; region 5
 	nop
 	ld (HDAE5000_RAM_PportBytesLeft:24), xwa
 	nop
@@ -13230,14 +13223,14 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2:
 	cp	(HDAE5000_RAM_PportError:24), 0x01
 	jp	z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3:
-	ld	a, (0x23c4e4:24)
+.Lsfsb_bit6:				; — Bit 6 (0x40)
+	ld	a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and	a, 0x40
 	nop
 	cp	a, 0x40
 	nop
-	jp	nz, (.Lsfsb_bit5:24)
+	jp	nz, (.Lsfsb_bit7:24)
 	nop
 	ld	xwa, (HDAE5000_RAM_PportRegions+56:24)
 	nop
@@ -13248,21 +13241,20 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3:
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lsfsb_bit5:				; — Bit 5 (0x20)
+.Lsfsb_bit7:				; — Bit 7 (0x80)
 	ld a, (HDAE5000_RAM_PportPartMask:24)
 	nop
 	and a, 0x80
 	nop
 	cp a, 0x80
 	nop
-	jp nz, (.Lsfsb_exit:24)			; jp NZ, .Lsfsb_bit6
+	jp nz, (.Lsfsb_exit:24)
 	nop
-	ld xwa, (HDAE5000_RAM_PportRegions+64:24)	; region 5
+	ld xwa, (HDAE5000_RAM_PportRegions+64:24)	; region 7
 	nop
 	ld (HDAE5000_RAM_PportBytesLeft:24), xwa
 	nop
 	ld	(HDAE5000_RAM_PportSendMaskLo), 0x80
-.Lsfsb_bit6:				; — Bit 6 (0x40)
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
@@ -13778,7 +13770,7 @@ HDAE5000_PPORT_Cmd16_DeleteFiles:	; (230 bytes)
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)		; exit to PPORT finish
 	nop
 .Lwmhd_check_head:
-	cp (HDAE5000_RAM_PportPartMaskHi:24), 0x00
+	cp (HDAE5000_RAM_PportPartMask:24), 0x00
 	jp z, (.Lwmhd_done:24)
 	nop
 .Lwmhd_do_write:
@@ -14679,10 +14671,9 @@ HDAE5000_PPORT_RecvCustomData:		; — Receive custom ROM data
 	nop
 
 ; ---------------------------------------------------------------------------
-; Size one region per part bit of HDAE5000_RAM_PportPartMask (and bit 0 of
-; PportPartMaskHi): fixed sizes 0xE40 (bit 0), 0x12CB0 (1), 0x72AA (4) and
-; 0x400 (7), and for the ninth part (TLX) the ADDRESS of
-; HDAE5000_RAM_LyricFileLength; bits 2, 3, 5, 6 read the size from
+; Size one region per part bit of HDAE5000_RAM_PportPartMask (bits 0-7; v1.x
+; has no ninth part): fixed sizes 0xE40 (bit 0), 0x12CB0 (1), 0x72AA (4) and
+; 0x400 (7); bits 2, 3, 5, 6 read the size from
 ; the part file's first sector (HDAE5000_PPORT_InitRegionDescriptors_Lookup
 ; with field offset 0x4E / 0x2E / 0x1E word fields, 0x1C long; bit 2 adds
 ; 0x5000).  The slots of HDAE5000_RAM_PportRegions are cleared first.  Stops
@@ -14745,7 +14736,7 @@ HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	ld (HDAE5000_RAM_PportSizeFieldOffset:24), 0x4e
 	call HDAE5000_PPORT_InitRegionDescriptors_Lookup
 	cp (HDAE5000_RAM_PportStepError:24), 0x01
-	jp z, (.Lir_flag2_bit0:24)
+	jp z, (.Lir_done:24)
 	nop
 	add xiy, 0x00005000
 	ld (HDAE5000_RAM_PportRegions+28:24), xiy
@@ -14764,7 +14755,7 @@ HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	ld (HDAE5000_RAM_PportSizeFieldOffset:24), 0x2e
 	call HDAE5000_PPORT_InitRegionDescriptors_Lookup
 	cp (HDAE5000_RAM_PportStepError:24), 0x01
-	jp z, (.Lir_flag2_bit0:24)
+	jp z, (.Lir_done:24)
 	nop
 	ld (HDAE5000_RAM_PportRegions+36:24), xiy
 	nop
@@ -14795,7 +14786,7 @@ HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	ld (HDAE5000_RAM_PportSizeFieldOffset:24), 0x1e
 	call HDAE5000_PPORT_InitRegionDescriptors_Lookup
 	cp (HDAE5000_RAM_PportStepError:24), 0x01
-	jp z, (.Lir_flag2_bit0:24)
+	jp z, (.Lir_done:24)
 	nop
 	ld (HDAE5000_RAM_PportRegions+52:24), xiy
 	nop
@@ -14813,7 +14804,7 @@ HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	ld (HDAE5000_RAM_PportSizeFieldOffset:24), 0x1c
 	call HDAE5000_PPORT_InitRegionDescriptors_Lookup
 	cp (HDAE5000_RAM_PportStepError:24), 0x01
-	jp z, (.Lir_flag2_bit0:24)
+	jp z, (.Lir_done:24)
 	nop
 	ld (HDAE5000_RAM_PportRegions+56:24), xiy
 	nop
@@ -14824,13 +14815,13 @@ HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	nop
 	cp a, 0x80
 	nop
-	jp nz, (.Lir_flag2_bit0:24)
+	jp nz, (.Lir_done:24)
 	nop
 	ld xwa, 0x00000400
 	nop
 	ld (HDAE5000_RAM_PportRegions+64:24), xwa
 	nop
-.Lir_flag2_bit0:
+.Lir_done:
 	ret
 	nop
 

@@ -61,8 +61,9 @@ The dumps with no tree at all are not in that table:
    private romsets with a SHA-1 check in the Makefile: kn7000's convention, also used for KN5000 v8/v6/v5. A
    payload with no better form is an `.incbin` with skip and count, or an `.incbin_range`, of that reference.
    It is labelled per item, and its comment says what the item is. Typed tables in the source follow the
-   precedent of the committed disassembly. Felipe's own instrument data (the IC21 read of his KN7000) stays out
-   of the trees.
+   precedent of the committed disassembly. Felipe's own instrument data (the IC21 read of his KN7000) stayed out
+   of the trees until 2026-10-31, when the owner decided to add it: `kn7000/src/ic21own/` (lane ic21-own,
+   `kn7000/notes/ic21-own/README.md`), its reference copied git-ignored like the others.
 3. **Byte identity.** Every new image is rebuilt and gated, and wired into its model's gate and `make gate-all`.
 4. **Evidence.** Every claim about a field's meaning cites the firmware code that reads it (address and label),
    or the probe that measured it. Probes are committed beside the notes they back, with a README.
@@ -167,9 +168,21 @@ with the reader search that found nothing (`kn7000/notes/data-final/README.md`, 
 Open items:
 
 - the KN2400's two Music Stylist setup lists: the KN2400's and the KN2600's, chosen by bits at 0x98070000?
-- the KN6000 sound hash tables' payload beyond their first field; the KN2400 effect blocks' format;
-- `KssBgScreen`'s `image_id` and `icon` in the SP7001 plug-in, probably the main program's resource ids;
-- the KN7000 demo-song streams are u8 rows, really 4-byte events;
+  Resolved 2026-10-31 (lane mn10300-formats, `kn7000/notes/mn10300-formats/README.md`): `KnprModelGet`
+  reads bits 0 and 1 of the strap (0 KN2600, 1 KN2400, 2 PR54); `StyleRecordTableKN2400` and four more
+  lists are the KN2400's, `StyleRecordTable` and its lists the KN2600's and PR54's;
+- the KN6000 sound hash tables' payload beyond their first field; the KN2400 effect blocks' format.
+  Resolved 2026-10-31 (same lane): `TONE_KEY_PAYLOAD` / `SHORT_KEY_PAYLOAD` / `BANK_KEY_PAYLOAD` from
+  their readers; the KN2400's 107 effect descriptors and 809 parameter records (`FX_DESC`, `FX_PARAM`);
+- `KssBgScreen`'s `image_id` and `icon` in the SP7001 plug-in, probably the main program's resource ids.
+  Resolved 2026-10-31 (same lane): `icon` is 942's icon index (ResIconTable[1]); `image_id` has no
+  reader and is no resource-trie id;
+- the KN7000 demo-song streams are u8 rows, really 4-byte events. Corrected 2026-10-31 (same lane): they
+  are no demo songs but the alphabetical sound lists {initial, bank MSB, LSB, program} (`SOUND_ALPHA`);
+- zlib's tables unnamed in the KN7000 symbol files: named in every KN7000 build and in the KN6000,
+  KN6500 and KN2400 (2026-10-31, same lane; the HD-SX3 has no zlib);
+- record fields named only by their offset: named from their use where the code shows it
+  (`data_struct_names.auto_name`, `tools/data_field_uses.py`; 2026-10-31, same lane, which counts what is left);
 - recursive structures other than the resource-id trie are typed one level deep;
 - HD-AE5000 v1.15i and v1.10i still have no tree. Resolved 2026-10-30 (lane hdae-v1, merge b84f732aa):
   `hdae5000_v1_15i/` and `hdae5000_v1_10i/` are byte-identical and in `make gate`, generic 0

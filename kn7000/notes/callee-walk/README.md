@@ -212,6 +212,9 @@ the new records' pointer fields name 6 more code addresses (`code_refs.txt`: +6,
   N-byte records), but `arg_kinds()` does not yet write the block as an array of them: the count is not known
   from the walk.
 - **Field names.**  Fields are offset-named except `T_CTSK`'s; naming the others needs reading each routine.
+  Partly done 2026-10-31 (lane mn10300-formats, `../mn10300-formats/README.md`): a field is named from what
+  the code does with it after the load (`tools/data_field_uses.py`, `data_struct_names.auto_name`); the
+  counts before and after are `../mn10300-formats-probes/field_names_census.py`'s.
 - **The siblings' walk** now has ext's slots (narrowed), joins and return sets, not its other rules
   (pointer-from-a-field returns, loop bodies keeping slots, bounds); `readers_ext` itself made the KN2400
   worse (`../../../kn6000/notes/siblings-data-final/README.md`).

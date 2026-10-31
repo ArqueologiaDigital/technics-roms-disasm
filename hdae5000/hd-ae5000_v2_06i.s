@@ -525,9 +525,8 @@
 ; ============================================================================
 
 HDAE5000_ROM_HEADER:
-	.ascii "XAPR4"	; Magic identifier ("XAPR" checked by main CPU)
-	.byte 0xa1	; Version byte
-	.byte 0x2f, 0x00	; Unknown (possibly size/flags)
+	.ascii "XAPR"		; magic identifier ("XAPR" checked by the main CPU)
+	.long HDAE5000_Init_Data_End	; the end of the .data image (every version: its own image's end)
 
 ; Entry point 1 - Jump to boot initialization
 HDAE5000_ENTRY_1:	; 280008h

@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 7,099
-#   semantic names ........... 7,099 (100.0%)
+#   symbols .................. 7,101
+#   semantic names ........... 7,101 (100.0%)
 #   positional names ......... 0
 #
 HDAE5000_ROM_HEADER 00280000
@@ -5965,6 +5965,7 @@ HDAE5000_Str_Chr202123242526 002E16DC
 HDAE5000_Str_Abc123 002E16EA
 HDAE5000_Str_NamingPageUpperCase 002E16F8
 HDAE5000_TextPtrs_A_to_SPC 002E1706
+HDAE5000_Str_Empty_AtoSPC 002E17A2
 HDAE5000_Str_SPC 002E17A4
 HDAE5000_Str_9 002E17A8
 HDAE5000_Str_8 002E17AA
@@ -6004,6 +6005,7 @@ HDAE5000_Str_C 002E17EC
 HDAE5000_Str_B 002E17EE
 HDAE5000_Str_A 002E17F0
 HDAE5000_TextPtrs_A_to_SPC_2 002E17F2
+HDAE5000_Str_Empty_AtoSPC_2 002E188E
 HDAE5000_Str_SPC_2 002E1890
 HDAE5000_Str_9_2 002E1894
 HDAE5000_Str_8_2 002E1896

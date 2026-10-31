@@ -37,7 +37,8 @@ The evidence is tools/data_readers.py: an access through base + index * stride
 
 gen_data_s.py writes one macro per record kind into <data dir>/data_structs.inc,
 its parameters the field names: tools/data_struct_names.py names the fields
-whose use is understood; the rest are f<off> (a number), p<off> (a pointer),
+whose use is understood -- by hand, or from what the code does with each field
+(data_struct_names.auto_name, tools/data_field_uses.py); the rest are f<off> (a number), p<off> (a pointer),
 s<off> (text), a<off> (an array inside the record) and x<off> (bytes no reader
 was seen to touch).
 """
@@ -141,6 +142,7 @@ def layout(g, gen, base_off, n, offs=None):
     s = g.stride
     offs = offs if offs is not None else [base_off + r * s for r in range(n)]
     n = len(offs)
+    g.gen, g.rec_offs = gen, offs     # (data_struct_names.auto_name: the records' values)
     widths = collections.defaultdict(collections.Counter)
     signed = collections.defaultdict(bool)
     byoff = collections.defaultdict(list)
@@ -243,11 +245,15 @@ def layout(g, gen, base_off, n, offs=None):
 
 
 def name_fields(g, names):
-    """Parameter names: the curated ones (data_struct_names) or kind + offset."""
+    """Parameter names: the curated ones (data_struct_names), else the use the code makes of the field
+    (data_struct_names.auto_name, lane mn10300-formats), else kind + offset."""
+    import data_struct_names as DN
     used = set()
     pre = {"num": "f", "ptr": "p", "text": "s", "bytes": "x", "array": "a"}
     for f in g.fields:
         n = names.get(f.off) if names else None
+        if not n:
+            n = DN.auto_name(g, f)
         if not n:
             n = f"{pre[f.kind]}{f.off}"
         while n in used or n == "this":

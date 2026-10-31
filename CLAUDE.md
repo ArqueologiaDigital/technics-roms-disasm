@@ -29,7 +29,7 @@ live in their own folders, each migrated with its full history rewritten to its 
   (MN103002A), so it has its own assembler, `kn7000/tools/kn7asm.py` (Python, no LLVM), and its own
   `kn7000/README.md`. `make kn7000`, and `make gate-kn7000` = `make -C kn7000 verify verify-sp7001
   verify-picture verify-cnv verify-table80 verify-ic18 verify-ic18-full verify-935 verify-893 verify-wave
-  verify-customdata verify-gui-map`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
+  verify-customdata verify-ic21-own verify-gui-map`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile
   regenerates them from the update disks, the private romset and the softlist floppy set beside this
   tree. `verify-cnv` covers the seven Style Convert Disk converters (`kn7000/src/cnv/`, fully
   disassembled from the `scd7000` / `scd6000` softlist disks; names in `kn7000/cnv_manual.sym`).
@@ -44,6 +44,10 @@ live in their own folders, each migrated with its full history rewritten to its 
   `verify-customdata` rebuilds the nine factory CUSTOM STYLE banks of IC21 (`kn7000/src/customdata/`,
   references inflated from the `.AST` files of the `idd7000` / `custom1` / `custom2` softlist floppies;
   `kn7000/notes/custom-data-ic21.md`); `make gate-kn6000` runs the KN6000's twin, `kn6000/src/customdata/`.
+  `verify-ic21-own` rebuilds all 2 MB of IC21 as read from Felipe's own KN7000 (`kn7000/src/ic21own/ic21.s`:
+  user settings, FAVORITES, HOME PAGE, the CUSTOM bank). The read is private; the owner decided on 2026-10-31
+  that it is typed source here. Its reference is copied git-ignored with a SHA-1 check from `IC21_OWN`;
+  see `kn7000/notes/ic21-own/README.md`.
 
 - **`kn2400/`, `kn6000/`, `kn6500/`, `hdsx3/`**: the other Panasonic MN10300 "MILK" firmwares
   (2026-10-24): SX-KN2400 = SX-KN2600 program v1.1 (linked at 0x48400000, with a part linked for RAM
@@ -897,12 +901,14 @@ what each script answers. The ledger is `docs/coverage/`, holding dated `.txt` +
 2026-10-05 at the owner's request: *"establish a longterm policy to keep track of that kind of info, so
 that we can have strong evidence whenever we reach true full code-coverage"*.
 
-1. **What it tracks.** For every image of both models (KN5000 v10/v9/v7, v142, subboot, table data,
-   custom data, HD-AE5000; WSA1 prom_a/b/c), each jump/call table is tracked: `.long` tables, jump-vector
-   runs, offset tables, the prom_b directory, and unframed pointer runs. **Not yet covered:** KN5000 maincpu
-   v6 and v5 (trees ported from v7 and v6, added 2026-10-24), v8 (v9's source) and sub-CPU v1.41 (generated
-   from v1.42). Adding them changes the image set of `data_range_census.py`, and so the semantic score's
-   totals, so it is left to a commit of its own. Until then no coverage claim covers those images.
+1. **What it tracks.** For every image of both models (KN5000 maincpu v10/v9/v8/v7/v6/v5, sub-CPU
+   v142/v141/v140, subboot, table data, custom data, HD-AE5000 v2.06i/v2.01i/v1.15i/v1.10i; WSA1
+   prom_a/b/c), each jump/call table is tracked: `.long` tables, jump-vector runs, offset tables, the prom_b
+   directory, and unframed pointer runs. v141 joined on 2026-10-24; v8 (v9's source with
+   `FW_VERSION_BYTE=0x08`), v6, v5, v140 and the three older HD-AE5000 versions (keys `hdae_v201`,
+   `hdae_v115`, `hdae_v110`) on 2026-10-31, in a commit of their own because they change the image set of
+   `data_range_census.py` and so the semantic score's totals (rules 5). Every gated KN5000 and WSA1 image
+   is now covered except WSA1 prom_d, which is data only.
    For each table the ledger records:
    - whether every entry that points into code lands on a labelled, disassembled instruction and is
      spelled symbolically;
@@ -1006,7 +1012,8 @@ component). It writes `docs/badges/*.svg`, `semantic-score.json` and appends a r
 `semantic-score-history.csv`. Re-run it after a change that moves the semantics noticeably, and always after
 committing a new dispatch-census snapshot. Commit `docs/badges/` in the same commit as the change, and quote the
 figures from the script's output, never by hand. The score is a summary for the badge; claims about coverage
-still go through the ledger above. Since rules 3 (2026-10-24) it rates all three models: the SX-KN7000's
+still go through the ledger above. Since rules 5 (2026-10-31) the KN5000 model also rates v8, v6, v5, v140 and
+the older HD-AE5000 ROMs. Since rules 3 (2026-10-24) it rates all three models: the SX-KN7000's
 program, table and Style Convert converters have their own bytes and names definitions, read from the sources
 (the docstring's "THE SX-KN7000 MODEL"), and need `make kn7000` built first.
 

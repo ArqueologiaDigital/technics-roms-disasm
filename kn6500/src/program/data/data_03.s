@@ -24,11 +24,11 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=6, f1=144
+	REC_func_4C09D468_entry_L4b_Table	f0=6, index=144
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=3, f1=128	# [24]
+	REC_func_4C09D468_entry_L4b_Table	f0=3, index=128	# [24]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -38,13 +38,13 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table		# [32]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=13, f1=96
+	REC_func_4C09D468_entry_L4b_Table	f0=13, index=96
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=20, f1=96
+	REC_func_4C09D468_entry_L4b_Table	f0=20, index=96
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=2, f1=128	# [40]
+	REC_func_4C09D468_entry_L4b_Table	f0=2, index=128	# [40]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -70,13 +70,13 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table		# [64]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=23, f1=80
+	REC_func_4C09D468_entry_L4b_Table	f0=23, index=80
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=1, f1=80
+	REC_func_4C09D468_entry_L4b_Table	f0=1, index=80
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=5, f1=80	# [72]
+	REC_func_4C09D468_entry_L4b_Table	f0=5, index=80	# [72]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -88,11 +88,11 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	f0=10
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=40, f1=80
+	REC_func_4C09D468_entry_L4b_Table	f0=40, index=80
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=41, f1=80	# [88]
+	REC_func_4C09D468_entry_L4b_Table	f0=41, index=80	# [88]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -102,9 +102,9 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table		# [96]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=25, f1=96
+	REC_func_4C09D468_entry_L4b_Table	f0=25, index=96
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=27, f1=96
+	REC_func_4C09D468_entry_L4b_Table	f0=27, index=96
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -136,15 +136,15 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	f0=3
 	REC_func_4C09D468_entry_L4b_Table	f0=2
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=5, f1=144
-	REC_func_4C09D468_entry_L4b_Table	f0=41, f1=144
+	REC_func_4C09D468_entry_L4b_Table	f0=5, index=144
+	REC_func_4C09D468_entry_L4b_Table	f0=41, index=144
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	f0=4	# [136]
 	REC_func_4C09D468_entry_L4b_Table	f0=26
 	REC_func_4C09D468_entry_L4b_Table	f0=12
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=9, f1=144
+	REC_func_4C09D468_entry_L4b_Table	f0=9, index=144
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -152,11 +152,11 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	f0=3
 	REC_func_4C09D468_entry_L4b_Table	f0=2
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=11, f1=1
+	REC_func_4C09D468_entry_L4b_Table	f0=11, index=1
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=26, f1=128	# [152]
+	REC_func_4C09D468_entry_L4b_Table	f0=26, index=128	# [152]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -168,11 +168,11 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	f0=25
 	REC_func_4C09D468_entry_L4b_Table	f0=14
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=8, f1=96
+	REC_func_4C09D468_entry_L4b_Table	f0=8, index=96
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=12, f1=128	# [168]
+	REC_func_4C09D468_entry_L4b_Table	f0=12, index=128	# [168]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -200,11 +200,11 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=3, f1=80
+	REC_func_4C09D468_entry_L4b_Table	f0=3, index=80
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=9, f1=80	# [200]
+	REC_func_4C09D468_entry_L4b_Table	f0=9, index=80	# [200]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -264,15 +264,15 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	f0=6
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=20, f1=144
+	REC_func_4C09D468_entry_L4b_Table	f0=20, index=144
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=1, f1=128	# [264]
+	REC_func_4C09D468_entry_L4b_Table	f0=1, index=128	# [264]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=40, f1=128
+	REC_func_4C09D468_entry_L4b_Table	f0=40, index=128
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=27, f1=144
+	REC_func_4C09D468_entry_L4b_Table	f0=27, index=144
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -280,11 +280,11 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	f0=9
 	REC_func_4C09D468_entry_L4b_Table	f0=6
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=19, f1=1
+	REC_func_4C09D468_entry_L4b_Table	f0=19, index=1
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=3, f1=128	# [280]
+	REC_func_4C09D468_entry_L4b_Table	f0=3, index=128	# [280]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -300,7 +300,7 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=2, f1=128	# [296]
+	REC_func_4C09D468_entry_L4b_Table	f0=2, index=128	# [296]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -326,13 +326,13 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table		# [320]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=10, f1=80
+	REC_func_4C09D468_entry_L4b_Table	f0=10, index=80
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=2, f1=80
+	REC_func_4C09D468_entry_L4b_Table	f0=2, index=80
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=6, f1=80	# [328]
+	REC_func_4C09D468_entry_L4b_Table	f0=6, index=80	# [328]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -396,7 +396,7 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=26, f1=64	# [392]
+	REC_func_4C09D468_entry_L4b_Table	f0=26, index=64	# [392]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -524,7 +524,7 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=13, f1=128	# [520]
+	REC_func_4C09D468_entry_L4b_Table	f0=13, index=128	# [520]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -532,15 +532,15 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=23, f1=112	# [528]
+	REC_func_4C09D468_entry_L4b_Table	f0=23, index=112	# [528]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=10, f1=32
+	REC_func_4C09D468_entry_L4b_Table	f0=10, index=32
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=25, f1=128	# [536]
+	REC_func_4C09D468_entry_L4b_Table	f0=25, index=128	# [536]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -548,15 +548,15 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=2, f1=32	# [544]
+	REC_func_4C09D468_entry_L4b_Table	f0=2, index=32	# [544]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=12, f1=32
+	REC_func_4C09D468_entry_L4b_Table	f0=12, index=32
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=2, f1=32
+	REC_func_4C09D468_entry_L4b_Table	f0=2, index=32
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=14, f1=128	# [552]
+	REC_func_4C09D468_entry_L4b_Table	f0=14, index=128	# [552]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -580,23 +580,23 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=6, f1=32	# [576]
+	REC_func_4C09D468_entry_L4b_Table	f0=6, index=32	# [576]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=40, f1=160
+	REC_func_4C09D468_entry_L4b_Table	f0=40, index=160
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=6, f1=32
-	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=8, f1=32	# [584]
+	REC_func_4C09D468_entry_L4b_Table	f0=6, index=32
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	f0=8, index=32	# [584]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=10, f1=112	# [592]
+	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	f0=10, index=112	# [592]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -652,7 +652,7 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=12, f1=64	# [648]
+	REC_func_4C09D468_entry_L4b_Table	f0=12, index=64	# [648]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -1092,23 +1092,23 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=3, f1=16	# [1088]
+	REC_func_4C09D468_entry_L4b_Table	f0=3, index=16	# [1088]
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=41, f1=160
+	REC_func_4C09D468_entry_L4b_Table	f0=41, index=160
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=26, f1=16
-	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=3, f1=16	# [1096]
+	REC_func_4C09D468_entry_L4b_Table	f0=26, index=16
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	f0=3, index=16	# [1096]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=25, f1=16	# [1104]
+	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	
+	REC_func_4C09D468_entry_L4b_Table	f0=25, index=16	# [1104]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -1164,7 +1164,7 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=9, f1=16	# [1160]
+	REC_func_4C09D468_entry_L4b_Table	f0=9, index=16	# [1160]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -1172,7 +1172,7 @@ func_4C09D468_entry_L4b_Table:	# 2048 x REC_func_4C09D468_entry_L4b_Table (2 byt
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
-	REC_func_4C09D468_entry_L4b_Table	f0=27, f1=16	# [1168]
+	REC_func_4C09D468_entry_L4b_Table	f0=27, index=16	# [1168]
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
 	REC_func_4C09D468_entry_L4b_Table	
@@ -9415,12 +9415,13 @@ User15_MainFunctionNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x306FDC, 0x306FE0
 
-GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes), then 49 x u32 the code indexes from +0 (read by func_4C0BAFFF_entry_L27 0x4C0BB02B `movbu (d1, a0), d0`; func_4C0BAFFF_entry_L4d 0x4C0BB051 `movbu (d1, a1), d0` (+22))
-	REC_GetFocusObject_Records_p4	f0=16, x1="\x00\x00\x00", p4=Str_Basic, x8="\x11\x00\x00\x00"
-	tab_u32	1277179225, 18, 1277179242, 19, 1277179259, 20, 1277179272, 21, 1277179285, 22, 1277179300, 23, 1277179313, 24, 1277179326, 25	# [0]
-	tab_u32	1277179339, 255, 0, 80, 1277179352, 83, 1277179365, 96, 1277179378, 97, 1277179391, 98, 1277179404, 100, 1277179417, 101	# [16]
-	tab_u32	1277179430, 102, 1277179443, 103, 1277179456, 255, 0, 82, 1277179472, 0, 1277179485, 1, 1277179498, 2, 1277179511, 255	# [32]
-	tab_u32	0	# [48]
+GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes)
+	REC_GetFocusObject_Records_p4	f0=16, x1="\x00\x00\x00", text=Str_Basic, f8=17, x9="\x00\x00\x00"
+
+GetFocusObject_Records_p4_0_Tail:	# 1 pointers after GetFocusObject_Records_p4_0: the array its kind's computed-offset read indexes (func_4C0BB075_entry_L1d 0x4C0BB097 `movbu (d0, a0), d0`; FE_CmpRecChdModTyp_entry_L185 0x4C0BB4D9 `mov (4, a0), d0` (+16)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
+	.long	Str_In_7th_G_8dB_a0
+# census: opaque -- unknown-dump: 192 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x306FF0, 0x3070B0
 
 GetFocusObject_Records:
 	.long	Str_Melody
@@ -10935,22 +10936,22 @@ func_4C057D61_Table:	# 2048 x u16, 0..34687; read by func_4C057D61 0x4C057D61: `
 	tab_u16	33400, 33145, 33018, 33531, 33916, 33533, 33918, 1289	# [2040]
 
 GetGenreName_entry_L14_Records:	# 16 x REC_GetGenreName_entry_L14_Records (24 bytes each); read by GetGenreStyleCount_entry_Lf 0x4C057D1A `movbu (0x11, a0), d0`; func_4C057D2F_entry_Ld 0x4C057D3E `movbu (0x11, a0), d2`; func_4C057D2F_entry_L25 0x4C057D56 `mov (0x14, a0), a0` (+4)
-	REC_GetGenreName_entry_L14_Records	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", p20=data_4C211214	# [0]
-	REC_GetGenreName_entry_L14_Records	s0="   ROCK & POP   ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_0
-	REC_GetGenreName_entry_L14_Records	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", p20=data_4C21128C
-	REC_GetGenreName_entry_L14_Records	s0="  SOUL & FUNK   ", x16="\x00", f17=16, x18="\x00\x00", p20=data_4C2112CC
-	REC_GetGenreName_entry_L14_Records	s0="  MODERN DANCE  ", x16="\x00", f17=16, x18="\x00\x00", p20=data_4C21130C
-	REC_GetGenreName_entry_L14_Records	s0=" GOSPEL & BLUES ", x16="\x00", f17=12, x18="\x00\x00", p20=data_4C21134C
-	REC_GetGenreName_entry_L14_Records	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", p20=data_4C21137C
-	REC_GetGenreName_entry_L14_Records	s0=" MARCH & WALTZ  ", x16="\x00", f17=10, x18="\x00\x00", p20=data_4C2113B4
-	REC_GetGenreName_entry_L14_Records	s0="BIG BAND & SWING", x16="\x00", f17=12, x18="\x00\x00", p20=data_4C2113DC	# [8]
-	REC_GetGenreName_entry_L14_Records	s0="   JAZZ COMBO   ", x16="\x00", f17=17, x18="\x00\x00", p20=data_4C21140C
-	REC_GetGenreName_entry_L14_Records	s0="    BALLROOM    ", x16="\x00", f17=12, x18="\x00\x00", p20=data_4C211450
-	REC_GetGenreName_entry_L14_Records	s0=" LATIN & WORLD  ", x16="\x00", f17=28, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_1
-	REC_GetGenreName_entry_L14_Records	s0="  ENTERTAINER   ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_2
-	REC_GetGenreName_entry_L14_Records	s0="  MOVIE & SHOW  ", x16="\x00", f17=17, x18="\x00\x00", p20=data_4C211540
-	REC_GetGenreName_entry_L14_Records	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_3
-	REC_GetGenreName_entry_L14_Records	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_4
+	REC_GetGenreName_entry_L14_Records	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=data_4C211214	# [0]
+	REC_GetGenreName_entry_L14_Records	s0="   ROCK & POP   ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_0
+	REC_GetGenreName_entry_L14_Records	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=data_4C21128C
+	REC_GetGenreName_entry_L14_Records	s0="  SOUL & FUNK   ", x16="\x00", f17=16, x18="\x00\x00", index=data_4C2112CC
+	REC_GetGenreName_entry_L14_Records	s0="  MODERN DANCE  ", x16="\x00", f17=16, x18="\x00\x00", index=data_4C21130C
+	REC_GetGenreName_entry_L14_Records	s0=" GOSPEL & BLUES ", x16="\x00", f17=12, x18="\x00\x00", index=data_4C21134C
+	REC_GetGenreName_entry_L14_Records	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", index=data_4C21137C
+	REC_GetGenreName_entry_L14_Records	s0=" MARCH & WALTZ  ", x16="\x00", f17=10, x18="\x00\x00", index=data_4C2113B4
+	REC_GetGenreName_entry_L14_Records	s0="BIG BAND & SWING", x16="\x00", f17=12, x18="\x00\x00", index=data_4C2113DC	# [8]
+	REC_GetGenreName_entry_L14_Records	s0="   JAZZ COMBO   ", x16="\x00", f17=17, x18="\x00\x00", index=data_4C21140C
+	REC_GetGenreName_entry_L14_Records	s0="    BALLROOM    ", x16="\x00", f17=12, x18="\x00\x00", index=data_4C211450
+	REC_GetGenreName_entry_L14_Records	s0=" LATIN & WORLD  ", x16="\x00", f17=28, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_1
+	REC_GetGenreName_entry_L14_Records	s0="  ENTERTAINER   ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_2
+	REC_GetGenreName_entry_L14_Records	s0="  MOVIE & SHOW  ", x16="\x00", f17=17, x18="\x00\x00", index=data_4C211540
+	REC_GetGenreName_entry_L14_Records	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_3
+	REC_GetGenreName_entry_L14_Records	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_4
 
 GetGenreName_Var:	# u16, a constant; read / written by GetGenreName 0x4C057CCF: `movhu (GetGenreName_Var), d3`; GetGenreStyleCount 0x4C057D09: `movhu (GetGenreName_Var), d2` ...
 	.word	16
@@ -17267,17 +17268,15 @@ ptrs_4C3108A0:
 Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x3108BC, 0x3108D0
-
-func_4C132F88_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132F88_entry_L9e 0x4C13302B: memcpy(.., 3); func_4C132F88_entry_L149 0x4C1330D6: memcpy(.., 3)
-	tab_u8	249, 255, 255	# [0]
-
+data_4C3108D0:
+	# 3 bytes the code takes the address of: func_4C132F88_entry_L9e 0x4C13302B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132F88_entry_L9e 0x4C13302B `mov data_4C3108D0, d2` (+0, as a base); func_4C132F88_entry_L149 0x4C1330D6 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	249, 255, 255	# +0
 Str_Technics:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x3108DF, 0x3108F3
-
-func_4C133252_entry_L9e_Block:	# 3 bytes, copied whole by func_4C133252_entry_L9e 0x4C1332F5: memcpy(.., 3); func_4C133252_entry_L11b 0x4C133372: memcpy(.., 3)
-	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_4C133252_entry_L9e_Block
+data_4C3108F3:
+	# 5 bytes the code takes the address of: func_4C133252_entry_L9e 0x4C1332F5 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C133252_entry_L9e 0x4C1332F5 `mov data_4C3108F3, d2` (+0, as a base); func_4C133252_entry_L11b 0x4C133372 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
+	tab_u8	240, 255, 255, 255, 255	# +0
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_4C058302_L9 0x4C05830B `movbu (1, a0), d0`; func_4C05831D_L9 0x4C058326 `movbu (2, a0), d0`; func_4C058338_L9 0x4C058341 `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]

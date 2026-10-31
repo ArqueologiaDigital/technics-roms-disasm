@@ -139,120 +139,120 @@ data_486023BE:
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2023BE, 0x2023C0
 
 func_4849DC55_Table:	# 114 x REC_func_4849DC55_Table (24 bytes each); read by ApDeleteEvent 0x484298BF `call func_4842886A_entry, [d2,d3,a2,a3], 0x54`; ChangeMode 0x4842B301 `call ApDeleteEvent_entry, [d2], 0x18`; ChangeTitle 0x4842B3AD `call ApDeleteEvent_entry, [d2], 0x18` (+18)
-	REC_func_4849DC55_Table	p0=Str_SOUND_MENU_2, f4=21, f8=0xE0003, f12=0xF0008, f16=0x5000C	# [0]
-	REC_func_4849DC55_Table	p0=Str_SOUND_PART_SETTING, f4=2, f8=0xE0003, f12=0xF0009, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MIXER_17, f4=7, f8=0xE0003, f12=0xF000C, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_TECHNI_CHORD_3, f4=24, f8=0xE0003, f12=0xF000D, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MASTER_TUNING_4, f4=9, f8=0xE0003, f12=0xF000A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_KEY_SCALING_3, f4=132, f8=0xE0003, f12=0xF000B, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SOUND_LOAD_OPTION_6, f4=209, f8=0xE0003, f12=0xF003A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_REVERB_EFFECT_MENU, f4=206, f8=0xE0014, f12=0xF0078, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_SOUND_DSP_12, f4=208, f8=0xE0014, f12=0xF007C, f16=0x5000D	# [8]
-	REC_func_4849DC55_Table	p0=Str_MULTI_DSP, f4=12, f8=0xE0014, f12=0xF007B, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_CHORUS_9, f4=207, f8=0xE0014, f12=0xF007A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_REVERB_8, f4=23, f8=0xE0014, f12=0xF0079, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_EQUALIZER_5, f4=13, f8=0xE0014, f12=0xF007D, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MIC_REVERB_EFFECT_5, f4=155, f8=0xE0014, f12=0xF007E, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_ALLOCATION_3, f4=210, f8=0xE0014, f12=0xF0039, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SOUND_EDIT_MENU_2, f4=15, f8=0xE000E, f12=0xF0011, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_CONTROL_MENU_2, f4=147, f8=0xE0005, f12=0xF0024, f16=0x5000C	# [16]
-	REC_func_4849DC55_Table	p0=Str_INITIAL_6, f4=14, f8=0xE0005, f12=0xF0025, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_OVERALL_TOUCH_SENSITIVITY_3, f4=10, f8=0xE0005, f12=0xF0027, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_FOOT_CONTROLLERS_3, f4=129, f8=0xE0005, f12=0xF0026, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MUSIC_STYLE_ARRANGER_MODE_3, f4=50, f8=0xE0005, f12=0xF0028, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PANEL_MEMORY_MODE_3, f4=49, f8=0xE0005, f12=0xF0029, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_FADE_IN_OUT_SETTING_3, f4=156, f8=0xE0005, f12=0xF002A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MIDI_MENU_2, f4=25, f8=0xE0004, f12=0xF0050, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_MIDI_PART_SETTING, f4=103, f8=0xE0004, f12=0xF0051, f16=0x5000D	# [24]
-	REC_func_4849DC55_Table	p0=Str_CONTROL_MESSAGES_3, f4=134, f8=0xE0004, f12=0xF0052, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_REALTIME_MESSAGES_3, f4=27, f8=0xE0004, f12=0xF0053, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_COMMON_SETTING_3, f4=26, f8=0xE0004, f12=0xF0054, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_INPUT_OUTPUT_SETTING_3, f4=104, f8=0xE0004, f12=0xF0055, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MIDI_PRESETS_3, f4=30, f8=0xE0004, f12=0xF0056, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MODE_SETTING_4, f4=186, f8=0xE0004, f12=0xF0058, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PROGRAM_CHANGE_MIDI_OUT_3, f4=29, f8=0xE0004, f12=0xF0059, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PANEL_MEMORY_OUTPUT_3, f4=105, f8=0xE0004, f12=0xF005B, f16=0x5000D	# [32]
-	REC_func_4849DC55_Table	p0=Str_COMPUTER_CONNECTION_3, f4=135, f8=0xE0004, f12=0xF005A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_CUSTOMIZE_MENU_2, f4=187, f8=0xE000D, f12=0xF0030, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_HOME_PAGE_SETTING_4, f4=188, f8=0xE000D, f12=0xF000F, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_DISPLAY_TIME_OUT_4, f4=148, f8=0xE000D, f12=0xF0033, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_WALLPAPER_SETTING_4, f4=133, f8=0xE000D, f12=0xF0034, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_CUSTOM_PANEL_MODE_4, f4=192, f8=0xE000D, f12=0xF0032, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MIDI_SETTING_LOAD_OPTION_4, f4=136, f8=0xE000D, f12=0xF0035, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_DATA_PROTECTION_4, f4=190, f8=0xE000D, f12=0xF002B, f16=0x5000D	# [40]
-	REC_func_4849DC55_Table	p0=Str_LANGUAGE_SETTING_4, f4=191, f8=0xE000D, f12=0xF0036, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_DISK_PREFERENCE_2, f4=232, f8=0xE0006, f12=0xF006D, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_DISK_MENU_3, f4=149, f8=0xE0006, f12=0xF0060, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_LOAD_23, f4=44, f8=0xE0006, f12=0xF0061, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SAVE_TECHNICS_FORMAT, f4=45, f8=0xE0006, f12=0xF0067, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SAVE_SMF_FORMAT_0, f4=45, f8=0xE0006, f12=0xF0069, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_DIRECT_PLAY_3, f4=46, f8=0xE0006, f12=0xF006E, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SONG_MEDLEY_8, f4=58, f8=0xE0006, f12=0xF0071, f16=0x5000D	# [48]
-	REC_func_4849DC55_Table	p0=Str_DISK_TOOLS_3, f4=231, f8=0xE0006, f12=0xF006A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_CUSTOM_STYLE_LOAD_SAVE_4, f4=193, f8=0xE0006, f12=0xF0075, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MUSIC_STYLIST_2, f4=162, f8=0xE0010, f12=0xF0041, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_MUSICAL_CATEGORY_3, f4=163, f8=0xE0010, f12=0xF0042, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MUSICAL_ERA_3, f4=184, f8=0xE0010, f12=0xF0044, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_ALPHABETICAL_LIST_3, f4=164, f8=0xE0010, f12=0xF0043, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_CUSTOM_STYLIST_3, f4=185, f8=0xE0010, f12=0xF0045, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_VOCALIST_WORKSTATION_2, f4=142, f8=0xE0000, f12=0xF00D4, f16=0x5000E	# [56]
-	REC_func_4849DC55_Table	p0=Str_CHORD_FINDER_4, f4=176, f8=0xE0000, f12=0xF00EE, f16=0x5000E
-	REC_func_4849DC55_Table	p0=Str_PADS_MENU_2, f4=197, f8=0xE0009, f12=0xF00DA, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_COMPILE_SET_2, f4=167, f8=0xE0009, f12=0xF00DC, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PHRASE_COPY_3, f4=198, f8=0xE0009, f12=0xF00E4, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SEQ_TO_PAD_COPY_3, f4=178, f8=0xE0009, f12=0xF00DE, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_COMPOSER_MENU_2, f4=77, f8=0xE0007, f12=0xF00B0, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_EASY_COMPOSER_3, f4=81, f8=0xE0007, f12=0xF00BA, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PATTERN_COPY_3, f4=82, f8=0xE0007, f12=0xF00B8, f16=0x5000D	# [64]
-	REC_func_4849DC55_Table	p0=Str_CUSTOM_STYLE_COPY_4, f4=161, f8=0xE0007, f12=0xF00BE, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SEQ_TO_COMPOSER_COPY_3, f4=83, f8=0xE0007, f12=0xF00B9, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_LOAD_SINGLE_COMPOSER_3, f4=84, f8=0xE0007, f12=0xF0062, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SEQUENCER_MENU, f4=51, f8=0xE0008, f12=0xF0080, f16=0x5000C
-	REC_func_4849DC55_Table	p0=Str_RECORD_EDIT_3, f4=202, f8=0xE0008, f12=0xF0093, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_COPY_PASTE_3, f4=203, f8=0xE0008, f12=0xF00A5, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_RANGE_EDIT_3, f4=204, f8=0xE0008, f12=0xF00A6, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PANEL_WRITE_3, f4=70, f8=0xE0008, f12=0xF008D, f16=0x5000D	# [72]
-	REC_func_4849DC55_Table	p0=Str_TRACK_MIXER_3, f4=7, f8=0xE0008, f12=0xF007F, f16=0x5000E
-	REC_func_4849DC55_Table	p0=Str_REALTIME_RECORD_3, f4=52, f8=0xE0008, f12=0xF0085, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_PUNCH_RECORD_3, f4=53, f8=0xE0008, f12=0xF0087, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_STEP_RECORD_6, f4=54, f8=0xE0008, f12=0xF0089, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_TRACK_ASSIGN_4, f4=57, f8=0xE0008, f12=0xF008B, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_QUANTIZE_8, f4=61, f8=0xE0008, f12=0xF009C, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SONG_SELECT_10, f4=55, f8=0xE0008, f12=0xF008E, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SONG_CLEAR_4, f4=63, f8=0xE0008, f12=0xF0090, f16=0x5000D	# [80]
-	REC_func_4849DC55_Table	p0=Str_TRACK_CLEAR_4, f4=64, f8=0xE0008, f12=0xF009A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_NOTE_EDIT_4, f4=4, f8=0xE0008, f12=0xF0094, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_DRUM_EDIT_4, f4=17, f8=0xE0008, f12=0xF0097, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_AFTER_TOUCH_SETTING_3, f4=110, f8=0xE0008, f12=0xF0092, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_TRACK_COPY_3, f4=205, f8=0xE0008, f12=0xF0084, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SONG_COPY_3, f4=67, f8=0xE0008, f12=0xF0091, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_TRACK_MERGE_3, f4=69, f8=0xE0008, f12=0xF009B, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MEASURE_COPY_5, f4=71, f8=0xE0008, f12=0xF00A2, f16=0x5000D	# [88]
-	REC_func_4849DC55_Table	p0=Str_MEASURE_ERASE_5, f4=72, f8=0xE0008, f12=0xF00A1, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MEASURE_DELETE_5, f4=73, f8=0xE0008, f12=0xF00A3, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MEASURE_INSERT_5, f4=74, f8=0xE0008, f12=0xF00A4, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_APC_TO_SMF_CONVERT_5, f4=201, f8=0xE0008, f12=0xF00A8, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_NOTE_CHANGE_3, f4=65, f8=0xE0008, f12=0xF009F, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_VELOCITY_CHANGE_3, f4=139, f8=0xE0008, f12=0xF009E, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_TRANSPOSE_6, f4=62, f8=0xE0008, f12=0xF009D, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_ADVANCE_DELAY_3, f4=66, f8=0xE0008, f12=0xF00A0, f16=0x5000D	# [96]
-	REC_func_4849DC55_Table	p0=Str_SEPARATE_OUT_SETTING_3, f4=215, f8=0xE0003, f12=0xF00E9, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_MONITOR_SETTING_3, f4=214, f8=0xE0003, f12=0xF00FE, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_APC_REVERB_SETTING_3, f4=230, f8=0xE0003, f12=0xF0103, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_MENU_3, f4=219, f8=0xE0018, f12=0xF0104, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_LOAD_2, f4=220, f8=0xE0018, f12=0xF0105, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_SAVE_TECHNICS_FORMAT, f4=221, f8=0xE0018, f12=0xF0108, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_SAVE_SMF_FORMAT_0, f4=221, f8=0xE0018, f12=0xF0109, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_SONG_MEDLEY_3, f4=222, f8=0xE0018, f12=0xF0110, f16=0x5000D	# [104]
-	REC_func_4849DC55_Table	p0=Str_SD_AUDIO_PLAY_4, f4=218, f8=0xE0018, f12=0xF0116, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_SOUND_PLAY_5, f4=216, f8=0xE0018, f12=0xF011A, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_TOOLS_3, f4=224, f8=0xE0018, f12=0xF010B, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_PREFERENCES_3, f4=226, f8=0xE0018, f12=0xF0112, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_FAVORITE_SONGS, f4=225, f8=0xE0018, f12=0xF011F, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_SD_CUSTOM_STYLE_LOAD_SAVE_2, f4=223, f8=0xE0018, f12=0xF0111, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_VIDEO_OUT_SETTNG, f4=229, f8=0xE000D, f12=0xF0102, f16=0x5000D
-	REC_func_4849DC55_Table	p0=Str_ORGAN_STYLIST_3, f4=213, f8=0xE0010, f12=0xF0057, f16=0x5000D	# [112]
-	REC_func_4849DC55_Table	p0=data_486023BE, f4=2, f8=0xE0000, f12=0xF0000, f16=0x5000D
+	REC_func_4849DC55_Table	text=Str_SOUND_MENU_2, f4=21, f8=0xE0003, f12=0xF0008, event=0x5000C	# [0]
+	REC_func_4849DC55_Table	text=Str_SOUND_PART_SETTING, f4=2, f8=0xE0003, f12=0xF0009, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MIXER_17, f4=7, f8=0xE0003, f12=0xF000C, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_TECHNI_CHORD_3, f4=24, f8=0xE0003, f12=0xF000D, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MASTER_TUNING_4, f4=9, f8=0xE0003, f12=0xF000A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_KEY_SCALING_3, f4=132, f8=0xE0003, f12=0xF000B, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SOUND_LOAD_OPTION_6, f4=209, f8=0xE0003, f12=0xF003A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_REVERB_EFFECT_MENU, f4=206, f8=0xE0014, f12=0xF0078, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_SOUND_DSP_12, f4=208, f8=0xE0014, f12=0xF007C, event=0x5000D	# [8]
+	REC_func_4849DC55_Table	text=Str_MULTI_DSP, f4=12, f8=0xE0014, f12=0xF007B, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_CHORUS_9, f4=207, f8=0xE0014, f12=0xF007A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_REVERB_8, f4=23, f8=0xE0014, f12=0xF0079, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_EQUALIZER_5, f4=13, f8=0xE0014, f12=0xF007D, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MIC_REVERB_EFFECT_5, f4=155, f8=0xE0014, f12=0xF007E, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_ALLOCATION_3, f4=210, f8=0xE0014, f12=0xF0039, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SOUND_EDIT_MENU_2, f4=15, f8=0xE000E, f12=0xF0011, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_CONTROL_MENU_2, f4=147, f8=0xE0005, f12=0xF0024, event=0x5000C	# [16]
+	REC_func_4849DC55_Table	text=Str_INITIAL_6, f4=14, f8=0xE0005, f12=0xF0025, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_OVERALL_TOUCH_SENSITIVITY_3, f4=10, f8=0xE0005, f12=0xF0027, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_FOOT_CONTROLLERS_3, f4=129, f8=0xE0005, f12=0xF0026, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MUSIC_STYLE_ARRANGER_MODE_3, f4=50, f8=0xE0005, f12=0xF0028, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PANEL_MEMORY_MODE_3, f4=49, f8=0xE0005, f12=0xF0029, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_FADE_IN_OUT_SETTING_3, f4=156, f8=0xE0005, f12=0xF002A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MIDI_MENU_2, f4=25, f8=0xE0004, f12=0xF0050, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_MIDI_PART_SETTING, f4=103, f8=0xE0004, f12=0xF0051, event=0x5000D	# [24]
+	REC_func_4849DC55_Table	text=Str_CONTROL_MESSAGES_3, f4=134, f8=0xE0004, f12=0xF0052, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_REALTIME_MESSAGES_3, f4=27, f8=0xE0004, f12=0xF0053, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_COMMON_SETTING_3, f4=26, f8=0xE0004, f12=0xF0054, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_INPUT_OUTPUT_SETTING_3, f4=104, f8=0xE0004, f12=0xF0055, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MIDI_PRESETS_3, f4=30, f8=0xE0004, f12=0xF0056, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MODE_SETTING_4, f4=186, f8=0xE0004, f12=0xF0058, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PROGRAM_CHANGE_MIDI_OUT_3, f4=29, f8=0xE0004, f12=0xF0059, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PANEL_MEMORY_OUTPUT_3, f4=105, f8=0xE0004, f12=0xF005B, event=0x5000D	# [32]
+	REC_func_4849DC55_Table	text=Str_COMPUTER_CONNECTION_3, f4=135, f8=0xE0004, f12=0xF005A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_CUSTOMIZE_MENU_2, f4=187, f8=0xE000D, f12=0xF0030, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_HOME_PAGE_SETTING_4, f4=188, f8=0xE000D, f12=0xF000F, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_DISPLAY_TIME_OUT_4, f4=148, f8=0xE000D, f12=0xF0033, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_WALLPAPER_SETTING_4, f4=133, f8=0xE000D, f12=0xF0034, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_CUSTOM_PANEL_MODE_4, f4=192, f8=0xE000D, f12=0xF0032, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MIDI_SETTING_LOAD_OPTION_4, f4=136, f8=0xE000D, f12=0xF0035, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_DATA_PROTECTION_4, f4=190, f8=0xE000D, f12=0xF002B, event=0x5000D	# [40]
+	REC_func_4849DC55_Table	text=Str_LANGUAGE_SETTING_4, f4=191, f8=0xE000D, f12=0xF0036, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_DISK_PREFERENCE_2, f4=232, f8=0xE0006, f12=0xF006D, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_DISK_MENU_3, f4=149, f8=0xE0006, f12=0xF0060, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_LOAD_23, f4=44, f8=0xE0006, f12=0xF0061, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SAVE_TECHNICS_FORMAT, f4=45, f8=0xE0006, f12=0xF0067, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SAVE_SMF_FORMAT_0, f4=45, f8=0xE0006, f12=0xF0069, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_DIRECT_PLAY_3, f4=46, f8=0xE0006, f12=0xF006E, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SONG_MEDLEY_8, f4=58, f8=0xE0006, f12=0xF0071, event=0x5000D	# [48]
+	REC_func_4849DC55_Table	text=Str_DISK_TOOLS_3, f4=231, f8=0xE0006, f12=0xF006A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_CUSTOM_STYLE_LOAD_SAVE_4, f4=193, f8=0xE0006, f12=0xF0075, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MUSIC_STYLIST_2, f4=162, f8=0xE0010, f12=0xF0041, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_MUSICAL_CATEGORY_3, f4=163, f8=0xE0010, f12=0xF0042, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MUSICAL_ERA_3, f4=184, f8=0xE0010, f12=0xF0044, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_ALPHABETICAL_LIST_3, f4=164, f8=0xE0010, f12=0xF0043, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_CUSTOM_STYLIST_3, f4=185, f8=0xE0010, f12=0xF0045, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_VOCALIST_WORKSTATION_2, f4=142, f8=0xE0000, f12=0xF00D4, event=0x5000E	# [56]
+	REC_func_4849DC55_Table	text=Str_CHORD_FINDER_4, f4=176, f8=0xE0000, f12=0xF00EE, event=0x5000E
+	REC_func_4849DC55_Table	text=Str_PADS_MENU_2, f4=197, f8=0xE0009, f12=0xF00DA, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_COMPILE_SET_2, f4=167, f8=0xE0009, f12=0xF00DC, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PHRASE_COPY_3, f4=198, f8=0xE0009, f12=0xF00E4, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SEQ_TO_PAD_COPY_3, f4=178, f8=0xE0009, f12=0xF00DE, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_COMPOSER_MENU_2, f4=77, f8=0xE0007, f12=0xF00B0, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_EASY_COMPOSER_3, f4=81, f8=0xE0007, f12=0xF00BA, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PATTERN_COPY_3, f4=82, f8=0xE0007, f12=0xF00B8, event=0x5000D	# [64]
+	REC_func_4849DC55_Table	text=Str_CUSTOM_STYLE_COPY_4, f4=161, f8=0xE0007, f12=0xF00BE, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SEQ_TO_COMPOSER_COPY_3, f4=83, f8=0xE0007, f12=0xF00B9, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_LOAD_SINGLE_COMPOSER_3, f4=84, f8=0xE0007, f12=0xF0062, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SEQUENCER_MENU, f4=51, f8=0xE0008, f12=0xF0080, event=0x5000C
+	REC_func_4849DC55_Table	text=Str_RECORD_EDIT_3, f4=202, f8=0xE0008, f12=0xF0093, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_COPY_PASTE_3, f4=203, f8=0xE0008, f12=0xF00A5, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_RANGE_EDIT_3, f4=204, f8=0xE0008, f12=0xF00A6, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PANEL_WRITE_3, f4=70, f8=0xE0008, f12=0xF008D, event=0x5000D	# [72]
+	REC_func_4849DC55_Table	text=Str_TRACK_MIXER_3, f4=7, f8=0xE0008, f12=0xF007F, event=0x5000E
+	REC_func_4849DC55_Table	text=Str_REALTIME_RECORD_3, f4=52, f8=0xE0008, f12=0xF0085, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_PUNCH_RECORD_3, f4=53, f8=0xE0008, f12=0xF0087, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_STEP_RECORD_6, f4=54, f8=0xE0008, f12=0xF0089, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_TRACK_ASSIGN_4, f4=57, f8=0xE0008, f12=0xF008B, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_QUANTIZE_8, f4=61, f8=0xE0008, f12=0xF009C, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SONG_SELECT_10, f4=55, f8=0xE0008, f12=0xF008E, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SONG_CLEAR_4, f4=63, f8=0xE0008, f12=0xF0090, event=0x5000D	# [80]
+	REC_func_4849DC55_Table	text=Str_TRACK_CLEAR_4, f4=64, f8=0xE0008, f12=0xF009A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_NOTE_EDIT_4, f4=4, f8=0xE0008, f12=0xF0094, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_DRUM_EDIT_4, f4=17, f8=0xE0008, f12=0xF0097, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_AFTER_TOUCH_SETTING_3, f4=110, f8=0xE0008, f12=0xF0092, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_TRACK_COPY_3, f4=205, f8=0xE0008, f12=0xF0084, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SONG_COPY_3, f4=67, f8=0xE0008, f12=0xF0091, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_TRACK_MERGE_3, f4=69, f8=0xE0008, f12=0xF009B, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MEASURE_COPY_5, f4=71, f8=0xE0008, f12=0xF00A2, event=0x5000D	# [88]
+	REC_func_4849DC55_Table	text=Str_MEASURE_ERASE_5, f4=72, f8=0xE0008, f12=0xF00A1, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MEASURE_DELETE_5, f4=73, f8=0xE0008, f12=0xF00A3, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MEASURE_INSERT_5, f4=74, f8=0xE0008, f12=0xF00A4, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_APC_TO_SMF_CONVERT_5, f4=201, f8=0xE0008, f12=0xF00A8, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_NOTE_CHANGE_3, f4=65, f8=0xE0008, f12=0xF009F, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_VELOCITY_CHANGE_3, f4=139, f8=0xE0008, f12=0xF009E, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_TRANSPOSE_6, f4=62, f8=0xE0008, f12=0xF009D, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_ADVANCE_DELAY_3, f4=66, f8=0xE0008, f12=0xF00A0, event=0x5000D	# [96]
+	REC_func_4849DC55_Table	text=Str_SEPARATE_OUT_SETTING_3, f4=215, f8=0xE0003, f12=0xF00E9, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_MONITOR_SETTING_3, f4=214, f8=0xE0003, f12=0xF00FE, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_APC_REVERB_SETTING_3, f4=230, f8=0xE0003, f12=0xF0103, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_MENU_3, f4=219, f8=0xE0018, f12=0xF0104, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_LOAD_2, f4=220, f8=0xE0018, f12=0xF0105, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_SAVE_TECHNICS_FORMAT, f4=221, f8=0xE0018, f12=0xF0108, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_SAVE_SMF_FORMAT_0, f4=221, f8=0xE0018, f12=0xF0109, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_SONG_MEDLEY_3, f4=222, f8=0xE0018, f12=0xF0110, event=0x5000D	# [104]
+	REC_func_4849DC55_Table	text=Str_SD_AUDIO_PLAY_4, f4=218, f8=0xE0018, f12=0xF0116, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_SOUND_PLAY_5, f4=216, f8=0xE0018, f12=0xF011A, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_TOOLS_3, f4=224, f8=0xE0018, f12=0xF010B, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_PREFERENCES_3, f4=226, f8=0xE0018, f12=0xF0112, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_FAVORITE_SONGS, f4=225, f8=0xE0018, f12=0xF011F, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_SD_CUSTOM_STYLE_LOAD_SAVE_2, f4=223, f8=0xE0018, f12=0xF0111, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_VIDEO_OUT_SETTNG, f4=229, f8=0xE000D, f12=0xF0102, event=0x5000D
+	REC_func_4849DC55_Table	text=Str_ORGAN_STYLIST_3, f4=213, f8=0xE0010, f12=0xF0057, event=0x5000D	# [112]
+	REC_func_4849DC55_Table	text=data_486023BE, f4=2, f8=0xE0000, f12=0xF0000, event=0x5000D
 
 AcFavScreenProc_Records_p0_p8_0:	# REC_AcFavScreenProc_Records_p0_p8 (4 bytes)
 	REC_AcFavScreenProc_Records_p0_p8	f0=67, x1="URR"
@@ -704,257 +704,257 @@ ptrs_48604AC4:
 	.long	Str_Keep_holding_the_set_button_and_push_a_l
 
 func_4849CB53_Records:	# 16 x REC_func_4849CB53_Records (8 bytes each); read by func_4849CB53 0x4849CB53 `mov (a0), d0`
-	REC_func_4849CB53_Records	f0=64, p4=loc_4849CE70	# [0]
-	REC_func_4849CB53_Records	f0=1, p4=loc_4849CD45
-	REC_func_4849CB53_Records	f0=2, p4=loc_4849CD68
-	REC_func_4849CB53_Records	f0=3, p4=loc_4849CD68
-	REC_func_4849CB53_Records	f0=4, p4=loc_4849CD9D
-	REC_func_4849CB53_Records	f0=5, p4=loc_4849CD68
-	REC_func_4849CB53_Records	f0=6, p4=loc_4849CD22
-	REC_func_4849CB53_Records	f0=7, p4=loc_4849CD68
-	REC_func_4849CB53_Records	f0=66, p4=loc_4849CE9B	# [8]
-	REC_func_4849CB53_Records	f0=67, p4=loc_4849CEC6
-	REC_func_4849CB53_Records	f0=58, p4=loc_4849CDC0
-	REC_func_4849CB53_Records	f0=59, p4=loc_4849CDEC
-	REC_func_4849CB53_Records	f0=60, p4=loc_4849CE18
-	REC_func_4849CB53_Records	f0=61, p4=loc_4849CE44
-	REC_func_4849CB53_Records	p4=loc_4849CEEF
-	REC_func_4849CB53_Records	p4=loc_4849CEEF
+	REC_func_4849CB53_Records	key=64, proc=loc_4849CE70	# [0]
+	REC_func_4849CB53_Records	key=1, proc=loc_4849CD45
+	REC_func_4849CB53_Records	key=2, proc=loc_4849CD68
+	REC_func_4849CB53_Records	key=3, proc=loc_4849CD68
+	REC_func_4849CB53_Records	key=4, proc=loc_4849CD9D
+	REC_func_4849CB53_Records	key=5, proc=loc_4849CD68
+	REC_func_4849CB53_Records	key=6, proc=loc_4849CD22
+	REC_func_4849CB53_Records	key=7, proc=loc_4849CD68
+	REC_func_4849CB53_Records	key=66, proc=loc_4849CE9B	# [8]
+	REC_func_4849CB53_Records	key=67, proc=loc_4849CEC6
+	REC_func_4849CB53_Records	key=58, proc=loc_4849CDC0
+	REC_func_4849CB53_Records	key=59, proc=loc_4849CDEC
+	REC_func_4849CB53_Records	key=60, proc=loc_4849CE18
+	REC_func_4849CB53_Records	key=61, proc=loc_4849CE44
+	REC_func_4849CB53_Records	proc=loc_4849CEEF
+	REC_func_4849CB53_Records	proc=loc_4849CEEF
 AcFavoriteProc_Records:	# 16 x REC_AcFavoriteProc_Records (8 bytes each); read by AcFavoriteProc 0x4849CFEC `mov (a0), d0`
-	REC_AcFavoriteProc_Records	f0=0x800000, p4=loc_4849D105	# [0]
-	REC_AcFavoriteProc_Records	f0=1, p4=loc_4849D040
-	REC_AcFavoriteProc_Records	f0=0x100B2, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	f0=0x100B3, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	f0=20, p4=loc_4849D040
-	REC_AcFavoriteProc_Records	f0=5, p4=loc_4849D180
-	REC_AcFavoriteProc_Records	f0=0x100B4, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	f0=0x100A3, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	f0=0x100B8, p4=loc_4849D1EE	# [8]
-	REC_AcFavoriteProc_Records	f0=9, p4=loc_4849D09B
-	REC_AcFavoriteProc_Records	f0=0x100A2, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	f0=0x1003A, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	p4=loc_4849D249
-	REC_AcFavoriteProc_Records	p4=loc_4849D249
-	REC_AcFavoriteProc_Records	f0=0x100AE, p4=loc_4849D1EE
-	REC_AcFavoriteProc_Records	f0=0x100AF, p4=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=0x800000, proc=loc_4849D105	# [0]
+	REC_AcFavoriteProc_Records	key=1, proc=loc_4849D040
+	REC_AcFavoriteProc_Records	key=0x100B2, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=0x100B3, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=20, proc=loc_4849D040
+	REC_AcFavoriteProc_Records	key=5, proc=loc_4849D180
+	REC_AcFavoriteProc_Records	key=0x100B4, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=0x100A3, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=0x100B8, proc=loc_4849D1EE	# [8]
+	REC_AcFavoriteProc_Records	key=9, proc=loc_4849D09B
+	REC_AcFavoriteProc_Records	key=0x100A2, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=0x1003A, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	proc=loc_4849D249
+	REC_AcFavoriteProc_Records	proc=loc_4849D249
+	REC_AcFavoriteProc_Records	key=0x100AE, proc=loc_4849D1EE
+	REC_AcFavoriteProc_Records	key=0x100AF, proc=loc_4849D1EE
 func_4849D2C7_Records:	# 16 x REC_func_4849D2C7_Records (8 bytes each); read by func_4849D2C7 0x4849D2C7 `mov (a0), d0`
-	REC_func_4849D2C7_Records	f0=0x100B0, p4=loc_4849D34A	# [0]
-	REC_func_4849D2C7_Records	f0=1, p4=loc_4849D318
-	REC_func_4849D2C7_Records	f0=0x1009F, p4=loc_4849D34D
-	REC_func_4849D2C7_Records	f0=0x1009E, p4=loc_4849D352
-	REC_func_4849D2C7_Records	f0=0x100B4, p4=loc_4849D31B
-	REC_func_4849D2C7_Records	f0=0x810000, p4=loc_4849D355
-	REC_func_4849D2C7_Records	f0=0x10036, p4=loc_4849D31B
-	REC_func_4849D2C7_Records	f0=0x810001, p4=loc_4849D360
-	REC_func_4849D2C7_Records	p4=loc_4849D364	# [8]
-	REC_func_4849D2C7_Records	p4=loc_4849D364
-	REC_func_4849D2C7_Records	f0=0x100AA, p4=loc_4849D31B
-	REC_func_4849D2C7_Records	f0=0x100AB, p4=loc_4849D31B
-	REC_func_4849D2C7_Records	f0=0x80FFFC, p4=loc_4849D35C
-	REC_func_4849D2C7_Records	p4=loc_4849D364
-	REC_func_4849D2C7_Records	f0=0x100AE, p4=loc_4849D32A
-	REC_func_4849D2C7_Records	f0=0x100AF, p4=loc_4849D34A
+	REC_func_4849D2C7_Records	f0=0x100B0, proc=loc_4849D34A	# [0]
+	REC_func_4849D2C7_Records	f0=1, proc=loc_4849D318
+	REC_func_4849D2C7_Records	f0=0x1009F, proc=loc_4849D34D
+	REC_func_4849D2C7_Records	f0=0x1009E, proc=loc_4849D352
+	REC_func_4849D2C7_Records	f0=0x100B4, proc=loc_4849D31B
+	REC_func_4849D2C7_Records	f0=0x810000, proc=loc_4849D355
+	REC_func_4849D2C7_Records	f0=0x10036, proc=loc_4849D31B
+	REC_func_4849D2C7_Records	f0=0x810001, proc=loc_4849D360
+	REC_func_4849D2C7_Records	proc=loc_4849D364	# [8]
+	REC_func_4849D2C7_Records	proc=loc_4849D364
+	REC_func_4849D2C7_Records	f0=0x100AA, proc=loc_4849D31B
+	REC_func_4849D2C7_Records	f0=0x100AB, proc=loc_4849D31B
+	REC_func_4849D2C7_Records	f0=0x80FFFC, proc=loc_4849D35C
+	REC_func_4849D2C7_Records	proc=loc_4849D364
+	REC_func_4849D2C7_Records	f0=0x100AE, proc=loc_4849D32A
+	REC_func_4849D2C7_Records	f0=0x100AF, proc=loc_4849D34A
 func_4849D368_Records:	# 16 x REC_func_4849D368_Records (8 bytes each); read by func_4849D368 0x4849D368 `mov (a0), d0`
-	REC_func_4849D368_Records	f0=0x100B0, p4=loc_4849D454	# [0]
-	REC_func_4849D368_Records	f0=1, p4=loc_4849D3BA
-	REC_func_4849D368_Records	f0=0x1009F, p4=loc_4849D466
-	REC_func_4849D368_Records	f0=0x1009E, p4=loc_4849D46B
-	REC_func_4849D368_Records	f0=0x100B4, p4=loc_4849D473
-	REC_func_4849D368_Records	f0=0x810000, p4=loc_4849D488
-	REC_func_4849D368_Records	f0=0x10036, p4=loc_4849D476
-	REC_func_4849D368_Records	f0=0x810001, p4=loc_4849D493
-	REC_func_4849D368_Records	p4=loc_4849D497	# [8]
-	REC_func_4849D368_Records	p4=loc_4849D497
-	REC_func_4849D368_Records	f0=0x100AA, p4=loc_4849D46E
-	REC_func_4849D368_Records	f0=0x100AB, p4=loc_4849D462
-	REC_func_4849D368_Records	f0=0x80FFFC, p4=loc_4849D48F
-	REC_func_4849D368_Records	p4=loc_4849D497
-	REC_func_4849D368_Records	f0=0x100AE, p4=loc_4849D454
-	REC_func_4849D368_Records	f0=0x100AF, p4=loc_4849D454
+	REC_func_4849D368_Records	key=0x100B0, proc=loc_4849D454	# [0]
+	REC_func_4849D368_Records	key=1, proc=loc_4849D3BA
+	REC_func_4849D368_Records	key=0x1009F, proc=loc_4849D466
+	REC_func_4849D368_Records	key=0x1009E, proc=loc_4849D46B
+	REC_func_4849D368_Records	key=0x100B4, proc=loc_4849D473
+	REC_func_4849D368_Records	key=0x810000, proc=loc_4849D488
+	REC_func_4849D368_Records	key=0x10036, proc=loc_4849D476
+	REC_func_4849D368_Records	key=0x810001, proc=loc_4849D493
+	REC_func_4849D368_Records	proc=loc_4849D497	# [8]
+	REC_func_4849D368_Records	proc=loc_4849D497
+	REC_func_4849D368_Records	key=0x100AA, proc=loc_4849D46E
+	REC_func_4849D368_Records	key=0x100AB, proc=loc_4849D462
+	REC_func_4849D368_Records	key=0x80FFFC, proc=loc_4849D48F
+	REC_func_4849D368_Records	proc=loc_4849D497
+	REC_func_4849D368_Records	key=0x100AE, proc=loc_4849D454
+	REC_func_4849D368_Records	key=0x100AF, proc=loc_4849D454
 func_4849D49B_Records:	# 32 x REC_func_4849D49B_Records (8 bytes each); read by func_4849D49B 0x4849D49B `mov (a0), d0`
-	REC_func_4849D49B_Records	f0=0x800000, p4=loc_4849D4EE	# [0]
-	REC_func_4849D49B_Records	f0=1, p4=loc_4849D4EE
-	REC_func_4849D49B_Records	f0=0x100A2, p4=loc_4849D6D8
-	REC_func_4849D49B_Records	f0=0x100A3, p4=loc_4849D6D3
-	REC_func_4849D49B_Records	f0=0x810004, p4=loc_4849D7F5
-	REC_func_4849D49B_Records	f0=5, p4=loc_4849D590
-	REC_func_4849D49B_Records	f0=0x810000, p4=loc_4849D85B
-	REC_func_4849D49B_Records	f0=0x810005, p4=loc_4849D89A
-	REC_func_4849D49B_Records	p4=loc_4849D89E	# [8]
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	f0=0x100AE, p4=loc_4849D6DE
-	REC_func_4849D49B_Records	f0=0x100AF, p4=loc_4849D6C4
-	REC_func_4849D49B_Records	p4=loc_4849D89E	# [16]
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	f0=0x100B2, p4=loc_4849D5FC
-	REC_func_4849D49B_Records	f0=0x100B3, p4=loc_4849D5FC
-	REC_func_4849D49B_Records	f0=20, p4=loc_4849D50C
-	REC_func_4849D49B_Records	f0=0x100B4, p4=loc_4849D60B
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	f0=0x100B8, p4=loc_4849D740	# [24]
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	f0=0x1003A, p4=loc_4849D744
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
-	REC_func_4849D49B_Records	p4=loc_4849D89E
+	REC_func_4849D49B_Records	key=0x800000, proc=loc_4849D4EE	# [0]
+	REC_func_4849D49B_Records	key=1, proc=loc_4849D4EE
+	REC_func_4849D49B_Records	key=0x100A2, proc=loc_4849D6D8
+	REC_func_4849D49B_Records	key=0x100A3, proc=loc_4849D6D3
+	REC_func_4849D49B_Records	key=0x810004, proc=loc_4849D7F5
+	REC_func_4849D49B_Records	key=5, proc=loc_4849D590
+	REC_func_4849D49B_Records	key=0x810000, proc=loc_4849D85B
+	REC_func_4849D49B_Records	key=0x810005, proc=loc_4849D89A
+	REC_func_4849D49B_Records	proc=loc_4849D89E	# [8]
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	key=0x100AE, proc=loc_4849D6DE
+	REC_func_4849D49B_Records	key=0x100AF, proc=loc_4849D6C4
+	REC_func_4849D49B_Records	proc=loc_4849D89E	# [16]
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	key=0x100B2, proc=loc_4849D5FC
+	REC_func_4849D49B_Records	key=0x100B3, proc=loc_4849D5FC
+	REC_func_4849D49B_Records	key=20, proc=loc_4849D50C
+	REC_func_4849D49B_Records	key=0x100B4, proc=loc_4849D60B
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	key=0x100B8, proc=loc_4849D740	# [24]
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	key=0x1003A, proc=loc_4849D744
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
+	REC_func_4849D49B_Records	proc=loc_4849D89E
 func_4849D8A2_Records:	# 32 x REC_func_4849D8A2_Records (8 bytes each); read by func_4849D8A2 0x4849D8A2 `mov (a0), d0`
-	REC_func_4849D8A2_Records	f0=0x800000, p4=loc_4849D8F5	# [0]
-	REC_func_4849D8A2_Records	f0=1, p4=loc_4849D8F5
-	REC_func_4849D8A2_Records	f0=0x100A2, p4=loc_4849DA3A
-	REC_func_4849D8A2_Records	f0=0x100A3, p4=loc_4849DA35
-	REC_func_4849D8A2_Records	f0=0x810004, p4=loc_4849DA9B
-	REC_func_4849D8A2_Records	f0=5, p4=loc_4849D937
-	REC_func_4849D8A2_Records	f0=0x810000, p4=loc_4849DACD
-	REC_func_4849D8A2_Records	f0=0x810005, p4=loc_4849DAE4
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8	# [8]
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	f0=0x100AE, p4=loc_4849DA40
-	REC_func_4849D8A2_Records	f0=0x100AF, p4=loc_4849DA26
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8	# [16]
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	f0=0x100B2, p4=loc_4849D981
-	REC_func_4849D8A2_Records	f0=0x100B3, p4=loc_4849D981
-	REC_func_4849D8A2_Records	f0=20, p4=loc_4849D906
-	REC_func_4849D8A2_Records	f0=0x100B4, p4=loc_4849D990
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	f0=0x100B8, p4=loc_4849DA46	# [24]
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	f0=0x1003A, p4=loc_4849DA4A
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
-	REC_func_4849D8A2_Records	p4=loc_4849DAE8
+	REC_func_4849D8A2_Records	key=0x800000, proc=loc_4849D8F5	# [0]
+	REC_func_4849D8A2_Records	key=1, proc=loc_4849D8F5
+	REC_func_4849D8A2_Records	key=0x100A2, proc=loc_4849DA3A
+	REC_func_4849D8A2_Records	key=0x100A3, proc=loc_4849DA35
+	REC_func_4849D8A2_Records	key=0x810004, proc=loc_4849DA9B
+	REC_func_4849D8A2_Records	key=5, proc=loc_4849D937
+	REC_func_4849D8A2_Records	key=0x810000, proc=loc_4849DACD
+	REC_func_4849D8A2_Records	key=0x810005, proc=loc_4849DAE4
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8	# [8]
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	key=0x100AE, proc=loc_4849DA40
+	REC_func_4849D8A2_Records	key=0x100AF, proc=loc_4849DA26
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8	# [16]
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	key=0x100B2, proc=loc_4849D981
+	REC_func_4849D8A2_Records	key=0x100B3, proc=loc_4849D981
+	REC_func_4849D8A2_Records	key=20, proc=loc_4849D906
+	REC_func_4849D8A2_Records	key=0x100B4, proc=loc_4849D990
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	key=0x100B8, proc=loc_4849DA46	# [24]
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	key=0x1003A, proc=loc_4849DA4A
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
+	REC_func_4849D8A2_Records	proc=loc_4849DAE8
 func_4849DAEC_Records:	# 16 x REC_func_4849DAEC_Records (8 bytes each); read by func_4849DAEC 0x4849DAEC `mov (a0), d0`
-	REC_func_4849DAEC_Records	f0=0x100B0, p4=loc_4849DB91	# [0]
-	REC_func_4849DAEC_Records	f0=1, p4=loc_4849DB40
-	REC_func_4849DAEC_Records	f0=0x1009F, p4=loc_4849DBB1
-	REC_func_4849DAEC_Records	f0=0x1009E, p4=loc_4849DBB6
-	REC_func_4849DAEC_Records	f0=0x100B4, p4=loc_4849DBC2
-	REC_func_4849DAEC_Records	f0=0x810000, p4=loc_4849DC14
-	REC_func_4849DAEC_Records	f0=0x10036, p4=loc_4849DBC6
-	REC_func_4849DAEC_Records	f0=0x810001, p4=loc_4849DC4D
-	REC_func_4849DAEC_Records	p4=loc_4849DC51	# [8]
-	REC_func_4849DAEC_Records	p4=loc_4849DC51
-	REC_func_4849DAEC_Records	f0=0x100AA, p4=loc_4849DBBC
-	REC_func_4849DAEC_Records	f0=0x100AB, p4=loc_4849DBA1
-	REC_func_4849DAEC_Records	f0=0x80FFFC, p4=loc_4849DC43
-	REC_func_4849DAEC_Records	p4=loc_4849DC51
-	REC_func_4849DAEC_Records	f0=0x100AE, p4=loc_4849DB91
-	REC_func_4849DAEC_Records	f0=0x100AF, p4=loc_4849DB91
+	REC_func_4849DAEC_Records	key=0x100B0, proc=loc_4849DB91	# [0]
+	REC_func_4849DAEC_Records	key=1, proc=loc_4849DB40
+	REC_func_4849DAEC_Records	key=0x1009F, proc=loc_4849DBB1
+	REC_func_4849DAEC_Records	key=0x1009E, proc=loc_4849DBB6
+	REC_func_4849DAEC_Records	key=0x100B4, proc=loc_4849DBC2
+	REC_func_4849DAEC_Records	key=0x810000, proc=loc_4849DC14
+	REC_func_4849DAEC_Records	key=0x10036, proc=loc_4849DBC6
+	REC_func_4849DAEC_Records	key=0x810001, proc=loc_4849DC4D
+	REC_func_4849DAEC_Records	proc=loc_4849DC51	# [8]
+	REC_func_4849DAEC_Records	proc=loc_4849DC51
+	REC_func_4849DAEC_Records	key=0x100AA, proc=loc_4849DBBC
+	REC_func_4849DAEC_Records	key=0x100AB, proc=loc_4849DBA1
+	REC_func_4849DAEC_Records	key=0x80FFFC, proc=loc_4849DC43
+	REC_func_4849DAEC_Records	proc=loc_4849DC51
+	REC_func_4849DAEC_Records	key=0x100AE, proc=loc_4849DB91
+	REC_func_4849DAEC_Records	key=0x100AF, proc=loc_4849DB91
 func_4849DC55_Records:	# 16 x REC_func_4849DC55_Records (8 bytes each); read by func_4849DC55 0x4849DC55 `mov (a0), d0`
-	REC_func_4849DC55_Records	f0=64, p4=loc_4849DD31	# [0]
-	REC_func_4849DC55_Records	f0=1, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=2, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=3, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=4, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=5, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=6, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=7, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=66, p4=loc_4849DD31	# [8]
-	REC_func_4849DC55_Records	f0=67, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=58, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=59, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=60, p4=loc_4849DD31
-	REC_func_4849DC55_Records	f0=61, p4=loc_4849DD31
-	REC_func_4849DC55_Records	p4=loc_4849DD49
-	REC_func_4849DC55_Records	p4=loc_4849DD49
+	REC_func_4849DC55_Records	f0=64, proc=loc_4849DD31	# [0]
+	REC_func_4849DC55_Records	f0=1, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=2, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=3, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=4, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=5, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=6, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=7, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=66, proc=loc_4849DD31	# [8]
+	REC_func_4849DC55_Records	f0=67, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=58, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=59, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=60, proc=loc_4849DD31
+	REC_func_4849DC55_Records	f0=61, proc=loc_4849DD31
+	REC_func_4849DC55_Records	proc=loc_4849DD49
+	REC_func_4849DC55_Records	proc=loc_4849DD49
 func_4849DC55_Records_2:	# 16 x REC_func_4849DC55_Records_2 (8 bytes each); read by func_4849DC55 0x4849DC55 `mov (a0), d0`
-	REC_func_4849DC55_Records_2	f0=0x100B0, p4=loc_4849DE07	# [0]
-	REC_func_4849DC55_Records_2	f0=1, p4=loc_4849DCA8
-	REC_func_4849DC55_Records_2	f0=0x1009F, p4=loc_4849DE27
-	REC_func_4849DC55_Records_2	f0=0x1009E, p4=loc_4849DE2D
-	REC_func_4849DC55_Records_2	f0=0x100B4, p4=loc_4849DE37
-	REC_func_4849DC55_Records_2	f0=0x810000, p4=loc_4849DEC0
-	REC_func_4849DC55_Records_2	f0=0x10036, p4=loc_4849DE78
-	REC_func_4849DC55_Records_2	f0=0x810001, p4=loc_4849DECB
-	REC_func_4849DC55_Records_2	p4=loc_4849DECF	# [8]
-	REC_func_4849DC55_Records_2	p4=loc_4849DECF
-	REC_func_4849DC55_Records_2	f0=0x100AA, p4=loc_4849DE31
-	REC_func_4849DC55_Records_2	f0=0x100AB, p4=loc_4849DE17
-	REC_func_4849DC55_Records_2	f0=0x80FFFC, p4=loc_4849DEC7
-	REC_func_4849DC55_Records_2	p4=loc_4849DECF
-	REC_func_4849DC55_Records_2	f0=0x100AE, p4=loc_4849DE07
-	REC_func_4849DC55_Records_2	f0=0x100AF, p4=loc_4849DE07
+	REC_func_4849DC55_Records_2	f0=0x100B0, proc=loc_4849DE07	# [0]
+	REC_func_4849DC55_Records_2	f0=1, proc=loc_4849DCA8
+	REC_func_4849DC55_Records_2	f0=0x1009F, proc=loc_4849DE27
+	REC_func_4849DC55_Records_2	f0=0x1009E, proc=loc_4849DE2D
+	REC_func_4849DC55_Records_2	f0=0x100B4, proc=loc_4849DE37
+	REC_func_4849DC55_Records_2	f0=0x810000, proc=loc_4849DEC0
+	REC_func_4849DC55_Records_2	f0=0x10036, proc=loc_4849DE78
+	REC_func_4849DC55_Records_2	f0=0x810001, proc=loc_4849DECB
+	REC_func_4849DC55_Records_2	proc=loc_4849DECF	# [8]
+	REC_func_4849DC55_Records_2	proc=loc_4849DECF
+	REC_func_4849DC55_Records_2	f0=0x100AA, proc=loc_4849DE31
+	REC_func_4849DC55_Records_2	f0=0x100AB, proc=loc_4849DE17
+	REC_func_4849DC55_Records_2	f0=0x80FFFC, proc=loc_4849DEC7
+	REC_func_4849DC55_Records_2	proc=loc_4849DECF
+	REC_func_4849DC55_Records_2	f0=0x100AE, proc=loc_4849DE07
+	REC_func_4849DC55_Records_2	f0=0x100AF, proc=loc_4849DE07
 func_4849DED3_Records:	# 16 x REC_func_4849DED3_Records (8 bytes each); read by func_4849DED3 0x4849DED3 `mov (a0), d0`
-	REC_func_4849DED3_Records	f0=0x100B0, p4=loc_4849DF3E	# [0]
-	REC_func_4849DED3_Records	f0=1, p4=loc_4849DF23
-	REC_func_4849DED3_Records	f0=0x1009F, p4=loc_4849DF50
-	REC_func_4849DED3_Records	f0=0x1009E, p4=loc_4849DF54
-	REC_func_4849DED3_Records	f0=0x100B4, p4=loc_4849DF5E
-	REC_func_4849DED3_Records	f0=0x810000, p4=loc_4849DF73
-	REC_func_4849DED3_Records	f0=0x10036, p4=loc_4849DF61
-	REC_func_4849DED3_Records	f0=0x810001, p4=loc_4849DF7E
-	REC_func_4849DED3_Records	p4=loc_4849DF82	# [8]
-	REC_func_4849DED3_Records	p4=loc_4849DF82
-	REC_func_4849DED3_Records	f0=0x100AA, p4=loc_4849DF59
-	REC_func_4849DED3_Records	f0=0x100AB, p4=loc_4849DF4C
-	REC_func_4849DED3_Records	f0=0x80FFFC, p4=loc_4849DF7A
-	REC_func_4849DED3_Records	p4=loc_4849DF82
-	REC_func_4849DED3_Records	f0=0x100AE, p4=loc_4849DF3E
-	REC_func_4849DED3_Records	f0=0x100AF, p4=loc_4849DF3E
+	REC_func_4849DED3_Records	f0=0x100B0, proc=loc_4849DF3E	# [0]
+	REC_func_4849DED3_Records	f0=1, proc=loc_4849DF23
+	REC_func_4849DED3_Records	f0=0x1009F, proc=loc_4849DF50
+	REC_func_4849DED3_Records	f0=0x1009E, proc=loc_4849DF54
+	REC_func_4849DED3_Records	f0=0x100B4, proc=loc_4849DF5E
+	REC_func_4849DED3_Records	f0=0x810000, proc=loc_4849DF73
+	REC_func_4849DED3_Records	f0=0x10036, proc=loc_4849DF61
+	REC_func_4849DED3_Records	f0=0x810001, proc=loc_4849DF7E
+	REC_func_4849DED3_Records	proc=loc_4849DF82	# [8]
+	REC_func_4849DED3_Records	proc=loc_4849DF82
+	REC_func_4849DED3_Records	f0=0x100AA, proc=loc_4849DF59
+	REC_func_4849DED3_Records	f0=0x100AB, proc=loc_4849DF4C
+	REC_func_4849DED3_Records	f0=0x80FFFC, proc=loc_4849DF7A
+	REC_func_4849DED3_Records	proc=loc_4849DF82
+	REC_func_4849DED3_Records	f0=0x100AE, proc=loc_4849DF3E
+	REC_func_4849DED3_Records	f0=0x100AF, proc=loc_4849DF3E
 func_4849DF86_Records:	# 32 x REC_func_4849DF86_Records (8 bytes each); read by func_4849DF86 0x4849DF86 `mov (a0), d0`
-	REC_func_4849DF86_Records	f0=0x800000, p4=loc_4849DFDA	# [0]
-	REC_func_4849DF86_Records	f0=1, p4=loc_4849DFDA
-	REC_func_4849DF86_Records	f0=0x100A2, p4=loc_4849E08B
-	REC_func_4849DF86_Records	f0=0x100A3, p4=loc_4849E06F
-	REC_func_4849DF86_Records	f0=0x810004, p4=loc_4849E0E3
-	REC_func_4849DF86_Records	f0=5, p4=loc_4849E01C
-	REC_func_4849DF86_Records	f0=0x810000, p4=loc_4849E0EA
-	REC_func_4849DF86_Records	f0=0x810005, p4=loc_4849E0EE
-	REC_func_4849DF86_Records	p4=loc_4849E0F2	# [8]
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	f0=0x100AE, p4=loc_4849E091
-	REC_func_4849DF86_Records	f0=0x100AF, p4=loc_4849E05F
-	REC_func_4849DF86_Records	p4=loc_4849E0F2	# [16]
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	f0=0x100B2, p4=loc_4849E04F
-	REC_func_4849DF86_Records	f0=0x100B3, p4=loc_4849E04F
-	REC_func_4849DF86_Records	f0=20, p4=loc_4849DFEB
-	REC_func_4849DF86_Records	f0=0x100B4, p4=loc_4849E04F
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	f0=0x100B8, p4=loc_4849E0AB	# [24]
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	f0=0x1003A, p4=loc_4849E0AE
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
-	REC_func_4849DF86_Records	p4=loc_4849E0F2
+	REC_func_4849DF86_Records	key=0x800000, proc=loc_4849DFDA	# [0]
+	REC_func_4849DF86_Records	key=1, proc=loc_4849DFDA
+	REC_func_4849DF86_Records	key=0x100A2, proc=loc_4849E08B
+	REC_func_4849DF86_Records	key=0x100A3, proc=loc_4849E06F
+	REC_func_4849DF86_Records	key=0x810004, proc=loc_4849E0E3
+	REC_func_4849DF86_Records	key=5, proc=loc_4849E01C
+	REC_func_4849DF86_Records	key=0x810000, proc=loc_4849E0EA
+	REC_func_4849DF86_Records	key=0x810005, proc=loc_4849E0EE
+	REC_func_4849DF86_Records	proc=loc_4849E0F2	# [8]
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	key=0x100AE, proc=loc_4849E091
+	REC_func_4849DF86_Records	key=0x100AF, proc=loc_4849E05F
+	REC_func_4849DF86_Records	proc=loc_4849E0F2	# [16]
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	key=0x100B2, proc=loc_4849E04F
+	REC_func_4849DF86_Records	key=0x100B3, proc=loc_4849E04F
+	REC_func_4849DF86_Records	key=20, proc=loc_4849DFEB
+	REC_func_4849DF86_Records	key=0x100B4, proc=loc_4849E04F
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	key=0x100B8, proc=loc_4849E0AB	# [24]
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	key=0x1003A, proc=loc_4849E0AE
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
+	REC_func_4849DF86_Records	proc=loc_4849E0F2
 func_4849E0F6_Records:	# 16 x REC_func_4849E0F6_Records (8 bytes each); read by func_4849E0F6 0x4849E0F6 `mov (a0), d0`
-	REC_func_4849E0F6_Records	f0=0x100B0, p4=loc_4849E19B	# [0]
-	REC_func_4849E0F6_Records	f0=1, p4=loc_4849E14A
-	REC_func_4849E0F6_Records	f0=0x1009F, p4=loc_4849E1BA
-	REC_func_4849E0F6_Records	f0=0x1009E, p4=loc_4849E1BE
-	REC_func_4849E0F6_Records	f0=0x100B4, p4=loc_4849E1C6
-	REC_func_4849E0F6_Records	f0=0x810000, p4=loc_4849E20C
-	REC_func_4849E0F6_Records	f0=0x10036, p4=loc_4849E1C9
-	REC_func_4849E0F6_Records	f0=0x810001, p4=loc_4849E217
-	REC_func_4849E0F6_Records	p4=loc_4849E21B	# [8]
-	REC_func_4849E0F6_Records	p4=loc_4849E21B
-	REC_func_4849E0F6_Records	f0=0x100AA, p4=loc_4849E1C3
-	REC_func_4849E0F6_Records	f0=0x100AB, p4=loc_4849E1AB
-	REC_func_4849E0F6_Records	f0=0x80FFFC, p4=loc_4849E213
-	REC_func_4849E0F6_Records	p4=loc_4849E21B
-	REC_func_4849E0F6_Records	f0=0x100AE, p4=loc_4849E19B
-	REC_func_4849E0F6_Records	f0=0x100AF, p4=loc_4849E19B
+	REC_func_4849E0F6_Records	key=0x100B0, proc=loc_4849E19B	# [0]
+	REC_func_4849E0F6_Records	key=1, proc=loc_4849E14A
+	REC_func_4849E0F6_Records	key=0x1009F, proc=loc_4849E1BA
+	REC_func_4849E0F6_Records	key=0x1009E, proc=loc_4849E1BE
+	REC_func_4849E0F6_Records	key=0x100B4, proc=loc_4849E1C6
+	REC_func_4849E0F6_Records	key=0x810000, proc=loc_4849E20C
+	REC_func_4849E0F6_Records	key=0x10036, proc=loc_4849E1C9
+	REC_func_4849E0F6_Records	key=0x810001, proc=loc_4849E217
+	REC_func_4849E0F6_Records	proc=loc_4849E21B	# [8]
+	REC_func_4849E0F6_Records	proc=loc_4849E21B
+	REC_func_4849E0F6_Records	key=0x100AA, proc=loc_4849E1C3
+	REC_func_4849E0F6_Records	key=0x100AB, proc=loc_4849E1AB
+	REC_func_4849E0F6_Records	key=0x80FFFC, proc=loc_4849E213
+	REC_func_4849E0F6_Records	proc=loc_4849E21B
+	REC_func_4849E0F6_Records	key=0x100AE, proc=loc_4849E19B
+	REC_func_4849E0F6_Records	key=0x100AF, proc=loc_4849E19B
 
 Field_PsParaListBox_font:	.asciz "font"
 Field_PsParaListBox_fontcolor:	.asciz "fontcolor"
@@ -1276,22 +1276,22 @@ Str_H_20:
 	.long	Text_MEMORY_B+252
 
 PsParaListBoxProc_Records:	# 16 x REC_PsParaListBoxProc_Records (8 bytes each); read by PsParaListBoxProc 0x4849F0A3 `mov (a0), d0`
-	REC_PsParaListBoxProc_Records	f0=16, p4=loc_4849F251	# [0]
-	REC_PsParaListBoxProc_Records	f0=1, p4=loc_4849F0F6
-	REC_PsParaListBoxProc_Records	f0=17, p4=loc_4849F182
-	REC_PsParaListBoxProc_Records	f0=18, p4=loc_4849F251
-	REC_PsParaListBoxProc_Records	f0=0x100B4, p4=loc_4849F3AD
-	REC_PsParaListBoxProc_Records	f0=2, p4=loc_4849F4FC
-	REC_PsParaListBoxProc_Records	f0=0x1610001, p4=loc_4849F511
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523	# [8]
-	REC_PsParaListBoxProc_Records	f0=9, p4=loc_4849F321
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523
-	REC_PsParaListBoxProc_Records	p4=loc_4849F523
-	REC_PsParaListBoxProc_Records	f0=15, p4=loc_4849F182
+	REC_PsParaListBoxProc_Records	key=16, proc=loc_4849F251	# [0]
+	REC_PsParaListBoxProc_Records	key=1, proc=loc_4849F0F6
+	REC_PsParaListBoxProc_Records	key=17, proc=loc_4849F182
+	REC_PsParaListBoxProc_Records	key=18, proc=loc_4849F251
+	REC_PsParaListBoxProc_Records	key=0x100B4, proc=loc_4849F3AD
+	REC_PsParaListBoxProc_Records	key=2, proc=loc_4849F4FC
+	REC_PsParaListBoxProc_Records	key=0x1610001, proc=loc_4849F511
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523	# [8]
+	REC_PsParaListBoxProc_Records	key=9, proc=loc_4849F321
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523
+	REC_PsParaListBoxProc_Records	proc=loc_4849F523
+	REC_PsParaListBoxProc_Records	key=15, proc=loc_4849F182
 
 Field_StestWindow_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_StestWindow_end
@@ -3507,30 +3507,30 @@ Str_WAVE_ROM_IC3:	.asciz "WAVE ROM      IC3 ="
 Str_IC4:	.asciz ", IC4 ="
 
 func_484A3BA1_Records:	# 24 x REC_func_484A3BA1_Records (12 bytes each); read by func_484A3BA1 0x484A3BA1 `mov (8, a2), a0`; func_484A3BA1 0x484A3BA1 `movhu (2, a2), d0`; func_484A3BA1 0x484A3BA1 `movhu (4, a2), d1` (+2)
-	REC_func_484A3BA1_Records	f0=4, f2=42, f4=40, f6=251, p8=Str_EXP1_4	# [0]
-	REC_func_484A3BA1_Records	f0=44, f2=42, f4=152, f6=255, p8=Str_PARAMETOR_ROM_IC5_4
-	REC_func_484A3BA1_Records	f0=44, f2=68, f4=152, f6=255, p8=Str_WAVE_ROM_IC1_4
-	REC_func_484A3BA1_Records	f0=220, f2=68, f4=56, f6=255, p8=Str_IC2_4
-	REC_func_484A3BA1_Records	f0=44, f2=94, f4=152, f6=255, p8=Str_WAVE_ROM_IC3_4
-	REC_func_484A3BA1_Records	f0=220, f2=94, f4=56, f6=255, p8=Str_IC4_4
-	REC_func_484A3BA1_Records	f0=4, f2=124, f4=40, f6=251, p8=Str_EXP2_4
-	REC_func_484A3BA1_Records	f0=44, f2=124, f4=152, f6=255, p8=Str_PARAMETOR_ROM_IC5_3
-	REC_func_484A3BA1_Records	f0=44, f2=150, f4=152, f6=255, p8=Str_WAVE_ROM_IC1_3	# [8]
-	REC_func_484A3BA1_Records	f0=220, f2=150, f4=56, f6=255, p8=Str_IC2_3
-	REC_func_484A3BA1_Records	f0=44, f2=176, f4=152, f6=255, p8=Str_WAVE_ROM_IC3_3
-	REC_func_484A3BA1_Records	f0=220, f2=176, f4=56, f6=255, p8=Str_IC4_3
-	REC_func_484A3BA1_Records	f0=324, f2=42, f4=40, f6=251, p8=Str_EXP3_4
-	REC_func_484A3BA1_Records	f0=364, f2=42, f4=152, f6=255, p8=Str_PARAMETOR_ROM_IC5_2
-	REC_func_484A3BA1_Records	f0=364, f2=68, f4=152, f6=255, p8=Str_WAVE_ROM_IC1_2
-	REC_func_484A3BA1_Records	f0=540, f2=68, f4=56, f6=255, p8=Str_IC2_2
-	REC_func_484A3BA1_Records	f0=364, f2=94, f4=152, f6=255, p8=Str_WAVE_ROM_IC3_2	# [16]
-	REC_func_484A3BA1_Records	f0=540, f2=94, f4=56, f6=255, p8=Str_IC4_2
-	REC_func_484A3BA1_Records	f0=324, f2=124, f4=40, f6=251, p8=Str_EXP4_4
-	REC_func_484A3BA1_Records	f0=364, f2=124, f4=152, f6=255, p8=Str_PARAMETOR_ROM_IC5
-	REC_func_484A3BA1_Records	f0=364, f2=150, f4=152, f6=255, p8=Str_WAVE_ROM_IC1
-	REC_func_484A3BA1_Records	f0=540, f2=150, f4=56, f6=255, p8=Str_IC2
-	REC_func_484A3BA1_Records	f0=364, f2=176, f4=152, f6=255, p8=Str_WAVE_ROM_IC3
-	REC_func_484A3BA1_Records	f0=540, f2=176, f4=56, f6=255, p8=Str_IC4
+	REC_func_484A3BA1_Records	f0=4, f2=42, f4=40, DrawString_d1=251, text=Str_EXP1_4	# [0]
+	REC_func_484A3BA1_Records	f0=44, f2=42, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_4
+	REC_func_484A3BA1_Records	f0=44, f2=68, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_4
+	REC_func_484A3BA1_Records	f0=220, f2=68, f4=56, DrawString_d1=255, text=Str_IC2_4
+	REC_func_484A3BA1_Records	f0=44, f2=94, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_4
+	REC_func_484A3BA1_Records	f0=220, f2=94, f4=56, DrawString_d1=255, text=Str_IC4_4
+	REC_func_484A3BA1_Records	f0=4, f2=124, f4=40, DrawString_d1=251, text=Str_EXP2_4
+	REC_func_484A3BA1_Records	f0=44, f2=124, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_3
+	REC_func_484A3BA1_Records	f0=44, f2=150, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_3	# [8]
+	REC_func_484A3BA1_Records	f0=220, f2=150, f4=56, DrawString_d1=255, text=Str_IC2_3
+	REC_func_484A3BA1_Records	f0=44, f2=176, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_3
+	REC_func_484A3BA1_Records	f0=220, f2=176, f4=56, DrawString_d1=255, text=Str_IC4_3
+	REC_func_484A3BA1_Records	f0=324, f2=42, f4=40, DrawString_d1=251, text=Str_EXP3_4
+	REC_func_484A3BA1_Records	f0=364, f2=42, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_2
+	REC_func_484A3BA1_Records	f0=364, f2=68, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_2
+	REC_func_484A3BA1_Records	f0=540, f2=68, f4=56, DrawString_d1=255, text=Str_IC2_2
+	REC_func_484A3BA1_Records	f0=364, f2=94, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_2	# [16]
+	REC_func_484A3BA1_Records	f0=540, f2=94, f4=56, DrawString_d1=255, text=Str_IC4_2
+	REC_func_484A3BA1_Records	f0=324, f2=124, f4=40, DrawString_d1=251, text=Str_EXP4_4
+	REC_func_484A3BA1_Records	f0=364, f2=124, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5
+	REC_func_484A3BA1_Records	f0=364, f2=150, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1
+	REC_func_484A3BA1_Records	f0=540, f2=150, f4=56, DrawString_d1=255, text=Str_IC2
+	REC_func_484A3BA1_Records	f0=364, f2=176, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3
+	REC_func_484A3BA1_Records	f0=540, f2=176, f4=56, DrawString_d1=255, text=Str_IC4
 
 func_484A3BA1_Table:	# 4 x u16, 0..0; read by func_484A3BA1 0x484A3BA1: `movhu  (a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -3592,89 +3592,89 @@ PanelSelfTestScanEntry_Table_2:
 	.long	loc_484A0EEB
 
 InOutTestWindowProc_Records_2:	# 32 x REC_InOutTestWindowProc_Records_2 (8 bytes each); read by InOutTestWindowProc 0x484A18F1 `mov (a0), d0`
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9	# [0]
-	REC_InOutTestWindowProc_Records_2	f0=1, p4=loc_484A1986
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9	# [8]
-	REC_InOutTestWindowProc_Records_2	f0=9, p4=loc_484A199C
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	f0=0x101000E, p4=loc_484A1A10
-	REC_InOutTestWindowProc_Records_2	f0=0x101000F, p4=loc_484A1AEC
-	REC_InOutTestWindowProc_Records_2	f0=0x1010010, p4=loc_484A1C05	# [16]
-	REC_InOutTestWindowProc_Records_2	f0=0x1010011, p4=loc_484A1C74
-	REC_InOutTestWindowProc_Records_2	f0=0x1010012, p4=loc_484A1D92
-	REC_InOutTestWindowProc_Records_2	f0=0x1010013, p4=loc_484A1EAE
-	REC_InOutTestWindowProc_Records_2	f0=20, p4=loc_484A19B2
-	REC_InOutTestWindowProc_Records_2	f0=0x1010014, p4=loc_484A1FCB
-	REC_InOutTestWindowProc_Records_2	f0=0x1010015, p4=loc_484A20ED
-	REC_InOutTestWindowProc_Records_2	f0=0x1010016, p4=loc_484A20F1
-	REC_InOutTestWindowProc_Records_2	f0=0x1010017, p4=loc_484A20F5	# [24]
-	REC_InOutTestWindowProc_Records_2	f0=0x100B2, p4=loc_484A2258
-	REC_InOutTestWindowProc_Records_2	f0=0x100B3, p4=loc_484A24B6
-	REC_InOutTestWindowProc_Records_2	f0=0x100B4, p4=loc_484A24B6
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
-	REC_InOutTestWindowProc_Records_2	p4=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9	# [0]
+	REC_InOutTestWindowProc_Records_2	f0=1, proc=loc_484A1986
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9	# [8]
+	REC_InOutTestWindowProc_Records_2	f0=9, proc=loc_484A199C
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	f0=0x101000E, proc=loc_484A1A10
+	REC_InOutTestWindowProc_Records_2	f0=0x101000F, proc=loc_484A1AEC
+	REC_InOutTestWindowProc_Records_2	f0=0x1010010, proc=loc_484A1C05	# [16]
+	REC_InOutTestWindowProc_Records_2	f0=0x1010011, proc=loc_484A1C74
+	REC_InOutTestWindowProc_Records_2	f0=0x1010012, proc=loc_484A1D92
+	REC_InOutTestWindowProc_Records_2	f0=0x1010013, proc=loc_484A1EAE
+	REC_InOutTestWindowProc_Records_2	f0=20, proc=loc_484A19B2
+	REC_InOutTestWindowProc_Records_2	f0=0x1010014, proc=loc_484A1FCB
+	REC_InOutTestWindowProc_Records_2	f0=0x1010015, proc=loc_484A20ED
+	REC_InOutTestWindowProc_Records_2	f0=0x1010016, proc=loc_484A20F1
+	REC_InOutTestWindowProc_Records_2	f0=0x1010017, proc=loc_484A20F5	# [24]
+	REC_InOutTestWindowProc_Records_2	f0=0x100B2, proc=loc_484A2258
+	REC_InOutTestWindowProc_Records_2	f0=0x100B3, proc=loc_484A24B6
+	REC_InOutTestWindowProc_Records_2	f0=0x100B4, proc=loc_484A24B6
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
+	REC_InOutTestWindowProc_Records_2	proc=loc_484A24B9
 func_484A2641_Records:	# 16 x REC_func_484A2641_Records (8 bytes each); read by func_484A2641 0x484A2641 `mov (a0), d1`
-	REC_func_484A2641_Records	p4=loc_484A281D	# [0]
-	REC_func_484A2641_Records	f0=17, p4=loc_484A2797
-	REC_func_484A2641_Records	f0=18, p4=loc_484A2699
-	REC_func_484A2641_Records	f0=19, p4=loc_484A2794
-	REC_func_484A2641_Records	f0=33, p4=loc_484A27CD
-	REC_func_484A2641_Records	f0=5, p4=loc_484A2726
-	REC_func_484A2641_Records	f0=6, p4=loc_484A275D
-	REC_func_484A2641_Records	f0=1, p4=loc_484A27FF
-	REC_func_484A2641_Records	f0=2, p4=loc_484A281D	# [8]
-	REC_func_484A2641_Records	f0=8193, p4=loc_484A281D
-	REC_func_484A2641_Records	f0=10, p4=loc_484A26F0
-	REC_func_484A2641_Records	f0=8194, p4=loc_484A281D
-	REC_func_484A2641_Records	f0=8195, p4=loc_484A281D
-	REC_func_484A2641_Records	f0=8196, p4=loc_484A281D
-	REC_func_484A2641_Records	f0=8197, p4=loc_484A281D
-	REC_func_484A2641_Records	p4=loc_484A281D
+	REC_func_484A2641_Records	proc=loc_484A281D	# [0]
+	REC_func_484A2641_Records	f0=17, proc=loc_484A2797
+	REC_func_484A2641_Records	f0=18, proc=loc_484A2699
+	REC_func_484A2641_Records	f0=19, proc=loc_484A2794
+	REC_func_484A2641_Records	f0=33, proc=loc_484A27CD
+	REC_func_484A2641_Records	f0=5, proc=loc_484A2726
+	REC_func_484A2641_Records	f0=6, proc=loc_484A275D
+	REC_func_484A2641_Records	f0=1, proc=loc_484A27FF
+	REC_func_484A2641_Records	f0=2, proc=loc_484A281D	# [8]
+	REC_func_484A2641_Records	f0=8193, proc=loc_484A281D
+	REC_func_484A2641_Records	f0=10, proc=loc_484A26F0
+	REC_func_484A2641_Records	f0=8194, proc=loc_484A281D
+	REC_func_484A2641_Records	f0=8195, proc=loc_484A281D
+	REC_func_484A2641_Records	f0=8196, proc=loc_484A281D
+	REC_func_484A2641_Records	f0=8197, proc=loc_484A281D
+	REC_func_484A2641_Records	proc=loc_484A281D
 SineWaveWindowProc_Records:	# 16 x REC_SineWaveWindowProc_Records (8 bytes each); read by SineWaveWindowProc 0x484A2E22 `mov (a0), d0`
-	REC_SineWaveWindowProc_Records	f0=0x1010010, p4=loc_484A301D	# [0]
-	REC_SineWaveWindowProc_Records	f0=1, p4=loc_484A2EB4
-	REC_SineWaveWindowProc_Records	f0=0x100B2, p4=loc_484A3085
-	REC_SineWaveWindowProc_Records	f0=0x100B3, p4=loc_484A317C
-	REC_SineWaveWindowProc_Records	f0=20, p4=loc_484A2F12
-	REC_SineWaveWindowProc_Records	f0=0x100B4, p4=loc_484A3211
-	REC_SineWaveWindowProc_Records	f0=5, p4=loc_484A325E
-	REC_SineWaveWindowProc_Records	p4=loc_484A327A
-	REC_SineWaveWindowProc_Records	p4=loc_484A327A	# [8]
-	REC_SineWaveWindowProc_Records	f0=9, p4=loc_484A2EC7
-	REC_SineWaveWindowProc_Records	p4=loc_484A327A
-	REC_SineWaveWindowProc_Records	p4=loc_484A327A
-	REC_SineWaveWindowProc_Records	p4=loc_484A327A
-	REC_SineWaveWindowProc_Records	f0=0x101000D, p4=loc_484A2F44
-	REC_SineWaveWindowProc_Records	f0=0x101000E, p4=loc_484A2F84
-	REC_SineWaveWindowProc_Records	p4=loc_484A327A
+	REC_SineWaveWindowProc_Records	f0=0x1010010, proc=loc_484A301D	# [0]
+	REC_SineWaveWindowProc_Records	f0=1, proc=loc_484A2EB4
+	REC_SineWaveWindowProc_Records	f0=0x100B2, proc=loc_484A3085
+	REC_SineWaveWindowProc_Records	f0=0x100B3, proc=loc_484A317C
+	REC_SineWaveWindowProc_Records	f0=20, proc=loc_484A2F12
+	REC_SineWaveWindowProc_Records	f0=0x100B4, proc=loc_484A3211
+	REC_SineWaveWindowProc_Records	f0=5, proc=loc_484A325E
+	REC_SineWaveWindowProc_Records	proc=loc_484A327A
+	REC_SineWaveWindowProc_Records	proc=loc_484A327A	# [8]
+	REC_SineWaveWindowProc_Records	f0=9, proc=loc_484A2EC7
+	REC_SineWaveWindowProc_Records	proc=loc_484A327A
+	REC_SineWaveWindowProc_Records	proc=loc_484A327A
+	REC_SineWaveWindowProc_Records	proc=loc_484A327A
+	REC_SineWaveWindowProc_Records	f0=0x101000D, proc=loc_484A2F44
+	REC_SineWaveWindowProc_Records	f0=0x101000E, proc=loc_484A2F84
+	REC_SineWaveWindowProc_Records	proc=loc_484A327A
 func_484A4B38_Records:	# 16 x REC_func_484A4B38_Records (8 bytes each); read by func_484A4B38 0x484A4B38 `mov (a0), d1`
-	REC_func_484A4B38_Records	p4=loc_484A4BDF	# [0]
-	REC_func_484A4B38_Records	f0=1, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=17, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=18, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=33, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=5, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=6, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=4097, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	f0=4098, p4=loc_484A4BDA	# [8]
-	REC_func_484A4B38_Records	p4=loc_484A4BDF
-	REC_func_484A4B38_Records	f0=10, p4=loc_484A4BDA
-	REC_func_484A4B38_Records	p4=loc_484A4BDF
-	REC_func_484A4B38_Records	p4=loc_484A4BDF
-	REC_func_484A4B38_Records	p4=loc_484A4BDF
-	REC_func_484A4B38_Records	p4=loc_484A4BDF
-	REC_func_484A4B38_Records	p4=loc_484A4BDF
+	REC_func_484A4B38_Records	proc=loc_484A4BDF	# [0]
+	REC_func_484A4B38_Records	f0=1, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=17, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=18, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=33, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=5, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=6, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=4097, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	f0=4098, proc=loc_484A4BDA	# [8]
+	REC_func_484A4B38_Records	proc=loc_484A4BDF
+	REC_func_484A4B38_Records	f0=10, proc=loc_484A4BDA
+	REC_func_484A4B38_Records	proc=loc_484A4BDF
+	REC_func_484A4B38_Records	proc=loc_484A4BDF
+	REC_func_484A4B38_Records	proc=loc_484A4BDF
+	REC_func_484A4B38_Records	proc=loc_484A4BDF
+	REC_func_484A4B38_Records	proc=loc_484A4BDF
 
 func_484A5BFF_Table:
 	.long	loc_484A5C21
@@ -4376,22 +4376,22 @@ CusMemModeBoxProc_Table_4:	# 256 x u8, 0..0; read by CusMemModeBoxProc 0x484A846
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
 AcDispTimeSetGridBoxProc_Records:	# 16 x REC_AcDispTimeSetGridBoxProc_Records (8 bytes each); read by AcDispTimeSetGridBoxProc 0x484A5F9D `mov (a0), d0`
-	REC_AcDispTimeSetGridBoxProc_Records	f0=16, p4=loc_484A6188	# [0]
-	REC_AcDispTimeSetGridBoxProc_Records	f0=1, p4=loc_484A5FF1
-	REC_AcDispTimeSetGridBoxProc_Records	f0=2, p4=loc_484A605D
-	REC_AcDispTimeSetGridBoxProc_Records	f0=17, p4=loc_484A60CD
-	REC_AcDispTimeSetGridBoxProc_Records	f0=18, p4=loc_484A6188
-	REC_AcDispTimeSetGridBoxProc_Records	f0=0x1007F, p4=loc_484A6258
-	REC_AcDispTimeSetGridBoxProc_Records	f0=20, p4=loc_484A6270
-	REC_AcDispTimeSetGridBoxProc_Records	f0=21, p4=loc_484A6270
-	REC_AcDispTimeSetGridBoxProc_Records	f0=0x10081, p4=loc_484A628A	# [8]
-	REC_AcDispTimeSetGridBoxProc_Records	p4=loc_484A62A4
-	REC_AcDispTimeSetGridBoxProc_Records	p4=loc_484A62A4
-	REC_AcDispTimeSetGridBoxProc_Records	p4=loc_484A62A4
-	REC_AcDispTimeSetGridBoxProc_Records	p4=loc_484A62A4
-	REC_AcDispTimeSetGridBoxProc_Records	p4=loc_484A62A4
-	REC_AcDispTimeSetGridBoxProc_Records	f0=0x1007E, p4=loc_484A6240
-	REC_AcDispTimeSetGridBoxProc_Records	f0=15, p4=loc_484A60CD
+	REC_AcDispTimeSetGridBoxProc_Records	key=16, proc=loc_484A6188	# [0]
+	REC_AcDispTimeSetGridBoxProc_Records	key=1, proc=loc_484A5FF1
+	REC_AcDispTimeSetGridBoxProc_Records	key=2, proc=loc_484A605D
+	REC_AcDispTimeSetGridBoxProc_Records	key=17, proc=loc_484A60CD
+	REC_AcDispTimeSetGridBoxProc_Records	key=18, proc=loc_484A6188
+	REC_AcDispTimeSetGridBoxProc_Records	key=0x1007F, proc=loc_484A6258
+	REC_AcDispTimeSetGridBoxProc_Records	key=20, proc=loc_484A6270
+	REC_AcDispTimeSetGridBoxProc_Records	key=21, proc=loc_484A6270
+	REC_AcDispTimeSetGridBoxProc_Records	key=0x10081, proc=loc_484A628A	# [8]
+	REC_AcDispTimeSetGridBoxProc_Records	proc=loc_484A62A4
+	REC_AcDispTimeSetGridBoxProc_Records	proc=loc_484A62A4
+	REC_AcDispTimeSetGridBoxProc_Records	proc=loc_484A62A4
+	REC_AcDispTimeSetGridBoxProc_Records	proc=loc_484A62A4
+	REC_AcDispTimeSetGridBoxProc_Records	proc=loc_484A62A4
+	REC_AcDispTimeSetGridBoxProc_Records	key=0x1007E, proc=loc_484A6240
+	REC_AcDispTimeSetGridBoxProc_Records	key=15, proc=loc_484A60CD
 
 WallPresetCheck_Table:
 	.long	loc_484A6D81
@@ -4405,22 +4405,22 @@ WallPresetCheck_Table:
 	.long	loc_484A6E35
 
 AcParaLoadOptGridBoxProc_Records:	# 16 x REC_AcParaLoadOptGridBoxProc_Records (8 bytes each); read by AcParaLoadOptGridBoxProc 0x484A6FF4 `mov (a0), d0`
-	REC_AcParaLoadOptGridBoxProc_Records	f0=16, p4=loc_484A71F4	# [0]
-	REC_AcParaLoadOptGridBoxProc_Records	f0=1, p4=loc_484A7049
-	REC_AcParaLoadOptGridBoxProc_Records	f0=2, p4=loc_484A70B6
-	REC_AcParaLoadOptGridBoxProc_Records	f0=17, p4=loc_484A7127
-	REC_AcParaLoadOptGridBoxProc_Records	f0=18, p4=loc_484A71F4
-	REC_AcParaLoadOptGridBoxProc_Records	f0=0x1007F, p4=loc_484A72D5
-	REC_AcParaLoadOptGridBoxProc_Records	f0=20, p4=loc_484A72EC
-	REC_AcParaLoadOptGridBoxProc_Records	f0=21, p4=loc_484A72EC
-	REC_AcParaLoadOptGridBoxProc_Records	f0=0x10081, p4=loc_484A7307	# [8]
-	REC_AcParaLoadOptGridBoxProc_Records	p4=loc_484A7322
-	REC_AcParaLoadOptGridBoxProc_Records	p4=loc_484A7322
-	REC_AcParaLoadOptGridBoxProc_Records	p4=loc_484A7322
-	REC_AcParaLoadOptGridBoxProc_Records	p4=loc_484A7322
-	REC_AcParaLoadOptGridBoxProc_Records	p4=loc_484A7322
-	REC_AcParaLoadOptGridBoxProc_Records	f0=0x1007E, p4=loc_484A72BD
-	REC_AcParaLoadOptGridBoxProc_Records	f0=15, p4=loc_484A7127
+	REC_AcParaLoadOptGridBoxProc_Records	key=16, proc=loc_484A71F4	# [0]
+	REC_AcParaLoadOptGridBoxProc_Records	key=1, proc=loc_484A7049
+	REC_AcParaLoadOptGridBoxProc_Records	key=2, proc=loc_484A70B6
+	REC_AcParaLoadOptGridBoxProc_Records	key=17, proc=loc_484A7127
+	REC_AcParaLoadOptGridBoxProc_Records	key=18, proc=loc_484A71F4
+	REC_AcParaLoadOptGridBoxProc_Records	key=0x1007F, proc=loc_484A72D5
+	REC_AcParaLoadOptGridBoxProc_Records	key=20, proc=loc_484A72EC
+	REC_AcParaLoadOptGridBoxProc_Records	key=21, proc=loc_484A72EC
+	REC_AcParaLoadOptGridBoxProc_Records	key=0x10081, proc=loc_484A7307	# [8]
+	REC_AcParaLoadOptGridBoxProc_Records	proc=loc_484A7322
+	REC_AcParaLoadOptGridBoxProc_Records	proc=loc_484A7322
+	REC_AcParaLoadOptGridBoxProc_Records	proc=loc_484A7322
+	REC_AcParaLoadOptGridBoxProc_Records	proc=loc_484A7322
+	REC_AcParaLoadOptGridBoxProc_Records	proc=loc_484A7322
+	REC_AcParaLoadOptGridBoxProc_Records	key=0x1007E, proc=loc_484A72BD
+	REC_AcParaLoadOptGridBoxProc_Records	key=15, proc=loc_484A7127
 
 Field_AcFSWAssGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcFSWAssGridBox_fixedrow:	.asciz "fixedrow"
@@ -5309,73 +5309,73 @@ TouchSenseFunc_Table:
 	.long	loc_484A8E6D
 
 AcTchSensGridBoxProc_Records:	# 16 x REC_AcTchSensGridBoxProc_Records (8 bytes each); read by AcTchSensGridBoxProc 0x484A8ED4 `mov (a0), d0`
-	REC_AcTchSensGridBoxProc_Records	f0=16, p4=loc_484A9069	# [0]
-	REC_AcTchSensGridBoxProc_Records	f0=1, p4=loc_484A8F27
-	REC_AcTchSensGridBoxProc_Records	f0=17, p4=loc_484A8F90
-	REC_AcTchSensGridBoxProc_Records	f0=18, p4=loc_484A9069
-	REC_AcTchSensGridBoxProc_Records	f0=0x1007F, p4=loc_484A9157
-	REC_AcTchSensGridBoxProc_Records	f0=20, p4=loc_484A916E
-	REC_AcTchSensGridBoxProc_Records	f0=21, p4=loc_484A916E
-	REC_AcTchSensGridBoxProc_Records	f0=0x10081, p4=loc_484A9188
-	REC_AcTchSensGridBoxProc_Records	p4=loc_484A91A2	# [8]
-	REC_AcTchSensGridBoxProc_Records	p4=loc_484A91A2
-	REC_AcTchSensGridBoxProc_Records	p4=loc_484A91A2
-	REC_AcTchSensGridBoxProc_Records	p4=loc_484A91A2
-	REC_AcTchSensGridBoxProc_Records	p4=loc_484A91A2
-	REC_AcTchSensGridBoxProc_Records	p4=loc_484A91A2
-	REC_AcTchSensGridBoxProc_Records	f0=0x1007E, p4=loc_484A9140
-	REC_AcTchSensGridBoxProc_Records	f0=15, p4=loc_484A8F90
+	REC_AcTchSensGridBoxProc_Records	key=16, proc=loc_484A9069	# [0]
+	REC_AcTchSensGridBoxProc_Records	key=1, proc=loc_484A8F27
+	REC_AcTchSensGridBoxProc_Records	key=17, proc=loc_484A8F90
+	REC_AcTchSensGridBoxProc_Records	key=18, proc=loc_484A9069
+	REC_AcTchSensGridBoxProc_Records	key=0x1007F, proc=loc_484A9157
+	REC_AcTchSensGridBoxProc_Records	key=20, proc=loc_484A916E
+	REC_AcTchSensGridBoxProc_Records	key=21, proc=loc_484A916E
+	REC_AcTchSensGridBoxProc_Records	key=0x10081, proc=loc_484A9188
+	REC_AcTchSensGridBoxProc_Records	proc=loc_484A91A2	# [8]
+	REC_AcTchSensGridBoxProc_Records	proc=loc_484A91A2
+	REC_AcTchSensGridBoxProc_Records	proc=loc_484A91A2
+	REC_AcTchSensGridBoxProc_Records	proc=loc_484A91A2
+	REC_AcTchSensGridBoxProc_Records	proc=loc_484A91A2
+	REC_AcTchSensGridBoxProc_Records	proc=loc_484A91A2
+	REC_AcTchSensGridBoxProc_Records	key=0x1007E, proc=loc_484A9140
+	REC_AcTchSensGridBoxProc_Records	key=15, proc=loc_484A8F90
 AcFSWAssGridBoxProc_Records:	# 16 x REC_AcFSWAssGridBoxProc_Records (8 bytes each); read by AcFSWAssGridBoxProc 0x484A9650 `mov (a0), d0`
-	REC_AcFSWAssGridBoxProc_Records	f0=16, p4=loc_484A97C7	# [0]
-	REC_AcFSWAssGridBoxProc_Records	f0=1, p4=loc_484A96A4
-	REC_AcFSWAssGridBoxProc_Records	f0=17, p4=loc_484A970D
-	REC_AcFSWAssGridBoxProc_Records	f0=18, p4=loc_484A97C7
-	REC_AcFSWAssGridBoxProc_Records	f0=0x1007F, p4=loc_484A9896
-	REC_AcFSWAssGridBoxProc_Records	f0=20, p4=loc_484A98AD
-	REC_AcFSWAssGridBoxProc_Records	f0=21, p4=loc_484A98AD
-	REC_AcFSWAssGridBoxProc_Records	f0=0x10081, p4=loc_484A98C7
-	REC_AcFSWAssGridBoxProc_Records	p4=loc_484A98E1	# [8]
-	REC_AcFSWAssGridBoxProc_Records	p4=loc_484A98E1
-	REC_AcFSWAssGridBoxProc_Records	p4=loc_484A98E1
-	REC_AcFSWAssGridBoxProc_Records	p4=loc_484A98E1
-	REC_AcFSWAssGridBoxProc_Records	p4=loc_484A98E1
-	REC_AcFSWAssGridBoxProc_Records	p4=loc_484A98E1
-	REC_AcFSWAssGridBoxProc_Records	f0=0x1007E, p4=loc_484A987F
-	REC_AcFSWAssGridBoxProc_Records	f0=15, p4=loc_484A970D
+	REC_AcFSWAssGridBoxProc_Records	key=16, proc=loc_484A97C7	# [0]
+	REC_AcFSWAssGridBoxProc_Records	key=1, proc=loc_484A96A4
+	REC_AcFSWAssGridBoxProc_Records	key=17, proc=loc_484A970D
+	REC_AcFSWAssGridBoxProc_Records	key=18, proc=loc_484A97C7
+	REC_AcFSWAssGridBoxProc_Records	key=0x1007F, proc=loc_484A9896
+	REC_AcFSWAssGridBoxProc_Records	key=20, proc=loc_484A98AD
+	REC_AcFSWAssGridBoxProc_Records	key=21, proc=loc_484A98AD
+	REC_AcFSWAssGridBoxProc_Records	key=0x10081, proc=loc_484A98C7
+	REC_AcFSWAssGridBoxProc_Records	proc=loc_484A98E1	# [8]
+	REC_AcFSWAssGridBoxProc_Records	proc=loc_484A98E1
+	REC_AcFSWAssGridBoxProc_Records	proc=loc_484A98E1
+	REC_AcFSWAssGridBoxProc_Records	proc=loc_484A98E1
+	REC_AcFSWAssGridBoxProc_Records	proc=loc_484A98E1
+	REC_AcFSWAssGridBoxProc_Records	proc=loc_484A98E1
+	REC_AcFSWAssGridBoxProc_Records	key=0x1007E, proc=loc_484A987F
+	REC_AcFSWAssGridBoxProc_Records	key=15, proc=loc_484A970D
 AcPmExpFilterGridBoxProc_Records:	# 16 x REC_AcPmExpFilterGridBoxProc_Records (8 bytes each); read by AcPmExpFilterGridBoxProc 0x484AA730 `mov (a0), d0`
-	REC_AcPmExpFilterGridBoxProc_Records	f0=16, p4=loc_484AA8F3	# [0]
-	REC_AcPmExpFilterGridBoxProc_Records	f0=1, p4=loc_484AA799
-	REC_AcPmExpFilterGridBoxProc_Records	f0=17, p4=loc_484AA82D
-	REC_AcPmExpFilterGridBoxProc_Records	f0=18, p4=loc_484AA8F3
-	REC_AcPmExpFilterGridBoxProc_Records	f0=0x1007F, p4=loc_484AA9D3
-	REC_AcPmExpFilterGridBoxProc_Records	f0=20, p4=loc_484AA9EE
-	REC_AcPmExpFilterGridBoxProc_Records	f0=21, p4=loc_484AA9EE
-	REC_AcPmExpFilterGridBoxProc_Records	f0=0x10081, p4=loc_484AAA0B
-	REC_AcPmExpFilterGridBoxProc_Records	f0=5, p4=loc_484AAA27	# [8]
-	REC_AcPmExpFilterGridBoxProc_Records	f0=9, p4=loc_484AA804
-	REC_AcPmExpFilterGridBoxProc_Records	p4=loc_484AAA87
-	REC_AcPmExpFilterGridBoxProc_Records	p4=loc_484AAA87
-	REC_AcPmExpFilterGridBoxProc_Records	p4=loc_484AAA87
-	REC_AcPmExpFilterGridBoxProc_Records	p4=loc_484AAA87
-	REC_AcPmExpFilterGridBoxProc_Records	f0=0x1007E, p4=loc_484AA9B8
-	REC_AcPmExpFilterGridBoxProc_Records	f0=15, p4=loc_484AA82D
+	REC_AcPmExpFilterGridBoxProc_Records	f0=16, proc=loc_484AA8F3	# [0]
+	REC_AcPmExpFilterGridBoxProc_Records	f0=1, proc=loc_484AA799
+	REC_AcPmExpFilterGridBoxProc_Records	f0=17, proc=loc_484AA82D
+	REC_AcPmExpFilterGridBoxProc_Records	f0=18, proc=loc_484AA8F3
+	REC_AcPmExpFilterGridBoxProc_Records	f0=0x1007F, proc=loc_484AA9D3
+	REC_AcPmExpFilterGridBoxProc_Records	f0=20, proc=loc_484AA9EE
+	REC_AcPmExpFilterGridBoxProc_Records	f0=21, proc=loc_484AA9EE
+	REC_AcPmExpFilterGridBoxProc_Records	f0=0x10081, proc=loc_484AAA0B
+	REC_AcPmExpFilterGridBoxProc_Records	f0=5, proc=loc_484AAA27	# [8]
+	REC_AcPmExpFilterGridBoxProc_Records	f0=9, proc=loc_484AA804
+	REC_AcPmExpFilterGridBoxProc_Records	proc=loc_484AAA87
+	REC_AcPmExpFilterGridBoxProc_Records	proc=loc_484AAA87
+	REC_AcPmExpFilterGridBoxProc_Records	proc=loc_484AAA87
+	REC_AcPmExpFilterGridBoxProc_Records	proc=loc_484AAA87
+	REC_AcPmExpFilterGridBoxProc_Records	f0=0x1007E, proc=loc_484AA9B8
+	REC_AcPmExpFilterGridBoxProc_Records	f0=15, proc=loc_484AA82D
 AcFadeSetGridBoxProc_Records:	# 16 x REC_AcFadeSetGridBoxProc_Records (8 bytes each); read by AcFadeSetGridBoxProc 0x484AB273 `mov (a0), d0`
-	REC_AcFadeSetGridBoxProc_Records	f0=16, p4=loc_484AB40E	# [0]
-	REC_AcFadeSetGridBoxProc_Records	f0=1, p4=loc_484AB2C6
-	REC_AcFadeSetGridBoxProc_Records	f0=17, p4=loc_484AB342
-	REC_AcFadeSetGridBoxProc_Records	f0=18, p4=loc_484AB40E
-	REC_AcFadeSetGridBoxProc_Records	f0=0x1007F, p4=loc_484AB4ED
-	REC_AcFadeSetGridBoxProc_Records	f0=20, p4=loc_484AB505
-	REC_AcFadeSetGridBoxProc_Records	f0=21, p4=loc_484AB505
-	REC_AcFadeSetGridBoxProc_Records	f0=0x10081, p4=loc_484AB51F
-	REC_AcFadeSetGridBoxProc_Records	p4=loc_484AB539	# [8]
-	REC_AcFadeSetGridBoxProc_Records	p4=loc_484AB539
-	REC_AcFadeSetGridBoxProc_Records	p4=loc_484AB539
-	REC_AcFadeSetGridBoxProc_Records	p4=loc_484AB539
-	REC_AcFadeSetGridBoxProc_Records	p4=loc_484AB539
-	REC_AcFadeSetGridBoxProc_Records	p4=loc_484AB539
-	REC_AcFadeSetGridBoxProc_Records	f0=0x1007E, p4=loc_484AB4D5
-	REC_AcFadeSetGridBoxProc_Records	f0=15, p4=loc_484AB342
+	REC_AcFadeSetGridBoxProc_Records	key=16, proc=loc_484AB40E	# [0]
+	REC_AcFadeSetGridBoxProc_Records	key=1, proc=loc_484AB2C6
+	REC_AcFadeSetGridBoxProc_Records	key=17, proc=loc_484AB342
+	REC_AcFadeSetGridBoxProc_Records	key=18, proc=loc_484AB40E
+	REC_AcFadeSetGridBoxProc_Records	key=0x1007F, proc=loc_484AB4ED
+	REC_AcFadeSetGridBoxProc_Records	key=20, proc=loc_484AB505
+	REC_AcFadeSetGridBoxProc_Records	key=21, proc=loc_484AB505
+	REC_AcFadeSetGridBoxProc_Records	key=0x10081, proc=loc_484AB51F
+	REC_AcFadeSetGridBoxProc_Records	proc=loc_484AB539	# [8]
+	REC_AcFadeSetGridBoxProc_Records	proc=loc_484AB539
+	REC_AcFadeSetGridBoxProc_Records	proc=loc_484AB539
+	REC_AcFadeSetGridBoxProc_Records	proc=loc_484AB539
+	REC_AcFadeSetGridBoxProc_Records	proc=loc_484AB539
+	REC_AcFadeSetGridBoxProc_Records	proc=loc_484AB539
+	REC_AcFadeSetGridBoxProc_Records	key=0x1007E, proc=loc_484AB4D5
+	REC_AcFadeSetGridBoxProc_Records	key=15, proc=loc_484AB342
 
 func_484AB89C_Table:	# 104 x u8, 19..255; read by func_484AB89C_entry 0x484AB816: `movbu  (d0, a0), d2`
 	tab_u8	65, 65, 64, 64, 63, 63, 63, 62, 62, 61, 61, 61, 60, 60, 59, 59	# [0]
@@ -5387,35 +5387,35 @@ func_484AB89C_Table:	# 104 x u8, 19..255; read by func_484AB89C_entry 0x484AB816
 	tab_u8	21, 21, 20, 20, 19, 255, 255, 255	# [96]
 
 PanelTypeDetect_Table:	# 3 x REC_PanelTypeDetect_Table (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table	f0=0x5006BE80, f4=3, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table	f0=0x5006BE7F, f4=192, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table	f0=0x5006BE80, key=3, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table	f0=0x5006BE7F, key=192, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table	x5="\x00\x00\x00"
 PanelTypeDetect_Table_2:	# 4 x REC_PanelTypeDetect_Table_2 (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table_2	f0=0x5006BE50, f4=16, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_2	f0=0x5006BE4F, f4=16, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_2	f0=0x5006BE4E, f4=16, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_2	f0=0x5006BE50, key=16, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_2	f0=0x5006BE4F, key=16, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_2	f0=0x5006BE4E, key=16, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table_2	x5="\x00\x00\x00"
 PanelTypeDetect_Table_3:	# 2 x REC_PanelTypeDetect_Table_3 (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table_3	f0=0x5006BE7E, f4=84, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_3	f0=0x5006BE7E, key=84, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table_3	x5="\x00\x00\x00"
 PanelTypeDetect_Table_4:	# 5 x REC_PanelTypeDetect_Table_4 (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table_4	f0=0x5006BE4C, f4=2, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_4	f0=0x5006BE52, f4=64, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_4	f0=0x5006BE51, f4=64, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_4	f0=0x5006BE50, f4=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_4	f0=0x5006BE4C, key=2, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_4	f0=0x5006BE52, key=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_4	f0=0x5006BE51, key=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_4	f0=0x5006BE50, key=64, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table_4	x5="\x00\x00\x00"
 PanelTypeDetect_Table_5:	# 4 x REC_PanelTypeDetect_Table_5 (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table_5	f0=0x5006BE4C, f4=2, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_5	f0=0x5006BE52, f4=64, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_5	f0=0x5006BE51, f4=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_5	f0=0x5006BE4C, key=2, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_5	f0=0x5006BE52, key=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_5	f0=0x5006BE51, key=64, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table_5	x5="\x00\x00\x00"
 PanelTypeDetect_Table_6:	# 2 x REC_PanelTypeDetect_Table_6 (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table_6	f0=0x5006BE7E, f4=170, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_6	f0=0x5006BE7E, key=170, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table_6	x5="\x00\x00\x00"
 PanelTypeDetect_Table_7:	# 4 x REC_PanelTypeDetect_Table_7 (8 bytes each); read by PanelTypeDetect 0x484ABF92 `mov (a1), a0`; PanelTypeDetect 0x484ABF92 `movbu (4, a1), d0`
-	REC_PanelTypeDetect_Table_7	f0=0x5006BE52, f4=64, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_7	f0=0x5006BE51, f4=64, x5="\x00\x00\x00"
-	REC_PanelTypeDetect_Table_7	f0=0x5006BE50, f4=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_7	f0=0x5006BE52, key=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_7	f0=0x5006BE51, key=64, x5="\x00\x00\x00"
+	REC_PanelTypeDetect_Table_7	f0=0x5006BE50, key=64, x5="\x00\x00\x00"
 	REC_PanelTypeDetect_Table_7	x5="\x00\x00\x00"
 
 PanelTxDoneIsr_Table:
@@ -5875,89 +5875,89 @@ PanelButtonDispatch_Table:
 	.long	Str_p_2
 
 func_484ADDBB_Result_0:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702068, f4=17, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702068, PanelBtnSuppressCheck_d0=17, x7="\x00"
 func_484ADDBB_Result_1:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702020, f4=4, f6=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702020, PanelBtnSuppressCheck_d0=4, f6=1, x7="\x00"
 func_484ADDBB_Result_2:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702014, f4=3, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702014, PanelBtnSuppressCheck_d0=3, x7="\x00"
 func_484ADDBB_Result_3:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702014, f4=3, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702014, PanelBtnSuppressCheck_d0=3, index=1, x7="\x00"
 func_484ADDBB_Result_4:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702023, f4=5, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702023, PanelBtnSuppressCheck_d0=5, x7="\x00"
 func_484ADDBB_Result_5:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702023, f4=5, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702023, PanelBtnSuppressCheck_d0=5, index=1, x7="\x00"
 func_484ADDBB_Result_6:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702022, f4=5, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702022, PanelBtnSuppressCheck_d0=5, x7="\x00"
 func_484ADDBB_Result_7:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702022, f4=5, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702022, PanelBtnSuppressCheck_d0=5, index=1, x7="\x00"
 func_484ADDBB_Result_8:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x70206D, f4=193, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x70206D, PanelBtnSuppressCheck_d0=193, x7="\x00"
 func_484ADDBB_Result_9:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702069, f4=48, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702069, PanelBtnSuppressCheck_d0=48, x7="\x00"
 func_484ADDBB_Result_10:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702061, f4=50, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702061, PanelBtnSuppressCheck_d0=50, x7="\x00"
 func_484ADDBB_Result_11:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x7020A2, f4=33, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x7020A2, PanelBtnSuppressCheck_d0=33, x7="\x00"
 func_484ADDBB_Result_12:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702021, f4=192, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702021, PanelBtnSuppressCheck_d0=192, x7="\x00"
 func_484ADDBB_Result_13:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x70206C, f4=194, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x70206C, PanelBtnSuppressCheck_d0=194, x7="\x00"
 func_484ADDBB_Result_14:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702015, f4=3, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702015, PanelBtnSuppressCheck_d0=3, x7="\x00"
 func_484ADDBB_Result_15:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702015, f4=3, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702015, PanelBtnSuppressCheck_d0=3, index=1, x7="\x00"
 func_484ADDBB_Result_16:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702014, f4=3, f5=2, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702014, PanelBtnSuppressCheck_d0=3, index=2, x7="\x00"
 func_484ADDBB_Result_17:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, x7="\x00"
 func_484ADDBB_Result_18:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=1, x7="\x00"
 func_484ADDBB_Result_19:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=2, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=2, x7="\x00"
 func_484ADDBB_Result_20:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=3, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=3, x7="\x00"
 func_484ADDBB_Result_21:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=4, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=4, x7="\x00"
 func_484ADDBB_Result_22:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=5, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=5, x7="\x00"
 func_484ADDBB_Result_23:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=6, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=6, x7="\x00"
 func_484ADDBB_Result_24:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702010, f4=3, f5=7, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702010, PanelBtnSuppressCheck_d0=3, index=7, x7="\x00"
 func_484ADDBB_Result_25:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x7020B0, f4=195, f5=8, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x7020B0, PanelBtnSuppressCheck_d0=195, index=8, x7="\x00"
 func_484ADDBB_Result_26:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x7020AF, f4=196, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x7020AF, PanelBtnSuppressCheck_d0=196, x7="\x00"
 func_484ADDBB_Result_27:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702084, f4=21, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702084, PanelBtnSuppressCheck_d0=21, x7="\x00"
 func_484ADDBB_Result_28:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702084, f4=21, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702084, PanelBtnSuppressCheck_d0=21, index=1, x7="\x00"
 func_484ADDBB_Result_29:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x70206B, f4=197, f6=5, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x70206B, PanelBtnSuppressCheck_d0=197, f6=5, x7="\x00"
 func_484ADDBB_Result_30:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x70206A, f4=198, f6=5, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x70206A, PanelBtnSuppressCheck_d0=198, f6=5, x7="\x00"
 func_484ADDBB_Result_31:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702064, f4=53, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702064, PanelBtnSuppressCheck_d0=53, x7="\x00"
 func_484ADDBB_Result_32:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702063, f4=53, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702063, PanelBtnSuppressCheck_d0=53, x7="\x00"
 func_484ADDBB_Result_33:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x7020AA, f4=49, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x7020AA, PanelBtnSuppressCheck_d0=49, x7="\x00"
 func_484ADDBB_Result_34:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x7020AB, f4=199, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x7020AB, PanelBtnSuppressCheck_d0=199, x7="\x00"
 func_484ADDBB_Result_35:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x7020A1, f4=32, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x7020A1, PanelBtnSuppressCheck_d0=32, x7="\x00"
 func_484ADDBB_Result_36:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702030, f4=6, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702030, PanelBtnSuppressCheck_d0=6, x7="\x00"
 func_484ADDBB_Result_37:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702030, f4=6, f5=1, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702030, PanelBtnSuppressCheck_d0=6, index=1, x7="\x00"
 func_484ADDBB_Result_38:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702030, f4=6, f5=2, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702030, PanelBtnSuppressCheck_d0=6, index=2, x7="\x00"
 func_484ADDBB_Result_39:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702030, f4=6, f5=3, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702030, PanelBtnSuppressCheck_d0=6, index=3, x7="\x00"
 func_484ADDBB_Result_40:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702030, f4=6, f5=4, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702030, PanelBtnSuppressCheck_d0=6, index=4, x7="\x00"
 func_484ADDBB_Result_41:	# REC_func_484ADDBB_Result (8 bytes)
-	REC_func_484ADDBB_Result	f0=0x702030, f4=6, f5=5, x7="\x00"
+	REC_func_484ADDBB_Result	f0=0x702030, PanelBtnSuppressCheck_d0=6, index=5, x7="\x00"
 
 PanelBtnEnableMaskGet_Table:
 	.long	loc_484ADA3A
@@ -5975,70 +5975,70 @@ PanelBtnEnableMaskGet_Table:
 	.long	loc_484ADA82
 
 func_484ADDBB_Records:	# 64 x REC_func_484ADDBB_Records (8 bytes each); read by func_484ADDBB 0x484ADDBB `mov (a0), d1`
-	REC_func_484ADDBB_Records	f0=128, p4=loc_484ADF23	# [0]
-	REC_func_484ADDBB_Records	f0=1, p4=loc_484ADDFD
-	REC_func_484ADDBB_Records	f0=129, p4=loc_484ADE96
-	REC_func_484ADDBB_Records	f0=130, p4=loc_484ADE9F
-	REC_func_484ADDBB_Records	f0=131, p4=loc_484ADEA8
-	REC_func_484ADDBB_Records	f0=132, p4=loc_484ADEB1
-	REC_func_484ADDBB_Records	f0=133, p4=loc_484ADEBA
-	REC_func_484ADDBB_Records	f0=134, p4=loc_484ADEC3
-	REC_func_484ADDBB_Records	f0=135, p4=loc_484ADECC	# [8]
-	REC_func_484ADDBB_Records	f0=73, p4=loc_484ADE06
-	REC_func_484ADDBB_Records	f0=137, p4=loc_484ADE57
-	REC_func_484ADDBB_Records	f0=136, p4=loc_484ADED5
-	REC_func_484ADDBB_Records	f0=2, p4=loc_484ADF02
-	REC_func_484ADDBB_Records	f0=3, p4=loc_484ADF0B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B	# [16]
-	REC_func_484ADDBB_Records	f0=81, p4=loc_484ADE0F
-	REC_func_484ADDBB_Records	f0=82, p4=loc_484ADE18
-	REC_func_484ADDBB_Records	f0=83, p4=loc_484ADE21
-	REC_func_484ADDBB_Records	f0=84, p4=loc_484ADE2A
-	REC_func_484ADDBB_Records	f0=85, p4=loc_484ADE33
-	REC_func_484ADDBB_Records	f0=86, p4=loc_484ADE3C
-	REC_func_484ADDBB_Records	f0=87, p4=loc_484ADE45
-	REC_func_484ADDBB_Records	f0=88, p4=loc_484ADE4E	# [24]
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	f0=90, p4=loc_484ADE60
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B	# [32]
-	REC_func_484ADDBB_Records	f0=97, p4=loc_484ADF3B
-	REC_func_484ADDBB_Records	f0=98, p4=loc_484ADF43
-	REC_func_484ADDBB_Records	f0=99, p4=loc_484ADF4B
-	REC_func_484ADDBB_Records	f0=100, p4=loc_484ADF53
-	REC_func_484ADDBB_Records	f0=101, p4=loc_484ADF5B
-	REC_func_484ADDBB_Records	f0=102, p4=loc_484ADF63
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B	# [40]
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	f0=110, p4=loc_484ADE72
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B	# [48]
-	REC_func_484ADDBB_Records	f0=113, p4=loc_484ADEDE
-	REC_func_484ADDBB_Records	f0=114, p4=loc_484ADEE7
-	REC_func_484ADDBB_Records	f0=115, p4=loc_484ADE8D
-	REC_func_484ADDBB_Records	f0=116, p4=loc_484ADE7B
-	REC_func_484ADDBB_Records	f0=117, p4=loc_484ADE84
-	REC_func_484ADDBB_Records	f0=118, p4=loc_484ADE69
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B	# [56]
-	REC_func_484ADDBB_Records	f0=121, p4=loc_484ADEF0
-	REC_func_484ADDBB_Records	f0=122, p4=loc_484ADEF9
-	REC_func_484ADDBB_Records	p4=loc_484ADF6B
-	REC_func_484ADDBB_Records	f0=124, p4=loc_484ADF13
-	REC_func_484ADDBB_Records	f0=125, p4=loc_484ADF1B
-	REC_func_484ADDBB_Records	f0=126, p4=loc_484ADF33
-	REC_func_484ADDBB_Records	f0=127, p4=loc_484ADF2B
+	REC_func_484ADDBB_Records	f0=128, proc=loc_484ADF23	# [0]
+	REC_func_484ADDBB_Records	f0=1, proc=loc_484ADDFD
+	REC_func_484ADDBB_Records	f0=129, proc=loc_484ADE96
+	REC_func_484ADDBB_Records	f0=130, proc=loc_484ADE9F
+	REC_func_484ADDBB_Records	f0=131, proc=loc_484ADEA8
+	REC_func_484ADDBB_Records	f0=132, proc=loc_484ADEB1
+	REC_func_484ADDBB_Records	f0=133, proc=loc_484ADEBA
+	REC_func_484ADDBB_Records	f0=134, proc=loc_484ADEC3
+	REC_func_484ADDBB_Records	f0=135, proc=loc_484ADECC	# [8]
+	REC_func_484ADDBB_Records	f0=73, proc=loc_484ADE06
+	REC_func_484ADDBB_Records	f0=137, proc=loc_484ADE57
+	REC_func_484ADDBB_Records	f0=136, proc=loc_484ADED5
+	REC_func_484ADDBB_Records	f0=2, proc=loc_484ADF02
+	REC_func_484ADDBB_Records	f0=3, proc=loc_484ADF0B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B	# [16]
+	REC_func_484ADDBB_Records	f0=81, proc=loc_484ADE0F
+	REC_func_484ADDBB_Records	f0=82, proc=loc_484ADE18
+	REC_func_484ADDBB_Records	f0=83, proc=loc_484ADE21
+	REC_func_484ADDBB_Records	f0=84, proc=loc_484ADE2A
+	REC_func_484ADDBB_Records	f0=85, proc=loc_484ADE33
+	REC_func_484ADDBB_Records	f0=86, proc=loc_484ADE3C
+	REC_func_484ADDBB_Records	f0=87, proc=loc_484ADE45
+	REC_func_484ADDBB_Records	f0=88, proc=loc_484ADE4E	# [24]
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	f0=90, proc=loc_484ADE60
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B	# [32]
+	REC_func_484ADDBB_Records	f0=97, proc=loc_484ADF3B
+	REC_func_484ADDBB_Records	f0=98, proc=loc_484ADF43
+	REC_func_484ADDBB_Records	f0=99, proc=loc_484ADF4B
+	REC_func_484ADDBB_Records	f0=100, proc=loc_484ADF53
+	REC_func_484ADDBB_Records	f0=101, proc=loc_484ADF5B
+	REC_func_484ADDBB_Records	f0=102, proc=loc_484ADF63
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B	# [40]
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	f0=110, proc=loc_484ADE72
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B	# [48]
+	REC_func_484ADDBB_Records	f0=113, proc=loc_484ADEDE
+	REC_func_484ADDBB_Records	f0=114, proc=loc_484ADEE7
+	REC_func_484ADDBB_Records	f0=115, proc=loc_484ADE8D
+	REC_func_484ADDBB_Records	f0=116, proc=loc_484ADE7B
+	REC_func_484ADDBB_Records	f0=117, proc=loc_484ADE84
+	REC_func_484ADDBB_Records	f0=118, proc=loc_484ADE69
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B	# [56]
+	REC_func_484ADDBB_Records	f0=121, proc=loc_484ADEF0
+	REC_func_484ADDBB_Records	f0=122, proc=loc_484ADEF9
+	REC_func_484ADDBB_Records	proc=loc_484ADF6B
+	REC_func_484ADDBB_Records	f0=124, proc=loc_484ADF13
+	REC_func_484ADDBB_Records	f0=125, proc=loc_484ADF1B
+	REC_func_484ADDBB_Records	f0=126, proc=loc_484ADF33
+	REC_func_484ADDBB_Records	f0=127, proc=loc_484ADF2B
 
 func_484AE08C_Table:
 	.long	loc_484AE277
@@ -6118,7 +6118,7 @@ MsgTable_48613BE8:	# 3 x {u32 key, code address}: a dispatch table; read by func
 	.space	8, 0x00
 
 func_484AE5C0_Var:	# REC_func_484AE5C0_ArgA0 (16 bytes): the layout func_484AE5C0 0x484AE5C0 reads through its argument a0 (passed by func_484AE4D2 0x484AE4D2 `call func_484AE5C0_entry, [d2,a2], 0x10`, +1 more calls)
-	REC_func_484AE5C0_ArgA0	f0=4, p4=func_484B1071, x8="\x00\x00\x00\x00"
+	REC_func_484AE5C0_ArgA0	f0=4, proc=func_484B1071, x8="\x00\x00\x00\x00"
 
 MsgTable_48613C18:	# 3 x {u32 key, code address}: a dispatch table; read by func_484AE57F 0x484AE57F `call func_484AE5C0_entry, [d2,a2], 0x10`; func_484AE5C0 0x484AE5C0 `mov (a2), d0`
 	.long	4, func_484B10DF
@@ -6178,22 +6178,22 @@ func_484AF4CC_Table:
 	.long	loc_484AF95A
 
 func_484B15BE_Records:	# 16 x REC_func_484B15BE_Records (8 bytes each); read by func_484B15BE 0x484B15BE `mov (a0), d0`
-	REC_func_484B15BE_Records	f0=91, p4=loc_484B175D	# [0]
-	REC_func_484B15BE_Records	f0=46, p4=loc_484B176F
-	REC_func_484B15BE_Records	f0=1, p4=loc_484B1795
-	REC_func_484B15BE_Records	f0=51, p4=loc_484B1782
-	REC_func_484B15BE_Records	f0=3, p4=loc_484B1795
-	REC_func_484B15BE_Records	f0=37, p4=loc_484B1738
-	REC_func_484B15BE_Records	p4=loc_484B17A4
-	REC_func_484B15BE_Records	p4=loc_484B17A4
-	REC_func_484B15BE_Records	p4=loc_484B17A4	# [8]
-	REC_func_484B15BE_Records	p4=loc_484B17A4
-	REC_func_484B15BE_Records	p4=loc_484B17A4
-	REC_func_484B15BE_Records	f0=43, p4=loc_484B16EF
-	REC_func_484B15BE_Records	f0=59, p4=loc_484B1701
-	REC_func_484B15BE_Records	f0=60, p4=loc_484B1713
-	REC_func_484B15BE_Records	f0=27, p4=loc_484B1726
-	REC_func_484B15BE_Records	f0=123, p4=loc_484B174B
+	REC_func_484B15BE_Records	f0=91, proc=loc_484B175D	# [0]
+	REC_func_484B15BE_Records	f0=46, proc=loc_484B176F
+	REC_func_484B15BE_Records	f0=1, proc=loc_484B1795
+	REC_func_484B15BE_Records	f0=51, proc=loc_484B1782
+	REC_func_484B15BE_Records	f0=3, proc=loc_484B1795
+	REC_func_484B15BE_Records	f0=37, proc=loc_484B1738
+	REC_func_484B15BE_Records	proc=loc_484B17A4
+	REC_func_484B15BE_Records	proc=loc_484B17A4
+	REC_func_484B15BE_Records	proc=loc_484B17A4	# [8]
+	REC_func_484B15BE_Records	proc=loc_484B17A4
+	REC_func_484B15BE_Records	proc=loc_484B17A4
+	REC_func_484B15BE_Records	f0=43, proc=loc_484B16EF
+	REC_func_484B15BE_Records	f0=59, proc=loc_484B1701
+	REC_func_484B15BE_Records	f0=60, proc=loc_484B1713
+	REC_func_484B15BE_Records	f0=27, proc=loc_484B1726
+	REC_func_484B15BE_Records	f0=123, proc=loc_484B174B
 
 func_484B19BB_Table:
 	.long	loc_484B19DA
@@ -6303,77 +6303,77 @@ SysEx_48614008:	.byte	0xF0, 0x7E, 0x7F, 0x09, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48614008
 
 func_484BFFE4_Result_0:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=8, f4=1, f6=2, p8=SysEx_48614008, f12=3, f16=2
+	REC_func_484BFFE4_Result	f0=8, f4=1, f6=2, memcpy_a1=SysEx_48614008, flags=3, f16=2
 	.align	4, 0x00	# pad after func_484BFFE4_Result_0
 
 SysEx_48614024:	.byte	0xF0, 0x7F, 0x7F, 0x04, 0x01, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.space	4, 0xFF
 
 func_484BFFE4_Result_1:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32769, f4=1, f6=3, p8=SysEx_48614024, f12=3, f16=127
+	REC_func_484BFFE4_Result	f0=32769, f4=1, f6=3, memcpy_a1=SysEx_48614024, flags=3, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_1
 
 SysEx_48614044:	.byte	0xF0, 0x7F, 0x7F, 0x04, 0x03, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.space	4, 0xFF
 
 func_484BFFE4_Result_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f4=1, f6=4, p8=SysEx_48614044, f12=3, f16=255
+	REC_func_484BFFE4_Result	f4=1, f6=4, memcpy_a1=SysEx_48614044, flags=3, f16=255
 	.align	4, 0x00	# pad after func_484BFFE4_Result_2
 
 SysEx_48614064:	.byte	0xF0, 0x7F, 0x7F, 0x04, 0x04, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.space	4, 0xFF
 
 func_484BFFE4_Result_3:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=3, f4=1, f6=5, p8=SysEx_48614064, f12=3, f14=52, f16=76
+	REC_func_484BFFE4_Result	f0=3, f4=1, f6=5, memcpy_a1=SysEx_48614064, flags=3, f14=52, f16=76
 	.align	4, 0x00	# pad after func_484BFFE4_Result_3
 
 SysEx_48614084:	.byte	0xF0, 0x7F, 0x7F, 0x04, 0x05, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48614084
 
 func_484BFFE4_Result_4:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=7, p8=SysEx_48614084, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=7, memcpy_a1=SysEx_48614084, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_4
 
 SysEx_486140A8:	.byte	0xF0, 0x7F, 0x7F, 0x04, 0x05, 0x01, 0x01, 0x01, 0x01, 0x02, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_486140A8
 
 func_484BFFE4_Result_5:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=8, p8=SysEx_486140A8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=8, memcpy_a1=SysEx_486140A8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_5
 
 SysEx_486140CC:	.byte	0xF0, 0x7E, 0x7F, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_486140CC
 
 func_484BFFE4_Result_6:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C0, f4=1, f6=6, p8=SysEx_486140CC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C0, f4=1, f6=6, memcpy_a1=SysEx_486140CC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_6
 
 SysEx_486140F8:	.byte	0xF0, 0x7F, 0x7F, 0x09, 0x01, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_486140F8
 
 func_484BFFE4_Result_7:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=9, p8=SysEx_486140F8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=9, memcpy_a1=SysEx_486140F8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_7
 
 SysEx_48614118:	.byte	0xF0, 0x7F, 0x7F, 0x09, 0x03, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48614118
 
 func_484BFFE4_Result_8:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=10, p8=SysEx_48614118, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=10, memcpy_a1=SysEx_48614118, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_8
 
 SysEx_48614138:	.byte	0xF0, 0x7F, 0x7F, 0x0A, 0x01, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48614138
 
 func_484BFFE4_Result_9:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=11, p8=SysEx_48614138, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=1, f6=11, memcpy_a1=SysEx_48614138, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_9
 
 SysEx_48614158:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x00, 0x10, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48614158
 
 func_484BFFE4_Result_10:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32770, p8=SysEx_48614158, f12=3, f16=127
+	REC_func_484BFFE4_Result	f0=32770, memcpy_a1=SysEx_48614158, flags=3, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214176, 0x214178
 
@@ -6381,7 +6381,7 @@ SysEx_48614178:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x00, 0x20, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614178
 
 func_484BFFE4_Result_11_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=20512, p8=SysEx_48614178, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=20512, memcpy_a1=SysEx_48614178, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214196, 0x214198
 
@@ -6389,7 +6389,7 @@ SysEx_48614198:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x00, 0x21, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614198
 
 func_484BFFE4_Result_12_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=20515, p8=SysEx_48614198, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=20515, memcpy_a1=SysEx_48614198, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2141B6, 0x2141B8
 
@@ -6397,7 +6397,7 @@ SysEx_486141B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x00, 0x22, 0x00
 	.align	4, 0xFF	# pad after SysEx_486141B8
 
 func_484BFFE4_Result_13_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=20513, p8=SysEx_486141B8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=20513, memcpy_a1=SysEx_486141B8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2141D6, 0x2141D8
 
@@ -6405,7 +6405,7 @@ SysEx_486141D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x00, 0x23, 0x00
 	.align	4, 0xFF	# pad after SysEx_486141D8
 
 func_484BFFE4_Result_14_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=20514, p8=SysEx_486141D8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=20514, memcpy_a1=SysEx_486141D8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2141F6, 0x2141F8
 
@@ -6414,7 +6414,7 @@ Str_P_1_6:	.asciz "\xF0P, 1\x1F"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2141FF, 0x214204
 
 func_484BFFE4_Result_11:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=8, f6=2, p8=Str_P_1_6, f12=3
+	REC_func_484BFFE4_Result	f0=8, f6=2, memcpy_a1=Str_P_1_6, flags=3
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214216, 0x214218
 
@@ -6422,7 +6422,7 @@ SysEx_48614218:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x30, 0x1F, 0x00, 0x01, 0x00, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614218
 
 func_484BFFE4_Result_16_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32800, f6=3, p8=SysEx_48614218, f12=7, f16=1
+	REC_func_484BFFE4_Result	f0=32800, f6=3, memcpy_a1=SysEx_48614218, flags=7, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214236, 0x214238
 
@@ -6430,7 +6430,7 @@ SysEx_48614238:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x01, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614238
 
 func_484BFFE4_Result_12:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40960, f6=4, p8=SysEx_48614238, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=40960, f6=4, memcpy_a1=SysEx_48614238, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214256, 0x214258
 
@@ -6438,7 +6438,7 @@ SysEx_48614258:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x02, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614258
 
 func_484BFFE4_Result_13:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40960, f6=5, p8=SysEx_48614258, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=40960, f6=5, memcpy_a1=SysEx_48614258, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214276, 0x214278
 
@@ -6446,7 +6446,7 @@ SysEx_48614278:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x04, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614278
 
 func_484BFFE4_Result_14:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32784, p8=SysEx_48614278, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=32784, memcpy_a1=SysEx_48614278, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214296, 0x214298
 
@@ -6454,7 +6454,7 @@ SysEx_48614298:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x11, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614298
 
 func_484BFFE4_Result_15:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41216, f6=4, p8=SysEx_48614298, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=41216, f6=4, memcpy_a1=SysEx_48614298, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2142B6, 0x2142B8
 
@@ -6462,7 +6462,7 @@ SysEx_486142B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x12, 0x00
 	.align	4, 0xFF	# pad after SysEx_486142B8
 
 func_484BFFE4_Result_16:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41216, f6=5, p8=SysEx_486142B8, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=41216, f6=5, memcpy_a1=SysEx_486142B8, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2142D6, 0x2142D8
 
@@ -6470,7 +6470,7 @@ SysEx_486142D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x21, 0x00
 	.align	4, 0xFF	# pad after SysEx_486142D8
 
 func_484BFFE4_Result_17:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41472, f6=4, p8=SysEx_486142D8, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=41472, f6=4, memcpy_a1=SysEx_486142D8, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2142F6, 0x2142F8
 
@@ -6478,7 +6478,7 @@ SysEx_486142F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x01, 0x22, 0x00
 	.align	4, 0xFF	# pad after SysEx_486142F8
 
 func_484BFFE4_Result_18:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41472, f6=5, p8=SysEx_486142F8, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=41472, f6=5, memcpy_a1=SysEx_486142F8, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214316, 0x214318
 
@@ -6486,7 +6486,7 @@ SysEx_48614318:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x00, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614318
 
 func_484BFFE4_Result_24_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614318, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614318, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214336, 0x214338
 
@@ -6494,7 +6494,7 @@ SysEx_48614338:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x01, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614338
 
 func_484BFFE4_Result_19:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45076, f6=4, p8=SysEx_48614338, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45076, f6=4, memcpy_a1=SysEx_48614338, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214356, 0x214358
 
@@ -6502,7 +6502,7 @@ SysEx_48614358:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x02, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614358
 
 func_484BFFE4_Result_20:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45076, f6=5, p8=SysEx_48614358, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45076, f6=5, memcpy_a1=SysEx_48614358, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214376, 0x214378
 
@@ -6510,7 +6510,7 @@ SysEx_48614378:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x03, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614378
 
 func_484BFFE4_Result_21:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45077, p8=SysEx_48614378, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45077, memcpy_a1=SysEx_48614378, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214396, 0x214398
 
@@ -6518,7 +6518,7 @@ SysEx_48614398:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x10, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614398
 
 func_484BFFE4_Result_28_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614398, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614398, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2143B6, 0x2143B8
 
@@ -6526,7 +6526,7 @@ SysEx_486143B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x11, 0x00
 	.align	4, 0xFF	# pad after SysEx_486143B8
 
 func_484BFFE4_Result_29_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45092, f6=4, p8=SysEx_486143B8, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45092, f6=4, memcpy_a1=SysEx_486143B8, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2143D6, 0x2143D8
 
@@ -6534,7 +6534,7 @@ SysEx_486143D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x12, 0x00
 	.align	4, 0xFF	# pad after SysEx_486143D8
 
 func_484BFFE4_Result_30_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45092, f6=5, p8=SysEx_486143D8, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45092, f6=5, memcpy_a1=SysEx_486143D8, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2143F6, 0x2143F8
 
@@ -6542,7 +6542,7 @@ SysEx_486143F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x13, 0x00
 	.align	4, 0xFF	# pad after SysEx_486143F8
 
 func_484BFFE4_Result_31_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45093, p8=SysEx_486143F8, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45093, memcpy_a1=SysEx_486143F8, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214416, 0x214418
 
@@ -6550,7 +6550,7 @@ SysEx_48614418:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x20, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614418
 
 func_484BFFE4_Result_32_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614418, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614418, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214436, 0x214438
 
@@ -6558,7 +6558,7 @@ SysEx_48614438:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x21, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614438
 
 func_484BFFE4_Result_33_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45108, f6=4, p8=SysEx_48614438, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45108, f6=4, memcpy_a1=SysEx_48614438, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214456, 0x214458
 
@@ -6566,7 +6566,7 @@ SysEx_48614458:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x22, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614458
 
 func_484BFFE4_Result_34_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45108, f6=5, p8=SysEx_48614458, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45108, f6=5, memcpy_a1=SysEx_48614458, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214476, 0x214478
 
@@ -6574,7 +6574,7 @@ SysEx_48614478:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x23, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614478
 
 func_484BFFE4_Result_35_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45109, p8=SysEx_48614478, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45109, memcpy_a1=SysEx_48614478, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214496, 0x214498
 
@@ -6582,7 +6582,7 @@ SysEx_48614498:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x30, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614498
 
 func_484BFFE4_Result_36_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614498, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614498, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2144B6, 0x2144B8
 
@@ -6590,7 +6590,7 @@ SysEx_486144B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x31, 0x00
 	.align	4, 0xFF	# pad after SysEx_486144B8
 
 func_484BFFE4_Result_37_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45124, f6=4, p8=SysEx_486144B8, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45124, f6=4, memcpy_a1=SysEx_486144B8, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2144D6, 0x2144D8
 
@@ -6598,7 +6598,7 @@ SysEx_486144D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x32, 0x00
 	.align	4, 0xFF	# pad after SysEx_486144D8
 
 func_484BFFE4_Result_38_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45124, f6=5, p8=SysEx_486144D8, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45124, f6=5, memcpy_a1=SysEx_486144D8, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2144F6, 0x2144F8
 
@@ -6606,7 +6606,7 @@ SysEx_486144F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x33, 0x00
 	.align	4, 0xFF	# pad after SysEx_486144F8
 
 func_484BFFE4_Result_39_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45125, p8=SysEx_486144F8, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45125, memcpy_a1=SysEx_486144F8, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214516, 0x214518
 
@@ -6614,7 +6614,7 @@ SysEx_48614518:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x40, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614518
 
 func_484BFFE4_Result_40_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614518, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614518, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214536, 0x214538
 
@@ -6622,7 +6622,7 @@ SysEx_48614538:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x41, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614538
 
 func_484BFFE4_Result_41_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45140, f6=4, p8=SysEx_48614538, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45140, f6=4, memcpy_a1=SysEx_48614538, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214556, 0x214558
 
@@ -6630,7 +6630,7 @@ SysEx_48614558:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x42, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614558
 
 func_484BFFE4_Result_42_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45140, f6=5, p8=SysEx_48614558, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45140, f6=5, memcpy_a1=SysEx_48614558, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214576, 0x214578
 
@@ -6638,7 +6638,7 @@ SysEx_48614578:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x02, 0x43, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614578
 
 func_484BFFE4_Result_43_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45141, p8=SysEx_48614578, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45141, memcpy_a1=SysEx_48614578, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214596, 0x214598
 
@@ -6646,7 +6646,7 @@ SysEx_48614598:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x00, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614598
 
 func_484BFFE4_Result_22:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x204001, f6=8, p8=SysEx_48614598, f12=6, f16=16
+	REC_func_484BFFE4_Result	f0=0x204001, f6=8, memcpy_a1=SysEx_48614598, flags=6, f16=16
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2145B6, 0x2145B8
 
@@ -6654,7 +6654,7 @@ SysEx_486145B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x10, 0x00
 	.align	4, 0xFF	# pad after SysEx_486145B8
 
 func_484BFFE4_Result_23:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200090, f6=7, p8=SysEx_486145B8, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200090, f6=7, memcpy_a1=SysEx_486145B8, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2145D6, 0x2145D8
 
@@ -6662,7 +6662,7 @@ SysEx_486145D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x11, 0x00
 	.align	4, 0xFF	# pad after SysEx_486145D8
 
 func_484BFFE4_Result_24:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200091, f6=7, p8=SysEx_486145D8, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200091, f6=7, memcpy_a1=SysEx_486145D8, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2145F6, 0x2145F8
 
@@ -6670,7 +6670,7 @@ SysEx_486145F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x12, 0x00
 	.align	4, 0xFF	# pad after SysEx_486145F8
 
 func_484BFFE4_Result_25:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200092, f6=7, p8=SysEx_486145F8, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200092, f6=7, memcpy_a1=SysEx_486145F8, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214616, 0x214618
 
@@ -6678,7 +6678,7 @@ SysEx_48614618:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x13, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614618
 
 func_484BFFE4_Result_26:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200093, f6=7, p8=SysEx_48614618, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200093, f6=7, memcpy_a1=SysEx_48614618, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214636, 0x214638
 
@@ -6686,7 +6686,7 @@ SysEx_48614638:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x14, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614638
 
 func_484BFFE4_Result_27:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200094, f6=7, p8=SysEx_48614638, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200094, f6=7, memcpy_a1=SysEx_48614638, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214656, 0x214658
 
@@ -6694,7 +6694,7 @@ SysEx_48614658:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x15, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614658
 
 func_484BFFE4_Result_28:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200095, f6=7, p8=SysEx_48614658, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200095, f6=7, memcpy_a1=SysEx_48614658, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214676, 0x214678
 
@@ -6702,7 +6702,7 @@ SysEx_48614678:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x16, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614678
 
 func_484BFFE4_Result_29:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200096, f6=7, p8=SysEx_48614678, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200096, f6=7, memcpy_a1=SysEx_48614678, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214696, 0x214698
 
@@ -6710,7 +6710,7 @@ SysEx_48614698:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x17, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614698
 
 func_484BFFE4_Result_30:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200097, f6=7, p8=SysEx_48614698, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200097, f6=7, memcpy_a1=SysEx_48614698, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2146B6, 0x2146B8
 
@@ -6718,7 +6718,7 @@ SysEx_486146B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x18, 0x00
 	.align	4, 0xFF	# pad after SysEx_486146B8
 
 func_484BFFE4_Result_31:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200098, f6=7, p8=SysEx_486146B8, f12=6, f16=8
+	REC_func_484BFFE4_Result	f0=0x200098, f6=7, memcpy_a1=SysEx_486146B8, flags=6, f16=8
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2146D6, 0x2146D8
 
@@ -6726,7 +6726,7 @@ SysEx_486146D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x19, 0x00
 	.align	4, 0xFF	# pad after SysEx_486146D8
 
 func_484BFFE4_Result_32:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200099, f6=7, p8=SysEx_486146D8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x200099, f6=7, memcpy_a1=SysEx_486146D8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2146F6, 0x2146F8
 
@@ -6734,7 +6734,7 @@ SysEx_486146F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x1A, 0x00
 	.align	4, 0xFF	# pad after SysEx_486146F8
 
 func_484BFFE4_Result_33:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20009A, f6=7, p8=SysEx_486146F8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20009A, f6=7, memcpy_a1=SysEx_486146F8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214716, 0x214718
 
@@ -6742,7 +6742,7 @@ SysEx_48614718:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x1B, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614718
 
 func_484BFFE4_Result_34:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20008A, f6=9, p8=SysEx_48614718, f12=6, f16=10
+	REC_func_484BFFE4_Result	f0=0x20008A, f6=9, memcpy_a1=SysEx_48614718, flags=6, f16=10
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214736, 0x214738
 
@@ -6750,7 +6750,7 @@ SysEx_48614738:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x1C, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614738
 
 func_484BFFE4_Result_35:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20008B, f6=9, p8=SysEx_48614738, f12=6, f16=10
+	REC_func_484BFFE4_Result	f0=0x20008B, f6=9, memcpy_a1=SysEx_48614738, flags=6, f16=10
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214756, 0x214758
 
@@ -6758,7 +6758,7 @@ SysEx_48614758:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x1D, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614758
 
 func_484BFFE4_Result_36:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200088, f6=9, p8=SysEx_48614758, f12=6, f16=10
+	REC_func_484BFFE4_Result	f0=0x200088, f6=9, memcpy_a1=SysEx_48614758, flags=6, f16=10
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214776, 0x214778
 
@@ -6766,7 +6766,7 @@ SysEx_48614778:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x1E, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614778
 
 func_484BFFE4_Result_37:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200089, f6=9, p8=SysEx_48614778, f12=6, f16=10
+	REC_func_484BFFE4_Result	f0=0x200089, f6=9, memcpy_a1=SysEx_48614778, flags=6, f16=10
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214796, 0x214798
 
@@ -6774,7 +6774,7 @@ SysEx_48614798:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x20, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614798
 
 func_484BFFE4_Result_38:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B0, f6=7, p8=SysEx_48614798, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B0, f6=7, memcpy_a1=SysEx_48614798, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2147B6, 0x2147B8
 
@@ -6782,7 +6782,7 @@ SysEx_486147B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x21, 0x00
 	.align	4, 0xFF	# pad after SysEx_486147B8
 
 func_484BFFE4_Result_39:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B1, f6=7, p8=SysEx_486147B8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B1, f6=7, memcpy_a1=SysEx_486147B8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2147D6, 0x2147D8
 
@@ -6790,7 +6790,7 @@ SysEx_486147D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x22, 0x00
 	.align	4, 0xFF	# pad after SysEx_486147D8
 
 func_484BFFE4_Result_40:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B2, f6=7, p8=SysEx_486147D8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B2, f6=7, memcpy_a1=SysEx_486147D8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2147F6, 0x2147F8
 
@@ -6798,7 +6798,7 @@ SysEx_486147F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x23, 0x00
 	.align	4, 0xFF	# pad after SysEx_486147F8
 
 func_484BFFE4_Result_41:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B3, f6=7, p8=SysEx_486147F8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B3, f6=7, memcpy_a1=SysEx_486147F8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214816, 0x214818
 
@@ -6806,7 +6806,7 @@ SysEx_48614818:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x24, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614818
 
 func_484BFFE4_Result_42:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B4, f6=7, p8=SysEx_48614818, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B4, f6=7, memcpy_a1=SysEx_48614818, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214836, 0x214838
 
@@ -6814,7 +6814,7 @@ SysEx_48614838:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x25, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614838
 
 func_484BFFE4_Result_43:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B5, f6=7, p8=SysEx_48614838, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B5, f6=7, memcpy_a1=SysEx_48614838, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214856, 0x214858
 
@@ -6822,7 +6822,7 @@ SysEx_48614858:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x26, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614858
 
 func_484BFFE4_Result_44:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B6, f6=7, p8=SysEx_48614858, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B6, f6=7, memcpy_a1=SysEx_48614858, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214876, 0x214878
 
@@ -6830,7 +6830,7 @@ SysEx_48614878:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x27, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614878
 
 func_484BFFE4_Result_45:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B7, f6=7, p8=SysEx_48614878, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B7, f6=7, memcpy_a1=SysEx_48614878, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214896, 0x214898
 
@@ -6838,7 +6838,7 @@ SysEx_48614898:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x28, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614898
 
 func_484BFFE4_Result_46:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B8, f6=7, p8=SysEx_48614898, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B8, f6=7, memcpy_a1=SysEx_48614898, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2148B6, 0x2148B8
 
@@ -6846,7 +6846,7 @@ SysEx_486148B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x29, 0x00
 	.align	4, 0xFF	# pad after SysEx_486148B8
 
 func_484BFFE4_Result_47:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000B9, f6=7, p8=SysEx_486148B8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000B9, f6=7, memcpy_a1=SysEx_486148B8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2148D6, 0x2148D8
 
@@ -6854,7 +6854,7 @@ SysEx_486148D8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x2A, 0x00
 	.align	4, 0xFF	# pad after SysEx_486148D8
 
 func_484BFFE4_Result_48:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000BA, f6=7, p8=SysEx_486148D8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000BA, f6=7, memcpy_a1=SysEx_486148D8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2148F6, 0x2148F8
 
@@ -6862,7 +6862,7 @@ SysEx_486148F8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x2B, 0x00
 	.align	4, 0xFF	# pad after SysEx_486148F8
 
 func_484BFFE4_Result_49:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000BB, f6=7, p8=SysEx_486148F8, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000BB, f6=7, memcpy_a1=SysEx_486148F8, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214916, 0x214918
 
@@ -6870,7 +6870,7 @@ SysEx_48614918:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x2C, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614918
 
 func_484BFFE4_Result_50:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000BC, f6=7, p8=SysEx_48614918, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000BC, f6=7, memcpy_a1=SysEx_48614918, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214936, 0x214938
 
@@ -6878,7 +6878,7 @@ SysEx_48614938:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x2D, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614938
 
 func_484BFFE4_Result_51:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000BD, f6=7, p8=SysEx_48614938, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000BD, f6=7, memcpy_a1=SysEx_48614938, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214956, 0x214958
 
@@ -6886,7 +6886,7 @@ SysEx_48614958:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x2E, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614958
 
 func_484BFFE4_Result_52:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000BE, f6=7, p8=SysEx_48614958, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000BE, f6=7, memcpy_a1=SysEx_48614958, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214976, 0x214978
 
@@ -6894,7 +6894,7 @@ SysEx_48614978:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x2F, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614978
 
 func_484BFFE4_Result_53:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000BF, f6=7, p8=SysEx_48614978, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x2000BF, f6=7, memcpy_a1=SysEx_48614978, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214996, 0x214998
 
@@ -6902,7 +6902,7 @@ SysEx_48614998:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x00, 0x10, 0x30, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614998
 
 func_484BFFE4_Result_54:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000A2, f6=7, p8=SysEx_48614998, f12=6, f16=7
+	REC_func_484BFFE4_Result	f0=0x2000A2, f6=7, memcpy_a1=SysEx_48614998, flags=6, f16=7
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2149B6, 0x2149B8
 
@@ -6910,7 +6910,7 @@ SysEx_486149B8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x00, 0x00
 	.align	4, 0xFF	# pad after SysEx_486149B8
 
 func_484BFFE4_Result_55:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f6=10, p8=SysEx_486149B8, f12=4
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f6=10, memcpy_a1=SysEx_486149B8, flags=4
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2149D6, 0x2149D8
 
@@ -6918,7 +6918,7 @@ func_484BEFB2_Table:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x10,
 	.align	4, 0xFF	# pad after func_484BEFB2_Table
 
 func_484BFFE4_Result_56:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49152, f6=11, p8=func_484BEFB2_Table, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=49152, f6=11, memcpy_a1=func_484BEFB2_Table, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2149F6, 0x2149F8
 
@@ -6926,7 +6926,7 @@ func_484BEFB2_Table_2:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x1
 	.align	4, 0xFF	# pad after func_484BEFB2_Table_2
 
 func_484BFFE4_Result_57:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49152, f6=11, p8=func_484BEFB2_Table_2, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=49152, f6=11, memcpy_a1=func_484BEFB2_Table_2, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214A16, 0x214A18
 
@@ -6934,7 +6934,7 @@ func_484BEFB2_Table_3:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x1
 	.align	4, 0xFF	# pad after func_484BEFB2_Table_3
 
 func_484BFFE4_Result_58:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49152, f6=11, p8=func_484BEFB2_Table_3, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=49152, f6=11, memcpy_a1=func_484BEFB2_Table_3, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214A36, 0x214A38
 
@@ -6942,7 +6942,7 @@ SysEx_48614A38:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x13, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614A38
 
 func_484BFFE4_Result_59:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49156, f6=12, p8=SysEx_48614A38, f12=7, f16=3
+	REC_func_484BFFE4_Result	f0=49156, f6=12, memcpy_a1=SysEx_48614A38, flags=7, f16=3
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214A56, 0x214A58
 
@@ -6950,7 +6950,7 @@ SysEx_48614A58:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x14, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614A58
 
 func_484BFFE4_Result_60:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49280, f6=13, p8=SysEx_48614A58, f12=7, f16=3
+	REC_func_484BFFE4_Result	f0=49280, f6=13, memcpy_a1=SysEx_48614A58, flags=7, f16=3
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214A76, 0x214A78
 
@@ -6958,7 +6958,7 @@ SysEx_48614A78:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x15, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614A78
 
 func_484BFFE4_Result_61:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49282, f6=13, p8=SysEx_48614A78, f12=7, f16=1
+	REC_func_484BFFE4_Result	f0=49282, f6=13, memcpy_a1=SysEx_48614A78, flags=7, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214A96, 0x214A98
 
@@ -6966,7 +6966,7 @@ SysEx_48614A98:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x16, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614A98
 
 func_484BFFE4_Result_62:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=49283, f6=13, p8=SysEx_48614A98, f12=7, f16=1
+	REC_func_484BFFE4_Result	f0=49283, f6=13, memcpy_a1=SysEx_48614A98, flags=7, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214AB6, 0x214AB8
 
@@ -6974,7 +6974,7 @@ SysEx_48614AB8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x17, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614AB8
 
 func_484BFFE4_Result_63:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=53258, p8=SysEx_48614AB8, f12=7, f16=1
+	REC_func_484BFFE4_Result	f0=53258, memcpy_a1=SysEx_48614AB8, flags=7, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214AD6, 0x214AD8
 
@@ -6982,7 +6982,7 @@ SysEx_48614AD8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x18, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614AD8
 
 func_484BFFE4_Result_64:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=53248, p8=SysEx_48614AD8, f12=7, f16=1
+	REC_func_484BFFE4_Result	f0=53248, memcpy_a1=SysEx_48614AD8, flags=7, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214AF6, 0x214AF8
 
@@ -6990,7 +6990,7 @@ SysEx_48614AF8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x19, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614AF8
 
 func_484BFFE4_Result_65:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=53249, f6=14, p8=SysEx_48614AF8, f12=3, f16=3
+	REC_func_484BFFE4_Result	f0=53249, f6=14, memcpy_a1=SysEx_48614AF8, flags=3, f16=3
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214B16, 0x214B18
 
@@ -6998,7 +6998,7 @@ SysEx_48614B18:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x1A, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614B18
 
 func_484BFFE4_Result_66:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=53250, f6=14, p8=SysEx_48614B18, f12=3, f16=2
+	REC_func_484BFFE4_Result	f0=53250, f6=14, memcpy_a1=SysEx_48614B18, flags=3, f16=2
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214B36, 0x214B38
 
@@ -7006,7 +7006,7 @@ SysEx_48614B38:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x1B, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614B38
 
 func_484BFFE4_Result_67:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=53251, f6=14, p8=SysEx_48614B38, f12=3, f16=2
+	REC_func_484BFFE4_Result	f0=53251, f6=14, memcpy_a1=SysEx_48614B38, flags=3, f16=2
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214B56, 0x214B58
 
@@ -7014,7 +7014,7 @@ SysEx_48614B58:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x20, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614B58
 
 func_484BFFE4_Result_90_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32819, f6=15, p8=SysEx_48614B58, f12=3, f16=2
+	REC_func_484BFFE4_Result	f0=32819, f6=15, memcpy_a1=SysEx_48614B58, flags=3, f16=2
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214B76, 0x214B78
 
@@ -7022,7 +7022,7 @@ func_484BF0BC_Table:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x28,
 	.align	4, 0xFF	# pad after func_484BF0BC_Table
 
 func_484BFFE4_Result_68:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=160, f6=16, p8=func_484BF0BC_Table, f12=7, f16=5
+	REC_func_484BFFE4_Result	f0=160, f6=16, memcpy_a1=func_484BF0BC_Table, flags=7, f16=5
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214B96, 0x214B98
 
@@ -7030,7 +7030,7 @@ func_484BF4B8_Table:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x30,
 	.align	4, 0xFF	# pad after func_484BF4B8_Table
 
 func_484BFFE4_Result_69:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=57344, f6=17, p8=func_484BF4B8_Table, f12=3, f16=127
+	REC_func_484BFFE4_Result	f0=57344, f6=17, memcpy_a1=func_484BF4B8_Table, flags=3, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214BB6, 0x214BB8
 
@@ -7038,7 +7038,7 @@ func_484BF4B8_Table_2:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x3
 	.align	4, 0xFF	# pad after func_484BF4B8_Table_2
 
 func_484BFFE4_Result_70:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=57344, f6=17, p8=func_484BF4B8_Table_2, f12=3, f16=127
+	REC_func_484BFFE4_Result	f0=57344, f6=17, memcpy_a1=func_484BF4B8_Table_2, flags=3, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214BD6, 0x214BD8
 
@@ -7046,7 +7046,7 @@ func_484BF4B8_Table_3:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x3
 	.align	4, 0xFF	# pad after func_484BF4B8_Table_3
 
 func_484BFFE4_Result_71:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=57344, f6=17, p8=func_484BF4B8_Table_3, f12=3, f16=127
+	REC_func_484BFFE4_Result	f0=57344, f6=17, memcpy_a1=func_484BF4B8_Table_3, flags=3, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214BF6, 0x214BF8
 
@@ -7054,7 +7054,7 @@ func_484BF5C2_Table:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x38,
 	.align	4, 0xFF	# pad after func_484BF5C2_Table
 
 func_484BFFE4_Result_72:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=128, f6=18, p8=func_484BF5C2_Table, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=128, f6=18, memcpy_a1=func_484BF5C2_Table, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214C16, 0x214C18
 
@@ -7062,7 +7062,7 @@ func_484BF5C2_Table_2:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x3
 	.align	4, 0xFF	# pad after func_484BF5C2_Table_2
 
 func_484BFFE4_Result_73:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=128, f6=18, p8=func_484BF5C2_Table_2, f12=7, f16=127
+	REC_func_484BFFE4_Result	f0=128, f6=18, memcpy_a1=func_484BF5C2_Table_2, flags=7, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214C36, 0x214C38
 
@@ -7070,7 +7070,7 @@ func_484BF5C2_Table_3:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x3
 	.align	4, 0xFF	# pad after func_484BF5C2_Table_3
 
 func_484BFFE4_Result_74:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=128, f6=18, p8=func_484BF5C2_Table_3, f12=7, f16=103
+	REC_func_484BFFE4_Result	f0=128, f6=18, memcpy_a1=func_484BF5C2_Table_3, flags=7, f16=103
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214C56, 0x214C58
 
@@ -7078,7 +7078,7 @@ SysEx_48614C58:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x40, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614C58
 
 func_484BFFE4_Result_75:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32896, p8=SysEx_48614C58, f12=7, f16=1
+	REC_func_484BFFE4_Result	f0=32896, memcpy_a1=SysEx_48614C58, flags=7, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214C76, 0x214C78
 
@@ -7086,7 +7086,7 @@ SysEx_48614C78:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x41, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614C78
 
 func_484BFFE4_Result_76:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32897, p8=SysEx_48614C78, f12=7, f16=13
+	REC_func_484BFFE4_Result	f0=32897, memcpy_a1=SysEx_48614C78, flags=7, f16=13
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214C96, 0x214C98
 
@@ -7094,7 +7094,7 @@ SysEx_48614C98:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x42, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614C98
 
 func_484BFFE4_Result_77:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32898, f6=19, p8=SysEx_48614C98, f12=7, f16=19
+	REC_func_484BFFE4_Result	f0=32898, f6=19, memcpy_a1=SysEx_48614C98, flags=7, f16=19
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214CB6, 0x214CB8
 
@@ -7102,7 +7102,7 @@ SysEx_48614CB8:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x7E, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614CB8
 
 func_484BFFE4_Result_78:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x600014, f6=21, p8=SysEx_48614CB8, f12=3, f16=127
+	REC_func_484BFFE4_Result	f0=0x600014, f6=21, memcpy_a1=SysEx_48614CB8, flags=3, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214CDA, 0x214CDC
 
@@ -7110,7 +7110,7 @@ SysEx_48614CDC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x00, 0x7F, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614CDC
 
 func_484BFFE4_Result_79:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f6=20, p8=SysEx_48614CDC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f6=20, memcpy_a1=SysEx_48614CDC, flags=2, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214CFA, 0x214CFC
 
@@ -7118,7 +7118,7 @@ SysEx_48614CFC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x01, 0x00, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614CFC
 
 func_484BFFE4_Result_80:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45056, p8=SysEx_48614CFC, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=45056, memcpy_a1=SysEx_48614CFC, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214D1A, 0x214D1C
 
@@ -7126,7 +7126,7 @@ SysEx_48614D1C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x01, 0x01, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614D1C
 
 func_484BFFE4_Result_104_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45120, p8=SysEx_48614D1C, f12=6, f16=255
+	REC_func_484BFFE4_Result	f0=45120, memcpy_a1=SysEx_48614D1C, flags=6, f16=255
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214D3A, 0x214D3C
 
@@ -7134,7 +7134,7 @@ SysEx_48614D3C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x01, 0x02, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614D3C
 
 func_484BFFE4_Result_105_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45136, p8=SysEx_48614D3C, f12=6, f16=255
+	REC_func_484BFFE4_Result	f0=45136, memcpy_a1=SysEx_48614D3C, flags=6, f16=255
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214D5A, 0x214D5C
 
@@ -7142,7 +7142,7 @@ SysEx_48614D5C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x01, 0x10, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614D5C
 
 func_484BFFE4_Result_81:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45057, p8=SysEx_48614D5C, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=45057, memcpy_a1=SysEx_48614D5C, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214D7A, 0x214D7C
 
@@ -7150,7 +7150,7 @@ SysEx_48614D7C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x01, 0x11, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614D7C
 
 func_484BFFE4_Result_107_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45120, p8=SysEx_48614D7C, f12=6, f16=255
+	REC_func_484BFFE4_Result	f0=45120, memcpy_a1=SysEx_48614D7C, flags=6, f16=255
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214D9A, 0x214D9C
 
@@ -7158,7 +7158,7 @@ SysEx_48614D9C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x01, 0x12, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614D9C
 
 func_484BFFE4_Result_108_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45136, p8=SysEx_48614D9C, f12=6, f16=255
+	REC_func_484BFFE4_Result	f0=45136, memcpy_a1=SysEx_48614D9C, flags=6, f16=255
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214DBA, 0x214DBC
 
@@ -7166,7 +7166,7 @@ SysEx_48614DBC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x00, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614DBC
 
 func_484BFFE4_Result_109_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614DBC, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614DBC, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214DDA, 0x214DDC
 
@@ -7174,7 +7174,7 @@ SysEx_48614DDC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x01, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614DDC
 
 func_484BFFE4_Result_110_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45124, f6=4, p8=SysEx_48614DDC, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45124, f6=4, memcpy_a1=SysEx_48614DDC, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214DFA, 0x214DFC
 
@@ -7182,7 +7182,7 @@ SysEx_48614DFC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x02, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614DFC
 
 func_484BFFE4_Result_111_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45124, f6=5, p8=SysEx_48614DFC, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45124, f6=5, memcpy_a1=SysEx_48614DFC, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214E1A, 0x214E1C
 
@@ -7190,7 +7190,7 @@ SysEx_48614E1C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x03, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614E1C
 
 func_484BFFE4_Result_82:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45077, p8=SysEx_48614E1C, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45077, memcpy_a1=SysEx_48614E1C, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214E3A, 0x214E3C
 
@@ -7198,7 +7198,7 @@ SysEx_48614E3C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x10, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614E3C
 
 func_484BFFE4_Result_113_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, p8=SysEx_48614E3C, f12=6, f16=1
+	REC_func_484BFFE4_Result	f0=0x20005F, f6=6, memcpy_a1=SysEx_48614E3C, flags=6, f16=1
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214E5A, 0x214E5C
 
@@ -7206,7 +7206,7 @@ SysEx_48614E5C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x11, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614E5C
 
 func_484BFFE4_Result_114_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45140, f6=4, p8=SysEx_48614E5C, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45140, f6=4, memcpy_a1=SysEx_48614E5C, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214E7A, 0x214E7C
 
@@ -7214,7 +7214,7 @@ SysEx_48614E7C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x12, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614E7C
 
 func_484BFFE4_Result_115_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45140, f6=5, p8=SysEx_48614E7C, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45140, f6=5, memcpy_a1=SysEx_48614E7C, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214E9A, 0x214E9C
 
@@ -7222,7 +7222,7 @@ SysEx_48614E9C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x01, 0x02, 0x13, 0x00
 	.align	4, 0xFF	# pad after SysEx_48614E9C
 
 func_484BFFE4_Result_83:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=45077, p8=SysEx_48614E9C, f12=6, f16=127
+	REC_func_484BFFE4_Result	f0=45077, memcpy_a1=SysEx_48614E9C, flags=6, f16=127
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214EBA, 0x214EBC
 
@@ -7230,7 +7230,7 @@ SysEx_48614EBC:	.byte	0xF0, 0x50, 0x25, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushit
 	.align	4, 0xFF	# pad after SysEx_48614EBC
 
 func_484BFFE4_Result_84:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=4, f6=1, p8=SysEx_48614EBC, f12=3, f14=40, f16=300
+	REC_func_484BFFE4_Result	f0=4, f6=1, memcpy_a1=SysEx_48614EBC, flags=3, f14=40, f16=300
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x214ED6, 0x214ED8
 
@@ -7238,892 +7238,892 @@ SysEx_48614ED8:	.byte	0xF0, 0x50, 0x21, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysE
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_0:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, p8=SysEx_48614ED8
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, memcpy_a1=SysEx_48614ED8
 
 SysEx_48614EF4:	.byte	0xF0, 0x50, 0x22, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_1:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=1, p8=SysEx_48614EF4
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=1, memcpy_a1=SysEx_48614EF4
 
 SysEx_48614F10:	.byte	0xF0, 0x50, 0x23, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_2:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=2, p8=SysEx_48614F10
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=2, memcpy_a1=SysEx_48614F10
 
 SysEx_48614F2C:	.byte	0xF0, 0x50, 0x27, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_3:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=3, p8=SysEx_48614F2C
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=3, memcpy_a1=SysEx_48614F2C
 
 SysEx_48614F48:	.byte	0xF0, 0x50, 0x28, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_4:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=4, p8=SysEx_48614F48
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=4, memcpy_a1=SysEx_48614F48
 
 SysEx_48614F64:	.byte	0xF0, 0x50, 0x29, 0x7E, 0x31, 0x1F, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48614F64
 
 func_484BFFE4_Result_s16_5:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=5, p8=SysEx_48614F64
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=5, memcpy_a1=SysEx_48614F64
 
 SysEx_48614F80:	.byte	0xF0, 0x50, 0x2D, 0x7E, 0x31, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48614F80
 
 func_484BFFE4_Result_s16_6:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=6, p8=SysEx_48614F80, f12=20364, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=6, memcpy_a1=SysEx_48614F80, flags=20364, f14=18529
 
 SysEx_48614FA0:	.byte	0xF0, 0x50, 0x2E, 0x7E, 0x31, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48614FA0
 
 func_484BFFE4_Result_s16_7:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=7, p8=SysEx_48614FA0, f12=20396, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=7, memcpy_a1=SysEx_48614FA0, flags=20396, f14=18529
 
 SysEx_48614FC0:	.byte	0xF0, 0x50, 0x2F, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_8:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=8, p8=SysEx_48614FC0
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=8, memcpy_a1=SysEx_48614FC0
 
 SysEx_48614FDC:	.byte	0xF0, 0x50, 0x30, 0x7E, 0x31, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_9:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=9, p8=SysEx_48614FDC
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=9, memcpy_a1=SysEx_48614FDC
 
 SysEx_48615000:	.byte	0xF0, 0x50, 0x31, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_10:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=10, p8=SysEx_48615000
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=10, memcpy_a1=SysEx_48615000
 
 SysEx_4861501C:	.byte	0xF0, 0x50, 0x32, 0x7E, 0x31, 0x1F, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.space	4, 0xFF
 
 func_484BFFE4_Result_s16_11:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=11, p8=SysEx_4861501C
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=11, memcpy_a1=SysEx_4861501C
 
 SysEx_48615038:	.byte	0xF0, 0x50, 0x33, 0x7E, 0x31, 0x1F, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615038
 
 func_484BFFE4_Result_s16_12:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=12, p8=SysEx_48615038
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=12, memcpy_a1=SysEx_48615038
 
 SysEx_48615054:	.byte	0xF0, 0x50, 0x7E, 0x01, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615054
 
 func_484BFFE4_Result_s16_13:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=13, p8=SysEx_48615054, f12=20567, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=13, memcpy_a1=SysEx_48615054, flags=20567, f14=18529
 
 SysEx_4861506C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861506C
 
 func_484BFFE4_Result_s16_14:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_4861506C, f12=20608, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_4861506C, flags=20608, f14=18529
 
 SysEx_48615094:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615094
 
 func_484BFFE4_Result_s16_15:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_48615094, f12=20648, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_48615094, flags=20648, f14=18529
 
 SysEx_486150BC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486150BC
 
 func_484BFFE4_Result_s16_16:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_486150BC, f12=20688, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_486150BC, flags=20688, f14=18529
 
 SysEx_486150E4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486150E4
 
 func_484BFFE4_Result_s16_17:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_486150E4, f12=20728, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_486150E4, flags=20728, f14=18529
 
 SysEx_4861510C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861510C
 
 func_484BFFE4_Result_s16_18:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_4861510C, f12=20768, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_4861510C, flags=20768, f14=18529
 
 SysEx_48615134:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x02, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615134
 
 func_484BFFE4_Result_s16_19:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_48615134, f12=20808, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_48615134, flags=20808, f14=18529
 
 SysEx_4861515C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861515C
 
 func_484BFFE4_Result_s16_20:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_4861515C, f12=20848, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_4861515C, flags=20848, f14=18529
 
 SysEx_48615184:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x03, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615184
 
 func_484BFFE4_Result_s16_21:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_48615184, f12=20888, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_48615184, flags=20888, f14=18529
 
 SysEx_486151AC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486151AC
 
 func_484BFFE4_Result_s16_22:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_486151AC, f12=20928, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_486151AC, flags=20928, f14=18529
 
 SysEx_486151D4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486151D4
 
 func_484BFFE4_Result_s16_23:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_486151D4, f12=20968, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_486151D4, flags=20968, f14=18529
 
 SysEx_486151FC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486151FC
 
 func_484BFFE4_Result_s16_24:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_486151FC, f12=21008, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_486151FC, flags=21008, f14=18529
 
 SysEx_48615224:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x05, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615224
 
 func_484BFFE4_Result_s16_25:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_48615224, f12=21048, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_48615224, flags=21048, f14=18529
 
 SysEx_4861524C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861524C
 
 func_484BFFE4_Result_s16_26:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_4861524C, f12=21088, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_4861524C, flags=21088, f14=18529
 
 SysEx_48615274:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x06, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615274
 
 func_484BFFE4_Result_s16_27:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_48615274, f12=21128, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_48615274, flags=21128, f14=18529
 
 SysEx_4861529C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x06, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861529C
 
 func_484BFFE4_Result_s16_28:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_4861529C, f12=21168, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_4861529C, flags=21168, f14=18529
 
 SysEx_486152C4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486152C4
 
 func_484BFFE4_Result_s16_29:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_486152C4, f12=21208, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_486152C4, flags=21208, f14=18529
 
 SysEx_486152EC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x07, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486152EC
 
 func_484BFFE4_Result_s16_30:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_486152EC, f12=21248, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_486152EC, flags=21248, f14=18529
 
 SysEx_48615314:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615314
 
 func_484BFFE4_Result_s16_31:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_48615314, f12=21288, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_48615314, flags=21288, f14=18529
 
 SysEx_4861533C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861533C
 
 func_484BFFE4_Result_s16_32:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_4861533C, f12=21328, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_4861533C, flags=21328, f14=18529
 
 SysEx_48615364:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615364
 
 func_484BFFE4_Result_s16_33:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_48615364, f12=21368, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_48615364, flags=21368, f14=18529
 
 SysEx_4861538C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x09, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861538C
 
 func_484BFFE4_Result_s16_34:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_4861538C, f12=21408, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_4861538C, flags=21408, f14=18529
 
 SysEx_486153B4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486153B4
 
 func_484BFFE4_Result_s16_35:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_486153B4, f12=21448, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_486153B4, flags=21448, f14=18529
 
 SysEx_486153DC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x0A, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486153DC
 
 func_484BFFE4_Result_s16_36:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_486153DC, f12=21488, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_486153DC, flags=21488, f14=18529
 
 SysEx_48615404:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615404
 
 func_484BFFE4_Result_s16_37:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, p8=SysEx_48615404, f12=21528, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=16, memcpy_a1=SysEx_48615404, flags=21528, f14=18529
 
 SysEx_4861542C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x0B, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861542C
 
 func_484BFFE4_Result_s16_38:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, p8=SysEx_4861542C, f12=21568, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=17, memcpy_a1=SysEx_4861542C, flags=21568, f14=18529
 
 SysEx_48615454:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615454
 
 func_484BFFE4_Result_s16_39:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=14, p8=SysEx_48615454, f12=21608, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=14, memcpy_a1=SysEx_48615454, flags=21608, f14=18529
 
 SysEx_4861547C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861547C
 
 func_484BFFE4_Result_s16_40:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=15, p8=SysEx_4861547C, f12=21648, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=15, memcpy_a1=SysEx_4861547C, flags=21648, f14=18529
 
 SysEx_486154A4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486154A4
 
 func_484BFFE4_Result_s16_41:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=18, p8=SysEx_486154A4, f12=21688, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=18, memcpy_a1=SysEx_486154A4, flags=21688, f14=18529
 
 SysEx_486154CC:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486154CC
 
 func_484BFFE4_Result_s16_42:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=19, p8=SysEx_486154CC, f12=21728, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=19, memcpy_a1=SysEx_486154CC, flags=21728, f14=18529
 
 SysEx_486154F4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x20, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_486154F4
 
 func_484BFFE4_Result_s16_43:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=20, p8=SysEx_486154F4, f12=21768, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=20, memcpy_a1=SysEx_486154F4, flags=21768, f14=18529
 
 SysEx_4861551C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x20, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861551C
 
 func_484BFFE4_Result_s16_44:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=21, p8=SysEx_4861551C, f12=21808, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=21, memcpy_a1=SysEx_4861551C, flags=21808, f14=18529
 
 SysEx_48615544:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_48615544
 
 func_484BFFE4_Result_s16_45:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=22, p8=SysEx_48615544, f12=21848, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=22, memcpy_a1=SysEx_48615544, flags=21848, f14=18529
 
 SysEx_4861556C:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx (Matsushita)
 	.align	4, 0xFF	# pad after SysEx_4861556C
 
 func_484BFFE4_Result_s16_46:	# REC_func_484BFFE4_Result_s16 (16 bytes)
-	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=23, p8=SysEx_4861556C, f12=21888, f14=18529
+	REC_func_484BFFE4_Result_s16	f0=0xFFFFFF, f4=4, f6=23, memcpy_a1=SysEx_4861556C, flags=21888, f14=18529
 data_48615594:
 	# 12 bytes read by func_484BA227 0x484BA227 `movhu (0x10, a0), d2` (+0, s16); func_484BA4CF 0x484BA4CF `movhu (0x10, a0), d2` (+0, s16); func_484BAC70 0x484BAC70 `movhu (0x10, a0), d2` (+0, s16) (+23 more); the read fields at their widths (s16), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_s16	16880, 17151, 18, 32512, 0, -9	# +0
 func_484BFFE4_Result_85:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=8, f4=2, f6=16, p8=data_48615594, f12=2, f16=6
+	REC_func_484BFFE4_Result	f0=8, f4=2, f6=16, memcpy_a1=data_48615594, flags=2, f16=6
 	.align	4, 0x00	# pad after func_484BFFE4_Result_85
 data_486155B4:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2155B4, 0x2155C4
 func_484BFFE4_Result_86:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f4=2, f6=4, p8=data_486155B4, f12=2, f16=127
+	REC_func_484BFFE4_Result	f4=2, f6=4, memcpy_a1=data_486155B4, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_86
 data_486155D8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2155D8, 0x2155E4
 func_484BFFE4_Result_87:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32769, f4=2, f6=3, p8=data_486155D8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=32769, f4=2, f6=3, memcpy_a1=data_486155D8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_87
 data_486155F8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2155F8, 0x215604
 func_484BFFE4_Result_88:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=3, f4=2, f6=5, p8=data_486155F8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=3, f4=2, f6=5, memcpy_a1=data_486155F8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_88
 data_48615618:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215618, 0x215624
 func_484BFFE4_Result_89:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=8, f4=2, f6=2, p8=data_48615618, f12=2, f16=6
+	REC_func_484BFFE4_Result	f0=8, f4=2, f6=2, memcpy_a1=data_48615618, flags=2, f16=6
 	.align	4, 0x00	# pad after func_484BFFE4_Result_89
 data_48615638:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215638, 0x215644
 func_484BFFE4_Result_90:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40960, f4=2, f6=6, p8=data_48615638, f12=2, f16=7
+	REC_func_484BFFE4_Result	f0=40960, f4=2, f6=6, memcpy_a1=data_48615638, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484BFFE4_Result_90
 data_48615658:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215658, 0x215664
 func_484BFFE4_Result_91:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40960, f4=2, f6=6, p8=data_48615658, f12=2, f16=7
+	REC_func_484BFFE4_Result	f0=40960, f4=2, f6=6, memcpy_a1=data_48615658, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484BFFE4_Result_91
 data_48615678:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215678, 0x215684
 func_484BFFE4_Result_92:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, p8=data_48615678, f12=2, f16=7
+	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_48615678, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484BFFE4_Result_92
 data_48615698:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215698, 0x2156A4
 func_484BFFE4_Result_93:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, p8=data_48615698, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_48615698, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_93
 data_486156B8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2156B8, 0x2156C4
 func_484BFFE4_Result_94:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, p8=data_486156B8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_486156B8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_94
 data_486156D8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2156D8, 0x2156E4
 func_484BFFE4_Result_95:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, p8=data_486156D8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_486156D8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_95
 data_486156F8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2156F8, 0x215704
 func_484BFFE4_Result_96:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, p8=data_486156F8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_486156F8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_96
 data_48615718:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215718, 0x215724
 func_484BFFE4_Result_97:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41216, f4=2, f6=7, p8=data_48615718, f12=2, f16=7
+	REC_func_484BFFE4_Result	f0=41216, f4=2, f6=7, memcpy_a1=data_48615718, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484BFFE4_Result_97
 data_48615738:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215738, 0x215744
 func_484BFFE4_Result_98:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_48615738, f12=2, f16=7
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48615738, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484BFFE4_Result_98
 data_48615758:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215758, 0x215764
 func_484BFFE4_Result_99:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_48615758, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48615758, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_99
 data_48615778:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215778, 0x215784
 func_484BFFE4_Result_100:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_48615778, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48615778, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_100
 data_48615798:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215798, 0x2157A4
 func_484BFFE4_Result_101:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_48615798, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48615798, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_101
 data_486157B8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2157B8, 0x2157C4
 func_484BFFE4_Result_102:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_486157B8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_486157B8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_102
 data_486157D8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2157D8, 0x2157E4
 func_484BFFE4_Result_103:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_486157D8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_486157D8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_103
 data_486157F8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2157F8, 0x215804
 func_484BFFE4_Result_104:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_486157F8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_486157F8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_104
 data_48615818:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215818, 0x215824
 func_484BFFE4_Result_105:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, p8=data_48615818, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48615818, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_105
 data_48615838:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215838, 0x215844
 func_484BFFE4_Result_106:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xC00000, f4=2, f6=15, p8=data_48615838, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xC00000, f4=2, f6=15, memcpy_a1=data_48615838, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_106
 data_48615858:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215858, 0x215864
 func_484BFFE4_Result_107:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=2, f6=14, p8=data_48615858, f12=2, f14=1, f16=95
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=2, f6=14, memcpy_a1=data_48615858, flags=2, f14=1, f16=95
 	.align	4, 0x00	# pad after func_484BFFE4_Result_107
 data_48615878:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215878, 0x215884
 func_484BFFE4_Result_141_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004C, f4=2, f6=10, p8=data_48615878, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004C, f4=2, f6=10, memcpy_a1=data_48615878, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_141_2
 data_48615898:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215898, 0x2158A4
 func_484BFFE4_Result_142_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004D, f4=2, f6=10, p8=data_48615898, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004D, f4=2, f6=10, memcpy_a1=data_48615898, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_142_2
 data_486158B8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2158B8, 0x2158C4
 func_484BFFE4_Result_143_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004A, f4=2, f6=10, p8=data_486158B8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004A, f4=2, f6=10, memcpy_a1=data_486158B8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_143_2
 data_486158D8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2158D8, 0x2158E4
 func_484BFFE4_Result_144_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB00047, f4=2, f6=10, p8=data_486158D8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB00047, f4=2, f6=10, memcpy_a1=data_486158D8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_144_2
 data_486158F8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2158F8, 0x215904
 func_484BFFE4_Result_145_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB00049, f4=2, f6=10, p8=data_486158F8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB00049, f4=2, f6=10, memcpy_a1=data_486158F8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_145_2
 data_48615918:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215918, 0x215924
 func_484BFFE4_Result_146_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004B, f4=2, f6=10, p8=data_48615918, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004B, f4=2, f6=10, memcpy_a1=data_48615918, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_146_2
 data_48615938:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215938, 0x215944
 func_484BFFE4_Result_147_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB00048, f4=2, f6=10, p8=data_48615938, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB00048, f4=2, f6=10, memcpy_a1=data_48615938, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_147_2
 data_48615958:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215958, 0x215964
 func_484BFFE4_Result_148_2:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004E, f4=2, f6=10, p8=data_48615958, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004E, f4=2, f6=10, memcpy_a1=data_48615958, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_148_2
 data_48615978:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215978, 0x215984
 func_484BFFE4_Result_108:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C0, f4=2, f6=11, p8=data_48615978, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C0, f4=2, f6=11, memcpy_a1=data_48615978, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_108
 data_48615998:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215998, 0x2159A4
 func_484BFFE4_Result_109:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C1, f4=2, f6=11, p8=data_48615998, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C1, f4=2, f6=11, memcpy_a1=data_48615998, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_109
 data_486159B8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2159B8, 0x2159C4
 func_484BFFE4_Result_110:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C2, f4=2, f6=11, p8=data_486159B8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C2, f4=2, f6=11, memcpy_a1=data_486159B8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_110
 data_486159D8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2159D8, 0x2159E4
 func_484BFFE4_Result_111:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C3, f4=2, f6=11, p8=data_486159D8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C3, f4=2, f6=11, memcpy_a1=data_486159D8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_111
 data_486159F8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2159F8, 0x215A04
 func_484BFFE4_Result_112:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C4, f4=2, f6=11, p8=data_486159F8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C4, f4=2, f6=11, memcpy_a1=data_486159F8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_112
 data_48615A18:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215A18, 0x215A24
 func_484BFFE4_Result_113:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C5, f4=2, f6=11, p8=data_48615A18, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C5, f4=2, f6=11, memcpy_a1=data_48615A18, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_113
 data_48615A38:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215A38, 0x215A44
 func_484BFFE4_Result_114:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C6, f4=2, f6=11, p8=data_48615A38, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C6, f4=2, f6=11, memcpy_a1=data_48615A38, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_114
 data_48615A58:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215A58, 0x215A64
 func_484BFFE4_Result_115:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C7, f4=2, f6=11, p8=data_48615A58, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C7, f4=2, f6=11, memcpy_a1=data_48615A58, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_115
 data_48615A78:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215A78, 0x215A84
 func_484BFFE4_Result_116:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C8, f4=2, f6=11, p8=data_48615A78, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C8, f4=2, f6=11, memcpy_a1=data_48615A78, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_116
 data_48615A98:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215A98, 0x215AA4
 func_484BFFE4_Result_117:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C9, f4=2, f6=11, p8=data_48615A98, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C9, f4=2, f6=11, memcpy_a1=data_48615A98, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_117
 data_48615AB8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215AB8, 0x215AC4
 func_484BFFE4_Result_118:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000CA, f4=2, f6=11, p8=data_48615AB8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000CA, f4=2, f6=11, memcpy_a1=data_48615AB8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_118
 data_48615AD8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215AD8, 0x215AE4
 func_484BFFE4_Result_119:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000CB, f4=2, f6=11, p8=data_48615AD8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000CB, f4=2, f6=11, memcpy_a1=data_48615AD8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_119
 data_48615AF8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215AF8, 0x215B04
 func_484BFFE4_Result_120:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200260, f4=2, f6=12, p8=data_48615AF8, f12=2, f14=40, f16=88
+	REC_func_484BFFE4_Result	f0=0x200260, f4=2, f6=12, memcpy_a1=data_48615AF8, flags=2, f14=40, f16=88
 	.align	4, 0x00	# pad after func_484BFFE4_Result_120
 data_48615B18:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215B18, 0x215B24
 func_484BFFE4_Result_121:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200261, f4=2, f6=12, p8=data_48615B18, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200261, f4=2, f6=12, memcpy_a1=data_48615B18, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_121
 data_48615B38:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215B38, 0x215B44
 func_484BFFE4_Result_122:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200262, f4=2, f6=12, p8=data_48615B38, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200262, f4=2, f6=12, memcpy_a1=data_48615B38, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_122
 data_48615B58:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215B58, 0x215B64
 func_484BFFE4_Result_123:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200263, f4=2, f6=12, p8=data_48615B58, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200263, f4=2, f6=12, memcpy_a1=data_48615B58, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_123
 data_48615B78:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215B78, 0x215B84
 func_484BFFE4_Result_124:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200264, f4=2, f6=12, p8=data_48615B78, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200264, f4=2, f6=12, memcpy_a1=data_48615B78, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_124
 data_48615B98:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215B98, 0x215BA4
 func_484BFFE4_Result_125:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200265, f4=2, f6=12, p8=data_48615B98, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200265, f4=2, f6=12, memcpy_a1=data_48615B98, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_125
 data_48615BB8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215BB8, 0x215BC4
 func_484BFFE4_Result_126:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200260, f4=2, f6=13, p8=data_48615BB8, f12=2, f14=40, f16=88
+	REC_func_484BFFE4_Result	f0=0x200260, f4=2, f6=13, memcpy_a1=data_48615BB8, flags=2, f14=40, f16=88
 	.align	4, 0x00	# pad after func_484BFFE4_Result_126
 data_48615BD8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215BD8, 0x215BE4
 func_484BFFE4_Result_127:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200261, f4=2, f6=13, p8=data_48615BD8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200261, f4=2, f6=13, memcpy_a1=data_48615BD8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_127
 data_48615BF8:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215BF8, 0x215C04
 func_484BFFE4_Result_128:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200262, f4=2, f6=13, p8=data_48615BF8, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200262, f4=2, f6=13, memcpy_a1=data_48615BF8, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_128
 data_48615C18:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215C18, 0x215C24
 func_484BFFE4_Result_129:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200263, f4=2, f6=13, p8=data_48615C18, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200263, f4=2, f6=13, memcpy_a1=data_48615C18, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_129
 data_48615C38:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215C38, 0x215C44
 func_484BFFE4_Result_130:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200264, f4=2, f6=13, p8=data_48615C38, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200264, f4=2, f6=13, memcpy_a1=data_48615C38, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_130
 data_48615C58:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x215C58, 0x215C64
 func_484BFFE4_Result_131:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200265, f4=2, f6=13, p8=data_48615C58, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200265, f4=2, f6=13, memcpy_a1=data_48615C58, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_131
 
 SysEx_48615C78:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.space	4, 0xFF
 
 func_484BFFE4_Result_132:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f4=3, f6=4, p8=SysEx_48615C78, f12=2, f16=127
+	REC_func_484BFFE4_Result	f4=3, f6=4, memcpy_a1=SysEx_48615C78, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_132
 
 SysEx_48615C9C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x00, 0x00, 0x04, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615C9C
 
 func_484BFFE4_Result_133:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=32769, f4=3, f6=3, p8=SysEx_48615C9C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=32769, f4=3, f6=3, memcpy_a1=SysEx_48615C9C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_133
 
 SysEx_48615CBC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x00, 0x00, 0x06, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615CBC
 
 func_484BFFE4_Result_134:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=3, f4=3, f6=5, p8=SysEx_48615CBC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=3, f4=3, f6=5, memcpy_a1=SysEx_48615CBC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_134
 
 SysEx_48615CDC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x00, 0x00, 0x7E, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615CDC
 
 func_484BFFE4_Result_135:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=8, f4=3, f6=2, p8=SysEx_48615CDC, f12=2
+	REC_func_484BFFE4_Result	f0=8, f4=3, f6=2, memcpy_a1=SysEx_48615CDC, flags=2
 	.align	4, 0x00	# pad after func_484BFFE4_Result_135
 
 SysEx_48615CFC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x02, 0x01, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615CFC
 
 func_484BFFE4_Result_136:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=40960, f4=3, f6=6, p8=SysEx_48615CFC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=40960, f4=3, f6=6, memcpy_a1=SysEx_48615CFC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_136
 
 SysEx_48615D1C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x02, 0x01, 0x20, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615D1C
 
 func_484BFFE4_Result_137:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41216, f4=3, f6=7, p8=SysEx_48615D1C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41216, f4=3, f6=7, memcpy_a1=SysEx_48615D1C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_137
 
 SysEx_48615D3C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x02, 0x01, 0x2E, 0x00, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615D3C
 
 func_484BFFE4_Result_138:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=41233, f4=3, f6=9, p8=SysEx_48615D3C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=41233, f4=3, f6=9, memcpy_a1=SysEx_48615D3C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_138
 
 SysEx_48615D5C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x15, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615D5C
 
 func_484BFFE4_Result_180:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004C, f4=3, f6=10, p8=SysEx_48615D5C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004C, f4=3, f6=10, memcpy_a1=SysEx_48615D5C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_180
 
 SysEx_48615D7C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x16, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615D7C
 
 func_484BFFE4_Result_181:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004D, f4=3, f6=10, p8=SysEx_48615D7C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004D, f4=3, f6=10, memcpy_a1=SysEx_48615D7C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_181
 
 SysEx_48615D9C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x17, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615D9C
 
 func_484BFFE4_Result_182:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004E, f4=3, f6=10, p8=SysEx_48615D9C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004E, f4=3, f6=10, memcpy_a1=SysEx_48615D9C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_182
 
 SysEx_48615DBC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x18, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615DBC
 
 func_484BFFE4_Result_183:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004A, f4=3, f6=10, p8=SysEx_48615DBC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004A, f4=3, f6=10, memcpy_a1=SysEx_48615DBC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_183
 
 SysEx_48615DDC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x19, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615DDC
 
 func_484BFFE4_Result_184:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB00047, f4=3, f6=10, p8=SysEx_48615DDC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB00047, f4=3, f6=10, memcpy_a1=SysEx_48615DDC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_184
 
 SysEx_48615DFC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x1A, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615DFC
 
 func_484BFFE4_Result_185:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB00049, f4=3, f6=10, p8=SysEx_48615DFC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB00049, f4=3, f6=10, memcpy_a1=SysEx_48615DFC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_185
 
 SysEx_48615E1C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x1B, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615E1C
 
 func_484BFFE4_Result_186:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB0004B, f4=3, f6=10, p8=SysEx_48615E1C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB0004B, f4=3, f6=10, memcpy_a1=SysEx_48615E1C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_186
 
 SysEx_48615E3C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x1C, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615E3C
 
 func_484BFFE4_Result_187:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xB00048, f4=3, f6=10, p8=SysEx_48615E3C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0xB00048, f4=3, f6=10, memcpy_a1=SysEx_48615E3C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_187
 
 SysEx_48615E5C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x41, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615E5C
 
 func_484BFFE4_Result_139:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C0, f4=3, f6=11, p8=SysEx_48615E5C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C0, f4=3, f6=11, memcpy_a1=SysEx_48615E5C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_139
 
 SysEx_48615E7C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x42, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615E7C
 
 func_484BFFE4_Result_140:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C1, f4=3, f6=11, p8=SysEx_48615E7C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C1, f4=3, f6=11, memcpy_a1=SysEx_48615E7C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_140
 
 SysEx_48615E9C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x43, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615E9C
 
 func_484BFFE4_Result_141:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C2, f4=3, f6=11, p8=SysEx_48615E9C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C2, f4=3, f6=11, memcpy_a1=SysEx_48615E9C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_141
 
 SysEx_48615EBC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x44, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615EBC
 
 func_484BFFE4_Result_142:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C3, f4=3, f6=11, p8=SysEx_48615EBC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C3, f4=3, f6=11, memcpy_a1=SysEx_48615EBC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_142
 
 SysEx_48615EDC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x45, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615EDC
 
 func_484BFFE4_Result_143:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C4, f4=3, f6=11, p8=SysEx_48615EDC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C4, f4=3, f6=11, memcpy_a1=SysEx_48615EDC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_143
 
 SysEx_48615EFC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x46, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615EFC
 
 func_484BFFE4_Result_144:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C5, f4=3, f6=11, p8=SysEx_48615EFC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C5, f4=3, f6=11, memcpy_a1=SysEx_48615EFC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_144
 
 SysEx_48615F1C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x47, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615F1C
 
 func_484BFFE4_Result_145:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C6, f4=3, f6=11, p8=SysEx_48615F1C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C6, f4=3, f6=11, memcpy_a1=SysEx_48615F1C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_145
 
 SysEx_48615F3C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x48, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615F3C
 
 func_484BFFE4_Result_146:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C7, f4=3, f6=11, p8=SysEx_48615F3C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C7, f4=3, f6=11, memcpy_a1=SysEx_48615F3C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_146
 
 SysEx_48615F5C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x49, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615F5C
 
 func_484BFFE4_Result_147:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C8, f4=3, f6=11, p8=SysEx_48615F5C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C8, f4=3, f6=11, memcpy_a1=SysEx_48615F5C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_147
 
 SysEx_48615F7C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x4A, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615F7C
 
 func_484BFFE4_Result_148:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000C9, f4=3, f6=11, p8=SysEx_48615F7C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000C9, f4=3, f6=11, memcpy_a1=SysEx_48615F7C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_148
 
 SysEx_48615F9C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x4B, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615F9C
 
 func_484BFFE4_Result_149:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000CA, f4=3, f6=11, p8=SysEx_48615F9C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000CA, f4=3, f6=11, memcpy_a1=SysEx_48615F9C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_149
 
 SysEx_48615FBC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x4C, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615FBC
 
 func_484BFFE4_Result_150:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x2000CB, f4=3, f6=11, p8=SysEx_48615FBC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x2000CB, f4=3, f6=11, memcpy_a1=SysEx_48615FBC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_150
 
 SysEx_48615FDC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x4D, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615FDC
 
 func_484BFFE4_Result_151:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200260, f4=3, f6=12, p8=SysEx_48615FDC, f12=2, f14=40, f16=88
+	REC_func_484BFFE4_Result	f0=0x200260, f4=3, f6=12, memcpy_a1=SysEx_48615FDC, flags=2, f14=40, f16=88
 	.align	4, 0x00	# pad after func_484BFFE4_Result_151
 
 SysEx_48615FFC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x4E, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_48615FFC
 
 func_484BFFE4_Result_152:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200261, f4=3, f6=12, p8=SysEx_48615FFC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200261, f4=3, f6=12, memcpy_a1=SysEx_48615FFC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_152
 
 SysEx_4861601C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x4F, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861601C
 
 func_484BFFE4_Result_153:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200262, f4=3, f6=12, p8=SysEx_4861601C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200262, f4=3, f6=12, memcpy_a1=SysEx_4861601C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_153
 
 SysEx_4861603C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x50, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861603C
 
 func_484BFFE4_Result_154:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200263, f4=3, f6=12, p8=SysEx_4861603C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200263, f4=3, f6=12, memcpy_a1=SysEx_4861603C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_154
 
 SysEx_4861605C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x51, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861605C
 
 func_484BFFE4_Result_155:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200264, f4=3, f6=12, p8=SysEx_4861605C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200264, f4=3, f6=12, memcpy_a1=SysEx_4861605C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_155
 
 SysEx_4861607C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x52, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861607C
 
 func_484BFFE4_Result_156:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200265, f4=3, f6=12, p8=SysEx_4861607C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200265, f4=3, f6=12, memcpy_a1=SysEx_4861607C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_156
 
 SysEx_4861609C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x59, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861609C
 
 func_484BFFE4_Result_157:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=3, f6=14, p8=SysEx_4861609C, f12=2, f14=1, f16=95
+	REC_func_484BFFE4_Result	f0=0xFFFFFF, f4=3, f6=14, memcpy_a1=SysEx_4861609C, flags=2, f14=1, f16=95
 	.align	4, 0x00	# pad after func_484BFFE4_Result_157
 
 SysEx_486160BC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x5A, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_486160BC
 
 func_484BFFE4_Result_158:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200260, f4=3, f6=13, p8=SysEx_486160BC, f12=2, f14=40, f16=88
+	REC_func_484BFFE4_Result	f0=0x200260, f4=3, f6=13, memcpy_a1=SysEx_486160BC, flags=2, f14=40, f16=88
 	.align	4, 0x00	# pad after func_484BFFE4_Result_158
 
 SysEx_486160DC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x5B, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_486160DC
 
 func_484BFFE4_Result_159:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200261, f4=3, f6=13, p8=SysEx_486160DC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200261, f4=3, f6=13, memcpy_a1=SysEx_486160DC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_159
 
 SysEx_486160FC:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x5C, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_486160FC
 
 func_484BFFE4_Result_160:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200262, f4=3, f6=13, p8=SysEx_486160FC, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200262, f4=3, f6=13, memcpy_a1=SysEx_486160FC, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_160
 
 SysEx_4861611C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x5D, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861611C
 
 func_484BFFE4_Result_161:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200263, f4=3, f6=13, p8=SysEx_4861611C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200263, f4=3, f6=13, memcpy_a1=SysEx_4861611C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_161
 
 SysEx_4861613C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x5E, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861613C
 
 func_484BFFE4_Result_162:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200264, f4=3, f6=13, p8=SysEx_4861613C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200264, f4=3, f6=13, memcpy_a1=SysEx_4861613C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_162
 
 SysEx_4861615C:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x08, 0x00, 0x5F, 0x00, 0xF7	# MIDI SysEx
 	.align	4, 0xFF	# pad after SysEx_4861615C
 
 func_484BFFE4_Result_163:	# REC_func_484BFFE4_Result (18 bytes)
-	REC_func_484BFFE4_Result	f0=0x200265, f4=3, f6=13, p8=SysEx_4861615C, f12=2, f16=127
+	REC_func_484BFFE4_Result	f0=0x200265, f4=3, f6=13, memcpy_a1=SysEx_4861615C, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484BFFE4_Result_163
 
 func_484B9F50_Table:	# 16 x u32, 0..16777215; read by func_484B9F50 0x484B9F50: `mov   (a1), d0`
@@ -8573,70 +8573,70 @@ func_484CC24B_Table_2:
 	.long	loc_484CC582
 
 func_484CC24B_Records:	# 64 x REC_func_484CC24B_Records (8 bytes each); read by func_484CC24B 0x484CC24B `mov (a0), d0`
-	REC_func_484CC24B_Records	p4=loc_484CCE63	# [0]
-	REC_func_484CC24B_Records	f0=1, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=2, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=3, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=4, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=5, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=6, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=7, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=8, p4=loc_484CC2AA	# [8]
-	REC_func_484CC24B_Records	f0=9, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=10, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=11, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=12, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=13, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=14, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=15, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=16, p4=loc_484CC2AA	# [16]
-	REC_func_484CC24B_Records	f0=17, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=18, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=19, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=20, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=21, p4=loc_484CC2AA
-	REC_func_484CC24B_Records	f0=69, p4=loc_484CC636
-	REC_func_484CC24B_Records	f0=70, p4=loc_484CC636
-	REC_func_484CC24B_Records	f0=24, p4=loc_484CC611	# [24]
-	REC_func_484CC24B_Records	f0=71, p4=loc_484CC636
-	REC_func_484CC24B_Records	f0=73, p4=loc_484CC867
-	REC_func_484CC24B_Records	f0=145, p4=loc_484CCB68
-	REC_func_484CC24B_Records	f0=153, p4=loc_484CCC57
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63	# [32]
-	REC_func_484CC24B_Records	f0=97, p4=loc_484CCA9E
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63	# [40]
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	f0=174, p4=loc_484CCD4C
-	REC_func_484CC24B_Records	f0=175, p4=loc_484CCD66
-	REC_func_484CC24B_Records	p4=loc_484CCE63	# [48]
-	REC_func_484CC24B_Records	f0=113, p4=loc_484CCACD
-	REC_func_484CC24B_Records	f0=177, p4=loc_484CCD80
-	REC_func_484CC24B_Records	f0=115, p4=loc_484CCB3F
-	REC_func_484CC24B_Records	f0=178, p4=loc_484CCDA9
-	REC_func_484CC24B_Records	f0=179, p4=loc_484CCDCE
-	REC_func_484CC24B_Records	f0=180, p4=loc_484CCDEE
-	REC_func_484CC24B_Records	f0=181, p4=loc_484CCE44
-	REC_func_484CC24B_Records	p4=loc_484CCE63	# [56]
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
-	REC_func_484CC24B_Records	p4=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63	# [0]
+	REC_func_484CC24B_Records	f0=1, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=2, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=3, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=4, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=5, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=6, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=7, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=8, proc=loc_484CC2AA	# [8]
+	REC_func_484CC24B_Records	f0=9, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=10, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=11, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=12, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=13, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=14, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=15, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=16, proc=loc_484CC2AA	# [16]
+	REC_func_484CC24B_Records	f0=17, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=18, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=19, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=20, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=21, proc=loc_484CC2AA
+	REC_func_484CC24B_Records	f0=69, proc=loc_484CC636
+	REC_func_484CC24B_Records	f0=70, proc=loc_484CC636
+	REC_func_484CC24B_Records	f0=24, proc=loc_484CC611	# [24]
+	REC_func_484CC24B_Records	f0=71, proc=loc_484CC636
+	REC_func_484CC24B_Records	f0=73, proc=loc_484CC867
+	REC_func_484CC24B_Records	f0=145, proc=loc_484CCB68
+	REC_func_484CC24B_Records	f0=153, proc=loc_484CCC57
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63	# [32]
+	REC_func_484CC24B_Records	f0=97, proc=loc_484CCA9E
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63	# [40]
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	f0=174, proc=loc_484CCD4C
+	REC_func_484CC24B_Records	f0=175, proc=loc_484CCD66
+	REC_func_484CC24B_Records	proc=loc_484CCE63	# [48]
+	REC_func_484CC24B_Records	f0=113, proc=loc_484CCACD
+	REC_func_484CC24B_Records	f0=177, proc=loc_484CCD80
+	REC_func_484CC24B_Records	f0=115, proc=loc_484CCB3F
+	REC_func_484CC24B_Records	f0=178, proc=loc_484CCDA9
+	REC_func_484CC24B_Records	f0=179, proc=loc_484CCDCE
+	REC_func_484CC24B_Records	f0=180, proc=loc_484CCDEE
+	REC_func_484CC24B_Records	f0=181, proc=loc_484CCE44
+	REC_func_484CC24B_Records	proc=loc_484CCE63	# [56]
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
+	REC_func_484CC24B_Records	proc=loc_484CCE63
 
 func_484CCE7A_Table:	# 8 x u8, 0..5; read by func_484CCE7A_entry 0x484C4CA6: `movbu  (d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -8659,70 +8659,70 @@ func_484CCE7A_Table_2:
 	.long	loc_484CD10C
 
 func_484CCE7A_Records:	# 64 x REC_func_484CCE7A_Records (8 bytes each); read by func_484CCE7A 0x484CCE7A `mov (a0), d0`
-	REC_func_484CCE7A_Records	p4=loc_484CDA07	# [0]
-	REC_func_484CCE7A_Records	f0=1, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=2, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=3, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=4, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=5, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=6, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=7, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=8, p4=loc_484CCEDA	# [8]
-	REC_func_484CCE7A_Records	f0=9, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=10, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=11, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=12, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=13, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=14, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=15, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=16, p4=loc_484CCEDA	# [16]
-	REC_func_484CCE7A_Records	f0=17, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=18, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=19, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=20, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=21, p4=loc_484CCEDA
-	REC_func_484CCE7A_Records	f0=69, p4=loc_484CD1BC
-	REC_func_484CCE7A_Records	f0=70, p4=loc_484CD1BC
-	REC_func_484CCE7A_Records	f0=24, p4=loc_484CD197	# [24]
-	REC_func_484CCE7A_Records	f0=71, p4=loc_484CD1BC
-	REC_func_484CCE7A_Records	f0=73, p4=loc_484CD3EE
-	REC_func_484CCE7A_Records	f0=145, p4=loc_484CD6EF
-	REC_func_484CCE7A_Records	f0=153, p4=loc_484CD7E0
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07	# [32]
-	REC_func_484CCE7A_Records	f0=97, p4=loc_484CD625
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07	# [40]
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	f0=174, p4=loc_484CD8F0
-	REC_func_484CCE7A_Records	f0=175, p4=loc_484CD90A
-	REC_func_484CCE7A_Records	p4=loc_484CDA07	# [48]
-	REC_func_484CCE7A_Records	f0=113, p4=loc_484CD654
-	REC_func_484CCE7A_Records	f0=177, p4=loc_484CD924
-	REC_func_484CCE7A_Records	f0=115, p4=loc_484CD6C6
-	REC_func_484CCE7A_Records	f0=178, p4=loc_484CD94D
-	REC_func_484CCE7A_Records	f0=179, p4=loc_484CD972
-	REC_func_484CCE7A_Records	f0=180, p4=loc_484CD993
-	REC_func_484CCE7A_Records	f0=181, p4=loc_484CD9E9
-	REC_func_484CCE7A_Records	p4=loc_484CDA07	# [56]
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
-	REC_func_484CCE7A_Records	p4=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07	# [0]
+	REC_func_484CCE7A_Records	f0=1, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=2, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=3, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=4, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=5, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=6, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=7, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=8, proc=loc_484CCEDA	# [8]
+	REC_func_484CCE7A_Records	f0=9, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=10, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=11, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=12, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=13, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=14, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=15, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=16, proc=loc_484CCEDA	# [16]
+	REC_func_484CCE7A_Records	f0=17, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=18, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=19, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=20, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=21, proc=loc_484CCEDA
+	REC_func_484CCE7A_Records	f0=69, proc=loc_484CD1BC
+	REC_func_484CCE7A_Records	f0=70, proc=loc_484CD1BC
+	REC_func_484CCE7A_Records	f0=24, proc=loc_484CD197	# [24]
+	REC_func_484CCE7A_Records	f0=71, proc=loc_484CD1BC
+	REC_func_484CCE7A_Records	f0=73, proc=loc_484CD3EE
+	REC_func_484CCE7A_Records	f0=145, proc=loc_484CD6EF
+	REC_func_484CCE7A_Records	f0=153, proc=loc_484CD7E0
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07	# [32]
+	REC_func_484CCE7A_Records	f0=97, proc=loc_484CD625
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07	# [40]
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	f0=174, proc=loc_484CD8F0
+	REC_func_484CCE7A_Records	f0=175, proc=loc_484CD90A
+	REC_func_484CCE7A_Records	proc=loc_484CDA07	# [48]
+	REC_func_484CCE7A_Records	f0=113, proc=loc_484CD654
+	REC_func_484CCE7A_Records	f0=177, proc=loc_484CD924
+	REC_func_484CCE7A_Records	f0=115, proc=loc_484CD6C6
+	REC_func_484CCE7A_Records	f0=178, proc=loc_484CD94D
+	REC_func_484CCE7A_Records	f0=179, proc=loc_484CD972
+	REC_func_484CCE7A_Records	f0=180, proc=loc_484CD993
+	REC_func_484CCE7A_Records	f0=181, proc=loc_484CD9E9
+	REC_func_484CCE7A_Records	proc=loc_484CDA07	# [56]
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
+	REC_func_484CCE7A_Records	proc=loc_484CDA07
 
 func_484CDA1E_Table:	# 8 x u8, 0..5; read by func_484CDA1E_entry 0x484C4CA6: `movbu  (d0, a2), d0`; func_484CDA1E_entry 0x484C4CA6: `movbu  (d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -8745,70 +8745,70 @@ func_484CDA1E_Table_2:
 	.long	loc_484CDC80
 
 func_484CDA1E_Records:	# 64 x REC_func_484CDA1E_Records (8 bytes each); read by func_484CDA1E 0x484CDA1E `mov (a0), d0`
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9	# [0]
-	REC_func_484CDA1E_Records	f0=1, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=2, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=3, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=4, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=5, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=6, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=7, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=8, p4=loc_484CDA7B	# [8]
-	REC_func_484CDA1E_Records	f0=9, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=10, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=11, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=12, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=13, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=14, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=15, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=16, p4=loc_484CDA7B	# [16]
-	REC_func_484CDA1E_Records	f0=17, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=18, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=19, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=20, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=21, p4=loc_484CDA7B
-	REC_func_484CDA1E_Records	f0=69, p4=loc_484CDD31
-	REC_func_484CDA1E_Records	f0=70, p4=loc_484CDD31
-	REC_func_484CDA1E_Records	f0=24, p4=loc_484CDD0D	# [24]
-	REC_func_484CDA1E_Records	f0=71, p4=loc_484CDD31
-	REC_func_484CDA1E_Records	f0=73, p4=loc_484CDF6D
-	REC_func_484CDA1E_Records	f0=145, p4=loc_484CE25F
-	REC_func_484CDA1E_Records	f0=153, p4=loc_484CE34F
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9	# [32]
-	REC_func_484CDA1E_Records	f0=97, p4=loc_484CE198
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9	# [40]
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	f0=174, p4=loc_484CE3C3
-	REC_func_484CDA1E_Records	f0=175, p4=loc_484CE3DD
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9	# [48]
-	REC_func_484CDA1E_Records	f0=113, p4=loc_484CE1C7
-	REC_func_484CDA1E_Records	f0=177, p4=loc_484CE3F7
-	REC_func_484CDA1E_Records	f0=115, p4=loc_484CE236
-	REC_func_484CDA1E_Records	f0=178, p4=loc_484CE420
-	REC_func_484CDA1E_Records	f0=179, p4=loc_484CE445
-	REC_func_484CDA1E_Records	f0=180, p4=loc_484CE465
-	REC_func_484CDA1E_Records	f0=181, p4=loc_484CE4BA
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9	# [56]
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
-	REC_func_484CDA1E_Records	p4=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9	# [0]
+	REC_func_484CDA1E_Records	f0=1, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=2, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=3, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=4, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=5, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=6, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=7, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=8, proc=loc_484CDA7B	# [8]
+	REC_func_484CDA1E_Records	f0=9, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=10, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=11, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=12, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=13, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=14, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=15, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=16, proc=loc_484CDA7B	# [16]
+	REC_func_484CDA1E_Records	f0=17, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=18, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=19, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=20, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=21, proc=loc_484CDA7B
+	REC_func_484CDA1E_Records	f0=69, proc=loc_484CDD31
+	REC_func_484CDA1E_Records	f0=70, proc=loc_484CDD31
+	REC_func_484CDA1E_Records	f0=24, proc=loc_484CDD0D	# [24]
+	REC_func_484CDA1E_Records	f0=71, proc=loc_484CDD31
+	REC_func_484CDA1E_Records	f0=73, proc=loc_484CDF6D
+	REC_func_484CDA1E_Records	f0=145, proc=loc_484CE25F
+	REC_func_484CDA1E_Records	f0=153, proc=loc_484CE34F
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9	# [32]
+	REC_func_484CDA1E_Records	f0=97, proc=loc_484CE198
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9	# [40]
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	f0=174, proc=loc_484CE3C3
+	REC_func_484CDA1E_Records	f0=175, proc=loc_484CE3DD
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9	# [48]
+	REC_func_484CDA1E_Records	f0=113, proc=loc_484CE1C7
+	REC_func_484CDA1E_Records	f0=177, proc=loc_484CE3F7
+	REC_func_484CDA1E_Records	f0=115, proc=loc_484CE236
+	REC_func_484CDA1E_Records	f0=178, proc=loc_484CE420
+	REC_func_484CDA1E_Records	f0=179, proc=loc_484CE445
+	REC_func_484CDA1E_Records	f0=180, proc=loc_484CE465
+	REC_func_484CDA1E_Records	f0=181, proc=loc_484CE4BA
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9	# [56]
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
+	REC_func_484CDA1E_Records	proc=loc_484CE4D9
 
 func_484CE4F0_Table:	# 8 x u8, 0..5; read by func_484CE4F0_entry 0x484C4CA6: `movbu  (d0, a3), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -9774,9 +9774,9 @@ Str_EFFECT_REVERB_MODULATION_SOUND_CONTROLLE:	.asciz "|-| EFFECT & REVERB      |
 Str_RPN_NRPN_SYSTEM_EXCLUSIVE:	.asciz "|-| RPN                  | NRPN                 | SYSTEM EXCLUSIVE     "
 
 MainAddM3Em_Records:	# 3 x REC_MainAddM3Em_Records (36 bytes each); read by MainAddM3Em 0x4841C37D `call Malloc_entry, [d2,a2,a3], 0x28`; MidiControlGrid 0x484D071B `call GetM3EmVal_entry, 0, 0x10`; MidiControlGrid 0x484D071B `call MainAddM3Em_entry, [d2,d3,a2], 0x20` (+7)
-	REC_MainAddM3Em_Records	f0=0xFFFFFFFF, x4="\xFF\xFF\xFF\xFF\x80 \x00\x00\x83 \x00\x00\x82 \x00\x00\x84 \x00\x00\x85 \x00\x00\x86 \x00\x00\x87 \x00\x00"
-	REC_MainAddM3Em_Records	f0=0xFFFFFFFF, x4="\xFF\xFF\xFF\xFF\x8A \x00\x00\x8B \x00\x00\x91 \x00\x00\x94 \x00\x00\x93 \x00\x00\x81 \x00\x00\x8E \x00\x00"
-	REC_MainAddM3Em_Records	f0=0xFFFFFFFF, x4="\xFF\xFF\xFF\xFF\x90 \x00\x00\x92 \x00\x00B \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	REC_MainAddM3Em_Records	key=0xFFFFFFFF, x4="\xFF\xFF\xFF\xFF\x80 \x00\x00\x83 \x00\x00\x82 \x00\x00\x84 \x00\x00\x85 \x00\x00\x86 \x00\x00\x87 \x00\x00"
+	REC_MainAddM3Em_Records	key=0xFFFFFFFF, x4="\xFF\xFF\xFF\xFF\x8A \x00\x00\x8B \x00\x00\x91 \x00\x00\x94 \x00\x00\x93 \x00\x00\x81 \x00\x00\x8E \x00\x00"
+	REC_MainAddM3Em_Records	key=0xFFFFFFFF, x4="\xFF\xFF\xFF\xFF\x90 \x00\x00\x92 \x00\x00B \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
 MidiControlGrid_Table:	# 12 x u8, 0..255; read by MidiControlGrid 0x484D071B: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
@@ -10209,90 +10209,90 @@ Str_KN:	.asciz "KN"
 	.align	4, 0xFF	# pad after Str_KN
 
 AcMidiPartGridBoxProc_Records:	# 16 x REC_AcMidiPartGridBoxProc_Records (8 bytes each); read by AcMidiPartGridBoxProc 0x484CF1ED `mov (a0), d0`
-	REC_AcMidiPartGridBoxProc_Records	f0=16, p4=loc_484CF728	# [0]
-	REC_AcMidiPartGridBoxProc_Records	f0=1, p4=loc_484CF25C
-	REC_AcMidiPartGridBoxProc_Records	f0=17, p4=loc_484CF49D
-	REC_AcMidiPartGridBoxProc_Records	f0=18, p4=loc_484CF728
-	REC_AcMidiPartGridBoxProc_Records	f0=0x1007F, p4=loc_484CF9B2
-	REC_AcMidiPartGridBoxProc_Records	f0=5, p4=loc_484CF33F
-	REC_AcMidiPartGridBoxProc_Records	f0=21, p4=loc_484CFA1E
-	REC_AcMidiPartGridBoxProc_Records	f0=20, p4=loc_484CFA21
-	REC_AcMidiPartGridBoxProc_Records	f0=0x10081, p4=loc_484CFA21	# [8]
-	REC_AcMidiPartGridBoxProc_Records	f0=9, p4=loc_484CF2DC
-	REC_AcMidiPartGridBoxProc_Records	p4=loc_484CFA3D
-	REC_AcMidiPartGridBoxProc_Records	p4=loc_484CFA3D
-	REC_AcMidiPartGridBoxProc_Records	p4=loc_484CFA3D
-	REC_AcMidiPartGridBoxProc_Records	p4=loc_484CFA3D
-	REC_AcMidiPartGridBoxProc_Records	f0=0x1007E, p4=loc_484CF999
-	REC_AcMidiPartGridBoxProc_Records	f0=15, p4=loc_484CF49D
+	REC_AcMidiPartGridBoxProc_Records	f0=16, proc=loc_484CF728	# [0]
+	REC_AcMidiPartGridBoxProc_Records	f0=1, proc=loc_484CF25C
+	REC_AcMidiPartGridBoxProc_Records	f0=17, proc=loc_484CF49D
+	REC_AcMidiPartGridBoxProc_Records	f0=18, proc=loc_484CF728
+	REC_AcMidiPartGridBoxProc_Records	f0=0x1007F, proc=loc_484CF9B2
+	REC_AcMidiPartGridBoxProc_Records	f0=5, proc=loc_484CF33F
+	REC_AcMidiPartGridBoxProc_Records	f0=21, proc=loc_484CFA1E
+	REC_AcMidiPartGridBoxProc_Records	f0=20, proc=loc_484CFA21
+	REC_AcMidiPartGridBoxProc_Records	f0=0x10081, proc=loc_484CFA21	# [8]
+	REC_AcMidiPartGridBoxProc_Records	f0=9, proc=loc_484CF2DC
+	REC_AcMidiPartGridBoxProc_Records	proc=loc_484CFA3D
+	REC_AcMidiPartGridBoxProc_Records	proc=loc_484CFA3D
+	REC_AcMidiPartGridBoxProc_Records	proc=loc_484CFA3D
+	REC_AcMidiPartGridBoxProc_Records	proc=loc_484CFA3D
+	REC_AcMidiPartGridBoxProc_Records	f0=0x1007E, proc=loc_484CF999
+	REC_AcMidiPartGridBoxProc_Records	f0=15, proc=loc_484CF49D
 AcMidiControlGridBoxProc_Records:	# 16 x REC_AcMidiControlGridBoxProc_Records (8 bytes each); read by AcMidiControlGridBoxProc 0x484D0219 `mov (a0), d0`
-	REC_AcMidiControlGridBoxProc_Records	f0=16, p4=loc_484D0553	# [0]
-	REC_AcMidiControlGridBoxProc_Records	f0=1, p4=loc_484D0281
-	REC_AcMidiControlGridBoxProc_Records	f0=17, p4=loc_484D0422
-	REC_AcMidiControlGridBoxProc_Records	f0=18, p4=loc_484D0553
-	REC_AcMidiControlGridBoxProc_Records	f0=0x1007F, p4=loc_484D0699
-	REC_AcMidiControlGridBoxProc_Records	f0=5, p4=loc_484D035E
-	REC_AcMidiControlGridBoxProc_Records	f0=21, p4=loc_484D06EE
-	REC_AcMidiControlGridBoxProc_Records	f0=20, p4=loc_484D06F1
-	REC_AcMidiControlGridBoxProc_Records	f0=0x10081, p4=loc_484D06F1	# [8]
-	REC_AcMidiControlGridBoxProc_Records	f0=9, p4=loc_484D02FE
-	REC_AcMidiControlGridBoxProc_Records	p4=loc_484D070B
-	REC_AcMidiControlGridBoxProc_Records	p4=loc_484D070B
-	REC_AcMidiControlGridBoxProc_Records	p4=loc_484D070B
-	REC_AcMidiControlGridBoxProc_Records	p4=loc_484D070B
-	REC_AcMidiControlGridBoxProc_Records	f0=0x1007E, p4=loc_484D0680
-	REC_AcMidiControlGridBoxProc_Records	f0=15, p4=loc_484D0422
+	REC_AcMidiControlGridBoxProc_Records	f0=16, proc=loc_484D0553	# [0]
+	REC_AcMidiControlGridBoxProc_Records	f0=1, proc=loc_484D0281
+	REC_AcMidiControlGridBoxProc_Records	f0=17, proc=loc_484D0422
+	REC_AcMidiControlGridBoxProc_Records	f0=18, proc=loc_484D0553
+	REC_AcMidiControlGridBoxProc_Records	f0=0x1007F, proc=loc_484D0699
+	REC_AcMidiControlGridBoxProc_Records	f0=5, proc=loc_484D035E
+	REC_AcMidiControlGridBoxProc_Records	f0=21, proc=loc_484D06EE
+	REC_AcMidiControlGridBoxProc_Records	f0=20, proc=loc_484D06F1
+	REC_AcMidiControlGridBoxProc_Records	f0=0x10081, proc=loc_484D06F1	# [8]
+	REC_AcMidiControlGridBoxProc_Records	f0=9, proc=loc_484D02FE
+	REC_AcMidiControlGridBoxProc_Records	proc=loc_484D070B
+	REC_AcMidiControlGridBoxProc_Records	proc=loc_484D070B
+	REC_AcMidiControlGridBoxProc_Records	proc=loc_484D070B
+	REC_AcMidiControlGridBoxProc_Records	proc=loc_484D070B
+	REC_AcMidiControlGridBoxProc_Records	f0=0x1007E, proc=loc_484D0680
+	REC_AcMidiControlGridBoxProc_Records	f0=15, proc=loc_484D0422
 MidiCommonGrid_Records:	# 16 x REC_MidiCommonGrid_Records (8 bytes each); read by MidiCommonGrid 0x484D0B83 `mov (a0), d0`
-	REC_MidiCommonGrid_Records	f0=32, p4=loc_484D1056	# [0]
-	REC_MidiCommonGrid_Records	f0=1, p4=loc_484D0F1F
-	REC_MidiCommonGrid_Records	f0=2, p4=loc_484D1056
-	REC_MidiCommonGrid_Records	f0=3, p4=loc_484D1056
-	REC_MidiCommonGrid_Records	f0=35, p4=loc_484D1056
-	REC_MidiCommonGrid_Records	f0=5, p4=loc_484D0FE9
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	f0=120, p4=loc_484D1056	# [8]
-	REC_MidiCommonGrid_Records	f0=121, p4=loc_484D1056
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	p4=loc_484D10A2
-	REC_MidiCommonGrid_Records	f0=111, p4=loc_484D1056
+	REC_MidiCommonGrid_Records	f0=32, proc=loc_484D1056	# [0]
+	REC_MidiCommonGrid_Records	f0=1, proc=loc_484D0F1F
+	REC_MidiCommonGrid_Records	f0=2, proc=loc_484D1056
+	REC_MidiCommonGrid_Records	f0=3, proc=loc_484D1056
+	REC_MidiCommonGrid_Records	f0=35, proc=loc_484D1056
+	REC_MidiCommonGrid_Records	f0=5, proc=loc_484D0FE9
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	f0=120, proc=loc_484D1056	# [8]
+	REC_MidiCommonGrid_Records	f0=121, proc=loc_484D1056
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	proc=loc_484D10A2
+	REC_MidiCommonGrid_Records	f0=111, proc=loc_484D1056
 MidiCommonGrid_Records_2:	# 16 x REC_MidiCommonGrid_Records_2 (8 bytes each); read by MidiCommonGrid 0x484D0B83 `mov (a0), d0`
-	REC_MidiCommonGrid_Records_2	f0=32, p4=loc_484D0E3B	# [0]
-	REC_MidiCommonGrid_Records_2	f0=1, p4=loc_484D0D14
-	REC_MidiCommonGrid_Records_2	f0=2, p4=loc_484D0E3B
-	REC_MidiCommonGrid_Records_2	f0=3, p4=loc_484D0E3B
-	REC_MidiCommonGrid_Records_2	f0=35, p4=loc_484D0E3B
-	REC_MidiCommonGrid_Records_2	f0=5, p4=loc_484D0DD3
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	f0=120, p4=loc_484D0E3B	# [8]
-	REC_MidiCommonGrid_Records_2	f0=121, p4=loc_484D0E3B
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	p4=loc_484D0E81
-	REC_MidiCommonGrid_Records_2	f0=111, p4=loc_484D0E3B
+	REC_MidiCommonGrid_Records_2	f0=32, proc=loc_484D0E3B	# [0]
+	REC_MidiCommonGrid_Records_2	f0=1, proc=loc_484D0D14
+	REC_MidiCommonGrid_Records_2	f0=2, proc=loc_484D0E3B
+	REC_MidiCommonGrid_Records_2	f0=3, proc=loc_484D0E3B
+	REC_MidiCommonGrid_Records_2	f0=35, proc=loc_484D0E3B
+	REC_MidiCommonGrid_Records_2	f0=5, proc=loc_484D0DD3
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	f0=120, proc=loc_484D0E3B	# [8]
+	REC_MidiCommonGrid_Records_2	f0=121, proc=loc_484D0E3B
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	proc=loc_484D0E81
+	REC_MidiCommonGrid_Records_2	f0=111, proc=loc_484D0E3B
 AcMidiInputGridBoxProc_Records:	# 16 x REC_AcMidiInputGridBoxProc_Records (8 bytes each); read by AcMidiInputGridBoxProc 0x484D1111 `mov (a0), d0`
-	REC_AcMidiInputGridBoxProc_Records	f0=16, p4=loc_484D12DB	# [0]
-	REC_AcMidiInputGridBoxProc_Records	f0=1, p4=loc_484D1167
-	REC_AcMidiInputGridBoxProc_Records	f0=17, p4=loc_484D11D1
-	REC_AcMidiInputGridBoxProc_Records	f0=18, p4=loc_484D12DB
-	REC_AcMidiInputGridBoxProc_Records	f0=0x1007F, p4=loc_484D13FC
-	REC_AcMidiInputGridBoxProc_Records	f0=21, p4=loc_484D144E
-	REC_AcMidiInputGridBoxProc_Records	f0=20, p4=loc_484D1451
-	REC_AcMidiInputGridBoxProc_Records	f0=0x10081, p4=loc_484D1451
-	REC_AcMidiInputGridBoxProc_Records	p4=loc_484D146C	# [8]
-	REC_AcMidiInputGridBoxProc_Records	p4=loc_484D146C
-	REC_AcMidiInputGridBoxProc_Records	p4=loc_484D146C
-	REC_AcMidiInputGridBoxProc_Records	p4=loc_484D146C
-	REC_AcMidiInputGridBoxProc_Records	p4=loc_484D146C
-	REC_AcMidiInputGridBoxProc_Records	p4=loc_484D146C
-	REC_AcMidiInputGridBoxProc_Records	f0=0x1007E, p4=func_484D13E3
-	REC_AcMidiInputGridBoxProc_Records	f0=15, p4=loc_484D11D1
+	REC_AcMidiInputGridBoxProc_Records	key=16, proc=loc_484D12DB	# [0]
+	REC_AcMidiInputGridBoxProc_Records	key=1, proc=loc_484D1167
+	REC_AcMidiInputGridBoxProc_Records	key=17, proc=loc_484D11D1
+	REC_AcMidiInputGridBoxProc_Records	key=18, proc=loc_484D12DB
+	REC_AcMidiInputGridBoxProc_Records	key=0x1007F, proc=loc_484D13FC
+	REC_AcMidiInputGridBoxProc_Records	key=21, proc=loc_484D144E
+	REC_AcMidiInputGridBoxProc_Records	key=20, proc=loc_484D1451
+	REC_AcMidiInputGridBoxProc_Records	key=0x10081, proc=loc_484D1451
+	REC_AcMidiInputGridBoxProc_Records	proc=loc_484D146C	# [8]
+	REC_AcMidiInputGridBoxProc_Records	proc=loc_484D146C
+	REC_AcMidiInputGridBoxProc_Records	proc=loc_484D146C
+	REC_AcMidiInputGridBoxProc_Records	proc=loc_484D146C
+	REC_AcMidiInputGridBoxProc_Records	proc=loc_484D146C
+	REC_AcMidiInputGridBoxProc_Records	proc=loc_484D146C
+	REC_AcMidiInputGridBoxProc_Records	key=0x1007E, proc=func_484D13E3
+	REC_AcMidiInputGridBoxProc_Records	key=15, proc=loc_484D11D1
 
 MidiInputGrid_Table_6:
 	.long	loc_484D1B5F
@@ -10307,22 +10307,22 @@ MidiInputGrid_Table_6:
 	.long	loc_484D1E66
 
 MidiInputGrid_Records:	# 16 x REC_MidiInputGrid_Records (8 bytes each); read by MidiInputGrid 0x484D147D `mov (a0), d0`
-	REC_MidiInputGrid_Records	p4=loc_484D1B14	# [0]
-	REC_MidiInputGrid_Records	f0=1, p4=loc_484D17C8
-	REC_MidiInputGrid_Records	f0=2, p4=loc_484D1800
-	REC_MidiInputGrid_Records	f0=24721, p4=loc_484D1837
-	REC_MidiInputGrid_Records	f0=24722, p4=loc_484D193D
-	REC_MidiInputGrid_Records	f0=24723, p4=loc_484D199A
-	REC_MidiInputGrid_Records	f0=17, p4=loc_484D19F7
-	REC_MidiInputGrid_Records	f0=20, p4=loc_484D1A30
-	REC_MidiInputGrid_Records	f0=18, p4=loc_484D1A69	# [8]
-	REC_MidiInputGrid_Records	f0=19, p4=loc_484D1AA2
-	REC_MidiInputGrid_Records	f0=21, p4=loc_484D1ADB
-	REC_MidiInputGrid_Records	p4=loc_484D1B14
-	REC_MidiInputGrid_Records	p4=loc_484D1B14
-	REC_MidiInputGrid_Records	p4=loc_484D1B14
-	REC_MidiInputGrid_Records	p4=loc_484D1B14
-	REC_MidiInputGrid_Records	p4=loc_484D1B14
+	REC_MidiInputGrid_Records	proc=loc_484D1B14	# [0]
+	REC_MidiInputGrid_Records	f0=1, proc=loc_484D17C8
+	REC_MidiInputGrid_Records	f0=2, proc=loc_484D1800
+	REC_MidiInputGrid_Records	f0=24721, proc=loc_484D1837
+	REC_MidiInputGrid_Records	f0=24722, proc=loc_484D193D
+	REC_MidiInputGrid_Records	f0=24723, proc=loc_484D199A
+	REC_MidiInputGrid_Records	f0=17, proc=loc_484D19F7
+	REC_MidiInputGrid_Records	f0=20, proc=loc_484D1A30
+	REC_MidiInputGrid_Records	f0=18, proc=loc_484D1A69	# [8]
+	REC_MidiInputGrid_Records	f0=19, proc=loc_484D1AA2
+	REC_MidiInputGrid_Records	f0=21, proc=loc_484D1ADB
+	REC_MidiInputGrid_Records	proc=loc_484D1B14
+	REC_MidiInputGrid_Records	proc=loc_484D1B14
+	REC_MidiInputGrid_Records	proc=loc_484D1B14
+	REC_MidiInputGrid_Records	proc=loc_484D1B14
+	REC_MidiInputGrid_Records	proc=loc_484D1B14
 
 MidiInputGrid_Table_7:
 	.long	loc_484D167F
@@ -10348,122 +10348,122 @@ MidiInputGrid_Table_8:
 	.long	loc_484D161B
 
 MidiPresetSw_Records:	# 32 x REC_MidiPresetSw_Records (8 bytes each); read by MidiPresetSw 0x484D1FFF `mov (a0), d0`
-	REC_MidiPresetSw_Records	p4=loc_484D229F	# [0]
-	REC_MidiPresetSw_Records	f0=1, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=2, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=3, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=4, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=129, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=130, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=131, p4=loc_484D220B
-	REC_MidiPresetSw_Records	f0=132, p4=loc_484D220B	# [8]
-	REC_MidiPresetSw_Records	f0=6, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=7, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=8, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=9, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=134, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=135, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=136, p4=loc_484D2256
-	REC_MidiPresetSw_Records	f0=137, p4=loc_484D2256	# [16]
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	f0=19, p4=loc_484D21B4
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F	# [24]
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
-	REC_MidiPresetSw_Records	p4=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F	# [0]
+	REC_MidiPresetSw_Records	f0=1, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=2, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=3, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=4, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=129, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=130, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=131, proc=loc_484D220B
+	REC_MidiPresetSw_Records	f0=132, proc=loc_484D220B	# [8]
+	REC_MidiPresetSw_Records	f0=6, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=7, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=8, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=9, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=134, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=135, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=136, proc=loc_484D2256
+	REC_MidiPresetSw_Records	f0=137, proc=loc_484D2256	# [16]
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	f0=19, proc=loc_484D21B4
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F	# [24]
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
+	REC_MidiPresetSw_Records	proc=loc_484D229F
 MidiPresetSw_Records_2:	# 32 x REC_MidiPresetSw_Records_2 (8 bytes each); read by MidiPresetSw 0x484D1FFF `mov (a0), d0`
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E	# [0]
-	REC_MidiPresetSw_Records_2	f0=1, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=2, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=3, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=4, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=129, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=130, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=131, p4=loc_484D20DA
-	REC_MidiPresetSw_Records_2	f0=132, p4=loc_484D20DA	# [8]
-	REC_MidiPresetSw_Records_2	f0=6, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=7, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=8, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=9, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=134, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=135, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=136, p4=loc_484D2125
-	REC_MidiPresetSw_Records_2	f0=137, p4=loc_484D2125	# [16]
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	f0=19, p4=loc_484D2083
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E	# [24]
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
-	REC_MidiPresetSw_Records_2	p4=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E	# [0]
+	REC_MidiPresetSw_Records_2	f0=1, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=2, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=3, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=4, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=129, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=130, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=131, proc=loc_484D20DA
+	REC_MidiPresetSw_Records_2	f0=132, proc=loc_484D20DA	# [8]
+	REC_MidiPresetSw_Records_2	f0=6, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=7, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=8, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=9, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=134, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=135, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=136, proc=loc_484D2125
+	REC_MidiPresetSw_Records_2	f0=137, proc=loc_484D2125	# [16]
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	f0=19, proc=loc_484D2083
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E	# [24]
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
+	REC_MidiPresetSw_Records_2	proc=loc_484D216E
 AcMidiPcgOutGridBoxProc_Records:	# 16 x REC_AcMidiPcgOutGridBoxProc_Records (8 bytes each); read by AcMidiPcgOutGridBoxProc 0x484D2C4C `mov (a0), d0`
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=16, p4=loc_484D2DC2	# [0]
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=1, p4=loc_484D2C9F
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=17, p4=loc_484D2D08
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=18, p4=loc_484D2DC2
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=0x1007F, p4=loc_484D2E9A
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=21, p4=loc_484D2EB2
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=20, p4=loc_484D2ECC
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=0x10081, p4=loc_484D2ECF
-	REC_AcMidiPcgOutGridBoxProc_Records	p4=loc_484D2EE9	# [8]
-	REC_AcMidiPcgOutGridBoxProc_Records	p4=loc_484D2EE9
-	REC_AcMidiPcgOutGridBoxProc_Records	p4=loc_484D2EE9
-	REC_AcMidiPcgOutGridBoxProc_Records	p4=loc_484D2EE9
-	REC_AcMidiPcgOutGridBoxProc_Records	p4=loc_484D2EE9
-	REC_AcMidiPcgOutGridBoxProc_Records	p4=loc_484D2EE9
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=0x1007E, p4=loc_484D2E82
-	REC_AcMidiPcgOutGridBoxProc_Records	f0=15, p4=loc_484D2D08
+	REC_AcMidiPcgOutGridBoxProc_Records	key=16, proc=loc_484D2DC2	# [0]
+	REC_AcMidiPcgOutGridBoxProc_Records	key=1, proc=loc_484D2C9F
+	REC_AcMidiPcgOutGridBoxProc_Records	key=17, proc=loc_484D2D08
+	REC_AcMidiPcgOutGridBoxProc_Records	key=18, proc=loc_484D2DC2
+	REC_AcMidiPcgOutGridBoxProc_Records	key=0x1007F, proc=loc_484D2E9A
+	REC_AcMidiPcgOutGridBoxProc_Records	key=21, proc=loc_484D2EB2
+	REC_AcMidiPcgOutGridBoxProc_Records	key=20, proc=loc_484D2ECC
+	REC_AcMidiPcgOutGridBoxProc_Records	key=0x10081, proc=loc_484D2ECF
+	REC_AcMidiPcgOutGridBoxProc_Records	proc=loc_484D2EE9	# [8]
+	REC_AcMidiPcgOutGridBoxProc_Records	proc=loc_484D2EE9
+	REC_AcMidiPcgOutGridBoxProc_Records	proc=loc_484D2EE9
+	REC_AcMidiPcgOutGridBoxProc_Records	proc=loc_484D2EE9
+	REC_AcMidiPcgOutGridBoxProc_Records	proc=loc_484D2EE9
+	REC_AcMidiPcgOutGridBoxProc_Records	proc=loc_484D2EE9
+	REC_AcMidiPcgOutGridBoxProc_Records	key=0x1007E, proc=loc_484D2E82
+	REC_AcMidiPcgOutGridBoxProc_Records	key=15, proc=loc_484D2D08
 AcMidiPmemOutLGridBoxProc_Records:	# 16 x REC_AcMidiPmemOutLGridBoxProc_Records (8 bytes each); read by AcMidiPmemOutLGridBoxProc 0x484D37EB `mov (a0), d0`
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=16, p4=loc_484D38F5	# [0]
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=1, p4=loc_484D383F
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=17, p4=loc_484D38F5
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=18, p4=loc_484D38F5
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=0x1007F, p4=loc_484D3B44
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=21, p4=loc_484D3B5C
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=0x10081, p4=loc_484D3B81
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B	# [8]
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B
-	REC_AcMidiPmemOutLGridBoxProc_Records	p4=loc_484D3B9B
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=0x1007E, p4=loc_484D3B2D
-	REC_AcMidiPmemOutLGridBoxProc_Records	f0=15, p4=loc_484D38F5
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=16, proc=loc_484D38F5	# [0]
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=1, proc=loc_484D383F
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=17, proc=loc_484D38F5
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=18, proc=loc_484D38F5
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=0x1007F, proc=loc_484D3B44
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=21, proc=loc_484D3B5C
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=0x10081, proc=loc_484D3B81
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B	# [8]
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B
+	REC_AcMidiPmemOutLGridBoxProc_Records	proc=loc_484D3B9B
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=0x1007E, proc=loc_484D3B2D
+	REC_AcMidiPmemOutLGridBoxProc_Records	key=15, proc=loc_484D38F5
 AcMidiPmemOutRGridBoxProc_Records:	# 16 x REC_AcMidiPmemOutRGridBoxProc_Records (8 bytes each); read by AcMidiPmemOutRGridBoxProc 0x484D3BAB `mov (a0), d0`
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=16, p4=loc_484D3C71	# [0]
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=1, p4=loc_484D3BFE
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=17, p4=loc_484D3C71
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=18, p4=loc_484D3C71
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=0x1007F, p4=loc_484D3F7A
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=21, p4=loc_484D3F92
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=0x10081, p4=loc_484D3FB7
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1	# [8]
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1
-	REC_AcMidiPmemOutRGridBoxProc_Records	p4=loc_484D3FD1
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=0x1007E, p4=loc_484D3F62
-	REC_AcMidiPmemOutRGridBoxProc_Records	f0=15, p4=loc_484D3C71
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=16, proc=loc_484D3C71	# [0]
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=1, proc=loc_484D3BFE
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=17, proc=loc_484D3C71
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=18, proc=loc_484D3C71
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=0x1007F, proc=loc_484D3F7A
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=21, proc=loc_484D3F92
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=0x10081, proc=loc_484D3FB7
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1	# [8]
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1
+	REC_AcMidiPmemOutRGridBoxProc_Records	proc=loc_484D3FD1
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=0x1007E, proc=loc_484D3F62
+	REC_AcMidiPmemOutRGridBoxProc_Records	key=15, proc=loc_484D3C71
 
 Field_AcPmemBankSel_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_AcPmemBankSel_end
@@ -10981,22 +10981,22 @@ func_484D6D22_Table:	# 8 x u8, 96..255; read by MainVocalistOK 0x484D6D22: `movb
 	tab_u8	96, 97, 96, 97, 98, 99, 255, 255
 
 func_484D5F54_Records:	# 16 x REC_func_484D5F54_Records (8 bytes each); read by func_484D5F54 0x484D5F54 `mov (a0), d0`
-	REC_func_484D5F54_Records	f0=16, p4=loc_484D60D7	# [0]
-	REC_func_484D5F54_Records	f0=1, p4=loc_484D5FA7
-	REC_func_484D5F54_Records	f0=17, p4=loc_484D6012
-	REC_func_484D5F54_Records	f0=18, p4=loc_484D60D7
-	REC_func_484D5F54_Records	f0=0x1007F, p4=loc_484D61B6
-	REC_func_484D5F54_Records	f0=20, p4=loc_484D61CE
-	REC_func_484D5F54_Records	f0=21, p4=loc_484D61CE
-	REC_func_484D5F54_Records	f0=0x10081, p4=loc_484D61E8
-	REC_func_484D5F54_Records	p4=loc_484D6202	# [8]
-	REC_func_484D5F54_Records	p4=loc_484D6202
-	REC_func_484D5F54_Records	p4=loc_484D6202
-	REC_func_484D5F54_Records	p4=loc_484D6202
-	REC_func_484D5F54_Records	p4=loc_484D6202
-	REC_func_484D5F54_Records	p4=loc_484D6202
-	REC_func_484D5F54_Records	f0=0x1007E, p4=loc_484D619E
-	REC_func_484D5F54_Records	f0=15, p4=loc_484D6012
+	REC_func_484D5F54_Records	key=16, proc=loc_484D60D7	# [0]
+	REC_func_484D5F54_Records	key=1, proc=loc_484D5FA7
+	REC_func_484D5F54_Records	key=17, proc=loc_484D6012
+	REC_func_484D5F54_Records	key=18, proc=loc_484D60D7
+	REC_func_484D5F54_Records	key=0x1007F, proc=loc_484D61B6
+	REC_func_484D5F54_Records	key=20, proc=loc_484D61CE
+	REC_func_484D5F54_Records	key=21, proc=loc_484D61CE
+	REC_func_484D5F54_Records	key=0x10081, proc=loc_484D61E8
+	REC_func_484D5F54_Records	proc=loc_484D6202	# [8]
+	REC_func_484D5F54_Records	proc=loc_484D6202
+	REC_func_484D5F54_Records	proc=loc_484D6202
+	REC_func_484D5F54_Records	proc=loc_484D6202
+	REC_func_484D5F54_Records	proc=loc_484D6202
+	REC_func_484D5F54_Records	proc=loc_484D6202
+	REC_func_484D5F54_Records	key=0x1007E, proc=loc_484D619E
+	REC_func_484D5F54_Records	key=15, proc=loc_484D6012
 
 VocalistGrid_Table_7:
 	.long	loc_484D66E8
@@ -17353,22 +17353,22 @@ Str_FIX:	.asciz " FIX"
 	.align	4, 0xFF	# pad after Str_FIX
 
 AcEditBoxSeProc_Records:	# 16 x REC_AcEditBoxSeProc_Records (8 bytes each); read by AcEditBoxSeProc 0x484D876D `mov (a0), d0`
-	REC_AcEditBoxSeProc_Records	f0=16, p4=loc_484D886B	# [0]
-	REC_AcEditBoxSeProc_Records	f0=1, p4=loc_484D87C0
-	REC_AcEditBoxSeProc_Records	f0=0x100B2, p4=loc_484D882E
-	REC_AcEditBoxSeProc_Records	f0=0x1B00003, p4=loc_484D880C
-	REC_AcEditBoxSeProc_Records	f0=17, p4=loc_484D886B
-	REC_AcEditBoxSeProc_Records	f0=18, p4=loc_484D886B
-	REC_AcEditBoxSeProc_Records	f0=20, p4=loc_484D88CA
-	REC_AcEditBoxSeProc_Records	p4=loc_484D8900
-	REC_AcEditBoxSeProc_Records	p4=loc_484D8900	# [8]
-	REC_AcEditBoxSeProc_Records	p4=loc_484D8900
-	REC_AcEditBoxSeProc_Records	f0=0x1004A, p4=loc_484D87E6
-	REC_AcEditBoxSeProc_Records	f0=0x1003A, p4=loc_484D8850
-	REC_AcEditBoxSeProc_Records	p4=loc_484D8900
-	REC_AcEditBoxSeProc_Records	p4=loc_484D8900
-	REC_AcEditBoxSeProc_Records	p4=loc_484D8900
-	REC_AcEditBoxSeProc_Records	f0=15, p4=loc_484D886B
+	REC_AcEditBoxSeProc_Records	key=16, proc=loc_484D886B	# [0]
+	REC_AcEditBoxSeProc_Records	key=1, proc=loc_484D87C0
+	REC_AcEditBoxSeProc_Records	key=0x100B2, proc=loc_484D882E
+	REC_AcEditBoxSeProc_Records	key=0x1B00003, proc=loc_484D880C
+	REC_AcEditBoxSeProc_Records	key=17, proc=loc_484D886B
+	REC_AcEditBoxSeProc_Records	key=18, proc=loc_484D886B
+	REC_AcEditBoxSeProc_Records	key=20, proc=loc_484D88CA
+	REC_AcEditBoxSeProc_Records	proc=loc_484D8900
+	REC_AcEditBoxSeProc_Records	proc=loc_484D8900	# [8]
+	REC_AcEditBoxSeProc_Records	proc=loc_484D8900
+	REC_AcEditBoxSeProc_Records	key=0x1004A, proc=loc_484D87E6
+	REC_AcEditBoxSeProc_Records	key=0x1003A, proc=loc_484D8850
+	REC_AcEditBoxSeProc_Records	proc=loc_484D8900
+	REC_AcEditBoxSeProc_Records	proc=loc_484D8900
+	REC_AcEditBoxSeProc_Records	proc=loc_484D8900
+	REC_AcEditBoxSeProc_Records	key=15, proc=loc_484D886B
 
 EzDeffSe_Table:
 	.long	loc_484D8FF7
@@ -17400,22 +17400,22 @@ DeffTypeSe_Table:
 	.long	loc_484DB599
 
 AcChEditBoxSeProc_Records:	# 16 x REC_AcChEditBoxSeProc_Records (8 bytes each); read by AcChEditBoxSeProc 0x484DC822 `mov (a0), d0`
-	REC_AcChEditBoxSeProc_Records	f0=0x1B00000, p4=loc_484DC8BE	# [0]
-	REC_AcChEditBoxSeProc_Records	f0=1, p4=loc_484DC876
-	REC_AcChEditBoxSeProc_Records	f0=0x100B2, p4=loc_484DC89C
-	REC_AcChEditBoxSeProc_Records	f0=17, p4=loc_484DC915
-	REC_AcChEditBoxSeProc_Records	f0=18, p4=loc_484DC915
-	REC_AcChEditBoxSeProc_Records	f0=16, p4=loc_484DC915
-	REC_AcChEditBoxSeProc_Records	f0=0x100C6, p4=loc_484DC8FB
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974	# [8]
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974
-	REC_AcChEditBoxSeProc_Records	f0=0x1003A, p4=loc_484DC8E0
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974
-	REC_AcChEditBoxSeProc_Records	p4=loc_484DC974
-	REC_AcChEditBoxSeProc_Records	f0=15, p4=loc_484DC915
+	REC_AcChEditBoxSeProc_Records	key=0x1B00000, proc=loc_484DC8BE	# [0]
+	REC_AcChEditBoxSeProc_Records	key=1, proc=loc_484DC876
+	REC_AcChEditBoxSeProc_Records	key=0x100B2, proc=loc_484DC89C
+	REC_AcChEditBoxSeProc_Records	key=17, proc=loc_484DC915
+	REC_AcChEditBoxSeProc_Records	key=18, proc=loc_484DC915
+	REC_AcChEditBoxSeProc_Records	key=16, proc=loc_484DC915
+	REC_AcChEditBoxSeProc_Records	key=0x100C6, proc=loc_484DC8FB
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974	# [8]
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974
+	REC_AcChEditBoxSeProc_Records	key=0x1003A, proc=loc_484DC8E0
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974
+	REC_AcChEditBoxSeProc_Records	proc=loc_484DC974
+	REC_AcChEditBoxSeProc_Records	key=15, proc=loc_484DC915
 
 DeffVal0Se_Table:
 	.long	loc_484DCB42
@@ -17979,22 +17979,22 @@ DeffVal7SwSe_Table:
 	.long	loc_484DE717
 
 AcGridBoxSeProc_Records:	# 16 x REC_AcGridBoxSeProc_Records (8 bytes each); read by AcGridBoxSeProc 0x484DEFCE `mov (a0), d0`
-	REC_AcGridBoxSeProc_Records	f0=16, p4=loc_484DF432	# [0]
-	REC_AcGridBoxSeProc_Records	f0=1, p4=loc_484DF022
-	REC_AcGridBoxSeProc_Records	f0=0x100B2, p4=loc_484DF0BD
-	REC_AcGridBoxSeProc_Records	f0=0x100B3, p4=loc_484DF392
-	REC_AcGridBoxSeProc_Records	f0=17, p4=loc_484DF3BF
-	REC_AcGridBoxSeProc_Records	f0=5, p4=loc_484DF0F6
-	REC_AcGridBoxSeProc_Records	f0=18, p4=loc_484DF432
-	REC_AcGridBoxSeProc_Records	f0=0x1007F, p4=loc_484DF4BF
-	REC_AcGridBoxSeProc_Records	f0=20, p4=loc_484DF4D9	# [8]
-	REC_AcGridBoxSeProc_Records	f0=21, p4=loc_484DF4D9
-	REC_AcGridBoxSeProc_Records	f0=0x10081, p4=loc_484DF4FE
-	REC_AcGridBoxSeProc_Records	p4=loc_484DF518
-	REC_AcGridBoxSeProc_Records	p4=loc_484DF518
-	REC_AcGridBoxSeProc_Records	p4=loc_484DF518
-	REC_AcGridBoxSeProc_Records	f0=0x1007E, p4=loc_484DF4A5
-	REC_AcGridBoxSeProc_Records	f0=15, p4=loc_484DF3BF
+	REC_AcGridBoxSeProc_Records	key=16, proc=loc_484DF432	# [0]
+	REC_AcGridBoxSeProc_Records	key=1, proc=loc_484DF022
+	REC_AcGridBoxSeProc_Records	key=0x100B2, proc=loc_484DF0BD
+	REC_AcGridBoxSeProc_Records	key=0x100B3, proc=loc_484DF392
+	REC_AcGridBoxSeProc_Records	key=17, proc=loc_484DF3BF
+	REC_AcGridBoxSeProc_Records	key=5, proc=loc_484DF0F6
+	REC_AcGridBoxSeProc_Records	key=18, proc=loc_484DF432
+	REC_AcGridBoxSeProc_Records	key=0x1007F, proc=loc_484DF4BF
+	REC_AcGridBoxSeProc_Records	key=20, proc=loc_484DF4D9	# [8]
+	REC_AcGridBoxSeProc_Records	key=21, proc=loc_484DF4D9
+	REC_AcGridBoxSeProc_Records	key=0x10081, proc=loc_484DF4FE
+	REC_AcGridBoxSeProc_Records	proc=loc_484DF518
+	REC_AcGridBoxSeProc_Records	proc=loc_484DF518
+	REC_AcGridBoxSeProc_Records	proc=loc_484DF518
+	REC_AcGridBoxSeProc_Records	key=0x1007E, proc=loc_484DF4A5
+	REC_AcGridBoxSeProc_Records	key=15, proc=loc_484DF3BF
 
 ToneSelGridSe_Table:
 	.long	loc_484DFDAC
@@ -18034,22 +18034,22 @@ ToneSelGridSe_Table_3:
 	.long	loc_484DF938
 
 ToneSelGridSe_Records:	# 16 x REC_ToneSelGridSe_Records (8 bytes each); read by ToneSelGridSe 0x484DF528 `mov (a0), d0`
-	REC_ToneSelGridSe_Records	f0=16, p4=loc_484DF57B	# [0]
-	REC_ToneSelGridSe_Records	f0=17, p4=loc_484DF95F
-	REC_ToneSelGridSe_Records	f0=18, p4=loc_484DF57B
-	REC_ToneSelGridSe_Records	f0=19, p4=loc_484DF95F
-	REC_ToneSelGridSe_Records	f0=0x10080, p4=loc_484DFD50
-	REC_ToneSelGridSe_Records	f0=21, p4=loc_484DFD63
-	REC_ToneSelGridSe_Records	f0=22, p4=loc_484DFD63
-	REC_ToneSelGridSe_Records	f0=0x10082, p4=loc_484DFD67
-	REC_ToneSelGridSe_Records	f0=1, p4=loc_484E00EB	# [8]
-	REC_ToneSelGridSe_Records	p4=loc_484E00EE
-	REC_ToneSelGridSe_Records	p4=loc_484E00EE
-	REC_ToneSelGridSe_Records	p4=loc_484E00EE
-	REC_ToneSelGridSe_Records	p4=loc_484E00EE
-	REC_ToneSelGridSe_Records	p4=loc_484E00EE
-	REC_ToneSelGridSe_Records	p4=loc_484E00EE
-	REC_ToneSelGridSe_Records	f0=0x1007F, p4=loc_484DFD3D
+	REC_ToneSelGridSe_Records	f0=16, proc=loc_484DF57B	# [0]
+	REC_ToneSelGridSe_Records	f0=17, proc=loc_484DF95F
+	REC_ToneSelGridSe_Records	f0=18, proc=loc_484DF57B
+	REC_ToneSelGridSe_Records	f0=19, proc=loc_484DF95F
+	REC_ToneSelGridSe_Records	f0=0x10080, proc=loc_484DFD50
+	REC_ToneSelGridSe_Records	f0=21, proc=loc_484DFD63
+	REC_ToneSelGridSe_Records	f0=22, proc=loc_484DFD63
+	REC_ToneSelGridSe_Records	f0=0x10082, proc=loc_484DFD67
+	REC_ToneSelGridSe_Records	f0=1, proc=loc_484E00EB	# [8]
+	REC_ToneSelGridSe_Records	proc=loc_484E00EE
+	REC_ToneSelGridSe_Records	proc=loc_484E00EE
+	REC_ToneSelGridSe_Records	proc=loc_484E00EE
+	REC_ToneSelGridSe_Records	proc=loc_484E00EE
+	REC_ToneSelGridSe_Records	proc=loc_484E00EE
+	REC_ToneSelGridSe_Records	proc=loc_484E00EE
+	REC_ToneSelGridSe_Records	f0=0x1007F, proc=loc_484DFD3D
 
 ToneGridSe1_Table:
 	.long	loc_484E04EA
@@ -18083,73 +18083,73 @@ ToneGridSe1_Table_3:
 	.long	loc_484E02AA
 
 ToneGridSe1_Records:	# 16 x REC_ToneGridSe1_Records (8 bytes each); read by ToneGridSe1 0x484E00F2 `mov (a0), d0`
-	REC_ToneGridSe1_Records	f0=16, p4=loc_484E0144	# [0]
-	REC_ToneGridSe1_Records	f0=17, p4=loc_484E02E6
-	REC_ToneGridSe1_Records	f0=18, p4=loc_484E0144
-	REC_ToneGridSe1_Records	f0=19, p4=loc_484E02E6
-	REC_ToneGridSe1_Records	f0=0x10080, p4=loc_484E0493
-	REC_ToneGridSe1_Records	f0=21, p4=loc_484E04A6
-	REC_ToneGridSe1_Records	f0=22, p4=loc_484E04A6
-	REC_ToneGridSe1_Records	f0=0x10082, p4=loc_484E04AA
-	REC_ToneGridSe1_Records	f0=1, p4=loc_484E066E	# [8]
-	REC_ToneGridSe1_Records	p4=loc_484E0671
-	REC_ToneGridSe1_Records	p4=loc_484E0671
-	REC_ToneGridSe1_Records	p4=loc_484E0671
-	REC_ToneGridSe1_Records	p4=loc_484E0671
-	REC_ToneGridSe1_Records	p4=loc_484E0671
-	REC_ToneGridSe1_Records	p4=loc_484E0671
-	REC_ToneGridSe1_Records	f0=0x1007F, p4=loc_484E0480
+	REC_ToneGridSe1_Records	f0=16, proc=loc_484E0144	# [0]
+	REC_ToneGridSe1_Records	f0=17, proc=loc_484E02E6
+	REC_ToneGridSe1_Records	f0=18, proc=loc_484E0144
+	REC_ToneGridSe1_Records	f0=19, proc=loc_484E02E6
+	REC_ToneGridSe1_Records	f0=0x10080, proc=loc_484E0493
+	REC_ToneGridSe1_Records	f0=21, proc=loc_484E04A6
+	REC_ToneGridSe1_Records	f0=22, proc=loc_484E04A6
+	REC_ToneGridSe1_Records	f0=0x10082, proc=loc_484E04AA
+	REC_ToneGridSe1_Records	f0=1, proc=loc_484E066E	# [8]
+	REC_ToneGridSe1_Records	proc=loc_484E0671
+	REC_ToneGridSe1_Records	proc=loc_484E0671
+	REC_ToneGridSe1_Records	proc=loc_484E0671
+	REC_ToneGridSe1_Records	proc=loc_484E0671
+	REC_ToneGridSe1_Records	proc=loc_484E0671
+	REC_ToneGridSe1_Records	proc=loc_484E0671
+	REC_ToneGridSe1_Records	f0=0x1007F, proc=loc_484E0480
 LayerGridSe1_Records:	# 16 x REC_LayerGridSe1_Records (8 bytes each); read by LayerGridSe1 0x484E0675 `mov (a0), d0`
-	REC_LayerGridSe1_Records	f0=16, p4=loc_484E06C8	# [0]
-	REC_LayerGridSe1_Records	f0=17, p4=loc_484E0805
-	REC_LayerGridSe1_Records	f0=18, p4=loc_484E06C8
-	REC_LayerGridSe1_Records	f0=19, p4=loc_484E0805
-	REC_LayerGridSe1_Records	f0=0x10080, p4=loc_484E094A
-	REC_LayerGridSe1_Records	f0=21, p4=loc_484E095D
-	REC_LayerGridSe1_Records	f0=22, p4=loc_484E095D
-	REC_LayerGridSe1_Records	f0=0x10082, p4=loc_484E0961
-	REC_LayerGridSe1_Records	f0=1, p4=loc_484E0C3C	# [8]
-	REC_LayerGridSe1_Records	p4=loc_484E0C3F
-	REC_LayerGridSe1_Records	p4=loc_484E0C3F
-	REC_LayerGridSe1_Records	p4=loc_484E0C3F
-	REC_LayerGridSe1_Records	p4=loc_484E0C3F
-	REC_LayerGridSe1_Records	p4=loc_484E0C3F
-	REC_LayerGridSe1_Records	p4=loc_484E0C3F
-	REC_LayerGridSe1_Records	f0=0x1007F, p4=loc_484E0937
+	REC_LayerGridSe1_Records	f0=16, proc=loc_484E06C8	# [0]
+	REC_LayerGridSe1_Records	f0=17, proc=loc_484E0805
+	REC_LayerGridSe1_Records	f0=18, proc=loc_484E06C8
+	REC_LayerGridSe1_Records	f0=19, proc=loc_484E0805
+	REC_LayerGridSe1_Records	f0=0x10080, proc=loc_484E094A
+	REC_LayerGridSe1_Records	f0=21, proc=loc_484E095D
+	REC_LayerGridSe1_Records	f0=22, proc=loc_484E095D
+	REC_LayerGridSe1_Records	f0=0x10082, proc=loc_484E0961
+	REC_LayerGridSe1_Records	f0=1, proc=loc_484E0C3C	# [8]
+	REC_LayerGridSe1_Records	proc=loc_484E0C3F
+	REC_LayerGridSe1_Records	proc=loc_484E0C3F
+	REC_LayerGridSe1_Records	proc=loc_484E0C3F
+	REC_LayerGridSe1_Records	proc=loc_484E0C3F
+	REC_LayerGridSe1_Records	proc=loc_484E0C3F
+	REC_LayerGridSe1_Records	proc=loc_484E0C3F
+	REC_LayerGridSe1_Records	f0=0x1007F, proc=loc_484E0937
 LayerGridSe2_Records:	# 16 x REC_LayerGridSe2_Records (8 bytes each); read by LayerGridSe2 0x484E0C43 `mov (a0), d0`
-	REC_LayerGridSe2_Records	f0=16, p4=loc_484E0C95	# [0]
-	REC_LayerGridSe2_Records	f0=17, p4=loc_484E0DCD
-	REC_LayerGridSe2_Records	f0=18, p4=loc_484E0C95
-	REC_LayerGridSe2_Records	f0=19, p4=loc_484E0DCD
-	REC_LayerGridSe2_Records	f0=0x10080, p4=loc_484E0F15
-	REC_LayerGridSe2_Records	f0=21, p4=loc_484E0F28
-	REC_LayerGridSe2_Records	f0=22, p4=loc_484E0F28
-	REC_LayerGridSe2_Records	f0=0x10082, p4=loc_484E0F2C
-	REC_LayerGridSe2_Records	f0=1, p4=loc_484E11F6	# [8]
-	REC_LayerGridSe2_Records	p4=loc_484E11F9
-	REC_LayerGridSe2_Records	p4=loc_484E11F9
-	REC_LayerGridSe2_Records	p4=loc_484E11F9
-	REC_LayerGridSe2_Records	p4=loc_484E11F9
-	REC_LayerGridSe2_Records	p4=loc_484E11F9
-	REC_LayerGridSe2_Records	p4=loc_484E11F9
-	REC_LayerGridSe2_Records	f0=0x1007F, p4=loc_484E0F02
+	REC_LayerGridSe2_Records	f0=16, proc=loc_484E0C95	# [0]
+	REC_LayerGridSe2_Records	f0=17, proc=loc_484E0DCD
+	REC_LayerGridSe2_Records	f0=18, proc=loc_484E0C95
+	REC_LayerGridSe2_Records	f0=19, proc=loc_484E0DCD
+	REC_LayerGridSe2_Records	f0=0x10080, proc=loc_484E0F15
+	REC_LayerGridSe2_Records	f0=21, proc=loc_484E0F28
+	REC_LayerGridSe2_Records	f0=22, proc=loc_484E0F28
+	REC_LayerGridSe2_Records	f0=0x10082, proc=loc_484E0F2C
+	REC_LayerGridSe2_Records	f0=1, proc=loc_484E11F6	# [8]
+	REC_LayerGridSe2_Records	proc=loc_484E11F9
+	REC_LayerGridSe2_Records	proc=loc_484E11F9
+	REC_LayerGridSe2_Records	proc=loc_484E11F9
+	REC_LayerGridSe2_Records	proc=loc_484E11F9
+	REC_LayerGridSe2_Records	proc=loc_484E11F9
+	REC_LayerGridSe2_Records	proc=loc_484E11F9
+	REC_LayerGridSe2_Records	f0=0x1007F, proc=loc_484E0F02
 PitchGridSe_Records:	# 16 x REC_PitchGridSe_Records (8 bytes each); read by PitchGridSe 0x484E11FD `mov (a0), d0`
-	REC_PitchGridSe_Records	f0=16, p4=loc_484E1250	# [0]
-	REC_PitchGridSe_Records	f0=17, p4=loc_484E1331
-	REC_PitchGridSe_Records	f0=18, p4=loc_484E1250
-	REC_PitchGridSe_Records	f0=19, p4=loc_484E1331
-	REC_PitchGridSe_Records	f0=0x10080, p4=loc_484E1422
-	REC_PitchGridSe_Records	f0=21, p4=loc_484E1435
-	REC_PitchGridSe_Records	f0=22, p4=loc_484E1435
-	REC_PitchGridSe_Records	f0=0x10082, p4=loc_484E1439
-	REC_PitchGridSe_Records	f0=1, p4=loc_484E1507	# [8]
-	REC_PitchGridSe_Records	p4=loc_484E150A
-	REC_PitchGridSe_Records	p4=loc_484E150A
-	REC_PitchGridSe_Records	p4=loc_484E150A
-	REC_PitchGridSe_Records	p4=loc_484E150A
-	REC_PitchGridSe_Records	p4=loc_484E150A
-	REC_PitchGridSe_Records	p4=loc_484E150A
-	REC_PitchGridSe_Records	f0=0x1007F, p4=loc_484E140F
+	REC_PitchGridSe_Records	f0=16, proc=loc_484E1250	# [0]
+	REC_PitchGridSe_Records	f0=17, proc=loc_484E1331
+	REC_PitchGridSe_Records	f0=18, proc=loc_484E1250
+	REC_PitchGridSe_Records	f0=19, proc=loc_484E1331
+	REC_PitchGridSe_Records	f0=0x10080, proc=loc_484E1422
+	REC_PitchGridSe_Records	f0=21, proc=loc_484E1435
+	REC_PitchGridSe_Records	f0=22, proc=loc_484E1435
+	REC_PitchGridSe_Records	f0=0x10082, proc=loc_484E1439
+	REC_PitchGridSe_Records	f0=1, proc=loc_484E1507	# [8]
+	REC_PitchGridSe_Records	proc=loc_484E150A
+	REC_PitchGridSe_Records	proc=loc_484E150A
+	REC_PitchGridSe_Records	proc=loc_484E150A
+	REC_PitchGridSe_Records	proc=loc_484E150A
+	REC_PitchGridSe_Records	proc=loc_484E150A
+	REC_PitchGridSe_Records	proc=loc_484E150A
+	REC_PitchGridSe_Records	f0=0x1007F, proc=loc_484E140F
 
 PitchGridSe2_Table:
 	.long	loc_484E1988
@@ -18189,56 +18189,56 @@ PitchGridSe2_Table_3:
 	.long	loc_484E1704
 
 PitchGridSe2_Records:	# 16 x REC_PitchGridSe2_Records (8 bytes each); read by PitchGridSe2 0x484E150E `mov (a0), d0`
-	REC_PitchGridSe2_Records	f0=16, p4=loc_484E1560	# [0]
-	REC_PitchGridSe2_Records	f0=17, p4=loc_484E1744
-	REC_PitchGridSe2_Records	f0=18, p4=loc_484E1560
-	REC_PitchGridSe2_Records	f0=19, p4=loc_484E1744
-	REC_PitchGridSe2_Records	f0=0x10080, p4=loc_484E1933
-	REC_PitchGridSe2_Records	f0=21, p4=loc_484E1946
-	REC_PitchGridSe2_Records	f0=22, p4=loc_484E1946
-	REC_PitchGridSe2_Records	f0=0x10082, p4=loc_484E194A
-	REC_PitchGridSe2_Records	f0=1, p4=loc_484E1BDB	# [8]
-	REC_PitchGridSe2_Records	p4=loc_484E1BDE
-	REC_PitchGridSe2_Records	p4=loc_484E1BDE
-	REC_PitchGridSe2_Records	p4=loc_484E1BDE
-	REC_PitchGridSe2_Records	p4=loc_484E1BDE
-	REC_PitchGridSe2_Records	p4=loc_484E1BDE
-	REC_PitchGridSe2_Records	p4=loc_484E1BDE
-	REC_PitchGridSe2_Records	f0=0x1007F, p4=loc_484E1920
+	REC_PitchGridSe2_Records	f0=16, proc=loc_484E1560	# [0]
+	REC_PitchGridSe2_Records	f0=17, proc=loc_484E1744
+	REC_PitchGridSe2_Records	f0=18, proc=loc_484E1560
+	REC_PitchGridSe2_Records	f0=19, proc=loc_484E1744
+	REC_PitchGridSe2_Records	f0=0x10080, proc=loc_484E1933
+	REC_PitchGridSe2_Records	f0=21, proc=loc_484E1946
+	REC_PitchGridSe2_Records	f0=22, proc=loc_484E1946
+	REC_PitchGridSe2_Records	f0=0x10082, proc=loc_484E194A
+	REC_PitchGridSe2_Records	f0=1, proc=loc_484E1BDB	# [8]
+	REC_PitchGridSe2_Records	proc=loc_484E1BDE
+	REC_PitchGridSe2_Records	proc=loc_484E1BDE
+	REC_PitchGridSe2_Records	proc=loc_484E1BDE
+	REC_PitchGridSe2_Records	proc=loc_484E1BDE
+	REC_PitchGridSe2_Records	proc=loc_484E1BDE
+	REC_PitchGridSe2_Records	proc=loc_484E1BDE
+	REC_PitchGridSe2_Records	f0=0x1007F, proc=loc_484E1920
 PitchGridSe3_Records:	# 16 x REC_PitchGridSe3_Records (8 bytes each); read by PitchGridSe3 0x484E1BE2 `mov (a0), d0`
-	REC_PitchGridSe3_Records	f0=16, p4=loc_484E1C35	# [0]
-	REC_PitchGridSe3_Records	f0=17, p4=loc_484E1DA8
-	REC_PitchGridSe3_Records	f0=18, p4=loc_484E1C35
-	REC_PitchGridSe3_Records	f0=19, p4=loc_484E1DA8
-	REC_PitchGridSe3_Records	f0=0x10080, p4=loc_484E1F2A
-	REC_PitchGridSe3_Records	f0=21, p4=loc_484E1F3D
-	REC_PitchGridSe3_Records	f0=22, p4=loc_484E1F3D
-	REC_PitchGridSe3_Records	f0=0x10082, p4=loc_484E1F41
-	REC_PitchGridSe3_Records	f0=1, p4=loc_484E20E2	# [8]
-	REC_PitchGridSe3_Records	p4=loc_484E20E5
-	REC_PitchGridSe3_Records	p4=loc_484E20E5
-	REC_PitchGridSe3_Records	p4=loc_484E20E5
-	REC_PitchGridSe3_Records	p4=loc_484E20E5
-	REC_PitchGridSe3_Records	p4=loc_484E20E5
-	REC_PitchGridSe3_Records	p4=loc_484E20E5
-	REC_PitchGridSe3_Records	f0=0x1007F, p4=loc_484E1F17
+	REC_PitchGridSe3_Records	f0=16, proc=loc_484E1C35	# [0]
+	REC_PitchGridSe3_Records	f0=17, proc=loc_484E1DA8
+	REC_PitchGridSe3_Records	f0=18, proc=loc_484E1C35
+	REC_PitchGridSe3_Records	f0=19, proc=loc_484E1DA8
+	REC_PitchGridSe3_Records	f0=0x10080, proc=loc_484E1F2A
+	REC_PitchGridSe3_Records	f0=21, proc=loc_484E1F3D
+	REC_PitchGridSe3_Records	f0=22, proc=loc_484E1F3D
+	REC_PitchGridSe3_Records	f0=0x10082, proc=loc_484E1F41
+	REC_PitchGridSe3_Records	f0=1, proc=loc_484E20E2	# [8]
+	REC_PitchGridSe3_Records	proc=loc_484E20E5
+	REC_PitchGridSe3_Records	proc=loc_484E20E5
+	REC_PitchGridSe3_Records	proc=loc_484E20E5
+	REC_PitchGridSe3_Records	proc=loc_484E20E5
+	REC_PitchGridSe3_Records	proc=loc_484E20E5
+	REC_PitchGridSe3_Records	proc=loc_484E20E5
+	REC_PitchGridSe3_Records	f0=0x1007F, proc=loc_484E1F17
 AmpGridSe1_Records:	# 16 x REC_AmpGridSe1_Records (8 bytes each); read by AmpGridSe1 0x484E20E9 `mov (a0), d0`
-	REC_AmpGridSe1_Records	f0=16, p4=loc_484E213C	# [0]
-	REC_AmpGridSe1_Records	f0=17, p4=loc_484E2311
-	REC_AmpGridSe1_Records	f0=18, p4=loc_484E213C
-	REC_AmpGridSe1_Records	f0=19, p4=loc_484E2311
-	REC_AmpGridSe1_Records	f0=0x10080, p4=loc_484E24EA
-	REC_AmpGridSe1_Records	f0=21, p4=loc_484E24FD
-	REC_AmpGridSe1_Records	f0=22, p4=loc_484E24FD
-	REC_AmpGridSe1_Records	f0=0x10082, p4=loc_484E2501
-	REC_AmpGridSe1_Records	f0=1, p4=loc_484E2739	# [8]
-	REC_AmpGridSe1_Records	p4=loc_484E273C
-	REC_AmpGridSe1_Records	p4=loc_484E273C
-	REC_AmpGridSe1_Records	p4=loc_484E273C
-	REC_AmpGridSe1_Records	p4=loc_484E273C
-	REC_AmpGridSe1_Records	p4=loc_484E273C
-	REC_AmpGridSe1_Records	p4=loc_484E273C
-	REC_AmpGridSe1_Records	f0=0x1007F, p4=loc_484E24D7
+	REC_AmpGridSe1_Records	f0=16, proc=loc_484E213C	# [0]
+	REC_AmpGridSe1_Records	f0=17, proc=loc_484E2311
+	REC_AmpGridSe1_Records	f0=18, proc=loc_484E213C
+	REC_AmpGridSe1_Records	f0=19, proc=loc_484E2311
+	REC_AmpGridSe1_Records	f0=0x10080, proc=loc_484E24EA
+	REC_AmpGridSe1_Records	f0=21, proc=loc_484E24FD
+	REC_AmpGridSe1_Records	f0=22, proc=loc_484E24FD
+	REC_AmpGridSe1_Records	f0=0x10082, proc=loc_484E2501
+	REC_AmpGridSe1_Records	f0=1, proc=loc_484E2739	# [8]
+	REC_AmpGridSe1_Records	proc=loc_484E273C
+	REC_AmpGridSe1_Records	proc=loc_484E273C
+	REC_AmpGridSe1_Records	proc=loc_484E273C
+	REC_AmpGridSe1_Records	proc=loc_484E273C
+	REC_AmpGridSe1_Records	proc=loc_484E273C
+	REC_AmpGridSe1_Records	proc=loc_484E273C
+	REC_AmpGridSe1_Records	f0=0x1007F, proc=loc_484E24D7
 
 AmpGridSe2_Table:
 	.long	loc_484E2B07
@@ -18272,22 +18272,22 @@ AmpGridSe2_Table_3:
 	.long	loc_484E28E4
 
 AmpGridSe2_Records:	# 16 x REC_AmpGridSe2_Records (8 bytes each); read by AmpGridSe2 0x484E2740 `mov (a0), d0`
-	REC_AmpGridSe2_Records	f0=16, p4=loc_484E2792	# [0]
-	REC_AmpGridSe2_Records	f0=17, p4=loc_484E2923
-	REC_AmpGridSe2_Records	f0=18, p4=loc_484E2792
-	REC_AmpGridSe2_Records	f0=19, p4=loc_484E2923
-	REC_AmpGridSe2_Records	f0=0x10080, p4=loc_484E2AB0
-	REC_AmpGridSe2_Records	f0=21, p4=loc_484E2AC3
-	REC_AmpGridSe2_Records	f0=22, p4=loc_484E2AC3
-	REC_AmpGridSe2_Records	f0=0x10082, p4=loc_484E2AC7
-	REC_AmpGridSe2_Records	f0=1, p4=loc_484E2D02	# [8]
-	REC_AmpGridSe2_Records	p4=loc_484E2D05
-	REC_AmpGridSe2_Records	p4=loc_484E2D05
-	REC_AmpGridSe2_Records	p4=loc_484E2D05
-	REC_AmpGridSe2_Records	p4=loc_484E2D05
-	REC_AmpGridSe2_Records	p4=loc_484E2D05
-	REC_AmpGridSe2_Records	p4=loc_484E2D05
-	REC_AmpGridSe2_Records	f0=0x1007F, p4=loc_484E2A9D
+	REC_AmpGridSe2_Records	f0=16, proc=loc_484E2792	# [0]
+	REC_AmpGridSe2_Records	f0=17, proc=loc_484E2923
+	REC_AmpGridSe2_Records	f0=18, proc=loc_484E2792
+	REC_AmpGridSe2_Records	f0=19, proc=loc_484E2923
+	REC_AmpGridSe2_Records	f0=0x10080, proc=loc_484E2AB0
+	REC_AmpGridSe2_Records	f0=21, proc=loc_484E2AC3
+	REC_AmpGridSe2_Records	f0=22, proc=loc_484E2AC3
+	REC_AmpGridSe2_Records	f0=0x10082, proc=loc_484E2AC7
+	REC_AmpGridSe2_Records	f0=1, proc=loc_484E2D02	# [8]
+	REC_AmpGridSe2_Records	proc=loc_484E2D05
+	REC_AmpGridSe2_Records	proc=loc_484E2D05
+	REC_AmpGridSe2_Records	proc=loc_484E2D05
+	REC_AmpGridSe2_Records	proc=loc_484E2D05
+	REC_AmpGridSe2_Records	proc=loc_484E2D05
+	REC_AmpGridSe2_Records	proc=loc_484E2D05
+	REC_AmpGridSe2_Records	f0=0x1007F, proc=loc_484E2A9D
 
 AmpGridSe3_Table:
 	.long	loc_484E3172
@@ -18321,56 +18321,56 @@ AmpGridSe3_Table_3:
 	.long	loc_484E2EF9
 
 AmpGridSe3_Records:	# 16 x REC_AmpGridSe3_Records (8 bytes each); read by AmpGridSe3 0x484E2D09 `mov (a0), d0`
-	REC_AmpGridSe3_Records	f0=16, p4=loc_484E2D5B	# [0]
-	REC_AmpGridSe3_Records	f0=17, p4=loc_484E2F34
-	REC_AmpGridSe3_Records	f0=18, p4=loc_484E2D5B
-	REC_AmpGridSe3_Records	f0=19, p4=loc_484E2F34
-	REC_AmpGridSe3_Records	f0=0x10080, p4=loc_484E311B
-	REC_AmpGridSe3_Records	f0=21, p4=loc_484E312E
-	REC_AmpGridSe3_Records	f0=22, p4=loc_484E312E
-	REC_AmpGridSe3_Records	f0=0x10082, p4=loc_484E3132
-	REC_AmpGridSe3_Records	f0=1, p4=loc_484E3336	# [8]
-	REC_AmpGridSe3_Records	p4=loc_484E3339
-	REC_AmpGridSe3_Records	p4=loc_484E3339
-	REC_AmpGridSe3_Records	p4=loc_484E3339
-	REC_AmpGridSe3_Records	p4=loc_484E3339
-	REC_AmpGridSe3_Records	p4=loc_484E3339
-	REC_AmpGridSe3_Records	p4=loc_484E3339
-	REC_AmpGridSe3_Records	f0=0x1007F, p4=loc_484E3108
+	REC_AmpGridSe3_Records	f0=16, proc=loc_484E2D5B	# [0]
+	REC_AmpGridSe3_Records	f0=17, proc=loc_484E2F34
+	REC_AmpGridSe3_Records	f0=18, proc=loc_484E2D5B
+	REC_AmpGridSe3_Records	f0=19, proc=loc_484E2F34
+	REC_AmpGridSe3_Records	f0=0x10080, proc=loc_484E311B
+	REC_AmpGridSe3_Records	f0=21, proc=loc_484E312E
+	REC_AmpGridSe3_Records	f0=22, proc=loc_484E312E
+	REC_AmpGridSe3_Records	f0=0x10082, proc=loc_484E3132
+	REC_AmpGridSe3_Records	f0=1, proc=loc_484E3336	# [8]
+	REC_AmpGridSe3_Records	proc=loc_484E3339
+	REC_AmpGridSe3_Records	proc=loc_484E3339
+	REC_AmpGridSe3_Records	proc=loc_484E3339
+	REC_AmpGridSe3_Records	proc=loc_484E3339
+	REC_AmpGridSe3_Records	proc=loc_484E3339
+	REC_AmpGridSe3_Records	proc=loc_484E3339
+	REC_AmpGridSe3_Records	f0=0x1007F, proc=loc_484E3108
 FilterGridSe1_Records:	# 16 x REC_FilterGridSe1_Records (8 bytes each); read by FilterGridSe1 0x484E333D `mov (a0), d0`
-	REC_FilterGridSe1_Records	f0=16, p4=loc_484E338F	# [0]
-	REC_FilterGridSe1_Records	f0=17, p4=loc_484E36AC
-	REC_FilterGridSe1_Records	f0=18, p4=loc_484E338F
-	REC_FilterGridSe1_Records	f0=19, p4=loc_484E36AC
-	REC_FilterGridSe1_Records	f0=0x10080, p4=loc_484E39BE
-	REC_FilterGridSe1_Records	f0=21, p4=loc_484E39D1
-	REC_FilterGridSe1_Records	f0=22, p4=loc_484E39D1
-	REC_FilterGridSe1_Records	f0=0x10082, p4=loc_484E39D5
-	REC_FilterGridSe1_Records	f0=1, p4=loc_484E3E23	# [8]
-	REC_FilterGridSe1_Records	p4=loc_484E3E26
-	REC_FilterGridSe1_Records	p4=loc_484E3E26
-	REC_FilterGridSe1_Records	p4=loc_484E3E26
-	REC_FilterGridSe1_Records	p4=loc_484E3E26
-	REC_FilterGridSe1_Records	p4=loc_484E3E26
-	REC_FilterGridSe1_Records	p4=loc_484E3E26
-	REC_FilterGridSe1_Records	f0=0x1007F, p4=loc_484E39AB
+	REC_FilterGridSe1_Records	f0=16, proc=loc_484E338F	# [0]
+	REC_FilterGridSe1_Records	f0=17, proc=loc_484E36AC
+	REC_FilterGridSe1_Records	f0=18, proc=loc_484E338F
+	REC_FilterGridSe1_Records	f0=19, proc=loc_484E36AC
+	REC_FilterGridSe1_Records	f0=0x10080, proc=loc_484E39BE
+	REC_FilterGridSe1_Records	f0=21, proc=loc_484E39D1
+	REC_FilterGridSe1_Records	f0=22, proc=loc_484E39D1
+	REC_FilterGridSe1_Records	f0=0x10082, proc=loc_484E39D5
+	REC_FilterGridSe1_Records	f0=1, proc=loc_484E3E23	# [8]
+	REC_FilterGridSe1_Records	proc=loc_484E3E26
+	REC_FilterGridSe1_Records	proc=loc_484E3E26
+	REC_FilterGridSe1_Records	proc=loc_484E3E26
+	REC_FilterGridSe1_Records	proc=loc_484E3E26
+	REC_FilterGridSe1_Records	proc=loc_484E3E26
+	REC_FilterGridSe1_Records	proc=loc_484E3E26
+	REC_FilterGridSe1_Records	f0=0x1007F, proc=loc_484E39AB
 FilterGridSe2_Records:	# 16 x REC_FilterGridSe2_Records (8 bytes each); read by FilterGridSe2 0x484E3E2A `mov (a0), d0`
-	REC_FilterGridSe2_Records	f0=16, p4=loc_484E3E7C	# [0]
-	REC_FilterGridSe2_Records	f0=17, p4=loc_484E402C
-	REC_FilterGridSe2_Records	f0=18, p4=loc_484E3E7C
-	REC_FilterGridSe2_Records	f0=19, p4=loc_484E402C
-	REC_FilterGridSe2_Records	f0=0x10080, p4=loc_484E41E3
-	REC_FilterGridSe2_Records	f0=21, p4=loc_484E41F6
-	REC_FilterGridSe2_Records	f0=22, p4=loc_484E41F6
-	REC_FilterGridSe2_Records	f0=0x10082, p4=loc_484E41FA
-	REC_FilterGridSe2_Records	f0=1, p4=loc_484E43D5	# [8]
-	REC_FilterGridSe2_Records	p4=loc_484E43D8
-	REC_FilterGridSe2_Records	p4=loc_484E43D8
-	REC_FilterGridSe2_Records	p4=loc_484E43D8
-	REC_FilterGridSe2_Records	p4=loc_484E43D8
-	REC_FilterGridSe2_Records	p4=loc_484E43D8
-	REC_FilterGridSe2_Records	p4=loc_484E43D8
-	REC_FilterGridSe2_Records	f0=0x1007F, p4=loc_484E41D0
+	REC_FilterGridSe2_Records	f0=16, proc=loc_484E3E7C	# [0]
+	REC_FilterGridSe2_Records	f0=17, proc=loc_484E402C
+	REC_FilterGridSe2_Records	f0=18, proc=loc_484E3E7C
+	REC_FilterGridSe2_Records	f0=19, proc=loc_484E402C
+	REC_FilterGridSe2_Records	f0=0x10080, proc=loc_484E41E3
+	REC_FilterGridSe2_Records	f0=21, proc=loc_484E41F6
+	REC_FilterGridSe2_Records	f0=22, proc=loc_484E41F6
+	REC_FilterGridSe2_Records	f0=0x10082, proc=loc_484E41FA
+	REC_FilterGridSe2_Records	f0=1, proc=loc_484E43D5	# [8]
+	REC_FilterGridSe2_Records	proc=loc_484E43D8
+	REC_FilterGridSe2_Records	proc=loc_484E43D8
+	REC_FilterGridSe2_Records	proc=loc_484E43D8
+	REC_FilterGridSe2_Records	proc=loc_484E43D8
+	REC_FilterGridSe2_Records	proc=loc_484E43D8
+	REC_FilterGridSe2_Records	proc=loc_484E43D8
+	REC_FilterGridSe2_Records	f0=0x1007F, proc=loc_484E41D0
 
 FilterGridSe3_Table:
 	.long	loc_484E4856
@@ -18410,39 +18410,39 @@ FilterGridSe3_Table_3:
 	.long	loc_484E45D2
 
 FilterGridSe3_Records:	# 16 x REC_FilterGridSe3_Records (8 bytes each); read by FilterGridSe3 0x484E43DC `mov (a0), d0`
-	REC_FilterGridSe3_Records	f0=16, p4=loc_484E442E	# [0]
-	REC_FilterGridSe3_Records	f0=17, p4=loc_484E4612
-	REC_FilterGridSe3_Records	f0=18, p4=loc_484E442E
-	REC_FilterGridSe3_Records	f0=19, p4=loc_484E4612
-	REC_FilterGridSe3_Records	f0=0x10080, p4=loc_484E4801
-	REC_FilterGridSe3_Records	f0=21, p4=loc_484E4814
-	REC_FilterGridSe3_Records	f0=22, p4=loc_484E4814
-	REC_FilterGridSe3_Records	f0=0x10082, p4=loc_484E4818
-	REC_FilterGridSe3_Records	f0=1, p4=loc_484E4AA9	# [8]
-	REC_FilterGridSe3_Records	p4=loc_484E4AAC
-	REC_FilterGridSe3_Records	p4=loc_484E4AAC
-	REC_FilterGridSe3_Records	p4=loc_484E4AAC
-	REC_FilterGridSe3_Records	p4=loc_484E4AAC
-	REC_FilterGridSe3_Records	p4=loc_484E4AAC
-	REC_FilterGridSe3_Records	p4=loc_484E4AAC
-	REC_FilterGridSe3_Records	f0=0x1007F, p4=loc_484E47EE
+	REC_FilterGridSe3_Records	f0=16, proc=loc_484E442E	# [0]
+	REC_FilterGridSe3_Records	f0=17, proc=loc_484E4612
+	REC_FilterGridSe3_Records	f0=18, proc=loc_484E442E
+	REC_FilterGridSe3_Records	f0=19, proc=loc_484E4612
+	REC_FilterGridSe3_Records	f0=0x10080, proc=loc_484E4801
+	REC_FilterGridSe3_Records	f0=21, proc=loc_484E4814
+	REC_FilterGridSe3_Records	f0=22, proc=loc_484E4814
+	REC_FilterGridSe3_Records	f0=0x10082, proc=loc_484E4818
+	REC_FilterGridSe3_Records	f0=1, proc=loc_484E4AA9	# [8]
+	REC_FilterGridSe3_Records	proc=loc_484E4AAC
+	REC_FilterGridSe3_Records	proc=loc_484E4AAC
+	REC_FilterGridSe3_Records	proc=loc_484E4AAC
+	REC_FilterGridSe3_Records	proc=loc_484E4AAC
+	REC_FilterGridSe3_Records	proc=loc_484E4AAC
+	REC_FilterGridSe3_Records	proc=loc_484E4AAC
+	REC_FilterGridSe3_Records	f0=0x1007F, proc=loc_484E47EE
 FilterGridSe4_Records:	# 16 x REC_FilterGridSe4_Records (8 bytes each); read by FilterGridSe4 0x484E4AB0 `mov (a0), d0`
-	REC_FilterGridSe4_Records	f0=16, p4=loc_484E4B03	# [0]
-	REC_FilterGridSe4_Records	f0=17, p4=loc_484E4C76
-	REC_FilterGridSe4_Records	f0=18, p4=loc_484E4B03
-	REC_FilterGridSe4_Records	f0=19, p4=loc_484E4C76
-	REC_FilterGridSe4_Records	f0=0x10080, p4=loc_484E4DF8
-	REC_FilterGridSe4_Records	f0=21, p4=loc_484E4E0B
-	REC_FilterGridSe4_Records	f0=22, p4=loc_484E4E0B
-	REC_FilterGridSe4_Records	f0=0x10082, p4=loc_484E4E0F
-	REC_FilterGridSe4_Records	f0=1, p4=loc_484E4FB0	# [8]
-	REC_FilterGridSe4_Records	p4=loc_484E4FB3
-	REC_FilterGridSe4_Records	p4=loc_484E4FB3
-	REC_FilterGridSe4_Records	p4=loc_484E4FB3
-	REC_FilterGridSe4_Records	p4=loc_484E4FB3
-	REC_FilterGridSe4_Records	p4=loc_484E4FB3
-	REC_FilterGridSe4_Records	p4=loc_484E4FB3
-	REC_FilterGridSe4_Records	f0=0x1007F, p4=loc_484E4DE5
+	REC_FilterGridSe4_Records	f0=16, proc=loc_484E4B03	# [0]
+	REC_FilterGridSe4_Records	f0=17, proc=loc_484E4C76
+	REC_FilterGridSe4_Records	f0=18, proc=loc_484E4B03
+	REC_FilterGridSe4_Records	f0=19, proc=loc_484E4C76
+	REC_FilterGridSe4_Records	f0=0x10080, proc=loc_484E4DF8
+	REC_FilterGridSe4_Records	f0=21, proc=loc_484E4E0B
+	REC_FilterGridSe4_Records	f0=22, proc=loc_484E4E0B
+	REC_FilterGridSe4_Records	f0=0x10082, proc=loc_484E4E0F
+	REC_FilterGridSe4_Records	f0=1, proc=loc_484E4FB0	# [8]
+	REC_FilterGridSe4_Records	proc=loc_484E4FB3
+	REC_FilterGridSe4_Records	proc=loc_484E4FB3
+	REC_FilterGridSe4_Records	proc=loc_484E4FB3
+	REC_FilterGridSe4_Records	proc=loc_484E4FB3
+	REC_FilterGridSe4_Records	proc=loc_484E4FB3
+	REC_FilterGridSe4_Records	proc=loc_484E4FB3
+	REC_FilterGridSe4_Records	f0=0x1007F, proc=loc_484E4DE5
 
 LfoGridSe1_Table:
 	.long	loc_484E5741
@@ -18482,22 +18482,22 @@ LfoGridSe1_Table_3:
 	.long	loc_484E5331
 
 LfoGridSe1_Records:	# 16 x REC_LfoGridSe1_Records (8 bytes each); read by LfoGridSe1 0x484E4FB7 `mov (a0), d0`
-	REC_LfoGridSe1_Records	f0=16, p4=loc_484E500A	# [0]
-	REC_LfoGridSe1_Records	f0=17, p4=loc_484E536B
-	REC_LfoGridSe1_Records	f0=18, p4=loc_484E500A
-	REC_LfoGridSe1_Records	f0=19, p4=loc_484E536B
-	REC_LfoGridSe1_Records	f0=0x10080, p4=loc_484E56DE
-	REC_LfoGridSe1_Records	f0=21, p4=loc_484E56F1
-	REC_LfoGridSe1_Records	f0=22, p4=loc_484E56F1
-	REC_LfoGridSe1_Records	f0=0x10082, p4=loc_484E56F5
-	REC_LfoGridSe1_Records	f0=1, p4=loc_484E5A9B	# [8]
-	REC_LfoGridSe1_Records	p4=loc_484E5A9E
-	REC_LfoGridSe1_Records	p4=loc_484E5A9E
-	REC_LfoGridSe1_Records	p4=loc_484E5A9E
-	REC_LfoGridSe1_Records	p4=loc_484E5A9E
-	REC_LfoGridSe1_Records	p4=loc_484E5A9E
-	REC_LfoGridSe1_Records	p4=loc_484E5A9E
-	REC_LfoGridSe1_Records	f0=0x1007F, p4=loc_484E56CB
+	REC_LfoGridSe1_Records	f0=16, proc=loc_484E500A	# [0]
+	REC_LfoGridSe1_Records	f0=17, proc=loc_484E536B
+	REC_LfoGridSe1_Records	f0=18, proc=loc_484E500A
+	REC_LfoGridSe1_Records	f0=19, proc=loc_484E536B
+	REC_LfoGridSe1_Records	f0=0x10080, proc=loc_484E56DE
+	REC_LfoGridSe1_Records	f0=21, proc=loc_484E56F1
+	REC_LfoGridSe1_Records	f0=22, proc=loc_484E56F1
+	REC_LfoGridSe1_Records	f0=0x10082, proc=loc_484E56F5
+	REC_LfoGridSe1_Records	f0=1, proc=loc_484E5A9B	# [8]
+	REC_LfoGridSe1_Records	proc=loc_484E5A9E
+	REC_LfoGridSe1_Records	proc=loc_484E5A9E
+	REC_LfoGridSe1_Records	proc=loc_484E5A9E
+	REC_LfoGridSe1_Records	proc=loc_484E5A9E
+	REC_LfoGridSe1_Records	proc=loc_484E5A9E
+	REC_LfoGridSe1_Records	proc=loc_484E5A9E
+	REC_LfoGridSe1_Records	f0=0x1007F, proc=loc_484E56CB
 
 LfoGridSe2_Table:
 	.long	loc_484E6234
@@ -18537,22 +18537,22 @@ LfoGridSe2_Table_3:
 	.long	loc_484E5E20
 
 LfoGridSe2_Records:	# 16 x REC_LfoGridSe2_Records (8 bytes each); read by LfoGridSe2 0x484E5AA2 `mov (a0), d0`
-	REC_LfoGridSe2_Records	f0=16, p4=loc_484E5AF5	# [0]
-	REC_LfoGridSe2_Records	f0=17, p4=loc_484E5E5A
-	REC_LfoGridSe2_Records	f0=18, p4=loc_484E5AF5
-	REC_LfoGridSe2_Records	f0=19, p4=loc_484E5E5A
-	REC_LfoGridSe2_Records	f0=0x10080, p4=loc_484E61D1
-	REC_LfoGridSe2_Records	f0=21, p4=loc_484E61E4
-	REC_LfoGridSe2_Records	f0=22, p4=loc_484E61E4
-	REC_LfoGridSe2_Records	f0=0x10082, p4=loc_484E61E8
-	REC_LfoGridSe2_Records	f0=1, p4=loc_484E6592	# [8]
-	REC_LfoGridSe2_Records	p4=loc_484E6595
-	REC_LfoGridSe2_Records	p4=loc_484E6595
-	REC_LfoGridSe2_Records	p4=loc_484E6595
-	REC_LfoGridSe2_Records	p4=loc_484E6595
-	REC_LfoGridSe2_Records	p4=loc_484E6595
-	REC_LfoGridSe2_Records	p4=loc_484E6595
-	REC_LfoGridSe2_Records	f0=0x1007F, p4=loc_484E61BE
+	REC_LfoGridSe2_Records	f0=16, proc=loc_484E5AF5	# [0]
+	REC_LfoGridSe2_Records	f0=17, proc=loc_484E5E5A
+	REC_LfoGridSe2_Records	f0=18, proc=loc_484E5AF5
+	REC_LfoGridSe2_Records	f0=19, proc=loc_484E5E5A
+	REC_LfoGridSe2_Records	f0=0x10080, proc=loc_484E61D1
+	REC_LfoGridSe2_Records	f0=21, proc=loc_484E61E4
+	REC_LfoGridSe2_Records	f0=22, proc=loc_484E61E4
+	REC_LfoGridSe2_Records	f0=0x10082, proc=loc_484E61E8
+	REC_LfoGridSe2_Records	f0=1, proc=loc_484E6592	# [8]
+	REC_LfoGridSe2_Records	proc=loc_484E6595
+	REC_LfoGridSe2_Records	proc=loc_484E6595
+	REC_LfoGridSe2_Records	proc=loc_484E6595
+	REC_LfoGridSe2_Records	proc=loc_484E6595
+	REC_LfoGridSe2_Records	proc=loc_484E6595
+	REC_LfoGridSe2_Records	proc=loc_484E6595
+	REC_LfoGridSe2_Records	f0=0x1007F, proc=loc_484E61BE
 
 LfoGridSe3_Table:
 	.long	loc_484E6D2B
@@ -18592,22 +18592,22 @@ LfoGridSe3_Table_3:
 	.long	loc_484E6917
 
 LfoGridSe3_Records:	# 16 x REC_LfoGridSe3_Records (8 bytes each); read by LfoGridSe3 0x484E6599 `mov (a0), d0`
-	REC_LfoGridSe3_Records	f0=16, p4=loc_484E65EC	# [0]
-	REC_LfoGridSe3_Records	f0=17, p4=loc_484E6951
-	REC_LfoGridSe3_Records	f0=18, p4=loc_484E65EC
-	REC_LfoGridSe3_Records	f0=19, p4=loc_484E6951
-	REC_LfoGridSe3_Records	f0=0x10080, p4=loc_484E6CC8
-	REC_LfoGridSe3_Records	f0=21, p4=loc_484E6CDB
-	REC_LfoGridSe3_Records	f0=22, p4=loc_484E6CDB
-	REC_LfoGridSe3_Records	f0=0x10082, p4=loc_484E6CDF
-	REC_LfoGridSe3_Records	f0=1, p4=loc_484E7089	# [8]
-	REC_LfoGridSe3_Records	p4=loc_484E708C
-	REC_LfoGridSe3_Records	p4=loc_484E708C
-	REC_LfoGridSe3_Records	p4=loc_484E708C
-	REC_LfoGridSe3_Records	p4=loc_484E708C
-	REC_LfoGridSe3_Records	p4=loc_484E708C
-	REC_LfoGridSe3_Records	p4=loc_484E708C
-	REC_LfoGridSe3_Records	f0=0x1007F, p4=loc_484E6CB5
+	REC_LfoGridSe3_Records	f0=16, proc=loc_484E65EC	# [0]
+	REC_LfoGridSe3_Records	f0=17, proc=loc_484E6951
+	REC_LfoGridSe3_Records	f0=18, proc=loc_484E65EC
+	REC_LfoGridSe3_Records	f0=19, proc=loc_484E6951
+	REC_LfoGridSe3_Records	f0=0x10080, proc=loc_484E6CC8
+	REC_LfoGridSe3_Records	f0=21, proc=loc_484E6CDB
+	REC_LfoGridSe3_Records	f0=22, proc=loc_484E6CDB
+	REC_LfoGridSe3_Records	f0=0x10082, proc=loc_484E6CDF
+	REC_LfoGridSe3_Records	f0=1, proc=loc_484E7089	# [8]
+	REC_LfoGridSe3_Records	proc=loc_484E708C
+	REC_LfoGridSe3_Records	proc=loc_484E708C
+	REC_LfoGridSe3_Records	proc=loc_484E708C
+	REC_LfoGridSe3_Records	proc=loc_484E708C
+	REC_LfoGridSe3_Records	proc=loc_484E708C
+	REC_LfoGridSe3_Records	proc=loc_484E708C
+	REC_LfoGridSe3_Records	f0=0x1007F, proc=loc_484E6CB5
 
 LfoGridSe4_Table:
 	.long	loc_484E7822
@@ -18647,158 +18647,158 @@ LfoGridSe4_Table_3:
 	.long	loc_484E740E
 
 LfoGridSe4_Records:	# 16 x REC_LfoGridSe4_Records (8 bytes each); read by LfoGridSe4 0x484E7090 `mov (a0), d0`
-	REC_LfoGridSe4_Records	f0=16, p4=loc_484E70E3	# [0]
-	REC_LfoGridSe4_Records	f0=17, p4=loc_484E7448
-	REC_LfoGridSe4_Records	f0=18, p4=loc_484E70E3
-	REC_LfoGridSe4_Records	f0=19, p4=loc_484E7448
-	REC_LfoGridSe4_Records	f0=0x10080, p4=loc_484E77BF
-	REC_LfoGridSe4_Records	f0=21, p4=loc_484E77D2
-	REC_LfoGridSe4_Records	f0=22, p4=loc_484E77D2
-	REC_LfoGridSe4_Records	f0=0x10082, p4=loc_484E77D6
-	REC_LfoGridSe4_Records	f0=1, p4=loc_484E7B80	# [8]
-	REC_LfoGridSe4_Records	p4=loc_484E7B83
-	REC_LfoGridSe4_Records	p4=loc_484E7B83
-	REC_LfoGridSe4_Records	p4=loc_484E7B83
-	REC_LfoGridSe4_Records	p4=loc_484E7B83
-	REC_LfoGridSe4_Records	p4=loc_484E7B83
-	REC_LfoGridSe4_Records	p4=loc_484E7B83
-	REC_LfoGridSe4_Records	f0=0x1007F, p4=loc_484E77AC
+	REC_LfoGridSe4_Records	f0=16, proc=loc_484E70E3	# [0]
+	REC_LfoGridSe4_Records	f0=17, proc=loc_484E7448
+	REC_LfoGridSe4_Records	f0=18, proc=loc_484E70E3
+	REC_LfoGridSe4_Records	f0=19, proc=loc_484E7448
+	REC_LfoGridSe4_Records	f0=0x10080, proc=loc_484E77BF
+	REC_LfoGridSe4_Records	f0=21, proc=loc_484E77D2
+	REC_LfoGridSe4_Records	f0=22, proc=loc_484E77D2
+	REC_LfoGridSe4_Records	f0=0x10082, proc=loc_484E77D6
+	REC_LfoGridSe4_Records	f0=1, proc=loc_484E7B80	# [8]
+	REC_LfoGridSe4_Records	proc=loc_484E7B83
+	REC_LfoGridSe4_Records	proc=loc_484E7B83
+	REC_LfoGridSe4_Records	proc=loc_484E7B83
+	REC_LfoGridSe4_Records	proc=loc_484E7B83
+	REC_LfoGridSe4_Records	proc=loc_484E7B83
+	REC_LfoGridSe4_Records	proc=loc_484E7B83
+	REC_LfoGridSe4_Records	f0=0x1007F, proc=loc_484E77AC
 AcGridBoxSe2Proc_Records:	# 16 x REC_AcGridBoxSe2Proc_Records (8 bytes each); read by AcGridBoxSe2Proc 0x484E7B87 `mov (a0), d0`
-	REC_AcGridBoxSe2Proc_Records	f0=0x1B10000, p4=loc_484E7C54	# [0]
-	REC_AcGridBoxSe2Proc_Records	f0=1, p4=loc_484E7BDB
-	REC_AcGridBoxSe2Proc_Records	f0=17, p4=loc_484E7CB8
-	REC_AcGridBoxSe2Proc_Records	f0=0x100B3, p4=loc_484E7C8B
-	REC_AcGridBoxSe2Proc_Records	f0=18, p4=loc_484E7DB9
-	REC_AcGridBoxSe2Proc_Records	f0=16, p4=loc_484E7DB9
-	REC_AcGridBoxSe2Proc_Records	f0=0x1007F, p4=loc_484E7ECD
-	REC_AcGridBoxSe2Proc_Records	f0=20, p4=loc_484E7EE5
-	REC_AcGridBoxSe2Proc_Records	f0=21, p4=loc_484E7EE5	# [8]
-	REC_AcGridBoxSe2Proc_Records	f0=0x10081, p4=loc_484E7F0A
-	REC_AcGridBoxSe2Proc_Records	p4=loc_484E7F24
-	REC_AcGridBoxSe2Proc_Records	p4=loc_484E7F24
-	REC_AcGridBoxSe2Proc_Records	p4=loc_484E7F24
-	REC_AcGridBoxSe2Proc_Records	p4=loc_484E7F24
-	REC_AcGridBoxSe2Proc_Records	f0=0x1007E, p4=loc_484E7EB6
-	REC_AcGridBoxSe2Proc_Records	f0=15, p4=loc_484E7CB8
+	REC_AcGridBoxSe2Proc_Records	key=0x1B10000, proc=loc_484E7C54	# [0]
+	REC_AcGridBoxSe2Proc_Records	key=1, proc=loc_484E7BDB
+	REC_AcGridBoxSe2Proc_Records	key=17, proc=loc_484E7CB8
+	REC_AcGridBoxSe2Proc_Records	key=0x100B3, proc=loc_484E7C8B
+	REC_AcGridBoxSe2Proc_Records	key=18, proc=loc_484E7DB9
+	REC_AcGridBoxSe2Proc_Records	key=16, proc=loc_484E7DB9
+	REC_AcGridBoxSe2Proc_Records	key=0x1007F, proc=loc_484E7ECD
+	REC_AcGridBoxSe2Proc_Records	key=20, proc=loc_484E7EE5
+	REC_AcGridBoxSe2Proc_Records	key=21, proc=loc_484E7EE5	# [8]
+	REC_AcGridBoxSe2Proc_Records	key=0x10081, proc=loc_484E7F0A
+	REC_AcGridBoxSe2Proc_Records	proc=loc_484E7F24
+	REC_AcGridBoxSe2Proc_Records	proc=loc_484E7F24
+	REC_AcGridBoxSe2Proc_Records	proc=loc_484E7F24
+	REC_AcGridBoxSe2Proc_Records	proc=loc_484E7F24
+	REC_AcGridBoxSe2Proc_Records	key=0x1007E, proc=loc_484E7EB6
+	REC_AcGridBoxSe2Proc_Records	key=15, proc=loc_484E7CB8
 ToneGridSe2_Records:	# 16 x REC_ToneGridSe2_Records (8 bytes each); read by ToneGridSe2 0x484E7F34 `mov (a0), d0`
-	REC_ToneGridSe2_Records	f0=16, p4=loc_484E8042	# [0]
-	REC_ToneGridSe2_Records	f0=0x1B10001, p4=loc_484E801F
-	REC_ToneGridSe2_Records	f0=2, p4=loc_484E7F87
-	REC_ToneGridSe2_Records	f0=18, p4=loc_484E8042
-	REC_ToneGridSe2_Records	f0=19, p4=loc_484E8294
-	REC_ToneGridSe2_Records	f0=17, p4=loc_484E8294
-	REC_ToneGridSe2_Records	f0=21, p4=loc_484E8524
-	REC_ToneGridSe2_Records	f0=22, p4=loc_484E8524
-	REC_ToneGridSe2_Records	f0=0x10082, p4=loc_484E8528	# [8]
-	REC_ToneGridSe2_Records	f0=1, p4=loc_484E87E8
-	REC_ToneGridSe2_Records	p4=loc_484E87EB
-	REC_ToneGridSe2_Records	p4=loc_484E87EB
-	REC_ToneGridSe2_Records	p4=loc_484E87EB
-	REC_ToneGridSe2_Records	p4=loc_484E87EB
-	REC_ToneGridSe2_Records	p4=loc_484E87EB
-	REC_ToneGridSe2_Records	p4=loc_484E87EB
+	REC_ToneGridSe2_Records	f0=16, proc=loc_484E8042	# [0]
+	REC_ToneGridSe2_Records	f0=0x1B10001, proc=loc_484E801F
+	REC_ToneGridSe2_Records	f0=2, proc=loc_484E7F87
+	REC_ToneGridSe2_Records	f0=18, proc=loc_484E8042
+	REC_ToneGridSe2_Records	f0=19, proc=loc_484E8294
+	REC_ToneGridSe2_Records	f0=17, proc=loc_484E8294
+	REC_ToneGridSe2_Records	f0=21, proc=loc_484E8524
+	REC_ToneGridSe2_Records	f0=22, proc=loc_484E8524
+	REC_ToneGridSe2_Records	f0=0x10082, proc=loc_484E8528	# [8]
+	REC_ToneGridSe2_Records	f0=1, proc=loc_484E87E8
+	REC_ToneGridSe2_Records	proc=loc_484E87EB
+	REC_ToneGridSe2_Records	proc=loc_484E87EB
+	REC_ToneGridSe2_Records	proc=loc_484E87EB
+	REC_ToneGridSe2_Records	proc=loc_484E87EB
+	REC_ToneGridSe2_Records	proc=loc_484E87EB
+	REC_ToneGridSe2_Records	proc=loc_484E87EB
 AcCtrlGridBoxSeProc_Records:	# 16 x REC_AcCtrlGridBoxSeProc_Records (8 bytes each); read by AcCtrlGridBoxSeProc 0x484E87EF `mov (a0), d0`
-	REC_AcCtrlGridBoxSeProc_Records	f0=16, p4=loc_484E8B80	# [0]
-	REC_AcCtrlGridBoxSeProc_Records	f0=1, p4=loc_484E8843
-	REC_AcCtrlGridBoxSeProc_Records	f0=0x100B2, p4=loc_484E88BB
-	REC_AcCtrlGridBoxSeProc_Records	f0=0x100B3, p4=loc_484E8AE0
-	REC_AcCtrlGridBoxSeProc_Records	f0=17, p4=loc_484E8B0D
-	REC_AcCtrlGridBoxSeProc_Records	f0=5, p4=loc_484E88F4
-	REC_AcCtrlGridBoxSeProc_Records	f0=18, p4=loc_484E8B80
-	REC_AcCtrlGridBoxSeProc_Records	f0=0x1007F, p4=loc_484E8C0D
-	REC_AcCtrlGridBoxSeProc_Records	f0=20, p4=loc_484E8C27	# [8]
-	REC_AcCtrlGridBoxSeProc_Records	f0=21, p4=loc_484E8C27
-	REC_AcCtrlGridBoxSeProc_Records	f0=0x10081, p4=loc_484E8C4C
-	REC_AcCtrlGridBoxSeProc_Records	p4=loc_484E8C66
-	REC_AcCtrlGridBoxSeProc_Records	p4=loc_484E8C66
-	REC_AcCtrlGridBoxSeProc_Records	p4=loc_484E8C66
-	REC_AcCtrlGridBoxSeProc_Records	f0=0x1007E, p4=loc_484E8BF3
-	REC_AcCtrlGridBoxSeProc_Records	f0=15, p4=loc_484E8B0D
+	REC_AcCtrlGridBoxSeProc_Records	key=16, proc=loc_484E8B80	# [0]
+	REC_AcCtrlGridBoxSeProc_Records	key=1, proc=loc_484E8843
+	REC_AcCtrlGridBoxSeProc_Records	key=0x100B2, proc=loc_484E88BB
+	REC_AcCtrlGridBoxSeProc_Records	key=0x100B3, proc=loc_484E8AE0
+	REC_AcCtrlGridBoxSeProc_Records	key=17, proc=loc_484E8B0D
+	REC_AcCtrlGridBoxSeProc_Records	key=5, proc=loc_484E88F4
+	REC_AcCtrlGridBoxSeProc_Records	key=18, proc=loc_484E8B80
+	REC_AcCtrlGridBoxSeProc_Records	key=0x1007F, proc=loc_484E8C0D
+	REC_AcCtrlGridBoxSeProc_Records	key=20, proc=loc_484E8C27	# [8]
+	REC_AcCtrlGridBoxSeProc_Records	key=21, proc=loc_484E8C27
+	REC_AcCtrlGridBoxSeProc_Records	key=0x10081, proc=loc_484E8C4C
+	REC_AcCtrlGridBoxSeProc_Records	proc=loc_484E8C66
+	REC_AcCtrlGridBoxSeProc_Records	proc=loc_484E8C66
+	REC_AcCtrlGridBoxSeProc_Records	proc=loc_484E8C66
+	REC_AcCtrlGridBoxSeProc_Records	key=0x1007E, proc=loc_484E8BF3
+	REC_AcCtrlGridBoxSeProc_Records	key=15, proc=loc_484E8B0D
 CtrlGridSe1_Records:	# 16 x REC_CtrlGridSe1_Records (8 bytes each); read by CtrlGridSe1 0x484E8C76 `mov (a0), d0`
-	REC_CtrlGridSe1_Records	f0=16, p4=loc_484E8CC8	# [0]
-	REC_CtrlGridSe1_Records	f0=17, p4=loc_484E93C2
-	REC_CtrlGridSe1_Records	f0=18, p4=loc_484E8CC8
-	REC_CtrlGridSe1_Records	f0=19, p4=loc_484E93C2
-	REC_CtrlGridSe1_Records	f0=0x10080, p4=loc_484E9AC6
-	REC_CtrlGridSe1_Records	f0=21, p4=loc_484E9AD9
-	REC_CtrlGridSe1_Records	f0=22, p4=loc_484E9AD9
-	REC_CtrlGridSe1_Records	f0=0x10082, p4=loc_484E9ADD
-	REC_CtrlGridSe1_Records	f0=1, p4=loc_484EA163	# [8]
-	REC_CtrlGridSe1_Records	p4=loc_484EA166
-	REC_CtrlGridSe1_Records	p4=loc_484EA166
-	REC_CtrlGridSe1_Records	p4=loc_484EA166
-	REC_CtrlGridSe1_Records	p4=loc_484EA166
-	REC_CtrlGridSe1_Records	p4=loc_484EA166
-	REC_CtrlGridSe1_Records	p4=loc_484EA166
-	REC_CtrlGridSe1_Records	f0=0x1007F, p4=loc_484E9AB3
+	REC_CtrlGridSe1_Records	f0=16, proc=loc_484E8CC8	# [0]
+	REC_CtrlGridSe1_Records	f0=17, proc=loc_484E93C2
+	REC_CtrlGridSe1_Records	f0=18, proc=loc_484E8CC8
+	REC_CtrlGridSe1_Records	f0=19, proc=loc_484E93C2
+	REC_CtrlGridSe1_Records	f0=0x10080, proc=loc_484E9AC6
+	REC_CtrlGridSe1_Records	f0=21, proc=loc_484E9AD9
+	REC_CtrlGridSe1_Records	f0=22, proc=loc_484E9AD9
+	REC_CtrlGridSe1_Records	f0=0x10082, proc=loc_484E9ADD
+	REC_CtrlGridSe1_Records	f0=1, proc=loc_484EA163	# [8]
+	REC_CtrlGridSe1_Records	proc=loc_484EA166
+	REC_CtrlGridSe1_Records	proc=loc_484EA166
+	REC_CtrlGridSe1_Records	proc=loc_484EA166
+	REC_CtrlGridSe1_Records	proc=loc_484EA166
+	REC_CtrlGridSe1_Records	proc=loc_484EA166
+	REC_CtrlGridSe1_Records	proc=loc_484EA166
+	REC_CtrlGridSe1_Records	f0=0x1007F, proc=loc_484E9AB3
 DrumAcCtrlGridBoxSeProc_Records:	# 16 x REC_DrumAcCtrlGridBoxSeProc_Records (8 bytes each); read by DrumAcCtrlGridBoxSeProc 0x484EA16A `mov (a0), d0`
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=16, p4=loc_484EA3ED	# [0]
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=1, p4=loc_484EA1BE
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=0x100B2, p4=loc_484EA231
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=0x100B3, p4=loc_484EA34D
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=17, p4=loc_484EA37A
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=5, p4=loc_484EA256
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=18, p4=loc_484EA3ED
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=0x1007F, p4=loc_484EA47A
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=20, p4=loc_484EA494	# [8]
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=21, p4=loc_484EA494
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=0x10081, p4=loc_484EA4B9
-	REC_DrumAcCtrlGridBoxSeProc_Records	p4=loc_484EA4D3
-	REC_DrumAcCtrlGridBoxSeProc_Records	p4=loc_484EA4D3
-	REC_DrumAcCtrlGridBoxSeProc_Records	p4=loc_484EA4D3
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=0x1007E, p4=loc_484EA460
-	REC_DrumAcCtrlGridBoxSeProc_Records	f0=15, p4=loc_484EA37A
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=16, proc=loc_484EA3ED	# [0]
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=1, proc=loc_484EA1BE
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=0x100B2, proc=loc_484EA231
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=0x100B3, proc=loc_484EA34D
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=17, proc=loc_484EA37A
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=5, proc=loc_484EA256
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=18, proc=loc_484EA3ED
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=0x1007F, proc=loc_484EA47A
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=20, proc=loc_484EA494	# [8]
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=21, proc=loc_484EA494
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=0x10081, proc=loc_484EA4B9
+	REC_DrumAcCtrlGridBoxSeProc_Records	proc=loc_484EA4D3
+	REC_DrumAcCtrlGridBoxSeProc_Records	proc=loc_484EA4D3
+	REC_DrumAcCtrlGridBoxSeProc_Records	proc=loc_484EA4D3
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=0x1007E, proc=loc_484EA460
+	REC_DrumAcCtrlGridBoxSeProc_Records	key=15, proc=loc_484EA37A
 DrumCtrlGridSe_Records:	# 16 x REC_DrumCtrlGridSe_Records (8 bytes each); read by DrumCtrlGridSe 0x484EA4E3 `mov (a0), d0`
-	REC_DrumCtrlGridSe_Records	f0=16, p4=loc_484EA536	# [0]
-	REC_DrumCtrlGridSe_Records	f0=17, p4=loc_484EA71B
-	REC_DrumCtrlGridSe_Records	f0=18, p4=loc_484EA536
-	REC_DrumCtrlGridSe_Records	f0=19, p4=loc_484EA71B
-	REC_DrumCtrlGridSe_Records	f0=0x10080, p4=loc_484EA900
-	REC_DrumCtrlGridSe_Records	f0=21, p4=loc_484EA913
-	REC_DrumCtrlGridSe_Records	f0=22, p4=loc_484EA913
-	REC_DrumCtrlGridSe_Records	f0=0x10082, p4=loc_484EA917
-	REC_DrumCtrlGridSe_Records	f0=1, p4=loc_484EAA6C	# [8]
-	REC_DrumCtrlGridSe_Records	p4=loc_484EAA6F
-	REC_DrumCtrlGridSe_Records	p4=loc_484EAA6F
-	REC_DrumCtrlGridSe_Records	p4=loc_484EAA6F
-	REC_DrumCtrlGridSe_Records	p4=loc_484EAA6F
-	REC_DrumCtrlGridSe_Records	p4=loc_484EAA6F
-	REC_DrumCtrlGridSe_Records	p4=loc_484EAA6F
-	REC_DrumCtrlGridSe_Records	f0=0x1007F, p4=loc_484EA8ED
+	REC_DrumCtrlGridSe_Records	f0=16, proc=loc_484EA536	# [0]
+	REC_DrumCtrlGridSe_Records	f0=17, proc=loc_484EA71B
+	REC_DrumCtrlGridSe_Records	f0=18, proc=loc_484EA536
+	REC_DrumCtrlGridSe_Records	f0=19, proc=loc_484EA71B
+	REC_DrumCtrlGridSe_Records	f0=0x10080, proc=loc_484EA900
+	REC_DrumCtrlGridSe_Records	f0=21, proc=loc_484EA913
+	REC_DrumCtrlGridSe_Records	f0=22, proc=loc_484EA913
+	REC_DrumCtrlGridSe_Records	f0=0x10082, proc=loc_484EA917
+	REC_DrumCtrlGridSe_Records	f0=1, proc=loc_484EAA6C	# [8]
+	REC_DrumCtrlGridSe_Records	proc=loc_484EAA6F
+	REC_DrumCtrlGridSe_Records	proc=loc_484EAA6F
+	REC_DrumCtrlGridSe_Records	proc=loc_484EAA6F
+	REC_DrumCtrlGridSe_Records	proc=loc_484EAA6F
+	REC_DrumCtrlGridSe_Records	proc=loc_484EAA6F
+	REC_DrumCtrlGridSe_Records	proc=loc_484EAA6F
+	REC_DrumCtrlGridSe_Records	f0=0x1007F, proc=loc_484EA8ED
 AcTsetGridBoxSeProc_Records:	# 16 x REC_AcTsetGridBoxSeProc_Records (8 bytes each); read by AcTsetGridBoxSeProc 0x484EAA73 `mov (a0), d0`
-	REC_AcTsetGridBoxSeProc_Records	f0=16, p4=loc_484EAC95	# [0]
-	REC_AcTsetGridBoxSeProc_Records	f0=1, p4=loc_484EAAC7
-	REC_AcTsetGridBoxSeProc_Records	f0=0x1B00002, p4=loc_484EAB39
-	REC_AcTsetGridBoxSeProc_Records	f0=0x100B3, p4=loc_484EAB6A
-	REC_AcTsetGridBoxSeProc_Records	f0=17, p4=loc_484EAB97
-	REC_AcTsetGridBoxSeProc_Records	f0=18, p4=loc_484EAC95
-	REC_AcTsetGridBoxSeProc_Records	f0=0x1007F, p4=loc_484EADA9
-	REC_AcTsetGridBoxSeProc_Records	f0=20, p4=loc_484EADC1
-	REC_AcTsetGridBoxSeProc_Records	f0=21, p4=loc_484EADC1	# [8]
-	REC_AcTsetGridBoxSeProc_Records	f0=0x10081, p4=loc_484EADE6
-	REC_AcTsetGridBoxSeProc_Records	p4=loc_484EAE00
-	REC_AcTsetGridBoxSeProc_Records	p4=loc_484EAE00
-	REC_AcTsetGridBoxSeProc_Records	p4=loc_484EAE00
-	REC_AcTsetGridBoxSeProc_Records	p4=loc_484EAE00
-	REC_AcTsetGridBoxSeProc_Records	f0=0x1007E, p4=loc_484EAD92
-	REC_AcTsetGridBoxSeProc_Records	f0=15, p4=loc_484EAB97
+	REC_AcTsetGridBoxSeProc_Records	key=16, proc=loc_484EAC95	# [0]
+	REC_AcTsetGridBoxSeProc_Records	key=1, proc=loc_484EAAC7
+	REC_AcTsetGridBoxSeProc_Records	key=0x1B00002, proc=loc_484EAB39
+	REC_AcTsetGridBoxSeProc_Records	key=0x100B3, proc=loc_484EAB6A
+	REC_AcTsetGridBoxSeProc_Records	key=17, proc=loc_484EAB97
+	REC_AcTsetGridBoxSeProc_Records	key=18, proc=loc_484EAC95
+	REC_AcTsetGridBoxSeProc_Records	key=0x1007F, proc=loc_484EADA9
+	REC_AcTsetGridBoxSeProc_Records	key=20, proc=loc_484EADC1
+	REC_AcTsetGridBoxSeProc_Records	key=21, proc=loc_484EADC1	# [8]
+	REC_AcTsetGridBoxSeProc_Records	key=0x10081, proc=loc_484EADE6
+	REC_AcTsetGridBoxSeProc_Records	proc=loc_484EAE00
+	REC_AcTsetGridBoxSeProc_Records	proc=loc_484EAE00
+	REC_AcTsetGridBoxSeProc_Records	proc=loc_484EAE00
+	REC_AcTsetGridBoxSeProc_Records	proc=loc_484EAE00
+	REC_AcTsetGridBoxSeProc_Records	key=0x1007E, proc=loc_484EAD92
+	REC_AcTsetGridBoxSeProc_Records	key=15, proc=loc_484EAB97
 AcGridBoxScrlSeProc_Records:	# 16 x REC_AcGridBoxScrlSeProc_Records (8 bytes each); read by AcGridBoxScrlSeProc 0x484EC742 `mov (a0), d0`
-	REC_AcGridBoxScrlSeProc_Records	f0=16, p4=loc_484EC98B	# [0]
-	REC_AcGridBoxScrlSeProc_Records	f0=1, p4=loc_484EC797
-	REC_AcGridBoxScrlSeProc_Records	f0=17, p4=loc_484EC84C
-	REC_AcGridBoxScrlSeProc_Records	f0=0x100B3, p4=loc_484EC81D
-	REC_AcGridBoxScrlSeProc_Records	f0=18, p4=loc_484EC98B
-	REC_AcGridBoxScrlSeProc_Records	f0=0x1007F, p4=loc_484ECAF0
-	REC_AcGridBoxScrlSeProc_Records	f0=20, p4=loc_484ECB0B
-	REC_AcGridBoxScrlSeProc_Records	f0=21, p4=loc_484ECB0B
-	REC_AcGridBoxScrlSeProc_Records	f0=0x10081, p4=loc_484ECB32	# [8]
-	REC_AcGridBoxScrlSeProc_Records	p4=loc_484ECB4D
-	REC_AcGridBoxScrlSeProc_Records	p4=loc_484ECB4D
-	REC_AcGridBoxScrlSeProc_Records	p4=loc_484ECB4D
-	REC_AcGridBoxScrlSeProc_Records	p4=loc_484ECB4D
-	REC_AcGridBoxScrlSeProc_Records	p4=loc_484ECB4D
-	REC_AcGridBoxScrlSeProc_Records	f0=0x1007E, p4=loc_484ECAD8
-	REC_AcGridBoxScrlSeProc_Records	f0=15, p4=loc_484EC84C
+	REC_AcGridBoxScrlSeProc_Records	key=16, proc=loc_484EC98B	# [0]
+	REC_AcGridBoxScrlSeProc_Records	key=1, proc=loc_484EC797
+	REC_AcGridBoxScrlSeProc_Records	key=17, proc=loc_484EC84C
+	REC_AcGridBoxScrlSeProc_Records	key=0x100B3, proc=loc_484EC81D
+	REC_AcGridBoxScrlSeProc_Records	key=18, proc=loc_484EC98B
+	REC_AcGridBoxScrlSeProc_Records	key=0x1007F, proc=loc_484ECAF0
+	REC_AcGridBoxScrlSeProc_Records	key=20, proc=loc_484ECB0B
+	REC_AcGridBoxScrlSeProc_Records	key=21, proc=loc_484ECB0B
+	REC_AcGridBoxScrlSeProc_Records	key=0x10081, proc=loc_484ECB32	# [8]
+	REC_AcGridBoxScrlSeProc_Records	proc=loc_484ECB4D
+	REC_AcGridBoxScrlSeProc_Records	proc=loc_484ECB4D
+	REC_AcGridBoxScrlSeProc_Records	proc=loc_484ECB4D
+	REC_AcGridBoxScrlSeProc_Records	proc=loc_484ECB4D
+	REC_AcGridBoxScrlSeProc_Records	proc=loc_484ECB4D
+	REC_AcGridBoxScrlSeProc_Records	key=0x1007E, proc=loc_484ECAD8
+	REC_AcGridBoxScrlSeProc_Records	key=15, proc=loc_484EC84C
 
 LfoViewSe_Table:
 	.long	loc_484ECE25
@@ -18823,39 +18823,39 @@ LfoViewSe_Table:
 	.long	loc_484ED94A
 
 LfoViewSe_Records:	# 16 x REC_LfoViewSe_Records (8 bytes each); read by LfoViewSe 0x484ECB5E `mov (a0), d0`
-	REC_LfoViewSe_Records	f0=16, p4=loc_484ECBB0	# [0]
-	REC_LfoViewSe_Records	f0=17, p4=loc_484ECC95
-	REC_LfoViewSe_Records	f0=18, p4=loc_484ECBB0
-	REC_LfoViewSe_Records	f0=19, p4=loc_484ECC95
-	REC_LfoViewSe_Records	f0=0x10080, p4=loc_484ECD78
-	REC_LfoViewSe_Records	f0=21, p4=loc_484ECDBF
-	REC_LfoViewSe_Records	f0=22, p4=loc_484ECDBF
-	REC_LfoViewSe_Records	f0=0x10082, p4=loc_484ECDC3
-	REC_LfoViewSe_Records	f0=1, p4=loc_484ED9C9	# [8]
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
-	REC_LfoViewSe_Records	p4=loc_484ED9CC
+	REC_LfoViewSe_Records	f0=16, proc=loc_484ECBB0	# [0]
+	REC_LfoViewSe_Records	f0=17, proc=loc_484ECC95
+	REC_LfoViewSe_Records	f0=18, proc=loc_484ECBB0
+	REC_LfoViewSe_Records	f0=19, proc=loc_484ECC95
+	REC_LfoViewSe_Records	f0=0x10080, proc=loc_484ECD78
+	REC_LfoViewSe_Records	f0=21, proc=loc_484ECDBF
+	REC_LfoViewSe_Records	f0=22, proc=loc_484ECDBF
+	REC_LfoViewSe_Records	f0=0x10082, proc=loc_484ECDC3
+	REC_LfoViewSe_Records	f0=1, proc=loc_484ED9C9	# [8]
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
+	REC_LfoViewSe_Records	proc=loc_484ED9CC
 AcDrumGridBoxSeProc_Records:	# 16 x REC_AcDrumGridBoxSeProc_Records (8 bytes each); read by AcDrumGridBoxSeProc 0x484F40AA `mov (a0), d0`
-	REC_AcDrumGridBoxSeProc_Records	f0=16, p4=loc_484F43CF	# [0]
-	REC_AcDrumGridBoxSeProc_Records	f0=1, p4=loc_484F40FE
-	REC_AcDrumGridBoxSeProc_Records	f0=0x100B2, p4=loc_484F418F
-	REC_AcDrumGridBoxSeProc_Records	f0=0x1B00003, p4=loc_484F41B4
-	REC_AcDrumGridBoxSeProc_Records	f0=0x100B3, p4=loc_484F432F
-	REC_AcDrumGridBoxSeProc_Records	f0=5, p4=loc_484F41D6
-	REC_AcDrumGridBoxSeProc_Records	f0=0x100B4, p4=loc_484F432F
-	REC_AcDrumGridBoxSeProc_Records	f0=17, p4=loc_484F435C
-	REC_AcDrumGridBoxSeProc_Records	f0=18, p4=loc_484F43CF	# [8]
-	REC_AcDrumGridBoxSeProc_Records	f0=0x1007F, p4=loc_484F445C
-	REC_AcDrumGridBoxSeProc_Records	f0=20, p4=loc_484F4476
-	REC_AcDrumGridBoxSeProc_Records	f0=21, p4=loc_484F4476
-	REC_AcDrumGridBoxSeProc_Records	f0=0x10081, p4=loc_484F449B
-	REC_AcDrumGridBoxSeProc_Records	p4=loc_484F44B5
-	REC_AcDrumGridBoxSeProc_Records	f0=0x1007E, p4=loc_484F4442
-	REC_AcDrumGridBoxSeProc_Records	f0=15, p4=loc_484F435C
+	REC_AcDrumGridBoxSeProc_Records	key=16, proc=loc_484F43CF	# [0]
+	REC_AcDrumGridBoxSeProc_Records	key=1, proc=loc_484F40FE
+	REC_AcDrumGridBoxSeProc_Records	key=0x100B2, proc=loc_484F418F
+	REC_AcDrumGridBoxSeProc_Records	key=0x1B00003, proc=loc_484F41B4
+	REC_AcDrumGridBoxSeProc_Records	key=0x100B3, proc=loc_484F432F
+	REC_AcDrumGridBoxSeProc_Records	key=5, proc=loc_484F41D6
+	REC_AcDrumGridBoxSeProc_Records	key=0x100B4, proc=loc_484F432F
+	REC_AcDrumGridBoxSeProc_Records	key=17, proc=loc_484F435C
+	REC_AcDrumGridBoxSeProc_Records	key=18, proc=loc_484F43CF	# [8]
+	REC_AcDrumGridBoxSeProc_Records	key=0x1007F, proc=loc_484F445C
+	REC_AcDrumGridBoxSeProc_Records	key=20, proc=loc_484F4476
+	REC_AcDrumGridBoxSeProc_Records	key=21, proc=loc_484F4476
+	REC_AcDrumGridBoxSeProc_Records	key=0x10081, proc=loc_484F449B
+	REC_AcDrumGridBoxSeProc_Records	proc=loc_484F44B5
+	REC_AcDrumGridBoxSeProc_Records	key=0x1007E, proc=loc_484F4442
+	REC_AcDrumGridBoxSeProc_Records	key=15, proc=loc_484F435C
 
 DrumMainGridSe_Table:
 	.long	loc_484F4E2F
@@ -18892,22 +18892,22 @@ DrumMainGridSe_Table_3:
 	.long	loc_484F4922
 
 DrumMainGridSe_Records:	# 16 x REC_DrumMainGridSe_Records (8 bytes each); read by DrumMainGridSe 0x484F44C5 `mov (a0), d0`
-	REC_DrumMainGridSe_Records	f0=16, p4=loc_484F4518	# [0]
-	REC_DrumMainGridSe_Records	f0=17, p4=loc_484F4971
-	REC_DrumMainGridSe_Records	f0=18, p4=loc_484F4518
-	REC_DrumMainGridSe_Records	f0=19, p4=loc_484F4971
-	REC_DrumMainGridSe_Records	f0=0x10080, p4=loc_484F4DD0
-	REC_DrumMainGridSe_Records	f0=21, p4=loc_484F4DE3
-	REC_DrumMainGridSe_Records	f0=22, p4=loc_484F4DE3
-	REC_DrumMainGridSe_Records	f0=0x10082, p4=loc_484F4DE7
-	REC_DrumMainGridSe_Records	f0=1, p4=loc_484F52F5	# [8]
-	REC_DrumMainGridSe_Records	p4=loc_484F52F8
-	REC_DrumMainGridSe_Records	p4=loc_484F52F8
-	REC_DrumMainGridSe_Records	p4=loc_484F52F8
-	REC_DrumMainGridSe_Records	p4=loc_484F52F8
-	REC_DrumMainGridSe_Records	p4=loc_484F52F8
-	REC_DrumMainGridSe_Records	p4=loc_484F52F8
-	REC_DrumMainGridSe_Records	f0=0x1007F, p4=loc_484F4DBD
+	REC_DrumMainGridSe_Records	f0=16, proc=loc_484F4518	# [0]
+	REC_DrumMainGridSe_Records	f0=17, proc=loc_484F4971
+	REC_DrumMainGridSe_Records	f0=18, proc=loc_484F4518
+	REC_DrumMainGridSe_Records	f0=19, proc=loc_484F4971
+	REC_DrumMainGridSe_Records	f0=0x10080, proc=loc_484F4DD0
+	REC_DrumMainGridSe_Records	f0=21, proc=loc_484F4DE3
+	REC_DrumMainGridSe_Records	f0=22, proc=loc_484F4DE3
+	REC_DrumMainGridSe_Records	f0=0x10082, proc=loc_484F4DE7
+	REC_DrumMainGridSe_Records	f0=1, proc=loc_484F52F5	# [8]
+	REC_DrumMainGridSe_Records	proc=loc_484F52F8
+	REC_DrumMainGridSe_Records	proc=loc_484F52F8
+	REC_DrumMainGridSe_Records	proc=loc_484F52F8
+	REC_DrumMainGridSe_Records	proc=loc_484F52F8
+	REC_DrumMainGridSe_Records	proc=loc_484F52F8
+	REC_DrumMainGridSe_Records	proc=loc_484F52F8
+	REC_DrumMainGridSe_Records	f0=0x1007F, proc=loc_484F4DBD
 
 DrumFilterGridSe_Table:
 	.long	loc_484F5D08
@@ -18944,73 +18944,73 @@ DrumFilterGridSe_Table_3:
 	.long	loc_484F57AD
 
 DrumFilterGridSe_Records:	# 16 x REC_DrumFilterGridSe_Records (8 bytes each); read by DrumFilterGridSe 0x484F52FC `mov (a0), d0`
-	REC_DrumFilterGridSe_Records	f0=16, p4=loc_484F534E	# [0]
-	REC_DrumFilterGridSe_Records	f0=17, p4=loc_484F57FE
-	REC_DrumFilterGridSe_Records	f0=18, p4=loc_484F534E
-	REC_DrumFilterGridSe_Records	f0=19, p4=loc_484F57FE
-	REC_DrumFilterGridSe_Records	f0=0x10080, p4=loc_484F5CB0
-	REC_DrumFilterGridSe_Records	f0=21, p4=loc_484F5CC3
-	REC_DrumFilterGridSe_Records	f0=22, p4=loc_484F5CC3
-	REC_DrumFilterGridSe_Records	f0=0x10082, p4=loc_484F5CC7
-	REC_DrumFilterGridSe_Records	f0=1, p4=loc_484F6264	# [8]
-	REC_DrumFilterGridSe_Records	p4=loc_484F6267
-	REC_DrumFilterGridSe_Records	p4=loc_484F6267
-	REC_DrumFilterGridSe_Records	p4=loc_484F6267
-	REC_DrumFilterGridSe_Records	p4=loc_484F6267
-	REC_DrumFilterGridSe_Records	p4=loc_484F6267
-	REC_DrumFilterGridSe_Records	p4=loc_484F6267
-	REC_DrumFilterGridSe_Records	f0=0x1007F, p4=loc_484F5C9D
+	REC_DrumFilterGridSe_Records	f0=16, proc=loc_484F534E	# [0]
+	REC_DrumFilterGridSe_Records	f0=17, proc=loc_484F57FE
+	REC_DrumFilterGridSe_Records	f0=18, proc=loc_484F534E
+	REC_DrumFilterGridSe_Records	f0=19, proc=loc_484F57FE
+	REC_DrumFilterGridSe_Records	f0=0x10080, proc=loc_484F5CB0
+	REC_DrumFilterGridSe_Records	f0=21, proc=loc_484F5CC3
+	REC_DrumFilterGridSe_Records	f0=22, proc=loc_484F5CC3
+	REC_DrumFilterGridSe_Records	f0=0x10082, proc=loc_484F5CC7
+	REC_DrumFilterGridSe_Records	f0=1, proc=loc_484F6264	# [8]
+	REC_DrumFilterGridSe_Records	proc=loc_484F6267
+	REC_DrumFilterGridSe_Records	proc=loc_484F6267
+	REC_DrumFilterGridSe_Records	proc=loc_484F6267
+	REC_DrumFilterGridSe_Records	proc=loc_484F6267
+	REC_DrumFilterGridSe_Records	proc=loc_484F6267
+	REC_DrumFilterGridSe_Records	proc=loc_484F6267
+	REC_DrumFilterGridSe_Records	f0=0x1007F, proc=loc_484F5C9D
 AcDrumGridBoxSe2Proc_Records:	# 16 x REC_AcDrumGridBoxSe2Proc_Records (8 bytes each); read by AcDrumGridBoxSe2Proc 0x484F626B `mov (a0), d0`
-	REC_AcDrumGridBoxSe2Proc_Records	f0=16, p4=loc_484F6590	# [0]
-	REC_AcDrumGridBoxSe2Proc_Records	f0=1, p4=loc_484F62BF
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x100B2, p4=loc_484F6350
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x1B00003, p4=loc_484F6375
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x100B3, p4=loc_484F64F0
-	REC_AcDrumGridBoxSe2Proc_Records	f0=5, p4=loc_484F6397
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x100B4, p4=loc_484F64F0
-	REC_AcDrumGridBoxSe2Proc_Records	f0=17, p4=loc_484F651D
-	REC_AcDrumGridBoxSe2Proc_Records	f0=18, p4=loc_484F6590	# [8]
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x1007F, p4=loc_484F661D
-	REC_AcDrumGridBoxSe2Proc_Records	f0=20, p4=loc_484F6637
-	REC_AcDrumGridBoxSe2Proc_Records	f0=21, p4=loc_484F6637
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x10081, p4=loc_484F665C
-	REC_AcDrumGridBoxSe2Proc_Records	p4=loc_484F6676
-	REC_AcDrumGridBoxSe2Proc_Records	f0=0x1007E, p4=loc_484F6603
-	REC_AcDrumGridBoxSe2Proc_Records	f0=15, p4=loc_484F651D
+	REC_AcDrumGridBoxSe2Proc_Records	key=16, proc=loc_484F6590	# [0]
+	REC_AcDrumGridBoxSe2Proc_Records	key=1, proc=loc_484F62BF
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x100B2, proc=loc_484F6350
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x1B00003, proc=loc_484F6375
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x100B3, proc=loc_484F64F0
+	REC_AcDrumGridBoxSe2Proc_Records	key=5, proc=loc_484F6397
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x100B4, proc=loc_484F64F0
+	REC_AcDrumGridBoxSe2Proc_Records	key=17, proc=loc_484F651D
+	REC_AcDrumGridBoxSe2Proc_Records	key=18, proc=loc_484F6590	# [8]
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x1007F, proc=loc_484F661D
+	REC_AcDrumGridBoxSe2Proc_Records	key=20, proc=loc_484F6637
+	REC_AcDrumGridBoxSe2Proc_Records	key=21, proc=loc_484F6637
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x10081, proc=loc_484F665C
+	REC_AcDrumGridBoxSe2Proc_Records	proc=loc_484F6676
+	REC_AcDrumGridBoxSe2Proc_Records	key=0x1007E, proc=loc_484F6603
+	REC_AcDrumGridBoxSe2Proc_Records	key=15, proc=loc_484F651D
 DrumAmpGridSe_Records:	# 16 x REC_DrumAmpGridSe_Records (8 bytes each); read by DrumAmpGridSe 0x484F6686 `mov (a0), d0`
-	REC_DrumAmpGridSe_Records	f0=16, p4=loc_484F66D9	# [0]
-	REC_DrumAmpGridSe_Records	f0=17, p4=loc_484F6921
-	REC_DrumAmpGridSe_Records	f0=18, p4=loc_484F66D9
-	REC_DrumAmpGridSe_Records	f0=19, p4=loc_484F6921
-	REC_DrumAmpGridSe_Records	f0=0x10080, p4=loc_484F6B6E
-	REC_DrumAmpGridSe_Records	f0=21, p4=loc_484F6B81
-	REC_DrumAmpGridSe_Records	f0=22, p4=loc_484F6B81
-	REC_DrumAmpGridSe_Records	f0=0x10082, p4=loc_484F6B85
-	REC_DrumAmpGridSe_Records	f0=1, p4=loc_484F6E5C	# [8]
-	REC_DrumAmpGridSe_Records	p4=loc_484F6E5F
-	REC_DrumAmpGridSe_Records	p4=loc_484F6E5F
-	REC_DrumAmpGridSe_Records	p4=loc_484F6E5F
-	REC_DrumAmpGridSe_Records	p4=loc_484F6E5F
-	REC_DrumAmpGridSe_Records	p4=loc_484F6E5F
-	REC_DrumAmpGridSe_Records	p4=loc_484F6E5F
-	REC_DrumAmpGridSe_Records	f0=0x1007F, p4=loc_484F6B5B
+	REC_DrumAmpGridSe_Records	f0=16, proc=loc_484F66D9	# [0]
+	REC_DrumAmpGridSe_Records	f0=17, proc=loc_484F6921
+	REC_DrumAmpGridSe_Records	f0=18, proc=loc_484F66D9
+	REC_DrumAmpGridSe_Records	f0=19, proc=loc_484F6921
+	REC_DrumAmpGridSe_Records	f0=0x10080, proc=loc_484F6B6E
+	REC_DrumAmpGridSe_Records	f0=21, proc=loc_484F6B81
+	REC_DrumAmpGridSe_Records	f0=22, proc=loc_484F6B81
+	REC_DrumAmpGridSe_Records	f0=0x10082, proc=loc_484F6B85
+	REC_DrumAmpGridSe_Records	f0=1, proc=loc_484F6E5C	# [8]
+	REC_DrumAmpGridSe_Records	proc=loc_484F6E5F
+	REC_DrumAmpGridSe_Records	proc=loc_484F6E5F
+	REC_DrumAmpGridSe_Records	proc=loc_484F6E5F
+	REC_DrumAmpGridSe_Records	proc=loc_484F6E5F
+	REC_DrumAmpGridSe_Records	proc=loc_484F6E5F
+	REC_DrumAmpGridSe_Records	proc=loc_484F6E5F
+	REC_DrumAmpGridSe_Records	f0=0x1007F, proc=loc_484F6B5B
 DrumLfoGridSe_Records:	# 16 x REC_DrumLfoGridSe_Records (8 bytes each); read by DrumLfoGridSe 0x484F6E63 `mov (a0), d0`
-	REC_DrumLfoGridSe_Records	f0=16, p4=loc_484F6EB6	# [0]
-	REC_DrumLfoGridSe_Records	f0=17, p4=loc_484F7037
-	REC_DrumLfoGridSe_Records	f0=18, p4=loc_484F6EB6
-	REC_DrumLfoGridSe_Records	f0=19, p4=loc_484F7037
-	REC_DrumLfoGridSe_Records	f0=0x10080, p4=loc_484F71C7
-	REC_DrumLfoGridSe_Records	f0=21, p4=loc_484F71DA
-	REC_DrumLfoGridSe_Records	f0=22, p4=loc_484F71DA
-	REC_DrumLfoGridSe_Records	f0=0x10082, p4=loc_484F71DE
-	REC_DrumLfoGridSe_Records	f0=1, p4=loc_484F73AD	# [8]
-	REC_DrumLfoGridSe_Records	p4=loc_484F73B0
-	REC_DrumLfoGridSe_Records	p4=loc_484F73B0
-	REC_DrumLfoGridSe_Records	p4=loc_484F73B0
-	REC_DrumLfoGridSe_Records	p4=loc_484F73B0
-	REC_DrumLfoGridSe_Records	p4=loc_484F73B0
-	REC_DrumLfoGridSe_Records	p4=loc_484F73B0
-	REC_DrumLfoGridSe_Records	f0=0x1007F, p4=loc_484F71B4
+	REC_DrumLfoGridSe_Records	f0=16, proc=loc_484F6EB6	# [0]
+	REC_DrumLfoGridSe_Records	f0=17, proc=loc_484F7037
+	REC_DrumLfoGridSe_Records	f0=18, proc=loc_484F6EB6
+	REC_DrumLfoGridSe_Records	f0=19, proc=loc_484F7037
+	REC_DrumLfoGridSe_Records	f0=0x10080, proc=loc_484F71C7
+	REC_DrumLfoGridSe_Records	f0=21, proc=loc_484F71DA
+	REC_DrumLfoGridSe_Records	f0=22, proc=loc_484F71DA
+	REC_DrumLfoGridSe_Records	f0=0x10082, proc=loc_484F71DE
+	REC_DrumLfoGridSe_Records	f0=1, proc=loc_484F73AD	# [8]
+	REC_DrumLfoGridSe_Records	proc=loc_484F73B0
+	REC_DrumLfoGridSe_Records	proc=loc_484F73B0
+	REC_DrumLfoGridSe_Records	proc=loc_484F73B0
+	REC_DrumLfoGridSe_Records	proc=loc_484F73B0
+	REC_DrumLfoGridSe_Records	proc=loc_484F73B0
+	REC_DrumLfoGridSe_Records	proc=loc_484F73B0
+	REC_DrumLfoGridSe_Records	f0=0x1007F, proc=loc_484F71B4
 
 func_484F84D4_Table:
 	.long	loc_484F85D0
@@ -20156,39 +20156,39 @@ Str_Artist_3:	.asciz "Artist : "
 	.align	4, 0xFF	# pad after Str_Artist_3
 
 LyricsBoxProc_Records:	# 16 x REC_LyricsBoxProc_Records (8 bytes each); read by LyricsBoxProc 0x484F9D3E `mov (a0), d0`
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E	# [0]
-	REC_LyricsBoxProc_Records	f0=1, p4=loc_484F9D92
-	REC_LyricsBoxProc_Records	f0=2, p4=loc_484F9DAB
-	REC_LyricsBoxProc_Records	f0=0x100B2, p4=loc_484F9DC2
-	REC_LyricsBoxProc_Records	f0=0x1300001, p4=loc_484F9E28
-	REC_LyricsBoxProc_Records	f0=0x1300002, p4=loc_484F9E64
-	REC_LyricsBoxProc_Records	f0=0x1300006, p4=loc_484F9E12
-	REC_LyricsBoxProc_Records	f0=0x1300003, p4=loc_484FA14B
-	REC_LyricsBoxProc_Records	f0=0x1300004, p4=loc_484FA187	# [8]
-	REC_LyricsBoxProc_Records	f0=0x1300005, p4=loc_484FA1C3
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E
-	REC_LyricsBoxProc_Records	p4=loc_484FA29E
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E	# [0]
+	REC_LyricsBoxProc_Records	f0=1, proc=loc_484F9D92
+	REC_LyricsBoxProc_Records	f0=2, proc=loc_484F9DAB
+	REC_LyricsBoxProc_Records	f0=0x100B2, proc=loc_484F9DC2
+	REC_LyricsBoxProc_Records	f0=0x1300001, proc=loc_484F9E28
+	REC_LyricsBoxProc_Records	f0=0x1300002, proc=loc_484F9E64
+	REC_LyricsBoxProc_Records	f0=0x1300006, proc=loc_484F9E12
+	REC_LyricsBoxProc_Records	f0=0x1300003, proc=loc_484FA14B
+	REC_LyricsBoxProc_Records	f0=0x1300004, proc=loc_484FA187	# [8]
+	REC_LyricsBoxProc_Records	f0=0x1300005, proc=loc_484FA1C3
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E
+	REC_LyricsBoxProc_Records	proc=loc_484FA29E
 func_484FBA6E_Records:	# 16 x REC_func_484FBA6E_Records (8 bytes each); read by func_484FBA6E 0x484FBA6E `mov (a0), d1`
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6	# [0]
-	REC_func_484FBA6E_Records	f0=1, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	f0=2, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	f0=3, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	f0=97, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	f0=4, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	f0=5, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6	# [8]
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6
-	REC_func_484FBA6E_Records	f0=90, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6
-	REC_func_484FBA6E_Records	f0=93, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	f0=94, p4=loc_484FBAB4
-	REC_func_484FBA6E_Records	p4=loc_484FBAB6
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6	# [0]
+	REC_func_484FBA6E_Records	f0=1, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	f0=2, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	f0=3, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	f0=97, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	f0=4, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	f0=5, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6	# [8]
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6
+	REC_func_484FBA6E_Records	f0=90, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6
+	REC_func_484FBA6E_Records	f0=93, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	f0=94, proc=loc_484FBAB4
+	REC_func_484FBA6E_Records	proc=loc_484FBAB6
 
 NameGetFuncCall_Table:
 	.long	loc_484FBCDE
@@ -22106,72 +22106,72 @@ Str_3s_6:	.asciz " %3s                                        "
 	.align	4, 0xFF	# pad after Str_3s_6
 
 AcFuncEditBoxProc_Records:	# 32 x REC_AcFuncEditBoxProc_Records (8 bytes each); read by AcFuncEditBoxProc 0x484FDCAF `mov (a0), d0`
-	REC_AcFuncEditBoxProc_Records	f0=0x1700000, p4=loc_484FDD94	# [0]
-	REC_AcFuncEditBoxProc_Records	f0=1, p4=loc_484FDDB9
-	REC_AcFuncEditBoxProc_Records	f0=0x10062, p4=loc_484FDD5D
-	REC_AcFuncEditBoxProc_Records	f0=2, p4=loc_484FDDB9
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4	# [8]
-	REC_AcFuncEditBoxProc_Records	f0=9, p4=loc_484FDD94
-	REC_AcFuncEditBoxProc_Records	f0=10, p4=loc_484FDD94
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	f0=15, p4=loc_484FDDDF
-	REC_AcFuncEditBoxProc_Records	f0=16, p4=loc_484FDDDF	# [16]
-	REC_AcFuncEditBoxProc_Records	f0=17, p4=loc_484FDDDF
-	REC_AcFuncEditBoxProc_Records	f0=0x100B2, p4=loc_484FDD27
-	REC_AcFuncEditBoxProc_Records	f0=18, p4=loc_484FDDDF
-	REC_AcFuncEditBoxProc_Records	f0=0x100B4, p4=loc_484FDD02
-	REC_AcFuncEditBoxProc_Records	f0=20, p4=loc_484FDD94
-	REC_AcFuncEditBoxProc_Records	f0=19, p4=loc_484FDDDF
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4	# [24]
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	f0=0x1003A, p4=loc_484FDD77
-	REC_AcFuncEditBoxProc_Records	f0=0x1003B, p4=loc_484FDD5D
-	REC_AcFuncEditBoxProc_Records	f0=0x1003C, p4=loc_484FDEAB
-	REC_AcFuncEditBoxProc_Records	f0=0x1003D, p4=loc_484FDD94
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
-	REC_AcFuncEditBoxProc_Records	p4=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	key=0x1700000, proc=loc_484FDD94	# [0]
+	REC_AcFuncEditBoxProc_Records	key=1, proc=loc_484FDDB9
+	REC_AcFuncEditBoxProc_Records	key=0x10062, proc=loc_484FDD5D
+	REC_AcFuncEditBoxProc_Records	key=2, proc=loc_484FDDB9
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4	# [8]
+	REC_AcFuncEditBoxProc_Records	key=9, proc=loc_484FDD94
+	REC_AcFuncEditBoxProc_Records	key=10, proc=loc_484FDD94
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	key=15, proc=loc_484FDDDF
+	REC_AcFuncEditBoxProc_Records	key=16, proc=loc_484FDDDF	# [16]
+	REC_AcFuncEditBoxProc_Records	key=17, proc=loc_484FDDDF
+	REC_AcFuncEditBoxProc_Records	key=0x100B2, proc=loc_484FDD27
+	REC_AcFuncEditBoxProc_Records	key=18, proc=loc_484FDDDF
+	REC_AcFuncEditBoxProc_Records	key=0x100B4, proc=loc_484FDD02
+	REC_AcFuncEditBoxProc_Records	key=20, proc=loc_484FDD94
+	REC_AcFuncEditBoxProc_Records	key=19, proc=loc_484FDDDF
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4	# [24]
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	key=0x1003A, proc=loc_484FDD77
+	REC_AcFuncEditBoxProc_Records	key=0x1003B, proc=loc_484FDD5D
+	REC_AcFuncEditBoxProc_Records	key=0x1003C, proc=loc_484FDEAB
+	REC_AcFuncEditBoxProc_Records	key=0x1003D, proc=loc_484FDD94
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
+	REC_AcFuncEditBoxProc_Records	proc=loc_484FDED4
 FE_Dummy_Records:	# 16 x REC_FE_Dummy_Records (8 bytes each); read by FE_Dummy 0x484FE278 `mov (a0), d0`
-	REC_FE_Dummy_Records	f0=16, p4=loc_484FE2CE	# [0]
-	REC_FE_Dummy_Records	f0=17, p4=loc_484FE2F6
-	REC_FE_Dummy_Records	f0=2, p4=loc_484FE2CA
-	REC_FE_Dummy_Records	f0=18, p4=loc_484FE2CE
-	REC_FE_Dummy_Records	f0=19, p4=loc_484FE2F6
-	REC_FE_Dummy_Records	f0=0x10063, p4=loc_484FE33E
-	REC_FE_Dummy_Records	f0=1, p4=loc_484FE358
-	REC_FE_Dummy_Records	p4=loc_484FE35B
-	REC_FE_Dummy_Records	p4=loc_484FE35B	# [8]
-	REC_FE_Dummy_Records	p4=loc_484FE35B
-	REC_FE_Dummy_Records	p4=loc_484FE35B
-	REC_FE_Dummy_Records	f0=0x1003B, p4=loc_484FE31F
-	REC_FE_Dummy_Records	f0=0x1003C, p4=loc_484FE347
-	REC_FE_Dummy_Records	p4=loc_484FE35B
-	REC_FE_Dummy_Records	p4=loc_484FE35B
-	REC_FE_Dummy_Records	p4=loc_484FE35B
+	REC_FE_Dummy_Records	f0=16, proc=loc_484FE2CE	# [0]
+	REC_FE_Dummy_Records	f0=17, proc=loc_484FE2F6
+	REC_FE_Dummy_Records	f0=2, proc=loc_484FE2CA
+	REC_FE_Dummy_Records	f0=18, proc=loc_484FE2CE
+	REC_FE_Dummy_Records	f0=19, proc=loc_484FE2F6
+	REC_FE_Dummy_Records	f0=0x10063, proc=loc_484FE33E
+	REC_FE_Dummy_Records	f0=1, proc=loc_484FE358
+	REC_FE_Dummy_Records	proc=loc_484FE35B
+	REC_FE_Dummy_Records	proc=loc_484FE35B	# [8]
+	REC_FE_Dummy_Records	proc=loc_484FE35B
+	REC_FE_Dummy_Records	proc=loc_484FE35B
+	REC_FE_Dummy_Records	f0=0x1003B, proc=loc_484FE31F
+	REC_FE_Dummy_Records	f0=0x1003C, proc=loc_484FE347
+	REC_FE_Dummy_Records	proc=loc_484FE35B
+	REC_FE_Dummy_Records	proc=loc_484FE35B
+	REC_FE_Dummy_Records	proc=loc_484FE35B
 AcGridBoxDeluxProc_Records:	# 16 x REC_AcGridBoxDeluxProc_Records (8 bytes each); read by AcGridBoxDeluxProc 0x484FE8DD `mov (a0), d0`
-	REC_AcGridBoxDeluxProc_Records	f0=16, p4=loc_484FE934	# [0]
-	REC_AcGridBoxDeluxProc_Records	f0=17, p4=loc_484FE934
-	REC_AcGridBoxDeluxProc_Records	f0=18, p4=loc_484FE934
-	REC_AcGridBoxDeluxProc_Records	f0=0x10080, p4=loc_484FE9A8
-	REC_AcGridBoxDeluxProc_Records	f0=0x100AF, p4=loc_484FEB00
-	REC_AcGridBoxDeluxProc_Records	f0=1, p4=loc_484FEB2D
-	REC_AcGridBoxDeluxProc_Records	f0=2, p4=loc_484FEB2D
-	REC_AcGridBoxDeluxProc_Records	f0=0x100B3, p4=loc_484FEB2D
-	REC_AcGridBoxDeluxProc_Records	f0=0x10082, p4=loc_484FEB2D	# [8]
-	REC_AcGridBoxDeluxProc_Records	p4=loc_484FEB5A
-	REC_AcGridBoxDeluxProc_Records	p4=loc_484FEB5A
-	REC_AcGridBoxDeluxProc_Records	p4=loc_484FEB5A
-	REC_AcGridBoxDeluxProc_Records	p4=loc_484FEB5A
-	REC_AcGridBoxDeluxProc_Records	p4=loc_484FEB5A
-	REC_AcGridBoxDeluxProc_Records	p4=loc_484FEB5A
-	REC_AcGridBoxDeluxProc_Records	f0=15, p4=loc_484FE934
+	REC_AcGridBoxDeluxProc_Records	key=16, proc=loc_484FE934	# [0]
+	REC_AcGridBoxDeluxProc_Records	key=17, proc=loc_484FE934
+	REC_AcGridBoxDeluxProc_Records	key=18, proc=loc_484FE934
+	REC_AcGridBoxDeluxProc_Records	key=0x10080, proc=loc_484FE9A8
+	REC_AcGridBoxDeluxProc_Records	key=0x100AF, proc=loc_484FEB00
+	REC_AcGridBoxDeluxProc_Records	key=1, proc=loc_484FEB2D
+	REC_AcGridBoxDeluxProc_Records	key=2, proc=loc_484FEB2D
+	REC_AcGridBoxDeluxProc_Records	key=0x100B3, proc=loc_484FEB2D
+	REC_AcGridBoxDeluxProc_Records	key=0x10082, proc=loc_484FEB2D	# [8]
+	REC_AcGridBoxDeluxProc_Records	proc=loc_484FEB5A
+	REC_AcGridBoxDeluxProc_Records	proc=loc_484FEB5A
+	REC_AcGridBoxDeluxProc_Records	proc=loc_484FEB5A
+	REC_AcGridBoxDeluxProc_Records	proc=loc_484FEB5A
+	REC_AcGridBoxDeluxProc_Records	proc=loc_484FEB5A
+	REC_AcGridBoxDeluxProc_Records	proc=loc_484FEB5A
+	REC_AcGridBoxDeluxProc_Records	key=15, proc=loc_484FE934
 
 AcCmpStepIndexEditSwProc_Table:
 	.long	loc_484FEF8F
@@ -22193,151 +22193,151 @@ AcCmpStepIndexEditSwProc_Table:
 	.long	loc_484FEFC6
 
 StepCommandCatch_Records:	# 16 x REC_StepCommandCatch_Records (8 bytes each); read by StepCommandCatch 0x484FF856 `mov (a0), d0`
-	REC_StepCommandCatch_Records	f0=0x1710000, p4=loc_484FF8FF	# [0]
-	REC_StepCommandCatch_Records	f0=1, p4=loc_484FF8AD
-	REC_StepCommandCatch_Records	f0=2, p4=loc_484FF8F4
-	REC_StepCommandCatch_Records	f0=0x1710001, p4=loc_484FF965
-	REC_StepCommandCatch_Records	f0=0x100B2, p4=loc_484FF9AB
-	REC_StepCommandCatch_Records	f0=0x1700001, p4=loc_484FF9D4
-	REC_StepCommandCatch_Records	f0=6, p4=loc_484FF911
-	REC_StepCommandCatch_Records	f0=7, p4=loc_484FF911
-	REC_StepCommandCatch_Records	f0=22, p4=loc_484FF94A	# [8]
-	REC_StepCommandCatch_Records	f0=0x10079, p4=loc_484FF9A6
-	REC_StepCommandCatch_Records	f0=17, p4=loc_484FF9D4
-	REC_StepCommandCatch_Records	f0=0x1700002, p4=loc_484FF9D6
-	REC_StepCommandCatch_Records	f0=18, p4=loc_484FF9D6
-	REC_StepCommandCatch_Records	f0=16, p4=loc_484FF9D6
-	REC_StepCommandCatch_Records	p4=loc_484FFCE2
-	REC_StepCommandCatch_Records	f0=15, p4=loc_484FF9D4
+	REC_StepCommandCatch_Records	f0=0x1710000, proc=loc_484FF8FF	# [0]
+	REC_StepCommandCatch_Records	f0=1, proc=loc_484FF8AD
+	REC_StepCommandCatch_Records	f0=2, proc=loc_484FF8F4
+	REC_StepCommandCatch_Records	f0=0x1710001, proc=loc_484FF965
+	REC_StepCommandCatch_Records	f0=0x100B2, proc=loc_484FF9AB
+	REC_StepCommandCatch_Records	f0=0x1700001, proc=loc_484FF9D4
+	REC_StepCommandCatch_Records	f0=6, proc=loc_484FF911
+	REC_StepCommandCatch_Records	f0=7, proc=loc_484FF911
+	REC_StepCommandCatch_Records	f0=22, proc=loc_484FF94A	# [8]
+	REC_StepCommandCatch_Records	f0=0x10079, proc=loc_484FF9A6
+	REC_StepCommandCatch_Records	f0=17, proc=loc_484FF9D4
+	REC_StepCommandCatch_Records	f0=0x1700002, proc=loc_484FF9D6
+	REC_StepCommandCatch_Records	f0=18, proc=loc_484FF9D6
+	REC_StepCommandCatch_Records	f0=16, proc=loc_484FF9D6
+	REC_StepCommandCatch_Records	proc=loc_484FFCE2
+	REC_StepCommandCatch_Records	f0=15, proc=loc_484FF9D4
 func_48500A08_Records:	# 128 x REC_func_48500A08_Records (8 bytes each); read by func_48500A08 0x48500A08 `mov (a0), d0`
-	REC_func_48500A08_Records	f0=0x1000000, p4=loc_485024C0	# [0]
-	REC_func_48500A08_Records	f0=0xC00001, p4=loc_48500A71
-	REC_func_48500A08_Records	f0=0x200001, p4=loc_48500AED
-	REC_func_48500A08_Records	f0=0x200081, p4=loc_48501082
-	REC_func_48500A08_Records	f0=0x200082, p4=loc_485010BC
-	REC_func_48500A08_Records	f0=0x204081, p4=loc_4850144C
-	REC_func_48500A08_Records	f0=0xB00006, p4=loc_48500F67
-	REC_func_48500A08_Records	f0=0x204082, p4=loc_48501476
-	REC_func_48500A08_Records	f0=0xB00008, p4=loc_48500AC2	# [8]
-	REC_func_48500A08_Records	f0=0x200089, p4=loc_485010E6
-	REC_func_48500A08_Records	f0=0x20008A, p4=loc_48501110
-	REC_func_48500A08_Records	f0=0x20008B, p4=loc_4850113A
-	REC_func_48500A08_Records	f0=0xB0000C, p4=loc_48500B27
-	REC_func_48500A08_Records	f0=0x20008C, p4=loc_48501164
-	REC_func_48500A08_Records	f0=0xB0000B, p4=loc_485014B1
-	REC_func_48500A08_Records	f0=0xB08001, p4=loc_48501536
-	REC_func_48500A08_Records	f0=0xB08002, p4=loc_48501561	# [16]
-	REC_func_48500A08_Records	f0=0x200091, p4=loc_4850118F
-	REC_func_48500A08_Records	f0=0x200092, p4=loc_485011BA
-	REC_func_48500A08_Records	f0=0x200093, p4=loc_485011E4
-	REC_func_48500A08_Records	f0=0x200094, p4=loc_4850120E
-	REC_func_48500A08_Records	f0=45077, p4=loc_48500C1B
-	REC_func_48500A08_Records	f0=0x200095, p4=loc_48501239
-	REC_func_48500A08_Records	f0=0x200096, p4=loc_48501263
-	REC_func_48500A08_Records	f0=0x200097, p4=loc_4850128D	# [24]
-	REC_func_48500A08_Records	f0=0x200098, p4=loc_485012B7
-	REC_func_48500A08_Records	f0=0x200099, p4=loc_485012E2
-	REC_func_48500A08_Records	f0=0x20009A, p4=loc_4850130D
-	REC_func_48500A08_Records	f0=0x20009B, p4=loc_48501347
-	REC_func_48500A08_Records	f0=0xB08003, p4=loc_4850158E
-	REC_func_48500A08_Records	f0=0xB08006, p4=loc_485015BB
-	REC_func_48500A08_Records	f0=0xD00001, p4=loc_485015E6
-	REC_func_48500A08_Records	f0=0xE00001, p4=loc_48501611	# [32]
-	REC_func_48500A08_Records	f0=0xB00002, p4=loc_48501655
-	REC_func_48500A08_Records	f0=49281, p4=loc_48501680
-	REC_func_48500A08_Records	f0=49282, p4=loc_48501680
-	REC_func_48500A08_Records	f0=49283, p4=loc_485016A3
-	REC_func_48500A08_Records	f0=45093, p4=loc_48500C9B
-	REC_func_48500A08_Records	f0=49284, p4=loc_485016D1
-	REC_func_48500A08_Records	f0=32777, p4=loc_4850172D
-	REC_func_48500A08_Records	f0=32775, p4=loc_4850174B	# [40]
-	REC_func_48500A08_Records	f0=53251, p4=loc_48501769
-	REC_func_48500A08_Records	f0=53250, p4=loc_485017B4
-	REC_func_48500A08_Records	f0=53252, p4=loc_48501815
-	REC_func_48500A08_Records	f0=53249, p4=loc_48501860
-	REC_func_48500A08_Records	f0=2, p4=loc_4850188E
-	REC_func_48500A08_Records	f0=49153, p4=loc_485018BC
-	REC_func_48500A08_Records	f0=49157, p4=loc_485018E3
-	REC_func_48500A08_Records	f0=57345, p4=loc_48501903	# [48]
-	REC_func_48500A08_Records	f0=5, p4=loc_48501944
-	REC_func_48500A08_Records	f0=32897, p4=loc_485019AD
-	REC_func_48500A08_Records	f0=32819, p4=loc_485016FF
-	REC_func_48500A08_Records	f0=32801, p4=loc_48501A68
-	REC_func_48500A08_Records	f0=45109, p4=loc_48500D1B
-	REC_func_48500A08_Records	f0=4, p4=loc_48501AF7
-	REC_func_48500A08_Records	f0=32820, p4=loc_48501B16
-	REC_func_48500A08_Records	f0=129, p4=loc_48501B61	# [56]
-	REC_func_48500A08_Records	f0=32818, p4=loc_48501BF6
-	REC_func_48500A08_Records	f0=161, p4=loc_48501C24
-	REC_func_48500A08_Records	f0=32771, p4=loc_48501C52
-	REC_func_48500A08_Records	f0=57346, p4=loc_48501C70
-	REC_func_48500A08_Records	f0=57347, p4=loc_48501C8E
-	REC_func_48500A08_Records	f0=1, p4=loc_48501CBC
-	REC_func_48500A08_Records	f0=0x600001, p4=loc_48501ECF
-	REC_func_48500A08_Records	f0=0x600015, p4=loc_48501F1F	# [64]
-	REC_func_48500A08_Records	f0=0xB00041, p4=loc_48501411
-	REC_func_48500A08_Records	f0=0xB00042, p4=loc_48500F92
-	REC_func_48500A08_Records	f0=32833, p4=loc_485019DB
-	REC_func_48500A08_Records	f0=0xB00043, p4=loc_48501D1C
-	REC_func_48500A08_Records	f0=45125, p4=loc_48500D9B
-	REC_func_48500A08_Records	f0=0xB00044, p4=loc_48501D46
-	REC_func_48500A08_Records	f0=0x2000A3, p4=loc_48501FCF
-	REC_func_48500A08_Records	f0=0xB00048, p4=loc_48501D71	# [72]
-	REC_func_48500A08_Records	f0=0xB00049, p4=loc_48501D9E
-	REC_func_48500A08_Records	f0=0xB0004A, p4=loc_48501DCB
-	REC_func_48500A08_Records	f0=0xB0004B, p4=loc_48501DF8
-	REC_func_48500A08_Records	f0=0xB0004C, p4=loc_48501E24
-	REC_func_48500A08_Records	f0=0xB0004D, p4=loc_48501E4F
-	REC_func_48500A08_Records	f0=0xB0004E, p4=loc_48501E7A
-	REC_func_48500A08_Records	f0=0xB0004F, p4=loc_48501EA5
-	REC_func_48500A08_Records	f0=0x2000B1, p4=loc_48502116	# [80]
-	REC_func_48500A08_Records	f0=0xB00051, p4=loc_48500FCD
-	REC_func_48500A08_Records	f0=0xB00052, p4=loc_48500FFA
-	REC_func_48500A08_Records	f0=0xB00053, p4=loc_48501028
-	REC_func_48500A08_Records	f0=0xB00054, p4=loc_48501054
-	REC_func_48500A08_Records	f0=45141, p4=loc_48500E1B
-	REC_func_48500A08_Records	f0=0x2000B2, p4=loc_48502151
-	REC_func_48500A08_Records	f0=0x2000B3, p4=loc_4850218B
-	REC_func_48500A08_Records	f0=0x2000B4, p4=loc_485021C6	# [88]
-	REC_func_48500A08_Records	f0=0x2000B5, p4=loc_48502201
-	REC_func_48500A08_Records	f0=0x2000B6, p4=loc_4850223C
-	REC_func_48500A08_Records	f0=0x2000B7, p4=loc_48502276
-	REC_func_48500A08_Records	f0=0xB0005C, p4=loc_48500BB6
-	REC_func_48500A08_Records	f0=0xB0005D, p4=loc_48500B51
-	REC_func_48500A08_Records	f0=0x20005D, p4=loc_48500B7C
-	REC_func_48500A08_Records	f0=0xB0005E, p4=loc_48500F01
-	REC_func_48500A08_Records	f0=0xB00060, p4=loc_48500E9B	# [96]
-	REC_func_48500A08_Records	f0=0x200060, p4=loc_48500EC6
-	REC_func_48500A08_Records	f0=0x20005E, p4=loc_48500F2C
-	REC_func_48500A08_Records	f0=0xB0005F, p4=loc_485013D7
-	REC_func_48500A08_Records	f0=32865, p4=loc_48501A96
-	REC_func_48500A08_Records	f0=0x2000B8, p4=loc_485022B1
-	REC_func_48500A08_Records	f0=0x2000B9, p4=loc_485022EC
-	REC_func_48500A08_Records	f0=0x2000BA, p4=loc_48502327
-	REC_func_48500A08_Records	f0=0x2000BB, p4=loc_48502362	# [104]
-	REC_func_48500A08_Records	f0=0x2000BC, p4=loc_4850239D
-	REC_func_48500A08_Records	f0=0x2000BD, p4=loc_485023D8
-	REC_func_48500A08_Records	f0=0x2000BE, p4=loc_48502413
-	REC_func_48500A08_Records	f0=0x2000BF, p4=loc_4850244E
-	REC_func_48500A08_Records	f0=0x2000C0, p4=loc_48502487
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1	# [112]
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1	# [120]
-	REC_func_48500A08_Records	f0=0xB00079, p4=loc_485013AC
-	REC_func_48500A08_Records	f0=0xB0007A, p4=loc_48501381
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	p4=loc_485024D1
-	REC_func_48500A08_Records	f0=0xB0007F, p4=loc_48500BE1
+	REC_func_48500A08_Records	key=0x1000000, proc=loc_485024C0	# [0]
+	REC_func_48500A08_Records	key=0xC00001, proc=loc_48500A71
+	REC_func_48500A08_Records	key=0x200001, proc=loc_48500AED
+	REC_func_48500A08_Records	key=0x200081, proc=loc_48501082
+	REC_func_48500A08_Records	key=0x200082, proc=loc_485010BC
+	REC_func_48500A08_Records	key=0x204081, proc=loc_4850144C
+	REC_func_48500A08_Records	key=0xB00006, proc=loc_48500F67
+	REC_func_48500A08_Records	key=0x204082, proc=loc_48501476
+	REC_func_48500A08_Records	key=0xB00008, proc=loc_48500AC2	# [8]
+	REC_func_48500A08_Records	key=0x200089, proc=loc_485010E6
+	REC_func_48500A08_Records	key=0x20008A, proc=loc_48501110
+	REC_func_48500A08_Records	key=0x20008B, proc=loc_4850113A
+	REC_func_48500A08_Records	key=0xB0000C, proc=loc_48500B27
+	REC_func_48500A08_Records	key=0x20008C, proc=loc_48501164
+	REC_func_48500A08_Records	key=0xB0000B, proc=loc_485014B1
+	REC_func_48500A08_Records	key=0xB08001, proc=loc_48501536
+	REC_func_48500A08_Records	key=0xB08002, proc=loc_48501561	# [16]
+	REC_func_48500A08_Records	key=0x200091, proc=loc_4850118F
+	REC_func_48500A08_Records	key=0x200092, proc=loc_485011BA
+	REC_func_48500A08_Records	key=0x200093, proc=loc_485011E4
+	REC_func_48500A08_Records	key=0x200094, proc=loc_4850120E
+	REC_func_48500A08_Records	key=45077, proc=loc_48500C1B
+	REC_func_48500A08_Records	key=0x200095, proc=loc_48501239
+	REC_func_48500A08_Records	key=0x200096, proc=loc_48501263
+	REC_func_48500A08_Records	key=0x200097, proc=loc_4850128D	# [24]
+	REC_func_48500A08_Records	key=0x200098, proc=loc_485012B7
+	REC_func_48500A08_Records	key=0x200099, proc=loc_485012E2
+	REC_func_48500A08_Records	key=0x20009A, proc=loc_4850130D
+	REC_func_48500A08_Records	key=0x20009B, proc=loc_48501347
+	REC_func_48500A08_Records	key=0xB08003, proc=loc_4850158E
+	REC_func_48500A08_Records	key=0xB08006, proc=loc_485015BB
+	REC_func_48500A08_Records	key=0xD00001, proc=loc_485015E6
+	REC_func_48500A08_Records	key=0xE00001, proc=loc_48501611	# [32]
+	REC_func_48500A08_Records	key=0xB00002, proc=loc_48501655
+	REC_func_48500A08_Records	key=49281, proc=loc_48501680
+	REC_func_48500A08_Records	key=49282, proc=loc_48501680
+	REC_func_48500A08_Records	key=49283, proc=loc_485016A3
+	REC_func_48500A08_Records	key=45093, proc=loc_48500C9B
+	REC_func_48500A08_Records	key=49284, proc=loc_485016D1
+	REC_func_48500A08_Records	key=32777, proc=loc_4850172D
+	REC_func_48500A08_Records	key=32775, proc=loc_4850174B	# [40]
+	REC_func_48500A08_Records	key=53251, proc=loc_48501769
+	REC_func_48500A08_Records	key=53250, proc=loc_485017B4
+	REC_func_48500A08_Records	key=53252, proc=loc_48501815
+	REC_func_48500A08_Records	key=53249, proc=loc_48501860
+	REC_func_48500A08_Records	key=2, proc=loc_4850188E
+	REC_func_48500A08_Records	key=49153, proc=loc_485018BC
+	REC_func_48500A08_Records	key=49157, proc=loc_485018E3
+	REC_func_48500A08_Records	key=57345, proc=loc_48501903	# [48]
+	REC_func_48500A08_Records	key=5, proc=loc_48501944
+	REC_func_48500A08_Records	key=32897, proc=loc_485019AD
+	REC_func_48500A08_Records	key=32819, proc=loc_485016FF
+	REC_func_48500A08_Records	key=32801, proc=loc_48501A68
+	REC_func_48500A08_Records	key=45109, proc=loc_48500D1B
+	REC_func_48500A08_Records	key=4, proc=loc_48501AF7
+	REC_func_48500A08_Records	key=32820, proc=loc_48501B16
+	REC_func_48500A08_Records	key=129, proc=loc_48501B61	# [56]
+	REC_func_48500A08_Records	key=32818, proc=loc_48501BF6
+	REC_func_48500A08_Records	key=161, proc=loc_48501C24
+	REC_func_48500A08_Records	key=32771, proc=loc_48501C52
+	REC_func_48500A08_Records	key=57346, proc=loc_48501C70
+	REC_func_48500A08_Records	key=57347, proc=loc_48501C8E
+	REC_func_48500A08_Records	key=1, proc=loc_48501CBC
+	REC_func_48500A08_Records	key=0x600001, proc=loc_48501ECF
+	REC_func_48500A08_Records	key=0x600015, proc=loc_48501F1F	# [64]
+	REC_func_48500A08_Records	key=0xB00041, proc=loc_48501411
+	REC_func_48500A08_Records	key=0xB00042, proc=loc_48500F92
+	REC_func_48500A08_Records	key=32833, proc=loc_485019DB
+	REC_func_48500A08_Records	key=0xB00043, proc=loc_48501D1C
+	REC_func_48500A08_Records	key=45125, proc=loc_48500D9B
+	REC_func_48500A08_Records	key=0xB00044, proc=loc_48501D46
+	REC_func_48500A08_Records	key=0x2000A3, proc=loc_48501FCF
+	REC_func_48500A08_Records	key=0xB00048, proc=loc_48501D71	# [72]
+	REC_func_48500A08_Records	key=0xB00049, proc=loc_48501D9E
+	REC_func_48500A08_Records	key=0xB0004A, proc=loc_48501DCB
+	REC_func_48500A08_Records	key=0xB0004B, proc=loc_48501DF8
+	REC_func_48500A08_Records	key=0xB0004C, proc=loc_48501E24
+	REC_func_48500A08_Records	key=0xB0004D, proc=loc_48501E4F
+	REC_func_48500A08_Records	key=0xB0004E, proc=loc_48501E7A
+	REC_func_48500A08_Records	key=0xB0004F, proc=loc_48501EA5
+	REC_func_48500A08_Records	key=0x2000B1, proc=loc_48502116	# [80]
+	REC_func_48500A08_Records	key=0xB00051, proc=loc_48500FCD
+	REC_func_48500A08_Records	key=0xB00052, proc=loc_48500FFA
+	REC_func_48500A08_Records	key=0xB00053, proc=loc_48501028
+	REC_func_48500A08_Records	key=0xB00054, proc=loc_48501054
+	REC_func_48500A08_Records	key=45141, proc=loc_48500E1B
+	REC_func_48500A08_Records	key=0x2000B2, proc=loc_48502151
+	REC_func_48500A08_Records	key=0x2000B3, proc=loc_4850218B
+	REC_func_48500A08_Records	key=0x2000B4, proc=loc_485021C6	# [88]
+	REC_func_48500A08_Records	key=0x2000B5, proc=loc_48502201
+	REC_func_48500A08_Records	key=0x2000B6, proc=loc_4850223C
+	REC_func_48500A08_Records	key=0x2000B7, proc=loc_48502276
+	REC_func_48500A08_Records	key=0xB0005C, proc=loc_48500BB6
+	REC_func_48500A08_Records	key=0xB0005D, proc=loc_48500B51
+	REC_func_48500A08_Records	key=0x20005D, proc=loc_48500B7C
+	REC_func_48500A08_Records	key=0xB0005E, proc=loc_48500F01
+	REC_func_48500A08_Records	key=0xB00060, proc=loc_48500E9B	# [96]
+	REC_func_48500A08_Records	key=0x200060, proc=loc_48500EC6
+	REC_func_48500A08_Records	key=0x20005E, proc=loc_48500F2C
+	REC_func_48500A08_Records	key=0xB0005F, proc=loc_485013D7
+	REC_func_48500A08_Records	key=32865, proc=loc_48501A96
+	REC_func_48500A08_Records	key=0x2000B8, proc=loc_485022B1
+	REC_func_48500A08_Records	key=0x2000B9, proc=loc_485022EC
+	REC_func_48500A08_Records	key=0x2000BA, proc=loc_48502327
+	REC_func_48500A08_Records	key=0x2000BB, proc=loc_48502362	# [104]
+	REC_func_48500A08_Records	key=0x2000BC, proc=loc_4850239D
+	REC_func_48500A08_Records	key=0x2000BD, proc=loc_485023D8
+	REC_func_48500A08_Records	key=0x2000BE, proc=loc_48502413
+	REC_func_48500A08_Records	key=0x2000BF, proc=loc_4850244E
+	REC_func_48500A08_Records	key=0x2000C0, proc=loc_48502487
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1	# [112]
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1	# [120]
+	REC_func_48500A08_Records	key=0xB00079, proc=loc_485013AC
+	REC_func_48500A08_Records	key=0xB0007A, proc=loc_48501381
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	proc=loc_485024D1
+	REC_func_48500A08_Records	key=0xB0007F, proc=loc_48500BE1
 
 Str_SONG_2d_16s:	.asciz "SONG%2d : %16s"
 	.align	4, 0xFF	# pad after Str_SONG_2d_16s
@@ -22367,39 +22367,39 @@ Str_SOUND_14:	.asciz "SOUND"
 	.align	4, 0xFF	# pad after Str_SOUND_14
 
 TtCmStep_Records:	# 16 x REC_TtCmStep_Records (8 bytes each); read by TtCmStep 0x48502DF2 `mov (a0), d0`
-	REC_TtCmStep_Records	f0=64, p4=loc_48502F33	# [0]
-	REC_TtCmStep_Records	f0=1, p4=loc_48502F33
-	REC_TtCmStep_Records	f0=0x200000, p4=loc_48502F33
-	REC_TtCmStep_Records	f0=0x300000, p4=loc_48502F33
-	REC_TtCmStep_Records	f0=16, p4=loc_48502F33
-	REC_TtCmStep_Records	f0=17, p4=loc_48502F33
-	REC_TtCmStep_Records	p4=loc_48502FC8
-	REC_TtCmStep_Records	p4=loc_48502FC8
-	REC_TtCmStep_Records	p4=loc_48502FC8	# [8]
-	REC_TtCmStep_Records	p4=loc_48502FC8
-	REC_TtCmStep_Records	f0=10, p4=loc_48502F33
-	REC_TtCmStep_Records	f0=11, p4=loc_48502F33
-	REC_TtCmStep_Records	p4=loc_48502FC8
-	REC_TtCmStep_Records	f0=13, p4=loc_48502F33
-	REC_TtCmStep_Records	p4=loc_48502FC8
-	REC_TtCmStep_Records	p4=loc_48502FC8
+	REC_TtCmStep_Records	f0=64, proc=loc_48502F33	# [0]
+	REC_TtCmStep_Records	f0=1, proc=loc_48502F33
+	REC_TtCmStep_Records	f0=0x200000, proc=loc_48502F33
+	REC_TtCmStep_Records	f0=0x300000, proc=loc_48502F33
+	REC_TtCmStep_Records	f0=16, proc=loc_48502F33
+	REC_TtCmStep_Records	f0=17, proc=loc_48502F33
+	REC_TtCmStep_Records	proc=loc_48502FC8
+	REC_TtCmStep_Records	proc=loc_48502FC8
+	REC_TtCmStep_Records	proc=loc_48502FC8	# [8]
+	REC_TtCmStep_Records	proc=loc_48502FC8
+	REC_TtCmStep_Records	f0=10, proc=loc_48502F33
+	REC_TtCmStep_Records	f0=11, proc=loc_48502F33
+	REC_TtCmStep_Records	proc=loc_48502FC8
+	REC_TtCmStep_Records	f0=13, proc=loc_48502F33
+	REC_TtCmStep_Records	proc=loc_48502FC8
+	REC_TtCmStep_Records	proc=loc_48502FC8
 TtMspStep_Records:	# 16 x REC_TtMspStep_Records (8 bytes each); read by TtMspStep 0x48502FD7 `mov (a0), d0`
-	REC_TtMspStep_Records	f0=0x100000, p4=loc_48503201	# [0]
-	REC_TtMspStep_Records	f0=1, p4=loc_48503201
-	REC_TtMspStep_Records	f0=64, p4=loc_48503201
-	REC_TtMspStep_Records	f0=0x200000, p4=loc_48503201
-	REC_TtMspStep_Records	f0=0x300000, p4=loc_48503201
-	REC_TtMspStep_Records	f0=16, p4=loc_48503201
-	REC_TtMspStep_Records	f0=17, p4=loc_48503201
-	REC_TtMspStep_Records	p4=loc_485032AA
-	REC_TtMspStep_Records	p4=loc_485032AA	# [8]
-	REC_TtMspStep_Records	p4=loc_485032AA
-	REC_TtMspStep_Records	f0=10, p4=loc_48503201
-	REC_TtMspStep_Records	f0=11, p4=loc_48503201
-	REC_TtMspStep_Records	p4=loc_485032AA
-	REC_TtMspStep_Records	f0=13, p4=loc_48503201
-	REC_TtMspStep_Records	f0=94, p4=loc_48503201
-	REC_TtMspStep_Records	p4=loc_485032AA
+	REC_TtMspStep_Records	f0=0x100000, proc=loc_48503201	# [0]
+	REC_TtMspStep_Records	f0=1, proc=loc_48503201
+	REC_TtMspStep_Records	f0=64, proc=loc_48503201
+	REC_TtMspStep_Records	f0=0x200000, proc=loc_48503201
+	REC_TtMspStep_Records	f0=0x300000, proc=loc_48503201
+	REC_TtMspStep_Records	f0=16, proc=loc_48503201
+	REC_TtMspStep_Records	f0=17, proc=loc_48503201
+	REC_TtMspStep_Records	proc=loc_485032AA
+	REC_TtMspStep_Records	proc=loc_485032AA	# [8]
+	REC_TtMspStep_Records	proc=loc_485032AA
+	REC_TtMspStep_Records	f0=10, proc=loc_48503201
+	REC_TtMspStep_Records	f0=11, proc=loc_48503201
+	REC_TtMspStep_Records	proc=loc_485032AA
+	REC_TtMspStep_Records	f0=13, proc=loc_48503201
+	REC_TtMspStep_Records	f0=94, proc=loc_48503201
+	REC_TtMspStep_Records	proc=loc_485032AA
 
 func_48503643_Table:
 	.long	loc_48503673
@@ -22546,8 +22546,8 @@ func_485036C8_Table_2:
 	.long	loc_48503942
 
 func_4850439D_Records:	# 2 x REC_func_4850439D_Records (48 bytes each); read by func_4850439D 0x4850439D `calls (a1)`; func_4850439D 0x4850439D `mov (0x14, a2), a0`; func_4850439D 0x4850439D `mov (0xc, a0), a1` (+17)
-	REC_func_4850439D_Records	p0=func_4843C15E, p4=func_4843C433, p8=func_48436E56, p12=func_48436FA7, p16=func_484370B0, p20=func_484371B3, p24=func_4843713D, p28=func_48437201, p32=func_48436B5F, p36=func_48436F3D, p40=loc_48436BCF, p44=loc_48436BBA
-	REC_func_4850439D_Records	p0=func_4843258C, p4=func_484326B7, p8=func_484393D7, p12=func_48439522, p16=func_48439629, p20=func_4843972A, p24=func_484396B4, p28=func_48439778, p32=func_484390B7, p36=func_484394BC, p40=loc_48439138, p44=loc_48439123
+	REC_func_4850439D_Records	proc=func_4843C15E, proc_=func_4843C433, proc__=func_48436E56, proc___=func_48436FA7, proc____=func_484370B0, proc_____=func_484371B3, proc______=func_4843713D, proc_______=func_48437201, proc________=func_48436B5F, proc_________=func_48436F3D, proc__________=loc_48436BCF, proc___________=loc_48436BBA
+	REC_func_4850439D_Records	proc=func_4843258C, proc_=func_484326B7, proc__=func_484393D7, proc___=func_48439522, proc____=func_48439629, proc_____=func_4843972A, proc______=func_484396B4, proc_______=func_48439778, proc________=func_484390B7, proc_________=func_484394BC, proc__________=loc_48439138, proc___________=loc_48439123
 
 func_48504867_Table:	# 6 x u32, 1111..1147; read by func_48504867 0x48504867: `mov   (d1, a0), d2`
 	tab_u32	1111, 1115, 1119, 1123, 1127, 1147
@@ -22661,9 +22661,9 @@ func_48502C36_Var_9:
 
 GetTitleNow_Records:	# 4 x REC_GetTitleNow_Records (18 bytes each); read by GetTitleNow 0x4842C940 `call func_48414A0B_entry, [a2], 4`; func_485036C8 0x485036C8 `call GetTitleNow_entry, 0, 0x10`; func_48504CCE 0x48504CCE `call LibDiv32, 0, 0` (+8)
 	REC_GetTitleNow_Records	x0="   \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_GetTitleNow_Records	x0=" ~ad~b8\x00\x00\x00\x00\x00\x00\x00\x00\x00", f16=8
-	REC_GetTitleNow_Records	x0=" ~ad \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", f16=12
-	REC_GetTitleNow_Records	x0=" ~ac~b8\x00\x00\x00\x00\x00\x00\x00\x00\x00", f16=16
+	REC_GetTitleNow_Records	x0=" ~ad~b8\x00\x00\x00\x00\x00\x00\x00\x00\x00", dividend=8
+	REC_GetTitleNow_Records	x0=" ~ad \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", dividend=12
+	REC_GetTitleNow_Records	x0=" ~ac~b8\x00\x00\x00\x00\x00\x00\x00\x00\x00", dividend=16
 
 Str_ac_4:	.asciz " ~ac "
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -22717,61 +22717,61 @@ func_48502C36_Var_13:
 	.align	4, 0xFF
 
 func_48504B04_Records:	# 16 x REC_func_48504B04_Records (8 bytes each); read by func_48504B04 0x48504B04 `mov (a0), d0`
-	REC_func_48504B04_Records	f0=16, p4=loc_48504C13	# [0]
-	REC_func_48504B04_Records	f0=1, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=17, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=64, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=66, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=67, p4=loc_48504C13
-	REC_func_48504B04_Records	p4=loc_48504C36
-	REC_func_48504B04_Records	p4=loc_48504C36
-	REC_func_48504B04_Records	p4=loc_48504C36	# [8]
-	REC_func_48504B04_Records	p4=loc_48504C36
-	REC_func_48504B04_Records	f0=10, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=11, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=91, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=93, p4=loc_48504C13
-	REC_func_48504B04_Records	f0=94, p4=loc_48504C13
-	REC_func_48504B04_Records	p4=loc_48504C36
+	REC_func_48504B04_Records	f0=16, proc=loc_48504C13	# [0]
+	REC_func_48504B04_Records	f0=1, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=17, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=64, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=66, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=67, proc=loc_48504C13
+	REC_func_48504B04_Records	proc=loc_48504C36
+	REC_func_48504B04_Records	proc=loc_48504C36
+	REC_func_48504B04_Records	proc=loc_48504C36	# [8]
+	REC_func_48504B04_Records	proc=loc_48504C36
+	REC_func_48504B04_Records	f0=10, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=11, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=91, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=93, proc=loc_48504C13
+	REC_func_48504B04_Records	f0=94, proc=loc_48504C13
+	REC_func_48504B04_Records	proc=loc_48504C36
 func_48504CCE_Records:	# 32 x REC_func_48504CCE_Records (8 bytes each); read by func_48504CCE 0x48504CCE `mov (a0), d0`
-	REC_func_48504CCE_Records	f0=1022, p4=loc_485059DD	# [0]
-	REC_func_48504CCE_Records	f0=1, p4=loc_48504F0D
-	REC_func_48504CCE_Records	f0=1026, p4=loc_485059F0
-	REC_func_48504CCE_Records	f0=1059, p4=loc_485052D9
-	REC_func_48504CCE_Records	f0=1025, p4=loc_48505A5E
-	REC_func_48504CCE_Records	f0=1029, p4=loc_4850591D
-	REC_func_48504CCE_Records	f0=1028, p4=loc_48505A84
-	REC_func_48504CCE_Records	f0=1050, p4=loc_48505C73
-	REC_func_48504CCE_Records	f0=1051, p4=loc_48505CCD	# [8]
-	REC_func_48504CCE_Records	f0=1047, p4=loc_48505D2C
-	REC_func_48504CCE_Records	f0=1048, p4=loc_48505DAB
-	REC_func_48504CCE_Records	f0=1054, p4=loc_48505E25
-	REC_func_48504CCE_Records	f0=1055, p4=loc_48505E9F
-	REC_func_48504CCE_Records	p4=loc_48505F1A
-	REC_func_48504CCE_Records	f0=1038, p4=loc_48505765
-	REC_func_48504CCE_Records	f0=1039, p4=loc_48505840
-	REC_func_48504CCE_Records	f0=1040, p4=loc_4850532A	# [16]
-	REC_func_48504CCE_Records	f0=1041, p4=loc_48505542
-	REC_func_48504CCE_Records	f0=1010, p4=loc_485059A7
-	REC_func_48504CCE_Records	f0=1042, p4=loc_48505A03
-	REC_func_48504CCE_Records	f0=1009, p4=loc_48505A16
-	REC_func_48504CCE_Records	f0=21, p4=loc_48504F86
-	REC_func_48504CCE_Records	f0=1046, p4=loc_48505960
-	REC_func_48504CCE_Records	f0=23, p4=loc_48505038
-	REC_func_48504CCE_Records	f0=1014, p4=loc_485059B9	# [24]
-	REC_func_48504CCE_Records	f0=1013, p4=loc_48505A28
-	REC_func_48504CCE_Records	f0=1018, p4=loc_485059CA
-	REC_func_48504CCE_Records	f0=1017, p4=loc_48505A38
-	REC_func_48504CCE_Records	f0=1043, p4=loc_48505A71
-	REC_func_48504CCE_Records	f0=1021, p4=loc_48505A4B
-	REC_func_48504CCE_Records	f0=30, p4=loc_48505010
-	REC_func_48504CCE_Records	f0=31, p4=loc_4850502D
+	REC_func_48504CCE_Records	f0=1022, proc=loc_485059DD	# [0]
+	REC_func_48504CCE_Records	f0=1, proc=loc_48504F0D
+	REC_func_48504CCE_Records	f0=1026, proc=loc_485059F0
+	REC_func_48504CCE_Records	f0=1059, proc=loc_485052D9
+	REC_func_48504CCE_Records	f0=1025, proc=loc_48505A5E
+	REC_func_48504CCE_Records	f0=1029, proc=loc_4850591D
+	REC_func_48504CCE_Records	f0=1028, proc=loc_48505A84
+	REC_func_48504CCE_Records	f0=1050, proc=loc_48505C73
+	REC_func_48504CCE_Records	f0=1051, proc=loc_48505CCD	# [8]
+	REC_func_48504CCE_Records	f0=1047, proc=loc_48505D2C
+	REC_func_48504CCE_Records	f0=1048, proc=loc_48505DAB
+	REC_func_48504CCE_Records	f0=1054, proc=loc_48505E25
+	REC_func_48504CCE_Records	f0=1055, proc=loc_48505E9F
+	REC_func_48504CCE_Records	proc=loc_48505F1A
+	REC_func_48504CCE_Records	f0=1038, proc=loc_48505765
+	REC_func_48504CCE_Records	f0=1039, proc=loc_48505840
+	REC_func_48504CCE_Records	f0=1040, proc=loc_4850532A	# [16]
+	REC_func_48504CCE_Records	f0=1041, proc=loc_48505542
+	REC_func_48504CCE_Records	f0=1010, proc=loc_485059A7
+	REC_func_48504CCE_Records	f0=1042, proc=loc_48505A03
+	REC_func_48504CCE_Records	f0=1009, proc=loc_48505A16
+	REC_func_48504CCE_Records	f0=21, proc=loc_48504F86
+	REC_func_48504CCE_Records	f0=1046, proc=loc_48505960
+	REC_func_48504CCE_Records	f0=23, proc=loc_48505038
+	REC_func_48504CCE_Records	f0=1014, proc=loc_485059B9	# [24]
+	REC_func_48504CCE_Records	f0=1013, proc=loc_48505A28
+	REC_func_48504CCE_Records	f0=1018, proc=loc_485059CA
+	REC_func_48504CCE_Records	f0=1017, proc=loc_48505A38
+	REC_func_48504CCE_Records	f0=1043, proc=loc_48505A71
+	REC_func_48504CCE_Records	f0=1021, proc=loc_48505A4B
+	REC_func_48504CCE_Records	f0=30, proc=loc_48505010
+	REC_func_48504CCE_Records	f0=31, proc=loc_4850502D
 
 func_48505F6D_Table:	# 4 x u8, 0..255; read by func_48505F6D 0x48505F6D: `movbu (func_48505F6D_Table), d0`; func_48505F6D 0x48505F6D: `movbu (func_48505F6D_Table), d1` ...
 	tab_u8	0, 255, 255, 255
 
 func_48505F6D_Records:	# 1 x REC_func_48505F6D_Records (36 bytes each); read by func_48505F6D 0x48505F6D `calls (a1)`; func_48505F6D 0x48505F6D `mov (0x14, a3), a0`; func_48505F6D 0x48505F6D `mov (0xc, a0), a1` (+12)
-	REC_func_48505F6D_Records	p0=func_4843258C, p4=func_484326B7, p8=func_48432FB8, p12=func_48433082, p16=func_4843317E, p20=loc_48433296, p24=func_48433220, p28=func_48432F75, p32=func_4843302E
+	REC_func_48505F6D_Records	proc=func_4843258C, proc_=func_484326B7, proc__=func_48432FB8, proc___=func_48433082, proc____=func_4843317E, proc_____=loc_48433296, proc______=func_48433220, proc_______=func_48432F75, proc________=func_4843302E
 
 Str_Unknown:	.asciz "Unknown!"
 	.align	4, 0xFF	# pad after Str_Unknown
@@ -22779,22 +22779,22 @@ Str_Error:	.asciz "Error!"
 	.align	4, 0xFF	# pad after Str_Error
 
 func_48506095_Records:	# 16 x REC_func_48506095_Records (8 bytes each); read by func_48506095 0x48506095 `mov (a0), d0`
-	REC_func_48506095_Records	f0=1040, p4=loc_4850639F	# [0]
-	REC_func_48506095_Records	f0=1, p4=loc_48506285
-	REC_func_48506095_Records	f0=2, p4=loc_4850635B
-	REC_func_48506095_Records	f0=1041, p4=loc_4850652D
-	REC_func_48506095_Records	f0=1038, p4=loc_485066AC
-	REC_func_48506095_Records	f0=21, p4=loc_485062B9
-	REC_func_48506095_Records	f0=1039, p4=loc_4850679C
-	REC_func_48506095_Records	f0=1029, p4=loc_4850688C
-	REC_func_48506095_Records	f0=1046, p4=loc_485068CE	# [8]
-	REC_func_48506095_Records	p4=loc_485068F5
-	REC_func_48506095_Records	p4=loc_485068F5
-	REC_func_48506095_Records	p4=loc_485068F5
-	REC_func_48506095_Records	p4=loc_485068F5
-	REC_func_48506095_Records	p4=loc_485068F5
-	REC_func_48506095_Records	f0=30, p4=loc_48506333
-	REC_func_48506095_Records	f0=31, p4=loc_48506350
+	REC_func_48506095_Records	f0=1040, proc=loc_4850639F	# [0]
+	REC_func_48506095_Records	f0=1, proc=loc_48506285
+	REC_func_48506095_Records	f0=2, proc=loc_4850635B
+	REC_func_48506095_Records	f0=1041, proc=loc_4850652D
+	REC_func_48506095_Records	f0=1038, proc=loc_485066AC
+	REC_func_48506095_Records	f0=21, proc=loc_485062B9
+	REC_func_48506095_Records	f0=1039, proc=loc_4850679C
+	REC_func_48506095_Records	f0=1029, proc=loc_4850688C
+	REC_func_48506095_Records	f0=1046, proc=loc_485068CE	# [8]
+	REC_func_48506095_Records	proc=loc_485068F5
+	REC_func_48506095_Records	proc=loc_485068F5
+	REC_func_48506095_Records	proc=loc_485068F5
+	REC_func_48506095_Records	proc=loc_485068F5
+	REC_func_48506095_Records	proc=loc_485068F5
+	REC_func_48506095_Records	f0=30, proc=loc_48506333
+	REC_func_48506095_Records	f0=31, proc=loc_48506350
 
 Field_AcSndArgGridBox_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_AcSndArgGridBox_end
@@ -22859,22 +22859,22 @@ Str_ON_42:	.asciz "ON "
 Str_empty_955:	.asciz "---"
 
 func_48506B84_Records:	# 16 x REC_func_48506B84_Records (8 bytes each); read by func_48506B84 0x48506B84 `mov (a0), d0`
-	REC_func_48506B84_Records	f0=16, p4=loc_48506C0B	# [0]
-	REC_func_48506B84_Records	f0=17, p4=loc_48506C0B
-	REC_func_48506B84_Records	f0=2, p4=loc_48506BD7
-	REC_func_48506B84_Records	f0=18, p4=loc_48506C0B
-	REC_func_48506B84_Records	f0=19, p4=loc_48506C0B
-	REC_func_48506B84_Records	f0=20, p4=loc_48506C0B
-	REC_func_48506B84_Records	f0=21, p4=loc_48506C66
-	REC_func_48506B84_Records	f0=0x10082, p4=loc_48506DC6
-	REC_func_48506B84_Records	f0=1, p4=loc_48506ECF	# [8]
-	REC_func_48506B84_Records	p4=loc_48506ED2
-	REC_func_48506B84_Records	p4=loc_48506ED2
-	REC_func_48506B84_Records	p4=loc_48506ED2
-	REC_func_48506B84_Records	p4=loc_48506ED2
-	REC_func_48506B84_Records	p4=loc_48506ED2
-	REC_func_48506B84_Records	p4=loc_48506ED2
-	REC_func_48506B84_Records	p4=loc_48506ED2
+	REC_func_48506B84_Records	f0=16, proc=loc_48506C0B	# [0]
+	REC_func_48506B84_Records	f0=17, proc=loc_48506C0B
+	REC_func_48506B84_Records	f0=2, proc=loc_48506BD7
+	REC_func_48506B84_Records	f0=18, proc=loc_48506C0B
+	REC_func_48506B84_Records	f0=19, proc=loc_48506C0B
+	REC_func_48506B84_Records	f0=20, proc=loc_48506C0B
+	REC_func_48506B84_Records	f0=21, proc=loc_48506C66
+	REC_func_48506B84_Records	f0=0x10082, proc=loc_48506DC6
+	REC_func_48506B84_Records	f0=1, proc=loc_48506ECF	# [8]
+	REC_func_48506B84_Records	proc=loc_48506ED2
+	REC_func_48506B84_Records	proc=loc_48506ED2
+	REC_func_48506B84_Records	proc=loc_48506ED2
+	REC_func_48506B84_Records	proc=loc_48506ED2
+	REC_func_48506B84_Records	proc=loc_48506ED2
+	REC_func_48506B84_Records	proc=loc_48506ED2
+	REC_func_48506B84_Records	proc=loc_48506ED2
 
 Field_AcMultiIndexList_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_AcMultiIndexList_end
@@ -25851,463 +25851,463 @@ CmBkslShowHideFunc_Table:
 	.long	loc_48507B79
 
 FE_CmpRecTS_Records:	# 16 x REC_FE_CmpRecTS_Records (8 bytes each); read by FE_CmpRecTS 0x48507E12 `mov (a0), d0`
-	REC_FE_CmpRecTS_Records	f0=16, p4=loc_48507EFB	# [0]
-	REC_FE_CmpRecTS_Records	f0=17, p4=loc_48507F48
-	REC_FE_CmpRecTS_Records	f0=2, p4=loc_48507E64
-	REC_FE_CmpRecTS_Records	f0=0x100B3, p4=loc_48507ECC
-	REC_FE_CmpRecTS_Records	f0=18, p4=loc_48507EFB
-	REC_FE_CmpRecTS_Records	f0=19, p4=loc_48507F48
-	REC_FE_CmpRecTS_Records	f0=0x10063, p4=loc_48507FA5
-	REC_FE_CmpRecTS_Records	f0=1, p4=loc_48507FB9
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC	# [8]
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC
-	REC_FE_CmpRecTS_Records	f0=0x1003B, p4=loc_48507F93
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC
-	REC_FE_CmpRecTS_Records	p4=loc_48507FBC
+	REC_FE_CmpRecTS_Records	f0=16, proc=loc_48507EFB	# [0]
+	REC_FE_CmpRecTS_Records	f0=17, proc=loc_48507F48
+	REC_FE_CmpRecTS_Records	f0=2, proc=loc_48507E64
+	REC_FE_CmpRecTS_Records	f0=0x100B3, proc=loc_48507ECC
+	REC_FE_CmpRecTS_Records	f0=18, proc=loc_48507EFB
+	REC_FE_CmpRecTS_Records	f0=19, proc=loc_48507F48
+	REC_FE_CmpRecTS_Records	f0=0x10063, proc=loc_48507FA5
+	REC_FE_CmpRecTS_Records	f0=1, proc=loc_48507FB9
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC	# [8]
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC
+	REC_FE_CmpRecTS_Records	f0=0x1003B, proc=loc_48507F93
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC
+	REC_FE_CmpRecTS_Records	proc=loc_48507FBC
 CmpPartSel_Records:	# 32 x REC_CmpPartSel_Records (8 bytes each); read by CmpPartSel 0x485081AC `mov (a0), d1`
-	REC_CmpPartSel_Records	p4=loc_4850825F	# [0]
-	REC_CmpPartSel_Records	f0=65, p4=loc_4850824D
-	REC_CmpPartSel_Records	f0=1, p4=loc_48508256
-	REC_CmpPartSel_Records	f0=3, p4=loc_48508218
-	REC_CmpPartSel_Records	f0=67, p4=loc_48508244
-	REC_CmpPartSel_Records	f0=69, p4=loc_4850823B
-	REC_CmpPartSel_Records	f0=5, p4=loc_4850824D
-	REC_CmpPartSel_Records	f0=71, p4=loc_48508232
-	REC_CmpPartSel_Records	f0=7, p4=loc_48508244	# [8]
-	REC_CmpPartSel_Records	f0=73, p4=loc_48508229
-	REC_CmpPartSel_Records	f0=9, p4=loc_4850823B
-	REC_CmpPartSel_Records	f0=75, p4=loc_48508221
-	REC_CmpPartSel_Records	f0=11, p4=loc_48508232
-	REC_CmpPartSel_Records	f0=13, p4=loc_48508229
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	f0=15, p4=loc_48508221
-	REC_CmpPartSel_Records	p4=loc_4850825F	# [16]
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F	# [24]
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	f0=61, p4=loc_48508256
-	REC_CmpPartSel_Records	p4=loc_4850825F
-	REC_CmpPartSel_Records	f0=63, p4=loc_48508218
+	REC_CmpPartSel_Records	proc=loc_4850825F	# [0]
+	REC_CmpPartSel_Records	f0=65, proc=loc_4850824D
+	REC_CmpPartSel_Records	f0=1, proc=loc_48508256
+	REC_CmpPartSel_Records	f0=3, proc=loc_48508218
+	REC_CmpPartSel_Records	f0=67, proc=loc_48508244
+	REC_CmpPartSel_Records	f0=69, proc=loc_4850823B
+	REC_CmpPartSel_Records	f0=5, proc=loc_4850824D
+	REC_CmpPartSel_Records	f0=71, proc=loc_48508232
+	REC_CmpPartSel_Records	f0=7, proc=loc_48508244	# [8]
+	REC_CmpPartSel_Records	f0=73, proc=loc_48508229
+	REC_CmpPartSel_Records	f0=9, proc=loc_4850823B
+	REC_CmpPartSel_Records	f0=75, proc=loc_48508221
+	REC_CmpPartSel_Records	f0=11, proc=loc_48508232
+	REC_CmpPartSel_Records	f0=13, proc=loc_48508229
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	f0=15, proc=loc_48508221
+	REC_CmpPartSel_Records	proc=loc_4850825F	# [16]
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F	# [24]
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	f0=61, proc=loc_48508256
+	REC_CmpPartSel_Records	proc=loc_4850825F
+	REC_CmpPartSel_Records	f0=63, proc=loc_48508218
 FE_CmpRecQtz_Records:	# 16 x REC_FE_CmpRecQtz_Records (8 bytes each); read by FE_CmpRecQtz 0x48508887 `mov (a0), d0`
-	REC_FE_CmpRecQtz_Records	f0=16, p4=loc_485088F4	# [0]
-	REC_FE_CmpRecQtz_Records	f0=17, p4=loc_48508955
-	REC_FE_CmpRecQtz_Records	f0=2, p4=loc_485088DA
-	REC_FE_CmpRecQtz_Records	f0=18, p4=loc_485088F4
-	REC_FE_CmpRecQtz_Records	f0=19, p4=loc_48508955
-	REC_FE_CmpRecQtz_Records	f0=0x10063, p4=loc_485089D2
-	REC_FE_CmpRecQtz_Records	f0=1, p4=loc_485089E5
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8	# [8]
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8
-	REC_FE_CmpRecQtz_Records	f0=0x1003B, p4=loc_485089B7
-	REC_FE_CmpRecQtz_Records	f0=0x1003C, p4=loc_485089DA
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8
-	REC_FE_CmpRecQtz_Records	p4=loc_485089E8
+	REC_FE_CmpRecQtz_Records	f0=16, proc=loc_485088F4	# [0]
+	REC_FE_CmpRecQtz_Records	f0=17, proc=loc_48508955
+	REC_FE_CmpRecQtz_Records	f0=2, proc=loc_485088DA
+	REC_FE_CmpRecQtz_Records	f0=18, proc=loc_485088F4
+	REC_FE_CmpRecQtz_Records	f0=19, proc=loc_48508955
+	REC_FE_CmpRecQtz_Records	f0=0x10063, proc=loc_485089D2
+	REC_FE_CmpRecQtz_Records	f0=1, proc=loc_485089E5
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8	# [8]
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8
+	REC_FE_CmpRecQtz_Records	f0=0x1003B, proc=loc_485089B7
+	REC_FE_CmpRecQtz_Records	f0=0x1003C, proc=loc_485089DA
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8
+	REC_FE_CmpRecQtz_Records	proc=loc_485089E8
 CmpPartCopyGrid_Records:	# 16 x REC_CmpPartCopyGrid_Records (8 bytes each); read by CmpPartCopyGrid 0x48509ABA `mov (a0), d0`
-	REC_CmpPartCopyGrid_Records	f0=16, p4=loc_48509BEE	# [0]
-	REC_CmpPartCopyGrid_Records	f0=17, p4=loc_48509BF3
-	REC_CmpPartCopyGrid_Records	f0=2, p4=loc_48509B11
-	REC_CmpPartCopyGrid_Records	f0=18, p4=loc_48509BEE
-	REC_CmpPartCopyGrid_Records	f0=0x100B4, p4=loc_48509BEB
-	REC_CmpPartCopyGrid_Records	f0=19, p4=loc_48509BF3
-	REC_CmpPartCopyGrid_Records	f0=0x10082, p4=loc_48509E45
-	REC_CmpPartCopyGrid_Records	f0=0x100B0, p4=loc_48509FB4
-	REC_CmpPartCopyGrid_Records	f0=1, p4=loc_48509FCD	# [8]
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
-	REC_CmpPartCopyGrid_Records	p4=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	f0=16, proc=loc_48509BEE	# [0]
+	REC_CmpPartCopyGrid_Records	f0=17, proc=loc_48509BF3
+	REC_CmpPartCopyGrid_Records	f0=2, proc=loc_48509B11
+	REC_CmpPartCopyGrid_Records	f0=18, proc=loc_48509BEE
+	REC_CmpPartCopyGrid_Records	f0=0x100B4, proc=loc_48509BEB
+	REC_CmpPartCopyGrid_Records	f0=19, proc=loc_48509BF3
+	REC_CmpPartCopyGrid_Records	f0=0x10082, proc=loc_48509E45
+	REC_CmpPartCopyGrid_Records	f0=0x100B0, proc=loc_48509FB4
+	REC_CmpPartCopyGrid_Records	f0=1, proc=loc_48509FCD	# [8]
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
+	REC_CmpPartCopyGrid_Records	proc=loc_48509FD0
 FE_CompPartCopyMem_Records:	# 16 x REC_FE_CompPartCopyMem_Records (8 bytes each); read by FE_CompPartCopyMem 0x4850A1CE `mov (a0), d0`
-	REC_FE_CompPartCopyMem_Records	f0=16, p4=loc_4850A2EC	# [0]
-	REC_FE_CompPartCopyMem_Records	f0=17, p4=loc_4850A366
-	REC_FE_CompPartCopyMem_Records	f0=2, p4=loc_4850A221
-	REC_FE_CompPartCopyMem_Records	f0=3, p4=loc_4850A2E8
-	REC_FE_CompPartCopyMem_Records	f0=18, p4=loc_4850A2EC
-	REC_FE_CompPartCopyMem_Records	f0=19, p4=loc_4850A366
-	REC_FE_CompPartCopyMem_Records	f0=0x10063, p4=loc_4850A426
-	REC_FE_CompPartCopyMem_Records	f0=1, p4=loc_4850A42E
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431	# [8]
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431
-	REC_FE_CompPartCopyMem_Records	f0=0x1003B, p4=loc_4850A3DC
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431
-	REC_FE_CompPartCopyMem_Records	p4=loc_4850A431
+	REC_FE_CompPartCopyMem_Records	f0=16, proc=loc_4850A2EC	# [0]
+	REC_FE_CompPartCopyMem_Records	f0=17, proc=loc_4850A366
+	REC_FE_CompPartCopyMem_Records	f0=2, proc=loc_4850A221
+	REC_FE_CompPartCopyMem_Records	f0=3, proc=loc_4850A2E8
+	REC_FE_CompPartCopyMem_Records	f0=18, proc=loc_4850A2EC
+	REC_FE_CompPartCopyMem_Records	f0=19, proc=loc_4850A366
+	REC_FE_CompPartCopyMem_Records	f0=0x10063, proc=loc_4850A426
+	REC_FE_CompPartCopyMem_Records	f0=1, proc=loc_4850A42E
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431	# [8]
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431
+	REC_FE_CompPartCopyMem_Records	f0=0x1003B, proc=loc_4850A3DC
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431
+	REC_FE_CompPartCopyMem_Records	proc=loc_4850A431
 FE_SeqToCmpFstMeas_Records:	# 16 x REC_FE_SeqToCmpFstMeas_Records (8 bytes each); read by FE_SeqToCmpFstMeas 0x4850A922 `mov (a0), d0`
-	REC_FE_SeqToCmpFstMeas_Records	f0=16, p4=loc_4850A979	# [0]
-	REC_FE_SeqToCmpFstMeas_Records	f0=17, p4=loc_4850A98B
-	REC_FE_SeqToCmpFstMeas_Records	f0=2, p4=loc_4850A975
-	REC_FE_SeqToCmpFstMeas_Records	f0=18, p4=loc_4850A979
-	REC_FE_SeqToCmpFstMeas_Records	f0=19, p4=loc_4850A98B
-	REC_FE_SeqToCmpFstMeas_Records	f0=0x10063, p4=loc_4850A9BB
-	REC_FE_SeqToCmpFstMeas_Records	f0=1, p4=loc_4850A9EE
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1	# [8]
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1
-	REC_FE_SeqToCmpFstMeas_Records	f0=0x1003B, p4=loc_4850A99D
-	REC_FE_SeqToCmpFstMeas_Records	f0=0x1003C, p4=loc_4850A9C3
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1
-	REC_FE_SeqToCmpFstMeas_Records	p4=loc_4850A9F1
+	REC_FE_SeqToCmpFstMeas_Records	f0=16, proc=loc_4850A979	# [0]
+	REC_FE_SeqToCmpFstMeas_Records	f0=17, proc=loc_4850A98B
+	REC_FE_SeqToCmpFstMeas_Records	f0=2, proc=loc_4850A975
+	REC_FE_SeqToCmpFstMeas_Records	f0=18, proc=loc_4850A979
+	REC_FE_SeqToCmpFstMeas_Records	f0=19, proc=loc_4850A98B
+	REC_FE_SeqToCmpFstMeas_Records	f0=0x10063, proc=loc_4850A9BB
+	REC_FE_SeqToCmpFstMeas_Records	f0=1, proc=loc_4850A9EE
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1	# [8]
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1
+	REC_FE_SeqToCmpFstMeas_Records	f0=0x1003B, proc=loc_4850A99D
+	REC_FE_SeqToCmpFstMeas_Records	f0=0x1003C, proc=loc_4850A9C3
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1
+	REC_FE_SeqToCmpFstMeas_Records	proc=loc_4850A9F1
 FE_SeqToCmpLstMeas_Records:	# 16 x REC_FE_SeqToCmpLstMeas_Records (8 bytes each); read by FE_SeqToCmpLstMeas 0x4850A9F5 `mov (a0), d0`
-	REC_FE_SeqToCmpLstMeas_Records	f0=16, p4=loc_4850AA4C	# [0]
-	REC_FE_SeqToCmpLstMeas_Records	f0=17, p4=loc_4850AA5E
-	REC_FE_SeqToCmpLstMeas_Records	f0=2, p4=loc_4850AA48
-	REC_FE_SeqToCmpLstMeas_Records	f0=18, p4=loc_4850AA4C
-	REC_FE_SeqToCmpLstMeas_Records	f0=19, p4=loc_4850AA5E
-	REC_FE_SeqToCmpLstMeas_Records	f0=0x10063, p4=loc_4850AA8E
-	REC_FE_SeqToCmpLstMeas_Records	f0=1, p4=loc_4850AAC1
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4	# [8]
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4
-	REC_FE_SeqToCmpLstMeas_Records	f0=0x1003B, p4=loc_4850AA70
-	REC_FE_SeqToCmpLstMeas_Records	f0=0x1003C, p4=loc_4850AA96
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4
-	REC_FE_SeqToCmpLstMeas_Records	p4=loc_4850AAC4
+	REC_FE_SeqToCmpLstMeas_Records	f0=16, proc=loc_4850AA4C	# [0]
+	REC_FE_SeqToCmpLstMeas_Records	f0=17, proc=loc_4850AA5E
+	REC_FE_SeqToCmpLstMeas_Records	f0=2, proc=loc_4850AA48
+	REC_FE_SeqToCmpLstMeas_Records	f0=18, proc=loc_4850AA4C
+	REC_FE_SeqToCmpLstMeas_Records	f0=19, proc=loc_4850AA5E
+	REC_FE_SeqToCmpLstMeas_Records	f0=0x10063, proc=loc_4850AA8E
+	REC_FE_SeqToCmpLstMeas_Records	f0=1, proc=loc_4850AAC1
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4	# [8]
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4
+	REC_FE_SeqToCmpLstMeas_Records	f0=0x1003B, proc=loc_4850AA70
+	REC_FE_SeqToCmpLstMeas_Records	f0=0x1003C, proc=loc_4850AA96
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4
+	REC_FE_SeqToCmpLstMeas_Records	proc=loc_4850AAC4
 FE_SeqToCmpTrans_Records:	# 16 x REC_FE_SeqToCmpTrans_Records (8 bytes each); read by FE_SeqToCmpTrans 0x4850ADB1 `mov (a0), d0`
-	REC_FE_SeqToCmpTrans_Records	f0=16, p4=loc_4850AE08	# [0]
-	REC_FE_SeqToCmpTrans_Records	f0=17, p4=loc_4850AE1B
-	REC_FE_SeqToCmpTrans_Records	f0=2, p4=loc_4850AE04
-	REC_FE_SeqToCmpTrans_Records	f0=18, p4=loc_4850AE08
-	REC_FE_SeqToCmpTrans_Records	f0=19, p4=loc_4850AE1B
-	REC_FE_SeqToCmpTrans_Records	f0=0x10063, p4=loc_4850AE65
-	REC_FE_SeqToCmpTrans_Records	f0=1, p4=loc_4850AE9A
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D	# [8]
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D
-	REC_FE_SeqToCmpTrans_Records	f0=0x1003B, p4=loc_4850AE2F
-	REC_FE_SeqToCmpTrans_Records	f0=0x1003C, p4=loc_4850AE6E
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D
-	REC_FE_SeqToCmpTrans_Records	p4=loc_4850AE9D
+	REC_FE_SeqToCmpTrans_Records	f0=16, proc=loc_4850AE08	# [0]
+	REC_FE_SeqToCmpTrans_Records	f0=17, proc=loc_4850AE1B
+	REC_FE_SeqToCmpTrans_Records	f0=2, proc=loc_4850AE04
+	REC_FE_SeqToCmpTrans_Records	f0=18, proc=loc_4850AE08
+	REC_FE_SeqToCmpTrans_Records	f0=19, proc=loc_4850AE1B
+	REC_FE_SeqToCmpTrans_Records	f0=0x10063, proc=loc_4850AE65
+	REC_FE_SeqToCmpTrans_Records	f0=1, proc=loc_4850AE9A
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D	# [8]
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D
+	REC_FE_SeqToCmpTrans_Records	f0=0x1003B, proc=loc_4850AE2F
+	REC_FE_SeqToCmpTrans_Records	f0=0x1003C, proc=loc_4850AE6E
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D
+	REC_FE_SeqToCmpTrans_Records	proc=loc_4850AE9D
 FE_SeqToCmpMemory_Records:	# 16 x REC_FE_SeqToCmpMemory_Records (8 bytes each); read by FE_SeqToCmpMemory 0x4850AEA1 `mov (a0), d0`
-	REC_FE_SeqToCmpMemory_Records	f0=16, p4=loc_4850AEF8	# [0]
-	REC_FE_SeqToCmpMemory_Records	f0=17, p4=loc_4850AF0A
-	REC_FE_SeqToCmpMemory_Records	f0=2, p4=loc_4850AEF4
-	REC_FE_SeqToCmpMemory_Records	f0=18, p4=loc_4850AEF8
-	REC_FE_SeqToCmpMemory_Records	f0=19, p4=loc_4850AF0A
-	REC_FE_SeqToCmpMemory_Records	f0=0x10063, p4=loc_4850AF65
-	REC_FE_SeqToCmpMemory_Records	f0=1, p4=loc_4850AF98
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B	# [8]
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B
-	REC_FE_SeqToCmpMemory_Records	f0=0x1003B, p4=loc_4850AF1D
-	REC_FE_SeqToCmpMemory_Records	f0=0x1003C, p4=loc_4850AF6D
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B
-	REC_FE_SeqToCmpMemory_Records	p4=loc_4850AF9B
+	REC_FE_SeqToCmpMemory_Records	f0=16, proc=loc_4850AEF8	# [0]
+	REC_FE_SeqToCmpMemory_Records	f0=17, proc=loc_4850AF0A
+	REC_FE_SeqToCmpMemory_Records	f0=2, proc=loc_4850AEF4
+	REC_FE_SeqToCmpMemory_Records	f0=18, proc=loc_4850AEF8
+	REC_FE_SeqToCmpMemory_Records	f0=19, proc=loc_4850AF0A
+	REC_FE_SeqToCmpMemory_Records	f0=0x10063, proc=loc_4850AF65
+	REC_FE_SeqToCmpMemory_Records	f0=1, proc=loc_4850AF98
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B	# [8]
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B
+	REC_FE_SeqToCmpMemory_Records	f0=0x1003B, proc=loc_4850AF1D
+	REC_FE_SeqToCmpMemory_Records	f0=0x1003C, proc=loc_4850AF6D
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B
+	REC_FE_SeqToCmpMemory_Records	proc=loc_4850AF9B
 FE_SeqToCmpPattern_Records:	# 16 x REC_FE_SeqToCmpPattern_Records (8 bytes each); read by FE_SeqToCmpPattern 0x4850AF9F `mov (a0), d0`
-	REC_FE_SeqToCmpPattern_Records	f0=16, p4=loc_4850AFF5	# [0]
-	REC_FE_SeqToCmpPattern_Records	f0=17, p4=loc_4850B007
-	REC_FE_SeqToCmpPattern_Records	f0=2, p4=loc_4850AFF1
-	REC_FE_SeqToCmpPattern_Records	f0=18, p4=loc_4850AFF5
-	REC_FE_SeqToCmpPattern_Records	f0=19, p4=loc_4850B007
-	REC_FE_SeqToCmpPattern_Records	f0=0x10063, p4=loc_4850B074
-	REC_FE_SeqToCmpPattern_Records	f0=1, p4=loc_4850B0A7
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA	# [8]
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA
-	REC_FE_SeqToCmpPattern_Records	f0=0x1003B, p4=loc_4850B01A
-	REC_FE_SeqToCmpPattern_Records	f0=0x1003C, p4=loc_4850B07C
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA
-	REC_FE_SeqToCmpPattern_Records	p4=loc_4850B0AA
+	REC_FE_SeqToCmpPattern_Records	f0=16, proc=loc_4850AFF5	# [0]
+	REC_FE_SeqToCmpPattern_Records	f0=17, proc=loc_4850B007
+	REC_FE_SeqToCmpPattern_Records	f0=2, proc=loc_4850AFF1
+	REC_FE_SeqToCmpPattern_Records	f0=18, proc=loc_4850AFF5
+	REC_FE_SeqToCmpPattern_Records	f0=19, proc=loc_4850B007
+	REC_FE_SeqToCmpPattern_Records	f0=0x10063, proc=loc_4850B074
+	REC_FE_SeqToCmpPattern_Records	f0=1, proc=loc_4850B0A7
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA	# [8]
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA
+	REC_FE_SeqToCmpPattern_Records	f0=0x1003B, proc=loc_4850B01A
+	REC_FE_SeqToCmpPattern_Records	f0=0x1003C, proc=loc_4850B07C
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA
+	REC_FE_SeqToCmpPattern_Records	proc=loc_4850B0AA
 CmpDspSetGrid_Records:	# 16 x REC_CmpDspSetGrid_Records (8 bytes each); read by CmpDspSetGrid 0x4850BADD `mov (a0), d0`
-	REC_CmpDspSetGrid_Records	f0=16, p4=loc_4850BB7E	# [0]
-	REC_CmpDspSetGrid_Records	f0=17, p4=loc_4850BB80
-	REC_CmpDspSetGrid_Records	f0=2, p4=loc_4850BB44
-	REC_CmpDspSetGrid_Records	f0=3, p4=loc_4850BB65
-	REC_CmpDspSetGrid_Records	f0=0x100B4, p4=loc_4850BB7B
-	REC_CmpDspSetGrid_Records	f0=18, p4=loc_4850BB7E
-	REC_CmpDspSetGrid_Records	f0=19, p4=loc_4850BB80
-	REC_CmpDspSetGrid_Records	f0=0x10082, p4=loc_4850BE9B
-	REC_CmpDspSetGrid_Records	f0=0x100B0, p4=loc_4850BFEA	# [8]
-	REC_CmpDspSetGrid_Records	f0=1, p4=loc_4850BFEE
-	REC_CmpDspSetGrid_Records	p4=loc_4850BFF2
-	REC_CmpDspSetGrid_Records	p4=loc_4850BFF2
-	REC_CmpDspSetGrid_Records	p4=loc_4850BFF2
-	REC_CmpDspSetGrid_Records	p4=loc_4850BFF2
-	REC_CmpDspSetGrid_Records	p4=loc_4850BFF2
-	REC_CmpDspSetGrid_Records	p4=loc_4850BFF2
+	REC_CmpDspSetGrid_Records	f0=16, proc=loc_4850BB7E	# [0]
+	REC_CmpDspSetGrid_Records	f0=17, proc=loc_4850BB80
+	REC_CmpDspSetGrid_Records	f0=2, proc=loc_4850BB44
+	REC_CmpDspSetGrid_Records	f0=3, proc=loc_4850BB65
+	REC_CmpDspSetGrid_Records	f0=0x100B4, proc=loc_4850BB7B
+	REC_CmpDspSetGrid_Records	f0=18, proc=loc_4850BB7E
+	REC_CmpDspSetGrid_Records	f0=19, proc=loc_4850BB80
+	REC_CmpDspSetGrid_Records	f0=0x10082, proc=loc_4850BE9B
+	REC_CmpDspSetGrid_Records	f0=0x100B0, proc=loc_4850BFEA	# [8]
+	REC_CmpDspSetGrid_Records	f0=1, proc=loc_4850BFEE
+	REC_CmpDspSetGrid_Records	proc=loc_4850BFF2
+	REC_CmpDspSetGrid_Records	proc=loc_4850BFF2
+	REC_CmpDspSetGrid_Records	proc=loc_4850BFF2
+	REC_CmpDspSetGrid_Records	proc=loc_4850BFF2
+	REC_CmpDspSetGrid_Records	proc=loc_4850BFF2
+	REC_CmpDspSetGrid_Records	proc=loc_4850BFF2
 CmpPartSetGrid2_Records:	# 16 x REC_CmpPartSetGrid2_Records (8 bytes each); read by CmpPartSetGrid2 0x4850CDE1 `mov (a0), d0`
-	REC_CmpPartSetGrid2_Records	f0=16, p4=loc_4850CF37	# [0]
-	REC_CmpPartSetGrid2_Records	f0=17, p4=loc_4850CF3C
-	REC_CmpPartSetGrid2_Records	f0=2, p4=loc_4850CE39
-	REC_CmpPartSetGrid2_Records	f0=3, p4=loc_4850CEC7
-	REC_CmpPartSetGrid2_Records	f0=0x100B4, p4=loc_4850CEDE
-	REC_CmpPartSetGrid2_Records	f0=18, p4=loc_4850CF37
-	REC_CmpPartSetGrid2_Records	f0=19, p4=loc_4850CF3C
-	REC_CmpPartSetGrid2_Records	f0=0x10082, p4=loc_4850D4BA
-	REC_CmpPartSetGrid2_Records	f0=1, p4=loc_4850D768	# [8]
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
-	REC_CmpPartSetGrid2_Records	p4=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	key=16, proc=loc_4850CF37	# [0]
+	REC_CmpPartSetGrid2_Records	key=17, proc=loc_4850CF3C
+	REC_CmpPartSetGrid2_Records	key=2, proc=loc_4850CE39
+	REC_CmpPartSetGrid2_Records	key=3, proc=loc_4850CEC7
+	REC_CmpPartSetGrid2_Records	key=0x100B4, proc=loc_4850CEDE
+	REC_CmpPartSetGrid2_Records	key=18, proc=loc_4850CF37
+	REC_CmpPartSetGrid2_Records	key=19, proc=loc_4850CF3C
+	REC_CmpPartSetGrid2_Records	key=0x10082, proc=loc_4850D4BA
+	REC_CmpPartSetGrid2_Records	key=1, proc=loc_4850D768	# [8]
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
+	REC_CmpPartSetGrid2_Records	proc=loc_4850D76B
 FE_CmpMCopySPart_Records:	# 16 x REC_FE_CmpMCopySPart_Records (8 bytes each); read by FE_CmpMCopySPart 0x4850D83C `mov (a0), d0`
-	REC_FE_CmpMCopySPart_Records	f0=16, p4=loc_4850D893	# [0]
-	REC_FE_CmpMCopySPart_Records	f0=17, p4=loc_4850D8A5
-	REC_FE_CmpMCopySPart_Records	f0=2, p4=loc_4850D88F
-	REC_FE_CmpMCopySPart_Records	f0=18, p4=loc_4850D893
-	REC_FE_CmpMCopySPart_Records	f0=19, p4=loc_4850D8A5
-	REC_FE_CmpMCopySPart_Records	f0=0x10063, p4=loc_4850D8D6
-	REC_FE_CmpMCopySPart_Records	f0=1, p4=loc_4850D909
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C	# [8]
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C
-	REC_FE_CmpMCopySPart_Records	f0=0x1003B, p4=loc_4850D8B7
-	REC_FE_CmpMCopySPart_Records	f0=0x1003C, p4=loc_4850D8DE
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C
-	REC_FE_CmpMCopySPart_Records	p4=loc_4850D90C
+	REC_FE_CmpMCopySPart_Records	f0=16, proc=loc_4850D893	# [0]
+	REC_FE_CmpMCopySPart_Records	f0=17, proc=loc_4850D8A5
+	REC_FE_CmpMCopySPart_Records	f0=2, proc=loc_4850D88F
+	REC_FE_CmpMCopySPart_Records	f0=18, proc=loc_4850D893
+	REC_FE_CmpMCopySPart_Records	f0=19, proc=loc_4850D8A5
+	REC_FE_CmpMCopySPart_Records	f0=0x10063, proc=loc_4850D8D6
+	REC_FE_CmpMCopySPart_Records	f0=1, proc=loc_4850D909
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C	# [8]
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C
+	REC_FE_CmpMCopySPart_Records	f0=0x1003B, proc=loc_4850D8B7
+	REC_FE_CmpMCopySPart_Records	f0=0x1003C, proc=loc_4850D8DE
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C
+	REC_FE_CmpMCopySPart_Records	proc=loc_4850D90C
 FE_CmpMCopyFstMeas_Records:	# 16 x REC_FE_CmpMCopyFstMeas_Records (8 bytes each); read by FE_CmpMCopyFstMeas 0x4850D910 `mov (a0), d0`
-	REC_FE_CmpMCopyFstMeas_Records	f0=16, p4=loc_4850D967	# [0]
-	REC_FE_CmpMCopyFstMeas_Records	f0=17, p4=loc_4850D979
-	REC_FE_CmpMCopyFstMeas_Records	f0=2, p4=loc_4850D963
-	REC_FE_CmpMCopyFstMeas_Records	f0=18, p4=loc_4850D967
-	REC_FE_CmpMCopyFstMeas_Records	f0=19, p4=loc_4850D979
-	REC_FE_CmpMCopyFstMeas_Records	f0=0x10063, p4=loc_4850D9A9
-	REC_FE_CmpMCopyFstMeas_Records	f0=1, p4=loc_4850D9DC
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF	# [8]
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF
-	REC_FE_CmpMCopyFstMeas_Records	f0=0x1003B, p4=loc_4850D98B
-	REC_FE_CmpMCopyFstMeas_Records	f0=0x1003C, p4=loc_4850D9B1
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF
-	REC_FE_CmpMCopyFstMeas_Records	p4=loc_4850D9DF
+	REC_FE_CmpMCopyFstMeas_Records	f0=16, proc=loc_4850D967	# [0]
+	REC_FE_CmpMCopyFstMeas_Records	f0=17, proc=loc_4850D979
+	REC_FE_CmpMCopyFstMeas_Records	f0=2, proc=loc_4850D963
+	REC_FE_CmpMCopyFstMeas_Records	f0=18, proc=loc_4850D967
+	REC_FE_CmpMCopyFstMeas_Records	f0=19, proc=loc_4850D979
+	REC_FE_CmpMCopyFstMeas_Records	f0=0x10063, proc=loc_4850D9A9
+	REC_FE_CmpMCopyFstMeas_Records	f0=1, proc=loc_4850D9DC
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF	# [8]
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF
+	REC_FE_CmpMCopyFstMeas_Records	f0=0x1003B, proc=loc_4850D98B
+	REC_FE_CmpMCopyFstMeas_Records	f0=0x1003C, proc=loc_4850D9B1
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF
+	REC_FE_CmpMCopyFstMeas_Records	proc=loc_4850D9DF
 FE_CmpMCopyLstMeas_Records:	# 16 x REC_FE_CmpMCopyLstMeas_Records (8 bytes each); read by FE_CmpMCopyLstMeas 0x4850D9E3 `mov (a0), d0`
-	REC_FE_CmpMCopyLstMeas_Records	f0=16, p4=loc_4850DA3A	# [0]
-	REC_FE_CmpMCopyLstMeas_Records	f0=17, p4=loc_4850DA4C
-	REC_FE_CmpMCopyLstMeas_Records	f0=2, p4=loc_4850DA36
-	REC_FE_CmpMCopyLstMeas_Records	f0=18, p4=loc_4850DA3A
-	REC_FE_CmpMCopyLstMeas_Records	f0=19, p4=loc_4850DA4C
-	REC_FE_CmpMCopyLstMeas_Records	f0=0x10063, p4=loc_4850DA7C
-	REC_FE_CmpMCopyLstMeas_Records	f0=1, p4=loc_4850DAAF
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2	# [8]
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2
-	REC_FE_CmpMCopyLstMeas_Records	f0=0x1003B, p4=loc_4850DA5E
-	REC_FE_CmpMCopyLstMeas_Records	f0=0x1003C, p4=loc_4850DA84
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2
-	REC_FE_CmpMCopyLstMeas_Records	p4=loc_4850DAB2
+	REC_FE_CmpMCopyLstMeas_Records	f0=16, proc=loc_4850DA3A	# [0]
+	REC_FE_CmpMCopyLstMeas_Records	f0=17, proc=loc_4850DA4C
+	REC_FE_CmpMCopyLstMeas_Records	f0=2, proc=loc_4850DA36
+	REC_FE_CmpMCopyLstMeas_Records	f0=18, proc=loc_4850DA3A
+	REC_FE_CmpMCopyLstMeas_Records	f0=19, proc=loc_4850DA4C
+	REC_FE_CmpMCopyLstMeas_Records	f0=0x10063, proc=loc_4850DA7C
+	REC_FE_CmpMCopyLstMeas_Records	f0=1, proc=loc_4850DAAF
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2	# [8]
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2
+	REC_FE_CmpMCopyLstMeas_Records	f0=0x1003B, proc=loc_4850DA5E
+	REC_FE_CmpMCopyLstMeas_Records	f0=0x1003C, proc=loc_4850DA84
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2
+	REC_FE_CmpMCopyLstMeas_Records	proc=loc_4850DAB2
 FE_CmpMCopyDPart_Records:	# 16 x REC_FE_CmpMCopyDPart_Records (8 bytes each); read by FE_CmpMCopyDPart 0x4850DAB6 `mov (a0), d0`
-	REC_FE_CmpMCopyDPart_Records	f0=16, p4=loc_4850DB0D	# [0]
-	REC_FE_CmpMCopyDPart_Records	f0=17, p4=loc_4850DB1F
-	REC_FE_CmpMCopyDPart_Records	f0=2, p4=loc_4850DB09
-	REC_FE_CmpMCopyDPart_Records	f0=18, p4=loc_4850DB0D
-	REC_FE_CmpMCopyDPart_Records	f0=19, p4=loc_4850DB1F
-	REC_FE_CmpMCopyDPart_Records	f0=0x10063, p4=loc_4850DB50
-	REC_FE_CmpMCopyDPart_Records	f0=1, p4=loc_4850DB83
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86	# [8]
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86
-	REC_FE_CmpMCopyDPart_Records	f0=0x1003B, p4=loc_4850DB31
-	REC_FE_CmpMCopyDPart_Records	f0=0x1003C, p4=loc_4850DB58
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86
-	REC_FE_CmpMCopyDPart_Records	p4=loc_4850DB86
+	REC_FE_CmpMCopyDPart_Records	f0=16, proc=loc_4850DB0D	# [0]
+	REC_FE_CmpMCopyDPart_Records	f0=17, proc=loc_4850DB1F
+	REC_FE_CmpMCopyDPart_Records	f0=2, proc=loc_4850DB09
+	REC_FE_CmpMCopyDPart_Records	f0=18, proc=loc_4850DB0D
+	REC_FE_CmpMCopyDPart_Records	f0=19, proc=loc_4850DB1F
+	REC_FE_CmpMCopyDPart_Records	f0=0x10063, proc=loc_4850DB50
+	REC_FE_CmpMCopyDPart_Records	f0=1, proc=loc_4850DB83
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86	# [8]
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86
+	REC_FE_CmpMCopyDPart_Records	f0=0x1003B, proc=loc_4850DB31
+	REC_FE_CmpMCopyDPart_Records	f0=0x1003C, proc=loc_4850DB58
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86
+	REC_FE_CmpMCopyDPart_Records	proc=loc_4850DB86
 FE_CmpMCopySrtMeas_Records:	# 16 x REC_FE_CmpMCopySrtMeas_Records (8 bytes each); read by FE_CmpMCopySrtMeas 0x4850DB8A `mov (a0), d0`
-	REC_FE_CmpMCopySrtMeas_Records	f0=16, p4=loc_4850DBE1	# [0]
-	REC_FE_CmpMCopySrtMeas_Records	f0=17, p4=loc_4850DBF3
-	REC_FE_CmpMCopySrtMeas_Records	f0=2, p4=loc_4850DBDD
-	REC_FE_CmpMCopySrtMeas_Records	f0=18, p4=loc_4850DBE1
-	REC_FE_CmpMCopySrtMeas_Records	f0=19, p4=loc_4850DBF3
-	REC_FE_CmpMCopySrtMeas_Records	f0=0x10063, p4=loc_4850DC23
-	REC_FE_CmpMCopySrtMeas_Records	f0=1, p4=loc_4850DC56
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59	# [8]
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59
-	REC_FE_CmpMCopySrtMeas_Records	f0=0x1003B, p4=loc_4850DC05
-	REC_FE_CmpMCopySrtMeas_Records	f0=0x1003C, p4=loc_4850DC2B
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59
-	REC_FE_CmpMCopySrtMeas_Records	p4=loc_4850DC59
+	REC_FE_CmpMCopySrtMeas_Records	f0=16, proc=loc_4850DBE1	# [0]
+	REC_FE_CmpMCopySrtMeas_Records	f0=17, proc=loc_4850DBF3
+	REC_FE_CmpMCopySrtMeas_Records	f0=2, proc=loc_4850DBDD
+	REC_FE_CmpMCopySrtMeas_Records	f0=18, proc=loc_4850DBE1
+	REC_FE_CmpMCopySrtMeas_Records	f0=19, proc=loc_4850DBF3
+	REC_FE_CmpMCopySrtMeas_Records	f0=0x10063, proc=loc_4850DC23
+	REC_FE_CmpMCopySrtMeas_Records	f0=1, proc=loc_4850DC56
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59	# [8]
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59
+	REC_FE_CmpMCopySrtMeas_Records	f0=0x1003B, proc=loc_4850DC05
+	REC_FE_CmpMCopySrtMeas_Records	f0=0x1003C, proc=loc_4850DC2B
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59
+	REC_FE_CmpMCopySrtMeas_Records	proc=loc_4850DC59
 FE_CmpMDelFstMeas_Records:	# 16 x REC_FE_CmpMDelFstMeas_Records (8 bytes each); read by FE_CmpMDelFstMeas 0x4850E0F5 `mov (a0), d0`
-	REC_FE_CmpMDelFstMeas_Records	f0=16, p4=loc_4850E14C	# [0]
-	REC_FE_CmpMDelFstMeas_Records	f0=17, p4=loc_4850E15E
-	REC_FE_CmpMDelFstMeas_Records	f0=2, p4=loc_4850E148
-	REC_FE_CmpMDelFstMeas_Records	f0=18, p4=loc_4850E14C
-	REC_FE_CmpMDelFstMeas_Records	f0=19, p4=loc_4850E15E
-	REC_FE_CmpMDelFstMeas_Records	f0=0x10063, p4=loc_4850E18E
-	REC_FE_CmpMDelFstMeas_Records	f0=1, p4=loc_4850E1C1
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4	# [8]
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4
-	REC_FE_CmpMDelFstMeas_Records	f0=0x1003B, p4=loc_4850E170
-	REC_FE_CmpMDelFstMeas_Records	f0=0x1003C, p4=loc_4850E196
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4
-	REC_FE_CmpMDelFstMeas_Records	p4=loc_4850E1C4
+	REC_FE_CmpMDelFstMeas_Records	f0=16, proc=loc_4850E14C	# [0]
+	REC_FE_CmpMDelFstMeas_Records	f0=17, proc=loc_4850E15E
+	REC_FE_CmpMDelFstMeas_Records	f0=2, proc=loc_4850E148
+	REC_FE_CmpMDelFstMeas_Records	f0=18, proc=loc_4850E14C
+	REC_FE_CmpMDelFstMeas_Records	f0=19, proc=loc_4850E15E
+	REC_FE_CmpMDelFstMeas_Records	f0=0x10063, proc=loc_4850E18E
+	REC_FE_CmpMDelFstMeas_Records	f0=1, proc=loc_4850E1C1
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4	# [8]
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4
+	REC_FE_CmpMDelFstMeas_Records	f0=0x1003B, proc=loc_4850E170
+	REC_FE_CmpMDelFstMeas_Records	f0=0x1003C, proc=loc_4850E196
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4
+	REC_FE_CmpMDelFstMeas_Records	proc=loc_4850E1C4
 FE_CmpMDelLstMeas_Records:	# 16 x REC_FE_CmpMDelLstMeas_Records (8 bytes each); read by FE_CmpMDelLstMeas 0x4850E1C8 `mov (a0), d0`
-	REC_FE_CmpMDelLstMeas_Records	f0=16, p4=loc_4850E21F	# [0]
-	REC_FE_CmpMDelLstMeas_Records	f0=17, p4=loc_4850E231
-	REC_FE_CmpMDelLstMeas_Records	f0=2, p4=loc_4850E21B
-	REC_FE_CmpMDelLstMeas_Records	f0=18, p4=loc_4850E21F
-	REC_FE_CmpMDelLstMeas_Records	f0=19, p4=loc_4850E231
-	REC_FE_CmpMDelLstMeas_Records	f0=0x10063, p4=loc_4850E261
-	REC_FE_CmpMDelLstMeas_Records	f0=1, p4=loc_4850E294
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297	# [8]
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297
-	REC_FE_CmpMDelLstMeas_Records	f0=0x1003B, p4=loc_4850E243
-	REC_FE_CmpMDelLstMeas_Records	f0=0x1003C, p4=loc_4850E269
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297
-	REC_FE_CmpMDelLstMeas_Records	p4=loc_4850E297
+	REC_FE_CmpMDelLstMeas_Records	f0=16, proc=loc_4850E21F	# [0]
+	REC_FE_CmpMDelLstMeas_Records	f0=17, proc=loc_4850E231
+	REC_FE_CmpMDelLstMeas_Records	f0=2, proc=loc_4850E21B
+	REC_FE_CmpMDelLstMeas_Records	f0=18, proc=loc_4850E21F
+	REC_FE_CmpMDelLstMeas_Records	f0=19, proc=loc_4850E231
+	REC_FE_CmpMDelLstMeas_Records	f0=0x10063, proc=loc_4850E261
+	REC_FE_CmpMDelLstMeas_Records	f0=1, proc=loc_4850E294
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297	# [8]
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297
+	REC_FE_CmpMDelLstMeas_Records	f0=0x1003B, proc=loc_4850E243
+	REC_FE_CmpMDelLstMeas_Records	f0=0x1003C, proc=loc_4850E269
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297
+	REC_FE_CmpMDelLstMeas_Records	proc=loc_4850E297
 FE_CmpMErsSPart_Records:	# 16 x REC_FE_CmpMErsSPart_Records (8 bytes each); read by FE_CmpMErsSPart 0x4850E59E `mov (a0), d0`
-	REC_FE_CmpMErsSPart_Records	f0=16, p4=loc_4850E5F5	# [0]
-	REC_FE_CmpMErsSPart_Records	f0=17, p4=loc_4850E607
-	REC_FE_CmpMErsSPart_Records	f0=2, p4=loc_4850E5F1
-	REC_FE_CmpMErsSPart_Records	f0=18, p4=loc_4850E5F5
-	REC_FE_CmpMErsSPart_Records	f0=19, p4=loc_4850E607
-	REC_FE_CmpMErsSPart_Records	f0=0x10063, p4=loc_4850E638
-	REC_FE_CmpMErsSPart_Records	f0=1, p4=loc_4850E66B
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E	# [8]
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E
-	REC_FE_CmpMErsSPart_Records	f0=0x1003B, p4=loc_4850E619
-	REC_FE_CmpMErsSPart_Records	f0=0x1003C, p4=loc_4850E640
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E
-	REC_FE_CmpMErsSPart_Records	p4=loc_4850E66E
+	REC_FE_CmpMErsSPart_Records	f0=16, proc=loc_4850E5F5	# [0]
+	REC_FE_CmpMErsSPart_Records	f0=17, proc=loc_4850E607
+	REC_FE_CmpMErsSPart_Records	f0=2, proc=loc_4850E5F1
+	REC_FE_CmpMErsSPart_Records	f0=18, proc=loc_4850E5F5
+	REC_FE_CmpMErsSPart_Records	f0=19, proc=loc_4850E607
+	REC_FE_CmpMErsSPart_Records	f0=0x10063, proc=loc_4850E638
+	REC_FE_CmpMErsSPart_Records	f0=1, proc=loc_4850E66B
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E	# [8]
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E
+	REC_FE_CmpMErsSPart_Records	f0=0x1003B, proc=loc_4850E619
+	REC_FE_CmpMErsSPart_Records	f0=0x1003C, proc=loc_4850E640
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E
+	REC_FE_CmpMErsSPart_Records	proc=loc_4850E66E
 FE_CmpMErsFstMeas_Records:	# 16 x REC_FE_CmpMErsFstMeas_Records (8 bytes each); read by FE_CmpMErsFstMeas 0x4850E672 `mov (a0), d0`
-	REC_FE_CmpMErsFstMeas_Records	f0=16, p4=loc_4850E6C9	# [0]
-	REC_FE_CmpMErsFstMeas_Records	f0=17, p4=loc_4850E6DB
-	REC_FE_CmpMErsFstMeas_Records	f0=2, p4=loc_4850E6C5
-	REC_FE_CmpMErsFstMeas_Records	f0=18, p4=loc_4850E6C9
-	REC_FE_CmpMErsFstMeas_Records	f0=19, p4=loc_4850E6DB
-	REC_FE_CmpMErsFstMeas_Records	f0=0x10063, p4=loc_4850E70B
-	REC_FE_CmpMErsFstMeas_Records	f0=1, p4=loc_4850E73E
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741	# [8]
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741
-	REC_FE_CmpMErsFstMeas_Records	f0=0x1003B, p4=loc_4850E6ED
-	REC_FE_CmpMErsFstMeas_Records	f0=0x1003C, p4=loc_4850E713
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741
-	REC_FE_CmpMErsFstMeas_Records	p4=loc_4850E741
+	REC_FE_CmpMErsFstMeas_Records	f0=16, proc=loc_4850E6C9	# [0]
+	REC_FE_CmpMErsFstMeas_Records	f0=17, proc=loc_4850E6DB
+	REC_FE_CmpMErsFstMeas_Records	f0=2, proc=loc_4850E6C5
+	REC_FE_CmpMErsFstMeas_Records	f0=18, proc=loc_4850E6C9
+	REC_FE_CmpMErsFstMeas_Records	f0=19, proc=loc_4850E6DB
+	REC_FE_CmpMErsFstMeas_Records	f0=0x10063, proc=loc_4850E70B
+	REC_FE_CmpMErsFstMeas_Records	f0=1, proc=loc_4850E73E
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741	# [8]
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741
+	REC_FE_CmpMErsFstMeas_Records	f0=0x1003B, proc=loc_4850E6ED
+	REC_FE_CmpMErsFstMeas_Records	f0=0x1003C, proc=loc_4850E713
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741
+	REC_FE_CmpMErsFstMeas_Records	proc=loc_4850E741
 FE_CmpMErsLstMeas_Records:	# 16 x REC_FE_CmpMErsLstMeas_Records (8 bytes each); read by FE_CmpMErsLstMeas 0x4850E745 `mov (a0), d0`
-	REC_FE_CmpMErsLstMeas_Records	f0=16, p4=loc_4850E79C	# [0]
-	REC_FE_CmpMErsLstMeas_Records	f0=17, p4=loc_4850E7AE
-	REC_FE_CmpMErsLstMeas_Records	f0=2, p4=loc_4850E798
-	REC_FE_CmpMErsLstMeas_Records	f0=18, p4=loc_4850E79C
-	REC_FE_CmpMErsLstMeas_Records	f0=19, p4=loc_4850E7AE
-	REC_FE_CmpMErsLstMeas_Records	f0=0x10063, p4=loc_4850E7DE
-	REC_FE_CmpMErsLstMeas_Records	f0=1, p4=loc_4850E811
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814	# [8]
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814
-	REC_FE_CmpMErsLstMeas_Records	f0=0x1003B, p4=loc_4850E7C0
-	REC_FE_CmpMErsLstMeas_Records	f0=0x1003C, p4=loc_4850E7E6
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814
-	REC_FE_CmpMErsLstMeas_Records	p4=loc_4850E814
+	REC_FE_CmpMErsLstMeas_Records	f0=16, proc=loc_4850E79C	# [0]
+	REC_FE_CmpMErsLstMeas_Records	f0=17, proc=loc_4850E7AE
+	REC_FE_CmpMErsLstMeas_Records	f0=2, proc=loc_4850E798
+	REC_FE_CmpMErsLstMeas_Records	f0=18, proc=loc_4850E79C
+	REC_FE_CmpMErsLstMeas_Records	f0=19, proc=loc_4850E7AE
+	REC_FE_CmpMErsLstMeas_Records	f0=0x10063, proc=loc_4850E7DE
+	REC_FE_CmpMErsLstMeas_Records	f0=1, proc=loc_4850E811
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814	# [8]
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814
+	REC_FE_CmpMErsLstMeas_Records	f0=0x1003B, proc=loc_4850E7C0
+	REC_FE_CmpMErsLstMeas_Records	f0=0x1003C, proc=loc_4850E7E6
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814
+	REC_FE_CmpMErsLstMeas_Records	proc=loc_4850E814
 FE_CmpMInsFstMeas_Records:	# 16 x REC_FE_CmpMInsFstMeas_Records (8 bytes each); read by FE_CmpMInsFstMeas 0x4850E9C2 `mov (a0), d0`
-	REC_FE_CmpMInsFstMeas_Records	f0=16, p4=loc_4850EA19	# [0]
-	REC_FE_CmpMInsFstMeas_Records	f0=17, p4=loc_4850EA2B
-	REC_FE_CmpMInsFstMeas_Records	f0=2, p4=loc_4850EA15
-	REC_FE_CmpMInsFstMeas_Records	f0=18, p4=loc_4850EA19
-	REC_FE_CmpMInsFstMeas_Records	f0=19, p4=loc_4850EA2B
-	REC_FE_CmpMInsFstMeas_Records	f0=0x10063, p4=loc_4850EA5B
-	REC_FE_CmpMInsFstMeas_Records	f0=1, p4=loc_4850EA8E
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91	# [8]
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91
-	REC_FE_CmpMInsFstMeas_Records	f0=0x1003B, p4=loc_4850EA3D
-	REC_FE_CmpMInsFstMeas_Records	f0=0x1003C, p4=loc_4850EA63
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91
-	REC_FE_CmpMInsFstMeas_Records	p4=loc_4850EA91
+	REC_FE_CmpMInsFstMeas_Records	f0=16, proc=loc_4850EA19	# [0]
+	REC_FE_CmpMInsFstMeas_Records	f0=17, proc=loc_4850EA2B
+	REC_FE_CmpMInsFstMeas_Records	f0=2, proc=loc_4850EA15
+	REC_FE_CmpMInsFstMeas_Records	f0=18, proc=loc_4850EA19
+	REC_FE_CmpMInsFstMeas_Records	f0=19, proc=loc_4850EA2B
+	REC_FE_CmpMInsFstMeas_Records	f0=0x10063, proc=loc_4850EA5B
+	REC_FE_CmpMInsFstMeas_Records	f0=1, proc=loc_4850EA8E
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91	# [8]
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91
+	REC_FE_CmpMInsFstMeas_Records	f0=0x1003B, proc=loc_4850EA3D
+	REC_FE_CmpMInsFstMeas_Records	f0=0x1003C, proc=loc_4850EA63
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91
+	REC_FE_CmpMInsFstMeas_Records	proc=loc_4850EA91
 FE_CmpMInsMeasNum_Records:	# 16 x REC_FE_CmpMInsMeasNum_Records (8 bytes each); read by FE_CmpMInsMeasNum 0x4850EA95 `mov (a0), d0`
-	REC_FE_CmpMInsMeasNum_Records	f0=16, p4=loc_4850EAEC	# [0]
-	REC_FE_CmpMInsMeasNum_Records	f0=17, p4=loc_4850EAFE
-	REC_FE_CmpMInsMeasNum_Records	f0=2, p4=loc_4850EAE8
-	REC_FE_CmpMInsMeasNum_Records	f0=18, p4=loc_4850EAEC
-	REC_FE_CmpMInsMeasNum_Records	f0=19, p4=loc_4850EAFE
-	REC_FE_CmpMInsMeasNum_Records	f0=0x10063, p4=loc_4850EB2E
-	REC_FE_CmpMInsMeasNum_Records	f0=1, p4=loc_4850EB61
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64	# [8]
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64
-	REC_FE_CmpMInsMeasNum_Records	f0=0x1003B, p4=loc_4850EB10
-	REC_FE_CmpMInsMeasNum_Records	f0=0x1003C, p4=loc_4850EB36
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64
-	REC_FE_CmpMInsMeasNum_Records	p4=loc_4850EB64
+	REC_FE_CmpMInsMeasNum_Records	f0=16, proc=loc_4850EAEC	# [0]
+	REC_FE_CmpMInsMeasNum_Records	f0=17, proc=loc_4850EAFE
+	REC_FE_CmpMInsMeasNum_Records	f0=2, proc=loc_4850EAE8
+	REC_FE_CmpMInsMeasNum_Records	f0=18, proc=loc_4850EAEC
+	REC_FE_CmpMInsMeasNum_Records	f0=19, proc=loc_4850EAFE
+	REC_FE_CmpMInsMeasNum_Records	f0=0x10063, proc=loc_4850EB2E
+	REC_FE_CmpMInsMeasNum_Records	f0=1, proc=loc_4850EB61
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64	# [8]
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64
+	REC_FE_CmpMInsMeasNum_Records	f0=0x1003B, proc=loc_4850EB10
+	REC_FE_CmpMInsMeasNum_Records	f0=0x1003C, proc=loc_4850EB36
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64
+	REC_FE_CmpMInsMeasNum_Records	proc=loc_4850EB64
 FE_CmpRecChdModGrp_Records:	# 16 x REC_FE_CmpRecChdModGrp_Records (8 bytes each); read by FE_CmpRecChdModGrp 0x4850ED6A `mov (a0), d0`
-	REC_FE_CmpRecChdModGrp_Records	f0=16, p4=loc_4850EE27	# [0]
-	REC_FE_CmpRecChdModGrp_Records	f0=0x1700001, p4=loc_4850EDBC
-	REC_FE_CmpRecChdModGrp_Records	f0=2, p4=loc_4850EDF7
-	REC_FE_CmpRecChdModGrp_Records	f0=18, p4=loc_4850EE27
-	REC_FE_CmpRecChdModGrp_Records	f0=19, p4=loc_4850EEDE
-	REC_FE_CmpRecChdModGrp_Records	f0=17, p4=loc_4850EEDE
-	REC_FE_CmpRecChdModGrp_Records	f0=0x10063, p4=loc_4850EFD7
-	REC_FE_CmpRecChdModGrp_Records	f0=1, p4=loc_4850EFEB
-	REC_FE_CmpRecChdModGrp_Records	p4=loc_4850EFEE	# [8]
-	REC_FE_CmpRecChdModGrp_Records	p4=loc_4850EFEE
-	REC_FE_CmpRecChdModGrp_Records	p4=loc_4850EFEE
-	REC_FE_CmpRecChdModGrp_Records	f0=0x1003B, p4=loc_4850EF78
-	REC_FE_CmpRecChdModGrp_Records	f0=0x1003C, p4=loc_4850EFE0
-	REC_FE_CmpRecChdModGrp_Records	p4=loc_4850EFEE
-	REC_FE_CmpRecChdModGrp_Records	p4=loc_4850EFEE
-	REC_FE_CmpRecChdModGrp_Records	p4=loc_4850EFEE
+	REC_FE_CmpRecChdModGrp_Records	f0=16, proc=loc_4850EE27	# [0]
+	REC_FE_CmpRecChdModGrp_Records	f0=0x1700001, proc=loc_4850EDBC
+	REC_FE_CmpRecChdModGrp_Records	f0=2, proc=loc_4850EDF7
+	REC_FE_CmpRecChdModGrp_Records	f0=18, proc=loc_4850EE27
+	REC_FE_CmpRecChdModGrp_Records	f0=19, proc=loc_4850EEDE
+	REC_FE_CmpRecChdModGrp_Records	f0=17, proc=loc_4850EEDE
+	REC_FE_CmpRecChdModGrp_Records	f0=0x10063, proc=loc_4850EFD7
+	REC_FE_CmpRecChdModGrp_Records	f0=1, proc=loc_4850EFEB
+	REC_FE_CmpRecChdModGrp_Records	proc=loc_4850EFEE	# [8]
+	REC_FE_CmpRecChdModGrp_Records	proc=loc_4850EFEE
+	REC_FE_CmpRecChdModGrp_Records	proc=loc_4850EFEE
+	REC_FE_CmpRecChdModGrp_Records	f0=0x1003B, proc=loc_4850EF78
+	REC_FE_CmpRecChdModGrp_Records	f0=0x1003C, proc=loc_4850EFE0
+	REC_FE_CmpRecChdModGrp_Records	proc=loc_4850EFEE
+	REC_FE_CmpRecChdModGrp_Records	proc=loc_4850EFEE
+	REC_FE_CmpRecChdModGrp_Records	proc=loc_4850EFEE
 FE_CmpRecChdModTyp_Records:	# 16 x REC_FE_CmpRecChdModTyp_Records (8 bytes each); read by FE_CmpRecChdModTyp 0x4850EFF2 `mov (a0), d0`
-	REC_FE_CmpRecChdModTyp_Records	f0=16, p4=loc_4850F0A7	# [0]
-	REC_FE_CmpRecChdModTyp_Records	f0=0x1700001, p4=loc_4850F045
-	REC_FE_CmpRecChdModTyp_Records	f0=2, p4=loc_4850F080
-	REC_FE_CmpRecChdModTyp_Records	f0=18, p4=loc_4850F0A7
-	REC_FE_CmpRecChdModTyp_Records	f0=19, p4=loc_4850F162
-	REC_FE_CmpRecChdModTyp_Records	f0=17, p4=loc_4850F162
-	REC_FE_CmpRecChdModTyp_Records	f0=0x10063, p4=loc_4850F27A
-	REC_FE_CmpRecChdModTyp_Records	f0=1, p4=loc_4850F28E
-	REC_FE_CmpRecChdModTyp_Records	p4=loc_4850F291	# [8]
-	REC_FE_CmpRecChdModTyp_Records	p4=loc_4850F291
-	REC_FE_CmpRecChdModTyp_Records	p4=loc_4850F291
-	REC_FE_CmpRecChdModTyp_Records	f0=0x1003B, p4=loc_4850F1FC
-	REC_FE_CmpRecChdModTyp_Records	f0=0x1003C, p4=loc_4850F283
-	REC_FE_CmpRecChdModTyp_Records	p4=loc_4850F291
-	REC_FE_CmpRecChdModTyp_Records	p4=loc_4850F291
-	REC_FE_CmpRecChdModTyp_Records	p4=loc_4850F291
+	REC_FE_CmpRecChdModTyp_Records	f0=16, proc=loc_4850F0A7	# [0]
+	REC_FE_CmpRecChdModTyp_Records	f0=0x1700001, proc=loc_4850F045
+	REC_FE_CmpRecChdModTyp_Records	f0=2, proc=loc_4850F080
+	REC_FE_CmpRecChdModTyp_Records	f0=18, proc=loc_4850F0A7
+	REC_FE_CmpRecChdModTyp_Records	f0=19, proc=loc_4850F162
+	REC_FE_CmpRecChdModTyp_Records	f0=17, proc=loc_4850F162
+	REC_FE_CmpRecChdModTyp_Records	f0=0x10063, proc=loc_4850F27A
+	REC_FE_CmpRecChdModTyp_Records	f0=1, proc=loc_4850F28E
+	REC_FE_CmpRecChdModTyp_Records	proc=loc_4850F291	# [8]
+	REC_FE_CmpRecChdModTyp_Records	proc=loc_4850F291
+	REC_FE_CmpRecChdModTyp_Records	proc=loc_4850F291
+	REC_FE_CmpRecChdModTyp_Records	f0=0x1003B, proc=loc_4850F1FC
+	REC_FE_CmpRecChdModTyp_Records	f0=0x1003C, proc=loc_4850F283
+	REC_FE_CmpRecChdModTyp_Records	proc=loc_4850F291
+	REC_FE_CmpRecChdModTyp_Records	proc=loc_4850F291
+	REC_FE_CmpRecChdModTyp_Records	proc=loc_4850F291
 
 TtCmPartSet_Table:	# 8 x u8, 0..7; read by TtCmPartSet 0x4850F4A7: `movbu  (d2, a0), d0`
 	tab_u8	0, 7, 1, 2, 3, 4, 5, 6
@@ -28141,158 +28141,158 @@ func_4851507E_Table:	# 5 x u32, 10485863..10485878; read by func_4851507E 0x4851
 	tab_u32	10485863, 10485864, 10485873, 10485877, 10485878
 
 FE_PadRecQtz_Records:	# 16 x REC_FE_PadRecQtz_Records (8 bytes each); read by FE_PadRecQtz 0x485117D7 `mov (a0), d0`
-	REC_FE_PadRecQtz_Records	f0=16, p4=loc_48511844	# [0]
-	REC_FE_PadRecQtz_Records	f0=17, p4=loc_485118A5
-	REC_FE_PadRecQtz_Records	f0=2, p4=loc_4851182A
-	REC_FE_PadRecQtz_Records	f0=18, p4=loc_48511844
-	REC_FE_PadRecQtz_Records	f0=19, p4=loc_485118A5
-	REC_FE_PadRecQtz_Records	f0=0x10063, p4=loc_48511922
-	REC_FE_PadRecQtz_Records	f0=1, p4=loc_48511935
-	REC_FE_PadRecQtz_Records	p4=loc_48511938
-	REC_FE_PadRecQtz_Records	p4=loc_48511938	# [8]
-	REC_FE_PadRecQtz_Records	p4=loc_48511938
-	REC_FE_PadRecQtz_Records	p4=loc_48511938
-	REC_FE_PadRecQtz_Records	f0=0x1003B, p4=loc_48511907
-	REC_FE_PadRecQtz_Records	f0=0x1003C, p4=loc_4851192A
-	REC_FE_PadRecQtz_Records	p4=loc_48511938
-	REC_FE_PadRecQtz_Records	p4=loc_48511938
-	REC_FE_PadRecQtz_Records	p4=loc_48511938
+	REC_FE_PadRecQtz_Records	f0=16, proc=loc_48511844	# [0]
+	REC_FE_PadRecQtz_Records	f0=17, proc=loc_485118A5
+	REC_FE_PadRecQtz_Records	f0=2, proc=loc_4851182A
+	REC_FE_PadRecQtz_Records	f0=18, proc=loc_48511844
+	REC_FE_PadRecQtz_Records	f0=19, proc=loc_485118A5
+	REC_FE_PadRecQtz_Records	f0=0x10063, proc=loc_48511922
+	REC_FE_PadRecQtz_Records	f0=1, proc=loc_48511935
+	REC_FE_PadRecQtz_Records	proc=loc_48511938
+	REC_FE_PadRecQtz_Records	proc=loc_48511938	# [8]
+	REC_FE_PadRecQtz_Records	proc=loc_48511938
+	REC_FE_PadRecQtz_Records	proc=loc_48511938
+	REC_FE_PadRecQtz_Records	f0=0x1003B, proc=loc_48511907
+	REC_FE_PadRecQtz_Records	f0=0x1003C, proc=loc_4851192A
+	REC_FE_PadRecQtz_Records	proc=loc_48511938
+	REC_FE_PadRecQtz_Records	proc=loc_48511938
+	REC_FE_PadRecQtz_Records	proc=loc_48511938
 FE_PadRecChdModGrp_Records:	# 16 x REC_FE_PadRecChdModGrp_Records (8 bytes each); read by FE_PadRecChdModGrp 0x4851193C `mov (a0), d0`
-	REC_FE_PadRecChdModGrp_Records	f0=16, p4=loc_485119FA	# [0]
-	REC_FE_PadRecChdModGrp_Records	f0=0x1700001, p4=loc_4851198F
-	REC_FE_PadRecChdModGrp_Records	f0=2, p4=loc_485119CA
-	REC_FE_PadRecChdModGrp_Records	f0=18, p4=loc_485119FA
-	REC_FE_PadRecChdModGrp_Records	f0=19, p4=loc_48511A8E
-	REC_FE_PadRecChdModGrp_Records	f0=17, p4=loc_48511A8E
-	REC_FE_PadRecChdModGrp_Records	f0=0x10063, p4=loc_48511B3F
-	REC_FE_PadRecChdModGrp_Records	f0=1, p4=loc_48511B53
-	REC_FE_PadRecChdModGrp_Records	p4=loc_48511B56	# [8]
-	REC_FE_PadRecChdModGrp_Records	p4=loc_48511B56
-	REC_FE_PadRecChdModGrp_Records	p4=loc_48511B56
-	REC_FE_PadRecChdModGrp_Records	f0=0x1003B, p4=loc_48511B09
-	REC_FE_PadRecChdModGrp_Records	f0=0x1003C, p4=loc_48511B48
-	REC_FE_PadRecChdModGrp_Records	p4=loc_48511B56
-	REC_FE_PadRecChdModGrp_Records	p4=loc_48511B56
-	REC_FE_PadRecChdModGrp_Records	p4=loc_48511B56
+	REC_FE_PadRecChdModGrp_Records	f0=16, proc=loc_485119FA	# [0]
+	REC_FE_PadRecChdModGrp_Records	f0=0x1700001, proc=loc_4851198F
+	REC_FE_PadRecChdModGrp_Records	f0=2, proc=loc_485119CA
+	REC_FE_PadRecChdModGrp_Records	f0=18, proc=loc_485119FA
+	REC_FE_PadRecChdModGrp_Records	f0=19, proc=loc_48511A8E
+	REC_FE_PadRecChdModGrp_Records	f0=17, proc=loc_48511A8E
+	REC_FE_PadRecChdModGrp_Records	f0=0x10063, proc=loc_48511B3F
+	REC_FE_PadRecChdModGrp_Records	f0=1, proc=loc_48511B53
+	REC_FE_PadRecChdModGrp_Records	proc=loc_48511B56	# [8]
+	REC_FE_PadRecChdModGrp_Records	proc=loc_48511B56
+	REC_FE_PadRecChdModGrp_Records	proc=loc_48511B56
+	REC_FE_PadRecChdModGrp_Records	f0=0x1003B, proc=loc_48511B09
+	REC_FE_PadRecChdModGrp_Records	f0=0x1003C, proc=loc_48511B48
+	REC_FE_PadRecChdModGrp_Records	proc=loc_48511B56
+	REC_FE_PadRecChdModGrp_Records	proc=loc_48511B56
+	REC_FE_PadRecChdModGrp_Records	proc=loc_48511B56
 FE_PadRecChdModTyp_Records:	# 16 x REC_FE_PadRecChdModTyp_Records (8 bytes each); read by FE_PadRecChdModTyp 0x48511B5A `mov (a0), d0`
-	REC_FE_PadRecChdModTyp_Records	f0=16, p4=loc_48511C0E	# [0]
-	REC_FE_PadRecChdModTyp_Records	f0=0x1700001, p4=loc_48511BAC
-	REC_FE_PadRecChdModTyp_Records	f0=2, p4=loc_48511BE7
-	REC_FE_PadRecChdModTyp_Records	f0=18, p4=loc_48511C0E
-	REC_FE_PadRecChdModTyp_Records	f0=19, p4=loc_48511CA8
-	REC_FE_PadRecChdModTyp_Records	f0=17, p4=loc_48511CA8
-	REC_FE_PadRecChdModTyp_Records	f0=0x10063, p4=loc_48511D79
-	REC_FE_PadRecChdModTyp_Records	f0=1, p4=loc_48511D8D
-	REC_FE_PadRecChdModTyp_Records	p4=loc_48511D90	# [8]
-	REC_FE_PadRecChdModTyp_Records	p4=loc_48511D90
-	REC_FE_PadRecChdModTyp_Records	p4=loc_48511D90
-	REC_FE_PadRecChdModTyp_Records	f0=0x1003B, p4=loc_48511D24
-	REC_FE_PadRecChdModTyp_Records	f0=0x1003C, p4=loc_48511D82
-	REC_FE_PadRecChdModTyp_Records	p4=loc_48511D90
-	REC_FE_PadRecChdModTyp_Records	p4=loc_48511D90
-	REC_FE_PadRecChdModTyp_Records	p4=loc_48511D90
+	REC_FE_PadRecChdModTyp_Records	f0=16, proc=loc_48511C0E	# [0]
+	REC_FE_PadRecChdModTyp_Records	f0=0x1700001, proc=loc_48511BAC
+	REC_FE_PadRecChdModTyp_Records	f0=2, proc=loc_48511BE7
+	REC_FE_PadRecChdModTyp_Records	f0=18, proc=loc_48511C0E
+	REC_FE_PadRecChdModTyp_Records	f0=19, proc=loc_48511CA8
+	REC_FE_PadRecChdModTyp_Records	f0=17, proc=loc_48511CA8
+	REC_FE_PadRecChdModTyp_Records	f0=0x10063, proc=loc_48511D79
+	REC_FE_PadRecChdModTyp_Records	f0=1, proc=loc_48511D8D
+	REC_FE_PadRecChdModTyp_Records	proc=loc_48511D90	# [8]
+	REC_FE_PadRecChdModTyp_Records	proc=loc_48511D90
+	REC_FE_PadRecChdModTyp_Records	proc=loc_48511D90
+	REC_FE_PadRecChdModTyp_Records	f0=0x1003B, proc=loc_48511D24
+	REC_FE_PadRecChdModTyp_Records	f0=0x1003C, proc=loc_48511D82
+	REC_FE_PadRecChdModTyp_Records	proc=loc_48511D90
+	REC_FE_PadRecChdModTyp_Records	proc=loc_48511D90
+	REC_FE_PadRecChdModTyp_Records	proc=loc_48511D90
 FE_PadRecTS_Records:	# 16 x REC_FE_PadRecTS_Records (8 bytes each); read by FE_PadRecTS 0x48514479 `mov (a0), d0`
-	REC_FE_PadRecTS_Records	f0=16, p4=loc_48514519	# [0]
-	REC_FE_PadRecTS_Records	f0=17, p4=loc_48514566
-	REC_FE_PadRecTS_Records	f0=2, p4=loc_485144CC
-	REC_FE_PadRecTS_Records	f0=0x100B3, p4=loc_485144EA
-	REC_FE_PadRecTS_Records	f0=18, p4=loc_48514519
-	REC_FE_PadRecTS_Records	f0=19, p4=loc_48514566
-	REC_FE_PadRecTS_Records	f0=0x10063, p4=loc_485145C3
-	REC_FE_PadRecTS_Records	f0=1, p4=loc_485145D7
-	REC_FE_PadRecTS_Records	p4=loc_485145DA	# [8]
-	REC_FE_PadRecTS_Records	p4=loc_485145DA
-	REC_FE_PadRecTS_Records	p4=loc_485145DA
-	REC_FE_PadRecTS_Records	f0=0x1003B, p4=loc_485145B1
-	REC_FE_PadRecTS_Records	p4=loc_485145DA
-	REC_FE_PadRecTS_Records	p4=loc_485145DA
-	REC_FE_PadRecTS_Records	p4=loc_485145DA
-	REC_FE_PadRecTS_Records	p4=loc_485145DA
+	REC_FE_PadRecTS_Records	f0=16, proc=loc_48514519	# [0]
+	REC_FE_PadRecTS_Records	f0=17, proc=loc_48514566
+	REC_FE_PadRecTS_Records	f0=2, proc=loc_485144CC
+	REC_FE_PadRecTS_Records	f0=0x100B3, proc=loc_485144EA
+	REC_FE_PadRecTS_Records	f0=18, proc=loc_48514519
+	REC_FE_PadRecTS_Records	f0=19, proc=loc_48514566
+	REC_FE_PadRecTS_Records	f0=0x10063, proc=loc_485145C3
+	REC_FE_PadRecTS_Records	f0=1, proc=loc_485145D7
+	REC_FE_PadRecTS_Records	proc=loc_485145DA	# [8]
+	REC_FE_PadRecTS_Records	proc=loc_485145DA
+	REC_FE_PadRecTS_Records	proc=loc_485145DA
+	REC_FE_PadRecTS_Records	f0=0x1003B, proc=loc_485145B1
+	REC_FE_PadRecTS_Records	proc=loc_485145DA
+	REC_FE_PadRecTS_Records	proc=loc_485145DA
+	REC_FE_PadRecTS_Records	proc=loc_485145DA
+	REC_FE_PadRecTS_Records	proc=loc_485145DA
 FE_SeqToPadFstMeas_Records:	# 16 x REC_FE_SeqToPadFstMeas_Records (8 bytes each); read by FE_SeqToPadFstMeas 0x48514AF3 `mov (a0), d0`
-	REC_FE_SeqToPadFstMeas_Records	f0=16, p4=loc_48514B4A	# [0]
-	REC_FE_SeqToPadFstMeas_Records	f0=17, p4=loc_48514B5C
-	REC_FE_SeqToPadFstMeas_Records	f0=2, p4=loc_48514B46
-	REC_FE_SeqToPadFstMeas_Records	f0=18, p4=loc_48514B4A
-	REC_FE_SeqToPadFstMeas_Records	f0=19, p4=loc_48514B5C
-	REC_FE_SeqToPadFstMeas_Records	f0=0x10063, p4=loc_48514B8C
-	REC_FE_SeqToPadFstMeas_Records	f0=1, p4=loc_48514BBF
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2	# [8]
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2
-	REC_FE_SeqToPadFstMeas_Records	f0=0x1003B, p4=loc_48514B6E
-	REC_FE_SeqToPadFstMeas_Records	f0=0x1003C, p4=loc_48514B94
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2
-	REC_FE_SeqToPadFstMeas_Records	p4=loc_48514BC2
+	REC_FE_SeqToPadFstMeas_Records	f0=16, proc=loc_48514B4A	# [0]
+	REC_FE_SeqToPadFstMeas_Records	f0=17, proc=loc_48514B5C
+	REC_FE_SeqToPadFstMeas_Records	f0=2, proc=loc_48514B46
+	REC_FE_SeqToPadFstMeas_Records	f0=18, proc=loc_48514B4A
+	REC_FE_SeqToPadFstMeas_Records	f0=19, proc=loc_48514B5C
+	REC_FE_SeqToPadFstMeas_Records	f0=0x10063, proc=loc_48514B8C
+	REC_FE_SeqToPadFstMeas_Records	f0=1, proc=loc_48514BBF
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2	# [8]
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2
+	REC_FE_SeqToPadFstMeas_Records	f0=0x1003B, proc=loc_48514B6E
+	REC_FE_SeqToPadFstMeas_Records	f0=0x1003C, proc=loc_48514B94
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2
+	REC_FE_SeqToPadFstMeas_Records	proc=loc_48514BC2
 FE_SeqToPadLstMeas_Records:	# 16 x REC_FE_SeqToPadLstMeas_Records (8 bytes each); read by FE_SeqToPadLstMeas 0x48514BC6 `mov (a0), d0`
-	REC_FE_SeqToPadLstMeas_Records	f0=16, p4=loc_48514C1D	# [0]
-	REC_FE_SeqToPadLstMeas_Records	f0=17, p4=loc_48514C2F
-	REC_FE_SeqToPadLstMeas_Records	f0=2, p4=loc_48514C19
-	REC_FE_SeqToPadLstMeas_Records	f0=18, p4=loc_48514C1D
-	REC_FE_SeqToPadLstMeas_Records	f0=19, p4=loc_48514C2F
-	REC_FE_SeqToPadLstMeas_Records	f0=0x10063, p4=loc_48514C5F
-	REC_FE_SeqToPadLstMeas_Records	f0=1, p4=loc_48514C92
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95	# [8]
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95
-	REC_FE_SeqToPadLstMeas_Records	f0=0x1003B, p4=loc_48514C41
-	REC_FE_SeqToPadLstMeas_Records	f0=0x1003C, p4=loc_48514C67
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95
-	REC_FE_SeqToPadLstMeas_Records	p4=loc_48514C95
+	REC_FE_SeqToPadLstMeas_Records	f0=16, proc=loc_48514C1D	# [0]
+	REC_FE_SeqToPadLstMeas_Records	f0=17, proc=loc_48514C2F
+	REC_FE_SeqToPadLstMeas_Records	f0=2, proc=loc_48514C19
+	REC_FE_SeqToPadLstMeas_Records	f0=18, proc=loc_48514C1D
+	REC_FE_SeqToPadLstMeas_Records	f0=19, proc=loc_48514C2F
+	REC_FE_SeqToPadLstMeas_Records	f0=0x10063, proc=loc_48514C5F
+	REC_FE_SeqToPadLstMeas_Records	f0=1, proc=loc_48514C92
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95	# [8]
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95
+	REC_FE_SeqToPadLstMeas_Records	f0=0x1003B, proc=loc_48514C41
+	REC_FE_SeqToPadLstMeas_Records	f0=0x1003C, proc=loc_48514C67
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95
+	REC_FE_SeqToPadLstMeas_Records	proc=loc_48514C95
 FE_SeqToPadTrans_Records:	# 16 x REC_FE_SeqToPadTrans_Records (8 bytes each); read by FE_SeqToPadTrans 0x48514C99 `mov (a0), d0`
-	REC_FE_SeqToPadTrans_Records	f0=16, p4=loc_48514CF0	# [0]
-	REC_FE_SeqToPadTrans_Records	f0=17, p4=loc_48514D03
-	REC_FE_SeqToPadTrans_Records	f0=2, p4=loc_48514CEC
-	REC_FE_SeqToPadTrans_Records	f0=18, p4=loc_48514CF0
-	REC_FE_SeqToPadTrans_Records	f0=19, p4=loc_48514D03
-	REC_FE_SeqToPadTrans_Records	f0=0x10063, p4=loc_48514D4D
-	REC_FE_SeqToPadTrans_Records	f0=1, p4=loc_48514D82
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85	# [8]
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85
-	REC_FE_SeqToPadTrans_Records	f0=0x1003B, p4=loc_48514D17
-	REC_FE_SeqToPadTrans_Records	f0=0x1003C, p4=loc_48514D56
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85
-	REC_FE_SeqToPadTrans_Records	p4=loc_48514D85
+	REC_FE_SeqToPadTrans_Records	f0=16, proc=loc_48514CF0	# [0]
+	REC_FE_SeqToPadTrans_Records	f0=17, proc=loc_48514D03
+	REC_FE_SeqToPadTrans_Records	f0=2, proc=loc_48514CEC
+	REC_FE_SeqToPadTrans_Records	f0=18, proc=loc_48514CF0
+	REC_FE_SeqToPadTrans_Records	f0=19, proc=loc_48514D03
+	REC_FE_SeqToPadTrans_Records	f0=0x10063, proc=loc_48514D4D
+	REC_FE_SeqToPadTrans_Records	f0=1, proc=loc_48514D82
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85	# [8]
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85
+	REC_FE_SeqToPadTrans_Records	f0=0x1003B, proc=loc_48514D17
+	REC_FE_SeqToPadTrans_Records	f0=0x1003C, proc=loc_48514D56
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85
+	REC_FE_SeqToPadTrans_Records	proc=loc_48514D85
 FE_SeqToPadMemory_Records:	# 16 x REC_FE_SeqToPadMemory_Records (8 bytes each); read by FE_SeqToPadMemory 0x48514D89 `mov (a0), d0`
-	REC_FE_SeqToPadMemory_Records	f0=16, p4=loc_48514DE0	# [0]
-	REC_FE_SeqToPadMemory_Records	f0=17, p4=loc_48514DF2
-	REC_FE_SeqToPadMemory_Records	f0=2, p4=loc_48514DDC
-	REC_FE_SeqToPadMemory_Records	f0=18, p4=loc_48514DE0
-	REC_FE_SeqToPadMemory_Records	f0=19, p4=loc_48514DF2
-	REC_FE_SeqToPadMemory_Records	f0=0x10063, p4=loc_48514E4D
-	REC_FE_SeqToPadMemory_Records	f0=1, p4=loc_48514E80
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83	# [8]
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83
-	REC_FE_SeqToPadMemory_Records	f0=0x1003B, p4=loc_48514E05
-	REC_FE_SeqToPadMemory_Records	f0=0x1003C, p4=loc_48514E55
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83
-	REC_FE_SeqToPadMemory_Records	p4=loc_48514E83
+	REC_FE_SeqToPadMemory_Records	f0=16, proc=loc_48514DE0	# [0]
+	REC_FE_SeqToPadMemory_Records	f0=17, proc=loc_48514DF2
+	REC_FE_SeqToPadMemory_Records	f0=2, proc=loc_48514DDC
+	REC_FE_SeqToPadMemory_Records	f0=18, proc=loc_48514DE0
+	REC_FE_SeqToPadMemory_Records	f0=19, proc=loc_48514DF2
+	REC_FE_SeqToPadMemory_Records	f0=0x10063, proc=loc_48514E4D
+	REC_FE_SeqToPadMemory_Records	f0=1, proc=loc_48514E80
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83	# [8]
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83
+	REC_FE_SeqToPadMemory_Records	f0=0x1003B, proc=loc_48514E05
+	REC_FE_SeqToPadMemory_Records	f0=0x1003C, proc=loc_48514E55
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83
+	REC_FE_SeqToPadMemory_Records	proc=loc_48514E83
 FE_SeqToPadPattern_Records:	# 16 x REC_FE_SeqToPadPattern_Records (8 bytes each); read by FE_SeqToPadPattern 0x48514E87 `mov (a0), d0`
-	REC_FE_SeqToPadPattern_Records	f0=16, p4=loc_48514EDE	# [0]
-	REC_FE_SeqToPadPattern_Records	f0=17, p4=loc_48514EF0
-	REC_FE_SeqToPadPattern_Records	f0=2, p4=loc_48514EDA
-	REC_FE_SeqToPadPattern_Records	f0=18, p4=loc_48514EDE
-	REC_FE_SeqToPadPattern_Records	f0=19, p4=loc_48514EF0
-	REC_FE_SeqToPadPattern_Records	f0=0x10063, p4=loc_48514F94
-	REC_FE_SeqToPadPattern_Records	f0=1, p4=loc_48514FC7
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA	# [8]
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA
-	REC_FE_SeqToPadPattern_Records	f0=0x1003B, p4=loc_48514F03
-	REC_FE_SeqToPadPattern_Records	f0=0x1003C, p4=loc_48514F9C
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA
-	REC_FE_SeqToPadPattern_Records	p4=loc_48514FCA
+	REC_FE_SeqToPadPattern_Records	f0=16, proc=loc_48514EDE	# [0]
+	REC_FE_SeqToPadPattern_Records	f0=17, proc=loc_48514EF0
+	REC_FE_SeqToPadPattern_Records	f0=2, proc=loc_48514EDA
+	REC_FE_SeqToPadPattern_Records	f0=18, proc=loc_48514EDE
+	REC_FE_SeqToPadPattern_Records	f0=19, proc=loc_48514EF0
+	REC_FE_SeqToPadPattern_Records	f0=0x10063, proc=loc_48514F94
+	REC_FE_SeqToPadPattern_Records	f0=1, proc=loc_48514FC7
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA	# [8]
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA
+	REC_FE_SeqToPadPattern_Records	f0=0x1003B, proc=loc_48514F03
+	REC_FE_SeqToPadPattern_Records	f0=0x1003C, proc=loc_48514F9C
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA
+	REC_FE_SeqToPadPattern_Records	proc=loc_48514FCA
 
 Str_Control_Preset:	.asciz "Control Preset"
 	.align	4, 0xFF	# pad after Str_Control_Preset
@@ -31468,90 +31468,90 @@ Str_WWC:	.asciz "WWC"
 Str_UPW:	.asciz "UPW"
 
 PsFileNameBoxProc_Records:	# 16 x REC_PsFileNameBoxProc_Records (8 bytes each); read by PsFileNameBoxProc 0x4851787D `mov (a0), d0`
-	REC_PsFileNameBoxProc_Records	f0=16, p4=loc_48517CDA	# [0]
-	REC_PsFileNameBoxProc_Records	f0=1, p4=loc_485178D3
-	REC_PsFileNameBoxProc_Records	f0=17, p4=loc_48517D3A
-	REC_PsFileNameBoxProc_Records	f0=18, p4=loc_48517D3A
-	REC_PsFileNameBoxProc_Records	f0=2, p4=loc_48517DD3
-	REC_PsFileNameBoxProc_Records	f0=0x1400000, p4=loc_48517DF1
-	REC_PsFileNameBoxProc_Records	f0=0x1400001, p4=loc_48517E1B
-	REC_PsFileNameBoxProc_Records	p4=loc_48517E45
-	REC_PsFileNameBoxProc_Records	p4=loc_48517E45	# [8]
-	REC_PsFileNameBoxProc_Records	f0=9, p4=loc_485179AA
-	REC_PsFileNameBoxProc_Records	f0=0x1400009, p4=loc_48517AE9
-	REC_PsFileNameBoxProc_Records	f0=0x140000B, p4=loc_48517CC6
-	REC_PsFileNameBoxProc_Records	f0=0x140001A, p4=loc_48517DA2
-	REC_PsFileNameBoxProc_Records	f0=0x140000D, p4=loc_48517C25
-	REC_PsFileNameBoxProc_Records	f0=0x140001B, p4=loc_48517DA2
-	REC_PsFileNameBoxProc_Records	f0=15, p4=loc_48517CDA
+	REC_PsFileNameBoxProc_Records	key=16, proc=loc_48517CDA	# [0]
+	REC_PsFileNameBoxProc_Records	key=1, proc=loc_485178D3
+	REC_PsFileNameBoxProc_Records	key=17, proc=loc_48517D3A
+	REC_PsFileNameBoxProc_Records	key=18, proc=loc_48517D3A
+	REC_PsFileNameBoxProc_Records	key=2, proc=loc_48517DD3
+	REC_PsFileNameBoxProc_Records	key=0x1400000, proc=loc_48517DF1
+	REC_PsFileNameBoxProc_Records	key=0x1400001, proc=loc_48517E1B
+	REC_PsFileNameBoxProc_Records	proc=loc_48517E45
+	REC_PsFileNameBoxProc_Records	proc=loc_48517E45	# [8]
+	REC_PsFileNameBoxProc_Records	key=9, proc=loc_485179AA
+	REC_PsFileNameBoxProc_Records	key=0x1400009, proc=loc_48517AE9
+	REC_PsFileNameBoxProc_Records	key=0x140000B, proc=loc_48517CC6
+	REC_PsFileNameBoxProc_Records	key=0x140001A, proc=loc_48517DA2
+	REC_PsFileNameBoxProc_Records	key=0x140000D, proc=loc_48517C25
+	REC_PsFileNameBoxProc_Records	key=0x140001B, proc=loc_48517DA2
+	REC_PsFileNameBoxProc_Records	key=15, proc=loc_48517CDA
 PsFileNmTwoBoxProc_Records:	# 16 x REC_PsFileNmTwoBoxProc_Records (8 bytes each); read by PsFileNmTwoBoxProc 0x48517E56 `mov (a0), d0`
-	REC_PsFileNmTwoBoxProc_Records	f0=16, p4=loc_48518157	# [0]
-	REC_PsFileNmTwoBoxProc_Records	f0=1, p4=loc_48517EAF
-	REC_PsFileNmTwoBoxProc_Records	f0=17, p4=loc_485181BB
-	REC_PsFileNmTwoBoxProc_Records	f0=18, p4=loc_485181BB
-	REC_PsFileNmTwoBoxProc_Records	f0=0x1400004, p4=loc_4851821C
-	REC_PsFileNmTwoBoxProc_Records	f0=0x1400005, p4=loc_4851821C
-	REC_PsFileNmTwoBoxProc_Records	f0=2, p4=loc_4851824B
-	REC_PsFileNmTwoBoxProc_Records	f0=0x1400000, p4=loc_48518268
-	REC_PsFileNmTwoBoxProc_Records	f0=0x1400001, p4=loc_48518291	# [8]
-	REC_PsFileNmTwoBoxProc_Records	f0=9, p4=loc_48517EE8
-	REC_PsFileNmTwoBoxProc_Records	p4=loc_485182BA
-	REC_PsFileNmTwoBoxProc_Records	p4=loc_485182BA
-	REC_PsFileNmTwoBoxProc_Records	f0=0x140000C, p4=loc_4851814B
-	REC_PsFileNmTwoBoxProc_Records	p4=loc_485182BA
-	REC_PsFileNmTwoBoxProc_Records	f0=0x140000E, p4=loc_48517FDA
-	REC_PsFileNmTwoBoxProc_Records	f0=15, p4=loc_48518157
+	REC_PsFileNmTwoBoxProc_Records	key=16, proc=loc_48518157	# [0]
+	REC_PsFileNmTwoBoxProc_Records	key=1, proc=loc_48517EAF
+	REC_PsFileNmTwoBoxProc_Records	key=17, proc=loc_485181BB
+	REC_PsFileNmTwoBoxProc_Records	key=18, proc=loc_485181BB
+	REC_PsFileNmTwoBoxProc_Records	key=0x1400004, proc=loc_4851821C
+	REC_PsFileNmTwoBoxProc_Records	key=0x1400005, proc=loc_4851821C
+	REC_PsFileNmTwoBoxProc_Records	key=2, proc=loc_4851824B
+	REC_PsFileNmTwoBoxProc_Records	key=0x1400000, proc=loc_48518268
+	REC_PsFileNmTwoBoxProc_Records	key=0x1400001, proc=loc_48518291	# [8]
+	REC_PsFileNmTwoBoxProc_Records	key=9, proc=loc_48517EE8
+	REC_PsFileNmTwoBoxProc_Records	proc=loc_485182BA
+	REC_PsFileNmTwoBoxProc_Records	proc=loc_485182BA
+	REC_PsFileNmTwoBoxProc_Records	key=0x140000C, proc=loc_4851814B
+	REC_PsFileNmTwoBoxProc_Records	proc=loc_485182BA
+	REC_PsFileNmTwoBoxProc_Records	key=0x140000E, proc=loc_48517FDA
+	REC_PsFileNmTwoBoxProc_Records	key=15, proc=loc_48518157
 PsOptionTwoBoxProc_Records:	# 16 x REC_PsOptionTwoBoxProc_Records (8 bytes each); read by PsOptionTwoBoxProc 0x485182CB `mov (a0), d0`
-	REC_PsOptionTwoBoxProc_Records	f0=16, p4=loc_485185C3	# [0]
-	REC_PsOptionTwoBoxProc_Records	f0=1, p4=loc_48518323
-	REC_PsOptionTwoBoxProc_Records	f0=17, p4=loc_48518623
-	REC_PsOptionTwoBoxProc_Records	f0=18, p4=loc_48518623
-	REC_PsOptionTwoBoxProc_Records	f0=2, p4=loc_4851868C
-	REC_PsOptionTwoBoxProc_Records	f0=0x1400000, p4=loc_485186A9
-	REC_PsOptionTwoBoxProc_Records	f0=0x1400001, p4=loc_485186D2
-	REC_PsOptionTwoBoxProc_Records	p4=loc_485186FB
-	REC_PsOptionTwoBoxProc_Records	p4=loc_485186FB	# [8]
-	REC_PsOptionTwoBoxProc_Records	f0=9, p4=loc_48518346
-	REC_PsOptionTwoBoxProc_Records	f0=0x140000A, p4=loc_48518490
-	REC_PsOptionTwoBoxProc_Records	p4=loc_485186FB
-	REC_PsOptionTwoBoxProc_Records	p4=loc_485186FB
-	REC_PsOptionTwoBoxProc_Records	p4=loc_485186FB
-	REC_PsOptionTwoBoxProc_Records	p4=loc_485186FB
-	REC_PsOptionTwoBoxProc_Records	f0=15, p4=loc_485185C3
+	REC_PsOptionTwoBoxProc_Records	key=16, proc=loc_485185C3	# [0]
+	REC_PsOptionTwoBoxProc_Records	key=1, proc=loc_48518323
+	REC_PsOptionTwoBoxProc_Records	key=17, proc=loc_48518623
+	REC_PsOptionTwoBoxProc_Records	key=18, proc=loc_48518623
+	REC_PsOptionTwoBoxProc_Records	key=2, proc=loc_4851868C
+	REC_PsOptionTwoBoxProc_Records	key=0x1400000, proc=loc_485186A9
+	REC_PsOptionTwoBoxProc_Records	key=0x1400001, proc=loc_485186D2
+	REC_PsOptionTwoBoxProc_Records	proc=loc_485186FB
+	REC_PsOptionTwoBoxProc_Records	proc=loc_485186FB	# [8]
+	REC_PsOptionTwoBoxProc_Records	key=9, proc=loc_48518346
+	REC_PsOptionTwoBoxProc_Records	key=0x140000A, proc=loc_48518490
+	REC_PsOptionTwoBoxProc_Records	proc=loc_485186FB
+	REC_PsOptionTwoBoxProc_Records	proc=loc_485186FB
+	REC_PsOptionTwoBoxProc_Records	proc=loc_485186FB
+	REC_PsOptionTwoBoxProc_Records	proc=loc_485186FB
+	REC_PsOptionTwoBoxProc_Records	key=15, proc=loc_485185C3
 PsPlayFileNameBoxProc_Records:	# 16 x REC_PsPlayFileNameBoxProc_Records (8 bytes each); read by PsPlayFileNameBoxProc 0x4851870C `mov (a0), d0`
-	REC_PsPlayFileNameBoxProc_Records	f0=0x1400010, p4=loc_485189A2	# [0]
-	REC_PsPlayFileNameBoxProc_Records	f0=1, p4=loc_48518762
-	REC_PsPlayFileNameBoxProc_Records	f0=16, p4=loc_48518B84
-	REC_PsPlayFileNameBoxProc_Records	f0=17, p4=loc_48518BE4
-	REC_PsPlayFileNameBoxProc_Records	f0=18, p4=loc_48518BE4
-	REC_PsPlayFileNameBoxProc_Records	f0=2, p4=loc_48518C4C
-	REC_PsPlayFileNameBoxProc_Records	f0=0x1400000, p4=loc_48518C6A
-	REC_PsPlayFileNameBoxProc_Records	f0=0x1400001, p4=loc_48518C94
-	REC_PsPlayFileNameBoxProc_Records	p4=loc_48518CBE	# [8]
-	REC_PsPlayFileNameBoxProc_Records	f0=9, p4=loc_48518834
-	REC_PsPlayFileNameBoxProc_Records	p4=loc_48518CBE
-	REC_PsPlayFileNameBoxProc_Records	f0=0x140000B, p4=loc_48518B70
-	REC_PsPlayFileNameBoxProc_Records	p4=loc_48518CBE
-	REC_PsPlayFileNameBoxProc_Records	p4=loc_48518CBE
-	REC_PsPlayFileNameBoxProc_Records	p4=loc_48518CBE
-	REC_PsPlayFileNameBoxProc_Records	f0=15, p4=loc_48518B84
+	REC_PsPlayFileNameBoxProc_Records	key=0x1400010, proc=loc_485189A2	# [0]
+	REC_PsPlayFileNameBoxProc_Records	key=1, proc=loc_48518762
+	REC_PsPlayFileNameBoxProc_Records	key=16, proc=loc_48518B84
+	REC_PsPlayFileNameBoxProc_Records	key=17, proc=loc_48518BE4
+	REC_PsPlayFileNameBoxProc_Records	key=18, proc=loc_48518BE4
+	REC_PsPlayFileNameBoxProc_Records	key=2, proc=loc_48518C4C
+	REC_PsPlayFileNameBoxProc_Records	key=0x1400000, proc=loc_48518C6A
+	REC_PsPlayFileNameBoxProc_Records	key=0x1400001, proc=loc_48518C94
+	REC_PsPlayFileNameBoxProc_Records	proc=loc_48518CBE	# [8]
+	REC_PsPlayFileNameBoxProc_Records	key=9, proc=loc_48518834
+	REC_PsPlayFileNameBoxProc_Records	proc=loc_48518CBE
+	REC_PsPlayFileNameBoxProc_Records	key=0x140000B, proc=loc_48518B70
+	REC_PsPlayFileNameBoxProc_Records	proc=loc_48518CBE
+	REC_PsPlayFileNameBoxProc_Records	proc=loc_48518CBE
+	REC_PsPlayFileNameBoxProc_Records	proc=loc_48518CBE
+	REC_PsPlayFileNameBoxProc_Records	key=15, proc=loc_48518B84
 IvIndexSwCtrlProc_Records:	# 16 x REC_IvIndexSwCtrlProc_Records (8 bytes each); read by IvIndexSwCtrlProc 0x48519D86 `mov (a0), d0`
-	REC_IvIndexSwCtrlProc_Records	f0=16, p4=loc_48519E34	# [0]
-	REC_IvIndexSwCtrlProc_Records	f0=1, p4=loc_48519DDA
-	REC_IvIndexSwCtrlProc_Records	f0=0x1410012, p4=loc_48519DF3
-	REC_IvIndexSwCtrlProc_Records	f0=0x100B2, p4=loc_48519DFF
-	REC_IvIndexSwCtrlProc_Records	f0=17, p4=loc_48519EEC
-	REC_IvIndexSwCtrlProc_Records	f0=18, p4=loc_48519EEC
-	REC_IvIndexSwCtrlProc_Records	f0=0x1400002, p4=loc_48519F46
-	REC_IvIndexSwCtrlProc_Records	f0=0x1400003, p4=loc_48519F46
-	REC_IvIndexSwCtrlProc_Records	p4=loc_48519F9F	# [8]
-	REC_IvIndexSwCtrlProc_Records	p4=loc_48519F9F
-	REC_IvIndexSwCtrlProc_Records	f0=0x1003A, p4=loc_48519E21
-	REC_IvIndexSwCtrlProc_Records	f0=0x1003B, p4=loc_48519DF3
-	REC_IvIndexSwCtrlProc_Records	p4=loc_48519F9F
-	REC_IvIndexSwCtrlProc_Records	p4=loc_48519F9F
-	REC_IvIndexSwCtrlProc_Records	p4=loc_48519F9F
-	REC_IvIndexSwCtrlProc_Records	f0=15, p4=loc_48519E34
+	REC_IvIndexSwCtrlProc_Records	key=16, proc=loc_48519E34	# [0]
+	REC_IvIndexSwCtrlProc_Records	key=1, proc=loc_48519DDA
+	REC_IvIndexSwCtrlProc_Records	key=0x1410012, proc=loc_48519DF3
+	REC_IvIndexSwCtrlProc_Records	key=0x100B2, proc=loc_48519DFF
+	REC_IvIndexSwCtrlProc_Records	key=17, proc=loc_48519EEC
+	REC_IvIndexSwCtrlProc_Records	key=18, proc=loc_48519EEC
+	REC_IvIndexSwCtrlProc_Records	key=0x1400002, proc=loc_48519F46
+	REC_IvIndexSwCtrlProc_Records	key=0x1400003, proc=loc_48519F46
+	REC_IvIndexSwCtrlProc_Records	proc=loc_48519F9F	# [8]
+	REC_IvIndexSwCtrlProc_Records	proc=loc_48519F9F
+	REC_IvIndexSwCtrlProc_Records	key=0x1003A, proc=loc_48519E21
+	REC_IvIndexSwCtrlProc_Records	key=0x1003B, proc=loc_48519DF3
+	REC_IvIndexSwCtrlProc_Records	proc=loc_48519F9F
+	REC_IvIndexSwCtrlProc_Records	proc=loc_48519F9F
+	REC_IvIndexSwCtrlProc_Records	proc=loc_48519F9F
+	REC_IvIndexSwCtrlProc_Records	key=15, proc=loc_48519E34
 
 func_4851AC0E_Table:	# 5 x u8, 96..113; read by func_4851AC0E_entry 0x4851A382: `movbu  (d0, a0), d0`
 	tab_u8	96, 96, 97, 110, 113
@@ -32095,22 +32095,22 @@ func_48522D6D_Table:
 	.long	loc_48522D9C
 
 FmmSmfMedleyFunc_Records:	# 16 x REC_FmmSmfMedleyFunc_Records (8 bytes each); read by FmmSmfMedleyFunc 0x48528D66 `mov (a0), d0`
-	REC_FmmSmfMedleyFunc_Records	f0=16, p4=loc_48529290	# [0]
-	REC_FmmSmfMedleyFunc_Records	f0=1, p4=loc_4852920A
-	REC_FmmSmfMedleyFunc_Records	f0=0x1410001, p4=loc_485298C9
-	REC_FmmSmfMedleyFunc_Records	p4=loc_4852990E
-	REC_FmmSmfMedleyFunc_Records	f0=0x1410004, p4=loc_485298A7
-	REC_FmmSmfMedleyFunc_Records	f0=0x1410005, p4=loc_485298B3
-	REC_FmmSmfMedleyFunc_Records	f0=0x1410006, p4=loc_485298BE
-	REC_FmmSmfMedleyFunc_Records	f0=0x1410007, p4=loc_4852986D
-	REC_FmmSmfMedleyFunc_Records	f0=20, p4=loc_485298D2	# [8]
-	REC_FmmSmfMedleyFunc_Records	f0=9, p4=loc_48529252
-	REC_FmmSmfMedleyFunc_Records	f0=0x1410009, p4=loc_48529879
-	REC_FmmSmfMedleyFunc_Records	f0=11, p4=loc_48528DBA
-	REC_FmmSmfMedleyFunc_Records	p4=loc_4852990E
-	REC_FmmSmfMedleyFunc_Records	p4=loc_4852990E
-	REC_FmmSmfMedleyFunc_Records	p4=loc_4852990E
-	REC_FmmSmfMedleyFunc_Records	f0=15, p4=loc_48529290
+	REC_FmmSmfMedleyFunc_Records	f0=16, proc=loc_48529290	# [0]
+	REC_FmmSmfMedleyFunc_Records	f0=1, proc=loc_4852920A
+	REC_FmmSmfMedleyFunc_Records	f0=0x1410001, proc=loc_485298C9
+	REC_FmmSmfMedleyFunc_Records	proc=loc_4852990E
+	REC_FmmSmfMedleyFunc_Records	f0=0x1410004, proc=loc_485298A7
+	REC_FmmSmfMedleyFunc_Records	f0=0x1410005, proc=loc_485298B3
+	REC_FmmSmfMedleyFunc_Records	f0=0x1410006, proc=loc_485298BE
+	REC_FmmSmfMedleyFunc_Records	f0=0x1410007, proc=loc_4852986D
+	REC_FmmSmfMedleyFunc_Records	f0=20, proc=loc_485298D2	# [8]
+	REC_FmmSmfMedleyFunc_Records	f0=9, proc=loc_48529252
+	REC_FmmSmfMedleyFunc_Records	f0=0x1410009, proc=loc_48529879
+	REC_FmmSmfMedleyFunc_Records	f0=11, proc=loc_48528DBA
+	REC_FmmSmfMedleyFunc_Records	proc=loc_4852990E
+	REC_FmmSmfMedleyFunc_Records	proc=loc_4852990E
+	REC_FmmSmfMedleyFunc_Records	proc=loc_4852990E
+	REC_FmmSmfMedleyFunc_Records	f0=15, proc=loc_48529290
 
 func_4852D6BF_Table:	# 16 x u8, 0..255; read by func_4852D6BF_entry 0x4852D3AB: `movbu  (d2, a3), d0`; func_4852D899_entry 0x4852D3AB: `movbu  (d2, a3), d0` ...
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255
@@ -32120,17 +32120,17 @@ func_4852ADD3_Table:	# 18 x u32, 0..4294967040; read by func_4852ADD3 0x4852ADD3
 	tab_u32	1260407296, 4294967040	# [16]
 
 DiskFileTagTable:	# 11 x REC_DiskFileTagTable (8 bytes each); read by func_4852AFE0 0x4852AFE0 `mov (a3), a0`; func_4852AFE0 0x4852AFE0 `movhu (4, a3), d0`; func_4852AFE0 0x4852AFE0 `movhu (a2), d0` (+1)
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+12, f4=4, f6=3	# [0]
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+16, f6=3
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+20, f4=5, f6=2
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+23, f6=4
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+28, f6=16
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+45, f6=4
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+50, f6=2
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+53, f6=3
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+57, f6=3	# [8]
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+61, f6=3
-	REC_DiskFileTagTable	p0=func_4852ADD3_Table+65, f6=3
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+12, fmmseek_d0=4, f6=3	# [0]
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+16, f6=3
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+20, fmmseek_d0=5, f6=2
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+23, f6=4
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+28, f6=16
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+45, f6=4
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+50, f6=2
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+53, f6=3
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+57, f6=3	# [8]
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+61, f6=3
+	REC_DiskFileTagTable	index=func_4852ADD3_Table+65, f6=3
 
 Str_J_KD_6:	.asciz "J KD"
 Str_J_KD_5:	.asciz "J KD"
@@ -32146,17 +32146,17 @@ Str_J_K_6:	.asciz "J K"
 	.align	4, 0xFF	# pad after Str_J_K_6
 
 func_4852B089_Records:	# 11 x REC_func_4852B089_Records (8 bytes each); read by func_4852B089 0x4852B089 `mov (a3), a0`; func_4852B089 0x4852B089 `movhu (4, a3), d0`; func_4852B089 0x4852B089 `movhu (a2), d0` (+4)
-	REC_func_4852B089_Records	p0=Str_J_KD_6, f6=4	# [0]
-	REC_func_4852B089_Records	p0=Str_J_KD_5, f6=4
-	REC_func_4852B089_Records	p0=Str_J_KD_4, f6=4
-	REC_func_4852B089_Records	p0=Str_J_KD_3, f6=4
-	REC_func_4852B089_Records	p0=Str_J_KD_2, f6=4
-	REC_func_4852B089_Records	p0=Str_J_KD, f6=4
-	REC_func_4852B089_Records	p0=Str_JK_D, f6=4
-	REC_func_4852B089_Records	p0=Str_JK_8, f6=3
-	REC_func_4852B089_Records	p0=Str_JK_7, f6=3	# [8]
-	REC_func_4852B089_Records	p0=Str_JK_6, f6=3
-	REC_func_4852B089_Records	p0=Str_J_K_6, f6=3
+	REC_func_4852B089_Records	text=Str_J_KD_6, f6=4	# [0]
+	REC_func_4852B089_Records	text=Str_J_KD_5, f6=4
+	REC_func_4852B089_Records	text=Str_J_KD_4, f6=4
+	REC_func_4852B089_Records	text=Str_J_KD_3, f6=4
+	REC_func_4852B089_Records	text=Str_J_KD_2, f6=4
+	REC_func_4852B089_Records	text=Str_J_KD, f6=4
+	REC_func_4852B089_Records	text=Str_JK_D, f6=4
+	REC_func_4852B089_Records	text=Str_JK_8, f6=3
+	REC_func_4852B089_Records	text=Str_JK_7, f6=3	# [8]
+	REC_func_4852B089_Records	text=Str_JK_6, f6=3
+	REC_func_4852B089_Records	text=Str_J_K_6, f6=3
 
 Str_I_KD_6:	.asciz "I KD"
 Str_I_KD_5:	.asciz "I KD"
@@ -32172,20 +32172,20 @@ Str_I_K_2:	.asciz "I K"
 	.align	4, 0xFF	# pad after Str_I_K_2
 
 func_4852B089_Var:	# 11 x REC_func_4852B089_Var (8 bytes each); read by func_4852B089 0x4852B089 `mov (a3), a0`; func_4852B089 0x4852B089 `movhu (4, a3), d0`; func_4852B089 0x4852B089 `movhu (a2), d0` (+1)
-	REC_func_4852B089_Var	p0=Str_I_KD_6, f6=4	# [0]
-	REC_func_4852B089_Var	p0=Str_I_KD_5, f6=4
-	REC_func_4852B089_Var	p0=Str_I_KD_4, f6=4
-	REC_func_4852B089_Var	p0=Str_I_KD_3, f6=4
-	REC_func_4852B089_Var	p0=Str_I_KD_2, f6=4
-	REC_func_4852B089_Var	p0=Str_I_KD, f6=4
-	REC_func_4852B089_Var	p0=Str_IK_D, f6=4
-	REC_func_4852B089_Var	p0=Str_JK_5, f6=3
-	REC_func_4852B089_Var	p0=Str_JK_3, f6=3	# [8]
-	REC_func_4852B089_Var	p0=Str_JK_2, f6=3
-	REC_func_4852B089_Var	p0=Str_I_K_2, f6=3
+	REC_func_4852B089_Var	text=Str_I_KD_6, f6=4	# [0]
+	REC_func_4852B089_Var	text=Str_I_KD_5, f6=4
+	REC_func_4852B089_Var	text=Str_I_KD_4, f6=4
+	REC_func_4852B089_Var	text=Str_I_KD_3, f6=4
+	REC_func_4852B089_Var	text=Str_I_KD_2, f6=4
+	REC_func_4852B089_Var	text=Str_I_KD, f6=4
+	REC_func_4852B089_Var	text=Str_IK_D, f6=4
+	REC_func_4852B089_Var	text=Str_JK_5, f6=3
+	REC_func_4852B089_Var	text=Str_JK_3, f6=3	# [8]
+	REC_func_4852B089_Var	text=Str_JK_2, f6=3
+	REC_func_4852B089_Var	text=Str_I_K_2, f6=3
 
 data_486629C8_p0_0:	# REC_data_486629C8_p0 (4 bytes)
-	REC_data_486629C8_p0	f0=73, x1="K \x00"
+	REC_data_486629C8_p0	key=73, x1="K \x00"
 
 func_4852B51A_Var:	# u32, a constant; read / written by func_4852B51A 0x4852B51A: `mov (func_4852B51A_Var), a0`
 	.long	0x486629c4
@@ -32199,13 +32199,13 @@ Str_SSW_ACT:	.asciz "SSW-ACT"
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2629D8, 0x2629E0
 
 func_4852AE25_Table:	# 7 x REC_func_4852AE25_Table (8 bytes each); read by func_4852AE25 0x4852AE25 `movhu (d3, a0), d0`; func_4852B486 0x4852B486 `movhu (4, a3), d0`; func_4852B486 0x4852B486 `movhu (a3), d0` (+4)
-	REC_func_4852AE25_Table	f0=24, f2=5, f4=8, f6=12
-	REC_func_4852AE25_Table	f0=16, f2=5, f4=12
-	REC_func_4852AE25_Table	f0=24, f2=5, f4=8, f6=12
-	REC_func_4852AE25_Table	f0=16, f2=5, f4=12
-	REC_func_4852AE25_Table	f0=16, f2=5, f4=12
-	REC_func_4852AE25_Table	f0=16, f2=5, f4=12
-	REC_func_4852AE25_Table	f0=16, f2=5, f4=12
+	REC_func_4852AE25_Table	f0=24, index=5, index_=8, index__=12
+	REC_func_4852AE25_Table	f0=16, index=5, index_=12
+	REC_func_4852AE25_Table	f0=24, index=5, index_=8, index__=12
+	REC_func_4852AE25_Table	f0=16, index=5, index_=12
+	REC_func_4852AE25_Table	f0=16, index=5, index_=12
+	REC_func_4852AE25_Table	f0=16, index=5, index_=12
+	REC_func_4852AE25_Table	f0=16, index=5, index_=12
 
 Str_rb_50:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_50
@@ -32213,7 +32213,7 @@ Str_rb_49:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_49
 
 data_48662A24_p0_0:	# REC_data_48662A24_p0 (4 bytes)
-	REC_data_48662A24_p0	f0=1, x1="\x00\xFF\xFF"
+	REC_data_48662A24_p0	key=1, x1="\x00\xFF\xFF"
 
 func_4852B192_Var:	# u32, a constant; read / written by func_4852B192 0x4852B192: `mov (func_4852B192_Var), a0`
 	.long	0x48662a20
@@ -39053,1073 +39053,1073 @@ Str_FWin:	.asciz "FWin"
 	.align	4, 0xFF	# pad after Str_FWin
 
 FE_SeqMenuSongSel_Records:	# 16 x REC_FE_SeqMenuSongSel_Records (8 bytes each); read by FE_SeqMenuSongSel 0x485344D7 `mov (a0), d0`
-	REC_FE_SeqMenuSongSel_Records	f0=16, p4=loc_4853452A	# [0]
-	REC_FE_SeqMenuSongSel_Records	f0=17, p4=loc_48534548
-	REC_FE_SeqMenuSongSel_Records	f0=2, p4=loc_48534528
-	REC_FE_SeqMenuSongSel_Records	f0=3, p4=loc_48534528
-	REC_FE_SeqMenuSongSel_Records	f0=0x100B3, p4=loc_48534528
-	REC_FE_SeqMenuSongSel_Records	f0=0x100B5, p4=loc_48534528
-	REC_FE_SeqMenuSongSel_Records	f0=18, p4=loc_4853452A
-	REC_FE_SeqMenuSongSel_Records	f0=19, p4=loc_48534548
-	REC_FE_SeqMenuSongSel_Records	f0=1, p4=loc_48534580	# [8]
-	REC_FE_SeqMenuSongSel_Records	p4=loc_48534582
-	REC_FE_SeqMenuSongSel_Records	p4=loc_48534582
-	REC_FE_SeqMenuSongSel_Records	f0=0x1003B, p4=loc_48534566
-	REC_FE_SeqMenuSongSel_Records	p4=loc_48534582
-	REC_FE_SeqMenuSongSel_Records	p4=loc_48534582
-	REC_FE_SeqMenuSongSel_Records	p4=loc_48534582
-	REC_FE_SeqMenuSongSel_Records	p4=loc_48534582
+	REC_FE_SeqMenuSongSel_Records	f0=16, proc=loc_4853452A	# [0]
+	REC_FE_SeqMenuSongSel_Records	f0=17, proc=loc_48534548
+	REC_FE_SeqMenuSongSel_Records	f0=2, proc=loc_48534528
+	REC_FE_SeqMenuSongSel_Records	f0=3, proc=loc_48534528
+	REC_FE_SeqMenuSongSel_Records	f0=0x100B3, proc=loc_48534528
+	REC_FE_SeqMenuSongSel_Records	f0=0x100B5, proc=loc_48534528
+	REC_FE_SeqMenuSongSel_Records	f0=18, proc=loc_4853452A
+	REC_FE_SeqMenuSongSel_Records	f0=19, proc=loc_48534548
+	REC_FE_SeqMenuSongSel_Records	f0=1, proc=loc_48534580	# [8]
+	REC_FE_SeqMenuSongSel_Records	proc=loc_48534582
+	REC_FE_SeqMenuSongSel_Records	proc=loc_48534582
+	REC_FE_SeqMenuSongSel_Records	f0=0x1003B, proc=loc_48534566
+	REC_FE_SeqMenuSongSel_Records	proc=loc_48534582
+	REC_FE_SeqMenuSongSel_Records	proc=loc_48534582
+	REC_FE_SeqMenuSongSel_Records	proc=loc_48534582
+	REC_FE_SeqMenuSongSel_Records	proc=loc_48534582
 FE_SeqPlaySongSel_Records:	# 16 x REC_FE_SeqPlaySongSel_Records (8 bytes each); read by FE_SeqPlaySongSel 0x48534D4C `mov (a0), d0`
-	REC_FE_SeqPlaySongSel_Records	f0=16, p4=loc_48534DC6	# [0]
-	REC_FE_SeqPlaySongSel_Records	f0=17, p4=loc_48534DE5
-	REC_FE_SeqPlaySongSel_Records	f0=2, p4=loc_48534D9F
-	REC_FE_SeqPlaySongSel_Records	f0=3, p4=loc_48534DA3
-	REC_FE_SeqPlaySongSel_Records	f0=0x100B3, p4=loc_48534DAB
-	REC_FE_SeqPlaySongSel_Records	f0=0x100B5, p4=loc_48534DA7
-	REC_FE_SeqPlaySongSel_Records	f0=18, p4=loc_48534DC6
-	REC_FE_SeqPlaySongSel_Records	f0=19, p4=loc_48534DE5
-	REC_FE_SeqPlaySongSel_Records	f0=1, p4=loc_48534E1F	# [8]
-	REC_FE_SeqPlaySongSel_Records	p4=loc_48534E22
-	REC_FE_SeqPlaySongSel_Records	p4=loc_48534E22
-	REC_FE_SeqPlaySongSel_Records	f0=0x1003B, p4=loc_48534E04
-	REC_FE_SeqPlaySongSel_Records	p4=loc_48534E22
-	REC_FE_SeqPlaySongSel_Records	p4=loc_48534E22
-	REC_FE_SeqPlaySongSel_Records	p4=loc_48534E22
-	REC_FE_SeqPlaySongSel_Records	p4=loc_48534E22
+	REC_FE_SeqPlaySongSel_Records	f0=16, proc=loc_48534DC6	# [0]
+	REC_FE_SeqPlaySongSel_Records	f0=17, proc=loc_48534DE5
+	REC_FE_SeqPlaySongSel_Records	f0=2, proc=loc_48534D9F
+	REC_FE_SeqPlaySongSel_Records	f0=3, proc=loc_48534DA3
+	REC_FE_SeqPlaySongSel_Records	f0=0x100B3, proc=loc_48534DAB
+	REC_FE_SeqPlaySongSel_Records	f0=0x100B5, proc=loc_48534DA7
+	REC_FE_SeqPlaySongSel_Records	f0=18, proc=loc_48534DC6
+	REC_FE_SeqPlaySongSel_Records	f0=19, proc=loc_48534DE5
+	REC_FE_SeqPlaySongSel_Records	f0=1, proc=loc_48534E1F	# [8]
+	REC_FE_SeqPlaySongSel_Records	proc=loc_48534E22
+	REC_FE_SeqPlaySongSel_Records	proc=loc_48534E22
+	REC_FE_SeqPlaySongSel_Records	f0=0x1003B, proc=loc_48534E04
+	REC_FE_SeqPlaySongSel_Records	proc=loc_48534E22
+	REC_FE_SeqPlaySongSel_Records	proc=loc_48534E22
+	REC_FE_SeqPlaySongSel_Records	proc=loc_48534E22
+	REC_FE_SeqPlaySongSel_Records	proc=loc_48534E22
 FE_SeqCycPlySrt_Records:	# 16 x REC_FE_SeqCycPlySrt_Records (8 bytes each); read by FE_SeqCycPlySrt 0x48534E26 `mov (a0), d0`
-	REC_FE_SeqCycPlySrt_Records	f0=16, p4=loc_48534E7D	# [0]
-	REC_FE_SeqCycPlySrt_Records	f0=17, p4=loc_48534E92
-	REC_FE_SeqCycPlySrt_Records	f0=2, p4=loc_48534E79
-	REC_FE_SeqCycPlySrt_Records	f0=18, p4=loc_48534E7D
-	REC_FE_SeqCycPlySrt_Records	f0=19, p4=loc_48534E92
-	REC_FE_SeqCycPlySrt_Records	f0=0x10063, p4=loc_48534EC8
-	REC_FE_SeqCycPlySrt_Records	f0=1, p4=loc_48534EFD
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00	# [8]
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00
-	REC_FE_SeqCycPlySrt_Records	f0=0x1003B, p4=loc_48534EA9
-	REC_FE_SeqCycPlySrt_Records	f0=0x1003C, p4=loc_48534ED1
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00
-	REC_FE_SeqCycPlySrt_Records	p4=loc_48534F00
+	REC_FE_SeqCycPlySrt_Records	f0=16, proc=loc_48534E7D	# [0]
+	REC_FE_SeqCycPlySrt_Records	f0=17, proc=loc_48534E92
+	REC_FE_SeqCycPlySrt_Records	f0=2, proc=loc_48534E79
+	REC_FE_SeqCycPlySrt_Records	f0=18, proc=loc_48534E7D
+	REC_FE_SeqCycPlySrt_Records	f0=19, proc=loc_48534E92
+	REC_FE_SeqCycPlySrt_Records	f0=0x10063, proc=loc_48534EC8
+	REC_FE_SeqCycPlySrt_Records	f0=1, proc=loc_48534EFD
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00	# [8]
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00
+	REC_FE_SeqCycPlySrt_Records	f0=0x1003B, proc=loc_48534EA9
+	REC_FE_SeqCycPlySrt_Records	f0=0x1003C, proc=loc_48534ED1
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00
+	REC_FE_SeqCycPlySrt_Records	proc=loc_48534F00
 FE_SeqCycPlyEnd_Records:	# 16 x REC_FE_SeqCycPlyEnd_Records (8 bytes each); read by FE_SeqCycPlyEnd 0x48534F04 `mov (a0), d0`
-	REC_FE_SeqCycPlyEnd_Records	f0=16, p4=loc_48534F5B	# [0]
-	REC_FE_SeqCycPlyEnd_Records	f0=17, p4=loc_48534F70
-	REC_FE_SeqCycPlyEnd_Records	f0=2, p4=loc_48534F57
-	REC_FE_SeqCycPlyEnd_Records	f0=18, p4=loc_48534F5B
-	REC_FE_SeqCycPlyEnd_Records	f0=19, p4=loc_48534F70
-	REC_FE_SeqCycPlyEnd_Records	f0=0x10063, p4=loc_48534FA6
-	REC_FE_SeqCycPlyEnd_Records	f0=1, p4=loc_48534FDB
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE	# [8]
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE
-	REC_FE_SeqCycPlyEnd_Records	f0=0x1003B, p4=loc_48534F87
-	REC_FE_SeqCycPlyEnd_Records	f0=0x1003C, p4=loc_48534FAF
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE
-	REC_FE_SeqCycPlyEnd_Records	p4=loc_48534FDE
+	REC_FE_SeqCycPlyEnd_Records	f0=16, proc=loc_48534F5B	# [0]
+	REC_FE_SeqCycPlyEnd_Records	f0=17, proc=loc_48534F70
+	REC_FE_SeqCycPlyEnd_Records	f0=2, proc=loc_48534F57
+	REC_FE_SeqCycPlyEnd_Records	f0=18, proc=loc_48534F5B
+	REC_FE_SeqCycPlyEnd_Records	f0=19, proc=loc_48534F70
+	REC_FE_SeqCycPlyEnd_Records	f0=0x10063, proc=loc_48534FA6
+	REC_FE_SeqCycPlyEnd_Records	f0=1, proc=loc_48534FDB
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE	# [8]
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE
+	REC_FE_SeqCycPlyEnd_Records	f0=0x1003B, proc=loc_48534F87
+	REC_FE_SeqCycPlyEnd_Records	f0=0x1003C, proc=loc_48534FAF
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE
+	REC_FE_SeqCycPlyEnd_Records	proc=loc_48534FDE
 FE_SeqCycRecSrt_Records:	# 16 x REC_FE_SeqCycRecSrt_Records (8 bytes each); read by FE_SeqCycRecSrt 0x48535350 `mov (a0), d0`
-	REC_FE_SeqCycRecSrt_Records	f0=16, p4=loc_485353A7	# [0]
-	REC_FE_SeqCycRecSrt_Records	f0=17, p4=loc_485353BC
-	REC_FE_SeqCycRecSrt_Records	f0=2, p4=loc_485353A3
-	REC_FE_SeqCycRecSrt_Records	f0=18, p4=loc_485353A7
-	REC_FE_SeqCycRecSrt_Records	f0=19, p4=loc_485353BC
-	REC_FE_SeqCycRecSrt_Records	f0=0x10063, p4=loc_485353F2
-	REC_FE_SeqCycRecSrt_Records	f0=1, p4=loc_48535427
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A	# [8]
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A
-	REC_FE_SeqCycRecSrt_Records	f0=0x1003B, p4=loc_485353D3
-	REC_FE_SeqCycRecSrt_Records	f0=0x1003C, p4=loc_485353FB
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A
-	REC_FE_SeqCycRecSrt_Records	p4=loc_4853542A
+	REC_FE_SeqCycRecSrt_Records	f0=16, proc=loc_485353A7	# [0]
+	REC_FE_SeqCycRecSrt_Records	f0=17, proc=loc_485353BC
+	REC_FE_SeqCycRecSrt_Records	f0=2, proc=loc_485353A3
+	REC_FE_SeqCycRecSrt_Records	f0=18, proc=loc_485353A7
+	REC_FE_SeqCycRecSrt_Records	f0=19, proc=loc_485353BC
+	REC_FE_SeqCycRecSrt_Records	f0=0x10063, proc=loc_485353F2
+	REC_FE_SeqCycRecSrt_Records	f0=1, proc=loc_48535427
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A	# [8]
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A
+	REC_FE_SeqCycRecSrt_Records	f0=0x1003B, proc=loc_485353D3
+	REC_FE_SeqCycRecSrt_Records	f0=0x1003C, proc=loc_485353FB
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A
+	REC_FE_SeqCycRecSrt_Records	proc=loc_4853542A
 FE_SeqCycRecEnd_Records:	# 16 x REC_FE_SeqCycRecEnd_Records (8 bytes each); read by FE_SeqCycRecEnd 0x4853542E `mov (a0), d0`
-	REC_FE_SeqCycRecEnd_Records	f0=16, p4=loc_48535485	# [0]
-	REC_FE_SeqCycRecEnd_Records	f0=17, p4=loc_4853549A
-	REC_FE_SeqCycRecEnd_Records	f0=2, p4=loc_48535481
-	REC_FE_SeqCycRecEnd_Records	f0=18, p4=loc_48535485
-	REC_FE_SeqCycRecEnd_Records	f0=19, p4=loc_4853549A
-	REC_FE_SeqCycRecEnd_Records	f0=0x10063, p4=loc_485354D0
-	REC_FE_SeqCycRecEnd_Records	f0=1, p4=loc_48535505
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508	# [8]
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508
-	REC_FE_SeqCycRecEnd_Records	f0=0x1003B, p4=loc_485354B1
-	REC_FE_SeqCycRecEnd_Records	f0=0x1003C, p4=loc_485354D9
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508
-	REC_FE_SeqCycRecEnd_Records	p4=loc_48535508
+	REC_FE_SeqCycRecEnd_Records	f0=16, proc=loc_48535485	# [0]
+	REC_FE_SeqCycRecEnd_Records	f0=17, proc=loc_4853549A
+	REC_FE_SeqCycRecEnd_Records	f0=2, proc=loc_48535481
+	REC_FE_SeqCycRecEnd_Records	f0=18, proc=loc_48535485
+	REC_FE_SeqCycRecEnd_Records	f0=19, proc=loc_4853549A
+	REC_FE_SeqCycRecEnd_Records	f0=0x10063, proc=loc_485354D0
+	REC_FE_SeqCycRecEnd_Records	f0=1, proc=loc_48535505
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508	# [8]
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508
+	REC_FE_SeqCycRecEnd_Records	f0=0x1003B, proc=loc_485354B1
+	REC_FE_SeqCycRecEnd_Records	f0=0x1003C, proc=loc_485354D9
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508
+	REC_FE_SeqCycRecEnd_Records	proc=loc_48535508
 FE_SeqSongClearSel_Records:	# 16 x REC_FE_SeqSongClearSel_Records (8 bytes each); read by FE_SeqSongClearSel 0x485357E7 `mov (a0), d0`
-	REC_FE_SeqSongClearSel_Records	f0=16, p4=loc_48535864	# [0]
-	REC_FE_SeqSongClearSel_Records	f0=17, p4=loc_48535897
-	REC_FE_SeqSongClearSel_Records	f0=2, p4=loc_48535839
-	REC_FE_SeqSongClearSel_Records	f0=3, p4=loc_48535858
-	REC_FE_SeqSongClearSel_Records	f0=0x100B3, p4=loc_48535860
-	REC_FE_SeqSongClearSel_Records	f0=0x100B5, p4=loc_4853585C
-	REC_FE_SeqSongClearSel_Records	f0=18, p4=loc_48535864
-	REC_FE_SeqSongClearSel_Records	f0=19, p4=loc_48535897
-	REC_FE_SeqSongClearSel_Records	f0=0x10063, p4=loc_485358EC	# [8]
-	REC_FE_SeqSongClearSel_Records	f0=1, p4=loc_485358F4
-	REC_FE_SeqSongClearSel_Records	p4=loc_485358F7
-	REC_FE_SeqSongClearSel_Records	f0=0x1003B, p4=loc_485358CC
-	REC_FE_SeqSongClearSel_Records	p4=loc_485358F7
-	REC_FE_SeqSongClearSel_Records	p4=loc_485358F7
-	REC_FE_SeqSongClearSel_Records	p4=loc_485358F7
-	REC_FE_SeqSongClearSel_Records	p4=loc_485358F7
+	REC_FE_SeqSongClearSel_Records	f0=16, proc=loc_48535864	# [0]
+	REC_FE_SeqSongClearSel_Records	f0=17, proc=loc_48535897
+	REC_FE_SeqSongClearSel_Records	f0=2, proc=loc_48535839
+	REC_FE_SeqSongClearSel_Records	f0=3, proc=loc_48535858
+	REC_FE_SeqSongClearSel_Records	f0=0x100B3, proc=loc_48535860
+	REC_FE_SeqSongClearSel_Records	f0=0x100B5, proc=loc_4853585C
+	REC_FE_SeqSongClearSel_Records	f0=18, proc=loc_48535864
+	REC_FE_SeqSongClearSel_Records	f0=19, proc=loc_48535897
+	REC_FE_SeqSongClearSel_Records	f0=0x10063, proc=loc_485358EC	# [8]
+	REC_FE_SeqSongClearSel_Records	f0=1, proc=loc_485358F4
+	REC_FE_SeqSongClearSel_Records	proc=loc_485358F7
+	REC_FE_SeqSongClearSel_Records	f0=0x1003B, proc=loc_485358CC
+	REC_FE_SeqSongClearSel_Records	proc=loc_485358F7
+	REC_FE_SeqSongClearSel_Records	proc=loc_485358F7
+	REC_FE_SeqSongClearSel_Records	proc=loc_485358F7
+	REC_FE_SeqSongClearSel_Records	proc=loc_485358F7
 AcSongSelBoxProc_Records:	# 16 x REC_AcSongSelBoxProc_Records (8 bytes each); read by AcSongSelBoxProc 0x485359AF `mov (a0), d0`
-	REC_AcSongSelBoxProc_Records	f0=16, p4=loc_48535A3C	# [0]
-	REC_AcSongSelBoxProc_Records	f0=1, p4=loc_48535A03
-	REC_AcSongSelBoxProc_Records	f0=17, p4=loc_48535A3C
-	REC_AcSongSelBoxProc_Records	f0=18, p4=loc_48535A3C
-	REC_AcSongSelBoxProc_Records	f0=0x1710002, p4=loc_48535A77
-	REC_AcSongSelBoxProc_Records	f0=0x100B4, p4=loc_48535B13
-	REC_AcSongSelBoxProc_Records	f0=0x100B3, p4=loc_48535CBD
-	REC_AcSongSelBoxProc_Records	p4=loc_48535F5A
-	REC_AcSongSelBoxProc_Records	p4=loc_48535F5A	# [8]
-	REC_AcSongSelBoxProc_Records	p4=loc_48535F5A
-	REC_AcSongSelBoxProc_Records	f0=0x1003A, p4=loc_48535AB8
-	REC_AcSongSelBoxProc_Records	f0=0x1007A, p4=loc_48535AE6
-	REC_AcSongSelBoxProc_Records	p4=loc_48535F5A
-	REC_AcSongSelBoxProc_Records	p4=loc_48535F5A
-	REC_AcSongSelBoxProc_Records	p4=loc_48535F5A
-	REC_AcSongSelBoxProc_Records	f0=15, p4=loc_48535A3C
+	REC_AcSongSelBoxProc_Records	f0=16, proc=loc_48535A3C	# [0]
+	REC_AcSongSelBoxProc_Records	f0=1, proc=loc_48535A03
+	REC_AcSongSelBoxProc_Records	f0=17, proc=loc_48535A3C
+	REC_AcSongSelBoxProc_Records	f0=18, proc=loc_48535A3C
+	REC_AcSongSelBoxProc_Records	f0=0x1710002, proc=loc_48535A77
+	REC_AcSongSelBoxProc_Records	f0=0x100B4, proc=loc_48535B13
+	REC_AcSongSelBoxProc_Records	f0=0x100B3, proc=loc_48535CBD
+	REC_AcSongSelBoxProc_Records	proc=loc_48535F5A
+	REC_AcSongSelBoxProc_Records	proc=loc_48535F5A	# [8]
+	REC_AcSongSelBoxProc_Records	proc=loc_48535F5A
+	REC_AcSongSelBoxProc_Records	f0=0x1003A, proc=loc_48535AB8
+	REC_AcSongSelBoxProc_Records	f0=0x1007A, proc=loc_48535AE6
+	REC_AcSongSelBoxProc_Records	proc=loc_48535F5A
+	REC_AcSongSelBoxProc_Records	proc=loc_48535F5A
+	REC_AcSongSelBoxProc_Records	proc=loc_48535F5A
+	REC_AcSongSelBoxProc_Records	f0=15, proc=loc_48535A3C
 FE_SeqAutoPunchSrt_Records:	# 16 x REC_FE_SeqAutoPunchSrt_Records (8 bytes each); read by FE_SeqAutoPunchSrt 0x485360E5 `mov (a0), d0`
-	REC_FE_SeqAutoPunchSrt_Records	f0=16, p4=loc_4853613C	# [0]
-	REC_FE_SeqAutoPunchSrt_Records	f0=17, p4=loc_48536151
-	REC_FE_SeqAutoPunchSrt_Records	f0=2, p4=loc_48536138
-	REC_FE_SeqAutoPunchSrt_Records	f0=18, p4=loc_4853613C
-	REC_FE_SeqAutoPunchSrt_Records	f0=19, p4=loc_48536151
-	REC_FE_SeqAutoPunchSrt_Records	f0=0x10063, p4=loc_48536187
-	REC_FE_SeqAutoPunchSrt_Records	f0=1, p4=loc_485361BC
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF	# [8]
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF
-	REC_FE_SeqAutoPunchSrt_Records	f0=0x1003B, p4=loc_48536168
-	REC_FE_SeqAutoPunchSrt_Records	f0=0x1003C, p4=loc_48536190
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF
-	REC_FE_SeqAutoPunchSrt_Records	p4=loc_485361BF
+	REC_FE_SeqAutoPunchSrt_Records	f0=16, proc=loc_4853613C	# [0]
+	REC_FE_SeqAutoPunchSrt_Records	f0=17, proc=loc_48536151
+	REC_FE_SeqAutoPunchSrt_Records	f0=2, proc=loc_48536138
+	REC_FE_SeqAutoPunchSrt_Records	f0=18, proc=loc_4853613C
+	REC_FE_SeqAutoPunchSrt_Records	f0=19, proc=loc_48536151
+	REC_FE_SeqAutoPunchSrt_Records	f0=0x10063, proc=loc_48536187
+	REC_FE_SeqAutoPunchSrt_Records	f0=1, proc=loc_485361BC
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF	# [8]
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF
+	REC_FE_SeqAutoPunchSrt_Records	f0=0x1003B, proc=loc_48536168
+	REC_FE_SeqAutoPunchSrt_Records	f0=0x1003C, proc=loc_48536190
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF
+	REC_FE_SeqAutoPunchSrt_Records	proc=loc_485361BF
 FE_SeqAutoPunchEnd_Records:	# 16 x REC_FE_SeqAutoPunchEnd_Records (8 bytes each); read by FE_SeqAutoPunchEnd 0x485361C3 `mov (a0), d0`
-	REC_FE_SeqAutoPunchEnd_Records	f0=16, p4=loc_4853621A	# [0]
-	REC_FE_SeqAutoPunchEnd_Records	f0=17, p4=loc_4853622F
-	REC_FE_SeqAutoPunchEnd_Records	f0=2, p4=loc_48536216
-	REC_FE_SeqAutoPunchEnd_Records	f0=18, p4=loc_4853621A
-	REC_FE_SeqAutoPunchEnd_Records	f0=19, p4=loc_4853622F
-	REC_FE_SeqAutoPunchEnd_Records	f0=0x10063, p4=loc_48536265
-	REC_FE_SeqAutoPunchEnd_Records	f0=1, p4=loc_4853629A
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D	# [8]
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D
-	REC_FE_SeqAutoPunchEnd_Records	f0=0x1003B, p4=loc_48536246
-	REC_FE_SeqAutoPunchEnd_Records	f0=0x1003C, p4=loc_4853626E
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D
-	REC_FE_SeqAutoPunchEnd_Records	p4=loc_4853629D
+	REC_FE_SeqAutoPunchEnd_Records	f0=16, proc=loc_4853621A	# [0]
+	REC_FE_SeqAutoPunchEnd_Records	f0=17, proc=loc_4853622F
+	REC_FE_SeqAutoPunchEnd_Records	f0=2, proc=loc_48536216
+	REC_FE_SeqAutoPunchEnd_Records	f0=18, proc=loc_4853621A
+	REC_FE_SeqAutoPunchEnd_Records	f0=19, proc=loc_4853622F
+	REC_FE_SeqAutoPunchEnd_Records	f0=0x10063, proc=loc_48536265
+	REC_FE_SeqAutoPunchEnd_Records	f0=1, proc=loc_4853629A
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D	# [8]
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D
+	REC_FE_SeqAutoPunchEnd_Records	f0=0x1003B, proc=loc_48536246
+	REC_FE_SeqAutoPunchEnd_Records	f0=0x1003C, proc=loc_4853626E
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D
+	REC_FE_SeqAutoPunchEnd_Records	proc=loc_4853629D
 FE_SeqAutoPunchCIn_Records:	# 16 x REC_FE_SeqAutoPunchCIn_Records (8 bytes each); read by FE_SeqAutoPunchCIn 0x485362A1 `mov (a0), d0`
-	REC_FE_SeqAutoPunchCIn_Records	f0=16, p4=loc_485362F8	# [0]
-	REC_FE_SeqAutoPunchCIn_Records	f0=17, p4=loc_4853630D
-	REC_FE_SeqAutoPunchCIn_Records	f0=2, p4=loc_485362F4
-	REC_FE_SeqAutoPunchCIn_Records	f0=18, p4=loc_485362F8
-	REC_FE_SeqAutoPunchCIn_Records	f0=19, p4=loc_4853630D
-	REC_FE_SeqAutoPunchCIn_Records	f0=0x10063, p4=loc_48536343
-	REC_FE_SeqAutoPunchCIn_Records	f0=1, p4=loc_48536378
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B	# [8]
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B
-	REC_FE_SeqAutoPunchCIn_Records	f0=0x1003B, p4=loc_48536324
-	REC_FE_SeqAutoPunchCIn_Records	f0=0x1003C, p4=loc_4853634C
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B
-	REC_FE_SeqAutoPunchCIn_Records	p4=loc_4853637B
+	REC_FE_SeqAutoPunchCIn_Records	f0=16, proc=loc_485362F8	# [0]
+	REC_FE_SeqAutoPunchCIn_Records	f0=17, proc=loc_4853630D
+	REC_FE_SeqAutoPunchCIn_Records	f0=2, proc=loc_485362F4
+	REC_FE_SeqAutoPunchCIn_Records	f0=18, proc=loc_485362F8
+	REC_FE_SeqAutoPunchCIn_Records	f0=19, proc=loc_4853630D
+	REC_FE_SeqAutoPunchCIn_Records	f0=0x10063, proc=loc_48536343
+	REC_FE_SeqAutoPunchCIn_Records	f0=1, proc=loc_48536378
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B	# [8]
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B
+	REC_FE_SeqAutoPunchCIn_Records	f0=0x1003B, proc=loc_48536324
+	REC_FE_SeqAutoPunchCIn_Records	f0=0x1003C, proc=loc_4853634C
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B
+	REC_FE_SeqAutoPunchCIn_Records	proc=loc_4853637B
 FE_SeqQtzTrack_Records:	# 16 x REC_FE_SeqQtzTrack_Records (8 bytes each); read by FE_SeqQtzTrack 0x485364DD `mov (a0), d0`
-	REC_FE_SeqQtzTrack_Records	f0=16, p4=loc_48536534	# [0]
-	REC_FE_SeqQtzTrack_Records	f0=17, p4=loc_48536546
-	REC_FE_SeqQtzTrack_Records	f0=2, p4=loc_48536530
-	REC_FE_SeqQtzTrack_Records	f0=18, p4=loc_48536534
-	REC_FE_SeqQtzTrack_Records	f0=19, p4=loc_48536546
-	REC_FE_SeqQtzTrack_Records	f0=0x10063, p4=loc_4853658C
-	REC_FE_SeqQtzTrack_Records	f0=1, p4=loc_485365BF
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2	# [8]
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2
-	REC_FE_SeqQtzTrack_Records	f0=0x1003B, p4=loc_48536559
-	REC_FE_SeqQtzTrack_Records	f0=0x1003C, p4=loc_48536594
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2
-	REC_FE_SeqQtzTrack_Records	p4=loc_485365C2
+	REC_FE_SeqQtzTrack_Records	f0=16, proc=loc_48536534	# [0]
+	REC_FE_SeqQtzTrack_Records	f0=17, proc=loc_48536546
+	REC_FE_SeqQtzTrack_Records	f0=2, proc=loc_48536530
+	REC_FE_SeqQtzTrack_Records	f0=18, proc=loc_48536534
+	REC_FE_SeqQtzTrack_Records	f0=19, proc=loc_48536546
+	REC_FE_SeqQtzTrack_Records	f0=0x10063, proc=loc_4853658C
+	REC_FE_SeqQtzTrack_Records	f0=1, proc=loc_485365BF
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2	# [8]
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2
+	REC_FE_SeqQtzTrack_Records	f0=0x1003B, proc=loc_48536559
+	REC_FE_SeqQtzTrack_Records	f0=0x1003C, proc=loc_48536594
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2
+	REC_FE_SeqQtzTrack_Records	proc=loc_485365C2
 FE_SeqQtzFstMeas_Records:	# 16 x REC_FE_SeqQtzFstMeas_Records (8 bytes each); read by FE_SeqQtzFstMeas 0x485365C6 `mov (a0), d0`
-	REC_FE_SeqQtzFstMeas_Records	f0=16, p4=loc_4853661D	# [0]
-	REC_FE_SeqQtzFstMeas_Records	f0=17, p4=loc_4853662F
-	REC_FE_SeqQtzFstMeas_Records	f0=2, p4=loc_48536619
-	REC_FE_SeqQtzFstMeas_Records	f0=18, p4=loc_4853661D
-	REC_FE_SeqQtzFstMeas_Records	f0=19, p4=loc_4853662F
-	REC_FE_SeqQtzFstMeas_Records	f0=0x10063, p4=loc_4853665F
-	REC_FE_SeqQtzFstMeas_Records	f0=1, p4=loc_48536692
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695	# [8]
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695
-	REC_FE_SeqQtzFstMeas_Records	f0=0x1003B, p4=loc_48536641
-	REC_FE_SeqQtzFstMeas_Records	f0=0x1003C, p4=loc_48536667
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695
-	REC_FE_SeqQtzFstMeas_Records	p4=loc_48536695
+	REC_FE_SeqQtzFstMeas_Records	f0=16, proc=loc_4853661D	# [0]
+	REC_FE_SeqQtzFstMeas_Records	f0=17, proc=loc_4853662F
+	REC_FE_SeqQtzFstMeas_Records	f0=2, proc=loc_48536619
+	REC_FE_SeqQtzFstMeas_Records	f0=18, proc=loc_4853661D
+	REC_FE_SeqQtzFstMeas_Records	f0=19, proc=loc_4853662F
+	REC_FE_SeqQtzFstMeas_Records	f0=0x10063, proc=loc_4853665F
+	REC_FE_SeqQtzFstMeas_Records	f0=1, proc=loc_48536692
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695	# [8]
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695
+	REC_FE_SeqQtzFstMeas_Records	f0=0x1003B, proc=loc_48536641
+	REC_FE_SeqQtzFstMeas_Records	f0=0x1003C, proc=loc_48536667
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695
+	REC_FE_SeqQtzFstMeas_Records	proc=loc_48536695
 FE_SeqQtzLstMeas_Records:	# 16 x REC_FE_SeqQtzLstMeas_Records (8 bytes each); read by FE_SeqQtzLstMeas 0x48536699 `mov (a0), d0`
-	REC_FE_SeqQtzLstMeas_Records	f0=16, p4=loc_485366F0	# [0]
-	REC_FE_SeqQtzLstMeas_Records	f0=17, p4=loc_48536702
-	REC_FE_SeqQtzLstMeas_Records	f0=2, p4=loc_485366EC
-	REC_FE_SeqQtzLstMeas_Records	f0=18, p4=loc_485366F0
-	REC_FE_SeqQtzLstMeas_Records	f0=19, p4=loc_48536702
-	REC_FE_SeqQtzLstMeas_Records	f0=0x10063, p4=loc_48536732
-	REC_FE_SeqQtzLstMeas_Records	f0=1, p4=loc_48536765
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768	# [8]
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768
-	REC_FE_SeqQtzLstMeas_Records	f0=0x1003B, p4=loc_48536714
-	REC_FE_SeqQtzLstMeas_Records	f0=0x1003C, p4=loc_4853673A
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768
-	REC_FE_SeqQtzLstMeas_Records	p4=loc_48536768
+	REC_FE_SeqQtzLstMeas_Records	f0=16, proc=loc_485366F0	# [0]
+	REC_FE_SeqQtzLstMeas_Records	f0=17, proc=loc_48536702
+	REC_FE_SeqQtzLstMeas_Records	f0=2, proc=loc_485366EC
+	REC_FE_SeqQtzLstMeas_Records	f0=18, proc=loc_485366F0
+	REC_FE_SeqQtzLstMeas_Records	f0=19, proc=loc_48536702
+	REC_FE_SeqQtzLstMeas_Records	f0=0x10063, proc=loc_48536732
+	REC_FE_SeqQtzLstMeas_Records	f0=1, proc=loc_48536765
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768	# [8]
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768
+	REC_FE_SeqQtzLstMeas_Records	f0=0x1003B, proc=loc_48536714
+	REC_FE_SeqQtzLstMeas_Records	f0=0x1003C, proc=loc_4853673A
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768
+	REC_FE_SeqQtzLstMeas_Records	proc=loc_48536768
 FE_SeqQtzValue_Records:	# 16 x REC_FE_SeqQtzValue_Records (8 bytes each); read by FE_SeqQtzValue 0x4853676C `mov (a0), d0`
-	REC_FE_SeqQtzValue_Records	f0=16, p4=loc_485367C2	# [0]
-	REC_FE_SeqQtzValue_Records	f0=17, p4=loc_485367D5
-	REC_FE_SeqQtzValue_Records	f0=2, p4=loc_485367BE
-	REC_FE_SeqQtzValue_Records	f0=18, p4=loc_485367C2
-	REC_FE_SeqQtzValue_Records	f0=19, p4=loc_485367D5
-	REC_FE_SeqQtzValue_Records	f0=0x10063, p4=loc_48536897
-	REC_FE_SeqQtzValue_Records	f0=1, p4=loc_485368CC
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF	# [8]
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF
-	REC_FE_SeqQtzValue_Records	f0=0x1003B, p4=loc_485367E9
-	REC_FE_SeqQtzValue_Records	f0=0x1003C, p4=loc_485368A0
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF
-	REC_FE_SeqQtzValue_Records	p4=loc_485368CF
+	REC_FE_SeqQtzValue_Records	f0=16, proc=loc_485367C2	# [0]
+	REC_FE_SeqQtzValue_Records	f0=17, proc=loc_485367D5
+	REC_FE_SeqQtzValue_Records	f0=2, proc=loc_485367BE
+	REC_FE_SeqQtzValue_Records	f0=18, proc=loc_485367C2
+	REC_FE_SeqQtzValue_Records	f0=19, proc=loc_485367D5
+	REC_FE_SeqQtzValue_Records	f0=0x10063, proc=loc_48536897
+	REC_FE_SeqQtzValue_Records	f0=1, proc=loc_485368CC
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF	# [8]
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF
+	REC_FE_SeqQtzValue_Records	f0=0x1003B, proc=loc_485367E9
+	REC_FE_SeqQtzValue_Records	f0=0x1003C, proc=loc_485368A0
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF
+	REC_FE_SeqQtzValue_Records	proc=loc_485368CF
 FE_SeqQtzStrength_Records:	# 16 x REC_FE_SeqQtzStrength_Records (8 bytes each); read by FE_SeqQtzStrength 0x485368D3 `mov (a0), d0`
-	REC_FE_SeqQtzStrength_Records	f0=16, p4=loc_4853692A	# [0]
-	REC_FE_SeqQtzStrength_Records	f0=17, p4=loc_4853693D
-	REC_FE_SeqQtzStrength_Records	f0=2, p4=loc_48536926
-	REC_FE_SeqQtzStrength_Records	f0=18, p4=loc_4853692A
-	REC_FE_SeqQtzStrength_Records	f0=19, p4=loc_4853693D
-	REC_FE_SeqQtzStrength_Records	f0=0x10063, p4=loc_4853696F
-	REC_FE_SeqQtzStrength_Records	f0=1, p4=loc_485369A4
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7	# [8]
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7
-	REC_FE_SeqQtzStrength_Records	f0=0x1003B, p4=loc_48536950
-	REC_FE_SeqQtzStrength_Records	f0=0x1003C, p4=loc_48536978
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7
-	REC_FE_SeqQtzStrength_Records	p4=loc_485369A7
+	REC_FE_SeqQtzStrength_Records	f0=16, proc=loc_4853692A	# [0]
+	REC_FE_SeqQtzStrength_Records	f0=17, proc=loc_4853693D
+	REC_FE_SeqQtzStrength_Records	f0=2, proc=loc_48536926
+	REC_FE_SeqQtzStrength_Records	f0=18, proc=loc_4853692A
+	REC_FE_SeqQtzStrength_Records	f0=19, proc=loc_4853693D
+	REC_FE_SeqQtzStrength_Records	f0=0x10063, proc=loc_4853696F
+	REC_FE_SeqQtzStrength_Records	f0=1, proc=loc_485369A4
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7	# [8]
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7
+	REC_FE_SeqQtzStrength_Records	f0=0x1003B, proc=loc_48536950
+	REC_FE_SeqQtzStrength_Records	f0=0x1003C, proc=loc_48536978
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7
+	REC_FE_SeqQtzStrength_Records	proc=loc_485369A7
 FE_SeqQtzWindow_Records:	# 16 x REC_FE_SeqQtzWindow_Records (8 bytes each); read by FE_SeqQtzWindow 0x485369AB `mov (a0), d0`
-	REC_FE_SeqQtzWindow_Records	f0=16, p4=loc_48536A02	# [0]
-	REC_FE_SeqQtzWindow_Records	f0=17, p4=loc_48536A15
-	REC_FE_SeqQtzWindow_Records	f0=2, p4=loc_485369FE
-	REC_FE_SeqQtzWindow_Records	f0=18, p4=loc_48536A02
-	REC_FE_SeqQtzWindow_Records	f0=19, p4=loc_48536A15
-	REC_FE_SeqQtzWindow_Records	f0=0x10063, p4=loc_48536A5F
-	REC_FE_SeqQtzWindow_Records	f0=1, p4=loc_48536A94
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97	# [8]
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97
-	REC_FE_SeqQtzWindow_Records	f0=0x1003B, p4=loc_48536A29
-	REC_FE_SeqQtzWindow_Records	f0=0x1003C, p4=loc_48536A68
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97
-	REC_FE_SeqQtzWindow_Records	p4=loc_48536A97
+	REC_FE_SeqQtzWindow_Records	f0=16, proc=loc_48536A02	# [0]
+	REC_FE_SeqQtzWindow_Records	f0=17, proc=loc_48536A15
+	REC_FE_SeqQtzWindow_Records	f0=2, proc=loc_485369FE
+	REC_FE_SeqQtzWindow_Records	f0=18, proc=loc_48536A02
+	REC_FE_SeqQtzWindow_Records	f0=19, proc=loc_48536A15
+	REC_FE_SeqQtzWindow_Records	f0=0x10063, proc=loc_48536A5F
+	REC_FE_SeqQtzWindow_Records	f0=1, proc=loc_48536A94
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97	# [8]
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97
+	REC_FE_SeqQtzWindow_Records	f0=0x1003B, proc=loc_48536A29
+	REC_FE_SeqQtzWindow_Records	f0=0x1003C, proc=loc_48536A68
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97
+	REC_FE_SeqQtzWindow_Records	proc=loc_48536A97
 SeqTrAsGridCheck_Records:	# 16 x REC_SeqTrAsGridCheck_Records (8 bytes each); read by SeqTrAsGridCheck 0x48536CAC `mov (a0), d0`
-	REC_SeqTrAsGridCheck_Records	f0=16, p4=loc_48536DC1	# [0]
-	REC_SeqTrAsGridCheck_Records	f0=0xE00011, p4=loc_48536D01
-	REC_SeqTrAsGridCheck_Records	f0=0xE00012, p4=loc_48536D1C
-	REC_SeqTrAsGridCheck_Records	f0=0xE00013, p4=loc_48536D40
-	REC_SeqTrAsGridCheck_Records	f0=0x1710004, p4=loc_48536D37
-	REC_SeqTrAsGridCheck_Records	f0=2, p4=loc_48536D95
-	REC_SeqTrAsGridCheck_Records	f0=18, p4=loc_48536DC1
-	REC_SeqTrAsGridCheck_Records	f0=19, p4=loc_48536DC3
-	REC_SeqTrAsGridCheck_Records	f0=17, p4=loc_48536DC3	# [8]
-	REC_SeqTrAsGridCheck_Records	f0=0x10081, p4=loc_48537040
-	REC_SeqTrAsGridCheck_Records	f0=0x10082, p4=loc_485371DE
-	REC_SeqTrAsGridCheck_Records	f0=1, p4=loc_48537363
-	REC_SeqTrAsGridCheck_Records	p4=loc_48537367
-	REC_SeqTrAsGridCheck_Records	p4=loc_48537367
-	REC_SeqTrAsGridCheck_Records	p4=loc_48537367
-	REC_SeqTrAsGridCheck_Records	p4=loc_48537367
+	REC_SeqTrAsGridCheck_Records	f0=16, proc=loc_48536DC1	# [0]
+	REC_SeqTrAsGridCheck_Records	f0=0xE00011, proc=loc_48536D01
+	REC_SeqTrAsGridCheck_Records	f0=0xE00012, proc=loc_48536D1C
+	REC_SeqTrAsGridCheck_Records	f0=0xE00013, proc=loc_48536D40
+	REC_SeqTrAsGridCheck_Records	f0=0x1710004, proc=loc_48536D37
+	REC_SeqTrAsGridCheck_Records	f0=2, proc=loc_48536D95
+	REC_SeqTrAsGridCheck_Records	f0=18, proc=loc_48536DC1
+	REC_SeqTrAsGridCheck_Records	f0=19, proc=loc_48536DC3
+	REC_SeqTrAsGridCheck_Records	f0=17, proc=loc_48536DC3	# [8]
+	REC_SeqTrAsGridCheck_Records	f0=0x10081, proc=loc_48537040
+	REC_SeqTrAsGridCheck_Records	f0=0x10082, proc=loc_485371DE
+	REC_SeqTrAsGridCheck_Records	f0=1, proc=loc_48537363
+	REC_SeqTrAsGridCheck_Records	proc=loc_48537367
+	REC_SeqTrAsGridCheck_Records	proc=loc_48537367
+	REC_SeqTrAsGridCheck_Records	proc=loc_48537367
+	REC_SeqTrAsGridCheck_Records	proc=loc_48537367
 FE_SeqTrAsPSongSel_Records:	# 16 x REC_FE_SeqTrAsPSongSel_Records (8 bytes each); read by FE_SeqTrAsPSongSel 0x48537629 `mov (a0), d0`
-	REC_FE_SeqTrAsPSongSel_Records	f0=16, p4=loc_485376BA	# [0]
-	REC_FE_SeqTrAsPSongSel_Records	f0=17, p4=loc_485376EE
-	REC_FE_SeqTrAsPSongSel_Records	f0=2, p4=loc_4853767C
-	REC_FE_SeqTrAsPSongSel_Records	f0=3, p4=loc_485376AE
-	REC_FE_SeqTrAsPSongSel_Records	f0=0x100B3, p4=loc_485376B6
-	REC_FE_SeqTrAsPSongSel_Records	f0=0x100B5, p4=loc_485376B2
-	REC_FE_SeqTrAsPSongSel_Records	f0=18, p4=loc_485376BA
-	REC_FE_SeqTrAsPSongSel_Records	f0=19, p4=loc_485376EE
-	REC_FE_SeqTrAsPSongSel_Records	f0=0x10063, p4=loc_48537743	# [8]
-	REC_FE_SeqTrAsPSongSel_Records	f0=1, p4=loc_48537766
-	REC_FE_SeqTrAsPSongSel_Records	p4=loc_48537769
-	REC_FE_SeqTrAsPSongSel_Records	f0=0x1003B, p4=loc_48537723
-	REC_FE_SeqTrAsPSongSel_Records	p4=loc_48537769
-	REC_FE_SeqTrAsPSongSel_Records	f0=0x1003D, p4=loc_4853774B
-	REC_FE_SeqTrAsPSongSel_Records	p4=loc_48537769
-	REC_FE_SeqTrAsPSongSel_Records	p4=loc_48537769
+	REC_FE_SeqTrAsPSongSel_Records	f0=16, proc=loc_485376BA	# [0]
+	REC_FE_SeqTrAsPSongSel_Records	f0=17, proc=loc_485376EE
+	REC_FE_SeqTrAsPSongSel_Records	f0=2, proc=loc_4853767C
+	REC_FE_SeqTrAsPSongSel_Records	f0=3, proc=loc_485376AE
+	REC_FE_SeqTrAsPSongSel_Records	f0=0x100B3, proc=loc_485376B6
+	REC_FE_SeqTrAsPSongSel_Records	f0=0x100B5, proc=loc_485376B2
+	REC_FE_SeqTrAsPSongSel_Records	f0=18, proc=loc_485376BA
+	REC_FE_SeqTrAsPSongSel_Records	f0=19, proc=loc_485376EE
+	REC_FE_SeqTrAsPSongSel_Records	f0=0x10063, proc=loc_48537743	# [8]
+	REC_FE_SeqTrAsPSongSel_Records	f0=1, proc=loc_48537766
+	REC_FE_SeqTrAsPSongSel_Records	proc=loc_48537769
+	REC_FE_SeqTrAsPSongSel_Records	f0=0x1003B, proc=loc_48537723
+	REC_FE_SeqTrAsPSongSel_Records	proc=loc_48537769
+	REC_FE_SeqTrAsPSongSel_Records	f0=0x1003D, proc=loc_4853774B
+	REC_FE_SeqTrAsPSongSel_Records	proc=loc_48537769
+	REC_FE_SeqTrAsPSongSel_Records	proc=loc_48537769
 FE_SeqAfterTouchSet_Records:	# 16 x REC_FE_SeqAfterTouchSet_Records (8 bytes each); read by FE_SeqAfterTouchSet 0x48537870 `mov (a0), d0`
-	REC_FE_SeqAfterTouchSet_Records	f0=16, p4=loc_485378E1	# [0]
-	REC_FE_SeqAfterTouchSet_Records	f0=17, p4=loc_4853791F
-	REC_FE_SeqAfterTouchSet_Records	f0=2, p4=loc_485378C2
-	REC_FE_SeqAfterTouchSet_Records	f0=18, p4=loc_485378E1
-	REC_FE_SeqAfterTouchSet_Records	f0=19, p4=loc_4853791F
-	REC_FE_SeqAfterTouchSet_Records	f0=0x10063, p4=loc_4853797D
-	REC_FE_SeqAfterTouchSet_Records	f0=1, p4=loc_48537995
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998	# [8]
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998
-	REC_FE_SeqAfterTouchSet_Records	f0=0x1003B, p4=loc_4853795B
-	REC_FE_SeqAfterTouchSet_Records	f0=0x1003C, p4=loc_48537985
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998
-	REC_FE_SeqAfterTouchSet_Records	p4=loc_48537998
+	REC_FE_SeqAfterTouchSet_Records	f0=16, proc=loc_485378E1	# [0]
+	REC_FE_SeqAfterTouchSet_Records	f0=17, proc=loc_4853791F
+	REC_FE_SeqAfterTouchSet_Records	f0=2, proc=loc_485378C2
+	REC_FE_SeqAfterTouchSet_Records	f0=18, proc=loc_485378E1
+	REC_FE_SeqAfterTouchSet_Records	f0=19, proc=loc_4853791F
+	REC_FE_SeqAfterTouchSet_Records	f0=0x10063, proc=loc_4853797D
+	REC_FE_SeqAfterTouchSet_Records	f0=1, proc=loc_48537995
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998	# [8]
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998
+	REC_FE_SeqAfterTouchSet_Records	f0=0x1003B, proc=loc_4853795B
+	REC_FE_SeqAfterTouchSet_Records	f0=0x1003C, proc=loc_48537985
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998
+	REC_FE_SeqAfterTouchSet_Records	proc=loc_48537998
 FE_SeqTrackCopyFTrack_Records:	# 16 x REC_FE_SeqTrackCopyFTrack_Records (8 bytes each); read by FE_SeqTrackCopyFTrack 0x48537BDC `mov (a0), d0`
-	REC_FE_SeqTrackCopyFTrack_Records	f0=16, p4=loc_48537C33	# [0]
-	REC_FE_SeqTrackCopyFTrack_Records	f0=17, p4=loc_48537C45
-	REC_FE_SeqTrackCopyFTrack_Records	f0=2, p4=loc_48537C2F
-	REC_FE_SeqTrackCopyFTrack_Records	f0=18, p4=loc_48537C33
-	REC_FE_SeqTrackCopyFTrack_Records	f0=19, p4=loc_48537C45
-	REC_FE_SeqTrackCopyFTrack_Records	f0=0x10063, p4=loc_48537C8B
-	REC_FE_SeqTrackCopyFTrack_Records	f0=1, p4=loc_48537CBE
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1	# [8]
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1
-	REC_FE_SeqTrackCopyFTrack_Records	f0=0x1003B, p4=loc_48537C58
-	REC_FE_SeqTrackCopyFTrack_Records	f0=0x1003C, p4=loc_48537C93
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1
-	REC_FE_SeqTrackCopyFTrack_Records	p4=loc_48537CC1
+	REC_FE_SeqTrackCopyFTrack_Records	f0=16, proc=loc_48537C33	# [0]
+	REC_FE_SeqTrackCopyFTrack_Records	f0=17, proc=loc_48537C45
+	REC_FE_SeqTrackCopyFTrack_Records	f0=2, proc=loc_48537C2F
+	REC_FE_SeqTrackCopyFTrack_Records	f0=18, proc=loc_48537C33
+	REC_FE_SeqTrackCopyFTrack_Records	f0=19, proc=loc_48537C45
+	REC_FE_SeqTrackCopyFTrack_Records	f0=0x10063, proc=loc_48537C8B
+	REC_FE_SeqTrackCopyFTrack_Records	f0=1, proc=loc_48537CBE
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1	# [8]
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1
+	REC_FE_SeqTrackCopyFTrack_Records	f0=0x1003B, proc=loc_48537C58
+	REC_FE_SeqTrackCopyFTrack_Records	f0=0x1003C, proc=loc_48537C93
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1
+	REC_FE_SeqTrackCopyFTrack_Records	proc=loc_48537CC1
 FE_SeqTrackCopyTTrack_Records:	# 16 x REC_FE_SeqTrackCopyTTrack_Records (8 bytes each); read by FE_SeqTrackCopyTTrack 0x48537CC5 `mov (a0), d0`
-	REC_FE_SeqTrackCopyTTrack_Records	f0=16, p4=loc_48537D1C	# [0]
-	REC_FE_SeqTrackCopyTTrack_Records	f0=17, p4=loc_48537D2E
-	REC_FE_SeqTrackCopyTTrack_Records	f0=2, p4=loc_48537D18
-	REC_FE_SeqTrackCopyTTrack_Records	f0=18, p4=loc_48537D1C
-	REC_FE_SeqTrackCopyTTrack_Records	f0=19, p4=loc_48537D2E
-	REC_FE_SeqTrackCopyTTrack_Records	f0=0x10063, p4=loc_48537D74
-	REC_FE_SeqTrackCopyTTrack_Records	f0=1, p4=loc_48537DA7
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA	# [8]
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA
-	REC_FE_SeqTrackCopyTTrack_Records	f0=0x1003B, p4=loc_48537D41
-	REC_FE_SeqTrackCopyTTrack_Records	f0=0x1003C, p4=loc_48537D7C
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA
-	REC_FE_SeqTrackCopyTTrack_Records	p4=loc_48537DAA
+	REC_FE_SeqTrackCopyTTrack_Records	f0=16, proc=loc_48537D1C	# [0]
+	REC_FE_SeqTrackCopyTTrack_Records	f0=17, proc=loc_48537D2E
+	REC_FE_SeqTrackCopyTTrack_Records	f0=2, proc=loc_48537D18
+	REC_FE_SeqTrackCopyTTrack_Records	f0=18, proc=loc_48537D1C
+	REC_FE_SeqTrackCopyTTrack_Records	f0=19, proc=loc_48537D2E
+	REC_FE_SeqTrackCopyTTrack_Records	f0=0x10063, proc=loc_48537D74
+	REC_FE_SeqTrackCopyTTrack_Records	f0=1, proc=loc_48537DA7
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA	# [8]
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA
+	REC_FE_SeqTrackCopyTTrack_Records	f0=0x1003B, proc=loc_48537D41
+	REC_FE_SeqTrackCopyTTrack_Records	f0=0x1003C, proc=loc_48537D7C
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA
+	REC_FE_SeqTrackCopyTTrack_Records	proc=loc_48537DAA
 FE_SeqTrackCopyFSong_Records:	# 16 x REC_FE_SeqTrackCopyFSong_Records (8 bytes each); read by FE_SeqTrackCopyFSong 0x48537DAE `mov (a0), d0`
-	REC_FE_SeqTrackCopyFSong_Records	f0=16, p4=loc_48537E04	# [0]
-	REC_FE_SeqTrackCopyFSong_Records	f0=17, p4=loc_48537E16
-	REC_FE_SeqTrackCopyFSong_Records	f0=2, p4=loc_48537E00
-	REC_FE_SeqTrackCopyFSong_Records	f0=18, p4=loc_48537E04
-	REC_FE_SeqTrackCopyFSong_Records	f0=19, p4=loc_48537E16
-	REC_FE_SeqTrackCopyFSong_Records	f0=0x10063, p4=loc_48537E48
-	REC_FE_SeqTrackCopyFSong_Records	f0=1, p4=loc_48537E7B
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E	# [8]
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E
-	REC_FE_SeqTrackCopyFSong_Records	f0=0x1003B, p4=loc_48537E28
-	REC_FE_SeqTrackCopyFSong_Records	f0=0x1003C, p4=loc_48537E50
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E
-	REC_FE_SeqTrackCopyFSong_Records	p4=loc_48537E7E
+	REC_FE_SeqTrackCopyFSong_Records	f0=16, proc=loc_48537E04	# [0]
+	REC_FE_SeqTrackCopyFSong_Records	f0=17, proc=loc_48537E16
+	REC_FE_SeqTrackCopyFSong_Records	f0=2, proc=loc_48537E00
+	REC_FE_SeqTrackCopyFSong_Records	f0=18, proc=loc_48537E04
+	REC_FE_SeqTrackCopyFSong_Records	f0=19, proc=loc_48537E16
+	REC_FE_SeqTrackCopyFSong_Records	f0=0x10063, proc=loc_48537E48
+	REC_FE_SeqTrackCopyFSong_Records	f0=1, proc=loc_48537E7B
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E	# [8]
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E
+	REC_FE_SeqTrackCopyFSong_Records	f0=0x1003B, proc=loc_48537E28
+	REC_FE_SeqTrackCopyFSong_Records	f0=0x1003C, proc=loc_48537E50
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E
+	REC_FE_SeqTrackCopyFSong_Records	proc=loc_48537E7E
 FE_SeqTrackCopyTSong_Records:	# 16 x REC_FE_SeqTrackCopyTSong_Records (8 bytes each); read by FE_SeqTrackCopyTSong 0x48537E82 `mov (a0), d0`
-	REC_FE_SeqTrackCopyTSong_Records	f0=16, p4=loc_48537ED8	# [0]
-	REC_FE_SeqTrackCopyTSong_Records	f0=17, p4=loc_48537EEA
-	REC_FE_SeqTrackCopyTSong_Records	f0=2, p4=loc_48537ED4
-	REC_FE_SeqTrackCopyTSong_Records	f0=18, p4=loc_48537ED8
-	REC_FE_SeqTrackCopyTSong_Records	f0=19, p4=loc_48537EEA
-	REC_FE_SeqTrackCopyTSong_Records	f0=0x10063, p4=loc_48537F1C
-	REC_FE_SeqTrackCopyTSong_Records	f0=1, p4=loc_48537F4F
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52	# [8]
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52
-	REC_FE_SeqTrackCopyTSong_Records	f0=0x1003B, p4=loc_48537EFC
-	REC_FE_SeqTrackCopyTSong_Records	f0=0x1003C, p4=loc_48537F24
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52
-	REC_FE_SeqTrackCopyTSong_Records	p4=loc_48537F52
+	REC_FE_SeqTrackCopyTSong_Records	f0=16, proc=loc_48537ED8	# [0]
+	REC_FE_SeqTrackCopyTSong_Records	f0=17, proc=loc_48537EEA
+	REC_FE_SeqTrackCopyTSong_Records	f0=2, proc=loc_48537ED4
+	REC_FE_SeqTrackCopyTSong_Records	f0=18, proc=loc_48537ED8
+	REC_FE_SeqTrackCopyTSong_Records	f0=19, proc=loc_48537EEA
+	REC_FE_SeqTrackCopyTSong_Records	f0=0x10063, proc=loc_48537F1C
+	REC_FE_SeqTrackCopyTSong_Records	f0=1, proc=loc_48537F4F
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52	# [8]
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52
+	REC_FE_SeqTrackCopyTSong_Records	f0=0x1003B, proc=loc_48537EFC
+	REC_FE_SeqTrackCopyTSong_Records	f0=0x1003C, proc=loc_48537F24
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52
+	REC_FE_SeqTrackCopyTSong_Records	proc=loc_48537F52
 FE_SeqSongCopyFSong_Records:	# 16 x REC_FE_SeqSongCopyFSong_Records (8 bytes each); read by FE_SeqSongCopyFSong 0x4853814B `mov (a0), d0`
-	REC_FE_SeqSongCopyFSong_Records	f0=16, p4=loc_485381A1	# [0]
-	REC_FE_SeqSongCopyFSong_Records	f0=17, p4=loc_485381B3
-	REC_FE_SeqSongCopyFSong_Records	f0=2, p4=loc_4853819D
-	REC_FE_SeqSongCopyFSong_Records	f0=18, p4=loc_485381A1
-	REC_FE_SeqSongCopyFSong_Records	f0=19, p4=loc_485381B3
-	REC_FE_SeqSongCopyFSong_Records	f0=0x10063, p4=loc_485381E5
-	REC_FE_SeqSongCopyFSong_Records	f0=1, p4=loc_48538218
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B	# [8]
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B
-	REC_FE_SeqSongCopyFSong_Records	f0=0x1003B, p4=loc_485381C5
-	REC_FE_SeqSongCopyFSong_Records	f0=0x1003C, p4=loc_485381ED
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B
-	REC_FE_SeqSongCopyFSong_Records	p4=loc_4853821B
+	REC_FE_SeqSongCopyFSong_Records	f0=16, proc=loc_485381A1	# [0]
+	REC_FE_SeqSongCopyFSong_Records	f0=17, proc=loc_485381B3
+	REC_FE_SeqSongCopyFSong_Records	f0=2, proc=loc_4853819D
+	REC_FE_SeqSongCopyFSong_Records	f0=18, proc=loc_485381A1
+	REC_FE_SeqSongCopyFSong_Records	f0=19, proc=loc_485381B3
+	REC_FE_SeqSongCopyFSong_Records	f0=0x10063, proc=loc_485381E5
+	REC_FE_SeqSongCopyFSong_Records	f0=1, proc=loc_48538218
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B	# [8]
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B
+	REC_FE_SeqSongCopyFSong_Records	f0=0x1003B, proc=loc_485381C5
+	REC_FE_SeqSongCopyFSong_Records	f0=0x1003C, proc=loc_485381ED
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B
+	REC_FE_SeqSongCopyFSong_Records	proc=loc_4853821B
 FE_SeqSongCopyTSong_Records:	# 16 x REC_FE_SeqSongCopyTSong_Records (8 bytes each); read by FE_SeqSongCopyTSong 0x4853821F `mov (a0), d0`
-	REC_FE_SeqSongCopyTSong_Records	f0=16, p4=loc_48538275	# [0]
-	REC_FE_SeqSongCopyTSong_Records	f0=17, p4=loc_48538287
-	REC_FE_SeqSongCopyTSong_Records	f0=2, p4=loc_48538271
-	REC_FE_SeqSongCopyTSong_Records	f0=18, p4=loc_48538275
-	REC_FE_SeqSongCopyTSong_Records	f0=19, p4=loc_48538287
-	REC_FE_SeqSongCopyTSong_Records	f0=0x10063, p4=loc_485382B9
-	REC_FE_SeqSongCopyTSong_Records	f0=1, p4=loc_485382EC
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF	# [8]
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF
-	REC_FE_SeqSongCopyTSong_Records	f0=0x1003B, p4=loc_48538299
-	REC_FE_SeqSongCopyTSong_Records	f0=0x1003C, p4=loc_485382C1
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF
-	REC_FE_SeqSongCopyTSong_Records	p4=loc_485382EF
+	REC_FE_SeqSongCopyTSong_Records	f0=16, proc=loc_48538275	# [0]
+	REC_FE_SeqSongCopyTSong_Records	f0=17, proc=loc_48538287
+	REC_FE_SeqSongCopyTSong_Records	f0=2, proc=loc_48538271
+	REC_FE_SeqSongCopyTSong_Records	f0=18, proc=loc_48538275
+	REC_FE_SeqSongCopyTSong_Records	f0=19, proc=loc_48538287
+	REC_FE_SeqSongCopyTSong_Records	f0=0x10063, proc=loc_485382B9
+	REC_FE_SeqSongCopyTSong_Records	f0=1, proc=loc_485382EC
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF	# [8]
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF
+	REC_FE_SeqSongCopyTSong_Records	f0=0x1003B, proc=loc_48538299
+	REC_FE_SeqSongCopyTSong_Records	f0=0x1003C, proc=loc_485382C1
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF
+	REC_FE_SeqSongCopyTSong_Records	proc=loc_485382EF
 FE_SeqTrkMrgTrack_Records:	# 16 x REC_FE_SeqTrkMrgTrack_Records (8 bytes each); read by FE_SeqTrkMrgTrack 0x485383F7 `mov (a0), d0`
-	REC_FE_SeqTrkMrgTrack_Records	f0=16, p4=loc_48538491	# [0]
-	REC_FE_SeqTrkMrgTrack_Records	f0=17, p4=loc_485384AA
-	REC_FE_SeqTrkMrgTrack_Records	f0=2, p4=loc_4853848D
-	REC_FE_SeqTrkMrgTrack_Records	f0=18, p4=loc_48538491
-	REC_FE_SeqTrkMrgTrack_Records	f0=19, p4=loc_485384AA
-	REC_FE_SeqTrkMrgTrack_Records	f0=0x10063, p4=loc_485384E3
-	REC_FE_SeqTrkMrgTrack_Records	f0=1, p4=loc_4853851B
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F	# [8]
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F
-	REC_FE_SeqTrkMrgTrack_Records	f0=0x1003B, p4=loc_485384C3
-	REC_FE_SeqTrkMrgTrack_Records	f0=0x1003C, p4=loc_485384ED
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F
-	REC_FE_SeqTrkMrgTrack_Records	p4=loc_4853851F
+	REC_FE_SeqTrkMrgTrack_Records	f0=16, proc=loc_48538491	# [0]
+	REC_FE_SeqTrkMrgTrack_Records	f0=17, proc=loc_485384AA
+	REC_FE_SeqTrkMrgTrack_Records	f0=2, proc=loc_4853848D
+	REC_FE_SeqTrkMrgTrack_Records	f0=18, proc=loc_48538491
+	REC_FE_SeqTrkMrgTrack_Records	f0=19, proc=loc_485384AA
+	REC_FE_SeqTrkMrgTrack_Records	f0=0x10063, proc=loc_485384E3
+	REC_FE_SeqTrkMrgTrack_Records	f0=1, proc=loc_4853851B
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F	# [8]
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F
+	REC_FE_SeqTrkMrgTrack_Records	f0=0x1003B, proc=loc_485384C3
+	REC_FE_SeqTrkMrgTrack_Records	f0=0x1003C, proc=loc_485384ED
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F
+	REC_FE_SeqTrkMrgTrack_Records	proc=loc_4853851F
 FE_SeqMsCpFTrack_Records:	# 16 x REC_FE_SeqMsCpFTrack_Records (8 bytes each); read by FE_SeqMsCpFTrack 0x4853866C `mov (a0), d0`
-	REC_FE_SeqMsCpFTrack_Records	f0=16, p4=loc_485386C3	# [0]
-	REC_FE_SeqMsCpFTrack_Records	f0=17, p4=loc_485386D5
-	REC_FE_SeqMsCpFTrack_Records	f0=2, p4=loc_485386BF
-	REC_FE_SeqMsCpFTrack_Records	f0=18, p4=loc_485386C3
-	REC_FE_SeqMsCpFTrack_Records	f0=19, p4=loc_485386D5
-	REC_FE_SeqMsCpFTrack_Records	f0=0x10063, p4=loc_4853871B
-	REC_FE_SeqMsCpFTrack_Records	f0=1, p4=loc_4853874E
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751	# [8]
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751
-	REC_FE_SeqMsCpFTrack_Records	f0=0x1003B, p4=loc_485386E8
-	REC_FE_SeqMsCpFTrack_Records	f0=0x1003C, p4=loc_48538723
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751
-	REC_FE_SeqMsCpFTrack_Records	p4=loc_48538751
+	REC_FE_SeqMsCpFTrack_Records	f0=16, proc=loc_485386C3	# [0]
+	REC_FE_SeqMsCpFTrack_Records	f0=17, proc=loc_485386D5
+	REC_FE_SeqMsCpFTrack_Records	f0=2, proc=loc_485386BF
+	REC_FE_SeqMsCpFTrack_Records	f0=18, proc=loc_485386C3
+	REC_FE_SeqMsCpFTrack_Records	f0=19, proc=loc_485386D5
+	REC_FE_SeqMsCpFTrack_Records	f0=0x10063, proc=loc_4853871B
+	REC_FE_SeqMsCpFTrack_Records	f0=1, proc=loc_4853874E
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751	# [8]
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751
+	REC_FE_SeqMsCpFTrack_Records	f0=0x1003B, proc=loc_485386E8
+	REC_FE_SeqMsCpFTrack_Records	f0=0x1003C, proc=loc_48538723
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751
+	REC_FE_SeqMsCpFTrack_Records	proc=loc_48538751
 FE_SeqMsCpTTrack_Records:	# 16 x REC_FE_SeqMsCpTTrack_Records (8 bytes each); read by FE_SeqMsCpTTrack 0x48538755 `mov (a0), d0`
-	REC_FE_SeqMsCpTTrack_Records	f0=16, p4=loc_485387AC	# [0]
-	REC_FE_SeqMsCpTTrack_Records	f0=17, p4=loc_485387BE
-	REC_FE_SeqMsCpTTrack_Records	f0=2, p4=loc_485387A8
-	REC_FE_SeqMsCpTTrack_Records	f0=18, p4=loc_485387AC
-	REC_FE_SeqMsCpTTrack_Records	f0=19, p4=loc_485387BE
-	REC_FE_SeqMsCpTTrack_Records	f0=0x10063, p4=loc_48538804
-	REC_FE_SeqMsCpTTrack_Records	f0=1, p4=loc_48538837
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A	# [8]
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A
-	REC_FE_SeqMsCpTTrack_Records	f0=0x1003B, p4=loc_485387D1
-	REC_FE_SeqMsCpTTrack_Records	f0=0x1003C, p4=loc_4853880C
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A
-	REC_FE_SeqMsCpTTrack_Records	p4=loc_4853883A
+	REC_FE_SeqMsCpTTrack_Records	f0=16, proc=loc_485387AC	# [0]
+	REC_FE_SeqMsCpTTrack_Records	f0=17, proc=loc_485387BE
+	REC_FE_SeqMsCpTTrack_Records	f0=2, proc=loc_485387A8
+	REC_FE_SeqMsCpTTrack_Records	f0=18, proc=loc_485387AC
+	REC_FE_SeqMsCpTTrack_Records	f0=19, proc=loc_485387BE
+	REC_FE_SeqMsCpTTrack_Records	f0=0x10063, proc=loc_48538804
+	REC_FE_SeqMsCpTTrack_Records	f0=1, proc=loc_48538837
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A	# [8]
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A
+	REC_FE_SeqMsCpTTrack_Records	f0=0x1003B, proc=loc_485387D1
+	REC_FE_SeqMsCpTTrack_Records	f0=0x1003C, proc=loc_4853880C
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A
+	REC_FE_SeqMsCpTTrack_Records	proc=loc_4853883A
 FE_SeqMsCpFFstMeas_Records:	# 16 x REC_FE_SeqMsCpFFstMeas_Records (8 bytes each); read by FE_SeqMsCpFFstMeas 0x4853883E `mov (a0), d0`
-	REC_FE_SeqMsCpFFstMeas_Records	f0=16, p4=loc_48538895	# [0]
-	REC_FE_SeqMsCpFFstMeas_Records	f0=17, p4=loc_485388A7
-	REC_FE_SeqMsCpFFstMeas_Records	f0=2, p4=loc_48538891
-	REC_FE_SeqMsCpFFstMeas_Records	f0=18, p4=loc_48538895
-	REC_FE_SeqMsCpFFstMeas_Records	f0=19, p4=loc_485388A7
-	REC_FE_SeqMsCpFFstMeas_Records	f0=0x10063, p4=loc_485388D7
-	REC_FE_SeqMsCpFFstMeas_Records	f0=1, p4=loc_4853890A
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D	# [8]
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D
-	REC_FE_SeqMsCpFFstMeas_Records	f0=0x1003B, p4=loc_485388B9
-	REC_FE_SeqMsCpFFstMeas_Records	f0=0x1003C, p4=loc_485388DF
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D
-	REC_FE_SeqMsCpFFstMeas_Records	p4=loc_4853890D
+	REC_FE_SeqMsCpFFstMeas_Records	f0=16, proc=loc_48538895	# [0]
+	REC_FE_SeqMsCpFFstMeas_Records	f0=17, proc=loc_485388A7
+	REC_FE_SeqMsCpFFstMeas_Records	f0=2, proc=loc_48538891
+	REC_FE_SeqMsCpFFstMeas_Records	f0=18, proc=loc_48538895
+	REC_FE_SeqMsCpFFstMeas_Records	f0=19, proc=loc_485388A7
+	REC_FE_SeqMsCpFFstMeas_Records	f0=0x10063, proc=loc_485388D7
+	REC_FE_SeqMsCpFFstMeas_Records	f0=1, proc=loc_4853890A
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D	# [8]
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D
+	REC_FE_SeqMsCpFFstMeas_Records	f0=0x1003B, proc=loc_485388B9
+	REC_FE_SeqMsCpFFstMeas_Records	f0=0x1003C, proc=loc_485388DF
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D
+	REC_FE_SeqMsCpFFstMeas_Records	proc=loc_4853890D
 FE_SeqMsCpFLstMeas_Records:	# 16 x REC_FE_SeqMsCpFLstMeas_Records (8 bytes each); read by FE_SeqMsCpFLstMeas 0x48538911 `mov (a0), d0`
-	REC_FE_SeqMsCpFLstMeas_Records	f0=16, p4=loc_48538968	# [0]
-	REC_FE_SeqMsCpFLstMeas_Records	f0=17, p4=loc_4853897A
-	REC_FE_SeqMsCpFLstMeas_Records	f0=2, p4=loc_48538964
-	REC_FE_SeqMsCpFLstMeas_Records	f0=18, p4=loc_48538968
-	REC_FE_SeqMsCpFLstMeas_Records	f0=19, p4=loc_4853897A
-	REC_FE_SeqMsCpFLstMeas_Records	f0=0x10063, p4=loc_485389AA
-	REC_FE_SeqMsCpFLstMeas_Records	f0=1, p4=loc_485389DD
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0	# [8]
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0
-	REC_FE_SeqMsCpFLstMeas_Records	f0=0x1003B, p4=loc_4853898C
-	REC_FE_SeqMsCpFLstMeas_Records	f0=0x1003C, p4=loc_485389B2
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0
-	REC_FE_SeqMsCpFLstMeas_Records	p4=loc_485389E0
+	REC_FE_SeqMsCpFLstMeas_Records	f0=16, proc=loc_48538968	# [0]
+	REC_FE_SeqMsCpFLstMeas_Records	f0=17, proc=loc_4853897A
+	REC_FE_SeqMsCpFLstMeas_Records	f0=2, proc=loc_48538964
+	REC_FE_SeqMsCpFLstMeas_Records	f0=18, proc=loc_48538968
+	REC_FE_SeqMsCpFLstMeas_Records	f0=19, proc=loc_4853897A
+	REC_FE_SeqMsCpFLstMeas_Records	f0=0x10063, proc=loc_485389AA
+	REC_FE_SeqMsCpFLstMeas_Records	f0=1, proc=loc_485389DD
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0	# [8]
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0
+	REC_FE_SeqMsCpFLstMeas_Records	f0=0x1003B, proc=loc_4853898C
+	REC_FE_SeqMsCpFLstMeas_Records	f0=0x1003C, proc=loc_485389B2
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0
+	REC_FE_SeqMsCpFLstMeas_Records	proc=loc_485389E0
 FE_SeqMsCpTSrtMeas_Records:	# 16 x REC_FE_SeqMsCpTSrtMeas_Records (8 bytes each); read by FE_SeqMsCpTSrtMeas 0x485389E4 `mov (a0), d0`
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=16, p4=loc_48538A3B	# [0]
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=17, p4=loc_48538A4D
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=2, p4=loc_48538A37
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=18, p4=loc_48538A3B
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=19, p4=loc_48538A4D
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=0x10063, p4=loc_48538A7D
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=1, p4=loc_48538AB0
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3	# [8]
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=0x1003B, p4=loc_48538A5F
-	REC_FE_SeqMsCpTSrtMeas_Records	f0=0x1003C, p4=loc_48538A85
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3
-	REC_FE_SeqMsCpTSrtMeas_Records	p4=loc_48538AB3
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=16, proc=loc_48538A3B	# [0]
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=17, proc=loc_48538A4D
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=2, proc=loc_48538A37
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=18, proc=loc_48538A3B
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=19, proc=loc_48538A4D
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=0x10063, proc=loc_48538A7D
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=1, proc=loc_48538AB0
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3	# [8]
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=0x1003B, proc=loc_48538A5F
+	REC_FE_SeqMsCpTSrtMeas_Records	f0=0x1003C, proc=loc_48538A85
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3
+	REC_FE_SeqMsCpTSrtMeas_Records	proc=loc_48538AB3
 FE_SeqMsCpTRep_Records:	# 16 x REC_FE_SeqMsCpTRep_Records (8 bytes each); read by FE_SeqMsCpTRep 0x48538AB7 `mov (a0), d0`
-	REC_FE_SeqMsCpTRep_Records	f0=16, p4=loc_48538B0E	# [0]
-	REC_FE_SeqMsCpTRep_Records	f0=17, p4=loc_48538B20
-	REC_FE_SeqMsCpTRep_Records	f0=2, p4=loc_48538B0A
-	REC_FE_SeqMsCpTRep_Records	f0=18, p4=loc_48538B0E
-	REC_FE_SeqMsCpTRep_Records	f0=19, p4=loc_48538B20
-	REC_FE_SeqMsCpTRep_Records	f0=0x10063, p4=loc_48538B50
-	REC_FE_SeqMsCpTRep_Records	f0=1, p4=loc_48538B83
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86	# [8]
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86
-	REC_FE_SeqMsCpTRep_Records	f0=0x1003B, p4=loc_48538B32
-	REC_FE_SeqMsCpTRep_Records	f0=0x1003C, p4=loc_48538B58
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86
-	REC_FE_SeqMsCpTRep_Records	p4=loc_48538B86
+	REC_FE_SeqMsCpTRep_Records	f0=16, proc=loc_48538B0E	# [0]
+	REC_FE_SeqMsCpTRep_Records	f0=17, proc=loc_48538B20
+	REC_FE_SeqMsCpTRep_Records	f0=2, proc=loc_48538B0A
+	REC_FE_SeqMsCpTRep_Records	f0=18, proc=loc_48538B0E
+	REC_FE_SeqMsCpTRep_Records	f0=19, proc=loc_48538B20
+	REC_FE_SeqMsCpTRep_Records	f0=0x10063, proc=loc_48538B50
+	REC_FE_SeqMsCpTRep_Records	f0=1, proc=loc_48538B83
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86	# [8]
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86
+	REC_FE_SeqMsCpTRep_Records	f0=0x1003B, proc=loc_48538B32
+	REC_FE_SeqMsCpTRep_Records	f0=0x1003C, proc=loc_48538B58
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86
+	REC_FE_SeqMsCpTRep_Records	proc=loc_48538B86
 FE_SeqMsErsTrack_Records:	# 16 x REC_FE_SeqMsErsTrack_Records (8 bytes each); read by FE_SeqMsErsTrack 0x48538E2E `mov (a0), d0`
-	REC_FE_SeqMsErsTrack_Records	f0=16, p4=loc_48538E85	# [0]
-	REC_FE_SeqMsErsTrack_Records	f0=17, p4=loc_48538E97
-	REC_FE_SeqMsErsTrack_Records	f0=2, p4=loc_48538E81
-	REC_FE_SeqMsErsTrack_Records	f0=18, p4=loc_48538E85
-	REC_FE_SeqMsErsTrack_Records	f0=19, p4=loc_48538E97
-	REC_FE_SeqMsErsTrack_Records	f0=0x10063, p4=loc_48538EDD
-	REC_FE_SeqMsErsTrack_Records	f0=1, p4=loc_48538F10
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13	# [8]
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13
-	REC_FE_SeqMsErsTrack_Records	f0=0x1003B, p4=loc_48538EAA
-	REC_FE_SeqMsErsTrack_Records	f0=0x1003C, p4=loc_48538EE5
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13
-	REC_FE_SeqMsErsTrack_Records	p4=loc_48538F13
+	REC_FE_SeqMsErsTrack_Records	f0=16, proc=loc_48538E85	# [0]
+	REC_FE_SeqMsErsTrack_Records	f0=17, proc=loc_48538E97
+	REC_FE_SeqMsErsTrack_Records	f0=2, proc=loc_48538E81
+	REC_FE_SeqMsErsTrack_Records	f0=18, proc=loc_48538E85
+	REC_FE_SeqMsErsTrack_Records	f0=19, proc=loc_48538E97
+	REC_FE_SeqMsErsTrack_Records	f0=0x10063, proc=loc_48538EDD
+	REC_FE_SeqMsErsTrack_Records	f0=1, proc=loc_48538F10
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13	# [8]
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13
+	REC_FE_SeqMsErsTrack_Records	f0=0x1003B, proc=loc_48538EAA
+	REC_FE_SeqMsErsTrack_Records	f0=0x1003C, proc=loc_48538EE5
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13
+	REC_FE_SeqMsErsTrack_Records	proc=loc_48538F13
 FE_SeqMsErsFstMeas_Records:	# 16 x REC_FE_SeqMsErsFstMeas_Records (8 bytes each); read by FE_SeqMsErsFstMeas 0x48538F17 `mov (a0), d0`
-	REC_FE_SeqMsErsFstMeas_Records	f0=16, p4=loc_48538F6E	# [0]
-	REC_FE_SeqMsErsFstMeas_Records	f0=17, p4=loc_48538F80
-	REC_FE_SeqMsErsFstMeas_Records	f0=2, p4=loc_48538F6A
-	REC_FE_SeqMsErsFstMeas_Records	f0=18, p4=loc_48538F6E
-	REC_FE_SeqMsErsFstMeas_Records	f0=19, p4=loc_48538F80
-	REC_FE_SeqMsErsFstMeas_Records	f0=0x10063, p4=loc_48538FB0
-	REC_FE_SeqMsErsFstMeas_Records	f0=1, p4=loc_48538FE3
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6	# [8]
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6
-	REC_FE_SeqMsErsFstMeas_Records	f0=0x1003B, p4=loc_48538F92
-	REC_FE_SeqMsErsFstMeas_Records	f0=0x1003C, p4=loc_48538FB8
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6
-	REC_FE_SeqMsErsFstMeas_Records	p4=loc_48538FE6
+	REC_FE_SeqMsErsFstMeas_Records	f0=16, proc=loc_48538F6E	# [0]
+	REC_FE_SeqMsErsFstMeas_Records	f0=17, proc=loc_48538F80
+	REC_FE_SeqMsErsFstMeas_Records	f0=2, proc=loc_48538F6A
+	REC_FE_SeqMsErsFstMeas_Records	f0=18, proc=loc_48538F6E
+	REC_FE_SeqMsErsFstMeas_Records	f0=19, proc=loc_48538F80
+	REC_FE_SeqMsErsFstMeas_Records	f0=0x10063, proc=loc_48538FB0
+	REC_FE_SeqMsErsFstMeas_Records	f0=1, proc=loc_48538FE3
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6	# [8]
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6
+	REC_FE_SeqMsErsFstMeas_Records	f0=0x1003B, proc=loc_48538F92
+	REC_FE_SeqMsErsFstMeas_Records	f0=0x1003C, proc=loc_48538FB8
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6
+	REC_FE_SeqMsErsFstMeas_Records	proc=loc_48538FE6
 FE_SeqMsErsLstMeas_Records:	# 16 x REC_FE_SeqMsErsLstMeas_Records (8 bytes each); read by FE_SeqMsErsLstMeas 0x48538FEA `mov (a0), d0`
-	REC_FE_SeqMsErsLstMeas_Records	f0=16, p4=loc_48539041	# [0]
-	REC_FE_SeqMsErsLstMeas_Records	f0=17, p4=loc_48539053
-	REC_FE_SeqMsErsLstMeas_Records	f0=2, p4=loc_4853903D
-	REC_FE_SeqMsErsLstMeas_Records	f0=18, p4=loc_48539041
-	REC_FE_SeqMsErsLstMeas_Records	f0=19, p4=loc_48539053
-	REC_FE_SeqMsErsLstMeas_Records	f0=0x10063, p4=loc_48539083
-	REC_FE_SeqMsErsLstMeas_Records	f0=1, p4=loc_485390B6
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9	# [8]
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9
-	REC_FE_SeqMsErsLstMeas_Records	f0=0x1003B, p4=loc_48539065
-	REC_FE_SeqMsErsLstMeas_Records	f0=0x1003C, p4=loc_4853908B
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9
-	REC_FE_SeqMsErsLstMeas_Records	p4=loc_485390B9
+	REC_FE_SeqMsErsLstMeas_Records	f0=16, proc=loc_48539041	# [0]
+	REC_FE_SeqMsErsLstMeas_Records	f0=17, proc=loc_48539053
+	REC_FE_SeqMsErsLstMeas_Records	f0=2, proc=loc_4853903D
+	REC_FE_SeqMsErsLstMeas_Records	f0=18, proc=loc_48539041
+	REC_FE_SeqMsErsLstMeas_Records	f0=19, proc=loc_48539053
+	REC_FE_SeqMsErsLstMeas_Records	f0=0x10063, proc=loc_48539083
+	REC_FE_SeqMsErsLstMeas_Records	f0=1, proc=loc_485390B6
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9	# [8]
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9
+	REC_FE_SeqMsErsLstMeas_Records	f0=0x1003B, proc=loc_48539065
+	REC_FE_SeqMsErsLstMeas_Records	f0=0x1003C, proc=loc_4853908B
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9
+	REC_FE_SeqMsErsLstMeas_Records	proc=loc_485390B9
 FE_SeqMsErsData_Records:	# 16 x REC_FE_SeqMsErsData_Records (8 bytes each); read by FE_SeqMsErsData 0x485390BD `mov (a0), d0`
-	REC_FE_SeqMsErsData_Records	f0=16, p4=loc_48539113	# [0]
-	REC_FE_SeqMsErsData_Records	f0=17, p4=loc_48539126
-	REC_FE_SeqMsErsData_Records	f0=2, p4=loc_4853910F
-	REC_FE_SeqMsErsData_Records	f0=18, p4=loc_48539113
-	REC_FE_SeqMsErsData_Records	f0=19, p4=loc_48539126
-	REC_FE_SeqMsErsData_Records	f0=0x10063, p4=loc_48539183
-	REC_FE_SeqMsErsData_Records	f0=1, p4=loc_485391B8
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB	# [8]
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB
-	REC_FE_SeqMsErsData_Records	f0=0x1003B, p4=loc_4853913A
-	REC_FE_SeqMsErsData_Records	f0=0x1003C, p4=loc_4853918C
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB
-	REC_FE_SeqMsErsData_Records	p4=loc_485391BB
+	REC_FE_SeqMsErsData_Records	f0=16, proc=loc_48539113	# [0]
+	REC_FE_SeqMsErsData_Records	f0=17, proc=loc_48539126
+	REC_FE_SeqMsErsData_Records	f0=2, proc=loc_4853910F
+	REC_FE_SeqMsErsData_Records	f0=18, proc=loc_48539113
+	REC_FE_SeqMsErsData_Records	f0=19, proc=loc_48539126
+	REC_FE_SeqMsErsData_Records	f0=0x10063, proc=loc_48539183
+	REC_FE_SeqMsErsData_Records	f0=1, proc=loc_485391B8
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB	# [8]
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB
+	REC_FE_SeqMsErsData_Records	f0=0x1003B, proc=loc_4853913A
+	REC_FE_SeqMsErsData_Records	f0=0x1003C, proc=loc_4853918C
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB
+	REC_FE_SeqMsErsData_Records	proc=loc_485391BB
 FE_SeqMsDelTrack_Records:	# 16 x REC_FE_SeqMsDelTrack_Records (8 bytes each); read by FE_SeqMsDelTrack 0x4853936B `mov (a0), d0`
-	REC_FE_SeqMsDelTrack_Records	f0=16, p4=loc_485393C2	# [0]
-	REC_FE_SeqMsDelTrack_Records	f0=17, p4=loc_485393D4
-	REC_FE_SeqMsDelTrack_Records	f0=2, p4=loc_485393BE
-	REC_FE_SeqMsDelTrack_Records	f0=18, p4=loc_485393C2
-	REC_FE_SeqMsDelTrack_Records	f0=19, p4=loc_485393D4
-	REC_FE_SeqMsDelTrack_Records	f0=0x10063, p4=loc_4853941A
-	REC_FE_SeqMsDelTrack_Records	f0=1, p4=loc_4853944D
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450	# [8]
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450
-	REC_FE_SeqMsDelTrack_Records	f0=0x1003B, p4=loc_485393E7
-	REC_FE_SeqMsDelTrack_Records	f0=0x1003C, p4=loc_48539422
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450
-	REC_FE_SeqMsDelTrack_Records	p4=loc_48539450
+	REC_FE_SeqMsDelTrack_Records	f0=16, proc=loc_485393C2	# [0]
+	REC_FE_SeqMsDelTrack_Records	f0=17, proc=loc_485393D4
+	REC_FE_SeqMsDelTrack_Records	f0=2, proc=loc_485393BE
+	REC_FE_SeqMsDelTrack_Records	f0=18, proc=loc_485393C2
+	REC_FE_SeqMsDelTrack_Records	f0=19, proc=loc_485393D4
+	REC_FE_SeqMsDelTrack_Records	f0=0x10063, proc=loc_4853941A
+	REC_FE_SeqMsDelTrack_Records	f0=1, proc=loc_4853944D
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450	# [8]
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450
+	REC_FE_SeqMsDelTrack_Records	f0=0x1003B, proc=loc_485393E7
+	REC_FE_SeqMsDelTrack_Records	f0=0x1003C, proc=loc_48539422
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450
+	REC_FE_SeqMsDelTrack_Records	proc=loc_48539450
 FE_SeqMsDelFstMeas_Records:	# 16 x REC_FE_SeqMsDelFstMeas_Records (8 bytes each); read by FE_SeqMsDelFstMeas 0x48539454 `mov (a0), d0`
-	REC_FE_SeqMsDelFstMeas_Records	f0=16, p4=loc_485394AB	# [0]
-	REC_FE_SeqMsDelFstMeas_Records	f0=17, p4=loc_485394BD
-	REC_FE_SeqMsDelFstMeas_Records	f0=2, p4=loc_485394A7
-	REC_FE_SeqMsDelFstMeas_Records	f0=18, p4=loc_485394AB
-	REC_FE_SeqMsDelFstMeas_Records	f0=19, p4=loc_485394BD
-	REC_FE_SeqMsDelFstMeas_Records	f0=0x10063, p4=loc_485394ED
-	REC_FE_SeqMsDelFstMeas_Records	f0=1, p4=loc_48539520
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523	# [8]
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523
-	REC_FE_SeqMsDelFstMeas_Records	f0=0x1003B, p4=loc_485394CF
-	REC_FE_SeqMsDelFstMeas_Records	f0=0x1003C, p4=loc_485394F5
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523
-	REC_FE_SeqMsDelFstMeas_Records	p4=loc_48539523
+	REC_FE_SeqMsDelFstMeas_Records	f0=16, proc=loc_485394AB	# [0]
+	REC_FE_SeqMsDelFstMeas_Records	f0=17, proc=loc_485394BD
+	REC_FE_SeqMsDelFstMeas_Records	f0=2, proc=loc_485394A7
+	REC_FE_SeqMsDelFstMeas_Records	f0=18, proc=loc_485394AB
+	REC_FE_SeqMsDelFstMeas_Records	f0=19, proc=loc_485394BD
+	REC_FE_SeqMsDelFstMeas_Records	f0=0x10063, proc=loc_485394ED
+	REC_FE_SeqMsDelFstMeas_Records	f0=1, proc=loc_48539520
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523	# [8]
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523
+	REC_FE_SeqMsDelFstMeas_Records	f0=0x1003B, proc=loc_485394CF
+	REC_FE_SeqMsDelFstMeas_Records	f0=0x1003C, proc=loc_485394F5
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523
+	REC_FE_SeqMsDelFstMeas_Records	proc=loc_48539523
 FE_SeqMsDelLstMeas_Records:	# 16 x REC_FE_SeqMsDelLstMeas_Records (8 bytes each); read by FE_SeqMsDelLstMeas 0x48539527 `mov (a0), d0`
-	REC_FE_SeqMsDelLstMeas_Records	f0=16, p4=loc_4853957E	# [0]
-	REC_FE_SeqMsDelLstMeas_Records	f0=17, p4=loc_48539590
-	REC_FE_SeqMsDelLstMeas_Records	f0=2, p4=loc_4853957A
-	REC_FE_SeqMsDelLstMeas_Records	f0=18, p4=loc_4853957E
-	REC_FE_SeqMsDelLstMeas_Records	f0=19, p4=loc_48539590
-	REC_FE_SeqMsDelLstMeas_Records	f0=0x10063, p4=loc_485395C0
-	REC_FE_SeqMsDelLstMeas_Records	f0=1, p4=loc_485395F3
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6	# [8]
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6
-	REC_FE_SeqMsDelLstMeas_Records	f0=0x1003B, p4=loc_485395A2
-	REC_FE_SeqMsDelLstMeas_Records	f0=0x1003C, p4=loc_485395C8
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6
-	REC_FE_SeqMsDelLstMeas_Records	p4=loc_485395F6
+	REC_FE_SeqMsDelLstMeas_Records	f0=16, proc=loc_4853957E	# [0]
+	REC_FE_SeqMsDelLstMeas_Records	f0=17, proc=loc_48539590
+	REC_FE_SeqMsDelLstMeas_Records	f0=2, proc=loc_4853957A
+	REC_FE_SeqMsDelLstMeas_Records	f0=18, proc=loc_4853957E
+	REC_FE_SeqMsDelLstMeas_Records	f0=19, proc=loc_48539590
+	REC_FE_SeqMsDelLstMeas_Records	f0=0x10063, proc=loc_485395C0
+	REC_FE_SeqMsDelLstMeas_Records	f0=1, proc=loc_485395F3
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6	# [8]
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6
+	REC_FE_SeqMsDelLstMeas_Records	f0=0x1003B, proc=loc_485395A2
+	REC_FE_SeqMsDelLstMeas_Records	f0=0x1003C, proc=loc_485395C8
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6
+	REC_FE_SeqMsDelLstMeas_Records	proc=loc_485395F6
 FE_SeqMsInsFTrack_Records:	# 16 x REC_FE_SeqMsInsFTrack_Records (8 bytes each); read by FE_SeqMsInsFTrack 0x48539776 `mov (a0), d0`
-	REC_FE_SeqMsInsFTrack_Records	f0=16, p4=loc_485397CD	# [0]
-	REC_FE_SeqMsInsFTrack_Records	f0=17, p4=loc_485397DF
-	REC_FE_SeqMsInsFTrack_Records	f0=2, p4=loc_485397C9
-	REC_FE_SeqMsInsFTrack_Records	f0=18, p4=loc_485397CD
-	REC_FE_SeqMsInsFTrack_Records	f0=19, p4=loc_485397DF
-	REC_FE_SeqMsInsFTrack_Records	f0=0x10063, p4=loc_48539825
-	REC_FE_SeqMsInsFTrack_Records	f0=1, p4=loc_48539858
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B	# [8]
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B
-	REC_FE_SeqMsInsFTrack_Records	f0=0x1003B, p4=loc_485397F2
-	REC_FE_SeqMsInsFTrack_Records	f0=0x1003C, p4=loc_4853982D
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B
-	REC_FE_SeqMsInsFTrack_Records	p4=loc_4853985B
+	REC_FE_SeqMsInsFTrack_Records	f0=16, proc=loc_485397CD	# [0]
+	REC_FE_SeqMsInsFTrack_Records	f0=17, proc=loc_485397DF
+	REC_FE_SeqMsInsFTrack_Records	f0=2, proc=loc_485397C9
+	REC_FE_SeqMsInsFTrack_Records	f0=18, proc=loc_485397CD
+	REC_FE_SeqMsInsFTrack_Records	f0=19, proc=loc_485397DF
+	REC_FE_SeqMsInsFTrack_Records	f0=0x10063, proc=loc_48539825
+	REC_FE_SeqMsInsFTrack_Records	f0=1, proc=loc_48539858
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B	# [8]
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B
+	REC_FE_SeqMsInsFTrack_Records	f0=0x1003B, proc=loc_485397F2
+	REC_FE_SeqMsInsFTrack_Records	f0=0x1003C, proc=loc_4853982D
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B
+	REC_FE_SeqMsInsFTrack_Records	proc=loc_4853985B
 FE_SeqMsInsTTrack_Records:	# 16 x REC_FE_SeqMsInsTTrack_Records (8 bytes each); read by FE_SeqMsInsTTrack 0x4853985F `mov (a0), d0`
-	REC_FE_SeqMsInsTTrack_Records	f0=16, p4=loc_485398B6	# [0]
-	REC_FE_SeqMsInsTTrack_Records	f0=17, p4=loc_485398C8
-	REC_FE_SeqMsInsTTrack_Records	f0=2, p4=loc_485398B2
-	REC_FE_SeqMsInsTTrack_Records	f0=18, p4=loc_485398B6
-	REC_FE_SeqMsInsTTrack_Records	f0=19, p4=loc_485398C8
-	REC_FE_SeqMsInsTTrack_Records	f0=0x10063, p4=loc_4853990E
-	REC_FE_SeqMsInsTTrack_Records	f0=1, p4=loc_48539941
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944	# [8]
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944
-	REC_FE_SeqMsInsTTrack_Records	f0=0x1003B, p4=loc_485398DB
-	REC_FE_SeqMsInsTTrack_Records	f0=0x1003C, p4=loc_48539916
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944
-	REC_FE_SeqMsInsTTrack_Records	p4=loc_48539944
+	REC_FE_SeqMsInsTTrack_Records	f0=16, proc=loc_485398B6	# [0]
+	REC_FE_SeqMsInsTTrack_Records	f0=17, proc=loc_485398C8
+	REC_FE_SeqMsInsTTrack_Records	f0=2, proc=loc_485398B2
+	REC_FE_SeqMsInsTTrack_Records	f0=18, proc=loc_485398B6
+	REC_FE_SeqMsInsTTrack_Records	f0=19, proc=loc_485398C8
+	REC_FE_SeqMsInsTTrack_Records	f0=0x10063, proc=loc_4853990E
+	REC_FE_SeqMsInsTTrack_Records	f0=1, proc=loc_48539941
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944	# [8]
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944
+	REC_FE_SeqMsInsTTrack_Records	f0=0x1003B, proc=loc_485398DB
+	REC_FE_SeqMsInsTTrack_Records	f0=0x1003C, proc=loc_48539916
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944
+	REC_FE_SeqMsInsTTrack_Records	proc=loc_48539944
 FE_SeqMsInsFFstMeas_Records:	# 16 x REC_FE_SeqMsInsFFstMeas_Records (8 bytes each); read by FE_SeqMsInsFFstMeas 0x48539948 `mov (a0), d0`
-	REC_FE_SeqMsInsFFstMeas_Records	f0=16, p4=loc_4853999F	# [0]
-	REC_FE_SeqMsInsFFstMeas_Records	f0=17, p4=loc_485399B1
-	REC_FE_SeqMsInsFFstMeas_Records	f0=2, p4=loc_4853999B
-	REC_FE_SeqMsInsFFstMeas_Records	f0=18, p4=loc_4853999F
-	REC_FE_SeqMsInsFFstMeas_Records	f0=19, p4=loc_485399B1
-	REC_FE_SeqMsInsFFstMeas_Records	f0=0x10063, p4=loc_485399E1
-	REC_FE_SeqMsInsFFstMeas_Records	f0=1, p4=loc_48539A14
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17	# [8]
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17
-	REC_FE_SeqMsInsFFstMeas_Records	f0=0x1003B, p4=loc_485399C3
-	REC_FE_SeqMsInsFFstMeas_Records	f0=0x1003C, p4=loc_485399E9
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17
-	REC_FE_SeqMsInsFFstMeas_Records	p4=loc_48539A17
+	REC_FE_SeqMsInsFFstMeas_Records	f0=16, proc=loc_4853999F	# [0]
+	REC_FE_SeqMsInsFFstMeas_Records	f0=17, proc=loc_485399B1
+	REC_FE_SeqMsInsFFstMeas_Records	f0=2, proc=loc_4853999B
+	REC_FE_SeqMsInsFFstMeas_Records	f0=18, proc=loc_4853999F
+	REC_FE_SeqMsInsFFstMeas_Records	f0=19, proc=loc_485399B1
+	REC_FE_SeqMsInsFFstMeas_Records	f0=0x10063, proc=loc_485399E1
+	REC_FE_SeqMsInsFFstMeas_Records	f0=1, proc=loc_48539A14
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17	# [8]
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17
+	REC_FE_SeqMsInsFFstMeas_Records	f0=0x1003B, proc=loc_485399C3
+	REC_FE_SeqMsInsFFstMeas_Records	f0=0x1003C, proc=loc_485399E9
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17
+	REC_FE_SeqMsInsFFstMeas_Records	proc=loc_48539A17
 FE_SeqMsInsFLstMeas_Records:	# 16 x REC_FE_SeqMsInsFLstMeas_Records (8 bytes each); read by FE_SeqMsInsFLstMeas 0x48539A1B `mov (a0), d0`
-	REC_FE_SeqMsInsFLstMeas_Records	f0=16, p4=loc_48539A72	# [0]
-	REC_FE_SeqMsInsFLstMeas_Records	f0=17, p4=loc_48539A84
-	REC_FE_SeqMsInsFLstMeas_Records	f0=2, p4=loc_48539A6E
-	REC_FE_SeqMsInsFLstMeas_Records	f0=18, p4=loc_48539A72
-	REC_FE_SeqMsInsFLstMeas_Records	f0=19, p4=loc_48539A84
-	REC_FE_SeqMsInsFLstMeas_Records	f0=0x10063, p4=loc_48539AB4
-	REC_FE_SeqMsInsFLstMeas_Records	f0=1, p4=loc_48539AE7
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA	# [8]
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA
-	REC_FE_SeqMsInsFLstMeas_Records	f0=0x1003B, p4=loc_48539A96
-	REC_FE_SeqMsInsFLstMeas_Records	f0=0x1003C, p4=loc_48539ABC
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA
-	REC_FE_SeqMsInsFLstMeas_Records	p4=loc_48539AEA
+	REC_FE_SeqMsInsFLstMeas_Records	f0=16, proc=loc_48539A72	# [0]
+	REC_FE_SeqMsInsFLstMeas_Records	f0=17, proc=loc_48539A84
+	REC_FE_SeqMsInsFLstMeas_Records	f0=2, proc=loc_48539A6E
+	REC_FE_SeqMsInsFLstMeas_Records	f0=18, proc=loc_48539A72
+	REC_FE_SeqMsInsFLstMeas_Records	f0=19, proc=loc_48539A84
+	REC_FE_SeqMsInsFLstMeas_Records	f0=0x10063, proc=loc_48539AB4
+	REC_FE_SeqMsInsFLstMeas_Records	f0=1, proc=loc_48539AE7
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA	# [8]
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA
+	REC_FE_SeqMsInsFLstMeas_Records	f0=0x1003B, proc=loc_48539A96
+	REC_FE_SeqMsInsFLstMeas_Records	f0=0x1003C, proc=loc_48539ABC
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA
+	REC_FE_SeqMsInsFLstMeas_Records	proc=loc_48539AEA
 FE_SeqMsInsTSrtMeas_Records:	# 16 x REC_FE_SeqMsInsTSrtMeas_Records (8 bytes each); read by FE_SeqMsInsTSrtMeas 0x48539AEE `mov (a0), d0`
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=16, p4=loc_48539B45	# [0]
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=17, p4=loc_48539B57
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=2, p4=loc_48539B41
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=18, p4=loc_48539B45
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=19, p4=loc_48539B57
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=0x10063, p4=loc_48539B87
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=1, p4=loc_48539BBA
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD	# [8]
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=0x1003B, p4=loc_48539B69
-	REC_FE_SeqMsInsTSrtMeas_Records	f0=0x1003C, p4=loc_48539B8F
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD
-	REC_FE_SeqMsInsTSrtMeas_Records	p4=loc_48539BBD
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=16, proc=loc_48539B45	# [0]
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=17, proc=loc_48539B57
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=2, proc=loc_48539B41
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=18, proc=loc_48539B45
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=19, proc=loc_48539B57
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=0x10063, proc=loc_48539B87
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=1, proc=loc_48539BBA
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD	# [8]
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=0x1003B, proc=loc_48539B69
+	REC_FE_SeqMsInsTSrtMeas_Records	f0=0x1003C, proc=loc_48539B8F
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD
+	REC_FE_SeqMsInsTSrtMeas_Records	proc=loc_48539BBD
 FE_SeqMsInsTRep_Records:	# 16 x REC_FE_SeqMsInsTRep_Records (8 bytes each); read by FE_SeqMsInsTRep 0x48539BC1 `mov (a0), d0`
-	REC_FE_SeqMsInsTRep_Records	f0=16, p4=loc_48539C18	# [0]
-	REC_FE_SeqMsInsTRep_Records	f0=17, p4=loc_48539C2A
-	REC_FE_SeqMsInsTRep_Records	f0=2, p4=loc_48539C14
-	REC_FE_SeqMsInsTRep_Records	f0=18, p4=loc_48539C18
-	REC_FE_SeqMsInsTRep_Records	f0=19, p4=loc_48539C2A
-	REC_FE_SeqMsInsTRep_Records	f0=0x10063, p4=loc_48539C5A
-	REC_FE_SeqMsInsTRep_Records	f0=1, p4=loc_48539C8D
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90	# [8]
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90
-	REC_FE_SeqMsInsTRep_Records	f0=0x1003B, p4=loc_48539C3C
-	REC_FE_SeqMsInsTRep_Records	f0=0x1003C, p4=loc_48539C62
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90
-	REC_FE_SeqMsInsTRep_Records	p4=loc_48539C90
+	REC_FE_SeqMsInsTRep_Records	f0=16, proc=loc_48539C18	# [0]
+	REC_FE_SeqMsInsTRep_Records	f0=17, proc=loc_48539C2A
+	REC_FE_SeqMsInsTRep_Records	f0=2, proc=loc_48539C14
+	REC_FE_SeqMsInsTRep_Records	f0=18, proc=loc_48539C18
+	REC_FE_SeqMsInsTRep_Records	f0=19, proc=loc_48539C2A
+	REC_FE_SeqMsInsTRep_Records	f0=0x10063, proc=loc_48539C5A
+	REC_FE_SeqMsInsTRep_Records	f0=1, proc=loc_48539C8D
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90	# [8]
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90
+	REC_FE_SeqMsInsTRep_Records	f0=0x1003B, proc=loc_48539C3C
+	REC_FE_SeqMsInsTRep_Records	f0=0x1003C, proc=loc_48539C62
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90
+	REC_FE_SeqMsInsTRep_Records	proc=loc_48539C90
 FE_SeqNoteChangeTrack_Records:	# 16 x REC_FE_SeqNoteChangeTrack_Records (8 bytes each); read by FE_SeqNoteChangeTrack 0x4853A452 `mov (a0), d0`
-	REC_FE_SeqNoteChangeTrack_Records	f0=16, p4=loc_4853A4A9	# [0]
-	REC_FE_SeqNoteChangeTrack_Records	f0=17, p4=loc_4853A4BB
-	REC_FE_SeqNoteChangeTrack_Records	f0=2, p4=loc_4853A4A5
-	REC_FE_SeqNoteChangeTrack_Records	f0=18, p4=loc_4853A4A9
-	REC_FE_SeqNoteChangeTrack_Records	f0=19, p4=loc_4853A4BB
-	REC_FE_SeqNoteChangeTrack_Records	f0=0x10063, p4=loc_4853A501
-	REC_FE_SeqNoteChangeTrack_Records	f0=1, p4=loc_4853A534
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537	# [8]
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537
-	REC_FE_SeqNoteChangeTrack_Records	f0=0x1003B, p4=loc_4853A4CE
-	REC_FE_SeqNoteChangeTrack_Records	f0=0x1003C, p4=loc_4853A509
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537
-	REC_FE_SeqNoteChangeTrack_Records	p4=loc_4853A537
+	REC_FE_SeqNoteChangeTrack_Records	f0=16, proc=loc_4853A4A9	# [0]
+	REC_FE_SeqNoteChangeTrack_Records	f0=17, proc=loc_4853A4BB
+	REC_FE_SeqNoteChangeTrack_Records	f0=2, proc=loc_4853A4A5
+	REC_FE_SeqNoteChangeTrack_Records	f0=18, proc=loc_4853A4A9
+	REC_FE_SeqNoteChangeTrack_Records	f0=19, proc=loc_4853A4BB
+	REC_FE_SeqNoteChangeTrack_Records	f0=0x10063, proc=loc_4853A501
+	REC_FE_SeqNoteChangeTrack_Records	f0=1, proc=loc_4853A534
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537	# [8]
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537
+	REC_FE_SeqNoteChangeTrack_Records	f0=0x1003B, proc=loc_4853A4CE
+	REC_FE_SeqNoteChangeTrack_Records	f0=0x1003C, proc=loc_4853A509
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537
+	REC_FE_SeqNoteChangeTrack_Records	proc=loc_4853A537
 FE_SeqNoteChangeFstMeas_Records:	# 16 x REC_FE_SeqNoteChangeFstMeas_Records (8 bytes each); read by FE_SeqNoteChangeFstMeas 0x4853A53B `mov (a0), d0`
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=16, p4=loc_4853A592	# [0]
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=17, p4=loc_4853A5A4
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=2, p4=loc_4853A58E
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=18, p4=loc_4853A592
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=19, p4=loc_4853A5A4
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=0x10063, p4=loc_4853A5D4
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=1, p4=loc_4853A607
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A	# [8]
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=0x1003B, p4=loc_4853A5B6
-	REC_FE_SeqNoteChangeFstMeas_Records	f0=0x1003C, p4=loc_4853A5DC
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A
-	REC_FE_SeqNoteChangeFstMeas_Records	p4=loc_4853A60A
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=16, proc=loc_4853A592	# [0]
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=17, proc=loc_4853A5A4
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=2, proc=loc_4853A58E
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=18, proc=loc_4853A592
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=19, proc=loc_4853A5A4
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=0x10063, proc=loc_4853A5D4
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=1, proc=loc_4853A607
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A	# [8]
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=0x1003B, proc=loc_4853A5B6
+	REC_FE_SeqNoteChangeFstMeas_Records	f0=0x1003C, proc=loc_4853A5DC
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A
+	REC_FE_SeqNoteChangeFstMeas_Records	proc=loc_4853A60A
 FE_SeqNoteChangeLstMeas_Records:	# 16 x REC_FE_SeqNoteChangeLstMeas_Records (8 bytes each); read by FE_SeqNoteChangeLstMeas 0x4853A60E `mov (a0), d0`
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=16, p4=loc_4853A665	# [0]
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=17, p4=loc_4853A677
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=2, p4=loc_4853A661
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=18, p4=loc_4853A665
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=19, p4=loc_4853A677
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=0x10063, p4=loc_4853A6A7
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=1, p4=loc_4853A6DA
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD	# [8]
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=0x1003B, p4=loc_4853A689
-	REC_FE_SeqNoteChangeLstMeas_Records	f0=0x1003C, p4=loc_4853A6AF
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD
-	REC_FE_SeqNoteChangeLstMeas_Records	p4=loc_4853A6DD
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=16, proc=loc_4853A665	# [0]
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=17, proc=loc_4853A677
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=2, proc=loc_4853A661
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=18, proc=loc_4853A665
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=19, proc=loc_4853A677
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=0x10063, proc=loc_4853A6A7
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=1, proc=loc_4853A6DA
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD	# [8]
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=0x1003B, proc=loc_4853A689
+	REC_FE_SeqNoteChangeLstMeas_Records	f0=0x1003C, proc=loc_4853A6AF
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD
+	REC_FE_SeqNoteChangeLstMeas_Records	proc=loc_4853A6DD
 FE_SeqNoteChangeSrcNt_Records:	# 16 x REC_FE_SeqNoteChangeSrcNt_Records (8 bytes each); read by FE_SeqNoteChangeSrcNt 0x4853A6E1 `mov (a0), d0`
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=16, p4=loc_4853A738	# [0]
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=17, p4=loc_4853A74A
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=2, p4=loc_4853A734
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=18, p4=loc_4853A738
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=19, p4=loc_4853A74A
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=0x10063, p4=loc_4853A789
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=1, p4=loc_4853A7BC
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF	# [8]
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=0x1003B, p4=loc_4853A75C
-	REC_FE_SeqNoteChangeSrcNt_Records	f0=0x1003C, p4=loc_4853A791
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF
-	REC_FE_SeqNoteChangeSrcNt_Records	p4=loc_4853A7BF
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=16, proc=loc_4853A738	# [0]
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=17, proc=loc_4853A74A
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=2, proc=loc_4853A734
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=18, proc=loc_4853A738
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=19, proc=loc_4853A74A
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=0x10063, proc=loc_4853A789
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=1, proc=loc_4853A7BC
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF	# [8]
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=0x1003B, proc=loc_4853A75C
+	REC_FE_SeqNoteChangeSrcNt_Records	f0=0x1003C, proc=loc_4853A791
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF
+	REC_FE_SeqNoteChangeSrcNt_Records	proc=loc_4853A7BF
 FE_SeqNoteChangeDstNt_Records:	# 16 x REC_FE_SeqNoteChangeDstNt_Records (8 bytes each); read by FE_SeqNoteChangeDstNt 0x4853A7C3 `mov (a0), d0`
-	REC_FE_SeqNoteChangeDstNt_Records	f0=16, p4=loc_4853A81A	# [0]
-	REC_FE_SeqNoteChangeDstNt_Records	f0=17, p4=loc_4853A82C
-	REC_FE_SeqNoteChangeDstNt_Records	f0=2, p4=loc_4853A816
-	REC_FE_SeqNoteChangeDstNt_Records	f0=18, p4=loc_4853A81A
-	REC_FE_SeqNoteChangeDstNt_Records	f0=19, p4=loc_4853A82C
-	REC_FE_SeqNoteChangeDstNt_Records	f0=0x10063, p4=loc_4853A86B
-	REC_FE_SeqNoteChangeDstNt_Records	f0=1, p4=loc_4853A89E
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1	# [8]
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1
-	REC_FE_SeqNoteChangeDstNt_Records	f0=0x1003B, p4=loc_4853A83E
-	REC_FE_SeqNoteChangeDstNt_Records	f0=0x1003C, p4=loc_4853A873
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1
-	REC_FE_SeqNoteChangeDstNt_Records	p4=loc_4853A8A1
+	REC_FE_SeqNoteChangeDstNt_Records	f0=16, proc=loc_4853A81A	# [0]
+	REC_FE_SeqNoteChangeDstNt_Records	f0=17, proc=loc_4853A82C
+	REC_FE_SeqNoteChangeDstNt_Records	f0=2, proc=loc_4853A816
+	REC_FE_SeqNoteChangeDstNt_Records	f0=18, proc=loc_4853A81A
+	REC_FE_SeqNoteChangeDstNt_Records	f0=19, proc=loc_4853A82C
+	REC_FE_SeqNoteChangeDstNt_Records	f0=0x10063, proc=loc_4853A86B
+	REC_FE_SeqNoteChangeDstNt_Records	f0=1, proc=loc_4853A89E
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1	# [8]
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1
+	REC_FE_SeqNoteChangeDstNt_Records	f0=0x1003B, proc=loc_4853A83E
+	REC_FE_SeqNoteChangeDstNt_Records	f0=0x1003C, proc=loc_4853A873
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1
+	REC_FE_SeqNoteChangeDstNt_Records	proc=loc_4853A8A1
 FE_SeqVeloCngTrack_Records:	# 16 x REC_FE_SeqVeloCngTrack_Records (8 bytes each); read by FE_SeqVeloCngTrack 0x4853AA83 `mov (a0), d0`
-	REC_FE_SeqVeloCngTrack_Records	f0=16, p4=loc_4853AADA	# [0]
-	REC_FE_SeqVeloCngTrack_Records	f0=17, p4=loc_4853AAEC
-	REC_FE_SeqVeloCngTrack_Records	f0=2, p4=loc_4853AAD6
-	REC_FE_SeqVeloCngTrack_Records	f0=18, p4=loc_4853AADA
-	REC_FE_SeqVeloCngTrack_Records	f0=19, p4=loc_4853AAEC
-	REC_FE_SeqVeloCngTrack_Records	f0=0x10063, p4=loc_4853AB32
-	REC_FE_SeqVeloCngTrack_Records	f0=1, p4=loc_4853AB65
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68	# [8]
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68
-	REC_FE_SeqVeloCngTrack_Records	f0=0x1003B, p4=loc_4853AAFF
-	REC_FE_SeqVeloCngTrack_Records	f0=0x1003C, p4=loc_4853AB3A
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68
-	REC_FE_SeqVeloCngTrack_Records	p4=loc_4853AB68
+	REC_FE_SeqVeloCngTrack_Records	f0=16, proc=loc_4853AADA	# [0]
+	REC_FE_SeqVeloCngTrack_Records	f0=17, proc=loc_4853AAEC
+	REC_FE_SeqVeloCngTrack_Records	f0=2, proc=loc_4853AAD6
+	REC_FE_SeqVeloCngTrack_Records	f0=18, proc=loc_4853AADA
+	REC_FE_SeqVeloCngTrack_Records	f0=19, proc=loc_4853AAEC
+	REC_FE_SeqVeloCngTrack_Records	f0=0x10063, proc=loc_4853AB32
+	REC_FE_SeqVeloCngTrack_Records	f0=1, proc=loc_4853AB65
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68	# [8]
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68
+	REC_FE_SeqVeloCngTrack_Records	f0=0x1003B, proc=loc_4853AAFF
+	REC_FE_SeqVeloCngTrack_Records	f0=0x1003C, proc=loc_4853AB3A
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68
+	REC_FE_SeqVeloCngTrack_Records	proc=loc_4853AB68
 FE_SeqVeloCngFstMeas_Records:	# 16 x REC_FE_SeqVeloCngFstMeas_Records (8 bytes each); read by FE_SeqVeloCngFstMeas 0x4853AB6C `mov (a0), d0`
-	REC_FE_SeqVeloCngFstMeas_Records	f0=16, p4=loc_4853ABC3	# [0]
-	REC_FE_SeqVeloCngFstMeas_Records	f0=17, p4=loc_4853ABD5
-	REC_FE_SeqVeloCngFstMeas_Records	f0=2, p4=loc_4853ABBF
-	REC_FE_SeqVeloCngFstMeas_Records	f0=18, p4=loc_4853ABC3
-	REC_FE_SeqVeloCngFstMeas_Records	f0=19, p4=loc_4853ABD5
-	REC_FE_SeqVeloCngFstMeas_Records	f0=0x10063, p4=loc_4853AC05
-	REC_FE_SeqVeloCngFstMeas_Records	f0=1, p4=loc_4853AC38
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B	# [8]
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B
-	REC_FE_SeqVeloCngFstMeas_Records	f0=0x1003B, p4=loc_4853ABE7
-	REC_FE_SeqVeloCngFstMeas_Records	f0=0x1003C, p4=loc_4853AC0D
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B
-	REC_FE_SeqVeloCngFstMeas_Records	p4=loc_4853AC3B
+	REC_FE_SeqVeloCngFstMeas_Records	f0=16, proc=loc_4853ABC3	# [0]
+	REC_FE_SeqVeloCngFstMeas_Records	f0=17, proc=loc_4853ABD5
+	REC_FE_SeqVeloCngFstMeas_Records	f0=2, proc=loc_4853ABBF
+	REC_FE_SeqVeloCngFstMeas_Records	f0=18, proc=loc_4853ABC3
+	REC_FE_SeqVeloCngFstMeas_Records	f0=19, proc=loc_4853ABD5
+	REC_FE_SeqVeloCngFstMeas_Records	f0=0x10063, proc=loc_4853AC05
+	REC_FE_SeqVeloCngFstMeas_Records	f0=1, proc=loc_4853AC38
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B	# [8]
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B
+	REC_FE_SeqVeloCngFstMeas_Records	f0=0x1003B, proc=loc_4853ABE7
+	REC_FE_SeqVeloCngFstMeas_Records	f0=0x1003C, proc=loc_4853AC0D
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B
+	REC_FE_SeqVeloCngFstMeas_Records	proc=loc_4853AC3B
 FE_SeqVeloCngLstMeas_Records:	# 16 x REC_FE_SeqVeloCngLstMeas_Records (8 bytes each); read by FE_SeqVeloCngLstMeas 0x4853AC3F `mov (a0), d0`
-	REC_FE_SeqVeloCngLstMeas_Records	f0=16, p4=loc_4853AC96	# [0]
-	REC_FE_SeqVeloCngLstMeas_Records	f0=17, p4=loc_4853ACA8
-	REC_FE_SeqVeloCngLstMeas_Records	f0=2, p4=loc_4853AC92
-	REC_FE_SeqVeloCngLstMeas_Records	f0=18, p4=loc_4853AC96
-	REC_FE_SeqVeloCngLstMeas_Records	f0=19, p4=loc_4853ACA8
-	REC_FE_SeqVeloCngLstMeas_Records	f0=0x10063, p4=loc_4853ACD8
-	REC_FE_SeqVeloCngLstMeas_Records	f0=1, p4=loc_4853AD0B
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E	# [8]
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E
-	REC_FE_SeqVeloCngLstMeas_Records	f0=0x1003B, p4=loc_4853ACBA
-	REC_FE_SeqVeloCngLstMeas_Records	f0=0x1003C, p4=loc_4853ACE0
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E
-	REC_FE_SeqVeloCngLstMeas_Records	p4=loc_4853AD0E
+	REC_FE_SeqVeloCngLstMeas_Records	f0=16, proc=loc_4853AC96	# [0]
+	REC_FE_SeqVeloCngLstMeas_Records	f0=17, proc=loc_4853ACA8
+	REC_FE_SeqVeloCngLstMeas_Records	f0=2, proc=loc_4853AC92
+	REC_FE_SeqVeloCngLstMeas_Records	f0=18, proc=loc_4853AC96
+	REC_FE_SeqVeloCngLstMeas_Records	f0=19, proc=loc_4853ACA8
+	REC_FE_SeqVeloCngLstMeas_Records	f0=0x10063, proc=loc_4853ACD8
+	REC_FE_SeqVeloCngLstMeas_Records	f0=1, proc=loc_4853AD0B
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E	# [8]
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E
+	REC_FE_SeqVeloCngLstMeas_Records	f0=0x1003B, proc=loc_4853ACBA
+	REC_FE_SeqVeloCngLstMeas_Records	f0=0x1003C, proc=loc_4853ACE0
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E
+	REC_FE_SeqVeloCngLstMeas_Records	proc=loc_4853AD0E
 FE_SeqVeloCngVelo_Records:	# 16 x REC_FE_SeqVeloCngVelo_Records (8 bytes each); read by FE_SeqVeloCngVelo 0x4853AD12 `mov (a0), d0`
-	REC_FE_SeqVeloCngVelo_Records	f0=16, p4=loc_4853AD69	# [0]
-	REC_FE_SeqVeloCngVelo_Records	f0=17, p4=loc_4853AD7C
-	REC_FE_SeqVeloCngVelo_Records	f0=2, p4=loc_4853AD65
-	REC_FE_SeqVeloCngVelo_Records	f0=18, p4=loc_4853AD69
-	REC_FE_SeqVeloCngVelo_Records	f0=19, p4=loc_4853AD7C
-	REC_FE_SeqVeloCngVelo_Records	f0=0x10063, p4=loc_4853ADC6
-	REC_FE_SeqVeloCngVelo_Records	f0=1, p4=loc_4853ADFB
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE	# [8]
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE
-	REC_FE_SeqVeloCngVelo_Records	f0=0x1003B, p4=loc_4853AD90
-	REC_FE_SeqVeloCngVelo_Records	f0=0x1003C, p4=loc_4853ADCF
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE
-	REC_FE_SeqVeloCngVelo_Records	p4=loc_4853ADFE
+	REC_FE_SeqVeloCngVelo_Records	f0=16, proc=loc_4853AD69	# [0]
+	REC_FE_SeqVeloCngVelo_Records	f0=17, proc=loc_4853AD7C
+	REC_FE_SeqVeloCngVelo_Records	f0=2, proc=loc_4853AD65
+	REC_FE_SeqVeloCngVelo_Records	f0=18, proc=loc_4853AD69
+	REC_FE_SeqVeloCngVelo_Records	f0=19, proc=loc_4853AD7C
+	REC_FE_SeqVeloCngVelo_Records	f0=0x10063, proc=loc_4853ADC6
+	REC_FE_SeqVeloCngVelo_Records	f0=1, proc=loc_4853ADFB
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE	# [8]
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE
+	REC_FE_SeqVeloCngVelo_Records	f0=0x1003B, proc=loc_4853AD90
+	REC_FE_SeqVeloCngVelo_Records	f0=0x1003C, proc=loc_4853ADCF
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE
+	REC_FE_SeqVeloCngVelo_Records	proc=loc_4853ADFE
 FE_SeqTransTrack_Records:	# 16 x REC_FE_SeqTransTrack_Records (8 bytes each); read by FE_SeqTransTrack 0x4853AFAE `mov (a0), d0`
-	REC_FE_SeqTransTrack_Records	f0=16, p4=loc_4853B005	# [0]
-	REC_FE_SeqTransTrack_Records	f0=17, p4=loc_4853B017
-	REC_FE_SeqTransTrack_Records	f0=2, p4=loc_4853B001
-	REC_FE_SeqTransTrack_Records	f0=18, p4=loc_4853B005
-	REC_FE_SeqTransTrack_Records	f0=19, p4=loc_4853B017
-	REC_FE_SeqTransTrack_Records	f0=0x10063, p4=loc_4853B05D
-	REC_FE_SeqTransTrack_Records	f0=1, p4=loc_4853B090
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093	# [8]
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093
-	REC_FE_SeqTransTrack_Records	f0=0x1003B, p4=loc_4853B02A
-	REC_FE_SeqTransTrack_Records	f0=0x1003C, p4=loc_4853B065
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093
-	REC_FE_SeqTransTrack_Records	p4=loc_4853B093
+	REC_FE_SeqTransTrack_Records	f0=16, proc=loc_4853B005	# [0]
+	REC_FE_SeqTransTrack_Records	f0=17, proc=loc_4853B017
+	REC_FE_SeqTransTrack_Records	f0=2, proc=loc_4853B001
+	REC_FE_SeqTransTrack_Records	f0=18, proc=loc_4853B005
+	REC_FE_SeqTransTrack_Records	f0=19, proc=loc_4853B017
+	REC_FE_SeqTransTrack_Records	f0=0x10063, proc=loc_4853B05D
+	REC_FE_SeqTransTrack_Records	f0=1, proc=loc_4853B090
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093	# [8]
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093
+	REC_FE_SeqTransTrack_Records	f0=0x1003B, proc=loc_4853B02A
+	REC_FE_SeqTransTrack_Records	f0=0x1003C, proc=loc_4853B065
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093
+	REC_FE_SeqTransTrack_Records	proc=loc_4853B093
 FE_SeqTransFstMeas_Records:	# 16 x REC_FE_SeqTransFstMeas_Records (8 bytes each); read by FE_SeqTransFstMeas 0x4853B097 `mov (a0), d0`
-	REC_FE_SeqTransFstMeas_Records	f0=16, p4=loc_4853B0EE	# [0]
-	REC_FE_SeqTransFstMeas_Records	f0=17, p4=loc_4853B100
-	REC_FE_SeqTransFstMeas_Records	f0=2, p4=loc_4853B0EA
-	REC_FE_SeqTransFstMeas_Records	f0=18, p4=loc_4853B0EE
-	REC_FE_SeqTransFstMeas_Records	f0=19, p4=loc_4853B100
-	REC_FE_SeqTransFstMeas_Records	f0=0x10063, p4=loc_4853B130
-	REC_FE_SeqTransFstMeas_Records	f0=1, p4=loc_4853B163
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166	# [8]
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166
-	REC_FE_SeqTransFstMeas_Records	f0=0x1003B, p4=loc_4853B112
-	REC_FE_SeqTransFstMeas_Records	f0=0x1003C, p4=loc_4853B138
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166
-	REC_FE_SeqTransFstMeas_Records	p4=loc_4853B166
+	REC_FE_SeqTransFstMeas_Records	f0=16, proc=loc_4853B0EE	# [0]
+	REC_FE_SeqTransFstMeas_Records	f0=17, proc=loc_4853B100
+	REC_FE_SeqTransFstMeas_Records	f0=2, proc=loc_4853B0EA
+	REC_FE_SeqTransFstMeas_Records	f0=18, proc=loc_4853B0EE
+	REC_FE_SeqTransFstMeas_Records	f0=19, proc=loc_4853B100
+	REC_FE_SeqTransFstMeas_Records	f0=0x10063, proc=loc_4853B130
+	REC_FE_SeqTransFstMeas_Records	f0=1, proc=loc_4853B163
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166	# [8]
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166
+	REC_FE_SeqTransFstMeas_Records	f0=0x1003B, proc=loc_4853B112
+	REC_FE_SeqTransFstMeas_Records	f0=0x1003C, proc=loc_4853B138
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166
+	REC_FE_SeqTransFstMeas_Records	proc=loc_4853B166
 FE_SeqTransLstMeas_Records:	# 16 x REC_FE_SeqTransLstMeas_Records (8 bytes each); read by FE_SeqTransLstMeas 0x4853B16A `mov (a0), d0`
-	REC_FE_SeqTransLstMeas_Records	f0=16, p4=loc_4853B1C1	# [0]
-	REC_FE_SeqTransLstMeas_Records	f0=17, p4=loc_4853B1D3
-	REC_FE_SeqTransLstMeas_Records	f0=2, p4=loc_4853B1BD
-	REC_FE_SeqTransLstMeas_Records	f0=18, p4=loc_4853B1C1
-	REC_FE_SeqTransLstMeas_Records	f0=19, p4=loc_4853B1D3
-	REC_FE_SeqTransLstMeas_Records	f0=0x10063, p4=loc_4853B203
-	REC_FE_SeqTransLstMeas_Records	f0=1, p4=loc_4853B236
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239	# [8]
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239
-	REC_FE_SeqTransLstMeas_Records	f0=0x1003B, p4=loc_4853B1E5
-	REC_FE_SeqTransLstMeas_Records	f0=0x1003C, p4=loc_4853B20B
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239
-	REC_FE_SeqTransLstMeas_Records	p4=loc_4853B239
+	REC_FE_SeqTransLstMeas_Records	f0=16, proc=loc_4853B1C1	# [0]
+	REC_FE_SeqTransLstMeas_Records	f0=17, proc=loc_4853B1D3
+	REC_FE_SeqTransLstMeas_Records	f0=2, proc=loc_4853B1BD
+	REC_FE_SeqTransLstMeas_Records	f0=18, proc=loc_4853B1C1
+	REC_FE_SeqTransLstMeas_Records	f0=19, proc=loc_4853B1D3
+	REC_FE_SeqTransLstMeas_Records	f0=0x10063, proc=loc_4853B203
+	REC_FE_SeqTransLstMeas_Records	f0=1, proc=loc_4853B236
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239	# [8]
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239
+	REC_FE_SeqTransLstMeas_Records	f0=0x1003B, proc=loc_4853B1E5
+	REC_FE_SeqTransLstMeas_Records	f0=0x1003C, proc=loc_4853B20B
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239
+	REC_FE_SeqTransLstMeas_Records	proc=loc_4853B239
 FE_SeqTransTrans_Records:	# 16 x REC_FE_SeqTransTrans_Records (8 bytes each); read by FE_SeqTransTrans 0x4853B23D `mov (a0), d0`
-	REC_FE_SeqTransTrans_Records	f0=16, p4=loc_4853B294	# [0]
-	REC_FE_SeqTransTrans_Records	f0=17, p4=loc_4853B2A7
-	REC_FE_SeqTransTrans_Records	f0=2, p4=loc_4853B290
-	REC_FE_SeqTransTrans_Records	f0=18, p4=loc_4853B294
-	REC_FE_SeqTransTrans_Records	f0=19, p4=loc_4853B2A7
-	REC_FE_SeqTransTrans_Records	f0=0x10063, p4=loc_4853B2F1
-	REC_FE_SeqTransTrans_Records	f0=1, p4=loc_4853B326
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329	# [8]
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329
-	REC_FE_SeqTransTrans_Records	f0=0x1003B, p4=loc_4853B2BB
-	REC_FE_SeqTransTrans_Records	f0=0x1003C, p4=loc_4853B2FA
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329
-	REC_FE_SeqTransTrans_Records	p4=loc_4853B329
+	REC_FE_SeqTransTrans_Records	f0=16, proc=loc_4853B294	# [0]
+	REC_FE_SeqTransTrans_Records	f0=17, proc=loc_4853B2A7
+	REC_FE_SeqTransTrans_Records	f0=2, proc=loc_4853B290
+	REC_FE_SeqTransTrans_Records	f0=18, proc=loc_4853B294
+	REC_FE_SeqTransTrans_Records	f0=19, proc=loc_4853B2A7
+	REC_FE_SeqTransTrans_Records	f0=0x10063, proc=loc_4853B2F1
+	REC_FE_SeqTransTrans_Records	f0=1, proc=loc_4853B326
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329	# [8]
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329
+	REC_FE_SeqTransTrans_Records	f0=0x1003B, proc=loc_4853B2BB
+	REC_FE_SeqTransTrans_Records	f0=0x1003C, proc=loc_4853B2FA
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329
+	REC_FE_SeqTransTrans_Records	proc=loc_4853B329
 FE_SeqAdvDlyTrack_Records:	# 16 x REC_FE_SeqAdvDlyTrack_Records (8 bytes each); read by FE_SeqAdvDlyTrack 0x4853B4D9 `mov (a0), d0`
-	REC_FE_SeqAdvDlyTrack_Records	f0=16, p4=loc_4853B530	# [0]
-	REC_FE_SeqAdvDlyTrack_Records	f0=17, p4=loc_4853B542
-	REC_FE_SeqAdvDlyTrack_Records	f0=2, p4=loc_4853B52C
-	REC_FE_SeqAdvDlyTrack_Records	f0=18, p4=loc_4853B530
-	REC_FE_SeqAdvDlyTrack_Records	f0=19, p4=loc_4853B542
-	REC_FE_SeqAdvDlyTrack_Records	f0=0x10063, p4=loc_4853B588
-	REC_FE_SeqAdvDlyTrack_Records	f0=1, p4=loc_4853B5BB
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE	# [8]
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE
-	REC_FE_SeqAdvDlyTrack_Records	f0=0x1003B, p4=loc_4853B555
-	REC_FE_SeqAdvDlyTrack_Records	f0=0x1003C, p4=loc_4853B590
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE
-	REC_FE_SeqAdvDlyTrack_Records	p4=loc_4853B5BE
+	REC_FE_SeqAdvDlyTrack_Records	f0=16, proc=loc_4853B530	# [0]
+	REC_FE_SeqAdvDlyTrack_Records	f0=17, proc=loc_4853B542
+	REC_FE_SeqAdvDlyTrack_Records	f0=2, proc=loc_4853B52C
+	REC_FE_SeqAdvDlyTrack_Records	f0=18, proc=loc_4853B530
+	REC_FE_SeqAdvDlyTrack_Records	f0=19, proc=loc_4853B542
+	REC_FE_SeqAdvDlyTrack_Records	f0=0x10063, proc=loc_4853B588
+	REC_FE_SeqAdvDlyTrack_Records	f0=1, proc=loc_4853B5BB
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE	# [8]
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE
+	REC_FE_SeqAdvDlyTrack_Records	f0=0x1003B, proc=loc_4853B555
+	REC_FE_SeqAdvDlyTrack_Records	f0=0x1003C, proc=loc_4853B590
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE
+	REC_FE_SeqAdvDlyTrack_Records	proc=loc_4853B5BE
 FE_SeqAdvDlyFstMeas_Records:	# 16 x REC_FE_SeqAdvDlyFstMeas_Records (8 bytes each); read by FE_SeqAdvDlyFstMeas 0x4853B5C2 `mov (a0), d0`
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=16, p4=loc_4853B619	# [0]
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=17, p4=loc_4853B62B
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=2, p4=loc_4853B615
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=18, p4=loc_4853B619
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=19, p4=loc_4853B62B
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=0x10063, p4=loc_4853B65B
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=1, p4=loc_4853B68E
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691	# [8]
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=0x1003B, p4=loc_4853B63D
-	REC_FE_SeqAdvDlyFstMeas_Records	f0=0x1003C, p4=loc_4853B663
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691
-	REC_FE_SeqAdvDlyFstMeas_Records	p4=loc_4853B691
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=16, proc=loc_4853B619	# [0]
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=17, proc=loc_4853B62B
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=2, proc=loc_4853B615
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=18, proc=loc_4853B619
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=19, proc=loc_4853B62B
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=0x10063, proc=loc_4853B65B
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=1, proc=loc_4853B68E
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691	# [8]
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=0x1003B, proc=loc_4853B63D
+	REC_FE_SeqAdvDlyFstMeas_Records	f0=0x1003C, proc=loc_4853B663
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691
+	REC_FE_SeqAdvDlyFstMeas_Records	proc=loc_4853B691
 FE_SeqAdvDlyLstMeas_Records:	# 16 x REC_FE_SeqAdvDlyLstMeas_Records (8 bytes each); read by FE_SeqAdvDlyLstMeas 0x4853B695 `mov (a0), d0`
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=16, p4=loc_4853B6EC	# [0]
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=17, p4=loc_4853B6FE
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=2, p4=loc_4853B6E8
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=18, p4=loc_4853B6EC
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=19, p4=loc_4853B6FE
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=0x10063, p4=loc_4853B72E
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=1, p4=loc_4853B761
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764	# [8]
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=0x1003B, p4=loc_4853B710
-	REC_FE_SeqAdvDlyLstMeas_Records	f0=0x1003C, p4=loc_4853B736
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764
-	REC_FE_SeqAdvDlyLstMeas_Records	p4=loc_4853B764
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=16, proc=loc_4853B6EC	# [0]
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=17, proc=loc_4853B6FE
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=2, proc=loc_4853B6E8
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=18, proc=loc_4853B6EC
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=19, proc=loc_4853B6FE
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=0x10063, proc=loc_4853B72E
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=1, proc=loc_4853B761
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764	# [8]
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=0x1003B, proc=loc_4853B710
+	REC_FE_SeqAdvDlyLstMeas_Records	f0=0x1003C, proc=loc_4853B736
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764
+	REC_FE_SeqAdvDlyLstMeas_Records	proc=loc_4853B764
 FE_SeqAdvDlyAdvDly_Records:	# 16 x REC_FE_SeqAdvDlyAdvDly_Records (8 bytes each); read by FE_SeqAdvDlyAdvDly 0x4853B768 `mov (a0), d0`
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=16, p4=loc_4853B7BF	# [0]
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=17, p4=loc_4853B7D2
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=2, p4=loc_4853B7BB
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=18, p4=loc_4853B7BF
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=19, p4=loc_4853B7D2
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=0x10063, p4=loc_4853B81C
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=1, p4=loc_4853B851
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854	# [8]
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=0x1003B, p4=loc_4853B7E6
-	REC_FE_SeqAdvDlyAdvDly_Records	f0=0x1003C, p4=loc_4853B825
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854
-	REC_FE_SeqAdvDlyAdvDly_Records	p4=loc_4853B854
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=16, proc=loc_4853B7BF	# [0]
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=17, proc=loc_4853B7D2
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=2, proc=loc_4853B7BB
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=18, proc=loc_4853B7BF
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=19, proc=loc_4853B7D2
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=0x10063, proc=loc_4853B81C
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=1, proc=loc_4853B851
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854	# [8]
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=0x1003B, proc=loc_4853B7E6
+	REC_FE_SeqAdvDlyAdvDly_Records	f0=0x1003C, proc=loc_4853B825
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854
+	REC_FE_SeqAdvDlyAdvDly_Records	proc=loc_4853B854
