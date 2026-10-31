@@ -13,6 +13,9 @@ THE PNGS STORE PALETTE INDICES, NOT COLOURS (PIL mode 'P'), so a pixel's byte va
 ROM's byte value. Storing RGB would not round-trip: these palettes contain duplicate colours,
 so RGB -> index is ambiguous.
 
+Since 2026-10-31 (lane media-build) every .bin of MANIFEST is a git-ignored build product, written by
+`build` beside its committed PNG; `verify` compares the PNGs with the built .bin files.
+
     python3 scripts/build/indexed_images.py export   # bin -> png (run once)
     python3 scripts/build/indexed_images.py build    # png -> bin (build step)
     python3 scripts/build/indexed_images.py verify   # assert the round trip is exact
@@ -99,10 +102,11 @@ def rebuild(raw, png, w, h, stride):
     assert img.mode == 'P', f"{png}: must be palette-indexed, got {img.mode}"
     assert img.size == (w, h), f"{png}: expected {(w, h)}, got {img.size}"
     px = img.tobytes()
-    if stride == w:
-        return px
-    pad = (REPO / raw).read_bytes()
-    return b''.join(px[y * w:(y + 1) * w] + pad[y * stride + w:(y + 1) * stride] for y in range(h))
+    # No MANIFEST row pads its rows.  The .bin is a build product, so row padding could not be read back
+    # from it: a padded picture needs its pad bytes in a committed sidecar (hdae5000_images.py's
+    # row_padding.json) before it gets a row here.
+    assert stride == w, f"{raw}: a padded stride needs a committed pad sidecar, not the built .bin"
+    return px
 
 
 def build():

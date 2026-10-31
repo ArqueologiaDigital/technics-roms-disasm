@@ -27,9 +27,10 @@ each palette holds duplicate entries (FTBMP01 has 192 distinct colours across it
 256 slots), so colour -> index is ambiguous.
 
 `build` writes table_data/images/FTBMPnn.BMP from those two inputs, in place, the way
-indexed_images.py regenerates table_data/images/Wallpaper_*.bin: the .BMP stays in git
-as a build cache, so the .incbin path and every tool that reads it are unchanged, and
-it is rewritten only when its bytes would change (otherwise only its mtime is brought
+indexed_images.py regenerates table_data/images/Wallpaper_*.bin.  Since 2026-10-31 (lane
+media-build) the .BMP is a git-ignored build product, like Wallpaper_*.bin: the PNG and the
+JSON are the only committed form, and the .incbin path is unchanged.  It is rewritten only
+when its bytes would change (otherwise only its mtime is brought
 forward, for the Makefile's FTBMP_BMPS rule). `build` refuses any header that is
 not self-consistent with the PNG (sizes, offsets), so an edited PNG of a different
 height cannot silently produce a malformed BMP.
@@ -40,8 +41,8 @@ height cannot silently produce a malformed BMP.
     python3 scripts/build/ftbmp_images.py build    # png + json -> BMP (build step)
     python3 scripts/build/ftbmp_images.py verify   # assert the round trip is exact
 
-`verify` rebuilds each BMP in memory and compares it with (1) the committed .BMP and
-(2) the bytes at its .incbin address in original_ROMs/kn5000_table_data.rom. That
+`verify` rebuilds each BMP in memory and compares it with (1) the built .BMP (run `build`
+first) and (2) the bytes at its .incbin address in original_ROMs/kn5000_table_data.rom. That
 address is not written down here: the .incbin's label is found in
 table_data/kn5000_table_data.s and its address in symbols/table_data_symbols_reference.txt.  Pass criterion:
 "ROUND TRIP EXACT" and exit 0.
@@ -150,7 +151,7 @@ def build_bmp(hdr, png_path):
 def export(force=False):
     """BMP -> png + json.  The PNGs and the JSON are the committed SOURCES once
     exported, so this refuses to overwrite them unless --force is given: a stray
-    `export` after a PNG was edited would otherwise undo the edit from the cache."""
+    `export` after a PNG was edited would otherwise undo the edit from a built .BMP."""
     existing = [p for p in [HEADERS, *(IMAGES / f'{n}.png' for n in NAMES)] if p.exists()]
     if existing and not force:
         sys.exit("ftbmp_images export: refusing to overwrite the committed sources "
@@ -194,8 +195,8 @@ def verify():
     offsets = rom_offsets()
     bad = 0
     for name, got in rebuilt().items():
-        committed = (IMAGES / f'{name}.BMP').read_bytes()
-        ok_file = got == committed
+        built = IMAGES / f'{name}.BMP'
+        ok_file = built.exists() and got == built.read_bytes()
         if rom is None:
             ok_rom, rom_note = True, 'ROM absent, not compared'
         else:
@@ -203,10 +204,10 @@ def verify():
             ok_rom = rom[off:off + len(got)] == got
             rom_note = f"ROM 0x{TABLE_DATA_BASE + off:06x}"
         if ok_file and ok_rom:
-            print(f"  ok  {name}.BMP  {len(got):>7,} B  == committed, == {rom_note}")
+            print(f"  ok  {name}.BMP  {len(got):>7,} B  == built, == {rom_note}")
         else:
             bad += 1
-            print(f"  *** {name}.BMP: MISMATCH (committed: {ok_file}, {rom_note}: {ok_rom})")
+            print(f"  *** {name}.BMP: MISMATCH (built: {ok_file}, {rom_note}: {ok_rom})")
     if bad:
         sys.exit(f"{bad} image(s) do not round-trip")
     print("ROUND TRIP EXACT")
