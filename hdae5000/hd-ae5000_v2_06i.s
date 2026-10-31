@@ -34,7 +34,11 @@
 	.equ HDAE5000_RAM_DeleteOptions, 0x22abe6	; 12-byte part-selection record of the delete options (HDAE5000_DelOpt_*)
 	.equ HDAE5000_RAM_SeparateOutputMode, 0x22b2f4	; 0..3 = OFF / DRUMS L/R / BASS+DRUMS MIX / BASS/DRUMS MONO (HDAE5000_SeparateOutput_Apply)
 	.equ HDAE5000_RAM_HdStreamBuffer, 0x230f1c	; 0x8000-byte buffer of the streamed file writes/reads (HDAE5000_HD_WriteStream, the part loaders/savers)
-	.equ HDAE5000_RAM_HdStreamBufferEnd, 0x238f1c	; end of HdStreamBuffer (HDAE5000_HD_WriteStream)
+	.equ HDAE5000_RAM_RcmStreamState, 0x238f1c	; the RCM stream context (u16 state, dir, song, last result), right after HdStreamBuffer: HDAE5000_LoadSong_Rcm / _SaveSong_Rcm ldirw HDAE5000_RcmStream_InitialState over it, HDAE5000_RcmStream_Read / _Write keep their state word here
+	.equ HDAE5000_RAM_FlsChainFls, 0x22ad96	; word: FLS of the item loaded last whose AL (AUTO LOAD) option is on; HDAE5000_FlsLoadScreen loads the next item from here
+	.equ HDAE5000_RAM_FlsChainItem, 0x22ad98	; word: that item (0-31); the next load takes item + 1, then item 0 of the next FLS
+	.equ HDAE5000_RAM_FlsAutoLoadPending, 0x22ad9a	; 1 while an AL chain is pending (the item just loaded had AL set); HDAE5000_Fls_GetAutoLoadPending returns it
+	.equ HDAE5000_RAM_FlsSeqStopPending, 0x22ad9b	; 1 when the sequencer stopped (sqsrtc bit 2 fell) during an AL chain while another title was shown; on return to the HD title HDAE5000_HDAETitleFunc posts EVT_HDAE_SEQ_STOP to the FLS page
 	.equ HDAE5000_RAM_HdStreamFill, 0x238f24	; fill pointer into HdStreamBuffer (HDAE5000_HD_WriteOpen/_WriteStream)
 	.equ HDAE5000_RAM_HdStreamSlot, 0x238f28	; the first-cluster slot of the open buffered write (HD_WriteOpen)
 	.equ HDAE5000_RAM_HdStreamState, 0x238f2c	; 0 closed, 1 open and nothing written, 2 written (HD_WriteOpen)
@@ -413,7 +417,7 @@
 ;   0x28FB26  HDAE5000_FlsItem_SongRecord - Get entry address with validation
 ;   0x28FBB1  HDAE5000_FlsItem_IsSet - Validate entry at coordinates
 ;   0x29501C  HDAE5000_PPORT_ServicePending - PPORT state machine entry
-;   0x295009  HDAE5000_PPORT_Svc27 - PPORT utility function
+;   0x295009  HDAE5000_PPORT_Svc27_DeleteSongParts - PPORT utility function
 ;   0x295046  HDAE5000_PPORT_SwitchToLink - context switch main -> PC link
 ;   0x295058  HDAE5000_PPORT_YieldToMain - context switch PC link -> main
 ;   0x2950CC  HDAE5000_PPORT_ReturnToLink - resume the link, detect its end

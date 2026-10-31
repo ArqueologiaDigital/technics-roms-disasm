@@ -74,7 +74,15 @@ RAM = {
     0x23A0A4: ("SeparateBassPartSent", "bass part last sent by HDAE5000_SeparateOutput_Apply"),
     0x230F1C: ("HdStreamBuffer", "0x8000-byte buffer of the streamed file writes/reads"
                                  " (HDAE5000_HD_WriteStream, the part loaders/savers)"),
-    0x238F1C: ("HdStreamBufferEnd", "end of HdStreamBuffer (HDAE5000_HD_WriteStream)"),
+    0x238F1C: ("RcmStreamState", "the RCM stream context (u16 state, dir, song, last result), right after"
+                                 " HdStreamBuffer: HDAE5000_LoadSong_Rcm / _SaveSong_Rcm ldirw"
+                                 " HDAE5000_RcmStream_InitialState over it (2026-10-31; was HdStreamBufferEnd)"),
+    # the FLS AUTO LOAD chain (notes/open4-kn5000-b/hdae/README.md, kn5000-44c)
+    0x22AD96: ("FlsChainFls", "word: FLS of the item loaded last whose AL (AUTO LOAD) option is on"),
+    0x22AD98: ("FlsChainItem", "word: that item (0-31); the next load takes item + 1"),
+    0x22AD9A: ("FlsAutoLoadPending", "1 while an AL chain is pending (HDAE5000_Fls_GetAutoLoadPending)"),
+    0x22AD9B: ("FlsSeqStopPending", "1 when the sequencer stopped during an AL chain away from the HD title"
+                                    " (HDAE5000_Fls_SetSeqStopPending)"),
     0x238F24: ("HdStreamFill", "fill pointer into HdStreamBuffer (HDAE5000_HD_WriteOpen/_WriteStream)"),
     0x238F28: ("HdStreamSlot", "the first-cluster slot of the open buffered write (HD_WriteOpen)"),
     0x238F2C: ("HdStreamState", "0 closed, 1 open and nothing written, 2 written (HD_WriteOpen)"),
@@ -271,7 +279,7 @@ RAM = {
     0x23A1A8: ("MathErrorHook", "routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting"
                                 " Errno, when it is non-zero"),
     # twelfth run: the lyric file's length and the RCM stream (the main CPU pulls / pushes the RCM part through
-    # HDAE5000_RcmStream_Read / _Write; its state word is the long at HdStreamBufferEnd)
+    # HDAE5000_RcmStream_Read / _Write; its state word is the long at RcmStreamState)
     0x2304F2: ("LyricFileLength", "the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22;"
                                   " 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk,"
                                   " TlxPart_Describe)"),
