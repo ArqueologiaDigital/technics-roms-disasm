@@ -103,12 +103,19 @@ EQU_DEF = re.compile(rb"^\s*\.equ\s+(\w+)\s*,\s*Payload_Bss_Start\+0x([0-9A-Fa-f
 BSS_REF = re.compile(rb"(?<![\w.$])Payload_Bss_Start\+0x([0-9A-Fa-f]+)(?![\w.$])")
 
 
+def tree_sources(tree):
+    """The tree's .s files: the top level and core/ (the split core, scripts/tools/split_v142_subcpu_core.py)."""
+    out = sorted(f for f in os.listdir(tree) if f.endswith(".s"))
+    core = os.path.join(tree, "core")
+    if os.path.isdir(core):
+        out += sorted(os.path.join("core", f) for f in os.listdir(core) if f.endswith(".s"))
+    return out
+
+
 def bss_names(tree):
     """{offset: NAME} for every `.equ NAME, Payload_Bss_Start+0x<offset>` in the tree."""
     names = {}
-    for fn in sorted(os.listdir(tree)):
-        if not fn.endswith(".s"):
-            continue
+    for fn in tree_sources(tree):
         for line in open(os.path.join(tree, fn), "rb").read().split(b"\n"):
             m = EQU_DEF.match(split_comment(line)[0])
             if m:
@@ -166,9 +173,7 @@ def main():
     tree = sys.argv[1]
     total = named = 0
     names = bss_names(tree)
-    for name in sorted(os.listdir(tree)):
-        if not name.endswith(".s"):
-            continue
+    for name in tree_sources(tree):
         p = os.path.join(tree, name)
         data = open(p, "rb").read()
         orig = data

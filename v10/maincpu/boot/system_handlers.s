@@ -1090,7 +1090,7 @@ Seq_InitFuncTable:
 ;   Boot_CallInitHandlers - Timer/init handler dispatch
 ;   MidiChannel_ProcessOutputState - MIDI output channel state changes
 ;   AccWrap_FlagSync - Accompaniment wrapper flag sync
-;   MidiParam_ProcessDeltas - Delta-debounce for encoder parameters
+;   AnalogIn_PollCpuAdc - Delta-debounce for encoder parameters
 ;   CPanel_RX_ProcessOrInit - Control panel serial RX processing
 ;   Encoder_TimingAndOutput - Encoder timing and output formatting
 ;   MidiChannel_ScanPending - Scan for pending MIDI changes
@@ -1127,7 +1127,7 @@ MainLoop:
 MainLoop_AfterTimerSync:
 	tset_dd16 0, 0x22, 0x04
 	jr nz, MainLoop_AfterInput
-	call MidiParam_ProcessDeltas
+	call AnalogIn_PollCpuAdc
 	call CPanel_RX_ProcessOrInit
 	call Encoder_TimingAndOutput
 	call MidiChannel_ScanPending
@@ -4533,7 +4533,9 @@ CPanel_RxEventQueue_Push_Return:
 	ret
 
 
-Seq_TimerEventLoop:
+; Pushes the byte argument (word on the stack) into CPANEL_LED_EVENT_QUEUE (RingBuf128_WriteByte_CheckFull);
+; HL = 0xFFFF when the ring is full.  LED_WriteToPanel feeds each LED frame through it.
+CPanel_LedQueue_PushByte:
 	link	xiz, 0x0000
 	pushw ix
 	push xde
@@ -4546,7 +4548,9 @@ Seq_TimerEventLoop:
 	ret
 
 
-SeqBuf_TimerEvent_BytecodeBlock2:
+; Pushes BC bytes from the pointer argument into CPANEL_LED_EVENT_QUEUE, one RingBuf128_WriteByte_CheckFull
+; each.
+CPanel_LedQueue_PushBlock:
 	link	xiz, 0
 	push	xiy
 	push	xix
@@ -4566,9 +4570,9 @@ SeqBuf_TimerEvent_BytecodeBlock2:
 	ld	hl, (0x20133:24)
 	cp	hl, (0x2012f:24)
 	ld	hl, 0:i3
-	jr	z, SeqBuf_TimerEvent_BytecodeBlock2_Return
+	jr	z, CPanel_LedQueue_CheckEmpty_Return
 	ldw	hl, 0xffff
-SeqBuf_TimerEvent_BytecodeBlock2_Return:
+CPanel_LedQueue_CheckEmpty_Return:
 	ret
 	ld	hl, (0x20135:24)
 	ret
@@ -5335,7 +5339,7 @@ Seq_RingBuf_ReadAheadToCheckpoint:
 Seq_RingBuf_ReadAheadToCheckpoint_Skip:
 	xor	hl, hl
 	ld	l, (xde+ix)
-	.byte	0xdc, 0x38, 0xff, 0x07	; minc1 0x07ff,IX
+	minc1_16	ix, 0x7ff
 	ld	(xde-10), ix
 	ret
 

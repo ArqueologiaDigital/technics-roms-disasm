@@ -1,0 +1,20 @@
+{
+ "kn5000-nl6": "Checked 2026-10-31 (lane open4/kn5000-b-naming); every lead has a verdict row in notes/open4-kn5000-b/naming/README.md. KN5000 v10/v9/v8/v7/v6/v5: about 40 mislabels renamed by scripts/renaming/rename_open4_naming.sed (single-load helpers that were called WP_* wallpaper code, SingleLoad_LoadPanelMemory, the SOUND RAM image converters that were HdaeRom_*, the FDD test title's swapped switch/state names, ArrowProc's painters that were DrawProgressRect*, the welcome glyphs that were Bitmap_Digit*, SqplyFunc punch-in/out/count-in, the seq-to-composer TRANSPOSE / memory-number steppers, the sequencer error maps, MainSysControl's INITIAL SETTING cases, the fade-level sender, the NoteEventBuffer case tables, six SndParam alias merges); headers and stale comments fixed and six unlabelled sound-RAM record helpers labelled by scripts/renaming/open4_naming_patches.py; data spelled as code respelled (the sound-editor black-key table, the bar-length table, MidiStream_PartEventMapTable's pointers, a 0x90 filler, a misframed lda/lda/cp run, minc1_16, Sprintf's (P2CR:8)). Sub-CPU v142 (v141/v140 regenerated): ToneGen_WriteVoice_TvfPair, the 0x2C sub-command table comments, InterCPU_E1_DMA_Transfer's register header, FIFO loop labels. WSA1: MidiFile_SaveWorkspaceToBank and wsa1_exact_copy_names.py's range. Tool: frame_switch_cases.py multi-range bias. make gate and make gate-wsa1 pass byte-identical. The technics-docs changes (cpu-subsystem.md PE.4, the two DSP opcode tables, the renamed labels quoted on 9 pages) are in the README's 'Website page draft' for the docs lane. Leads of other kn5000-b sub-lanes (SysEx_BytecodeDispatcher, ENCODER_STATE_BASE, ChordDetect_*, RhythmVariation_InlineCode_Code, VoiceSlot_FinalRetZ, ToneGen_CompareVoiceBlocks, the HD-AE5000 leads) are reported by those lanes. Not reached here and proposed as new issues: the remaining WSA1 leads, the 100 'not reviewed' g-batch records, RhythmProc_ChannelMapTable (data spelled as code), the callees of the MainSysCtrl cases and the rest of the HdaeRom_* family. The c4 'GS chorus cases 1-7' lead could not be located in the proposal files.",
+ "new-issues": [
+  {
+   "parent": "kn5000-nl6",
+   "title": "WSA1 naming leads of 2026-10-06/07 not yet checked",
+   "description": "MidiFileSave_Page4/5_* are said to be the floppy-format screens 0x50/0x51 (re-derive Dispatch_FF3D39's page-to-screen map; page 5's LcdRow3 runs DiskFormat_Execute); the MIXER page-frame painter at 0xFBE135 needs a label; SmfOut_WriteFirstWindow (0xF77F9A) sits on an unreachable copy; 0x216E is the COMPARE LED flag; gen_prom_b_f5553f_module.py spells Select36CE_%06X with a format string (regenerating it would restore old names); the MidiFileL0ad_ prefix uses a digit zero. Source: kn5000-nl6, notes/open4-kn5000-b/naming/README.md 'What is left'."
+  },
+  {
+   "parent": "kn5000-nl6",
+   "title": "KN5000 generic-label batches g1/g3/g5: 100 records not reviewed",
+   "description": "analysis/kn5000-naming/proposals-2026-10-07-generic-g{1,3,5}.json hold 100 records marked 'not reviewed (stopped early)' (g5 79, g3 17, g1 4). Check each label against the code and rename by sed in v10/v9/v7/v6/v5."
+  },
+  {
+   "parent": "kn5000-nl6",
+   "title": "KN5000: RhythmProc_ChannelMapTable is data spelled as code; MainSysCtrl case callees and the rest of HdaeRom_* misnamed",
+   "description": "RhythmProc_ChannelMapTable (sequencer/accompaniment_engine.s) is decoded as nop/max/ld (P2:8),8:io lines: respell as data after finding its reader. The callees of MainSysControl's INITIAL SETTING cases (Display_CopyAndRenderBitmaps = PANEL MEMORY, AccDemo_InitDone = COMPOSER, Part_InitFromPreset = SEQUENCER, Voice_InitBankDataSafe = MSP USER, SendPartDataBlock_DoGetError = SOUND MEMORY) are probably the per-item resetters; the remaining HdaeRom_* labels (ReadParam, ProcessBlock, TableEntry*, AltCheckResult, ...) are SOUND RAM conversion code, not HD-AE5000 code; v142 Voice_PanReg_WriteDispatchB emits the second TVF word. Found while closing kn5000-nl6."
+  }
+ ]
+}

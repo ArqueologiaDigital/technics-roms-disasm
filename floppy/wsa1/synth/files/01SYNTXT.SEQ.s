@@ -5,6 +5,9 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_01SYNTXT_SEQ:

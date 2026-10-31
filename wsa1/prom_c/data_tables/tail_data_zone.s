@@ -446,6 +446,12 @@ Curve_Exp2Gain_Percent_101:
 ;     rather than reworded -- this paragraph is the correction.
 ;   ⚠ The producer of (0x00E08C) is a key-zone record in prom_d, so what the 27 values mean
 ;     zone by zone is still not established here.
+;   ★ (lane open4/wsa1-a, 2026-10-31) THE 27 VALUES ARE ONE RAMP OF A SIGNED BIAS, not zone data.
+;     (0x00E08C) is element byte +5 of the key-zone record (KeyZone_Stage_Reg0040_Stride8 /
+;     _Stride6A, via Pack104_SetInputs_Rec0C_E08C 0xFC4D99), the same byte Dev104_PackStagingStruct
+;     reads SIGNED as the 0x0140/0x0180 bias (0xFC4FB7).  Indices 0..127 (b >= 0) hold 0x3C,
+;     128..224 (b <= -32) hold 0x22, and 224..255 (b = -32..-1) rise 0x22 -> 0x3B; over every
+;     factory key zone b is 0 or -2..-32.  notes/open4-a-probes/zone_bias_census.py.
 ; ----------------------------------------------------------------------------
 Table_Muting_CutoffFloor_ByKeyZone_256:
 	.byte	0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c   ; 0xFDFF96

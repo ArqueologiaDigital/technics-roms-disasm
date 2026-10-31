@@ -25,7 +25,7 @@ SoundEditController_PaintPage1:
 	ld	xiy, DL_F32F43	; F09820  ld XIY,0x00f32f43
 	ld	xix, DL_F32FA0	; F09825  ld XIX,0x00f32fa0
 	call	T_DisplayListB_Run	; F0982A  call 0xf417f4
-	cp	(0x27f5:16), 0x01	; F0982E  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F0982E  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintPage1_Skip	; F09833  jr Z,0xf09848
 	ld	(LCD_CurrentLayer:16), 0	; F09835  ld (0x2540),0x00
 	ld	xiy, DL_F32FC8	; F0983A  ld XIY,0x00f32fc8
@@ -61,7 +61,7 @@ SoundEditController_PaintPage2:
 	ld	xiy, DL_F3341C	; F0987C  ld XIY,0x00f3341c
 	ld	xix, DLBoxes_F334AE	; F09881  ld XIX,0x00f334ae
 	call	T_DisplayListB_Run	; F09886  call 0xf417f4
-	cp	(0x27f5:16), 0x01	; F0988A  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F0988A  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintPage2_Skip	; F0988F  jr Z,0xf098a4
 	ld	(LCD_CurrentLayer:16), 0	; F09891  ld (0x2540),0x00
 	ld	xiy, DL_F32FC8	; F09896  ld XIY,0x00f32fc8
@@ -89,7 +89,7 @@ SoundEditController_PaintPage2_Skip:
 ;           between two end bounds on (0x27F5).
 ; --------------------------------------------------------------------------
 SoundEditController_PaintHeader:
-	cp	(0x27f5:16), 0x01	; F098B8  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F098B8  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintHeader_Skip	; F098BD  jr Z,0xf098d4
 	ld	(LCD_CurrentLayer:16), 0	; F098BF  ld (0x2540),0x00
 	ld	xiy, DL_C0ntr0llerSoundEditDepth	; F098C4  ld XIY,0x00f32c2a
@@ -216,7 +216,7 @@ SoundEditController_PaintHeader_Return3:
 ;   (0x27F5) = 1, where the header shows only '1st 2nd'. Both CONTROLLER field repainters call it. Basis: callers +
 ;   body + display-list records. (notes/naming-pilot-2026-10-06/proposals_wave2_f.json)
 SoundEditController_PaintDepthAndSwitches:
-	cp	(0x27f5:16), 0x01	; F099C7  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F099C7  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintDepthAndSwitches_Skip	; F099CC  jr Z,0xf099e1
 	ld	(LCD_CurrentLayer:16), 0	; F099CE  ld (0x2540),0x00
 	ld	xiy, DL_F32FC8	; F099D3  ld XIY,0x00f32fc8
@@ -468,7 +468,7 @@ SoundEditCopy_Paint:
 	ld	xiy, SoundEditCopy_Frame	; F09BA0  ld XIY,0x00fc4ba7
 	ld	xix, SoundEditCopy_Frame_End	; F09BA5  ld XIX,0x00fc4d77
 	call	T_DisplayList_Run	; F09BAA  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F09BAE  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F09BAE  cp (0x27f5),0x01
 	jr	z, SoundEditCopy_Paint_Skip	; F09BB3  jr Z,0xf09bdd
 	ld	(LCD_CurrentLayer:16), 0	; F09BB5  ld (0x2540),0x00
 	ld	xiy, SoundEditCopy_Frame_End	; F09BBA  ld XIY,0x00fc4d77
@@ -525,7 +525,7 @@ SoundEditCopy_RepaintField_Skip2:
 	call	T_DisplayListB_Run	; F09C40  call 0xf417f4
 	jr	SoundEditCopy_RepaintField_Return	; F09C44  jr T,0xf09c62
 SoundEditCopy_RepaintField_Join:
-	cp	(0x27f5:16), 0x01	; F09C46  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F09C46  cp (0x27f5),0x01
 	jr	z, SoundEditCopy_RepaintField_Skip3	; F09C4B  jr Z,0xf09c54
 	ld	xiy, SoundEditCopy_ToneFieldRecords	; F09C4D  ld XIY,0x00fc4fa6
 	jr	SoundEditCopy_RepaintField_Join2	; F09C52  jr T,0xf09c59
@@ -570,7 +570,7 @@ SoundEditCopy_DrawSoundName_Skip:
 	ldw	bc, 16	; F09C8C  ld BC,0x0010
 	ld	(LCD_CurrentLayer:16), 0	; F09C8F  ld (0x2540),0x00
 	xor	hl, hl	; F09C94  xor HL,HL
-	cp	(0x27f5:16), 0x01	; F09C96  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F09C96  cp (0x27f5),0x01
 	jr	z, SoundEditCopy_DrawSoundName_Skip2	; F09C9B  jr Z,0xf09ca2
 	ldw	ix, 3763	; F09C9D  ld IX,0x0eb3
 	jr	SoundEditCopy_DrawSoundName_Join	; F09CA0  jr T,0xf09ca5
@@ -687,7 +687,7 @@ SoundEditMenu_RepaintField_Return2:
 SoundEditMenu_PaintOrdinals:
 	ld	(LCD_CurrentLayer:16), 0	; F09D91  ld (0x2540),0x00
 	ld	c, 2:opc	; F09D96  ld C,0x02
-	ld	w, (10148:16)	; F09D98  ld W,(0x27a4)
+	ld	w, (ToneEdit_LayerOnBits:16)	; F09D98  ld W,(0x27a4)
 	ld	a, c	; F09D9C  ld A,C
 	sla	a, 1	; F09D9E  sla 0x01,A
 	dec	1, a	; F09DA1  dec 1,A

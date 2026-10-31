@@ -879,9 +879,9 @@ PanelOpTable_FCF92C:
 ; Read by: ToneEditPage_A0_KeyDispatch at 0xFD3DD4.
 ToneEditPage_A0_OpTable:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ToneEditPage_A0_Op0
-	on_key	KEY_SoftKeyCol2,	ToneEditPage_A0_Op1
-	on_key	KEY_SoftKeyCol3,	ToneEditPage_A0_Op2
+	on_key	KEY_SoftKeyCol1,	ToneEditPage_A0_SetLayerOnOff
+	on_key	KEY_SoftKeyCol2,	ToneEditPage_A0_StepDriverGroup
+	on_key	KEY_SoftKeyCol3,	ToneEditPage_A0_StepDriver
 	on_key	KEY_SoftKeyCol4,	PanelOp_Nop
 	on_key	KEY_SoftKeyCol5,	PanelOp_Nop
 	on_key	KEY_SoftKeyCol6,	ToneEditField_A0_ResonatorType
@@ -891,7 +891,7 @@ ToneEditPage_A0_OpTable:
 	on_key	KEY_LcdRow2,		ToneEditPage_A0_Op9
 	on_key	KEY_LcdRow3,		ToneEditPage_A0_Op10
 	on_key	KEY_LcdRow4,		ToneEditPage_A0_Op11
-	on_key	KEY_LcdRow5,		ToneEditPage_A0_Op12
+	on_key	KEY_LcdRow5,		ToneEditPage_A0_SelectLayer4
 	on_key	KEY_MinusPlus,		PanelOp_Nop
 	on_key	KEY_Code0E,		PanelOp_Nop
 	on_key	KEY_Exit,		ToneEditPage_A0_Op15
@@ -5947,7 +5947,7 @@ ModelingPage_OnPercSource1Reply:
 	unlk XIZ                                             ; FD2566  ee 0d
 	ret                                                  ; FD2568  0e
 ; ModelingPage_OnPercSource2Reply: Twin for source 2: a tag-0x10 reply to query 0x13 / 0x0A on screen 0x86 or 0xC0 --
-;   requested by ToneMsg80_Id13(.., 0x10) from SoftKeyCol2_SoundEditModelingDriverWaveform and ToneEditPage_A0_Op1 /
+;   requested by ToneMsg80_Id13(.., 0x10) from SoftKeyCol2_SoundEditModelingDriverWaveform and ToneEditPage_A0_StepDriverGroup /
 ;   _Op2: ModelingPage_StorePercSource2Reply(Fields[0]), Dispatch_Code80 repaints field Fields[0] + 7 of UI_ScreenId,
 ;   then ToneMsg80_Id00(0x10). Basis: caller + body + requesters. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave10_a10.json)
@@ -9085,8 +9085,8 @@ ToneEditPage_A8_KeyDispatch:
 .LFD3FDD:
 	unlk XIZ                                             ; FD3FDD  ee 0d
 	ret                                                  ; FD3FDF  0e
-; ToneEditPage_A0_Op0 -- a handler: an entry of ToneEditPage_A0_OpTable
-ToneEditPage_A0_Op0:
+; ToneEditPage_A0_SetLayerOnOff -- a handler: an entry of ToneEditPage_A0_OpTable
+ToneEditPage_A0_SetLayerOnOff:
 	link XIZ,0xfffe                                      ; FD3FE0  ee 0c fe ff
 	pushw hl                                             ; FD3FE4  2b
 	lda xbc, (xiz-2)                                     ; FD3FE5  be fe 31
@@ -9105,7 +9105,7 @@ ToneEditPage_A0_Op0:
 	cp h, 0x00:i3                                          ; FD4006  ce d8
 	jr z, .LFD4035                                       ; FD4008  66 2b
 	pushw 0x00                                           ; FD400A  0b 00 00
-; (sub_FD400D removed 2026-10-04: no code names it and the line above falls through into it -- part of ToneEditPage_A0_Op0;
+; (sub_FD400D removed 2026-10-04: no code names it and the line above falls through into it -- part of ToneEditPage_A0_SetLayerOnOff;
 ;  notes/prom_a_stray_label_removal.py)
 	jr .LFD4016                                          ; FD400D  68 07
 .LFD400F:
@@ -9128,8 +9128,8 @@ ToneEditPage_A0_Op0:
 	popw hl                                              ; FD4035  4b
 	unlk XIZ                                             ; FD4036  ee 0d
 	ret                                                  ; FD4038  0e
-; ToneEditPage_A0_Op1 -- a handler: an entry of ToneEditPage_A0_OpTable
-ToneEditPage_A0_Op1:
+; ToneEditPage_A0_StepDriverGroup -- a handler: an entry of ToneEditPage_A0_OpTable
+ToneEditPage_A0_StepDriverGroup:
 	link XIZ,0xfff8                                      ; FD4039  ee 0c f8 ff
 	pushw hl                                             ; FD403D  2b
 	lda xbc, (xiz-2)                                     ; FD403E  be fe 31
@@ -9192,8 +9192,8 @@ ToneEditPage_A0_Op1:
 	popw hl                                              ; FD40D0  4b
 	unlk XIZ                                             ; FD40D1  ee 0d
 	ret                                                  ; FD40D3  0e
-; ToneEditPage_A0_Op2 -- a handler: an entry of ToneEditPage_A0_OpTable
-ToneEditPage_A0_Op2:
+; ToneEditPage_A0_StepDriver -- a handler: an entry of ToneEditPage_A0_OpTable
+ToneEditPage_A0_StepDriver:
 	link XIZ,0xfffa                                      ; FD40D4  ee 0c fa ff
 	lda xbc, (xiz-2)                                     ; FD40D8  be fe 31
 	push XBC                                             ; FD40DB  39
@@ -9637,8 +9637,8 @@ ToneEditPage_A0_Op11:
 .LFD4465:
 	unlk XIZ                                             ; FD4465  ee 0d
 	ret                                                  ; FD4467  0e
-; ToneEditPage_A0_Op12 -- a handler: an entry of ToneEditPage_A0_OpTable
-ToneEditPage_A0_Op12:
+; ToneEditPage_A0_SelectLayer4 -- a handler: an entry of ToneEditPage_A0_OpTable
+ToneEditPage_A0_SelectLayer4:
 	link XIZ,0xfffe                                      ; FD4468  ee 0c fe ff
 	cp (XIZ+0x08),0x00                                   ; FD446C  8e 08 3f 00
 	jr z, .LFD4490                                       ; FD4470  66 1e
@@ -14056,7 +14056,7 @@ ToneMsg88_Id15:
 	ret                                                  ; FD65D2  0e
 ; ToneMsg88_Id16: builds a tone message for ToneMsg_Send.  Stores read from its code: [0]=0x88 [1]=UI_PartIndex [2]=0x16 [3]=(computed) [4]=(computed) [5]=arg1.
 ; ToneMsg88_Id16: Sends tone message [0x88, part, 0x16 (0x0A when Var27F5 = 0), index hi, index lo, 16 * (arg2 - 1) +
-;   arg1 - 1]: ToneMsg88_Id15 with a second selector. DRIVER WAVEFORM keys 2/3 and ToneEditPage_A0_Op1/Op2 call it;
+;   arg1 - 1]: ToneMsg88_Id15 with a second selector. DRIVER WAVEFORM keys 2/3 and ToneEditPage_A0_StepDriverGroup/Op2 call it;
 ;   the existing label ToneMsg88_Id16 is 5 bytes inside, unreferenced -- move it here. Basis: body + callers.
 ;   (wsa1/notes/naming-pilot-2026-10-06/proposals_prom_a.json)
 ToneMsg88_Id16:
@@ -14693,10 +14693,10 @@ ToneMsg_SendP23FromArr2800:
 ; Var27A2_SetBool(arg): (0x27A2) = (arg != 0).
 Var27A2_SetBool:
 	link XIZ,0x0000                                      ; FD6B07  ee 0c 00 00
-	ld (0x27a2:16), 0x00                                 ; FD6B0B  f1 a2 27 00 00
+	ld (ToneEdit_SoloOn:16), 0x00                                 ; FD6B0B  f1 a2 27 00 00
 	cp (XIZ+0x08),0x00                                   ; FD6B10  8e 08 3f 00
 	jr z, .LFD6B1B                                       ; FD6B14  66 05
-	ld (0x27a2:16), 0x01                                 ; FD6B16  f1 a2 27 00 01
+	ld (ToneEdit_SoloOn:16), 0x01                                 ; FD6B16  f1 a2 27 00 01
 .LFD6B1B:
 	unlk XIZ                                             ; FD6B1B  ee 0d
 	ret                                                  ; FD6B1D  0e
@@ -14712,11 +14712,12 @@ Var27A2_SetBool:
 ;          absolute address, 0x27A2.  The name states the cell and the
 ;          direction and claims nothing about meaning.
 ; Unknown:  what (0x27A2) holds.
+; Resolved 2026-10-31: (0x27A2) is ToneEdit_SoloOn, the MODELING top SOLO flag (FINDINGS-prom_b-graphics-veneers.md).
 ; ---------------------------------------------------------------------
 Var27A2_Get:
 	link XIZ,0x0000                                      ; FD6B1E  ee 0c 00 00
 	ld XBC,(XIZ+0x08)                                    ; FD6B22  ae 08 21
-	ld a, (0x27a2:16)                                   ; FD6B25  c1 a2 27 21
+	ld a, (ToneEdit_SoloOn:16)                                   ; FD6B25  c1 a2 27 21
 	ld (XBC),A                                           ; FD6B29  b1 41
 	unlk XIZ                                             ; FD6B2B  ee 0d
 	ret                                                  ; FD6B2D  0e
@@ -14798,16 +14799,17 @@ Var27A3_GetValidSlot:
 ;          absolute address, 0x27A4.  The name states the cell and the
 ;          direction and claims nothing about meaning.
 ; Unknown:  what (0x27A4) holds.
+; Resolved 2026-10-31: (0x27A4) is ToneEdit_LayerOnBits, bit 2n-2 = layer n on (FINDINGS-prom_b-graphics-veneers.md).
 ; ---------------------------------------------------------------------
 Var27A4_Set:
 	link XIZ,0x0000                                      ; FD6BA8  ee 0c 00 00
 	ld C,(XIZ+0x08)                                      ; FD6BAC  8e 08 23
-	ld (0x27a4:16), c                                   ; FD6BAF  f1 a4 27 43
+	ld (ToneEdit_LayerOnBits:16), c                                   ; FD6BAF  f1 a4 27 43
 	unlk XIZ                                             ; FD6BB3  ee 0d
 	ret                                                  ; FD6BB5  0e
 	link XIZ,0x0000                                      ; FD6BB6  ee 0c 00 00
 	ld XBC,(XIZ+0x08)                                    ; FD6BBA  ae 08 21
-	ld a, (0x27a4:16)                                   ; FD6BBD  c1 a4 27 21
+	ld a, (ToneEdit_LayerOnBits:16)                                   ; FD6BBD  c1 a4 27 21
 	ld (XBC),A                                           ; FD6BC1  b1 41
 	unlk XIZ                                             ; FD6BC3  ee 0d
 	ret                                                  ; FD6BC5  0e
@@ -14820,7 +14822,7 @@ SoundEdit_SetSlotEnabled:
 	link XIZ,0xfffd                                      ; FD6BC6  ee 0c fd ff
 	pushw hl                                             ; FD6BCA  2b
 	push XIX                                             ; FD6BCB  3c
-	lda xix, (0x27a4:16)                                ; FD6BCC  f1 a4 27 34
+	lda xix, (ToneEdit_LayerOnBits:16)                                ; FD6BCC  f1 a4 27 34
 	ld L,(XIZ+0x08)                                      ; FD6BD0  8e 08 27
 	cp l, 0x01:i3                                          ; FD6BD3  cf d9
 	jr c, .LFD6C2F                                       ; FD6BD5  67 58
@@ -14887,7 +14889,7 @@ Var27A4_SlotEnabled:
 	pushw bc                                             ; FD6C4C  29
 	pushw 0x01                                           ; FD6C4D  0b 01 00
 	calr U8_ShiftLeft                                      ; FD6C50  1e 41 00
-	and a, (0x27a4:16)                                   ; FD6C53  c1 a4 27 c1
+	and a, (ToneEdit_LayerOnBits:16)                                   ; FD6C53  c1 a4 27 c1
 	pop XIY                                              ; FD6C57  5d
 	jr z, .LFD6C5F                                       ; FD6C58  66 05
 	ldw wa, 0x01                                         ; FD6C5A  30 01 00
@@ -15218,6 +15220,7 @@ ToneEdit_ApplyStep_Signed:
 	ret                                                  ; FD6E8F  0e
 ; Var27A2_ToggleWithP23: (0x27A2) set -> ToneMsg_SendP23FromArr2800(0), Var27A2_SetBool(0); clear -> Var27A2_SetBool(1),
 ;   ToneMsg_SendP23FromArr2800(1); then T_UiPaint_Solo.  What (0x27A2) holds is not established.
+; Resolved 2026-10-31: (0x27A2) is ToneEdit_SoloOn, the MODELING top SOLO flag (FINDINGS-prom_b-graphics-veneers.md).
 Var27A2_ToggleWithP23:
 	link XIZ,0xfffe                                      ; FD6E90  ee 0c fe ff
 	lda xbc, (xiz-2)                                     ; FD6E94  be fe 31
@@ -21375,11 +21378,12 @@ Var27F6_Get:
 ;          absolute address, 0x27F5.  The name states the cell and the
 ;          direction and claims nothing about meaning.
 ; Unknown:  what (0x27F5) holds.
+; Resolved 2026-10-31: (0x27F5) is SoundEdit_SoundKind, 0 tone / 1 drum kit / 2 drawbar (FINDINGS-prom_b-graphics-veneers.md).
 ; ---------------------------------------------------------------------
 Var27F5_Get:
 	link XIZ,0x0000                                      ; FDA0CA  ee 0c 00 00
 	ld XBC,(XIZ+0x08)                                    ; FDA0CE  ae 08 21
-	ld a, (0x27f5:16)                                   ; FDA0D1  c1 f5 27 21
+	ld a, (SoundEdit_SoundKind:16)                                   ; FDA0D1  c1 f5 27 21
 	ld (XBC),A                                           ; FDA0D5  b1 41
 	unlk XIZ                                             ; FDA0D7  ee 0d
 	ret                                                  ; FDA0D9  0e
@@ -21395,11 +21399,12 @@ Var27F5_Get:
 ;          absolute address, 0x27F5.  The name states the cell and the
 ;          direction and claims nothing about meaning.
 ; Unknown:  what (0x27F5) holds.
+; Resolved 2026-10-31: (0x27F5) is SoundEdit_SoundKind, 0 tone / 1 drum kit / 2 drawbar (FINDINGS-prom_b-graphics-veneers.md).
 ; ---------------------------------------------------------------------
 Var27F5_Set:
 	link XIZ,0x0000                                      ; FDA0DA  ee 0c 00 00
 	ld C,(XIZ+0x08)                                      ; FDA0DE  8e 08 23
-	ld (0x27f5:16), c                                   ; FDA0E1  f1 f5 27 43
+	ld (SoundEdit_SoundKind:16), c                                   ; FDA0E1  f1 f5 27 43
 	unlk XIZ                                             ; FDA0E5  ee 0d
 	ret                                                  ; FDA0E7  0e
 	link XIZ,0x0000                                      ; FDA0E8  ee 0c 00 00

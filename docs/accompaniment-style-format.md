@@ -23,19 +23,33 @@ Section 7 is a 96-byte header followed by erased flash; it is now typed out in
 
 ## Style directory
 
-At magic + 0x60, thirty records of 96 bytes, seven directories in all = 210 styles.
+At magic + 0x60, thirty records of 96 bytes: the 30 STYLE_SECTION records of ONE style (a/b/c
+variation 1-4, then intro, fill-in and ending 1-2 of a, b and c), seven banks in all.  ⚠ CORRECTION
+(2026-10-29, lane kn5000-existing): this section used to call them "seven directories = 210 styles".
 
-    +0x00  ..      unidentified
-    +0x40  16 B    style name, ASCII, space- or NUL-padded
-    +0x50  ..      unidentified
+Every field is now named; the layout, the names and the evidence for each are in
+`scripts/build/style_bank_layout.py` (adopted 2026-10-31, `notes/kn5000-style-2026-10-31/README.md`),
+which both describers of the format import (`scripts/build/style_events.py` for these banks,
+`floppy/kn5000/formats.py` for the floppy .CMP / .RCM files).  In short:
 
-The names are now typed out in the source, so they are greppable: "Bolero puro",
+    +0x00  5 x u16   the parts' first cells, DRUM +0, BASS +4, ACCOMP1-3 +6/+8/+0xa (+2 = 0, unused)
+    +0x0c  1 B       time signature (0 = 1/2 .. 7 = 4/4 .. 15 = 4/8)
+    +0x0d  1 B       MEASURE - 1
+    +0x0e  1 B       RECORD SETTING: KEY (bits 0-3), CHORD MINOR (4), ACCOMP TYPE 7th (5), BASS TYPE 7th (6)
+    +0x0f  1 B       bit 7: MEASURE / TIME SIGNATURE still changeable
+    +0x10  2 B       the section's style, {number, group} as in PANEL_STYLE
+    +0x12  6 B       0
+    +0x18  5 x 8 B   part settings DRUM, BASS, ACCOMP1-3: sound, bank, pan, digital_effect, pc_byte4,
+                     pitch point, high key, 0
+    +0x40  16 B      name, ASCII, space- or NUL-padded (the pattern source the section came from)
+    +0x50  16 B      0
+
+The names are typed out in the source, so they are greppable: "Bolero puro",
 "GentleSwing 1", "GospelRevival", "Roaring 20's", "AccordionJazz", "8BtPopBallad D".
-**Only the name field is established.** No other field in the 96 bytes has been identified.
 
 ## The directory names its chains -- a bijection (2026-09-02)
 
-The record layout above lists everything but the name as "unidentified".  The five u16
+(Written when the record layout above still listed everything but the name as "unidentified".)  The five u16
 fields at record **+0x00, +0x04, +0x06, +0x08 and +0x0A** are CELL POINTERS, resolved by
 the same rule as the chain links (`block = (v & 0x0FFF) + first_cell_block_of_section`),
 and they are a consecutive ascending run `v, v+1, v+2, v+3, v+4` in **240 of 240**
@@ -321,8 +335,12 @@ Reproduce: run the measurement script; the seven offsets it prints are exactly t
 2. **0x91, 0xD1, 0xD2, 0xD3.** Argument counts are known and now confirmed against the whole
    corpus with no exceptions (7, 2, 2, 2); their MEANINGS are not known. This is the remaining
    semantic gap, and it no longer blocks reading the data -- only interpreting those events.
-3. **The 96-byte directory record**, beyond the name.
-4. **Which chain belongs to which style**, and how a style's parts/variations map onto chains.
+3. ~~**The 96-byte directory record**, beyond the name.~~ **SOLVED 2026-10-31**: every field named
+   (`scripts/build/style_bank_layout.py`); only the part byte `pc_byte4` and bit 7 of `high_key` stay
+   inferences.
+4. ~~**Which chain belongs to which style**, and how a style's parts/variations map onto chains.~~
+   **SOLVED**: one bank is one style; record k is STYLE_SECTION k, and its five cell words are the
+   chains of DRUM, BASS, ACCOMP1, ACCOMP2 and ACCOMP3 (MapBitFlagsToChannelOffset).
 5. **The 0x00-marker cell's meaning** (§ above) and the 7 misaligned pseudo-cells at `+0x1300`.
 
 ## What NOT to do

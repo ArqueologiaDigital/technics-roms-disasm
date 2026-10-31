@@ -1232,29 +1232,29 @@ Rhythm_SaveState_CheckFx2:
 Rhythm_SaveState_Fx2Active:
 	ld	a, (12911:16)
 	and	a, 63
-	jr	nz, Rhythm_VoiceAssignDetect
+	jr	nz, Rhythm_SaveState_CheckFillIn1Done
 	and	a, 252
 	and	a, 242
-	jr	Rhythm_VoiceAssignDetect
+	jr	Rhythm_SaveState_CheckFillIn1Done
 Rhythm_SaveState_ClearFx2:
 	and	(0x326f:16), 0xc0	; anddi8 (0x3327), 192 (v7 patched)
 
 
 
-Rhythm_VoiceAssignDetect:
+Rhythm_SaveState_CheckFillIn1Done:
 	ld	a, (0x325a:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_PartBDetect
+	jr nz, Rhythm_SaveState_CheckFillIn2Done
 	ld	a, (0x3261:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_PartBDetect
-	and (PANEL_STYLE+5:16), 0xbf
+	jr z, Rhythm_SaveState_CheckFillIn2Done
+	and (0xfc5f:16), 0xbf
 	ld	a, (0x325b:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_PartAOn
-	or (PANEL_STYLE+5:16), 0x80
+	jr z, Rhythm_SaveState_FillIn1Done
+	or (0xfc5f:16), 0x80
 	or	(0x3244:16), 0x02
-Rhythm_VoiceAssign_PartAOn:
+Rhythm_SaveState_FillIn1Done:
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1269,23 +1269,23 @@ Rhythm_VoiceAssign_PartAOn:
 	or	a, (0x325c:16)
 	or	a, (0x325d:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_PartBDetect
+	jr nz, Rhythm_SaveState_CheckFillIn2Done
 	or	(0x31cc:16), 0x10
 	or	(0x31cc:16), 0x04
-Rhythm_VoiceAssign_PartBDetect:
+Rhythm_SaveState_CheckFillIn2Done:
 	ld	a, (0x325b:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Ext1Detect
+	jr nz, Rhythm_SaveState_CheckIntro1Done
 	ld	a, (0x3262:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_Ext1Detect
-	and (PANEL_STYLE+5:16), 0x7f
+	jr z, Rhythm_SaveState_CheckIntro1Done
+	and (0xfc5f:16), 0x7f
 	ld	a, (0x325a:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_PartBOn
-	or (PANEL_STYLE+5:16), 0x40
+	jr z, Rhythm_SaveState_FillIn2Done
+	or (0xfc5f:16), 0x40
 	or	(0x3244:16), 0x01
-Rhythm_VoiceAssign_PartBOn:
+Rhythm_SaveState_FillIn2Done:
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1300,17 +1300,17 @@ Rhythm_VoiceAssign_PartBOn:
 	or	a, (0x325c:16)
 	or	a, (0x325d:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Ext1Detect
+	jr nz, Rhythm_SaveState_CheckIntro1Done
 	or	(0x31cc:16), 0x10
 	or	(0x31cc:16), 0x04
-Rhythm_VoiceAssign_Ext1Detect:
+Rhythm_SaveState_CheckIntro1Done:
 	ld	a, (0x325e:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Ext2Detect
+	jr nz, Rhythm_SaveState_CheckCountInDone
 	ld	a, (0x3265:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_Ext2Detect
-	and (PANEL_STYLE+5:16), 0xfb
+	jr z, Rhythm_SaveState_CheckCountInDone
+	and (0xfc5f:16), 0xfb
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1324,16 +1324,16 @@ Rhythm_VoiceAssign_Ext1Detect:
 	or	a, (0x325c:16)
 	or	a, (0x325d:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Ext2Detect
+	jr nz, Rhythm_SaveState_CheckCountInDone
 	or	(0x31cc:16), 0x08
-Rhythm_VoiceAssign_Ext2Detect:
+Rhythm_SaveState_CheckCountInDone:
 	ld	a, (0x325f:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Ext3Detect
+	jr nz, Rhythm_SaveState_CheckIntro2Done
 	ld	a, (0x3266:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_Ext3Detect
-	and (PANEL_STYLE+5:16), 0xf7
+	jr z, Rhythm_SaveState_CheckIntro2Done
+	and (0xfc5f:16), 0xf7
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1347,16 +1347,16 @@ Rhythm_VoiceAssign_Ext2Detect:
 	or	a, (0x325c:16)
 	or	a, (0x325d:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Ext3Detect
+	jr nz, Rhythm_SaveState_CheckIntro2Done
 	or	(0x31cc:16), 0x08
-Rhythm_VoiceAssign_Ext3Detect:
+Rhythm_SaveState_CheckIntro2Done:
 	ld	a, (0x3260:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Perc1Detect
+	jr nz, Rhythm_SaveState_CheckEnding1Done
 	ld	a, (0x3267:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_Perc1Detect
-	and (PANEL_STYLE+6:16), 0xfb
+	jr z, Rhythm_SaveState_CheckEnding1Done
+	and (0xfc60:16), 0xfb
 	ld e, 72:opc
 	ld d, 6:opc
 	ld a, 0:opc
@@ -1370,16 +1370,16 @@ Rhythm_VoiceAssign_Ext3Detect:
 	or	a, (0x325c:16)
 	or	a, (0x325d:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Perc1Detect
+	jr nz, Rhythm_SaveState_CheckEnding1Done
 	or	(0x31cc:16), 0x08
-Rhythm_VoiceAssign_Perc1Detect:
+Rhythm_SaveState_CheckEnding1Done:
 	ld	a, (0x325c:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_Perc2Detect
+	jr nz, Rhythm_SaveState_CheckEnding2Done
 	ld	a, (0x3263:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_Perc2Detect
-	and (PANEL_STYLE+5:16), 0xef
+	jr z, Rhythm_SaveState_CheckEnding2Done
+	and (0xfc5f:16), 0xef
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1387,14 +1387,14 @@ Rhythm_VoiceAssign_Perc1Detect:
 	calr Rhythm_QueuePartChangeEvent
 	and	(0x3245:16), 0xfe
 	or	(0x31cc:16), 0x04
-Rhythm_VoiceAssign_Perc2Detect:
+Rhythm_SaveState_CheckEnding2Done:
 	ld	a, (0x325d:16)
 	and a, 63
-	jr nz, Rhythm_VoiceAssign_SaveShadow
+	jr nz, Rhythm_SaveState_SaveLaneShadows
 	ld	a, (0x3264:16)
 	and a, 63
-	jr z, Rhythm_VoiceAssign_SaveShadow
-	and (PANEL_STYLE+5:16), 0xdf
+	jr z, Rhythm_SaveState_SaveLaneShadows
+	and (0xfc5f:16), 0xdf
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
@@ -1402,7 +1402,7 @@ Rhythm_VoiceAssign_Perc2Detect:
 	calr Rhythm_QueuePartChangeEvent
 	and	(0x3245:16), 0xfd
 	or	(0x31cc:16), 0x04
-Rhythm_VoiceAssign_SaveShadow:
+Rhythm_SaveState_SaveLaneShadows:
 	ld	a, (12890:16)
 	ld	(12897:16), a
 	ld	a, (12891:16)

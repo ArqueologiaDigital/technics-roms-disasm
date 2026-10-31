@@ -4256,19 +4256,19 @@ Draws:
 
 Keys (`ToneEditPage_A0_OpTable`):
 
-| key map                   | key               | handler                          | requests |
-|---------------------------|-------------------|----------------------------------|----------|
-| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol1` | `ToneEditPage_A0_Op0`            |          |
-| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol2` | `ToneEditPage_A0_Op1`            |          |
-| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol3` | `ToneEditPage_A0_Op2`            |          |
-| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A0_ResonatorType` |          |
-| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol7` | `ToneEditField_A0_Group`         |          |
-| `ToneEditPage_A0_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A0_Op8`            |          |
-| `ToneEditPage_A0_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A0_Op9`            |          |
-| `ToneEditPage_A0_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A0_Op10`           |          |
-| `ToneEditPage_A0_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A0_Op11`           |          |
-| `ToneEditPage_A0_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A0_Op12`           |          |
-| `ToneEditPage_A0_OpTable` | `KEY_Exit`        | `ToneEditPage_A0_Op15`           |          |
+| key map                   | key               | handler                           | requests |
+|---------------------------|-------------------|-----------------------------------|----------|
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol1` | `ToneEditPage_A0_SetLayerOnOff`   |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol2` | `ToneEditPage_A0_StepDriverGroup` |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol3` | `ToneEditPage_A0_StepDriver`      |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol6` | `ToneEditField_A0_ResonatorType`  |          |
+| `ToneEditPage_A0_OpTable` | `KEY_SoftKeyCol7` | `ToneEditField_A0_Group`          |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow1`     | `ToneEditPage_A0_Op8`             |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow2`     | `ToneEditPage_A0_Op9`             |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow3`     | `ToneEditPage_A0_Op10`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow4`     | `ToneEditPage_A0_Op11`            |          |
+| `ToneEditPage_A0_OpTable` | `KEY_LcdRow5`     | `ToneEditPage_A0_SelectLayer4`    |          |
+| `ToneEditPage_A0_OpTable` | `KEY_Exit`        | `ToneEditPage_A0_Op15`            |          |
 
 ## screen 0xC1: `T_F41F7C_Nop`
 

@@ -19,7 +19,7 @@
 #          elem*0x23; 0x10 + 2*0x1C + 2*0x23 = 0x8E)
 
 .macro VOICE_HEAD name, h0d, h0e, h0f
-	.ascii	\name
+	.ascii	"\name"
 	.byte	\h0d, \h0e, \h0f
 .endm
 # A sub-record, 0x1C bytes.  +0x01..+0x03 name the element: the note-on staging of a table tone
@@ -51,9 +51,10 @@
 #   +0x00  0x54-byte head, the 16-character name first (SOUND_HEAD after the name)
 #   +0x54  four 0x7A-byte units, SOUND_MOD (TgPartAuxModRecPtr 0x4C00C25B)
 #   +0x23C four 0x23-byte elements, VOICE_ELEM (TgPartAuxElemRecPtr 0x4C00C28D; 0x54 + 4*0x7A + 4*0x23 = 0x2C8)
-# The 16-character name is not a parameter: llvm-mc strips a quoted macro argument's quotes and kn7asm keeps
-# them, so no `.ascii \name` spelling works for both assemblers.  The callers write `.ascii "<name>"` and then
-# SOUND_HEAD; VOICE_HEAD_TAIL is VOICE_HEAD without its name, for the same reason.
+# The 16-character name is not a parameter: until 2026-10-31 llvm-mc stripped a quoted macro argument's quotes
+# and kn7asm kept them, so no one spelling worked for both assemblers.  Both strip them now, and VOICE_HEAD's
+# `.ascii "\name"` serves both; the callers still write `.ascii "<name>"` and then SOUND_HEAD, and
+# VOICE_HEAD_TAIL (VOICE_HEAD without its name) is kept for them.
 .macro VOICE_HEAD_TAIL h0d, h0e, h0f
 	.byte	\h0d, \h0e, \h0f
 .endm

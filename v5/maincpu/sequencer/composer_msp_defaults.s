@@ -162,7 +162,7 @@ MSP_Default_GroupOffsetA:
 	.short	PartGrid_ColumnDispatch_FlashSection6 - PartGrid_ColumnJumpTable
 
 ; Group offset table B (duplicate)
-MSP_Default_GroupOffsetB:
+NoteEventBuffer_CopyToSlot_CaseTable:
 	.short	NOTE_EVENT_DISPATCH_1 - NOTE_EVENT_DISPATCH_1
 	.short	NoteEventBuffer_CopyToSlot_LoadSection1 - NOTE_EVENT_DISPATCH_1
 	.short	NoteEventBuffer_CopyToSlot_LoadSection2 - NOTE_EVENT_DISPATCH_1
@@ -172,7 +172,7 @@ MSP_Default_GroupOffsetB:
 	.short	NoteEventBuffer_CopyToSlot_LoadSection6 - NOTE_EVENT_DISPATCH_1
 
 ; Variation size table (cumulative)
-MSP_Default_VarSize:
+NoteEventBuffer_Store_CaseTable:
 	.short	NOTE_EVENT_DISPATCH_2 - NOTE_EVENT_DISPATCH_2
 	.short	NOTE_EVENT_DISPATCH_2b - NOTE_EVENT_DISPATCH_2
 	.short	NoteEventBuffer_Store_WriteSection2 - NOTE_EVENT_DISPATCH_2

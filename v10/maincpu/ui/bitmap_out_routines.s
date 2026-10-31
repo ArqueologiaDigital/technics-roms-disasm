@@ -3861,14 +3861,14 @@ BitMapOut_UpdateWidget_Finalize_Join:
 	call	ApPostEvent
 	ret
 ; PanelMemory_PreSlotLoad: Empty hook (ret) run before one panel memory is read from a .PMT file; WA = destination
-;   memory index. Basis: callers + body -- FileIO_ByteBlock_DemoProc1 (the single-memory load reached from
+;   memory index. Basis: callers + body -- SingleLoad_LoadPanelMemory (the single-memory load reached from
 ;   SLDstBankList) calls it right before reading the memory into 0x1ED400 + size*index, the slot where the whole-file
 ;   load calls PrePmLoad (also a bare ret).
 PanelMemory_PreSlotLoad:
 	ret
 ; PanelMemory_PostSlotLoad: Hook run after one panel memory was read: BC < 0 (read failed) restores memory WA from its
 ;   ROM default (VoiceData_InitAndCopyParams), otherwise validates it (PanelTlv_ValidatePanelMemory). Basis: callers +
-;   body -- FileIO_ByteBlock_DemoProc1 passes WA = destination index and BC = the read result, in the place PostPmLoad
+;   body -- SingleLoad_LoadPanelMemory passes WA = destination index and BC = the read result, in the place PostPmLoad
 ;   (which calls PanelTlv_ValidatePanelMemories) takes for a whole-file load.
 PanelMemory_PostSlotLoad:
 	extz	wa

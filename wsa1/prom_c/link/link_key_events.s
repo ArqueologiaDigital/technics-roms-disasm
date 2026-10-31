@@ -109,9 +109,14 @@
 ;   call is at 0xF98BC6, converted above) that does the same thing with the same
 ;   32-byte bound.  Two drains of one queue, in one
 ;   loop body, is what the code says; why is not established.
-; Unknown:  what writes 0x00E2E1 (it is inside the boot RAM image, so its power-on
-;          value is readable with notes/prom_c_ram_image.py, but no writer has been
-;          found in converted code); what CPU 1 does with channel 5.
+; ★ 0x00E2E1 IS NEVER RE-ARMED (2026-10-31): its only writers are this routine's
+;          `decw` and RamImage_Copy (0xF989EF), which RESET alone calls and which
+;          seeds it with 1000 from ROM 0xFCB4EC.  The watchdog and SWI 1 vectors
+;          jump to RESET, so a reboot is the one way the keybed goes deaf again.
+;          The nearest lower base, 0x00E2A1, is a 62-byte block that ends at
+;          0xE2DE.  notes/open4-b-probes/prom_c_ram_cell_census.py.
+; Unknown:  what CPU 1 does with channel 5 (since answered: gap M,
+;          notes/WSA1-EMULATION-DISASM-GAPS.md).
 ; --------------------------------------------------------------------------
 KeyEvents_ToLink:
 	link	xiz, 0xffdd          ; F98CB9  link XIZ,0xffdd   [llvm-mc cannot encode this]

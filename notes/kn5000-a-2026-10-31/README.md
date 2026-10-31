@@ -212,3 +212,17 @@ these items of its list were not worked; nothing in this branch changes them:
 | N-51b2e19c             | per-bit naming of the busiest flag bytes (kn5000_ram_bit_usage.py)                                                                                                                                                                                                                                                                                                   |
 | N-e40b7174             | the per-title RAM address tables (AppEvtHandler_Branch_002_RamPtrs / AppEvent_SubDispatch_RamPtrs in naka_widget_descriptors.c) hold 0xF1F1, 0x261C ...: they need the SQEDT_* names in a C header (gen_naka_gui_headers.py does not export RAM names yet); 0x2640 / 0x2642 / 0x263a (SeqPart_VelZoneLookup, SeqPart_VelExprClamp) are the only numeric .s uses left |
 | N-52dcf02a, N-d352b868 | IC307 sequence words / unselected entries; owned in effect by kn5000-b (tracker kn5000-d38)                                                                                                                                                                                                                                                                          |
+
+## Merge of main 37ecc2a2b (kn5000-b, kn5000-style, misc, wsa1)
+
+Lane kn5000-b's cpanel sub-lane had renamed the same encoder / panel-action labels as this lane's c2 batch, so 77
+files conflicted (611 hunks in sources).  Resolution: every source hunk took main's side, then this lane's sed
+scripts were run again over all five trees (they are idempotent), and where both lanes had renamed one label
+differently main's name wins: `scripts/renaming/rename_kn5000_a_reconcile_main.sed` (11 labels per tree found by
+comparing the base, main and lane symbol files by address, plus the 12 encoder RAM `.equ` names, e.g.
+`Encoder_TouchSettingsListener` -> `Encoder_OnTouchSensitivityChange`, `PANEL_LED_IMAGE` -> `CPANEL_LED_IMAGE`).
+Two RAM `.equ` lines of this lane (ACC_CH_CC3 / ACC_CUR_CC3) sat in a conflicted hunk and were re-added.  Headers this
+lane inserted inside conflicted hunks (some c2 / h3 headers) are main's text now.  Checked after the merge: none of
+the 455 old names of the four proposal files remains in v10, every hand edit of this lane listed above is present in
+all five trees, the v1 HD-AE5000 replays reproduce their committed trees (run before the merge, at 81875bdd9's
+successor), and `make gate` passes.

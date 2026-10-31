@@ -81,12 +81,12 @@ DkMdlyPlyTtlFunc_CaseTable:
 	.short	DkMdlyPly_ReturnZero - DkMdlyPlyTtl_Dispatch
 	.short	DkMdlyPly_ReturnZero - DkMdlyPlyTtl_Dispatch
 	.short	DkMdlyPly_ReturnZero - DkMdlyPlyTtl_Dispatch
-; DkMdlyPly_BitMaskByIndex: 16 x u16 single-bit masks, entry n = 1 << n; DkMdlyPly_SendAudioCmd ANDs each with WA and
+; DkMdlyPly_BitMaskByIndex: 16 x u16 single-bit masks, entry n = 1 << n; DkMdlyPly_FindLowestSetBit ANDs each with WA and
 ;   returns HL = the index of the lowest set bit of WA (16 when none). Basis: readers + bytes.
 DkMdlyPly_BitMaskByIndex:			.incbin "includes/generated/sepaout_config.bin", 0x6E, 0x20
 ; DkMdlyPly_PartIndexTable: 32 x u16 part numbers 0..31 (entry i = i) through which DkMdlyPly_CheckState walks the
 ;   parts: the entry is passed to SndParam_LookupViaEncode with BC = 0x401 and, on a match with the lowest set bit of
-;   the mask (DkMdlyPly_SendAudioCmd), written to PART_SELECT. Basis: readers + bytes.
+;   the mask (DkMdlyPly_FindLowestSetBit), written to PART_SELECT. Basis: readers + bytes.
 DkMdlyPly_PartIndexTable:			.incbin "includes/generated/sepaout_config.bin", 0x8E, 0x40
 DisplayMode_DispatchEvents_CaseTable:
 	.short	DisplayMode_BatchEventSend - DisplayMode_BatchEventSend

@@ -5,6 +5,9 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_01WORKS__SEQ:
@@ -51443,11 +51446,269 @@ F_01WORKS__SEQ:
 	.byte	0xf7, 0xdf, 0xf7, 0xdf, 0xf7, 0xdf, 0xff, 0xdf, 0xf7, 0xdf, 0xf7, 0xdf, 0xf7, 0xdf, 0xff, 0xdf
 	.byte	0xf7, 0xdf, 0xff, 0xff, 0xf7, 0xdf, 0xf7, 0xdf, 0xf7
 	seq_block	0x5f, 0, 839	; block 838: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"qsdisk.img", 0x50f05, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+; the rest (250 bytes) does not parse as events of the song grammar (stopped at status 0xdf)
+	; census: opaque -- unknown-dump: free-block bytes that are not song events (left over in the store)
+	.incbin	"qsdisk.img", 0x50f06, 250
 	seq_block	0x7f, 838, 840	; block 839: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"qsdisk.img", 0x51005, 251
+; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
+; 5-byte block headers the free-chain set-up wrote over them
+	.byte	130
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255
 	seq_block	0x7d, 839, 841	; block 840: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"qsdisk.img", 0x51105, 251
+; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
+; 5-byte block headers the free-chain set-up wrote over them
+	.byte	130
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	247
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255, 253
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	0xff, 0xff	; the end of a combination's record list
+	.byte	255

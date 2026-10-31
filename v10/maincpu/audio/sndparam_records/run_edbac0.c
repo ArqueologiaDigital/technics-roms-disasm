@@ -23,7 +23,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .read_accessor     = 6, /* SndParam_ReadRegAddress */
       .register_accessor = 8, /* SndParam_RegisterSimple_Data */
       .lookup2_accessor  = 6, /* SndParam_RegisterOffset_Data */
-      .codec             = 2, /* SndParam_ClampReverbTime / SndParam_ClampDelayTime */
+      .codec             = 2, /* SndParam_GetStyleTempoClamped / SndParam_GetStyleTempoClamped2 */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
     /* [  2] 0xEDBAE4  SndParam_Tempo_Bit8 */
@@ -33,7 +33,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .read_accessor     = 6, /* SndParam_ReadRegAddress */
       .register_accessor = 8, /* SndParam_RegisterSimple_Data */
       .lookup2_accessor  = 6, /* SndParam_RegisterOffset_Data */
-      .codec             = 2, /* SndParam_ClampReverbTime / SndParam_ClampDelayTime */
+      .codec             = 2, /* SndParam_GetStyleTempoClamped / SndParam_GetStyleTempoClamped2 */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
     /* [  3] 0xEDBAF6  SndParam_GmOnOff */

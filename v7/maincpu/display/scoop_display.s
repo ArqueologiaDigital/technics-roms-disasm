@@ -571,7 +571,7 @@ ScoopDisp_BytecodeBlock1_0x32:
 	xor	b, b
 	ld	a, w
 	xor	w, w
-	call	ScoopDisp_BytecodeBlock1_Helper
+	call	SndParam_ValueMapLookupSel1
 	ld	a, l
 	pop	xiz
 	pop	xiy
@@ -591,7 +591,7 @@ PerfMode_LookupValueMapColumn5:
 	xor	b, b
 	ld	a, w
 	xor	w, w
-	call	Scoop_CurveUpdate_NextSegment
+	call	SndParam_ValueMapLookupSel2
 	ld	a, l
 	pop	xiz
 	pop	xiy
@@ -2018,7 +2018,7 @@ VoiceSlot_ReadParamsWithSaveRestore:
 	call VoiceSlot_SaveState
 	ld	e, (PERF_STEP_FIELD:16)
 	xor d, d
-	call VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call SeqTrack_AdvanceCursor
 	call VoiceSlot_ReadCurrentParams
 	ld	w, (POPUP_VALUE:16)
 	call VoiceSlot_WriteCurrentParam
@@ -2042,7 +2042,7 @@ VoiceParam_BitManipHelper:
 	call VoiceSlot_WriteCurrentParam
 	ld	e, (PERF_STEP_FIELD:16)
 	xor d, d
-	call VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call SeqTrack_AdvanceCursor
 	call VoiceSlot_ReadCurrentParams
 	ld	w, (POPUP_VALUE:16)
 	and w, 0x7f
@@ -2749,7 +2749,7 @@ SwbtB2_CodeA8_Listener:
 	push	xhl
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	ld	(3519:16), a
-	call	SysEx_BytecodeDispatcher
+	call	SqStep_PanelButtonDispatch
 	ld	(3519:16), 0
 	pop	xhl
 	ld	wa, (SWBTWR_PAYLOAD_2:16)
@@ -2795,7 +2795,7 @@ SwbtBank2_PostCallback:
 	andmi16	(xiy), 65532
 	cp	(xiy), wa
 	jrl	z, SwbtBank2_PostCallback_Skip5
-	call	SysEx_BytecodeDispatcher
+	call	SqStep_PanelButtonDispatch
 SwbtBank2_PostCallback_Skip4:
 	ldw	(4360:16), 0
 SwbtBank2_PostCallback_Skip5:
@@ -2831,7 +2831,7 @@ PerfMode_Handler_EvtB_Helper:
 	and	a, (SWBTWR_PAYLOAD_3:16)
 	ld	(3520:16), a
 	push	xhl
-	call	SysEx_BytecodeDispatcher
+	call	SqStep_PanelButtonDispatch
 	pop	xhl
 PerfMode_Handler_EvtB_Skip5:
 	ld	(3520:16), 0
@@ -3060,10 +3060,10 @@ Timer_ModeHandler_0_Loop:
 	jrl	nz, Timer_ModeHandler_0_Loop
 	call	VoiceCtrl_SendNoteOffSequence
 	ld	e, (SEQ_CURSOR_TRACK:16)
-	call	VoiceSlot_FinalRetZ_0x11
+	call	SeqBlockChain_0x11
 	ld	(3522:16), a
 Timer_ModeHandler_0_Join:
-	call	VoiceSlot_FinalRetZ_0x11
+	call	SeqBlockChain_0x11
 	cp	a, (3522:16)
 	jrl	z, Timer_ModeHandler_0_Skip3
 	jr	Timer_ModeHandler_0_Skip
@@ -3105,7 +3105,7 @@ Timer_ModeHandler_0_Skip3:
 	push	xiy
 	push	xiz
 	ld	de, 3:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -3113,7 +3113,7 @@ Timer_ModeHandler_0_Skip3:
 	pop	xbc
 	pop	xhl
 	pop	xwa
-	call	VoiceSlot_FinalRetZ_0x1E
+	call	SeqBlockChain_0x1E
 	cp	a, 144
 	jr	nz, Timer_ModeHandler_0_Skip
 	jp	Timer_ModeHandler_0_Join
@@ -3172,7 +3172,7 @@ Timer_ModeHandler_0_Return3:
 	ret
 Timer_ModeHandler_0_Helper:
 	push	xhl
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xhl
 	ret
 Timer_ParamLoadAndCompare:
@@ -3621,7 +3621,7 @@ MemConfig_Handler_5_Helper4:
 	xor	a, a
 	call	VoiceSlot_SaveState
 	ld	de, 4:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	(3575:16), a
 	call	VoiceSlot_FlagCheck
@@ -3801,7 +3801,7 @@ MemConfig_Handler_5_Skip11:
 	jp	MemConfig_Handler_5_Skip7
 MemConfig_Handler_5_Helper9:
 	pushw	wa
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	wa
 	call	VoiceSlot_WriteCurrentParam
 MemConfig_Handler_5_Return3:
@@ -4114,7 +4114,7 @@ ToneParam_HandlerTable_BC_Helper5:
 	push	xiy
 	ld	a, 2:opc
 	call	VoiceSlot_SaveState
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x0dc8), a
 	and	a, 240
 	cp	a, 192
@@ -4122,7 +4122,7 @@ ToneParam_HandlerTable_BC_Helper5:
 	call	VoiceSlot_SkipByteAndRead
 	cp	a, 72
 	jrl	nz, ToneParam_Evt09_BytecodeHandler_Skip19
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldfr_berp	a, 60
 	and	a, 31
 	ldto_berp	a, 60
@@ -4931,7 +4931,7 @@ PerfMode_StepNoteNumber:
 	xor	a, a
 	call	VoiceSlot_SaveState
 	ld	de, 2:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	call	PerfMode_MapEventNoteToDisplay
 	ld	w, a
@@ -5033,7 +5033,7 @@ PerfMode_Evt01_NoteNumberDial_Helper:
 	call	VoiceSlot_SaveState
 	ldb_d8	e, (PERF_STEP_FIELD)
 	xor	d, d
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	c, a
 	pushw	bc
@@ -5064,7 +5064,7 @@ PerfMode_Evt01_NoteNumberDial_Join:
 	ld	w, a
 	pushw	bc
 	call	VoiceSlot_WriteCurrentParam
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	a, c
 	and	a, 128
@@ -5217,7 +5217,7 @@ PerfMode_StepCursorEventByte:
 	call	VoiceSlot_SaveState
 	ldb_d8	e, (PERF_STEP_FIELD)
 	xor	d, d
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	ld	w, a
 	add	a, (PERF_STEP_AMOUNT:16)
@@ -5241,7 +5241,7 @@ PerfMode_Evt01_NoteNumberDial_Helper3:
 	call	VoiceSlot_SaveState
 	ldb_d8	e, (PERF_STEP_FIELD)
 	xor	d, d
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	stb_d8	(CONTROL_LINE_VALUE), a
 	call	VoiceSlot_FlagCheck
@@ -5280,7 +5280,7 @@ DisplayMode_Handler_3_Skip13:
 	ld	w, a
 	pushw	bc
 	call	VoiceSlot_WriteCurrentParam
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	w, c
 	call	VoiceSlot_WriteCurrentParam
@@ -5996,27 +5996,27 @@ VoiceCtrl_BytecodeHandler:
 	and	a, 240
 	cp	a, 176
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	and	a, 3
 	ld	(3528:16), a
-	call	VoiceSlot_FinalRetZ
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 72
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldfr_berp a, 56
 	cp a, 6:i3
 	jrl	z, VoiceCtrl_BytecodeHandler_Skip2
 	cp	a, 5:i3
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
 VoiceCtrl_BytecodeHandler_Skip2:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(3527:16), a
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceCtrl_BytecodeHandler_Skip3
 	or	(0x0dc7:16), 128
 VoiceCtrl_BytecodeHandler_Skip3:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	bit	1, (0x0dc8:16)
 	jrl	z, VoiceCtrl_BytecodeHandler_Skip4
 	or	a, 128
@@ -6732,7 +6732,7 @@ SqStep_CheckRhythmOrControlTrack_Epilogue:
 ;   (DisplayStr_CopyStyleSectionName), modes 1-2 set pop-up 5 and draw the RHYTHM label plus the name
 ;   (DisplayStr_BytecodeBlock_C), mode 3 sets pop-up 15 (DisplayStr_StyleSectionInit); XHL kept. Basis: callers + body
 ;   -- TempoRingBuf_OnStyleSectionEvent, the section path of SqStep_ProcessRhythmSectionEvent and
-;   SysEx_BytecodeDispatcher_Helper2 each set 0x368C and then call it.
+;   SqStep_PanelButtonDispatch_Helper2 each set 0x368C and then call it.
 DisplayStr_ShowStyleSectionName:
 	push	xhl
 	ld	a, (SQSTEP_DISPLAY_MODE:16)
@@ -6978,7 +6978,7 @@ SqStep_AddStepToClock:
 	inc	1, a
 SqStep_AddStepToClock_Return2:
 	ret
-SysEx_BytecodeDispatcher_Helper5:
+SqStep_PanelButtonDispatch_Helper5:
 	push	xwa
 	push	xhl
 	push	xbc
@@ -7938,7 +7938,7 @@ SqStep_RestoreOnLeave_Skip4:
 SqStep_RestoreOnLeave_Skip5:
 	cp	a, 0:i3
 	jrl	nz, SqStep_RestoreOnLeave_Return2
-	call	SysEx_BytecodeDispatcher_Tbl2_Sub4
+	call	SqStep_PanelButtonDispatch_Tbl2_Sub4
 SqStep_RestoreOnLeave_Return2:
 	ret
 ; SqStep_RestoreTrackType: When 0x28BE is not 0xFF (a track's type was switched on entry), sets the type of the
@@ -7990,8 +7990,8 @@ SysEx_ControllerBitCheck:
 	jrl z, SysEx_ModeChangeCheck
 	ld c, (3925:16)
 	add c, 0x5
-	ld xwa, (TRANSITION_PROGRESS:24)
-	or xwa, (TRANSITION_TIMER:24)
+	ld xwa, (PANEL_SW_HELD_UP:24)
+	or xwa, (PANEL_SW_HELD_DOWN:24)
 	ld (4560:16), xwa
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
@@ -8044,24 +8044,30 @@ SysEx_DecrementCounter:
 
 SubCPU_CmdCountdownRet:
 	ret
-SysEx_BytecodeDispatcher:
+; SqStep_PanelButtonDispatch: The TT_SQSTEP (step-record) panel-button action dispatcher.  Takes the lowest set
+;   bit of the first non-zero request mask: 0x0DBF (note-length buttons, stored by SwbtB2_CodeA8_Listener) ->
+;   sends F0 50 87 <SqStep_ButtonRhythmModeBytes[bit] | 2> to the sub CPU (MIDI_SendSysExFromW) and selects that
+;   note length; 0x0DC0 (stored by PerfMode_Handler_EvtB) -> MemoryConfig_Handler_Table[bit]; the word 0x1108 ->
+;   _Helper2's action switch.  Called only from those two listeners and SwbtBank2_PostCallback, all gated on
+;   title 0x8A (TT_SQSTEP).  Was named SysEx_BytecodeDispatcher; renamed 2026-10-31 (kn5000-nl6 lead).
+SqStep_PanelButtonDispatch:
 	xor	wa, wa
 	ld	xiy, 3519
 	cp	(xiy), a
-	jrl	nz, SysEx_BytecodeDispatcher_Skip
+	jrl	nz, SqStep_PanelButtonDispatch_Skip
 	ld	xiy, 3520
 	cp	(xiy), a
-	jrl	nz, SysEx_BytecodeDispatcher_Skip2
+	jrl	nz, SqStep_PanelButtonDispatch_Skip2
 	ld	xiy, 4360
 	cp	(xiy), wa
-	jrl	nz, SysEx_BytecodeDispatcher_Skip3
-	jp	SysEx_BytecodeDispatcher_Return
-SysEx_BytecodeDispatcher_Skip:
-	call	SysEx_BytecodeDispatcher_Helper5
+	jrl	nz, SqStep_PanelButtonDispatch_Skip3
+	jp	SqStep_PanelButtonDispatch_Return
+SqStep_PanelButtonDispatch_Skip:
+	call	SqStep_PanelButtonDispatch_Helper5
 	call	SqStep_LowestSetBitOfByte
 	xor	h, h
 	push	xix
-	ld	xix, SysInit_BytecodeBlock
+	ld	xix, SqStep_ButtonRhythmModeBytes
 	ld	w, (xix+hl)
 	pop	xix
 	or	w, 2
@@ -8069,24 +8075,24 @@ SysEx_BytecodeDispatcher_Skip:
 	call	MIDI_SendSysExFromW
 	pop	xhl
 	push	xde
-	ld	xde, SysEx_BytecodeDispatcher_Data
+	ld	xde, SqStep_PanelButtonDispatch_Data
 	ld	w, (xde+hl)
 	pop	xde
 	ld	(3425:16), w
 	ld	(3432:16), 1
-	call	SysEx_BytecodeDispatcher_Helper2
+	call	SqStep_PanelButtonDispatch_Helper2
 	push	xhl
 	call	SNS_Init_Startup
 	pop	xhl
-	call	SysEx_BytecodeDispatcher_Helper3
-	call	SysEx_BytecodeDispatcher_Helper3_Sub
+	call	SqStep_PanelButtonDispatch_Helper3
+	call	SqStep_PanelButtonDispatch_Helper3_Sub
 	ld	(3434:16), 0
 	call	MemConfig_Handler_5_Helper12
 	call	MemConfig_Handler_5_Helper11
 	ld	w, 0:opc
-	jp	SysEx_BytecodeDispatcher_Join
-SysEx_BytecodeDispatcher_Skip2:
-	call	SysEx_BytecodeDispatcher_Helper5
+	jp	SqStep_PanelButtonDispatch_Join
+SqStep_PanelButtonDispatch_Skip2:
+	call	SqStep_PanelButtonDispatch_Helper5
 	push	xiy
 	call	MemConfig_Handler_4_Helper
 	pop	xiy
@@ -8098,43 +8104,43 @@ SysEx_BytecodeDispatcher_Skip2:
 	ld	xhl, (xix+hl)
 	pop	xix
 	call (xhl)
-	jp	SysEx_BytecodeDispatcher_Join
-SysEx_BytecodeDispatcher_Skip3:
-	call	SysEx_BytecodeDispatcher_Helper5
+	jp	SqStep_PanelButtonDispatch_Join
+SqStep_PanelButtonDispatch_Skip3:
+	call	SqStep_PanelButtonDispatch_Helper5
 	call	SqStep_LowestSetBitOfWord
-	call	SysEx_BytecodeDispatcher_Helper4
-	call	SysEx_BytecodeDispatcher_Helper6
-	call	SysEx_BytecodeDispatcher_Helper7
+	call	SqStep_PanelButtonDispatch_Helper4
+	call	SqStep_PanelButtonDispatch_Helper6
+	call	SqStep_PanelButtonDispatch_Helper7
 	cp	l, 2:i3
-	jrl	z, SysEx_BytecodeDispatcher_Skip4
+	jrl	z, SqStep_PanelButtonDispatch_Skip4
 	cp	l, 3:i3
-	jrl	z, SysEx_BytecodeDispatcher_Skip4
+	jrl	z, SqStep_PanelButtonDispatch_Skip4
 	cp	l, 10
-	jrl	z, SysEx_BytecodeDispatcher_Skip4
+	jrl	z, SqStep_PanelButtonDispatch_Skip4
 	call	MemConfig_Handler_4_Helper
-SysEx_BytecodeDispatcher_Skip4:
+SqStep_PanelButtonDispatch_Skip4:
 	call	SystemInit_Handler_Table_0x18
 	ld	(3434:16), 0
 	call	MemConfig_Handler_5_Helper12
 	call	MemConfig_Handler_5_Helper11
-SysEx_BytecodeDispatcher_Join:
+SqStep_PanelButtonDispatch_Join:
 	cp	w, 255
-	jrl	nz, SysEx_BytecodeDispatcher_Skip5
+	jrl	nz, SqStep_PanelButtonDispatch_Skip5
 	call	SysInit_SendAllNotesAndReset
-	jp	SysEx_BytecodeDispatcher_Return
-SysEx_BytecodeDispatcher_Skip5:
+	jp	SqStep_PanelButtonDispatch_Return
+SqStep_PanelButtonDispatch_Skip5:
 	call	AccPedal_CheckBitAndUpdate
 	ld	a, (SQSTEP_BEAT:16)
 	cp	(SQSTEP_CLOCK:16), 48
-	jrl	nz, SysEx_BytecodeDispatcher_Skip6
+	jrl	nz, SqStep_PanelButtonDispatch_Skip6
 	or	a, 128
-SysEx_BytecodeDispatcher_Skip6:
+SqStep_PanelButtonDispatch_Skip6:
 	ld	(13949:16), a
 	call	DisplayStr_ShowMeasureNumber_B
 	call	Display_UpdateRegion3
-SysEx_BytecodeDispatcher_Return:
+SqStep_PanelButtonDispatch_Return:
 	ret
-	; Handler dispatch table, 24 B.  Read by SysEx_BytecodeDispatcher (0xEFAAB1): `ld xix, MemoryConfig_Handler_Table`
+	; Handler dispatch table, 24 B.  Read by SqStep_PanelButtonDispatch (0xEFAAB1): `ld xix, MemoryConfig_Handler_Table`
 	; indexed with stride 4 (`sla hl, 2`)
 	; 6 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 MemoryConfig_Handler_Table:
@@ -8145,7 +8151,7 @@ MemoryConfig_Handler_Table:
 	.long	MemConfig_Handler_4
 	.long	MemConfig_Handler_5
 SystemInit_Handler_Table_Helper:
-	ld XIY,SysEx_BytecodeDispatcher_Tbl
+	ld XIY,SqStep_PanelButtonDispatch_Tbl
 	ld XIX,0x00000d8f
 	ld A, 0xb0:opc
 	ld (XIX),A
@@ -8158,18 +8164,18 @@ SystemInit_Handler_Table_Helper:
 	ld	(xix+2), 72
 	ld	a, 5:opc
 	cp	hl, 48
-	jrl	c, SysEx_BytecodeDispatcher_Skip7
+	jrl	c, SqStep_PanelButtonDispatch_Skip7
 	ld	a, 6:opc
-SysEx_BytecodeDispatcher_Skip7:
+SqStep_PanelButtonDispatch_Skip7:
 	ld	(xix+3), a
 	xor	w, w
 	ld	a, (xiy+hl)
 	bit	7, a
-	jrl	z, SysEx_BytecodeDispatcher_Skip8
+	jrl	z, SqStep_PanelButtonDispatch_Skip8
 	ormi8	(xix), 1
 	ld	(xix+4), w
 	jp	MemoryConfig_Handler_Table_Join
-SysEx_BytecodeDispatcher_Skip8:
+SqStep_PanelButtonDispatch_Skip8:
 	ld	(xix+4), a
 MemoryConfig_Handler_Table_Join:
 	ldfr_lerp	xiy, 56
@@ -8177,11 +8183,11 @@ MemoryConfig_Handler_Table_Join:
 	ld	a, (xiy+1)
 	ldto_lerp	xiy, 56
 	bit	7, a
-	jrl	z, SysEx_BytecodeDispatcher_Skip9
+	jrl	z, SqStep_PanelButtonDispatch_Skip9
 	ormi8	(xix), 2
 	ld	(xix+5), w
 	jp	MemoryConfig_Handler_Table_Join2
-SysEx_BytecodeDispatcher_Skip9:
+SqStep_PanelButtonDispatch_Skip9:
 	ld	(xix+5), a
 MemoryConfig_Handler_Table_Join2:
 	push	xiy
@@ -8208,9 +8214,9 @@ MemoryConfig_Handler_Table_Join2:
 	ld	w, (xiy+3)
 	ldto_lerp	xiy, 56
 	ret
-	; Byte data, 97 B.  Read by SysEx_BytecodeDispatcher (0xEFAAB1): `ld XIY,SysEx_BytecodeDispatcher_Tbl`
-	; reader SysEx_BytecodeDispatcher: `ld XIY,SysEx_BytecodeDispatcher_Tbl` then `lda xiy, (xiy+hl)`
-SysEx_BytecodeDispatcher_Tbl:
+	; Byte data, 97 B.  Read by SqStep_PanelButtonDispatch (0xEFAAB1): `ld XIY,SqStep_PanelButtonDispatch_Tbl`
+	; reader SqStep_PanelButtonDispatch: `ld XIY,SqStep_PanelButtonDispatch_Tbl` then `lda xiy, (xiy+hl)`
+SqStep_PanelButtonDispatch_Tbl:
 	.byte	0x04, 0x04, 0x00, 0x03, 0x00, 0x04, 0x00, 0x00, 0x08, 0x08, 0x00, 0x03, 0x00, 0x08, 0x00, 0x00
 	.byte	0x10, 0x10, 0x00, 0x05, 0x00, 0x10, 0x2f, 0x02, 0x20, 0x20, 0x00, 0x05, 0x00, 0x20, 0x2f, 0x02
 	.byte	0x40, 0x40, 0x00, 0x04, 0x00, 0x40, 0x2f, 0x01, 0x80, 0x80, 0x00, 0x04, 0x00, 0x80, 0x2f, 0x01
@@ -8305,7 +8311,7 @@ MemConfig_Handler_0_Join:
 	ld W, 0x81:opc
 	call VoiceSlot_WriteCurrentParam
 	ld de, 1:i3
-	call VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call SeqTrack_AdvanceCursor
 	ld W, 0x82:opc
 	call VoiceSlot_WriteCurrentParam
 	xor A,A
@@ -8357,7 +8363,7 @@ MemConfig_Handler_1_Code_Skip:
 MemConfig_Handler_1_Join2:
 	call	VoiceSlot_WriteCurrentParam
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	ld	w, 132:opc
 	call	VoiceSlot_WriteCurrentParam
 	xor	a, a
@@ -9034,7 +9040,7 @@ SndDispatch_ProcessCommand_Skip21:
 	exts	wa
 	add (SQSTEP_WRAP_COUNT:16), wa
 	ld	de, wa
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 130
 	jrl	z, SndDispatch_ProcessCommand_Skip23
@@ -9084,8 +9090,8 @@ SndDispatch_ProcessCommand_Helper:
 	xor	a, a
 	call	VoiceSlot_SaveState
 	ld	de, 4:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_AdvanceCursor
+	call	SeqTrack_ReadByteAndAdvance
 	ld	(3575:16), a
 	call	VoiceSlot_ReadCurrentParams
 	ld	(3576:16), a
@@ -9331,8 +9337,8 @@ SystemInit_StepHandler_5:
 	push	xiy
 	push	xiz
 	ld	l, 5:opc
-	call	SysEx_BytecodeDispatcher_Helper2
-	call	SysEx_BytecodeDispatcher_Helper3
+	call	SqStep_PanelButtonDispatch_Helper2
+	call	SqStep_PanelButtonDispatch_Helper3
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -9371,17 +9377,17 @@ SystemInit_StepHandler_3_Helper:
 	ld	d, a
 	xor	e, e
 	call	VoiceCtrl_ParamSetupBytecode_Tbl4_Sub
-	call	SysEx_BytecodeDispatcher_Helper3
+	call	SqStep_PanelButtonDispatch_Helper3
 	popw	wa
 SystemInit_StepHandler_0_Skip:
 	exts	wa
 	ld	bc, wa
 	ld	l, 96:opc
-	call	SysEx_BytecodeDispatcher_Helper3_Sub2
+	call	SqStep_PanelButtonDispatch_Helper3_Sub2
 SystemInit_StepHandler_0_Skip2:
 	or	(0x0d53:16), 64
 	ret
-SysEx_BytecodeDispatcher_Helper2:
+SqStep_PanelButtonDispatch_Helper2:
 	xor	h, h
 	sla	hl, 2
 	extz	xhl
@@ -9424,12 +9430,12 @@ SystemInit_StepHandler_0_Return:
 SystemInit_StepHandler_0_Tbl:
 	.byte	0x00, 0x04, 0x60, 0x04, 0x00, 0x03, 0x60, 0x03, 0x00, 0x02, 0x60, 0x02, 0x30, 0x01, 0x90, 0x01
 	.byte	0x00, 0x01, 0x60, 0x01, 0x30, 0x00, 0x30, 0x01
-	; Byte data, 6 B.  Read by SysEx_BytecodeDispatcher: `ld xix, SysInit_BytecodeBlock`
-	; reader SysEx_BytecodeDispatcher: `ld xix, SysInit_BytecodeBlock` then `ld w, (xix+hl)`
-SysInit_BytecodeBlock:
+	; Rhythm-mode byte per TT_SQSTEP note-length button (bit 0..5 of 0x0DBF): SqStep_PanelButtonDispatch sends
+	; F0 50 87 <byte | 2> (MIDI_SendSysExFromW), which Voice_SetRhythmMode reads in the sub CPU (bits 7-4).
+SqStep_ButtonRhythmModeBytes:
 	.byte	0x50, 0x40, 0x30, 0x20, 0x10, 0x00
-SysEx_BytecodeDispatcher_Data:	.byte	0x01, 0x02, 0x03, 0x05, 0x04, 0x06
-SysEx_BytecodeDispatcher_Helper3:
+SqStep_PanelButtonDispatch_Data:	.byte	0x01, 0x02, 0x03, 0x05, 0x04, 0x06
+SqStep_PanelButtonDispatch_Helper3:
 	ld b, (0xce55:16)
 	sla B, 0x01
 	ld C,B
@@ -9439,21 +9445,21 @@ SysEx_BytecodeDispatcher_Helper3:
 	ld XIY,0x00000d8f
 	call SystemInit_StepHandler_0_Helper2
 	ret
-SysEx_BytecodeDispatcher_Helper3_Loop:
+SqStep_PanelButtonDispatch_Helper3_Loop:
 	call	VoiceSlot_DispatchRet
 	cp	w, 255
-	jrl	z, SysEx_BytecodeDispatcher_Helper3_Skip
-SysEx_BytecodeDispatcher_Helper3_Sub:
+	jrl	z, SqStep_PanelButtonDispatch_Helper3_Skip
+SqStep_PanelButtonDispatch_Helper3_Sub:
 	call	VoiceCtrl_BytecodeHandler
 	cp	b, 22
-	jrl	z, SysEx_BytecodeDispatcher_Helper3_Loop
+	jrl	z, SqStep_PanelButtonDispatch_Helper3_Loop
 	cp	b, 23
-	jrl	z, SysEx_BytecodeDispatcher_Helper3_Loop
-SysEx_BytecodeDispatcher_Helper3_Skip:
+	jrl	z, SqStep_PanelButtonDispatch_Helper3_Loop
+SqStep_PanelButtonDispatch_Helper3_Skip:
 	ld	xiy, 0x0dbf
 	call	SqStep_LowestSetBitOfByte
 	cp	l, 255
-	jrl	z, SysEx_BytecodeDispatcher_Helper3_Return
+	jrl	z, SqStep_PanelButtonDispatch_Helper3_Return
 	xor	h, h
 	sla	hl, 2
 	push	xde
@@ -9464,41 +9470,41 @@ SysEx_BytecodeDispatcher_Helper3_Skip:
 	ld	l, c
 	xor	c, c
 	ex8	c, b
-SysEx_BytecodeDispatcher_Helper3_Sub2:
+SqStep_PanelButtonDispatch_Helper3_Sub2:
 	ldb_d8	a, (SQSTEP_CLOCK)
 	stb_d8	(0x0dfa), a
 	add	a, l
 	cp	a, 96
-	jrl	c, SysEx_BytecodeDispatcher_Helper3_Skip2
+	jrl	c, SqStep_PanelButtonDispatch_Helper3_Skip2
 	sub	a, 96
 	stb_d8	(SQSTEP_CLOCK), a
 	call	SqStep_WriteClockWrapMarker
 	cp	a, 96
-	jrl	c, SysEx_BytecodeDispatcher_Helper3_Skip2
+	jrl	c, SqStep_PanelButtonDispatch_Helper3_Skip2
 	sub	a, 96
 	stb_d8	(SQSTEP_CLOCK), a
 	call	SqStep_WriteClockWrapMarker
-SysEx_BytecodeDispatcher_Helper3_Skip2:
+SqStep_PanelButtonDispatch_Helper3_Skip2:
 	djnz16	bc, -39
 	stb_d8	(SQSTEP_CLOCK), a
 	cp	a, (0x0dfa:16)
-	jrl	z, SysEx_BytecodeDispatcher_Helper3_Return
+	jrl	z, SqStep_PanelButtonDispatch_Helper3_Return
 	call	MemConfig_Handler_5_Helper6
-SysEx_BytecodeDispatcher_Helper3_Return:
+SqStep_PanelButtonDispatch_Helper3_Return:
 	ret
 SysInit_BytecodeBlock_Join:
 	call	VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp	w, 255
-	jrl	z, SysEx_BytecodeDispatcher_Helper3_Skip3
+	jrl	z, SqStep_PanelButtonDispatch_Helper3_Skip3
 	cp	c, 2:i3
-	jrl	ule, SysEx_BytecodeDispatcher_Helper3_Return2
-SysEx_BytecodeDispatcher_Helper3_Skip3:
+	jrl	ule, SqStep_PanelButtonDispatch_Helper3_Return2
+SqStep_PanelButtonDispatch_Helper3_Skip3:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 129
-	jrl	nz, SysEx_BytecodeDispatcher_Helper3_Return2
+	jrl	nz, SqStep_PanelButtonDispatch_Helper3_Return2
 	call	VoiceSlot_LoadAndDispatch
 	jp	SysInit_BytecodeBlock_Join
-SysEx_BytecodeDispatcher_Helper3_Return2:
+SqStep_PanelButtonDispatch_Helper3_Return2:
 	ret
 ; SqStep_WriteWrapMarkerAtCursor: Writes one 0x81 unit marker into the track at the song-data cursor without counting
 ;   it (falls to SqStep_WriteWrapMarker: record {0x81}, W = 1, SystemInit_StepHandler_0_Helper2), with the
@@ -9550,7 +9556,7 @@ SqStep_WriteWrapMarker:
 	pop XHL
 	pop XWA
 	ret
-SysEx_BytecodeDispatcher_Helper4:
+SqStep_PanelButtonDispatch_Helper4:
 	cp	l, 2:i3
 	jrl	z, SystemInit_StepHandler_0_Skip8
 	cp	l, 10
@@ -9577,7 +9583,7 @@ SystemInit_StepHandler_0_Skip11:
 	ld	l, 4:opc
 SystemInit_StepHandler_0_Return4:
 	ret
-SysEx_BytecodeDispatcher_Helper6:
+SqStep_PanelButtonDispatch_Helper6:
 	cp	l, 7:i3
 	jrl	nz, SystemInit_StepHandler_0_Return5
 	call	VoiceSlot_CheckCursorAtTrackStart
@@ -9593,7 +9599,7 @@ SystemInit_StepHandler_0_Skip12:
 	ld	l, 3:opc
 SystemInit_StepHandler_0_Return5:
 	ret
-SysEx_BytecodeDispatcher_Helper7:
+SqStep_PanelButtonDispatch_Helper7:
 	cp	l, 10
 	jrl	nz, SystemInit_StepHandler_0_Return6
 	call	VoiceSlot_CheckCursorAtTrackStart
@@ -9629,14 +9635,14 @@ ClockConfig_Handler_0_Tbl2_Helper2:
 	ld	xix, 0x0cbe
 	ld	(xix+iz), a
 	pop	xix
-SysEx_BytecodeDispatcher_Tbl2_Join2:
+SqStep_PanelButtonDispatch_Tbl2_Join2:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 132
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Skip
 	call	VoiceSlot_StepCursorBack
 	cp	w, 255
 	jrl	z, ClockConfig_Handler_0_Tbl2_Helper2_Return
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join2
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join2
 ClockConfig_Handler_0_Tbl2_Helper2_Skip:
 	cp	a, 129
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Return
@@ -9645,7 +9651,7 @@ ClockConfig_Handler_0_Tbl2_Helper2_Skip:
 	ld	w, 132:opc
 	call	VoiceSlot_WriteCurrentParam
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	ld	w, 132:opc
 	call	VoiceSlot_WriteCurrentParam
 	xor	a, a
@@ -9655,7 +9661,7 @@ ClockConfig_Handler_0_Tbl2_Helper2_Return:
 	ret
 	xor	a, a
 	stb_d8	(SEQ_CURSOR_TRACK), a
-SysEx_BytecodeDispatcher_Helper4_Loop:
+SqStep_PanelButtonDispatch_Helper4_Loop:
 	ldb_d8	a, (SEQ_CURSOR_TRACK)
 	inc	1, a
 	cp	a, 15
@@ -9667,8 +9673,8 @@ SysEx_BytecodeDispatcher_Helper4_Loop:
 	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+iz), 0x0d
 	pop	xix
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Loop
-SysEx_BytecodeDispatcher_Tbl2_Sub4:
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Loop
+SqStep_PanelButtonDispatch_Tbl2_Sub4:
 	call	SqStep_CheckCursorTrackUsed
 	cp	w, 0:i3
 	jrl	nz, SystemInit_StepHandler_0_Return7
@@ -9693,7 +9699,7 @@ SysInit_BytecodeBlock_Join3:
 	ld	w, a
 	and	a, 240
 	cp	a, 176
-	jrl	z, SysEx_BytecodeDispatcher_Helper4_Skip8
+	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip8
 SysInit_BytecodeBlock_Join4:
 	call	VoiceSlot_DispatchRet
 	cp	w, 255
@@ -9706,74 +9712,74 @@ SysInit_BytecodeBlock_Join5:
 	jrl	z, SystemInit_StepHandler_0_Return7
 	jp	SysInit_BytecodeBlock_Join3
 	jp	SystemInit_StepHandler_0_Return7
-SysEx_BytecodeDispatcher_Helper4_Skip8:
+SqStep_PanelButtonDispatch_Helper4_Skip8:
 	and	w, 1
 	rrc	w
 	stb_d8	(0x0dc8), w
 	cp	a, 176
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Skip11
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip11
 	call	VoiceSlot_FlagCheck
 	cp	a, 48
-	jrl	z, SysEx_BytecodeDispatcher_Helper4_Skip9
+	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip9
 	cp	a, 96
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Skip11
-SysEx_BytecodeDispatcher_Helper4_Skip9:
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip11
+SqStep_PanelButtonDispatch_Helper4_Skip9:
 	ld	a, 2:opc
 	call	VoiceSlot_SaveState
 	ld	de, 4:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	or	a, (0x0dc8:16)
 	cp	a, 0:i3
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Skip10
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip10
 	ld	a, 2:opc
 	call	VoiceSlot_RestoreState
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	call	VoiceSlot_ReadCurrentParams
 	dec	1, a
 	ld	w, a
 	call	VoiceSlot_WriteCurrentParam
-SysEx_BytecodeDispatcher_Helper4_Skip10:
+SqStep_PanelButtonDispatch_Helper4_Skip10:
 	ld	a, 2:opc
 	call	VoiceSlot_RestoreState
-SysEx_BytecodeDispatcher_Helper4_Skip11:
+SqStep_PanelButtonDispatch_Helper4_Skip11:
 	call	VoiceSlot_FlagCheck
 	stb_d8	(0x0e4a), a
 	xor	a, a
 	stb_d8	(0x0e49), a
-SysEx_BytecodeDispatcher_Helper4_Loop2:
+SqStep_PanelButtonDispatch_Helper4_Loop2:
 	call	VoiceSlot_DispatchRet
 	inc	1, (0x0e49:16)
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 132
-	jrl	z, SysEx_BytecodeDispatcher_Helper4_Skip12
+	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip12
 	cp	a, 129
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Skip13
-SysEx_BytecodeDispatcher_Helper4_Skip12:
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip13
+SqStep_PanelButtonDispatch_Helper4_Skip12:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
 	jp	SysInit_BytecodeBlock_Join4
-SysEx_BytecodeDispatcher_Helper4_Skip13:
+SqStep_PanelButtonDispatch_Helper4_Skip13:
 	call	VoiceSlot_FlagCheck
 	cp	(0x0e4a:16), a
-	jrl	ule, SysEx_BytecodeDispatcher_Helper4_Loop2
-SysEx_BytecodeDispatcher_Helper4_Loop3:
+	jrl	ule, SqStep_PanelButtonDispatch_Helper4_Loop2
+SqStep_PanelButtonDispatch_Helper4_Loop3:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 129
-	jrl	z, SysEx_BytecodeDispatcher_Helper4_Skip14
+	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip14
 	call	VoiceSlot_FlagCheck
 	cp	(0x0e4a:16), a
-	jrl	ugt, SysEx_BytecodeDispatcher_Helper4_Skip14
+	jrl	ugt, SqStep_PanelButtonDispatch_Helper4_Skip14
 	inc	1, (0x0e49:16)
 	call	VoiceSlot_DispatchRet
 	cp	w, 255
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Loop3
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Loop3
 	dec	1, (0x0e49:16)
-SysEx_BytecodeDispatcher_Helper4_Skip14:
+SqStep_PanelButtonDispatch_Helper4_Skip14:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	xiy, 0x0d8f
 	ld	(SQSTEP_RECORD_LENGTH:16), 0
 	ld	(xiy), a
@@ -9781,13 +9787,13 @@ SysInit_BytecodeBlock_Join6:
 	inc	1, xiy
 	inc	1, (SQSTEP_RECORD_LENGTH:16)
 	push	xiy
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xiy
 	bit	7, a
-	jrl	nz, SysEx_BytecodeDispatcher_Helper4_Skip15
+	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip15
 	ld	(xiy), a
 	jp	SysInit_BytecodeBlock_Join6
-SysEx_BytecodeDispatcher_Helper4_Skip15:
+SqStep_PanelButtonDispatch_Helper4_Skip15:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
 	call	SqStep_DeleteEventAtCursor
@@ -9848,8 +9854,8 @@ SqStep_LowestSetBitOfByte_Return:
 	ret
 ; SqStep_LowestSetBitOfWord: Returns L = the index (0..15) of the lowest set bit of the 16-bit mask at XIY (low byte
 ;   first), or 0xFF when it is 0; A, BC and XIY are preserved. Basis: callers + body -- the TT_SQSTEP dispatcher
-;   (SysEx_BytecodeDispatcher) calls it on the request mask 0x1108 and passes L, after the Helper5-7 remaps, to the
-;   action dispatch SysEx_BytecodeDispatcher_Helper2; same scan as SqStep_LowestSetBitOfByte over two bytes.
+;   (SqStep_PanelButtonDispatch) calls it on the request mask 0x1108 and passes L, after the Helper5-7 remaps, to the
+;   action dispatch SqStep_PanelButtonDispatch_Helper2; same scan as SqStep_LowestSetBitOfByte over two bytes.
 SqStep_LowestSetBitOfWord:
 	push	xiy
 	pushw	bc
@@ -9892,11 +9898,11 @@ SqStep_LowestSetBitOfWord_Return2:
 	ret
 SystemInit_StepHandler_0_Helper2:
 	ld a, (SEQ_CURSOR_TRACK:16)
-	call SysEx_BytecodeDispatcher_Tbl2_Helper
+	call SqStep_PanelButtonDispatch_Tbl2_Helper
 	or (0x8cec:16), 0x01
 	or (0x266a:16), 0x01
 	ret
-SysEx_BytecodeDispatcher_Tbl2_Helper:
+SqStep_PanelButtonDispatch_Tbl2_Helper:
 	pushw	bc
 	ld	(0x1101:16), xiy
 	stb_d8	(SEQ_CURSOR_TRACK), a
@@ -9907,7 +9913,7 @@ SysEx_BytecodeDispatcher_Tbl2_Helper:
 SysInit_BytecodeBlock_Join9:
 	ld	iy, (xix+iz)
 	cp	iy, 65535
-	jrl	z, SysEx_BytecodeDispatcher_Tbl2_Helper_Skip3
+	jrl	z, SqStep_PanelButtonDispatch_Tbl2_Helper_Skip3
 	ld	(0x28ba:16), iy
 	srl	xiz, 1
 	ldfr_lerp	xix, 56
@@ -9918,10 +9924,10 @@ SysInit_BytecodeBlock_Join9:
 	sla	iz, 1
 	ld	(0x28bc:16), wa
 	ld	xix, 0x0c9e
-SysEx_BytecodeDispatcher_Tbl2_Join10:
+SqStep_PanelButtonDispatch_Tbl2_Join10:
 	ld	de, (xix+iz)
 	cp	de, 65535
-	jrl	nz, SysEx_BytecodeDispatcher_Tbl2_Helper_Skip
+	jrl	nz, SqStep_PanelButtonDispatch_Tbl2_Helper_Skip
 	ld	(xix+iz), iy
 	srl	iz, 1
 	ldfr_lerp	xix, 56
@@ -9929,8 +9935,8 @@ SysEx_BytecodeDispatcher_Tbl2_Join10:
 	ld	(xix+32), 5
 	ldto_lerp	xix, 56
 	sla	iz, 1
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join10
-SysEx_BytecodeDispatcher_Tbl2_Helper_Skip:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join10
+SqStep_PanelButtonDispatch_Tbl2_Helper_Skip:
 	srl	iz, 1
 	ldfr_lerp	xix, 56
 	lda	xix, (xix+iz)
@@ -9949,7 +9955,7 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip:
 	sla	iz, 1
 	add	wa, bc
 	cp	wa, 255
-	jrl	ugt, SysEx_BytecodeDispatcher_Tbl2_Helper_Skip2
+	jrl	ugt, SqStep_PanelButtonDispatch_Tbl2_Helper_Skip2
 	ld	iy, (xix+iz)
 	ld	(0x289f:16), iy
 	ld	(0x28b6:16), wa
@@ -9977,8 +9983,8 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip:
 	call	VoiceSlot_InitAndProcess
 	xor	w, w
 	popw	bc
-	jp	SysEx_BytecodeDispatcher_Tbl2_Return3
-SysEx_BytecodeDispatcher_Tbl2_Helper_Skip2:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Return3
+SqStep_PanelButtonDispatch_Tbl2_Helper_Skip2:
 	sub	wa, 251
 	ld	(0x28b6:16), wa
 	pushw	de
@@ -10022,7 +10028,7 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip2:
 	call	VoiceSlot_InitAndProcess
 	xor	w, w
 	popw	bc
-	jp	SysEx_BytecodeDispatcher_Tbl2_Return3
+	jp	SqStep_PanelButtonDispatch_Tbl2_Return3
 SystemInit_StepHandler_0_Loop7:
 	ld	w, 104:opc
 	call	MIDI_SendSysExFromW
@@ -10032,8 +10038,8 @@ SystemInit_StepHandler_0_Loop7:
 	ld	a, TT_MESAGE:opc
 	call	UI_InterruptTitleByIndex
 	popw	bc
-	jp	SysEx_BytecodeDispatcher_Tbl2_Return3
-SysEx_BytecodeDispatcher_Tbl2_Helper_Skip3:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Return3
+SqStep_PanelButtonDispatch_Tbl2_Helper_Skip3:
 	push	xix
 	call	DispatchHandler_JumpToSubHandler
 	ld	iy, ix
@@ -10073,7 +10079,7 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip3:
 	ldw	(xhl+1), 0
 	ldw	(xhl+3), 65535
 	jp	SysInit_BytecodeBlock_Join9
-SysEx_BytecodeDispatcher_Tbl2_Return3:
+SqStep_PanelButtonDispatch_Tbl2_Return3:
 	ret
 VoiceSlot_InitAndProcess:
 	cp bc, 0:i3
@@ -10509,16 +10515,20 @@ VoiceSlot_FinalDone:
 VoiceSlot_FinalRetNZ:
 	ret
 
-VoiceSlot_FinalRetZ:
+; SeqTrack_ReadByteAndAdvance: reads the byte at the current track's song-data cursor
+;   (VoiceSlot_ReadCurrentParams) and moves the cursor one byte on (SeqTrack_AdvanceCursor, DE = 1).
+;   Out: A = the byte, W = 0 when the cursor moved, 0xff when it was at the end of the track.
+;   Basis: body + SeqTrack_AdvanceCursor.
+SeqTrack_ReadByteAndAdvance:
 	call VoiceSlot_ReadCurrentParams
 	pushw WA
 	ld de, 1:i3
-	call VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call SeqTrack_AdvanceCursor
 	ld D,W
 	popw	wa
 	ld	w, d
 	ret
-VoiceSlot_FinalRetZ_0x11:
+SeqBlockChain_0x11:
 	ld	a, e
 	push	xiy
 	push	xiz
@@ -10528,7 +10538,7 @@ VoiceSlot_FinalRetZ_0x11:
 	pop	xiz
 	pop	xiy
 	ret
-VoiceSlot_FinalRetZ_0x1E:
+SeqBlockChain_0x1E:
 	push	xhl
 	pushw	de
 	dec	1, e
@@ -10567,7 +10577,7 @@ Timer_ModeHandler_0_Helper4:
 	ld	w, d
 	ld	a, e
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -10597,7 +10607,13 @@ VoiceSlot_WriteCurrentParam:
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+iy), w
 	ret
-VoiceSlot_ReadParamsWithSaveRestore_Helper2:
+; SeqTrack_AdvanceCursor: moves the current track's song-data cursor DE bytes on.  The cursor is a
+;   block number and an offset 5..255 into a 256-byte song block (5 header bytes: flags, prev, next;
+;   251 data bytes); past offset 255 it follows the next link (+3) once per 251 bytes.  When the
+;   cursor is in the track's tail block (the song record's per-track tail-block table) it may not pass
+;   the track's write offset (the per-track offset table 32 bytes after it).  Out: W = 0 when moved,
+;   0xff when the chain or the write offset stopped it (cursor unchanged).  Basis: body.
+SeqTrack_AdvanceCursor:
 	ld	a, (SEQ_CURSOR_TRACK:16)
 	dec	1, a
 	ld	(3566:16), a
@@ -10614,27 +10630,27 @@ VoiceSlot_ReadParamsWithSaveRestore_Helper2:
 	ldto_lerp	xix, 56
 	adc	d, 0
 	cp	de, 255
-	jrl	ugt, VoiceSlot_FinalRetZ_Skip2
+	jrl	ugt, SeqBlockChain_Skip2
 	ld	bc, (xix+iz)
 	ld	xix, 61944
 	cp	bc, (xix+iz)
-	jrl	z, VoiceSlot_FinalRetZ_Skip
-VoiceSlot_FinalRetZ_Loop:
+	jrl	z, SeqBlockChain_Skip
+SeqBlockChain_Loop:
 	push	xwa
 	ld	xwa, 3262
 	ld	(xwa+hl), e
 	pop	xwa
 	ld	w, 0:opc
 	ret
-VoiceSlot_FinalRetZ_Skip:
+SeqBlockChain_Skip:
 	ldfr_lerp	xix, 56
 	lda	xix, (xix+hl)
 	cp	e, (xix+32)
 	ldto_lerp	xix, 56
-	jrl	ule, VoiceSlot_FinalRetZ_Loop
+	jrl	ule, SeqBlockChain_Loop
 	ld	w, 255:opc
-	jp	VoiceSlot_FinalRetZ_Return
-VoiceSlot_FinalRetZ_Skip2:
+	jp	SeqBlockChain_Return
+SeqBlockChain_Skip2:
 	sub	de, 256
 	ld	wa, de
 	xor	de, de
@@ -10651,14 +10667,14 @@ VoiceSlot_FinalRetZ_Skip2:
 	ld	l, (3566:16)
 	xor	h, h
 	cp	iy, 65535
-	jrl	z, VoiceSlot_FinalRetZ_Skip3
-VoiceSlot_FinalRetZ_Loop2:
+	jrl	z, SeqBlockChain_Skip3
+SeqBlockChain_Loop2:
 	djnz16	bc, -27
 	add	de, 5
 	ld	xix, 61944
 	cp	iy, (xix+iz)
 	jrl	z, VoiceSlot_WriteCurrentParam_Skip
-VoiceSlot_FinalRetZ_Loop3:
+SeqBlockChain_Loop3:
 	ld	xix, 3230
 	ld	(xix+iz), iy
 	srl	iz, 1
@@ -10668,17 +10684,17 @@ VoiceSlot_FinalRetZ_Loop3:
 	ldto_lerp	xix, 56
 	sla	iz, 1
 	xor	w, w
-	jp	VoiceSlot_FinalRetZ_Return
-VoiceSlot_FinalRetZ_Skip3:
+	jp	SeqBlockChain_Return
+SeqBlockChain_Skip3:
 	cp	bc, 1:i3
-	jrl	z, VoiceSlot_FinalRetZ_Loop2
+	jrl	z, SeqBlockChain_Loop2
 	ld	w, 255:opc
-	jp	VoiceSlot_FinalRetZ_Return
+	jp	SeqBlockChain_Return
 VoiceSlot_WriteCurrentParam_Skip:
 	cp	wa, (xix+hl)
-	jrl	ule, VoiceSlot_FinalRetZ_Loop3
+	jrl	ule, SeqBlockChain_Loop3
 	ld	w, 255:opc
-VoiceSlot_FinalRetZ_Return:
+SeqBlockChain_Return:
 	ret
 	ld	xhl, SEQ_BLOCK_POOL_COPY
 	ld	xwa, (SEQ_BLOCK_POOL:16)
@@ -10699,41 +10715,41 @@ MemConfig_Handler_1_Helper5:
 	ld	ix, (xhl+1)
 	ld	de, ix
 	cp	ix, 0:i3
-	jrl	z, VoiceSlot_FinalRetZ_Skip6
+	jrl	z, SeqBlockChain_Skip6
 	ld	iy, ix
 	ldw	(xhl+1), 0
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
-VoiceSlot_FinalRetZ_Loop4:
+SeqBlockChain_Loop4:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 	cp	iy, 65535
-	jrl	z, VoiceSlot_FinalRetZ_Skip4
+	jrl	z, SeqBlockChain_Skip4
 VoiceSlot_WriteCurrentParam_Loop:
 	andmi8	(xhl), 127
 	ld	(xhl+5), 130
 	inc	1, wa
 	cp	wa, (0x0ce6:16)
-	jrl	nz, VoiceSlot_FinalRetZ_Loop4
+	jrl	nz, SeqBlockChain_Loop4
 	dec	1, wa
-VoiceSlot_FinalRetZ_Join:
+SeqBlockChain_Join:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+1), de
-VoiceSlot_FinalRetZ_Skip4:
+SeqBlockChain_Skip4:
 	cp	de, 0:i3
-	jrl	z, VoiceSlot_FinalRetZ_Skip5
+	jrl	z, SeqBlockChain_Skip5
 	push	xiy
 	ld	iy, de
 	call	VoiceSlot_UpdateCurrentPointer
 	pop	xiy
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+3), iy
-VoiceSlot_FinalRetZ_Skip5:
+SeqBlockChain_Skip5:
 	ld	iy, ix
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	xhl, (SEQ_BLOCK_PTR:16)
@@ -10746,8 +10762,8 @@ VoiceSlot_FinalRetZ_Skip5:
 	ld	(xhl+1), ix
 	inc	1, wa
 	add (SEQ_FREE_BLOCKS:16), wa
-	jp	VoiceSlot_FinalRetZ_Return2
-VoiceSlot_FinalRetZ_Skip6:
+	jp	SeqBlockChain_Return2
+SeqBlockChain_Skip6:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	ix, iy
 	ld	xhl, (SEQ_BLOCK_PTR:16)
@@ -10757,8 +10773,8 @@ VoiceSlot_FinalRetZ_Skip6:
 	ldw	(3302:16), 0
 	ld	iy, ix
 	andmi8	(xhl), 127
-	jp	VoiceSlot_FinalRetZ_Join
-VoiceSlot_FinalRetZ_Return2:
+	jp	SeqBlockChain_Join
+SeqBlockChain_Return2:
 	ret
 VoiceSlot_UpdateCurrentPointer:
 	ld hl, iy
@@ -10802,7 +10818,7 @@ VoiceSlot_IndexDone_Join:
 	cp	a, 129
 	jrl	nz, VoiceSlot_ComputeIndex_Skip
 	ld	de, 1:i3
-	call	VoiceSlot_ReadParamsWithSaveRestore_Helper2
+	call	SeqTrack_AdvanceCursor
 	incw	1, (3426:16)
 	jp	VoiceSlot_IndexDone_Join
 VoiceSlot_ComputeIndex_Skip:
@@ -10924,7 +10940,7 @@ VoiceSlot_StatusRet_Skip3:
 VoiceSlot_StatusRet_Skip4:
 	cp	(SQSTEP_DISPLAY_MODE:16), 0
 	jrl	z, VoiceSlot_StatusRet_Skip7
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	pushw	wa
 	call	VoiceSlot_ComputeWordIndex
@@ -10943,7 +10959,7 @@ VoiceSlot_StatusRet_Skip5:
 	call	ScoopDisp_BytecodeBlock1_0x32
 VoiceSlot_StatusRet_Join:
 	stb_d8	(STEP_NOTE), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(STEP_VELOCITY), a
 	cp	(STATUS_POPUP_ID:16), 0
 	jrl	nz, VoiceSlot_StatusRet_Skip6
@@ -10956,7 +10972,7 @@ VoiceSlot_StatusRet_Join2:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip7:
 	call	VoiceSlot_StatusRet_Helper
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	call	VoiceSlot_SkipByteAndRead
 	and	a, 32
@@ -10972,16 +10988,16 @@ VoiceSlot_StatusRet_Skip7:
 	call	SNS_Init_Startup
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip8:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	cp	a, 72
 	jrl	z, VoiceSlot_StatusRet_Skip10
 	stb_d8	(0x11bb), a
 	stb_d8	(PROGRAM_CHANGE_PART), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	h, a
 	push	xhl
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip9
 	or	a, 128
@@ -10989,7 +11005,7 @@ VoiceSlot_StatusRet_Skip9:
 	pop	xhl
 	stb_d8	(0x11bd), a
 	ld	l, a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x11bc), a
 	ld	h, a
 	call	PartCtrl_WriteProgramChange
@@ -10998,16 +11014,16 @@ VoiceSlot_StatusRet_Skip9:
 	call	DisplayStr_ShowPartSoundLine
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip10:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 0:i3
 	jrl	nz, VoiceSlot_StatusRet_Loop2
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip11
 	or	a, 128
 VoiceSlot_StatusRet_Skip11:
 	stb_d8	(0x3686), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x3687), a
 	bit	1, (0x0ef4:16)
 	jrl	z, VoiceSlot_StatusRet_Skip12
@@ -11026,7 +11042,7 @@ VoiceSlot_StatusRet_Skip13:
 VoiceSlot_StatusRet_Loop3:
 	jp	VoiceSlot_StatusRet_Loop2
 VoiceSlot_StatusRet_Skip14:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	call	VoiceSlot_SkipByteAndRead
 	and	a, 127
 	ldb_d8	h, (0x0dc8)
@@ -11036,7 +11052,7 @@ VoiceSlot_StatusRet_Skip14:
 	stb_d8	(POPUP_PART), a
 	cp	a, 72
 	jrl	nz, VoiceSlot_StatusRet_Code_Skip13
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 5:i3
 	jrl	z, VoiceSlot_StatusRet_Code_Skip10
 	cp	a, 6:i3
@@ -11049,10 +11065,10 @@ VoiceSlot_StatusRet_Skip14:
 	jrl	z, VoiceSlot_StatusRet_Code_Skip9
 	jp	VoiceSlot_StatusRet_Loop3
 VoiceSlot_StatusRet_Code_Skip2:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	c, a
 	pushw	bc
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ldb_d8	a, (SQSTEP_DISPLAY_MODE)
 	cp	a, 3:i3
@@ -11075,9 +11091,9 @@ VoiceSlot_StatusRet_Code_Skip4:
 	call	DisplayStr_ShowRhythmVariationLine
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip5:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(POPUP_VALUE), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldb_d8	l, (0x0dc8)
 	ld	h, l
 	and	l, 1
@@ -11109,9 +11125,9 @@ VoiceSlot_StatusRet_Code_Skip7:
 VoiceSlot_StatusRet_Code_Skip8:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip9:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(POPUP_VALUE), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldb_d8	l, (0x0dc8)
 	ld	h, l
 	and	l, 1
@@ -11137,14 +11153,14 @@ VoiceSlot_StatusRet_Skip16:
 VoiceSlot_StatusRet_Code_Skip10:
 	ldfr_berp	a, 56
 	stb_d8	(0x10f2), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	c, a
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip17
 	or	c, 128
 VoiceSlot_StatusRet_Skip17:
 	pushw	bc
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	bit	1, (0x0dc8:16)
 	jrl	z, VoiceSlot_StatusRet_Skip18
@@ -11206,9 +11222,9 @@ VoiceSlot_StatusRet_Code_Skip12:
 	call	Display_ModePopupDispatch
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip13:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x10f2), a
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ldb_d8	l, (0x0dc8)
 	ld	h, l
 	and	l, 1
@@ -11216,7 +11232,7 @@ VoiceSlot_StatusRet_Code_Skip13:
 	or	a, l
 	stb_d8	(POPUP_VALUE), a
 	push	xhl
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xhl
 	and	h, 2
 	rrc h, 2	; rrc 0x02,H
@@ -11509,7 +11525,7 @@ VoiceSlot_StatusRet_Code_Skip39:
 	jrl	nz, VoiceSlot_StatusRet_Loop3
 	jp	VoiceSlot_StatusRet_Loop3
 VoiceSlot_StatusRet_Skip72:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	ld	xiy, SQSTEP_STYLE_SECTION
 	cp	a, 128
 	jrl	z, VoiceSlot_StatusRet_Code_Skip41
@@ -11565,7 +11581,7 @@ VoiceSlot_StatusRet_Skip44:
 VoiceSlot_StatusRet_Code_Skip45:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Join5:
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 208
 	jrl	z, VoiceSlot_StatusRet_Skip80
 	cp	a, 209
@@ -11603,7 +11619,7 @@ VoiceSlot_StatusRet_Skip84:
 	call	VoiceSlot_SkipByteAndRead
 	stb_d8	(CONTROL_LINE_VALUE), a
 	ld	(CONTROL_LINE_KIND:16), 1
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x1112), a
 	cp	(STATUS_POPUP_ID:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip85
@@ -11626,14 +11642,14 @@ VoiceSlot_StatusRet_Skip87:
 	call	DisplayStr_BytecodeBlock_B
 VoiceSlot_StatusRet_Return:
 	ret
-; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with VoiceSlot_FinalRetZ (read the cursor byte,
+; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with SeqTrack_ReadByteAndAdvance (read the cursor byte,
 ;   advance one) and returns the second in A (W = the advance status), so it skips one byte. Basis: callers + body --
 ;   VoiceSlot_StatusRet calls it right after consuming a stored event's status byte, skipping the clock byte +1 to
 ;   fetch data byte +2 (the 0xDn value that goes to 0x3685, the 0xBn tag compared with 72, the 0xCn part), and twice
 ;   in a row to reach byte +4.
 VoiceSlot_SkipByteAndRead:
-	call	VoiceSlot_FinalRetZ
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
+	call	SeqTrack_ReadByteAndAdvance
 	ret
 ; Display_ModePopupDispatch -- the pop-up id for the display mode (0x0D65), from
 ; Display_ModePopupIds, goes to (0x0DEF) before Display_UpdateRegion0; then a call
@@ -11916,7 +11932,7 @@ VoiceSlot_CheckCursorAtTrackStart_Loop2:
 	push XIY
 	push XIX
 	push XIZ
-	call VoiceSlot_FinalRetZ
+	call SeqTrack_ReadByteAndAdvance
 	pop XIZ
 	pop XIX
 	pop XIY
@@ -14008,7 +14024,7 @@ OscScope_RefreshLoop_Loop:
 	push	xiy
 	push	xix
 	push	xiz
-	call	VoiceSlot_FinalRetZ
+	call	SeqTrack_ReadByteAndAdvance
 	pop	xiz
 	pop	xix
 	pop	xiy
@@ -18425,7 +18441,9 @@ Scoop_CurveUpdate_DrawSegment:
 	ld	iy, ix
 	andmi8	(xhl), 127
 	jr	Scoop_SpecialMode_ValueSend_Part3
-ScoopDisp_BytecodeBlock1_Helper:
+; SndParam_ValueMapLookupSel1: Value-map lookup with selector 1: A = value, C = map row -> BC = value, DE = row,
+;   WA = 1, then SndParam_ValueMapLookup. Basis: callers + body -- DisplayMode_Handler_3_Helper2 wraps it.
+SndParam_ValueMapLookupSel1:
 	ld E,A
 	extz DE
 	ld A,C
@@ -18433,8 +18451,11 @@ ScoopDisp_BytecodeBlock1_Helper:
 	ld BC,DE
 	ld DE,WA
 	ld wa, 1:i3
-	jp Param_SignExtendReturn
-Scoop_CurveUpdate_NextSegment:
+	jp SndParam_ValueMapLookup
+; SndParam_ValueMapLookupSel2: Value-map lookup with selector 2 (column 5 of the SndParam_ValueMapGrid row):
+;   A = value, C = map row -> BC, DE, WA = 2, then SndParam_ValueMapLookup. Basis: callers + body --
+;   PerfMode_LookupValueMapColumn5 wraps it.
+SndParam_ValueMapLookupSel2:
 	ld	e, a
 	extz	de
 	ld	a, c
@@ -18442,7 +18463,7 @@ Scoop_CurveUpdate_NextSegment:
 	ld	bc, de
 	ld	de, wa
 	ld	wa, 2:i3
-	jp	Param_SignExtendReturn
+	jp	SndParam_ValueMapLookup
 Scoop_CurveUpdate_SegmentEnd:
 	lda xsp, (xsp-272)
 	push xiz

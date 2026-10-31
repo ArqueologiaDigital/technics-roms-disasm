@@ -8,8 +8,65 @@ P_12HEITER_SQT_p2:
 	sq_cell	0xff, 49, 65535	; cell 1: song 1 track 8, 4 of 4
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"12HEITER.sqt.p2.ref", 0x7, 249
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	42, 0, 95	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"12HEITER.sqt.p2.ref", 0xa, 5
+	sq_beat
+	sq_bend	33, 0, 64, 60
+	sq_bend	36, 0, 64, 56
+	sq_bend	37, 0, 64, 52
+	sq_bend	40, 0, 64, 45
+	sq_bend	43, 0, 64, 37
+	sq_bend	43, 0, 0, 28
+	sq_bend	46, 0, 0, 19
+	sq_bend	46, 0, 0, 14
+	sq_note	50, 0, 79, 103, 0, 1
+	sq_bend	50, 0, 0, 11
+	sq_bend	53, 0, 0, 12
+	sq_bend	56, 0, 0, 22
+	sq_bend	57, 0, 0, 29
+	sq_bend	60, 0, 0, 38
+	sq_bend	63, 0, 64, 47
+	sq_bend	66, 0, 0, 55
+	sq_bend	66, 0, 64, 61
+	sq_bend	69, 0, 0, 64
+	sq_cc	76, 0, 16, 1, 12
+	sq_cc	79, 0, 16, 1, 21
+	sq_cc	79, 0, 16, 1, 29
+	sq_cc	82, 0, 16, 1, 37
+	sq_cc	86, 0, 16, 1, 44
+	sq_cc	86, 0, 16, 1, 51
+	sq_cc	89, 0, 16, 1, 56
+	sq_cc	89, 0, 16, 1, 62
+	sq_cc	92, 0, 16, 1, 67
+	sq_cc	95, 0, 16, 1, 71
+	sq_beat
+	sq_cc	0, 0, 16, 1, 75
+	sq_cc	3, 0, 16, 1, 78
+	sq_cc	7, 0, 16, 1, 80
+	sq_cc	7, 0, 16, 1, 82
+	sq_cc	16, 0, 16, 1, 80
+	sq_cc	16, 0, 16, 1, 79
+	sq_cc	19, 0, 16, 1, 76
+	sq_cc	22, 0, 16, 1, 74
+	sq_cc	23, 0, 16, 1, 72
+	sq_cc	26, 0, 16, 1, 70
+	sq_cc	26, 0, 16, 1, 67
+	sq_cc	29, 0, 16, 1, 63
+	sq_cc	32, 0, 16, 1, 58
+	sq_cc	33, 0, 16, 1, 53
+	sq_cc	36, 0, 16, 1, 46
+	sq_cc	39, 0, 16, 1, 39
+	sq_cc	39, 0, 16, 1, 32
+	sq_cc	42, 0, 16, 1, 25
+	sq_cc	42, 0, 16, 1, 17
+	sq_cc	45, 0, 16, 1, 9
+	sq_cc	49, 0, 16, 1, 0
+	sq_note	55, 0, 77, 101, 87, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"12HEITER.sqt.p2.ref", 0xfd, 3
 	sq_cell	0x80, 0, 3	; cell 2: song 1 track 2, 1 of 15
 	sq_sys	0, 0x85
 	sq_beat
@@ -1357,8 +1414,73 @@ P_12HEITER_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"12HEITER.sqt.p2.ref", 0xf23, 221
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	k5_note	0x90, 20, 76, 71, 25, 0
+	k5_note	0x90, 43, 79, 70, 29, 0
+	k5_note	0x90, 72, 84, 73, 82, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 58, 83, 88, 93, 0
+	sq_beat
+	k5_note	0x90, 43, 84, 83, 94, 0
+	sq_beat
+	k5_note	0x90, 41, 83, 80, 46, 1
+	sq_beat
+	k5_note	0x90, 89, 76, 88, 1, 1
+	sq_beat
+	k5_note	0x90, 84, 77, 83, 17, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 5, 81, 90, 39, 0
+	k5_note	0x90, 42, 84, 88, 14, 1
+	sq_beat
+	k5_note	0x90, 46, 81, 95, 46, 0
+	k5_note	0x90, 89, 84, 83, 67, 0
+	sq_beat
+	k5_note	0x90, 44, 81, 95, 56, 1
+	sq_beat
+	k5_note	0x90, 93, 79, 90, 13, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 72, 102, 18, 0
+	sq_beat
+	k5_note	0x90, 22, 76, 86, 22, 0
+	k5_note	0x90, 47, 79, 82, 19, 0
+	k5_note	0x90, 74, 84, 83, 75, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 53, 83, 98, 86, 0
+	sq_beat
+	k5_note	0x90, 41, 84, 86, 1, 1
+	sq_beat
+	k5_note	0x90, 41, 83, 98, 41, 1
+	sq_beat
+	k5_note	0x90, 87, 76, 95, 89, 0
+	sq_beat
+	k5_note	0x90, 85, 77, 93, 94, 0
+	sq_beat
+	k5_note	0x90, 86, 81, 90, 47, 0
+	sq_beat
+	k5_note	0x90, 37, 84, 88, 4, 1
+	sq_beat
+	k5_note	0x90, 41, 81, 106, 50, 0
+	k5_note	0x90, 91, 84, 88, 49, 0
+	sq_beat
+	k5_note	0x90, 44, 81, 106, 0, 1
+	sq_beat
+	k5_note	0x90, 44, 79, 80, 77, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 0, 92, 66, 19, 2
+	k5_note	0x90, 0, 80, 67, 22, 2
+	sq_beat
+	sq_beat
+	.byte	144	; the first 1 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 18	; cell 17: song 1 track 7, 1 of 2
 	sq_sys	0, 0x85
 	sq_beat
@@ -4237,8 +4359,19 @@ P_12HEITER_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"12HEITER.sqt.p2.ref", 0x33d1, 47
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0	; data bytes of an event cut at the start
+	k5_note	0x90, 88, 76, 103, 74, 0
+	sq_beat
+	k5_note	0x90, 92, 69, 90, 15, 0
+	k5_note	0x90, 93, 77, 96, 14, 0
+	k5_note	0x90, 93, 74, 103, 13, 0
+	sq_beat
+	k5_note	0x90, 45, 77, 93, 57, 0
+	k5_note	0x90, 45, 74, 103, 54, 0
+	k5_note	0x90, 45, 69, 93, 54, 0
+	sq_beat
+	.byte	144	; the first 1 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 55, 29	; cell 53: song 1 track 4, 8 of 10
 	sq_beat
 	sq_note	83, 0, 48, 66, 68, 1
@@ -4620,8 +4753,47 @@ P_12HEITER_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"12HEITER.sqt.p2.ref", 0x3988, 120
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 84, 50, 93, 11, 5
+	k5_note	0x90, 84, 53, 84, 10, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 86, 43, 83, 4, 1
+	k5_note	0x90, 86, 47, 90, 6, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 86, 48, 72, 76, 0
+	k5_note	0x90, 86, 51, 56, 79, 0
+	k5_note	0x90, 87, 41, 60, 71, 0
+	k5_note	0x90, 87, 44, 60, 75, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 86, 44, 80, 38, 1
+	k5_note	0x90, 86, 46, 76, 42, 1
+	k5_note	0x90, 86, 50, 71, 46, 1
+	k5_note	0x90, 87, 41, 71, 34, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 83, 46, 84, 64, 6
+	k5_note	0x90, 83, 51, 55, 67, 6
+	k5_note	0x90, 86, 43, 69, 59, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 82, 48, 66, 65, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 
 	.if	(. - P_12HEITER_SQT_p2) - 14848
 	.error	"12HEITER.SQT part 2: the payload is not 14848 bytes"

@@ -1,0 +1,9 @@
+BitMapOut_CopyExtTable_Check: 14 bytes, 6 instructions: IDENTICAL
+PanelMemory_RecallRecords_Loop: 28 bytes, 12 instructions: IDENTICAL
+PanelMemory_RecallRecords_Join: 139 bytes, 60 instructions: IDENTICAL
+CmpStepTitle_OnPaint: 32 bytes, 9 instructions: DIFFERS
+  tree:      '\tcp\t(PREVIOUS_TITLE:16), 182'
+  converter: '\tcp\t(0x8c9b:16), 182'
+CmpStepTitle_OnPaint_Draw: 13 bytes, 10 instructions: IDENTICAL
+CmpStepTitle_OnHide: 13 bytes, 10 instructions: IDENTICAL
+CmpStepTitle_OnSwitchIn: 13 bytes, 10 instructions: IDENTICAL

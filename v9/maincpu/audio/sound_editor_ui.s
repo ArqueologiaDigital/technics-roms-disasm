@@ -8548,8 +8548,8 @@ SeMenu_DrawKeyboardOctave:
 	popw	iy
 	popw	ix
 	ld	c, 5:opc
-	ld	xiz, SeMenu_ShowConfirmDialog_Code
-SeMenu_ShowConfirmDialog_Data_Code_Loop2:
+	ld	xiz, SeMenu_KeyboardOctave_BlackKeyX
+SeMenu_DrawKeyboardOctave_BlackKeyLoop:
 	ld	hl, (xiz)
 	ld	de, (xiz+2)
 	add	xiz, 4
@@ -8571,7 +8571,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop2:
 	pop	xiz
 	pop	c
 	dec	1, c
-	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Loop2
+	jr	nz, SeMenu_DrawKeyboardOctave_BlackKeyLoop
 	ld	c, 6:opc
 SeMenu_DrawKeyboardOctave_Loop:
 	add	ix, 4
@@ -8591,23 +8591,16 @@ SeMenu_DrawKeyboardOctave_Loop:
 	dec	1, c
 	jr	nz, SeMenu_DrawKeyboardOctave_Loop
 	ret
-SeMenu_ShowConfirmDialog_Code:
-	pop	sr
-	nop
-	halt
-	nop
-	reti
-	nop
-	push	0
-	retd	4352
-	nop
-	zcf
-	nop
-	pop_a
-	nop
-	ldf	0
-	pop_f
-	nop
+; SeMenu_KeyboardOctave_BlackKeyX: 5 x {x1, x2}: the x offsets of the five black keys in one 28-px octave
+;   of the sound editor's mini keyboard (C#, D#, F#, G#, A#). Basis: reader + bytes --
+;   SeMenu_DrawKeyboardOctave draws each as an op-09 line from (IX + x1, IY + 1) to (IX + x2, IY + 7).
+;   (Was disassembled as 13 dead instruction lines, SeMenu_ShowConfirmDialog_Code.)
+SeMenu_KeyboardOctave_BlackKeyX:
+	.short	3, 5
+	.short	7, 9
+	.short	15, 17
+	.short	19, 21
+	.short	23, 25
 ; SeMenu_DrawSelectedPartEnvCurve: Draws the current part's (0x65D) envelope-curve picture: its frame, then by bits
 ;   7-5 of the part's curve-type byte (0x662+part, 0x668+part in 4-part mode) a SeEnvCurve_BitmapTable bitmap or (type
 ;   3) a framed box, at that part's cell. Basis: callers + body.

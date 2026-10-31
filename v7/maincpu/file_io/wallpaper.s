@@ -314,113 +314,121 @@ WPLoad_Return:
 	inc 6, xsp
 	ret
 
-WP_ScanAvailability:
+; SingleLoad_ScanAreas: Sets bit SingleLoad_AreaFlagBits[n] of RAM 0x89F6 for each single-load area n = 0..3
+;   that is present: considered when CheckFileSystemStatus's flag word has that bit; checked with
+;   FileIO_ValidateAndOpenFile (value 3), signature + region (2) or the signature (other); when the current
+;   area SINGLE_LOAD_AREA is 4 or more it is set to the area just found. Basis: callers + body -- the
+;   SINGLE LOAD entry in file_io/single_load.s calls it before SingleLoad_FindNextArea.
+SingleLoad_ScanAreas:
 	push	xiz
 	call	CheckFileSystemStatus
 	ld	qiz, hl
 	ldw	(35162:16), 0
 	ld	iz, 0:i3
-WPScan_LoopBody:
+SingleLoad_ScanAreas_LoopBody:
 	ld bc, iz
 	extz xbc
-	ld xwa, WPScan_SlotFlagBits
+	ld xwa, SingleLoad_AreaFlagBits
 	add xwa, xbc
 	ld c, (xwa)
 	ld de, 1:i3
 	ld a, c
 	and a, 0xf
-	jr z, WPScan_CheckAvail
+	jr z, SingleLoad_ScanAreas_CheckAvail
 	slla de
 
-WPScan_CheckAvail:
+SingleLoad_ScanAreas_CheckAvail:
 	andw_erp DE, 0xfa
-	jrl z, WPScan_LoopContinue
+	jrl z, SingleLoad_ScanAreas_LoopContinue
 	cp c, 3:i3
-	jr nz, WPScan_TypeNotThree
+	jr nz, SingleLoad_ScanAreas_TypeNotThree
 	call FileIO_ValidateAndOpenFile
 	cp hl, 0:i3
-	jrl z, WPScan_LoopContinue
+	jrl z, SingleLoad_ScanAreas_LoopContinue
 	ld wa, iz
 	extz xwa
-	ld xbc, WPScan_SlotFlagBits
+	ld xbc, SingleLoad_AreaFlagBits
 	add xbc, xwa
 	ld de, 1:i3
 	ld a, (xbc)
 	and a, 0xf
-	jr z, WPScan_MarkAvailable
+	jr z, SingleLoad_ScanAreas_MarkAvailable
 	slla de
 
-WPScan_MarkAvailable:
+SingleLoad_ScanAreas_MarkAvailable:
 	or	(0x895a:16), de
 	cp	(SINGLE_LOAD_AREA:16), 4
-	jr	nc, WPScan_LimitReached
-	jr	WPScan_LoopContinue
-WPScan_TypeNotThree:
+	jr	nc, SingleLoad_ScanAreas_LimitReached
+	jr	SingleLoad_ScanAreas_LoopContinue
+SingleLoad_ScanAreas_TypeNotThree:
 	ld a, c
 	cp c, 2:i3
-	jr nz, WPScan_TypeGeneric
+	jr nz, SingleLoad_ScanAreas_TypeGeneric
 	call FileIO_ValidateFileSignature
 	cp hl, 0:i3
-	jr z, WPScan_LoopContinue
+	jr z, SingleLoad_ScanAreas_LoopContinue
 	call FileIO_ValidateFileWithRegion
 	cp hl, 0:i3
-	jr nz, WPScan_LoopContinue
+	jr nz, SingleLoad_ScanAreas_LoopContinue
 	ld wa, iz
 	extz xwa
-	ld xbc, WPScan_SlotFlagBits
+	ld xbc, SingleLoad_AreaFlagBits
 	add xbc, xwa
 	ld de, 1:i3
 	ld a, (xbc)
 	and a, 0xf
-	jr z, WPScan_TypeTwo_Mark
+	jr z, SingleLoad_ScanAreas_TypeTwo_Mark
 	slla de
 
-WPScan_TypeTwo_Mark:
+SingleLoad_ScanAreas_TypeTwo_Mark:
 	or	(0x895a:16), de
 	cp	(SINGLE_LOAD_AREA:16), 4
-	jr	nc, WPScan_LimitReached
-	jr	WPScan_LoopContinue
-WPScan_TypeGeneric:
+	jr	nc, SingleLoad_ScanAreas_LimitReached
+	jr	SingleLoad_ScanAreas_LoopContinue
+SingleLoad_ScanAreas_TypeGeneric:
 	call FileIO_ValidateFileSignature
 	cp hl, 0:i3
-	jr z, WPScan_LoopContinue
+	jr z, SingleLoad_ScanAreas_LoopContinue
 	ld wa, iz
 	extz xwa
-	ld xbc, WPScan_SlotFlagBits
+	ld xbc, SingleLoad_AreaFlagBits
 	add xbc, xwa
 	ld de, 1:i3
 	ld a, (xbc)
 	and a, 0xf
-	jr z, WPScan_Generic_Mark
+	jr z, SingleLoad_ScanAreas_Generic_Mark
 	slla de
 
-WPScan_Generic_Mark:
+SingleLoad_ScanAreas_Generic_Mark:
 	or	(0x895a:16), de
 	cp	(SINGLE_LOAD_AREA:16), 4
-	jr	c, WPScan_LoopContinue
-WPScan_LimitReached:
+	jr	c, SingleLoad_ScanAreas_LoopContinue
+SingleLoad_ScanAreas_LimitReached:
 	ldto_berp	A, 0xf8
 	ld	(SINGLE_LOAD_AREA:16), a
-WPScan_LoopContinue:
+SingleLoad_ScanAreas_LoopContinue:
 	inc 1, iz
 	cp iz, 4:i3
-	jrl c, WPScan_LoopBody
+	jrl c, SingleLoad_ScanAreas_LoopBody
 	pop xiz
 	ret
 
-WP_FindNextSlot:
+; SingleLoad_FindNextArea: Steps SINGLE_LOAD_AREA round-robin to the next area whose bit is set in RAM 0x89F6
+;   (SingleLoad_ScanAreas); L = 1 when one was found, 0 when none is present or the area is 4 or more. Basis:
+;   callers + body.
+SingleLoad_FindNextArea:
 	pushw	iz
 	ld	a, (SINGLE_LOAD_AREA:16)
 	cp	a, 4:i3
-	jr	nc, WPFind_NotFound
+	jr	nc, SingleLoad_FindNextArea_NotFound
 	ld	bc, (35162:16)
 	cp	bc, 0:i3
-	jr	z, WPFind_NotFound
+	jr	z, SingleLoad_FindNextArea_NotFound
 	ld	iz, 1:i3
 	extz	wa
 	ld	qbc, wa
-	lda	xde, (WPScan_SlotFlagBits:24)
-WPFind_SearchLoop:
+	lda	xde, (SingleLoad_AreaFlagBits:24)
+SingleLoad_FindNextArea_SearchLoop:
 	ldto_werp HL, 0xe6
 	add hl, iz
 	and hl, 0x3
@@ -431,29 +439,32 @@ WPFind_SearchLoop:
 	ld iy, 1:i3
 	ld a, (xix)
 	and a, 0xf
-	jr z, WPFind_CheckSlot
+	jr z, SingleLoad_FindNextArea_CheckSlot
 	slla iy
 
-WPFind_CheckSlot:
+SingleLoad_FindNextArea_CheckSlot:
 	and	iy, bc
-	jr	z, WPFind_NextSlot
+	jr	z, SingleLoad_FindNextArea_NextSlot
 	ld	(SINGLE_LOAD_AREA:16), l
 	ld	l, 1:opc
-	jr	WPFind_Return
-WPFind_NextSlot:
+	jr	SingleLoad_FindNextArea_Return
+SingleLoad_FindNextArea_NextSlot:
 	inc 1, iz
 	cp iz, 4:i3
-	jr c, WPFind_SearchLoop
+	jr c, SingleLoad_FindNextArea_SearchLoop
 
-WPFind_NotFound:
+SingleLoad_FindNextArea_NotFound:
 	ld l, 0x0:opc
 
-WPFind_Return:
+SingleLoad_FindNextArea_Return:
 	popw iz
 	ret
 
 ; -----------------------------------------------------------------------------
-; Wallpaper Name Getter Routines
+; Single-load helpers.  Only FmmWallpaperLoadFunc above is wallpaper code; the routines below scan
+; the single-load areas and fetch the names the SINGLE LOAD source and destination lists show (file
+; buffer 0x1ED350, sound RAM 0x1E0000, the composer records 0x948A0, ROM name tables).  Callers:
+; file_io/single_load.s.  XWA = destination buffer, E = the marker byte stored first.
 ; -----------------------------------------------------------------------------
 ; These routines retrieve wallpaper display names from various sources:
 ; - User RAM structures (0x1ed350, 0x1e0000, 0x1e4980, 0x1e4aa7)
@@ -465,9 +476,10 @@ WPFind_Return:
 ;   E = type marker byte
 ; -----------------------------------------------------------------------------
 
-; Get wallpaper name from config structure by index
-; Input: XWA = dest buffer, BC = index, E = type marker
-WP_GetConfigName:
+; SingleLoad_GetFileBankName: Writes E, then the 16-byte name of panel-memory bank BC of the loaded .PMT file
+;   (0x1ED350 + 16 + 16 * BC) to XWA, trimmed and padded to 16 (TrimAndPadSmfFilename). Basis: callers --
+;   the panel-memory bank lists of file_io/single_load.s.
+SingleLoad_GetFileBankName:
 	push xiz
 	ld xiz, xwa
 	lda xhl, (0x1ed350:24); Wallpaper config base address
@@ -487,9 +499,10 @@ WP_GetConfigName:
 	pop xiz
 	ret
 
-; Get wallpaper name with calculated offset
-; Input: XWA = dest buffer, BC = multiplier, E = type marker
-WP_GetNameByOffset:
+; SingleLoad_GetFileMemoryName: Writes E, then the name of panel memory BC of the loaded .PMT file
+;   (0x1ED350 + entry size (+13) * BC + 178) to XWA, padded to 16. Basis: callers -- the panel-memory item
+;   rows of the single-load destination list.
+SingleLoad_GetFileMemoryName:
 	push xiz
 	ld xiz, xwa
 	lda xwa, (0x1ed350:24)
@@ -509,9 +522,9 @@ WP_GetNameByOffset:
 	pop xiz
 	ret
 
-; Get wallpaper name from ROM table 1 (0xea07ae)
-; Input: XWA = dest buffer, BC = index, E = type marker
-WP_GetPresetName1:
+; SingleLoad_GetComposerBankName: Writes E, then SingleLoad_MemoryBankNames[BC] ("MEMORY-A" / "-B" / "-C")
+;   to XWA, padded to 16. Basis: callers -- the COMPOSER source and destination lists (BC = position / 10).
+SingleLoad_GetComposerBankName:
 	push xiz
 	ld xiz, xwa
 	ld (xiz+), e
@@ -529,10 +542,9 @@ WP_GetPresetName1:
 	pop xiz
 	ret
 
-; Simple wallpaper pointer lookup from ROM table 2 (0xea07ea)
-; Input: WA = index
-; Output: XHL = pointer to name string
-WP_GetPresetPtr:
+; SingleLoad_GetVariationName: Returns XHL = PtrTbl_VariationNames[WA] ("VARI 1".."VARI 4", then empty).
+;   Basis: callers -- the COMPOSER single-load lists (WA = item mod items per bank).
+SingleLoad_GetVariationName:
 	extz xwa
 	sll xwa, 2	; index * 4
 	ld xbc, PtrTbl_VariationNames
@@ -540,9 +552,12 @@ WP_GetPresetPtr:
 	ld xhl, (xbc)
 	ret
 
-; Get wallpaper name with bank/memory selection
-; Input: XWA = dest buffer, BC = bank, DE = memory slot, stack+8 = type marker
-WP_GetBankMemName:
+; SingleLoad_GetComposerSectionName: Writes the marker (stack word), then the name of section DE of composer
+;   bank BC to XWA: sections 0-3 (VARI 1-4) from the 96-byte composer records at RAM 0x948A0 + 96 * (4 * BC +
+;   DE) (13 bytes), sections 4-9 from SingleLoad_StyleSectionNames (INTRO 1 .. ENDING 2); padded to 16; pops
+;   the marker word (retd 2). Basis: callers -- SingleLoadSrc_ComposerDrawPatternSlot and
+;   SingleLoadDst_DrawComposerItemRows.
+SingleLoad_GetComposerSectionName:
 	push xiz
 	ld hl, bc
 	ld xiz, xwa
@@ -550,7 +565,7 @@ WP_GetBankMemName:
 	ld wa, (xsp + 8)
 	ld (xbc), a	; Store type marker
 	cp de, 4:i3
-	jr nc, WP_GetBankMemName_FromROM
+	jr nc, SingleLoad_GetComposerSectionName_FromROM
 	; From RAM at 0x0948a0
 	lda xbc, (0x0948a0:24)
 	sll hl, 2
@@ -561,32 +576,33 @@ WP_GetBankMemName:
 	ldw de, 0xd	; Copy 13 bytes
 	call FileIO_CopyString_WriteNull
 	ld (xiz + 13), 0x0
-	jr WP_GetBankMemName_Format
-WP_GetBankMemName_FromROM:
+	jr SingleLoad_GetComposerSectionName_Format
+SingleLoad_GetComposerSectionName_FromROM:
 	extz xde
 	sll xde, 2
-	ld xbc, WP_SectionNameTable	; ROM table address
+	ld xbc, SingleLoad_StyleSectionNames	; ROM table address
 	add xbc, xde
 	ld xbc, (xbc)
 	ld xwa, xiz
 	call FileIO_CopyString
-WP_GetBankMemName_Format:
+SingleLoad_GetComposerSectionName_Format:
 	ld xwa, xiz
 	ldw bc, 0x10
 	calr TrimAndPadSmfFilename
 	pop xiz
 	retd 0x2
 
-; Get wallpaper name from ROM table 3 (0xea08da)
-; Input: XWA = dest buffer, BC = index, E = type marker
-WP_GetPresetName3:
+; SingleLoad_GetSoundMemBankName: Writes E, then SingleLoad_SoundMemBankNames[BC] ("MEMORY A", "MEMORY B",
+;   "USER KIT") to XWA, padded to 16. Basis: callers -- the SOUND MEMORY source and destination lists (BC =
+;   position / 20).
+SingleLoad_GetSoundMemBankName:
 	push xiz
 	ld xiz, xwa
 	ld (xiz+), e
 	ld wa, bc
 	extz xwa
 	sll xwa, 2
-	ld xbc, WP_GetPresetName3_PtrTable
+	ld xbc, SingleLoad_SoundMemBankNames
 	add xbc, xwa
 	ld xbc, (xbc)
 	ld xwa, xiz
@@ -597,9 +613,9 @@ WP_GetPresetName3:
 	pop xiz
 	ret
 
-; Get wallpaper name from structure at 0x1e0000 (stride 0x1d6)
-; Input: XWA = dest buffer, BC = index, E = type marker
-WP_GetUserName1:
+; SingleLoad_GetSoundRamName: Writes E, then the 16-byte name of sound-RAM sound BC (0x1E0000 + 16 + 470 * BC)
+;   to XWA, padded to 16. Basis: callers -- the SOUND MEMORY destination list.
+SingleLoad_GetSoundRamName:
 	push xiz
 	ld xiz, xwa
 	lda xhl, (0x1e0000:24)
@@ -618,9 +634,9 @@ WP_GetUserName1:
 	pop xiz
 	ret
 
-; Get wallpaper name from RAM at 0x1e4980
-; Input: XWA = dest buffer, BC = (unused), E = type marker
-WP_GetUserName2:
+; SingleLoad_GetUserKitName: Writes E, then the 16-byte USER KIT name in sound RAM (0x1E4980) to XWA, padded to
+;   16; BC is not used. Basis: callers -- the SOUND MEMORY destination list's USER KIT row.
+SingleLoad_GetUserKitName:
 	push xiz
 	ld de, bc
 	ld xiz, xwa
@@ -636,9 +652,9 @@ WP_GetUserName2:
 	pop xiz
 	ret
 
-; Get wallpaper name from structure at 0x1e4aa7 (stride 0x50)
-; Input: XWA = dest buffer, BC = index, E = type marker
-WP_GetUserName3:
+; SingleLoad_GetUserKitEntryName: Writes E and a space, then the 13-byte name of USER KIT entry BC (0x1E4AA7 +
+;   80 * BC) to XWA, padded to 15. Basis: callers -- the SOUND MEMORY destination list past the 2 x 20 sounds.
+SingleLoad_GetUserKitEntryName:
 	push xiz
 	ld xiz, xwa
 	lda xhl, (0x1e4aa7:24)

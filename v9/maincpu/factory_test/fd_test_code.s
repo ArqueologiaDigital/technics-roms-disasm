@@ -12,18 +12,15 @@
 ;
 ;   2. When the title system activates one of these titles (exact user-facing
 ;      menu path not yet traced; likely a hidden service/diagnostic mode),
-;      it sends lifecycle events to TestTitleFunc:
-;        Event 0x1c00007 + xde parameter:
-;          0 = Title new      3 = Title activate
-;          1 = Title old       4 = Title inactivate
-;          2 = Title INTERUPT  5 = Title INTERUPT RETURN
-;          6 = TBIOS Test
+;      TestTitleFunc gets EVT_ACTIVATE_STATE with XDE = 2..7 and prints
+;      "Title new" / "old" / "Inactivate" / "Activate" / "INTERUPT" /
+;      "INTERUPT RETURN".
 ;
-;   3. Once the dialog is active, user button presses generate event
-;      0x1c00013 dispatched to TestTitleFunc with xde parameter:
-;        2 = STOP FDD TEST           5 = Debug Test
-;        3 = START FDD TEST LOOP     6 = Debug Test
-;        4 = DIR (directory listing)
+;   3. Its switches arrive as EVT_SW_IN with XDE = switch number:
+;        0 = TBIOS Test               4 = format 2DD ("TEST_HAMA")
+;        1 = STOP FDD TEST            5 = format 2HD ("TESTHAMA2HD")
+;        2 = START FDD TEST LOOP      6 = list A:\HAMA\*.LSW
+;        3 = DIR (directory listing)  7 = nothing
 ;
 ;   4. The NAKA widget system generates events 0x1c00017..0x1C0001D for
 ;      the 7 dialog buttons, handled by FDTestDialogProc via jump table.

@@ -12,8 +12,14 @@ QUESTION IT ANSWERS
               a 0x27-byte header (the kit name first), 128 {program, bank LSB, bank MSB} references, then 128
               voice records of 0x8E: a 16-byte head (13-character name), 2 sub-records of 0x1C at +0x10
               (TgPartLocalEditModRecPtr), 2 elements of 0x23 at +0x48 (TgPartLocalEditElemRecPtr)
-    +0xB7F7   3 bytes: [INFERENCE] the KN5000's edit index and checksum: the LE16 is ~(sum of the LE16 words
-              of the 40 sound records) in 13 of the 50 files (SoundRam_WriteIdAndChecksum's rule on the KN5000)
+    +0xB7F7   a byte ([INFERENCE] the edit index the KN5000 file has here), then the LE16 checksum the firmware
+              keeps at RAM +0xB7F8: ~(LE16 sum of the 0x37A0 halfwords of the 40 sound records), KN6000
+              func_4C07D7C1 (from 0x8402F4F4 = block 0x8402F4E4 + 0x10; KN7000 func_4844AC9B, 0x840327F8).  It is
+              validated against RAM at power-on (func_4C07E1D4: a mismatch re-initialises the sounds,
+              func_4C07DD55) and recomputed after every .TM load (PostTmTransLoad 0x4C07DF7B -> func_4C07DEC8),
+              so a file's word is never read.  It matches in 12 of the 50 files; [INFERENCE] the others were
+              saved after sounds were changed by a path that does not recompute it
+              (notes/floppy-leftovers-2026-10-31/probes/tm_tail.py, tm_tail2.py).
   Records are content-addressed include files in floppy/kn6000/include/tm/, shared by every disk.
 """
 import hashlib
@@ -85,6 +91,6 @@ def typer(ctx, part, p, ref, lab):
     t = p[-3:]
     s = (~sum(p[i] | p[i + 1] << 8 for i in range(0x10, kb, 2))) & 0xFFFF
     L.append('\t.byte\t%d\t; [INFERENCE] the edit index (the KN5000 file has one here)' % t[0])
-    L.append('\t.short\t0x%04x\t; %s' % (t[1] | t[2] << 8, '= ~(LE16 sum of the 40 sound records), the KN5000 rule'
-                                       if s == t[1] | t[2] << 8 else 'not ~(LE16 sum of the sound records) (= 0x%04x)' % s))
+    L.append('\t.short\t0x%04x\t; %s' % (t[1] | t[2] << 8, 'the sound records\' checksum, ~(LE16 sum) (func_4C07D7C1)'
+                                       if s == t[1] | t[2] << 8 else 'a stale checksum (the records give 0x%04x); no load reads it, PostTmTransLoad recomputes it' % s))
     return L

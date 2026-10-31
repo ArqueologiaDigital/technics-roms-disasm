@@ -410,6 +410,9 @@ says nothing about how they interact.  It now can:
    therefore dead on every `GROUP`ed part *and on every ungrouped one too*, is a
    **sequencing** question this lane did not answer.  It is the cheapest remaining item:
    `FINDINGS-l7a1429-write-sequencing.md` already has the call graph.  Graded **OPEN**.
+   (Resolved 2026-10-31, lane open4/wsa1-a: §9 below — the dispatcher runs last on every path
+   that runs both, so the static term is dead after a program change or a wave-select edit; it
+   is LIVE on the drum-kit note path, the drawbar note tail and controller 94's reload.)
 2. ⚠ **The waveguide reading of §4.3 is STRONG, not PROVEN.**  Five exact constants agreeing
    is a strong argument and not a measurement.  What would settle it is playing a `GROUP`ed
    tone with the two resonators tuned apart and measuring the pitch of the partials against
@@ -439,3 +442,32 @@ says nothing about how they interact.  It now can:
 | ★ the solver evaluates a **coupled-waveguide loop characteristic function** | **STRONG** (§4.3) |
 | ★ the block is the `MAIN`↔`SUB` **interaction** the editor's caption names | **STRONG** — the mechanism is proven; that the caption `INTERACTION GAIN` names *this* as well as register `0x0300` inherits editor-pages' STRONG grade for the caption |
 | which of the two writers of `P[+0x12]` survives | **OPEN** (§8.1) |
+
+---
+
+## 9. ★ WHICH WRITER OF `P[+0x12]`/`P[+0x14]` RUNS LAST — PROVEN (lane `open4/wsa1-a`, 2026-10-31)
+
+Probe: `notes/open4-a-probes/detune_writer_order.py` (exits 0 on PASS).  `P` is the part element
+sub-record `0x5D23 + 187·part + 0x13 + 42·e`; both writers reach it through `(0x00E084)`.
+
+* **Writer 1**, `Pack104_UnpackWaveSelRec_ToSubRecord`, is reached only through
+  `Pack104_LoadElementWaveSelRec`, and writes `P[+0x12] = (p26 << 8) + p27` only when p25 bit 7
+  is set (0xFC48F4 … 0xFC4926), `P[+0x14]` likewise from p37/p38/p39; otherwise it leaves the
+  fields as they were.
+* **Writer 2**, `Pack104_DispatchByResoMode_ForPart`, always runs one arm (or a pair) covering
+  all four elements, and **every arm writes both fields**: 0 in `sub_FC6CA8`/`_FC6CEA`/`_FC6D2C`,
+  the solver's result in `sub_FC6D6E`/`_FC6FFD`/`_FC723F`.
+
+| caller kind                         | routines                                                                                                                                                                       | last writer | static term                                                       |
+|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|-------------------------------------------------------------------|
+| both, dispatcher after every loader | `Part_RestageVoiceParams_Melodic`, `_Drawbar`, `ToneDB_SourceNameList1/2_SelectEntry`, `ToneMsg_WriteWaveSelectParam` (tail), `sub_FBB793` (two pairs), `sub_FBBFFB`           | dispatcher  | **dead**: overwritten by 0 (ungrouped) or the solver (grouped)    |
+| loader only, note time              | `VoiceParams_Compute_C` (drum-kit note-on, 4 sites), `VoiceParams_Compute_D` (drawbar note tail, 2 sites)                                                                      | unpacker    | **live** when p25/p37 bit 7 is set, until the part's next restage |
+| loader only, edit / controller      | `sub_FAFBEC` (controller 94, `MidiCtrl_Dispatch` 0xFAFF4C, and `sub_FBB793`: a MELODIC part's four elements), the drum/percussion tone-edit writers (8 routines, in the probe) | unpacker    | **live** on that part until its next restage                      |
+| never called                        | `sub_FB289A`, `sub_FB2F74` (orphan twins of C and D)                                                                                                                           | —           | —                                                                 |
+
+So the answer to §8.1 is **neither "always" nor "never"**: on a melodic part (modes 0x00/0x40)
+the GROUP term (or zero) is what a program change and every wave-select edit leave in place,
+and only controller 94's reload re-installs the static detune; on a drum kit and on the drawbar
+note tail the static term is rewritten at every note.  Because P is per PART, not per voice,
+the value one path leaves is what every later note of that part packs.
+⚠ What controller 94 is *for* is not established here; the probe states only the route.

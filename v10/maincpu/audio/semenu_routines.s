@@ -4096,7 +4096,7 @@ SeMenu_DrawAmpEnvGraph_Join10:
 	lda	xsp, (xsp+22)
 	ret
 ; SeMenu_DrawClippedEnvSegment: Draws one envelope-graph segment from (WA, BC) to (DE, y2 = the word pushed before the
-;   call, removed by retd 2) through SeMenu_DrawEnvGraphLine (a line clamped to y 59..146). A segment starting
+;   call, removed by retd 2) through SeMenu_DrawEnvGraphLine (which offsets and clips the line to y 59..146 on title 0x37 only). A segment starting
 ;   left of x = 213 is cut at x = 213, one starting at or right of 213 is cut at x = 258; HL returns the interpolated
 ;   y at the cut, or 0 if the segment fits. Basis: callers + body -- SeMenu_DrawAmpEnvGraph (and the second envelope
 ;   graph in SeMenu_DrawPitFilEnvGraph) draw their key-on segments from x = 51 with it, stop at the first non-zero

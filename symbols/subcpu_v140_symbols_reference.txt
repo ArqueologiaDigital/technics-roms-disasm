@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 5,063
-#   semantic names ........... 5,042 (99.6%)
+#   symbols .................. 5,066
+#   semantic names ........... 5,045 (99.6%)
 #   positional names ......... 21
 #
 PAYLOAD_ENTRY 00000400
@@ -107,12 +107,12 @@ Voice_CommandIndexTable 0000F4EC
 Voice_Pool_Quota_ModeA 0000F507
 Voice_Pool_Quota_ModeB 0000F519
 Voice_Part_PoolPtr_ModeA 0000F52B
-Voice_Pitch_Table_High 0000F597
-Voice_KeyTable_Remapping 0000F603
+Voice_Part_PoolPtr_ModeB 0000F597
+Voice_StealPoolOrder 0000F603
 Voice_Search_Order_List_1 0000F60B
 Voice_Search_Order_List_2 0000F61A
 Voice_Search_Order_List_3 0000F628
-Voice_SFX_ModulationTable 0000F633
+Voice_LayerClassTable 0000F633
 Pitch_OctaveShift_CaseOffsets 0000F693
 TVF_Build_CaseOffsets 0000F6A7
 TVF_BuildEmit_Short_CaseOffsets 0000F6B3
@@ -1097,6 +1097,7 @@ TaskSched_Unlock 0002083F
 FIFO1K_Get 00020844
 FIFO1K_Put 00020851
 FIFO1K_PutBytes 00020867
+FIFO1K_PutBytes_Loop 00020879
 FIFO1K_Is_Empty 00020889
 FIFO1K_Put_Block_Code_Return 0002089A
 FIFO1K_Free_Space 0002089B
@@ -1109,6 +1110,7 @@ FIFO1K_Set_Commit 000208E5
 FIFO256_Get 000208F2
 FIFO256_Put 000208FF
 FIFO256_PutBytes 00020915
+FIFO256_PutBytes_Loop 00020927
 FIFO256_Is_Empty 00020937
 FIFO256_Put_Block_Code_Return 00020948
 FIFO256_Free_Space 00020949
@@ -1121,6 +1123,7 @@ FIFO256_Set_Commit 00020993
 FIFO512_Get 000209A0
 FIFO512_Put 000209AD
 FIFO512_PutBytes 000209C3
+FIFO512_PutBytes_Loop 000209D5
 FIFO512_Is_Empty 000209E5
 FIFO512_Put_Block_Code_Return 000209F6
 FIFO512_Free_Space 000209F7
@@ -1368,10 +1371,10 @@ Voice_Find_Candidate_Secondary 000222A3
 Voice_Find_Candidate_Primary 000222CB
 Voice_Find_Candidate_Advance 000222E8
 NoteChain_FindNode_NotFound 000222EF
-NoteChain_FindNode_B 000222F2
-NoteChain_FindNode_B_Walk 00022302
-NoteChain_FindNode_B_Advance 0002231F
-NoteChain_FindNode_B_NotFound 00022326
+Voice_FindStealCandidate 000222F2
+Voice_FindStealCandidate_Walk 00022302
+Voice_FindStealCandidate_Advance 0002231F
+Voice_FindStealCandidate_NotFound 00022326
 Voice_Allocate_Nodes 00022329
 Voice_Allocate_Nodes_SlotLoop 0002233E
 Voice_Allocate_Nodes_ProcessSlot 00022379
@@ -1382,8 +1385,8 @@ Voice_Allocate_Nodes_RetriggerMask 00022440
 Voice_Allocate_Nodes_RetriggerOrMask 00022468
 Voice_Allocate_Nodes_UpdateLists 0002247B
 Voice_Allocate_Nodes_SetGlobalHead 000224A8
-Voice_Allocate_Nodes_AdvancePriority 000224B1
-Voice_Allocate_Nodes_WalkNext 000224C5
+Voice_Allocate_Nodes_CountAgainstQuota 000224B1
+Voice_Allocate_Nodes_StealAtQuota 000224C5
 Voice_Allocate_Nodes_WriteSlot 000224EE
 Voice_Allocate_Nodes_SlotNoNode 0002250E
 Voice_Allocate_Nodes_SlotInactive 00022524
@@ -2092,9 +2095,9 @@ ToneGen_WriteNote2ch_NopCont1 000280BE
 ToneGen_WriteNote2ch_NopCont2 000280E0
 VoiceCC_DataTable_0280FE 000280E7
 VoiceCC_DataTable_0280FE_Next 00028104
-ToneGen_WriteVoice_Pan_Pair 00028109
-ToneGen_WriteVoice_Pan_Pair_Next 00028130
-ToneGen_WriteVoice_Pan_Pair_Next2 00028152
+ToneGen_WriteVoice_TvfPair 00028109
+ToneGen_WriteVoice_TvfPair_Next 00028130
+ToneGen_WriteVoice_TvfPair_Next2 00028152
 ToneGen_WriteVoice_Reg21_Reg22 00028159
 ToneGen_WriteVoice_Reg21_Reg22_Next 00028180
 ToneGen_WriteVoice_Reg21_Reg22_Next2 000281A2
@@ -2183,14 +2186,14 @@ Voice_CC_SetTuning 000289D2
 Voice_CC_SetKeyShift 000289ED
 Voice_CC_SetModWheelRange 00028A03
 Voice_CC_SetModWheelRange_Else 00028A1A
-Voice_CC_SetReverbDepth 00028A2D
+Voice_CC_SetVelSwitchConfig 00028A2D
 Voice_CC_SetGlidePedal 00028A3E
 VoiceCC_SetGlidePedal_ClearBit 00028A55
 Voice_CC_SetSustainLength 00028A68
-Voice_CC_SetDelayDepth 00028A79
+Voice_CC_SetGateRoutingMode 00028A79
 Voice_CC_SetKeyScaling 00028A8A
 VoiceCC_SetKeyScaling_ClearBit 00028AA1
-Voice_CC_SetDelayFeedback 00028AB4
+Voice_CC_SetTgPanMode 00028AB4
 Voice_SetPolyphonyMode 00028AC5
 Voice_SetPolyphonyMode_Else 00028ADB
 Voice_SetPolyphonyMode_Apply 00028AE8
@@ -2412,12 +2415,12 @@ Voice_CC_Num123 0002A3EB
 Voice_CC_BendRange 0002A406
 Voice_CC_Tuning 0002A41C
 Voice_CC_KeyShift 0002A440
-Voice_CC_91 0002A455
+Voice_CC_VelSwitchConfig 0002A455
 Voice_CC_GlidePedal 0002A46A
 Voice_CC_SustainLength 0002A47F
-Voice_CC_9B 0002A494
+Voice_CC_GateRoutingMode 0002A494
 Voice_CC_KeyScaling 0002A4A9
-Voice_CC_9D 0002A4BE
+Voice_CC_TgPanMode 0002A4BE
 Voice_CC_Exit 0002A4D1
 Voice_ChanPressure 0002A4D3
 Voice_ChanPressure_StereoLoopStart 0002A519

@@ -75,10 +75,10 @@ section 2.  Enclosing-routine names are the tree's labels.
 |---|---|---|---|
 | `Dev104_WriteAllChanRegs` 0xFB77EF | all 19, block 0 **last** | 9 | 4 × `VoiceRegs_Stage_A/B/C/D` (note-on/off staging) · `MidiNote_OnTail` · `MidiNote_OffTail` · `NotePool8_NoteOnOff` (the private 8-slot pool's note-on) · `sub_FAC34D` (the auto-note countdown) · `Dev10C_ResetAllChannels` (**power-on, ×64**) |
 | `Dev104_WriteChanReg0` 0xFB7A58 | block 0 only | 8 | `MidiNote_OnTail` · `MidiNote_OffTail` · `MidiNote_OnByPartMode` ×3 (one per part-mode arm) · `NotePool8_NoteOnOff` · `sub_FAC34D` · `Dev10C_ResetAllChannels` (**power-on, ×64**) |
-| `Dev104_SetChanRegs_00C0_0100_0240` 0xFB7A73 | 0x00C0, 0x0100, 0x0240 | 3 | `sub_FACAB7` (**periodic**, §5) · `sub_FAEAF9`, `sub_FAEB65` (**parameter edit / MIDI CC**, §6) |
+| `Dev104_SetChanRegs_00C0_0100_0240` 0xFB7A73 | 0x00C0, 0x0100, 0x0240 | 3 | `sub_FACAB7` (**periodic**, §5) · `CtrlDest29_Position_Apply`, `CtrlDest30_PosDepth_Apply` (**parameter edit / MIDI CC**, §6) |
 | `Dev104_SetChanRegs_00C0_0100` 0xFB7AC9 | 0x00C0, 0x0100 | 1 | `sub_FACAB7` (**periodic**) |
 | `Dev104_SetChanRegs_0140_0180` 0xFB7B05 | 0x0140, 0x0180 | 5 | `MidiNote_OnTail` · `MidiNote_OffTail` · `MidiNote_OnByPartMode` ×3 — always conditional on `sub_FC56C4` returning non-zero |
-| `Dev104_SetChanReg_0280` 0xFB7B41 | 0x0280 | 1 | `sub_FAECC7` (**parameter edit / MIDI CC**) |
+| `Dev104_SetChanReg_0280` 0xFB7B41 | 0x0280 | 1 | `CtrlDest37_SubGain_Apply` (**parameter edit / MIDI CC**) |
 | `Dev104_SetChanRegs_01C0_0200_0240` 0xFB796E | block 0 **first**, then 0x01C0, 0x0200, 0x0240 | **0** | no located caller |
 | `Dev104_SetChanRegs_0140_to_0240` 0xFB79D0 | block 0 **first**, then 0x0140…0x0240 | **0** | no located caller |
 
@@ -87,7 +87,7 @@ negative of an absolute-`call` and `calr` scan; a call through a register operan
 to it.  Not "dead" — "not found".
 
 ⚠ Two dozen of the 27 sites are reached from `MAIN` (0xF98B7D) directly or through
-`MidiIn_ParseRingAndDispatch`; the three inside `sub_FAEAF9`/`sub_FAEB65`/`sub_FAECC7` inherit
+`MidiIn_ParseRingAndDispatch`; the three inside `CtrlDest29_Position_Apply`/`CtrlDest30_PosDepth_Apply`/`CtrlDest37_SubGain_Apply` inherit
 `Voice_ApplyParamChange_Dispatch`'s 68 call sites, which this lane did not trace.  **No site
 was found inside an interrupt handler**, which is consistent with the fact that no writer
 disables interrupts around its select/data pair (§7) — but the fan-in above is unfinished, so
@@ -276,7 +276,7 @@ timing picture and it is what separates the modulation destinations from the voi
 | chan+0x00C0                                                                                         | **PERIODIC — model as a stream**                                                 | 40.69 Hz per sounding voice (both arms), + parameter edit, + every full write                                   |
 | chan+0x0100                                                                                         | **PERIODIC — but a constant on this firmware**                                   | as above; the value is always 0x0100 (`Dev104_Reg0100_Const_251`)                                               |
 | chan+0x0240                                                                                         | **PERIODIC**                                                                     | 40.69 Hz per sounding voice, arm 1 only; + parameter edit; + every full write                                   |
-| chan+0x0280                                                                                         | ONE-SHOT + parameter edit                                                        | full writes; plus `sub_FAECC7` on a param change                                                                |
+| chan+0x0280                                                                                         | ONE-SHOT + parameter edit                                                        | full writes; plus `CtrlDest37_SubGain_Apply` on a param change                                                                |
 | chan+0x0140, chan+0x0180                                                                            | ONE-SHOT, with a conditional extra write at note time                            | full writes; plus `Dev104_SetChanRegs_0140_0180` at all 5 `MidiNote_*` sites when `sub_FC56C4` returns non-zero |
 | chan+0x0000                                                                                         | ONE-SHOT, but written **twice** per note event and twice per channel at power-on | see §7                                                                                                          |
 | chan+0x0040, 0x0080, 0x01C0, 0x0200, 0x02C0, 0x0300, 0x0340, 0x0380, 0x03C0, 0x0400, 0x0440, 0x0480 | ONE-SHOT — voice parameters                                                      | only ever inside a full 19-register write                                                                       |
@@ -298,13 +298,13 @@ back to hardware: a 6-bit target code selects one of 49 arms through the table a
 
 | table index | target code | arm                     | what it recomputes and ships                                           |
 |-------------|-------------|-------------------------|------------------------------------------------------------------------|
-| 28          | 29          | 0xFAF246 → `sub_FAEAF9` | `sub_FC5D5B` → `sub_FC49AD` → registers **0x00C0, 0x0100, 0x0240**     |
-| 29          | 30          | 0xFAF254 → `sub_FAEB65` | `PartRec_SetPositionOffset_0005` / `sub_FC5D5B` → same three registers |
-| 36          | 37          | 0xFAF29A → `sub_FAECC7` | `sub_FC6712` → `sub_FC4AED` → register **0x0280**                      |
+| 28          | 29          | 0xFAF246 → `CtrlDest29_Position_Apply` | `sub_FC5D5B` → `sub_FC49AD` → registers **0x00C0, 0x0100, 0x0240**     |
+| 29          | 30          | 0xFAF254 → `CtrlDest30_PosDepth_Apply` | `PartRec_SetPositionOffset_0005` / `sub_FC5D5B` → same three registers |
+| 36          | 37          | 0xFAF29A → `CtrlDest37_SubGain_Apply` | `sub_FC6712` → `sub_FC4AED` → register **0x0280**                      |
 
 All three go through `VoiceQuery_Tag00_Part` first, i.e. they act on the voices of one part.
 ⚠ What the target codes 29, 30 and 37 *mean* is UNIDENTIFIED — the dispatcher's own header
-refuses to name the 49 entries.
+refuses to name the 49 entries. (Resolved 2026-10-31: they are controller DESTINATIONS — 29 `POSITION`, 30 `POS.DEPTH`, 37 `SUB GAIN` — by prom_b's `ControllerDestinationNames` (0xF33022), indexed by the same 6-bit field; the arms are now `CtrlDest29_Position_Apply`, `CtrlDest30_PosDepth_Apply`, `CtrlDest37_SubGain_Apply`; §10.4.)
 
 **The other 46 arms never touch this device.**  So a parameter edit reaches 0x00104000 through
 exactly four of its nineteen registers, and they are the same four the periodic refresh uses.
@@ -403,7 +403,7 @@ calls `MidiNote_OnByPartMode` (0xFB3F66) and then `MidiNote_OnTail` (0xFB3F75).
 writer; none of the 35 sites in the image that name the literal `0x00D7A2` is inside those
 three, and nothing between them calls the 0x00104000 packer — so the second burst repeats the
 first's values.  Grade **STRONG**, not PROVEN: a write through a pointer already in a register
-would be invisible to a literal scan.  ⚠ Either way, **an emulator matching a bus trace must
+would be invisible to a literal scan. (Resolved 2026-10-31: **PROVEN** — every store in the forward closure of what runs between the bursts is classified by its base register, and none can reach 0x00D7A2..0x00D7C7; both tails load `XIX = 0x00D7A2` once in their prologue and `VoiceRegs_Stage_D` never names XIX; §10.5.)  ⚠ Either way, **an emulator matching a bus trace must
 expect the burst twice.**
 
 **Worst case per note-on on this path: 1 + 19 + 2 + 1 + 19 + 19 + 2 = 63 register writes = 126
@@ -461,7 +461,7 @@ programs once and then stops talking to.
   `Dev104_SetChanRegs_0140_0180` (0xFB39D1).  `MidiNote_OnTail` does **not** run.
 * **mode 0x80** (arm at 0xFB3B01): one `VoiceRegs_Stage_C`.  ★ `VoiceRegs_Stage_A`, `_C` and
   `_D` all call the real packer; only `_B` (mode 0x40) uses the ROM image.
-* **mode 0xC0 and the default** fall into 0xFB3C0E, which was never traced.  UNIDENTIFIED.
+* **mode 0xC0 and the default** fall into 0xFB3C0E, which was never traced.  UNIDENTIFIED. (Resolved 2026-10-31: the bare common exit — no voice, no device write — and no factory tone has kind 0xC0; §10.3.)
 
 ### The two paths that are not the keyboard
 
@@ -488,18 +488,127 @@ programs once and then stops talking to.
   19-register per-channel map.  Whether it is block 0x20 channel 0 or a global register, and
   what it does, is UNIDENTIFIED.
 * **What selects the `VoiceRegs_Stage_B` / ROM-image path**, beyond "part mode 0x40" — and what
-  part-record byte +0x10 *is*.
+  part-record byte +0x10 *is*. (Resolved 2026-10-31, lane open4/wsa1-a, §10.1: the byte is the tone record's prom_d `kind` (+0x10) through part +0x00's pointer; 0x40 marks the two Drawbar tones.)
 * **What the Z test at 0xFB3946 tests**, i.e. what makes a mode-0x00 voice take `Stage_A`
-  rather than `Stage_C`.
-* **Part mode 0xC0** and the default arm at 0xFB3C0E — never traced.
+  rather than `Stage_C`. (Resolved 2026-10-31, lane open4/wsa1-a, §10.2: voice byte +0x01 bit 1, set only by `VoiceParams_Compute_D`'s builder tag; always clear on this arm, so `Stage_C` is unreachable from mode 0x00.)
+* **Part mode 0xC0** and the default arm at 0xFB3C0E — never traced. (Resolved 2026-10-31, lane open4/wsa1-a, §10.3.)
 * **Target codes 29, 30, 37** of `Voice_ApplyParamChange_Dispatch` — the three parameters a UI
   edit can push at this device.  Naming them would name three of the four registers that are
-  written continuously, which is the highest-value open item here.
+  written continuously, which is the highest-value open item here. (Resolved 2026-10-31, lane open4/wsa1-a, §10.4: controller destinations POSITION / POS.DEPTH / SUB GAIN.)
 * **Whether the second full burst at note-on/off carries the same values** — STRONG, not PROVEN
-  (§8).
+  (§8). (Resolved 2026-10-31, lane open4/wsa1-a, §10.5: PROVEN.)
 * **Whether any of the 68 `Voice_ApplyParamChange_Dispatch` call sites is inside an interrupt
-  handler**, which is the last hole in "the select/data pair never needs guarding".
+  handler**, which is the last hole in "the select/data pair never needs guarding". (Resolved 2026-10-31, lane open4/wsa1-a, §10.6: none is; every caller chain ends at the MAIN task.)
 * **Seventeen of the nineteen registers' meanings**, unchanged from
   `notes/FINDINGS-prom_c-dev104-register-map.md` §3.  ⚠ Felipe has no access to the hardware,
   so a live trace is not an available next step; the open routes stay the tone-editor UI and
   the localisation strings. (Resolved: HLE-GUIDE-l7a1429.md section 5.3 (1ccfc5fb2) and FINDINGS-l7a1429-editor-pages.md section 4 (478b87dca): fourteen of the nineteen blocks carry an editor name; 0x0100/0x02C0 are constants, 0x03C0/0x0480 have no editor name by proof, 0x0000 is named by its fields; open-items register 2026-10-31.)
+
+---
+
+## 10. CLOSURES, 2026-10-31 (lane `open4/wsa1-a`)
+
+Nothing above is rewritten; the bullets of §6, §8 and §9 that these answer carry a pointer here.
+Every claim is asserted by a probe in `notes/open4-a-probes/` (README there; each exits 0 on PASS).
+
+### 10.1 What selects the part mode: the tone record's `kind` — PROVEN
+
+`MidiNote_OnByPartMode` loads `XWA = (0x1523 + 300·part)` — the part record's **+0x00 is a
+POINTER** — and tests `(XWA+0x10) & 0xC0` (0xFB3872 / 0xFB3877 / 0xFB387A).  The only 32-bit
+store into that slot is `Part_LoadToneRecordAndPointers`'s `ld (XBC+0x1523),XIY` at 0xFB47EE,
+which stores `Part_ResolveToneRecord`'s answer — the prom_d tone record, or the part's RAM-staged
+copy when part word +0x04 bit 0 is set — and switches on the same byte at 0xFB47F3.  The other
+five 32-bit stores into the array are element sub-record pointers (+0x88, +0x8C, +0x90+4k).
+So "part-record byte +0x10" is **tone-head byte +0x10**, prom_d's `kind`:
+
+| kind (+0x10) | tone heads | bits 7:6 | arm                                                             |
+|--------------|------------|----------|-----------------------------------------------------------------|
+| 0x10         | 248        | 00       | melodic: `VoiceParams_Compute_A`, Stage_A                       |
+| 0x00         | 6          | 00       | melodic (Square Guitar, the vocal pads)                         |
+| 0x71         | 2          | 01       | DRAWBAR: `VoiceParams_Compute_B`, `VoiceRegs_Stage_B` ROM image |
+| 0x80         | 18         | 10       | drum kit: `VoiceParams_Compute_C`, Stage_C                      |
+| —            | 0          | 11       | arm 0xC0, §10.3                                                 |
+
+Probe: `part_mode_kind.py`.  So the Stage_B / ROM-image path is selected by the tone being one of
+the two `<<< Drawbar >>>` records, exactly the complement of prom_d's "0x80 is the drum path".
+
+### 10.2 The Z test at 0xFB3946: the voice record's BUILDER TAG — PROVEN, and the branch is dead
+
+`ld WA,(XBC+0x3BCF)` with `XBC = 68·v + 1`, then `and DE,0x0002`: bit 1 of the voice record's
+byte **+0x01**.  That byte is written when the record is built, in the staging copy at
+`0x5A53 + 68·element` that each `VoiceParams_Compute_*` fills and then lays over the voice record
+with `MemCopyWords(…, 68)` (0xFB1DE7 for A).  Its low bits are a tag of the builder:
+
+| builder (and its orphan twin)          | byte +0x01             | sites                                                                 |
+|----------------------------------------|------------------------|-----------------------------------------------------------------------|
+| `VoiceParams_Compute_A` / `sub_FB0B95` | `(layer << 6) \| 0x04` | 0xFB0F53, 0xFB1162, 0xFB139E, 0xFB1638, 0xFB18E6, 0xFB1BB8 / 0xFB0CAF |
+| `VoiceParams_Compute_B` / `sub_FB1FB1` | `0x08`                 | 0xFB224F, 0xFB23C6, 0xFB253D, 0xFB26CF / 0xFB2093                     |
+| `VoiceParams_Compute_C` / `sub_FB289A` | `(layer << 6) \| 0x10` | 0xFB2B3E, 0xFB2CFE / 0xFB293C                                         |
+| `VoiceParams_Compute_D` / `sub_FB2F74` | `(layer << 6) \| 0x12` | 0xFB32B4, 0xFB34BF / 0xFB307A                                         |
+
+`layer` is `VelSplit_LayerFromVelocity`'s result.  **Bit 1 is D's alone** — D is C's tag plus
+bit 1 — and 0xFB393A is the only test of that bit anywhere in prom_c.  In the mode-0x00 arm every
+voice tested was rebuilt by `VoiceParams_Compute_A` a few instructions earlier: its copy loop runs k = 10..13
+over the request buffer's voice list (0xFB1DA9 / 0xFB1DB4) and the arm walks the same list[10..13]
+(0xFB38D1 / 0xFB395A), and nothing called in between (`Pack104_SetInputs_PartRecord`,
+`Pack104_SetInputs_SubRecordPair`, `Dev104_WriteChanReg0` and their callees) names a voice record
+or its staging copy.  So the bit is **always clear here, `VoiceRegs_Stage_A` is always taken, and
+the `VoiceRegs_Stage_C` call at 0xFB3948 is unreachable from mode 0x00** — a compiled test of a
+tag this path never sets.  Probe: `voice_builder_tag.py`.
+
+### 10.3 Arm 0xC0 and the default (0xFB3C0E) — PROVEN
+
+The arm is the common exit and nothing else: `and (part+0x04),0xFFF3` (0xFB3C1B), the frame pop
+and `ret` — no `VoiceParams_Compute_*`, no voice allocated, no write to either device.  The other
+three arms reach the same instructions after `PartRec_Word0006_ClearBit13` (0xFB3C09), so **every
+note-on clears bits 2-3 of part word +0x04**.  Bit 3 is set by the twelve `Voice_Restage_Reg0440/
+0180/04C0_*_ForPart` sites (0xFAE3A6 … 0xFAEA84) and bit 2 by `sub_FB8CEC` (0xFB8D7A) and
+`sub_FB9AC2` (0xFB9AEC); ⚠ what the two bits *mean* is not established here.  No factory tone has
+kind 0xC0 (§10.1); a RAM-staged tone carrying it would load its pointers as a melodic one
+(`Part_LoadToneRecordAndPointers` treats 0xC0 like 0x00, 0xFB4813) and be **silent on note-on**.
+Probe: `part_mode_kind.py`.
+
+### 10.4 Target codes 29, 30, 37: controller DESTINATIONS — PROVEN
+
+The dispatcher's code is the 6-bit field of a **tone record's controller-assignment slot**:
+`MidiCtrl_CC01` hands it tone[+0x17]/[+0x1A], `CC02` tone[+0x1D]/[+0x20], `CC04` tone[+0x25]/[+0x28],
+and `ld L,(XIX+0x01) / and L,0x3F` takes the code (0xFAF041).  CPU 1 names the same field:
+prom_b's `ControllerDestinationNames` (0xF33022, 64 × 13 bytes, read with mask 0x3F) is the list
+the SOUND EDIT controller page draws, and its entries agree with every arm this note decoded:
+
+| code | prom_b name | arm (renamed)               | stores                                         | ships                  |
+|------|-------------|-----------------------------|------------------------------------------------|------------------------|
+| 29   | `POSITION`  | `CtrlDest29_Position_Apply` | `PartRec_SetPositionOffset_0003` → PART[+0x03] | 0x00C0, 0x0100, 0x0240 |
+| 30   | `POS.DEPTH` | `CtrlDest30_PosDepth_Apply` | `PartRec_SetPositionOffset_0005` → PART[+0x05] | 0x00C0, 0x0100, 0x0240 |
+| 37   | `SUB GAIN`  | `CtrlDest37_SubGain_Apply`  | `PartRec_SetSubGainOffset_000F` → PART[+0x0F]  | 0x0280                 |
+
+So there is no CPU 1 or MIDI "sender" of a code: a code is a per-tone routing choice (edited on
+CPU 1's controller page), and the MIDI controller the tone assigns to that destination is what
+triggers the arm.  Factory use (`ctrl_dest_names.py`): code 29 is controller 2's first destination
+in 119 of the 256 non-drum tones and its second in 33; no factory tone assigns 30 or 37.
+⚠ PART[+0x05] is now the `POS.DEPTH` offset, which sharpens the asymmetry
+`PartRec_SetPositionOffset_0005`'s header reports: the routine stores it but re-derives the
+element fields from PART[+0x03], so no located code folds a `POS.DEPTH` controller into a register.
+Renames: `scripts/renaming/rename_wsa1_open4_a.sed`.
+
+### 10.5 The second 19-register burst repeats the first — PROVEN
+
+`second_burst_stores.py` lists every memory store in the forward call closure of what runs between
+the two bursts (`Dev104_WriteAllChanRegs` itself, `Voice_ComputeLevelBase_CD`,
+`SlotRec_AddToArgField_000E`, `Voice_StageLevel_Reg0080_CD`, `Dev10C_WriteAllChanRegs` and their
+callees — 12 routines) and classifies each by its base: frame locals; absolutes, all outside
+0x00D7A2..0x00D7C7 (the one is 0x00D762, the *companion's* staging word); the voice record
+pointer argument (`0x3BCF + 68·v`); and the two port pairs 0x00104000/2 and 0x0010C000/2.  Both
+tails load `XIX = 0x00D7A2` in their prologue (0xFB363B, 0xFB3751) and `VoiceRegs_Stage_D` never
+names XIX.  So the second burst sends the struct the first one sent.  §8's grade is **PROVEN**.
+
+### 10.6 No `Voice_ApplyParamChange_Dispatch` call site runs in an interrupt — PROVEN
+
+`isr_reach_param_dispatch.py`: the forward closure (calls, tail jumps and computed-goto tables) of
+every vector of prom_c's table except RESET, plus the one soft-timer callback the INTT3 tick can
+run (`SoftTimer_RotateLevel2`, the only `SoftTimer_Register` request), is 33 routines and contains
+neither the dispatcher nor any of its 18 transitive callers.  Every caller chain ends at `MAIN`,
+task 1 of `EntryPoint_Records` (initial SR 0x8800, IFF 0: thread level).  The computed branches
+inside the closure are the INT0 and INTTC3 handlers' own local tables, INTT1's phase table and the
+soft-timer callback slot — all accounted for.  So the select/data pair is only ever driven at task
+level by this path, and "never needs guarding" holds for it.

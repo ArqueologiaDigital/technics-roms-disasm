@@ -2600,8 +2600,13 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x10ec, 20
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	71, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	83, 0, 67, 99, 68, 1
+	sq_note	83, 0, 64, 91, 65, 1
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"09SKYDIV.sqt.p2.ref", 0x10fb, 5
 	sq_cell	0xff, 15, 22	; cell 18: song 1 track 1, 6 of 8
 	.byte	0x3c, 0x63, 0x30, 0x01	; bytes 3..6 of `sq_note	7, 0, 60, 99, 48, 1` (the event spans two cells)
 	sq_beat
@@ -3190,14 +3195,414 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x161b, 229
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_sys	13, 0xf3, 2, 0, 64, 0, 0, 0, 16
+	sq_sys	13, 0xf1, 2, 0, 64, 4, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	71, 0xf3, 2, 0, 64, 0, 0, 0, 16
+	sq_sys	71, 0xf1, 2, 0, 64, 4, 0
+	sq_beat
+	sq_sys	52, 0xf1, 0, 0, 0, 3, 66
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	6, 0xf3, 2, 0, 64, 0, 0, 0, 16
+	sq_sys	6, 0xf1, 2, 0, 64, 4, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	92, 0xf1, 2, 0, 80, 3, 1
+	sq_beat
+	sq_sys	9, 0xf1, 2, 0, 80, 3, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xc1, 13, 72, 0, 2, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 22, 65535	; cell 24: song 1 track 1, 8 of 8
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x1708, 248
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	93, 0, 58, 110, 19, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 58, 108, 13, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	94	; data bytes of an event cut by the end
 	sq_cell	0xff, 4, 26	; cell 25: song 1 track 3, 2 of 3
 	sq_beat
 	sq_beat
@@ -3497,8 +3902,65 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x1933, 205
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	92, 0, 63, 100, 9, 0
+	sq_note	93, 0, 67, 80, 63, 0
+	sq_beat
+	sq_note	4, 0, 64, 91, 58, 0
+	sq_note	93, 0, 64, 107, 52, 0
+	sq_note	94, 0, 67, 88, 48, 0
+	sq_beat
+	sq_note	75, 0, 64, 114, 18, 0
+	sq_note	76, 0, 67, 98, 39, 1
+	sq_note	92, 0, 62, 97, 20, 0
+	sq_beat
+	sq_note	18, 0, 64, 102, 19, 0
+	sq_note	33, 0, 62, 90, 16, 0
+	sq_note	49, 0, 60, 93, 67, 0
+	sq_beat
+	sq_note	47, 0, 60, 96, 44, 0
+	sq_note	49, 0, 67, 75, 39, 0
+	sq_note	50, 0, 69, 84, 19, 0
+	sq_note	94, 0, 57, 87, 39, 0
+	sq_note	95, 0, 65, 87, 36, 0
+	sq_beat
+	sq_note	49, 0, 65, 93, 26, 0
+	sq_note	49, 0, 60, 96, 24, 0
+	sq_note	95, 0, 65, 93, 19, 0
+	sq_note	95, 0, 60, 103, 15, 0
+	sq_beat
+	sq_note	23, 0, 57, 98, 60, 0
+	sq_note	25, 0, 65, 63, 49, 0
+	sq_note	93, 0, 55, 87, 6, 1
+	sq_note	93, 0, 64, 90, 17, 1
+	sq_beat
+	sq_beat
+	sq_note	89, 0, 63, 107, 8, 0
+	sq_note	90, 0, 67, 86, 72, 0
+	sq_note	95, 0, 64, 87, 68, 0
+	sq_beat
+	sq_note	91, 0, 64, 93, 54, 0
+	sq_note	92, 0, 67, 99, 54, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"09SKYDIV.sqt.p2.ref", 0x19fc, 4
 	sq_cell	0x80, 3, 28	; cell 27: song 1 track 4, 2 of 3
 	sq_beat
 	sq_beat
@@ -3798,8 +4260,79 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x1b33, 205
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	29, 0, 43	; data bytes of an event cut at the start
+	k5_note	0x90, 67, 102, 27, 0, 91
+	k5_note	0x90, 64, 89, 56, 0, 92
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"09SKYDIV.sqt.p2.ref", 0x1b42, 5
+	sq_beat
+	sq_note	70, 0, 64, 100, 15, 0
+	sq_note	71, 0, 67, 102, 13, 0
+	sq_note	88, 0, 65, 100, 39, 0
+	sq_note	89, 0, 62, 96, 37, 0
+	sq_beat
+	sq_note	43, 0, 62, 92, 37, 0
+	sq_note	44, 0, 65, 98, 34, 0
+	sq_note	88, 0, 63, 96, 8, 0
+	sq_note	90, 0, 67, 99, 46, 0
+	sq_note	92, 0, 64, 66, 43, 0
+	sq_beat
+	sq_note	44, 0, 65, 85, 46, 0
+	sq_note	45, 0, 62, 90, 43, 0
+	sq_note	90, 0, 64, 83, 20, 2
+	sq_note	92, 0, 60, 72, 13, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	89, 0, 63, 98, 9, 0
+	sq_note	90, 0, 67, 81, 67, 0
+	sq_beat
+	sq_note	1, 0, 64, 98, 63, 0
+	sq_note	91, 0, 64, 97, 52, 0
+	sq_note	92, 0, 67, 79, 49, 0
+	sq_beat
+	sq_note	72, 0, 64, 99, 20, 0
+	sq_note	73, 0, 67, 72, 22, 0
+	sq_note	89, 0, 62, 81, 20, 0
+	sq_beat
+	sq_note	10, 0, 67, 41, 4, 1
+	sq_note	16, 0, 64, 97, 19, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"09SKYDIV.sqt.p2.ref", 0x1bfb, 5
 
 	.if	(. - P_09SKYDIV_SQT_p2) - 7168
 	.error	"09SKYDIV.SQT part 2: the payload is not 7168 bytes"

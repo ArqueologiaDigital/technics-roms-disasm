@@ -195,7 +195,7 @@ P_02AKKORG_TM_p1_Kit:
 	.include	"tm/voice_5b152f015720.s"	; voice 126: Click 2
 	.include	"tm/voice_fca7ac854918.s"	; voice 127: Click 3
 	.byte	0	; [INFERENCE] the edit index (the KN5000 file has one here)
-	.short	0x39df	; = ~(LE16 sum of the 40 sound records), the KN5000 rule
+	.short	0x39df	; the sound records' checksum, ~(LE16 sum) (func_4C07D7C1)
 
 	.if	(. - P_02AKKORG_TM_p1) - 47098
 	.error	"02AKKORG.TM part 1: the payload is not 47098 bytes"

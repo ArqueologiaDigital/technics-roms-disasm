@@ -62,18 +62,52 @@ workspace at `0x00603400` that `FINDINGS-prom_b-block-store.md` derives.
 
 **Established, by reading the loops verbatim:**
 
-| source | destination | length | loop |
-|---|---|---:|---|
-| `0xF46074` | `0x00603400` | 8 | `ld A,(XIX+IY)` / `inc 1,IY` / `cp IY,7` / `jr ULE` — IY takes 0..7 |
-| `0xF4607C` | `0x00603414` | 8 | `ld WA,(XIX+IY)` / `add IY,0x0002` / `cp IY,0x0008` / `jr C` — a **word** loop |
+| source     | destination  | length | loop                                                                           |
+|------------|--------------|--------|--------------------------------------------------------------------------------|
+| `0xF46074` | `0x00603400` | 8      | `ld A,(XIX+IY)` / `inc 1,IY` / `cp IY,7` / `jr ULE` — IY takes 0..7            |
+| `0xF4607C` | `0x00603414` | 8      | `ld WA,(XIX+IY)` / `add IY,0x0002` / `cp IY,0x0008` / `jr C` — a **word** loop |
 
-⚠ **Not established: how the other ~145 bytes are partitioned.** The loops in
-this module differ in stride (byte and word) and in bound form (`cp IY,n / jr
-ULE` and `cp IY,n / jr C`), and the two do **not** mean the same count. An
-automated read of them gave nine bytes for the `0xF4607C` block where the
-instructions say eight. Rather than ship a partition a mechanical reader already
-got wrong once, the object is emitted as one labelled run of bytes and the gap is
-stated. `--copies` prints every `ld XIX,0x00F460xx` site for whoever finishes it.
+~~⚠ **Not established: how the other ~145 bytes are partitioned.**~~ (Resolved
+2026-10-31, lane open4/wsa1-d: the whole object is partitioned, see the table
+below; `prom_b/modules/f44018_f477ff_sequencer_core.s` `WorkspaceDefaults_*`.)
+The loops in this module differ in stride (byte and word) and in bound form
+(`cp IY,n / jr ULE` and `cp IY,n / jr C`), and the two do **not** mean the same
+count. An automated read of them gave nine bytes for the `0xF4607C` block where
+the instructions say eight, which is why the object was first emitted as one
+labelled run.
+
+### The partition (2026-10-31)
+
+Every run starts at the `ld XIX/XIY,imm32` operand of its copy site and its
+length is that site's loop bound, both re-read from the ROM by
+`python3 notes/open4-d-probes/workspace_defaults_partition.py --selftest`
+(FAILURES: 0). The runs abut with no gap and no overlap.
+
+| run (label)                           | offset | bytes | element        | copied to                              | by                                                                        |
+|---------------------------------------|--------|-------|----------------|----------------------------------------|---------------------------------------------------------------------------|
+| `WorkspaceDefaults_Header8`           | +0x00  | 8     | byte           | `0x603400` (then 0 at +8)              | `BStore_TrackOutChannel_LoadDefaults` tail, `BStore_ResetWorkspaceFields` |
+| `WorkspaceDefaults_Words4`            | +0x08  | 8     | 4 words        | `0x603414`                             | the same two routines                                                     |
+| `WorkspaceDefaults_HeapDescriptor`    | +0x10  | 6     | long + word    | `BStore_HeapBase`, `BStore_BlockCount` | `BStore_BootPhase0` (0x00617800, 1292)                                    |
+| `WorkspaceDefaults_HeapDescriptorAlt` | +0x16  | 6     | long + word    | the same                               | `BStore_BootPhase0`'s branch that `xor HL,HL / jr Z` never falls into     |
+| `WorkspaceDefaults_TrackToPart`       | +0x1C  | 17    | byte per track | `BStore_TrackToPart`                   | `BStore_TrackToPart_LoadDefaults` (non-GM)                                |
+| `WorkspaceDefaults_TrackToPartGm`     | +0x2D  | 17    | byte per track | `BStore_TrackToPart`                   | `BStore_LoadGmTrackDefaults`                                              |
+| `WorkspaceDefaults_TrackOutNone`      | +0x3E  | 17    | byte per track | `0x603433`                             | both loaders when `(0x6034C7)` bit 1 is clear: all `0x20`, no OUT channel |
+| `WorkspaceDefaults_TrackOutChannel`   | +0x4F  | 17    | byte per track | `0x603433`                             | `BStore_TrackOutChannel_LoadDefaults`, bit 1 set                          |
+| `WorkspaceDefaults_TrackOutChannelGm` | +0x60  | 17    | byte per track | `0x603433`                             | `BStore_LoadGmTrackDefaults` and `sub_F45E14`, bit 1 set                  |
+| `WorkspaceDefaults_SongName`          | +0x71  | 6     | 3 words        | `BStore_SongName`                      | `BStore_SongName_LoadDefault` (`ld BC,3 / ldirw`): `"______"`             |
+| `WorkspaceDefaults_SixteenthTicks`    | +0x77  | 4     | byte           | `Seq_BeatTick`                         | `Seq_LocateToSongPosition`, indexed by position & 3: 0, 24, 48, 72        |
+| `WorkspaceDefaults_UnreadTail`        | +0x7B  | 38    | byte           | nothing                                | no operand in prom_a or prom_b points into it                             |
+
+The 38-byte tail repeats the last 11 bytes of a 17-byte track table, a whole
+one, the song name and the four ticks: the shape of a longer default block of
+which only the runs above are read. The probe's byte scan of both CPU-1 images
+finds one 24-bit value inside it, prom_a `0xF8E21C`, which is the last byte of
+`cp BC,0x0014` and the `jr LT` after it, not an operand.
+
+⚠ `notes/gen_prom_b_f44018_module.py` emitted this module once; the source has
+been edited by hand since (naming waves, this partition), so its plain emit now
+refuses and `--stale-emit` prints the original text. `--checks` and `--copies`
+still run, given a working `unidasm`.
 
 ## The routines
 

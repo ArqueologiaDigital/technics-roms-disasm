@@ -103,4 +103,4 @@ RVari_UpdateNotify_End                   = 0x00FC1A22;
 PmBank_Boundary                          = 0x00FC1F26;
 MainMssSetUp_End                         = 0x00FC2D0B;
 AcTranspose_ParamData_End                = 0x00FC2EC3;
-AcChordBoxProc_Entry                     = 0x00FC2FBB;
+AcChordBoxProc                     = 0x00FC2FBB;

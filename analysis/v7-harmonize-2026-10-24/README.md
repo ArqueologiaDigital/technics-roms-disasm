@@ -201,6 +201,7 @@ header, (c) -131 `.Lc_` locals, (d) -124 runs.  The read-only dispatch census
   elsewhere in v10, 1 v10 label is gone) and take v7's current name in v10 and, where v9 has the label, v9 (124);
   `MasterSetup_HandleDialStop/Turn` are `AcMstStyleAlp_Boundary_OnHide/OnSwIn`.  Records:
   `analysis/kn5000-naming/proposals-2026-10-31-v7-reparent.json`; run: `notes/kn5000-a-2026-10-31/`.)
-- The respelling of step 8 is a post-process; the converters (`v7_byte_region_to_insns.py`,
-  `reframe_byte_runs_by_decode.py`) still emit llvm-objdump's spelling and should emit the tree's form
-  directly before they are used again.
+- ~~The respelling of step 8 is a post-process; the converters still emit llvm-objdump's spelling.~~
+  **CLOSED 2026-10-31** (lane open4/misc, `notes/misc-2026-10-31/README.md`): both converters call
+  `respell_v7_new_lines_like_v10.respell_lines()` on the lines they write; a re-run on committed step-5 blocks
+  reproduces the tree (6 of 7 blocks identical, the seventh differing only by a RAM name applied later).

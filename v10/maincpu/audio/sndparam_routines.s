@@ -55,7 +55,7 @@ SndParam_DispatchCallback:
 	jr nc, SndParam_NotFound
 	extz bc
 	sla bc, 2
-	lda xde, (SndParam_DispatchCallback_Data:24)
+	lda xde, (SndParam_RegisterHandlers:24)
 	lda	xhl, (xde+bc)
 	ld bc, (xsp + 12)
 	ld de, (xsp + 10)
@@ -93,7 +93,7 @@ SndParam_DispatchTypeDE5:
 	jr nc, SndParam_Epilogue
 	extz bc
 	sla bc, 2
-	lda xde, (SndParam_DispatchTypeDE5_Data:24)
+	lda xde, (SndParam_WriteHandlers:24)
 	lda	xde, (xde+bc)
 	ld bc, (xsp + 12)
 	ld xhl, (xde)
@@ -121,7 +121,7 @@ SndParam_NotifyAndReturn:
 ;   In:  XWA = key, BC and DE = the value arguments handed to the setter.
 ;   Out: HL = 0, or 0xffff when the key is not registered or the setter reports failure.
 ;   The key is hashed and SNDPARAM_HASH_TABLE probed as in SndParam_LookupReadOnly; the setter is
-;   SndParam_Lkp2_Dispatch_Data[record type byte +14] (types 0..7).  Depending on the word +2 of
+;   SndParam_Register2Handlers[record type byte +14] (types 0..7).  Depending on the word +2 of
 ;   the setter's result, SndParam_WidgetNotifyType0 or _Type1 tells the UI.
 SndParam_LookupByKey:
 	lda xsp, (xsp - 10)
@@ -196,7 +196,7 @@ SndParam_Lkp2_Dispatch:
 	jr nc, SndParam_Lkp2_NotFound
 	extz wa
 	sla wa, 2
-	lda xbc, (SndParam_Lkp2_Dispatch_Data:24)
+	lda xbc, (SndParam_Register2Handlers:24)
 	lda	xhl, (xbc+wa)
 	ld xwa, (xsp + 6)
 	ld bc, (xsp + 12)
@@ -245,7 +245,7 @@ SndParam_WrapNotify2:
 ;        key is not registered or its record type is 7 or more.
 ;   Hashes the key ((b0 * 513 + b1) * 513 + (b2 & 0x1f)) mod 0x7ff and probes
 ;   SNDPARAM_HASH_TABLE (8-byte {key, record} slots, step 3, stop at SNDPARAM_HASH_EMPTY_KEY);
-;   the last matching slot's record is used.  The getter is SndParam_RO_Dispatch_Data[record
+;   the last matching slot's record is used.  The getter is SndParam_ReadHandlers[record
 ;   type byte +12], called with XWA = record.
 SndParam_LookupReadOnly:
 	dec 6, xsp
@@ -318,7 +318,7 @@ SndParam_RO_Dispatch:
 	jr nc, SndParam_RO_Epilogue
 	extz wa
 	sla wa, 2
-	lda xbc, (SndParam_RO_Dispatch_Data:24)
+	lda xbc, (SndParam_ReadHandlers:24)
 	lda	xbc, (xbc+wa)
 	ld xwa, (xsp + 6)
 	ld xhl, (xbc)
@@ -489,7 +489,7 @@ SndParam_RW_ProcessResult:
 	inc 3, a
 	extz wa
 	sla wa, 2
-	lda xbc, (SndParam_RW_ProcessResult_Data:24)
+	lda xbc, (SndParam_EncodeHandlers:24)
 	lda	xde, (xbc+wa)
 	ld xwa, xiz
 	ld bc, (xsp + 4)
@@ -614,7 +614,7 @@ SndParam_ResolveWidget_Skip2:
 	ld	e, (xwa+15)
 	extz	de
 	sla	de, 2
-	lda	xhl, (SndParam_RW_ProcessResult_Data:24)
+	lda	xhl, (SndParam_EncodeHandlers:24)
 	exts	xde
 	add	xde, xhl
 	ld	xix, (xde)
@@ -2557,19 +2557,19 @@ SndParam_EncodeFieldSub_Data_Skip2:
 	and	l, a
 	extz	hl
 	ret
-SndParam_ClampReverbTime:
+SndParam_GetStyleTempoClamped:
 	ld	xwa, (SndParam_StyleRecordRamPtr:24)
 	ld	hl, (xwa+8)
 	and	hl, 511
 	cp	hl, 40
-	jr	nc, SndParam_ClampReverbTime_Skip
+	jr	nc, SndParam_GetStyleTempoClamped_Skip
 	ldw	hl, 40
-	jr	SndParam_ClampReverbTime_Return
-SndParam_ClampReverbTime_Skip:
+	jr	SndParam_GetStyleTempoClamped_Return
+SndParam_GetStyleTempoClamped_Skip:
 	cp	hl, 300
 	ret	ule
 	ldw	hl, 300
-SndParam_ClampReverbTime_Return:
+SndParam_GetStyleTempoClamped_Return:
 	ret
 SndParam_DecodeField_Data:
 	ld	hl, bc
@@ -2627,19 +2627,19 @@ SndParam_DecodeFieldAlt_Data_Join:
 	ld	l, (xbc)
 	extz	hl
 	ret
-SndParam_ClampDelayTime:
+SndParam_GetStyleTempoClamped2:
 	ld	xwa, (SndParam_StyleRecordRamPtr:24)
 	ld	hl, (xwa+8)
 	and	hl, 511
 	cp	hl, 40
-	jr	nc, SndParam_ClampDelayTime_Skip
+	jr	nc, SndParam_GetStyleTempoClamped2_Skip
 	ldw	hl, 40
-	jr	SndParam_ClampDelayTime_Return
-SndParam_ClampDelayTime_Skip:
+	jr	SndParam_GetStyleTempoClamped2_Return
+SndParam_GetStyleTempoClamped2_Skip:
 	cp	hl, 300
 	ret	ule
 	ldw	hl, 300
-SndParam_ClampDelayTime_Return:
+SndParam_GetStyleTempoClamped2_Return:
 	ret
 SndParam_ReturnInvalid:
 	ldw	hl, 0xffff
@@ -3134,7 +3134,7 @@ SndParam_RegisterAllWidgets:
 SndParam_RegisterLoop:
 	ld xbc, xiz
 	sll xbc, 2
-	ld xwa, SndParam_RegisterLoop_Data
+	ld xwa, SndParam_Registry
 	add xwa, xbc
 	ld xbc, (xwa)
 	ld xwa, (xbc)
@@ -3249,7 +3249,7 @@ SndParam_ReregisterAll:
 SndParam_ReregisterLoop:
 	ld xbc, xiz
 	sll xbc, 2
-	ld xwa, SndParam_RegisterLoop_Data
+	ld xwa, SndParam_Registry
 	add xwa, xbc
 	ld xhl, (xwa)
 	ld a, (xhl + 4)

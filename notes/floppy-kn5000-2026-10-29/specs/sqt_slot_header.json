@@ -7,11 +7,10 @@
     {
      "off": 0,
      "size": 1,
-     "name": "init_zero_07",
+     "name": "written_only_07",
      "kind": "hex",
-     "evidence": "Part_InitVoiceDefaults (sequencer_engine.s:16142) writes 0 (BC=7); 0x00 in 153/153 slots",
-     "inference": false,
-     "todo": "no reader found; meaning unknown"
+     "evidence": "Part_InitVoiceDefaults (sequencer_engine.s:16142) writes 0 (BC=7); 0x00 in 153/153 slots. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: the one PART row is that write)",
+     "inference": false
     },
     {
      "off": 1,
@@ -34,56 +33,50 @@
     {
      "off": 11,
      "size": 2,
-     "name": "b_0x12",
+     "name": "stale_12",
      "kind": "hex",
-     "evidence": "stale bytes (ff ff in 109/153); nothing writes or reads it",
-     "inference": false,
-     "todo": "no writer/reader found"
+     "evidence": "RAM residue: ff ff in 109/153; nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: 0 ABS, 0 PART; the DISP candidates are stack locals)",
+     "inference": false
     },
     {
      "off": 13,
      "size": 2,
      "name": "section0_offset16",
      "kind": "u16",
-     "evidence": "Part_InitVoiceDefaults writes 0 (BC=0x14), SoundBank_InitTrack_WordFields_Data the same; constant 0x0000 in 153/153",
-     "inference": true,
-     "todo": "read as {offset/16, length} pair by analogy with +0x18/+0x1a; no reader found"
+     "evidence": "Part_InitVoiceDefaults writes 0 (BC=0x14), SoundBank_InitTrack_WordFields_Data the same; constant 0x0000 in 153/153. Read as the {offset/16, length} pair of section 0 (the song-parameter block +0..+0xff) by the values of its twin +0x18/+0x1a, which match the code (Part_CopyToBuffer copies 0x520 B from +0x2e0); the firmware reads none of +0x14..+0x1b (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10), so the pairing stays an inference",
+     "inference": true
     },
     {
      "off": 15,
      "size": 2,
      "name": "section0_length",
      "kind": "u16",
-     "evidence": "Part_InitVoiceDefaults writes 0x0100 (BC=0x16); constant in 153/153. 0x100 = the end of the song-parameter block (+0x100 is the name)",
-     "inference": true,
-     "todo": "no reader found"
+     "evidence": "Part_InitVoiceDefaults writes 0x0100 (BC=0x16); constant in 153/153. 0x100 = the end of the song-parameter block (+0x100 is the name). Written only: no reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": true
     },
     {
      "off": 17,
      "size": 2,
      "name": "panel_section_offset16",
      "kind": "u16",
-     "evidence": "Part_InitVoiceDefaults writes 0x002e (BC=0x18); 0x2e * 16 = 0x2e0, the song panel copy (SEQ_SONG_RECORD+736 in Part_CopyToBuffer / BitMapOut_ComputeRegionDelta); constant in 153/153",
-     "inference": true,
-     "todo": "no reader found; the reading is from the value"
+     "evidence": "Part_InitVoiceDefaults writes 0x002e (BC=0x18); 0x2e * 16 = 0x2e0, the song panel copy (SEQ_SONG_RECORD+736 in Part_CopyToBuffer / BitMapOut_ComputeRegionDelta); constant in 153/153. Written only: no reader of the word in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py)",
+     "inference": true
     },
     {
      "off": 19,
      "size": 2,
      "name": "panel_section_length",
      "kind": "u16",
-     "evidence": "Part_InitVoiceDefaults writes 0x0520 (BC=0x1a); Part_CopyToBuffer (sequencer_engine.s:15668) copies exactly 0x520 bytes from slot +0x2e0 (0x2e0 + 0x520 = 0x800); constant in 153/153",
-     "inference": true,
-     "todo": "no reader of the word itself found"
+     "evidence": "Part_InitVoiceDefaults writes 0x0520 (BC=0x1a); Part_CopyToBuffer (sequencer_engine.s:15668) copies exactly 0x520 bytes from slot +0x2e0 (0x2e0 + 0x520 = 0x800); constant in 153/153. Written only: no reader of +0x14..+0x1b in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py), so the reading rests on the values",
+     "inference": true
     },
     {
      "off": 21,
      "size": 2,
-     "name": "w_0x1c",
+     "name": "password",
      "kind": "u16",
-     "evidence": "cleared (0) whenever a song is erased, beside the track mask: SeqTempo_ApplyAndReturn (sequencer_engine.s:12515, 12528), SeqBufPos_StoreResult, PartRelRange_WriteDefaults, SeqVoice_InitChannelLoop; SeqInit_WriteDefaultsLoop (18862) calls Part_ReleaseVoicesForRange for a slot whose word is non-zero; 0 in 153/153",
-     "inference": false,
-     "todo": "no writer of a non-zero value found"
+     "evidence": "the song password: FmmPasswordFunc (file_io/filename_password.s) on EVT_SET_PASSWORD writes the entered password into +0x1c of all ten slots (ClearAllSongSlots -> SetSongSlotValue, file_io/medley.s, which also writes SEQ_SONG_RECORD+0x1c for the current song) and into the Composer image +0x0e; GetSongSlotValue / FindFirstEmptySlot read it back, SMF_InitPlaybackState tests it (cpw (SEQ_SONG_RECORD+28), 0), SeqInit_WriteDefaultsLoop (18862) releases the voices of a slot whose word is non-zero. Cleared (0) whenever a song is erased (SeqTempo_ApplyAndReturn, SeqBufPos_StoreResult, PartRelRange_WriteDefaults, SeqVoice_InitChannelLoop). 0 in 153/153",
+     "inference": false
     },
     {
      "off": 23,
@@ -121,20 +114,18 @@
     {
      "off": 57,
      "size": 2,
-     "name": "w_0x40",
+     "name": "stale_40",
      "kind": "hex",
-     "evidence": "varies (00 00 / 31 b1 / fe ff / b2 5c / 1e c8 ...); no writer or reader found",
-     "inference": false,
-     "todo": "searched 0xf1c0..0xf1c1 refs and the slot accessors"
+     "evidence": "RAM residue: varies (00 00 / 31 b1 / fe ff / b2 5c / 1e c8 ...); nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: 0 ABS, 0 DISP, 0 PART, .equ names and SEQ_SONG_RECORD+N included)",
+     "inference": false
     },
     {
      "off": 59,
      "size": 12,
-     "name": "init_zero_42",
+     "name": "written_only_42",
      "kind": "hex",
-     "evidence": "PartInit_WriteZeroLoop in Part_InitVoiceDefaults zeroes +0x42..+0x4d; 0 in 153/153",
-     "inference": false,
-     "todo": "no reader found"
+     "evidence": "PartInit_WriteZeroLoop in Part_InitVoiceDefaults zeroes +0x42..+0x4d; 0 in 153/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 71,
@@ -156,11 +147,10 @@
     {
      "off": 75,
      "size": 1,
-     "name": "b_0x52",
+     "name": "written_only_52",
      "kind": "dec",
-     "evidence": "SeqParams_InitDefaults (v10 sequencer_engine.s:12015) and SeqInit_Return (sequencer_engine.s:18929..19143, Part_WriteByte/Part_WriteWord with BC = this offset) write the default; 0; it is cleared together with SQEDT_TRKCLR_MASK; 0 in 150/153",
-     "inference": true,
-     "todo": "no reader found"
+     "evidence": "SeqParams_InitDefaults (v10 sequencer_engine.s:12015) and SeqInit_Return (sequencer_engine.s:18929..19143, Part_WriteByte/Part_WriteWord with BC = this offset) write the default; 0; it is cleared together with SQEDT_TRKCLR_MASK; 0 in 150/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: the rows are those writes)",
+     "inference": false
     },
     {
      "off": 76,
@@ -341,11 +331,10 @@
     {
      "off": 109,
      "size": 2,
-     "name": "sqedt_qtz_count",
+     "name": "written_only_74",
      "kind": "u16",
-     "evidence": "SEQ_SONG_RECORD+116, set to 1 beside SQEDT_QTZ_FROM / _LAST in SeqParams_InitDefaults",
-     "inference": true,
-     "todo": "count by analogy with +0x59/+0x5e/+0x64/+0x6c; the TT_SQQTZ handler was not read"
+     "evidence": "SEQ_SONG_RECORD+116: SeqParams_InitDefaults writes 1 and SeqInit_Return (BC=0x74) the default, like the MDEL / MERS / MINS / MCP counts at +0x59 / +0x5e / +0x64 / +0x6c, whose title handlers read them (e.g. SeqEvent_MainHandler_OnTitleSqmcp, `add wa, (SEQ_SONG_RECORD+108)`). The TT_SQQTZ page keeps its range in SQEDT_QTZ_FROM and SQEDT_QTZ_LAST (RAM 0x25fc, outside the record) and never reads this word: no reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 111,
@@ -358,11 +347,10 @@
     {
      "off": 112,
      "size": 1,
-     "name": "b_0x77",
+     "name": "written_only_77",
      "kind": "dec",
-     "evidence": "SeqInit_Return writes 0 (BC=0x77); 0 in 152/153",
-     "inference": false,
-     "todo": "no reader found"
+     "evidence": "SeqInit_Return writes 0 (BC=0x77); 0 in 152/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 113,
@@ -407,20 +395,18 @@
     {
      "off": 164,
      "size": 2,
-     "name": "sqedt_velocng_count",
+     "name": "written_only_ab",
      "kind": "u16",
-     "evidence": "SEQ_SONG_RECORD+171, set to 1 beside SQEDT_VELOCNG_FROM / _LAST in SeqParams_InitDefaults",
-     "inference": true,
-     "todo": "count by analogy; the handler was not read"
+     "evidence": "SEQ_SONG_RECORD+171: SeqParams_InitDefaults writes 1, SeqInit_Return (BC=0xab) the default, as for the quantize word at +0x74; TT_SQVELOCNG keeps its range in SQEDT_VELOCNG_FROM and SQEDT_VELOCNG_LAST (RAM 0x25fa) and never reads this word: no reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 166,
      "size": 1,
-     "name": "b_0xad",
+     "name": "written_only_ad",
      "kind": "dec",
-     "evidence": "SeqParams_InitDefaults / SeqInit_Return write 0 (SEQ_SONG_RECORD+173)",
-     "inference": false,
-     "todo": "no reader found"
+     "evidence": "SeqParams_InitDefaults / SeqInit_Return write 0 (SEQ_SONG_RECORD+173). No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 167,
@@ -449,20 +435,18 @@
     {
      "off": 172,
      "size": 4,
-     "name": "init_zero_b3",
+     "name": "written_only_b3",
      "kind": "hex",
-     "evidence": "SeqParams_InitDefaults and SeqInit_Return write 0 to +0xb3, +0xb4, +0xb5, +0xb6 (bytes); 0 in 152/153",
-     "inference": false,
-     "todo": "no reader found"
+     "evidence": "SeqParams_InitDefaults and SeqInit_Return write 0 to +0xb3, +0xb4, +0xb5, +0xb6 (bytes); 0 in 152/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 176,
      "size": 1,
-     "name": "b_0xb7",
+     "name": "stale_b7",
      "kind": "hex",
-     "evidence": "stale bytes (ff/bf/00); nothing writes it",
-     "inference": false,
-     "todo": "no writer/reader found"
+     "evidence": "RAM residue (ff/bf/00); nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 177,
@@ -517,11 +501,10 @@
     {
      "off": 186,
      "size": 6,
-     "name": "b_0xc1",
+     "name": "stale_c1",
      "kind": "hex",
-     "evidence": "six 0x20 in 100/153 slots, b3 23 20 00 20 20 in 53; no writer or reader found",
-     "inference": false,
-     "todo": "the KN7000 .SQF has an 8-character slot name at +0xC1 (docs/kn5000-sequencer-and-smf.md) -- not confirmed for the KN5000"
+     "evidence": "six 0x20 in 100/153 slots, b3 23 20 00 20 20 in 53; nothing writes or reads it in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10). The KN7000 .SQF keeps an 8-character slot name at +0xC1 (docs/kn5000-sequencer-and-smf.md); no KN5000 build has that field: the bytes are residue",
+     "inference": false
     },
     {
      "off": 192,
@@ -542,11 +525,10 @@
     {
      "off": 195,
      "size": 1,
-     "name": "b_0xca",
+     "name": "stale_ca",
      "kind": "hex",
-     "evidence": "0 in 152/153; nothing writes or reads it",
-     "inference": false,
-     "todo": "no writer/reader found"
+     "evidence": "0 in 152/153; nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 196,
@@ -560,11 +542,10 @@
     {
      "off": 197,
      "size": 4,
-     "name": "b_0xcc",
+     "name": "stale_cc",
      "kind": "hex",
-     "evidence": "00 00 ff ff / 0a f3 ff ff / fe ff fe bf (stale); nothing writes or reads it",
-     "inference": false,
-     "todo": "no writer/reader found"
+     "evidence": "RAM residue: 00 00 ff ff / 0a f3 ff ff / fe ff fe bf; nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)",
+     "inference": false
     },
     {
      "off": 201,
@@ -617,11 +598,10 @@
     {
      "off": 3,
      "size": 461,
-     "name": "init_zero_113",
+     "name": "reserved_113",
      "kind": "hex",
-     "evidence": "SeqInit_ClearPartDataLoop (sequencer_engine.s:19160) zeroes +0x113..+0x2df (0x1cd bytes); no other reader or writer found (refs to 0xf293..0xf45f are only .incbin offsets); zero in 84+ slots, stale in the rest",
-     "inference": false,
-     "todo": "purpose unknown"
+     "evidence": "SeqInit_ClearPartDataLoop (sequencer_engine.s:19160) zeroes +0x113..+0x2df (0x1cd bytes); nothing else writes or reads it in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: the ABS rows in that range are the constant 0xf400, a length)",
+     "inference": false
     },
     {
      "off": 464,
@@ -641,23 +621,22 @@
     },
     {
      "off": 1456,
-     "size": 66,
-     "name": "song_panel_block1_head",
+     "size": 72,
+     "name": "song_panel_block1_copy",
      "kind": "hex",
-     "evidence": "the first 0x42 bytes of panel block 1 (RAM 0xfd60..0xfda1): the copy ends at PANEL_PMEM_SETTINGS + 12 = 0xfda2 (BitMapOut_ComputeRegionDelta length = 0x422). Records tag 0x17 (24 B), 0x18 (24 B) and tag 0x98 (18 B) with its first 12 payload bytes; match_layout finds those 3 PanelTlv_Block1_Layout records ending at +0x708 in 153/153",
+     "evidence": "the first three records of panel block 1 (RAM 0xfd60..0xfda7: tags 0x17 (24 B), 0x18 (24 B), 0x98 (18 B), PanelTlv_Block1_Layout +0x000 / +0x01a / +0x034); BitMapOut_ComputeRegionDelta copies 0x422 bytes from 0xf980, which ends at PANEL_REC_98 + 12 = 0xfda2, six bytes into record 0x98; its last 6 payload bytes (+0x702..+0x707) are the slot RAM of an earlier copy and complete the record in 153/153 (match_layout ends the 3 records at +0x708). describe_sqt types them with the panel record macros",
      "inference": false
     },
     {
-     "off": 1522,
-     "size": 254,
-     "name": "panel_tail_702",
+     "off": 1528,
+     "size": 248,
+     "name": "stale_708",
      "kind": "hex",
-     "evidence": "inside Part_CopyToBuffer's 0x520 bytes but past what BitMapOut_ComputeRegionDelta writes; values vary freely (stale RAM: dozens of distinct byte values per offset over 153 slots), except +0x702..+0x707 which complete record 0x98",
-     "inference": true,
-     "todo": "not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as part of that record"
+     "evidence": "RAM residue: moved with the panel copy by Part_CopyToBuffer (0x520 B from +0x2e0) but written by no song-panel copy (BitMapOut_ComputeRegionDelta stops at +0x702); dozens of distinct byte values per offset over 153 slots",
+     "inference": false
     }
    ]
   }
  },
- "notes": "A slot is the RAM image of SEQ_SONG_RECORD 0xf180..0xf97f (the current song) / SEQ_SONG_SLOTS 0xab000 + 0x800*n; offsets are slot-relative, RAM name = 0xf180 + offset. Most names come from the .equ table v10/maincpu/shared/ram_variables_by_use.s and from the constant-offset calls to the slot accessors Part_ReadByteDirect/Part_WriteByte/Part_ReadWord/Part_WriteWord (BC = offset). Defaults: Part_InitVoiceDefaults writes +0..+8, +0x14..+0x1b, +0x42..+0x4d, +0xbd; SeqInit_Return / SeqParams_InitDefaults the edit block. File side: 72 SQT files, 153 slots (9 files have 10 slots, +4 = 1; the rest 1). +5/+6 (01 08) are written 1 and 8 by Part_InitVoiceDefaults and tested by SeqLoad_CheckAutoAccompFlag (+6 < 3, +5 == 0): a format version 1.08 [INFERENCE]. +4: SeqSavePre sets slot 0's byte to 1 for the save, SeqSavePost back to 0. CORRECTION to notes/floppy-kn5000-2026-10-29/README.md ('every start field read 0xffff'): the +0xd0 track table does hold the first cell of each present track (132/132 chain heads, tails = +0x78, end marks at +0x98); the slot links track t to its chain. The empty template slots carry stale bytes at +0xd0 with bit 7 clear. Probes (scratch, not committed; promote to notes/floppy-kn5000-2026-10-29/probes/ before quoting the numbers): ~/compartilhado/tmp/data-floppy-kn5000/agentB/scripts/sqt_slots.py <extracted dir> var LO HI (per-offset variety), sqt_tracks.py <dir> (track table / tail / free-list / used-size checks), partcalls.py and ramrefs.py (run from the worktree root: accessor offsets and RAM references), write_sqt_spec.py (this file + tiling check). Extract the disks first with floppy/tools/fat12_extract.py."
+ "notes": "A slot is the RAM image of SEQ_SONG_RECORD 0xf180..0xf97f (the current song) / SEQ_SONG_SLOTS 0xab000 + 0x800*n; offsets are slot-relative, RAM name = 0xf180 + offset. Most names come from the .equ table v10/maincpu/shared/ram_variables_by_use.s and from the constant-offset calls to the slot accessors Part_ReadByteDirect/Part_WriteByte/Part_ReadWord/Part_WriteWord (BC = offset). Defaults: Part_InitVoiceDefaults writes +0..+8, +0x14..+0x1b, +0x42..+0x4d, +0xbd; SeqInit_Return / SeqParams_InitDefaults the edit block. File side: 72 SQT files, 153 slots (9 files have 10 slots, +4 = 1; the rest 1). +5/+6 (01 08) are written 1 and 8 by Part_InitVoiceDefaults and tested by SeqLoad_CheckAutoAccompFlag (+6 < 3, +5 == 0): a format version 1.08 [INFERENCE]. +4: SeqSavePre sets slot 0's byte to 1 for the save, SeqSavePost back to 0. CORRECTION to notes/floppy-kn5000-2026-10-29/README.md ('every start field read 0xffff'): the +0xd0 track table does hold the first cell of each present track (132/132 chain heads, tails = +0x78, end marks at +0x98); the slot links track t to its chain. The empty template slots carry stale bytes at +0xd0 with bit 7 clear. Probes (committed in notes/floppy-kn5000-2026-10-29/probes/): sqt_slots.py <extracted dir> var LO HI (per-offset variety), sqt_tracks.py <dir> (track table / tail / free-list / used-size checks), partcalls.py and ramrefs.py (run from the worktree root: accessor offsets and RAM references), write_sqt_spec.py (this file + tiling check); the reader search of every field over v5..v10: notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py. Extract the disks first with floppy/tools/fat12_extract.py."
 }

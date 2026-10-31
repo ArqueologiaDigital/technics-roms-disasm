@@ -195,7 +195,7 @@ P_08GIVEUP_TM_p1_Kit:
 	.include	"tm/voice_1518af8058ce.s"	; voice 126: Silent
 	.include	"tm/voice_1518af8058ce.s"	; voice 127: Silent
 	.byte	0	; [INFERENCE] the edit index (the KN5000 file has one here)
-	.short	0x7946	; = ~(LE16 sum of the 40 sound records), the KN5000 rule
+	.short	0x7946	; the sound records' checksum, ~(LE16 sum) (func_4C07D7C1)
 
 	.if	(. - P_08GIVEUP_TM_p1) - 47098
 	.error	"08GIVEUP.TM part 1: the payload is not 47098 bytes"

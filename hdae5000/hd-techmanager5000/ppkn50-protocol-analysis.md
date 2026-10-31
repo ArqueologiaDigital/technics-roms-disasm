@@ -160,48 +160,39 @@ Core function for sending protocol commands:
 
 ## PPORT Command Codes
 
-Commands sent from PC to HDAE5000 (correlates with firmware PPI handler at 0x160000):
+Corrected 2026-10-31 (notes/open4-kn5000-b/hdae/README.md, kn5000-qnf / kn5000-t8n).  The command byte is
+packet byte 0, in **decimal** 1-20; the HD-AE5000 handler names are the firmware's status records
+(`HDAE5000_PPORT_Cmd01_SendInfosAboutHd` ... `Cmd20_SendXapFileFlash`).  The earlier table here had 02 as a
+connection test and wrote the decimal commands 10, 11, 16, 17, 18 as 0x10 ... 0x18.
 
-| Code | Function Name | Description |
-|------|---------------|-------------|
-| 0x01 | SendInfosAboutHD | Report CHS parameters and model |
-| 0x02 | TestTheKNPP | Test connection |
-| 0x03 | ReadFsbFromKnHdToKnMem | Read filesystem block from HD |
-| 0x04 | SendFsbToPC | Transfer FSB to PC |
-| 0x05 | RcvFsbFromPC | Receive FSB from PC |
-| 0x06 | WriteFsbToHd | Write filesystem block |
-| 0x07 | LoadHdToMemory | Load file into KN5000 RAM |
-| 0x08 | SendDataToPC | Send data block to PC |
-| 0x0A | - | Test/initialization |
-| 0x10 | RcvDataFromPC | Receive data from PC |
-| 0x11 | SaveMemoryToHd | Save RAM contents to file |
-| 0x16 | DeleteFiles | Remove files from disk |
-| 0x17 | FormatHd | Low-level disk format |
-| 0x18 | SwitchHdMotorOff | Spin down drive motor |
+| Command | HD-AE5000 handler           | Sent by (ppkn50.dll export)                                          |
+|---------|-----------------------------|----------------------------------------------------------------------|
+| 1       | `Cmd01_SendInfosAboutHd`    | `PP50TestTheKNPP`                                                    |
+| 2       | `Cmd02_ExitPport`           | `PP50EscapeKeyboardToPlay`                                           |
+| 3       | `Cmd03_ReadFsbFromHd`       | `PP50ReadFsbFromKnHdToKnMem`                                         |
+| 4       | `Cmd04_SendFsbToPc`         | `PP50SendFsbFromKnMemToPC`                                           |
+| 5       | `Cmd05_RcvFsbFromPc`        | `PP50SendFsbFromPCToKnMem`                                           |
+| 6       | `Cmd06_WriteFsbToHd`        | `PP50WriteFsbFromKnMemToKnHd`, `PP50SendSeveralFileDirectToKNHD`     |
+| 7       | `Cmd07_LoadHdToMemory`      | `PP50LoadFileFromKnHdToKnMem`                                        |
+| 8       | `Cmd08_SendDataToPc`        | `PP50LoadFileFromKnHdToPC`                                           |
+| 9       | `Cmd09_SendFilesToPc`       | `PP50LoadFileFromKnHdDirectToPC`                                     |
+| 10      | `Cmd10_RcvDataFromPc`       | `PP50SendFileFromPCToKNMem`, `PP50SendFileFromPCToKNHD`              |
+| 11      | `Cmd11_SaveMemoryToHd`      | `PP50SaveFileFromKNMemToKNHd`                                        |
+| 12      | `Cmd12_Nothing`             | -                                                                    |
+| 13      | `Cmd13_RcvDataFromPc`       | `PP50SaveFileFromPCDirectToKNHd`, `PP50SavePCMemDirectToKNHd`, `PP50SendSeveralFileDirectToKNHD` |
+| 14      | `Cmd14_SendInfosToPc`       | `PP50TestSongInfoFromKnHd`                                           |
+| 15      | `Cmd15_Nothing`             | -                                                                    |
+| 16      | `Cmd16_DeleteFiles`         | `PP50DeleteFileOnKnHd`                                               |
+| 17      | `Cmd17_FormatHd`            | `PP50FormatTheKn50HardDisk`                                          |
+| 18      | `Cmd18_SwitchHdMotorOff`    | `PP50TurnOffTheKn50HdMotor`                                          |
+| 19      | `Cmd19_Nothing`             | -                                                                    |
+| 20      | `Cmd20_SendXapFileFlash`    | - (no export of this DLL sends it)                                   |
 
-## DLL Exported Functions
-
-| Export | Address | Command Code | Description |
-|--------|---------|--------------|-------------|
-| `InitializeTheDllPP50` | 0x10002530 | - | Initialize DLL |
-| `OpenThePortNumberPP50` | 0x10002720 | - | Select LPT port (1-3) |
-| `CloseThePortPP50` | 0x100027F0 | - | Close parallel port |
-| `TestTheKNPPPP50` | 0x10002890 | 0x01 | Test connection |
-| `TestParallelModusPP50` | 0x10002930 | 0x02 | Test parallel mode |
-| `ReadFsbFromKnHdToKnMemPP50` | 0x10002990 | 0x03 | Read FSB from HD |
-| `WriteFsbFromKnMemToKnHdPP50` | - | 0x06 | Write FSB to HD |
-| `SendFsbFromKnMemToPCPP50` | 0x100028F0 | 0x04 | Transfer FSB to PC |
-| `SendFsbFromPCToKnMemPP50` | 0x10002890 | 0x05 | Transfer FSB to KN |
-| `LoadFileFromKnHdToKnMemPP50` | 0x10002A30 | 0x07 | Load file HD→KN |
-| `LoadFileFromKnHdToPCPP50` | - | 0x07+0x08 | Load file HD→PC |
-| `LoadFileFromKnHdDirectToPCPP50` | - | - | Direct transfer |
-| `SaveFileFromKNMemToKNHdPP50` | - | 0x11 | Save KN→HD |
-| `SaveFileFromPCDirectToKNHdPP50` | - | 0x10+0x11 | Save PC→HD |
-| `DeleteFileOnKnHdPP50` | - | 0x16 | Delete file |
-| `FormatTheKn50HardDiskPP50` | - | 0x17 | Format HD |
-| `TurnOffTheKn50HdMotorPP50` | - | 0x18 | Spin down |
-| `TestSongInfoFromKnHdPP50` | - | - | Read song info |
-| `EscapeKeyboardToPlayPP50` | - | - | Release KB |
+Measured with `notes/open4-kn5000-b/hdae/probes/ppkn50_command_map.py` (the `push <command>; push <port>;
+call 0x10002810` before each transaction).  `PP50InitializeTheDll`, `PP50OpenThePortNumber`,
+`PP50CloseThePort`, `PP50TestParallelModus`, `AskTheConvMem`, `OpenThisFile` and `SaveThisFile` send no command.
+The reply's byte 255 (DLL 0x100121BF) is the HD-AE5000's failure flag (`HDAE5000_PPORT_FlagPacketError`); the
+exports that read it return -5 when it is set.
 
 ## Timeout Values
 

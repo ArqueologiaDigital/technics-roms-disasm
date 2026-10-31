@@ -592,7 +592,7 @@ SLSrcBankList_FuncBody_Helper11:
 	div	bc, (xsp+0x4)
 	extz	bc
 	ld	de, 1:i3
-	calr	WP_GetPresetName1
+	calr	SingleLoad_GetComposerBankName
 	ld	xwa, xiz
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 34966
@@ -632,7 +632,7 @@ SLSrcBankList_FuncBody_Helper12:
 	jr	nz, SLSrcBankList_FuncBody_Skip14
 	lda	xiz, (35009:16)
 	ld	wa, (xsp+4)
-	calr	WP_GetPresetPtr
+	calr	SingleLoad_GetVariationName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_BuildFilePath
@@ -665,7 +665,7 @@ SingleLoadSrc_SequencerListProc_Skip:
 	extz	bc
 	pushw 3
 	ld	de, (xsp+6)
-	calr	WP_GetBankMemName
+	calr	SingleLoad_GetComposerSectionName
 	lda	xde, (35029:16)
 	ld	xwa, (xsp+8)
 	ld	xbc, EVT_PARA_DRAW
@@ -713,7 +713,7 @@ SLSrcBankList_FuncBody_Epilogue4:
 	ret
 ; SingleLoadSrc_ComposerListProc: Single-load source list for area 2 COMPOSER: 30 items laid out in columns of
 ;   SLSrcComposer_RowsPerColumn (10) -- parameter 5 moves the cursor (RAM 0x89FE) by +-10, parameter 6 by +-1;
-;   EVT_PAINT draws via SingleLoadSrc_ReadTmSoundName/_Helper4/_Helper6 (WP_GetPresetName1, WP_GetBankMemName); entry
+;   EVT_PAINT draws via SingleLoadSrc_ReadTmSoundName/_Helper4/_Helper6 (SingleLoad_GetComposerBankName, SingleLoad_GetComposerSectionName); entry
 ;   [2] of SingleLoadSrc_ListProcByMode and CmpSingleLoadSrc_ListProcByMode, called with XWA = file-name box, XBC =
 ;   event, XDE = parameter
 SingleLoadSrc_ComposerListProc:
@@ -965,7 +965,7 @@ SLSrcBankList_FuncBody_Helper15:
 	div	bc, (xsp)
 	extz	bc
 	ld	de, 1:i3
-	calr	WP_GetPresetName3
+	calr	SingleLoad_GetSoundMemBankName
 	lda	xde, (34987:16)
 	ld	xwa, (xsp+2)
 	ld	xbc, EVT_PARA_DRAW
@@ -1599,7 +1599,7 @@ SLDstBankList_FuncBody:
 	div	bc, (xsp+0x4)
 	extz	bc
 	ld	de, 1:i3
-	calr	WP_GetConfigName
+	calr	SingleLoad_GetFileBankName
 	lda	xwa, (35072:16)
 	ldw	bc, 16
 	calr	TrimAndPadSmfFilename
@@ -1667,7 +1667,7 @@ SLDstBankList_FuncBody_Skip:
 	ld	c, (35146:16)
 	extz	bc
 	ld	de, 3:i3
-	calr	WP_GetNameByOffset
+	calr	SingleLoad_GetFileMemoryName
 SLDstBankList_FuncBody_Join:
 	lda	xde, (35092:16)
 	ld	xwa, (xsp+6)
@@ -1682,7 +1682,7 @@ SLDstBankList_FuncBody_Join:
 	ret
 ; SingleLoadDst_PanelMemListProc: Single-load destination list for area 0 PANEL MEMORY: banks of
 ;   SingleLoadDst_PanelMemBankSize (8) up to 80 over RAM 0x8A02 (parameter 7 pages); EVT_PAINT draws
-;   SLDstBankList_FuncBody (bank caption + WP_GetConfigName) and SLDstBankList_FuncBody_Helper; entry [0] of
+;   SLDstBankList_FuncBody (bank caption + SingleLoad_GetFileBankName) and SLDstBankList_FuncBody_Helper; entry [0] of
 ;   SingleLoadDst_AreaListProcs and CmpSingleLoadDst_AreaListProcs, called with XWA = file-name box, XBC = event, XDE
 ;   = parameter
 SingleLoadDst_PanelMemListProc:
@@ -1860,7 +1860,7 @@ SLDstBankList_FuncBody_Skip11:
 	extz	wa
 	ld	c, (35146:16)
 	extz	bc
-	call	FileIO_ByteBlock_DemoProc1
+	call	SingleLoad_LoadPanelMemory
 	exts	xhl
 SLDstBankList_FuncBody_Epilogue:
 	pop	xiz
@@ -2033,7 +2033,7 @@ SLDstBankList_FuncBody_Helper8:
 	div	bc, (xsp+0x4)
 	extz	bc
 	ld	de, 1:i3
-	calr	WP_GetPresetName1
+	calr	SingleLoad_GetComposerBankName
 	ld	xwa, xiz
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 35050
@@ -2071,7 +2071,7 @@ SLDstBankList_FuncBody_Helper9:
 	div	wa, (xsp+0x4)
 	ld	a, w
 	extz	wa
-	calr	WP_GetPresetPtr
+	calr	SingleLoad_GetVariationName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_BuildFilePath
@@ -2099,7 +2099,7 @@ SLDstBankList_FuncBody_Skip18:
 	ld	e, d
 	extz	de
 	pushw 3
-	calr	WP_GetBankMemName
+	calr	SingleLoad_GetComposerSectionName
 SLDstBankList_FuncBody_Join7:
 	lda	xde, (35092:16)
 	ld	xwa, (xsp+6)
@@ -2327,11 +2327,11 @@ SLDstBankList_FuncBody_Helper10:
 	div	bc, (xsp)
 	extz	bc
 	ld	de, 1:i3
-	calr	WP_GetPresetName3
+	calr	SingleLoad_GetSoundMemBankName
 	jr	SLDstBankList_FuncBody_Join12
 SLDstBankList_FuncBody_Skip29:
 	ld	bc, 1:i3
-	calr	WP_GetUserName2
+	calr	SingleLoad_GetUserKitName
 SLDstBankList_FuncBody_Join12:
 	ld	xwa, (xsp+2)
 	ld	xbc, EVT_PARA_DRAW
@@ -2411,7 +2411,7 @@ SLDstBankList_FuncBody_Skip30:
 	sub	c, e
 	extz	bc
 	ld	de, 3:i3
-	calr	WP_GetUserName3
+	calr	SingleLoad_GetUserKitEntryName
 	jr	SLDstBankList_FuncBody_Join13
 SLDstBankList_FuncBody_Skip31:
 	ld	c, (35136:16)
@@ -2442,7 +2442,7 @@ SLDstBankList_FuncBody_Skip31:
 	ld	c, (35152:16)
 	extz	bc
 	ld	de, 3:i3
-	calr	WP_GetUserName1
+	calr	SingleLoad_GetSoundRamName
 SLDstBankList_FuncBody_Join13:
 	lda	xde, (35092:16)
 	ld	xwa, (xsp+6)
@@ -2776,7 +2776,7 @@ SingleLoadDstFunc:
 	ld	wa, 0:i3
 	calr	InitializeOperationState
 	calr	SignalProgressUpdate
-	calr	WP_ScanAvailability
+	calr	SingleLoad_ScanAreas
 	calr	SignalProgressUpdate
 	cp	(35136:16), 1
 	jr	z, SLDst_ShowHide_Internal
@@ -2907,7 +2907,7 @@ SLDst_ScrollMode4:
 	ld	xwa, (xsp+4)
 	cp	xwa, 4
 	jrl	nz, SLDst_ScrollDispatch
-	calr	WP_FindNextSlot
+	calr	SingleLoad_FindNextArea
 	cp	l, 0:i3
 	jrl	z, SLDst_Return
 	cp	(35136:16), 1

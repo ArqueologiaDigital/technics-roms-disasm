@@ -5756,7 +5756,7 @@ PartRec_SetFittingOffset_0001__FC59D2:
 ; PartRec_SetPositionOffset_0003 -- 0xFC59EF..0xFC5BA1 (435 bytes)
 ;
 ; Called from: 2 site(s) outside this module:
-;          0xFAEB19 in sub_FAEAF9, 0xFB65AD in PartRec_ResetToDefaults
+;          0xFAEB19 in CtrlDest29_Position_Apply, 0xFB65AD in PartRec_ResetToDefaults
 ; Inputs:  frame `link XIZ,0`; argument slots read: (XIZ+0x08), (XIZ+0x0A), (XIZ+0x0C)
 ; Outputs: writes 0x00E082, 0x00E084
 ; Evidence: the listing below is the byte-identical round-trip of 0xFC59EF-0xFC5BA1
@@ -5960,7 +5960,7 @@ PartRec_SetPositionOffset_0003__FC5B87:
 ; PartRec_SetPositionOffset_0005 -- 0xFC5BA2..0xFC5D5A (441 bytes)
 ;
 ; Called from: 1 site(s) outside this module:
-;          0xFAEB85 in sub_FAEB65
+;          0xFAEB85 in CtrlDest30_PosDepth_Apply
 ; Inputs:  frame `link XIZ,0`; argument slots read: (XIZ+0x08), (XIZ+0x0A), (XIZ+0x0C)
 ; Outputs: writes 0x00E082, 0x00E084
 ; Evidence: the listing below is the byte-identical round-trip of 0xFC5BA2-0xFC5D5A
@@ -6188,7 +6188,7 @@ PartRec_SetPositionOffset_0005__FC5D40:
 ;          then recomputes R's position terms and calls
 ;          Pack104_StageRegs_00C0_0100_0240 with the caller's staging struct
 ;          (0xFC5EE9).
-; ★★ WHAT PINS IT: its caller `sub_FAEAF9` (prom_c/midi/midi_controllers.s)
+; ★★ WHAT PINS IT: its caller `CtrlDest29_Position_Apply` (prom_c/midi/midi_controllers.s)
 ;          walks the part's sounding voices from VoiceQuery_Tag00_Part, calls this
 ;          routine at 0xFAEB41 and, when it returns non-zero, calls
 ;          Dev104_SetChanRegs_00C0_0100_0240 at 0xFAEB56 with the SAME staging
@@ -7291,7 +7291,7 @@ PartRec_SetTuningOffset_000D__FC65D5:
 ; PartRec_SetSubGainOffset_000F -- 0xFC65EC..0xFC6711 (294 bytes)
 ;
 ; Called from: 2 site(s) outside this module:
-;          0xFAECE7 in sub_FAECC7, 0xFB65F3 in PartRec_ResetToDefaults
+;          0xFAECE7 in CtrlDest37_SubGain_Apply, 0xFB65F3 in PartRec_ResetToDefaults
 ; Inputs:  frame `link XIZ,-4`; argument slots read: (XIZ+0x08), (XIZ+0x0A), (XIZ+0x0C)
 ; Outputs: writes 0x00E082, 0x00E084
 ; Evidence: the listing below is the byte-identical round-trip of 0xFC65EC-0xFC6711
@@ -7468,7 +7468,7 @@ PartRec_SetSubGainOffset_000F__FC66F3:
 ;          (0xFC67EF).  Dev104_PackStagingStruct does NOT do that on the note
 ;          path, so register chan+0x0280 has a low-3-bit field this refresh sets
 ;          and the packer leaves clear.  Recorded, not explained.
-; ★★ WHAT PINS IT: its caller `sub_FAECC7` (midi_controllers.s) calls this at
+; ★★ WHAT PINS IT: its caller `CtrlDest37_SubGain_Apply` (midi_controllers.s) calls this at
 ;          0xFAED0F and, on a non-zero return, Dev104_SetChanReg_0280 at 0xFAED24
 ;          with the same staging buffer -- and that writer reads struct offset
 ;          +0x14, which is the word Pack104_StageReg_0280 fills.

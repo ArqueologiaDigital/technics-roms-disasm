@@ -8,6 +8,10 @@ prom_b sees the prom_a ones through its `.set` imports.  The list is STATIC, wri
 so it outlives the sed files' application (the rule notes/prom_a_preservation_check.py states).
 """
 RENAMES = [
+    ("LoadSingle_BankA", "LoadSingle_SourceBank"),   # 2026-10-31 lane open4/wsa1-c: the copy records' +0 source (DiskFile_BuildLinkCopyRecords)
+    ("LoadSingle_BankB", "LoadSingle_DestBank"),   # 2026-10-31: their +6 destination
+    ("MidiOutPgm_Cell2742", "MidiOutPgm_FilledBox"),   # 2026-10-31: notes/open4-c-probes/ram_cell_writer_census.py
+    ("DiskSave_Cell272A", "DiskSave_PasswordCursor"),   # 2026-10-31: the two password character cells
     ("CombiEditMixer_DirtySound", "CombiEdit_DirtySound"),   # 2026-10-05: shared by MIXER and CONFIGURE
     ("NoteRouting_ListChannel", "NoteRouting_SingleChannel"),   # 2026-10-04: the Reference Guide's SINGLE CHANNEL
     ("NoteRouting_PreviousListChannel", "NoteRouting_PreviousSingleChannel"),   # 2026-10-04: with it
@@ -147,14 +151,14 @@ RENAMES = [
     ("sub_F7FD8A", "Transp0se_StageZero_Button21"),
     ("sub_FA7531", "MidiOut_Param70"),
     ("sub_FA7584", "MidiOut_Param98"),
-    ("sub_FD3FE0", "ToneEditPage_A0_Op0"),
-    ("sub_FD4039", "ToneEditPage_A0_Op1"),
-    ("sub_FD40D4", "ToneEditPage_A0_Op2"),
+    ("sub_FD3FE0", "ToneEditPage_A0_SetLayerOnOff"),
+    ("sub_FD4039", "ToneEditPage_A0_StepDriverGroup"),
+    ("sub_FD40D4", "ToneEditPage_A0_StepDriver"),
     ("sub_FD43C6", "ToneEditPage_A0_Op8"),
     ("sub_FD43E4", "ToneEditPage_A0_Op9"),
     ("sub_FD440A", "ToneEditPage_A0_Op10"),
     ("sub_FD4430", "ToneEditPage_A0_Op11"),
-    ("sub_FD4468", "ToneEditPage_A0_Op12"),
+    ("sub_FD4468", "ToneEditPage_A0_SelectLayer4"),
     ("sub_FD4493", "ToneEditPage_A0_Op15"),
     ("sub_FD4712", "ToneEditPage_A3_Op8"),
     ("sub_FD4730", "ToneEditPage_A3_Op9"),

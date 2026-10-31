@@ -152,9 +152,11 @@ IMAGES = [
          rom="original_ROMs/hd-ae5000_v1_10i.ic4", base=0x280000, size=524288),
     dict(key="prom_a", title="SX-WSA1R prom_a IC12", mirror="wsa1",
          root="prom_a/wsa1_prom_a.s", ld="prom_a/prom_a.ld", incs=["", "prom_a"],
+         just_symbols="wsa1/rebuilt_ROMs/wsa1_maincpu.llvm.elf",
          rom="wsa1/original_ROMs/wsa1_prom_a.ic12", base=0xF80000, size=524288),
     dict(key="prom_b", title="SX-WSA1R prom_b IC13", mirror="wsa1",
          root="prom_b/wsa1_prom_b.s", ld="prom_b/prom_b.ld", incs=["", "prom_b"],
+         just_symbols="wsa1/rebuilt_ROMs/wsa1_maincpu.llvm.elf",
          rom="wsa1/original_ROMs/wsa1_prom_b.ic13", base=0xF00000, size=524288),
     dict(key="prom_c", title="SX-WSA1R prom_c IC28", mirror="wsa1",
          root="prom_c/wsa1_prom_c.s", ld="prom_c/prom_c.ld", incs=["", "prom_c"],
@@ -408,7 +410,16 @@ def link_mirror(mirror, img, tmp):
         cmd += ["-I", os.path.join(ROOT, x)]
     cmd += ["-o", obj, os.path.join(mirror, img["root"])]
     sh(cmd)
-    sh([LLD, "-e", "0", "-T", os.path.join(mirror, img["ld"]), "-o", elf, obj])
+    ld = [LLD, "-e", "0", "-T", os.path.join(mirror, img["ld"])]
+    if img.get("just_symbols"):
+        # prom_a and prom_b are ONE link since 2026-10-31 (wsa1/maincpu/maincpu.ld): a name one image
+        # uses for the other's code is undefined in its object.  The mirror is linked on its own, so
+        # those names are taken, as absolute values, from the real joint ELF of a built tree.
+        js = os.path.join(ROOT, img["just_symbols"])
+        if not os.path.exists(js):
+            sys.exit("%s: build the tree first (make wsa1): %s is missing" % (img["key"], js))
+        ld += ["--just-symbols=" + js]
+    sh(ld + ["-o", elf, obj])
     return elf
 
 

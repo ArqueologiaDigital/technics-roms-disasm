@@ -58,6 +58,14 @@ RUN
                the object plus its offset; a mid-instruction value stays numeric
     make gate-wsa1
 """
+
+# RETIRED 2026-10-31: prom_a and prom_b are now ONE link (wsa1/maincpu/maincpu.ld,
+# wsa1/scripts/tools/join_maincpu_link.py).  The address-equate blocks this tool wrote are gone:
+# a cross-image name is resolved by the linker from wsa1/prom_X/exports.syms.  Re-running this
+# would put numbers back where the link now checks names, so it refuses.
+import sys as _sys
+_sys.exit("RETIRED 2026-10-31: the cross-image equates are resolved by the joint link; see wsa1/scripts/tools/join_maincpu_link.py")
+
 import argparse
 import collections
 import os

@@ -265,13 +265,13 @@ Value_OffsetToSignAndMagnitude:
 	jr gt, .LF8BD66                                      ; F8BD57  6a 0d
 	xor WA,0xffff                                        ; F8BD59  d8 cd ff ff
 	inc 1,WA                                             ; F8BD5D  d8 61
-	ld (0x2660:16), 0x2d                                 ; F8BD5F  f1 60 26 00 2d
+	ld (Value_AsciiSign:16), 0x2d                                 ; F8BD5F  f1 60 26 00 2d
 	jr .LF8BD72                                          ; F8BD64  68 0c
 .LF8BD66:
-	ld (0x2660:16), 0x2b                                 ; F8BD66  f1 60 26 00 2b
+	ld (Value_AsciiSign:16), 0x2b                                 ; F8BD66  f1 60 26 00 2b
 	jr .LF8BD72                                          ; F8BD6B  68 05
 .LF8BD6D:
-	ld (0x2660:16), 0x20                                 ; F8BD6D  f1 60 26 00 20
+	ld (Value_AsciiSign:16), 0x20                                 ; F8BD6D  f1 60 26 00 20
 .LF8BD72:
 	ret                                                  ; F8BD72  0e
 ; Value_ApplyNibbleDeltaClamped -- A += signed 4-bit step encoded in W, clamped to C..B

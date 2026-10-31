@@ -1664,8 +1664,15 @@ LCD_Svc_05__ret:
 ;          clobbered.
 ; Evidence: font 0xF1B400, 14 bytes per glyph, 8 wide -- and that table passes
 ;          notes/render_font.py's ASCII test (blank only at 0x20).
-; Unknown:  what HL is a stride THROUGH; it is multiplied by BC once, before the
-;          loop, and never used again.
+; HL:      a ROW NUMBER in a table of BC-character strings at XIY.  IZ := HL * BC
+;          once, before the loop, and every character is read as `ld A,(XIY+IZ)`
+;          (0xF8F04A), so the string drawn is the one at XIY + HL*BC.  Call sites
+;          that pass HL /= 0 use exactly that: StepRecord_DrawNibbleAsStars
+;          (BC = 4, HL = a nibble, XIY = sixteen 4-character rows),
+;          SysexProgressBar_FillCells (svc 0x07, BC = 1, HL = 1: the second byte of
+;          Chars_F0D99A), LCD_DrawVar272ENumberTag_SaveRegs (BC = 4, HL = its
+;          argument).  The other text services share this prologue.  Census:
+;          notes/open4-f-probes/swi7_text_hl.py.
 ; ---------------------------------------------------------------------
 LCD_Svc_06_DrawText8x14:
 	and BC,BC                                     ; F8F039  d9 c1
@@ -13085,7 +13092,7 @@ Paint_PowerOnSplash_Entry:
 	ret                                                  ; F94111  0e
 ; Paint_PowerOnSplash -- draw the power-on splash (dithered halves sliding together, then the Technics wordmark), or ALL INITIAL SETTING!
 ; Evidence: (0x97) bit 0 set, bit 4 clear -> LCD_DrawAllInitialSettingMessage (FACTORY CLEAR sets (0x97) bit 0 before re-entering RESET).  First Enter
-; ((0x207C) != (0x207D)): SWI7 0x03 blits SplashImage_DitherA (IX 0) and SplashImage_DitherB (IX 0x4C00), SWI7 0x0C C = 5, (0x2541)/(0x2543) = 0x2580,
+; ((0x207C) != (0x207D)): SWI7 0x03 blits SplashImage_DitherA (IX 0) and SplashImage_DitherB (IX 0x4C00) into the layer (0x2540) already holds, layer 0 (base 0x0000: the only one under which the halves end where the scrolls stop; notes/open4-d-probes/splash_layer_and_logo.py), SWI7 0x0C C = 5, (0x2541)/(0x2543) = 0x2580,
 ; (0x2545) = 0x2680, (0x207E) = 0.  Each re-Enter ((0x2071) |= 0x10, (0x209A) = 0xFF): phase 0 runs LCD_ScrollLayer0_Back3Lines / _ScrollLayer2_Forward3Lines
 ; every >= 0x14 counts of (0x80) until (0x2545) reaches 0x4C00; phase 1 counts (0x2680) = 0x800 down, then blits SplashImage_Wordmark to layer 1,
 ; SWI7 0x0C C = 2, (0x209A) = 0x3F (auto-return, PanelState_TakePendingHoldTime).  Caller: Paint_PowerOnSplash_Entry.

@@ -2537,19 +2537,19 @@ SndParam_EncodeFieldSub_Data_Skip2:
 	and	l, a
 	extz	hl
 	ret
-SndParam_ClampReverbTime:
+SndParam_GetStyleTempoClamped:
 	ld	xwa, (SndParam_StyleRecordRamPtr:24)
 	ld	hl, (xwa+8)
 	and	hl, 511
 	cp	hl, 40
-	jr	nc, SndParam_ClampReverbTime_Skip
+	jr	nc, SndParam_GetStyleTempoClamped_Skip
 	ldw	hl, 40
-	jr	SndParam_ClampReverbTime_Return
-SndParam_ClampReverbTime_Skip:
+	jr	SndParam_GetStyleTempoClamped_Return
+SndParam_GetStyleTempoClamped_Skip:
 	cp	hl, 300
 	ret	ule
 	ldw	hl, 300
-SndParam_ClampReverbTime_Return:
+SndParam_GetStyleTempoClamped_Return:
 	ret
 SndParam_DecodeField_Data:
 	ld	hl, bc
@@ -2607,19 +2607,19 @@ SndParam_DecodeFieldAlt_Data_Join:
 	ld	l, (xbc)
 	extz	hl
 	ret
-SndParam_ClampDelayTime:
+SndParam_GetStyleTempoClamped2:
 	ld	xwa, (SndParam_StyleRecordRamPtr:24)
 	ld	hl, (xwa+8)
 	and	hl, 511
 	cp	hl, 40
-	jr	nc, SndParam_ClampDelayTime_Skip
+	jr	nc, SndParam_GetStyleTempoClamped2_Skip
 	ldw	hl, 40
-	jr	SndParam_ClampDelayTime_Return
-SndParam_ClampDelayTime_Skip:
+	jr	SndParam_GetStyleTempoClamped2_Return
+SndParam_GetStyleTempoClamped2_Skip:
 	cp	hl, 300
 	ret	ule
 	ldw	hl, 300
-SndParam_ClampDelayTime_Return:
+SndParam_GetStyleTempoClamped2_Return:
 	ret
 SndParam_ReturnInvalid:
 	ldw	hl, 0xffff

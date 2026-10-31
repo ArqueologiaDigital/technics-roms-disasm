@@ -195,7 +195,7 @@ P_03MARSH1_TM_p1_Kit:
 	.include	"tm/voice_48978d331307.s"	; voice 126: Click 2
 	.include	"tm/voice_fa4f138e4cd0.s"	; voice 127: Click 3
 	.byte	0	; [INFERENCE] the edit index (the KN5000 file has one here)
-	.short	0x769a	; = ~(LE16 sum of the 40 sound records), the KN5000 rule
+	.short	0x769a	; the sound records' checksum, ~(LE16 sum) (func_4C07D7C1)
 
 	.if	(. - P_03MARSH1_TM_p1) - 47098
 	.error	"03MARSH1.TM part 1: the payload is not 47098 bytes"

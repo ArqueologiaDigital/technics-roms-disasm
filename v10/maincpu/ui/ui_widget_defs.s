@@ -3535,7 +3535,7 @@ ButtonState_DispatchDSP_CaptionDownTriangle:
 	ld	xwa, ButtonState_DispatchDSP_InlineData_Str_N81
 	jr	ButtonState_PaintProc_Join
 ButtonState_DispatchDSP_CaptionOn:
-	ld	xwa, NakaInst_OK
+	ld	xwa, ButtonState_DispatchDSP_InlineData_Str_ON
 	jr	ButtonState_PaintProc_Join
 ButtonState_DispatchDSP_CaptionOff:
 	ld	xwa, ButtonState_DispatchDSP_InlineData_Str_OFF
@@ -8418,7 +8418,7 @@ TrTransposeBoxProc:
 	jp AcTranspose_ParamData_End
 
 TrChordBoxProc:
-	jp AcChordBoxProc_Entry
+	jp AcChordBoxProc
 
 ; Proc of the root class Object, the end of every InheritedProc chain (ResEventProc,
 ; ResMethodProc and ResNameProc jump here).
@@ -11242,13 +11242,13 @@ ViewableProc:
 	cp xiy, EVT_SET_VISIBLE
 	jrl z, Viewable_SetVisible
 	cp xiy, EVT_GET_PREVVIEW
-	jrl z, Viewable_GetClass
+	jrl z, Viewable_OnGetPrevView
 	cp xiy, EVT_GET_NEXTVIEW
-	jrl z, Viewable_GetChild
+	jrl z, Viewable_OnGetNextView
 	cp xiy, EVT_GET_SUBVIEW
-	jrl z, Viewable_GetOwner
+	jrl z, Viewable_OnGetSubView
 	cp xiy, EVT_GET_SUPERVIEW
-	jrl z, Viewable_GetParent
+	jrl z, Viewable_OnGetSuperView
 	cp xiy, EVT_GET_INSTANCE
 	jrl z, Viewable_GetInstance
 	ld xwa, xiz
@@ -11321,7 +11321,7 @@ Viewable_GetClassProc:
 
 Viewable_InitClose:
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_InitClose_ToChild
@@ -11331,7 +11331,7 @@ Viewable_InitClose:
 
 Viewable_InitClose_ToChild:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_ReturnZero
@@ -11348,7 +11348,7 @@ ViewableProc_OnPaint:
 	ld xde, 0:i3
 	call SendEvent
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_Show_DispatchChild
@@ -11358,7 +11358,7 @@ ViewableProc_OnPaint:
 
 Viewable_Show_DispatchChild:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_ReturnZero
@@ -11375,7 +11375,7 @@ ViewableProc_OnRepaint:
 	ld xde, 0:i3
 	call SendEvent
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_ReturnZero
@@ -11401,7 +11401,7 @@ Viewable_PostEvent:
 
 Viewable_PostEvent_ToOwner:
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_PostEvent_ToChild
@@ -11413,7 +11413,7 @@ Viewable_PostEvent_ToOwner:
 
 Viewable_PostEvent_ToChild:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_ReturnZero
@@ -11476,24 +11476,24 @@ Viewable_GetInstance:
 	calr GetViewInstance
 	jrl Viewable_Return
 
-Viewable_GetParent:
+Viewable_OnGetSuperView:
 	ld xwa, xiz
-	calr View_GetParentOffset
+	calr GetSuperView
 	jrl Viewable_Return
 
-Viewable_GetOwner:
+Viewable_OnGetSubView:
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	jrl Viewable_Return
 
-Viewable_GetChild:
+Viewable_OnGetNextView:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	jrl Viewable_Return
 
-Viewable_GetClass:
+Viewable_OnGetPrevView:
 	ld xwa, xiz
-	calr View_ResolveInstanceAddr
+	calr GetPrevView
 	jrl Viewable_Return
 
 Viewable_SetVisible:
@@ -11510,7 +11510,7 @@ Viewable_Dispatch:
 	or xhl, xhl
 	jr nz, Viewable_MatchClass_Found
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_Dispatch_ToChild
@@ -11522,7 +11522,7 @@ Viewable_Dispatch:
 
 Viewable_Dispatch_ToChild:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jrl z, Viewable_ReturnZero
@@ -11547,7 +11547,7 @@ Viewable_MatchClass_Found:
 
 Viewable_MatchClass_ToOwner:
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_MatchClass_ToChild
@@ -11559,7 +11559,7 @@ Viewable_MatchClass_ToOwner:
 
 Viewable_MatchClass_ToChild:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jrl z, Viewable_ReturnZero
@@ -11668,7 +11668,7 @@ Viewable_DefaultDispatch:
 
 Viewable_Default_ToOwner:
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr z, Viewable_Default_ToChild
@@ -11680,7 +11680,7 @@ Viewable_Default_ToOwner:
 
 Viewable_Default_ToChild:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jrl z, Viewable_ReturnZero
@@ -11827,7 +11827,10 @@ DrawWidget_Hline_4_Draw:
 	pop xiz
 	ret
 
-View_GetNextSibling:
+; Returns in XHL the id of view XWA's next sibling: the same object table with the index in the
+; instance's +8 word, or 0xffffffff when that word is 0xffff (last sibling).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
+GetNextView:
 	push xiz
 	ld xiz, xwa
 	ld xwa, xiz
@@ -11879,7 +11882,10 @@ DrawWidget_Hline_6_Draw:
 	pop xiz
 	ret
 
-View_ResolveInstanceAddr:
+; Returns in XHL the id of view XWA's previous sibling: the same object table with the index in the
+; instance's +10 word, or 0xffffffff when that word is 0xffff (first sibling).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
+GetPrevView:
 	push xiz
 	ld xiz, xwa
 	ld xwa, xiz
@@ -11931,7 +11937,10 @@ DrawWidget_Hline_8_Draw:
 	pop xiz
 	ret
 
-View_GetParentOffset:
+; Returns in XHL the id of view XWA's superview: the same object table with the index in the
+; instance's +4 word, or 0xffffffff when that word is 0xffff (no superview).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
+GetSuperView:
 	push xiz
 	ld xiz, xwa
 	ld xwa, xiz
@@ -11983,9 +11992,10 @@ DrawWidget_Hline_10_Draw:
 	pop xiz
 	ret
 
-; Returns in XHL the id of view XWA's superview: the same object table with the index in the
-; instance's +6 word, or 0xffffffff when that word is 0xffff (no superview).
-View_GetSuperViewInstance:
+; Returns in XHL the id of view XWA's first subview: the same object table with the index in the
+; instance's +6 word, or 0xffffffff when that word is 0xffff (no subview).  Viewable +4 super, +6 sub,
+; +8 next, +10 prev (naka_cls_Viewable_t).
+GetSubView:
 	push xiz
 	ld xiz, xwa
 	ld xwa, xiz
@@ -12016,16 +12026,16 @@ Link:
 	push xiz
 	ld (xsp + 8), xbc
 	ld xiz, xwa
-	calr View_GetNextSibling
+	calr GetNextView
 	cp xhl, 0xffffffff
 	jr z, DrawWidget_Hline_Return
 
 DrawWidget_Hline_Epilogue:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	ld xiz, xhl
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	cp xhl, 0xffffffff
 	jr nz, DrawWidget_Hline_Epilogue
 
@@ -12038,7 +12048,7 @@ DrawWidget_Hline_Return:
 	ld bc, 1:i3
 	calr SetChange
 	ld xwa, xiz
-	calr View_GetParentOffset
+	calr GetSuperView
 	ld (xsp + 4), xhl
 	ld xwa, (xsp + 8)
 	calr GetViewInstance
@@ -12058,7 +12068,7 @@ Unlink:
 	push xiz
 	ld (xsp + 12), xwa
 	ld xwa, (xsp + 12)
-	calr View_ResolveInstanceAddr
+	calr GetPrevView
 	ld (xsp + 8), xhl
 	ld xwa, (xsp + 8)
 	cp xwa, 0xffffffff
@@ -12067,7 +12077,7 @@ Unlink:
 	calr GetViewInstance
 	ld xiz, xhl
 	ld xwa, (xsp + 12)
-	calr View_GetNextSibling
+	calr GetNextView
 	ld (xiz + 8), hl
 	ld xwa, (xsp + 8)
 	ld bc, 1:i3
@@ -12081,7 +12091,7 @@ Unlink:
 
 FrameDraw_TopEdge:
 	ld xwa, (xsp + 12)
-	calr View_GetNextSibling
+	calr GetNextView
 	ld (xsp + 4), xhl
 	ld xwa, (xsp + 4)
 	cp xwa, 0xffffffff
@@ -12102,7 +12112,7 @@ FrameDraw_TopEdge:
 
 FrameDraw_BottomEdge:
 	ld xwa, (xsp + 12)
-	calr View_GetParentOffset
+	calr GetSuperView
 	ld xiz, xhl
 	cp xiz, 0xffffffff
 	jr z, FrameDraw_InnerFill
@@ -12110,7 +12120,7 @@ FrameDraw_BottomEdge:
 	calr GetViewInstance
 	ld (xsp + 8), xhl
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	cp xhl, (xsp + 12)
 	jr nz, FrameDraw_CheckInner
 	ld xbc, (xsp + 4)
@@ -12139,7 +12149,7 @@ SetSuperView:
 	ld xiz, xbc
 	ld (xsp + 8), xwa
 	ld xwa, (xsp + 8)
-	calr View_GetParentOffset
+	calr GetSuperView
 	ld (xsp + 4), xhl
 	ld xwa, (xsp + 8)
 	calr Unlink
@@ -12153,7 +12163,7 @@ FrameDraw_AltCheckInner:
 
 FrameDraw_ReturnZero:
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	ld xwa, xhl
 	cp xwa, 0xffffffff
 	jr nz, FrameDraw_DefaultInit
@@ -12192,16 +12202,16 @@ GetLinkView:
 	push xiz
 	ld xiz, xwa
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	cp xhl, 0xffffffff
 	jr z, FrameDraw_DefaultCalcWidth
 	ld xwa, xiz
-	calr View_GetSuperViewInstance
+	calr GetSubView
 	jr FrameDraw_Return
 
 FrameDraw_DefaultCalcWidth:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	cp xhl, 0xffffffff
 	jr z, FrameDraw_DefaultCalcHeight
 	ld xwa, xiz
@@ -12209,13 +12219,13 @@ FrameDraw_DefaultCalcWidth:
 
 FrameDraw_DefaultCalcHeight:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	cp xhl, 0xffffffff
 	jr nz, FrameDraw_DefaultDone
 
 FrameDraw_DefaultSetup:
 	ld xwa, xiz
-	calr View_GetParentOffset
+	calr GetSuperView
 	ld xiz, xhl
 	cp xiz, 0xffffffff
 	jr nz, FrameDraw_DefaultExecute
@@ -12224,7 +12234,7 @@ FrameDraw_DefaultSetup:
 
 FrameDraw_DefaultExecute:
 	ld xwa, xiz
-	calr View_GetNextSibling
+	calr GetNextView
 	cp xhl, 0xffffffff
 	jr z, FrameDraw_DefaultSetup
 
@@ -12232,7 +12242,7 @@ FrameDraw_DefaultDone:
 	ld xwa, xiz
 
 FrameDraw_DefaultReturn:
-	calr View_GetNextSibling
+	calr GetNextView
 
 FrameDraw_Return:
 	pop xiz

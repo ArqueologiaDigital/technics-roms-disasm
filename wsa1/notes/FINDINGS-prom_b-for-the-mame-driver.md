@@ -228,7 +228,7 @@ Same buffer, `0x60A700`, so all three are disk content:
 | `WSA SOUND RAM S0` | `0xF48C1A` onward, 16 bytes at `+0` | only when the screen id `(0x207C)` is `0x54` |
 | `WSA1` | the same routine, 4 bytes at `+6` | `0xFF` is accepted as a wildcard; mismatch returns error `0x2B` |
 
-## 7. The 0x617800 record array — size confirmed, count still open
+## 7. The 0x617800 record array — size confirmed, count now bounded (1292)
 
 The driver deliberately leaves this unmapped because *"nothing in the reached
 code fixes how many records there are"*. That is still true, and prom_b does fix
@@ -237,6 +237,21 @@ the **record size and the numbering**: `0xF61D94` and `0xF61F24` both do
 inverse (`sla 0x08 / add 0x00617800`). So records are **256 bytes** and the
 number the UI carries is **1-based**. No bound was found; leaving it unmapped
 remains right.
+
+★ **Resolved 2026-10-31 (lane open4/wsa1-d): the heap holds 1292 records,
+`0x617800-0x6683FF`.** `BStore_BootPhase0` (module 19's boot phase 0, prom_b
+`0xF44042`) copies the six bytes `WorkspaceDefaults_HeapDescriptor` (prom_b
+`0xF46084`: `00 78 61 00 0C 05`) to `BStore_HeapBase` = `(0x3604)` as a long and
+`BStore_BlockCount` = `(0x3608)` as a word: base `0x00617800`, count `0x050C` =
+**1292**. Nothing else writes `(0x3608)` in either CPU-1 image; every user reads
+it as the bound: `BStore_FreeList_Init` threads blocks 1..1292 onto the free
+list, `BStore_RebuildFreeChain` (prom_a `0xFBAD91`) clamps the free head past it,
+and the allocator and SEQ readers (prom_b `0xF72DF6`, `0xF72E51`, `0xF7340C`)
+raise an error for a block number above it. `0x617800 + 1292 * 0x100 =
+0x668400`, inside the CS3 window. Re-derive with
+`python3 notes/open4-d-probes/workspace_defaults_partition.py --selftest`.
+The driver may now map `0x617800-0x6683FF` as the heap; `0x668400-0x67FFFF`
+stays unaccounted.
 
 ## 8. DSP effects — 128 slots, 56 used
 

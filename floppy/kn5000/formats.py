@@ -253,6 +253,23 @@ def emit_block(o, d, start, end, blkname, title):
     return True
 
 
+def emit_block_head(o, d, start, end, blkname, title):
+    """The first records of a panel block's list that exactly fill [start, end): typed with the record
+    macros when they match the firmware's tags and lengths, else bytes."""
+    want = layout()[blkname]
+    k, p = match_layout(d, start, end, want)
+    if p != end:
+        o.fill_or_bytes(d[start:end], title + ': not the records of %s here' % blkname)
+        return
+    o.comment('%s: the first %d records of %s.' % (title, k, blkname))
+    q = start
+    for t, n in want[:k]:
+        pay = d[q + 2:q + 2 + n]
+        line = panel_fields.record_line(t, n, pay, sound_name(pay) if t in panel_fields.PART_TAGS and n == 24 else None)
+        o.put(line or panel_fields.raw_line(t, n, pay), 2 + n)
+        q += 2 + n
+
+
 def describe_lsw(ctx):
     d = ctx.data
     if len(d) != 0xE40 or d[4:6] != b'HK':
@@ -269,11 +286,38 @@ def describe_lsw(ctx):
     emit_block(o, d, 0x20, 0x3E0, 'PanelTlv_Block0_Layout', 'Block 0 (RAM 0xf9a0)')
     o.label('Block1')
     emit_block(o, d, 0x3E0, 0x640, 'PanelTlv_Block1_Layout', 'Block 1 (RAM 0xfd60)')
-    o.label('Ram1E7800')
-    o.inc(0x800, 'RAM 0x1e7800..0x1e8000',
-          opaque='what the firmware keeps at RAM 0x1e7800..0x1e8000 is not identified '
-                 '(docs/kn-disk-file-formats.md, "still unmapped")')
+    o.label('SoundArranger')
+    emit_sound_arranger(o, d, 0x640)
     return o.done()
+
+
+def emit_sound_arranger(o, d, a):
+    """RAM 0x1e7800..0x1e7fff: the Sound Arranger memory.  AccStyle_InitVRAM fills its first 0x7e0 bytes from
+    AccStyle_RamImage_1E7800: a 16-byte header, then 200 ten-byte records at 0x1e7810 + 10 * n, n from
+    AccHelper_ComputeVoiceOffset (the panel style's index).  A record holds the sounds of DRUM, BASS and
+    ACCOMP1-3 for that style: AccVoiceState_Snapshot writes them from PANEL_PART_DRUM .. _ACP3 (+0 sound, +1 bank,
+    bit 7 of +1 = the part's DIGITAL EFFECT, PANEL_PART_x+4 bit 6; DRUM: the kit, low nibble), AccTuning_LoadFromROM
+    reads them back into the lane records 0x3246.. when bit 7 of the DRUM bank byte is set, which
+    AccStyle_InlinedBlock_Skip2 sets (the style's sounds were arranged)."""
+    o.comment('Sound Arranger memory (RAM 0x1e7800..0x1e7fff; emit_sound_arranger\'s docstring has the readers).')
+    h = d[a:a + 16]
+    if h[:6] == b'ZZZH\0K':
+        o.ascii(h[:6], 'image signature, as AccStyle_RamImage_1E7800 has it (no reader)')
+        o.raw('.byte', ['%d' % h[6]], 1, 'record count, 200 in the initial image [INFERENCE: no reader]')
+        o.fill_or_bytes(h[7:16], 'header +7..+0xf, zero in the initial image (no reader)')
+    else:
+        o.fill_or_bytes(h, 'header, not the initial image\'s shape here')
+    for n in range(200):
+        if n % 20 == 0:
+            o.comment('style index %d..%d' % (n, n + 19))
+        r = d[a + 16 + 10 * n:a + 26 + 10 * n]
+        vals = [str(r[0]), str(r[1] & 0x7F)]
+        for i in (2, 4, 6, 8):
+            vals += [str(r[i]), str(r[i + 1] & 0x7F)]
+        fl = sum((r[1 + 2 * k] >> 7) << k for k in range(5))
+        vals.append('0x%02x' % fl if fl else '0')
+        o.put('\tsndarg\t%s' % ', '.join(vals), 10)
+    o.fill_or_bytes(d[a + 0x7E0:a + 0x800], 'RAM 0x1e7fe0..0x1e7fff, past the initial image (no reader)')
 
 
 def describe_pmt(ctx):
@@ -361,19 +405,18 @@ def describe_tm(ctx):
 # Style banks: CMP (COMPOSER) and the sections of RCM (RHYTHM CUSTOM)
 
 DIR0, NREC, REC = 0x60, 30, 0x60
-# STYLE_SECTION 0..29 (AccDemo_LoadVariation_EntryLoop_Data's order; scripts/build/style_events.py).
-SECTION_ROLE = ['a-variation1', 'a-variation2', 'a-variation3', 'a-variation4',
-                'b-variation1', 'b-variation2', 'b-variation3', 'b-variation4',
-                'c-variation1', 'c-variation2', 'c-variation3', 'c-variation4',
-                'a-intro 1', 'a-intro 2', 'a-fill in 1', 'a-fill in 2', 'a-ending 1', 'a-ending 2',
-                'b-intro 1', 'b-intro 2', 'b-fill in 1', 'b-fill in 2', 'b-ending 1', 'b-ending 2',
-                'c-intro 1', 'c-intro 2', 'c-fill in 1', 'c-fill in 2', 'c-ending 1', 'c-ending 2']
+# The bank's field layout, shared with scripts/build/style_events.py (the IC19 banks): one module names
+# every field for both, with the evidence for each (STYLE_SECTION 0..29 in AccDemo_LoadVariation_EntryLoop_
+# Data's order, the header, the section records, the chord maps and the measure-start table).
+sys.path.insert(0, str(REPO / 'scripts' / 'build'))
+import style_bank_layout as SBL  # noqa: E402
+SECTION_ROLE = SBL.SECTION_ROLE
 
 
 # Cell pointers count blocks from block 20 of the bank (bank + 0x1400), in every bank on these
 # disks: no other base makes 1/10 as many links mutual (probe kn5000_floppy_formats.py, BASE), and
 # AccPatch_InitSlotChain allocates the cells from base + 0x1400.  Three CMPs hold cell-shaped
-# bytes in data_ba0 below that base; they are spelled as bytes there.
+# bytes below that base, in the measure-start table's area; they are spelled as bytes there.
 CELL_BASE_BLOCK = 20
 
 
@@ -385,24 +428,72 @@ def emit_style_bank(o, d, base, end, title):
     """One IC19-format style bank at d[base:end]: header, directory, then 256-byte blocks."""
     if d[base:base + 4] != b'H\0K\0':
         return False
-    o.comment('%s: one Composer style image (the bank layout of scripts/build/style_events.py, shared' % title)
-    o.comment('with the IC19 custom-data banks): header, 30 STYLE_SECTION records, the fill-in cell at')
-    o.comment('+0x13c0, then 256-byte cells from +0x1400 (AccPatch_InitSlotChain: base + 0x1400).')
+    o.comment('%s: one Composer style image (the bank layout of scripts/build/style_bank_layout.py,' % title)
+    o.comment('shared with the IC19 custom-data banks): header, 30 STYLE_SECTION records, chord maps and')
+    o.comment('measure-start table, the fill-in cell at +0x13c0, then 256-byte cells from +0x1400.')
     o.ascii(d[base:base + 4], 'bank magic')
-    o.fill_or_bytes(d[base + 4:base + 0x1E], 'hdr_04: 26 bytes, the same in every bank (TODO: not established)')
+    hb = {nm: (off, n) for off, n, nm in SBL.HEADER_BYTES}
+
+    def hdr_bytes(nm, what):
+        off, n = hb[nm]
+        o.fill_or_bytes(d[base + off:base + off + n], '%s: %s' % (nm, what))
+
+    hdr_bytes('reserved_04', '0 in every bank; no reader')
+    hdr_bytes('reserved_0b', '5a 5a 5a in every bank (Demo_StyleRhythmData); no reader')
+    o.put('\tstyle_bank_mode\t0x%04x, %d\t; password (0 = none), %s MODE' % (
+        struct.unpack_from('<H', d, base + SBL.PASSWORD)[0], d[base + SBL.COMPOSER_MODE],
+        {0: 'NORMAL', 1: 'EXPAND'}.get(d[base + SBL.COMPOSER_MODE], '?')), 3)
+    hdr_bytes('reserved_11', '0 in every bank; no reader')
+    hdr_bytes('reserved_15', '01 01 01 01 02 02 02 02 in every bank (Demo_StyleRhythmData); no reader')
+    hdr_bytes('reserved_1d', '0; no reader')
     w = struct.unpack_from('<9H', d, base + 0x1E)
     o.put('\tstyle_bank_sizes\t0x%04x, 0x%02x, 0x%02x, %d, 0x%03x, %d, 0x%02x, 0x%04x, 0x%04x' % w, 18)
-    o.fill_or_bytes(d[base + 0x30:base + 0x60], 'hdr_30 (TODO: not established)')
+    o.fill_or_bytes(d[base + 0x30:base + 0x60], 'reserved_30: 0 in every bank; no reader')
     for k in range(NREC):
         r = base + DIR0 + k * REC
         v = struct.unpack_from('<6H', d, r)
-        g = struct.unpack_from('<20H', d, r + 0x18)
-        vals = ['0x%04x' % x for x in v] + ['0x%02x' % x if x else '0' for x in d[r + 0x0C:r + 0x18]] + \
-            ['0x%04x' % x if x else '0' for x in g] + [s_escape(d[r + 0x40:r + 0x50])] + \
-            ['0x%02x' % x if x else '0' for x in d[r + 0x50:r + 0x60]]
-        o.put('\tstyle_section\t%s\t; %d %s' % (', '.join(vals), k, SECTION_ROLE[k]), REC)
-    o.fill_or_bytes(d[base + 0xBA0:base + 0x13C0], 'data_ba0 (AccDemo_LoadVariation_DataBlock and the table '
-                    'after it; zero in the factory banks; TODO: fields not established)')
+        key, minor, a7, b7, hi = SBL.rec_chord_fields(d[r + 0x0E])
+        o.put('\tstyle_section_head\t%s, %d, %d, %d, %d, %d, %d, %d, 0x%02x, 0x%02x, %d'
+              '\t; section %d %s: %s, %d measures, key %s' % (
+                  ', '.join('0x%04x' % x for x in v), d[r + 0x0C], d[r + 0x0D], key, minor, a7, b7, hi,
+                  d[r + 0x0F], d[r + 0x10], d[r + 0x11], k, SECTION_ROLE[k], SBL.time_sig_name(d[r + 0x0C]),
+                  d[r + 0x0D] + 1, SBL.key_name(key)), 0x12)
+        o.fill_or_bytes(d[r + 0x12:r + 0x18], 'reserved_12')
+        for i, pt in enumerate(SBL.PARTS):
+            q = r + SBL.PART_BASE + SBL.PART_SIZE * i
+            b8 = d[q:q + 8]
+            vals = [str(b8[0]), str(b8[1]), str(b8[2]), str(b8[3]), '0x%02x' % b8[4], str(b8[5]),
+                    '0x%02x' % b8[6], str(b8[7])]
+            o.put('\tstyle_part\t%s\t; %s' % (', '.join(vals), pt), 8)
+        o.put('\tstyle_section_name\t%s' % s_escape(d[r + SBL.NAME_OFF:r + SBL.NAME_OFF + 16]), 16)
+        o.fill_or_bytes(d[r + SBL.TAIL_OFF:r + REC], 'reserved_50: no reader')
+    cm = d[base + SBL.CHORD_MAP_OFF:base + SBL.MEASURE_OFF]
+    maps_ok = all(cm[32 * n + 4:32 * n + 16] == bytes(12) and all(x < 12 or x == 0xFF for x in cm[32 * n:32 * n + 4])
+                  for n in range(SBL.CHORD_MAPS))
+    if not any(cm):
+        o.fill_or_bytes(cm, 'chord_map[5]: the five COMPOSER CHORD MAPs, all zero here')
+    elif maps_ok:
+        o.comment('The five COMPOSER CHORD MAPs (+0xba0): the four variations each plays, 0xff = none.')
+        for n in range(SBL.CHORD_MAPS):
+            c = cm[32 * n:32 * n + 32]
+            o.put('\tstyle_chord_map\t%s, %s' % (', '.join('0x%02x' % x if x == 0xFF else str(x) for x in c[:4]),
+                                                  s_escape(c[16:])), 32)
+    else:
+        o.fill_or_bytes(cm, 'chord_map[5] area, not in the chord-map shape here')
+    mt = d[base + SBL.MEASURE_OFF:base + SBL.FILLIN_OFF]
+    rows = [struct.unpack_from('<16H', mt, 32 * j) for j in range(SBL.MEASURE_VARS * SBL.MEASURE_PARTS)]
+    table_ok = all(row[2 * m] < 0x154 and row[2 * m + 1] < 0x100 for row in rows for m in range(8))
+    if not any(mt):
+        o.fill_or_bytes(mt, 'measure_start[12][5][8]: all zero here')
+    elif table_ok:
+        o.comment('The measure-start table (+0xc40): per variation and part, the {cell, offset} where each of')
+        o.comment('the eight measures starts (AccVoice_GetMeasureStartBlock, AccPatch_StoreMeasureCursor).')
+        for j, row in enumerate(rows):
+            o.put('\tstyle_measure_starts\t%s\t; variation %d %s' % (
+                ', '.join('%d' % x for x in row), j // 5, SBL.PARTS[j % 5]), 32)
+    else:
+        o.fill_or_bytes(mt, 'measure_start table area: holds bytes that are no {cell, offset} table '
+                        '(stale cell-shaped data of an older layout)')
     f = base + 0x13C0
     if d[f + 5] == 0x87:
         o.raw('style_cell', ['0x%02x' % d[f]] + ['0x%04x' % x for x in struct.unpack_from('<HH', d, f + 1)], 6,
@@ -581,7 +672,11 @@ def describe_sqt(ctx):
         pb, pn = tl.panel
         emit_block(o, d, b + pb, b + pb + pn, 'PanelTlv_Block0_Layout',
                    'The song\'s copy of panel block 0 (taken when the song is recorded)')
-        o.struct(tl, d[b + pb + pn:b + 0x800])
+        p1, n1 = tl.panel1
+        emit_block_head(o, d, b + p1, b + p1 + n1, 'PanelTlv_Block1_Layout',
+                        'The song\'s copy of panel block 1\'s first records (BitMapOut_ComputeRegionDelta copies '
+                        '0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM)')
+        o.struct(tl, d[b + p1 + n1:b + 0x800])
     p = nslots * 0x800
     o.label('Events')
     o.comment('Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the')

@@ -39,13 +39,24 @@
 	.equ MIDISEQ_ACTIVE_BLOCK_PTR,	0xbc54	; the second pair's active pointer (its +10 / +14 words are compared)
 	.equ MIDISEQ_SPARE_BLOCK_PTR,	0xbc58	; and its spare
 ; the ACTIVE title: EVT_CHANGE_TITLE, EVT_RETURN_TITLE and EVT_INTERRUPT_TITLE all set it (`ldmm8
-; ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE / ld (ACTIVE_TITLE), l`); MainTitleCtrl_ChangeTitle's header names the
-; transition variables
+; ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE / ld (ACTIVE_TITLE), l`)
 	.equ ACTIVE_TITLE,	0x8d38	; the title on screen: CURRENT_TITLE, or an interrupting / returned-to one
 	.equ ACTIVE_TITLE_PREVIOUS,	0x8d39	; its previous value, saved before each change
-	.equ TRANSITION_PROGRESS,	0x2749a	; transition progress counter (cleared on every title change)
-	.equ TRANSITION_TIMER,		0x2749e	; transition timer
-	.equ TRANSITION_FLAGS,		0x274a2	; transition type / flags
+; held panel switches, kept by SwbtB3_OnPanelEvent from the 0xA9 switch records: group N = payload byte 1
+; (0..16), bit N of a mask = CtrlPanel_SwitchRowBit[N].  Payload bit 1 is the group's UP switch (switch
+; number N), bit 0 its DOWN switch (N | 0x80; ES_Left1..5 are 0x88..0x8C).  MainTitleControl clears all three
+; on every mode or title change, so a held switch is forgotten across screens.  (Named TRANSITION_PROGRESS /
+; _TIMER / _FLAGS until 2026-10-31: nothing in the firmware animates a title change.)
+	.equ PANEL_SW_HELD_UP,	0x2749a	; groups whose UP switch is held (set on press, cleared on release)
+	.equ PANEL_SW_HELD_DOWN,	0x2749e	; groups whose DOWN switch is held
+	.equ PANEL_SW_HELD_BOTH,	0x274a2	; PANEL_SW_HELD_UP & PANEL_SW_HELD_DOWN: 0x1100 -> CaptureLcd (version 0xff), 0xa1 -> TITLE_SOFTVER, 0x91 -> TITLE_PS, 0x89 -> EVT_SHOW to view 7
+; MainTitleControl's delayed requests (MT_SetTitleFlag 0x01E000BA, MT_OtherPartLed 0x01E000AB): the handler
+; stores the parameter and a count of 10; MT_MainLoopCount (0x01E000BB, once per main-loop pass) counts down
+	.equ TITLE_FLAGS_LATCHED,	0x274a6	; title-flags word, copied from TITLE_FLAGS_PENDING when the count ends; read by CtrlPanel_GetSelectionState
+	.equ TITLE_FLAGS_PENDING,	0x274a8	; the flags MT_SetTitleFlag last sent
+	.equ TITLE_FLAGS_DELAY,	0x274aa	; passes left before TITLE_FLAGS_PENDING is latched
+	.equ OTHER_PART_LED_PENDING,	0x274ac	; MT_OtherPartLed's request: non-zero = LED on (MainTitleCtrl_OnMainLoopCount sets bit 0 of a panel-state byte, 0x8f5c in v10)
+	.equ OTHER_PART_LED_DELAY,	0x274ae	; passes left before the request is applied (CtrlPanel_SetIndicatorBit 0x60)
 ; the palette routine's header (ui/ui_window_procs.s) and UpdateScreen's (ui/ui_widget_defs.s)
 	.equ PALETTE_DATA_PTR_CACHED,	0x3ef94	; current palette data pointer (cached)
 	.equ PALETTE_INDEX_CACHED,	0x3ef9e	; current palette index (cached); a pending update is checked here

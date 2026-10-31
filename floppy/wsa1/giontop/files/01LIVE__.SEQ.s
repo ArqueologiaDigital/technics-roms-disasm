@@ -5,6 +5,9 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_01LIVE___SEQ:
@@ -11167,11 +11170,142 @@ F_01LIVE___SEQ:
 	.byte	0x00, 0x90, 0x4f, 0x54, 0x29, 0x15, 0x00, 0x90, 0x5b, 0x56, 0x54, 0x05, 0x00, 0x81, 0x90, 0x06
 	.byte	0x51, 0x5a, 0x1f, 0x01, 0x90
 	seq_block	0x00, 0, 175	; block 174: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"giontop.img", 0x27705, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_data	88, 15, 33, 1
+	sq_note	0x90, 11, 83, 64, 25, 1
+	sq_note	0x90, 13, 93, 105, 25, 1
+	sq_beat
+	sq_note	0x90, 58, 93, 102, 25, 0
+	sq_note	0x90, 60, 88, 93, 31, 0
+	sq_note	0x90, 60, 83, 90, 32, 0
+	sq_note	0x90, 60, 81, 104, 32, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 97, 26, 0
+	.byte	0x81, 0x90, 0x00, 0x38, 0x59, 0x16, 0x00, 0x81, 0x90, 0x48, 0x38, 0x49, 0x11, 0x00, 0x81, 0x90	; after the end of track
+	.byte	0x48, 0x38, 0x4f, 0x12, 0x00, 0x90, 0x48, 0x38, 0x61, 0x13, 0x00, 0x81, 0x90, 0x00, 0x2c, 0x61
+	.byte	0x12, 0x00, 0x90, 0x30, 0x38, 0x61, 0x11, 0x00, 0x90, 0x48, 0x38, 0x43, 0x12, 0x00, 0x90, 0x48
+	.byte	0x2c, 0x61, 0x19, 0x00, 0x81, 0x81, 0x90, 0x00, 0x38, 0x55, 0x11, 0x00, 0x90, 0x48, 0x38, 0x39
+	.byte	0x10, 0x00, 0x81, 0x90, 0x18, 0x38, 0x42, 0x0d, 0x00, 0x90, 0x48, 0x44, 0x61, 0x13, 0x00, 0x81
+	.byte	0x90, 0x00, 0x38, 0x34, 0x11, 0x00, 0x90, 0x00, 0x38, 0x61, 0x15, 0x00, 0x90, 0x30, 0x38, 0x40
+	.byte	0x11, 0x00, 0x90, 0x30, 0x44, 0x61, 0x12, 0x00, 0x90, 0x48, 0x38, 0x61, 0x17, 0x00, 0x81, 0x90
+	.byte	0x00, 0x38, 0x59, 0x18, 0x00, 0x81, 0x90, 0x48, 0x38, 0x49, 0x11, 0x00, 0x81, 0x90, 0x48, 0x38
+	.byte	0x4f, 0x14, 0x00, 0x90, 0x48, 0x50, 0x61, 0x15, 0x00, 0x81, 0x90, 0x00, 0x44, 0x61, 0x12, 0x00
+	.byte	0x90, 0x30, 0x50, 0x61, 0x12, 0x00, 0x90, 0x48, 0x38, 0x43, 0x12, 0x00, 0x90, 0x48, 0x44, 0x61
+	.byte	0x15, 0x00, 0x81, 0x81, 0x90, 0x00, 0x38, 0x55, 0x10, 0x00, 0x90, 0x48, 0x38, 0x39, 0x10, 0x00
+	.byte	0x81, 0x90, 0x18, 0x36, 0x42, 0x0d, 0x00, 0x90, 0x18, 0x2a, 0x61, 0x1c, 0x00, 0x90, 0x48, 0x36
+	.byte	0x61, 0x14, 0x00, 0x81, 0x90, 0x00, 0x36, 0x34, 0x15
 	seq_block	0x5f, 174, 176	; block 175: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"giontop.img", 0x27805, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_note	0x90, 0, 42, 97, 30, 0
+	sq_note	0x90, 48, 54, 64, 15, 0
+	sq_note	0x90, 48, 54, 97, 17, 0
+	sq_note	0x90, 72, 42, 97, 27, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 89, 23, 0
+	sq_beat
+	sq_note	0x90, 72, 54, 73, 17, 0
+	sq_beat
+	sq_note	0x90, 72, 54, 79, 17, 0
+	sq_note	0x90, 72, 54, 97, 19, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 97, 18, 0
+	sq_note	0x90, 48, 54, 97, 17, 0
+	sq_note	0x90, 72, 54, 67, 18, 0
+	sq_note	0x90, 72, 42, 97, 25, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 54, 85, 17, 0
+	sq_note	0x90, 72, 54, 57, 16, 0
+	sq_beat
+	sq_note	0x90, 24, 54, 66, 14, 0
+	sq_note	0x90, 72, 66, 97, 19, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 52, 16, 0
+	sq_note	0x90, 0, 54, 97, 20, 0
+	sq_note	0x90, 48, 54, 64, 19, 0
+	sq_note	0x90, 48, 66, 97, 18, 0
+	sq_note	0x90, 72, 54, 97, 21, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 89, 23, 0
+	sq_beat
+	sq_note	0x90, 72, 54, 73, 17, 0
+	sq_beat
+	sq_note	0x90, 72, 54, 79, 20, 0
+	sq_note	0x90, 72, 78, 97, 21, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 97, 18, 0
+	sq_note	0x90, 48, 78, 97, 18, 0
+	sq_note	0x90, 72, 54, 67, 16, 0
+	sq_note	0x90, 72, 66, 97, 21, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 54, 85, 17, 0
+	sq_note	0x90, 72, 54, 57, 15, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 76, 12, 0
+	sq_note	0x90, 24, 75, 75, 17, 0
+	sq_note	0x90, 48, 73, 78, 16, 0
+	sq_note	0x90, 72, 68, 92, 18, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 80, 14, 0
+	sq_note	0x90, 24, 75, 66, 17, 0
+	sq_note	0x90, 48, 73, 72, 16, 0
+	sq_note	0x90, 72, 68, 92, 18, 0
 	seq_block	0x08, 175, 177	; block 176: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"giontop.img", 0x27905, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_note	0x90, 0, 80, 59, 17, 0
+	sq_note	0x90, 24, 75, 46, 15, 0
+	sq_note	0x90, 48, 73, 47, 17, 0
+	sq_note	0x90, 72, 68, 29, 17, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 15, 16, 0
+	sq_note	0x90, 24, 75, 14, 17, 0
+	sq_note	0x90, 48, 73, 14, 17, 0
+	sq_note	0x90, 72, 68, 30, 17, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 22, 16, 0
+	sq_note	0x90, 24, 75, 22, 17, 0
+	sq_note	0x90, 48, 73, 18, 16, 0
+	sq_note	0x90, 72, 68, 48, 17, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 23, 17, 0
+	sq_note	0x90, 24, 75, 25, 17, 0
+	sq_note	0x90, 48, 73, 28, 16, 0
+	sq_note	0x90, 72, 68, 52, 17, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 31, 17, 0
+	sq_note	0x90, 24, 75, 46, 15, 0
+	sq_note	0x90, 48, 73, 48, 19, 0
+	sq_note	0x90, 72, 68, 65, 18, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 52, 18, 0
+	sq_note	0x90, 24, 75, 48, 17, 0
+	sq_note	0x90, 48, 73, 62, 17, 0
+	sq_note	0x90, 72, 68, 89, 18, 0
+	sq_beat
+	sq_note	0x90, 0, 80, 68, 16, 0
+	sq_note	0x90, 24, 75, 59, 17, 0
+	sq_note	0x90, 48, 73, 78, 16, 0
+	sq_note	0x90, 72, 68, 82, 17, 0
+	sq_note	0x90, 72, 66, 39, 17, 0
+	sq_beat
+	sq_note	0x90, 0, 68, 60, 17, 0
+	sq_note	0x90, 24, 56, 57, 17, 0
+	sq_note	0x90, 48, 56, 56, 16, 0
+	sq_note	0x90, 72, 68, 57, 18, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 57, 17, 0
+	sq_note	0x90, 24, 56, 57, 17, 0
+	sq_note	0x90, 48, 68, 57, 17, 0
+	sq_note	0x90, 72, 56, 59, 17, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 54, 16, 0
+	sq_note	0x90, 24, 68, 57, 17, 0
+	sq_note	0x90, 48, 56, 61, 16, 0
+	.fill	1, 1, 0x90	; the first 1 bytes of an event (status 0x90), cut by the block's end

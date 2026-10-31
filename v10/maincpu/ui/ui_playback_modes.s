@@ -1664,8 +1664,9 @@ DkMdlyPly_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-; DkMdlyPly send audio command
-DkMdlyPly_SendAudioCmd:
+; DkMdlyPly_FindLowestSetBit: HL = the index (0..15) of the lowest bit of WA that is set, by
+;   DkMdlyPly_BitMaskByIndex; 16 when none is. Sends nothing. Basis: body + its one caller.
+DkMdlyPly_FindLowestSetBit:
 	ld hl, 0:i3
 	lda xde, (DkMdlyPly_BitMaskByIndex:24)
 
@@ -1708,7 +1709,7 @@ DkMdlyPly_HandleResult:
 	call SndParam_LookupViaEncode
 	ld iz, hl
 	ld wa, (xsp + 4)
-	calr DkMdlyPly_SendAudioCmd
+	calr DkMdlyPly_FindLowestSetBit
 	cp hl, iz
 	jr nz, DkMdlyPly_ExtendedCheck
 	ldto_werp WA, 0xfa
@@ -3585,7 +3586,7 @@ SqStepTtlFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 

@@ -4062,6 +4062,10 @@ sub_FA6FE0__FA7277:
 ;   Every caller passes VoiceParams_Compute_A's fourth argument, and
 ;   MidiNote_OnByPartMode pushes MidiNote_Dispatch's msg[3] into that slot
 ;   (0xFB38A4 / 0xFB38B7), i.e. the VELOCITY.
+;   ★ (lane open4/wsa1-a) t is the element's WAVE-SELECT record (part[+0x8C+41*e], e.g.
+;   0xFB0C35 / 0xFB0C3B), so t[0..2] are wave-select p0, p1, p2: the three velocity-split
+;   thresholds; the layer selects part[+0x90+4*layer], the element's envelope descriptor.
+;   notes/open4-a-probes/wavesel_field_readers.py.
 ; VelSplit_LayerFromVelocity -- 0xFA727D..0xFA72B2 (54 bytes)
 ;
 ; Called from: 7 site(s) outside this module:

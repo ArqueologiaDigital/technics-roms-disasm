@@ -9,10 +9,12 @@ QUESTION IT ANSWERS
   KN5000   v10 v9 v8 v7 v6 v5 v142 v141 v140 subboot tabledata customdata (TLCS-900, llvm-mc dialect, `;`
            hdae5000 hdae_v201 hdae_v115 hdae_v110                         comments)
   SX-WSA1R prom_a prom_b prom_c prom_d                                  (TLCS-900, llvm-mc dialect, `;` comments)
-  SX-KN7000 program table cnv program942                                (MN10300, kn7asm dialect, `#` / `;` comments)
+  SX-KN7000 program table cnv program942 program935 program893         (MN10300, kn7asm dialect, `#` / `;` comments)
   MN10300 siblings kn2400 kn6000 kn6500 hdsx3                           (MN10300, kn7asm dialect, `#` / `;` comments)
 
-  program942 is the SP7001 PLUG-iN program flash (build 942, kn7000/src/sp7001/program.s).  The siblings are the
+  program942 is the SP7001 PLUG-iN program flash (build 942, kn7000/src/sp7001/program.s); program935 and program893
+  are the older program builds 935 (v1.5) and 893 (v1.3), kn7000/src/b935/ and src/b893/, added on 2026-10-31
+  (lane open4/misc).  The siblings are the
   SX-KN2400/2600, SX-KN6000 and SX-KN6500 program flashes and the HD-SX3 plug-in image, generated with the
   kn7000 tools (kn7000/tools/gen_image_s.py); model `mn10300-siblings`.  v141, program942 and the siblings were
   added on 2026-10-24 (wave2/metrics-2); a --compare against an older snapshot lists them as `new`, not as rises.
@@ -111,8 +113,8 @@ RULES (each count is re-derivable from these definitions)
   The image address ranges used by (b) are in IMAGES below (from the linked ELFs' LOAD segments; kn7000 from
   `.mnbase` and the image size; kn2400 also has its work-RAM link window).  prom_d (data at 0x0) has no range,
   so its (b) in/other split is not computed.  imm_in_image is not computed for v142 / v141 / v140 either: their range
-  starts at 0x400, so masks and counts such as 0xffff and 0x2710 would land in it.  kn7000 program and
-  program942 use the flash range only: code linked for the library window at 0x4C000000 counts as elsewhere.
+  starts at 0x400, so masks and counts such as 0xffff and 0x2710 would land in it.  kn7000 program,
+  program942, program935 and program893 use the flash range only: code linked for the library window at 0x4C000000 counts as elsewhere.
 
 LIMITS
   A source-text census: it reads names, not the CPU.  A case of a `.long` jump table and a pushed return address
@@ -178,6 +180,11 @@ IMAGES = collections.OrderedDict([
     ("cnv", ("kn7000", "mn", "kn7000", ["kn7000"], "kn7000/src/cnv/*.s", (0x502B8000, 0x502E0000))),
     # the SP7001 PLUG-iN program flash, build 942 (4 MiB image)
     ("program942", ("kn7000", "mn", "kn7000", ["kn7000"], ["kn7000/src/sp7001/program.s"],
+                    (0x48400000, 0x48400000 + 0x400000))),
+    # the older program builds 935 (v1.5) and 893 (v1.3), 4 MiB images like 942's
+    ("program935", ("kn7000", "mn", "kn7000", ["kn7000"], ["kn7000/src/b935/program.s"],
+                    (0x48400000, 0x48400000 + 0x400000))),
+    ("program893", ("kn7000", "mn", "kn7000", ["kn7000"], ["kn7000/src/b893/program.s"],
                     (0x48400000, 0x48400000 + 0x400000))),
     # MN10300 siblings, assembled from their own directory (`kn7asm.py src/program.s -I .`).  kn2400 links the
     # code from file 0x3285be to 0x3965bb for work RAM at 0x50120000 (kn2400/README.md, "Layout"), so its

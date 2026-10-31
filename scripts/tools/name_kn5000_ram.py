@@ -20,13 +20,19 @@ QUESTION THIS ANSWERS / JOB IT DOES
   (addr_tokens): memory operands, pointer loads, both ldmm operands, and a 32-bit register immediate
   when v10's value is DRAM.  Pairing the bare numbers instead mis-aligned an instruction whose other
   operand was already named and gave v9 MIDI_MSG_DATA3 = 0x9131 (the gate caught it, 2026-10-03).  A name is applied only when all its votes agree, and the
-  tree's `.equ` is corrected to that value (a comment says so).  A name with no vote whose voted
-  neighbours (within 0x100, at least five) ALL moved by one delta takes that delta -- v7's panel block
-  moved -0x9C as one, the low variables (0x408, 0x409, 0xC9A) not at all.  Same bytes: make gate-all.
+  tree's `.equ` is corrected to that value (a comment says so).  Same bytes: make gate-all.
+
+  THE BLOCK-DELTA FALLBACK IS OFF BY DEFAULT (review 2026-10-31, notes/misc-2026-10-31/README.md).  With
+  --infer-block-delta, a name with no vote whose voted neighbours (within 0x100, at least five) ALL moved
+  by one delta takes that delta -- v7's panel block moved -0x9C as one, the low variables (0x408, 0x409,
+  0xC9A) not at all.  That is a guess from layout, not a vote: the gate cannot check it (a name nothing
+  numeric uses changes no byte) and its `.equ` correction would carry the same "derived from v10's
+  uses" comment as a voted one.  Without the flag the names it would place are only listed, with the
+  address it would give them, and nothing of theirs is rewritten.
 
 USAGE
   make all
-  python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 [--apply]
+  python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 [--apply] [--infer-block-delta]
   python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 --check-xhl   # named xhl loads the PTR rule would not make
 """
 import argparse
@@ -178,6 +184,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tree", required=True, choices=["v10", "v9", "v7"])
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--infer-block-delta", action="store_true",
+                    help="also place unvoted names by their voted neighbours' common delta (a guess; off by default)")
     ap.add_argument("--check-xhl", action="store_true",
                     help="list the tree's `ld xhl, NAME` loads of a RAM name that xhl_is_pointer() rejects")
     a = ap.parse_args()
@@ -250,9 +258,10 @@ def main():
                 continue
             near = {addr[m] - ref[m] for m in addr if abs(ref[m] - ref[n]) <= 0x100}
             if len(near) == 1 and sum(1 for m in addr if abs(ref[m] - ref[n]) <= 0x100) >= 5:
-                addr[n] = ref[n] + near.pop()
-                inferred[n] = addr[n]
+                inferred[n] = ref[n] + near.pop()
                 report[n] = "inferred"
+                if a.infer_block_delta:
+                    addr[n] = inferred[n]       # as before 2026-10-31: a guess counts as a neighbour for the next
     byaddr = {v: n for n, v in addr.items()}
     files = sorted(glob.glob(os.path.join(REPO, a.tree, "maincpu", "**", "*.s"), recursive=True))
     st = collections.Counter()
@@ -319,7 +328,9 @@ def main():
                     used |= set(ref_re.findall(l.split(";")[0]))
         # a name the tree's code already uses has nothing numeric left to vote with: not "unsure"
         unsure = {n: v for n, v in report.items() if v != "inferred" and (not v or len(v) != 1) and n not in used}
-        print("  inferred from the block's common delta: %s" % {n: report[n] for n in report if report[n] == "inferred"})
+        print("  block-delta guesses (%s): %s" % (
+            "applied, --infer-block-delta" if a.infer_block_delta else "NOT applied; --infer-block-delta applies them",
+            {n: "0x%04x" % inferred[n] for n in sorted(inferred)}))
         print("  not applied (no vote, or votes disagree): %s" % unsure)
     for x in fixed:
         print("  .equ %s: %s -> %s" % x)

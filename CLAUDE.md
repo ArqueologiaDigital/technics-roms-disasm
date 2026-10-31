@@ -750,7 +750,7 @@ This is a strict policy to ensure the disassembly is maintainable and understand
    | `Audio_` | Audio subsystem (locks, DMA, commands) | `Audio_Lock_Acquire`, `Audio_DMA_Transfer` |
    | `AudioCmd_` | Audio command formatting | `AudioCmd_NoteOn`, `AudioCmd_ProgramChange` |
    | `AudioInit_` | Audio initialization | `AudioInit_ResetChannels` |
-   | `Acc_` / `AccPedal_` / `AccVoice_` | Auto-accompaniment | `AccPedal_SustainHandler` |
+   | `Acc_` / `AccPedal_` / `AccVoice_` | Auto-accompaniment | `AccPedal_ApplyChangeMask` |
    | `BitMapOut_` | Bitmap rendering | `BitMapOut_DrawRegion` |
    | `CPanel_` | Control panel protocol | `CPanel_ReadButtons` |
    | `Display_` | Display/video routines | `Display_ClearScreen` |

@@ -112,7 +112,7 @@
 ;   slots 12..15  AccVoice_ComputeParamAddr: 0x18/0x1a (section slot < 15), 0x1c/0x1e (< 20),
 ;                 the same +0x400 in half 1; the second of each pair when RAM 0x3309 bit 0 is 0
 ;   slots 16..18  AccVoice_SelectPartOffset (0x20, 0x22, 0x420: RAM 0x32ff bits 0/1),
-;                 AccVoice_Reset_SelectMode (0x330a), AccVoice_ThirdLayer_SelectMode (0x24/0x424)
+;                 AccSection_StartIntro_SelectMode (0x330a), AccSection_StartEnding_SelectMode (0x24/0x424)
 ;   slots 8..11   no reader: every offset handed to AccPart_GetParamAddr is a section-map pick
 ;                 (0..7), 0x18..0x1e, 0x20, 0x22, 0x24 or their +0x400 twins
 ;                 (notes/kn5000-a-2026-10-31/probes/ic14_slot_readers.py); leftover bars

@@ -559,6 +559,7 @@ Dispatch_Code80_RepaintFieldTable:
 ;          unconditionally is the string "SOLO" inside DL_Solo.  The name is
 ;          taken from that literal and from nothing else.
 ; Unknown: what (0x27A2) holds -- nothing in this block writes it.  What ops
+; Resolved 2026-10-31: (0x27A2) is ToneEdit_SoloOn, the MODELING top SOLO flag (FINDINGS-prom_b-graphics-veneers.md).
 ;          0x05 and 0x1B do differs by interpreter-A handler, both 0xF31A75.
 ; ---------------------------------------------------------------------
 UiPaint_Solo:		; <- T_UiPaint_Solo
@@ -573,7 +574,7 @@ UiPaint_Solo:		; <- T_UiPaint_Solo
 	ld	xiy, DL_Solo	; F5BAC4  ld XIY,0x00f02fb2
 	ld	xix, UiPaint_Solo_DL1	; F5BAC9  ld XIX,0x00f02fd9
 	call	T_DisplayList_Run	; F5BACE  call 0xf417f0
-	cp	(0x27a2:16), 0x00	; F5BAD2  cp (0x27a2),0x00
+	cp	(ToneEdit_SoloOn:16), 0x00	; F5BAD2  cp (0x27a2),0x00
 	jr	z, UiPaint_Solo_Skip	; F5BAD7  jr Z,0xf5bae5
 	ld	xiy, UiPaint_Solo_DL1	; F5BAD9  ld XIY,0x00f02fd9
 	ld	xix, UiPaint_Solo_DL2	; F5BADE  ld XIX,0x00f02fe3
@@ -660,7 +661,7 @@ UiPaint_Ordinals:		; <- T_UiPaint_Ordinals
 	push	xix	; F5BB04  push XIX
 	push	xiy	; F5BB05  push XIY
 	push	xiz	; F5BB06  push XIZ
-	cp	(0x27f5:16), 0x01	; F5BB07  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BB07  cp (0x27f5),0x01
 	jr	nz, UiPaint_Ordinals_Skip	; F5BB0C  jr NZ,0xf5bb25
 	ld	(LCD_CurrentLayer:16), 0	; F5BB0E  ld (0x2540),0x00
 	ld	xiy, UiPaint_Ordinals_DL1	; F5BB13  ld XIY,0x00f02f22
@@ -675,7 +676,7 @@ UiPaint_Ordinals_Skip:
 	call	T_DisplayList_Run	; F5BB34  call 0xf417f0
 	ld	c, 4:opc	; F5BB38  ld C,0x04
 UiPaint_Ordinals_Join:
-	ld	w, (10148:16)	; F5BB3A  ld W,(0x27a4)
+	ld	w, (ToneEdit_LayerOnBits:16)	; F5BB3A  ld W,(0x27a4)
 	ld	a, c	; F5BB3E  ld A,C
 	sla	a, 1	; F5BB40  sla 0x01,A
 	dec	1, a	; F5BB43  dec 1,A
@@ -1044,7 +1045,7 @@ OctaveIcon_BlackKeyX:
 ;   ModelingPage_Fields+5 / +8 + (0x27A3), then the slot's TouchCurve_ListPtrs list.  Called by
 ;   Draw_Page12LevelTouchCurveLevel and SoundEditAmpLevel1_RepaintField.
 TouchCurve_DrawCurrentSlot:
-	cp	(0x27f5:16), 0x01	; F5BDBB  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BDBB  cp (0x27f5),0x01
 	jr	nz, TouchCurve_DrawCurrentSlot_Skip4	; F5BDC0  jr NZ,0xf5bdd7
 	ld	(LCD_CurrentLayer:16), 0	; F5BDC2  ld (0x2540),0x00
 	ld	xiy, TouchCurve_DrawCurrentSlot_DL1	; F5BDC7  ld XIY,0x00f04038
@@ -1060,7 +1061,7 @@ TouchCurve_DrawCurrentSlot_Join:
 	xor	xwa, xwa	; F5BDEA  xor XWA,XWA
 	ld	a, (ToneEdit_TouchCurveSlot:16)	; F5BDEC  ld A,(0x27a3)
 	sla	wa, 2	; F5BDF0  sla 0x02,WA
-	cp	(0x27f5:16), 0x01	; F5BDF3  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BDF3  cp (0x27f5),0x01
 	jr	nz, TouchCurve_DrawCurrentSlot_Skip	; F5BDF8  jr NZ,0xf5be01
 	ld	xiz, TouchCurve_BoxOrigins3	; F5BDFA  ld XIZ,0x00f04172
 	jr	TouchCurve_DrawCurrentSlot_Join2	; F5BDFF  jr T,0xf5be06
@@ -1073,7 +1074,7 @@ TouchCurve_DrawCurrentSlot_Join2:
 	ld	(IconOrigin_X:16), wa	; F5BE0B  ld (0x2350),WA
 	ld	wa, (xiz+2)	; F5BE0F  ld WA,(XIZ+0x02)
 	ld	(IconOrigin_Y:16), wa	; F5BE12  ld (0x2352),WA
-	cp	(0x27f5:16), 0x01	; F5BE16  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BE16  cp (0x27f5),0x01
 	jr	nz, TouchCurve_DrawCurrentSlot_Skip2	; F5BE1B  jr NZ,0xf5be24
 	ld	xiz, ModelingPage_Fields+5	; F5BE1D  ld XIZ,0x000027ab
 	jr	TouchCurve_DrawCurrentSlot_Join3	; F5BE22  jr T,0xf5be29
@@ -1085,7 +1086,7 @@ TouchCurve_DrawCurrentSlot_Join3:
 	add	xiz, xwa	; F5BE2F  add XIZ,XWA
 	call	TouchCurve_DrawThumbnail	; F5BE31  call 0xf5be5a
 	pop	xwa	; F5BE35  pop XWA
-	cp	(0x27f5:16), 0x01	; F5BE36  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BE36  cp (0x27f5),0x01
 	jr	nz, TouchCurve_DrawCurrentSlot_Skip3	; F5BE3B  jr NZ,0xf5be44
 	ld	xiz, TouchCurve_ListPtrs3	; F5BE3D  ld XIZ,0x00f04152
 	jr	TouchCurve_DrawCurrentSlot_Join4	; F5BE42  jr T,0xf5be49
@@ -1205,7 +1206,7 @@ LCD_ShowAllLayers_Copy2:
 	ret	; F5BF26  ret
 ; SoundEditMenu_Paint: Dispatch_Code80_PaintTable[code 0x80] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditMenu_Paint:
-	cp	(0x27f5:16), 0x01	; F5BF27  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BF27  cp (0x27f5),0x01
 	jr	z, SoundEditMenu_Paint_Skip2	; F5BF2C  jr Z,0xf5bf51
 	ld	(LCD_CurrentLayer:16), 0	; F5BF2E  ld (0x2540),0x00
 	ld	xiy, DL_SoundEditWriteCopy	; F5BF33  ld XIY,0x00f01800
@@ -1314,7 +1315,7 @@ SoundEdit_PaintPageLabelBackdrop:
 ToneEditPage_A0_Paint:
 	call	Draw_M0delingSoundEditToneDriver	; F5BFC7  call 0xf5c338
 	call	Draw_ToneDriverResonator	; F5BFCB  call 0xf5c360
-	cp	(0x27f5:16), 0x01	; F5BFCF  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BFCF  cp (0x27f5),0x01
 	jr	z, ToneEditPage_A0_Paint_Skip	; F5BFD4  jr Z,0xf5bfe4
 	ld	xiy, ToneEditPage_A0_Paint_DL1	; F5BFD6  ld XIY,0x00f02064
 	ld	xix, DL_ResonatorDriverOnOffGroup	; F5BFDB  ld XIX,0x00f020aa
@@ -1323,7 +1324,7 @@ ToneEditPage_A0_Paint_Skip:
 	ld	xiy, DL_ResonatorDriverOnOffGroup	; F5BFE4  ld XIY,0x00f020aa
 	ld	xix, DL_ToneDriverResonator	; F5BFE9  ld XIX,0x00f021e4
 	call	T_DisplayList_Run	; F5BFEE  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5BFF2  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5BFF2  cp (0x27f5),0x01
 	jr	z, ToneEditPage_A0_Paint_Skip2	; F5BFF7  jr Z,0xf5c01f
 	ld	(LCD_CurrentLayer:16), 0	; F5BFF9  ld (0x2540),0x00
 	ld	xiy, DL_OriginalStringCylinderCone	; F5BFFE  ld XIY,0x00f0302a
@@ -1472,7 +1473,7 @@ ToneEditPage_A6_Paint:
 ToneEditPage_A7_Paint:
 	call	DisplayList_Run_M0delingSoundEditToneDriver	; F5C1AC  call 0xf5c34c
 	call	DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMutingSubGain	; F5C1B0  call 0xf5c388
-	cp	(0x27f5:16), 0x01	; F5C1B4  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C1B4  cp (0x27f5),0x01
 	jr	z, ToneEditPage_A7_Paint_Skip	; F5C1B9  jr Z,0xf5c1de
 	ld	xiy, DL_MutingKeyFollowSlopeRange	; F5C1BB  ld XIY,0x00f02dfb
 	ld	xix, UiPaint_Ordinals_DL1	; F5C1C0  ld XIX,0x00f02f22
@@ -1563,7 +1564,7 @@ Draw_ToneTemplateLevelKeyTune:
 	ld	xiy, DL_ToneTemplateLevelKeyTune	; F5C2B0  ld XIY,0x00f02329
 	ld	xix, Draw_ToneTemplateLevelKeyTune_DL1	; F5C2B5  ld XIX,0x00f0245f
 	call	T_DisplayList_Run	; F5C2BA  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5C2BE  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C2BE  cp (0x27f5),0x01
 	jr	z, Draw_ToneTemplateLevelKeyTune_Skip2	; F5C2C3  jr Z,0xf5c2e6
 	ld	(LCD_CurrentLayer:16), 0	; F5C2C5  ld (0x2540),0x00
 	ld	xiy, Draw_ToneTemplateLevelKeyTune_DL1	; F5C2CA  ld XIY,0x00f0245f
@@ -1575,7 +1576,7 @@ Draw_ToneTemplateLevelKeyTune:
 Draw_ToneTemplateLevelKeyTune_Skip2:
 	call	UiPaint_Solo	; F5C2E6  call 0xf5bab8
 	call	SoundEdit_PaintSlotOrdinals	; F5C2EA  call 0xf5c39c
-	cp	(0x27f5:16), 0x01	; F5C2EE  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C2EE  cp (0x27f5),0x01
 	jr	z, Draw_ToneTemplateLevelKeyTune_Skip3	; F5C2F3  jr Z,0xf5c308
 	ld	(LCD_CurrentLayer:16), 0	; F5C2F5  ld (0x2540),0x00
 	ld	xiy, Draw_ToneTemplateLevelKeyTune_DL3	; F5C2FA  ld XIY,0x00f33a71
@@ -1704,7 +1705,7 @@ DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMuting
 ;   body -- the last step of four SOUND EDIT page painters; same loop as UiPaint_Ordinals. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_d.json)
 SoundEdit_PaintSlotOrdinals:
-	cp	(0x27f5:16), 0x01	; F5C39C  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C39C  cp (0x27f5),0x01
 	jr	nz, SoundEdit_PaintSlotOrdinals_Skip	; F5C3A1  jr NZ,0xf5c3ba
 	ld	(LCD_CurrentLayer:16), 0	; F5C3A3  ld (0x2540),0x00
 	ld	xiy, SoundEdit_PaintSlotOrdinals_DL	; F5C3A8  ld XIY,0x00f039d9
@@ -1719,7 +1720,7 @@ SoundEdit_PaintSlotOrdinals_Skip:
 	call	T_DisplayList_Run	; F5C3C9  call 0xf417f0
 	ld	c, 4:opc	; F5C3CD  ld C,0x04
 SoundEdit_PaintSlotOrdinals_Join:
-	ld	w, (10148:16)	; F5C3CF  ld W,(0x27a4)
+	ld	w, (ToneEdit_LayerOnBits:16)	; F5C3CF  ld W,(0x27a4)
 	ld	a, c	; F5C3D3  ld A,C
 	sla	a, 1	; F5C3D5  sla 0x01,A
 	dec	1, a	; F5C3D8  dec 1,A
@@ -1768,14 +1769,14 @@ SoundEdit_PaintSlotOrdinals_Join2:
 ;   pilot-2026-10-06/proposals_wave2_d.json)
 ToneEditPage_A0_PaintSlotOrdinals:
 	ld	(LCD_CurrentLayer:16), 0	; F5C424  ld (0x2540),0x00
-	cp	(0x27f5:16), 0x01	; F5C429  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C429  cp (0x27f5),0x01
 	jr	nz, ToneEditPage_A0_PaintSlotOrdinals_Skip	; F5C42E  jr NZ,0xf5c434
 	ld	c, 2:opc	; F5C430  ld C,0x02
 	jr	ToneEditPage_A0_PaintSlotOrdinals_Join	; F5C432  jr T,0xf5c436
 ToneEditPage_A0_PaintSlotOrdinals_Skip:
 	ld	c, 4:opc	; F5C434  ld C,0x04
 ToneEditPage_A0_PaintSlotOrdinals_Join:
-	ld	w, (10148:16)	; F5C436  ld W,(0x27a4)
+	ld	w, (ToneEdit_LayerOnBits:16)	; F5C436  ld W,(0x27a4)
 	ld	a, c	; F5C43A  ld A,C
 	sla	a, 1	; F5C43C  sla 0x01,A
 	dec	1, a	; F5C43F  dec 1,A
@@ -1927,7 +1928,7 @@ Draw_Lf01Lf02Lf03Lf04Lf0WaveDelay:
 SoundEditLfo_PaintOrdinals:
 	ld	(LCD_CurrentLayer:16), 0	; F5C549  ld (0x2540),0x00
 	ld	c, 4:opc	; F5C54E  ld C,0x04
-	ld	w, (10148:16)	; F5C550  ld W,(0x27a4)
+	ld	w, (ToneEdit_LayerOnBits:16)	; F5C550  ld W,(0x27a4)
 	ld	a, c	; F5C554  ld A,C
 	sla	a, 1	; F5C556  sla 0x01,A
 	dec	1, a	; F5C559  dec 1,A
@@ -2070,7 +2071,7 @@ SoundEditLfo_DrawRowLinks_Skip:
 	ret	; F5C6BD  ret
 Draw_Page12LevelTouchCurveLevel:
 	call	SoundEditAmp_PaintHeader	; F5C6BE  call 0xf5c727
-	cp	(0x27f5:16), 0x01	; F5C6C2  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C6C2  cp (0x27f5),0x01
 	jr	z, Draw_Page12LevelTouchCurveLevel_Skip2	; F5C6C7  jr Z,0xf5c6dd
 	call	SoundEdit_PaintPageLabelBackdrop	; F5C6C9  call 0xf5bfbd
 	ld	xiy, DL_Page12LevelTouchCurveLevel	; F5C6CD  ld XIY,0x00f0417e
@@ -2085,7 +2086,7 @@ Draw_Page12LevelTouchCurveLevel_Join:
 	call	UiPaint_Solo	; F5C6EB  call 0xf5bab8
 	call	SoundEdit_PaintSlotOrdinals	; F5C6EF  call 0xf5c39c
 	call	TouchCurve_DrawCurrentSlot	; F5C6F3  call 0xf5bdbb
-	cp	(0x27f5:16), 0x01	; F5C6F7  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C6F7  cp (0x27f5),0x01
 	jr	z, Draw_Page12LevelTouchCurveLevel_Skip3	; F5C6FC  jr Z,0xf5c713
 	ld	(LCD_CurrentLayer:16), 0	; F5C6FE  ld (0x2540),0x00
 	ld	xiy, Draw_Page12LevelTouchCurveLevel_DL	; F5C703  ld XIY,0x00f04f72
@@ -2119,7 +2120,7 @@ Draw_Page12LevelTouchCurveLevel_Return:
 SoundEditAmp_PaintHeader:
 	ld	(LCD_CurrentLayer:16), 0	; F5C727  ld (0x2540),0x00
 	ld	xiy, SoundEditAmp_PaintHeader_DL	; F5C72C  ld XIY,0x00f03f77
-	cp	(0x27f5:16), 0x01	; F5C731  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C731  cp (0x27f5),0x01
 	jr	z, SoundEditAmp_PaintHeader_Skip	; F5C736  jr Z,0xf5c73f
 	ld	xix, TouchCurve_DrawCurrentSlot_DL2	; F5C738  ld XIX,0x00f0402e
 	jr	SoundEditAmp_PaintHeader_Join	; F5C73D  jr T,0xf5c744
@@ -2170,7 +2171,7 @@ SoundEditFilterKeyFollow_PaintKeyboardAndValues:
 ; SoundEditAmpEnvelope1_Paint: Dispatch_Code80_PaintTable[code 0x8D] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditAmpEnvelope1_Paint:
 	call	SoundEditAmp_PaintHeader	; F5C79E  call 0xf5c727
-	cp	(0x27f5:16), 0x01	; F5C7A2  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C7A2  cp (0x27f5),0x01
 	jr	z, SoundEditAmpEnvelope1_Paint_Skip	; F5C7A7  jr Z,0xf5c7d0
 	ld	xiy, DL_EnvelopeKeyoffAtkPeakDecay1	; F5C7A9  ld XIY,0x00f04358
 	ld	xix, DL_Page22KeyFollowEnvelopeKeyFollowTouchAtk	; F5C7AE  ld XIX,0x00f04415
@@ -2192,7 +2193,7 @@ SoundEditAmpEnvelope1_Paint_Join:
 	call	UiPaint_Solo	; F5C7EC  call 0xf5bab8
 	call	UiPaint_Ordinals	; F5C7F0  call 0xf5bb00
 	ld	(LCD_CurrentLayer:16), 0	; F5C7F4  ld (0x2540),0x00
-	cp	(0x27f5:16), 0x01	; F5C7F9  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C7F9  cp (0x27f5),0x01
 	jr	z, SoundEditAmpEnvelope1_Paint_Skip2	; F5C7FE  jr Z,0xf5c810
 	ld	xiy, SoundEditAmpEnvelope1_Paint_DL1	; F5C800  ld XIY,0x00f050ab
 	ld	xix, Data_F050F1	; F5C805  ld XIX,0x00f050f1
@@ -2272,7 +2273,7 @@ SoundEditFilterLpf12_Paint:
 	ld	xiy, DL_LowPass12db	; F5C8DD  ld XIY,0x00f047df
 	ld	xix, DL_FilterCutoffFilterCutoff	; F5C8E2  ld XIX,0x00f047f3
 	call	T_DisplayList_Run	; F5C8E7  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5C8EB  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C8EB  cp (0x27f5),0x01
 	jr	z, Draw_Keyoff_Skip2	; F5C8F0  jr Z,0xf5c8f6
 	call	SoundEdit_PaintPage12Label	; F5C8F2  call 0xf5c916
 Draw_Keyoff_Skip2:
@@ -2325,7 +2326,7 @@ SoundEdit_PaintPage12Label:
 ;   SoundEditController_PaintHeader. (wsa1/notes/naming-pilot-2026-10-06/proposals_prom_b.json)
 SoundEditFilter_PaintHeader:
 	ld	(LCD_CurrentLayer:16), 0	; F5C929  ld (0x2540),0x00
-	cp	(0x27f5:16), 0x01	; F5C92E  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C92E  cp (0x27f5),0x01
 	jr	z, SoundEditFilter_PaintHeader_Skip	; F5C933  jr Z,0xf5c93c
 	ld	xix, DL_F04632	; F5C935  ld XIX,0x00f04632
 	jr	SoundEditFilter_PaintHeader_Join	; F5C93A  jr T,0xf5c941
@@ -2360,7 +2361,7 @@ SoundEditFilter_PaintModeField:
 	ld	(SoundEditFilter_TypeShown:16), a	; F5C94F  ld (0x27be),A
 	ld	(LCD_CurrentLayer:16), 2	; F5C953  ld (0x2540),0x02
 	ld	xiy, SoundEditFilter_PaintModeField_DL1	; F5C958  ld XIY,0x00f04650
-	cp	(0x27f5:16), 0x01	; F5C95D  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C95D  cp (0x27f5),0x01
 	jr	z, SoundEditFilter_PaintModeField_Skip	; F5C962  jr Z,0xf5c96b
 	ld	xix, SoundEdit_PaintPage12Label_DL	; F5C964  ld XIX,0x00f04672
 	jr	SoundEditFilter_PaintModeField_Join	; F5C969  jr T,0xf5c970
@@ -2381,7 +2382,7 @@ SoundEditFilterHpf12_Paint:
 	ld	xiy, DL_HighPass12db	; F5C995  ld XIY,0x00f047ca
 	ld	xix, DL_LowPass12db	; F5C99A  ld XIX,0x00f047df
 	call	T_DisplayList_Run	; F5C99F  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5C9A3  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C9A3  cp (0x27f5),0x01
 	jr	z, SoundEditFilterHpf12_Paint_Skip2	; F5C9A8  jr Z,0xf5c9ae
 	call	SoundEdit_PaintPage12Label	; F5C9AA  call 0xf5c916
 SoundEditFilterHpf12_Paint_Skip2:
@@ -2402,7 +2403,7 @@ SoundEditFilterLpf24_Paint:
 	ld	xiy, DL_LowPass24db	; F5C9E0  ld XIY,0x00f04889
 	ld	xix, DL_HighPass24db	; F5C9E5  ld XIX,0x00f0489d
 	call	T_DisplayList_Run	; F5C9EA  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5C9EE  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5C9EE  cp (0x27f5),0x01
 	jr	z, SoundEditFilterLpf24_Paint_Skip3	; F5C9F3  jr Z,0xf5c9f9
 	call	SoundEdit_PaintPage12Label	; F5C9F5  call 0xf5c916
 SoundEditFilterLpf24_Paint_Skip3:
@@ -2423,7 +2424,7 @@ SoundEditFilterHpf24_Paint:
 	ld	xiy, DL_HighPass24db	; F5CA2B  ld XIY,0x00f0489d
 	ld	xix, DL_FilterBandPassLowHighCutoff	; F5CA30  ld XIX,0x00f048b2
 	call	T_DisplayList_Run	; F5CA35  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5CA39  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5CA39  cp (0x27f5),0x01
 	jr	z, SoundEditFilterHpf24_Paint_Skip4	; F5CA3E  jr Z,0xf5ca44
 	call	SoundEdit_PaintPage12Label	; F5CA40  call 0xf5c916
 SoundEditFilterHpf24_Paint_Skip4:
@@ -2440,7 +2441,7 @@ Draw_FilterBandPassLowHighCutoff:
 	ld	xiy, DL_FilterBandPassLowHighCutoff	; F5CA68  ld XIY,0x00f048b2
 	ld	xix, DL_Through	; F5CA6D  ld XIX,0x00f049bc
 	call	T_DisplayList_Run	; F5CA72  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5CA76  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5CA76  cp (0x27f5),0x01
 	jr	z, Draw_FilterBandPassLowHighCutoff_Skip5	; F5CA7B  jr Z,0xf5ca81
 	call	SoundEdit_PaintPage12Label	; F5CA7D  call 0xf5c916
 Draw_FilterBandPassLowHighCutoff_Skip5:
@@ -2457,7 +2458,7 @@ Draw_Through:
 	ld	xiy, DL_Through	; F5CAA5  ld XIY,0x00f049bc
 	ld	xix, Draw_Page12EnvelopeKeyoffCurSor_DL1	; F5CAAA  ld XIX,0x00f049d3
 	call	T_DisplayList_Run	; F5CAAF  call 0xf417f0
-	cp	(0x27f5:16), 0x01	; F5CAB3  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5CAB3  cp (0x27f5),0x01
 	jr	z, Draw_Through_Skip6	; F5CAB8  jr Z,0xf5cabe
 	call	SoundEdit_PaintPage12Label	; F5CABA  call 0xf5c916
 Draw_Through_Skip6:
@@ -2975,7 +2976,7 @@ SoundEditLfo_DrawField0RowLine:
 	ret	; F5CFD6  ret
 ; SoundEditAmpLevel1_RepaintField: Dispatch_Code80_RepaintFieldTable[code 0x8B] -- Dispatch_Code80, the partial repaint.
 SoundEditAmpLevel1_RepaintField:
-	cp	(0x27f5:16), 0x01	; F5CFD7  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5CFD7  cp (0x27f5),0x01
 	jr	nz, SoundEditAmpLevel1_RepaintField_Skip	; F5CFDC  jr NZ,0xf5cfe8
 	cp	a, 6:i3	; F5CFDE  cp A,6
 	jr	z, SoundEditAmpLevel1_RepaintField_Skip2	; F5CFE0  jr Z,0xf5cfed
@@ -2994,7 +2995,7 @@ SoundEditAmpLevel1_RepaintField_Join:
 	cp	a, 0:i3	; F5CFF5  cp A,0
 	jr	nz, SoundEditAmpLevel1_RepaintField_Join3	; F5CFF7  jr NZ,0xf5d02a
 	call	TouchCurve_DrawCurrentSlot	; F5CFF9  call 0xf5bdbb
-	cp	(0x27f5:16), 0x01	; F5CFFD  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5CFFD  cp (0x27f5),0x01
 	jr	z, SoundEditAmpLevel1_RepaintField_Skip3	; F5D002  jr Z,0xf5d015
 	ld	(LCD_CurrentLayer:16), 1	; F5D004  ld (0x2540),0x01
 	ld	xiy, Data_F05031	; F5D009  ld XIY,0x00f05031
@@ -3009,7 +3010,7 @@ SoundEditAmpLevel1_RepaintField_Join2:
 	ld	a, 0:opc	; F5D028  ld A,0x00
 SoundEditAmpLevel1_RepaintField_Join3:
 	ld	(LCD_CurrentLayer:16), 0	; F5D02A  ld (0x2540),0x00
-	cp	(0x27f5:16), 0x01	; F5D02F  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D02F  cp (0x27f5),0x01
 	jr	z, SoundEditAmpLevel1_RepaintField_Skip4	; F5D034  jr Z,0xf5d03d
 	ld	xiy, Data_F04FFD	; F5D036  ld XIY,0x00f04ffd
 	jr	SoundEditAmpLevel1_RepaintField_Join4	; F5D03B  jr T,0xf5d056
@@ -3034,7 +3035,7 @@ SoundEditKeyFollow_RepaintField:
 	ret	; F5D069  ret
 ; SoundEditAmpEnvelope1_RepaintField: Dispatch_Code80_RepaintFieldTable[code 0x8D] -- Dispatch_Code80, the partial repaint.
 SoundEditAmpEnvelope1_RepaintField:
-	cp	(0x27f5:16), 0x01	; F5D06A  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D06A  cp (0x27f5),0x01
 	jr	z, SoundEditAmpEnvelope1_RepaintField_Skip6	; F5D06F  jr Z,0xf5d078
 	ld	xiy, Data_F050F1	; F5D071  ld XIY,0x00f050f1
 	jr	SoundEditAmpEnvelope1_RepaintField_Join5	; F5D076  jr T,0xf5d095
@@ -3120,7 +3121,7 @@ SoundEditEnvelope1_RepaintField_Skip10:
 	ret	; F5D14D  ret
 Draw_Mem0ryWriteSoundEditName:
 	ld	(LCD_CurrentLayer:16), 0	; F5D14E  ld (0x2540),0x00
-	cp	(0x27f5:16), 0x01	; F5D153  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D153  cp (0x27f5),0x01
 	jr	z, Draw_Mem0ryWriteSoundEditName_Skip11	; F5D158  jr Z,0xf5d178
 	ld	xiy, DL_Mem0ryWriteSoundEditName	; F5D15A  ld XIY,0x00f0564b
 	ld	xix, DLTable_F0574D	; F5D15F  ld XIX,0x00f0574d
@@ -3158,7 +3159,7 @@ Draw_Mem0ryWriteSoundEditName_Join6:
 ;   and draws its 16 characters at 0x1701 (swi 7 service 7, 8x16 font). Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_f.json)
 SoundEditMemoryWrite_DrawSlotSoundName:
-	cp	(0x27f5:16), 0x01	; F5D199  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D199  cp (0x27f5),0x01
 	jr	z, SoundEditMemoryWrite_DrawSlotSoundName_Skip	; F5D19E  jr Z,0xf5d1b2
 	ld	l, (ModelingPage_Fields:16)	; F5D1A0  ld L,(0x27a6)
 	inc	7, l	; F5D1A4  inc 7,L
@@ -3270,7 +3271,7 @@ SoundEditDrumMenu_RepaintField:
 	ret	; F5D2E8  ret
 ; SoundEditMemoryWrite_RepaintField: Dispatch_Code80_RepaintFieldTable[code 0x9E] -- Dispatch_Code80, the partial repaint.
 SoundEditMemoryWrite_RepaintField:
-	cp	(0x27f5:16), 0x01	; F5D2E9  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D2E9  cp (0x27f5),0x01
 	jr	z, SoundEditMemoryWrite_RepaintField_Skip7	; F5D2EE  jr Z,0xf5d300
 	ld	xiy, DL_F057C0	; F5D2F0  ld XIY,0x00f057c0
 	ld	xix, DL_MemoryBank	; F5D2F5  ld XIX,0x00f057e3
@@ -3736,7 +3737,7 @@ SoundEditEnvelope2_RepaintField:
 	ld	xiy, DL_F3341C	; F5D743  ld XIY,0x00f3341c
 	ld	xix, DLBoxes_F334AE	; F5D748  ld XIX,0x00f334ae
 	call	T_DisplayListB_Run	; F5D74D  call 0xf417f4
-	cp	(0x27f5:16), 0x01	; F5D751  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D751  cp (0x27f5),0x01
 	jr	z, Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_Skip6	; F5D756  jr Z,0xf5d76b
 	ld	(LCD_CurrentLayer:16), 0	; F5D758  ld (0x2540),0x00
 	ld	xiy, DL_F32FC8	; F5D75D  ld XIY,0x00f32fc8
@@ -3764,7 +3765,7 @@ Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_Skip6:
 ; SoundEditController_PaintHeader_Copy: an exact copy of SoundEditController_PaintHeader (prom_b 0xF098B8) -- all 16 instructions equal, operands included,
 ;   but the targets of its jr / jrl / djnz (notes/wsa1_exact_copy_names.py).
 SoundEditController_PaintHeader_Copy:
-	cp	(0x27f5:16), 0x01	; F5D77F  cp (0x27f5),0x01
+	cp	(SoundEdit_SoundKind:16), 0x01	; F5D77F  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintHeader_Copy_Skip	; F5D784  jr Z,0xf5d79b
 	ld	(LCD_CurrentLayer:16), 0	; F5D786  ld (0x2540),0x00
 	ld	xiy, DL_C0ntr0llerSoundEditDepth	; F5D78B  ld XIY,0x00f32c2a

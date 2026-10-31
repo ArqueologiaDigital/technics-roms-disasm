@@ -35,7 +35,7 @@ PsGridBox_Init:
 	ld XWA, (xsp + 0x014e)
 	ld XBC, (xsp + 0x014a)
 	ld XDE, (xsp + 0x0146)
-	jrl PsGridBox_ShowHide_Tail
+	jrl PsGridBox_OnPaint_Tail
 
 PsGridBox_Close:
 	ld XWA, (xsp + 0x014e)
@@ -89,7 +89,7 @@ PsGridBox_ReturnZero:
 	ld xhl, 0:i3
 	jrl PsGridBox_Return
 
-PsGridBox_ShowHide:
+PsGridBox_OnPaint:
 	ld XWA, (xsp + 0x014e)
 	call GetViewInstance
 	ld (xsp + 20), xhl
@@ -101,24 +101,24 @@ PsGridBox_ShowHide:
 	call SendEvent
 	ldw (xsp + 14), 0x0
 	ldw (xsp + 18), 0x0
-	jr PsGridBox_ShowHide_CountLoop
+	jr PsGridBox_OnPaint_CountLoop
 
-PsGridBox_ShowHide_CountPipe:
+PsGridBox_OnPaint_CountPipe:
 	cp a, 0x7c
-	jr nz, PsGridBox_ShowHide_CountNext
+	jr nz, PsGridBox_OnPaint_CountNext
 	incw 1, (xsp + 18)
 
-PsGridBox_ShowHide_CountNext:
+PsGridBox_OnPaint_CountNext:
 	incw 1, (xsp + 14)
 
-PsGridBox_ShowHide_CountLoop:
+PsGridBox_OnPaint_CountLoop:
 	ld bc, (xsp + 14)
 	extz xbc
 	lda xwa, (xsp + 42)
 	add xwa, xbc
 	ld a, (xwa)
 	cp a, 0:i3
-	jr nz, PsGridBox_ShowHide_CountPipe
+	jr nz, PsGridBox_OnPaint_CountPipe
 	lda xbc, (xsp+318)
 	ld XWA, (xsp + 0x014e)
 	calr GetClientBox
@@ -143,36 +143,36 @@ PsGridBox_ShowHide_CountLoop:
 	ld (xbc), wa
 	ldw (xsp + 12), 0x1
 	cpw (xde + 38), 0x1
-	jr c, PsGridBox_ShowHide_ParseRows
+	jr c, PsGridBox_OnPaint_ParseRows
 
-PsGridBox_ShowHide_CalcWidths:
+PsGridBox_OnPaint_CalcWidths:
 	ld wa, (xsp + 14)
 	extz xwa
 	lda xde, (xsp + 42)
 	ld (xsp + 16), xde
 	add (xsp + 16), xwa
-	jr PsGridBox_ShowHide_ScanLoop
+	jr PsGridBox_OnPaint_ScanLoop
 
-PsGridBox_ShowHide_ScanPipe:
+PsGridBox_OnPaint_ScanPipe:
 	cp a, 0x7c
-	jr nz, PsGridBox_ShowHide_AdvChar
+	jr nz, PsGridBox_OnPaint_AdvChar
 	ld (xbc), 0x0
 	incw 1, (xsp + 14)
-	jr PsGridBox_ShowHide_CalcWidth
+	jr PsGridBox_OnPaint_CalcWidth
 
-PsGridBox_ShowHide_AdvChar:
+PsGridBox_OnPaint_AdvChar:
 	incw 1, (xsp + 14)
 
-PsGridBox_ShowHide_ScanLoop:
+PsGridBox_OnPaint_ScanLoop:
 	ld wa, (xsp + 14)
 	extz xwa
 	ld xbc, xde
 	add xbc, xwa
 	ld a, (xbc)
 	cp a, 0:i3
-	jr nz, PsGridBox_ShowHide_ScanPipe
+	jr nz, PsGridBox_OnPaint_ScanPipe
 
-PsGridBox_ShowHide_CalcWidth:
+PsGridBox_OnPaint_CalcWidth:
 	ld xwa, (xsp + 16)
 	push xwa
 	call Strlen
@@ -202,9 +202,9 @@ PsGridBox_ShowHide_CalcWidth:
 	incw 1, (xsp + 12)
 	ld bc, (xsp + 12)
 	cp bc, (xix + 38)
-	jr ule, PsGridBox_ShowHide_CalcWidths
+	jr ule, PsGridBox_OnPaint_CalcWidths
 
-PsGridBox_ShowHide_ParseRows:
+PsGridBox_OnPaint_ParseRows:
 	lda xde, (xsp + 42)
 	ld XWA, (xsp + 0x014e)
 	ld xbc, EVT_GET_FIXED_ROW_STR
@@ -219,36 +219,36 @@ PsGridBox_ShowHide_ParseRows:
 	lda xwa, (xwa + 36)
 	ld (xsp + 20), xwa
 	cpw (xwa), 0x1
-	jrl c, PsGridBox_ShowHide_FinalRow
+	jrl c, PsGridBox_OnPaint_FinalRow
 
-PsGridBox_ShowHide_RowScan:
+PsGridBox_OnPaint_RowScan:
 	ld wa, (xsp + 14)
 	extz xwa
 	lda xde, (xsp + 42)
 	ld (xsp + 16), xde
 	add (xsp + 16), xwa
-	jr PsGridBox_ShowHide_RowLoop
+	jr PsGridBox_OnPaint_RowLoop
 
-PsGridBox_ShowHide_RowPipe:
+PsGridBox_OnPaint_RowPipe:
 	cp a, 0x7c
-	jr nz, PsGridBox_ShowHide_RowNext
+	jr nz, PsGridBox_OnPaint_RowNext
 	ld (xbc), 0x0
 	incw 1, (xsp + 14)
-	jr PsGridBox_ShowHide_ClassifyCell
+	jr PsGridBox_OnPaint_ClassifyCell
 
-PsGridBox_ShowHide_RowNext:
+PsGridBox_OnPaint_RowNext:
 	incw 1, (xsp + 14)
 
-PsGridBox_ShowHide_RowLoop:
+PsGridBox_OnPaint_RowLoop:
 	ld wa, (xsp + 14)
 	extz xwa
 	ld xbc, xde
 	add xbc, xwa
 	ld a, (xbc)
 	cp a, 0:i3
-	jr nz, PsGridBox_ShowHide_RowPipe
+	jr nz, PsGridBox_OnPaint_RowPipe
 
-PsGridBox_ShowHide_ClassifyCell:
+PsGridBox_OnPaint_ClassifyCell:
 	ld xwa, (xsp + 16)
 	ld a, (xwa)
 	ldfr_berp A, 0xee
@@ -259,20 +259,20 @@ PsGridBox_ShowHide_ClassifyCell:
 	ld xwa, (xsp + 4)
 	lda xbc, (xwa + 58)
 	cp_erpb 0xee, 0x2d
-	jr z, PsGridBox_ShowHide_CellDash
+	jr z, PsGridBox_OnPaint_CellDash
 	cpib_erp 0xee, 0
-	jr nz, PsGridBox_ShowHide_CellNormal
+	jr nz, PsGridBox_OnPaint_CellNormal
 	ld wa, 0:i3
-	jr PsGridBox_ShowHide_StoreType
+	jr PsGridBox_OnPaint_StoreType
 
-PsGridBox_ShowHide_CellDash:
+PsGridBox_OnPaint_CellDash:
 	ld wa, 1:i3
-	jr PsGridBox_ShowHide_StoreType
+	jr PsGridBox_OnPaint_StoreType
 
-PsGridBox_ShowHide_CellNormal:
+PsGridBox_OnPaint_CellNormal:
 	ld wa, 2:i3
 
-PsGridBox_ShowHide_StoreType:
+PsGridBox_OnPaint_StoreType:
 	ld xbc, (xbc)
 	ld xbc, (xbc)
 	add xbc, xde
@@ -284,22 +284,22 @@ PsGridBox_ShowHide_StoreType:
 	add xbc, xbc
 	ld xwa, (xsp + 16)
 	cp (xwa), 0x2d
-	jr z, PsGridBox_ShowHide_DashRow
+	jr z, PsGridBox_OnPaint_DashRow
 	ld xwa, (xde)
 	ld xde, (xwa)
 	add xde, xbc
 	ld wa, hl
 	sla wa, 2
 	ld (xde), wa
-	jr PsGridBox_ShowHide_AccumHeight
+	jr PsGridBox_OnPaint_AccumHeight
 
-PsGridBox_ShowHide_DashRow:
+PsGridBox_OnPaint_DashRow:
 	ld xwa, (xde)
 	ld xwa, (xwa)
 	add xwa, xbc
 	ld (xwa), hl
 
-PsGridBox_ShowHide_AccumHeight:
+PsGridBox_OnPaint_AccumHeight:
 	ld bc, (xsp + 12)
 	extz xbc
 	add xbc, xbc
@@ -313,9 +313,9 @@ PsGridBox_ShowHide_AccumHeight:
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 12)
 	cp bc, (xwa)
-	jrl ule, PsGridBox_ShowHide_RowScan
+	jrl ule, PsGridBox_OnPaint_RowScan
 
-PsGridBox_ShowHide_FinalRow:
+PsGridBox_OnPaint_FinalRow:
 	ld bc, (xsp + 12)
 	dec 1, bc
 	extz xbc
@@ -337,9 +337,9 @@ PsGridBox_ShowHide_FinalRow:
 	ldw (xsp + 12), 0x1
 	ld xwa, (xsp + 20)
 	cpw (xwa), 0x1
-	jr c, PsGridBox_ShowHide_Forward
+	jr c, PsGridBox_OnPaint_Forward
 
-PsGridBox_ShowHide_BoundLoop:
+PsGridBox_OnPaint_BoundLoop:
 	ld wa, (xsp + 12)
 	dec 1, wa
 	extz xwa
@@ -365,18 +365,18 @@ PsGridBox_ShowHide_BoundLoop:
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 12)
 	cp bc, (xwa)
-	jr ule, PsGridBox_ShowHide_BoundLoop
+	jr ule, PsGridBox_OnPaint_BoundLoop
 
-PsGridBox_ShowHide_Forward:
+PsGridBox_OnPaint_Forward:
 	ld XWA, (xsp + 0x014e)
 	ld XBC, (xsp + 0x014a)
 	ld XDE, (xsp + 0x0146)
 
-PsGridBox_ShowHide_Tail:
+PsGridBox_OnPaint_Tail:
 	calr VwBoxProc
 	jrl PsGridBox_ReturnZero
 
-PsGridBox_Paint:
+PsGridBox_OnDraw:
 	ld XWA, (xsp + 0x014e)
 	ld XBC, (xsp + 0x014a)
 	ld XDE, (xsp + 0x0146)
@@ -396,7 +396,7 @@ PsGridBox_Paint:
 	ld xbc, EVT_SELE_DRAW
 	jrl PsGridBox_DispatchEvent
 
-PsGridBox_Confirm:
+PsGridBox_OnParaDraw:
 	ld XWA, (xsp + 0x014e)
 	ld XBC, (xsp + 0x014a)
 	ld XDE, (xsp + 0x0146)
@@ -426,36 +426,36 @@ PsGridBox_Confirm:
 	ldw (xsp + 14), 0x0
 	ldw (xsp + 12), 0x0
 	cpw (xhl + 38), 0x0
-	jrl ule, PsGridBox_Confirm_Rows
+	jrl ule, PsGridBox_OnParaDraw_Rows
 
-PsGridBox_Confirm_ColScan:
+PsGridBox_OnParaDraw_ColScan:
 	ld wa, (xsp + 14)
 	extz xwa
 	lda xde, (xsp + 42)
 	ld (xsp + 16), xde
 	add (xsp + 16), xwa
-	jr PsGridBox_Confirm_ColLoop
+	jr PsGridBox_OnParaDraw_ColLoop
 
-PsGridBox_Confirm_ColPipe:
+PsGridBox_OnParaDraw_ColPipe:
 	cp a, 0x7c
-	jr nz, PsGridBox_Confirm_ColNext
+	jr nz, PsGridBox_OnParaDraw_ColNext
 	ld (xbc), 0x0
 	incw 1, (xsp + 14)
-	jr PsGridBox_Confirm_DrawCol
+	jr PsGridBox_OnParaDraw_DrawCol
 
-PsGridBox_Confirm_ColNext:
+PsGridBox_OnParaDraw_ColNext:
 	incw 1, (xsp + 14)
 
-PsGridBox_Confirm_ColLoop:
+PsGridBox_OnParaDraw_ColLoop:
 	ld wa, (xsp + 14)
 	extz xwa
 	ld xbc, xde
 	add xbc, xwa
 	ld a, (xbc)
 	cp a, 0:i3
-	jr nz, PsGridBox_Confirm_ColPipe
+	jr nz, PsGridBox_OnParaDraw_ColPipe
 
-PsGridBox_Confirm_DrawCol:
+PsGridBox_OnParaDraw_DrawCol:
 	ld bc, (xsp + 12)
 	extz xbc
 	add xbc, xbc
@@ -496,9 +496,9 @@ PsGridBox_Confirm_DrawCol:
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 12)
 	cp bc, (xwa + 38)
-	jrl c, PsGridBox_Confirm_ColScan
+	jrl c, PsGridBox_OnParaDraw_ColScan
 
-PsGridBox_Confirm_Rows:
+PsGridBox_OnParaDraw_Rows:
 	lda xde, (xsp + 42)
 	ld XWA, (xsp + 0x014e)
 	ld xbc, EVT_GET_FIXED_ROW_STR
@@ -517,39 +517,39 @@ PsGridBox_Confirm_Rows:
 	ldw (xsp + 14), 0x0
 	ldw (xsp + 12), 0x0
 	cpw (xhl + 36), 0x0
-	jrl ule, PsGridBox_Confirm_CellSelect
+	jrl ule, PsGridBox_OnParaDraw_CellSelect
 
-PsGridBox_Confirm_RowScan:
+PsGridBox_OnParaDraw_RowScan:
 	ld wa, (xsp + 14)
 	extz xwa
 	lda xde, (xsp + 42)
 	ld (xsp + 16), xde
 	add (xsp + 16), xwa
-	jr PsGridBox_Confirm_RowLoop
+	jr PsGridBox_OnParaDraw_RowLoop
 
-PsGridBox_Confirm_RowPipe:
+PsGridBox_OnParaDraw_RowPipe:
 	cp a, 0x7c
-	jr nz, PsGridBox_Confirm_RowAdv
+	jr nz, PsGridBox_OnParaDraw_RowAdv
 	ld (xbc), 0x0
 	incw 1, (xsp + 14)
-	jr PsGridBox_Confirm_DrawRow
+	jr PsGridBox_OnParaDraw_DrawRow
 
-PsGridBox_Confirm_RowAdv:
+PsGridBox_OnParaDraw_RowAdv:
 	incw 1, (xsp + 14)
 
-PsGridBox_Confirm_RowLoop:
+PsGridBox_OnParaDraw_RowLoop:
 	ld wa, (xsp + 14)
 	extz xwa
 	ld xbc, xde
 	add xbc, xwa
 	ld a, (xbc)
 	cp a, 0:i3
-	jr nz, PsGridBox_Confirm_RowPipe
+	jr nz, PsGridBox_OnParaDraw_RowPipe
 
-PsGridBox_Confirm_DrawRow:
+PsGridBox_OnParaDraw_DrawRow:
 	ld xwa, (xsp + 16)
 	cp (xwa), 0x2d
-	jr z, PsGridBox_Confirm_DrawSep
+	jr z, PsGridBox_OnParaDraw_DrawSep
 	ld de, (xsp + 12)
 	extz xde
 	add xde, xde
@@ -588,9 +588,9 @@ PsGridBox_Confirm_DrawRow:
 	ld xbc, xde
 	ld xde, (xsp + 26)
 	call DrawStringAlignment
-	jr PsGridBox_Confirm_RowDone
+	jr PsGridBox_OnParaDraw_RowDone
 
-PsGridBox_Confirm_DrawSep:
+PsGridBox_OnParaDraw_DrawSep:
 	lda xbc, (xsp+310)
 	ld XWA, (xsp + 0x014e)
 	calr GetClientBox
@@ -624,26 +624,26 @@ PsGridBox_Confirm_DrawSep:
 	ldw de, 0xff
 	call DrawLine
 
-PsGridBox_Confirm_RowDone:
+PsGridBox_OnParaDraw_RowDone:
 	incw 1, (xsp + 12)
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 12)
 	cp bc, (xwa + 36)
-	jrl c, PsGridBox_Confirm_RowScan
+	jrl c, PsGridBox_OnParaDraw_RowScan
 
-PsGridBox_Confirm_CellSelect:
+PsGridBox_OnParaDraw_CellSelect:
 	ldw (xsp + 14), 0x0
 	ld xwa, (xsp + 20)
 	cpw (xwa + 36), 0x0
 	jrl ule, PsGridBox_ReturnZero
 
-PsGridBox_Confirm_OuterLoop:
+PsGridBox_OnParaDraw_OuterLoop:
 	ldw (xsp + 12), 0x1
 	ld xwa, (xsp + 20)
 	cpw (xwa + 38), 0x1
-	jr ule, PsGridBox_Confirm_OuterNext
+	jr ule, PsGridBox_OnParaDraw_OuterNext
 
-PsGridBox_Confirm_InnerLoop:
+PsGridBox_OnParaDraw_InnerLoop:
 	ld bc, (xsp + 14)
 	extz xbc
 	ld xde, xbc
@@ -653,7 +653,7 @@ PsGridBox_Confirm_InnerLoop:
 	ld xwa, (xwa)
 	add xwa, xde
 	cpw (xwa), 0x2
-	jr nz, PsGridBox_Confirm_InnerNext
+	jr nz, PsGridBox_OnParaDraw_InnerNext
 	ld de, (xsp + 12)
 	extz xde
 	sll xde, 16
@@ -662,22 +662,22 @@ PsGridBox_Confirm_InnerLoop:
 	ld xbc, EVT_REQUEST_GRID_DRAW
 	call SendEvent
 
-PsGridBox_Confirm_InnerNext:
+PsGridBox_OnParaDraw_InnerNext:
 	incw 1, (xsp + 12)
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 12)
 	cp bc, (xwa + 38)
-	jr c, PsGridBox_Confirm_InnerLoop
+	jr c, PsGridBox_OnParaDraw_InnerLoop
 
-PsGridBox_Confirm_OuterNext:
+PsGridBox_OnParaDraw_OuterNext:
 	incw 1, (xsp + 14)
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 14)
 	cp bc, (xwa + 36)
-	jr c, PsGridBox_Confirm_OuterLoop
+	jr c, PsGridBox_OnParaDraw_OuterLoop
 	jrl PsGridBox_ReturnZero
 
-PsGridBox_Select:
+PsGridBox_OnSeleDraw:
 	ld XWA, (xsp + 0x014e)
 	call GetViewInstance
 	ld (xsp + 20), xhl
@@ -697,7 +697,7 @@ PsGridBox_Select:
 	cp wa, (xsp + 18)
 	jrl z, PsGridBox_ReturnZero
 	cpw (xbc), 0xffff
-	jr z, PsGridBox_Select_NoOld
+	jr z, PsGridBox_OnSeleDraw_NoOld
 	ld wa, (xbc)
 	ld (xsp + 18), wa
 	lda xbc, (xsp+318)
@@ -734,15 +734,15 @@ PsGridBox_Select:
 	ld bc, 1:i3
 	ld de, 2:i3
 	calr DrawDesignFrame
-	jr PsGridBox_Select_Scroll
+	jr PsGridBox_OnSeleDraw_Scroll
 
-PsGridBox_Select_NoOld:
+PsGridBox_OnSeleDraw_NoOld:
 	ldw (xsp + 18), 0xffff
 
-PsGridBox_Select_Scroll:
+PsGridBox_OnSeleDraw_Scroll:
 	ld xwa, (xsp + 20)
 	cpw (xwa + 40), 0x0
-	jr z, PsGridBox_Select_StoreSel
+	jr z, PsGridBox_OnSeleDraw_StoreSel
 	lda xbc, (xsp+318)
 	ld XWA, (xsp + 0x014e)
 	calr GetClientBox
@@ -754,9 +754,9 @@ PsGridBox_Select_Scroll:
 	ldw (xsp + 12), 0x1
 	ld xwa, (xsp + 20)
 	cpw (xwa + 38), 0x1
-	jr ule, PsGridBox_Select_StoreSel
+	jr ule, PsGridBox_OnSeleDraw_StoreSel
 
-PsGridBox_Select_ScrollLoop:
+PsGridBox_OnSeleDraw_ScrollLoop:
 	ld de, (xsp + 12)
 	extz xde
 	add xde, xde
@@ -780,15 +780,15 @@ PsGridBox_Select_ScrollLoop:
 	ld xwa, (xsp + 20)
 	ld bc, (xsp + 12)
 	cp bc, (xwa + 38)
-	jr c, PsGridBox_Select_ScrollLoop
+	jr c, PsGridBox_OnSeleDraw_ScrollLoop
 
-PsGridBox_Select_StoreSel:
+PsGridBox_OnSeleDraw_StoreSel:
 	ld xde, (xsp + 20)
 	ld xbc, (xde + 42)
 	ld XWA, (xsp + 0x0146)
 	ld (xbc), wa
 	cpw (xsp + 18), 0xffff
-	jr z, PsGridBox_Select_SendCurr
+	jr z, PsGridBox_OnSeleDraw_SendCurr
 	ld bc, (xsp + 18)
 	extz xbc
 	ld xwa, (xde + 46)
@@ -801,7 +801,7 @@ PsGridBox_Select_StoreSel:
 	ld xbc, EVT_REQUEST_GRID_DRAW
 	call SendEvent
 
-PsGridBox_Select_SendCurr:
+PsGridBox_OnSeleDraw_SendCurr:
 	ld xde, (xsp + 20)
 	ld xwa, (xde + 42)
 	ld bc, (xwa)

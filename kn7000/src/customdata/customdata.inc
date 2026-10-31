@@ -44,7 +44,7 @@
 #   +0x04  the style's name, then the four ONE TOUCH SETTING names, 16 bytes each
 #          (func_48484049 / 7B / B1 / E7 / 1D return +0x04 / +0x14 / +0x24 / +0x34 / +0x44)
 .macro CSTREC_NAME text
-	.ascii	\text
+	.ascii	"\text"
 .endm
 #   +0x54..+0x8B  seven dependency sections {u32 offset, 0 = none; u32 count}: five kinds of
 #          0x42-byte record, the 0x2C8-byte SOUND EDIT records (CustomSoundEditRecFetch
@@ -100,8 +100,8 @@
 # (+0x50; CustStyleImportToMem renormalises them) and two u16BE fields at +0x70 (not traced;
 # the ROM template has 0x0010 0x0023).
 .macro TCMP_STYLE name, vname1, vname2, vname3, vname4, w70, w72
-	.ascii	\name
-	.ascii	\vname1, \vname2, \vname3, \vname4
+	.ascii	"\name"
+	.ascii	"\vname1", "\vname2", "\vname3", "\vname4"
 	.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 	.space	12
 	.be16	\w70, \w72
@@ -186,7 +186,7 @@
 # The 0x30-byte bank record at TPAD +0x70: the bank name and its six pads, each
 # {bank, pad, 0x20} (func_484384A3 builds the MEMORY ones with 0x10).
 .macro TPAD_BANK name
-	.ascii	\name
+	.ascii	"\name"
 	.byte	0, 0, 0x20, 0, 1, 0x20, 0, 2, 0x20, 0, 3, 0x20, 0, 4, 0x20, 0, 5, 0x20
 	.space	14
 .endm
@@ -196,7 +196,7 @@
 # part, +0x1A bits 2/3 set for pads 4 and 5 by func_484385DD), the u24BE stream offset
 # (+0x1D, func_484387A9), eight zero bytes; two PART_SETUP blocks and eight zero bytes follow.
 .macro TPAD_PAD name, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, stream
-	.ascii	\name
+	.ascii	"\name"
 	.byte	\s0, \s1, \s2, \s3, \s4, \s5, \s6, \s7, \s8, \s9, \s10, \s11, \s12
 	.be24	\stream
 	.space	8

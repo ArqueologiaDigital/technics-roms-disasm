@@ -46,8 +46,12 @@
 ;     bytes encoding a 13-bit absolute ring position and a 3..10 byte count
 ;     over a 0x2000-byte ring (zero-prefilled to the 0x1FF6 start position)
 ;   * termination purely by output count; the final flag byte may be only
-;     partially consumed and its unused bits are NONZERO in these blocks, so
-;     only decision-replay against the factory stream is byte-exact
+;     partially consumed (its unused bits are zero in the five live blocks;
+;     the stale block's cut stream ends in 0xA0)
+;   * the encoder is H. Okumura's LZSS.C (N = 8192, F = 10), the SX-KN7000's
+;     'J KD' coder: floppy/tools/kd/lzss_j.py's encode() makes every factory
+;     decision of the five live streams, byte for byte, with no reference
+;     (notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py, 2026-10-31)
 ;   * each stream is odd-length and followed by ONE alignment pad byte of
 ;     arbitrary leftover value (0x20/0x7F/0xCF/0xCD/0xCE) that the decoder
 ;     never reads; the pad is preserved inside each *_compressed.bin
@@ -57,11 +61,12 @@
 ; (one entry per non-empty page of each of the 50 topics); scripts/build/
 ; help_db_text.py builds the 0x9000-byte decompressed databases from them
 ; (`verify` checks each against the factory stream's decompression), and the
-; Makefile recompresses them with scripts/build/compress_slide8k.py --strict
-; --reference original_ROMs/help_db_<lang>_compressed.original.bin, which
-; replays the factory encoder's decisions for byte-identical output (same
-; flow as the SLIDE4K demo-song presets).  `make verify-help-databases`
-; byte-compares all rebuilt payloads against the original slices.
+; Makefile recompresses them with scripts/build/compress_slide8k.py --pad,
+; which runs the factory encoder (above) and appends the pad byte the Makefile
+; records (HELP_DB_PAD_<lang>); no reference stream is read.  Only the stale
+; remnant below is still replayed from its factory slice (--reference), for
+; verification.  `make verify-help-databases` byte-compares all rebuilt
+; payloads against the original slices.
 ;
 ; THE STALE GERMAN BLOCK IS TRUNCATED, NOT MERELY CORRUPT: its SLIDE8K
 ; stream is intact only up to ROM 0x985FFF.  Decoding it tracks the live
@@ -201,7 +206,7 @@ Str_HelpIntro_Indonesian:
 HelpDB_English:
 	.asciz	"SLIDE8K"
 	.byte	0x00, 0x90, 0x00	; decompressed size = 0x9000 (24-bit big-endian)
-	.incbin	"includes/help_databases/help_db_english_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py --strict, from help_db_<lang>.txt (encoder decisions replayed from original_ROMs/help_db_<lang>_compressed.original.bin)
+	.incbin	"includes/help_databases/help_db_english_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt
 
 ; German help database: HelpDB_LanguageTable slot 1 (RAM 0x0340E4 value).
 ; HelpLang_LoadSlide (0xF477BA) passes it to SLIDE_Parse_Header (0xEF41E3),
@@ -211,7 +216,7 @@ HelpDB_English:
 HelpDB_German:
 	.asciz	"SLIDE8K"
 	.byte	0x00, 0x90, 0x00	; decompressed size = 0x9000 (24-bit big-endian)
-	.incbin	"includes/help_databases/help_db_german_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py --strict, from help_db_<lang>.txt (encoder decisions replayed from original_ROMs/help_db_<lang>_compressed.original.bin)
+	.incbin	"includes/help_databases/help_db_german_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt
 
 ; French help database: HelpDB_LanguageTable slot 2 (RAM 0x0340E4 value).
 ; HelpLang_LoadSlide (0xF477BA) passes it to SLIDE_Parse_Header (0xEF41E3),
@@ -221,7 +226,7 @@ HelpDB_German:
 HelpDB_French:
 	.asciz	"SLIDE8K"
 	.byte	0x00, 0x90, 0x00	; decompressed size = 0x9000 (24-bit big-endian)
-	.incbin	"includes/help_databases/help_db_french_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py --strict, from help_db_<lang>.txt (encoder decisions replayed from original_ROMs/help_db_<lang>_compressed.original.bin)
+	.incbin	"includes/help_databases/help_db_french_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt
 
 ; Spanish help database: HelpDB_LanguageTable slot 3 (RAM 0x0340E4 value).
 ; HelpLang_LoadSlide (0xF477BA) passes it to SLIDE_Parse_Header (0xEF41E3),
@@ -231,7 +236,7 @@ HelpDB_French:
 HelpDB_Spanish:
 	.asciz	"SLIDE8K"
 	.byte	0x00, 0x90, 0x00	; decompressed size = 0x9000 (24-bit big-endian)
-	.incbin	"includes/help_databases/help_db_spanish_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py --strict, from help_db_<lang>.txt (encoder decisions replayed from original_ROMs/help_db_<lang>_compressed.original.bin)
+	.incbin	"includes/help_databases/help_db_spanish_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt
 
 ; Indonesian help database: HelpDB_LanguageTable slot 5 (RAM 0x0340E4 value).
 ; HelpLang_LoadSlide (0xF477BA) passes it to SLIDE_Parse_Header (0xEF41E3),
@@ -241,4 +246,4 @@ HelpDB_Spanish:
 HelpDB_Indonesian:
 	.asciz	"SLIDE8K"
 	.byte	0x00, 0x90, 0x00	; decompressed size = 0x9000 (24-bit big-endian)
-	.incbin	"includes/help_databases/help_db_indonesian_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py --strict, from help_db_<lang>.txt (encoder decisions replayed from original_ROMs/help_db_<lang>_compressed.original.bin)
+	.incbin	"includes/help_databases/help_db_indonesian_compressed.bin"	; census: generated -- help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt

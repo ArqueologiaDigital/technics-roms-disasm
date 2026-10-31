@@ -8230,8 +8230,17 @@ P_11MOMEN2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"11MOMEN2.sqt.p2.ref", 0x6ec7, 57
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
 	sq_cell	0xff, 0, 113	; cell 112: song 1 track 7, 1 of 74
 	sq_note	7, 0, 69, 63, 29, 0
 	sq_note	7, 0, 89, 110, 95, 6

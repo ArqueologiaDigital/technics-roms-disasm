@@ -128,8 +128,9 @@
 .macro PMR_END
 	.byte	0xff, 0xff
 .endm
-# 0x40, 18 bytes: the memory's 16-character name, then n10, n11.  The name is not a parameter (llvm-mc
-# strips a quoted argument's quotes, kn7asm keeps them): PMR_NAME_HEAD, then .ascii "<name>", then
+# 0x40, 18 bytes: the memory's 16-character name, then n10, n11.  The name is not a parameter: until
+# 2026-10-31 llvm-mc stripped a quoted argument's quotes and kn7asm kept them.  Both strip them now, so
+# the name could become one (`.ascii "\name"`); the callers still write PMR_NAME_HEAD, .ascii "<name>",
 # PMR_NAME_TAIL.
 .macro PMR_NAME_HEAD
 	.byte	0x40, 18

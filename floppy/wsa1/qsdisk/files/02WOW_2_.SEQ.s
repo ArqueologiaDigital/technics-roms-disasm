@@ -5,6 +5,9 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_02WOW_2__SEQ:
@@ -56911,11 +56914,347 @@ F_02WOW_2__SEQ:
 	.byte	0x3e, 0x32, 0x2d, 0x00, 0x90, 0x5e, 0x3c, 0x28, 0x29, 0x00, 0x81, 0x90, 0x32, 0x3e, 0x51, 0x15
 	.byte	0x00, 0x90, 0x33, 0x3c, 0x57
 	seq_block	0x00, 0, 875	; block 874: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"qsdisk.img", 0xe7305, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc0, 94, 10, 0, 29, 8
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 77, 55, 92, 1
+	sq_note	0x90, 4, 72, 49, 93, 5
+	sq_note	0x90, 4, 67, 53, 82, 3
+	sq_note	0x90, 5, 69, 43, 78, 1
+	sq_beat
+	sq_note	0x90, 92, 76, 66, 7, 1
+	sq_beat
+	sq_note	0x90, 95, 77, 68, 0, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 74, 53, 0, 3
+	sq_note	0x90, 5, 65, 39, 82, 3
+	sq_beat
+	sq_note	0x90, 93, 70, 38, 82, 3
+	sq_beat
+	sq_note	0x90, 95, 76, 71, 7, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 11, 65, 23, 72, 1
+	sq_note	0x90, 23, 74, 39, 5, 0
+	sq_beat
+	sq_note	0x90, 7, 74, 41, 86, 0
+	sq_note	0x90, 93, 76, 63, 82, 1
+	sq_note	0x90, 95, 72, 36, 92, 1
+	sq_note	0x90, 95, 67, 40, 82, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 73, 62, 89, 1
+	sq_beat
+	sq_note	0x90, 2, 78, 83, 0, 1
+	sq_beat
+	sq_note	0x90, 2, 77, 62, 92, 0
+	sq_note	0x90, 93, 76, 48, 4, 1
+	sq_note	0x90, 93, 72, 62, 6, 2
+	sq_note	0x90, 95, 67, 55, 81, 0
+	sq_beat
+	sq_note	0x90, 95, 70, 22, 83, 0
+	sq_beat
 	seq_block	0x00, 874, 876	; block 875: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"qsdisk.img", 0xe7405, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_data	2, 66, 51, 85, 0
+	sq_note	0x90, 93, 70, 32, 81, 3
+	sq_beat
+	sq_note	0x90, 1, 65, 37, 76, 1
+	sq_beat
+	sq_note	0x90, 94, 65, 37, 9, 8
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 74, 48, 94, 0
+	sq_note	0x90, 94, 69, 36, 14, 4
+	sq_note	0x90, 95, 72, 42, 6, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81	; after the end of track
+	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x82, 0x4c, 0x06, 0x13, 0x0b, 0x00, 0x90, 0x4e, 0x41, 0x52, 0x06
+	.byte	0x00, 0x91, 0x4e, 0x06, 0x0c, 0x09, 0x00, 0xb4, 0x57, 0x35, 0x06, 0x00, 0x3f, 0x81, 0x90, 0x07
+	.byte	0x01, 0x32, 0x06, 0x00, 0x90, 0x33, 0x46, 0x05, 0x08, 0x00, 0x90, 0x33, 0x3e, 0x41, 0x07, 0x00
+	.byte	0x80, 0x35, 0x41, 0x10, 0x06, 0x00, 0x81, 0x90, 0x07, 0x43, 0x11, 0x03, 0x00, 0xb4, 0x26, 0x15
+	.byte	0x06, 0x7f, 0x7f, 0x90, 0x34, 0x43, 0x47, 0x00, 0x00, 0x91, 0x35, 0x3e, 0x52, 0x07, 0x00, 0x90
+	.byte	0x35, 0x3b, 0x4e, 0x08, 0x00, 0x90, 0x37, 0x45, 0x35, 0x06, 0x00, 0x90, 0x4d, 0x42, 0x34, 0x00
+	.byte	0x00, 0x90, 0x4d, 0x06, 0x06, 0x0b, 0x00, 0x90, 0x0e, 0x3b, 0x2f, 0x00, 0x00, 0x90, 0x4f, 0x45
+	.byte	0x28, 0x07, 0x00, 0x81, 0x90, 0x01, 0x3e, 0x44, 0x05, 0x00, 0x90, 0x1b, 0x02, 0x59, 0x0b, 0x00
+	.byte	0x90, 0x1d, 0x3e, 0x44, 0x06, 0x01, 0x90, 0x1d, 0x3b, 0x5a, 0x07
 	seq_block	0x00, 875, 877	; block 876: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"qsdisk.img", 0xe7505, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 41, 62, 0, 33
+	sq_beat
+	sq_note	0x90, 82, 53, 41, 65, 8
+	sq_beat
+	sq_note	0x90, 12, 70, 44, 43, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 27, 72, 62, 48, 3
+	sq_beat
+	sq_note	0x90, 54, 67, 60, 9, 1
+	sq_beat
+	sq_note	0x90, 61, 65, 54, 48, 11
+	sq_beat
+	sq_beat
+	sq_note	0x90, 61, 60, 40, 94, 5
+	sq_beat
+	sq_beat
+	sq_note	0x90, 86, 53, 58, 17, 22
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 34, 70, 57, 68, 2
+	sq_beat
+	sq_note	0x90, 73, 62, 61, 14, 3
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 72, 50, 22, 5
+	sq_beat
+	sq_beat
+	sq_note	0x90, 11, 67, 51, 71, 1
+	sq_note	0x90, 13, 64, 24, 82, 1
+	sq_beat
+	sq_note	0x90, 81, 69, 50, 76, 2
+	sq_beat
+	sq_note	0x90, 50, 65, 42, 82, 3
+	sq_beat
+	sq_note	0x90, 6, 60, 28, 41, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb0, 39, 11, 3, 23, 127
+	sq_ev	0xb0, 46, 11, 3, 24, 127
+	sq_ev	0xb0, 53, 11, 3, 25, 127
+	sq_ev	0xb0, 62, 11, 3, 26, 127
+	sq_ev	0xb0, 67, 11, 3, 27, 127
+	sq_ev	0xb0, 75, 11, 3, 28, 127
+	sq_ev	0xb0, 83, 11, 3, 29, 127
+	.fill	1, 1, 0x90	; the first 1 bytes of an event (status 0x90), cut by the block's end

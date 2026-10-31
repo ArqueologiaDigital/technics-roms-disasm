@@ -3195,7 +3195,7 @@ typedef struct __attribute__((packed)) {
 } naka_cls_TransposeBox_t;
 _Static_assert(sizeof(naka_cls_TransposeBox_t) == 36, "class TransposeBox is 36 bytes");
 
-/* ChordBox (0x01620004, Toshi module): parent PsParaBox, 36 bytes, class procedure AcChordBoxProc_Entry */
+/* ChordBox (0x01620004, Toshi module): parent PsParaBox, 36 bytes, class procedure AcChordBoxProc */
 typedef struct __attribute__((packed)) {
     uint32_t class_;              /* +0 M class id */
     uint16_t super;               /* +4 [ object index in this table */
@@ -4975,7 +4975,7 @@ typedef struct __attribute__((packed)) {
 } naka_cls_CmpNameMenuBox_t;
 _Static_assert(sizeof(naka_cls_CmpNameMenuBox_t) == 50, "class CmpNameMenuBox is 50 bytes");
 
-/* S2cGridBox (0x01640027, Suna module): parent PsGridBox, 74 bytes, class procedure SndArg_GridBnk_Case3 */
+/* S2cGridBox (0x01640027, Suna module): parent PsGridBox, 74 bytes, class procedure S2cGridBoxProc */
 typedef struct __attribute__((packed)) {
     uint32_t class_;              /* +0 M class id */
     uint16_t super;               /* +4 [ object index in this table */

@@ -283,7 +283,7 @@ BStore_BootPhase0:		; <- T_BStore_BootPhase0
 	xor	hl, hl	; F4404B  xor HL,HL
 	jr	z, BStore_BootPhase0_Skip	; F4404D  jr Z,0xf44070
 	jr	BStore_BootPhase0_Join	; F4404F  jr T,0xf4408d
-	ld	xix, WorkspaceDefaults + 0x16	; F44051  ld XIX,0x00f4608a
+	ld	xix, WorkspaceDefaults_HeapDescriptorAlt	; F44051  ld XIX,0x00f4608a
 	ld	xwa, (xix+hl)	; F44056  ld XWA,(XIX+HL)
 	ld	(xiy+hl), xwa	; F4405B  ld (XIY+HL),XWA
 	add	hl, 4	; F44060  add HL,0x0004
@@ -291,7 +291,7 @@ BStore_BootPhase0:		; <- T_BStore_BootPhase0
 	ld	(xiy+hl), wa	; F44069  ld (XIY+HL),WA
 	jr	BStore_BootPhase0_Join	; F4406E  jr T,0xf4408d
 BStore_BootPhase0_Skip:
-	ld	xix, WorkspaceDefaults + 0x10	; F44070  ld XIX,0x00f46084
+	ld	xix, WorkspaceDefaults_HeapDescriptor	; F44070  ld XIX,0x00f46084
 	ld	xwa, (xix+hl)	; F44075  ld XWA,(XIX+HL)
 	ld	(xiy+hl), xwa	; F4407A  ld (XIY+HL),XWA
 	add	hl, 4	; F4407F  add HL,0x0004
@@ -652,7 +652,7 @@ BStore_SongName_LoadDefault:
 	pushw	bc	; F442C6  push BC
 	ldw	bc, 3	; F442C7  ld BC,0x0003
 	ld	xix, BStore_SongName	; F442CA  ld XIX,0x006034ca
-	ld	xiy, WorkspaceDefaults + 0x71	; F442CF  ld XIY,0x00f460e5
+	ld	xiy, WorkspaceDefaults_SongName	; F442CF  ld XIY,0x00f460e5
 	ldirw	; F442D4  ldirw
 	popw	bc	; F442D6  pop BC
 	pop	xiy	; F442D7  pop XIY
@@ -682,11 +682,11 @@ BStore_TrackOutChannel_LoadDefaults_Loop:
 	ld	a, (6304967:24)	; F442E2  ld A,(0x6034c7)
 	and	a, 2	; F442E7  and A,0x02
 	jr	nz, BStore_TrackOutChannel_LoadDefaults_Skip	; F442EA  jr NZ,0xf442f8
-	ld	xix, WorkspaceDefaults + 0x3E	; F442EC  ld XIX,0x00f460b2
+	ld	xix, WorkspaceDefaults_TrackOutNone	; F442EC  ld XIX,0x00f460b2
 	ld	a, (xix+iy)	; F442F1  ld A,(XIX+IY)
 	jr	BStore_TrackOutChannel_LoadDefaults_Join	; F442F6  jr T,0xf44302
 BStore_TrackOutChannel_LoadDefaults_Skip:
-	ld	xix, WorkspaceDefaults + 0x4F	; F442F8  ld XIX,0x00f460c3
+	ld	xix, WorkspaceDefaults_TrackOutChannel	; F442F8  ld XIX,0x00f460c3
 	ld	a, (xix+iy)	; F442FD  ld A,(XIX+IY)
 BStore_TrackOutChannel_LoadDefaults_Join:
 	ld	(xhl+iy), a	; F44302  ld (XHL+IY),A
@@ -699,7 +699,7 @@ BStore_TrackOutChannel_LoadDefaults_Join:
 	ld	xhl, 6304768	; F44312  ld XHL,0x00603400
 	xor	iy, iy	; F44317  xor IY,IY
 BStore_TrackOutChannel_LoadDefaults_Loop2:
-	ld	xix, WorkspaceDefaults	; F44319  ld XIX,0x00f46074
+	ld	xix, WorkspaceDefaults_Header8	; F44319  ld XIX,0x00f46074
 	ld	a, (xix+iy)	; F4431E  ld A,(XIX+IY)
 	ld	(xhl+iy), a	; F44323  ld (XHL+IY),A
 	inc	1, iy	; F44328  inc 1,IY
@@ -710,7 +710,7 @@ BStore_TrackOutChannel_LoadDefaults_Loop2:
 	ld	xhl, 6304788	; F44335  ld XHL,0x00603414
 	xor	iy, iy	; F4433A  xor IY,IY
 BStore_TrackOutChannel_LoadDefaults_Loop3:
-	ld	xix, WorkspaceDefaults + 0x8	; F4433C  ld XIX,0x00f4607c
+	ld	xix, WorkspaceDefaults_Words4	; F4433C  ld XIX,0x00f4607c
 	ld	wa, (xix+iy)	; F44341  ld WA,(XIX+IY)
 	ld	(xhl+iy), wa	; F44346  ld (XHL+IY),WA
 	add	iy, 2	; F4434B  add IY,0x0002
@@ -745,7 +745,7 @@ BStore_ResetWorkspaceFields:		; <- T_F40A1C, T_F40A8C
 	ld	xhl, 6304768	; F44368  ld XHL,0x00603400
 	xor	iy, iy	; F4436D  xor IY,IY
 BStore_ResetWorkspaceFields_Loop:
-	ld	xix, WorkspaceDefaults	; F4436F  ld XIX,0x00f46074
+	ld	xix, WorkspaceDefaults_Header8	; F4436F  ld XIX,0x00f46074
 	ld	a, (xix+iy)	; F44374  ld A,(XIX+IY)
 	ld	(xhl+iy), a	; F44379  ld (XHL+IY),A
 	inc	1, iy	; F4437E  inc 1,IY
@@ -756,7 +756,7 @@ BStore_ResetWorkspaceFields_Loop:
 	ld	xhl, 6304788	; F4438B  ld XHL,0x00603414
 	xor	iy, iy	; F44390  xor IY,IY
 BStore_ResetWorkspaceFields_Loop2:
-	ld	xix, WorkspaceDefaults + 0x8	; F44392  ld XIX,0x00f4607c
+	ld	xix, WorkspaceDefaults_Words4	; F44392  ld XIX,0x00f4607c
 	ld	wa, (xix+iy)	; F44397  ld WA,(XIX+IY)
 	ld	(xhl+iy), wa	; F4439C  ld (XHL+IY),WA
 	add	iy, 2	; F443A1  add IY,0x0002
@@ -855,7 +855,7 @@ BStore_TrackToPart_LoadDefaults:
 	push	xix	; F444E4  push XIX
 	ld	xhl, BStore_TrackToPart	; F444E5  ld XHL,0x00603422
 	xor	iy, iy	; F444EA  xor IY,IY
-	ld	xix, WorkspaceDefaults + 0x1C	; F444EC  ld XIX,0x00f46090
+	ld	xix, WorkspaceDefaults_TrackToPart	; F444EC  ld XIX,0x00f46090
 BStore_TrackToPart_LoadDefaults_Loop:
 	ld	a, (xix+iy)	; F444F1  ld A,(XIX+IY)
 	ld	(xhl+iy), a	; F444F6  ld (XHL+IY),A
@@ -1115,7 +1115,7 @@ Seq_LocateToSongPosition_Skip:
 	ld	(3157:16), wa	; F446A6  ld (0x0c55),WA
 	xor	b, b	; F446AA  xor B,B
 	ld	iy, bc	; F446AC  ld IY,BC
-	ld	xix, WorkspaceDefaults + 0x77	; F446AE  ld XIX,0x00f460eb
+	ld	xix, WorkspaceDefaults_SixteenthTicks	; F446AE  ld XIX,0x00f460eb
 	ld	a, (xix+iy)	; F446B3  ld A,(XIX+IY)
 	ld	(Seq_BeatTick:8), a	; F446B8  ld (0x93),A
 	cpw	(TransportB_Beat:8), 0x0000	; F446BB  cp (0x91),0x0000
@@ -4437,7 +4437,7 @@ BStore_LoadGmTrackDefaults:		; <- T_BStore_LoadGmTrackDefaults
 	ld	xhl, BStore_TrackToPart	; F45D26  ld XHL,0x00603422
 	xor	iy, iy	; F45D2B  xor IY,IY
 BStore_LoadGmTrackDefaults_Loop:
-	ld	xix, WorkspaceDefaults + 0x2D	; F45D2D  ld XIX,0x00f460a1
+	ld	xix, WorkspaceDefaults_TrackToPartGm	; F45D2D  ld XIX,0x00f460a1
 	ld	a, (xix+iy)	; F45D32  ld A,(XIX+IY)
 	ld	(xhl+iy), a	; F45D37  ld (XHL+IY),A
 	inc	1, iy	; F45D3C  inc 1,IY
@@ -4449,11 +4449,11 @@ BStore_LoadGmTrackDefaults_Loop2:
 	ld	a, (6304967:24)	; F45D4B  ld A,(0x6034c7)
 	and	a, 2	; F45D50  and A,0x02
 	jr	nz, BStore_LoadGmTrackDefaults_Skip	; F45D53  jr NZ,0xf45d61
-	ld	xix, WorkspaceDefaults + 0x3E	; F45D55  ld XIX,0x00f460b2
+	ld	xix, WorkspaceDefaults_TrackOutNone	; F45D55  ld XIX,0x00f460b2
 	ld	a, (xix+iy)	; F45D5A  ld A,(XIX+IY)
 	jr	BStore_LoadGmTrackDefaults_Join	; F45D5F  jr T,0xf45d6b
 BStore_LoadGmTrackDefaults_Skip:
-	ld	xix, WorkspaceDefaults + 0x60	; F45D61  ld XIX,0x00f460d4
+	ld	xix, WorkspaceDefaults_TrackOutChannelGm	; F45D61  ld XIX,0x00f460d4
 	ld	a, (xix+iy)	; F45D66  ld A,(XIX+IY)
 BStore_LoadGmTrackDefaults_Join:
 	ld	(xhl+iy), a	; F45D6B  ld (XHL+IY),A
@@ -4606,11 +4606,11 @@ sub_F45E14_Loop:
 	ld	a, (6304967:24)	; F45E1B  ld A,(0x6034c7)
 	and	a, 2	; F45E20  and A,0x02
 	jr	nz, sub_F45E14_Skip	; F45E23  jr NZ,0xf45e31
-	ld	xix, WorkspaceDefaults + 0x3E	; F45E25  ld XIX,0x00f460b2
+	ld	xix, WorkspaceDefaults_TrackOutNone	; F45E25  ld XIX,0x00f460b2
 	ld	a, (xix+iy)	; F45E2A  ld A,(XIX+IY)
 	jr	sub_F45E14_Join	; F45E2F  jr T,0xf45e3b
 sub_F45E14_Skip:
-	ld	xix, WorkspaceDefaults + 0x60	; F45E31  ld XIX,0x00f460d4
+	ld	xix, WorkspaceDefaults_TrackOutChannelGm	; F45E31  ld XIX,0x00f460d4
 	ld	a, (xix+iy)	; F45E36  ld A,(XIX+IY)
 sub_F45E14_Join:
 	ld	(xhl+iy), a	; F45E3B  ld (XHL+IY),A
@@ -5143,76 +5143,42 @@ sub_F4603C_Return:
 	ret	; F46073  ret
 
 ; --------------------------------------------------------------------------
-; WorkspaceDefaults -- 161 bytes, the source of the copy loops that seed the
-;                      banked 3 KiB workspace at 0x00603400 -- the same
-;                      workspace notes/FINDINGS-prom_b-block-store.md
-;                      derives.
-; Extent: 0xF46074-0xF46114.  The start is where the last code segment's
-;         decode ends; the end is where 5,867 bytes of 0x0E begin, and
-;         0xF46114 is the byte before them and is 0x48, NOT 0x0E -- so
-;         unlike most pad boundaries in this image there is no `ret`-versus-
-;         padding ambiguity here.
-; Read by: 15 `ld XIX,0x00F460xx` sites in this module: 0xF44051 (src
-;          0xF4608A), 0xF44070 (src 0xF46084), 0xF442EC (src 0xF460B2),
-;          0xF442F8 (src 0xF460C3), 0xF44319 (src 0xF46074), 0xF4433C (src
-;          0xF4607C), 0xF4436F (src 0xF46074), 0xF44392 (src 0xF4607C),
-;          0xF444EC (src 0xF46090), 0xF446AE (src 0xF460EB), 0xF45D2D (src
-;          0xF460A1), 0xF45D55 (src 0xF460B2), 0xF45D61 (src 0xF460D4),
-;          0xF45E25 (src 0xF460B2), 0xF45E31 (src 0xF460D4).
-; Two blocks are ESTABLISHED, by reading their loops verbatim: 0xF46074 ->
-;                                                              0x00603400,
-;                                                              EIGHT bytes
-;                                                              (`ld
-;                                                              A,(XIX+IY)` /
-;                                                              `ld
-;                                                              (XHL+IY),A` /
-;                                                              `inc 1,IY` /
-;                                                              `cp IY,7` /
-;                                                              `jr ULE`, so
-;                                                              IY takes
-;                                                              0..7), from
-;                                                              the sites at
-;                                                              0xF44319 and
-;                                                              0xF4436F; and
-;                                                              0xF4607C ->
-;                                                              0x00603414,
-;                                                              also EIGHT
-;                                                              bytes but a
-;                                                              WORD loop
-;                                                              (`ld
-;                                                              WA,(XIX+IY)`
-;                                                              / `add
-;                                                              IY,0x0002` /
-;                                                              `cp
-;                                                              IY,0x0008` /
-;                                                              `jr C`), from
-;                                                              0xF4433C.
-; ⚠ NOT ESTABLISHED: how the other 13 bytes are partitioned.  The loops in
-;                    this module differ in stride (byte and word) and in
-;                    bound form (`cp IY,n / jr ULE` and `cp IY,n / jr C`),
-;                    and the two do not mean the same count; an automated
-;                    read of them gave NINE bytes for the 0xF4607C block
-;                    where the instructions say eight.  Rather than ship a
-;                    partition that a mechanical reader got wrong once, the
-;                    object is emitted as one labelled run of bytes and the
-;                    gap is stated.
-; Evidence: the 15 `ld XIX` sites are read out of this transcription's own
-;           decoded comments, and the destination 0x00603400 comes from the
-;           `ld XHL,0x00603400` two instructions in front of the first of
-;           them.  All 161 bytes are re-read from the ROM on every emit.
-; Unknown: what the fields mean.
+; WorkspaceDefaults -- 161 bytes of initial values: eleven runs that copy loops in this module
+;   move into the banked 3 KiB song workspace at 0x00603400 (notes/FINDINGS-prom_b-block-store.md)
+;   and into the block-store heap descriptor, then 38 bytes that nothing reads.
+; Partition: every run starts at the `ld XIX/XIY,imm32` operand of its copy site and its length is
+;   that site's loop bound, both re-read from the ROM by
+;   notes/open4-d-probes/workspace_defaults_partition.py --selftest.  The runs abut with no gap.
+; Bound forms: Header8 runs IY 0..7 (`cp IY,7 / jr ULE`) and its caller stores a 0 at +8 after
+;   the loop; Words4 is a word loop (`add IY,2 / cp IY,8 / jr C`); the five 17-byte tables are
+;   `cp IY,0x11 / jr C`, one byte per sequencer track 0..16; SongName is `ld BC,3 / ldirw`.
 ; --------------------------------------------------------------------------
 WorkspaceDefaults:
-	.byte	0x5A, 0x5A, 0x5A, 0x5A, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x20, 0x00, 0x00, 0x0A	; F46074  [0..15]
-	.byte	0x00, 0x78, 0x61, 0x00, 0x0C, 0x05, 0x00, 0x78, 0x61, 0x00, 0x0C, 0x05, 0x00, 0x01, 0x02, 0x03	; F46084  [16..31]
-	.byte	0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x20, 0x00, 0x01, 0x02	; F46094  [32..47]
-	.byte	0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x20, 0x20, 0x20	; F460A4  [48..63]
-	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00	; F460B4  [64..79]
-	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x20	; F460C4  [80..95]
-	.byte	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F	; F460D4  [96..111]
-	.byte	0x20, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x00, 0x18, 0x30, 0x48, 0x06, 0x07, 0x08, 0x09, 0x0A	; F460E4  [112..127]
-	.byte	0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x20, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09	; F460F4  [128..143]
-	.byte	0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x20, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x00, 0x18, 0x30	; F46104  [144..159]
-	.byte	0x48	; F46114  [160..160]
+WorkspaceDefaults_Header8:		.byte	0x5a, 0x5a, 0x5a, 0x5a, 0x00, 0x04, 0x00, 0x00	; -> 0x603400, BStore_TrackOutChannel_LoadDefaults / BStore_ResetWorkspaceFields
+WorkspaceDefaults_Words4:		.short	0x0000, 0x0200, 0x0020, 0x0a00	; -> 0x603414, the same two routines
+; The heap descriptor BStore_BootPhase0 copies to BStore_HeapBase (long) and BStore_BlockCount
+;   (word): the heap is 1292 blocks of 256 bytes from 0x00617800, i.e. 0x617800-0x6683FF.  No other
+;   writer of BStore_BlockCount exists, so this word bounds the record array.
+WorkspaceDefaults_HeapDescriptor:	.long	0x00617800
+					.short	1292
+; Its twin is read only by the branch BStore_BootPhase0 never takes (`xor HL,HL` sets Z for the
+;   `jr Z` in front of it); the bytes are equal.
+WorkspaceDefaults_HeapDescriptorAlt:	.long	0x00617800
+					.short	1292
+; Five per-track tables of 17 bytes (tracks 0..16).
+WorkspaceDefaults_TrackToPart:		.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0x20	; -> BStore_TrackToPart, non-GM (BStore_TrackToPart_LoadDefaults)
+WorkspaceDefaults_TrackToPartGm:	.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0x20	; -> BStore_TrackToPart, GM mode (BStore_LoadGmTrackDefaults)
+WorkspaceDefaults_TrackOutNone:		.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20	; -> 0x603433 when (0x6034C7) bit 1 is clear: no MIDI OUT channel (0x20 = none)
+WorkspaceDefaults_TrackOutChannel:	.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0x20	; -> 0x603433, bit 1 set, non-GM (BStore_TrackOutChannel_LoadDefaults)
+WorkspaceDefaults_TrackOutChannelGm:	.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0x20	; -> 0x603433, bit 1 set, GM (BStore_LoadGmTrackDefaults, sub_F45E14)
+WorkspaceDefaults_SongName:		.ascii	"______"	; -> BStore_SongName (BStore_SongName_LoadDefault)
+WorkspaceDefaults_SixteenthTicks:	.byte	0, 24, 48, 72	; Seq_BeatTick per sixteenth at 96 ticks a beat (Seq_LocateToSongPosition)
+; 38 bytes no operand in either CPU-1 image points into.  They repeat the tail of a 17-byte track
+;   table (11 bytes), a whole one, the song name and the four ticks -- the shape of a longer
+;   default block of which only the runs above are live.
+WorkspaceDefaults_UnreadTail:		.byte	6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0x20
+					.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0x20
+					.ascii	"______"
+					.byte	0, 24, 48, 72
 
 	.fill	5867, 1, 0x0E	; F46115-F477FF  `ret` padding (asserted pure 0x0E)

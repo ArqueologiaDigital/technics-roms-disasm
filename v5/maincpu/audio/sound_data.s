@@ -232,7 +232,15 @@ SOUND_DATA_WORLD_PERC:		.include "audio/sound_data_world_perc.s"
 ;     >= 0xF0: record[+3] = t[2*v], record[+4] = t[2*v+1], v = record[+2];
 ;   SndParam_LookupAndDispatch (0xFEEA24 / 0xFEE255), when its bank argument
 ;     is 0x78: (A, C) = (t[2*A], t[2*A+1]).
-; Every entry is (b, 0) with b one of 0xF0-0xF3, 0xF5, 0xF7, 0xFC, 0xFD.
+; Every entry is (b, 0) with b one of 0xF0-0xF3, 0xF5, 0xF7, 0xFC, 0xFD.  It is a GS drum-set map: the index
+; is a received drum-set program number and b the KN5000 kit (program 0xF0+k, bank 0): 0-7 -> 0xF0, 8-15
+; -> 0xF3, 16-23 -> 0xF7, 24 and 26-31 -> 0xF2, 32-39 -> 0xF1, 40-47 -> 0xF5, 48-55 -> 0xFC, 56-63 ->
+; 0xFD, the rest (25 and 64-127) -> 0xF0 -- the GS numbering Standard 1 / Room 9 / Power 17 / Electronic 25
+; / Jazz 33 / Brush 41 / Orchestra 49 / SFX 57.  Bank 0x78 is the GM2 rhythm bank (120).  The kits resolve
+; (SndParam_ApplyMaskClamp: 0xF0+k, bank 0 -> program k in bank 0x40) to Standard 0xF0, Jazz 0xF1, Electric
+; 0xF2, Room 0xF3, Brush 0xF5, Power 0xF7, Orchestral 0xFC, Sound Effect 0xFD: the same kinds in the same GS
+; slots (scripts/generators/gen_sound_patch_catalogue.py; probe
+; notes/open4-kn5000-b/midi/probes/sound_desc_slots_30_34.py).  The label is historical (see the header).
 SOUND_DATA_ORGAN_ACCORDION:	.incbin "includes/generated/sound_data_organ_accordion.bin"
 
 ; Descriptor slot +0x34: VOICE INDEX -> signed byte, 128 B.
@@ -241,7 +249,16 @@ SOUND_DATA_ORGAN_ACCORDION:	.incbin "includes/generated/sound_data_organ_accordi
 ; +0x18/+0x28) and returns L = t[record[+2]].  The caller at v10 0xF24D8C
 ; (MidiNoteOn_NonDrumLookupA, sequencer/smf_tonegen_core.s) adds L to the
 ; byte at RAM 0x0FAC.  Values are 0, 12 and 0xF4 (-12) only -- the shape of
-; an octave shift in semitones; what the sum is used for is not traced.
+; an octave shift in semitones.  The sum is the NOTE NUMBER: both callers (MidiNoteOn_NonDrumLookupA/B, the
+; SMF import in sequencer/smf_tonegen_core.s) add L to SEQ_EVT_DATA1 of a note-on on a channel other than
+; 10, with the channel's program/bank from RAM 0x1A37.  The voice index is the GM program number (slot +0x1C
+; resolves voice v to the KN5000 tone for GM program v+1: 0 Piano, 8 Celesta, 32 Acoustic Bass ...).
+; +12 for voices 31-39, 43, 57, 58, 61, 70, 87, 113, 121 (Rock Harmonics, the basses, Bowed Bass, Bright
+; Trombone, Orchestral Tuba, Bigband Brass, Bassoon, Bass & Lead, Agogo, Breath Noise), -12 for 8-10, 13, 14,
+; 16, 17, 72, 78, 112, 115 (Celesta, Glockenspiel, Music Box, Xylophone, Tubular Bells, Full Drawbars, Perc
+; Organ, Piccolo, Whistle, Tinkle Bell, Wood Block): an octave correction between GM's written pitch and the
+; KN5000 tone, applied while an SMF is imported.  That purpose is an inference from those voices.  The label
+; is historical.
 SOUND_DATA_ORCHESTRAL_PAD:	.incbin "includes/generated/sound_data_orchestral_pad.bin"
 
 ; Descriptor slot +0x38: PROGRAM-CHANGE REMAP, 128 x 2 = 256 B.

@@ -599,8 +599,108 @@ P_10SECRET_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"10SECRET.sqt.p2.ref", 0x279, 135
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0, 51	; data bytes of an event cut at the start
+	k5_note	0x98, 71, 93, 24, 0, 51
+	k5_note	0x98, 64, 32, 22, 0, 74
+	k5_note	0x98, 67, 93, 25, 0, 74
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"10SECRET.sqt.p2.ref", 0x28d, 5
+	sq_beat
+	sq_note	2, 8, 69, 92, 1, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	91, 8, 86, 93, 1, 3
+	sq_note	94, 8, 78, 91, 89, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0xed, 0, 5	; cell 4: song 1 track 6, 1 of 7
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 123, 0
@@ -1309,8 +1409,95 @@ P_10SECRET_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"10SECRET.sqt.p2.ref", 0x922, 222
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	78, 8, 67, 69, 63, 3
+	sq_note	86, 8, 71, 69, 56, 3
+	sq_beat
+	sq_note	7, 8, 76, 69, 43, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	79, 8, 69, 69, 48, 3
+	sq_note	87, 8, 73, 69, 40, 3
+	sq_beat
+	sq_note	6, 8, 76, 69, 29, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	81, 8, 69, 69, 93, 3
+	sq_note	90, 8, 74, 69, 91, 3
+	sq_beat
+	sq_note	11, 8, 78, 69, 70, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	82, 8, 67, 69, 24, 3
+	sq_note	90, 8, 71, 69, 13, 3
+	sq_beat
+	sq_note	10, 8, 76, 69, 4, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	81, 8, 69, 69, 30, 4
+	sq_note	90, 8, 73, 69, 19, 4
+	sq_beat
+	sq_note	5, 8, 76, 69, 19, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	84, 8, 69, 69, 89, 2
+	sq_note	91, 8, 74, 69, 80, 2
+	sq_beat
+	sq_note	10, 8, 78, 69, 64, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	12, 0x86
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"10SECRET.sqt.p2.ref", 0x9bb, 5
+	k5_note	0x98, 90, 78, 79, 16, 6
+	sq_beat
+	k5_note	0x98, 2, 81, 79, 0, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x98, 81, 69, 79, 25, 5
+	k5_note	0x98, 91, 73, 79, 37, 5
+	sq_beat
+	k5_note	0x98, 6, 76, 79, 25, 5
+	k5_note	0x98, 15, 81, 79, 11, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x98, 76, 69, 79, 22, 4
+	k5_note	0x98, 89, 74, 79, 9, 4
 
 	.if	(. - P_10SECRET_SQT_p2) - 2560
 	.error	"10SECRET.SQT part 2: the payload is not 2560 bytes"

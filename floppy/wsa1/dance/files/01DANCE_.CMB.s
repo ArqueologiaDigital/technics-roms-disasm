@@ -3358,8 +3358,21 @@ F_01DANCE__CMB_C127:		; bank 15 memory 7
 	cmb_key_scaling	0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	cmb_common	64, 216, 2, 88, 4, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0xff, 0xff
-; The rest of the file's last kilobyte.  [INFERENCE] the disk code moves the file in whole kilobytes
-; (Disk_SetWindowLengthToKilobyte), and DiskLoad_Combination takes 0x16300 bytes of the 89 KB.  These 0x100
-; bytes are what the staging buffer still held.
-; census: opaque -- unknown-dump: stale staging-buffer bytes past the 0x16300-byte bank
-	.incbin	"dance.img", 0x1b100, 256
+; The rest of the file's last kilobyte, 0x16300..0x163FF: a stale copy of bytes 0x13700..0x137FF, the
+; first 0x100 bytes of combination 112 (C112 above).  DiskSave_StreamLinkRamToFile (prom_a 0xFE2AA9, mode 1)
+; fetches the bank from link RAM 0xEC0000 into the staging window in 8 chunks of 0x2C00 and a last one of
+; 0x300, and writes each window to the file 0x400 bytes at a time.  The last chunk fills only window
+; +0..+0x2FF, so the last 0x400 write carries window +0x300..+0x3FF from the chunk before, file
+; 0x13400 + 0x300 = 0x13700.  Measured: true in all 13 .CMB files (notes/open-items/probes/stale_tails.py,
+; notes/floppy-leftovers-2026-10-31/probes/wsa1_leftovers.py).  Typed below as the records it repeats.
+F_01DANCE__CMB_StaleCopyOfC112:
+	cmb_name
+	.ascii	"  Jimmy Plays   "
+	cmb_effect_common	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x61, 6, 99, 30, 4, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 2, 88, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x62, 35, 99, 30, 89, 0, 5, 70, 84, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 1, 0, 0, 0, 0, 0, 0, 0
+	cmb_effect	0x63, 20, 27, 11, 16, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 2, 88, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_a	0, 30, 0, 0, 120, 0, 82, 0, 90, 64, 64, 128, 2, 0, 192, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x20, 0, 0, 0, 1, 0, 24, 0, 0, 127, 0, 127, 96, 11, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 1, 1, 2, 7, 0, 0
+	cmb_part_a	1, 27, 2, 0, 120, 0, 86, 0, 83, 64, 64, 128, 2, 0, 193, 128, 128, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	cmb_part_b	0x21, 0, 0, 0, 1, 0, 24, 0, 0, 127, 0, 127, 96, 11, 0, 63, 16, 132, 0, 0, 112, 183, 0, 63, 64, 1, 2, 1, 7, 2, 0

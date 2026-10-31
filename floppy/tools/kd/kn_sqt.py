@@ -17,7 +17,7 @@ QUESTION IT ANSWERS
   each track with 0x4845979E, which reads an event at 0x48459C98; classifier 0x48458705, encoder 0x484582D5.
   The lengths (status byte included): 0x80 3 (tempo b1 + (b2 << 7)), 0x81 1 (next beat), 0x82 1 (end of
   track), 0x84 1 (bar), 0x85 1 / 0x86 1 (rhythm start / stop), 0x8A 3 (PIC), 0x90-0x9F 5 (note, velocity,
-  u16 duration; 0x98 = recorded from MIDI IN), 0xA1-0xA3 7-9 (part parameter: part, flags, id(3), value(n)),
+  duration ticks (0..0x5F), duration beats (0..255); 0x98 = recorded from MIDI IN), 0xA1-0xA3 7-9 (part parameter: part, flags, id(3), value(n)),
   0xB0 4 (part, cc, value), 0xC0 4 (prog, bank LSB, bank MSB), 0xD0 2, 0xE0 3, 0xF1-0xF4 6-9 (global
   parameter: flags, id(3), value(n)).  A byte below 0x80 is the position in the beat (96 PPQN) before an
   event.  LENGTHS below is that table (minus the status byte).  The tick-before-every-ticked-event shape is
@@ -25,6 +25,8 @@ QUESTION IT ANSWERS
   accepts an event without a tick, which no disk holds.
   A chain that parses to 0x82 is typed event by event (sq_* macros, kn_song.inc); one that does not is left
   as the reference bytes of its cells, and the unit says where parsing stopped.
+  The bytes after a track's 0x82 and the free cells are stale events in two orders (stale_tokens below,
+  k5_* macros): the rest that neither order explains is declared opaque.
 """
 import collections
 import os
@@ -62,8 +64,12 @@ def tokens(s):
             if st in LENGTHS and st not in UNTICKED and st not in SYSTEM:
                 n = LENGTHS[st]
                 d = s[i + 2:i + 2 + n]
-                # a note's last byte and a bend's second byte can have bit 7 set (5 events on the disks, each the
-                # track's last before 0x82; what that bit means is not traced); no other data byte ever does
+                # a note's last byte and a bend's second byte are whole bytes (5 events on the disks have bit 7 set):
+                # the note's +4 is its duration in beats, read unsigned (func_48459032 ends extbu) and added to the
+                # track's beat by the note handler func_48459B49 (0x48459BFE; KN6000 func_4C11938E), so 141 / 216 are
+                # notes held that many beats; the bend's +2 is bits 8-15 of its 16-bit M3 value (encoder
+                # func_484586AC writes value & 0xFF, value >> 8; classifier func_484588DE rebuilds lsb | msb << 8).
+                # No other data byte ever has bit 7 set.
                 free = {0x90: 3, 0xE0: 1}.get(st & 0xF0)
                 if len(d) < n or any(b & 0x80 for k, b in enumerate(d) if k != free):
                     return out, 'status 0x%02x at +%d: a data byte >= 0x80' % (st, i + 1)
@@ -82,6 +88,120 @@ def tokens(s):
             return out, 'status 0x%02x at +%d without a tick' % (x, i)
     return out, 'the chain ends before 0x82'
 
+
+
+# ---- stale events past the end of a track ------------------------------------------------------------------
+# The bytes after 0x82 in a track's last cell (and a free cell) are events of an earlier version of a song, in
+# one of two orders (notes/floppy-leftovers-2026-10-31/README.md, probes/sqt_tails.py):
+#  - this file's own, tick first (LENGTHS above);
+#  - the KN5000's, status first (floppy/kn5000/events.py, the demo-song grammar: 0x9n tick, key, velocity and
+#    two duration bytes, further groups of 5 under the same status).  76 of these tails hold KN5000-order notes
+#    equal, tick for tick, to notes of the same track's live events: [INFERENCE] the songs were made from
+#    KN5000 song files, converted in place, and the shorter converted stream left the end of the original.
+# K5_LENGTHS: the data-byte counts of the KN5000's statuses besides 0x81 / 0x82 / 0x9n, as the KN5000 and
+# WSA1R disks' chains hold them (notes/floppy-leftovers-2026-10-31/probes/).
+K5_LENGTHS = {0x80: 3, 0x85: 1, 0x86: 1, 0x87: 2, 0xD0: 2, 0xD1: 2, 0xD2: 3, 0xD3: 2,
+              **{0xB0 + n: 5 for n in range(16)}, **{0xC0 + n: 5 for n in range(16)}}
+
+
+def _live_event(s, i):
+    """(length, line) of a tick-first event at i, or None."""
+    if i + 1 >= len(s) or s[i] >= 0x80:
+        return None
+    st = s[i + 1]
+    if st not in LENGTHS or st in UNTICKED:
+        return None
+    n = LENGTHS[st]
+    d = s[i + 2:i + 2 + n]
+    if len(d) < n or any(b & 0x80 for b in d):
+        return None
+    if st in SYSTEM:
+        return 2 + n, '\tsq_sys\t%d, 0x%02x%s' % (s[i], st, ''.join(', %d' % b for b in d))
+    return 2 + n, '\t%s\t%d, %d%s' % (MAC[st & 0xF0], s[i], st & 15, ''.join(', %d' % b for b in d))
+
+
+def _options(s, i):
+    """Every token that can start at i: [(length, line)]."""
+    out, x = [], s[i]
+    if x == 0x81:
+        return [(1, '\tsq_beat')]
+    if x == 0x82:
+        return [(1, '\tsq_end')]
+    ev = _live_event(s, i)
+    if ev:
+        out.append(ev)
+    if x >= 0x80:
+        n = 5 if x & 0xF0 == 0x90 else K5_LENGTHS.get(x)
+        if n is not None:
+            d = s[i + 1:i + 1 + n]
+            if not any(b & 0x80 for b in d):
+                if len(d) < n:
+                    out.append((len(s) - i, '; the first %d bytes of a KN5000-order event, cut by the end' % (len(s) - i)))
+                else:
+                    out.append((1 + n, '\tk5_%s\t0x%02x, %s' % ('note' if x & 0xF0 == 0x90 else 'ev', x, ', '.join(str(b) for b in d))))
+    elif i == 0 or all(b < 0x80 for b in s[i:]):
+        j = i
+        while j < len(s) and s[j] < 0x80:
+            j += 1
+        out.append((j - i, '; data bytes of an event %s' % ('cut at the start' if i == 0 else 'cut by the end')))
+    return out
+
+
+def stale_tokens(s, min_resync=12):
+    """[(offset, length, line)] over stale bytes s.  The order of each event is chosen so that the parse runs
+    furthest (a dynamic programme over both orders); where neither explains a byte, the bytes up to the next
+    point from which at least `min_resync` bytes parse are one token with line None (declared opaque).  A
+    line starting with ';' is a part event cut at the start or the end of s.  KN5000-order notes take the
+    groups of 5 that follow them as running notes (k5_run)."""
+    N = len(s)
+    reach = [0] * (N + 1)
+    pick = [None] * (N + 1)
+    reach[N] = N
+    for i in range(N - 1, -1, -1):
+        reach[i], pick[i] = i, None
+        for m, line in _options(s, i):
+            r = reach[i + m] if i + m <= N else i
+            if r > reach[i]:
+                reach[i], pick[i] = r, (m, line)
+        # running KN5000 notes: a group of 5 data bytes right after a k5 note continues it
+    out, i = [], 0
+    after_k5_note = False
+    while i < N:
+        if after_k5_note and i + 5 <= N and all(b < 0x80 for b in s[i:i + 5]) and reach[i + 5] >= reach[i]:
+            out.append((i, 5, '\tk5_run\t' + ', '.join(str(b) for b in s[i:i + 5])))
+            i += 5
+            continue
+        if pick[i] is None or reach[i] - i < min(min_resync, N - i) and out and out[-1][2] is None:
+            q = i + 1
+            while q < N and not (pick[q] and (reach[q] - q >= min_resync or reach[q] == N and pick[q][1].startswith('\tk'))):
+                q += 1
+            if out and out[-1][2] is None:
+                o, m, _ = out.pop()
+                out.append((o, q - o, None))
+            else:
+                out.append((i, q - i, None))
+            i = q
+            after_k5_note = False
+            continue
+        m, line = pick[i]
+        out.append((i, m, line))
+        after_k5_note = line.startswith('\tk5_note')
+        i += m
+    return out
+
+
+def stale_lines(s, ref, at):
+    """Lines spelling the stale bytes s, which sit at offset `at` of `ref`."""
+    L = []
+    for o, m, line in stale_tokens(s):
+        if line is None:
+            L += ['\t; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)',
+                  '\t.incbin\t"%s", 0x%x, %d' % (ref, at + o, m)]
+        elif line.startswith(';'):
+            L.append('\t.byte\t%s\t%s' % (', '.join(str(b) for b in s[o:o + m]), line))
+        else:
+            L.append(line)
+    return L
 
 def rows(b, w=16):
     return ['\t.byte\t' + ', '.join(str(x) for x in b[k:k + w]) for k in range(0, len(b), w)]
@@ -186,8 +306,8 @@ def typer2(ctx, part, p2, ref, lab, p1):
                         if len(set(rest)) == 1:
                             lines.append('\t.fill\t%d, 1, 0x%02x\t; after the end of track' % (len(rest), rest[0]))
                         else:
-                            lines.append('\t; census: opaque -- unknown-dump: cell bytes after the end of track (left over)')
-                            lines.append('\t.incbin\t"%s", 0x%x, %d' % (ref, (cc - 1) * 256 + 5 + (max(end, lo) - lo), len(rest)))
+                            lines.append('; after the end of track: stale events of an earlier version of the song (stale_tokens)')
+                            lines += stale_lines(rest, ref, (cc - 1) * 256 + 5 + (max(end, lo) - lo))
                 plan[cc] = lines
     L = ['\t.include\t"kn_song.inc"', '',
          '; %d cells of 256 bytes.  Tracks typed event by event: %d of %d.'
@@ -211,8 +331,8 @@ def typer2(ctx, part, p2, ref, lab, p1):
         elif c in owner:
             L.append('\t.incbin\t"%s", 0x%x, 251\t; events of a track not typed (see above)' % (ref, b + 5))
         else:
-            L.append('\t; census: opaque -- unknown-dump: a free cell: bytes left from an earlier song')
-            L.append('\t.incbin\t"%s", 0x%x, 251' % (ref, b + 5))
+            L.append('; a free cell: stale events of an earlier song (stale_tokens)')
+            L += stale_lines(body, ref, b + 5)
     return L
 
 

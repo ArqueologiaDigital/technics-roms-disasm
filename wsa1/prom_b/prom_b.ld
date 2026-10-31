@@ -1,5 +1,9 @@
 /* prom_b.ld -- linker script for Technics SX-WSA1R wsa1_prom_b.ic13
  *
+ * ⚠ NOT A LINK INPUT SINCE 2026-10-31.  prom_a and prom_b are linked together by
+ * maincpu/maincpu.ld (scripts/tools/join_maincpu_link.py); this file stays as the
+ * record of this image's base and of the memory-map evidence below.
+ *
  * IC13, the second program EPROM on CPU 1's bus.
  *
  * ==========================================================================

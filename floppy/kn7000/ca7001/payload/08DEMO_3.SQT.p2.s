@@ -710,8 +710,10 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0xc68, 152
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	118	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08DEMO_3.sqt.p2.ref", 0xc69, 151
 	sq_cell	0xbe, 0, 65535	; cell 14: song 1 track 2, 1 of 1
 	sq_beat
 	sq_beat
@@ -908,7 +910,8 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"08DEMO_3.sqt.p2.ref", 0xdc8, 56
 	sq_cell	0xbf, 0, 65535	; cell 15: song 1 track 3, 1 of 1
 	sq_beat
@@ -1106,8 +1109,24 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0xec8, 56
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	74, 94, 0, 94	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08DEMO_3.sqt.p2.ref", 0xecc, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	94, 0, 42, 67, 55, 0
+	sq_note	94, 0, 45, 80, 55, 0
+	sq_note	94, 0, 48, 72, 59, 0
+	sq_note	95, 0, 50, 71, 64, 0
+	sq_beat
+	sq_beat
+	sq_note	63, 0, 43, 76, 22, 0
+	sq_note	63, 0, 53, 76, 23, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08DEMO_3.sqt.p2.ref", 0xefb, 5
 	sq_cell	0x81, 0, 65535	; cell 16: song 1 track 4, 1 of 1
 	sq_beat
 	sq_beat
@@ -1304,8 +1323,25 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0xfc8, 56
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	29, 2, 75	; data bytes of an event cut at the start
+	k5_note	0x90, 43, 75, 28, 2, 76
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08DEMO_3.sqt.p2.ref", 0xfd1, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	78, 0xf1, 2, 0, 80, 2, 2
+	sq_sys	93, 0xf2, 0, 112, 32, 35, 0, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 43, 81, 22, 0
+	sq_note	2, 0, 48, 87, 21, 0
+	sq_note	4, 0, 52, 80, 23, 0
 	sq_cell	0x85, 0, 18	; cell 17: song 1 track 5, 1 of 3
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 48, 93, 79, 1
@@ -1586,8 +1622,23 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0x12bc, 68
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	96, 62, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	3, 0, 74, 91, 80, 0
+	sq_note	3, 0, 65, 81, 75, 0
+	sq_note	4, 0, 71, 90, 71, 0
+	sq_beat
+	sq_note	7, 0, 70, 82, 74, 0
+	sq_note	7, 0, 73, 90, 67, 0
+	sq_note	9, 0, 64, 70, 71, 0
+	sq_beat
+	sq_note	6, 0, 70, 86, 67, 0
+	sq_note	7, 0, 64, 76, 54, 0
+	sq_note	8, 0, 73, 91, 58, 0
+	sq_beat
+	sq_note	3, 0, 69, 96, 80, 0
+	.byte	6	; data bytes of an event cut by the end
 	sq_cell	0xe0, 0, 21	; cell 20: song 1 track 6, 1 of 2
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 38, 1
@@ -1800,8 +1851,10 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0x1432, 206
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	51	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"08DEMO_3.sqt.p2.ref", 0x1433, 205
 
 	.if	(. - P_08DEMO_3_SQT_p2) - 5376
 	.error	"08DEMO_3.SQT part 2: the payload is not 5376 bytes"

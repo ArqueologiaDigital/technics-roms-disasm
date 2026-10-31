@@ -751,8 +751,78 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x787, 121
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 2, 60, 104, 54, 0
+	sq_beat
+	k5_note	0x90, 1, 60, 104, 63, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 2, 60, 105, 45, 0
+	k5_note	0x90, 51, 62, 102, 52, 0
+	sq_beat
+	k5_note	0x90, 50, 62, 107, 58, 0
+	sq_beat
+	k5_note	0x90, 50, 60, 110, 21, 0
+	sq_beat
+	k5_note	0x90, 0, 64, 114, 1, 1
+	k5_note	0x90, 95, 62, 108, 91, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 1, 60, 102, 59, 0
+	sq_beat
+	k5_note	0x90, 4, 60, 104, 62, 0
 	sq_cell	0x80, 0, 10	; cell 9: song 1 track 2, 1 of 8
 	sq_beat
 	sq_beat
@@ -1488,8 +1558,98 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0xf14, 236
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	94, 12, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 49, 69, 94, 32, 1
+	k5_note	0x90, 50, 72, 84, 26, 1
+	sq_beat
+	k5_note	0x90, 93, 67, 90, 76, 0
+	sq_beat
+	k5_note	0x90, 0, 72, 75, 68, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 44, 56, 95, 27, 0
+	k5_note	0x90, 45, 60, 80, 27, 1
+	k5_note	0x90, 46, 57, 103, 32, 1
+	sq_beat
+	k5_note	0x90, 91, 55, 97, 78, 0
+	k5_note	0x90, 93, 60, 78, 81, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 92, 64, 99, 58, 0
+	sq_beat
+	k5_note	0x90, 93, 64, 96, 62, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 0, 64, 99, 50, 0
+	k5_note	0x90, 51, 65, 93, 57, 0
+	sq_beat
+	k5_note	0x90, 49, 65, 97, 59, 0
+	sq_beat
+	k5_note	0x90, 46, 64, 97, 27, 0
+	k5_note	0x90, 95, 67, 96, 95, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 3, 65, 93, 84, 0
+	k5_note	0x90, 93, 64, 98, 53, 0
+	sq_beat
+	k5_note	0x90, 95, 64, 98, 54, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 1, 64, 103, 45, 0
+	k5_note	0x90, 51, 65, 82, 53, 0
+	sq_beat
+	k5_note	0x90, 45, 65, 99, 70, 0
+	sq_beat
+	k5_note	0x90, 52, 64, 99, 25, 0
+	sq_beat
+	k5_note	0x90, 3, 67, 96, 3, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 4, 64, 95, 49, 0
+	k5_note	0x90, 95, 64, 91, 83, 0
+	sq_beat
+	k5_note	0x90, 0, 65, 85, 39, 0
+	sq_beat
+	k5_note	0x90, 89, 64, 99, 45, 0
+	sq_beat
+	.byte	144, 46, 65, 93	; the first 4 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 18	; cell 17: song 1 track 3, 1 of 7
 	sq_beat
 	sq_beat
@@ -2223,8 +2383,32 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x16e3, 29
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	88, 55, 93, 4, 1	; data bytes of an event cut at the start
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 25	; cell 24: song 1 track 4, 1 of 2
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 40, 64, 24, 0
@@ -3227,8 +3411,55 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x1bcb, 53
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xc1, 25, 72, 0, 4, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 30	; cell 29: song 1 track 8, 1 of 10
 	sq_beat
 	sq_beat
@@ -4910,8 +5141,24 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x2dcb, 53
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 74, 77, 96, 17, 0
+	k5_note	0x90, 92, 81, 93, 18, 0
+	sq_beat
+	k5_note	0x90, 45, 84, 102, 18, 0
+	k5_note	0x90, 93, 83, 111, 22, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 44, 74, 96, 15, 0
+	k5_note	0x90, 68, 77, 90, 17, 0
+	k5_note	0x90, 86, 81, 97, 20, 0
+	sq_beat
+	.byte	144, 46	; the first 2 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 48	; cell 47: song 1 track 10, 1 of 4
 	sq_beat
 	sq_beat
@@ -5541,8 +5788,31 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x31ca, 54
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	k5_note	0x90, 92, 55, 118, 48, 0
+	sq_beat
+	k5_note	0x90, 88, 60, 117, 69, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 87, 55, 116, 53, 0
+	sq_beat
+	k5_note	0x90, 88, 60, 117, 74, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 55, 121, 53, 0
+	sq_beat
+	k5_note	0x90, 88, 60, 117, 83, 0
 	sq_cell	0x80, 0, 52	; cell 51: song 1 track 11, 1 of 5
 	sq_beat
 	sq_beat
@@ -6046,8 +6316,40 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x3691, 111
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	k5_note	0x90, 51, 60, 110, 16, 0
+	sq_beat
+	k5_note	0x90, 0, 60, 105, 16, 0
+	k5_note	0x90, 46, 60, 107, 17, 0
+	k5_note	0x90, 94, 60, 112, 62, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 48, 60, 105, 16, 0
+	k5_note	0x90, 94, 60, 110, 18, 0
+	sq_beat
+	k5_note	0x90, 46, 60, 109, 19, 0
+	k5_note	0x90, 94, 60, 114, 0, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 1, 62, 109, 76, 0
+	k5_note	0x90, 91, 64, 105, 50, 0
+	sq_beat
+	k5_note	0x90, 49, 55, 102, 72, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 45, 64, 116, 80, 0
+	sq_beat
+	k5_note	0x90, 36, 65, 104, 53, 0
+	k5_note	0x90, 92, 64, 118, 16, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 46, 65, 114, 85, 0
+	sq_beat
+	.byte	144, 37, 67, 103	; the first 4 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 57	; cell 56: song 1 track 12, 1 of 10
 	sq_beat
 	sq_beat
@@ -6917,8 +7219,123 @@ P_07x28DEMOx29_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"07x28DEMOx29.sqt.p2.ref", 0x4039, 199
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 85, 48, 89, 1, 2
+	k5_note	0x90, 87, 72, 68, 86, 23
+	k5_note	0x90, 88, 64, 67, 76, 1
+	k5_note	0x90, 88, 67, 78, 76, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 78, 46, 80, 7, 2
+	k5_note	0x90, 83, 70, 59, 90, 1
+	k5_note	0x90, 83, 62, 72, 77, 1
+	k5_note	0x90, 84, 65, 79, 83, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 85, 45, 59, 91, 1
+	k5_note	0x90, 88, 65, 78, 61, 1
+	k5_note	0x90, 89, 69, 75, 54, 1
+	k5_note	0x90, 90, 60, 68, 75, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 76, 60, 43, 93, 1
+	k5_note	0x90, 78, 67, 82, 91, 1
+	k5_note	0x90, 78, 43, 87, 6, 2
+	k5_note	0x90, 79, 62, 84, 84, 1
+	sq_beat
+	sq_beat
+	.byte	144, 83, 48, 81	; the first 4 bytes of a KN5000-order event, cut by the end
 
 	.if	(. - P_07x28DEMOx29_SQT_p2) - 16640
 	.error	"07(DEMO).SQT part 2: the payload is not 16640 bytes"
