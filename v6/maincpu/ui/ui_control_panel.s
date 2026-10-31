@@ -2173,9 +2173,9 @@ RefreshApTask:
 	ld	(58106:16), 255
 	ld	(58108:16), 255
 	ld	xwa, 0:i3
-	ld	(TRANSITION_PROGRESS:24), xwa
-	ld	(TRANSITION_TIMER:24), xwa
-	ld	(TRANSITION_FLAGS:24), xwa
+	ld	(PANEL_SW_HELD_UP:24), xwa
+	ld	(PANEL_SW_HELD_DOWN:24), xwa
+	ld	(PANEL_SW_HELD_BOTH:24), xwa
 	ld	xwa, 4294967295
 	ld	xbc, EVT_SW_ON
 	call	DeleteEvent
@@ -2206,9 +2206,9 @@ RefreshApTask:
 	jp	ApPostEvent
 RefreshSwEvent:
 	ld xwa, 0:i3
-	ld (TRANSITION_PROGRESS:24), xwa
-	ld (TRANSITION_TIMER:24), xwa
-	ld (TRANSITION_FLAGS:24), xwa
+	ld (PANEL_SW_HELD_UP:24), xwa
+	ld (PANEL_SW_HELD_DOWN:24), xwa
+	ld (PANEL_SW_HELD_BOTH:24), xwa
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SW_ON
 	call DeleteEvent
@@ -2788,19 +2788,19 @@ MainTitleControl:
 	ld	xwa, xde
 	and	xwa, 65535
 	cp	xbc, EVT_MAIN_LOOP_COUNT
-	jrl	z, MainTitleCtrl_HandleBB
+	jrl	z, MainTitleCtrl_OnMainLoopCount
 	ld	hl, wa
 	cp	xbc, EVT_SET_TITLE_FLAG
-	jrl	z, MainTitleCtrl_HandleBA
+	jrl	z, MainTitleCtrl_OnSetTitleFlag
 	cp	xbc, EVT_OTHER_PART_LED
-	jrl	z, MainTitleCtrl_HandleAB
+	jrl	z, MainTitleCtrl_OnOtherPartLed
 	ld	a, (CURRENT_TITLE:16)
 	cp	xbc, EVT_ACTIVATE_STATE
 	jrl	z, SeqState_DemoModeHandler
 	cp	xbc, EVT_RETURN_TITLE
-	jr	z, MainTitleCtrl_SaveAndTransition
+	jr	z, MainTitleCtrl_OnInterruptOrReturnTitle
 	cp	xbc, EVT_INTERRUPT_TITLE
-	jr	z, MainTitleCtrl_SaveAndTransition
+	jr	z, MainTitleCtrl_OnInterruptOrReturnTitle
 	cp	xbc, EVT_CHANGE_TITLE
 	jr	z, MainTitleCtrl_ChangeTitle
 	cp	xbc, EVT_CHANGE_MODE
@@ -2810,41 +2810,33 @@ MainTitleControl:
 	ldw	wa, 72
 	call	CtrlPanel_SetIndicatorBit
 	ld	xwa, 0:i3
-	ld	(TRANSITION_FLAGS:24), xwa
-	ld	(TRANSITION_TIMER:24), xwa
-	ld	(TRANSITION_PROGRESS:24), xwa
+	ld	(PANEL_SW_HELD_BOTH:24), xwa
+	ld	(PANEL_SW_HELD_DOWN:24), xwa
+	ld	(PANEL_SW_HELD_UP:24), xwa
 	jrl	UIWidget_ReturnZero
-; =============================================================================
-; MainTitleCtrl_ChangeTitle - Screen transition state handler
-;
-; Manages state transitions for the sequencer/demo screen mode changes.
-; Saves current display state bytes (SFR 35994-35997) and clears animation
-; state variables at 0x0274a2, 0x02749e, 0x02749a. Calls CtrlPanel_SetIndicatorBit
-; to initiate the actual screen transition, then AudioMode_ResetVoiceState for cleanup.
-;
-; Animation state addresses:
-;   0x02749a - Transition progress counter
-;   0x02749e - Transition timer
-;   0x0274a2 - Transition type/flags
-;   0x0274a8-0x0274ae - Additional transition parameters
-; =============================================================================
+; MainTitleCtrl_ChangeTitle -- MainTitleControl's EVT_CHANGE_TITLE case (L = new title id).
+;   PREVIOUS_TITLE := CURRENT_TITLE (held in A), ACTIVE_TITLE_PREVIOUS := ACTIVE_TITLE, then CURRENT_TITLE
+;   and ACTIVE_TITLE := L.  EVT_INTERRUPT_TITLE and EVT_RETURN_TITLE (MainTitleCtrl_OnInterruptOrReturnTitle)
+;   change only ACTIVE_TITLE.  Both then request panel indicator 0x61 (CtrlPanel_SetIndicatorBit), clear the
+;   three held-switch masks PANEL_SW_HELD_* and call AudioMode_ResetVoiceState.  The change itself is
+;   immediate: no fade, slide or timed transition is started here or by any reader of these variables.
 MainTitleCtrl_ChangeTitle:
 	ld	(PREVIOUS_TITLE:16), a
 	ldmm8 ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE
 	ld	(CURRENT_TITLE:16), l
 	ld	(ACTIVE_TITLE:16), l
 	ldw	wa, 97
-	jr	MainTitleCtrl_SetIndicatorAndClear
-MainTitleCtrl_SaveAndTransition:
+	jr	MainTitleCtrl_FinishTitleChange
+MainTitleCtrl_OnInterruptOrReturnTitle:
 	ldmm8 ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE
 	ld	(ACTIVE_TITLE:16), l
 	ldw	wa, 97
-MainTitleCtrl_SetIndicatorAndClear:
+MainTitleCtrl_FinishTitleChange:
 	call	CtrlPanel_SetIndicatorBit
 	ld	xwa, 0:i3
-	ld	(TRANSITION_FLAGS:24), xwa
-	ld	(TRANSITION_TIMER:24), xwa
-	ld	(TRANSITION_PROGRESS:24), xwa
+	ld	(PANEL_SW_HELD_BOTH:24), xwa
+	ld	(PANEL_SW_HELD_DOWN:24), xwa
+	ld	(PANEL_SW_HELD_UP:24), xwa
 	call	AudioMode_ResetVoiceState
 	jrl	UIWidget_ReturnZero
 SeqState_DemoModeHandler:
@@ -2857,28 +2849,28 @@ SeqDemo_SaveCurrentState:
 	ldmm8 ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE
 	ldmm8 PREVIOUS_MODE, CURRENT_MODE
 	jr UIWidget_ReturnZero
-MainTitleCtrl_HandleAB:
-	ld (0x0274ac:24), de
-	ldw (0x0274ae:24), 0x000a
+MainTitleCtrl_OnOtherPartLed:
+	ld (OTHER_PART_LED_PENDING:24), de
+	ldw (OTHER_PART_LED_DELAY:24), 0x000a
 	jr UIWidget_ReturnZero
 
-MainTitleCtrl_HandleBA:
-	ld (0x0274a8:24), de
-	ldw (0x0274aa:24), 0x000a
+MainTitleCtrl_OnSetTitleFlag:
+	ld (TITLE_FLAGS_PENDING:24), de
+	ldw (TITLE_FLAGS_DELAY:24), 0x000a
 	jr UIWidget_ReturnZero
 
-MainTitleCtrl_HandleBB:
-	ld wa, (0x0274aa:24)
+MainTitleCtrl_OnMainLoopCount:
+	ld wa, (TITLE_FLAGS_DELAY:24)
 	cp wa, 0:i3
-	jr z, MainTitleCtrl_CheckSecondTimer
+	jr z, MainTitleCtrl_CountOtherPartLedDelay
 	dec 1, wa
-	ld (0x0274aa:24), wa
+	ld (TITLE_FLAGS_DELAY:24), wa
 	cp wa, 0:i3
-	jr nz, MainTitleCtrl_CheckSecondTimer
-	ld wa, (0x0274a8:24)
-	ld (0x0274a6:24), wa
+	jr nz, MainTitleCtrl_CountOtherPartLedDelay
+	ld wa, (TITLE_FLAGS_PENDING:24)
+	ld (TITLE_FLAGS_LATCHED:24), wa
 
-MainTitleCtrl_CheckSecondTimer:
+MainTitleCtrl_CountOtherPartLedDelay:
 	ld wa, (160942:24)
 	cp wa, 0:i3
 	jr z, UIWidget_ReturnZero
@@ -2887,15 +2879,15 @@ MainTitleCtrl_CheckSecondTimer:
 	cp wa, 0:i3
 	jr nz, UIWidget_ReturnZero
 	cpw (160940:24), 0
-	jr z, MainTitleCtrl_ClearIndicatorBit
+	jr z, MainTitleCtrl_OtherPartLedOff
 	set	0, (36508:16)
-	jr MainTitleCtrl_SetIndicator60
-MainTitleCtrl_ClearIndicatorBit:
+	jr MainTitleCtrl_RequestOtherPartLed
+MainTitleCtrl_OtherPartLedOff:
 	res	0, (36508:16)	; resda 0, 0x8f5c (v7 patched)
 
 
 
-MainTitleCtrl_SetIndicator60:
+MainTitleCtrl_RequestOtherPartLed:
 	ldw wa, 0x60
 	call CtrlPanel_SetIndicatorBit
 
@@ -2904,7 +2896,7 @@ UIWidget_ReturnZero:
 	ret
 
 CtrlPanel_GetSelectionState:
-	ld wa, (0x0274a6:24)
+	ld wa, (TITLE_FLAGS_LATCHED:24)
 	bit 0, wa
 	jr z, CtrlPanel_CheckBit1
 	ld hl, 1:i3

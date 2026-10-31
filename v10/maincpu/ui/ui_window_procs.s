@@ -2352,13 +2352,13 @@ VwBoxProc:
 	cp xbc, EVT_GET_BOX_COLOR
 	jrl z, VwBox_HandleGetColor
 	cp xbc, EVT_GET_BOX_BORDER
-	jrl z, VwBox_HandleGetHeight
+	jrl z, VwBox_OnGetBoxBorder
 	cp xbc, EVT_CHECK_INDEX
-	jr z, VwBox_HandleHitTest
+	jr z, VwBox_OnCheckIndex
 	cp xbc, EVT_GET_INDEX
-	jr z, VwBox_HandleGetWidth
+	jr z, VwBox_OnGetIndex
 	cp xbc, EVT_DRAW_SELECTED
-	jr z, VwBox_HandleGetFocus
+	jr z, VwBox_OnDrawSelected
 	cp xbc, EVT_DRAW
 	jrl nz, VwBox_DefaultHandler
 	ld xwa, xiz
@@ -2372,7 +2372,7 @@ VwBoxProc:
 	call DrawDesignBox
 	jr VwBox_DrawReturnZero
 
-VwBox_HandleGetFocus:
+VwBox_OnDrawSelected:
 	lda xbc, (xsp + 4)
 	ld xwa, xiz
 	calr GetClientBox
@@ -2399,12 +2399,12 @@ VwBox_DrawReturnZero:
 	ld xhl, 0:i3
 	jr ViewableProc_Return
 
-VwBox_HandleGetWidth:
+VwBox_OnGetIndex:
 	ld xwa, xiz
 	ld xiz, 0x1a
 	jr VwBox_GetFieldAtOffset
 
-VwBox_HandleHitTest:
+VwBox_OnCheckIndex:
 	ld xwa, xiz
 	call GetViewInstance
 	ld wa, (xhl + 26)
@@ -2414,7 +2414,7 @@ VwBox_HandleHitTest:
 	extz xhl
 	jr ViewableProc_Return
 
-VwBox_HandleGetHeight:
+VwBox_OnGetBoxBorder:
 	ld xwa, xiz
 	ld xiz, 0x18
 	jr VwBox_GetFieldAtOffset
@@ -3936,15 +3936,15 @@ PsGridBoxProc:
 	cp xwa, EVT_INDEXSW_UP_AIC
 	jrl z, PsGridBox_Scroll
 	cp xwa, EVT_SELE_DRAW
-	jrl z, PsGridBox_Select
+	jrl z, PsGridBox_OnSeleDraw
 	cp xwa, EVT_PARA_DRAW
-	jrl z, PsGridBox_Confirm
+	jrl z, PsGridBox_OnParaDraw
 	cp xwa, EVT_DRAW
-	jrl z, PsGridBox_Paint
+	jrl z, PsGridBox_OnDraw
 	cp xwa, EVT_REPAINT
-	jrl z, PsGridBox_ShowHide
+	jrl z, PsGridBox_OnPaint
 	cp xwa, EVT_PAINT
-	jrl z, PsGridBox_ShowHide
+	jrl z, PsGridBox_OnPaint
 	cp xwa, EVT_HIDE
 	jrl z, PsGridBox_Close
 	cp xwa, EVT_SHOW
