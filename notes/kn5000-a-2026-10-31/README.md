@@ -159,3 +159,17 @@ renders, 2x, labelled; scratch only) and described by eye: `scripts/generators/n
 trees) and `.equ` (hdae5000/shared/naka_values.s); `hdae5000_menu_map.py` adds it to the HD-AE5000 menu maps.
 The KN5000 menu map does not print icons.  Descriptions say what the picture shows, not what the firmware uses
 it for.
+
+## IC14 style records (N-628bbeaf, N-a7314f90, N-ae3d1690, N-8f4e2d69)
+
+`probes/ic14_slot_readers.py` lists the evidence; `notes/rhythm-data-ic14-2026-10-29/README.md` (open questions
+2, 3, 4, 6) has the answers, and `rhythm_data/rhythm_macros.inc` (via `gen_rhythm_data_s.py`, which still
+reproduces it) says them per field:
+
+- part_sound +4 `voice4`: byte 4 of the part's voice record and of the 0xC0 ring-buffer record, never read alone;
+  +5 `turnover` (-> 0x32c3+n -> 0x32cb, Rhythm_TransposeNote / Rhythm_CrossVoiceCorrect); +6 `ceiling`
+  (-> 0x32c7+n -> 0x32cc, the octave-folding limit).
+- slots 8..11: no caller of AccPart_GetParamAddr passes their offsets; leftover bars.
+- +0x3e3..+0x3f2: no reader anywhere in v10; declared authoring metadata.
+- 8beats / 6beats: every locator reader but Rhythm_LoadCurrentTimeSig remaps; that one reads only the time
+  signature.  No path plays them: leftovers.

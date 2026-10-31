@@ -98,7 +98,7 @@ then 0x400..0x413). With groups of five that is 8 sections, 0..3 and 4..7. The m
 | +0x000      | 280  | `style_section_map`                  | 7 blocks of 40 B. Each block is 4 sections x `sec_picks` (4 slot numbers + 0x83), then 4 more `sec_picks`. Block 0 is for parts 1 and 2, blocks 1..4 for parts 4, 8, 16 and 32. Blocks 5 and 6 are unread. The map is identical in all 404 halves | `AccStyle_ReadParamOffset` (+0/+40/+80/+120/+160), `AccPart_IncrementIndex` (0x83 = back to the group's first pick), `AccStyle_ByteDataBlock` (+20, no caller in v10)       |
 | +0x118      | 6x38 | `part_tracks` x 6                    | per part, 19 u16 track slots: offset of the track within the half's pattern bank                                                                                                                                                                  | `AccPart_GetParamAddr` (+0x118, +0x13e, +0x164, +0x18a, +0x1b0, +0x1d6), `AccVoice_TableLookup`                                                                             |
 | +0x1fc      | 76   | `style_gap_1fc`                      | FF                                                                                                                                                                                                                                                | constant                                                                                                                                                                    |
-| +0x248      | 8x49 | `part_sound` x 5 + `sound_block_end` | 8 sound blocks. Each is 5 x 7-byte part sound records (DRUM, BASS, ACCOMP1, ACCOMP2, ACCOMP3: program, bank, forced byte, bank-msb flag, 3 untraced bytes) and 14 FF                                                                              | `AccVoice_LoadTuningBlock` (copies 0x31 B to RAM 0x3246, forces +9/+0x10/+0x17/+0x1e), `RhythmROM_PatternDisp_Handle90`, `AccTuning_LoadFromROM` (Sound Arranger overrides) |
+| +0x248      | 8x49 | `part_sound` x 5 + `sound_block_end` | 8 sound blocks. Each is 5 x 7-byte part sound records (DRUM, BASS, ACCOMP1, ACCOMP2, ACCOMP3: program, bank, forced byte, bank-msb flag, voice-record byte 4, transpose turnover, note ceiling) and 14 FF                                                                              | `AccVoice_LoadTuningBlock` (copies 0x31 B to RAM 0x3246, forces +9/+0x10/+0x17/+0x1e), `RhythmROM_PatternDisp_Handle90`, `AccTuning_LoadFromROM` (Sound Arranger overrides) |
 | +0x3d0      | 1    | `style_tail` time_sig                | time-signature code: 7 = 4/4 (374 halves), 6 = 3/4 (26), 11 = 8/4 (2), 9 = 6/4 (2); spelled `TIMESIG_n_d`                                                                                                                                         | `AccStyle_ReadVoiceParam` -> `AccTone_LookupByProgram_Table` (beats per bar); `Rhythm_LoadCurrentTimeSig` -> RAM 0x34f0, the `TimeSig_DisplayStrings` index                 |
 | +0x3d1      | 1    | bank                                 | pattern bank 0x06..0x37 of this half's tracks                                                                                                                                                                                                     | `AccStyle_SetupPartAddresses` -> ACC_STYLE_BANK, `ToneData_LookupEffectParam`                                                                                               |
 | +0x3d2      | 8    | v0a..v3b                             | per section of the half, two velocity settings; the same 61,61 / 13,61 / 61,61 / 61,61 in every half                                                                                                                                              | `Rhythm_LookupTuningRange` (0x3d2, 0x3d4, 0x3d6, 0x3d8 and +0x400) -> RAM 0x333f / 0x3340; `AccMidi_SelectVelocitySource`                                                   |
@@ -127,7 +127,7 @@ signature (2,424 of 2,424 per slot). Slots 16 and 18 hold 1..8 bars.
 | slots  | selected by                                                                                                                                                                           | reading                                        |
 |--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
 | 0..7   | the section map: pick p -> slot p (`AccPart_LookupBoundVoiceParam`)                                                                                                                   | the sections' bars                             |
-| 8..11  | no reader traced (in record 0 they equal slots 12..15)                                                                                                                                | open                                           |
+| 8..11  | no reader: no offset any caller hands AccPart_GetParamAddr falls there (2026-10-31, `notes/kn5000-a-2026-10-31/probes/ic14_slot_readers.py`); in record 0 they equal slots 12..15                                                                                                                                | leftover bars                                  |
 | 12..15 | `AccVoice_ComputeParamAddr`: 0x18/0x1a for section slots < 15, 0x1c/0x1e for < 20, the same +0x400 in half 1; the second of a pair when RAM 0x3309 bit 0 is 0 (`AccPedal_DirectionA`) | [INFERENCE] fill-ins                           |
 | 16..18 | `AccVoice_SelectPartOffset` (0x20 / 0x22 / 0x420 on RAM 0x32ff bits 0, 1), `AccVoice_Reset_SelectMode` (RAM 0x330a), `AccVoice_ThirdLayer_SelectMode` (0x24 / 0x424, RAM 0x330b)      | [INFERENCE] 16 / 18 intro / ending, 17 one bar |
 
@@ -176,12 +176,27 @@ generic = 0, opaque = 0 and generated = 0. The tree has no binary include to cla
    (rhythm group, number).
 2. +0x3E3..+0x3F2: no reader. Tried: a displacement search over v10 sequencer and UI code for 0x3e3..0x3f2 /
    995..1010; and comparing the four u16 with per-part sums of distinct-track bytes, note counts and beats for five
-   records (no match). It may be authoring metadata.
-3. Slots 8..11: no reader traced.
-4. `part_sound` bytes +4..+6: copied to RAM 0x3246.. with the rest; consumer not traced.
+   records (no match).  Settled 2026-10-31 (lane kn5000-a): no displacement 0x3e3..0x3f2 or 0x7e3..0x7f2 off any base
+   register in all of v10, no immediate of those values used as an offset, and the only copies of a half to RAM
+   are the 0x31-byte sound block and the five records; declared authoring metadata in `rhythm_macros.inc`
+   (`probes` of that lane: `ic14_slot_readers.py`).
+3. Slots 8..11: no reader.  Settled 2026-10-31: AccPart_GetParamAddr is the only routine that indexes part_tracks,
+   and its callers pass section-map picks 0..7, 0x18..0x1e (AccVoice_ComputeParamAddr), 0x20 / 0x22 / 0x24 and the
+   +0x400 twins: never 0x10..0x16.  Leftover bars.
+4. `part_sound` bytes +4..+6: traced 2026-10-31.  RhythmPartN_LoadAndStore (and AccStyle_InlinedBlock for all
+   five) take +4 into ACC_EVENT+4, byte 4 of the part's 5-byte voice record and of the 0xC0 record appended to the
+   channel ring buffer (nothing reads it on its own); +5 into RAM 0x32c3 + n and +6 into 0x32c7 + n, which
+   Rhythm_SetupChannel_Dn copies to 0x32cb / 0x32cc: Rhythm_TransposeNote moves a transposition above 0x32cb an
+   octave down and folds notes at or above 0x32cc down by octaves (when it is 12 or more).  Named `voice4`,
+   `turnover`, `ceiling` in the `part_sound` macro.
 5. Does the board cross A19/A21, or is the dump wrong? (See above; it decides the MAME fix.)
 6. `8beats` and `6beats`: the remap reaches neither. Are they leftovers, or are they selected by a path that skips
-   `VoiceParam_BankProgramWords`?
+   `VoiceParam_BankProgramWords`?  Answered 2026-10-31: four routines read the locators.  RhythmROM_PatternDispatcher
+   and VoiceAssign_Process_Return remap through VoiceParam_ClampAndValidate, and AccVoice_ComputeChannelIndex reads
+   ACC_STYLE_GROUP / NUMBER, which come only from ACC_PENDING_* after VoiceParam_ClampAndStore.  Only
+   Rhythm_LoadCurrentTimeSig indexes PANEL_STYLE without the remap, and it reads nothing but the time-signature
+   byte +0x3d0.  So no path plays either record: leftovers (at most their time signature could be read, should
+   PANEL_STYLE hold (3, 24) or (2, 8)).
 
 ## Reproduce
 

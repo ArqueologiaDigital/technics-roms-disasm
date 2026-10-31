@@ -113,7 +113,9 @@
 ;                 the same +0x400 in half 1; the second of each pair when RAM 0x3309 bit 0 is 0
 ;   slots 16..18  AccVoice_SelectPartOffset (0x20, 0x22, 0x420: RAM 0x32ff bits 0/1),
 ;                 AccVoice_Reset_SelectMode (0x330a), AccVoice_ThirdLayer_SelectMode (0x24/0x424)
-;   slots 8..11   no reader traced yet
+;   slots 8..11   no reader: every offset handed to AccPart_GetParamAddr is a section-map pick
+;                 (0..7), 0x18..0x1e, 0x20, 0x22, 0x24 or their +0x400 twins
+;                 (notes/kn5000-a-2026-10-31/probes/ic14_slot_readers.py); leftover bars
 ; Measured over all 404 halves x 6 parts (probes/slot_bars_probe.py): every track in slots
 ; 0..15 and 17 is exactly one bar; slots 16 and 18 hold 1..8 bars.  [INFERENCE] 12..15 are the
 ; fill-ins (AccPedal_DirectionA picks the pair member) and 16 / 18 intro / ending patterns.
@@ -142,9 +144,16 @@
 ;   +0 program    +1 bank (7 bits)
 ;   +2 forced     both loaders overwrite it with 0x40 / 0x0c / 0x74 / 0x40 in records 1..4
 ;   +3 bank_msb   AccTuning_LoadFromROM stores bit 7 of the arrangement's bank byte here
-;   +4..+6        copied with the rest; no reader of these three bytes traced yet
-.macro	part_sound program, bank, forced, bank_msb, f4, f5, f6
-	.byte	\program, \bank, \forced, \bank_msb, \f4, \f5, \f6
+;   +4 voice4     byte 4 of the part's 5-byte voice record (RAM 0x3214 + 5 * record + 4) and of the
+;                 0xC0 record RhythmPartN_ProcessRingBuf appends to the channel ring buffer; nothing
+;                 reads it on its own (the AccVoiceReg_WritePartN take bytes 0, 1 and 3)
+;   +5 turnover   RhythmPartN_LoadAndStore -> RAM 0x32c3 + record - 1 -> 0x32cb (Rhythm_SetupChannel_Dn):
+;                 Rhythm_TransposeNote moves a transposition above it an octave down, and
+;                 Rhythm_CrossVoiceCorrect bases its lower limit 0x332e on it
+;   +6 ceiling    -> RAM 0x32c7 + record - 1 -> 0x32cc: Rhythm_TransposeNote folds a note at or above it
+;                 down by octaves (only when it is 12 or more; 127 = no folding)
+.macro	part_sound program, bank, forced, bank_msb, voice4, turnover, ceiling
+	.byte	\program, \bank, \forced, \bank_msb, \voice4, \turnover, \ceiling
 .endm
 .macro	sound_block_end
 	.fill	14, 1, 0xff
@@ -167,7 +176,9 @@
 ;                        the two velocity settings AccMidi_SelectVelocitySource chooses between
 ;   +0x3da flag          AccStyle_ReadVoiceParam W -> RAM 0x32ef (written, no reader in v10)
 ;   +0x3db id            8 ASCII characters, "<style id>1n" / "<style id>1v"; no reader found
-;   +0x3e3 m0, m1, 0, m3, w0..w3 (u16), c0..c3   16 bytes with no reader found (open question)
+;   +0x3e3 m0, m1, 0, m3, w0..w3 (u16), c0..c3   16 bytes no code reads: no displacement 0x3e3..0x3f2
+;                        (or +0x400) off any base and no copy of the tail to RAM in v10; authoring
+;                        metadata (ic14_slot_readers.py lists the search)
 ;   +0x3f3 13 zero bytes
 .macro	style_tail time_sig, bank, v0a, v0b, v1a, v1b, v2a, v2b, v3a, v3b, flag, id, m0, m1, m3, w0, w1, w2, w3, c0, c1, c2, c3
 	.byte	\time_sig, \bank, \v0a, \v0b, \v1a, \v1b, \v2a, \v2b, \v3a, \v3b, \flag
