@@ -11106,8 +11106,7 @@
 .equ PfOutField_entry_L56_Var, 0x978afd7c
 .equ PfDoubleToDecimal_entry_L3a3_Var, 0x978afd88
 .equ PfDoubleToDecimal_entry_L1e1_Var, 0x978afd90
-.equ PfDoubleToDecimal_entry_L290_Records, 0x978afd98
-.equ doubles_978AFDA0, 0x978afda0
+.equ Pow10Table, 0x978afd98
 .equ Module08_Classes, 0x978b0740
 .equ Str_7_2, 0x978b1f40
 .equ V_HDD_MAIN_MENU_Viewables, 0x978b1f44

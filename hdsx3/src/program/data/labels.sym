@@ -6126,9 +6126,7 @@
 0x978AFD7C  PfOutField_entry_L56_Var  12
 0x978AFD88  PfDoubleToDecimal_entry_L3a3_Var  8
 0x978AFD90  PfDoubleToDecimal_entry_L1e1_Var  8
-0x978AFD98  PfDoubleToDecimal_entry_L290_Records  8
-0x978AFDA0  doubles_978AFDA0  88
-0x978B0143  Str_a9X_B  8
+0x978AFD98  Pow10Table  2472
 0x978B0740  Module08_Classes  1320
 0x978B1F40  Str_7_2  2
 0x978B1F44  V_HDD_MAIN_MENU_Viewables  3996

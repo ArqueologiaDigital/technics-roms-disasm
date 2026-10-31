@@ -557772,12 +557772,12 @@ PfDoubleToDecimal_entry:
 	inc	d1
 	nop
 	lne
-	mov	PfDoubleToDecimal_entry_L290_Records, a2
+	mov	Pow10Table, a2
 	mov	(a2), d0
 	mov	(4, a2), d1
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
-	mov	doubles_485288E0, a0
+	mov	Pow10Table+8, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x24, sp)
@@ -627885,7 +627885,7 @@ func_501464C6_entry_L178:
 	mov	d2, d0
 	mov	d3, d1
 	mov	a2, a1
-	mov	data_48402864, a0
+	mov	ResourceIdLeaf_48402864, a0
 	call	func_50144DDA_entry, [d2,d3,a2,a3], 0x28
 	mov	(0x24, sp), d1
 	mov	d2, d0
@@ -629088,7 +629088,7 @@ func_50146FD4_entry_L30:
 	and	d0, d2
 	add	0x200012, d2
 	mov	d3, (0x1c, sp)
-	mov	data_48402864, a0
+	mov	ResourceIdLeaf_48402864, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x1c, a1
@@ -629130,7 +629130,7 @@ func_5014703A_entry:
 	and	d0, d2
 	add	0x200012, d2
 	mov	d3, (0x1c, sp)
-	mov	data_48402864, a0
+	mov	ResourceIdLeaf_48402864, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x1c, a1
@@ -631932,7 +631932,7 @@ func_50148773_entry_L83:
 	jmp	func_50148773_entry_L189
 func_50148773_entry_L86:
 	mov	d2, (0x14, sp)
-	mov	Str_l_p_2, a0
+	mov	ResourceIdLeaf_48402E80, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x670206c, d2
@@ -631943,7 +631943,7 @@ func_50148773_entry_L86:
 	jmp	func_50148773_entry_L189
 func_50148773_entry_La9:
 	mov	d2, (0x14, sp)
-	mov	Str_p_47, a0
+	mov	ResourceIdLeaf_48402DA4, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x6702015, d2
@@ -631954,7 +631954,7 @@ func_50148773_entry_La9:
 	jmp	func_50148773_entry_L189
 func_50148773_entry_Lcc:
 	mov	d2, (0x14, sp)
-	mov	Str_m_p_2, a0
+	mov	ResourceIdLeaf_48402E8C, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x670206d, d2
@@ -631971,7 +631971,7 @@ func_50148773_entry_Lef:
 	add	0x6702014, d2
 	add	0x100, d1
 	mov	d2, d0
-	mov	Str_p_48, a0
+	mov	ResourceIdLeaf_48402D98, a0
 	call	func_50148F7D_entry, [d2,d3,a2,a3], 0x34
 	mov	d0, d3
 	bra	func_50148773_entry_L189
@@ -631983,13 +631983,13 @@ func_50148773_entry_L115:
 	add	0x6702015, d2
 	add	0x100, d1
 	mov	d2, d0
-	mov	Str_p_47, a0
+	mov	ResourceIdLeaf_48402DA4, a0
 	call	func_5014906F_entry, [d2,d3,a2], 0x1c
 	mov	d0, d3
 	bra	func_50148773_entry_L189
 func_50148773_entry_L13b:
 	mov	d2, (0x14, sp)
-	mov	Str_p_48, a0
+	mov	ResourceIdLeaf_48402D98, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x6702014, d2
@@ -633506,7 +633506,7 @@ func_50149473_entry_L34:
 	extbu	d2
 	asl	24, d2
 	mov	d2, (0x18, sp)
-	mov	data_48402864, a3
+	mov	ResourceIdLeaf_48402864, a3
 	movhu	(0x40, sp), d3
 	mov	a3, a0
 	mov	Namingabc_id, d0

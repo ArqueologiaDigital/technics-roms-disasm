@@ -63,14 +63,6 @@
 	.long	\p12
 .endm
 
-# REC_PfDoubleToDecimal_entry_L290_Records: 8-byte records (PfDoubleToDecimal_entry_L290_Records, 1 records); fields, and what reads them:
-#   +0   LibF64Div_d0 u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-8, a0), d0`
-#   +4   LibF64Div_d1 u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1`
-.macro REC_PfDoubleToDecimal_entry_L290_Records LibF64Div_d0=0, LibF64Div_d1=0
-	.long	\LibF64Div_d0
-	.long	\LibF64Div_d1
-.endm
-
 # REC_func_97805FD0_L26_Var: 4-byte records (func_97805FD0_L26_Var, 4 records); fields, and what reads them:
 #   +0   f0           u8             func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978063F3 0x978063F3 `movbu (func_97805FD0_L26_Var), d0` (+3)
 #   +1   f1           u8             func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)`

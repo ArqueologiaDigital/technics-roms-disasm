@@ -3395,14 +3395,6 @@
 	.long	\p12
 .endm
 
-# REC_PfDoubleToDecimal_entry_L290_Records: 8-byte records (PfDoubleToDecimal_entry_L290_Records, 1 records); fields, and what reads them:
-#   +0   LibF64Div_d0 u32            PfDoubleToDecimal_entry_L290 0x50122E45 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x50122E81 `mov (-8, a0), d0`
-#   +4   LibF64Div_d1 u32            PfDoubleToDecimal_entry_L290 0x50122E45 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L2cc 0x50122E81 `mov (-4, a0), d1`
-.macro REC_PfDoubleToDecimal_entry_L290_Records LibF64Div_d0=0, LibF64Div_d1=0
-	.long	\LibF64Div_d0
-	.long	\LibF64Div_d1
-.endm
-
 # REC_func_5012FE46_entry_L23_Records: 256-byte records (func_5012FE46_entry_L23_Records, 7 records); fields, and what reads them:
 #   +0   index        256 x 1 (u8)   func_5012FE46_entry_L23 0x5012FE6E `movbu (d1, a0), d1`; func_5012FE46_entry_L65 0x5012FEB0 `movbu (d1, a0), d1` (+2)
 .macro REC_func_5012FE46_entry_L23_Records index:vararg
@@ -3600,27 +3592,27 @@
 .endm
 
 # REC_func_4863D95A_entry_Ld0_Records: 128-byte records (func_4863D95A_entry_Ld0_Records, 8 records); fields, and what reads them:
-#   +0   index        64 x 2 (s8)    func_4863D95A_entry_Ld0 0x4863DA2F `movbu (a0), d0`; func_4863D95A_entry_Led 0x4863DA4C `movbu (1, a0), d1`
-.macro REC_func_4863D95A_entry_Ld0_Records index:vararg
-	.byte	\index
+#   +0   a0           64 x 2 (s8)    func_4863D95A_entry_Ld0 0x4863DA2F `movbu (a0), d0`; func_4863D95A_entry_Led 0x4863DA4C `movbu (1, a0), d1`
+.macro REC_func_4863D95A_entry_Ld0_Records a0:vararg
+	.byte	\a0
 .endm
 
 # REC_func_4863D95A_entry_L126_Records: 128-byte records (func_4863D95A_entry_L126_Records, 1 records); fields, and what reads them:
-#   +0   index        64 x 2 (s8)    func_4863D95A_entry_L126 0x4863DA85 `movbu (a0), d1`; func_4863D95A_entry_L143 0x4863DAA2 `movbu (1, a0), d1`
-.macro REC_func_4863D95A_entry_L126_Records index:vararg
-	.byte	\index
+#   +0   a0           64 x 2 (s8)    func_4863D95A_entry_L126 0x4863DA85 `movbu (a0), d1`; func_4863D95A_entry_L143 0x4863DAA2 `movbu (1, a0), d1`
+.macro REC_func_4863D95A_entry_L126_Records a0:vararg
+	.byte	\a0
 .endm
 
 # REC_func_4863D95A_entry_L17c_Records: 128-byte records (func_4863D95A_entry_L17c_Records, 1 records); fields, and what reads them:
-#   +0   index        64 x 2 (s8)    func_4863D95A_entry_L17c 0x4863DADB `movbu (a0), d0`; func_4863D95A_entry_L199 0x4863DAF8 `movbu (1, a0), d1`
-.macro REC_func_4863D95A_entry_L17c_Records index:vararg
-	.byte	\index
+#   +0   a0           64 x 2 (s8)    func_4863D95A_entry_L17c 0x4863DADB `movbu (a0), d0`; func_4863D95A_entry_L199 0x4863DAF8 `movbu (1, a0), d1`
+.macro REC_func_4863D95A_entry_L17c_Records a0:vararg
+	.byte	\a0
 .endm
 
 # REC_func_4863D95A_entry_L1d2_Records: 128-byte records (func_4863D95A_entry_L1d2_Records, 1 records); fields, and what reads them:
-#   +0   index        64 x 2 (s8)    func_4863D95A_entry_L1d2 0x4863DB31 `movbu (a0), d1`; func_4863D95A_entry_L1ee 0x4863DB4D `movbu (1, a0), d1`
-.macro REC_func_4863D95A_entry_L1d2_Records index:vararg
-	.byte	\index
+#   +0   a0           64 x 2 (s8)    func_4863D95A_entry_L1d2 0x4863DB31 `movbu (a0), d1`; func_4863D95A_entry_L1ee 0x4863DB4D `movbu (1, a0), d1`
+.macro REC_func_4863D95A_entry_L1d2_Records a0:vararg
+	.byte	\a0
 .endm
 
 # REC_func_4863D95A_entry_L227_Records: 128-byte records (func_4863D95A_entry_L227_Records, 1 records); fields, and what reads them:
@@ -3952,32 +3944,6 @@
 #   +0   x0           u8[2]          no reader seen
 .macro REC_data_4852886C_p0 x0
 	.ascii	\x0
-.endm
-
-# REC_func_50145183_Selected: 20-byte records (func_50145183_Selected, 65 records); fields, and what reads them:
-#   +0   key          u32            ResourceIdFind_entry_L20 0x5014A97E `mov (a0), d1`; func_50145183 0x50145183 `mov (a0), d0` (+4)
-#   +4   x4           u8[4]          no reader seen
-#   +8   index        s16            func_50147890_entry_L24 0x501478B9 `movhu (a0), d0`; func_50147890_entry_L24 0x501478B9 `movhu (a0), d1`
-#   +10  index_       s16            func_50147890 0x50147890 `movhu (a0), d0`; func_50147890 0x50147890 `movhu (a0), d1`
-#   +12  index__      u8             func_50144C7D 0x50144C7D `movbu (a3), d0`; func_50144C7D_entry_L49 0x50144CCB `movbu (a3), d0` (+2)
-#   +13  dividend     u8             func_50144C7D 0x50144C7D `movbu (a2), d1`; func_50144C7D_entry_L49 0x50144CCB `movbu (a2), d1` (+3)
-#   +14  f14          u8             func_501464C6 0x501464C6 `movbu (a3), d1`; func_501464C6 0x501464C6 `movbu (a3), d2`
-#   +15  x15          u8[1]          no reader seen
-#   +16  f16          u16            func_50145183 0x50145183 `movhu (0x10, a0), d1`; func_50147890_entry_L30 0x501478C5 `movhu (a1), d0` (+4)
-#   +18  x18          u8[1]          no reader seen
-#   +19  f19          u8             func_50145183 0x50145183 `movbu (0x13, a0), d1`; func_50147890_entry_L30 0x501478C5 `movbu (0x13, a2), d0` (+1)
-.macro REC_func_50145183_Selected key=0, x4, index=0, index_=0, index__=0, dividend=0, f14=0, x15, f16=0, x18, f19=0
-	.long	\key
-	.ascii	\x4
-	.word	\index
-	.word	\index_
-	.byte	\index__
-	.byte	\dividend
-	.byte	\f14
-	.ascii	\x15
-	.word	\f16
-	.ascii	\x18
-	.byte	\f19
 .endm
 
 # REC_func_50157E10_entry_L3_Records_p4: 113-byte records (func_50157E10_entry_L3_Records_p4, 1 records); fields, and what reads them:
@@ -4500,87 +4466,6 @@
 	.word	\f4
 	.ascii	\x6
 	.long	\f8
-.endm
-
-# REC_func_5014474E_ArgA0: 16-byte records (func_5014474E_ArgA0, 14 records); fields, and what reads them:
-#   (the layout func_5014474E 0x5014474E reads through its argument a0 (passed by func_5014542B_entry_L7f 0x501454AF `call func_5014474E_entry, [d2,d3,a2,a3], 0x28`, +7 more calls))
-#   (the layout func_5014542B 0x5014542B reads through its argument a0 (passed by func_50145EB5 0x50145EB5 `call func_5014542B_entry, [d2,d3,a2,a3], 0x30`, +13 more calls))
-#   (+2 more routines)
-#   +0   x0           u8[8]          no reader seen
-#   +8   index        s16            func_5014542B_entry_L19 0x50145449 `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449 `movhu (a0), d2` (+2)
-#   +10  index_       s16            func_5014542B 0x5014542B `movhu (a0), d0`; func_5014542B 0x5014542B `movhu (a0), d2` (+2)
-#   +12  f12          u8             func_5014474E 0x5014474E `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455 `movbu (0xc, a3), d1`
-#   +13  f13          u8             func_5014474E_entry_L1e 0x50144771 `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481 `movbu (0xd, a3), d2`
-#   +14  f14          u8             func_5014474E_entry_L1e 0x50144771 `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793 `movbu (a2), d1` (+3)
-#   +15  f15          u8             func_5014474E_entry_L40 0x50144793 `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455 `movbu (0xf, a3), d1` (+1)
-.macro REC_func_5014474E_ArgA0 x0, index=0, index_=0, f12=0, f13=0, f14=0, f15=0
-	.ascii	\x0
-	.word	\index
-	.word	\index_
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.byte	\f15
-.endm
-
-# REC_func_501448AB_ArgA0: 16-byte records (func_501448AB_ArgA0, 1 records); fields, and what reads them:
-#   (the layout func_501448AB 0x501448AB reads through its argument a0 (passed by func_50146E69 0x50146E69 `call func_501448AB_entry, [d2,d3,a2], 0x24`, +3 more calls))
-#   +0   x0           u8[12]         no reader seen
-#   +12  f12          u8             func_501448AB 0x501448AB `movbu (0xc, a0), d0`
-#   +13  f13          u8             func_501448AB 0x501448AB `movbu (0xd, a0), d3`
-#   +14  f14          u8             func_501448AB 0x501448AB `movbu (0xe, a0), d2`
-#   +15  x15          u8[1]          no reader seen
-.macro REC_func_501448AB_ArgA0 x0, f12=0, f13=0, f14=0, x15
-	.ascii	\x0
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.ascii	\x15
-.endm
-
-# REC_func_50144C7D_ArgA0: 16-byte records (func_50144C7D_ArgA0, 1 records); fields, and what reads them:
-#   (the layout func_50144C7D 0x50144C7D reads through its argument a0 (passed by func_50144D28_entry_L5d 0x50144D8A `call func_50144C7D_entry, [d2,d3,a2,a3], 0x2c`, +4 more calls))
-#   (the layout func_501464C6 0x501464C6 reads through its argument a0 (passed by func_50146713_entry_L68 0x50146780 `call func_501464C6_entry, [d2,d3,a2,a3], 0x38`, +1 more calls))
-#   +0   x0           u8[12]         no reader seen
-#   +12  index        u8             func_50144C7D 0x50144C7D `movbu (a3), d0`; func_50144C7D_entry_L49 0x50144CCB `movbu (a3), d0` (+2)
-#   +13  dividend     u8             func_50144C7D 0x50144C7D `movbu (a2), d1`; func_50144C7D_entry_L49 0x50144CCB `movbu (a2), d1` (+3)
-#   +14  f14          u8             func_501464C6 0x501464C6 `movbu (a3), d1`; func_501464C6 0x501464C6 `movbu (a3), d2`
-#   +15  x15          u8[1]          no reader seen
-.macro REC_func_50144C7D_ArgA0 x0, index=0, dividend=0, f14=0, x15
-	.ascii	\x0
-	.byte	\index
-	.byte	\dividend
-	.byte	\f14
-	.ascii	\x15
-.endm
-
-# REC_func_5014906F_ArgA0_p8: 4-byte records (func_5014906F_ArgA0_p8, 1 records); fields, and what reads them:
-#   +0   f0           u32            func_5014906F_entry_L68 0x501490DC `mov (a2), d0`
-.macro REC_func_5014906F_ArgA0_p8 f0=0
-	.long	\f0
-.endm
-
-# REC_func_501447AF_ArgA0: 16-byte records (func_501447AF_ArgA0, 2 records); fields, and what reads them:
-#   (the layout func_501447AF 0x501447AF reads through its argument a0 (passed by func_5014552F_entry_Lc7 0x501455FB `call func_501447AF_entry, [d2,d3,a2,a3], 0x28`, +2 more calls))
-#   (the layout func_5014552F 0x5014552F reads through its argument a0 (passed by func_50146FD4 0x50146FD4 `call func_5014552F_entry, [d2,d3,a2,a3], 0x38`, +2 more calls))
-#   (+1 more routines)
-#   +0   flags        u32            func_5014552F_entry_L12 0x50145546 `mov (a2), d0`
-#   +4   x4           u8[4]          no reader seen
-#   +8   f8           s16            func_501447AF_entry_L40 0x501447F4 `movhu (8, a3), d1`
-#   +10  f10          s16            func_501447AF_entry_L40 0x501447F4 `movhu (0xa, a3), d1`
-#   +12  index        u8             func_501447AF 0x501447AF `movbu (0xc, a3), d1`; func_5014552F_entry_L93 0x501455C7 `movbu (0xc, a2), d3`
-#   +13  f13          u8             func_501447AF_entry_L1e 0x501447D2 `movbu (0xd, a3), d2`; func_5014552F_entry_L96 0x501455CA `movbu (0xd, a2), d1`
-#   +14  f14          u8             func_501447AF_entry_L1e 0x501447D2 `movbu (a2), d0`; func_501447AF_entry_L40 0x501447F4 `movbu (a2), d1` (+2)
-#   +15  f15          u8             func_501447AF_entry_L40 0x501447F4 `movbu (0xf, a3), d1`; func_5014552F_entry_L12 0x50145546 `movbu (0xf, a2), d0`
-.macro REC_func_501447AF_ArgA0 flags=0, x4, f8=0, f10=0, index=0, f13=0, f14=0, f15=0
-	.long	\flags
-	.ascii	\x4
-	.word	\f8
-	.word	\f10
-	.byte	\index
-	.byte	\f13
-	.byte	\f14
-	.byte	\f15
 .endm
 
 # REC_func_50180F38_ArgA0: 8-byte records (func_50180F38_ArgA0, 1 records); fields, and what reads them:

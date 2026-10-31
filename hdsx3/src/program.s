@@ -16755,12 +16755,12 @@ PfDoubleToDecimal_entry:
 	inc	d1
 	nop
 	lne
-	mov	PfDoubleToDecimal_entry_L290_Records, a2
+	mov	Pow10Table, a2
 	mov	(a2), d0
 	mov	(4, a2), d1
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
-	mov	doubles_978AFDA0, a0
+	mov	Pow10Table+8, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x24, sp)

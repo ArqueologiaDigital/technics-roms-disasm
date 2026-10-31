@@ -101,12 +101,12 @@
 .equ func_50145183_Selected_1, 0x48402510
 .equ func_5014A95C_Records_p0_66, 0x48402534
 .equ func_50145183_Selected_2, 0x48402544
-.equ data_48402864, 0x48402864
+.equ ResourceIdLeaf_48402864, 0x48402864
 .equ func_5014474E_ArgA0_2, 0x48402894
-.equ Str_p_48, 0x48402d98
-.equ Str_p_47, 0x48402da4
-.equ Str_l_p_2, 0x48402e80
-.equ Str_m_p_2, 0x48402e8c
+.equ ResourceIdLeaf_48402D98, 0x48402d98
+.equ ResourceIdLeaf_48402DA4, 0x48402da4
+.equ ResourceIdLeaf_48402E80, 0x48402e80
+.equ ResourceIdLeaf_48402E8C, 0x48402e8c
 .equ func_50145183_Selected_49, 0x48402fbc
 .equ func_5014A95C_Records_p0_50, 0x48403008
 .equ func_5014A95C_Records_p0_51, 0x48403018
@@ -5144,8 +5144,7 @@
 .equ localeconv_Records, 0x48528870
 .equ localeconv_Records_2, 0x48528898
 .equ doubles_485288B8, 0x485288b8
-.equ PfDoubleToDecimal_entry_L290_Records, 0x485288d8
-.equ doubles_485288E0, 0x485288e0
+.equ Pow10Table, 0x485288d8
 .equ func_50124F00_Table, 0x48529290
 .equ func_50124F00_Table_2, 0x48529296
 .equ TgDrawbarNibbleScatter_Var, 0x4852929c

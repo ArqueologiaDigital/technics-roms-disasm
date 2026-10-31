@@ -5377,7 +5377,7 @@ func_4C002A49_entry_L3d:
 	add	4, d2
 	mov	0xf, a2
 	add	d2, a2
-	mov	func_4C002A49_entry_L3d_Table, a3
+	mov	Pow10Table, a3
 func_4C002A49_entry_L49:
 	movbu	(a2), d0
 	call	LibU32ToF64, 0, 0
@@ -5429,7 +5429,7 @@ func_4C002A49_entry_L49:
 	exth	d0
 	asl	3, d0
 	mov	d0, a0
-	add	func_4C002A49_entry_L3d_Table, a0
+	add	Pow10Table, a0
 	mov	(-0x80, a0), d0
 	mov	(-0x7c, a0), d1
 	mov	d0, (0x20, sp)
@@ -5461,7 +5461,7 @@ func_4C002A49_entry_Ldf:
 	not	d0
 	inc	d0
 	asl	3, d0
-	add	func_4C002A49_entry_L3d_Table, d0
+	add	Pow10Table, d0
 	mov	d0, a0
 	mov	(0x84, a0), d2
 	mov	(0x80, a0), d1
@@ -5479,7 +5479,7 @@ func_4C002A49_entry_Ldf:
 	mov	d1, (0x1c, sp)
 	bra	func_4C002A49_entry_L182
 func_4C002A49_entry_L127:
-	mov	func_4C002A49_entry_L127_Table, a0
+	mov	Pow10Table+128, a0
 	mov	(a0), d1
 	mov	(4, a0), d2
 	mov	sp, a0
@@ -5492,7 +5492,7 @@ func_4C002A49_entry_L127:
 	not	d0
 	inc	d0
 	asl	3, d0
-	mov	func_4C002A49_entry_L3d_Table, a1
+	mov	Pow10Table, a1
 	add	d0, a1
 	mov	(a1), d1
 	mov	(4, a1), d2
@@ -8305,12 +8305,12 @@ PfDoubleToDecimal_entry:
 	inc	d1
 	nop
 	lne
-	mov	func_4C002A49_entry_L3d_Table, a2
+	mov	Pow10Table, a2
 	mov	(a2), d0
 	mov	(4, a2), d1
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
-	mov	PfDoubleToDecimal_Table_2, a0
+	mov	Pow10Table+8, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x24, sp)
@@ -78074,7 +78074,7 @@ func_4C02A2A6_entry_L83:
 	jmp	func_4C02A2A6_entry_L189
 func_4C02A2A6_entry_L86:
 	mov	d2, (0x14, sp)
-	mov	Str_l_p, a0
+	mov	ResourceIdLeaf_4C1916E0, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x670206c, d2
@@ -78085,7 +78085,7 @@ func_4C02A2A6_entry_L86:
 	jmp	func_4C02A2A6_entry_L189
 func_4C02A2A6_entry_La9:
 	mov	d2, (0x14, sp)
-	mov	Str_p_23, a0
+	mov	ResourceIdLeaf_4C191604, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x6702015, d2
@@ -78096,7 +78096,7 @@ func_4C02A2A6_entry_La9:
 	jmp	func_4C02A2A6_entry_L189
 func_4C02A2A6_entry_Lcc:
 	mov	d2, (0x14, sp)
-	mov	Str_m_p, a0
+	mov	ResourceIdLeaf_4C1916EC, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x670206d, d2
@@ -78113,7 +78113,7 @@ func_4C02A2A6_entry_Lef:
 	add	0x6702014, d2
 	add	0x100, d1
 	mov	d2, d0
-	mov	Str_p_24, a0
+	mov	ResourceIdLeaf_4C1915F8, a0
 	call	func_4C02AD27_entry, [d2,d3,a2,a3], 0x34
 	mov	d0, d3
 	bra	func_4C02A2A6_entry_L189
@@ -78125,13 +78125,13 @@ func_4C02A2A6_entry_L115:
 	add	0x6702015, d2
 	add	0x100, d1
 	mov	d2, d0
-	mov	Str_p_23, a0
+	mov	ResourceIdLeaf_4C191604, a0
 	call	func_4C02AE1B_entry, [d2,d3,a2], 0x1c
 	mov	d0, d3
 	bra	func_4C02A2A6_entry_L189
 func_4C02A2A6_entry_L13b:
 	mov	d2, (0x14, sp)
-	mov	Str_p_24, a0
+	mov	ResourceIdLeaf_4C1915F8, a0
 	mov	a2, d2
 	and	0xf0000000, d2
 	add	0x6702014, d2
@@ -80782,7 +80782,7 @@ func_4C02B99E_entry_L30:
 	btst	0xf0, (0x5001b4df)
 	beq	func_4C02B99E_entry_L7e
 	mov	a2, (0x14, sp)
-	mov	Str_p_22, a0
+	mov	ResourceIdLeaf_4C1917C4, a0
 	mov	0xc67020ac, d0
 	mov	1, d1
 	call	func_4C02B11F_entry, [d2,d3,a2,a3], 0x34
@@ -80922,7 +80922,7 @@ func_4C02BB04_entry_L16:
 	clr	d0
 	mov	d0, (0x1c, sp)
 	mov	d3, (0x18, sp)
-	mov	data_4C18FAE8, a0
+	mov	ResourceIdLeaf_4C18FAE8, a0
 	mov	a2, d0
 	and	0xff000000, d0
 	add	4, d0

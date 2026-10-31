@@ -112,7 +112,7 @@ data_4C176284:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x176284, 0x176288
 Str_C_18:	.asciz "C"
-Str_empty_999:	.asciz "."
+Str_empty_977:	.asciz "."
 data_4C17628C:
 	.space	1, 0x00
 data_4C17628D:
@@ -564,12 +564,12 @@ AcNamingWindowProc_L34f_Table:
 	.long	GetEditSwPointInit_Table+332
 	.long	GetEditSwPointInit_Table+796
 
-Str_empty_998:	.asciz " "
-Str_empty_997:	.asciz "_"
+Str_empty_976:	.asciz " "
+Str_empty_975:	.asciz "_"
 
 AcNamingWindowProc_Lbf_Table:
-	.long	Str_empty_998
-	.long	Str_empty_997
+	.long	Str_empty_976
+	.long	Str_empty_975
 
 Str_7f_3:	.asciz "~7f"
 Str_empty_970:	.asciz " "
@@ -603,7 +603,7 @@ Str_l_3:	.asciz "l"
 Str_m:	.asciz "m"
 Str_n:	.asciz "n"
 Str_o_2:	.asciz "o"
-Str_p_41:	.asciz "p"
+Str_p_3:	.asciz "p"
 Str_q:	.asciz "q"
 Str_r_4:	.asciz "r"
 Str_s_69:	.asciz "s"
@@ -631,7 +631,7 @@ ptrs_4C176B1C:
 	.long	Str_m
 	.long	Str_n
 	.long	Str_o_2
-	.long	Str_p_41
+	.long	Str_p_3
 	.long	Str_q
 	.long	Str_r_4
 	.long	Str_s_69
@@ -776,10 +776,10 @@ data_4C176CC8:
 data_4C176CC9:
 	.space	1, 0x00
 
-Str_empty_996:	.asciz "_"
-Str_0_22:	.asciz "0"
-Str_1_35:	.asciz "1"
-Str_2_36:	.asciz "2"
+Str_empty_974:	.asciz "_"
+Str_0_17:	.asciz "0"
+Str_1_34:	.asciz "1"
+Str_2_35:	.asciz "2"
 Str_3_29:	.asciz "3"
 Str_4_29:	.asciz "4"
 Str_5_25:	.asciz "5"
@@ -806,10 +806,10 @@ ptrs_4C176CE4:
 	.long	data_4C176CC7
 	.long	data_4C176CC8
 	.long	data_4C176CC9
-	.long	Str_empty_996
-	.long	Str_0_22
-	.long	Str_1_35
-	.long	Str_2_36
+	.long	Str_empty_974
+	.long	Str_0_17
+	.long	Str_1_34
+	.long	Str_2_35
 	.long	Str_3_29
 	.long	Str_4_29
 	.long	Str_5_25
@@ -819,25 +819,25 @@ ptrs_4C176CE4:
 	.long	Str_9_12
 	.long	data_4C176CE0
 
-Str_empty_995:	.asciz "!"
-Str_empty_994:	.asciz "#"
-Str_empty_993:	.asciz "$"
-Str_empty_992:	.asciz "%"
-Str_empty_991:	.asciz "&"
-Str_empty_990:	.asciz "?"
+Str_empty_973:	.asciz "!"
+Str_empty_972:	.asciz "#"
+Str_empty_971:	.asciz "$"
+Str_empty_967:	.asciz "%"
+Str_empty_959:	.asciz "&"
+Str_empty_958:	.asciz "?"
 Str_40_2:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_989:	.asciz "^"
+Str_empty_957:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_988:	.asciz "`"
+Str_empty_956:	.asciz "`"
 data_4C176D6C:
 	.space	1, 0x00
-Str_empty_987:	.asciz " "
-Str_empty_986:	.asciz "_"
-Str_0_17:	.asciz "0"
-Str_1_34:	.asciz "1"
-Str_2_35:	.asciz "2"
+Str_empty_955:	.asciz " "
+Str_empty_954:	.asciz "_"
+Str_0_16:	.asciz "0"
+Str_1_33:	.asciz "1"
+Str_2_34:	.asciz "2"
 Str_3_28:	.asciz "3"
 Str_4_28:	.asciz "4"
 Str_5_22:	.asciz "5"
@@ -852,24 +852,24 @@ data_4C176D86:
 .incbin_range "baserom/kn6000_program.rom", 0x176D86, 0x176D88
 
 ptrs_4C176D88:
-	.long	Str_empty_995
-	.long	Str_empty_994
-	.long	Str_empty_993
-	.long	Str_empty_992
-	.long	Str_empty_991
-	.long	Str_empty_990
+	.long	Str_empty_973
+	.long	Str_empty_972
+	.long	Str_empty_971
+	.long	Str_empty_967
+	.long	Str_empty_959
+	.long	Str_empty_958
 	.long	Str_40_2
 	.long	Str_5c
-	.long	Str_empty_989
+	.long	Str_empty_957
 	.long	Str_22
 	.long	Str_27
-	.long	Str_empty_988
+	.long	Str_empty_956
 	.long	data_4C176D6C
-	.long	Str_empty_987
-	.long	Str_empty_986
-	.long	Str_0_17
-	.long	Str_1_34
-	.long	Str_2_35
+	.long	Str_empty_955
+	.long	Str_empty_954
+	.long	Str_0_16
+	.long	Str_1_33
+	.long	Str_2_34
 	.long	Str_3_28
 	.long	Str_4_28
 	.long	Str_5_22
@@ -880,15 +880,15 @@ ptrs_4C176D88:
 	.long	data_4C176D85
 	.long	data_4C176D86
 
-Str_empty_985:	.asciz "("
-Str_empty_984:	.asciz ")"
-Str_empty_983:	.asciz "<"
-Str_empty_982:	.asciz ">"
-Str_empty_981:	.asciz "["
-Str_empty_980:	.asciz "]"
-Str_empty_979:	.asciz "{"
-Str_empty_978:	.asciz "}"
-Str_empty_977:	.asciz "|"
+Str_empty_953:	.asciz "("
+Str_empty_952:	.asciz ")"
+Str_empty_951:	.asciz "<"
+Str_empty_950:	.asciz ">"
+Str_empty_949:	.asciz "["
+Str_empty_948:	.asciz "]"
+Str_empty_947:	.asciz "{"
+Str_empty_946:	.asciz "}"
+Str_empty_945:	.asciz "|"
 data_4C176E06:
 	.space	1, 0x00
 data_4C176E07:
@@ -897,15 +897,15 @@ data_4C176E08:
 	.space	1, 0x00
 data_4C176E09:
 	.space	1, 0x00
-Str_empty_976:	.asciz ","
-Str_empty_975:	.asciz "."
-Str_empty_974:	.asciz ":"
-Str_empty_973:	.asciz ";"
-Str_empty_972:	.asciz "+"
-Str_empty_971:	.asciz "-"
-Str_empty_967:	.asciz "*"
-Str_empty_959:	.asciz "/"
-Str_empty_958:	.asciz "="
+Str_empty_944:	.asciz ","
+Str_empty_943:	.asciz "."
+Str_empty_942:	.asciz ":"
+Str_empty_941:	.asciz ";"
+Str_empty_940:	.asciz "+"
+Str_empty_939:	.asciz "-"
+Str_empty_934:	.asciz "*"
+Str_empty_930:	.asciz "/"
+Str_empty_929:	.asciz "="
 Str_8b:	.asciz "~8b"
 Str_8d:	.asciz "~8d"
 data_4C176E24:
@@ -915,28 +915,28 @@ data_4C176E25:
 .incbin_range "baserom/kn6000_program.rom", 0x176E25, 0x176E28
 
 ptrs_4C176E28:
-	.long	Str_empty_985
-	.long	Str_empty_984
-	.long	Str_empty_983
-	.long	Str_empty_982
-	.long	Str_empty_981
-	.long	Str_empty_980
-	.long	Str_empty_979
-	.long	Str_empty_978
-	.long	Str_empty_977
+	.long	Str_empty_953
+	.long	Str_empty_952
+	.long	Str_empty_951
+	.long	Str_empty_950
+	.long	Str_empty_949
+	.long	Str_empty_948
+	.long	Str_empty_947
+	.long	Str_empty_946
+	.long	Str_empty_945
 	.long	data_4C176E06
 	.long	data_4C176E07
 	.long	data_4C176E08
 	.long	data_4C176E09
-	.long	Str_empty_976
-	.long	Str_empty_975
-	.long	Str_empty_974
-	.long	Str_empty_973
-	.long	Str_empty_972
-	.long	Str_empty_971
-	.long	Str_empty_967
-	.long	Str_empty_959
-	.long	Str_empty_958
+	.long	Str_empty_944
+	.long	Str_empty_943
+	.long	Str_empty_942
+	.long	Str_empty_941
+	.long	Str_empty_940
+	.long	Str_empty_939
+	.long	Str_empty_934
+	.long	Str_empty_930
+	.long	Str_empty_929
 	.long	Str_8b
 	.long	Str_8d
 	.long	data_4C176E24
@@ -6894,1405 +6894,1823 @@ PanelAtnIsr_L114_Table:
 
 func_4C025957_Table:	# 5 x u32, 127..1342287563; read by func_4C025957 0x4C025957: `mov	(a1), d0`
 	tab_u32	1342287436, 1342287563, 1342287436, 1342287436, 127
-func_4C02596F_Table:	# 56 x u32, 0..4294967104; read by func_4C02596F 0x4C02596F: `mov	(a1), d0`
+func_4C02596F_Table:	# 38 x u32, 127..4294967104; read by func_4C02596F 0x4C02596F: `mov	(a1), d0`
 	tab_u32	1342287584, 1342287711, 1342287584, 1342287584, 127, 3284320704, 3351692740, 3419064776	# [0]
 	tab_u32	3486436812, 3553808848, 3621180884, 3688552920, 3755924956, 3823296992, 3890669028, 3958041064	# [8]
 	tab_u32	4025413100, 4092785136, 4160157172, 4227529208, 4294901244, 50462976, 117835012, 185207048	# [16]
 	tab_u32	252579084, 319951120, 387323156, 454695192, 522067228, 589439264, 656811300, 724183336	# [24]
-	tab_u32	791555372, 858927408, 926299444, 993671480, 1061043516, 4294967104, 0, 131072	# [32]
-	tab_u32	16711680, 16711760, 0, 1276705308, 129, 1, 327681, 196608	# [40]
-	tab_u32	1342289124, 65539, 0, 3, 0, 4980788, 16712260, 0	# [48]
-data_4C18FAE8:
-	# 20 bytes the code takes the address of: func_4C02BB04_entry_L16 0x4C02BB1F `call func_4C02C20E_entry, [d2,d3,a2], 0x1c` (+0, arg a0); func_4C02BB04_entry_L16 0x4C02BB1F `mov data_4C18FAE8, a0` (+0, as a base); func_4C02C20E 0x4C02C20E `call func_4C04D10E_entry, 0, 8` (+0, arg a0) (+1 more); byte rows (u8); the callee walk: func_4C02C20E (a0): func_4C02C20E reads nothing through it at a fixed offset (it hands it on, or stores it); func_4C04D10E (a0): func_4C04D10E reads nothing through it at a fixed offset (it hands it on, or stores it); func_4C04D224 (a0): func_4C04D224 reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u8	4, 0, 0, 0, 0, 0, 10, 0, 40, 0, 44, 1, 66, 8, 255, 0	# +0
-	tab_u8	0, 0, 0, 0	# +16
-data_4C18FAFC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FAFC, 0x18FB10
-data_4C18FB10:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FB10, 0x18FB24
-data_4C18FB24:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FB24, 0x18FB38
-data_4C18FB38:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FB38, 0x18FB4C
-data_4C18FB4C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FB4C, 0x18FB60
-data_4C18FB60:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FB60, 0x18FB74
+	tab_u32	791555372, 858927408, 926299444, 993671480, 1061043516, 4294967104	# [32]
 
-func_4C026766_ArgA0_0_2:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls); +1 more routines
-	REC_func_4C026766_ArgA0	x0="\x80\x00\x00\x00\x00\x00\x09\x00", index_=104, f12=82, f13=1, f14=127, x17="\x00\x00\x00"
-func_4C026E51_Selected_0_2:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=129, x4="\x01\x00\x00\x00", index_=1, index__=231, dividend=180, f14=1, x15="P", f16=1, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_0_2
-data_4C18FBA0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FBA0, 0x18FBB4
-func_4C02CA6A_Records_p0_1:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls)
-	REC_func_4C026766_ArgA0	x0="\xA0\x00\x00\x00\x00\x00\x12\x00", index_=1, f12=82, f13=3, f14=1, x17="\x00\x00\x00"
-data_4C18FBC8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FBC8, 0x18FBDC
-data_4C18FBDC:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FBDC, 0x18FBE8
-data_4C18FBE8:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FBE8, 0x18FBFC
-data_4C18FBFC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FBFC, 0x18FC10
-data_4C18FC10:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC10, 0x18FC24
-data_4C18FC24:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC24, 0x18FC38
-data_4C18FC38:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC38, 0x18FC4C
-data_4C18FC4C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC4C, 0x18FC60
-data_4C18FC60:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC60, 0x18FC74
-data_4C18FC74:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC74, 0x18FC88
-data_4C18FC88:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC88, 0x18FC9C
-data_4C18FC9C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FC9C, 0x18FCB0
-data_4C18FCB0:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FCB0, 0x18FCC4
-data_4C18FCC4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FCC4, 0x18FCD8
-data_4C18FCD8:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FCD8, 0x18FCEC
-data_4C18FCEC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FCEC, 0x18FD00
-data_4C18FD00:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD00, 0x18FD14
-data_4C18FD14:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD14, 0x18FD28
-data_4C18FD28:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD28, 0x18FD3C
-data_4C18FD3C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD3C, 0x18FD50
-data_4C18FD50:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD50, 0x18FD64
-data_4C18FD64:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD64, 0x18FD78
-data_4C18FD78:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD78, 0x18FD8C
-data_4C18FD8C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FD8C, 0x18FDA0
-data_4C18FDA0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FDA0, 0x18FDB4
-data_4C18FDB4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FDB4, 0x18FDC8
-data_4C18FDC8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FDC8, 0x18FDDC
-data_4C18FDDC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FDDC, 0x18FDF0
-data_4C18FDF0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FDF0, 0x18FE04
-data_4C18FE04:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE04, 0x18FE18
-data_4C18FE18:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE18, 0x18FE2C
-data_4C18FE2C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE2C, 0x18FE40
-data_4C18FE40:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE40, 0x18FE54
-data_4C18FE54:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE54, 0x18FE68
-data_4C18FE68:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE68, 0x18FE7C
-data_4C18FE7C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE7C, 0x18FE90
-data_4C18FE90:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FE90, 0x18FEA4
-data_4C18FEA4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FEA4, 0x18FEB8
-data_4C18FEB8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FEB8, 0x18FECC
-data_4C18FECC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FECC, 0x18FEE0
-data_4C18FEE0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FEE0, 0x18FEF4
-data_4C18FEF4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FEF4, 0x18FF08
-data_4C18FF08:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF08, 0x18FF1C
-data_4C18FF1C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF1C, 0x18FF30
-data_4C18FF30:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF30, 0x18FF44
-data_4C18FF44:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF44, 0x18FF58
-data_4C18FF58:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF58, 0x18FF6C
-data_4C18FF6C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF6C, 0x18FF80
-data_4C18FF80:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF80, 0x18FF94
-data_4C18FF94:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FF94, 0x18FFA8
-data_4C18FFA8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FFA8, 0x18FFBC
-data_4C18FFBC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FFBC, 0x18FFD0
-data_4C18FFD0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FFD0, 0x18FFE4
-data_4C18FFE4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FFE4, 0x18FFF8
-data_4C18FFF8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x18FFF8, 0x19000C
-data_4C19000C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19000C, 0x190020
-data_4C190020:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190020, 0x190034
-data_4C190034:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190034, 0x190048
-data_4C190048:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190048, 0x19005C
-data_4C19005C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19005C, 0x190070
-data_4C190070:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190070, 0x190084
-data_4C190084:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190084, 0x190098
-data_4C190098:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190098, 0x1900AC
-data_4C1900AC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1900AC, 0x1900C0
-data_4C1900C0:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1900C0, 0x1900D4
-data_4C1900D4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1900D4, 0x1900E8
-data_4C1900E8:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1900E8, 0x1900FC
-data_4C1900FC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1900FC, 0x190110
-data_4C190110:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190110, 0x190124
-data_4C190124:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190124, 0x190138
-data_4C190138:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190138, 0x19014C
-data_4C19014C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19014C, 0x190160
-data_4C190160:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190160, 0x190174
-data_4C190174:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190174, 0x190188
-data_4C190188:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190188, 0x19019C
-data_4C19019C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19019C, 0x1901B0
-data_4C1901B0:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1901B0, 0x1901C4
-data_4C1901C4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1901C4, 0x1901D8
-data_4C1901D8:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1901D8, 0x1901EC
-data_4C1901EC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1901EC, 0x190200
-data_4C190200:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190200, 0x190214
-data_4C190214:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190214, 0x190228
-data_4C190228:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190228, 0x19023C
-data_4C19023C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19023C, 0x190250
-data_4C190250:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190250, 0x190264
-data_4C190264:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190264, 0x190278
-data_4C190278:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190278, 0x19028C
-data_4C19028C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19028C, 0x1902A0
-data_4C1902A0:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1902A0, 0x1902B4
-data_4C1902B4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1902B4, 0x1902C8
-data_4C1902C8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1902C8, 0x1902DC
-data_4C1902DC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1902DC, 0x1902F0
-data_4C1902F0:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1902F0, 0x190304
-data_4C190304:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190304, 0x190318
-data_4C190318:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190318, 0x19032C
-data_4C19032C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19032C, 0x190340
-data_4C190340:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190340, 0x190354
-data_4C190354:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190354, 0x190368
-data_4C190368:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190368, 0x19037C
-data_4C19037C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19037C, 0x190390
-data_4C190390:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190390, 0x1903A4
-data_4C1903A4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1903A4, 0x1903B8
-data_4C1903B8:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1903B8, 0x1903CC
-data_4C1903CC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1903CC, 0x1903E0
-data_4C1903E0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1903E0, 0x1903F4
-data_4C1903F4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1903F4, 0x190408
-data_4C190408:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190408, 0x19041C
-data_4C19041C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19041C, 0x190430
-data_4C190430:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190430, 0x190444
-data_4C190444:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190444, 0x190458
-data_4C190458:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190458, 0x19046C
-data_4C19046C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19046C, 0x190480
-data_4C190480:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190480, 0x190494
-data_4C190494:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190494, 0x1904A8
-data_4C1904A8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1904A8, 0x1904BC
-data_4C1904BC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1904BC, 0x1904D0
-data_4C1904D0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1904D0, 0x1904E4
-data_4C1904E4:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1904E4, 0x1904F8
-data_4C1904F8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1904F8, 0x19050C
-data_4C19050C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19050C, 0x190520
-data_4C190520:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190520, 0x190534
-data_4C190534:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190534, 0x190548
-data_4C190548:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190548, 0x19055C
-data_4C19055C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19055C, 0x190570
-data_4C190570:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190570, 0x190584
-data_4C190584:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190584, 0x190598
-data_4C190598:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190598, 0x1905AC
-data_4C1905AC:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1905AC, 0x1905C0
-data_4C1905C0:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1905C0, 0x1905D4
-data_4C1905D4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1905D4, 0x1905E8
-func_4C026E51_Selected_1_2:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32768, x4="\x01\x00\x00\x00", index_=127, index__=112, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_1_2
-func_4C026E51_Selected_2_2:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32769, x4="\x01\x00\x00\x00", index_=127, index__=113, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_2_2
-func_4C026E51_Selected_3_2:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32770, x4="\x01\x00\x00\x00", index_=127, index__=114, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_3_2
-func_4C026E51_Selected_4_2:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32772, x4="\x01\x00\x00\x00", index_=127, index__=115, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_4_2
-func_4C026E51_Selected_5:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32774, x4="\x01\x00\x00\x00", index_=127, index__=116, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_5
-func_4C02CA6A_Records_p0_15:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="\x08\x80\x00\x00\x00\x00\x00\x00", index_=127, f12=68, f13=8, f14=127, x17="\x00\x00\x00"
-data_4C190674:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190674, 0x190688
-data_4C190688:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190688, 0x19069C
-data_4C19069C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19069C, 0x1906B0
-data_4C1906B0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1906B0, 0x1906C4
-data_4C1906C4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1906C4, 0x1906D8
-data_4C1906D8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1906D8, 0x1906EC
-data_4C1906EC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1906EC, 0x190700
-data_4C190700:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190700, 0x190714
-data_4C190714:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190714, 0x190728
-data_4C190728:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190728, 0x19073C
-func_4C026E51_Selected_6:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32810, x4="\x00\x00\x01\x00", index_=127, index__=74, f14=1, x15="\x00", x18="\x00", f20=4123
-# census: opaque -- unknown-dump: 18 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190752, 0x190764
-func_4C026E51_Selected_7:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32812, x4="\x00\x00\x02\x00", index_=27, index__=74, dividend=2, f14=127, x15="\x00", x18="\x00", f20=1872
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19077A, 0x190780
-data_4C190780:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190780, 0x190794
-func_4C02CA6A_Records_p0_60:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C028B7A 0x4C028B7A reads through its argument a0 (passed by func_4C0285C8_entry_L14b 0x4C028718 `call func_4C028B7A_entry, [d2,d3,a2,a3], 0x3c`, +3 more calls)
-	REC_func_4C026766_ArgA0	x0="0\x80\x00\x00\x00\x00\x19\x00", index_=1, f12=68, f14=4, f15=2, x17="\x00\x00\x00"
-func_4C026E51_Selected_8:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32817, x4="\x01\x00\x00\x00", index_=1, index__=230, dividend=180, f14=1, x15="P", f16=1, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_8
-func_4C026E51_Selected_9:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32818, x4="\x01\x00\x00\x00", index_=1, index__=229, dividend=180, f14=1, x15="P", f16=1, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_9
-data_4C1907D8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1907D8, 0x1907EC
-data_4C1907EC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1907EC, 0x190800
-func_4C02CA6A_Records_p0_61:	# REC_func_4C0268D8_ArgA0 (16 bytes): the layout func_4C0268D8 0x4C0268D8 reads through its argument a0 (passed by func_4C028DFF 0x4C028DFF `call func_4C0268D8_entry, [d2,d3,a2], 0x24`, +3 more calls)
-	REC_func_4C0268D8_ArgA0	x0="@\x80\x00\x00\x00\x00\x05\x00\x00\x00\x05\x00", f12=65, f14=7, x15="\x00"
-	# then 4 x u8 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
-	tab_u8	0, 0, 0, 0	# +16
-func_4C026E51_Selected_10:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32833, x4="\x01\x00\x03\x00", index_=33, x15="\x00", f16=255, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_10
-func_4C026E51_Selected_11:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32834, x4="\x01\x00\x04\x00", index_=33, x15="\x00", f16=255, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_11
-data_4C190844:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190844, 0x190858
-data_4C190858:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190858, 0x19086C
-func_4C026E51_Selected_12:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32896, x4="\x00\x00\x00\x00", index_=1, index__=66, dividend=4, f14=64, x15="\x06", x18="\x00", f20=256
-# census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190882, 0x190890
-func_4C026E51_Selected_13:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32897, x4="\x00\x00\x02\x00", index_=13, index__=68, dividend=4, f14=15, x15="\x00", x18="\x00", f20=2176
-# census: opaque -- unknown-dump: 26 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1908A6, 0x1908C0
-func_4C026E51_Selected_14:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32898, x4="\x00\x00\x02\x00", index_=255, index__=68, dividend=3, f14=255, x15="\x00", x18="\x00", f20=2220
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1908D6, 0x1908DC
-func_4C026E51_Selected_15:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32912, x4="\x00\x00\x00\x00", index_=2, index__=71, dividend=11, f14=3, x15="\x00", x18="\x00", f20=53198
-# census: opaque -- unknown-dump: 102 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1908F2, 0x190958
-func_4C026E51_Selected_16:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=32913, x4="\x00\x00\x02\x00", index_=255, index__=71, dividend=12, f14=255, x15="\x00", x18="\x00", f20=2288
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19096E, 0x190974
-data_4C190974:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190974, 0x190988
-data_4C190988:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190988, 0x19099C
-data_4C19099C:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19099C, 0x1909A4
-data_4C1909A4:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909A4, 0x1909AC
-data_4C1909AC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909AC, 0x1909C0
-data_4C1909C0:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909C0, 0x1909C8
-data_4C1909C8:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909C8, 0x1909D0
-data_4C1909D0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909D0, 0x1909E4
-data_4C1909E4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909E4, 0x1909F8
-data_4C1909F8:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1909F8, 0x190A00
-data_4C190A00:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A00, 0x190A14
-data_4C190A14:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A14, 0x190A28
-data_4C190A28:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A28, 0x190A3C
-data_4C190A3C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A3C, 0x190A50
-data_4C190A50:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A50, 0x190A64
-data_4C190A64:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A64, 0x190A78
-data_4C190A78:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A78, 0x190A8C
-data_4C190A8C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190A8C, 0x190AA0
-data_4C190AA0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190AA0, 0x190AB4
-data_4C190AB4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190AB4, 0x190AC8
-data_4C190AC8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190AC8, 0x190ADC
-data_4C190ADC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190ADC, 0x190AF0
-data_4C190AF0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190AF0, 0x190B04
-data_4C190B04:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B04, 0x190B18
-data_4C190B18:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B18, 0x190B2C
-data_4C190B2C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B2C, 0x190B40
-data_4C190B40:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B40, 0x190B54
-data_4C190B54:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B54, 0x190B68
-data_4C190B68:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B68, 0x190B7C
-data_4C190B7C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190B7C, 0x190B90
-func_4C026B6B_Selected_0:
-	# 20 bytes read by func_4C026B6B 0x4C026B6B `movbu (a2), d1` (+13, u8); func_4C026B6B 0x4C026B6B `movbu (a3), d0` (+12, u8); func_4C026B6B_entry_L49 0x4C026BB9 `movbu (a2), d1` (+13, u8) (+58 more); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
-	tab_u8	20, 176, 0, 0, 0, 0, 16, 0, 0, 0, 255, 255, 76, 14, 127, 0	# +0
-	tab_u8	0, 0, 0, 0	# +16
-func_4C026E51_Selected_0:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=45077, x4="\x01\x00\x08\x00", index_=127, index__=253, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_0
-data_4C190BBC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190BBC, 0x190BD0
-func_4C026B6B_Selected_1:
-	# 20 bytes read by func_4C026B6B 0x4C026B6B `movbu (a2), d1` (+13, u8); func_4C026B6B 0x4C026B6B `movbu (a3), d0` (+12, u8); func_4C026B6B_entry_L49 0x4C026BB9 `movbu (a2), d1` (+13, u8) (+58 more); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
-	tab_u8	36, 176, 0, 0, 0, 0, 16, 0, 0, 0, 255, 255, 76, 16, 127, 0	# +0
-	tab_u8	0, 0, 0, 0	# +16
-func_4C026E51_Selected_1:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=45093, x4="\x01\x00\x08\x00", index_=127, index__=253, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_1
-data_4C190BFC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190BFC, 0x190C10
-func_4C026B6B_Selected_2:
-	# 20 bytes read by func_4C026B6B 0x4C026B6B `movbu (a2), d1` (+13, u8); func_4C026B6B 0x4C026B6B `movbu (a3), d0` (+12, u8); func_4C026B6B_entry_L49 0x4C026BB9 `movbu (a2), d1` (+13, u8) (+58 more); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
-	tab_u8	52, 176, 0, 0, 0, 0, 16, 0, 0, 0, 255, 255, 76, 18, 127, 0	# +0
-	tab_u8	0, 0, 0, 0	# +16
-func_4C026E51_Selected_2:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=45109, x4="\x01\x00\x08\x00", index_=127, index__=253, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_2
-func_4C02CA6A_Records_p0_86:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="@\xB0\x00\x00\x00\x00\x0D\x00", index_=127, f12=82, f13=19, f14=255, x17="\x00\x00\x00"
-func_4C026B6B_Selected_3:	# REC_func_4C026B6B_ArgA0 (16 bytes): the layout func_4C026B6B 0x4C026B6B reads through its argument a0 (passed by func_4C026C16_entry_L80 0x4C026C9B `call func_4C026B6B_entry, [d2,d3,a2,a3], 0x2c`, +6 more calls); the layout func_4C0285C8 0x4C0285C8 reads through its argument a0 (passed by func_4C027BCD_entry_Lbf 0x4C027C91 `call func_4C0285C8_entry, [d2,d3,a2,a3], 0x34`, +4 more calls)
-	REC_func_4C026B6B_ArgA0	x0="D\xB0\x00\x00\x00\x00\x10\x00\x00\x00\xFF\xFF", index=76, dividend=20, f14=127, x15="\x00"
-	# then 4 x u8 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
-	tab_u8	0, 0, 0, 0	# +16
-func_4C026E51_Selected_3:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=45125, x4="\x01\x00\x08\x00", index_=127, index__=253, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_3
-data_4C190C7C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190C7C, 0x190C90
-func_4C02CA6A_Records_p0_87:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="P\xB0\x00\x00\x00\x00\x0D\x00", index_=127, f12=82, f13=20, f14=255, x17="\x00\x00\x00"
-func_4C026B6B_Selected_4:	# REC_func_4C026B6B_ArgA0 (16 bytes): the layout func_4C026B6B 0x4C026B6B reads through its argument a0 (passed by func_4C026C16_entry_L80 0x4C026C9B `call func_4C026B6B_entry, [d2,d3,a2,a3], 0x2c`, +6 more calls); the layout func_4C0285C8 0x4C0285C8 reads through its argument a0 (passed by func_4C027BCD_entry_Lbf 0x4C027C91 `call func_4C0285C8_entry, [d2,d3,a2,a3], 0x34`, +4 more calls)
-	REC_func_4C026B6B_ArgA0	x0="T\xB0\x00\x00\x00\x00\x10\x00\x00\x00\xFF\xFF", index=76, dividend=22, f14=127, x15="\x00"
-	# then 4 x u8 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
-	tab_u8	0, 0, 0, 0	# +16
-func_4C026E51_Selected_4:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=45141, x4="\x01\x00\x08\x00", index_=127, index__=253, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_4
-data_4C190CD0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190CD0, 0x190CE4
-data_4C190CE4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190CE4, 0x190CF8
-data_4C190CF8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190CF8, 0x190D0C
-data_4C190D0C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190D0C, 0x190D20
-data_4C190D20:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190D20, 0x190D34
-data_4C190D34:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190D34, 0x190D48
-data_4C190D48:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190D48, 0x190D5C
-data_4C190D5C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190D5C, 0x190D70
-data_4C190D70:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190D70, 0x190D84
-func_4C026E51_Selected_22:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=53250, x4="\x01\x00\x00\x00", index_=2, index__=228, dividend=180, f14=1, x15="P", f16=48, x18="\x01", f19=4
-	.align	4, 0x00	# pad after func_4C026E51_Selected_22
-func_4C026E51_Selected_23:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=53251, x4="\x01\x00\x00\x00", index_=2, index__=228, dividend=180, f14=1, x15="P", f16=192, x18="\x01", f19=6
-	.align	4, 0x00	# pad after func_4C026E51_Selected_23
-data_4C190DB4:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190DB4, 0x190DBC
-data_4C190DBC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190DBC, 0x190DD0
-data_4C190DD0:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190DD0, 0x190DD8
-data_4C190DD8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190DD8, 0x190DEC
-data_4C190DEC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190DEC, 0x190E00
-data_4C190E00:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190E00, 0x190E14
-data_4C190E14:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190E14, 0x190E28
-func_4C026E51_Selected_24:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=57376, x4="\x01\x00\x00\x00", index_=1, index__=232, dividend=180, f14=1, x15="P", f16=1, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_24
-func_4C026E51_Selected_25:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=57377, x4="\x01\x00\x00\x00", index_=1, index__=232, dividend=180, f14=1, x15="P", f16=2, x18="\x01", f19=1
-	.align	4, 0x00	# pad after func_4C026E51_Selected_25
-func_4C026E51_Selected_26:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=57378, x4="\x01\x00\x00\x00", index_=1, index__=232, dividend=180, f14=1, x15="P", f16=4, x18="\x01", f19=2
-	.align	4, 0x00	# pad after func_4C026E51_Selected_26
-func_4C026E51_Selected_27:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=57379, x4="\x01\x00\x00\x00", index_=1, index__=232, dividend=180, f14=1, x15="P", f16=8, x18="\x01", f19=3
-	.align	4, 0x00	# pad after func_4C026E51_Selected_27
-func_4C026E51_Selected_28:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=57380, x4="\x01\x00\x00\x00", index_=1, index__=232, dividend=180, f14=1, x15="P", f16=16, x18="\x01", f19=4
-	.align	4, 0x00	# pad after func_4C026E51_Selected_28
-func_4C026E51_Selected_29:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=57381, x4="\x01\x00\x00\x00", index_=1, index__=232, dividend=180, f14=1, x15="P", f16=32, x18="\x01", f19=5
-	.align	4, 0x00	# pad after func_4C026E51_Selected_29
-func_4C026E51_Selected_30:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=61440, x4="\x00\x00\x07\x00", index_=255, index__=104, f14=255, x15="\x00", x18="\x00", f20=255
-# census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190ECE, 0x190EE0
-func_4C026E51_Selected_31:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=61697, x4="\x00\x00\x02\x00", index_=255, index__=67, f14=255, x15="\x00", x18="\x00", f20=3788
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190EF6, 0x190EFC
-data_4C190EFC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190EFC, 0x190F10
-data_4C190F10:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190F10, 0x190F24
-data_4C190F24:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190F24, 0x190F38
-data_4C190F38:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190F38, 0x190F4C
-data_4C190F4C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190F4C, 0x190F60
-func_4C026E51_Selected_32:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x200080, x4="\x00\x00\x00\x00", index_=1, dividend=34, f14=15, x15="\x00", x18="\x00", f20=3083
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190F76, 0x190F80
-func_4C026E51_Selected_33:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x200088, x4="\x00\x00\x1A\x00", index_=15, index__=16, dividend=36, f14=15, x15="\x00", x18="\x00", f20=3956
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190F96, 0x190F9C
-func_4C026E51_Selected_34:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x200089, x4="\x00\x00\x1A\x00", index_=15, index__=16, dividend=36, f14=240, x15="\x04", x18="\x00", f20=3956
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190FB2, 0x190FB8
-func_4C026E51_Selected_35:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x20008A, x4="\x00\x00\x1A\x00", index_=15, index__=16, dividend=37, f14=15, x15="\x00", x18="\x00", f20=3956
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190FCE, 0x190FD4
-func_4C026E51_Selected_36:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x20008B, x4="\x00\x00\x1A\x00", index_=15, index__=16, dividend=37, f14=240, x15="\x04", x18="\x00", f20=3956
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x190FEA, 0x190FF0
-data_4C190FF0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x190FF0, 0x191004
-data_4C191004:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191004, 0x191018
-data_4C191018:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191018, 0x19102C
-data_4C19102C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19102C, 0x191040
-data_4C191040:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191040, 0x191054
-data_4C191054:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191054, 0x191068
-data_4C191068:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191068, 0x19107C
-data_4C19107C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19107C, 0x191090
-data_4C191090:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191090, 0x1910A4
-data_4C1910A4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1910A4, 0x1910B8
-data_4C1910B8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1910B8, 0x1910CC
-data_4C1910CC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1910CC, 0x1910E0
-data_4C1910E0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1910E0, 0x1910F4
-data_4C1910F4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1910F4, 0x191108
-data_4C191108:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191108, 0x19111C
-data_4C19111C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19111C, 0x191130
-data_4C191130:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191130, 0x191144
-data_4C191144:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191144, 0x191158
-data_4C191158:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191158, 0x19116C
-data_4C19116C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19116C, 0x191180
-data_4C191180:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191180, 0x191194
-data_4C191194:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191194, 0x1911A8
-data_4C1911A8:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911A8, 0x1911BC
-data_4C1911BC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911BC, 0x1911C4
-data_4C1911C4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911C4, 0x1911CC
-data_4C1911CC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911CC, 0x1911D4
-data_4C1911D4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911D4, 0x1911DC
-data_4C1911DC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911DC, 0x1911E4
-data_4C1911E4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911E4, 0x1911EC
-data_4C1911EC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911EC, 0x1911F4
-data_4C1911F4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911F4, 0x1911FC
-data_4C1911FC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1911FC, 0x191204
-data_4C191204:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191204, 0x19120C
-data_4C19120C:
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19120C, 0x191220
-func_4C026E51_Selected_37:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x204001, x4="\x00\x00\x02\x00", index_=255, dividend=59, f14=255, x15="\x00", x18="\x00", f20=3788
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191236, 0x19123C
-func_4C026E51_Selected_38:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x204004, x4="\x00\x00\x00\x00", index_=6, dividend=58, f14=7, x15="\x00", x18="\x00"
-	.space	6, 0x00
-
-Str_empty_947:	.asciz " @ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19125C, 0x19126C
-Str_empty_946:	.asciz "!@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191270, 0x191280
-Str_empty_939:	.asciz "\"@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191284, 0x191294
-Str_empty_945:	.asciz "$@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191298, 0x1912A8
-Str_empty_944:	.asciz "%@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1912AC, 0x1912BC
-Str_empty_934:	.asciz "&@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1912C0, 0x1912D0
-Str_empty_943:	.asciz "(@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1912D4, 0x1912E4
-Str_empty_942:	.asciz ")@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1912E8, 0x1912F8
-Str_empty_930:	.asciz "*@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1912FC, 0x19130C
-Str_empty_941:	.asciz ",@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191310, 0x191320
-Str_empty_940:	.asciz "-@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191324, 0x191334
-Str_empty_929:	.asciz ".@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191338, 0x191348
-Str_0_16:	.asciz "0@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19134C, 0x19135C
-Str_1_33:	.asciz "1@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191360, 0x191370
-Str_2_34:	.asciz "2@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191374, 0x191384
-Str_empty_956:	.asciz "\x80@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191388, 0x191398
-Str_empty_955:	.asciz "\x81@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19139C, 0x1913AC
-Str_empty_952:	.asciz "\x82@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1913B0, 0x1913C0
-Str_empty_950:	.asciz "\x83@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1913C4, 0x1913D4
-Str_empty_954:	.asciz "\x84@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1913D8, 0x1913E8
-Str_empty_953:	.asciz "\x85@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1913EC, 0x1913FC
-Str_empty_951:	.asciz "\x86@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191400, 0x191410
-Str_empty_949:	.asciz "\x87@ "
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191414, 0x191424
-Str_empty_948:	.asciz "\x88@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191428, 0x191438
-Str_empty_957:	.asciz "\xE0@ "
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19143C, 0x19144C
-data_4C19144C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19144C, 0x191458
-data_4C191458:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191458, 0x191464
-data_4C191464:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191464, 0x191470
-
-func_4C026E51_Selected_39:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x600004, x4="\x01\x00\n\x00", index_=255, x15="\x00", f16=255, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_39
-func_4C026E51_Selected_40:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0x600005, x4="\x01\x00\x0B\x00", index_=1, index__=222, dividend=180, f14=1, x15="P", f16=1, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_40
-data_4C1914A0:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914A0, 0x1914A8
-func_4C02AE1B_ArgA0_p8_0:	# REC_func_4C02AE1B_ArgA0_p8 (4 bytes)
-	REC_func_4C02AE1B_ArgA0_p8	f0=0x600008
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1914AC, 0x1914B4
-data_4C1914B4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914B4, 0x1914BC
-data_4C1914BC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914BC, 0x1914C4
-data_4C1914C4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914C4, 0x1914CC
-data_4C1914CC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914CC, 0x1914D4
-data_4C1914D4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914D4, 0x1914DC
-data_4C1914DC:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914DC, 0x1914E4
-data_4C1914E4:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914E4, 0x1914EC
-data_4C1914EC:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914EC, 0x1914FC
-data_4C1914FC:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1914FC, 0x19150C
-data_4C19150C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19150C, 0x19151C
-data_4C19151C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19151C, 0x19152C
-data_4C19152C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19152C, 0x19153C
-data_4C19153C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19153C, 0x19154C
-data_4C19154C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19154C, 0x19155C
-data_4C19155C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19155C, 0x19156C
-data_4C19156C:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19156C, 0x19157C
-
-Str_p_40:	.asciz " \x10p"
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191580, 0x19158C
-data_4C19158C:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19158C, 0x191594
-data_4C191594:
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191594, 0x19159C
-data_4C19159C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x19159C, 0x1915A8
-data_4C1915A8:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1915A8, 0x1915B4
-data_4C1915B4:
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1915B4, 0x1915C0
-Str_p_39:	.asciz "\x09 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1915C4, 0x1915CC
-Str_p_38:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1915D0, 0x1915D8
-Str_p_37:	.asciz "\x11 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1915DC, 0x1915E4
-Str_p_36:	.asciz "\x12 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1915E8, 0x1915F0
-Str_p_35:	.asciz "\x13 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1915F4, 0x1915F8
-Str_p_24:	.asciz "\x14 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1915FC, 0x191600
-
-func_4C02AD27_entry_L21_Var:	# u32, a constant; read / written by func_4C02AD27_entry_L21 0x4C02AD4D: `mov (8, a2), d0`
-	.long	0x4c18fb74
-
-Str_p_23:	.asciz "\x15 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191608, 0x19160C
-
-func_4C02AE1B_entry_L1f_Var:	# u32, a constant; read / written by func_4C02AE1B_entry_L1f 0x4C02AE3F: `mov (8, a2), a2`
-	.long	0x4c1914a8
-
-Str_p_34:	.asciz "\x16 p"
+ResourceIdLeaf_4C18FAA0:	# a parameter-id trie leaf (ResourceIdFind): id 0x000000, type 0, kind 2
+	.long	0x000000
+	.word	0, 2
+	.byte	0x00, 0x00, 0xff, 0x00, 0x50, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c, 0xfa, 0x18, 0x4c	# +8
+	.byte	0x81, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C18FABC:	# a parameter-id trie leaf (ResourceIdFind): id 0x000001, type 1, kind 5
+	.long	0x000001
+	.word	1, 5
+	.byte	0x00, 0x00, 0x03, 0x00, 0xe4, 0xb4, 0x01, 0x50, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FAD4:	# a parameter-id trie leaf (ResourceIdFind): id 0x000003, type 0, kind 0
+	.long	0x000003
+	.word	0, 0
+	.byte	0x34, 0x00, 0x4c, 0x00, 0x44, 0x02, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FAE8:	# a parameter-id trie leaf (ResourceIdFind): id 0x000004, type 0, kind 10
+	.long	0x000004
+	.word	0, 10
+	.byte	0x28, 0x00, 0x2c, 0x01, 0x42, 0x08, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FAFC:	# a parameter-id trie leaf (ResourceIdFind): id 0x000008, type 0, kind 4
+	.long	0x000008
+	.word	0, 4
+	.byte	0x00, 0x00, 0x06, 0x00, 0x50, 0x03, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FB10:	# a parameter-id trie leaf (ResourceIdFind): id 0x000020, type 0, kind 0
+	.long	0x000020
+	.word	0, 0
+	.byte	0x00, 0x00, 0x09, 0x00, 0x51, 0x00, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FB24:	# a parameter-id trie leaf (ResourceIdFind): id 0x000024, type 0, kind 0
+	.long	0x000024
+	.word	0, 0
+	.byte	0x01, 0x00, 0x0a, 0x00, 0x51, 0x05, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FB38:	# a parameter-id trie leaf (ResourceIdFind): id 0x000028, type 0, kind 0
+	.long	0x000028
+	.word	0, 0
+	.byte	0x01, 0x00, 0x7f, 0x00, 0x51, 0x06, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FB4C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00002C, type 0, kind 0
+	.long	0x00002C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x51, 0x06, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FB60:	# a parameter-id trie leaf (ResourceIdFind): id 0x000030, type 0, kind 0
+	.long	0x000030
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x51, 0x02, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_0_2:	# a parameter-id trie leaf (ResourceIdFind): id 0x000080, type 0, kind 9
+	.long	0x000080
+	.word	0, 9
+	.byte	0x00, 0x00, 0x68, 0x00, 0x52, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FB88:	# a parameter-id trie leaf (ResourceIdFind): id 0x000081, type 1, kind 0
+	.long	0x000081
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe7, 0xb4, 0x01, 0x50, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FBA0:	# a parameter-id trie leaf (ResourceIdFind): id 0x000082, type 0, kind 0
+	.long	0x000082
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x00, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_1:	# a parameter-id trie leaf (ResourceIdFind): id 0x0000A0, type 0, kind 18
+	.long	0x0000A0
+	.word	0, 18
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FBC8:	# a parameter-id trie leaf (ResourceIdFind): id 0x0000A1, type 0, kind 0
+	.long	0x0000A1
+	.word	0, 0
+	.byte	0x01, 0x00, 0x03, 0x00, 0x52, 0x03, 0x70, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FBDC:	# a parameter-id trie leaf (ResourceIdFind): id 0x0000B0, type 1, kind 6
+	.long	0x0000B0
+	.word	1, 6
+	.byte	0xf5, 0x18, 0x06, 0x4c	# +8
+ResourceIdLeaf_4C18FBE8:	# a parameter-id trie leaf (ResourceIdFind): id 0x002000, type 0, kind 0
+	.long	0x002000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FBFC:	# a parameter-id trie leaf (ResourceIdFind): id 0x002001, type 0, kind 0
+	.long	0x002001
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x03, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC10:	# a parameter-id trie leaf (ResourceIdFind): id 0x002010, type 0, kind 0
+	.long	0x002010
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x03, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC24:	# a parameter-id trie leaf (ResourceIdFind): id 0x002011, type 0, kind 0
+	.long	0x002011
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x00, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC38:	# a parameter-id trie leaf (ResourceIdFind): id 0x002012, type 0, kind 0
+	.long	0x002012
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x03, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC4C:	# a parameter-id trie leaf (ResourceIdFind): id 0x002013, type 0, kind 0
+	.long	0x002013
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x00, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC60:	# a parameter-id trie leaf (ResourceIdFind): id 0x002014, type 0, kind 0
+	.long	0x002014
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC74:	# a parameter-id trie leaf (ResourceIdFind): id 0x002020, type 0, kind 0
+	.long	0x002020
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x00, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC88:	# a parameter-id trie leaf (ResourceIdFind): id 0x002021, type 0, kind 0
+	.long	0x002021
+	.word	0, 0
+	.byte	0x00, 0x00, 0x03, 0x00, 0x47, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FC9C:	# a parameter-id trie leaf (ResourceIdFind): id 0x002022, type 0, kind 0
+	.long	0x002022
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x00, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FCB0:	# a parameter-id trie leaf (ResourceIdFind): id 0x002023, type 0, kind 0
+	.long	0x002023
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x00, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FCC4:	# a parameter-id trie leaf (ResourceIdFind): id 0x002025, type 0, kind 0
+	.long	0x002025
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x02, 0x18, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FCD8:	# a parameter-id trie leaf (ResourceIdFind): id 0x002040, type 0, kind 0
+	.long	0x002040
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x01, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FCEC:	# a parameter-id trie leaf (ResourceIdFind): id 0x002043, type 0, kind 0
+	.long	0x002043
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD00:	# a parameter-id trie leaf (ResourceIdFind): id 0x002041, type 0, kind 0
+	.long	0x002041
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x02, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD14:	# a parameter-id trie leaf (ResourceIdFind): id 0x002042, type 0, kind 0
+	.long	0x002042
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x06, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD28:	# a parameter-id trie leaf (ResourceIdFind): id 0x002080, type 0, kind 0
+	.long	0x002080
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD3C:	# a parameter-id trie leaf (ResourceIdFind): id 0x002081, type 0, kind 0
+	.long	0x002081
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD50:	# a parameter-id trie leaf (ResourceIdFind): id 0x002082, type 0, kind 0
+	.long	0x002082
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD64:	# a parameter-id trie leaf (ResourceIdFind): id 0x002083, type 0, kind 0
+	.long	0x002083
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD78:	# a parameter-id trie leaf (ResourceIdFind): id 0x002084, type 0, kind 0
+	.long	0x002084
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FD8C:	# a parameter-id trie leaf (ResourceIdFind): id 0x002085, type 0, kind 0
+	.long	0x002085
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FDA0:	# a parameter-id trie leaf (ResourceIdFind): id 0x002086, type 0, kind 0
+	.long	0x002086
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FDB4:	# a parameter-id trie leaf (ResourceIdFind): id 0x002087, type 0, kind 0
+	.long	0x002087
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FDC8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00208A, type 0, kind 0
+	.long	0x00208A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FDDC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00208B, type 0, kind 0
+	.long	0x00208B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FDF0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00208C, type 0, kind 0
+	.long	0x00208C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE04:	# a parameter-id trie leaf (ResourceIdFind): id 0x00208D, type 0, kind 0
+	.long	0x00208D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE18:	# a parameter-id trie leaf (ResourceIdFind): id 0x00208E, type 0, kind 0
+	.long	0x00208E
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE2C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00208F, type 0, kind 0
+	.long	0x00208F
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x01, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE40:	# a parameter-id trie leaf (ResourceIdFind): id 0x002090, type 0, kind 0
+	.long	0x002090
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE54:	# a parameter-id trie leaf (ResourceIdFind): id 0x002091, type 0, kind 0
+	.long	0x002091
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x09, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE68:	# a parameter-id trie leaf (ResourceIdFind): id 0x002092, type 0, kind 0
+	.long	0x002092
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE7C:	# a parameter-id trie leaf (ResourceIdFind): id 0x002093, type 0, kind 0
+	.long	0x002093
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x08, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FE90:	# a parameter-id trie leaf (ResourceIdFind): id 0x002094, type 0, kind 0
+	.long	0x002094
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x07, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FEA4:	# a parameter-id trie leaf (ResourceIdFind): id 0x002098, type 0, kind 0
+	.long	0x002098
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x09, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FEB8:	# a parameter-id trie leaf (ResourceIdFind): id 0x002099, type 0, kind 0
+	.long	0x002099
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x47, 0x09, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FECC:	# a parameter-id trie leaf (ResourceIdFind): id 0x004000, type 0, kind 23
+	.long	0x004000
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x02, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FEE0:	# a parameter-id trie leaf (ResourceIdFind): id 0x004002, type 0, kind 23
+	.long	0x004002
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x04, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FEF4:	# a parameter-id trie leaf (ResourceIdFind): id 0x004003, type 0, kind 23
+	.long	0x004003
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x05, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF08:	# a parameter-id trie leaf (ResourceIdFind): id 0x004004, type 0, kind 23
+	.long	0x004004
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x06, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF1C:	# a parameter-id trie leaf (ResourceIdFind): id 0x004005, type 0, kind 23
+	.long	0x004005
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x07, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF30:	# a parameter-id trie leaf (ResourceIdFind): id 0x004006, type 0, kind 23
+	.long	0x004006
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x08, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF44:	# a parameter-id trie leaf (ResourceIdFind): id 0x004007, type 0, kind 23
+	.long	0x004007
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x09, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF58:	# a parameter-id trie leaf (ResourceIdFind): id 0x004008, type 0, kind 23
+	.long	0x004008
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x0a, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF6C:	# a parameter-id trie leaf (ResourceIdFind): id 0x004009, type 0, kind 23
+	.long	0x004009
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x0b, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF80:	# a parameter-id trie leaf (ResourceIdFind): id 0x00400A, type 0, kind 23
+	.long	0x00400A
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x0c, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FF94:	# a parameter-id trie leaf (ResourceIdFind): id 0x00400B, type 0, kind 23
+	.long	0x00400B
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x0d, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FFA8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00400C, type 0, kind 23
+	.long	0x00400C
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x0e, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FFBC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00400D, type 0, kind 23
+	.long	0x00400D
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x0f, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FFD0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00400E, type 0, kind 23
+	.long	0x00400E
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x10, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FFE4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00400F, type 0, kind 23
+	.long	0x00400F
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x11, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C18FFF8:	# a parameter-id trie leaf (ResourceIdFind): id 0x004010, type 0, kind 23
+	.long	0x004010
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x12, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19000C:	# a parameter-id trie leaf (ResourceIdFind): id 0x004011, type 0, kind 23
+	.long	0x004011
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x13, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190020:	# a parameter-id trie leaf (ResourceIdFind): id 0x004013, type 0, kind 23
+	.long	0x004013
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x15, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190034:	# a parameter-id trie leaf (ResourceIdFind): id 0x004014, type 0, kind 23
+	.long	0x004014
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x16, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190048:	# a parameter-id trie leaf (ResourceIdFind): id 0x004015, type 0, kind 23
+	.long	0x004015
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x17, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19005C:	# a parameter-id trie leaf (ResourceIdFind): id 0x004016, type 0, kind 23
+	.long	0x004016
+	.word	0, 23
+	.byte	0x00, 0x00, 0xc7, 0x00, 0x48, 0x18, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190070:	# a parameter-id trie leaf (ResourceIdFind): id 0x004020, type 0, kind 0
+	.long	0x004020
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x01, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190084:	# a parameter-id trie leaf (ResourceIdFind): id 0x004022, type 0, kind 0
+	.long	0x004022
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190098:	# a parameter-id trie leaf (ResourceIdFind): id 0x004023, type 0, kind 0
+	.long	0x004023
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1900AC:	# a parameter-id trie leaf (ResourceIdFind): id 0x004024, type 0, kind 0
+	.long	0x004024
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1900C0:	# a parameter-id trie leaf (ResourceIdFind): id 0x004025, type 0, kind 0
+	.long	0x004025
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1900D4:	# a parameter-id trie leaf (ResourceIdFind): id 0x004026, type 0, kind 0
+	.long	0x004026
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1900E8:	# a parameter-id trie leaf (ResourceIdFind): id 0x004027, type 0, kind 0
+	.long	0x004027
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1900FC:	# a parameter-id trie leaf (ResourceIdFind): id 0x004028, type 0, kind 0
+	.long	0x004028
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190110:	# a parameter-id trie leaf (ResourceIdFind): id 0x004029, type 0, kind 0
+	.long	0x004029
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190124:	# a parameter-id trie leaf (ResourceIdFind): id 0x00402A, type 0, kind 0
+	.long	0x00402A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190138:	# a parameter-id trie leaf (ResourceIdFind): id 0x00402B, type 0, kind 0
+	.long	0x00402B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x01, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19014C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00402C, type 0, kind 0
+	.long	0x00402C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x01, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190160:	# a parameter-id trie leaf (ResourceIdFind): id 0x00402D, type 0, kind 0
+	.long	0x00402D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x48, 0x01, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190174:	# a parameter-id trie leaf (ResourceIdFind): id 0x004040, type 0, kind 0
+	.long	0x004040
+	.word	0, 0
+	.byte	0x00, 0x00, 0x3f, 0x00, 0x48, 0x1c, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190188:	# a parameter-id trie leaf (ResourceIdFind): id 0x004041, type 0, kind 0
+	.long	0x004041
+	.word	0, 0
+	.byte	0x00, 0x00, 0x3f, 0x00, 0x48, 0x1d, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19019C:	# a parameter-id trie leaf (ResourceIdFind): id 0x005000, type 0, kind 0
+	.long	0x005000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1901B0:	# a parameter-id trie leaf (ResourceIdFind): id 0x005001, type 0, kind 0
+	.long	0x005001
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1901C4:	# a parameter-id trie leaf (ResourceIdFind): id 0x005002, type 0, kind 0
+	.long	0x005002
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1901D8:	# a parameter-id trie leaf (ResourceIdFind): id 0x005003, type 0, kind 0
+	.long	0x005003
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1901EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x005004, type 0, kind 0
+	.long	0x005004
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190200:	# a parameter-id trie leaf (ResourceIdFind): id 0x005005, type 0, kind 0
+	.long	0x005005
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190214:	# a parameter-id trie leaf (ResourceIdFind): id 0x005006, type 0, kind 0
+	.long	0x005006
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190228:	# a parameter-id trie leaf (ResourceIdFind): id 0x005007, type 0, kind 0
+	.long	0x005007
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x07, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19023C:	# a parameter-id trie leaf (ResourceIdFind): id 0x005008, type 0, kind 0
+	.long	0x005008
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190250:	# a parameter-id trie leaf (ResourceIdFind): id 0x005009, type 0, kind 0
+	.long	0x005009
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190264:	# a parameter-id trie leaf (ResourceIdFind): id 0x00500A, type 0, kind 0
+	.long	0x00500A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190278:	# a parameter-id trie leaf (ResourceIdFind): id 0x00500B, type 0, kind 0
+	.long	0x00500B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19028C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00500C, type 0, kind 0
+	.long	0x00500C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1902A0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00500D, type 0, kind 0
+	.long	0x00500D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1902B4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00500E, type 0, kind 0
+	.long	0x00500E
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1902C8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00500F, type 0, kind 0
+	.long	0x00500F
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x08, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1902DC:	# a parameter-id trie leaf (ResourceIdFind): id 0x005010, type 0, kind 0
+	.long	0x005010
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1902F0:	# a parameter-id trie leaf (ResourceIdFind): id 0x005011, type 0, kind 0
+	.long	0x005011
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x09, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190304:	# a parameter-id trie leaf (ResourceIdFind): id 0x005013, type 0, kind 0
+	.long	0x005013
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x09, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190318:	# a parameter-id trie leaf (ResourceIdFind): id 0x005014, type 0, kind 0
+	.long	0x005014
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x09, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19032C:	# a parameter-id trie leaf (ResourceIdFind): id 0x005012, type 0, kind 0
+	.long	0x005012
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x09, 0x80, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190340:	# a parameter-id trie leaf (ResourceIdFind): id 0x005020, type 0, kind 0
+	.long	0x005020
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0a, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190354:	# a parameter-id trie leaf (ResourceIdFind): id 0x005021, type 0, kind 0
+	.long	0x005021
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0a, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190368:	# a parameter-id trie leaf (ResourceIdFind): id 0x005022, type 0, kind 0
+	.long	0x005022
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0a, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19037C:	# a parameter-id trie leaf (ResourceIdFind): id 0x005023, type 0, kind 0
+	.long	0x005023
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0a, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190390:	# a parameter-id trie leaf (ResourceIdFind): id 0x005024, type 0, kind 0
+	.long	0x005024
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0a, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1903A4:	# a parameter-id trie leaf (ResourceIdFind): id 0x005040, type 0, kind 0
+	.long	0x005040
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x45, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1903B8:	# a parameter-id trie leaf (ResourceIdFind): id 0x005041, type 0, kind 0
+	.long	0x005041
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x45, 0x00, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1903CC:	# a parameter-id trie leaf (ResourceIdFind): id 0x006000, type 0, kind 0
+	.long	0x006000
+	.word	0, 0
+	.byte	0x01, 0x00, 0x10, 0x00, 0x44, 0x05, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1903E0:	# a parameter-id trie leaf (ResourceIdFind): id 0x006001, type 0, kind 0
+	.long	0x006001
+	.word	0, 0
+	.byte	0x01, 0x00, 0x10, 0x00, 0x44, 0x06, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1903F4:	# a parameter-id trie leaf (ResourceIdFind): id 0x006004, type 0, kind 0
+	.long	0x006004
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x44, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190408:	# a parameter-id trie leaf (ResourceIdFind): id 0x006005, type 0, kind 0
+	.long	0x006005
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x44, 0x07, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19041C:	# a parameter-id trie leaf (ResourceIdFind): id 0x006006, type 0, kind 0
+	.long	0x006006
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x44, 0x07, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190430:	# a parameter-id trie leaf (ResourceIdFind): id 0x006020, type 0, kind 0
+	.long	0x006020
+	.word	0, 0
+	.byte	0x00, 0x00, 0x02, 0x00, 0x52, 0x0e, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190444:	# a parameter-id trie leaf (ResourceIdFind): id 0x006040, type 0, kind 8
+	.long	0x006040
+	.word	0, 8
+	.byte	0x00, 0x00, 0xff, 0x00, 0x40, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190458:	# a parameter-id trie leaf (ResourceIdFind): id 0x007000, type 0, kind 0
+	.long	0x007000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x11, 0x00, 0x4b, 0x01, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19046C:	# a parameter-id trie leaf (ResourceIdFind): id 0x007001, type 0, kind 0
+	.long	0x007001
+	.word	0, 0
+	.byte	0x00, 0x00, 0x63, 0x00, 0x4b, 0x02, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190480:	# a parameter-id trie leaf (ResourceIdFind): id 0x007002, type 0, kind 0
+	.long	0x007002
+	.word	0, 0
+	.byte	0x00, 0x00, 0x07, 0x00, 0x4b, 0x03, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190494:	# a parameter-id trie leaf (ResourceIdFind): id 0x007003, type 0, kind 0
+	.long	0x007003
+	.word	0, 0
+	.byte	0x00, 0x00, 0x0b, 0x00, 0x4b, 0x03, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1904A8:	# a parameter-id trie leaf (ResourceIdFind): id 0x007004, type 0, kind 0
+	.long	0x007004
+	.word	0, 0
+	.byte	0x00, 0x00, 0x03, 0x00, 0x4b, 0x04, 0xc0, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1904BC:	# a parameter-id trie leaf (ResourceIdFind): id 0x007005, type 0, kind 0
+	.long	0x007005
+	.word	0, 0
+	.byte	0x00, 0x00, 0x79, 0x00, 0x4b, 0x05, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1904D0:	# a parameter-id trie leaf (ResourceIdFind): id 0x007006, type 0, kind 0
+	.long	0x007006
+	.word	0, 0
+	.byte	0x00, 0x00, 0xff, 0x00, 0x4b, 0x06, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1904E4:	# a parameter-id trie leaf (ResourceIdFind): id 0x007007, type 0, kind 0
+	.long	0x007007
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4b, 0x06, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1904F8:	# a parameter-id trie leaf (ResourceIdFind): id 0x007008, type 0, kind 0
+	.long	0x007008
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x06, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19050C:	# a parameter-id trie leaf (ResourceIdFind): id 0x007009, type 0, kind 0
+	.long	0x007009
+	.word	0, 0
+	.byte	0x00, 0x00, 0xff, 0x00, 0x4b, 0x07, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190520:	# a parameter-id trie leaf (ResourceIdFind): id 0x00700A, type 0, kind 0
+	.long	0x00700A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4b, 0x07, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190534:	# a parameter-id trie leaf (ResourceIdFind): id 0x00700B, type 0, kind 0
+	.long	0x00700B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x07, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190548:	# a parameter-id trie leaf (ResourceIdFind): id 0x007020, type 0, kind 0
+	.long	0x007020
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19055C:	# a parameter-id trie leaf (ResourceIdFind): id 0x007021, type 0, kind 0
+	.long	0x007021
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190570:	# a parameter-id trie leaf (ResourceIdFind): id 0x007022, type 0, kind 0
+	.long	0x007022
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190584:	# a parameter-id trie leaf (ResourceIdFind): id 0x007023, type 0, kind 0
+	.long	0x007023
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190598:	# a parameter-id trie leaf (ResourceIdFind): id 0x007024, type 0, kind 0
+	.long	0x007024
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1905AC:	# a parameter-id trie leaf (ResourceIdFind): id 0x007025, type 0, kind 0
+	.long	0x007025
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1905C0:	# a parameter-id trie leaf (ResourceIdFind): id 0x007026, type 0, kind 0
+	.long	0x007026
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1905D4:	# a parameter-id trie leaf (ResourceIdFind): id 0x007027, type 0, kind 0
+	.long	0x007027
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4b, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1905E8:	# a parameter-id trie leaf (ResourceIdFind): id 0x008000, type 1, kind 0
+	.long	0x008000
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x70, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190600:	# a parameter-id trie leaf (ResourceIdFind): id 0x008001, type 1, kind 0
+	.long	0x008001
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x71, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_3_2:	# a parameter-id trie leaf (ResourceIdFind): id 0x008002, type 1, kind 0
+	.long	0x008002
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x72, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190630:	# a parameter-id trie leaf (ResourceIdFind): id 0x008004, type 1, kind 0
+	.long	0x008004
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x73, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_5:	# a parameter-id trie leaf (ResourceIdFind): id 0x008006, type 1, kind 0
+	.long	0x008006
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x74, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_15:	# a parameter-id trie leaf (ResourceIdFind): id 0x008008, type 0, kind 0
+	.long	0x008008
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x44, 0x08, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190674:	# a parameter-id trie leaf (ResourceIdFind): id 0x008009, type 0, kind 0
+	.long	0x008009
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x44, 0x08, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190688:	# a parameter-id trie leaf (ResourceIdFind): id 0x00800C, type 0, kind 0
+	.long	0x00800C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x04, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19069C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00800D, type 0, kind 0
+	.long	0x00800D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x04, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1906B0:	# a parameter-id trie leaf (ResourceIdFind): id 0x008020, type 0, kind 1
+	.long	0x008020
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4c, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1906C4:	# a parameter-id trie leaf (ResourceIdFind): id 0x008010, type 0, kind 0
+	.long	0x008010
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4c, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1906D8:	# a parameter-id trie leaf (ResourceIdFind): id 0x008022, type 0, kind 1
+	.long	0x008022
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4c, 0x00, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1906EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x008024, type 0, kind 1
+	.long	0x008024
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4c, 0x00, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190700:	# a parameter-id trie leaf (ResourceIdFind): id 0x008025, type 0, kind 1
+	.long	0x008025
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4c, 0x00, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190714:	# a parameter-id trie leaf (ResourceIdFind): id 0x008028, type 0, kind 1
+	.long	0x008028
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4a, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190728:	# a parameter-id trie leaf (ResourceIdFind): id 0x008029, type 0, kind 1
+	.long	0x008029
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4a, 0x00, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19073C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00802A, type 0, kind 1
+	.long	0x00802A
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4a, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1b, 0x10, 0x11, 0x12	# +8
+	.byte	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07	# +24
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191614, 0x19161C
-Str_p_33:	.asciz "  p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191620, 0x191624
-Str_p_32:	.asciz "! p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191628, 0x191630
-Str_p_31:	.asciz "\" p"
-# census: opaque -- unknown-dump: 12 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191634, 0x191640
-Str_p_30:	.asciz "# p"
-# census: opaque -- unknown-dump: 12 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191644, 0x191650
-Str_0_p:	.asciz "0 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191654, 0x19165C
-Str_1_p:	.asciz "1 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191660, 0x191668
-Str_2_p:	.asciz "2 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19166C, 0x191670
-Str_3_p:	.asciz "3 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191674, 0x191678
-Str_p_29:	.asciz "@ p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19167C, 0x191680
-Str_p_28:	.asciz "` p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191684, 0x19168C
-Str_a_p:	.asciz "a p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191690, 0x191698
-Str_b_p:	.asciz "b p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19169C, 0x1916A4
-Str_c_p:	.asciz "c p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916A8, 0x1916B0
-Str_h_p:	.asciz "h p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916B4, 0x1916BC
-Str_i_p:	.asciz "i p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916C0, 0x1916C8
-Str_j_p:	.asciz "j p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916CC, 0x1916D4
-Str_k_p:	.asciz "k p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916D8, 0x1916E0
-Str_l_p:	.asciz "l p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916E4, 0x1916EC
-Str_m_p:	.asciz "m p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916F0, 0x1916F4
-
-func_4C02AFF9_entry_L21_Var:	# u32, a constant; read / written by func_4C02AFF9_entry_L21 0x4C02B01F: `mov (8, a2), d0`
-	.long	0x4c1907a8
-
-Str_n_p:	.asciz "n p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1916FC, 0x191704
-Str_p_27:	.asciz "\x80 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191708, 0x19170C
-Str_p_26:	.asciz "\x81 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191710, 0x191718
-Str_p_25:	.asciz "\x82 p"
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19171C, 0x191724
-Str_p_21:	.asciz "\x83 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191728, 0x191730
-Str_p_20:	.asciz "\x84 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191734, 0x19173C
-Str_p_19:	.asciz "\x85 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191740, 0x191748
-Str_p_18:	.asciz "\x86 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19174C, 0x191754
-Str_p_17:	.asciz "\xA0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191758, 0x19175C
-Str_p_16:	.asciz "\xA1 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191760, 0x191764
-Str_p_15:	.asciz "\xA2 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191768, 0x191770
-Str_p_14:	.asciz "\xA3 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191774, 0x19177C
-Str_p_13:	.asciz "\xA4 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191780, 0x191784
-Str_p_12:	.asciz "\xA6 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191788, 0x191790
-Str_p_11:	.asciz "\xA7 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191794, 0x191798
-Str_p_10:	.asciz "\xA8 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x19179C, 0x1917A0
-Str_p_9:	.asciz "\xA9 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917A4, 0x1917AC
-Str_p_8:	.asciz "\xAA p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917B0, 0x1917B8
-Str_p_7:	.asciz "\xAB p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917BC, 0x1917C4
-Str_p_22:	.asciz "\xAC p"
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917C8, 0x1917D0
-Str_p_6:	.asciz "\xAD p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917D4, 0x1917D8
-Str_p_5:	.asciz "\xAE p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917DC, 0x1917E0
-Str_p_4:	.asciz "\xAF p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917E4, 0x1917EC
-Str_p_3:	.asciz "\xB0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1917F0, 0x1917F4
-data_4C1917F4:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1917F4, 0x191800
-data_4C191800:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191800, 0x191808
-data_4C191808:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191808, 0x191810
-
-func_4C026E51_Selected_41:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00001, x4="\x01\x00\x00\x00", index_=127, index__=117, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_41
-func_4C026E51_Selected_42:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00002, x4="\x01\x00\x00\x00", index_=127, index__=151, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_42
-func_4C026E51_Selected_43:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00004, x4="\x01\x00\x00\x00", index_=127, index__=185, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_43
-data_4C191858:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191858, 0x19186C
-func_4C02CA6A_Records_p0_66:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="\x07\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=3, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_0:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="\n\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=28, f14=127, x17="\x00\x00\x00"
-func_4C026D58_ArgA0_0:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB0000B, x4="\x01\x00\x00\x00", index_=127, index__=219, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026D58_ArgA0_0
-data_4C1918AC:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1918AC, 0x1918C0
-func_4C026E51_Selected_45:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB0000D, x4="\x01\x00\x09\x00", index_=127, index__=253, dividend=176, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_45
-func_4C026E51_Selected_46:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00010, x4="\x01\x00\x00\x00", index_=127, index__=3, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_46
-func_4C026E51_Selected_47:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00011, x4="\x01\x00\x00\x00", index_=127, index__=37, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_47
-func_4C026E51_Selected_48:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00012, x4="\x01\x00\x00\x00", index_=127, index__=71, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_48
-func_4C026E51_Selected_49:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00013, x4="\x01\x00\x00\x00", index_=127, index__=105, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_49
-func_4C02CA6A_Records_p0_119:	# REC_func_4C0267D0_ArgA0 (20 bytes): the layout func_4C0267D0 0x4C0267D0 reads through its argument a0 (passed by func_4C0271DD_entry_Lcf 0x4C0272B1 `call func_4C0267D0_entry, [d2,d3,a2,a3], 0x28`, +2 more calls); the layout func_4C0271DD 0x4C0271DD reads through its argument a0 (passed by func_4C02AA77_entry_L46 0x4C02AAC2 `call func_4C0271DD_entry, [d2,d3,a2,a3], 0x38`, +1 more calls)
-	REC_func_4C0267D0_ArgA0	flags=0xB00040, x4="\x00\x00\x01\x00", f10=127, f13=4, f14=8, f15=3, x17="\x00\x00\x00"
-func_4C0267D0_ArgA0_1:	# REC_func_4C0267D0_ArgA0 (20 bytes): the layout func_4C0267D0 0x4C0267D0 reads through its argument a0 (passed by func_4C0271DD_entry_Lcf 0x4C0272B1 `call func_4C0267D0_entry, [d2,d3,a2,a3], 0x28`, +2 more calls); the layout func_4C0271DD 0x4C0271DD reads through its argument a0 (passed by func_4C02AA77_entry_L46 0x4C02AAC2 `call func_4C0271DD_entry, [d2,d3,a2,a3], 0x38`, +1 more calls)
-	REC_func_4C0267D0_ArgA0	flags=0xB00041, x4="\x00\x00\x01\x00", f10=127, f13=15, f14=128, f15=7, x17="\x00\x00\x00"
-func_4C026E51_Selected_50:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00042, x4="\x01\x00\x00\x00", index_=127, index__=139, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_50
-func_4C026E51_Selected_51:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00043, x4="\x01\x00\x00\x00", index_=127, index__=173, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C026E51_Selected_51
-func_4C026766_ArgA0_8:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="G\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=16, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_9:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="H\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=17, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_10:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="I\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=18, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_11:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="J\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=19, f14=127, x17="\x00\x00\x00"
-data_4C1919E0:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1919E0, 0x1919F4
-data_4C1919F4:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x1919F4, 0x191A08
-data_4C191A08:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191A08, 0x191A1C
-func_4C026E51_Selected_52:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB0004E, x4="\x00\x00\x00\x00", index_=127, dividend=23, f14=127, x15="\x00", x18="\x00", f20=1024
-# census: opaque -- unknown-dump: 30 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191A32, 0x191A50
-func_4C026E51_Selected_53:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00050, x4="\x00\x00\x02\x00", index_=120, dividend=24, f14=127, x15="\x00", x18="\x00", f20=6704
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191A66, 0x191A6C
-data_4C191A6C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191A6C, 0x191A80
-func_4C026E51_Selected_54:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xB00052, x4="\x00\x00\x02\x00", index_=120, dividend=26, f14=127, x15="\x00", x18="\x00", f20=6704
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x191A96, 0x191A9C
-data_4C191A9C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191A9C, 0x191AB0
-func_4C02CA6A_Records_p0_120:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="[\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=14, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_13:	# REC_func_4C026766_ArgA0 (20 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_func_4C026766_ArgA0	x0="\\\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=12, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_14:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="]\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=13, f14=127, x17="\x00\x00\x00"
-func_4C026766_ArgA0_15:	# REC_func_4C026766_ArgA0 (20 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_func_4C026766_ArgA0	x0="^\x00\xB0\x00\x00\x00\x01\x00", index_=127, f13=4, f14=64, f15=6, x17="\x00\x00\x00"
-func_4C026766_ArgA0_16:	# REC_func_4C026766_ArgA0 (20 bytes): the layout func_4C026766 0x4C026766 reads through its argument a0 (passed by func_4C0270D4_entry_L84 0x4C02715D `call func_4C026766_entry, [d2,d3,a2,a3], 0x28`, +7 more calls); the layout func_4C0270D4 0x4C0270D4 reads through its argument a0 (passed by func_4C027BA5 0x4C027BA5 `call func_4C0270D4_entry, [d2,d3,a2,a3], 0x30`, +14 more calls)
-	REC_func_4C026766_ArgA0	x0="_\x00\xB0\x00\x00\x00\x00\x00", index_=127, f13=11, f14=127, x17="\x00\x00\x00"
-data_4C191B14:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B14, 0x191B1C
-data_4C191B1C:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B1C, 0x191B24
-data_4C191B24:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B24, 0x191B2C
-data_4C191B2C:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B2C, 0x191B34
-data_4C191B34:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B34, 0x191B48
-data_4C191B48:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B48, 0x191B5C
-data_4C191B5C:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B5C, 0x191B70
-data_4C191B70:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B70, 0x191B84
-data_4C191B84:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B84, 0x191B98
-data_4C191B98:
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x191B98, 0x191BAC
-func_4C02CA6A_Records_p0_68:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xD00000, x4="\x01\x00\x00\x00", index_=127, index__=207, dividend=177, f14=1, x15="P", f16=127, x18="\x01"
-	.align	4, 0x00	# pad after func_4C02CA6A_Records_p0_68
-func_4C02CA6A_Records_p0_69:	# REC_func_4C026E51_Selected (22 bytes)
-	REC_func_4C026E51_Selected	key=0xE00000, x4="\x01\x00\x00\x00", index_=32639, index__=242, dividend=177, f14=1, x15="P", f16=32767, x18="\x02"
-	.align	4, 0x00	# pad after func_4C02CA6A_Records_p0_69
+.incbin_range "baserom/kn6000_program.rom", 0x19075C, 0x190764
+ResourceIdLeaf_4C190764:	# a parameter-id trie leaf (ResourceIdFind): id 0x00802C, type 0, kind 2
+	.long	0x00802C
+	.word	0, 2
+	.byte	0x00, 0x00, 0x1b, 0x00, 0x4a, 0x02, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x07, 0x19, 0x4c	# +8
+	.byte	0x14, 0x00, 0x1b, 0x00	# +24
+ResourceIdLeaf_4C190780:	# a parameter-id trie leaf (ResourceIdFind): id 0x00802D, type 0, kind 0
+	.long	0x00802D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x4a, 0x02, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_60:	# a parameter-id trie leaf (ResourceIdFind): id 0x008030, type 0, kind 25
+	.long	0x008030
+	.word	0, 25
+	.byte	0x00, 0x00, 0x01, 0x00, 0x44, 0x00, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_8:	# a parameter-id trie leaf (ResourceIdFind): id 0x008031, type 1, kind 0
+	.long	0x008031
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe6, 0xb4, 0x01, 0x50, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_9:	# a parameter-id trie leaf (ResourceIdFind): id 0x008032, type 1, kind 0
+	.long	0x008032
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe5, 0xb4, 0x01, 0x50, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1907D8:	# a parameter-id trie leaf (ResourceIdFind): id 0x008033, type 0, kind 0
+	.long	0x008033
+	.word	0, 0
+	.byte	0x00, 0x00, 0x02, 0x00, 0x52, 0x0d, 0xc0, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1907EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x008038, type 0, kind 0
+	.long	0x008038
+	.word	0, 0
+	.byte	0x28, 0x00, 0x58, 0x00, 0x41, 0x04, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_61:	# a parameter-id trie leaf (ResourceIdFind): id 0x008040, type 0, kind 5
+	.long	0x008040
+	.word	0, 5
+	.byte	0x00, 0x00, 0x05, 0x00, 0x41, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190814:	# a parameter-id trie leaf (ResourceIdFind): id 0x008041, type 1, kind 3
+	.long	0x008041
+	.word	1, 3
+	.byte	0x00, 0x00, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19082C:	# a parameter-id trie leaf (ResourceIdFind): id 0x008042, type 1, kind 4
+	.long	0x008042
+	.word	1, 4
+	.byte	0x00, 0x00, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190844:	# a parameter-id trie leaf (ResourceIdFind): id 0x008060, type 0, kind 0
+	.long	0x008060
+	.word	0, 0
+	.byte	0x00, 0x00, 0x03, 0x00, 0x44, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190858:	# a parameter-id trie leaf (ResourceIdFind): id 0x008061, type 0, kind 0
+	.long	0x008061
+	.word	0, 0
+	.byte	0x15, 0x00, 0x6c, 0x00, 0x44, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19086C:	# a parameter-id trie leaf (ResourceIdFind): id 0x008080, type 0, kind 0
+	.long	0x008080
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x42, 0x04, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x0d	# +8
+	.byte	0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a	# +24
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x19088C, 0x190890
+ResourceIdLeaf_4C190890:	# a parameter-id trie leaf (ResourceIdFind): id 0x008081, type 0, kind 2
+	.long	0x008081
+	.word	0, 2
+	.byte	0x00, 0x00, 0x0d, 0x00, 0x44, 0x04, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x08, 0x19, 0x4c	# +8
+	.byte	0x0e, 0x00, 0x07, 0x00, 0xff, 0x10, 0x11, 0x12	# +24
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1908B0, 0x1908C0
+ResourceIdLeaf_4C1908C0:	# a parameter-id trie leaf (ResourceIdFind): id 0x008082, type 0, kind 2
+	.long	0x008082
+	.word	0, 2
+	.byte	0x00, 0x00, 0xff, 0x00, 0x44, 0x03, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0xac, 0x08, 0x19, 0x4c	# +8
+	.byte	0x14, 0x00, 0xff, 0x00	# +24
+ResourceIdLeaf_4C1908DC:	# a parameter-id trie leaf (ResourceIdFind): id 0x008090, type 0, kind 0
+	.long	0x008090
+	.word	0, 0
+	.byte	0x00, 0x00, 0x02, 0x00, 0x47, 0x0b, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0xce, 0xcf, 0xd0, 0xd1	# +8
+	.byte	0xd2, 0xd3, 0xd4, 0xd5, 0xd6, 0xd7, 0xd8, 0xd9	# +24
+# census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1908FC, 0x190958
+ResourceIdLeaf_4C190958:	# a parameter-id trie leaf (ResourceIdFind): id 0x008091, type 0, kind 2
+	.long	0x008091
+	.word	0, 2
+	.byte	0x00, 0x00, 0xff, 0x00, 0x47, 0x0c, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x08, 0x19, 0x4c	# +8
+	.byte	0x65, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C190974:	# a parameter-id trie leaf (ResourceIdFind): id 0x008092, type 0, kind 0
+	.long	0x008092
+	.word	0, 0
+	.byte	0x01, 0x00, 0x7f, 0x00, 0x47, 0x0d, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190988:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A000, type 0, kind 15
+	.long	0x00A000
+	.word	0, 15
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x02, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19099C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A010, type 6, kind 0
+	.long	0x00A010
+	.word	6, 0
+ResourceIdLeaf_4C1909A4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A011, type 6, kind 0
+	.long	0x00A011
+	.word	6, 0
+ResourceIdLeaf_4C1909AC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A100, type 0, kind 15
+	.long	0x00A100
+	.word	0, 15
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x04, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1909C0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A110, type 6, kind 0
+	.long	0x00A110
+	.word	6, 0
+ResourceIdLeaf_4C1909C8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A111, type 6, kind 0
+	.long	0x00A111
+	.word	6, 0
+ResourceIdLeaf_4C1909D0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A200, type 0, kind 15
+	.long	0x00A200
+	.word	0, 15
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x06, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1909E4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A300, type 0, kind 15
+	.long	0x00A300
+	.word	0, 15
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x08, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1909F8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A301, type 6, kind 0
+	.long	0x00A301
+	.word	6, 0
+ResourceIdLeaf_4C190A00:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A310, type 0, kind 0
+	.long	0x00A310
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1a, 0x00, 0x4d, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A14:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A311, type 0, kind 0
+	.long	0x00A311
+	.word	0, 0
+	.byte	0x00, 0x00, 0x30, 0x00, 0x4d, 0x01, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A28:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A312, type 0, kind 0
+	.long	0x00A312
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1a, 0x00, 0x4d, 0x02, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A3C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A313, type 0, kind 0
+	.long	0x00A313
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1f, 0x00, 0x4d, 0x03, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A50:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A314, type 0, kind 0
+	.long	0x00A314
+	.word	0, 0
+	.byte	0x00, 0x00, 0x30, 0x00, 0x4d, 0x04, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A64:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A315, type 0, kind 0
+	.long	0x00A315
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1a, 0x00, 0x4d, 0x05, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A78:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A316, type 0, kind 0
+	.long	0x00A316
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1f, 0x00, 0x4d, 0x06, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190A8C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A317, type 0, kind 0
+	.long	0x00A317
+	.word	0, 0
+	.byte	0x00, 0x00, 0x30, 0x00, 0x4d, 0x07, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190AA0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A318, type 0, kind 0
+	.long	0x00A318
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1a, 0x00, 0x4d, 0x08, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190AB4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A319, type 0, kind 0
+	.long	0x00A319
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1f, 0x00, 0x4d, 0x09, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190AC8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A31A, type 0, kind 0
+	.long	0x00A31A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x30, 0x00, 0x4d, 0x0a, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190ADC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A31B, type 0, kind 0
+	.long	0x00A31B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x1a, 0x00, 0x4d, 0x0b, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190AF0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A31C, type 0, kind 0
+	.long	0x00A31C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x30, 0x00, 0x4d, 0x0c, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B04:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A400, type 0, kind 15
+	.long	0x00A400
+	.word	0, 15
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x0a, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B18:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A401, type 0, kind 0
+	.long	0x00A401
+	.word	0, 0
+	.byte	0x00, 0x00, 0x63, 0x00, 0x4a, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B2C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A402, type 0, kind 0
+	.long	0x00A402
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x4a, 0x03, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B40:	# a parameter-id trie leaf (ResourceIdFind): id 0x00A500, type 0, kind 15
+	.long	0x00A500
+	.word	0, 15
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x0c, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B54:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B000, type 0, kind 11
+	.long	0x00B000
+	.word	0, 11
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0f, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B68:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B001, type 0, kind 12
+	.long	0x00B001
+	.word	0, 12
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0f, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190B7C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B010, type 0, kind 13
+	.long	0x00B010
+	.word	0, 13
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x10, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026B6B_Selected_0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B014, type 0, kind 16
+	.long	0x00B014
+	.word	0, 16
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x0e, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B015, type 1, kind 8
+	.long	0x00B015
+	.word	1, 8
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xfd, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190BBC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B020, type 0, kind 13
+	.long	0x00B020
+	.word	0, 13
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x11, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026B6B_Selected_1:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B024, type 0, kind 16
+	.long	0x00B024
+	.word	0, 16
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x10, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_1:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B025, type 1, kind 8
+	.long	0x00B025
+	.word	1, 8
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xfd, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190BFC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B030, type 0, kind 13
+	.long	0x00B030
+	.word	0, 13
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x12, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026B6B_Selected_2:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B034, type 0, kind 16
+	.long	0x00B034
+	.word	0, 16
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x12, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_2:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B035, type 1, kind 8
+	.long	0x00B035
+	.word	1, 8
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xfd, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_86:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B040, type 0, kind 13
+	.long	0x00B040
+	.word	0, 13
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x13, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026B6B_Selected_3:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B044, type 0, kind 16
+	.long	0x00B044
+	.word	0, 16
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x14, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_3:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B045, type 1, kind 8
+	.long	0x00B045
+	.word	1, 8
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xfd, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190C7C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B048, type 0, kind 14
+	.long	0x00B048
+	.word	0, 14
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x13, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_87:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B050, type 0, kind 13
+	.long	0x00B050
+	.word	0, 13
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x52, 0x14, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026B6B_Selected_4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B054, type 0, kind 16
+	.long	0x00B054
+	.word	0, 16
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x16, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00B055, type 1, kind 8
+	.long	0x00B055
+	.word	1, 8
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xfd, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190CD0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C000, type 0, kind 6
+	.long	0x00C000
+	.word	0, 6
+	.byte	0x00, 0x00, 0xff, 0x00, 0x42, 0x00, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190CE4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C004, type 0, kind 19
+	.long	0x00C004
+	.word	0, 19
+	.byte	0x00, 0x00, 0x03, 0x00, 0x42, 0x07, 0x30, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190CF8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C080, type 0, kind 21
+	.long	0x00C080
+	.word	0, 21
+	.byte	0x00, 0x00, 0x03, 0x00, 0x42, 0x03, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D0C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C081, type 0, kind 0
+	.long	0x00C081
+	.word	0, 0
+	.byte	0x00, 0x00, 0x03, 0x00, 0x42, 0x04, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D20:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C082, type 0, kind 0
+	.long	0x00C082
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x42, 0x03, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D34:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C083, type 0, kind 0
+	.long	0x00C083
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x41, 0x03, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D48:	# a parameter-id trie leaf (ResourceIdFind): id 0x00C084, type 0, kind 22
+	.long	0x00C084
+	.word	0, 22
+	.byte	0x00, 0x00, 0x01, 0x00, 0x41, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D5C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00D000, type 0, kind 0
+	.long	0x00D000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x42, 0x05, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D70:	# a parameter-id trie leaf (ResourceIdFind): id 0x00D001, type 0, kind 0
+	.long	0x00D001
+	.word	0, 0
+	.byte	0x00, 0x00, 0x03, 0x00, 0x42, 0x06, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D84:	# a parameter-id trie leaf (ResourceIdFind): id 0x00D002, type 1, kind 0
+	.long	0x00D002
+	.word	1, 0
+	.byte	0x00, 0x00, 0x02, 0x00, 0xe4, 0xb4, 0x01, 0x50, 0x30, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190D9C:	# a parameter-id trie leaf (ResourceIdFind): id 0x00D003, type 1, kind 0
+	.long	0x00D003
+	.word	1, 0
+	.byte	0x00, 0x00, 0x02, 0x00, 0xe4, 0xb4, 0x01, 0x50, 0xc0, 0x00, 0x01, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190DB4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00D008, type 6, kind 0
+	.long	0x00D008
+	.word	6, 0
+ResourceIdLeaf_4C190DBC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00D00A, type 0, kind 0
+	.long	0x00D00A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0d, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190DD0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E000, type 6, kind 0
+	.long	0x00E000
+	.word	6, 0
+ResourceIdLeaf_4C190DD8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E001, type 0, kind 0
+	.long	0x00E001
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x46, 0x00, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190DEC:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E002, type 0, kind 0
+	.long	0x00E002
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x46, 0x00, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E00:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E004, type 0, kind 0
+	.long	0x00E004
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x52, 0x0d, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E14:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E005, type 0, kind 0
+	.long	0x00E005
+	.word	0, 0
+	.byte	0x00, 0x00, 0xff, 0x00, 0x46, 0x01, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E28:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E020, type 1, kind 0
+	.long	0x00E020
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe8, 0xb4, 0x01, 0x50, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E40:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E021, type 1, kind 0
+	.long	0x00E021
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe8, 0xb4, 0x01, 0x50, 0x02, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E58:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E022, type 1, kind 0
+	.long	0x00E022
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe8, 0xb4, 0x01, 0x50, 0x04, 0x00, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E70:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E023, type 1, kind 0
+	.long	0x00E023
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe8, 0xb4, 0x01, 0x50, 0x08, 0x00, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190E88:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E024, type 1, kind 0
+	.long	0x00E024
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe8, 0xb4, 0x01, 0x50, 0x10, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190EA0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00E025, type 1, kind 0
+	.long	0x00E025
+	.word	1, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0xe8, 0xb4, 0x01, 0x50, 0x20, 0x00, 0x01, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190EB8:	# a parameter-id trie leaf (ResourceIdFind): id 0x00F000, type 0, kind 7
+	.long	0x00F000
+	.word	0, 7
+	.byte	0x00, 0x00, 0xff, 0x00, 0x68, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x01, 0x02	# +8
+	.byte	0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a	# +24
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x190ED8, 0x190EE0
+ResourceIdLeaf_4C190EE0:	# a parameter-id trie leaf (ResourceIdFind): id 0x00F101, type 0, kind 2
+	.long	0x00F101
+	.word	0, 2
+	.byte	0x00, 0x00, 0xff, 0x00, 0x43, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0xcc, 0x0e, 0x19, 0x4c	# +8
+	.byte	0x11, 0x00, 0xff, 0x00	# +24
+ResourceIdLeaf_4C190EFC:	# a parameter-id trie leaf (ResourceIdFind): id 0x200000, type 0, kind 0
+	.long	0x200000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x03, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190F10:	# a parameter-id trie leaf (ResourceIdFind): id 0x200011, type 0, kind 0
+	.long	0x200011
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190F24:	# a parameter-id trie leaf (ResourceIdFind): id 0x20005C, type 0, kind 0
+	.long	0x20005C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x0c, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190F38:	# a parameter-id trie leaf (ResourceIdFind): id 0x20005D, type 0, kind 0
+	.long	0x20005D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x0d, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190F4C:	# a parameter-id trie leaf (ResourceIdFind): id 0x20005F, type 0, kind 0
+	.long	0x20005F
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x0b, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C190F60:	# a parameter-id trie leaf (ResourceIdFind): id 0x200080, type 0, kind 0
+	.long	0x200080
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x22, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b, 0x0c, 0x0d, 0x0e	# +8
+	.byte	0x0f, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0xff	# +24
+ResourceIdLeaf_4C190F80:	# a parameter-id trie leaf (ResourceIdFind): id 0x200088, type 0, kind 26
+	.long	0x200088
+	.word	0, 26
+	.byte	0x00, 0x00, 0x0f, 0x00, 0x10, 0x24, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x74, 0x0f, 0x19, 0x4c	# +8
+	.byte	0x0b, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C190F9C:	# a parameter-id trie leaf (ResourceIdFind): id 0x200089, type 0, kind 26
+	.long	0x200089
+	.word	0, 26
+	.byte	0x00, 0x00, 0x0f, 0x00, 0x10, 0x24, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00, 0x74, 0x0f, 0x19, 0x4c	# +8
+	.byte	0x0b, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C190FB8:	# a parameter-id trie leaf (ResourceIdFind): id 0x20008A, type 0, kind 26
+	.long	0x20008A
+	.word	0, 26
+	.byte	0x00, 0x00, 0x0f, 0x00, 0x10, 0x25, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x74, 0x0f, 0x19, 0x4c	# +8
+	.byte	0x0b, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C190FD4:	# a parameter-id trie leaf (ResourceIdFind): id 0x20008B, type 0, kind 26
+	.long	0x20008B
+	.word	0, 26
+	.byte	0x00, 0x00, 0x0f, 0x00, 0x10, 0x25, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00, 0x74, 0x0f, 0x19, 0x4c	# +8
+	.byte	0x0b, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C190FF0:	# a parameter-id trie leaf (ResourceIdFind): id 0x200090, type 0, kind 0
+	.long	0x200090
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x26, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191004:	# a parameter-id trie leaf (ResourceIdFind): id 0x200091, type 0, kind 0
+	.long	0x200091
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x26, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191018:	# a parameter-id trie leaf (ResourceIdFind): id 0x200092, type 0, kind 0
+	.long	0x200092
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x27, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19102C:	# a parameter-id trie leaf (ResourceIdFind): id 0x200093, type 0, kind 0
+	.long	0x200093
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x27, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191040:	# a parameter-id trie leaf (ResourceIdFind): id 0x200094, type 0, kind 0
+	.long	0x200094
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x28, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191054:	# a parameter-id trie leaf (ResourceIdFind): id 0x200095, type 0, kind 0
+	.long	0x200095
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x28, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191068:	# a parameter-id trie leaf (ResourceIdFind): id 0x200096, type 0, kind 0
+	.long	0x200096
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x29, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19107C:	# a parameter-id trie leaf (ResourceIdFind): id 0x200097, type 0, kind 0
+	.long	0x200097
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x29, 0xf0, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191090:	# a parameter-id trie leaf (ResourceIdFind): id 0x200098, type 0, kind 0
+	.long	0x200098
+	.word	0, 0
+	.byte	0x00, 0x00, 0x08, 0x00, 0x00, 0x2a, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1910A4:	# a parameter-id trie leaf (ResourceIdFind): id 0x200099, type 0, kind 0
+	.long	0x200099
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x2a, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1910B8:	# a parameter-id trie leaf (ResourceIdFind): id 0x20009A, type 0, kind 0
+	.long	0x20009A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x2a, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1910CC:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C0, type 0, kind 0
+	.long	0x2000C0
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x2c, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1910E0:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C1, type 0, kind 0
+	.long	0x2000C1
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x2d, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1910F4:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C2, type 0, kind 0
+	.long	0x2000C2
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x2e, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191108:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C3, type 0, kind 0
+	.long	0x2000C3
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x2f, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19111C:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C4, type 0, kind 0
+	.long	0x2000C4
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x30, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191130:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C5, type 0, kind 0
+	.long	0x2000C5
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x31, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191144:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C6, type 0, kind 0
+	.long	0x2000C6
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x32, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191158:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C7, type 0, kind 0
+	.long	0x2000C7
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x33, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19116C:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C8, type 0, kind 0
+	.long	0x2000C8
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x34, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191180:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000C9, type 0, kind 0
+	.long	0x2000C9
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x35, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191194:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000CA, type 0, kind 0
+	.long	0x2000CA
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x36, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1911A8:	# a parameter-id trie leaf (ResourceIdFind): id 0x2000CB, type 0, kind 0
+	.long	0x2000CB
+	.word	0, 0
+	.byte	0x1c, 0x00, 0xe4, 0x00, 0x00, 0x37, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1911BC:	# a parameter-id trie leaf (ResourceIdFind): id 0x200260, type 6, kind 0
+	.long	0x200260
+	.word	6, 0
+ResourceIdLeaf_4C1911C4:	# a parameter-id trie leaf (ResourceIdFind): id 0x200261, type 6, kind 0
+	.long	0x200261
+	.word	6, 0
+ResourceIdLeaf_4C1911CC:	# a parameter-id trie leaf (ResourceIdFind): id 0x200262, type 6, kind 0
+	.long	0x200262
+	.word	6, 0
+ResourceIdLeaf_4C1911D4:	# a parameter-id trie leaf (ResourceIdFind): id 0x200263, type 6, kind 0
+	.long	0x200263
+	.word	6, 0
+ResourceIdLeaf_4C1911DC:	# a parameter-id trie leaf (ResourceIdFind): id 0x200264, type 6, kind 0
+	.long	0x200264
+	.word	6, 0
+ResourceIdLeaf_4C1911E4:	# a parameter-id trie leaf (ResourceIdFind): id 0x200265, type 6, kind 0
+	.long	0x200265
+	.word	6, 0
+ResourceIdLeaf_4C1911EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x200270, type 6, kind 0
+	.long	0x200270
+	.word	6, 0
+ResourceIdLeaf_4C1911F4:	# a parameter-id trie leaf (ResourceIdFind): id 0x200271, type 6, kind 0
+	.long	0x200271
+	.word	6, 0
+ResourceIdLeaf_4C1911FC:	# a parameter-id trie leaf (ResourceIdFind): id 0x200272, type 6, kind 0
+	.long	0x200272
+	.word	6, 0
+ResourceIdLeaf_4C191204:	# a parameter-id trie leaf (ResourceIdFind): id 0x200273, type 6, kind 0
+	.long	0x200273
+	.word	6, 0
+ResourceIdLeaf_4C19120C:	# a parameter-id trie leaf (ResourceIdFind): id 0x204000, type 0, kind 0
+	.long	0x204000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x3a, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191220:	# a parameter-id trie leaf (ResourceIdFind): id 0x204001, type 0, kind 2
+	.long	0x204001
+	.word	0, 2
+	.byte	0x00, 0x00, 0xff, 0x00, 0x00, 0x3b, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0xcc, 0x0e, 0x19, 0x4c	# +8
+	.byte	0x11, 0x00, 0xff, 0x00	# +24
+ResourceIdLeaf_4C19123C:	# a parameter-id trie leaf (ResourceIdFind): id 0x204004, type 0, kind 0
+	.long	0x204004
+	.word	0, 0
+	.byte	0x00, 0x00, 0x06, 0x00, 0x00, 0x3a, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+	.byte	0x00, 0x00, 0x00, 0x00	# +24
+ResourceIdLeaf_4C191258:	# a parameter-id trie leaf (ResourceIdFind): id 0x204020, type 0, kind 6
+	.long	0x204020
+	.word	0, 6
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x3c, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19126C:	# a parameter-id trie leaf (ResourceIdFind): id 0x204021, type 0, kind 0
+	.long	0x204021
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x3c, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191280:	# a parameter-id trie leaf (ResourceIdFind): id 0x204022, type 0, kind 0
+	.long	0x204022
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x43, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191294:	# a parameter-id trie leaf (ResourceIdFind): id 0x204024, type 0, kind 0
+	.long	0x204024
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x3f, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1912A8:	# a parameter-id trie leaf (ResourceIdFind): id 0x204025, type 0, kind 0
+	.long	0x204025
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x3f, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1912BC:	# a parameter-id trie leaf (ResourceIdFind): id 0x204026, type 0, kind 0
+	.long	0x204026
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x43, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1912D0:	# a parameter-id trie leaf (ResourceIdFind): id 0x204028, type 0, kind 0
+	.long	0x204028
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x40, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1912E4:	# a parameter-id trie leaf (ResourceIdFind): id 0x204029, type 0, kind 0
+	.long	0x204029
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x40, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1912F8:	# a parameter-id trie leaf (ResourceIdFind): id 0x20402A, type 0, kind 0
+	.long	0x20402A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x43, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19130C:	# a parameter-id trie leaf (ResourceIdFind): id 0x20402C, type 0, kind 0
+	.long	0x20402C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x41, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191320:	# a parameter-id trie leaf (ResourceIdFind): id 0x20402D, type 0, kind 0
+	.long	0x20402D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x41, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191334:	# a parameter-id trie leaf (ResourceIdFind): id 0x20402E, type 0, kind 0
+	.long	0x20402E
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x43, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191348:	# a parameter-id trie leaf (ResourceIdFind): id 0x204030, type 0, kind 0
+	.long	0x204030
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x42, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19135C:	# a parameter-id trie leaf (ResourceIdFind): id 0x204031, type 0, kind 0
+	.long	0x204031
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x42, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191370:	# a parameter-id trie leaf (ResourceIdFind): id 0x204032, type 0, kind 0
+	.long	0x204032
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x43, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191384:	# a parameter-id trie leaf (ResourceIdFind): id 0x204080, type 0, kind 0
+	.long	0x204080
+	.word	0, 0
+	.byte	0x00, 0x00, 0x07, 0x00, 0x00, 0x04, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191398:	# a parameter-id trie leaf (ResourceIdFind): id 0x204081, type 0, kind 0
+	.long	0x204081
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x04, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1913AC:	# a parameter-id trie leaf (ResourceIdFind): id 0x204082, type 0, kind 0
+	.long	0x204082
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1913C0:	# a parameter-id trie leaf (ResourceIdFind): id 0x204083, type 0, kind 0
+	.long	0x204083
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1913D4:	# a parameter-id trie leaf (ResourceIdFind): id 0x204084, type 0, kind 0
+	.long	0x204084
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x04, 0x20, 0x05, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1913E8:	# a parameter-id trie leaf (ResourceIdFind): id 0x204085, type 0, kind 0
+	.long	0x204085
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1913FC:	# a parameter-id trie leaf (ResourceIdFind): id 0x204086, type 0, kind 0
+	.long	0x204086
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191410:	# a parameter-id trie leaf (ResourceIdFind): id 0x204087, type 0, kind 0
+	.long	0x204087
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191424:	# a parameter-id trie leaf (ResourceIdFind): id 0x204088, type 0, kind 0
+	.long	0x204088
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x05, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191438:	# a parameter-id trie leaf (ResourceIdFind): id 0x2040E0, type 0, kind 7
+	.long	0x2040E0
+	.word	0, 7
+	.byte	0x00, 0x00, 0xff, 0x00, 0x60, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19144C:	# a parameter-id trie leaf (ResourceIdFind): id 0x600000, type 1, kind 6
+	.long	0x600000
+	.word	1, 6
+	.byte	0xfa, 0xe3, 0x09, 0x4c	# +8
+ResourceIdLeaf_4C191458:	# a parameter-id trie leaf (ResourceIdFind): id 0x600001, type 1, kind 6
+	.long	0x600001
+	.word	1, 6
+	.byte	0xdf, 0xdc, 0x01, 0x4c	# +8
+ResourceIdLeaf_4C191464:	# a parameter-id trie leaf (ResourceIdFind): id 0x600002, type 1, kind 6
+	.long	0x600002
+	.word	1, 6
+	.byte	0xc3, 0xf2, 0x01, 0x4c	# +8
+ResourceIdLeaf_4C191470:	# a parameter-id trie leaf (ResourceIdFind): id 0x600004, type 1, kind 10
+	.long	0x600004
+	.word	1, 10
+	.byte	0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191488:	# a parameter-id trie leaf (ResourceIdFind): id 0x600005, type 1, kind 11
+	.long	0x600005
+	.word	1, 11
+	.byte	0x00, 0x00, 0x01, 0x00, 0xde, 0xb4, 0x01, 0x50, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1914A0:	# a parameter-id trie leaf (ResourceIdFind): id 0x600006, type 6, kind 0
+	.long	0x600006
+	.word	6, 0
+ResourceIdLeaf_4C1914A8:	# a parameter-id trie leaf (ResourceIdFind): id 0x600008, type 1, kind 7
+	.long	0x600008
+	.word	1, 7
+	.byte	0xb8, 0xd1, 0x03, 0x4c	# +8
+ResourceIdLeaf_4C1914B4:	# a parameter-id trie leaf (ResourceIdFind): id 0x600010, type 6, kind 0
+	.long	0x600010
+	.word	6, 0
+ResourceIdLeaf_4C1914BC:	# a parameter-id trie leaf (ResourceIdFind): id 0x600011, type 6, kind 0
+	.long	0x600011
+	.word	6, 0
+ResourceIdLeaf_4C1914C4:	# a parameter-id trie leaf (ResourceIdFind): id 0x600012, type 6, kind 0
+	.long	0x600012
+	.word	6, 0
+ResourceIdLeaf_4C1914CC:	# a parameter-id trie leaf (ResourceIdFind): id 0x600020, type 6, kind 0
+	.long	0x600020
+	.word	6, 0
+ResourceIdLeaf_4C1914D4:	# a parameter-id trie leaf (ResourceIdFind): id 0x601000, type 6, kind 0
+	.long	0x601000
+	.word	6, 0
+ResourceIdLeaf_4C1914DC:	# a parameter-id trie leaf (ResourceIdFind): id 0x601001, type 6, kind 0
+	.long	0x601001
+	.word	6, 0
+ResourceIdLeaf_4C1914E4:	# a parameter-id trie leaf (ResourceIdFind): id 0x700000, type 2, kind 0
+	.long	0x700000
+	.word	2, 0
+ResourceIdLeaf_4C1914EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x701000, type 4, kind 1
+	.long	0x701000
+	.word	4, 1
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1914FC:	# a parameter-id trie leaf (ResourceIdFind): id 0x701001, type 4, kind 2
+	.long	0x701001
+	.word	4, 2
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19150C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701004, type 4, kind 3
+	.long	0x701004
+	.word	4, 3
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19151C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701005, type 4, kind 4
+	.long	0x701005
+	.word	4, 4
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19152C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701008, type 4, kind 5
+	.long	0x701008
+	.word	4, 5
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19153C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701009, type 4, kind 6
+	.long	0x701009
+	.word	4, 6
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19154C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701010, type 4, kind 7
+	.long	0x701010
+	.word	4, 7
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19155C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701011, type 4, kind 8
+	.long	0x701011
+	.word	4, 8
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19156C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701012, type 4, kind 9
+	.long	0x701012
+	.word	4, 9
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19157C:	# a parameter-id trie leaf (ResourceIdFind): id 0x701020, type 4, kind 10
+	.long	0x701020
+	.word	4, 10
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19158C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702000, type 6, kind 0
+	.long	0x702000
+	.word	6, 0
+ResourceIdLeaf_4C191594:	# a parameter-id trie leaf (ResourceIdFind): id 0x702001, type 6, kind 0
+	.long	0x702001
+	.word	6, 0
+ResourceIdLeaf_4C19159C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702004, type 3, kind 3
+	.long	0x702004
+	.word	3, 3
+	.byte	0x98, 0x1b, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1915A8:	# a parameter-id trie leaf (ResourceIdFind): id 0x702005, type 3, kind 4
+	.long	0x702005
+	.word	3, 4
+	.byte	0xd0, 0x0c, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1915B4:	# a parameter-id trie leaf (ResourceIdFind): id 0x702008, type 3, kind 5
+	.long	0x702008
+	.word	3, 5
+	.byte	0x00, 0x08, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1915C0:	# a parameter-id trie leaf (ResourceIdFind): id 0x702009, type 3, kind 6
+	.long	0x702009
+	.word	3, 6
+	.byte	0x14, 0x08, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1915CC:	# a parameter-id trie leaf (ResourceIdFind): id 0x702010, type 3, kind 7
+	.long	0x702010
+	.word	3, 7
+	.byte	0x74, 0xfb, 0x18, 0x4c	# +8
+ResourceIdLeaf_4C1915D8:	# a parameter-id trie leaf (ResourceIdFind): id 0x702011, type 3, kind 26
+	.long	0x702011
+	.word	3, 26
+	.byte	0x88, 0xfb, 0x18, 0x4c	# +8
+ResourceIdLeaf_4C1915E4:	# a parameter-id trie leaf (ResourceIdFind): id 0x702012, type 3, kind 19
+	.long	0x702012
+	.word	3, 19
+	.byte	0xa8, 0x14, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1915F0:	# a parameter-id trie leaf (ResourceIdFind): id 0x702013, type 6, kind 0
+	.long	0x702013
+	.word	6, 0
+ResourceIdLeaf_4C1915F8:	# a parameter-id trie leaf (ResourceIdFind): id 0x702014, type 3, kind 23
+	.long	0x702014
+	.word	3, 23
+	.byte	0x74, 0xfb, 0x18, 0x4c	# +8
+ResourceIdLeaf_4C191604:	# a parameter-id trie leaf (ResourceIdFind): id 0x702015, type 3, kind 24
+	.long	0x702015
+	.word	3, 24
+	.byte	0xa8, 0x14, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191610:	# a parameter-id trie leaf (ResourceIdFind): id 0x702016, type 3, kind 28
+	.long	0x702016
+	.word	3, 28
+	.byte	0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C19161C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702020, type 6, kind 0
+	.long	0x702020
+	.word	6, 0
+ResourceIdLeaf_4C191624:	# a parameter-id trie leaf (ResourceIdFind): id 0x702021, type 3, kind 1
+	.long	0x702021
+	.word	3, 1
+	.byte	0x5c, 0x0d, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191630:	# a parameter-id trie leaf (ResourceIdFind): id 0x702022, type 3, kind 8
+	.long	0x702022
+	.word	3, 8
+	.byte	0x70, 0x0d, 0x19, 0x4c, 0x9c, 0x0d, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191640:	# a parameter-id trie leaf (ResourceIdFind): id 0x702023, type 3, kind 9
+	.long	0x702023
+	.word	3, 9
+	.byte	0x70, 0x0d, 0x19, 0x4c, 0x84, 0x0d, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191650:	# a parameter-id trie leaf (ResourceIdFind): id 0x702030, type 3, kind 10
+	.long	0x702030
+	.word	3, 10
+	.byte	0xd0, 0x0d, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C19165C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702031, type 3, kind 1
+	.long	0x702031
+	.word	3, 1
+	.byte	0x00, 0x0e, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191668:	# a parameter-id trie leaf (ResourceIdFind): id 0x702032, type 6, kind 0
+	.long	0x702032
+	.word	6, 0
+ResourceIdLeaf_4C191670:	# a parameter-id trie leaf (ResourceIdFind): id 0x702033, type 6, kind 0
+	.long	0x702033
+	.word	6, 0
+ResourceIdLeaf_4C191678:	# a parameter-id trie leaf (ResourceIdFind): id 0x702040, type 6, kind 0
+	.long	0x702040
+	.word	6, 0
+ResourceIdLeaf_4C191680:	# a parameter-id trie leaf (ResourceIdFind): id 0x702060, type 3, kind 1
+	.long	0x702060
+	.word	3, 1
+	.byte	0xb0, 0x06, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C19168C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702061, type 3, kind 1
+	.long	0x702061
+	.word	3, 1
+	.byte	0x24, 0x0f, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191698:	# a parameter-id trie leaf (ResourceIdFind): id 0x702062, type 3, kind 1
+	.long	0x702062
+	.word	3, 1
+	.byte	0x38, 0x0f, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916A4:	# a parameter-id trie leaf (ResourceIdFind): id 0x702063, type 3, kind 1
+	.long	0x702063
+	.word	3, 1
+	.byte	0x3c, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916B0:	# a parameter-id trie leaf (ResourceIdFind): id 0x702068, type 3, kind 20
+	.long	0x702068
+	.word	3, 20
+	.byte	0x38, 0x19, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916BC:	# a parameter-id trie leaf (ResourceIdFind): id 0x702069, type 3, kind 1
+	.long	0x702069
+	.word	3, 1
+	.byte	0xec, 0x1a, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916C8:	# a parameter-id trie leaf (ResourceIdFind): id 0x70206A, type 3, kind 26
+	.long	0x70206A
+	.word	3, 26
+	.byte	0x60, 0x19, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916D4:	# a parameter-id trie leaf (ResourceIdFind): id 0x70206B, type 3, kind 26
+	.long	0x70206B
+	.word	3, 26
+	.byte	0x78, 0x19, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916E0:	# a parameter-id trie leaf (ResourceIdFind): id 0x70206C, type 3, kind 30
+	.long	0x70206C
+	.word	3, 30
+	.byte	0x94, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x70206D, type 3, kind 26
+	.long	0x70206D
+	.word	3, 26
+	.byte	0xa8, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1916F8:	# a parameter-id trie leaf (ResourceIdFind): id 0x70206E, type 3, kind 26
+	.long	0x70206E
+	.word	3, 26
+	.byte	0xc0, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191704:	# a parameter-id trie leaf (ResourceIdFind): id 0x702080, type 6, kind 0
+	.long	0x702080
+	.word	6, 0
+ResourceIdLeaf_4C19170C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702081, type 3, kind 12
+	.long	0x702081
+	.word	3, 12
+	.byte	0xd4, 0xfa, 0x18, 0x4c	# +8
+ResourceIdLeaf_4C191718:	# a parameter-id trie leaf (ResourceIdFind): id 0x702082, type 3, kind 13
+	.long	0x702082
+	.word	3, 13
+	.byte	0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191724:	# a parameter-id trie leaf (ResourceIdFind): id 0x702083, type 3, kind 14
+	.long	0x702083
+	.word	3, 14
+	.byte	0xec, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191730:	# a parameter-id trie leaf (ResourceIdFind): id 0x702084, type 3, kind 15
+	.long	0x702084
+	.word	3, 15
+	.byte	0xd8, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C19173C:	# a parameter-id trie leaf (ResourceIdFind): id 0x702085, type 3, kind 16
+	.long	0x702085
+	.word	3, 16
+	.byte	0xe4, 0x0c, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191748:	# a parameter-id trie leaf (ResourceIdFind): id 0x702086, type 3, kind 1
+	.long	0x702086
+	.word	3, 1
+	.byte	0x34, 0x1b, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191754:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A0, type 6, kind 0
+	.long	0x7020A0
+	.word	6, 0
+ResourceIdLeaf_4C19175C:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A1, type 6, kind 0
+	.long	0x7020A1
+	.word	6, 0
+ResourceIdLeaf_4C191764:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A2, type 3, kind 1
+	.long	0x7020A2
+	.word	3, 1
+	.byte	0x6c, 0x08, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191770:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A3, type 3, kind 29
+	.long	0x7020A3
+	.word	3, 29
+	.byte	0xb4, 0xfb, 0x18, 0x4c	# +8
+ResourceIdLeaf_4C19177C:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A4, type 6, kind 0
+	.long	0x7020A4
+	.word	6, 0
+ResourceIdLeaf_4C191784:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A6, type 3, kind 17
+	.long	0x7020A6
+	.word	3, 17
+	.byte	0x44, 0x08, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C191790:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A7, type 6, kind 0
+	.long	0x7020A7
+	.word	6, 0
+ResourceIdLeaf_4C191798:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A8, type 6, kind 0
+	.long	0x7020A8
+	.word	6, 0
+ResourceIdLeaf_4C1917A0:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020A9, type 3, kind 18
+	.long	0x7020A9
+	.word	3, 18
+	.byte	0xf8, 0x0c, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1917AC:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020AA, type 3, kind 21
+	.long	0x7020AA
+	.word	3, 21
+	.byte	0x4c, 0x0f, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1917B8:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020AB, type 3, kind 22
+	.long	0x7020AB
+	.word	3, 22
+	.byte	0x90, 0x0b, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1917C4:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020AC, type 3, kind 27
+	.long	0x7020AC
+	.word	3, 27
+	.byte	0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1917D0:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020AD, type 6, kind 0
+	.long	0x7020AD
+	.word	6, 0
+ResourceIdLeaf_4C1917D8:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020AE, type 6, kind 0
+	.long	0x7020AE
+	.word	6, 0
+ResourceIdLeaf_4C1917E0:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020AF, type 3, kind 26
+	.long	0x7020AF
+	.word	3, 26
+	.byte	0xc0, 0x07, 0x19, 0x4c	# +8
+ResourceIdLeaf_4C1917EC:	# a parameter-id trie leaf (ResourceIdFind): id 0x7020B0, type 6, kind 0
+	.long	0x7020B0
+	.word	6, 0
+ResourceIdLeaf_4C1917F4:	# a parameter-id trie leaf (ResourceIdFind): id 0x708000, type 6, kind 0
+	.long	0x708000
+	.word	6, 0
+	.byte	0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191800:	# a parameter-id trie leaf (ResourceIdFind): id 0x800000, type 5, kind 0
+	.long	0x800000
+	.word	5, 0
+ResourceIdLeaf_4C191808:	# a parameter-id trie leaf (ResourceIdFind): id 0x900000, type 5, kind 0
+	.long	0x900000
+	.word	5, 0
+func_4C026E51_Selected_41:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00001, type 1, kind 0
+	.long	0xB00001
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x75, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191828:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00002, type 1, kind 0
+	.long	0xB00002
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x97, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191840:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00004, type 1, kind 0
+	.long	0xB00004
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xb9, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191858:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00005, type 0, kind 0
+	.long	0xB00005
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x0f, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_66:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00007, type 0, kind 0
+	.long	0xB00007
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x03, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_0:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0000A, type 0, kind 0
+	.long	0xB0000A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x1c, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026D58_ArgA0_0:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0000B, type 1, kind 0
+	.long	0xB0000B
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xdb, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1918AC:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0000C, type 0, kind 17
+	.long	0xB0000C
+	.word	0, 17
+	.byte	0x00, 0x00, 0xff, 0xff, 0x4c, 0x0e, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_45:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0000D, type 1, kind 9
+	.long	0xB0000D
+	.word	1, 9
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xfd, 0xb0, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_46:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00010, type 1, kind 0
+	.long	0xB00010
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x03, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_47:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00011, type 1, kind 0
+	.long	0xB00011
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x25, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191908:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00012, type 1, kind 0
+	.long	0xB00012
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x47, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191920:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00013, type 1, kind 0
+	.long	0xB00013
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x69, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_119:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00040, type 0, kind 1
+	.long	0xB00040
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x04, 0x08, 0x03, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C0267D0_ArgA0_1:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00041, type 0, kind 1
+	.long	0xB00041
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x0f, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_50:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00042, type 1, kind 0
+	.long	0xB00042
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x8b, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026E51_Selected_51:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00043, type 1, kind 0
+	.long	0xB00043
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xad, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_8:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00047, type 0, kind 0
+	.long	0xB00047
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x10, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_9:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00048, type 0, kind 0
+	.long	0xB00048
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x11, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_10:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00049, type 0, kind 0
+	.long	0xB00049
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x12, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_11:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0004A, type 0, kind 0
+	.long	0xB0004A
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x13, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1919E0:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0004B, type 0, kind 0
+	.long	0xB0004B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x14, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C1919F4:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0004C, type 0, kind 0
+	.long	0xB0004C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x15, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191A08:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0004D, type 0, kind 0
+	.long	0xB0004D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x16, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191A1C:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0004E, type 0, kind 0
+	.long	0xB0004E
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x17, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x08, 0x0c	# +8
+	.byte	0x10, 0x14, 0x18, 0x1c, 0x20, 0x24, 0x28, 0x2c	# +24
+# census: opaque -- unknown-dump: 20 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x191A3C, 0x191A50
+ResourceIdLeaf_4C191A50:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00050, type 0, kind 2
+	.long	0xB00050
+	.word	0, 2
+	.byte	0x00, 0x00, 0x78, 0x00, 0x00, 0x18, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x1a, 0x19, 0x4c	# +8
+	.byte	0x1f, 0x00, 0x6c, 0x00	# +24
+ResourceIdLeaf_4C191A6C:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00051, type 0, kind 0
+	.long	0xB00051
+	.word	0, 0
+	.byte	0x28, 0x00, 0x58, 0x00, 0x00, 0x19, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191A80:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00052, type 0, kind 2
+	.long	0xB00052
+	.word	0, 2
+	.byte	0x00, 0x00, 0x78, 0x00, 0x00, 0x1a, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x1a, 0x19, 0x4c	# +8
+	.byte	0x1f, 0x00, 0x1c, 0x00	# +24
+ResourceIdLeaf_4C191A9C:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00053, type 0, kind 0
+	.long	0xB00053
+	.word	0, 0
+	.byte	0x28, 0x00, 0x58, 0x00, 0x00, 0x1b, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_120:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0005B, type 0, kind 0
+	.long	0xB0005B
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x0e, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191AC4:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0005C, type 0, kind 0
+	.long	0xB0005C
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x0c, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_14:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0005D, type 0, kind 0
+	.long	0xB0005D
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x0d, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191AEC:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0005E, type 0, kind 1
+	.long	0xB0005E
+	.word	0, 1
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x04, 0x40, 0x06, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C026766_ArgA0_16:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0005F, type 0, kind 0
+	.long	0xB0005F
+	.word	0, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0x00, 0x0b, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191B14:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00078, type 6, kind 0
+	.long	0xB00078
+	.word	6, 0
+ResourceIdLeaf_4C191B1C:	# a parameter-id trie leaf (ResourceIdFind): id 0xB00079, type 6, kind 0
+	.long	0xB00079
+	.word	6, 0
+ResourceIdLeaf_4C191B24:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0007B, type 6, kind 0
+	.long	0xB0007B
+	.word	6, 0
+ResourceIdLeaf_4C191B2C:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0007C, type 6, kind 0
+	.long	0xB0007C
+	.word	6, 0
+ResourceIdLeaf_4C191B34:	# a parameter-id trie leaf (ResourceIdFind): id 0xB0007E, type 0, kind 0
+	.long	0xB0007E
+	.word	0, 0
+	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x04, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191B48:	# a parameter-id trie leaf (ResourceIdFind): id 0xB08000, type 0, kind 0
+	.long	0xB08000
+	.word	0, 0
+	.byte	0x00, 0x00, 0x0c, 0x00, 0x00, 0x1f, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191B5C:	# a parameter-id trie leaf (ResourceIdFind): id 0xB08001, type 0, kind 24
+	.long	0xB08001
+	.word	0, 24
+	.byte	0x00, 0x00, 0xff, 0x00, 0x00, 0x1e, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191B70:	# a parameter-id trie leaf (ResourceIdFind): id 0xB08002, type 0, kind 0
+	.long	0xB08002
+	.word	0, 0
+	.byte	0x28, 0x00, 0x58, 0x00, 0x00, 0x1d, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191B84:	# a parameter-id trie leaf (ResourceIdFind): id 0xB08005, type 0, kind 20
+	.long	0xB08005
+	.word	0, 20
+	.byte	0x00, 0x00, 0x7f, 0x0c, 0x00, 0x20, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+ResourceIdLeaf_4C191B98:	# a parameter-id trie leaf (ResourceIdFind): id 0xC00000, type 0, kind 6
+	.long	0xC00000
+	.word	0, 6
+	.byte	0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_68:	# a parameter-id trie leaf (ResourceIdFind): id 0xD00000, type 1, kind 0
+	.long	0xD00000
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x00, 0xcf, 0xb1, 0x01, 0x50, 0x7f, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
+func_4C02CA6A_Records_p0_69:	# a parameter-id trie leaf (ResourceIdFind): id 0xE00000, type 1, kind 0
+	.long	0xE00000
+	.word	1, 0
+	.byte	0x00, 0x00, 0x7f, 0x7f, 0xf2, 0xb1, 0x01, 0x50, 0xff, 0x7f, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
 
 ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibble (func_4C01BB1A)
-	RES_TRIE_ENTRY	func_4C02596F_Table+152, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C02596F_Table+180, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FAA0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FABC, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
-	RES_TRIE_ENTRY	func_4C02596F_Table+204, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C18FAE8, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FAD4, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FAE8, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C18FAFC, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FAFC, 0, 0	# [8]
 	# +72: a table of 1 entries (ResourceIdTrieNode_4C191C24)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +80: a table of 13 entries (ResourceIdTrieNode_4C191C2C)
-	RES_TRIE_ENTRY	data_4C18FB10, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FB10, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C18FB24, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FB24, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C18FB38, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FB38, 0, 0	# [8]
 	RES_TRIE_ENTRY	0, 0, 0	# [9]
 	RES_TRIE_ENTRY	0, 0, 0	# [A]
 	RES_TRIE_ENTRY	0, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C18FB4C, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FB4C, 0, 0	# [C]
 	# +184: a table of 1 entries (ResourceIdTrieNode_4C191C94)
-	RES_TRIE_ENTRY	data_4C18FB60, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FB60, 0, 0	# [0]
 	# +192: a table of 2 entries (ResourceIdTrieNode_4C191C9C)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
@@ -8300,288 +8718,288 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +216: a table of 3 entries (ResourceIdTrieNode_4C191CB4)
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_0_2, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_0_2, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FBA0, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FB88, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FBA0, 0, 0	# [2]
 	# +240: a table of 2 entries (ResourceIdTrieNode_4C191CCC)
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_1, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FBC8, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FBC8, 0, 0	# [1]
 	# +256: a table of 1 entries (ResourceIdTrieNode_4C191CDC)
-	RES_TRIE_ENTRY	data_4C18FBDC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FBDC, 0, 0	# [0]
 	# +264: a table of 2 entries (ResourceIdTrieNode_4C191CE4)
-	RES_TRIE_ENTRY	data_4C18FBE8, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FBFC, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FBE8, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FBFC, 0, 0	# [1]
 	# +280: a table of 5 entries (ResourceIdTrieNode_4C191CF4)
-	RES_TRIE_ENTRY	data_4C18FC10, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FC24, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FC38, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C18FC4C, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C18FC60, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC10, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC24, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC38, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC4C, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC60, 0, 0	# [4]
 	# +320: a table of 6 entries (ResourceIdTrieNode_4C191D1C)
-	RES_TRIE_ENTRY	data_4C18FC74, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FC88, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FC9C, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C18FCB0, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC74, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC88, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FC9C, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FCB0, 0, 0	# [3]
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C18FCC4, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FCC4, 0, 0	# [5]
 	# +368: a table of 4 entries (ResourceIdTrieNode_4C191D4C)
-	RES_TRIE_ENTRY	data_4C18FCD8, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FD00, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FD14, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C18FCEC, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FCD8, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD00, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD14, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FCEC, 0, 0	# [3]
 	# +400: a table of 16 entries (ResourceIdTrieNode_4C191D6C)
-	RES_TRIE_ENTRY	data_4C18FD28, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FD3C, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FD50, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C18FD64, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C18FD78, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C18FD8C, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C18FDA0, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C18FDB4, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD28, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD3C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD50, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD64, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD78, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FD8C, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FDA0, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FDB4, 0, 0	# [7]
 	RES_TRIE_ENTRY	0, 0, 0	# [8]
 	RES_TRIE_ENTRY	0, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C18FDC8, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C18FDDC, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C18FDF0, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C18FE04, 0, 0	# [D]
-	RES_TRIE_ENTRY	data_4C18FE18, 0, 0	# [E]
-	RES_TRIE_ENTRY	data_4C18FE2C, 0, 0	# [F]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FDC8, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FDDC, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FDF0, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE04, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE18, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE2C, 0, 0	# [F]
 	# +528: a table of 10 entries (ResourceIdTrieNode_4C191DEC)
-	RES_TRIE_ENTRY	data_4C18FE40, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C18FE54, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FE68, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C18FE7C, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C18FE90, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE40, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE54, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE68, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE7C, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FE90, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C18FEA4, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C18FEB8, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FEA4, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FEB8, 0, 0	# [9]
 	# +608: a table of 16 entries (ResourceIdTrieNode_4C191E3C)
-	RES_TRIE_ENTRY	data_4C18FECC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FECC, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C18FEE0, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C18FEF4, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C18FF08, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C18FF1C, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C18FF30, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C18FF44, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C18FF58, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C18FF6C, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C18FF80, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C18FF94, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C18FFA8, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C18FFBC, 0, 0	# [D]
-	RES_TRIE_ENTRY	data_4C18FFD0, 0, 0	# [E]
-	RES_TRIE_ENTRY	data_4C18FFE4, 0, 0	# [F]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FEE0, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FEF4, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF08, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF1C, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF30, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF44, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF58, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF6C, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF80, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FF94, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FFA8, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FFBC, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FFD0, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FFE4, 0, 0	# [F]
 	# +736: a table of 9 entries (ResourceIdTrieNode_4C191EBC)
-	RES_TRIE_ENTRY	data_4C18FFF8, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C19000C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C18FFF8, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19000C, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190020, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190034, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C190048, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C19005C, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190020, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190034, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190048, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19005C, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
 	RES_TRIE_ENTRY	0, 0, 0	# [8]
 	# +808: a table of 14 entries (ResourceIdTrieNode_4C191F04)
-	RES_TRIE_ENTRY	data_4C190070, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190070, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190084, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190098, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C1900AC, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C1900C0, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C1900D4, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C1900E8, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C1900FC, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C190110, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C190124, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C190138, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C19014C, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C190160, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190084, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190098, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1900AC, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1900C0, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1900D4, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1900E8, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1900FC, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190110, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190124, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190138, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19014C, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190160, 0, 0	# [D]
 	# +920: a table of 2 entries (ResourceIdTrieNode_4C191F74)
-	RES_TRIE_ENTRY	data_4C190174, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190188, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190174, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190188, 0, 0	# [1]
 	# +936: a table of 16 entries (ResourceIdTrieNode_4C191F84)
-	RES_TRIE_ENTRY	data_4C19019C, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1901B0, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C1901C4, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C1901D8, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C1901EC, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C190200, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C190214, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C190228, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C19023C, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C190250, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C190264, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C190278, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C19028C, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C1902A0, 0, 0	# [D]
-	RES_TRIE_ENTRY	data_4C1902B4, 0, 0	# [E]
-	RES_TRIE_ENTRY	data_4C1902C8, 0, 0	# [F]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19019C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1901B0, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1901C4, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1901D8, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1901EC, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190200, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190214, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190228, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19023C, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190250, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190264, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190278, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19028C, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1902A0, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1902B4, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1902C8, 0, 0	# [F]
 	# +1064: a table of 5 entries (ResourceIdTrieNode_4C192004)
-	RES_TRIE_ENTRY	data_4C1902DC, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1902F0, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C19032C, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190304, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190318, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1902DC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1902F0, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19032C, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190304, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190318, 0, 0	# [4]
 	# +1104: a table of 5 entries (ResourceIdTrieNode_4C19202C)
-	RES_TRIE_ENTRY	data_4C190340, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190354, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190368, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C19037C, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190390, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190340, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190354, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190368, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19037C, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190390, 0, 0	# [4]
 	# +1144: a table of 2 entries (ResourceIdTrieNode_4C192054)
-	RES_TRIE_ENTRY	data_4C1903A4, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1903B8, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1903A4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1903B8, 0, 0	# [1]
 	# +1160: a table of 7 entries (ResourceIdTrieNode_4C192064)
-	RES_TRIE_ENTRY	data_4C1903CC, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1903E0, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1903CC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1903E0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C1903F4, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C190408, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C19041C, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1903F4, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190408, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19041C, 0, 0	# [6]
 	# +1216: a table of 1 entries (ResourceIdTrieNode_4C19209C)
-	RES_TRIE_ENTRY	data_4C190430, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190430, 0, 0	# [0]
 	# +1224: a table of 1 entries (ResourceIdTrieNode_4C1920A4)
-	RES_TRIE_ENTRY	data_4C190444, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190444, 0, 0	# [0]
 	# +1232: a table of 12 entries (ResourceIdTrieNode_4C1920AC)
-	RES_TRIE_ENTRY	data_4C190458, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C19046C, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190480, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190494, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C1904A8, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C1904BC, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C1904D0, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C1904E4, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C1904F8, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C19050C, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C190520, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C190534, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190458, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19046C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190480, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190494, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1904A8, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1904BC, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1904D0, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1904E4, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1904F8, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19050C, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190520, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190534, 0, 0	# [B]
 	# +1328: a table of 8 entries (ResourceIdTrieNode_4C19210C)
-	RES_TRIE_ENTRY	data_4C190548, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C19055C, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190570, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190584, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190598, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C1905AC, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C1905C0, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C1905D4, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190548, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19055C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190570, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190584, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190598, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1905AC, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1905C0, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1905D4, 0, 0	# [7]
 	# +1392: a table of 14 entries (ResourceIdTrieNode_4C19214C)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_1_2, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_2_2, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1905E8, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190600, 0, 0	# [1]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_3_2, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_4_2, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190630, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_5, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_15, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C190674, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190674, 0, 0	# [9]
 	RES_TRIE_ENTRY	0, 0, 0	# [A]
 	RES_TRIE_ENTRY	0, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C190688, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C19069C, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190688, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19069C, 0, 0	# [D]
 	# +1504: a table of 1 entries (ResourceIdTrieNode_4C1921BC)
-	RES_TRIE_ENTRY	data_4C1906C4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1906C4, 0, 0	# [0]
 	# +1512: a table of 14 entries (ResourceIdTrieNode_4C1921C4)
-	RES_TRIE_ENTRY	data_4C1906B0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1906B0, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C1906D8, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1906D8, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C1906EC, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C190700, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1906EC, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190700, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C190714, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C190728, 0, 0	# [9]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_6, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190714, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190728, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19073C, 0, 0	# [A]
 	RES_TRIE_ENTRY	0, 0, 0	# [B]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_7, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C190780, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190764, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190780, 0, 0	# [D]
 	# +1624: a table of 9 entries (ResourceIdTrieNode_4C192234)
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_60, 0, 0	# [0]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_8, 0, 0	# [1]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_9, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C1907D8, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1907D8, 0, 0	# [3]
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C1907EC, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1907EC, 0, 0	# [8]
 	# +1696: a table of 3 entries (ResourceIdTrieNode_4C19227C)
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_61, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_10, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_11, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190814, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19082C, 0, 0	# [2]
 	# +1720: a table of 2 entries (ResourceIdTrieNode_4C192294)
-	RES_TRIE_ENTRY	data_4C190844, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190858, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190844, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190858, 0, 0	# [1]
 	# +1736: a table of 3 entries (ResourceIdTrieNode_4C1922A4)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_12, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_13, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_14, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19086C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190890, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1908C0, 0, 0	# [2]
 	# +1760: a table of 3 entries (ResourceIdTrieNode_4C1922BC)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_15, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_16, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190974, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1908DC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190958, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190974, 0, 0	# [2]
 	# +1784: a table of 1 entries (ResourceIdTrieNode_4C1922D4)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +1792: a table of 1 entries (ResourceIdTrieNode_4C1922DC)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +1800: a table of 1 entries (ResourceIdTrieNode_4C1922E4)
-	RES_TRIE_ENTRY	data_4C190988, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190988, 0, 0	# [0]
 	# +1808: a table of 2 entries (ResourceIdTrieNode_4C1922EC)
-	RES_TRIE_ENTRY	data_4C19099C, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1909A4, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19099C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909A4, 0, 0	# [1]
 	# +1824: a table of 1 entries (ResourceIdTrieNode_4C1922FC)
-	RES_TRIE_ENTRY	data_4C1909AC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909AC, 0, 0	# [0]
 	# +1832: a table of 2 entries (ResourceIdTrieNode_4C192304)
-	RES_TRIE_ENTRY	data_4C1909C0, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1909C8, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909C0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909C8, 0, 0	# [1]
 	# +1848: a table of 1 entries (ResourceIdTrieNode_4C192314)
-	RES_TRIE_ENTRY	data_4C1909D0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909D0, 0, 0	# [0]
 	# +1856: a table of 2 entries (ResourceIdTrieNode_4C19231C)
-	RES_TRIE_ENTRY	data_4C1909E4, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1909F8, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909E4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1909F8, 0, 0	# [1]
 	# +1872: a table of 13 entries (ResourceIdTrieNode_4C19232C)
-	RES_TRIE_ENTRY	data_4C190A00, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190A14, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190A28, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190A3C, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190A50, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C190A64, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C190A78, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C190A8C, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C190AA0, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C190AB4, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C190AC8, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C190ADC, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C190AF0, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A00, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A14, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A28, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A3C, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A50, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A64, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A78, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190A8C, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190AA0, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190AB4, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190AC8, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190ADC, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190AF0, 0, 0	# [C]
 	# +1976: a table of 3 entries (ResourceIdTrieNode_4C192394)
-	RES_TRIE_ENTRY	data_4C190B04, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190B18, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190B2C, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B04, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B18, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B2C, 0, 0	# [2]
 	# +2000: a table of 1 entries (ResourceIdTrieNode_4C1923AC)
-	RES_TRIE_ENTRY	data_4C190B40, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B40, 0, 0	# [0]
 	# +2008: a table of 2 entries (ResourceIdTrieNode_4C1923B4)
-	RES_TRIE_ENTRY	data_4C190B54, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190B68, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B54, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B68, 0, 0	# [1]
 	# +2024: a table of 6 entries (ResourceIdTrieNode_4C1923C4)
-	RES_TRIE_ENTRY	data_4C190B7C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190B7C, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
 	RES_TRIE_ENTRY	func_4C026B6B_Selected_0, 0, 0	# [4]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_0, 0, 0	# [5]
 	# +2072: a table of 6 entries (ResourceIdTrieNode_4C1923F4)
-	RES_TRIE_ENTRY	data_4C190BBC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190BBC, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
 	RES_TRIE_ENTRY	func_4C026B6B_Selected_1, 0, 0	# [4]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_1, 0, 0	# [5]
 	# +2120: a table of 6 entries (ResourceIdTrieNode_4C192424)
-	RES_TRIE_ENTRY	data_4C190BFC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190BFC, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
@@ -8596,7 +9014,7 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	func_4C026E51_Selected_3, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C190C7C, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190C7C, 0, 0	# [8]
 	# +2240: a table of 6 entries (ResourceIdTrieNode_4C19249C)
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_87, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
@@ -8605,38 +9023,38 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	func_4C026B6B_Selected_4, 0, 0	# [4]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_4, 0, 0	# [5]
 	# +2288: a table of 5 entries (ResourceIdTrieNode_4C1924CC)
-	RES_TRIE_ENTRY	data_4C190CD0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190CD0, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190CE4, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190CE4, 0, 0	# [4]
 	# +2328: a table of 5 entries (ResourceIdTrieNode_4C1924F4)
-	RES_TRIE_ENTRY	data_4C190CF8, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190D0C, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190D20, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C190D34, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190D48, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190CF8, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D0C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D20, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D34, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D48, 0, 0	# [4]
 	# +2368: a table of 11 entries (ResourceIdTrieNode_4C19251C)
-	RES_TRIE_ENTRY	data_4C190D5C, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190D70, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_22, 0, 0	# [2]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_23, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D5C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D70, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D84, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190D9C, 0, 0	# [3]
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C190DB4, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190DB4, 0, 0	# [8]
 	RES_TRIE_ENTRY	0, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C190DBC, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190DBC, 0, 0	# [A]
 	# +2456: a table of 1 entries (ResourceIdTrieNode_4C192574)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +2464: a table of 6 entries (ResourceIdTrieNode_4C19257C)
-	RES_TRIE_ENTRY	data_4C190DD0, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190DD8, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C190DEC, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190DD0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190DD8, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190DEC, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C190E00, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C190E14, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E00, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E14, 0, 0	# [5]
 	# +2512: a table of 6 entries (ResourceIdTrieNode_4C1925AC)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
@@ -8645,19 +9063,19 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	# +2560: a table of 6 entries (ResourceIdTrieNode_4C1925DC)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_24, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_25, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_26, 0, 0	# [2]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_27, 0, 0	# [3]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_28, 0, 0	# [4]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_29, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E28, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E40, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E58, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E70, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190E88, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190EA0, 0, 0	# [5]
 	# +2608: a table of 1 entries (ResourceIdTrieNode_4C19260C)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_30, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190EB8, 0, 0	# [0]
 	# +2616: a table of 1 entries (ResourceIdTrieNode_4C192614)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +2624: a table of 2 entries (ResourceIdTrieNode_4C19261C)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_31, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190EE0, 0, 0	# [1]
 	# +2640: a table of 12 entries (ResourceIdTrieNode_4C19262C)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC, 1, 9	# [0]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+72, 1, 1	# [1]
@@ -8826,10 +9244,10 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	# +3672: a table of 1 entries (ResourceIdTrieNode_4C192A34)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+3544, 1, 16	# [0]
 	# +3680: a table of 1 entries (ResourceIdTrieNode_4C192A3C)
-	RES_TRIE_ENTRY	data_4C190EFC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190EFC, 0, 0	# [0]
 	# +3688: a table of 2 entries (ResourceIdTrieNode_4C192A44)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C190F10, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F10, 0, 0	# [1]
 	# +3704: a table of 1 entries (ResourceIdTrieNode_4C192A54)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +3712: a table of 16 entries (ResourceIdTrieNode_4C192A5C)
@@ -8845,14 +9263,14 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [9]
 	RES_TRIE_ENTRY	0, 0, 0	# [A]
 	RES_TRIE_ENTRY	0, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C190F24, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C190F38, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F24, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F38, 0, 0	# [D]
 	RES_TRIE_ENTRY	0, 0, 0	# [E]
-	RES_TRIE_ENTRY	data_4C190F4C, 0, 0	# [F]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F4C, 0, 0	# [F]
 	# +3840: a table of 1 entries (ResourceIdTrieNode_4C192ADC)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	# +3848: a table of 12 entries (ResourceIdTrieNode_4C192AE4)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_32, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F60, 0, 0	# [0]
 	RES_TRIE_ENTRY	0, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
@@ -8860,85 +9278,85 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_33, 0, 0	# [8]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_34, 0, 0	# [9]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_35, 0, 0	# [A]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_36, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F80, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190F9C, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190FB8, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190FD4, 0, 0	# [B]
 	# +3944: a table of 11 entries (ResourceIdTrieNode_4C192B44)
-	RES_TRIE_ENTRY	data_4C190FF0, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C191004, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C191018, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C19102C, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C191040, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C191054, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C191068, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C19107C, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C191090, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C1910A4, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C1910B8, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C190FF0, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191004, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191018, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19102C, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191040, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191054, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191068, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19107C, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191090, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1910A4, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1910B8, 0, 0	# [A]
 	# +4032: a table of 12 entries (ResourceIdTrieNode_4C192B9C)
-	RES_TRIE_ENTRY	data_4C1910CC, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1910E0, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C1910F4, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C191108, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C19111C, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C191130, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C191144, 0, 0	# [6]
-	RES_TRIE_ENTRY	data_4C191158, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C19116C, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C191180, 0, 0	# [9]
-	RES_TRIE_ENTRY	data_4C191194, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C1911A8, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1910CC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1910E0, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1910F4, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191108, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19111C, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191130, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191144, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191158, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19116C, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191180, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191194, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911A8, 0, 0	# [B]
 	# +4128: a table of 6 entries (ResourceIdTrieNode_4C192BFC)
-	RES_TRIE_ENTRY	data_4C1911BC, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1911C4, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C1911CC, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C1911D4, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C1911DC, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C1911E4, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911BC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911C4, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911CC, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911D4, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911DC, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911E4, 0, 0	# [5]
 	# +4176: a table of 4 entries (ResourceIdTrieNode_4C192C2C)
-	RES_TRIE_ENTRY	data_4C1911EC, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1911F4, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C1911FC, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C191204, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911EC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911F4, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1911FC, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191204, 0, 0	# [3]
 	# +4208: a table of 5 entries (ResourceIdTrieNode_4C192C4C)
-	RES_TRIE_ENTRY	data_4C19120C, 0, 0	# [0]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_37, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19120C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191220, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_38, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19123C, 0, 0	# [4]
 	# +4248: a table of 15 entries (ResourceIdTrieNode_4C192C74)
-	RES_TRIE_ENTRY	Str_empty_947, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_empty_946, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_empty_939, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191258, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19126C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191280, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	Str_empty_945, 0, 0	# [4]
-	RES_TRIE_ENTRY	Str_empty_944, 0, 0	# [5]
-	RES_TRIE_ENTRY	Str_empty_934, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191294, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1912A8, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1912BC, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	Str_empty_943, 0, 0	# [8]
-	RES_TRIE_ENTRY	Str_empty_942, 0, 0	# [9]
-	RES_TRIE_ENTRY	Str_empty_930, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1912D0, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1912E4, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1912F8, 0, 0	# [A]
 	RES_TRIE_ENTRY	0, 0, 0	# [B]
-	RES_TRIE_ENTRY	Str_empty_941, 0, 0	# [C]
-	RES_TRIE_ENTRY	Str_empty_940, 0, 0	# [D]
-	RES_TRIE_ENTRY	Str_empty_929, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19130C, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191320, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191334, 0, 0	# [E]
 	# +4368: a table of 3 entries (ResourceIdTrieNode_4C192CEC)
-	RES_TRIE_ENTRY	Str_0_16, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_1_33, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_2_34, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191348, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19135C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191370, 0, 0	# [2]
 	# +4392: a table of 9 entries (ResourceIdTrieNode_4C192D04)
-	RES_TRIE_ENTRY	Str_empty_956, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_empty_955, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_empty_952, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_empty_950, 0, 0	# [3]
-	RES_TRIE_ENTRY	Str_empty_954, 0, 0	# [4]
-	RES_TRIE_ENTRY	Str_empty_953, 0, 0	# [5]
-	RES_TRIE_ENTRY	Str_empty_951, 0, 0	# [6]
-	RES_TRIE_ENTRY	Str_empty_949, 0, 0	# [7]
-	RES_TRIE_ENTRY	Str_empty_948, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191384, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191398, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1913AC, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1913C0, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1913D4, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1913E8, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1913FC, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191410, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191424, 0, 0	# [8]
 	# +4464: a table of 1 entries (ResourceIdTrieNode_4C192D4C)
-	RES_TRIE_ENTRY	Str_empty_957, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191438, 0, 0	# [0]
 	# +4472: a table of 13 entries (ResourceIdTrieNode_4C192D54)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+3680, 1, 1	# [0]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+3688, 1, 2	# [1]
@@ -8993,24 +9411,24 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	# +4832: a table of 1 entries (ResourceIdTrieNode_4C192EBC)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+4792, 1, 5	# [0]
 	# +4840: a table of 9 entries (ResourceIdTrieNode_4C192EC4)
-	RES_TRIE_ENTRY	data_4C19144C, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C191458, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C191464, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19144C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191458, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191464, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_39, 0, 0	# [4]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_40, 0, 0	# [5]
-	RES_TRIE_ENTRY	data_4C1914A0, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191470, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191488, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914A0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	func_4C02AE1B_ArgA0_p8_0, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914A8, 0, 0	# [8]
 	# +4912: a table of 3 entries (ResourceIdTrieNode_4C192F0C)
-	RES_TRIE_ENTRY	data_4C1914B4, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1914BC, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C1914C4, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914B4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914BC, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914C4, 0, 0	# [2]
 	# +4936: a table of 1 entries (ResourceIdTrieNode_4C192F24)
-	RES_TRIE_ENTRY	data_4C1914CC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914CC, 0, 0	# [0]
 	# +4944: a table of 9 entries (ResourceIdTrieNode_4C192F2C)
-	RES_TRIE_ENTRY	data_4C1914D4, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1914DC, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914D4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914DC, 0, 0	# [1]
 	# +4960: a table of 3 entries (ResourceIdTrieNode_4C192F3C)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+4840, 1, 9	# [0]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+4912, 1, 3	# [1]
@@ -9027,100 +9445,100 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	# +5024: a table of 1 entries (ResourceIdTrieNode_4C192F7C)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+5008, 1, 2	# [0]
 	# +5032: a table of 1 entries (ResourceIdTrieNode_4C192F84)
-	RES_TRIE_ENTRY	data_4C1914E4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914E4, 0, 0	# [0]
 	# +5040: a table of 10 entries (ResourceIdTrieNode_4C192F8C)
-	RES_TRIE_ENTRY	data_4C1914EC, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C1914FC, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914EC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1914FC, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C19150C, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C19151C, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19150C, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19151C, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C19152C, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C19153C, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19152C, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19153C, 0, 0	# [9]
 	# +5120: a table of 3 entries (ResourceIdTrieNode_4C192FDC)
-	RES_TRIE_ENTRY	data_4C19154C, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C19155C, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C19156C, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19154C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19155C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19156C, 0, 0	# [2]
 	# +5144: a table of 1 entries (ResourceIdTrieNode_4C192FF4)
-	RES_TRIE_ENTRY	Str_p_40, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19157C, 0, 0	# [0]
 	# +5152: a table of 10 entries (ResourceIdTrieNode_4C192FFC)
-	RES_TRIE_ENTRY	data_4C19158C, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C191594, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19158C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191594, 0, 0	# [1]
 	RES_TRIE_ENTRY	0, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	data_4C19159C, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C1915A8, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19159C, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915A8, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C1915B4, 0, 0	# [8]
-	RES_TRIE_ENTRY	Str_p_39, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915B4, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915C0, 0, 0	# [9]
 	# +5232: a table of 7 entries (ResourceIdTrieNode_4C19304C)
-	RES_TRIE_ENTRY	Str_p_38, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_p_37, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_p_36, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_p_35, 0, 0	# [3]
-	RES_TRIE_ENTRY	Str_p_24, 0, 0	# [4]
-	RES_TRIE_ENTRY	Str_p_23, 0, 0	# [5]
-	RES_TRIE_ENTRY	Str_p_34, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915CC, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915D8, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915E4, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915F0, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1915F8, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191604, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191610, 0, 0	# [6]
 	# +5288: a table of 4 entries (ResourceIdTrieNode_4C193084)
-	RES_TRIE_ENTRY	Str_p_33, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_p_32, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_p_31, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_p_30, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19161C, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191624, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191630, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191640, 0, 0	# [3]
 	# +5320: a table of 4 entries (ResourceIdTrieNode_4C1930A4)
-	RES_TRIE_ENTRY	Str_0_p, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_1_p, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_2_p, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_3_p, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191650, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19165C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191668, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191670, 0, 0	# [3]
 	# +5352: a table of 1 entries (ResourceIdTrieNode_4C1930C4)
-	RES_TRIE_ENTRY	Str_p_29, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191678, 0, 0	# [0]
 	# +5360: a table of 15 entries (ResourceIdTrieNode_4C1930CC)
-	RES_TRIE_ENTRY	Str_p_28, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_a_p, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_b_p, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_c_p, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191680, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19168C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191698, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916A4, 0, 0	# [3]
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	Str_h_p, 0, 0	# [8]
-	RES_TRIE_ENTRY	Str_i_p, 0, 0	# [9]
-	RES_TRIE_ENTRY	Str_j_p, 0, 0	# [A]
-	RES_TRIE_ENTRY	Str_k_p, 0, 0	# [B]
-	RES_TRIE_ENTRY	Str_l_p, 0, 0	# [C]
-	RES_TRIE_ENTRY	Str_m_p, 0, 0	# [D]
-	RES_TRIE_ENTRY	Str_n_p, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916B0, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916BC, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916C8, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916D4, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916E0, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916EC, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1916F8, 0, 0	# [E]
 	# +5480: a table of 7 entries (ResourceIdTrieNode_4C193144)
-	RES_TRIE_ENTRY	Str_p_27, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_p_26, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_p_25, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_p_21, 0, 0	# [3]
-	RES_TRIE_ENTRY	Str_p_20, 0, 0	# [4]
-	RES_TRIE_ENTRY	Str_p_19, 0, 0	# [5]
-	RES_TRIE_ENTRY	Str_p_18, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191704, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19170C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191718, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191724, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191730, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19173C, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191748, 0, 0	# [6]
 	# +5536: a table of 16 entries (ResourceIdTrieNode_4C19317C)
-	RES_TRIE_ENTRY	Str_p_17, 0, 0	# [0]
-	RES_TRIE_ENTRY	Str_p_16, 0, 0	# [1]
-	RES_TRIE_ENTRY	Str_p_15, 0, 0	# [2]
-	RES_TRIE_ENTRY	Str_p_14, 0, 0	# [3]
-	RES_TRIE_ENTRY	Str_p_13, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191754, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19175C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191764, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191770, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C19177C, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
-	RES_TRIE_ENTRY	Str_p_12, 0, 0	# [6]
-	RES_TRIE_ENTRY	Str_p_11, 0, 0	# [7]
-	RES_TRIE_ENTRY	Str_p_10, 0, 0	# [8]
-	RES_TRIE_ENTRY	Str_p_9, 0, 0	# [9]
-	RES_TRIE_ENTRY	Str_p_8, 0, 0	# [A]
-	RES_TRIE_ENTRY	Str_p_7, 0, 0	# [B]
-	RES_TRIE_ENTRY	Str_p_22, 0, 0	# [C]
-	RES_TRIE_ENTRY	Str_p_6, 0, 0	# [D]
-	RES_TRIE_ENTRY	Str_p_5, 0, 0	# [E]
-	RES_TRIE_ENTRY	Str_p_4, 0, 0	# [F]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191784, 0, 0	# [6]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191790, 0, 0	# [7]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191798, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917A0, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917AC, 0, 0	# [A]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917B8, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917C4, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917D0, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917D8, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917E0, 0, 0	# [F]
 	# +5664: a table of 1 entries (ResourceIdTrieNode_4C1931FC)
-	RES_TRIE_ENTRY	Str_p_3, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917EC, 0, 0	# [0]
 	# +5672: a table of 1 entries (ResourceIdTrieNode_4C193204)
-	RES_TRIE_ENTRY	data_4C1917F4, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1917F4, 0, 0	# [0]
 	# +5680: a table of 1 entries (ResourceIdTrieNode_4C19320C)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+5032, 1, 1	# [0]
 	# +5688: a table of 3 entries (ResourceIdTrieNode_4C193214)
@@ -9165,23 +9583,23 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	# +5928: a table of 14 entries (ResourceIdTrieNode_4C193304)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_41, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_42, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191828, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_43, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C191858, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191840, 0, 0	# [4]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191858, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_66, 0, 0	# [7]
 	RES_TRIE_ENTRY	0, 0, 0	# [8]
 	RES_TRIE_ENTRY	0, 0, 0	# [9]
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_0, 0, 0	# [A]
 	RES_TRIE_ENTRY	func_4C026D58_ArgA0_0, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C1918AC, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1918AC, 0, 0	# [C]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_45, 0, 0	# [D]
 	# +6040: a table of 4 entries (ResourceIdTrieNode_4C193374)
 	RES_TRIE_ENTRY	func_4C026E51_Selected_46, 0, 0	# [0]
 	RES_TRIE_ENTRY	func_4C026E51_Selected_47, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_48, 0, 0	# [2]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_49, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191908, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191920, 0, 0	# [3]
 	# +6072: a table of 15 entries (ResourceIdTrieNode_4C193394)
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_119, 0, 0	# [0]
 	RES_TRIE_ENTRY	func_4C0267D0_ArgA0_1, 0, 0	# [1]
@@ -9194,15 +9612,15 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_9, 0, 0	# [8]
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_10, 0, 0	# [9]
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_11, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C1919E0, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C1919F4, 0, 0	# [C]
-	RES_TRIE_ENTRY	data_4C191A08, 0, 0	# [D]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_52, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1919E0, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C1919F4, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191A08, 0, 0	# [D]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191A1C, 0, 0	# [E]
 	# +6192: a table of 16 entries (ResourceIdTrieNode_4C19340C)
-	RES_TRIE_ENTRY	func_4C026E51_Selected_53, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C191A6C, 0, 0	# [1]
-	RES_TRIE_ENTRY	func_4C026E51_Selected_54, 0, 0	# [2]
-	RES_TRIE_ENTRY	data_4C191A9C, 0, 0	# [3]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191A50, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191A6C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191A80, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191A9C, 0, 0	# [3]
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
@@ -9211,9 +9629,9 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [9]
 	RES_TRIE_ENTRY	0, 0, 0	# [A]
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_120, 0, 0	# [B]
-	RES_TRIE_ENTRY	func_4C026766_ArgA0_13, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191AC4, 0, 0	# [C]
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_14, 0, 0	# [D]
-	RES_TRIE_ENTRY	func_4C026766_ArgA0_15, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191AEC, 0, 0	# [E]
 	RES_TRIE_ENTRY	func_4C026766_ArgA0_16, 0, 0	# [F]
 	# +6320: a table of 15 entries (ResourceIdTrieNode_4C19348C)
 	RES_TRIE_ENTRY	0, 0, 0	# [0]
@@ -9224,20 +9642,20 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	0, 0, 0	# [6]
 	RES_TRIE_ENTRY	0, 0, 0	# [7]
-	RES_TRIE_ENTRY	data_4C191B14, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C191B1C, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B14, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B1C, 0, 0	# [9]
 	RES_TRIE_ENTRY	0, 0, 0	# [A]
-	RES_TRIE_ENTRY	data_4C191B24, 0, 0	# [B]
-	RES_TRIE_ENTRY	data_4C191B2C, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B24, 0, 0	# [B]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B2C, 0, 0	# [C]
 	RES_TRIE_ENTRY	0, 0, 0	# [D]
-	RES_TRIE_ENTRY	data_4C191B34, 0, 0	# [E]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B34, 0, 0	# [E]
 	# +6440: a table of 6 entries (ResourceIdTrieNode_4C193504)
-	RES_TRIE_ENTRY	data_4C191B48, 0, 0	# [0]
-	RES_TRIE_ENTRY	data_4C191B5C, 0, 0	# [1]
-	RES_TRIE_ENTRY	data_4C191B70, 0, 0	# [2]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B48, 0, 0	# [0]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B5C, 0, 0	# [1]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B70, 0, 0	# [2]
 	RES_TRIE_ENTRY	0, 0, 0	# [3]
 	RES_TRIE_ENTRY	0, 0, 0	# [4]
-	RES_TRIE_ENTRY	data_4C191B84, 0, 0	# [5]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B84, 0, 0	# [5]
 	# +6488: a table of 8 entries (ResourceIdTrieNode_4C193534)
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+5928, 1, 14	# [0]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+6040, 1, 4	# [1]
@@ -9274,39 +9692,39 @@ ResourceIdTrieNode_4C191BDC:	# entries of the resource-id trie, one per id nibbl
 	RES_TRIE_ENTRY	0, 0, 0	# [5]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+5024, 1, 1	# [6]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+5920, 1, 1	# [7]
-	RES_TRIE_ENTRY	data_4C191800, 0, 0	# [8]
-	RES_TRIE_ENTRY	data_4C191808, 0, 0	# [9]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191800, 0, 0	# [8]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191808, 0, 0	# [9]
 	RES_TRIE_ENTRY	0, 0, 0	# [A]
 	RES_TRIE_ENTRY	ResourceIdTrieNode_4C191BDC+6648, 1, 1	# [B]
-	RES_TRIE_ENTRY	data_4C191B98, 0, 0	# [C]
+	RES_TRIE_ENTRY	ResourceIdLeaf_4C191B98, 0, 0	# [C]
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_68, 0, 0	# [D]
 	RES_TRIE_ENTRY	func_4C02CA6A_Records_p0_69, 0, 0	# [E]
 	RES_TRIE_ENTRY	0, 0, 0	# [F]
 data_4C19365C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191B98
+	.long	ResourceIdLeaf_4C191B98
 	.long	0
 
 ptrs_4C193664:
 	.long	func_4C02CA6A_Records_p0_66
-	.long	data_4C190EFC
+	.long	ResourceIdLeaf_4C190EFC
 	.long	0
 ptrs_4C193670:
-	.long	Str_empty_956
+	.long	ResourceIdLeaf_4C191384
 	.long	func_4C02CA6A_Records_p0_119
-	.long	Str_empty_955
-	.long	Str_empty_954
-	.long	func_4C026766_ArgA0_15
-	.long	data_4C191B34
+	.long	ResourceIdLeaf_4C191398
+	.long	ResourceIdLeaf_4C1913D4
+	.long	ResourceIdLeaf_4C191AEC
+	.long	ResourceIdLeaf_4C191B34
 	.long	0
 ptrs_4C19368C:
-	.long	Str_empty_953
-	.long	data_4C190F10
-	.long	Str_empty_952
-	.long	Str_empty_951
-	.long	Str_empty_950
-	.long	Str_empty_949
-	.long	Str_empty_948
+	.long	ResourceIdLeaf_4C1913E8
+	.long	ResourceIdLeaf_4C190F10
+	.long	ResourceIdLeaf_4C1913AC
+	.long	ResourceIdLeaf_4C1913FC
+	.long	ResourceIdLeaf_4C1913C0
+	.long	ResourceIdLeaf_4C191410
+	.long	ResourceIdLeaf_4C191424
 	.long	0
 data_4C1936AC:
 	.space	4, 0x00
@@ -9316,22 +9734,22 @@ data_4C1936B4:
 	.space	4, 0x00
 ptrs_4C1936B8:
 	.long	func_4C026766_ArgA0_16
-	.long	data_4C190F4C
+	.long	ResourceIdLeaf_4C190F4C
 	.long	0
 ptrs_4C1936C4:
-	.long	func_4C026766_ArgA0_13
-	.long	data_4C190F24
+	.long	ResourceIdLeaf_4C191AC4
+	.long	ResourceIdLeaf_4C190F24
 	.long	0
 ptrs_4C1936D0:
 	.long	func_4C026766_ArgA0_14
-	.long	data_4C190F38
+	.long	ResourceIdLeaf_4C190F38
 	.long	0
 data_4C1936DC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
 	.long	func_4C02CA6A_Records_p0_120
 	.long	0
 ptrs_4C1936E4:
-	.long	data_4C191858
+	.long	ResourceIdLeaf_4C191858
 	.long	func_4C0267D0_ArgA0_1
 	.long	0
 data_4C1936F0:
@@ -9352,35 +9770,35 @@ data_4C193708:
 	.long	0
 data_4C193710:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1919E0
+	.long	ResourceIdLeaf_4C1919E0
 	.long	0
 data_4C193718:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1919F4
+	.long	ResourceIdLeaf_4C1919F4
 	.long	0
 data_4C193720:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191A08
+	.long	ResourceIdLeaf_4C191A08
 	.long	0
 data_4C193728:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_52
+	.long	ResourceIdLeaf_4C191A1C
 	.long	0
 data_4C193730:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_53
+	.long	ResourceIdLeaf_4C191A50
 	.long	0
 data_4C193738:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191A6C
+	.long	ResourceIdLeaf_4C191A6C
 	.long	0
 data_4C193740:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_54
+	.long	ResourceIdLeaf_4C191A80
 	.long	0
 data_4C193748:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191A9C
+	.long	ResourceIdLeaf_4C191A9C
 	.long	0
 data_4C193750:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
@@ -9388,308 +9806,308 @@ data_4C193750:
 	.long	0
 data_4C193758:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191B70
+	.long	ResourceIdLeaf_4C191B70
 	.long	0
 data_4C193760:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191B5C
+	.long	ResourceIdLeaf_4C191B5C
 	.long	0
 data_4C193768:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191B48
+	.long	ResourceIdLeaf_4C191B48
 	.long	0
 data_4C193770:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191B84
+	.long	ResourceIdLeaf_4C191B84
 	.long	0
 data_4C193778:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_32
+	.long	ResourceIdLeaf_4C190F60
 	.long	0
 data_4C193780:
 	.space	4, 0x00
 ptrs_4C193784:
-	.long	func_4C026E51_Selected_33
-	.long	func_4C026E51_Selected_34
+	.long	ResourceIdLeaf_4C190F80
+	.long	ResourceIdLeaf_4C190F9C
 	.long	0
 ptrs_4C193790:
-	.long	func_4C026E51_Selected_35
-	.long	func_4C026E51_Selected_36
+	.long	ResourceIdLeaf_4C190FB8
+	.long	ResourceIdLeaf_4C190FD4
 	.long	0
 ptrs_4C19379C:
-	.long	data_4C190FF0
-	.long	data_4C191004
+	.long	ResourceIdLeaf_4C190FF0
+	.long	ResourceIdLeaf_4C191004
 	.long	0
 ptrs_4C1937A8:
-	.long	data_4C191018
-	.long	data_4C19102C
+	.long	ResourceIdLeaf_4C191018
+	.long	ResourceIdLeaf_4C19102C
 	.long	0
 ptrs_4C1937B4:
-	.long	data_4C191040
-	.long	data_4C191054
+	.long	ResourceIdLeaf_4C191040
+	.long	ResourceIdLeaf_4C191054
 	.long	0
 ptrs_4C1937C0:
-	.long	data_4C191068
-	.long	data_4C19107C
+	.long	ResourceIdLeaf_4C191068
+	.long	ResourceIdLeaf_4C19107C
 	.long	0
 ptrs_4C1937CC:
-	.long	data_4C191090
-	.long	data_4C1910A4
-	.long	data_4C1910B8
+	.long	ResourceIdLeaf_4C191090
+	.long	ResourceIdLeaf_4C1910A4
+	.long	ResourceIdLeaf_4C1910B8
 	.long	0
 data_4C1937DC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1910CC
+	.long	ResourceIdLeaf_4C1910CC
 	.long	0
 data_4C1937E4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1910E0
+	.long	ResourceIdLeaf_4C1910E0
 	.long	0
 data_4C1937EC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1910F4
+	.long	ResourceIdLeaf_4C1910F4
 	.long	0
 data_4C1937F4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191108
+	.long	ResourceIdLeaf_4C191108
 	.long	0
 data_4C1937FC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C19111C
+	.long	ResourceIdLeaf_4C19111C
 	.long	0
 data_4C193804:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191130
+	.long	ResourceIdLeaf_4C191130
 	.long	0
 data_4C19380C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191144
+	.long	ResourceIdLeaf_4C191144
 	.long	0
 data_4C193814:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191158
+	.long	ResourceIdLeaf_4C191158
 	.long	0
 data_4C19381C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C19116C
+	.long	ResourceIdLeaf_4C19116C
 	.long	0
 data_4C193824:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191180
+	.long	ResourceIdLeaf_4C191180
 	.long	0
 data_4C19382C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C191194
+	.long	ResourceIdLeaf_4C191194
 	.long	0
 data_4C193834:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1911A8
+	.long	ResourceIdLeaf_4C1911A8
 	.long	0
 ptrs_4C19383C:
-	.long	func_4C026E51_Selected_38
-	.long	data_4C19120C
+	.long	ResourceIdLeaf_4C19123C
+	.long	ResourceIdLeaf_4C19120C
 	.long	0
 data_4C193848:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_37
+	.long	ResourceIdLeaf_4C191220
 	.long	0
 ptrs_4C193850:
-	.long	Str_empty_947
-	.long	Str_empty_946
+	.long	ResourceIdLeaf_4C191258
+	.long	ResourceIdLeaf_4C19126C
 	.long	0
 ptrs_4C19385C:
-	.long	Str_empty_945
-	.long	Str_empty_944
+	.long	ResourceIdLeaf_4C191294
+	.long	ResourceIdLeaf_4C1912A8
 	.long	0
 ptrs_4C193868:
-	.long	Str_empty_943
-	.long	Str_empty_942
+	.long	ResourceIdLeaf_4C1912D0
+	.long	ResourceIdLeaf_4C1912E4
 	.long	0
 ptrs_4C193874:
-	.long	Str_empty_941
-	.long	Str_empty_940
+	.long	ResourceIdLeaf_4C19130C
+	.long	ResourceIdLeaf_4C191320
 	.long	0
 ptrs_4C193880:
-	.long	Str_0_16
-	.long	Str_1_33
+	.long	ResourceIdLeaf_4C191348
+	.long	ResourceIdLeaf_4C19135C
 	.long	0
 ptrs_4C19388C:
-	.long	Str_empty_939
-	.long	Str_empty_934
-	.long	Str_empty_930
-	.long	Str_empty_929
-	.long	Str_2_34
+	.long	ResourceIdLeaf_4C191280
+	.long	ResourceIdLeaf_4C1912BC
+	.long	ResourceIdLeaf_4C1912F8
+	.long	ResourceIdLeaf_4C191334
+	.long	ResourceIdLeaf_4C191370
 	.long	0
 data_4C1938A4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190444
+	.long	ResourceIdLeaf_4C190444
 	.long	0
 data_4C1938AC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
 	.long	func_4C02CA6A_Records_p0_61
 	.long	0
 ptrs_4C1938B4:
-	.long	data_4C190D48
-	.long	data_4C190D34
+	.long	ResourceIdLeaf_4C190D48
+	.long	ResourceIdLeaf_4C190D34
 	.long	0
 data_4C1938C0:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1907EC
+	.long	ResourceIdLeaf_4C1907EC
 	.long	0
 data_4C1938C8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190CD0
+	.long	ResourceIdLeaf_4C190CD0
 	.long	0
 ptrs_4C1938D0:
-	.long	data_4C190CF8
-	.long	data_4C190D20
+	.long	ResourceIdLeaf_4C190CF8
+	.long	ResourceIdLeaf_4C190D20
 	.long	0
 ptrs_4C1938DC:
-	.long	data_4C190D0C
-	.long	func_4C026E51_Selected_12
+	.long	ResourceIdLeaf_4C190D0C
+	.long	ResourceIdLeaf_4C19086C
 	.long	0
 data_4C1938E8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190D5C
+	.long	ResourceIdLeaf_4C190D5C
 	.long	0
 data_4C1938F0:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190D70
+	.long	ResourceIdLeaf_4C190D70
 	.long	0
 data_4C1938F8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190CE4
+	.long	ResourceIdLeaf_4C190CE4
 	.long	0
 data_4C193900:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FAE8
+	.long	ResourceIdLeaf_4C18FAE8
 	.long	0
 data_4C193908:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_31
+	.long	ResourceIdLeaf_4C190EE0
 	.long	0
 ptrs_4C193910:
-	.long	data_4C190844
+	.long	ResourceIdLeaf_4C190844
 	.long	func_4C02CA6A_Records_p0_60
 	.long	0
 data_4C19391C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190858
+	.long	ResourceIdLeaf_4C190858
 	.long	0
 data_4C193924:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C02596F_Table+204
+	.long	ResourceIdLeaf_4C18FAD4
 	.long	0
 data_4C19392C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_14
+	.long	ResourceIdLeaf_4C1908C0
 	.long	0
 data_4C193934:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_13
+	.long	ResourceIdLeaf_4C190890
 	.long	0
 data_4C19393C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1903CC
+	.long	ResourceIdLeaf_4C1903CC
 	.long	0
 data_4C193944:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1903E0
+	.long	ResourceIdLeaf_4C1903E0
 	.long	0
 ptrs_4C19394C:
-	.long	data_4C1903F4
-	.long	data_4C190408
-	.long	data_4C19041C
+	.long	ResourceIdLeaf_4C1903F4
+	.long	ResourceIdLeaf_4C190408
+	.long	ResourceIdLeaf_4C19041C
 	.long	0
 ptrs_4C19395C:
 	.long	func_4C02CA6A_Records_p0_15
-	.long	data_4C190674
+	.long	ResourceIdLeaf_4C190674
 	.long	0
 ptrs_4C193968:
-	.long	data_4C1903A4
-	.long	data_4C1903B8
+	.long	ResourceIdLeaf_4C1903A4
+	.long	ResourceIdLeaf_4C1903B8
 	.long	0
 ptrs_4C193974:
-	.long	data_4C190DD8
-	.long	data_4C190DEC
+	.long	ResourceIdLeaf_4C190DD8
+	.long	ResourceIdLeaf_4C190DEC
 	.long	0
 data_4C193980:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190E14
+	.long	ResourceIdLeaf_4C190E14
 	.long	0
 ptrs_4C193988:
-	.long	data_4C18FC88
-	.long	data_4C18FC74
-	.long	data_4C18FC9C
-	.long	data_4C18FCB0
-	.long	data_4C18FC4C
-	.long	data_4C18FC24
-	.long	data_4C18FC60
+	.long	ResourceIdLeaf_4C18FC88
+	.long	ResourceIdLeaf_4C18FC74
+	.long	ResourceIdLeaf_4C18FC9C
+	.long	ResourceIdLeaf_4C18FCB0
+	.long	ResourceIdLeaf_4C18FC4C
+	.long	ResourceIdLeaf_4C18FC24
+	.long	ResourceIdLeaf_4C18FC60
 	.long	0
 ptrs_4C1939A8:
-	.long	data_4C18FE2C
-	.long	data_4C18FCD8
+	.long	ResourceIdLeaf_4C18FE2C
+	.long	ResourceIdLeaf_4C18FCD8
 	.long	0
 ptrs_4C1939B4:
-	.long	data_4C18FCEC
-	.long	data_4C18FD00
-	.long	data_4C18FCC4
+	.long	ResourceIdLeaf_4C18FCEC
+	.long	ResourceIdLeaf_4C18FD00
+	.long	ResourceIdLeaf_4C18FCC4
 	.long	0
 ptrs_4C1939C4:
-	.long	data_4C18FBE8
-	.long	data_4C18FBFC
-	.long	data_4C18FC38
-	.long	data_4C18FC10
+	.long	ResourceIdLeaf_4C18FBE8
+	.long	ResourceIdLeaf_4C18FBFC
+	.long	ResourceIdLeaf_4C18FC38
+	.long	ResourceIdLeaf_4C18FC10
 	.long	0
 data_4C1939D8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FD14
+	.long	ResourceIdLeaf_4C18FD14
 	.long	0
 ptrs_4C1939E0:
-	.long	data_4C18FE04
-	.long	data_4C18FDF0
-	.long	data_4C18FE40
-	.long	data_4C18FE68
-	.long	data_4C18FD28
-	.long	data_4C18FD3C
-	.long	data_4C18FD50
-	.long	data_4C18FE90
+	.long	ResourceIdLeaf_4C18FE04
+	.long	ResourceIdLeaf_4C18FDF0
+	.long	ResourceIdLeaf_4C18FE40
+	.long	ResourceIdLeaf_4C18FE68
+	.long	ResourceIdLeaf_4C18FD28
+	.long	ResourceIdLeaf_4C18FD3C
+	.long	ResourceIdLeaf_4C18FD50
+	.long	ResourceIdLeaf_4C18FE90
 	.long	0
 ptrs_4C193A04:
-	.long	data_4C18FDB4
-	.long	data_4C18FDDC
-	.long	data_4C18FD78
-	.long	data_4C18FD8C
-	.long	data_4C18FDA0
-	.long	data_4C18FDC8
-	.long	data_4C18FE7C
-	.long	data_4C18FD64
+	.long	ResourceIdLeaf_4C18FDB4
+	.long	ResourceIdLeaf_4C18FDDC
+	.long	ResourceIdLeaf_4C18FD78
+	.long	ResourceIdLeaf_4C18FD8C
+	.long	ResourceIdLeaf_4C18FDA0
+	.long	ResourceIdLeaf_4C18FDC8
+	.long	ResourceIdLeaf_4C18FE7C
+	.long	ResourceIdLeaf_4C18FD64
 	.long	0
 ptrs_4C193A28:
-	.long	data_4C18FE18
-	.long	data_4C18FE54
-	.long	data_4C18FEA4
-	.long	data_4C18FEB8
+	.long	ResourceIdLeaf_4C18FE18
+	.long	ResourceIdLeaf_4C18FE54
+	.long	ResourceIdLeaf_4C18FEA4
+	.long	ResourceIdLeaf_4C18FEB8
 	.long	0
 data_4C193A3C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_15
+	.long	ResourceIdLeaf_4C1908DC
 	.long	0
 data_4C193A44:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C026E51_Selected_16
+	.long	ResourceIdLeaf_4C190958
 	.long	0
 data_4C193A4C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190974
+	.long	ResourceIdLeaf_4C190974
 	.long	0
 ptrs_4C193A54:
-	.long	data_4C190084
-	.long	data_4C190098
-	.long	data_4C1900AC
-	.long	data_4C1900C0
-	.long	data_4C1900D4
-	.long	data_4C1900E8
+	.long	ResourceIdLeaf_4C190084
+	.long	ResourceIdLeaf_4C190098
+	.long	ResourceIdLeaf_4C1900AC
+	.long	ResourceIdLeaf_4C1900C0
+	.long	ResourceIdLeaf_4C1900D4
+	.long	ResourceIdLeaf_4C1900E8
 	.long	0
 
 Str_p:	.asciz "p"
@@ -9697,31 +10115,31 @@ Str_p:	.asciz "p"
 .incbin_range "baserom/kn6000_program.rom", 0x193A72, 0x193A78
 data_4C193A78:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FECC
+	.long	ResourceIdLeaf_4C18FECC
 	.long	0
 data_4C193A80:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FEE0
+	.long	ResourceIdLeaf_4C18FEE0
 	.long	0
 data_4C193A88:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FEF4
+	.long	ResourceIdLeaf_4C18FEF4
 	.long	0
 data_4C193A90:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FF08
+	.long	ResourceIdLeaf_4C18FF08
 	.long	0
 data_4C193A98:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FF1C
+	.long	ResourceIdLeaf_4C18FF1C
 	.long	0
 data_4C193AA0:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FF30
+	.long	ResourceIdLeaf_4C18FF30
 	.long	0
 data_4C193AA8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FF44
+	.long	ResourceIdLeaf_4C18FF44
 	.long	0
 Str_empty_928:	.asciz " "
 # census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -9731,101 +10149,101 @@ Str_4_27:	.asciz "4"
 .incbin_range "baserom/kn6000_program.rom", 0x193ABA, 0x193AC0
 data_4C193AC0:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190174
+	.long	ResourceIdLeaf_4C190174
 	.long	0
 data_4C193AC8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190188
+	.long	ResourceIdLeaf_4C190188
 	.long	0
 
 ptrs_4C193AD0:
-	.long	data_4C190714
-	.long	data_4C190728
-	.long	func_4C026E51_Selected_6
+	.long	ResourceIdLeaf_4C190714
+	.long	ResourceIdLeaf_4C190728
+	.long	ResourceIdLeaf_4C19073C
 	.long	0
 data_4C193AE0:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190B18
+	.long	ResourceIdLeaf_4C190B18
 	.long	0
 ptrs_4C193AE8:
-	.long	func_4C026E51_Selected_7
-	.long	data_4C190780
+	.long	ResourceIdLeaf_4C190764
+	.long	ResourceIdLeaf_4C190780
 	.long	0
 data_4C193AF4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190B2C
+	.long	ResourceIdLeaf_4C190B2C
 	.long	0
 ptrs_4C193AFC:
-	.long	data_4C190548
-	.long	data_4C19055C
-	.long	data_4C190570
-	.long	data_4C190584
-	.long	data_4C190598
-	.long	data_4C1905AC
-	.long	data_4C1905C0
-	.long	data_4C1905D4
+	.long	ResourceIdLeaf_4C190548
+	.long	ResourceIdLeaf_4C19055C
+	.long	ResourceIdLeaf_4C190570
+	.long	ResourceIdLeaf_4C190584
+	.long	ResourceIdLeaf_4C190598
+	.long	ResourceIdLeaf_4C1905AC
+	.long	ResourceIdLeaf_4C1905C0
+	.long	ResourceIdLeaf_4C1905D4
 	.long	0
 data_4C193B20:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190458
+	.long	ResourceIdLeaf_4C190458
 	.long	0
 data_4C193B28:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C19046C
+	.long	ResourceIdLeaf_4C19046C
 	.long	0
 ptrs_4C193B30:
-	.long	data_4C190480
-	.long	data_4C190494
+	.long	ResourceIdLeaf_4C190480
+	.long	ResourceIdLeaf_4C190494
 	.long	0
 data_4C193B3C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1904A8
+	.long	ResourceIdLeaf_4C1904A8
 	.long	0
 data_4C193B44:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1904BC
+	.long	ResourceIdLeaf_4C1904BC
 	.long	0
 data_4C193B4C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1904D0
+	.long	ResourceIdLeaf_4C1904D0
 	.long	0
 data_4C193B54:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C19050C
+	.long	ResourceIdLeaf_4C19050C
 	.long	0
 ptrs_4C193B5C:
-	.long	data_4C1906B0
-	.long	data_4C1906D8
-	.long	data_4C1906EC
-	.long	data_4C190700
+	.long	ResourceIdLeaf_4C1906B0
+	.long	ResourceIdLeaf_4C1906D8
+	.long	ResourceIdLeaf_4C1906EC
+	.long	ResourceIdLeaf_4C190700
 	.long	0
 data_4C193B70:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1906C4
+	.long	ResourceIdLeaf_4C1906C4
 	.long	0
 data_4C193B78:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190988
+	.long	ResourceIdLeaf_4C190988
 	.long	0
 data_4C193B80:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1909AC
+	.long	ResourceIdLeaf_4C1909AC
 	.long	0
 data_4C193B88:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1909D0
+	.long	ResourceIdLeaf_4C1909D0
 	.long	0
 data_4C193B90:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C1909E4
+	.long	ResourceIdLeaf_4C1909E4
 	.long	0
 data_4C193B98:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190B04
+	.long	ResourceIdLeaf_4C190B04
 	.long	0
 data_4C193BA0:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190B40
+	.long	ResourceIdLeaf_4C190B40
 	.long	0
 data_4C193BA8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
@@ -9851,87 +10269,87 @@ data_4C193BD0:
 	.space	4, 0x00
 data_4C193BD4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A00
+	.long	ResourceIdLeaf_4C190A00
 	.long	0
 data_4C193BDC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A14
+	.long	ResourceIdLeaf_4C190A14
 	.long	0
 data_4C193BE4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A28
+	.long	ResourceIdLeaf_4C190A28
 	.long	0
 data_4C193BEC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A3C
+	.long	ResourceIdLeaf_4C190A3C
 	.long	0
 data_4C193BF4:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A50
+	.long	ResourceIdLeaf_4C190A50
 	.long	0
 data_4C193BFC:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A64
+	.long	ResourceIdLeaf_4C190A64
 	.long	0
 data_4C193C04:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A78
+	.long	ResourceIdLeaf_4C190A78
 	.long	0
 data_4C193C0C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190A8C
+	.long	ResourceIdLeaf_4C190A8C
 	.long	0
 data_4C193C14:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190AA0
+	.long	ResourceIdLeaf_4C190AA0
 	.long	0
 data_4C193C1C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190AB4
+	.long	ResourceIdLeaf_4C190AB4
 	.long	0
 data_4C193C24:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190AC8
+	.long	ResourceIdLeaf_4C190AC8
 	.long	0
 data_4C193C2C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190ADC
+	.long	ResourceIdLeaf_4C190ADC
 	.long	0
 data_4C193C34:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190AF0
+	.long	ResourceIdLeaf_4C190AF0
 	.long	0
 data_4C193C3C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	func_4C02596F_Table+152
+	.long	ResourceIdLeaf_4C18FAA0
 	.long	0
 data_4C193C44:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FAFC
+	.long	ResourceIdLeaf_4C18FAFC
 	.long	0
 data_4C193C4C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FB10
+	.long	ResourceIdLeaf_4C18FB10
 	.long	0
 data_4C193C54:
 	.space	4, 0x00
 data_4C193C58:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FB60
+	.long	ResourceIdLeaf_4C18FB60
 	.long	0
 data_4C193C60:
 	.space	4, 0x00
 data_4C193C64:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FB24
+	.long	ResourceIdLeaf_4C18FB24
 	.long	0
 ptrs_4C193C6C:
-	.long	data_4C18FB38
-	.long	data_4C18FB4C
+	.long	ResourceIdLeaf_4C18FB38
+	.long	ResourceIdLeaf_4C18FB4C
 	.long	0
 data_4C193C78:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C18FBA0
+	.long	ResourceIdLeaf_4C18FBA0
 	.long	0
 data_4C193C80:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
@@ -9941,70 +10359,70 @@ data_4C193C88:
 	.space	4, 0x00
 ptrs_4C193C8C:
 	.long	func_4C02CA6A_Records_p0_1
-	.long	data_4C18FBC8
+	.long	ResourceIdLeaf_4C18FBC8
 	.long	0
 ptrs_4C193C98:
-	.long	data_4C190688
-	.long	data_4C19069C
+	.long	ResourceIdLeaf_4C190688
+	.long	ResourceIdLeaf_4C19069C
 	.long	0
 ptrs_4C193CA4:
-	.long	data_4C19019C
-	.long	data_4C1901B0
-	.long	data_4C1901C4
-	.long	data_4C1901D8
-	.long	data_4C1901EC
-	.long	data_4C190200
-	.long	data_4C190214
-	.long	data_4C190228
+	.long	ResourceIdLeaf_4C19019C
+	.long	ResourceIdLeaf_4C1901B0
+	.long	ResourceIdLeaf_4C1901C4
+	.long	ResourceIdLeaf_4C1901D8
+	.long	ResourceIdLeaf_4C1901EC
+	.long	ResourceIdLeaf_4C190200
+	.long	ResourceIdLeaf_4C190214
+	.long	ResourceIdLeaf_4C190228
 	.long	0
 ptrs_4C193CC8:
-	.long	data_4C19023C
-	.long	data_4C190250
-	.long	data_4C190264
-	.long	data_4C190278
-	.long	data_4C19028C
-	.long	data_4C1902A0
-	.long	data_4C1902B4
-	.long	data_4C1902C8
+	.long	ResourceIdLeaf_4C19023C
+	.long	ResourceIdLeaf_4C190250
+	.long	ResourceIdLeaf_4C190264
+	.long	ResourceIdLeaf_4C190278
+	.long	ResourceIdLeaf_4C19028C
+	.long	ResourceIdLeaf_4C1902A0
+	.long	ResourceIdLeaf_4C1902B4
+	.long	ResourceIdLeaf_4C1902C8
 	.long	0
 ptrs_4C193CEC:
-	.long	data_4C1902DC
-	.long	data_4C1902F0
-	.long	data_4C19032C
+	.long	ResourceIdLeaf_4C1902DC
+	.long	ResourceIdLeaf_4C1902F0
+	.long	ResourceIdLeaf_4C19032C
 	.long	0
 ptrs_4C193CFC:
-	.long	data_4C190340
-	.long	data_4C190354
-	.long	data_4C190368
-	.long	data_4C19037C
-	.long	data_4C190390
+	.long	ResourceIdLeaf_4C190340
+	.long	ResourceIdLeaf_4C190354
+	.long	ResourceIdLeaf_4C190368
+	.long	ResourceIdLeaf_4C19037C
+	.long	ResourceIdLeaf_4C190390
 	.long	0
 data_4C193D14:
 	.space	4, 0x00
 ptrs_4C193D18:
-	.long	data_4C1907D8
-	.long	data_4C190DBC
-	.long	data_4C190E00
+	.long	ResourceIdLeaf_4C1907D8
+	.long	ResourceIdLeaf_4C190DBC
+	.long	ResourceIdLeaf_4C190E00
 	.long	0
 data_4C193D28:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190430
+	.long	ResourceIdLeaf_4C190430
 	.long	0
 ptrs_4C193D30:
-	.long	data_4C190B54
-	.long	data_4C190B68
+	.long	ResourceIdLeaf_4C190B54
+	.long	ResourceIdLeaf_4C190B68
 	.long	0
 data_4C193D3C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190B7C
+	.long	ResourceIdLeaf_4C190B7C
 	.long	0
 data_4C193D44:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190BBC
+	.long	ResourceIdLeaf_4C190BBC
 	.long	0
 data_4C193D4C:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	data_4C190BFC
+	.long	ResourceIdLeaf_4C190BFC
 	.long	0
 data_4C193D54:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
@@ -39590,416 +40008,3 @@ Str_TIME_SIGNATURE:	.asciz "TIME SIGNATURE:"
 		AcIndexWideES	CmpPtnCpP1Win_IndexWideES4, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES5, prev=CmpPtnCpP1Win_IndexWideES3, flag=VF_Const, X=408, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
 		AcIndexWideES	CmpPtnCpP1Win_IndexWideES5, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncEditSw1, prev=CmpPtnCpP1Win_IndexWideES4, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
 		AcFuncEditSw	CmpPtnCpP1Win_FuncEditSw1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_MEMORY, prev=CmpPtnCpP1Win_IndexWideES5, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmPnCpOK
-
-Str_MEMORY_8:	.asciz "MEMORY"
-	.align	4, 0xFF	# pad after Str_MEMORY_8
-
-		VwLabel	CmpPtnCpP1Win_Label_MEMORY, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN, prev=CmpPtnCpP1Win_FuncEditSw1, flag=VF_Const, X=414, Y=198, W=52, H=19, str=Str_MEMORY_8, fontcolor=CL_White	# str "MEMORY"
-
-Str_PATTERN_3:	.asciz "PATTERN"
-
-		VwLabel	CmpPtnCpP1Win_Label_PATTERN, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_GROUP, prev=CmpPtnCpP1Win_Label_MEMORY, flag=VF_Const, X=490, Y=198, W=60, H=19, str=Str_PATTERN_3, fontcolor=CL_White	# str "PATTERN"
-
-Str_GROUP_14:	.asciz "GROUP"
-	.align	4, 0xFF	# pad after Str_GROUP_14
-
-		VwLabel	CmpPtnCpP1Win_Label_GROUP, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_RHYTHM, prev=CmpPtnCpP1Win_Label_PATTERN, flag=VF_Const, X=18, Y=198, W=44, H=19, str=Str_GROUP_14, fontcolor=CL_White	# str "GROUP"
-
-Str_RHYTHM_11:	.asciz "RHYTHM"
-	.align	4, 0xFF	# pad after Str_RHYTHM_11
-
-		VwLabel	CmpPtnCpP1Win_Label_RHYTHM, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_PATTERN2, prev=CmpPtnCpP1Win_Label_GROUP, flag=VF_Const, X=94, Y=198, W=52, H=19, str=Str_RHYTHM_11, fontcolor=CL_White	# str "RHYTHM"
-
-Str_PATTERN_4:	.asciz "PATTERN"
-
-		VwLabel	CmpPtnCpP1Win_Label_PATTERN2, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_TO, prev=CmpPtnCpP1Win_Label_RHYTHM, flag=VF_Const, X=170, Y=198, W=60, H=19, str=Str_PATTERN_4, fontcolor=CL_White	# str "PATTERN"
-
-Str_TO_13:	.asciz "TO"
-	.align	4, 0xFF	# pad after Str_TO_13
-
-		VwLabel	CmpPtnCpP1Win_Label_TO, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_FROM, prev=CmpPtnCpP1Win_Label_PATTERN2, flag=VF_Const, X=482, Y=50, W=36, H=31, str=Str_TO_13, font=11, fontcolor=CL_White	# str "TO"
-
-Str_FROM_13:	.asciz "FROM"
-	.align	4, 0xFF	# pad after Str_FROM_13
-
-		VwLabel	CmpPtnCpP1Win_Label_FROM, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Yajirushi1, prev=CmpPtnCpP1Win_Label_TO, flag=VF_Const, X=94, Y=50, W=68, H=31, str=Str_FROM_13, font=11, fontcolor=CL_White	# str "FROM"
-		Yajirushi	CmpPtnCpP1Win_Yajirushi1, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_IndexWideES6, prev=CmpPtnCpP1Win_Label_FROM, flag=VF_Const, X=268, Y=88, W=132, H=58, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
-		AcIndexWideES	CmpPtnCpP1Win_IndexWideES6, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Label_ACCOMP_DSP, prev=CmpPtnCpP1Win_Yajirushi1, flag=VF_Const, X=284, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom9, style=3
-
-Str_ACCOMP_DSP_3:	.asciz "ACCOMP DSP"
-	.align	4, 0xFF	# pad after Str_ACCOMP_DSP_3
-
-		VwLabel	CmpPtnCpP1Win_Label_ACCOMP_DSP, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_FuncMenu_EDIT, prev=CmpPtnCpP1Win_IndexWideES6, flag=VF_Const, X=278, Y=198, W=84, H=19, str=Str_ACCOMP_DSP_3, fontcolor=CL_White	# str "ACCOMP DSP"
-
-Str_EDIT_4:	.asciz "EDIT"
-	.align	4, 0xFF	# pad after Str_EDIT_4
-
-		AcFuncMenu	CmpPtnCpP1Win_FuncMenu_EDIT, super=CmpPtnCpP1Win, next=CmpPtnCpP1Win_Box1, prev=CmpPtnCpP1Win_Label_ACCOMP_DSP, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpPtnCpP1Win_FuncMenu_EDIT_selected, str=Str_EDIT_4, func=FN_CmpPnCpEditFunc	# str "EDIT"
-		VwBox	CmpPtnCpP1Win_Box1, super=CmpPtnCpP1Win, sub=CmpPtnCpP1Win_Label_MEMORY2, next=CmpPtnCpP1Win_Box2, prev=CmpPtnCpP1Win_FuncMenu_EDIT, flag=VF_Const, X=404, Y=78, W=186, H=120, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_MEMORY_9:	.asciz "MEMORY:"
-
-			VwLabel	CmpPtnCpP1Win_Label_MEMORY2, super=CmpPtnCpP1Win_Box1, next=CmpPtnCpP1Win_Label_PATTERN3, flag=VF_Const, X=410, Y=90, W=60, H=19, str=Str_MEMORY_9, fontcolor=CL_Yellow	# str "MEMORY:"
-
-Str_PATTERN_5:	.asciz "PATTERN:"
-	.align	4, 0xFF	# pad after Str_PATTERN_5
-
-			VwLabel	CmpPtnCpP1Win_Label_PATTERN3, super=CmpPtnCpP1Win_Box1, next=CmpPtnCpP1Win_FuncEditBox1, prev=CmpPtnCpP1Win_Label_MEMORY2, flag=VF_Const, X=410, Y=142, W=68, H=19, str=Str_PATTERN_5, fontcolor=CL_Yellow	# str "PATTERN:"
-
-Str_empty_208:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_208
-
-			AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox1, super=CmpPtnCpP1Win_Box1, next=PnCpDstPtn, prev=CmpPtnCpP1Win_Label_PATTERN3, flag=VF_Const, X=410, Y=106, W=177, H=34, color=CL_WallPattern, index=4, caption=Str_empty_208, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox1_selected, func=FN_FuncEdit_rhyDstName	# caption ""
-
-Str_empty_209:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_209
-
-			AcFuncEditBox	PnCpDstPtn, super=CmpPtnCpP1Win_Box1, prev=CmpPtnCpP1Win_FuncEditBox1, flag=VF_Const, X=410, Y=160, W=178, H=34, color=CL_WallPattern, index=5, caption=Str_empty_209, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDstPtn_selected, func=FN_FuncEdit_rhyDstPattern	# caption ""
-		VwBox	CmpPtnCpP1Win_Box2, super=CmpPtnCpP1Win, sub=CmpPtnCpP1Win_Label_ACCOMP_DSP2, next=CmpPtnCpP1Win_Box3, prev=CmpPtnCpP1Win_Box1, flag=VF_Const, X=268, Y=150, W=132, H=48, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_ACCOMP_DSP_4:	.asciz "ACCOMP DSP"
-	.align	4, 0xFF	# pad after Str_ACCOMP_DSP_4
-
-			VwLabel	CmpPtnCpP1Win_Label_ACCOMP_DSP2, super=CmpPtnCpP1Win_Box2, next=PnCpDspYN, flag=VF_Const, X=270, Y=154, W=64, H=11, str=Str_ACCOMP_DSP_4, font=3, fontcolor=CL_Yellow	# str "ACCOMP DSP"
-
-Str_empty_210:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_210
-
-			AcFuncEditBox	PnCpDspYN, super=CmpPtnCpP1Win_Box2, next=CmpPtnCpP1Win_Label_COPY_OPTION, prev=CmpPtnCpP1Win_Label_ACCOMP_DSP2, flag=VF_Const, X=273, Y=177, W=125, H=15, color=CL_WallPattern, index=6, caption=Str_empty_210, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDspYN_selected, func=FN_FuncEdit_rhyYN	# caption ""
-
-Str_COPY_OPTION_3:	.asciz "COPY OPTION:"
-	.align	4, 0xFF	# pad after Str_COPY_OPTION_3
-
-			VwLabel	CmpPtnCpP1Win_Label_COPY_OPTION, super=CmpPtnCpP1Win_Box2, prev=PnCpDspYN, flag=VF_Const, X=276, Y=164, W=76, H=11, str=Str_COPY_OPTION_3, font=3, fontcolor=CL_Yellow	# str "COPY OPTION:"
-		VwBox	CmpPtnCpP1Win_Box3, super=CmpPtnCpP1Win, sub=CmpPtnCpP1Win_Label_RHYTHM2, prev=CmpPtnCpP1Win_Box2, flag=VF_Const, X=0, Y=78, W=264, H=120, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_RHYTHM_12:	.asciz "RHYTHM:"
-
-			VwLabel	CmpPtnCpP1Win_Label_RHYTHM2, super=CmpPtnCpP1Win_Box3, next=CmpPtnCpP1Win_Label_GROUP2, flag=VF_Const, X=6, Y=130, W=60, H=19, str=Str_RHYTHM_12, fontcolor=CL_Yellow	# str "RHYTHM:"
-
-Str_GROUP_15:	.asciz "GROUP:"
-	.align	4, 0xFF	# pad after Str_GROUP_15
-
-			VwLabel	CmpPtnCpP1Win_Label_GROUP2, super=CmpPtnCpP1Win_Box3, next=CmpPtnCpP1Win_Label_PATTERN4, prev=CmpPtnCpP1Win_Label_RHYTHM2, flag=VF_Const, X=6, Y=94, W=52, H=19, str=Str_GROUP_15, fontcolor=CL_Yellow	# str "GROUP:"
-
-Str_PATTERN_6:	.asciz "PATTERN:"
-	.align	4, 0xFF	# pad after Str_PATTERN_6
-
-			VwLabel	CmpPtnCpP1Win_Label_PATTERN4, super=CmpPtnCpP1Win_Box3, next=CmpPtnCpP1Win_FuncEditBox2, prev=CmpPtnCpP1Win_Label_GROUP2, flag=VF_Const, X=6, Y=166, W=68, H=19, str=Str_PATTERN_6, fontcolor=CL_Yellow	# str "PATTERN:"
-
-Str_empty_211:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_211
-
-			AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox2, super=CmpPtnCpP1Win_Box3, next=PnCpSrcPtn, prev=CmpPtnCpP1Win_Label_PATTERN4, flag=VF_Const, X=72, Y=122, W=189, H=34, color=CL_WallPattern, index=2, caption=Str_empty_211, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox2_selected, func=FN_FuncEdit_rhyName	# caption ""
-
-Str_empty_212:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_212
-
-			AcFuncEditBox	PnCpSrcPtn, super=CmpPtnCpP1Win_Box3, next=CmpPtnCpP1Win_FuncEditBox3, prev=CmpPtnCpP1Win_FuncEditBox2, flag=VF_Const, X=72, Y=158, W=189, H=34, color=CL_WallPattern, index=3, caption=Str_empty_212, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpSrcPtn_selected, func=FN_FuncEdit_rhyPattern	# caption ""
-
-Str_empty_213:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_213
-
-			AcFuncEditBox	CmpPtnCpP1Win_FuncEditBox3, super=CmpPtnCpP1Win_Box3, prev=PnCpSrcPtn, flag=VF_Const, X=72, Y=86, W=189, H=34, color=CL_WallPattern, index=1, caption=Str_empty_213, font=4, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=CmpPtnCpP1Win_FuncEditBox3_selected, func=FN_FuncEdit_rhyGroup	# caption ""
-
-	Window	CmpPtnCpP2Win, sub=CmpPrtCpySrcGrid, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=1, parent=CmpPtnCpP2Win_parent, child=CmpPtnCpP2Win_child
-
-Str_GROUP_RHYTHM_PATTERN_PART:	.asciz "|    GROUP    |     RHYTHM     | PATTERN |  PART   "
-Str_empty_214:	.asciz "|-| | | | | | | | |"
-
-		AcGridBoxDelux	CmpPrtCpySrcGrid, super=CmpPtnCpP2Win, next=CmpPrtCpyDstGrid, flag=VF_Const, X=0, Y=70, W=400, H=145, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=10, col=5, vertline=1, selrow=CmpPrtCpySrcGrid_selrow, selcol=CmpPrtCpySrcGrid_selcol, pcol=CmpPrtCpySrcGrid_pcol, prow=CmpPrtCpySrcGrid_prow, crow=CmpPrtCpySrcGrid_crow, fixedcol=Str_GROUP_RHYTHM_PATTERN_PART, fixedrow=Str_empty_214, func=FN_CmpPartCopyGrid	# fixedcol "|    GROUP    |     RHYTHM     | PATTERN"; fixedrow "|-| | | | | | | | |"
-
-Str_PART_FUNC:	.asciz "  PART  |  FUNC  "
-Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_4:	.asciz "|-| DRUM1 | DRUM2 | BASS  |ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5"
-	.align	4, 0xFF	# pad after Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_4
-
-		AcGridBoxDelux	CmpPrtCpyDstGrid, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Yajirushi1, prev=CmpPrtCpySrcGrid, flag=VF_Const, X=444, Y=70, W=145, H=145, color=CL_WallPattern, border=BD_3D_UP2, index=6, fontcolor=CL_White, row=10, col=2, vertline=1, selrow=CmpPrtCpyDstGrid_selrow, selcol=CmpPrtCpyDstGrid_selcol, pcol=CmpPrtCpyDstGrid_pcol, prow=CmpPrtCpyDstGrid_prow, crow=CmpPrtCpyDstGrid_crow, fixedcol=Str_PART_FUNC, fixedrow=Str_DRUM1_DRUM2_BASS_ACCOMP1_ACCOMP2_ACCOMP3_4, func=FN_CmpPrtCpyStsGrid	# fixedcol "  PART  |  FUNC  "; fixedrow "|-| DRUM1 | DRUM2 | BASS  |ACCOMP1|ACCOM"
-		Yajirushi	CmpPtnCpP2Win_Yajirushi1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES1, prev=CmpPrtCpyDstGrid, flag=VF_Const, X=404, Y=114, W=38, H=64, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES2, prev=CmpPtnCpP2Win_Yajirushi1, flag=VF_Const, X=4, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom3, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES2, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES3, prev=CmpPtnCpP2Win_IndexWideES1, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES3, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES4, prev=CmpPtnCpP2Win_IndexWideES2, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES4, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexWideES5, prev=CmpPtnCpP2Win_IndexWideES3, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=3
-		AcIndexWideES	CmpPtnCpP2Win_IndexWideES5, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_FROM, prev=CmpPtnCpP2Win_IndexWideES4, flag=VF_Const, X=524, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom15, style=3
-
-Str_FROM_14:	.asciz "FROM"
-	.align	4, 0xFF	# pad after Str_FROM_14
-
-		VwLabel	CmpPtnCpP2Win_Label_FROM, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_TO, prev=CmpPtnCpP2Win_IndexWideES5, flag=VF_Const, X=166, Y=40, W=68, H=31, str=Str_FROM_14, font=11, fontcolor=CL_White	# str "FROM"
-
-Str_TO_14:	.asciz "TO"
-	.align	4, 0xFF	# pad after Str_TO_14
-
-		VwLabel	CmpPtnCpP2Win_Label_TO, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_MEM, prev=CmpPtnCpP2Win_Label_FROM, flag=VF_Const, X=502, Y=29, W=20, H=19, str=Str_TO_14, font=1, fontcolor=CL_White	# str "TO"
-
-Str_MEM_2:	.asciz "MEM"
-
-		VwLabel	CmpPtnCpP2Win_Label_MEM, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_Label_PART, prev=CmpPtnCpP2Win_Label_TO, flag=VF_Const, X=596, Y=61, W=28, H=19, str=Str_MEM_2, font=1, fontcolor=CL_White	# str "MEM"
-
-Str_PART_9:	.asciz "PART"
-	.align	4, 0xFF	# pad after Str_PART_9
-
-		VwLabel	CmpPtnCpP2Win_Label_PART, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncMenu_EDIT, prev=CmpPtnCpP2Win_Label_MEM, flag=VF_Const, X=402, Y=200, W=36, H=19, str=Str_PART_9, fontcolor=CL_White	# str "PART"
-
-Str_EDIT_5:	.asciz "EDIT"
-	.align	4, 0xFF	# pad after Str_EDIT_5
-
-		AcFuncMenu	CmpPtnCpP2Win_FuncMenu_EDIT, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncEditBox1, prev=CmpPtnCpP2Win_Label_PART, flag=VF_Const, X=8, Y=28, W=80, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=CmpPtnCpP2Win_FuncMenu_EDIT_selected, str=Str_EDIT_5, func=FN_CmpPrtCpyEditFunc	# str "EDIT"
-
-Str_empty_215:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_215
-
-		AcFuncEditBox	CmpPtnCpP2Win_FuncEditBox1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexEditSw1, prev=CmpPtnCpP2Win_FuncMenu_EDIT, flag=VF_Const, X=444, Y=44, W=145, H=26, color=CL_WallPattern, border=BD_3D_UP2, index=10, caption=Str_empty_215, font=1, fontcolor=CL_White, align=1, length=15, editsw=ES_None, selected=CmpPtnCpP2Win_FuncEditBox1_selected, func=FN_FE_CompPartCopyMem	# caption ""
-		AcIndexEditSw	CmpPtnCpP2Win_IndexEditSw1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_IndexEditSw2, prev=CmpPtnCpP2Win_FuncEditBox1, flag=VF_Const, X=592, Y=37, W=40, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=1
-		AcIndexEditSw	CmpPtnCpP2Win_IndexEditSw2, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncEditSw1, prev=CmpPtnCpP2Win_IndexEditSw1, flag=VF_Const, X=592, Y=80, W=40, H=20, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=2
-		AcFuncEditSw	CmpPtnCpP2Win_FuncEditSw1, super=CmpPtnCpP2Win, next=CmpPtnCpP2Win_FuncEditSw2, prev=CmpPtnCpP2Win_IndexEditSw2, flag=VF_Const, X=404, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=14, func=FN_CmpPrtCpyPart
-		AcFuncEditSw	CmpPtnCpP2Win_FuncEditSw2, super=CmpPtnCpP2Win, prev=CmpPtnCpP2Win_FuncEditSw1, flag=VF_Const, X=592, Y=165, W=40, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CmpPartCopyOk
-
-Str_PART_BALANCE_3:	.asciz "PART BALANCE"
-	.align	4, 0xFF	# pad after Str_PART_BALANCE_3
-
-	TtlScreen	CmpBalScreen, sub=CmpBalScreen_MixerVol1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CMREAL, window=CmpBalScreen_window, title=Str_PART_BALANCE_3, icon=143	# title "PART BALANCE"
-		AcMixerVol	CmpBalScreen_MixerVol1, super=CmpBalScreen, next=CmpBalScreen_MixerVol2, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=20, editsw=ES_Bottom6
-		AcMixerVol	CmpBalScreen_MixerVol2, super=CmpBalScreen, next=CmpBalScreen_MixerVol3, prev=CmpBalScreen_MixerVol1, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=21, editsw=ES_Bottom5
-		AcMixerVol	CmpBalScreen_MixerVol3, super=CmpBalScreen, next=CmpBalScreen_MixerVol4, prev=CmpBalScreen_MixerVol2, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=22, editsw=ES_Bottom4
-		AcMixerVol	CmpBalScreen_MixerVol4, super=CmpBalScreen, next=CmpBalScreen_MixerVol5, prev=CmpBalScreen_MixerVol3, flag=VF_Const, X=43, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=25, editsw=ES_Bottom2
-		AcMixerVol	CmpBalScreen_MixerVol5, super=CmpBalScreen, next=CmpBalScreen_MixerVol6, prev=CmpBalScreen_MixerVol4, flag=VF_Const, X=4, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=26, editsw=ES_Bottom1
-		AcMixerVol	CmpBalScreen_MixerVol6, super=CmpBalScreen, next=CmpBalScreen_MixerVol7, prev=CmpBalScreen_MixerVol5, flag=VF_Const, X=82, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=23, editsw=ES_Bottom3
-		AcMixerVol	CmpBalScreen_MixerVol7, super=CmpBalScreen, next=CmpBalScreen_MixerVol8, prev=CmpBalScreen_MixerVol6, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=19, editsw=ES_Bottom7
-		AcMixerVol	CmpBalScreen_MixerVol8, super=CmpBalScreen, next=CmpBalScreen_MixerVol9, prev=CmpBalScreen_MixerVol7, flag=VF_Const, X=597, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=32, editsw=ES_Bottom16
-		AcMixerVol	CmpBalScreen_MixerVol9, super=CmpBalScreen, next=CmpBalScreen_CmpPatternBox1, prev=CmpBalScreen_MixerVol8, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=24, editsw=ES_Bottom8
-		AcCmpPatternBox	CmpBalScreen_CmpPatternBox1, super=CmpBalScreen, next=CmpBalScreen_CmpBarBox1, prev=CmpBalScreen_MixerVol9, flag=VF_Const, X=216, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1, drawPattern=1
-		AcCmpBarBox	CmpBalScreen_CmpBarBox1, super=CmpBalScreen, prev=CmpBalScreen_CmpPatternBox1, flag=VF_Const, X=512, Y=6, W=48, H=19, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
-
-	Window	MspBksl3Win, sub=MspBksl3Win_Label_4_5_6, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_Transparent, index=0xFFFF, parent=MspBksl3Win_parent, child=MspBksl3Win_child
-
-Str_4_5_6_2:	.asciz "4    5    6"
-
-		VwLabel	MspBksl3Win_Label_4_5_6, super=MspBksl3Win, sub=MspBksl3Win_Line1, next=MspBksl3Win_Line2, flag=VF_Const, X=258, Y=82, W=125, H=19, str=Str_4_5_6_2, font=4, fontcolor=CL_White	# str "4    5    6"
-			VwLine	MspBksl3Win_Line1, super=MspBksl3Win_Label_4_5_6, flag=VF_Const, X=292, Y=44, W=60, H=1, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line2, super=MspBksl3Win, next=MspBksl3Win_Line3, prev=MspBksl3Win_Label_4_5_6, flag=VF_Const, X=232, Y=76, W=180, H=1, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line3, super=MspBksl3Win, sub=MspBksl3Win_Label_1_2_3, next=MspBksl3Win_Line4, prev=MspBksl3Win_Line2, flag=VF_Const, X=292, Y=46, W=1, H=60, color=CL_White, linemode=1
-
-Str_1_2_3_2:	.asciz "1    2    3"
-
-			VwLabel	MspBksl3Win_Label_1_2_3, super=MspBksl3Win_Line3, flag=VF_Const, X=258, Y=54, W=125, H=19, str=Str_1_2_3_2, font=4, fontcolor=CL_White	# str "1    2    3"
-		VwLine	MspBksl3Win_Line4, super=MspBksl3Win, next=MspBksl3Win_Line5, prev=MspBksl3Win_Line3, flag=VF_Const, X=352, Y=46, W=1, H=60, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line5, super=MspBksl3Win, next=MspBksl3Win_Line6, prev=MspBksl3Win_Line4, flag=VF_Const, X=232, Y=56, W=1, H=40, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line6, super=MspBksl3Win, next=MspBksl3Win_Line7, prev=MspBksl3Win_Line5, flag=VF_Const, X=412, Y=56, W=1, H=40, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line7, super=MspBksl3Win, next=MspBksl3Win_Line8, prev=MspBksl3Win_Line6, flag=VF_Const, X=352, Y=44, W=60, H=12, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line8, super=MspBksl3Win, next=MspBksl3Win_Line9, prev=MspBksl3Win_Line7, flag=VF_Const, X=232, Y=96, W=60, H=12, color=CL_White, linemode=1
-		VwLine	MspBksl3Win_Line9, super=MspBksl3Win, next=MspBksl3Win_Line10, prev=MspBksl3Win_Line8, flag=VF_Const, X=232, Y=44, W=60, H=12, color=CL_White
-		VwLine	MspBksl3Win_Line10, super=MspBksl3Win, next=MspBksl3Win_Line11, prev=MspBksl3Win_Line9, flag=VF_Const, X=352, Y=96, W=60, H=12, color=CL_White
-		VwLine	MspBksl3Win_Line11, super=MspBksl3Win, next=MspBksl3Win_PadBankSel1, prev=MspBksl3Win_Line10, flag=VF_Const, X=292, Y=108, W=60, H=1, color=CL_White, linemode=1
-		AcPadBankSel	MspBksl3Win_PadBankSel1, super=MspBksl3Win, next=MspBksl3Win_PadBankSel2, prev=MspBksl3Win_Line11, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel1_caption, visible=MspBksl3Win_PadBankSel1_visible, selected=MspBksl3Win_PadBankSel1_selected, padtype=1
-		AcPadBankSel	MspBksl3Win_PadBankSel2, super=MspBksl3Win, next=MspBksl3Win_PadBankSel3, prev=MspBksl3Win_PadBankSel1, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel2_caption, visible=MspBksl3Win_PadBankSel2_visible, selected=MspBksl3Win_PadBankSel2_selected, padbank=1, padtype=1
-		AcPadBankSel	MspBksl3Win_PadBankSel3, super=MspBksl3Win, next=MspBksl3Win_PadBankSel4, prev=MspBksl3Win_PadBankSel2, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel3_caption, visible=MspBksl3Win_PadBankSel3_visible, selected=MspBksl3Win_PadBankSel3_selected, padtype=3
-		AcPadBankSel	MspBksl3Win_PadBankSel4, super=MspBksl3Win, next=MspBksl3Win_PadBankSel5, prev=MspBksl3Win_PadBankSel3, flag=VF_Const, X=431, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel4_caption, visible=MspBksl3Win_PadBankSel4_visible, selected=MspBksl3Win_PadBankSel4_selected, padbank=1, padtype=3
-		AcPadBankSel	MspBksl3Win_PadBankSel5, super=MspBksl3Win, next=MspBksl3Win_PadBankSel6, prev=MspBksl3Win_PadBankSel4, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel5_caption, visible=MspBksl3Win_PadBankSel5_visible, selected=MspBksl3Win_PadBankSel5_selected, padtype=4
-		AcPadBankSel	MspBksl3Win_PadBankSel6, super=MspBksl3Win, prev=MspBksl3Win_PadBankSel5, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel6_caption, visible=MspBksl3Win_PadBankSel6_visible, selected=MspBksl3Win_PadBankSel6_selected, padbank=2, padtype=1
-
-	Window	MspBksl2Win, sub=MspBksl2Win_Label_4_5_6, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_Transparent, index=0xFFFF, parent=MspBksl2Win_parent, child=MspBksl2Win_child
-
-Str_4_5_6_3:	.asciz "4    5    6"
-
-		VwLabel	MspBksl2Win_Label_4_5_6, super=MspBksl2Win, sub=MspBksl2Win_Line1, next=MspBksl2Win_Line2, flag=VF_Const, X=258, Y=82, W=125, H=19, str=Str_4_5_6_3, font=4, fontcolor=CL_White	# str "4    5    6"
-			VwLine	MspBksl2Win_Line1, super=MspBksl2Win_Label_4_5_6, flag=VF_Const, X=292, Y=44, W=60, H=1, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line2, super=MspBksl2Win, next=MspBksl2Win_Line3, prev=MspBksl2Win_Label_4_5_6, flag=VF_Const, X=232, Y=76, W=180, H=1, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line3, super=MspBksl2Win, sub=MspBksl2Win_Label_1_2_3, next=MspBksl2Win_Line4, prev=MspBksl2Win_Line2, flag=VF_Const, X=292, Y=46, W=1, H=60, color=CL_White, linemode=1
-
-Str_1_2_3_3:	.asciz "1    2    3"
-
-			VwLabel	MspBksl2Win_Label_1_2_3, super=MspBksl2Win_Line3, flag=VF_Const, X=258, Y=54, W=125, H=19, str=Str_1_2_3_3, font=4, fontcolor=CL_White	# str "1    2    3"
-		VwLine	MspBksl2Win_Line4, super=MspBksl2Win, next=MspBksl2Win_Line5, prev=MspBksl2Win_Line3, flag=VF_Const, X=352, Y=46, W=1, H=60, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line5, super=MspBksl2Win, next=MspBksl2Win_Line6, prev=MspBksl2Win_Line4, flag=VF_Const, X=232, Y=56, W=1, H=40, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line6, super=MspBksl2Win, next=MspBksl2Win_Line7, prev=MspBksl2Win_Line5, flag=VF_Const, X=412, Y=56, W=1, H=40, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line7, super=MspBksl2Win, next=MspBksl2Win_Line8, prev=MspBksl2Win_Line6, flag=VF_Const, X=352, Y=44, W=60, H=12, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line8, super=MspBksl2Win, next=MspBksl2Win_Line9, prev=MspBksl2Win_Line7, flag=VF_Const, X=232, Y=96, W=60, H=12, color=CL_White, linemode=1
-		VwLine	MspBksl2Win_Line9, super=MspBksl2Win, next=MspBksl2Win_Line10, prev=MspBksl2Win_Line8, flag=VF_Const, X=232, Y=44, W=60, H=12, color=CL_White
-		VwLine	MspBksl2Win_Line10, super=MspBksl2Win, next=MspBksl2Win_Line11, prev=MspBksl2Win_Line9, flag=VF_Const, X=352, Y=96, W=60, H=12, color=CL_White
-		VwLine	MspBksl2Win_Line11, super=MspBksl2Win, next=MspBksl2Win_PadBankSel1, prev=MspBksl2Win_Line10, flag=VF_Const, X=292, Y=108, W=60, H=1, color=CL_White, linemode=1
-		AcPadBankSel	MspBksl2Win_PadBankSel1, super=MspBksl2Win, next=MspBksl2Win_PadBankSel2, prev=MspBksl2Win_Line11, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel1_caption, visible=MspBksl2Win_PadBankSel1_visible, selected=MspBksl2Win_PadBankSel1_selected, padbank=10
-		AcPadBankSel	MspBksl2Win_PadBankSel2, super=MspBksl2Win, next=MspBksl2Win_PadBankSel3, prev=MspBksl2Win_PadBankSel1, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel2_caption, visible=MspBksl2Win_PadBankSel2_visible, selected=MspBksl2Win_PadBankSel2_selected, padbank=11
-		AcPadBankSel	MspBksl2Win_PadBankSel3, super=MspBksl2Win, next=MspBksl2Win_PadBankSel4, prev=MspBksl2Win_PadBankSel2, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel3_caption, visible=MspBksl2Win_PadBankSel3_visible, selected=MspBksl2Win_PadBankSel3_selected, padbank=12
-		AcPadBankSel	MspBksl2Win_PadBankSel4, super=MspBksl2Win, next=MspBksl2Win_PadBankSel5, prev=MspBksl2Win_PadBankSel3, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel4_caption, visible=MspBksl2Win_PadBankSel4_visible, selected=MspBksl2Win_PadBankSel4_selected, padbank=13
-		AcPadBankSel	MspBksl2Win_PadBankSel5, super=MspBksl2Win, next=MspBksl2Win_PadBankSel6, prev=MspBksl2Win_PadBankSel4, flag=VF_Const, X=8, Y=203, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left5, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel5_caption, visible=MspBksl2Win_PadBankSel5_visible, selected=MspBksl2Win_PadBankSel5_selected, padbank=14
-		AcPadBankSel	MspBksl2Win_PadBankSel6, super=MspBksl2Win, next=MspBksl2Win_PadBankSel7, prev=MspBksl2Win_PadBankSel5, flag=VF_Const, X=431, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right1, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel6_caption, visible=MspBksl2Win_PadBankSel6_visible, selected=MspBksl2Win_PadBankSel6_selected, padbank=15
-		AcPadBankSel	MspBksl2Win_PadBankSel7, super=MspBksl2Win, next=MspBksl2Win_PadBankSel8, prev=MspBksl2Win_PadBankSel6, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel7_caption, visible=MspBksl2Win_PadBankSel7_visible, selected=MspBksl2Win_PadBankSel7_selected, padbank=16
-		AcPadBankSel	MspBksl2Win_PadBankSel8, super=MspBksl2Win, next=MspBksl2Win_PadBankSel9, prev=MspBksl2Win_PadBankSel7, flag=VF_Const, X=431, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel8_caption, visible=MspBksl2Win_PadBankSel8_visible, selected=MspBksl2Win_PadBankSel8_selected, padbank=17
-		AcPadBankSel	MspBksl2Win_PadBankSel9, super=MspBksl2Win, next=MspBksl2Win_PadBankSel10, prev=MspBksl2Win_PadBankSel8, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel9_caption, visible=MspBksl2Win_PadBankSel9_visible, selected=MspBksl2Win_PadBankSel9_selected, padbank=18
-		AcPadBankSel	MspBksl2Win_PadBankSel10, super=MspBksl2Win, prev=MspBksl2Win_PadBankSel9, flag=VF_Const, X=431, Y=203, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right5, font=4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel10_caption, visible=MspBksl2Win_PadBankSel10_visible, selected=MspBksl2Win_PadBankSel10_selected, padbank=19
-
-Str_PADS_MENU:	.asciz "PADS MENU"
-	.align	4, 0xFF	# pad after Str_PADS_MENU
-
-	TtlScreen	MspMenuScreen, sub=MspMenuScreen_TitleMenu_PHRASE_COPY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PS, window=MspMenuScreen_window, title=Str_PADS_MENU, icon=197	# title "PADS MENU"
-
-Str_PHRASE_COPY:	.asciz "PHRASE COPY "
-	.align	4, 0xFF	# pad after Str_PHRASE_COPY
-
-		AcTitleMenu	MspMenuScreen_TitleMenu_PHRASE_COPY, super=MspMenuScreen, next=MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=MspMenuScreen_TitleMenu_PHRASE_COPY_selected, str=Str_PHRASE_COPY, title=TT_MSPPNCP, icon=198	# str "PHRASE COPY "
-
-Str_SEQ_TO_PAD_COPY:	.asciz "SEQ TO PAD COPY "
-	.align	4, 0xFF	# pad after Str_SEQ_TO_PAD_COPY
-
-		AcTitleMenu	MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY, super=MspMenuScreen, next=MspMenuScreen_Line1, prev=MspMenuScreen_TitleMenu_PHRASE_COPY, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY_selected, str=Str_SEQ_TO_PAD_COPY, title=TT_MSPSEQCP, icon=178	# str "SEQ TO PAD COPY "
-		VwLine	MspMenuScreen_Line1, super=MspMenuScreen, next=MspMenuScreen_Line2, prev=MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY, flag=VF_Const, X=70, Y=91, W=10, H=1, color=CL_White, linemode=1
-		VwLine	MspMenuScreen_Line2, super=MspMenuScreen, next=MspMenuScreen_TitleMenu_COMPILE_SET, prev=MspMenuScreen_Line1, flag=VF_Const, X=70, Y=133, W=10, H=1, color=CL_White, linemode=1
-
-Str_COMPILE_SET:	.asciz "COMPILE SET "
-	.align	4, 0xFF	# pad after Str_COMPILE_SET
-
-		AcTitleMenu	MspMenuScreen_TitleMenu_COMPILE_SET, super=MspMenuScreen, next=MspMenuScreen_Line3, prev=MspMenuScreen_Line2, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=MspMenuScreen_TitleMenu_COMPILE_SET_selected, str=Str_COMPILE_SET, title=TT_MSPGROUP, icon=167	# str "COMPILE SET "
-		VwLine	MspMenuScreen_Line3, super=MspMenuScreen, next=MspMenuScreen_Line4, prev=MspMenuScreen_TitleMenu_COMPILE_SET, flag=VF_Const, X=80, Y=91, W=1, H=85, color=CL_White, linemode=1
-		VwLine	MspMenuScreen_Line4, super=MspMenuScreen, next=MspMenuScreen_Label_RECORDING_BANK, prev=MspMenuScreen_Line3, flag=VF_Const, X=70, Y=175, W=10, H=1, color=CL_White, linemode=1
-
-Str_RECORDING_BANK:	.asciz "RECORDING BANK"
-	.align	4, 0xFF	# pad after Str_RECORDING_BANK
-
-		VwLabel	MspMenuScreen_Label_RECORDING_BANK, super=MspMenuScreen, next=MspMenuScreen_ExitMode1, prev=MspMenuScreen_Line4, flag=VF_Const, X=90, Y=125, W=158, H=19, str=Str_RECORDING_BANK, font=4, fontcolor=CL_White	# str "RECORDING BANK"
-		IvExitMode	MspMenuScreen_ExitMode1, super=MspMenuScreen, next=MspMenuScreen_FuncMenu_A, prev=MspMenuScreen_Label_RECORDING_BANK, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
-
-Str_A_2:	.asciz " A"
-	.align	4, 0xFF	# pad after Str_A_2
-
-		AcFuncMenu	MspMenuScreen_FuncMenu_A, super=MspMenuScreen, next=MspMenuScreen_FuncMenu_C, prev=MspMenuScreen_ExitMode1, flag=VF_Const, X=8, Y=71, W=60, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=MspMenuScreen_FuncMenu_A_selected, str=Str_A_2, func=FN_PadRecBankSelFunc, icon=166	# str " A"
-
-Str_C_2:	.asciz " C"
-	.align	4, 0xFF	# pad after Str_C_2
-
-		AcFuncMenu	MspMenuScreen_FuncMenu_C, super=MspMenuScreen, next=MspMenuScreen_FuncMenu_B, prev=MspMenuScreen_FuncMenu_A, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=MspMenuScreen_FuncMenu_C_selected, str=Str_C_2, func=FN_PadRecBankSelFunc, icon=166, vari=2	# str " C"
-
-Str_B_2:	.asciz " B"
-	.align	4, 0xFF	# pad after Str_B_2
-
-		AcFuncMenu	MspMenuScreen_FuncMenu_B, super=MspMenuScreen, prev=MspMenuScreen_FuncMenu_C, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=MspMenuScreen_FuncMenu_B_selected, str=Str_B_2, func=FN_PadRecBankSelFunc, icon=166, vari=1	# str " B"
-
-Str_RECORD_PAD:	.asciz "RECORD PAD"
-	.align	4, 0xFF	# pad after Str_RECORD_PAD
-
-	TtlScreen	MspPadSelScreen, sub=MspPadSelScreen_TitleMenu_BANK_NAMING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPMENU, window=MspPadSelScreen_window, title=Str_RECORD_PAD, icon=197	# title "RECORD PAD"
-
-Str_BANK_NAMING_3:	.asciz "BANK NAMING"
-
-		AcTitleMenu	MspPadSelScreen_TitleMenu_BANK_NAMING, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES1, flag=VF_Const, X=527, Y=71, W=105, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=MspPadSelScreen_TitleMenu_BANK_NAMING_selected, str=Str_BANK_NAMING_3, title=TT_MSPNAME, icon=153	# str "BANK NAMING"
-		AcFuncWideES	MspPadSelScreen_FuncWideES1, super=MspPadSelScreen, sub=MspPadSelScreen_Label_PAD_1, next=MspPadSelScreen_SureWindowMenu_BANK_CLR, prev=MspPadSelScreen_TitleMenu_BANK_NAMING, flag=VF_Const, X=0, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, func=FN_PadPatSelOK
-
-Str_PAD_1:	.asciz "PAD 1"
-	.align	4, 0xFF	# pad after Str_PAD_1
-
-			VwLabel	MspPadSelScreen_Label_PAD_1, super=MspPadSelScreen_FuncWideES1, flag=VF_Const, X=14, Y=220, W=44, H=19, str=Str_PAD_1, font=1, fontcolor=CL_Black	# str "PAD 1"
-
-Str_BANK_CLR:	.asciz "BANK CLR"
-	.align	4, 0xFF	# pad after Str_BANK_CLR
-
-		AcSureWindowMenu	MspPadSelScreen_SureWindowMenu_BANK_CLR, super=MspPadSelScreen, next=MspPadSelScreen_CmpPatternBox1, prev=MspPadSelScreen_FuncWideES1, flag=VF_Const, X=527, Y=33, W=105, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=MspPadSelScreen_SureWindowMenu_BANK_CLR_selected, str=Str_BANK_CLR, window=MspMemClrWin_id, func=FN_PadMemClrYes	# str "BANK CLR"
-		AcCmpPatternBox	MspPadSelScreen_CmpPatternBox1, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_1, prev=MspPadSelScreen_SureWindowMenu_BANK_CLR, flag=VF_Const, X=256, Y=2, W=270, H=25, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-
-Str_1_16:	.asciz "1:"
-	.align	4, 0xFF	# pad after Str_1_16
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_1, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_2, prev=MspPadSelScreen_CmpPatternBox1, flag=VF_Const, X=4, Y=104, W=157, H=22, color=CL_WallPattern, index=0xFFFF, caption=Str_1_16, font=1, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_1_selected	# caption "1:"
-
-Str_2_18:	.asciz "2:"
-	.align	4, 0xFF	# pad after Str_2_18
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_2, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_3, prev=MspPadSelScreen_RecPadNameBox_1, flag=VF_Const, X=168, Y=100, W=157, H=22, color=CL_WallPattern, index=0xFFFF, caption=Str_2_18, font=1, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_2_selected, padno=1	# caption "2:"
-
-Str_3_16:	.asciz "3:"
-	.align	4, 0xFF	# pad after Str_3_16
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_3, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_4, prev=MspPadSelScreen_RecPadNameBox_2, flag=VF_Const, X=332, Y=104, W=157, H=22, color=CL_WallPattern, index=0xFFFF, caption=Str_3_16, font=1, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_3_selected, padno=2	# caption "3:"
-
-Str_4_17:	.asciz "4:"
-	.align	4, 0xFF	# pad after Str_4_17
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_4, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_5, prev=MspPadSelScreen_RecPadNameBox_3, flag=VF_Const, X=4, Y=148, W=157, H=22, color=CL_WallPattern, index=0xFFFF, caption=Str_4_17, font=1, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_4_selected, padno=3	# caption "4:"
-
-Str_5_13:	.asciz "5:"
-	.align	4, 0xFF	# pad after Str_5_13
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_5, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_6, prev=MspPadSelScreen_RecPadNameBox_4, flag=VF_Const, X=168, Y=152, W=157, H=22, color=CL_WallPattern, index=0xFFFF, caption=Str_5_13, font=1, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_5_selected, padno=4	# caption "5:"
-
-Str_6_13:	.asciz "6:"
-	.align	4, 0xFF	# pad after Str_6_13
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_6, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES2, prev=MspPadSelScreen_RecPadNameBox_5, flag=VF_Const, X=332, Y=148, W=157, H=22, color=CL_WallPattern, index=0xFFFF, caption=Str_6_13, font=1, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_6_selected, padno=5	# caption "6:"
-		AcFuncWideES	MspPadSelScreen_FuncWideES2, super=MspPadSelScreen, sub=MspPadSelScreen_Label_PAD_2, next=MspPadSelScreen_FuncWideES3, prev=MspPadSelScreen_RecPadNameBox_6, flag=VF_Const, X=80, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, func=FN_PadPatSelOK
-
-Str_PAD_2:	.asciz "PAD 2"
-	.align	4, 0xFF	# pad after Str_PAD_2
-
-			VwLabel	MspPadSelScreen_Label_PAD_2, super=MspPadSelScreen_FuncWideES2, flag=VF_Const, X=94, Y=220, W=44, H=19, str=Str_PAD_2, font=1, fontcolor=CL_Black	# str "PAD 2"
-		AcFuncWideES	MspPadSelScreen_FuncWideES3, super=MspPadSelScreen, sub=MspPadSelScreen_Label_PAD_3, next=MspPadSelScreen_FuncWideES4, prev=MspPadSelScreen_FuncWideES2, flag=VF_Const, X=160, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, func=FN_PadPatSelOK
-
-Str_PAD_3:	.asciz "PAD 3"
-	.align	4, 0xFF	# pad after Str_PAD_3
-
-			VwLabel	MspPadSelScreen_Label_PAD_3, super=MspPadSelScreen_FuncWideES3, flag=VF_Const, X=174, Y=220, W=44, H=19, str=Str_PAD_3, font=1, fontcolor=CL_Black	# str "PAD 3"
-		AcFuncWideES	MspPadSelScreen_FuncWideES4, super=MspPadSelScreen, sub=MspPadSelScreen_Label_PAD_4, next=MspPadSelScreen_FuncWideES5, prev=MspPadSelScreen_FuncWideES3, flag=VF_Const, X=248, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, func=FN_PadPatSelOK
-
-Str_PAD_4:	.asciz "PAD 4"
-	.align	4, 0xFF	# pad after Str_PAD_4
-
-			VwLabel	MspPadSelScreen_Label_PAD_4, super=MspPadSelScreen_FuncWideES4, flag=VF_Const, X=262, Y=220, W=44, H=19, str=Str_PAD_4, font=1, fontcolor=CL_Black	# str "PAD 4"
-		AcFuncWideES	MspPadSelScreen_FuncWideES5, super=MspPadSelScreen, sub=MspPadSelScreen_Label_PAD_5, next=MspPadSelScreen_FuncWideES6, prev=MspPadSelScreen_FuncWideES4, flag=VF_Const, X=328, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, func=FN_PadPatSelOK
-
-Str_PAD_5:	.asciz "PAD 5"
-	.align	4, 0xFF	# pad after Str_PAD_5
-
-			VwLabel	MspPadSelScreen_Label_PAD_5, super=MspPadSelScreen_FuncWideES5, flag=VF_Const, X=342, Y=221, W=44, H=19, str=Str_PAD_5, font=1, fontcolor=CL_Black	# str "PAD 5"
-		AcFuncWideES	MspPadSelScreen_FuncWideES6, super=MspPadSelScreen, sub=MspPadSelScreen_Label_PAD_6, next=MspPadSelScreen_Line1, prev=MspPadSelScreen_FuncWideES5, flag=VF_Const, X=408, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, func=FN_PadPatSelOK
-
-Str_PAD_6:	.asciz "PAD 6"
-	.align	4, 0xFF	# pad after Str_PAD_6
-
-			VwLabel	MspPadSelScreen_Label_PAD_6, super=MspPadSelScreen_FuncWideES6, flag=VF_Const, X=422, Y=221, W=44, H=19, str=Str_PAD_6, font=1, fontcolor=CL_Black	# str "PAD 6"
-		VwLine	MspPadSelScreen_Line1, super=MspPadSelScreen, next=MspPadSelScreen_Line2, prev=MspPadSelScreen_FuncWideES6, flag=VF_Const, X=0, Y=138, W=492, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line2, super=MspPadSelScreen, next=MspPadSelScreen_Line3, prev=MspPadSelScreen_Line1, flag=VF_Const, X=164, Y=86, W=1, H=103, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line3, super=MspPadSelScreen, next=MspPadSelScreen_Line4, prev=MspPadSelScreen_Line2, flag=VF_Const, X=328, Y=86, W=1, H=103, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line4, super=MspPadSelScreen, next=MspPadSelScreen_Line5, prev=MspPadSelScreen_Line3, flag=VF_Const, X=492, Y=94, W=1, H=87, color=CL_Gray, linemode=1
-		VwLine	MspPadSelScreen_Line5, super=MspPadSelScreen, next=MspPadSelScreen_Line6, prev=MspPadSelScreen_Line4, flag=VF_Const, X=0, Y=86, W=164, H=10, color=CL_White
-		VwLine	MspPadSelScreen_Line6, super=MspPadSelScreen, next=MspPadSelScreen_Line7, prev=MspPadSelScreen_Line5, flag=VF_Const, X=328, Y=179, W=164, H=10, color=CL_Gray
-		VwLine	MspPadSelScreen_Line7, super=MspPadSelScreen, next=MspPadSelScreen_Line8, prev=MspPadSelScreen_Line6, flag=VF_Const, X=0, Y=179, W=164, H=10, color=CL_Gray, linemode=1
-		VwLine	MspPadSelScreen_Line8, super=MspPadSelScreen, next=MspPadSelScreen_Line9, prev=MspPadSelScreen_Line7, flag=VF_Const, X=164, Y=86, W=164, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line9, super=MspPadSelScreen, next=MspPadSelScreen_Box1, prev=MspPadSelScreen_Line8, flag=VF_Const, X=164, Y=188, W=164, H=1, color=CL_Gray, linemode=1
-		VwBox	MspPadSelScreen_Box1, super=MspPadSelScreen, sub=MspPadSelScreen_Label_BANK_NAME, next=MspPadSelScreen_Line10, prev=MspPadSelScreen_Line9, flag=VF_Const, X=0, Y=34, W=492, H=36, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-
-Str_BANK_NAME:	.asciz "BANK NAME :"
-
-			VwLabel	MspPadSelScreen_Label_BANK_NAME, super=MspPadSelScreen_Box1, next=MspPadSelScreen_CmpMemNameBox1, flag=VF_Const, X=91, Y=45, W=125, H=19, str=Str_BANK_NAME, font=4, fontcolor=CL_White	# str "BANK NAME :"
-			AcCmpMemNameBox	MspPadSelScreen_CmpMemNameBox1, super=MspPadSelScreen_Box1, prev=MspPadSelScreen_Label_BANK_NAME, flag=VF_Const, X=220, Y=44, W=200, H=19, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, align=1
-		VwLine	MspPadSelScreen_Line10, super=MspPadSelScreen, next=MspPadSelScreen_Line11, prev=MspPadSelScreen_Box1, flag=VF_Const, X=240, Y=215, W=1, H=25, color=CL_Silver, linemode=1
-		VwLine	MspPadSelScreen_Line11, super=MspPadSelScreen, next=MspPadSelScreen_Label_SOLO, prev=MspPadSelScreen_Line10, flag=VF_Const, X=328, Y=86, W=164, H=10, color=CL_White, linemode=1
-
-Str_SOLO_47:	.asciz "SOLO"
-	.align	4, 0xFF	# pad after Str_SOLO_47
-
-		VwLabel	MspPadSelScreen_Label_SOLO, super=MspPadSelScreen, next=MspPadSelScreen_Line12, prev=MspPadSelScreen_Line11, flag=VF_Const, X=384, Y=198, W=36, H=19, str=Str_SOLO_47, font=1, fontcolor=CL_White	# str "SOLO"
-		VwLine	MspPadSelScreen_Line12, super=MspPadSelScreen, next=MspPadSelScreen_Line13, prev=MspPadSelScreen_Label_SOLO, flag=VF_Const, X=330, Y=204, W=48, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line13, super=MspPadSelScreen, next=MspPadSelScreen_Line14, prev=MspPadSelScreen_Line12, flag=VF_Const, X=426, Y=204, W=48, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line14, super=MspPadSelScreen, next=MspPadSelScreen_Line15, prev=MspPadSelScreen_Line13, flag=VF_Const, X=1, Y=96, W=1, H=83, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line15, super=MspPadSelScreen, next=MspPadSelScreen_Line16, prev=MspPadSelScreen_Line14, flag=VF_Const, X=0, Y=85, W=164, H=10, color=CL_White
-		VwLine	MspPadSelScreen_Line16, super=MspPadSelScreen, next=MspPadSelScreen_Line17, prev=MspPadSelScreen_Line15, flag=VF_Const, X=328, Y=180, W=164, H=10, color=CL_Gray
-		VwLine	MspPadSelScreen_Line17, super=MspPadSelScreen, next=MspPadSelScreen_Line18, prev=MspPadSelScreen_Line16, flag=VF_Const, X=0, Y=180, W=164, H=10, color=CL_Gray, linemode=1
-		VwLine	MspPadSelScreen_Line18, super=MspPadSelScreen, next=MspPadSelScreen_Line19, prev=MspPadSelScreen_Line17, flag=VF_Const, X=164, Y=85, W=164, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line19, super=MspPadSelScreen, next=MspPadSelScreen_Line20, prev=MspPadSelScreen_Line18, flag=VF_Const, X=164, Y=189, W=164, H=1, color=CL_Gray, linemode=1
-		VwLine	MspPadSelScreen_Line20, super=MspPadSelScreen, next=MspPadSelScreen_Line21, prev=MspPadSelScreen_Line19, flag=VF_Const, X=328, Y=85, W=164, H=10, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line21, super=MspPadSelScreen, next=MspPadSelScreen_Line22, prev=MspPadSelScreen_Line20, flag=VF_Const, X=491, Y=95, W=1, H=84, color=CL_Gray, linemode=1
-		VwLine	MspPadSelScreen_Line22, super=MspPadSelScreen, prev=MspPadSelScreen_Line21, flag=VF_Const, X=0, Y=96, W=1, H=84, color=CL_White, linemode=1
-
-Str_PAD_RECORDING:	.asciz "PAD RECORDING"
-	.align	4, 0xFF	# pad after Str_PAD_RECORDING
-
-	TtlScreen	MspPadSel_sScreen, sub=MspPadSel_sScreen_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL, window=MspPadSel_sScreen_window, title=Str_PAD_RECORDING, icon=197	# title "PAD RECORDING"
-		AcIndexWideES	MspPadSel_sScreen_IndexWideES1, super=MspPadSel_sScreen, next=MspPadSel_sScreen_IndexWideES2, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
-		AcIndexWideES	MspPadSel_sScreen_IndexWideES2, super=MspPadSel_sScreen, next=MspPadSel_sScreen_Box1, prev=MspPadSel_sScreen_IndexWideES1, flag=VF_Const, X=484, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom14, style=3
-		VwBox	MspPadSel_sScreen_Box1, super=MspPadSel_sScreen, sub=MspPadSel_sScreen_Line1, next=MspPadSel_sScreen_FuncEditSw1, prev=MspPadSel_sScreen_IndexWideES2, flag=VF_Const, X=400, Y=114, W=160, H=100, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-			VwLine	MspPadSel_sScreen_Line1, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Line2, flag=VF_Const, X=402, Y=160, W=156, H=1, color=CL_White, linemode=1
-			VwLine	MspPadSel_sScreen_Line2, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Label_MEASURE, prev=MspPadSel_sScreen_Line1, flag=VF_Const, X=480, Y=116, W=1, H=96, color=CL_White, linemode=1
-
-Str_MEASURE_42:	.asciz "MEASURE"
-
-			VwLabel	MspPadSel_sScreen_Label_MEASURE, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Label_SIGNATURE, prev=MspPadSel_sScreen_Line2, flag=VF_Const, X=410, Y=130, W=60, H=19, str=Str_MEASURE_42, font=1, fontcolor=CL_Yellow	# str "MEASURE"
-
-Str_SIGNATURE_2:	.asciz "SIGNATURE"
-	.align	4, 0xFF	# pad after Str_SIGNATURE_2

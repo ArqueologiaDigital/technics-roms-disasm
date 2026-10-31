@@ -61625,7 +61625,7 @@
 .equ PanelTxDoneIsr_Table, 0x4c1903e4
 .equ func_4C025A78_Table, 0x4c190410
 .equ func_4C025A90_Table, 0x4c190424
-.equ data_4C190504, 0x4c190504
+.equ ResourceIdLeaf_4C190504, 0x4c190504
 .equ func_4C0268BC_ArgA0_0_2, 0x4c190590
 .equ func_4C02CBDA_Records_p0_1, 0x4c1905d0
 .equ func_4C026FA7_Selected_3_2, 0x4c191034
@@ -61647,11 +61647,11 @@
 .equ func_4C02CBDA_Records_p0_87, 0x4c1916ac
 .equ func_4C026CC1_Selected_4, 0x4c1916c0
 .equ func_4C026FA7_Selected_4, 0x4c1916d4
-.equ Str_p_23, 0x4c192014
-.equ Str_p_22, 0x4c192020
-.equ Str_l_p, 0x4c1920fc
-.equ Str_m_p, 0x4c192108
-.equ Str_p_21, 0x4c1921e0
+.equ ResourceIdLeaf_4C192014, 0x4c192014
+.equ ResourceIdLeaf_4C192020, 0x4c192020
+.equ ResourceIdLeaf_4C1920FC, 0x4c1920fc
+.equ ResourceIdLeaf_4C192108, 0x4c192108
+.equ ResourceIdLeaf_4C1921E0, 0x4c1921e0
 .equ func_4C026FA7_Selected_41, 0x4c19222c
 .equ func_4C02CBDA_Records_p0_66, 0x4c192288
 .equ func_4C0268BC_ArgA0_0, 0x4c19229c
@@ -65958,9 +65958,7 @@
 .equ localeconv_Table, 0x4c2b274c
 .equ PfDoubleToDecimal_entry_L3a3_Table, 0x4c2b275c
 .equ PfDoubleToDecimal_entry_L1e1_Table, 0x4c2b2764
-.equ func_4C002A49_entry_L3d_Table, 0x4c2b276c
-.equ PfDoubleToDecimal_Table_2, 0x4c2b2774
-.equ func_4C002A49_entry_L127_Table, 0x4c2b27ec
+.equ Pow10Table, 0x4c2b276c
 .equ func_4C004EA1_Table, 0x4c2b3114
 .equ InitPaletteRGB_Table, 0x4c2b3154
 .equ User00_ApFunctions, 0x4c2b3554
