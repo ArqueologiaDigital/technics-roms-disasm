@@ -105,11 +105,11 @@ leading-zero-blanking variants (`0xF8BCAF`, `0xF8BCC9`).
 
 * **Which screen `0x207C == 0x0E` is.** prom_a `0xF81C15` and `0xF81ACB` both
   refuse to draw unless the screen id is `0x0E`. `0x0E` is a number; no table in
-  this tree says what that screen is called, so nothing was named for it.
+  this tree says what that screen is called, so nothing was named for it. (Resolved: screen 0x0E is STEP RECORD, notes/prom_ab_step_record_screen_names.py and docs/gui-menu-map.md; open-items register 2026-10-31.)
 * **What `(0x0EF5)` selects.** Each writer compares it against its own constant
   and, on a change, calls the full-repaint entry `T_F431B0` (prom_a `0xF81ACB`,
   which dispatches on `(0x0EF5)`). The codes seen here are `0x01` and `0x0A`,
-  so it is coarser than "which caption" — several routines share a code.
+  so it is coarser than "which caption" — several routines share a code. (Resolved: (0x0EF5) is UI_StepRecord_SubScreen, the STEP RECORD sub-screen, wsa1/notes/FINDINGS-prom_b-for-the-mame-driver.md; open-items register 2026-10-31.)
 * **Which RAM variable supplies each value.**
 
 ## 3. The 36 names, and the evidence class of each

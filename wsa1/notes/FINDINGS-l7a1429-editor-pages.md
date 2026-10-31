@@ -559,10 +559,10 @@ consumers); **PROVEN** for the arithmetic.
   lane measured that `0x0300` opens only when some element's `Q[+0x0B]` bits 7:6
   are non-zero, and `0xFC5B48` reads `P[+0x01]` bits 7:6 and branches three ways.
   What is still missing is the instruction that carries those bits into word 0
-  bits 6:4.
+  bits 6:4. (Resolved: FINDINGS-l7a1429-reso-scale.md section 5, the eight-hop GROUP chain (d3f9ef977), carried into this note's closing table; open-items register 2026-10-31.)
 * **What p22 bit 7 (`RESO SCALE`) does to the coefficients.**  It reaches
   `R[+0x1A]` (`index_bias_A`), whose writer this lane did not locate.  Until that is
-  found, `RESO SCALE` is a named control with no traced effect.
+  found, `RESO SCALE` is a named control with no traced effect. (Resolved: FINDINGS-l7a1429-reso-scale.md sections 1-2 (d3f9ef977): bit 7 of p22/p32 picks the delta term of registers chan+0x0040/0x0080; the R[+0x1A] route is retracted there, section 4; open-items register 2026-10-31.)
 * **Where the DATA-dial edit for `DEPTH`, `FORMANT`, `INTERACTION GAIN`, `WIDTH`,
   `SPEED`, `S/H`, `TOUCH`, `FITTING`, `KEY SHIFT`, `DETUNE`, `RESO SCALE` and
   `RESO MODE` lives.**  The two `MUTING` editors clamp their value to 0..0x7F
@@ -573,11 +573,11 @@ consumers); **PROVEN** for the arithmetic.
   fields must be written from somewhere this pass did not find.  ⚠ This does not
   weaken anything above -- the read-back order is the map, and it is controlled
   eight times -- but it is a hole in the coverage and is stated rather than papered
-  over.
+  over. (Resolved: FINDINGS-l7a1429-field-editors.md section 2 (be68cf321): all twelve fields have ToneEditField_* editors, reached through the 0xFCF974 + 0x48*k tables; open-items register 2026-10-31.)
 * **`ToneMsg80_SendParam`'s byte 3 is a COUNT** (3 on `PAGE2/2`, 1 elsewhere, 2 and 3 on the
   MODELING top).  That reading is what makes `PAGE2/2`'s single request return
   p16/p17/p18; the reply's own layout on the CPU 2 side was not read, so
-  `PAGE2/2`'s three-way split is graded **STRONG**, not PROVEN.
+  `PAGE2/2`'s three-way split is graded **STRONG**, not PROVEN. (Resolved: FINDINGS-l7a1429-field-editors.md section 2c (be68cf321): four PAGE2/2 editors pin p16/p17/p18 one field at a time, so the split is PROVEN; open-items register 2026-10-31.)
 * **The eight remaining 43-byte-record parameters** -- p0, p1, p2 (read by the
   MODELING top with count 3), p12 and p20 -- still do nothing this image reads.
 

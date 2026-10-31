@@ -224,7 +224,7 @@ twins in `hdae5000/shared/naka_values.s`, in the same pass from the same v10 tab
    - Assembler macros were used instead. They let the tree compute its links from the nesting, which
      C initialisers could not do without a generator.
 6. **Older versions.** v1.10i / v1.15i (private romset) are not ported. The converter's `VERSIONS`
-   table would need their trees.
+   table would need their trees. (Resolved: 678568105 adds v1_15i / v1_10i to hdae5000_ui_tree.py's VERSIONS; trees 2b7c0bd3d / 779abeaf5, menu-map-v1_*.md; open-items register 2026-10-31.)
 
 ## Shared files touched
 

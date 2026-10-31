@@ -437,7 +437,7 @@ it cannot choose between.
 * **The `0x00E08C` bias in `0x0140`'s index.**  If it is `0x30` the `(a, 1−a)` pair of §5 is
   exact.  It comes from prom_d.
 * **Register `chan+0x0000`, `0x0040`, `0x0080`, `0x02C0`, `0x03C0`, `0x0480`** — no table
-  passes through them, so this pass had no lever on them at all.
+  passes through them, so this pass had no lever on them at all. (Resolved: HLE-GUIDE-l7a1429.md section 5.3 (1ccfc5fb2): 0x0040/0x0080 PROVEN as KEY SHIFT + DETUNE (and RESO SCALE, FINDINGS-l7a1429-reso-scale.md, d3f9ef977), 0x0000 named by its fields, 0x03C0/0x0480 resolved negatively, 0x02C0 the literal 0xFF00; open-items register 2026-10-31.)
 
 ⚠ Felipe has no access to the hardware, so "measure the instrument" is not on this list.  The
 routes that remain are prom_d's tone/zone record formats and the tone-editor UI, which must

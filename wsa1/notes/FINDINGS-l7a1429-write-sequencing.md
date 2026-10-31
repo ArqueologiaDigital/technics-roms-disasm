@@ -502,4 +502,4 @@ programs once and then stops talking to.
 * **Seventeen of the nineteen registers' meanings**, unchanged from
   `notes/FINDINGS-prom_c-dev104-register-map.md` §3.  ⚠ Felipe has no access to the hardware,
   so a live trace is not an available next step; the open routes stay the tone-editor UI and
-  the localisation strings.
+  the localisation strings. (Resolved: HLE-GUIDE-l7a1429.md section 5.3 (1ccfc5fb2) and FINDINGS-l7a1429-editor-pages.md section 4 (478b87dca): fourteen of the nineteen blocks carry an editor name; 0x0100/0x02C0 are constants, 0x03C0/0x0480 have no editor name by proof, 0x0000 is named by its fields; open-items register 2026-10-31.)

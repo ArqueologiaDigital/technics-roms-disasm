@@ -156,9 +156,11 @@ extensions and fonts beside their strings, and RAM-image variables.
   the three words of each record was not traced.
 - The KN2400 title ids 0x000F000F / 0x000F0102 that records name but no RegisterTitle registers.
 - `gen_symbols.py`'s start-alignment rule would change `kn6000.sym` in 330 lines: not applied
-  there (lane sib-kn6000's tree).
+  there (lane sib-kn6000's tree). (Resolved: 66126698c, start-aligned pairing by default reproduces
+  kn6000.sym, see the corrected item below; open-items register 2026-10-31.)
 - `gen_data_s.py`'s per-field macro parameters change KN7000 941's `AcOtpRamBox` macro (its
-  second `font` field) when 941 is regenerated; the bytes are the same.
+  second `font` field) when 941 is regenerated; the bytes are the same. (Resolved: 941 regenerated since,
+  fd73a97fa .. 6ca33e656, its gui_classes.inc carries `font_AcOtpRamBox`; open-items register 2026-10-31.)
 
 - (Corrected 2026-10-29, lane kn7000-data-rest.)  `hdsx3/hdsx3.sym` was not what the
   end-aligned pairing writes: it, `kn6000.sym` and `kn6500.sym` are the START-aligned pairing's
@@ -166,7 +168,7 @@ extensions and fonts beside their strings, and RAM-image variables.
   at name lists, so the SP7001 plug-in keeps its committed names) and reproduces every committed
   symbol file; no rule has a symbol file as its target any more, so `make` never regenerates one,
   and `make symbols-check` (in each sibling's gate) compares the generator's output with them.
-  No `touch` is needed.
+  No `touch` is needed. (Resolved: 66126698c; open-items register 2026-10-31.)
 
 ## Website page draft
 

@@ -120,7 +120,7 @@ that the census line is not read as "an encoder exists".
   (2026-10-24), and its symbols table v6 53,581 rows. Measured after this lane with
   `scripts/analysis/kn5000_source_coverage.py`: v6 17,159 B (99.2% source), v5 19,978 B (99.0%). The drop is exactly
   the generic bytes above, 5,130 and 4,949 B (the banners plus the slices). v6's symbol file has 53,583 rows. This
-  lane did not edit `CLAUDE.md`; the integrator should update both rows.
+  lane did not edit `CLAUDE.md`; the integrator should update both rows. (Resolved: 8f40cc8fc updates both CLAUDE.md rows; open-items register 2026-10-31.)
 
 ## Follow-up: the custom-data style banks typed (integrator request, 2026-10-29)
 
@@ -163,9 +163,9 @@ factory initial-data disk. Two points of interpretation differ from the floppy l
    The firmware indexes them by `STYLE_SECTION` (0..29: variations 0-11, intros / fill-ins / endings 12-29;
    `AccPatch_GetCurrentSlotAddr`, `RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * n`). The default image names them
    "a-variation1" .. " c-ending 2". The names a bank holds, such as "Bolero puro" four times, are the names of the
-   patterns each section was taken from.
+   patterns each section was taken from. (Resolved: e266dd9f8, floppy/kn5000/formats.py emits 30 STYLE_SECTION records; open-items register 2026-10-31.)
 2. **The area between the directory and block 20 is not unknown.** It is zero up to +0x13c0, then a 64-byte
-   fill-in cell, which the floppy lane types as one opaque run ("between the directory and the first cell").
+   fill-in cell, which the floppy lane types as one opaque run ("between the directory and the first cell"). (Resolved: e266dd9f8, formats.py types data_ba0 and the fill-in cell at +0x13c0; open-items register 2026-10-31.)
 
 The three chains the listing leaves `UNDECODED` (0x0EA in section_0, 0x0E5 in section_1_2, 0x0FE in the Composer
 image) are single cells with prev = 0xffff whose payload starts inside an event, as format 1 already showed.

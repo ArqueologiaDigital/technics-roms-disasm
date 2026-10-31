@@ -68,7 +68,7 @@ like codes, for example the rhythm-ROM header word 0x01008305 and an audio-mixer
 
 - technics-docs `event-codes.md` should list the full catalog with the firmware's names. Its
   "0x01E0 = lifecycle", "0x01E4 = widget responses" framing is wrong (see each group's
-  `existing_conflicts`).
+  `existing_conflicts`). (Resolved: technics-docs cef613e / c537aec, event-codes.md reads 0x01E0 / 0x01E4 as ResMethod `MT_*` tables and points to catalog.json for the full catalog; open-items register 2026-10-31.)
 - Labels and headers that the conflicts sections name as contradicted: `SoundCtrl_SendCommand` is
   the 0x01C00016 title request; `UI_PostModeChangeEvent` posts a title request; the FDC header's
   `ei 4`/`di 4` comment; HD-AE5000 SEL_DIR arm comments; `NAKA_TYPE_*` in macros.s, whose low
