@@ -32378,7 +32378,7 @@ loc_484D8896:
     mov     a3, a0
     mov     0x10, d0
     clr     d1
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448D15_entry, [d2,a2], 0x2c
     mov     a3, a1
     clr     d0
     movbu   d0, (Str_Sound_Naming_Edt_6+16)

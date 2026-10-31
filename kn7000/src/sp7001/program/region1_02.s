@@ -14313,7 +14313,7 @@ func_48448C34:
     mov     sp, a0
     add     0x14, a0
     mov     d2, d0
-    call    SoundGroupSizeGet_entry, [d2,a2], 0x14
+    call    func_48570794_entry, [d2,a2], 0x14
     exth    d0
     cmp     d2, d0
     bne     loc_48448C4F
@@ -14322,11 +14322,11 @@ func_48448C34:
 loc_48448C4F:
     movbu   (0x14, sp), d0
     ret     [d2], 0x1c
-# SoundGroupSizeFetch  (CPU 0x48448c55)
-SoundGroupSizeFetch:
+
+func_48448C55:
     movm    [d2], (sp)
     add     -0x18, sp
-SoundGroupSizeFetch_entry:
+func_48448C55_entry:
     mov     d1, d2
     extbu   d2
     extbu   d0
@@ -14334,7 +14334,7 @@ SoundGroupSizeFetch_entry:
     mov     sp, a0
     add     0x14, a0
     mov     d2, d0
-    call    SoundGroupSizeGet_entry, [d2,a2], 0x14
+    call    func_48570794_entry, [d2,a2], 0x14
     exth    d0
     cmp     0, d0
     bne     loc_48448C72
@@ -14354,7 +14354,7 @@ func_48448C78:
     mov     sp, a0
     add     0x14, a0
     mov     d2, d0
-    call    SoundGroupNameGet_entry, [d2,a2], 0x14
+    call    func_48570600_entry, [d2,a2], 0x14
     exth    d0
     cmp     d2, d0
     bne     loc_48448CA5
@@ -14400,7 +14400,7 @@ func_48448CBC_entry:
     mov     sp, a0
     add     0x14, a0
     mov     d2, d0
-    call    SoundGroupNameGet_entry, [d2,a2], 0x14
+    call    func_48570600_entry, [d2,a2], 0x14
     exth    d0
     cmp     0, d0
     bne     loc_48448CEC
@@ -14435,11 +14435,11 @@ loc_48448CEC:
     llt
 loc_48448D01:
     ret     [d2,a2], 0x20
-# SoundNameGet  (CPU 0x48448d04)
-SoundNameGet:
+
+func_48448D04:
     movm    [d2,a2], (sp)
     add     -0x24, sp
-SoundNameGet_entry:
+func_48448D04_entry:
     mov     a0, a2
     mov     d1, d2
     extbu   d0
@@ -14477,14 +14477,14 @@ loc_48448D46:
     mov     sp, a1
     add     0x1c, a1
     mov     d2, d1
-    call    SoundToneIndexGet_entry, [d2,a2], 0x20
+    call    func_48570040_entry, [d2,a2], 0x20
     exth    d0
     cmp     0, d0
     mov     Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er+16, a0
     beq     loc_48448D70
     movhu   (0x20, sp), d0
     movbu   (0x1c, sp), d1
-    call    ToneNameGet_entry, [d2,d3], 8
+    call    func_4844961F_entry, [d2,d3], 8
 loc_48448D70:
     clr     d0
     clr     d2
@@ -14623,11 +14623,11 @@ loc_48448E5D:
     mov     1, d1
     call    set_flg, 0, 0
     ret     [d2,d3,a2], 0x2c
-# SoundIconFetch  (CPU 0x48448e6b)
-SoundIconFetch:
+
+func_48448E6B:
     movm    [d2], (sp)
     add     -0x1c, sp
-SoundIconFetch_entry:
+func_48448E6B_entry:
     mov     d0, d2
     movbu   (0x30, sp), d0
     extbu   d2
@@ -14636,7 +14636,7 @@ SoundIconFetch_entry:
     mov     sp, a0
     add     0x18, a0
     mov     d2, d0
-    call    SoundIconGet_entry, [d2,a2], 0x24
+    call    func_48570016_entry, [d2,a2], 0x24
     exth    d0
     cmp     0, d0
     bne     loc_48448E8C
@@ -15176,8 +15176,8 @@ func_4844925D_entry:
     mov     d2, d0
     call    VoiceDirPartRefProbe_entry, [d2,d3,a2,a3], 0x28
     ret     [d2], 0x20
-# SoundSwFromBankState0  (CPU 0x4844927a)
-SoundSwFromBankState0:
+
+func_4844927A:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
     mov     a0, a3
@@ -15208,7 +15208,7 @@ SoundSwFromBankState0:
     mov     a2, (0x1c, sp)
     mov     d2, a1
     mov     d3, d1
-    call    SoundSwNoGet_entry, [d2,a2,a3], 0x28
+    call    func_4856FF64_entry, [d2,a2,a3], 0x28
     exth    d0
     cmp     0, d0
     bne     loc_484492C0
@@ -15227,11 +15227,11 @@ loc_484492C0:
     inc     d1
     lne
     ret     [d2,d3,a2,a3], 0x38
-# SoundSwFromBank  (CPU 0x484492d1)
-SoundSwFromBank:
+
+func_484492D1:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
-SoundSwFromBank_entry:
+func_484492D1_entry:
     mov     a0, a3
     mov     a3, a1
     mov     sp, a0
@@ -15258,7 +15258,7 @@ SoundSwFromBank_entry:
     mov     d3, d1
     mov     5, a0
     add     d2, a0
-    call    SoundSwNoGet_entry, [d2,a2,a3], 0x28
+    call    func_4856FF64_entry, [d2,a2,a3], 0x28
     exth    d0
     cmp     0, d0
     bne     loc_48449314
@@ -15277,8 +15277,8 @@ loc_48449314:
     inc     d1
     lne
     ret     [d2,d3,a2,a3], 0x38
-# SoundSwToBankState0  (CPU 0x48449325)
-SoundSwToBankState0:
+
+func_48449325:
     movm    [d2,a2,a3], (sp)
     add     -0x28, sp
     mov     a0, (0x3c, sp)
@@ -15310,7 +15310,7 @@ SoundSwToBankState0:
     mov     d2, (0x1c, sp)
     mov     a3, a1
     clr     d0
-    call    SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
+    call    func_485702BB_entry, [d2,a2,a3], 0x18
     exth    d0
     cmp     0, d0
     bne     loc_48449372
@@ -15333,11 +15333,11 @@ loc_48449372:
     inc     d1
     lne
     ret     [d2,a2,a3], 0x34
-# SoundSwToBank  (CPU 0x48449385)
-SoundSwToBank:
+
+func_48449385:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
-SoundSwToBank_entry:
+func_48449385_entry:
     mov     a0, (0x40, sp)
     mov     a0, a1
     mov     sp, a0
@@ -15366,7 +15366,7 @@ SoundSwToBank_entry:
     add     4, d2
     mov     d2, (0x1c, sp)
     mov     a3, a1
-    call    SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
+    call    func_485702BB_entry, [d2,a2,a3], 0x18
     exth    d0
     cmp     0, d0
     bne     loc_484493D1
@@ -15554,11 +15554,11 @@ loc_4844950D:
 loc_48449510:
     extbu   d0
     retf    [d2,d3,a2], 0xc
-# ToneRecordFind  (CPU 0x48449514)
-ToneRecordFind:
+
+func_48449514:
     movm    [d2,d3], (sp)
     add     -0x24, sp
-ToneRecordFind_entry:
+func_48449514_entry:
     extbu   d0
     mov     d0, (0x10, sp)
     movbu   (0x3c, sp), d0
@@ -15567,7 +15567,7 @@ ToneRecordFind_entry:
     add     0x20, a0
     mov     sp, a1
     add     0x1c, a1
-    call    SoundToneIndexGet_entry, [d2,a2], 0x20
+    call    func_48570040_entry, [d2,a2], 0x20
     exth    d0
     cmp     0, d0
     bne     loc_48449536
@@ -15679,13 +15679,13 @@ loc_48449612:
     extbu   d0
     extbu   d2
     mov     d2, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
 loc_4844961C:
     ret     [d2], 0x18
-# ToneNameGet  (CPU 0x4844961f)
-ToneNameGet:
+
+func_4844961F:
     movm    [d2,d3], (sp)
-ToneNameGet_entry:
+func_4844961F_entry:
     extbu   d1
     cmp     0, d1
     beq     loc_48449636
@@ -17242,7 +17242,7 @@ func_4844A3E5_entry:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
 loc_4844A3FF:
     ret     0, 0x14
 
@@ -17256,7 +17256,7 @@ func_4844A402_entry:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
 loc_4844A41B:
     ret     0, 0x14
 # CustomVoiceRecFetch  (CPU 0x4844a41e)
@@ -17285,7 +17285,7 @@ loc_4844A43F:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
     mov     0x27, d0
     add     a0, d0
     add     d2, d0
@@ -17321,7 +17321,7 @@ loc_4844A488:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
     mov     0x20, d0
     extbu   d2
     mov     d2, d1
@@ -17358,7 +17358,7 @@ loc_4844A4CC:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
     mov     d2, d0
     asl2    d0
     sub     d2, d0
@@ -17400,7 +17400,7 @@ loc_4844A51F:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
     movbu   (0x34, sp), d2
     mov     0x20, d0
     mov     d2, d1
@@ -17448,7 +17448,7 @@ loc_4844A586:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_48449514_entry, [d2,d3], 0x2c
     movbu   (0x34, sp), d2
     movbu   (0x38, sp), d3
     mov     d2, d0

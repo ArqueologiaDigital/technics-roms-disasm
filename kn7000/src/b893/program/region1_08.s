@@ -990,7 +990,7 @@ loc_48500A71:
     lsr     8, d1
     extbu   d1
     mov     a2, a0
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448CD3_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x40, sp)
     mov     (0xc8, sp), d0
@@ -6922,7 +6922,7 @@ loc_48504740:
     mov     sp, a2
     add     0x3c, a2
     mov     a2, a0
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448CD3_entry, [d2,a2], 0x2c
     mov     a2, a0
     clr     d0
     movbu   d0, (0x4c, sp)
@@ -7971,7 +7971,7 @@ loc_4850521C:
     mov     d2, d1
     extbu   d1
     mov     a2, a0
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448CD3_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x30, sp)
     mov     0x489, d0
@@ -10684,7 +10684,7 @@ loc_48506DEE:
     extbu   d0
     extbu   d2
     mov     d2, d1
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448CD3_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x34, sp)
     call    GetFocusObject_entry, 0, 0x10
@@ -19651,7 +19651,7 @@ loc_4850CBC5:
     extbu   d1
     mov     a3, a0
     mov     d3, d0
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448CD3_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x34, sp)
     jmp     loc_4850CDBD
@@ -30565,7 +30565,7 @@ loc_48513B3F:
     extbu   d1
     mov     a3, a0
     mov     d3, d0
-    call    SoundNameGet_entry, [d2,a2], 0x2c
+    call    func_48448CD3_entry, [d2,a2], 0x2c
     clr     d0
     movbu   d0, (0x34, sp)
     jmp     loc_48513D17

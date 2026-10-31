@@ -5928,12 +5928,12 @@ PfDoubleToDecimal_entry:
     inc     d1
     nop
     lne
-    mov     Pow10Table, a2
+    mov     func_4C002B70_Table_4, a2
     mov     (a2), d0
     mov     (4, a2), d1
     mov     d0, (0x1c, sp)
     mov     d1, (0x20, sp)
-    mov     Pow10Table+8, a0
+    mov     func_4C002B70_Table_5, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x24, sp)
@@ -33449,7 +33449,7 @@ loc_4C01066B:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_484494E3_entry, [d2,d3], 0x2c
     mov     a0, (4, a3)
     mov     0x10, d0
     mov     4, d1
@@ -33580,7 +33580,7 @@ loc_4C010786:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    ToneRecordFind_entry, [d2,d3], 0x2c
+    call    func_484494E3_entry, [d2,d3], 0x2c
     mov     a0, (4, a3)
     mov     0x10, d0
     mov     4, d1
@@ -45181,7 +45181,7 @@ loc_4C0167A0:
     movbu   d1, (0x31, sp)
 loc_4C0167A3:
     mov     a2, a0
-    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
+    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x2c, sp), d0
     mov     sp, a0
     movbu   d0, (0x34, sp)
@@ -49601,7 +49601,7 @@ loc_4C018D2C:
     movbu   d1, (0x31, sp)
 loc_4C018D2F:
     mov     a2, a0
-    call    SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
+    call    func_48449354_entry, [d2,d3,a2,a3], 0x38
 loc_4C018D37:
     movbu   (0x2f, sp), d0
     movbu   (0x30, sp), d1
@@ -62510,7 +62510,7 @@ loc_4C01FCA0:
     movbu   d1, (0x21, sp)
 loc_4C01FCA3:
     mov     a3, a0
-    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
+    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1c, sp), d0
     mov     a2, a0
     movbu   d0, (0x24, sp)
@@ -62657,7 +62657,7 @@ loc_4C01FDD3:
     movbu   d1, (0x21, sp)
 loc_4C01FDD6:
     mov     d3, a0
-    call    SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
+    call    func_484492A0_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x1c, sp), d0
     mov     d2, a0
     movbu   d0, (0x24, sp)

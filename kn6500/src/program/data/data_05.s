@@ -38458,7 +38458,7 @@ USBTEST_SW_onoff:
 	.space	4, 0x00
 HDDTEST_SW_onoff:
 	.space	4, 0x00
-XaprBoardPresent:	# 4 x u8, 0..255; read by XaprBoardDetect 0x4C17321A: `movbu d1, (XaprBoardPresent)`; XaprBoardDetect_L3a 0x4C173254: `movbu d0, (XaprBoardPresent)` ...
+func_4C17321A_Table:	# 4 x u8, 0..255; read by func_4C17321A 0x4C17321A: `movbu d1, (func_4C17321A_Table)`; func_4C17321A_L3a 0x4C173254: `movbu d0, (func_4C17321A_Table)` ...
 	tab_u8	0, 255, 255, 255
 
 HDD_COMM_TEST_L60c_Var:	# u32, initial value of a RAM variable; read / written by HDD_COMM_TEST_L60c 0x4C173BE5: `mov (HDD_COMM_TEST_L60c_Var), d0`; HDD_COMM_TEST_L60c 0x4C173BE5: `mov d0, (HDD_COMM_TEST_L60c_Var)`
@@ -38480,10 +38480,10 @@ func_4C0064C6_entry_L7d_Table_2:	# 2 x s16, -1..255; read by func_4C0064C6_entry
 	tab_s16	255, -1
 
 func_4C01B47B_Table:	# 4 x REC_func_4C01B47B_Table (56 bytes each); read by func_4C0065B1_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0`; func_4C01465E_L26 0x4C014684 `movhu (6, a0), d0` (+893)
-	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012358, key___=-1, count=1, index__=0x50015F70
-	REC_func_4C01B47B_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012364, key___=-1, count=128, index__=0x50015F88
-	REC_func_4C01B47B_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012F64, key___=-1, count=128, index__=0x50016B88
-	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50015F64, key___=-1, count=1, index__=0x50017788
+	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012358, f48=-1, f50=1, f52=0x50015F70
+	REC_func_4C01B47B_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012364, f48=-1, f50=128, f52=0x50015F88
+	REC_func_4C01B47B_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012F64, f48=-1, f50=128, f52=0x50016B88
+	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50015F64, f48=-1, f50=1, f52=0x50017788
 
 names_50005794:
 	.long	Str_CHARA1, Str_CHARA2
@@ -38717,8 +38717,8 @@ func_4C123C73_Records:	# 65 x REC_func_4C123C73_Records (4 bytes each); read by 
 	REC_func_4C123C73_Records	f0=11940, f2=19, f3=76
 	REC_func_4C123C73_Records	f0=11946, f2=19, f3=76	# [64]
 func_4C130418_entry_Ld1_Records:	# 2 x REC_func_4C130418_entry_Ld1_Records (40 bytes each); read by func_4C130418_entry_Ld1 0x4C1304EE `mov (func_4C130418_entry_Ld1_Records+40), d0`; func_4C130418_entry_L103 0x4C130520 `mov (a2), a1`; func_4C130418_entry_L103 0x4C130520 `mov (func_4C130418_entry_Ld1_Records+40), d0` (+13)
-	REC_func_4C130418_entry_Ld1_Records	count=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_4, x32=",[\x00P\x00\x00\x00\x00"
-	REC_func_4C130418_entry_Ld1_Records	count=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
+	REC_func_4C130418_entry_Ld1_Records	f0=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_4, x32=",[\x00P\x00\x00\x00\x00"
+	REC_func_4C130418_entry_Ld1_Records	f0=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x37D168, 0x37D16C
 
@@ -39190,66 +39190,66 @@ func_4C15562E_Table:
 	.long	0
 
 func_4C15839E_entry_L1b41_Records:	# 27 x REC_func_4C15839E_entry_L1b41_Records (8 bytes each); read by func_4C15839E_entry_L1b41 0x4C159EE1 `mov (4, a1), d2`; func_4C15839E_entry_L1b41 0x4C159EE1 `mov (a1), d1`; func_4C15839E_entry_L1f71 0x4C15A311 `mov (4, a1), d2` (+16)
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40440000	# [0]
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40490000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x404F8000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40540000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40590000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x405F4000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40640000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40690000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x406F4000	# [8]
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x4073B000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40790000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x407F4000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x4083B000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40890000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x408F4000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40938800
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40990000	# [16]
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x409F4000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40A38800
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40A89C00
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40AF4000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40B38800
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40B89C00
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40BF4000
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40C38800	# [24]
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40C86A00
-	REC_func_4C15839E_entry_L1b41_Records	LibF64Div_d1=0x40CF4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40440000	# [0]
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40490000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x404F8000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40540000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40590000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x405F4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40640000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40690000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x406F4000	# [8]
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x4073B000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40790000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x407F4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x4083B000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40890000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x408F4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40938800
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40990000	# [16]
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x409F4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40A38800
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40A89C00
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40AF4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40B38800
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40B89C00
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40BF4000
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40C38800	# [24]
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40C86A00
+	REC_func_4C15839E_entry_L1b41_Records	f4=0x40CF4000
 func_4C15839E_entry_L1b41_Records_2:	# 32 x REC_func_4C15839E_entry_L1b41_Records_2 (8 bytes each); read by func_4C15839E_entry_L1b41 0x4C159EE1 `mov (4, a1), d2`; func_4C15839E_entry_L1b41 0x4C159EE1 `mov (a1), d1`; func_4C15839E_entry_L2188 0x4C15A528 `mov (4, a1), d2` (+3)
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FB99999	# [0]
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FC99999
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x33333333, LibF64Mul_d1=0x3FD33333
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FD99999
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x3FE00000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x33333333, LibF64Mul_d1=0x3FE33333
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x66666666, LibF64Mul_d1=0x3FE66666
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0x9999999A, LibF64Mul_d1=0x3FE99999
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d0=0xCCCCCCCD, LibF64Mul_d1=0x3FECCCCC	# [8]
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x3FF00000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x3FF80000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40000000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40040000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40080000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x400C0000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40100000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40140000	# [16]
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40180000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x401C0000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40200000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40220000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40240000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40260000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40280000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x402A0000	# [24]
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x402C0000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x402E0000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40300000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40310000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40320000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40330000
-	REC_func_4C15839E_entry_L1b41_Records_2	LibF64Mul_d1=0x40340000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FB99999	# [0]
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FC99999
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x33333333, f4=0x3FD33333
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FD99999
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x3FE00000
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x33333333, f4=0x3FE33333
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x66666666, f4=0x3FE66666
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0x9999999A, f4=0x3FE99999
+	REC_func_4C15839E_entry_L1b41_Records_2	LibI32ToF64_d1=0xCCCCCCCD, f4=0x3FECCCCC	# [8]
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x3FF00000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x3FF80000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40000000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40040000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40080000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x400C0000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40100000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40140000	# [16]
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40180000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x401C0000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40200000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40220000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40240000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40260000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40280000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x402A0000	# [24]
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x402C0000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x402E0000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40300000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40310000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40320000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40330000
+	REC_func_4C15839E_entry_L1b41_Records_2	f4=0x40340000
 
 func_4C15839E_entry_L2ad7_Table:	# 132 x u32, 1635..1580427; read by func_4C15839E_entry_L2ad7 0x4C15AE77: `mov	(d0, a0), d1`
 	tab_u32	1635, 1635, 1635, 1635, 1635, 1635, 1635, 1635	# [0]
