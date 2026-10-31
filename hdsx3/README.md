@@ -54,15 +54,27 @@ The header words:
 
 - `+0x04` points at the second `XAPR`, at `0xb655c`, the last bytes before the erased tail. It is
   labelled `XaprTrailerSignature` (`hdsx3_manual.sym`), so the header row names it. No code in
-  the image refers to it; what the firmware does with it has not been traced.
-- `+0x08` to `+0x54` point at code. The KN6000 firmware calls `+0x08`, `+0x0C` and `+0x10`
-  through `calls (aN)` once the signature checks out, according to the documentation site's
-  `kn7000-expansion-and-wave-dump` page.
-- `+0x58` to `+0x7C`, ten words, all point at `0x80`, a bare `rets`, named `XaprEmptySlot` in
-  `hdsx3_manual.sym`.
+  the image refers to it; the host checks it (below).
+- `+0x08` to `+0x54` point at code: the plug-in's 20 entry vectors. The KN6000 (and the KN6500,
+  the same code) calls every one of them through a stub that first tests the result of
+  `XaprBoardDetect` (`kn6000_manual.sym`; lane mn10300-rest, `../kn7000/notes/mn10300-rest/README.md`,
+  probe `../kn7000/notes/mn10300-rest-probes/hdsx3_entry_vectors.py`):
 
-The roles of the individual entry vectors have not been worked out yet, so they keep the names
-`func_<ADDR>`.
+  | word             | routine (`hdsx3_manual.sym`)              | when the host calls it                                                                              |
+  |------------------|-------------------------------------------|-----------------------------------------------------------------------------------------------------|
+  | `+0x08`          | `XaprEntryInit`                           | once at boot (`XaprInit`), a0 = the host's registry base: the plug-in registers its GUI             |
+  | `+0x0C`          | `XaprEntryIdle`                           | every pass of the host's main task loop (`XaprCallIdle`)                                            |
+  | `+0x10`          | `XaprEntryIsrGroup24`                     | interrupt group 0x18 (`XaprIsrGroup24`, def_int'd by `XaprInstallIsrs`): the "USB chip" 0x98068000  |
+  | `+0x14`          | `XaprEntryIsrGroup27`                     | interrupt group 0x1B (`XaprIsrGroup27`): the "PPORT chip" 0x98064000                                |
+  | `+0x18`          | `XaprEntryM3Hook`                         | the group-0x70 row of the host's PutM3Em hook list (`XaprCallM3Hook`)                               |
+  | `+0x1C`          | `XaprExtDiskFreeSpace`                    | the host's file layer, while its ExtMode flag is set (the plug-in sets it with SetExtMode)          |
+  | `+0x20`..`+0x54` | `XaprExtCstFileName` .. `XaprExtFileTell` | the same file layer: names, error, open, close, remove, getc, putc, read, write, seek, rewind, tell |
+
+- `+0x58` to `+0x7C`, ten words, all point at `0x80`, a bare `rets`, named `XaprEmptySlot` in
+  `hdsx3_manual.sym`. Neither host loads them.
+- `+0x04`: `XaprBoardDetect` 0x4C172A18 compares both 0x97800000 and the word `+0x04` points at
+  with "XAPR"; the board is accepted only when `XaprTrailerSignature` is there too [INFERENCE: the
+  whole flash was written].
 
 ## Symbols and source
 
@@ -123,12 +135,16 @@ the title TT_HDDEXT, whose screen is HDD_MAIN_MENU. The generator reads the KN60
 
 ## Open work
 
-- The entry vectors' roles: what the firmware passes to them and expects back.
-- The plug-in has no direct call into the KN6000 firmware. It makes 2,625 indirect
-  `calls (aN)` (`grep -c 'calls	(a' src/program.s`). Those that load the host's block-0 Function
-  table are traced (above: entry OFF / 4); the others, through pointers the plug-in builds at run time,
-  are not.
-- No data piece is a generic `.incbin` any more; 101 (3,133 bytes) are declared opaque after the reader
-  search (`docs/coverage/data-incbin-2026-10-30-02.txt`, `../kn6000/notes/siblings-data-final/README.md`).
-- The 2,625 indirect calls could print the host routine's name for OFF (`plugin_registry.py` lists
-  the 41 offsets); they are still numbers.
+Closed 2026-10-31 by lane mn10300-rest (`../kn7000/notes/mn10300-rest/README.md`):
+
+- The entry vectors' roles: the table above.
+- The indirect calls: all 2,630 `calls (aN)` resolve statically
+  (`../kn7000/notes/mn10300-rest-probes/hdsx3_indirect_calls.py`). 2,444 go through registry slot 0x100
+  (the host's block-0 Function table) and 183 through slot 0x107 (block 7: ExtMode, the `_HD` loaders,
+  the `*_ext` file calls, `dis_int` / `ena_int`, the sequencer queries). Each now carries the host
+  routine's name as a comment (`# host DrawBox (registry slot 0x100, entry 42)`): `gen_data_s.py` writes
+  the host's tables to `src/program/data/host_calls.tsv`, and `gen_image_s.py --host-calls` reads them.
+  The other 3 are `func_97834719`'s tag handlers, `calls (a2)` through the `proc` field of its tag table
+  (FONT, P, BR, H1..H6): no pointer is built at run time from anything but these two tables.
+- The opaque data pieces: `../kn7000/notes/mn10300-rest/README.md` lists them by group; the 2,368-byte
+  pair is the C library's powers of ten (now `Pow10Table`).

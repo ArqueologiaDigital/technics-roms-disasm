@@ -248,17 +248,18 @@ varies from run to run).
 
 ## Left open
 
-- `mem_ptrs` finds few slots in these images: most stored pointers are values the linear walk does not
-  know at the store (computed, or loaded through an index), and the stores into a parameter's record that
-  matter (`SetApTimer`'s message) are read by routines reached through a function pointer.
-- Top-tested pointer loops (`L: cmp End, aN; bcc out; ...; add s, aN; bra L`) do not bound their arrays.
+- ~~`mem_ptrs` finds few slots~~ (lane mn10300-rest, `../mn10300-rest/README.md` section 3: `fld_slots`
+  follows a pointer loaded from a typed field through a memory slot, 131 slots in 941; SetApTimer's message
+  is read through ProcCall's run-time window table 0x5011FAAC, a dispatch no static walk resolves).
+- ~~Top-tested pointer loops~~ (lane mn10300-rest, section 3: `top_tested` bounds them; the images' compiled
+  loops are bottom-tested, so it finds none there).
 - A few bytes per tree that an over-long table or record held before are now untyped: the tables' last
   `0xFFFFFFFF` words (`func_484161BE_Table` and its twins: the loop now starts at the counter's first value
   and stops before the terminator, written `.space 4, 0xFF`), `func_48440E4D_Records` (3 "User Bank"
   records, not 6), `data_50001850_p0_1` (a pseudo-record over three RAM pointer variables), build 935's
   64-character map at 0x48613508 (was a string running into the next record, now a 64-byte piece of
   printable bytes).  `typer_stats.py` lists them.
-- Field names stay offset-named (`f0`, `p8`, `x2`).
+- ~~Field names stay offset-named~~ (lane mn10300-rest, section 4: 941 630 -> 257 fields with a reader).
 
 ## Website page draft
 

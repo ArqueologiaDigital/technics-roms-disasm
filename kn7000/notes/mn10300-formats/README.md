@@ -62,8 +62,10 @@ macros' trailing `.space` (`src/include/data_tables.inc`):
 So ToneKeyHash maps a sound to its panel switch and ShortKeyHash maps a switch back to the sound.
 `swgroup01` takes 0..15 and `swno0` / `swno1` 0..39 (the panel's sound groups), `swgroup23` 0..31 and
 `swno2` / `swno3` 0..127 (bank-and-program style numbers) [INFERENCE on what the two pairs of states are].
-The KN7000's 'Tone' hash (`gen_table_voices.py`) has the same 12-byte payload; its readers were not
-traced here.
+The KN7000's 'Tone' hash (`gen_table_voices.py`) has the same 12-byte payload; its readers: lane
+mn10300-rest (`../mn10300-rest/README.md` section 2), which also replaced the [INFERENCE] on the two pairs of
+states: 0 / 1 are the panel SOUND GROUP switch and 2 / 3 the SOUND EXPLORER category, the even one for a part
+with a DSP unit (`panel_group`, `explorer_group`, `panel_no_dsp`, `panel_no`, `explorer_no_dsp`, `explorer_no`).
 
 ## 3. The KN2400's DSP-effect descriptors
 
@@ -76,8 +78,8 @@ decide how the index is found.
 - `FX_DESC` (16 bytes): `count` records at `params` (right before the descriptor), `nparams` parameter
   numbers (`FxDescNParamsGet`), `mode` (`FxDescModeGet`; `SndUnitDbGroupQuery` searches the parameters for
   1 and 2), `pnum9` / `pnum10` / `pnum11` (a parameter number or -1, read by `FxDescPnum9Get` /
-  `FxDescPnum10Get` / `FxDescPnum11Get`; roles not traced: `pnum9` is the number of a *SPEED* parameter in
-  91 of 106 descriptors), `send_param` (`FxDescSendParamGet`: the REVERB SEND parameter's number in 106 of
+  `FxDescPnum10Get` / `FxDescPnum11Get`; their roles, lane mn10300-rest: `speed_param`, `tempo_param`,
+  `drive_param`, and `mode` is `connection`, FX_PARAM `x29` `depth_link`: `../mn10300-rest/README.md` section 1), `send_param` (`FxDescSendParamGet`: the REVERB SEND parameter's number in 106 of
   106, -1 in the reverbs), 3 zero bytes.
 - `FX_PARAM` (36 bytes): the name, NUL-padded to 20 bytes; `number`, `min`, `max` (`FxParamNumberGet`,
   `FxParamMinGet`, `FxParamMaxGet`); `band` and `sub` (`FxParamBandGet`, `FxParamSubGet`: 0..4 / 0..2 in
@@ -88,8 +90,10 @@ decide how the index is found.
 
 `gen_data_s.py fx_descriptors()` (profile key `fx_descriptors` = 260, the KN2400 only) writes them, one
 line a record. The KN7000's `SndUnitDbGroupQuery` / `SndRec*` routines are the same family
-(`kn2400_ported.sym`), but the KN7000's records are not this layout. Still open: the 20 KB of
-`7c aa aa 7d 55 55 ...` streams at 0x4853C5BE.. (effect-DSP programs [INFERENCE]), which nothing reads.
+(`kn2400_ported.sym`), but the KN7000's records are not this layout. The 20 KB of
+`7c aa aa 7d 55 55 ...` streams at 0x4853C5BE..: the effect DSP's programs, parameter scripts and address
+maps, read through four pointer tables (lane mn10300-rest, `../mn10300-rest/README.md` section 1, typed by
+`gen_data_s.py fx_streams()`).
 
 ## 4. KssBgScreen's `image_id` and `icon` (the SP7001 plug-in)
 
