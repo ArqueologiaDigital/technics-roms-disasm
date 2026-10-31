@@ -590,7 +590,7 @@ consumers); **PROVEN** for the arithmetic.
   (127,127,127) in 579 of 594 records -- one layer -- and splits such as (60,80,100) in the rest. The MODELING top's count-3 read (0xFDD4B4..0xFDD4C2) stores, per
   layer, the index of the first threshold equal to 0x7F (bit 7 masked, 0xFDD514..0xFDD545) in
   Arr27D6, so it is the VELOCITY-LAYER count, not the ON/OFF or DRIVER column; those are
-  `ToneEditPage_A0_Op0..2`'s, and the per-element enable reaches the packer as
+  `ToneEditPage_A0_SetLayerOnOff`, `_StepDriverGroup` and `_StepDriver`'s (were `ToneEditPage_A0_Op0..2`), and the per-element enable reaches the packer as
   `Pack104_LoadElementWaveSelRec`'s fourth argument from part word +0x06 (`BitMask_Table_FDE695`).
   **p12: no reader** -- `notes/open4-a-probes/wavesel_field_readers.py` tracks every register
   loaded from the three wave-select pointer sources and finds no +0x0C access, the unpacker reads
