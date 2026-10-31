@@ -13,11 +13,11 @@ labels are the current ones (after this lane's renames).  `probes/README.md` lis
 
 The 76-byte song record (`HDAE5000_RAM_SongRecords + dir × 0x4C0 + song × 0x4C`) is
 
-| Offset | Size   | Contents                                                                         |
-|--------|--------|----------------------------------------------------------------------------------|
-| +0     | 26     | name, space-padded                                                               |
-| +26    | 10 × 1 | part-present flags: part *k* at +26 + *k*; 1 = saved, 0 = deleted                |
-| +36    | 10 × 4 | first-cluster slots: part *k* at +36 + 4*k*; `0xFFFFFFFF` = absent               |
+| Offset | Size   | Contents                                                           |
+|--------|--------|--------------------------------------------------------------------|
+| +0     | 26     | name, space-padded                                                 |
+| +26    | 10 × 1 | part-present flags: part *k* at +26 + *k*; 1 = saved, 0 = deleted  |
+| +36    | 10 × 4 | first-cluster slots: part *k* at +36 + 4*k*; `0xFFFFFFFF` = absent |
 
 Part numbers are the order of the nine `HDAE5000_SaveSong_*` / `LoadSong_*` / `DeleteSongPart_*` routines and of
 the mask bits: 0 LSW, 1 PMT, 2 SQT, 3 CMP, 4 TM, 5 MSP, 6 RCM, 7 MD, 8 TLX.  Evidence:
@@ -139,15 +139,15 @@ services, packet offsets and transfers quoted below.
 **Request (PC to HD-AE5000).**  Byte 0 is the command, 1-20 (`HDAE5000_PPORT_CommandLoop` rejects only values
 above 20: a 0 would jump through the long before `HDAE5000_PPORT_CommandTable`).  The rest depends on the command:
 
-| Command                  | Request bytes                                                                                            |
-|--------------------------|----------------------------------------------------------------------------------------------------------|
-| 01                       | +1 / +2 = the PC program's version major / minor                                                         |
-| 07, 08, 09, 11, 14, 16   | +1 directory, +2 song, +3 / +4 part mask low / high (`HDAE5000_PPORT_LatchPacketArgs`)                   |
-| 10                       | +1 / +2 part mask low / high, +3.. eight u32 part sizes: LSW, PMT, SQT, CMP, TM, MSP, MD, TLX            |
-| 11                       | (also) +5 the 26-byte song name                                                                          |
-| 13                       | +1..+4 as 07; +5 u32 sector count; +9 the 26-byte song name                                              |
-| 20                       | +2 u32 byte count                                                                                        |
-| 02-06, 12, 15, 17-19     | nothing beyond byte 0                                                                                    |
+| Command                | Request bytes                                                                                 |
+|------------------------|-----------------------------------------------------------------------------------------------|
+| 01                     | +1 / +2 = the PC program's version major / minor                                              |
+| 07, 08, 09, 11, 14, 16 | +1 directory, +2 song, +3 / +4 part mask low / high (`HDAE5000_PPORT_LatchPacketArgs`)        |
+| 10                     | +1 / +2 part mask low / high, +3.. eight u32 part sizes: LSW, PMT, SQT, CMP, TM, MSP, MD, TLX |
+| 11                     | (also) +5 the 26-byte song name                                                               |
+| 13                     | +1..+4 as 07; +5 u32 sector count; +9 the 26-byte song name                                   |
+| 20                     | +2 u32 byte count                                                                             |
+| 02-06, 12, 15, 17-19   | nothing beyond byte 0                                                                         |
 
 The part mask is the song-part numbering of kn5000-44c: bits 0-7 of the low byte = parts 0-7, bit 0 of the high
 byte = part 8 (TLX).
@@ -157,23 +157,23 @@ of the info block `HDAE5000_RAM_PportInfoBlock` copied to the same offsets (`HDA
 byte 255 is set to 0xFF on failure (`HDAE5000_PPORT_FlagPacketError`; ppkn50.dll reads it at 0x100121BF and returns
 -5).  The info block:
 
-| Offset  | Size  | Contents                                                                                                   | Filled by     |
-|---------|-------|------------------------------------------------------------------------------------------------------------|---------------|
-| +0x00   | 2     | the song's part mask                                                                                       | service 13    |
-| +0x02   | 26    | song name                                                                                                  | service 13    |
-| +0x1C   | 16    | directory name                                                                                             | service 13    |
-| +0x2C   | 8     | block 0 (directory names): u32 address, u16 record width, u16 count                                        | service 4     |
-| +0x34   | 8     | block 1 (song records), same layout                                                                        | service 5     |
-| +0x3C   | 10    | block 2 (FLS records), same plus u16 items per record                                                      | service 6     |
-| +0x46   | 9 × 9 | part records {u32 address, u32 size, u8 present}: LSW area A, LSW area B, PMT, SQT, CMP, TM, MSP, RCM, MD  | service 13    |
-| +0x97   | 30    | drive model                                                                                                | service 3     |
-| +0xB5   | 4     | cylinders                                                                                                  | service 3     |
-| +0xB9   | 2     | heads                                                                                                      | service 3     |
-| +0xBB   | 2     | sectors per track                                                                                          | service 3     |
-| +0xBD   | 2     | 512 (bytes per sector)                                                                                     | service 3     |
-| +0xBF   | 9     | the TLX part record                                                                                        | service 13    |
-| +0xC8   | 2     | file-format version major / minor (`HDAE5000_RAM_FileFormat_VersionMajor` / `_Minor`)                      | service 3     |
-| +0xCA   | -     | free work area (service 19 returns its address)                                                            | -             |
+| Offset | Size  | Contents                                                                                                  | Filled by  |
+|--------|-------|-----------------------------------------------------------------------------------------------------------|------------|
+| +0x00  | 2     | the song's part mask                                                                                      | service 13 |
+| +0x02  | 26    | song name                                                                                                 | service 13 |
+| +0x1C  | 16    | directory name                                                                                            | service 13 |
+| +0x2C  | 8     | block 0 (directory names): u32 address, u16 record width, u16 count                                       | service 4  |
+| +0x34  | 8     | block 1 (song records), same layout                                                                       | service 5  |
+| +0x3C  | 10    | block 2 (FLS records), same plus u16 items per record                                                     | service 6  |
+| +0x46  | 9 × 9 | part records {u32 address, u32 size, u8 present}: LSW area A, LSW area B, PMT, SQT, CMP, TM, MSP, RCM, MD | service 13 |
+| +0x97  | 30    | drive model                                                                                               | service 3  |
+| +0xB5  | 4     | cylinders                                                                                                 | service 3  |
+| +0xB9  | 2     | heads                                                                                                     | service 3  |
+| +0xBB  | 2     | sectors per track                                                                                         | service 3  |
+| +0xBD  | 2     | 512 (bytes per sector)                                                                                    | service 3  |
+| +0xBF  | 9     | the TLX part record                                                                                       | service 13 |
+| +0xC8  | 2     | file-format version major / minor (`HDAE5000_RAM_FileFormat_VersionMajor` / `_Minor`)                     | service 3  |
+| +0xCA  | -     | free work area (service 19 returns its address)                                                           | -          |
 
 The part records come from the main CPU (`HamaFn_GetResouceInfo` resources 0-3 and 5-9), with the sizes of SQT,
 CMP and MSP from `HamaFn_SeqSavePre` (added), `HamaFn_cmp_sv_mae` and `HamaFn_msp_sv_mae`, 0x72AA for TM and
@@ -181,26 +181,26 @@ CMP and MSP from `HamaFn_SeqSavePre` (added), `HamaFn_cmp_sv_mae` and `HamaFn_ms
 
 Per command:
 
-| Command | Handler                    | Services          | Reply / transfers                                                                                                                                                |
-|---------|----------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 01      | `Cmd01_SendInfosAboutHd`   | 3                 | info +0x97..+0xC9 (geometry, file-format version); failure when request +1 differs from the version major ("Error Wrong Dll Ver")                               |
-| 02      | `Cmd02_ExitPport`          | 1, 18             | no reply; writes 0x00FF at info +0, then service 18 posts `EVT_CHANGE_MODE` `NAKA_MODE_MD_NORMAL` (back to play)                                                |
-| 03      | `Cmd03_ReadFsbFromHd`      | 7                 | status only (`HDAE5000_HD_LoadTables`)                                                                                                                           |
-| 04      | `Cmd04_SendFsbToPc`        | 4, 5, 6           | info +0x2C..+0x45, then blocks 0, 1, 2 to the PC                                                                                                                 |
-| 05      | `Cmd05_RcvFsbFromPc`       | 4, 5, 6           | info +0x2C..+0x45, then blocks 0, 1, 2 from the PC                                                                                                               |
-| 06      | `Cmd06_WriteFsbToHd`       | 10                | status only (`HDAE5000_HD_StoreTables`)                                                                                                                          |
-| 07      | `Cmd07_LoadHdToMemory`     | 13, 14            | info +0x00..+0xC7, then (mask non-zero) service 14 loads the parts into the keyboard's memory and a status packet follows                                        |
-| 08      | `Cmd08_SendDataToPc`       | 13, 14            | info +0x00..+0x2B with the mask (RCM bit 6 cleared); then load as 07, info +0x00..+0xC7, and one block per mask bit from the part's memory (LSW: areas A and B) |
-| 09      | `Cmd09_SendFilesToPc`      | 13, 24, 25        | info +0x00..+0x2B, mask in +0/+1, nine u32 part sizes from +0x2C; then each part streamed from the disk (`HDAE5000_PPORT_SendRegionToPc`)                        |
-| 10      | `Cmd10_RcvDataFromPc`      | 1, 20, 16         | receives each masked part into fixed main-CPU RAM: PMT 0x1ED350, SQT 0x0AB000, CMP 0x094800, TM 0x1E0000, MSP 0x1E8800, MD 0x3D3000, TLX the lyric buffer, LSW `HDAE5000_PPORT_RecvCustomData` |
-| 11      | `Cmd11_SaveMemoryToHd`     | 1, 15             | mask and name into the info block, service 15 saves the song from memory to disk; status                                                                        |
-| 12, 15, 19 | `Cmd12/15/19_Nothing`   | -                 | status record only, no reply                                                                                                                                     |
-| 13      | `Cmd13_RcvDataFromPc`      | 1, 21, 23, 22     | writes the PC's sectors straight to a new chain (WriteOpenHD / WriteFileHD per 512-byte sector / WriteCloseHD), one status byte per step (`HDAE5000_PPORT_SendByte`) |
-| 14      | `Cmd14_SendInfosToPc`      | 13                | the reply of 09 without the data                                                                                                                                 |
-| 16      | `Cmd16_DeleteFiles`        | 13, 27            | info +0x00..+0xC7 with the masked mask; service 27 deletes those parts; status                                                                                   |
-| 17      | `Cmd17_FormatHd`           | 17                | status only                                                                                                                                                      |
-| 18      | `Cmd18_SwitchHdMotorOff`   | 2                 | status only                                                                                                                                                      |
-| 20      | `Cmd20_SendXapFileFlash`   | 29, 28, 30        | see kn5000-e7f; no reply packet                                                                                                                                  |
+| Command    | Handler                  | Services      | Reply / transfers                                                                                                                                                                              |
+|------------|--------------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 01         | `Cmd01_SendInfosAboutHd` | 3             | info +0x97..+0xC9 (geometry, file-format version); failure when request +1 differs from the version major ("Error Wrong Dll Ver")                                                              |
+| 02         | `Cmd02_ExitPport`        | 1, 18         | no reply; writes 0x00FF at info +0, then service 18 posts `EVT_CHANGE_MODE` `NAKA_MODE_MD_NORMAL` (back to play)                                                                               |
+| 03         | `Cmd03_ReadFsbFromHd`    | 7             | status only (`HDAE5000_HD_LoadTables`)                                                                                                                                                         |
+| 04         | `Cmd04_SendFsbToPc`      | 4, 5, 6       | info +0x2C..+0x45, then blocks 0, 1, 2 to the PC                                                                                                                                               |
+| 05         | `Cmd05_RcvFsbFromPc`     | 4, 5, 6       | info +0x2C..+0x45, then blocks 0, 1, 2 from the PC                                                                                                                                             |
+| 06         | `Cmd06_WriteFsbToHd`     | 10            | status only (`HDAE5000_HD_StoreTables`)                                                                                                                                                        |
+| 07         | `Cmd07_LoadHdToMemory`   | 13, 14        | info +0x00..+0xC7, then (mask non-zero) service 14 loads the parts into the keyboard's memory and a status packet follows                                                                      |
+| 08         | `Cmd08_SendDataToPc`     | 13, 14        | info +0x00..+0x2B with the mask (RCM bit 6 cleared); then load as 07, info +0x00..+0xC7, and one block per mask bit from the part's memory (LSW: areas A and B)                                |
+| 09         | `Cmd09_SendFilesToPc`    | 13, 24, 25    | info +0x00..+0x2B, mask in +0/+1, nine u32 part sizes from +0x2C; then each part streamed from the disk (`HDAE5000_PPORT_SendRegionToPc`)                                                      |
+| 10         | `Cmd10_RcvDataFromPc`    | 1, 20, 16     | receives each masked part into fixed main-CPU RAM: PMT 0x1ED350, SQT 0x0AB000, CMP 0x094800, TM 0x1E0000, MSP 0x1E8800, MD 0x3D3000, TLX the lyric buffer, LSW `HDAE5000_PPORT_RecvCustomData` |
+| 11         | `Cmd11_SaveMemoryToHd`   | 1, 15         | mask and name into the info block, service 15 saves the song from memory to disk; status                                                                                                       |
+| 12, 15, 19 | `Cmd12/15/19_Nothing`    | -             | status record only, no reply                                                                                                                                                                   |
+| 13         | `Cmd13_RcvDataFromPc`    | 1, 21, 23, 22 | writes the PC's sectors straight to a new chain (WriteOpenHD / WriteFileHD per 512-byte sector / WriteCloseHD), one status byte per step (`HDAE5000_PPORT_SendByte`)                           |
+| 14         | `Cmd14_SendInfosToPc`    | 13            | the reply of 09 without the data                                                                                                                                                               |
+| 16         | `Cmd16_DeleteFiles`      | 13, 27        | info +0x00..+0xC7 with the masked mask; service 27 deletes those parts; status                                                                                                                 |
+| 17         | `Cmd17_FormatHd`         | 17            | status only                                                                                                                                                                                    |
+| 18         | `Cmd18_SwitchHdMotorOff` | 2             | status only                                                                                                                                                                                    |
+| 20         | `Cmd20_SendXapFileFlash` | 29, 28, 30    | see kn5000-e7f; no reply packet                                                                                                                                                                |
 
 (Service 26, the status record, runs first in every handler and is left out of the column.)
 
@@ -274,22 +274,22 @@ connection on two sheets:
 - **MAIN P.C. diagram** (sheet II-8, PDF page 30) lists CN6 pin by pin, 70 pins (the wiring sheet's "68" counts
   without the last two ground pins, 69 and 70):
 
-| Pin | Signal  | Pin | Signal  | Pin | Signal  | Pin | Signal  | Pin | Signal  |
-|-----|---------|-----|---------|-----|---------|-----|---------|-----|---------|
-| 1   | E       | 15  | D2      | 29  | A9      | 43  | A5      | 57  | D4      |
-| 2   | E       | 16  | D9      | 30  | IORST   | 44  | A4      | 58  | HDINT   |
-| 3   | +15M    | 17  | D1      | 31  | RYBY    | 45  | A3      | 59  | PPIFCS  |
-| 4   | +5A     | 18  | D8      | 32  | A1      | 46  | A2      | 60  | +5D     |
-| 5   | E       | 19  | D0      | 33  | E       | 47  | E       | 61  | LRCK    |
-| 6   | E       | 20  | HSORAM  | 34  | E       | 48  | HSOROM  | 62  | D03     |
-| 7   | DACCK   | 21  | A18     | 35  | E       | 49  | RD      | 63  | E       |
-| 8   | BCK     | 22  | A17     | 36  | E       | 50  | D15     | 64  | E       |
-| 9   | +5D     | 23  | A16     | 37  | WRLL    | 51  | D7      | 65  | +15A    |
-| 10  | HDDCS   | 24  | A15     | 38  | WRLH    | 52  | D14     | 66  | -15A    |
-| 11  | HDRDY   | 25  | A14     | 39  | A10     | 53  | D6      | 67  | E       |
-| 12  | D11     | 26  | A13     | 40  | A8      | 54  | D13     | 68  | E       |
-| 13  | D3      | 27  | A12     | 41  | A7      | 55  | D5      | 69  | E       |
-| 14  | D10     | 28  | A11     | 42  | A6      | 56  | D12     | 70  | E       |
+| Pin | Signal | Pin | Signal | Pin | Signal | Pin | Signal | Pin | Signal |
+|-----|--------|-----|--------|-----|--------|-----|--------|-----|--------|
+| 1   | E      | 15  | D2     | 29  | A9     | 43  | A5     | 57  | D4     |
+| 2   | E      | 16  | D9     | 30  | IORST  | 44  | A4     | 58  | HDINT  |
+| 3   | +15M   | 17  | D1     | 31  | RYBY   | 45  | A3     | 59  | PPIFCS |
+| 4   | +5A    | 18  | D8     | 32  | A1     | 46  | A2     | 60  | +5D    |
+| 5   | E      | 19  | D0     | 33  | E      | 47  | E      | 61  | LRCK   |
+| 6   | E      | 20  | HSORAM | 34  | E      | 48  | HSOROM | 62  | D03    |
+| 7   | DACCK  | 21  | A18    | 35  | E      | 49  | RD     | 63  | E      |
+| 8   | BCK    | 22  | A17    | 36  | E      | 50  | D15    | 64  | E      |
+| 9   | +5D    | 23  | A16    | 37  | WRLL   | 51  | D7     | 65  | +15A   |
+| 10  | HDDCS  | 24  | A15    | 38  | WRLH   | 52  | D14    | 66  | -15A   |
+| 11  | HDRDY  | 25  | A14    | 39  | A10    | 53  | D6     | 67  | E      |
+| 12  | D11    | 26  | A13    | 40  | A8     | 54  | D13    | 68  | E      |
+| 13  | D3     | 27  | A12    | 41  | A7     | 55  | D5     | 69  | E      |
+| 14  | D10    | 28  | A11    | 42  | A6     | 56  | D12    | 70  | E      |
 
 (E = ground.  "D03" is printed so on the sheet; next to BCK / LRCK / DACCK it is [INFERENCE] a serial audio data
 line, not a data-bus bit.)
@@ -350,18 +350,18 @@ keysoftservice.ch.
   sends (`probes/ppkn50_command_map.py`, from the `push <command>; push <port>; call 0x10002810` before each link
   transaction):
 
-| Export                            | Commands | Export                            | Commands |
-|-----------------------------------|----------|-----------------------------------|----------|
-| `PP50TestTheKNPP`                 | 1        | `PP50SendFileFromPCToKNMem`       | 10       |
-| `PP50EscapeKeyboardToPlay`        | 2        | `PP50SendFileFromPCToKNHD`        | 10       |
-| `PP50ReadFsbFromKnHdToKnMem`      | 3        | `PP50SaveFileFromKNMemToKNHd`     | 11       |
-| `PP50SendFsbFromKnMemToPC`        | 4        | `PP50SaveFileFromPCDirectToKNHd`  | 13       |
-| `PP50SendFsbFromPCToKnMem`        | 5        | `PP50SavePCMemDirectToKNHd`       | 13       |
-| `PP50WriteFsbFromKnMemToKnHd`     | 6        | `PP50SendSeveralFileDirectToKNHD` | 13, 6    |
-| `PP50LoadFileFromKnHdToKnMem`     | 7        | `PP50TestSongInfoFromKnHd`        | 14       |
-| `PP50LoadFileFromKnHdToPC`        | 8        | `PP50DeleteFileOnKnHd`            | 16       |
-| `PP50LoadFileFromKnHdDirectToPC`  | 9        | `PP50FormatTheKn50HardDisk`       | 17       |
-|                                   |          | `PP50TurnOffTheKn50HdMotor`       | 18       |
+| Export                           | Commands | Export                            | Commands |
+|----------------------------------|----------|-----------------------------------|----------|
+| `PP50TestTheKNPP`                | 1        | `PP50SendFileFromPCToKNMem`       | 10       |
+| `PP50EscapeKeyboardToPlay`       | 2        | `PP50SendFileFromPCToKNHD`        | 10       |
+| `PP50ReadFsbFromKnHdToKnMem`     | 3        | `PP50SaveFileFromKNMemToKNHd`     | 11       |
+| `PP50SendFsbFromKnMemToPC`       | 4        | `PP50SaveFileFromPCDirectToKNHd`  | 13       |
+| `PP50SendFsbFromPCToKnMem`       | 5        | `PP50SavePCMemDirectToKNHd`       | 13       |
+| `PP50WriteFsbFromKnMemToKnHd`    | 6        | `PP50SendSeveralFileDirectToKNHD` | 13, 6    |
+| `PP50LoadFileFromKnHdToKnMem`    | 7        | `PP50TestSongInfoFromKnHd`        | 14       |
+| `PP50LoadFileFromKnHdToPC`       | 8        | `PP50DeleteFileOnKnHd`            | 16       |
+| `PP50LoadFileFromKnHdDirectToPC` | 9        | `PP50FormatTheKn50HardDisk`       | 17       |
+|                                  |          | `PP50TurnOffTheKn50HdMotor`       | 18       |
 
   Commands 12, 15, 19 ("nothing") and 20 (XAP flash) are never sent.  This corrects
   `hdae5000/hd-techmanager5000/ppkn50-protocol-analysis.md`, whose command table had 02 as "TestTheKNPP" and wrote
@@ -397,59 +397,47 @@ and replace the "DLL exports 23 `PP50*` functions" table with the export/command
 
 ## kn5000-nl6: the HD-AE5000 leads
 
-| Lead                                                                                     | Outcome                                                                                                                                                                                                                                                                                           |
-|------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `HDAE5000_LoadSong_Rcm` / `SaveSong_Rcm` comments have the LDIRW direction backwards      | Already fixed before this lane (the swapped comments are gone; `HDAE5000_RcmStream_InitialState` documents `95 11` = LDIRW (XIX+),(XIY+)).  This lane named the destination: `HDAE5000_RAM_HdStreamBufferEnd` was only ever the RCM stream context, now `HDAE5000_RAM_RcmStreamState`, all four trees |
-| the signature table's pointers are `.byte` + `.asciz "/"` (respell as .long)            | Already fixed by `d8574de89`: `HDAE5000_PartSignatureTable` is nine `{.long HDAE5000_PartSig_<part>; .short offset, length}` records in every tree (checked)                                                                                                                                      |
-| the CMP signature is 'H\0K', not 'HK\0'                                                   | Already right: `HDAE5000_PartSig_CMP` / `_MSP` / `_RCM` are `.asciz "H"` + `.asciz "K"` (bytes 48 00 4B), compare length 3                                                                                                                                                                        |
-| `HdaeRom_DataHandler` / `HdaeRom_AltHandler` convert older models' sound-RAM images       | Confirmed and renamed in v10, v9 (= v8), v7, v6, v5 (`scripts/renaming/rename_open4_hdae.sed`): see below                                                                                                                                                                                          |
+| Lead                                                                                 | Outcome                                                                                                                                                                                                                                                                                                                                                               |
+|--------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HDAE5000_LoadSong_Rcm` / `SaveSong_Rcm` comments have the LDIRW direction backwards | Already fixed before this lane (the swapped comments are gone; `HDAE5000_RcmStream_InitialState` documents `95 11` = LDIRW (XIX+),(XIY+)).  This lane named the destination: `HDAE5000_RAM_HdStreamBufferEnd` was only ever the RCM stream context, now `HDAE5000_RAM_RcmStreamState`, all four trees                                                                 |
+| the signature table's pointers are `.byte` + `.asciz "/"` (respell as .long)         | Already fixed by `d8574de89`: `HDAE5000_PartSignatureTable` is nine `{.long HDAE5000_PartSig_<part>; .short offset, length}` records in every tree (checked)                                                                                                                                                                                                          |
+| the CMP signature is 'H\0K', not 'HK\0'                                              | Already right: `HDAE5000_PartSig_CMP` / `_MSP` / `_RCM` are `.asciz "H"` + `.asciz "K"` (bytes 48 00 4B), compare length 3                                                                                                                                                                                                                                            |
+| `HdaeRom_DataHandler` / `HdaeRom_AltHandler` convert older models' sound-RAM images  | Confirmed (main CPU, not HD-AE5000).  Renamed by the naming sub-lane, open4/kn5000-b-naming `3832a6dfc` (`scripts/renaming/rename_open4_naming.sed`): `SoundRam_IdentifyImage`, `SoundRam_ConvertSounds`, `SoundRam_ConvertUserKit`, `SoundRam_ConvertKn3000UserKit`, `SoundRam_WriteChecksum`.  This lane's own rename of the same family was reverted (`11a3b6d5b`) |
 
-**The sound-RAM converters (main CPU).**  After a .TM file (`PostTmLoad`) or one SOUND MEMORY entry
-(`PostTmLoadEntry`) is read into the image at 0x1E0000:
-
-- `SoundRam_IdentifyImage` (was `SendPartDataBlock_InitVal4`) compares the 16-byte id with
-  `SoundRam_Id_KN5000` / `_KN1500` / `_KN3000` (whole id) and `_KN2000` / `_MKA` / `_MKB` (bytes 5-7) and returns
-  6, 5, 4, 1, 2, 3, or 0 for an unknown id;
-- `SoundRam_ConvertUserSounds` (was `HdaeRom_DataHandler`) rewrites the 40 user sounds (470 B each from +0x10):
-  ids 1-3 from 144-byte records at +80 (`SoundRam_ConvertKn2000Record`; single entries first pass through
-  `SoundRam_RemapKn2000RecordFields`, was `HdaeRom_DataHandler_Helper`), id 5 from 289-byte records at +16
-  (`SoundRam_ConvertKn1500Record`), ids 4 and 6 unchanged, id 0 returns 0xFF9A;
-- `SoundRam_ConvertUserDrumKit` (was `HdaeRom_AltHandler`) handles the user drum-kit record at +0x4980: id 4
-  through `SoundRam_ConvertKn3000DrumKit` (was `HdaeRom_DataDispatch_Block3`: inserts kit byte +0x11 = 1 by moving
-  +0x4991..+0x72A5 up one, and sets bit 5 "user RAM entry" in the 128 per-note words at +0x49A7), id 6 unchanged,
-  any other id returns 0xFF9A;
-- `SoundRam_WriteIdAndChecksum` then stamps "KN5000 SOUND RAM" and `SoundRam_StoreChecksum` (was
-  `SendPartDataBlock_SetWord7`) the checksum at 0x1E72A8.
-
-The kit layout is the floppy lane's (`floppy/kn5000/include/kn5000_specs.inc`, kit record and note_bank_*), whose
-evidence strings now use the new names.  **Left for the naming lane**: the rest of the `HdaeRom_*` family
-(`HdaeRom_ProcessBlock`, `_ReadParam`, `_WriteParam`, `_CheckResult`, `_FinishBlock`, `_TableEntry0/1`,
-`_Alt*`) are panel-code listeners of `SwbtB2_Code61..80_Listeners`, a different subsystem, and keep the wrong
-prefix; they need a naming pass of their own.
+What this lane read in that code, for the naming sub-lane's notes (names as in `3832a6dfc`): after a .TM file
+(`PostTmLoad`) or one SOUND MEMORY entry (`PostTmLoadEntry`) is read into the image at 0x1E0000,
+`SoundRam_IdentifyImage` compares the 16-byte id with the KN5000 / KN1500 / KN3000 ids (whole) and the KN2000 / MKA /
+MKB ids (bytes 5-7) and returns 6, 5, 4, 1, 2, 3, or 0; `SoundRam_ConvertSounds` rewrites the 40 user sounds
+(470 B from +0x10): ids 1-3 from 144-byte records at +80, id 5 from 289-byte records at +16, ids 4 and 6 unchanged,
+id 0 returns 0xFF9A; `SoundRam_ConvertUserKit` converts the user kit at +0x4980 only for id 4
+(`SoundRam_ConvertKn3000UserKit`: opens kit byte +0x11 = 1 by moving +0x4991..+0x72A5 up one, sets bit 5 "user RAM
+entry" in the 128 per-note words at +0x49A7), leaves id 6 and returns 0xFF9A for the others.  In v10/v9 the two
+switch tables were also reached through `.set` aliases `COMM_InitFuncTable + 540` / `+ 552` at the same addresses
+(llvm-nm); whether `3832a6dfc` merged those is for the naming sub-lane to say.
 
 ## Also renamed (HD-AE5000, all trees that have them)
 
-| Old                                    | New                                           | Why                                                                         |
-|----------------------------------------|-----------------------------------------------|-----------------------------------------------------------------------------|
-| `HDAE5000_FlsItem_SetByte80`           | `HDAE5000_FlsItem_SetAutoStart`               | kn5000-44c                                                                  |
-| `HDAE5000_FlsItem_SetByte112`          | `HDAE5000_FlsItem_SetAutoLoad`                | kn5000-44c                                                                  |
-| `HDAE5000_Get_Status_Byte`             | `HDAE5000_Fls_GetAutoLoadPending`             | kn5000-44c                                                                  |
-| `HDAE5000_Set_Status_Byte`             | `HDAE5000_Fls_SetSeqStopPending`              | kn5000-44c                                                                  |
-| RAM 0x22AD96/98/9A/9B (v1 0x22AD4E..)  | `HDAE5000_RAM_FlsChainFls` / `_FlsChainItem` / `_FlsAutoLoadPending` / `_FlsSeqStopPending` | kn5000-44c                          |
-| `HDAE5000_RAM_HdStreamBufferEnd`       | `HDAE5000_RAM_RcmStreamState`                 | kn5000-nl6 lead                                                             |
-| `HDAE5000_PPORT_Svc18`                 | `HDAE5000_PPORT_Svc18_RequestNormalMode`      | kn5000-t8n (posts `EVT_CHANGE_MODE` `NAKA_MODE_MD_NORMAL`)                  |
-| `HDAE5000_PPORT_Svc27`                 | `HDAE5000_PPORT_Svc27_DeleteSongParts`        | kn5000-t8n (calls `HDAE5000_DeleteSongParts`)                               |
-| `HDAE5000_PPORT_Svc29_MainHook0538`    | `HDAE5000_PPORT_Svc29_SleepMainTask`          | kn5000-e7f (`RootFn_SleepMainTask`), v2.x                                   |
-| `HDAE5000_PPORT_Svc30_MainHook053C`    | `HDAE5000_PPORT_Svc30_WakeUpMainTask`         | kn5000-e7f (`RootFn_WakeUpMainTask`), v2.x                                  |
+| Old                                   | New                                                                                         | Why                                                        |
+|---------------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------|
+| `HDAE5000_FlsItem_SetByte80`          | `HDAE5000_FlsItem_SetAutoStart`                                                             | kn5000-44c                                                 |
+| `HDAE5000_FlsItem_SetByte112`         | `HDAE5000_FlsItem_SetAutoLoad`                                                              | kn5000-44c                                                 |
+| `HDAE5000_Get_Status_Byte`            | `HDAE5000_Fls_GetAutoLoadPending`                                                           | kn5000-44c                                                 |
+| `HDAE5000_Set_Status_Byte`            | `HDAE5000_Fls_SetSeqStopPending`                                                            | kn5000-44c                                                 |
+| RAM 0x22AD96/98/9A/9B (v1 0x22AD4E..) | `HDAE5000_RAM_FlsChainFls` / `_FlsChainItem` / `_FlsAutoLoadPending` / `_FlsSeqStopPending` | kn5000-44c                                                 |
+| `HDAE5000_RAM_HdStreamBufferEnd`      | `HDAE5000_RAM_RcmStreamState`                                                               | kn5000-nl6 lead                                            |
+| `HDAE5000_PPORT_Svc18`                | `HDAE5000_PPORT_Svc18_RequestNormalMode`                                                    | kn5000-t8n (posts `EVT_CHANGE_MODE` `NAKA_MODE_MD_NORMAL`) |
+| `HDAE5000_PPORT_Svc27`                | `HDAE5000_PPORT_Svc27_DeleteSongParts`                                                      | kn5000-t8n (calls `HDAE5000_DeleteSongParts`)              |
+| `HDAE5000_PPORT_Svc29_MainHook0538`   | `HDAE5000_PPORT_Svc29_SleepMainTask`                                                        | kn5000-e7f (`RootFn_SleepMainTask`), v2.x                  |
+| `HDAE5000_PPORT_Svc30_MainHook053C`   | `HDAE5000_PPORT_Svc30_WakeUpMainTask`                                                       | kn5000-e7f (`RootFn_WakeUpMainTask`), v2.x                 |
 
 The technics-docs pages that quote old names: boot-sequence.md and hdae5000.md (`HDAE5000_Get_Status_Byte`).
 
 ## Outcomes
 
-| Issue      | Outcome | Evidence / blocker                                                                                                                                      |
-|------------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| kn5000-44c | CLOSED  | this README "kn5000-44c"; renames in the four HD-AE5000 trees; draft for hdae5000-filesystem.md                                                         |
-| kn5000-t8n | CLOSED  | this README "kn5000-t8n", `probes/pport_packet_map.py`; draft for hdae5000-filesystem.md / hdae5000.md                                                  |
+| Issue      | Outcome | Evidence / blocker                                                                                                                                       |
+|------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| kn5000-44c | CLOSED  | this README "kn5000-44c"; renames in the four HD-AE5000 trees; draft for hdae5000-filesystem.md                                                          |
+| kn5000-t8n | CLOSED  | this README "kn5000-t8n", `probes/pport_packet_map.py`; draft for hdae5000-filesystem.md / hdae5000.md                                                   |
 | kn5000-e7f | CLOSED  | this README "kn5000-e7f" (HD-AE5000 side traced, no version check; the 0x23FEB0 flasher is shown absent from every image and from the v1.40 software)    |
-| kn5000-mzz | BLOCKED | main-board end transcribed (CN6, 70 pins; W3 correction); the HD-AE5000 board side needs the board or its service manual                                |
+| kn5000-mzz | BLOCKED | main-board end transcribed (CN6, 70 pins; W3 correction); the HD-AE5000 board side needs the board or its service manual                                 |
 | kn5000-qnf | CLOSED  | this README "kn5000-qnf", `probes/wise_scan.py`, `probes/ppkn50_command_map.py`; the VB5 form logic is not decompiled (no decompiler), stated as a limit |
