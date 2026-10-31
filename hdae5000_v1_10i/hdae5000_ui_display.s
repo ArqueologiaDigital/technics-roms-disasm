@@ -762,17 +762,19 @@ HDAE5000_NameHistory_Recall:
 	ret
 
 ; ---------------------------------------------------------------------------
-; L = the byte at RAM 0x22AD9A (its role is not established).
+; L = HDAE5000_RAM_FlsAutoLoadPending: 1 while an FLS AUTO LOAD chain waits
+; for the sequencer to stop (HDAE5000_Frame_Handler_Status).
 ; ---------------------------------------------------------------------------
-HDAE5000_Get_Status_Byte:
-	ld l, (0x22ad52:24)
+HDAE5000_Fls_GetAutoLoadPending:
+	ld l, (HDAE5000_RAM_FlsAutoLoadPending:24)
 	ret
 
 ; ---------------------------------------------------------------------------
-; Store A at RAM 0x22AD9B (its role is not established).
+; HDAE5000_RAM_FlsSeqStopPending = A: the sequencer stopped during an FLS
+; AUTO LOAD chain while another title was shown (HDAE5000_Frame_Handler_Status).
 ; ---------------------------------------------------------------------------
-HDAE5000_Set_Status_Byte:
-	ld (0x22ad53:24), a
+HDAE5000_Fls_SetSeqStopPending:
+	ld (HDAE5000_RAM_FlsSeqStopPending:24), a
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -3387,7 +3389,7 @@ HDAE5000_Frame_Handler:
 	; Frame handler main entry - called periodically from main loop
 	; (v1.x has no lyric box, so no song-position post: v2.x's part 1.)
 	; 2. (_Status) When bit 2 of the main CPU's sqsrtc byte falls to 0 and
-	;    HDAE5000_Get_Status_Byte is 1: on the HD title (GetTitleNow ==
+	;    HDAE5000_Fls_GetAutoLoadPending is 1: on the HD title (GetTitleNow ==
 	;    0x01A0007F) post the file-load events, else HDAE5000_RequestTitle15(0x7F).
 	;
 	inc	1, (HDAE5000_RAM_FrameCount:24)	; v1.x only: counts frames; read nowhere in this ROM
@@ -3407,7 +3409,7 @@ HDAE5000_Frame_Handler_Status:
 	jrl nz, HDAE5000_Frame_Handler_Exit	; jrl NZ, Frame_Handler_Exit  ; Skip if bit still set
 	;
 	; Bit 2 cleared - check if display init needed
-	call HDAE5000_Get_Status_Byte	; Call status check routine
+	call HDAE5000_Fls_GetAutoLoadPending	; Call status check routine
 	cp l, 1:i3	; Check return value
 	jr nz, HDAE5000_Frame_Handler_Exit	; Skip if not 1
 	;
@@ -3421,7 +3423,7 @@ HDAE5000_Frame_Handler_Status:
 	;
 	; Partial update
 	ld wa, 1:i3
-	call HDAE5000_Set_Status_Byte	; Call update routine
+	call HDAE5000_Fls_SetSeqStopPending	; Call update routine
 	ldw wa, 0x7f
 	call HDAE5000_RequestTitle15	; Call UI update
 	jr HDAE5000_Frame_Handler_Exit
@@ -4059,7 +4061,7 @@ HDAE5000_FlsItem_IsSet:	; (1497 bytes)
 	; at 0x2257C2 and its song+1 byte at 0x2257E2 are non-zero -- else 0xFFFF)
 ; LCIB: 0x28FBB1 (1497 bytes)
 	; ^ conversion-region size (local-label prefix .LCIB_), not a routine
-	;   size: HDAE5000_FlsItem_IsSet .. HDAE5000_FlsItem_SetByte112.
+	;   size: HDAE5000_FlsItem_IsSet .. HDAE5000_FlsItem_SetAutoLoad.
 
 	ld	hl, 0:i3
 	ld	ix, bc
@@ -4092,10 +4094,10 @@ HDAE5000_FlsItem_IsSet_Done:
 	ret
 
 ; ---------------------------------------------------------------------------
-; Copy item BC of FLS record WA out as {u16 dir; u16 song; u8 byte80; u8
-; byte112} (the stored 1-based directory and song bytes minus 1); nothing is
+; Copy item BC of FLS record WA out as {u16 dir; u16 song; u8 AS; u8
+; AL} (the stored 1-based directory and song bytes minus 1); nothing is
 ; stored when the item is empty (HDAE5000_FlsItem_IsSet).  FLS records hold
-; 32 items as parallel byte arrays at +16 (dir + 1), +48 (song + 1), +80, +112.
+; 32 items as parallel byte arrays at +16 (dir + 1), +48 (song + 1), +80 (AS), +112 (AL).
 ; In:  WA = FLS, BC = item, XDE = destination
 ; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_Get:
@@ -4679,11 +4681,13 @@ HDAE5000_FlsItem_SetSong:
 	ret
 
 ; ---------------------------------------------------------------------------
-; Item BC of FLS record WA, when set: its byte at +80 = E (its meaning is not
-; established).
+; Item BC of FLS record WA, when set: its AS (AUTO START) option byte at +80 =
+; E (0/1).  HDAE5000_FlsLoadScreen starts the sequencer after loading an item
+; whose AS byte is 1 (HamaFn_SwbtWr panel code 0x48 bit 5); the FLS lists
+; mark it with "*" (owner's manual: "AUTO START (AS)").
 ; In:  WA = FLS, BC = item, E = value
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetByte80:
+HDAE5000_FlsItem_SetAutoStart:
 	dec	4, xsp
 	pushw iz
 	ld	(xsp+2), e
@@ -4694,7 +4698,7 @@ HDAE5000_FlsItem_SetByte80:
 	calr	HDAE5000_FlsItem_IsSet
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr	z, HDAE5000_FlsItem_SetByte80_Epilogue
+	jr	z, HDAE5000_FlsItem_SetAutoStart_Epilogue
 	ld	bc, iz
 	extz xbc
 	ld	wa, (xsp+4)
@@ -4709,17 +4713,19 @@ HDAE5000_FlsItem_SetByte80:
 	add	xbc, xde
 	ld	a, (xsp+2)
 	ld	(xbc), a
-HDAE5000_FlsItem_SetByte80_Epilogue:
+HDAE5000_FlsItem_SetAutoStart_Epilogue:
 	popw iz
 	inc 4, xsp
 	ret
 
 ; ---------------------------------------------------------------------------
-; Item BC of FLS record WA, when set: its byte at +112 = E (its meaning is not
-; established).
+; Item BC of FLS record WA, when set: its AL (AUTO LOAD) option byte at +112 =
+; E (0/1).  Loading an item whose AL byte is 1 arms the chain
+; (HDAE5000_RAM_FlsAutoLoadPending): when the sequencer stops, the next item
+; is loaded (owner's manual: "AUTO LOAD (AL)").
 ; In:  WA = FLS, BC = item, E = value
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetByte112:
+HDAE5000_FlsItem_SetAutoLoad:
 	dec	4, xsp
 	pushw iz
 	ld	(xsp+2), e
@@ -4730,7 +4736,7 @@ HDAE5000_FlsItem_SetByte112:
 	calr	HDAE5000_FlsItem_IsSet
 	ld	wa, hl
 	cp	wa, 0xffff
-	jr	z, HDAE5000_FlsItem_SetByte112_Epilogue
+	jr	z, HDAE5000_FlsItem_SetAutoLoad_Epilogue
 	ld	bc, iz
 	extz xbc
 	ld	wa, (xsp+4)
@@ -4745,7 +4751,7 @@ HDAE5000_FlsItem_SetByte112:
 	add	xbc, xde
 	ld	a, (xsp+2)
 	ld	(xbc), a
-HDAE5000_FlsItem_SetByte112_Epilogue:
+HDAE5000_FlsItem_SetAutoLoad_Epilogue:
 	popw iz
 	inc 4, xsp
 	ret
@@ -5938,7 +5944,7 @@ HDAE5000_LoadSong_Msp:
 ; ---------------------------------------------------------------------------
 ; Load part 6 (RCM) of a song by letting the main CPU pull it: when slot +60
 ; of the song record is not 0xFFFFFFFF, reset the RCM stream state (8 zero
-; bytes from HDAE5000_RcmStream_InitialState at HdStreamBufferEnd), note the
+; bytes from HDAE5000_RcmStream_InitialState at RcmStreamState), note the
 ; song in HDAE5000_RAM_RcmStreamDir / _RcmStreamSong and call
 ; HamaFn_rcm_ld_XAPR_j with the read callback HDAE5000_RcmStream_Read and
 ; HDAE5000_RcmStream_LastResult.  Called by HDAE5000_LoadSong for mask bit 6.
@@ -5967,7 +5973,7 @@ HDAE5000_LoadSong_Rcm:
 	cp xwa, 0xffffffff
 	jr z, .Lts290_exit
 	ld xiy, HDAE5000_RcmStream_InitialState
-	ld xix, HDAE5000_RAM_HdStreamBufferEnd
+	ld xix, HDAE5000_RAM_RcmStreamState
 	ld bc, 4:i3
 	ldirw
 	ld wa, (xsp + 6)
@@ -6924,7 +6930,7 @@ HDAE5000_SaveSong_Rcm:
 	ld de, bc
 	ld	iz, 0:i3
 	ld xiy, HDAE5000_RcmStream_InitialState
-	ld xix, HDAE5000_RAM_HdStreamBufferEnd
+	ld xix, HDAE5000_RAM_RcmStreamState
 	ld bc, 4:i3
 	ldirw
 	ld (HDAE5000_RAM_RcmStreamDir:24), wa
@@ -10065,7 +10071,7 @@ HDAE5000_RcmStream_Read:
 	lda	xsp, (xsp-12)
 	push xiz
 	ld (xsp + 0x0c), xbc
-	ld	bc, (HDAE5000_RAM_HdStreamBufferEnd:24)
+	ld	bc, (HDAE5000_RAM_RcmStreamState:24)
 	cp	bc, 1:i3
 	jr	z, HDAE5000_RcmStream_Read_Skip
 	cp	bc, 0:i3
@@ -10091,7 +10097,7 @@ HDAE5000_RcmStream_Read:
 	ld xbc, (xsp + 0x08)
 	call HDAE5000_HD_ReadFile
 	ld	(HDAE5000_RAM_RcmStreamResult), hl
-	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 1
+	ldw	(HDAE5000_RAM_RcmStreamState:24), 1
 	jr	t, HDAE5000_RcmStream_Read_Done
 HDAE5000_RcmStream_Read_Skip:
 	ld (xsp + 0x04), xwa
@@ -10115,11 +10121,11 @@ HDAE5000_RcmStream_Read_Skip:
 	ld xbc, (xsp + 0x08)
 	call HDAE5000_HD_ReadFileNext
 	ld	(HDAE5000_RAM_RcmStreamResult), hl
-	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 1
+	ldw	(HDAE5000_RAM_RcmStreamState:24), 1
 	jr	t, HDAE5000_RcmStream_Read_Done
 HDAE5000_RcmStream_Read_Skip2:
 	ldw	(HDAE5000_RAM_RcmStreamResult:24), 65535
-	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 0
+	ldw	(HDAE5000_RAM_RcmStreamState:24), 0
 HDAE5000_RcmStream_Read_Done:
 	ld xhl, (xsp + 0x0c)
 	pop xiz
@@ -10135,7 +10141,7 @@ HDAE5000_RcmStream_Write:
 	dec	6, xsp
 	push xiz
 	ld (xsp + 0x06), xbc
-	ld	bc, (HDAE5000_RAM_HdStreamBufferEnd:24)
+	ld	bc, (HDAE5000_RAM_RcmStreamState:24)
 	cp	bc, 2:i3
 	jr	z, HDAE5000_RcmStream_Write_Skip2
 	cp	bc, 0:i3
@@ -10159,7 +10165,7 @@ HDAE5000_RcmStream_Write:
 	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24)
 	add	xwa, xhl
 	ld	(xwa), 0x01
-	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 2
+	ldw	(HDAE5000_RAM_RcmStreamState:24), 2
 	jr	t, HDAE5000_RcmStream_Write_Join
 HDAE5000_RcmStream_Write_Skip:
 	ldw (xsp + 0x04), 65535
@@ -10187,7 +10193,7 @@ HDAE5000_RcmStream_Write_Skip2:
 	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24)
 	add	xwa, xhl
 	ld	(xwa), 0x01
-	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 2
+	ldw	(HDAE5000_RAM_RcmStreamState:24), 2
 	jr	t, HDAE5000_RcmStream_Write_Join2
 HDAE5000_RcmStream_Write_Skip3:
 	ldw (xsp + 0x04), 65535
@@ -10197,7 +10203,7 @@ HDAE5000_RcmStream_Write_Join2:
 	jr	t, HDAE5000_RcmStream_Write_Done
 HDAE5000_RcmStream_Write_Skip4:
 	ldw	(HDAE5000_RAM_RcmStreamResult:24), 65535
-	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 0
+	ldw	(HDAE5000_RAM_RcmStreamState:24), 0
 HDAE5000_RcmStream_Write_Done:
 	ld xhl, (xsp + 0x06)
 	pop xiz
@@ -10438,7 +10444,7 @@ HDAE5000_HD_WriteStream:
 	ldw hl, 0xffff
 	jrl	t, .Lds301_exit
 .Lds301_compute:
-	lda xwa, (HDAE5000_RAM_HdStreamBufferEnd:24)
+	lda xwa, (HDAE5000_RAM_RcmStreamState:24)
 	sub xwa, (HDAE5000_RAM_HdStreamFill:24)	; XWA -= fill pointer => room left
 	ld	xiz, xwa
 	cp	(xsp+10), xiz
@@ -15072,7 +15078,7 @@ HDAE5000_HD_Init:	; (1902 bytes)
 	ldw	wa, 0x5a5a
 	lda xiy, (HDAE5000_RAM_HdStreamBuffer:24)
 HDAE5000_HD_Init_SramFillLoop:
-	cp	xiy, HDAE5000_RAM_HdStreamBufferEnd
+	cp	xiy, HDAE5000_RAM_RcmStreamState
 	jp	z, (.LHD_Init_SramFillLoop_Skip1:24)
 	ld (xiy), wa
 	inc 2, xiy
@@ -15080,7 +15086,7 @@ HDAE5000_HD_Init_SramFillLoop:
 .LHD_Init_SramFillLoop_Skip1:
 	lda xiy, (HDAE5000_RAM_HdStreamBuffer:24)
 HDAE5000_HD_Init_SramVerifyLoop:
-	cp	xiy, HDAE5000_RAM_HdStreamBufferEnd
+	cp	xiy, HDAE5000_RAM_RcmStreamState
 	jp	z, (.LHD_Init_SramVerifyLoop_Skip2:24)
 	cp	(xiy), wa
 	jp	z, (.LHD_Init_SramVerifyLoop_Skip1:24)
@@ -15093,7 +15099,7 @@ HDAE5000_HD_Init_SramVerifyLoop:
 	xor	wa, wa
 	lda xiy, (HDAE5000_RAM_HdStreamBuffer:24)
 HDAE5000_HD_Init_SramClearLoop:
-	cp	xiy, HDAE5000_RAM_HdStreamBufferEnd
+	cp	xiy, HDAE5000_RAM_RcmStreamState
 	jp	z, (.LHD_Init_SramClearLoop_Skip1:24)
 	ld (xiy), wa
 	inc 2, xiy

@@ -2099,10 +2099,10 @@ HDAE5000_FlsLoadScreen_OnHdaeSeqStop:
 	call	(xhl)
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeAfterLoad:
-	cp	(0x22ad52:24), 1
+	cp	(HDAE5000_RAM_FlsAutoLoadPending:24), 1
 	jrl	nz, HDAE5000_FlsLoadScreen_Done
-	ld	iz, (0x22ad4e:24)
-	ld	wa, (0x22ad50:24)
+	ld	iz, (HDAE5000_RAM_FlsChainFls:24)
+	ld	wa, (HDAE5000_RAM_FlsChainItem:24)
 	inc	1, wa
 	ld	qiz, wa
 	cp	wa, 0x0020
@@ -2124,13 +2124,13 @@ HDAE5000_FlsLoadScreen_Join2:
 	jr	z, HDAE5000_FlsLoadScreen_Skip2
 	cp	(xsp+9), 0x01
 	jr	nz, HDAE5000_FlsLoadScreen_Skip
-	ld	(0x22ad52:24), 1
-	ld	(0x22ad4e), iz
+	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 1
+	ld	(HDAE5000_RAM_FlsChainFls), iz
 	ld	wa, qiz
-	ld	(0x22ad50), wa
+	ld	(HDAE5000_RAM_FlsChainItem), wa
 	jr	t, HDAE5000_FlsLoadScreen_Join3
 HDAE5000_FlsLoadScreen_Skip:
-	ld	(0x22ad52:24), 0
+	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 0
 HDAE5000_FlsLoadScreen_Join3:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -2157,7 +2157,7 @@ HDAE5000_FlsLoadScreen_Join4:
 	call	(xhl)
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_Skip2:
-	ld	(0x22ad52:24), 0
+	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 0
 	jrl	t, HDAE5000_FlsLoadScreen_Done
 HDAE5000_FlsLoadScreen_OnHdaeSelectOk:
 	ld	bc, iz
@@ -2173,14 +2173,14 @@ HDAE5000_FlsLoadScreen_OnHdaeSelectOk:
 	jrl	z, HDAE5000_FlsLoadScreen_Done
 	cp	(xsp+9), 0x01
 	jr	nz, HDAE5000_FlsLoadScreen_Skip3
-	ld	(0x22ad52:24), 1
+	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 1
 	ld	wa, (HDAE5000_RAM_CurFls:24)
-	ld	(0x22ad4e), wa
+	ld	(HDAE5000_RAM_FlsChainFls), wa
 	ld	wa, (HDAE5000_RAM_CurFlsItem:24)
-	ld	(0x22ad50), wa
+	ld	(HDAE5000_RAM_FlsChainItem), wa
 	jr	t, HDAE5000_FlsLoadScreen_Join5
 HDAE5000_FlsLoadScreen_Skip3:
-	ld	(0x22ad52:24), 0
+	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 0
 HDAE5000_FlsLoadScreen_Join5:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -2376,7 +2376,7 @@ HDAE5000_FlsFileLoadSwCatch_OnSwIn:
 	cp	xhl, 0x00000006
 	jr	nz, HDAE5000_FlsFileLoadSwCatch_Join2
 HDAE5000_FlsFileLoadSwCatch_Join:
-	ld	(0x22ad52:24), 0
+	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 0
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_HamaFnTable)
 	ld_sril	xhl, (xwa + HamaFn_PlayHalt)
@@ -2470,13 +2470,13 @@ HDAE5000_FlsEditScreen_Skip3:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
 	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 0:i3
-	call HDAE5000_FlsItem_SetByte80
+	call HDAE5000_FlsItem_SetAutoStart
 	jr	t, HDAE5000_FlsEditScreen_Join
 HDAE5000_FlsEditScreen_Skip4:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
 	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 1:i3
-	call HDAE5000_FlsItem_SetByte80
+	call HDAE5000_FlsItem_SetAutoStart
 HDAE5000_FlsEditScreen_Join:
 	ld	wa, 1:i3
 	ld	bc, 0:i3
@@ -2488,13 +2488,13 @@ HDAE5000_FlsEditScreen_Skip5:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
 	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 0:i3
-	call HDAE5000_FlsItem_SetByte112
+	call HDAE5000_FlsItem_SetAutoLoad
 	jr	t, HDAE5000_FlsEditScreen_Join2
 HDAE5000_FlsEditScreen_Skip6:
 	ld	wa, (HDAE5000_RAM_CurFls:24)
 	ld	bc, (HDAE5000_RAM_CurFlsItem:24)
 	ld	de, 1:i3
-	call HDAE5000_FlsItem_SetByte112
+	call HDAE5000_FlsItem_SetAutoLoad
 HDAE5000_FlsEditScreen_Join2:
 	ld	wa, 1:i3
 	ld	bc, 0:i3
