@@ -130,7 +130,7 @@ GROUPS = [
         0x345C: ("BStore_CursorBlock", "the cursor's 1-based block number", "the block-store cursor section"),
         0x360A: ("BStore_CurrentBank", "the current bank, 0..9 (prom_a refuses to step outside); bank n lives at 0x610000 + n*0xC00", "0xF8143F cp A,0 / 0xF814D2 cp A,0x09"),
         0x3604: ("BStore_HeapBase", "the heap base, 0x00617800", "BStore_SeekBlock and its two inverses"),
-        0x3608: ("BStore_BlockCount", "how many blocks BStore_FreeList_Init threads onto the free list", "BStore_FreeList_Init"),
+        0x3608: ("BStore_BlockCount", "how many blocks BStore_FreeList_Init threads onto the free list: 1292 (0x050C), copied once by BStore_BootPhase0 from WorkspaceDefaults_HeapDescriptor and written nowhere else, so the heap is 0x617800-0x6683FF", "BStore_FreeList_Init"),
         0x6034B8: ("BStore_FreeHead", "head of the free list; 0xFFFF = empty", "BStore_AllocBlock"),
         0x6034BA: ("BStore_FreeCount", "number of blocks on the free list", "BStore_FreeChain"),
     }),
