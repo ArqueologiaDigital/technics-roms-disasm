@@ -43,6 +43,8 @@ never edited by hand.  Regenerate v6 first (its README), then:
     python3 scripts/converters/disassemble_port_todo.py --tree v5 --rom $V5 --apply
     python3 scripts/tools/port_symbolize_pointers.py rows --tree v5 InitializeMurai_PtrTable_5 \
         PerfMode_ParamHandler_4_Data SndDispatch_Handler_1_Data
+    sed -i -f scripts/renaming/rename_v5_langcheck_shift.sed v5/maincpu/sequencer/sequencer_ui.s \
+        v5/maincpu/port_dropped_labels.txt
     python3 scripts/tools/port_symbolize_pointers.py relink --tree v5
 
 v5 inherits v6's hand edits through the port (`FIRMWARE_VERSION` is `.byte FW_VERSION_BYTE`,
@@ -55,6 +57,11 @@ the C link scripts' v7 addresses, which made `apply_c_divergence.py` patch this 
 as raw bytes (`relink`: each script gets this tree's own label addresses, and the divergence json is
 recomputed).  `style_ui/ctlonly_link.ld` is left as it is: its four Scoop_* names are not at the
 addresses the C data holds in v7 either, so relinking it would add patched bytes.
+
+The sed step (2026-10-31; once, before `relink`) moves the Yoko ApFunction language checks'
+labels back one procedure: the port had put each of v6's names (PartSelLangCheck ...
+GmOffSureLangCheck) on the procedure after its own, and left entry 0 unlabelled.  Evidence in the
+script's header: v5's ApFunction table and its name table.  It is not idempotent.
 
 ## Build
 
