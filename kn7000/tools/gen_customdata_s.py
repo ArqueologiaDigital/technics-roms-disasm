@@ -368,8 +368,14 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     for (off, sz), nm in zip(secs, ("Ots", "Tcmp", "Tpad")):
         o.emit(None, f"CSTREC_SECTION {lab}_{nm} - {lab}, {lab}_{nm}_End - {lab}_{nm}",
                rec[0x8C:0x94] if nm == "Ots" else rec[0x94:0x9C] if nm == "Tcmp" else rec[0x9C:0xA4])
-    o.emit(None, f"CSTREC_PLACE {place}", rec[0xA4:0xA6],
-           "as in the directory" if slot_of is not None else "as when it was written")
+    written = f"{rec[0xA4]}, {rec[0xA5]}"
+    if slot_of is None:
+        why = "as when it was written"
+    elif written == place:
+        why = "as in the directory"
+    else:                         # the record was written for other blocks (a slot copied from another)
+        why = f"as when it was written; the directory places it at {place}"
+    o.emit(None, f"CSTREC_PLACE {written}", rec[0xA4:0xA6], why)
     o.bytes_run(rec[0xA6:0x100], "+0xA6..+0xFF: RAM residue of the writer's buffer, not read")
     # dependency sections
     for k, (off, cnt) in enumerate(deps):
