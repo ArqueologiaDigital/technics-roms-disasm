@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,825
-#   semantic names ........... 53,341 (99.1%)
+#   symbols .................. 53,826
+#   semantic names ........... 53,342 (99.1%)
 #   positional names ......... 484
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -24878,20 +24878,21 @@ SMF_SetupRead_Adjust 00F29B95
 SMF_SetupRead_Finalize 00F29BAA
 SMF_SetupRead_Return 00F29BD3
 InitializeYoko 00F29BF8
-InitializeYoko_Skip 00F2A6C5
-PartSelLangCheck 00F2A6C8
-PartSelLang_ReturnZero 00F2A6D6
-AfterLangCheck 00F2A6D9
-AfterLang_ReturnZero 00F2A6E7
-TrAsPreLangCheck 00F2A6EA
-TrAsPreLang_ReturnZero 00F2A6F8
-AtentionLangCheck 00F2A6FB
-AtentionLang_ReturnZero 00F2A709
-AreYouSureLangCheck 00F2A70C
-AreYouSureLang_ReturnZero 00F2A71A
-GmOnSureLangCheck 00F2A71D
-GmOnSureLang_ReturnZero 00F2A72B
-GmOffSureLangCheck 00F2A72E
+PartSelLangCheck 00F2A6B7
+PartSelLang_ReturnZero 00F2A6C5
+AfterLangCheck 00F2A6C8
+AfterLang_ReturnZero 00F2A6D6
+TrAsPreLangCheck 00F2A6D9
+TrAsPreLang_ReturnZero 00F2A6E7
+AtentionLangCheck 00F2A6EA
+AtentionLang_ReturnZero 00F2A6F8
+AreYouSureLangCheck 00F2A6FB
+AreYouSureLang_ReturnZero 00F2A709
+GmOnSureLangCheck 00F2A70C
+GmOnSureLang_ReturnZero 00F2A71A
+GmOffSureLangCheck 00F2A71D
+GmOffSureLang_ReturnZero 00F2A72B
+TrAsSureLangCheck 00F2A72E
 TrAsSureLang_ReturnZero 00F2A78A
 Audio_SendEventPostCmd 00F2A78D
 Audio_ExternalCallback 00F2A79D

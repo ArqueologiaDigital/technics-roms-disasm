@@ -262,4 +262,4 @@ NakaWidget_TrAsFileList = 0x00E22BF6;
 SeqStep_TimerDispatch_ProcTables_Tail = 0x00E44FF4;
 NakaWidget_DiskMenu_1_AcTitleMenu = 0x00EA13D4;
 SeMenu_CompareAndApply_Data6 = 0x00F0FABE;
-SendPartDataBlock_Data5 = 0x00FF00FF; /* v6's address: nothing in v5 places it */ /* v7's address: nothing in v6 places it */
+SendPartDataBlock_Data5 = 0x00FEF3D3; /* v6's address: nothing in v5 places it */ /* v7's address: nothing in v6 places it */

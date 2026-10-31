@@ -54,9 +54,19 @@ redoes every such edit and is part of the sequence below.
     python3 scripts/converters/disassemble_port_todo.py --tree v6 --rom $V6 --apply
     python3 scripts/tools/port_hand_edits.py --tree v6 --fw 0x06
     python3 scripts/converters/disassemble_port_todo.py --tree v6 --rom $V6 --apply
+    python3 scripts/tools/port_symbolize_pointers.py rows --tree v6 InitializeMurai_PtrTable_5 \
+        PerfMode_ParamHandler_4_Data SndDispatch_Handler_1_Data
+    python3 scripts/tools/port_symbolize_pointers.py relink --tree v6
 
 `port_hand_edits.py` makes `FIRMWARE_VERSION` the byte `FW_VERSION_BYTE` (v7 spells it `reti`)
 and decodes `AccTone_JumpTableData` as the call/ret thunks it is (v10's spelling and names).
+
+`port_symbolize_pointers.py` (2026-10-31) spells by name what the dispatch census found spelled
+as numbers: three code-pointer tables the porter left as `; TODO(port)` `.byte` rows (`rows`), and
+the C link scripts' v7 addresses, which made `apply_c_divergence.py` patch this tree's pointers in
+as raw bytes (`relink`: each script gets this tree's own label addresses, and the divergence json is
+recomputed).  `style_ui/ctlonly_link.ld` is left as it is: its four Scoop_* names are not at the
+addresses the C data holds in v7 either, so relinking it would add patched bytes.
 
 ## Build
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""data_range_census.py -- a per-range census of EVERY BYTE of all 13 gated images.
+r"""data_range_census.py -- a per-range census of EVERY BYTE of all 20 gated images.
 
 QUESTION ANSWERED
 -----------------
@@ -29,7 +29,7 @@ BUCKETS
 
 HOW THE MAP IS BUILT (and why it can be trusted)
     The same instrument as scripts/analysis/address_line_map.py, generalised to
-    all thirteen images: mirror each image's source tree, insert a synthetic label
+    all twenty images: mirror each image's source tree, insert a synthetic label
     `__drc_<n>:` in front of every byte-emitting line, assemble and LINK the
     mirror with the real linker script, and read the marker addresses out of the
     ELF symbol table.  Byte [addr(marker n), addr(marker n+1)) is emitted by the
@@ -77,10 +77,17 @@ MARK = "__drc_"
 # How far above an object its banner may sit and still be credited to it.
 ANCHOR_SLACK = 6
 
-# ---------------------------------------------------------------- the 13 images
+# ---------------------------------------------------------------- the 20 images
 # `mirror` is the directory copied and marked; `root` and `incs` are relative to
-# it.  `split` (v142 and v141) maps a linked-image offset to a ROM offset, because
+# it.  `split` (v142, v141 and v140) maps a linked-image offset to a ROM offset, because
 # that image's ROM is two slices of the linked binary spliced by `dd`.
+# `xmirrors` (2026-10-31): further repository directories the build passes as -I after the
+# tree's own, in that order (the HD-AE5000 version trees take hdae5000/'s shared/ and
+# pictures; v1.10i also takes v1.15i's).  They are mirrored and marked too, beside the tree,
+# so their lines are mapped like the tree's; a line of one is named by its path relative to
+# the tree (`../hdae5000/shared/...`).  `defsym` (v8): the --defsym the Makefile passes.
+# v6, v5, v8, v140 and the three older HD-AE5000 versions were added on 2026-10-31 (lane
+# hdae-ledgers); before that the census measured thirteen images.
 IMAGES = [
     dict(key="v10", title="KN5000 maincpu v10", mirror="v10/maincpu",
          root="kn5000_v10_program.s", ld="maincpu.ld", incs=[""],
@@ -91,6 +98,19 @@ IMAGES = [
     dict(key="v7", title="KN5000 maincpu v7", mirror="v7/maincpu",
          root="kn5000_v7_program.s", ld="maincpu.ld", incs=[""],
          rom="original_ROMs/kn5000_v7_program.rom", base=0xE00000, size=2097152),
+    # v8 is the v9 tree assembled with --defsym FW_VERSION_BYTE=0x08 (one byte differs, at
+    # 0xFFFFE8); its reference image is copied, git-ignored, from the private romset by make.
+    dict(key="v8", title="KN5000 maincpu v8", mirror="v9/maincpu",
+         root="kn5000_v9_program.s", ld="maincpu.ld", incs=[""], defsym=["FW_VERSION_BYTE=0x08"],
+         rom="original_ROMs/kn5000_v8_program.rom", base=0xE00000, size=2097152),
+    # v6 was ported from v7 and v5 from v6 (scripts/converters/port_maincpu_version.py); their
+    # reference images are git-ignored copies, like v8's.
+    dict(key="v6", title="KN5000 maincpu v6", mirror="v6/maincpu",
+         root="kn5000_v6_program.s", ld="maincpu.ld", incs=[""],
+         rom="original_ROMs/kn5000_v6_program.rom", base=0xE00000, size=2097152),
+    dict(key="v5", title="KN5000 maincpu v5", mirror="v5/maincpu",
+         root="kn5000_v5_program.s", ld="maincpu.ld", incs=[""],
+         rom="original_ROMs/kn5000_v5_program.rom", base=0xE00000, size=2097152),
     dict(key="v142", title="KN5000 subcpu payload v1.42", mirror="v142/subcpu",
          root="kn5000_subprogram_v142.s", ld="subcpu.ld", incs=[""],
          rom="original_ROMs/kn5000_subprogram_v142.rom", base=0x0400, size=196608,
@@ -100,6 +120,11 @@ IMAGES = [
     dict(key="v141", title="KN5000 subcpu payload v1.41", mirror="v141/subcpu",
          root="kn5000_subprogram_v141.s", ld="subcpu.ld", incs=[""],
          rom="original_ROMs/kn5000_subprogram_v141.rom", base=0x0400, size=196608,
+         split=(256, 60416)),
+    # v1.40 is generated from the v1.41 tree (scripts/generators/create_v140_subcpu_source.py).
+    dict(key="v140", title="KN5000 subcpu payload v1.40", mirror="v140/subcpu",
+         root="kn5000_subprogram_v140.s", ld="subcpu.ld", incs=[""],
+         rom="original_ROMs/kn5000_subprogram_v140.rom", base=0x0400, size=196608,
          split=(256, 60416)),
     dict(key="subboot", title="KN5000 subcpu boot IC30", mirror="subcpu/boot",
          root="kn5000_subcpu_boot.s", ld="subcpu_boot.ld", incs=[""],
@@ -113,6 +138,18 @@ IMAGES = [
     dict(key="hdae5000", title="HD-AE5000 v2.06i", mirror="hdae5000",
          root="hd-ae5000_v2_06i.s", ld="hdae5000.ld", incs=[""],
          rom="original_ROMs/hd-ae5000_v2_06i.ic4", base=0x280000, size=524288),
+    # The older HD-AE5000 versions (notes/hdae5000-versions-2026-10-24/); reference images
+    # git-ignored, copied from the private romset by make with a SHA-1 check.
+    dict(key="hdae_v201", title="HD-AE5000 v2.01i", mirror="hdae5000_v2_01i",
+         root="hd-ae5000_v2_01i.s", ld="hdae5000.ld", incs=[""], xmirrors=["hdae5000"],
+         rom="original_ROMs/hd-ae5000_v2_01i.ic4", base=0x280000, size=524288),
+    dict(key="hdae_v115", title="HD-AE5000 v1.15i", mirror="hdae5000_v1_15i",
+         root="hd-ae5000_v1_15i.s", ld="hdae5000.ld", incs=[""], xmirrors=["hdae5000"],
+         rom="original_ROMs/hd-ae5000_v1_15i.ic4", base=0x280000, size=524288),
+    dict(key="hdae_v110", title="HD-AE5000 v1.10i", mirror="hdae5000_v1_10i",
+         root="hd-ae5000_v1_10i.s", ld="hdae5000.ld", incs=[""],
+         xmirrors=["hdae5000_v1_15i", "hdae5000"],
+         rom="original_ROMs/hd-ae5000_v1_10i.ic4", base=0x280000, size=524288),
     dict(key="prom_a", title="SX-WSA1R prom_a IC12", mirror="wsa1",
          root="prom_a/wsa1_prom_a.s", ld="prom_a/prom_a.ld", incs=["", "prom_a"],
          rom="wsa1/original_ROMs/wsa1_prom_a.ic12", base=0xF80000, size=524288),
@@ -126,7 +163,7 @@ IMAGES = [
          root="prom_d/wsa1_prom_d.s", ld="prom_d/prom_d.ld", incs=["", "prom_d"],
          rom="wsa1/original_ROMs/wsa1_prom_d.bin", base=0x000000, size=524288),
 ]
-TOTAL_BYTES = 12582912          # sum of the thirteen dumps; asserted in selftest
+TOTAL_BYTES = 20643840          # sum of the twenty dumps; asserted in selftest
 
 # ---------------------------------------------------------------- directives
 DATA_DIRS = {".byte", ".short", ".word", ".hword", ".2byte", ".long", ".4byte",
@@ -264,14 +301,14 @@ def strip_comment(line):
 
 
 # ------------------------------------------------------------------ the mirror
-def collect_macros(srcroot):
+def collect_macros(srcroot, extra=()):
     """name -> 'code'|'data'|'none', judged from the macro BODY -- or declared: a `.macro` line
     whose comment says `census: data` is data whatever its body invokes (2026-10-29: the
     HD-AE5000 GUI's class macros, hdae5000/shared/naka_ui_macros.s, emit their records through
     helper macros, which this body test would take for instructions)."""
     macros = {}
     declared = set()
-    for dp, _, fn in os.walk(srcroot):
+    for dp, _, fn in [w for r in (srcroot,) + tuple(extra) for w in os.walk(r)]:
         for f in sorted(fn):
             if not f.endswith((".s", ".inc")):
                 continue
@@ -311,9 +348,11 @@ def collect_macros(srcroot):
     return macros
 
 
-def mirror_tree(srcroot, dest):
-    """Copy srcroot to dest, marking every non-blank source line.  Returns marks."""
-    marks = []
+def mirror_tree(srcroot, dest, marks=None, relbase=None):
+    """Copy srcroot to dest, marking every non-blank source line.  Returns marks: (path relative
+    to relbase, default srcroot; line index).  Pass marks to continue another tree's numbering."""
+    marks = [] if marks is None else marks
+    relbase = relbase or srcroot
     for dp, dn, fn in os.walk(srcroot):
         rel = os.path.relpath(dp, srcroot)
         outdir = os.path.join(dest, rel) if rel != "." else dest
@@ -336,7 +375,7 @@ def mirror_tree(srcroot, dest):
                     in_macro = True
                 if code and not in_macro:
                     out.append("%s%d:" % (MARK, len(marks)))
-                    marks.append((os.path.relpath(s, srcroot), i))
+                    marks.append((os.path.relpath(s, relbase), i))
                 if re.match(r'^\.endm\b', code):
                     in_macro = False
                 out.append(ln)
@@ -348,8 +387,12 @@ def link_mirror(mirror, img, tmp):
     obj = os.path.join(tmp, img["key"] + ".o")
     elf = os.path.join(tmp, img["key"] + ".elf")
     cmd = [MC, "-triple=tlcs900", "-filetype=obj"]
+    for d in img.get("defsym", []):
+        cmd += ["--defsym", d]
     for inc in img["incs"]:
         cmd += ["-I", os.path.join(mirror, inc) if inc else mirror]
+    for x in img.get("xmirrors", []):            # mirrored beside the tree (census_image)
+        cmd += ["-I", os.path.normpath(os.path.join(mirror, os.path.relpath(x, img["mirror"])))]
     # ⚠ SOME `.incbin` PATHS LEAVE THE MIRRORED DIRECTORY -- table_data reaches
     # `../v10/maincpu/images/*.bin`, which no amount of copying table_data/ can
     # provide.  The REAL source dir is appended as a LAST-RESORT search path so
@@ -361,6 +404,8 @@ def link_mirror(mirror, img, tmp):
         real = os.path.join(ROOT, img["mirror"], inc) if inc else \
             os.path.join(ROOT, img["mirror"])
         cmd += ["-I", real]
+    for x in img.get("xmirrors", []):
+        cmd += ["-I", os.path.join(ROOT, x)]
     cmd += ["-o", obj, os.path.join(mirror, img["root"])]
     sh(cmd)
     sh([LLD, "-e", "0", "-T", os.path.join(mirror, img["ld"]), "-o", elf, obj])
@@ -679,10 +724,18 @@ def census_image(img, tmp, verbose=True):
     assert len(rom) == img["size"], "%s dump is %d bytes, expected %d" % (
         img["key"], len(rom), img["size"])
 
-    mdir = os.path.join(tmp, "mirror_" + os.path.basename(img["mirror"]) + "_"
-                        + str(abs(hash(img["mirror"])) % 10 ** 6))
+    xm = img.get("xmirrors", [])
+    if xm:
+        # the tree and its extra -I directories keep their repository layout under one root
+        top = os.path.join(tmp, "mirror_" + img["key"])
+        mdir = os.path.join(top, img["mirror"])
+    else:
+        mdir = os.path.join(tmp, "mirror_" + os.path.basename(img["mirror"]) + "_"
+                            + str(abs(hash(img["mirror"])) % 10 ** 6))
     if not os.path.isdir(mdir):
         marks = mirror_tree(srcroot, mdir)
+        for x in xm:
+            mirror_tree(os.path.join(ROOT, x), os.path.join(top, x), marks, srcroot)
         with open(mdir + ".marks.json", "w") as fh:
             json.dump(marks, fh)
     else:
@@ -700,7 +753,7 @@ def census_image(img, tmp, verbose=True):
     inert = (got == rom)
 
     addrs = marker_addresses(elf)
-    macros = collect_macros(srcroot)
+    macros = collect_macros(srcroot, [os.path.join(ROOT, x) for x in xm])
     src = Sources(srcroot, [k for k, v in macros.items() if v == "data"])
     off = rom_offset_fn(img)
 
@@ -870,10 +923,11 @@ def annotate(c, regions, ctrl_targets, label_index):
     return out
 
 
-def scan_refs(srcroot):
-    """-> (set of symbols targeted by a control transfer, {rel: [(line, label)]})."""
+def scan_refs(srcroot, extra=()):
+    """-> (set of symbols targeted by a control transfer, {rel: [(line, label)]}).  extra: further
+    directories of the image (xmirrors), their files named relative to srcroot."""
     ctrl, index = set(), {}
-    for dp, _, fn in os.walk(srcroot):
+    for dp, _, fn in [w for r in (srcroot,) + tuple(extra) for w in os.walk(r)]:
         for f in sorted(fn):
             if not f.endswith(".s"):
                 continue
@@ -910,9 +964,10 @@ def run(keys, verbose=True):
                 print("  %-12s building map ..." % img["key"], flush=True)
             c = census_image(img, tmp)
             srcroot = os.path.join(ROOT, img["mirror"])
-            if srcroot not in refs_cache:
-                refs_cache[srcroot] = scan_refs(srcroot)
-            ctrl, index = refs_cache[srcroot]
+            rk = (srcroot,) + tuple(img.get("xmirrors", []))
+            if rk not in refs_cache:
+                refs_cache[rk] = scan_refs(srcroot, [os.path.join(ROOT, x) for x in rk[1:]])
+            ctrl, index = refs_cache[rk]
             regions = build_regions(c)
             recs = annotate(c, regions, ctrl, index)
             tot = {b: 0 for b in BUCKETS}
@@ -1138,7 +1193,7 @@ def selftest():
         f += not cond
 
     ck("the pinned llvm-mc exists", os.path.exists(MC), MC)
-    ck("thirteen images are declared", len(IMAGES) == 13, str(len(IMAGES)))
+    ck("twenty images are declared", len(IMAGES) == 20, str(len(IMAGES)))
     ck("declared sizes sum to the known total",
        sum(i["size"] for i in IMAGES) == TOTAL_BYTES,
        "%d vs %d" % (sum(i["size"] for i in IMAGES), TOTAL_BYTES))
@@ -1239,6 +1294,12 @@ def selftest():
     v141 = [i for i in IMAGES if i["key"] == "v141"][0]
     ck("v141 has v142's base, size and splice (the Makefile's dd rules are the same)",
        (v141["base"], v141["size"], v141["split"]) == (v142["base"], v142["size"], v142["split"]))
+    v140 = [i for i in IMAGES if i["key"] == "v140"][0]
+    ck("v140 has v142's base, size and splice (the Makefile's dd rules are the same)",
+       (v140["base"], v140["size"], v140["split"]) == (v142["base"], v142["size"], v142["split"]))
+    for i in IMAGES:
+        for x in i.get("xmirrors", []):
+            ck("xmirror of %s is a directory: %s" % (i["key"], x), os.path.isdir(os.path.join(ROOT, x)))
 
     off10 = rom_offset_fn([i for i in IMAGES if i["key"] == "v10"][0])
     ck("plain map: base -> 0", off10(0xE00000) == 0)

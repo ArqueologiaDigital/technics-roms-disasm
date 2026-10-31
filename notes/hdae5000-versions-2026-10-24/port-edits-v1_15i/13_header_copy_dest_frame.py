@@ -13,12 +13,15 @@
 import re
 from _edit import read, write, replace
 
-replace("hd-ae5000_v1_15i.s", [
+# Since 2026-10-31 the v2.x trees spell the header pointer the same way (lane hdae-ledgers), so a
+# replay that starts from the current hdae5000_v2_01i/ already has it.
+if b"\t.long HDAE5000_Init_Data_End\t; the end of the .data image" not in read("hd-ae5000_v1_15i.s"):
+  replace("hd-ae5000_v1_15i.s", [
     (b'\t.ascii "XAPR\\212"\t; Magic identifier ("XAPR" checked by main CPU)\n'
      b'\t.byte 0x95\t; Version byte\n\t.byte 0x2f, 0x00\t; Unknown (possibly size/flags)\n',
      b'\t.ascii "XAPR"\t\t; magic identifier ("XAPR" checked by the main CPU)\n'
      b'\t.long HDAE5000_Init_Data_End\t; the end of the .data image (every version: its own image\'s end)\n'),
-])
+  ])
 f = "hdae5000_ui_display.s"
 s = read(f)
 s, n = re.subn(rb"\.equ HDAE5000_DATA_COPY_DEST, 0x2394ce\t[^\n]*\n",
