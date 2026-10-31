@@ -16,6 +16,10 @@ HOW
 
   Nothing is written inside the repository: the mirror, objects, ELFs and the
   pickles all live under OUT ($DISPATCH_CENSUS_DIR, else $TMPDIR/dispatch-table-census).
+  A mirror left in OUT by an earlier run is reused only while its fingerprint (the source
+  trees' paths, file names and .s bytes) still matches; otherwise it is rebuilt.  Give each
+  worktree and each concurrent run its own DISPATCH_CENSUS_DIR: two runs in one OUT rebuild
+  each other's mirrors.
 
 RUN
   python3 scripts/analysis/dispatch_table_census/build_maps.py [keys...]   # default: all 19 images, ~4 min
@@ -72,6 +76,10 @@ def main(keys):
             # was a label defined on this line, or on a non-emitting line between the
             # previous emitting line of the SAME file and this one?
             L = src.lines(rel)
+            # a mark past the end of its file means the mirror is not this source (see
+            # census_image's fingerprint); say so instead of an IndexError
+            assert li < len(L), "%s: mark %s:%d is past the file's %d lines -- stale mirror" % (
+                img["key"], rel, li + 1, len(L))
             p = prev_by_file.get(rel, -1)
             lab = None
             for k in range(p + 1, li + 1):
