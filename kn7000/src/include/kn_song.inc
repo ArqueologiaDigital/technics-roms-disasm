@@ -28,9 +28,10 @@
 .macro sq_end
 	.byte	0x82
 .endm
-# 0x9n: note, velocity, u16 duration; n = 8 when recorded from MIDI IN.
-.macro sq_note tick, n, key, velocity, dur_lo, dur_hi
-	.byte	\tick, 0x90 + \n, \key, \velocity, \dur_lo, \dur_hi
+# 0x9n: note, velocity, duration in ticks (0..0x5F) and in beats (0..255, unsigned: the note handler
+# func_48459B49 sets the note-off at beat + dur_beats); n = 8 when recorded from MIDI IN.
+.macro sq_note tick, n, key, velocity, dur_ticks, dur_beats
+	.byte	\tick, 0x90 + \n, \key, \velocity, \dur_ticks, \dur_beats
 .endm
 # 0x80: tempo = lo7 + (hi7 << 7) BPM; 0x8A: PIC.
 .macro sq_8n tick, n, lo7, hi7

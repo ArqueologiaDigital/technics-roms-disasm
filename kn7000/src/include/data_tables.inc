@@ -77,7 +77,7 @@
 # (0x485834C0) finds the entry whose msb / lsb / program match a sound and answers its initial.
 # A list ends with an entry whose initial is 0.
 .macro SOUND_ALPHA initial, msb, lsb, program
-	.ascii	\initial
+	.ascii	"\initial"
 	.byte	\msb, \lsb, \program
 .endm
 # The payloads of the SX-KN6000's three sound hash tables (tools/gen_data_s.py hash_tables, lane
@@ -136,7 +136,7 @@
 # such record, FxDepthApply 0x4863BA75 scales it by the control / 0x50; lane mn10300-rest) and the
 # value texts (FxParamValuesGet).
 .macro FX_PARAM name, pad, number=0, min=0, max=0, band=0xFF, sub=0, variant=0xFF, depth_link=0xFF, values=0
-	.ascii	\name
+	.ascii	"\name"
 	.space	\pad, 0x00
 	.word	\number, \min, \max
 	.byte	\band, \sub, \variant, \depth_link

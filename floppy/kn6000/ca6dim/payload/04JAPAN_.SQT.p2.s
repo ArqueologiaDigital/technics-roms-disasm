@@ -773,8 +773,33 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0xb98, 104
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0, 7, 47	; data bytes of an event cut at the start
+	k5_note	0x90, 77, 100, 93, 0, 49
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0xba1, 3
+	sq_bend	52, 0, 0, 1
+	sq_bend	58, 0, 0, 11
+	sq_bend	62, 0, 0, 22
+	sq_bend	65, 0, 0, 30
+	sq_bend	65, 0, 64, 38
+	sq_bend	68, 0, 64, 46
+	sq_bend	68, 0, 0, 53
+	sq_bend	72, 0, 0, 57
+	sq_bend	75, 0, 0, 61
+	sq_bend	75, 0, 0, 64
+	sq_cc	88, 0, 16, 1, 14
+	sq_cc	91, 0, 16, 1, 22
+	sq_cc	91, 0, 16, 1, 28
+	sq_cc	95, 0, 16, 1, 33
+	sq_cc	95, 0, 16, 1, 38
+	sq_beat
+	sq_cc	2, 0, 16, 1, 41
+	sq_cc	5, 0, 16, 1, 43
+	sq_cc	5, 0, 16, 1, 44
+	sq_cc	14, 0, 16, 1, 38
+	sq_cc	14, 0, 16, 1, 33
+	.byte	16	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 14	; cell 13: song 1 track 2, 1 of 7
 	sq_note	12, 0, 70, 44, 38, 0
 	sq_note	12, 0, 75, 56, 44, 0
@@ -1328,8 +1353,25 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x12bb, 69
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	49, 0, 72, 94, 49, 0
+	sq_beat
+	sq_note	4, 0, 74, 90, 41, 0
+	sq_bend	47, 0, 0, 59
+	sq_bend	47, 0, 64, 56
+	sq_bend	50, 0, 0, 54
+	sq_bend	50, 0, 0, 52
+	sq_note	52, 0, 72, 96, 91, 0
+	sq_bend	55, 0, 64, 48
+	sq_bend	55, 0, 64, 46
+	sq_bend	57, 0, 0, 46
+	sq_bend	66, 0, 64, 49
+	sq_bend	67, 0, 0, 53
+	sq_bend	70, 0, 64, 55
+	sq_bend	73, 0, 64, 58
+	sq_bend	73, 0, 64, 63
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x12fe, 2
 	sq_cell	0xff, 0, 21	; cell 20: song 1 track 3, 1 of 8
 	sq_beat
 	sq_beat
@@ -1846,8 +1888,52 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x1a23, 221
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	75, 13, 0, 91	; data bytes of an event cut at the start
+	k5_note	0x90, 53, 67, 12, 0, 91
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x1a2d, 5
+	sq_beat
+	sq_note	18, 0, 55, 83, 32, 0
+	sq_note	19, 0, 60, 77, 26, 0
+	sq_note	65, 0, 55, 75, 19, 0
+	sq_note	65, 0, 60, 75, 30, 0
+	sq_note	88, 0, 53, 70, 18, 0
+	sq_note	90, 0, 58, 82, 13, 0
+	sq_beat
+	sq_note	17, 0, 55, 83, 37, 0
+	sq_note	20, 0, 60, 70, 38, 0
+	sq_note	65, 0, 57, 80, 35, 0
+	sq_note	66, 0, 62, 73, 35, 0
+	sq_beat
+	sq_note	16, 0, 58, 75, 36, 0
+	sq_note	18, 0, 63, 87, 34, 0
+	sq_note	64, 0, 58, 79, 15, 0
+	sq_note	64, 0, 63, 82, 17, 0
+	sq_note	88, 0, 55, 83, 15, 0
+	sq_note	88, 0, 60, 85, 12, 0
+	sq_beat
+	sq_note	15, 0, 58, 82, 39, 0
+	sq_note	16, 0, 63, 82, 37, 0
+	sq_note	64, 0, 60, 81, 36, 0
+	sq_note	64, 0, 65, 85, 36, 0
+	sq_beat
+	sq_note	15, 0, 62, 77, 94, 1
+	sq_note	16, 0, 67, 76, 5, 2
+	sq_beat
+	sq_beat
+	sq_note	13, 0, 60, 76, 20, 0
+	sq_note	14, 0, 55, 73, 24, 0
+	sq_note	63, 0, 55, 89, 17, 0
+	sq_note	64, 0, 60, 87, 16, 0
+	sq_note	86, 0, 53, 75, 16, 0
+	sq_note	87, 0, 58, 92, 16, 0
+	sq_beat
+	sq_note	16, 0, 55, 86, 31, 0
+	sq_note	16, 0, 60, 89, 30, 0
+	sq_note	64, 0, 55, 80, 16, 0
+	sq_note	65, 0, 60, 88, 16, 0
+	sq_note	88, 0, 53, 75, 13, 0
 	sq_cell	0x80, 0, 29	; cell 28: song 1 track 4, 1 of 3
 	sq_beat
 	sq_beat
@@ -2226,8 +2312,28 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x1dac, 84
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	110, 92	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x1dae, 4
+	sq_cc	93, 0, 16, 1, 113
+	sq_beat
+	sq_cc	0, 0, 16, 1, 114
+	sq_cc	3, 0, 16, 1, 115
+	sq_cc	7, 0, 16, 1, 116
+	sq_cc	16, 0, 16, 1, 118
+	sq_cc	19, 0, 16, 1, 119
+	sq_cc	39, 0, 16, 1, 121
+	sq_cc	49, 0, 16, 1, 122
+	sq_cc	55, 0, 16, 1, 125
+	sq_cc	62, 0, 16, 1, 127
+	sq_cc	82, 0, 16, 1, 125
+	sq_cc	85, 0, 16, 1, 122
+	sq_cc	85, 0, 16, 1, 120
+	sq_cc	88, 0, 16, 1, 118
+	sq_cc	88, 0, 16, 1, 115
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x1dfe, 2
 	sq_cell	0x80, 0, 32	; cell 31: song 1 track 6, 1 of 2
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 88, 0
@@ -2559,8 +2665,64 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x1fa5, 91
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x1fa5, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	25, 0xf1, 2, 0, 80, 3, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	k5_note	0x90, 81, 69, 55, 0, 67
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x1fe5, 5
+	sq_beat
+	sq_note	21, 0, 82, 70, 12, 0
+	sq_note	21, 0, 87, 82, 16, 0
+	sq_note	69, 0, 82, 61, 23, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x1ffd, 3
 	sq_cell	0xff, 0, 34	; cell 33: song 1 track 8, 1 of 2
 	sq_beat
 	sq_beat
@@ -2882,8 +3044,53 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x215d, 163
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	62, 77	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x215f, 3
+	sq_bend	77, 0, 0, 61
+	sq_bend	80, 0, 64, 60
+	sq_bend	80, 0, 64, 59
+	sq_bend	83, 0, 0, 59
+	sq_bend	86, 0, 0, 58
+	sq_bend	87, 0, 0, 57
+	sq_bend	89, 0, 64, 56
+	sq_bend	93, 0, 64, 55
+	sq_bend	93, 0, 64, 54
+	sq_beat
+	sq_bend	0, 0, 0, 54
+	sq_bend	0, 0, 0, 53
+	sq_bend	3, 0, 0, 50
+	sq_bend	7, 0, 64, 47
+	sq_bend	8, 0, 64, 45
+	sq_bend	10, 0, 0, 43
+	sq_bend	10, 0, 0, 40
+	sq_bend	13, 0, 0, 37
+	sq_bend	16, 0, 0, 34
+	sq_bend	17, 0, 0, 30
+	sq_bend	20, 0, 0, 26
+	sq_bend	23, 0, 0, 24
+	sq_bend	23, 0, 0, 19
+	sq_bend	26, 0, 0, 16
+	sq_bend	30, 0, 0, 12
+	sq_bend	30, 0, 0, 10
+	sq_bend	33, 0, 0, 6
+	sq_bend	39, 0, 0, 2
+	sq_bend	43, 0, 0, 1
+	sq_bend	49, 0, 0, 13
+	sq_bend	52, 0, 64, 34
+	sq_bend	56, 0, 0, 59
+	sq_bend	56, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	53, 0, 79, 106, 39, 0
+	sq_beat
+	sq_note	1, 0, 80, 101, 46, 0
+	sq_bend	41, 0, 0, 57
+	sq_bend	41, 0, 0, 53
+	sq_bend	44, 0, 64, 44
+	.byte	47	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 36	; cell 35: song 1 track 9, 1 of 2
 	sq_beat
 	sq_beat
@@ -3213,8 +3420,37 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x2378, 136
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	83, 0, 58, 90, 13, 0
+	sq_note	84, 0, 53, 72, 14, 0
+	sq_beat
+	sq_note	11, 0, 55, 85, 44, 0
+	sq_note	11, 0, 60, 91, 39, 0
+	sq_note	57, 0, 62, 77, 46, 0
+	sq_note	58, 0, 57, 81, 37, 0
+	sq_beat
+	sq_note	13, 0, 53, 94, 22, 0
+	sq_note	13, 0, 58, 93, 23, 0
+	sq_beat
+	sq_note	13, 0, 55, 72, 47, 0
+	sq_note	15, 0, 50, 67, 38, 0
+	sq_note	60, 0, 48, 51, 39, 0
+	sq_note	60, 0, 53, 67, 46, 0
+	sq_beat
+	sq_note	9, 0, 50, 58, 80, 1
+	sq_note	10, 0, 55, 61, 81, 1
+	sq_beat
+	sq_beat
+	sq_note	13, 0, 55, 88, 24, 0
+	sq_note	13, 0, 60, 96, 21, 0
+	sq_note	63, 0, 55, 87, 14, 0
+	sq_note	63, 0, 60, 86, 15, 0
+	sq_note	84, 0, 53, 78, 15, 0
+	sq_note	84, 0, 58, 89, 14, 0
+	sq_beat
+	sq_note	13, 0, 55, 85, 33, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x23fd, 3
 	sq_cell	0x80, 0, 38	; cell 37: song 1 track 10, 1 of 6
 	sq_beat
 	sq_beat
@@ -3706,8 +3942,52 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x293d, 195
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x293d, 3
+	sq_bend	68, 0, 0, 23
+	sq_bend	71, 0, 0, 34
+	sq_bend	71, 0, 64, 44
+	sq_bend	74, 0, 64, 53
+	sq_bend	78, 0, 0, 59
+	sq_bend	78, 0, 0, 64
+	sq_beat
+	sq_cc	2, 0, 16, 1, 8
+	sq_cc	5, 0, 16, 1, 14
+	sq_cc	5, 0, 16, 1, 19
+	sq_cc	8, 0, 16, 1, 24
+	sq_cc	9, 0, 16, 1, 30
+	sq_cc	12, 0, 16, 1, 36
+	sq_cc	15, 0, 16, 1, 41
+	sq_cc	15, 0, 16, 1, 47
+	sq_cc	18, 0, 16, 1, 52
+	sq_cc	21, 0, 16, 1, 56
+	sq_cc	21, 0, 16, 1, 60
+	sq_cc	24, 0, 16, 1, 64
+	sq_cc	25, 0, 16, 1, 67
+	sq_cc	28, 0, 16, 1, 70
+	sq_cc	31, 0, 16, 1, 72
+	sq_cc	31, 0, 16, 1, 74
+	sq_cc	34, 0, 16, 1, 75
+	sq_cc	44, 0, 16, 1, 71
+	sq_cc	47, 0, 16, 1, 68
+	sq_cc	48, 0, 16, 1, 64
+	sq_cc	51, 0, 16, 1, 60
+	sq_cc	51, 0, 16, 1, 56
+	sq_cc	54, 0, 16, 1, 50
+	sq_cc	57, 0, 16, 1, 44
+	sq_cc	57, 0, 16, 1, 36
+	sq_cc	61, 0, 16, 1, 29
+	sq_cc	64, 0, 16, 1, 20
+	sq_cc	64, 0, 16, 1, 9
+	sq_cc	67, 0, 16, 1, 0
+	sq_beat
+	sq_note	9, 0, 74, 100, 44, 0
+	sq_note	53, 0, 70, 91, 49, 0
+	sq_beat
+	sq_note	3, 0, 74, 91, 41, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x29fe, 2
 	sq_cell	0x80, 0, 44	; cell 43: song 1 track 11, 1 of 58
 	sq_beat
 	sq_beat
@@ -6478,8 +6758,49 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x634a, 182
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	22, 0, 36, 78, 58, 0
+	sq_note	94, 0, 36, 62, 10, 0
+	sq_beat
+	sq_note	23, 0, 36, 72, 45, 0
+	sq_note	70, 0, 43, 71, 51, 0
+	sq_beat
+	sq_note	22, 0, 36, 66, 21, 0
+	sq_note	43, 0, 39, 50, 38, 0
+	sq_note	94, 0, 39, 69, 13, 0
+	sq_beat
+	sq_note	22, 0, 39, 75, 46, 0
+	sq_note	71, 0, 34, 75, 48, 0
+	sq_beat
+	sq_note	22, 0, 39, 75, 58, 0
+	sq_note	94, 0, 39, 66, 13, 0
+	sq_beat
+	sq_note	22, 0, 39, 72, 49, 0
+	sq_note	70, 0, 34, 69, 44, 0
+	sq_beat
+	sq_note	22, 0, 36, 72, 59, 0
+	sq_note	94, 0, 36, 72, 12, 0
+	sq_beat
+	sq_note	22, 0, 36, 76, 47, 0
+	sq_note	70, 0, 31, 66, 48, 0
+	sq_beat
+	sq_note	22, 0, 36, 80, 72, 0
+	sq_note	94, 0, 43, 62, 12, 0
+	sq_beat
+	sq_note	22, 0, 43, 71, 45, 0
+	sq_note	70, 0, 31, 78, 27, 0
+	sq_beat
+	sq_note	23, 0, 41, 75, 58, 0
+	sq_note	94, 0, 41, 73, 13, 0
+	sq_beat
+	sq_note	21, 0, 41, 78, 40, 0
+	sq_note	70, 0, 36, 76, 45, 0
+	sq_beat
+	sq_note	19, 0, 34, 60, 1, 0
+	sq_note	22, 0, 34, 82, 55, 0
+	sq_note	95, 0, 34, 72, 13, 0
 	sq_cell	0x80, 0, 102	; cell 101: song 1 track 12, 1 of 2
 	sq_cc	0, 0, 9, 11, 102
 	sq_beat
@@ -6803,8 +7124,41 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x654f, 177
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 7, 88, 9, 0, 22
+	k5_note	0x90, 54, 120, 9, 0, 22
+	k5_note	0x90, 64, 108, 9, 0, 45
+	k5_note	0x90, 64, 64, 9, 0, 46
+	k5_note	0x90, 96, 90, 9, 0, 70
+	k5_note	0x90, 106, 75, 9, 0, 94
+	k5_note	0x90, 106, 69, 9, 0, 94
+	k5_note	0x90, 43, 52, 9, 0, 94
+	k5_note	0x90, 96, 54, 9, 0, 94
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x6585, 5
+	sq_beat
+	sq_note	23, 0, 43, 55, 10, 0
+	sq_note	23, 0, 39, 96, 10, 0
+	sq_note	23, 0, 96, 126, 10, 0
+	sq_note	23, 0, 7, 55, 10, 0
+	sq_note	23, 0, 54, 120, 10, 0
+	sq_note	23, 0, 64, 127, 10, 0
+	sq_note	70, 0, 106, 76, 9, 0
+	sq_note	70, 0, 45, 91, 9, 0
+	sq_note	70, 0, 96, 124, 9, 0
+	sq_note	94, 0, 106, 71, 10, 0
+	sq_note	94, 0, 36, 66, 10, 0
+	sq_note	94, 0, 96, 121, 10, 0
+	sq_beat
+	sq_note	22, 0, 43, 107, 9, 0
+	sq_note	22, 0, 36, 76, 9, 0
+	sq_note	22, 0, 7, 92, 9, 0
+	sq_note	22, 0, 54, 108, 9, 0
+	sq_note	22, 0, 64, 127, 9, 0
+	sq_note	45, 0, 43, 49, 9, 0
+	sq_note	70, 0, 106, 74, 10, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x65fe, 2
 	sq_cell	0x80, 0, 104	; cell 103: song 1 track 13, 1 of 14
 	sq_cc	0, 0, 8, 11, 127
 	sq_beat
@@ -7676,8 +8030,16 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x73d1, 47
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	23	; data bytes of an event cut at the start
+	k5_note	0x90, 106, 65, 9, 0, 23
+	k5_note	0x90, 54, 91, 9, 0, 23
+	k5_note	0x90, 43, 81, 9, 0, 23
+	k5_note	0x90, 96, 85, 9, 0, 23
+	k5_note	0x90, 64, 114, 9, 0, 70
+	k5_note	0x90, 63, 103, 9, 0, 70
+	k5_note	0x90, 96, 87, 9, 0, 70
+	.byte	144, 47, 73, 9	; the first 4 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 118	; cell 117: song 1 track 14, 1 of 42
 	sq_cc	0, 0, 10, 11, 102
 	sq_beat
@@ -9760,8 +10122,30 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0x9d94, 108
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	71, 0, 72, 78, 17, 0
+	sq_note	94, 0, 74, 61, 12, 0
+	sq_beat
+	sq_note	22, 0, 72, 87, 12, 0
+	sq_note	22, 0, 82, 75, 18, 0
+	sq_note	70, 0, 84, 69, 11, 0
+	sq_note	70, 0, 82, 87, 16, 0
+	sq_note	70, 0, 72, 87, 11, 0
+	sq_beat
+	sq_note	22, 0, 72, 87, 11, 0
+	sq_note	22, 0, 82, 89, 14, 0
+	sq_note	70, 0, 84, 72, 12, 0
+	sq_note	70, 0, 82, 82, 15, 0
+	sq_note	70, 0, 72, 82, 12, 0
+	sq_beat
+	sq_note	23, 0, 72, 83, 11, 0
+	sq_note	23, 0, 82, 87, 14, 0
+	sq_note	70, 0, 84, 72, 12, 0
+	sq_note	70, 0, 72, 78, 12, 0
+	sq_note	70, 0, 82, 90, 14, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0x9dfe, 2
 	sq_cell	0xff, 0, 160	; cell 159: song 1 track 15, 1 of 6
 	sq_cc	0, 0, 11, 11, 92
 	sq_beat
@@ -10279,8 +10663,21 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0xa3bd, 67
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 106, 72, 10, 0, 94
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0xa3c3, 5
+	sq_beat
+	sq_note	22, 0, 43, 96, 9, 0
+	sq_note	22, 0, 36, 83, 9, 0
+	sq_note	22, 0, 7, 105, 9, 0
+	sq_note	22, 0, 54, 120, 9, 0
+	sq_note	22, 0, 64, 127, 9, 0
+	sq_note	46, 0, 43, 37, 9, 0
+	sq_note	46, 0, 64, 54, 9, 0
+	sq_note	70, 0, 106, 76, 9, 0
+	sq_note	94, 0, 106, 74, 9, 0
+	.byte	94	; data bytes of an event cut by the end
 	sq_cell	0xff, 0, 166	; cell 165: song 1 track 16, 1 of 9
 	sq_cc	0, 0, 12, 11, 92
 	sq_beat
@@ -10900,8 +11297,50 @@ P_04JAPAN__SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"04JAPAN_.sqt.p2.ref", 0xac1f, 225
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	43, 102, 9, 0, 22	; data bytes of an event cut at the start
+	k5_note	0x90, 39, 100, 9, 0, 22
+	k5_note	0x90, 54, 120, 9, 0, 22
+	k5_note	0x90, 64, 127, 9, 0, 70
+	k5_note	0x90, 106, 74, 9, 0, 70
+	k5_note	0x90, 96, 127, 9, 0, 93
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0xac42, 5
+	sq_beat
+	sq_note	22, 0, 43, 98, 9, 0
+	sq_note	22, 0, 7, 88, 9, 0
+	sq_note	22, 0, 54, 120, 9, 0
+	sq_note	22, 0, 64, 108, 9, 0
+	sq_note	45, 0, 64, 64, 9, 0
+	sq_note	46, 0, 96, 90, 9, 0
+	sq_note	70, 0, 106, 75, 9, 0
+	sq_note	94, 0, 106, 69, 9, 0
+	sq_note	94, 0, 43, 52, 9, 0
+	sq_note	94, 0, 96, 54, 9, 0
+	sq_note	94, 0, 64, 83, 9, 0
+	sq_beat
+	sq_note	23, 0, 43, 55, 10, 0
+	sq_note	23, 0, 39, 96, 10, 0
+	sq_note	23, 0, 96, 126, 10, 0
+	sq_note	23, 0, 7, 55, 10, 0
+	sq_note	23, 0, 54, 120, 10, 0
+	sq_note	23, 0, 64, 127, 10, 0
+	sq_note	70, 0, 106, 76, 9, 0
+	sq_note	70, 0, 45, 91, 9, 0
+	sq_note	70, 0, 96, 124, 9, 0
+	sq_note	94, 0, 106, 71, 10, 0
+	sq_note	94, 0, 36, 66, 10, 0
+	sq_note	94, 0, 96, 121, 10, 0
+	sq_beat
+	sq_note	22, 0, 43, 107, 9, 0
+	sq_note	22, 0, 36, 76, 9, 0
+	sq_note	22, 0, 7, 92, 9, 0
+	sq_note	22, 0, 54, 108, 9, 0
+	sq_note	22, 0, 64, 127, 9, 0
+	sq_note	45, 0, 43, 49, 9, 0
+	sq_note	70, 0, 106, 74, 10, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"04JAPAN_.sqt.p2.ref", 0xacfe, 2
 
 	.if	(. - P_04JAPAN__SQT_p2) - 44288
 	.error	"04JAPAN_.SQT part 2: the payload is not 44288 bytes"

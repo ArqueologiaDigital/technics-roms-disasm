@@ -406,17 +406,17 @@ noted only so the next lane does not rediscover it and believe it.
 2. **`0xFDBD28` in prom_a.**  It is the routine all four dispatchers call, and
    it returns the *record index* and the *value* handed to the handler.  Decode
    its two inputs and two outputs and the meaning of a "field" is settled — and
-   with it the column semantics that run 2 and run 3 inherit.
+   with it the column semantics that run 2 and run 3 inherit. (Resolved: 0xFDBD28 is mid-instruction in this prom_a; the cluster's targets are an older build's, wsa1/notes/FINDINGS-prom_b-f00c4d-orphan-cluster.md N2 (98436e231); open-items register 2026-10-31.)
 3. **Who calls `sub_F00CA2/CE3/D24/D65`.**  No immediate names them.
    `sub_F00800` in the same file is documented as reached from *routine-directory*
    slots `T_F40970..T_F40980` holding `jp 0x00F00800`.  Enumerating that
    directory — and finding whether it is built at runtime from a table — is the
-   one search form §3 could not run, and it is where a caller would be.
+   one search form §3 could not run, and it is where a caller would be. (Resolved: nothing reaches them, wsa1/notes/FINDINGS-prom_b-f00c4d-orphan-cluster.md N1 (98436e231); declared census: stale, dispatch-census-2026-10-06-25 (8a41951c3); open-items register 2026-10-31.)
 4. **prom_a `0xFE28B2-0xFE2F8C` needs framing.**  Run 3 says 21 pointers into a
    1 755-byte window, which is what an object index looks like, while prom_a
    calls it code and only 6/21 land on an instruction (below chance).  Someone
    should decide whether that window is code at all; run 3's 21 addresses and
-   their deltas (§4.1) are a free framing hypothesis to test against.
+   their deltas (§4.1) are a free framing hypothesis to test against. (Resolved: the window is byte-gated code in prom_a's disk module and PtrTable_F00762's targets are an older build's (census: stale, 8a41951c3; FINDINGS-prom_b-f00c4d-orphan-cluster.md N2); open-items register 2026-10-31.)
 5. **Run 3's 3-slot tail.**  Either the array is 39 slots for a reason, or
    `0xFE2F8C` at `0xF007FA` belongs to something else.  A second build settles
    this one too.

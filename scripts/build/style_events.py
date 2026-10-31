@@ -33,48 +33,31 @@ being decoded -- honestly inert, not silently wrong. Nothing here says what 0x00
 factory-blank template slot is a plausible guess, not a claim); `cells_of` just stops requiring
 byte[0]==0x80 and lets the same event grammar speak for itself.
 
-BANK LAYOUT (format 2 of the listing, 2026-10-29).  A bank is one Composer style image: the RAM layout
+BANK LAYOUT (format 3 of the listing, 2026-10-31).  A bank is one Composer style image: the RAM layout
 of RHYTHM_PATTERN_BUF_A, which FileIO_SaveRegion3_ExtMem (v10 0xF87D2C) saves as a .CMP file and
 FileIO_SaveRcmFromFlash / FileIO_LoadRcmToFlash move between an .RCM file and these flash sections.  The
-KN5000 floppy describer (floppy/kn5000/formats.py, lane floppy-kn5000) types .CMP and .RCM banks with the
-same layout and the same cell rule (link base = block 20), so its names are used here.
-  +0x00   "H\0K\0" magic                              floppy: "bank magic"
-  +0x04   26 bytes, the same in every bank                not established
-  +0x1e   capacity16  0x1680 = 0x16800 / 16              [INFERENCE] 0x16800 is the section size, and the
-          size words here count 16-byte units (+0x2e)
-  +0x20   dir_offset 0x60, +0x22 record_size 0x60, +0x24 record_count 30, +0x26 cell_size 0x100,
-          +0x28 cell_count 340 (0x154), +0x2a name_offset 0x40: constant in every bank and in the default
-          image Demo_StyleRhythmData (+0x000, copied by AccDemo_LoadRhythm).  [INFERENCE] from the values:
-          the code uses the same constants (AccDemo_LoadVariation `cp a, 0x1e`; `cp wa, 0x154` in AccPatch_SeqAdvance_CheckLimit,
-          AccPatch_AdvSeq_CheckLimit and ToneBank_ComputeEntryAddress_Join; 0x100-byte cells; the name at record +0x40) but no reader of these words was found
-  +0x2e   used_size16: ((last entry * 256 + 0x1400) rounded up to 1 KB) / 16, written by
-          AccPatch_InitSlotChain; cmp_sv_mae returns it * 16 as the .CMP size and FileIO_SaveRcmFromFlash
-          reads it (+46/+47) for the .RCM chunk lengths
-  +0x30   48 bytes, zero in every bank
-  +0x60   30 section records of 0x60 bytes, one per STYLE_SECTION (0..29: a/b/c variation 1-4, then intro,
-          fill-in and ending 1-2 of a, b and c; AccDemo_LoadVariation_EntryLoop_Data's order):
-          +0x00, +0x04..+0x0a  five part pointers (floppy: "chain pointers"), +0x02 = 0
-                               (AccDemo_LoadVariation: "five consecutive block numbers, the second word 0");
-                               value = (section nibble << 12) | cell entry; style_directory_chains.py proves
-                               they name the parts' first cells
-          +0x0c..+0x3f         0x34 bytes (AccDemo_LoadVariation copies AccDemo_LoadVariation_EntryLoop_Data_2
-                               here): listed as 12 bytes, then five 8-byte groups, one per part [INFERENCE:
-                               the grouping is by shape, five groups for five parts; no field is named]
-          +0x40..+0x4f         the name (floppy: "style name"; the default image writes "a-variation1" ...)
-          +0x50..+0x5f         AccDemo_SectionRecordTail's 16 bytes
-  +0xba0  to +0x13bf: AccDemo_LoadVariation_DataBlock's 160 bytes and the table after it; zero in every bank
-  +0x13c0 a 64-byte fill-in cell (AccDemo_LoadFillIn copies 0x40 bytes here): mark, prev, next, 0x87, events
-  +0x1400 340 cells of 256 bytes (AccPatch_InitSlotChain: base + 0x1400; the first 0x96 = 150 are the head
-          entries, 30 sections x 5 parts, the rest the continuation cells from +0xaa00)
+field layout and the evidence for every field are in scripts/build/style_bank_layout.py, which the KN5000
+floppy describer (floppy/kn5000/formats.py) imports too, so both name every field the same way.
+In short: header +0x00 magic, +0x0e password, +0x10 composer_mode, the size words +0x1e..+0x2f, reserved
+bytes; 30 section records from +0x60 (part cells, time_sig, last_measure, rec_chord, edit_flags, the
+section's style pair, five 8-byte part settings DRUM BASS ACCOMP1-3, name); the five chord maps at +0xba0
+and the measure-start table at +0xc40 (both zero in the factory banks); the fill-in cell at +0x13c0; the
+256-byte cells from +0x1400 (AccPatch_InitSlotChain: base + 0x1400; the first 0x96 = 150 are the head
+entries, 30 sections x 5 parts, the rest the continuation cells from +0xaa00).
 
-THE LISTING (format 2): `#` lines are comments; `SIZE n` first; then, in address order,
+THE LISTING (format 3): `#` lines are comments; `SIZE n` first; then, in address order,
   FILL a-b xx            blocks a..b all byte xx
   BANK b                 a bank at block b; its indented lines type its first 20 blocks:
-    hdr_04 <hex>, capacity16, dir_offset, record_size, record_count, cell_size, cell_count, name_offset,
-    hdr_2c, used_size16, hdr_30 <hex|zero>;
-    SECTION k parts=p0,p1,p2,p3,p4 w02=wwww name="..." (\0, \xNN, \\, \" escapes), with
-      rec_0c <12 B hex>, part0..part4 <four u16>, tail <hex|zero>;
-    data_ba0 <hex|zero>; FILLIN mark= prev= next= and its events
+    reserved_04 / _0b / _11 / _15 / _1d <hex|zero>, password, composer_mode, capacity16, dir_offset,
+    record_size, record_count, cell_size, cell_count, name_offset, reserved_2c, used_size16,
+    reserved_30 <hex|zero>;
+    SECTION k cells=drum,bass,acc1,acc2,acc3 reserved_02=wwww name="..." (\0, \xNN, \\, \" escapes), with
+      time_sig t, last_measure m, rec_chord key= minor= accomp_7th= bass_7th= bit7=, edit_flags xx,
+      style number= group=, reserved_12 <hex|zero>, part <drum|bass|acc1|acc2|acc3> sound= bank= pan=
+      reverb= pc_byte4= pitch_point= high_key= reserved_7=, reserved_50 <hex|zero>;
+    CHORDMAP n variations=v0,v1,v2,v3 reserved=<hex|zero> name="..." (five), or chord_maps zero;
+    MEASURES s part c:o c:o ... (eight cell:offset pairs; 60 lines), or measure_starts zero;
+    FILLIN mark= prev= next= and its events
   CELL b mark=mm prev=pppp next=nnnn   one 256-byte cell (byte 5 and byte 255 are 0x87)
   RAW b + 8 hex lines    a block nothing above describes (none in the factory banks)
 then one CHAIN per chain head (prev = 0xffff), its events one per line: st_beat, st_end,
@@ -96,6 +79,9 @@ established what they select. They are emitted as numbers, never as invented lab
 import pathlib
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import style_bank_layout as L  # noqa: E402  (the shared field layout)
+
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
 INC = REPO / 'custom_data' / 'includes'
 OUT = REPO / 'custom_data' / 'styles'
@@ -108,12 +94,13 @@ SECTIONS = {'section_0':    (0x00000, 0x17000),
 ROM = REPO / 'original_ROMs' / 'kn5000_custom_data.ic19'
 
 # One more bank in the SAME format, living inside table_data rather than IC19:
-# Composer_FactoryMemoryImage, a 64 KB slice of includes/icons_to_strings.bin. It was
+# Composer_FactoryMemoryImage, the 64 KB at ROM 0x9B4000 (it was a slice of the deleted
+# includes/icons_to_strings.bin; export and verify read it from original_ROMs/kn5000_table_data.rom). It was
 # classified "partially understood -- no field spec, no parser" until the IC19 container was
 # solved; the identical rules decode it with 168/168 pointers, 84/84 back-links and 7,457
 # events, none malformed. Its section nibble is 0 rather than 1.
 EXTRA = {'Composer_FactoryMemoryImage':
-         (REPO / 'table_data' / 'includes' / 'icons_to_strings.bin', 0x6F288, 0x10000,
+         (REPO / 'original_ROMs' / 'kn5000_table_data.rom', 0x9B4000 - 0x800000, 0x10000,
           REPO / 'table_data' / 'includes' / 'generated')}
 PAYLOAD = 249
 ARGS = {0x90: 5, 0x91: 7, 0x81: 0, 0xD1: 2, 0xD2: 2, 0xD3: 2}
@@ -161,16 +148,9 @@ def sources():
         yield name, src.read_bytes()[off:off + ln]
 
 
-# --- The typed listing (format 2, 2026-10-29) ------------------------------------------------
-# Field names follow the KN5000 floppy describer (floppy/kn5000/formats.py, branch data/floppy-kn5000)
-# where it names a field, and the firmware where it says more.  Evidence per field: the docstring's
-# BANK LAYOUT section.
-SECTION_ROLE = ['a-variation1', 'a-variation2', 'a-variation3', 'a-variation4',
-                'b-variation1', 'b-variation2', 'b-variation3', 'b-variation4',
-                'c-variation1', 'c-variation2', 'c-variation3', 'c-variation4',
-                'a-intro 1', 'a-intro 2', 'a-fill in 1', 'a-fill in 2', 'a-ending 1', 'a-ending 2',
-                'b-intro 1', 'b-intro 2', 'b-fill in 1', 'b-fill in 2', 'b-ending 1', 'b-ending 2',
-                'c-intro 1', 'c-intro 2', 'c-fill in 1', 'c-fill in 2', 'c-ending 1', 'c-ending 2']
+# --- The typed listing (format 3, 2026-10-31) ------------------------------------------------
+# Field names and their evidence: scripts/build/style_bank_layout.py (shared with floppy/kn5000/formats.py).
+SECTION_ROLE = L.SECTION_ROLE
 # The listing's event grammar: the IC19 grammar above plus the two controllers only the floppy CMP/RCM
 # banks use (0xd4 / 0xd5, two data bytes; floppy/kn5000/events.py).  Mnemonics are the floppy lane's.
 ST_ARGS = {**ARGS, 0xD4: 2, 0xD5: 2}
@@ -178,10 +158,10 @@ ST_NAME = {0x81: 'st_beat', 0x83: 'st_end', 0x90: 'st_note', 0x91: 'st_note2',
            0xD1: 'st_ctl1', 0xD2: 'st_ctl2', 0xD3: 'st_ctl3', 0xD4: 'st_ctl4', 0xD5: 'st_ctl5'}
 ST_CODE = {v: k for k, v in ST_NAME.items()}
 HDR_BLOCKS = 20             # cells start at bank + 0x1400 (AccPatch_InitSlotChain: base + 0x1400)
-HEADER_U16 = [(0x1e, 'capacity16'), (0x20, 'dir_offset'), (0x22, 'record_size'), (0x24, 'record_count'),
-              (0x26, 'cell_size'), (0x28, 'cell_count'), (0x2a, 'name_offset'), (0x2c, 'hdr_2c'),
-              (0x2e, 'used_size16')]
+HEADER_U16 = L.HEADER_U16
 U16_DEC = {'record_count', 'cell_count'}
+HDR_BYTES = {nm: (off, n) for off, n, nm in L.HEADER_BYTES}
+REC_LINES = {'time_sig', 'last_measure', 'rec_chord', 'edit_flags', 'style', 'reserved_12', 'part', 'reserved_50'}
 
 
 def q(b):
@@ -262,41 +242,77 @@ def blocks_uniform(d, a, e):
     return j
 
 
+def u16(d, o):
+    return d[o] | (d[o + 1] << 8)
+
+
+def kv_of(words):
+    return dict(x.split('=', 1) for x in words if '=' in x)
+
+
 def export_bank_header(d, s):
     """Lines for the bank's first 20 blocks: header, 30-section directory, the area to +0x1400."""
-    L = [f'BANK {s >> 8:03X}']
+    out = [f'BANK {s >> 8:03X}']
     assert d[s:s + 4] == b'H\x00K\x00'
-    L.append('  # +0x00 magic "H\\0K\\0"; +0x04..+0x1d not established')
-    L.append('  hdr_04 ' + d[s + 4:s + 0x1e].hex())
+    out.append('  # +0x00 magic "H\\0K\\0"; fields: scripts/build/style_bank_layout.py')
+    for off, n, nm in L.HEADER_BYTES:
+        out.append(f'  {nm} ' + hexorzero(d[s + off:s + off + n]))
+    out.append('  password 0x%04x' % u16(d, s + L.PASSWORD))
+    out.append('  composer_mode %d' % d[s + L.COMPOSER_MODE])
     for off, nm in HEADER_U16:
-        v = d[s + off] | (d[s + off + 1] << 8)
-        L.append(f'  {nm} ' + (str(v) if nm in U16_DEC else '0x%04x' % v))
-    L.append('  hdr_30 ' + hexorzero(d[s + 0x30:s + 0x60]))
+        v = u16(d, s + off)
+        out.append(f'  {nm} ' + (str(v) if nm in U16_DEC else '0x%04x' % v))
+    out.append('  reserved_30 ' + hexorzero(d[s + 0x30:s + 0x60]))
     for k in range(30):
         r = s + 0x60 + 0x60 * k
-        w = [d[r + 2 * i] | (d[r + 2 * i + 1] << 8) for i in range(6)]
-        L.append(f'  # section {k}: {SECTION_ROLE[k]}')
-        L.append(f'  SECTION {k} parts=' + ','.join('%04x' % x for x in (w[0],) + tuple(w[2:])) +
-                 ' w02=%04x' % w[1] + ' name=' + q(d[r + 0x40:r + 0x50]))
-        L.append('    rec_0c ' + d[r + 0x0c:r + 0x18].hex())
-        for pt in range(5):
-            o = r + 0x18 + 8 * pt
-            L.append(f'    part{pt} ' + ' '.join('%04x' % (d[o + 2 * i] | (d[o + 2 * i + 1] << 8)) for i in range(4)))
-        L.append('    tail ' + hexorzero(d[r + 0x50:r + 0x60]))
-    L.append('  data_ba0 ' + hexorzero(d[s + 0xBA0:s + 0x13C0]))
-    f = s + 0x13C0
+        w = [u16(d, r + 2 * i) for i in range(6)]
+        out.append(f'  # section {k}: {SECTION_ROLE[k]}')
+        out.append(f'  SECTION {k} cells=' + ','.join('%04x' % x for x in (w[0],) + tuple(w[2:])) +
+                   ' reserved_02=%04x' % w[1] + ' name=' + q(d[r + L.NAME_OFF:r + L.NAME_OFF + 16]))
+        out.append(f'    time_sig {d[r + 0x0c]}' + (f'  # {L.time_sig_name(d[r + 0x0c])}'))
+        out.append(f'    last_measure {d[r + 0x0d]}')
+        key, minor, a7, b7, hi = L.rec_chord_fields(d[r + 0x0e])
+        out.append(f'    rec_chord key={key} minor={minor} accomp_7th={a7} bass_7th={b7} bit7={hi}'
+                   f'  # {L.key_name(key)}')
+        out.append('    edit_flags 0x%02x' % d[r + 0x0f])
+        out.append('    style number=0x%02x group=%d' % (d[r + 0x10], d[r + 0x11]))
+        out.append('    reserved_12 ' + hexorzero(d[r + 0x12:r + 0x18]))
+        for i, pt in enumerate(L.PARTS):
+            o = r + L.PART_BASE + L.PART_SIZE * i
+            out.append(f'    part {pt} ' + ' '.join(
+                f'{f}=' + ('0x%02x' % d[o + j] if f in ('high_key', 'pc_byte4') else str(d[o + j]))
+                for j, f in enumerate(L.PART_FIELDS)))
+        out.append('    reserved_50 ' + hexorzero(d[r + L.TAIL_OFF:r + 0x60]))
+    cm = d[s + L.CHORD_MAP_OFF:s + L.MEASURE_OFF]
+    if not any(cm):
+        out.append('  chord_maps zero')
+    else:
+        for n in range(L.CHORD_MAPS):
+            c = s + L.CHORD_MAP_OFF + L.CHORD_MAP_SIZE * n
+            out.append(f'  CHORDMAP {n} variations=' + ','.join('%d' % x for x in d[c:c + 4]) +
+                       ' reserved=' + hexorzero(d[c + 4:c + 16]) + ' name=' + q(d[c + 16:c + 32]))
+    mt = d[s + L.MEASURE_OFF:s + L.FILLIN_OFF]
+    if not any(mt):
+        out.append('  measure_starts zero')
+    else:
+        for v in range(L.MEASURE_VARS):
+            for i, pt in enumerate(L.PARTS):
+                o = s + L.MEASURE_OFF + 160 * v + 32 * i
+                out.append(f'  MEASURES {v} {pt} ' + ' '.join(
+                    '%x:%x' % (u16(d, o + 4 * m), u16(d, o + 4 * m + 2)) for m in range(L.MEASURES)))
+    f = s + L.FILLIN_OFF
     assert d[f + 5] == 0x87, hex(f)
-    L.append('  FILLIN mark=%02x prev=%04x next=%04x' % (d[f], d[f + 1] | (d[f + 2] << 8), d[f + 3] | (d[f + 4] << 8)))
-    L += event_lines(d[f + 6:f + 0x40], '    ')
-    return L
+    out.append('  FILLIN mark=%02x prev=%04x next=%04x' % (d[f], u16(d, f + 1), u16(d, f + 3)))
+    out += event_lines(d[f + 6:f + 0x40], '    ')
+    return out
 
 
 def export():
     OUT.mkdir(parents=True, exist_ok=True)
     for sec, d in sources():
         L = [f'# {sec}: {len(d)} bytes, {len(d) // 256} blocks of 256',
-             '# Produced by scripts/build/style_events.py (format 2); that script\'s docstring defines',
-             '# every line kind and gives the evidence for each field.  docs/accompaniment-style-format.md',
+             '# Produced by scripts/build/style_events.py (format 3); scripts/build/style_bank_layout.py defines',
+             '# every field and its evidence.  docs/accompaniment-style-format.md',
              '# describes the cells and the event grammar.', '',
              f'SIZE {len(d)}']
         banks = list(hk_sections(d))
@@ -355,23 +371,43 @@ def rebuild(sec):
             bank, rec = s, None
             i += 1
             continue
-        if bank is not None and l.startswith('    ') and (w[0] in ('rec_0c', 'tail') or w[0].startswith('part')):
+        if bank is not None and rec is not None and l.startswith('    ') and not l.startswith('     ') and \
+                w[0] in REC_LINES:
             r = rec
-            if w[0] == 'rec_0c':
-                out[r + 0x0c:r + 0x18] = bytes.fromhex(w[1])
-            elif w[0] == 'tail':
-                out[r + 0x50:r + 0x60] = unhexorzero(w[1], 16)
+            kv = kv_of(w[1:])
+            if w[0] == 'time_sig':
+                out[r + 0x0c] = int(w[1])
+            elif w[0] == 'last_measure':
+                out[r + 0x0d] = int(w[1])
+            elif w[0] == 'rec_chord':
+                out[r + 0x0e] = L.rec_chord_byte(int(kv['key']), int(kv['minor']), int(kv['accomp_7th']),
+                                                 int(kv['bass_7th']), int(kv['bit7']))
+            elif w[0] == 'edit_flags':
+                out[r + 0x0f] = int(w[1], 16)
+            elif w[0] == 'style':
+                out[r + 0x10] = int(kv['number'], 0)
+                out[r + 0x11] = int(kv['group'], 0)
+            elif w[0] == 'reserved_12':
+                out[r + 0x12:r + 0x18] = unhexorzero(w[1], 6)
+            elif w[0] == 'reserved_50':
+                out[r + L.TAIL_OFF:r + 0x60] = unhexorzero(w[1], 16)
             else:
-                o = r + 0x18 + 8 * int(w[0][4:])
-                for k, v in enumerate(w[1:5]):
-                    out[o + 2 * k:o + 2 * k + 2] = int(v, 16).to_bytes(2, 'little')
+                o = r + L.PART_BASE + L.PART_SIZE * L.PARTS.index(w[1])
+                kv = kv_of(w[2:])
+                for j, fn in enumerate(L.PART_FIELDS):
+                    out[o + j] = int(kv[fn], 0)
             i += 1
             continue
         if l.startswith('  ') and not l.startswith('    ') and bank is not None:
             s = bank
-            if w[0] == 'hdr_04':
-                out[s + 4:s + 0x1e] = bytes.fromhex(w[1])
-            elif w[0] == 'hdr_30':
+            if w[0] in HDR_BYTES:
+                off, n = HDR_BYTES[w[0]]
+                out[s + off:s + off + n] = unhexorzero(w[1], n)
+            elif w[0] == 'password':
+                out[s + L.PASSWORD:s + L.PASSWORD + 2] = int(w[1], 0).to_bytes(2, 'little')
+            elif w[0] == 'composer_mode':
+                out[s + L.COMPOSER_MODE] = int(w[1])
+            elif w[0] == 'reserved_30':
                 out[s + 0x30:s + 0x60] = unhexorzero(w[1], 0x30)
             elif w[0] in dict((n, o) for o, n in HEADER_U16):
                 o = dict((n, o) for o, n in HEADER_U16)[w[0]]
@@ -379,14 +415,26 @@ def rebuild(sec):
             elif w[0] == 'SECTION':
                 k = int(w[1])
                 rec = s + 0x60 + 0x60 * k
-                kv = dict(x.split('=', 1) for x in w[2:4])
-                p = [int(x, 16) for x in kv['parts'].split(',')]
-                words = [p[0], int(kv['w02'], 16)] + p[1:]
+                kv = kv_of(w[2:4])
+                p = [int(x, 16) for x in kv['cells'].split(',')]
+                words = [p[0], int(kv['reserved_02'], 16)] + p[1:]
                 for n, v in enumerate(words):
                     out[rec + 2 * n:rec + 2 * n + 2] = v.to_bytes(2, 'little')
-                out[rec + 0x40:rec + 0x50] = unq(l.split(' name=', 1)[1])
-            elif w[0] == 'data_ba0':
-                out[s + 0xBA0:s + 0x13C0] = unhexorzero(w[1], 0x13C0 - 0xBA0)
+                out[rec + L.NAME_OFF:rec + L.NAME_OFF + 16] = unq(l.split(' name=', 1)[1])
+            elif w[0] in ('chord_maps', 'measure_starts'):
+                assert w[1] == 'zero', l
+            elif w[0] == 'CHORDMAP':
+                c = s + L.CHORD_MAP_OFF + L.CHORD_MAP_SIZE * int(w[1])
+                kv = kv_of(w[2:4])
+                out[c:c + 4] = bytes(int(x) for x in kv['variations'].split(','))
+                out[c + 4:c + 16] = unhexorzero(kv['reserved'], 12)
+                out[c + 16:c + 32] = unq(l.split(' name=', 1)[1])
+            elif w[0] == 'MEASURES':
+                o = s + L.MEASURE_OFF + 160 * int(w[1]) + 32 * L.PARTS.index(w[2])
+                for m, pr in enumerate(w[3:3 + L.MEASURES]):
+                    c, off = (int(x, 16) for x in pr.split(':'))
+                    out[o + 4 * m:o + 4 * m + 2] = c.to_bytes(2, 'little')
+                    out[o + 4 * m + 2:o + 4 * m + 4] = off.to_bytes(2, 'little')
             elif w[0] == 'FILLIN':
                 kv = dict(x.split('=') for x in w[1:])
                 f = s + 0x13C0

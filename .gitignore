@@ -50,6 +50,9 @@ cruft_please_ignore/
 mame_driver/build_error.txt
 # Generated binary blobs (compiled from C, .incbin'd by assembly)
 */maincpu/includes/generated/*.bin
+# apply_c_divergence.py's once-only stamps beside the patched bins of v7/v6/v5 (build state; a missing
+# one makes the script recompile that bin before patching it)
+*/maincpu/includes/generated/*.bin.patched
 # the pixels of the NAKA GUI C pictures, written from images/*.png by scripts/build/c_bitmaps.py
 */maincpu/includes/generated/pictures/
 hdae5000/includes/generated/*.bin

@@ -195,7 +195,7 @@ P_03SWING_TM_p1_Kit:
 	.include	"tm/voice_116f9e21bffd.s"	; voice 126: Click 2
 	.include	"tm/voice_3eb7f3b4a81a.s"	; voice 127: Click 3
 	.byte	0	; [INFERENCE] the edit index (the KN5000 file has one here)
-	.short	0xb0c5	; not ~(LE16 sum of the sound records) (= 0x4e69)
+	.short	0xb0c5	; a stale checksum (the records give 0x4e69); no load reads it, PostTmTransLoad recomputes it
 
 	.if	(. - P_03SWING_TM_p1) - 47098
 	.error	"03SWING.TM part 1: the payload is not 47098 bytes"

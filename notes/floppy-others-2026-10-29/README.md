@@ -54,9 +54,10 @@ The first byte of the magic names the model: `I` is the KN6000, `J` the KN7000. 
   - no end marker.
 
   Okumura's LZSS.C binary-tree encoder with N = 8192 and F = 10 reproduces every stream with no reference
-  (`floppy/tools/kd/lzss_j.py`). [INFERENCE] The KN5000's SLIDE8K is probably the same coder. Its current
-  compressor replays reference decisions (`scripts/build/compress_slide8k.py`), so trying `lzss_j.encode` on it
-  is cheap.
+  (`floppy/tools/kd/lzss_j.py`). The KN5000's SLIDE8K is the same coder, encoder included (measured 2026-10-31,
+  `notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py`: the five live help databases re-encode to every factory
+  decision and stream byte), so `scripts/build/compress_slide8k.py` now builds them with `lzss_j.encode` and no
+  reference.
 - **'I K\1' / 'J K\1'** (.AST, .CST). A u32 inflated size, then one deflate part.
   - .AST: the two u32 at +8/+0xC are not read back by any routine found. On the KN7000 they look like a
     program-ROM address and a RAM address (0x48582CD3, 0x5006F220), so [INFERENCE] they are left-over stack
@@ -166,7 +167,8 @@ from lane customdata's typed sources. The header words +8 / +0xC are never writt
 
 - **.MID.** The SMF writer flushes whole 1024-byte windows (`SmfOut_WindowsFlushed` 0x126C, the length
   arithmetic at 0xF7789A; `wsa1/notes/FINDINGS-prom_b-smf-writer.md`). So 13 of the 16 files end with stale
-  window bytes after the last track, and these are declared opaque. The three demo1 files are not padded.
+  window bytes after the last track. The three demo1 files are not padded. Since 2026-10-31 the stale bytes
+  are spelled as the copy they are, of the SMF's bytes 1024 earlier (`notes/floppy-leftovers-2026-10-31/`).
 - **.SEQ.** The prom_b block store's blocks (`FINDINGS-prom_b-block-store.md`). Events use the KN5000 demo-song
   grammar (`floppy/kn5000/events.py`): bit 7 = status. It parses 443 of 444 chains ([INFERENCE]).
 
@@ -199,28 +201,44 @@ No byte is generic any more, but many fields have only a neutral name: an offset
 - **Not named this round, and why:**
   - the KN6000/KN7000 panel-memory record's fields: the recall routine is not located. The library routines
     that index the record (0x3A90 / 0x750 strides, `func_4C01ED89`, `func_4C01F5FC`, the 0x4A part stride
-    around `func_4C01F657`) are template copies and per-part sound fix-ups, not the field-by-field recall;
+    around `func_4C01F657`) are template copies and per-part sound fix-ups, not the field-by-field recall.
+    **Since done** by lane kn67-field-names (c4a339f4c, `notes/data-semantics-2026-10-29/kn67-field-names.md`):
+    the record is the live panel state (recall `func_4C021F33`), and the parameter-id trie names its fields
+    in `PMR_*`; what keeps an `m<id>` / `p<hex>` name, and why, is listed in that note's "Open questions";
   - the KN6000 SOUND_MOD / VOICE_ELEM fields: the `TgPartAux*` accessors name offsets, not parameters, and the
     sound-edit screens' parameter tables were not traced;
   - the .SQT event reader and record head: no sequencer-player routine is named in `kn7000_manual.sym`, so the
-    event lengths stay measured;
-  - kn7asm quote stripping: changing it alters every kn7000 source that passes `.ascii \name` (CUSTOM records,
-    styles), which belongs to those trees' lanes.
+    event lengths stay measured (since done: the lengths are the firmware's table 0x485B9328, lane
+    kn67-field-names; the high bit below, 2026-10-31);
+  - kn7asm quote stripping: done 2026-10-31 (lane open4/misc), see the open questions below.
 
 ## Open questions
 
-- The meanings above, starting with the panel-memory record's fields.
-- What the high bit in those 5 song events means.
-- The KN6000 .TM tail word: it is the KN5000's checksum, ~(LE16 sum of the 40 sound records), in only 13 of
-  the 50 files.
-- What the 8 lines at the start of each WSA1R sound bank are. SoundRam_ClearFourBanks does not write them.
-- Whether 'J KD' is the KN5000's SLIDE8K. If so, `scripts/build/compress_slide8k.py` could use `lzss_j.encode`
-  instead of replaying reference decisions.
-- **Macro strings across the two assemblers.** llvm-mc strips the quotes from a quoted macro argument, and
-  kn7asm keeps them. So no `.ascii \name` macro serves both. The shared includes therefore leave names out of
-  the macros (VOICE_HEAD_TAIL, SOUND_HEAD, PMR_NAME_HEAD / _TAIL), and the floppy sources write `.ascii`
-  themselves. Giving kn7asm the GNU behaviour (quotes stripped, `"\name"` re-quotes) would let one macro take
-  the name.
+- The meanings above, starting with the panel-memory record's fields. (Panel-memory record and one-touch fields:
+  resolved by lane kn67-field-names, 2026-10-29, from the parameter-id trie (`ResourceIdTrie`: block = tag,
+  offset, mask), `notes/data-semantics-2026-10-29/kn67-field-names.md`; the fields named only by parameter id
+  (`m<id>`) and the bytes no traced routine reads are register item N-e3880498. The SOUND EDIT / voice records
+  are named there too (`SOUND_HEAD`, `SOUND_MOD`, `VOICE_*`). Still open from the list above: the KN6000/KN7000
+  .SQT record head (+0x07..+0xCF, +0x100..+0x13F; kn67-field-names open questions), the WSA1R .SQF song record
+  and the TCMP variation bytes. Lane kn5000-style, open-items register 2026-10-31.)
+- ~~What the high bit in those 5 song events means.~~ Answered 2026-10-31
+  (`notes/floppy-leftovers-2026-10-31/README.md`): a note's last byte is its duration in **beats**, read
+  unsigned by the note handler (KN7000 `func_48459B49`, KN6000 `func_4C11938E`), so 141 / 216 are held
+  notes; a bend's second byte is bits 8-15 of its 16-bit value, never masked.
+- ~~The KN6000 .TM tail word.~~ Answered 2026-10-31: it is the firmware's checksum of the 40 sound records
+  (KN6000 `func_4C07D7C1`, the same rule as the KN5000's), validated against RAM at power-on and recomputed
+  after every load (`PostTmTransLoad`), so no load reads a file's word. It matches in 12 of the 50 files
+  (13 was a miscount); the others carry a stale value.
+- ~~What the 8 lines at the start of each WSA1R sound bank are.~~ Answered 2026-10-31: the USER 1 / USER 2
+  sound-group names (16 per USER bank, 8 per 64 KB bank), read by `UserSoundBank_RemoteGroupNameAddr` and
+  `SoundGroupName_Lookup`.
+- ~~Whether 'J KD' is the KN5000's SLIDE8K.~~ **CLOSED 2026-10-31** (lane open4/misc,
+  `notes/misc-2026-10-31/README.md`): it is, encoder included; `compress_slide8k.py` uses `lzss_j.encode`.
+- ~~**Macro strings across the two assemblers.**~~ **CLOSED 2026-10-31** (lane open4/misc,
+  `notes/misc-2026-10-31/README.md`): kn7asm now strips a quoted macro argument's quotes as GNU as and llvm-mc
+  do (`"\name"` re-quotes), and every kn7asm macro body that wrote `.ascii \name` writes `.ascii "\name"`.
+  One macro can now take the name in both assemblers. Moving the shared callers to it (VOICE_HEAD_TAIL,
+  SOUND_HEAD, PMR_NAME_HEAD / _TAIL) is a separate regeneration, listed there.
 
 ## Shared files touched
 

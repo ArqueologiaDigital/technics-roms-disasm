@@ -115,5 +115,5 @@ TimeSig_ProcNop = 0x00F65FC7;
 AttAreYouSureCheck_Strings = 0x00E33824;
 CmpStepTitle_Method3Nop = 0x00F69F18;
 CmpStepTitle_OnHide = 0x00F69EFE;
-CmpStepTitle_OnPaint = 0x00F6A2FF; /* v7's address: nothing in v6 places it */
+CmpStepTitle_OnPaint = 0x00F69ED1; /* v7's address: nothing in v6 places it */
 CmpStepTitle_OnSwitchIn = 0x00F69F0B;

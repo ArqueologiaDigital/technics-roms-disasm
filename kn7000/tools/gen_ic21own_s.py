@@ -23,6 +23,7 @@ Usage:  gen_ic21own_s.py --rom IMAGE --ref REF_AS_THE_SOURCE_NAMES_IT --out-dir 
 """
 import argparse
 import os
+import re
 import struct
 import sys
 
@@ -178,6 +179,42 @@ def gen_midi(d):
     return o
 
 
+# FAVORITES item kinds and home-page types / part kinds: the .equ names of src/include/user_settings.inc
+FAV_KINDS = {2: "FAVK_SETTING", 3: "FAVK_SOUND", 4: "FAVK_RHYTHM", 5: "FAVK_STYLIST", 6: "FAVK_MENU", 7: "FAVK_PANIC",
+             8: "FAVK_MUTE_KEYS", 9: "FAVK_SOUND_MODE"}
+FAV_VALUE_OF = {"FAVK_NONE": 0}       # FAVK_NONE stands for kind 0 only; kinds 1 and 10..15 keep their number
+HP_TYPES = ["HPT_DEFAULT", "HPT_DEFAULT_PICTURE", "HPT_PRESET1", "HPT_PRESET2", "HPT_PRESET3", "HPT_USER"]
+HP_KINDS = ["HPK_TITLE_BAR_NORM", "HPK_TITLE_BAR_PMEM", "HPK_TITLE_BAR_RHYTHM", "HPK_TITLE_BAR_PAD",
+            "HPK_TITLE_BAR_SPLIT", "HPK_TITLE_BAR_SEQ", "HPK_BALANCE_NORM_1", "HPK_BALANCE_NORM_2",
+            "HPK_BALANCE_MIXER_1", "HPK_BALANCE_MIXER_2", "HPK_BALANCE_SEQ", "HPK_BALANCE_8PT_L_1",
+            "HPK_BALANCE_8PT_L_2", "HPK_BALANCE_8PT_R_1", "HPK_BALANCE_8PT_R_2", "HPK_RIGHT_COMBI_1",
+            "HPK_RIGHT_COMBI_2", "HPK_LEFT_COMBI_1", "HPK_LEFT_COMBI_2", "HPK_R1_SOUND_LARGE", "HPK_R1_SOUND_NORM",
+            "HPK_R2_SOUND_LARGE", "HPK_R2_SOUND_NORM", "HPK_LEFT_SOUND_LARGE", "HPK_LEFT_SOUND_NORM",
+            "HPK_RHYTHM_LARGE", "HPK_RHYTHM_NORM", "HPK_TEMPO_NORM", "HPK_TEMPO_SMALL", "HPK_CHORD_NORM",
+            "HPK_CHORD_SMALL", "HPK_SPLIT_POINT", "HPK_R1_R2_OCT", "HPK_TRANSPOSE", "HPK_PAD", "HPK_MONITOR",
+            "HPK_PMEMORY_BANK", "HPK_PMEMORY_1_8", "HPK_CURRENT_PMEMORY", "HPK_PADS_BANK", "HPK_PAD_1_6",
+            "HPK_PICTURE", "HPK_SEQ_SONG", "HPK_FAVORITES_BANK", "HPK_GLOBAL_EFFECTS", "HPK_SOUND_DSP",
+            "HPK_SOUND_LOAD_OPT", "HPK_FOOT_SWITCH", "HPK_FOOT_CONTROLLER"]
+
+
+def menu_names():
+    """The texts of func_4849DE62_Table's 114 records (the FAVORITES menu shortcuts), read from program
+    941's committed data source (kn7000/src/program/data/data_01.s)."""
+    src = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "program", "data", "data_01.s")
+    text = open(src, "rb").read().decode("latin1")
+    strs = dict(re.findall(r'^(Str_\w+):\s*\.asciz\s+"((?:[^"\\]|\\.)*)"', text, re.M))
+    a = text.index("func_4849DE62_Table:")
+    names = []
+    for m in re.finditer(r"^\tREC_func_4849DE62_Table\ttext=(\w+)", text[a:], re.M):
+        names.append(strs.get(m.group(1), m.group(1)).strip())
+        if len(names) == 114:
+            break
+    return names
+
+
+MENU_NAMES = menu_names()
+
+
 def gen_fav(d):
     o = Out(d, FAV, "favorites.inc")
     f = d[FAV:FAV + FAV_SIZE]
@@ -192,7 +229,18 @@ def gen_fav(d):
                label=f"FavBank{k + 1}")
         for i in range(10):
             kind, val = struct.unpack_from("<II", r, 20 + 8 * i)
-            o.emit(f"FAV_ITEM {kind}, {val:#x}", r[20 + 8 * i:28 + 8 * i])
+            name = FAV_KINDS.get(kind, "FAVK_NONE" if kind in (0, 1) or 10 <= kind <= 15 else None)
+            if name is None:
+                sys.exit(f"favorites.inc: item kind {kind} is not one AcFavoriteProc_Table dispatches")
+            note = None
+            if kind == 6:
+                note = f"menu: {MENU_NAMES[val]}" if val < len(MENU_NAMES) else "menu index past func_4849DE62_Table"
+            elif kind == 3:
+                note = f"program {val & 0xFF}, bank LSB {val >> 8 & 0xFF}, MSB {val >> 16 & 0xFF}"
+            elif kind == 9:
+                note = {0: "NX SOUND ON", 2: "GM LEVEL2 ON"}.get(val)
+            o.emit(f"FAV_ITEM {name if kind == FAV_VALUE_OF.get(name, kind) else kind}, {val:#x}",
+                   r[20 + 8 * i:28 + 8 * i], note)
     o.label("Favorites_End")
     return o
 
@@ -203,10 +251,11 @@ def gen_hp(d, bmp_src, bmp_path):
     if h[:4] != SIG:
         sys.exit("homepage.inc: no signature")
     stamp, typ = struct.unpack_from("<II", h, 4)
-    o.emit(f"HP_HEADER {stamp:#x}, {typ}", h[:12], label="HomePage")
+    o.emit(f"HP_HEADER {stamp:#x}, {HP_TYPES[typ] if typ < len(HP_TYPES) else typ}", h[:12], label="HomePage")
     for i in range(64):
-        k, x, y = struct.unpack_from("<3H", h, 12 + 6 * i)
-        o.emit(f"HP_PART {k:#06x}, {x:#06x}, {y:#06x}", h[12 + 6 * i:18 + 6 * i], f"part {i}" if i % 8 == 0 else None)
+        k, x, y = struct.unpack_from("<Hhh", h, 12 + 6 * i)
+        kind = HP_KINDS[k] if k < len(HP_KINDS) else ("HPK_NONE" if k == 0x31 else f"{k:#06x}")
+        o.emit(f"HP_PART {kind}, {x}, {y}", h[12 + 6 * i:18 + 6 * i], f"part {i}" if i % 8 == 0 else None)
     pic = open(bmp_path, "rb").read()
     if d[HP + HP_REC:HP + HP_REC + HP_BMP] != pic or len(pic) != HP_BMP:
         sys.exit(f"homepage.inc: the BMP at {HP + HP_REC:#x} is not {bmp_path}")

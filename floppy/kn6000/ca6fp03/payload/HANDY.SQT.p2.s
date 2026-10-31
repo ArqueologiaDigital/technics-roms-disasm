@@ -1474,8 +1474,47 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 8, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0xc42, 190
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_note	44, 0, 74, 104, 15, 0
+	sq_note	59, 0, 76, 84, 19, 0
+	sq_note	72, 0, 74, 85, 16, 0
+	sq_note	88, 0, 73, 81, 19, 0
+	sq_beat
+	sq_note	7, 0, 74, 93, 22, 0
+	sq_note	24, 0, 73, 69, 20, 0
+	sq_note	42, 0, 71, 89, 17, 0
+	sq_note	59, 0, 73, 80, 17, 0
+	sq_note	74, 0, 71, 82, 17, 0
+	sq_note	92, 0, 69, 93, 39, 0
+	sq_beat
+	sq_note	45, 0, 73, 63, 40, 0
+	sq_note	45, 0, 81, 46, 35, 0
+	sq_note	95, 0, 81, 63, 17, 1
+	sq_note	95, 0, 73, 59, 15, 1
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 81, 103, 15, 0
+	sq_note	61, 0, 83, 81, 20, 0
+	sq_note	74, 0, 81, 72, 17, 0
+	sq_note	89, 0, 80, 82, 20, 0
+	sq_beat
+	sq_note	13, 0, 81, 82, 17, 0
+	sq_note	28, 0, 80, 93, 17, 0
+	sq_note	46, 0, 78, 90, 17, 0
+	sq_note	60, 0, 80, 95, 20, 0
+	sq_note	76, 0, 78, 90, 17, 0
+	sq_note	93, 0, 76, 90, 35, 0
+	sq_beat
+	sq_note	44, 0, 68, 55, 53, 1
+	sq_note	45, 0, 76, 57, 56, 1
+	sq_beat
+	sq_beat
+	sq_note	43, 0, 74, 103, 15, 0
+	sq_note	58, 0, 76, 84, 22, 0
+	sq_note	70, 0, 74, 87, 21, 0
+	sq_note	90, 0, 73, 94, 18, 0
+	sq_beat
 	sq_cell	0x80, 115, 65535	; cell 14: song 1 track 4, 15 of 15
 	sq_bend	1, 0, 58, 48
 	sq_bend	4, 0, 0, 64
@@ -1487,8 +1526,84 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 3, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0xd22, 222
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	44, 0, 83, 117, 43, 0
+	sq_note	85, 0, 81, 90, 17, 0
+	sq_beat
+	sq_note	4, 0, 83, 88, 23, 0
+	sq_note	17, 0, 81, 75, 22, 0
+	sq_note	43, 0, 79, 99, 46, 0
+	sq_note	94, 0, 78, 116, 15, 0
+	sq_beat
+	sq_note	46, 0, 78, 105, 22, 0
+	sq_note	93, 0, 79, 117, 25, 0
+	sq_beat
+	sq_note	24, 0, 78, 99, 20, 0
+	sq_note	42, 0, 79, 99, 28, 0
+	sq_note	69, 0, 81, 107, 20, 0
+	sq_note	89, 0, 78, 110, 36, 0
+	sq_beat
+	sq_beat
+	sq_note	95, 0, 68, 47, 11, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 68, 47, 11, 2
+	sq_note	2, 0, 76, 38, 9, 2
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 74, 99, 14, 0
+	sq_note	61, 0, 76, 73, 21, 0
+	sq_note	76, 0, 74, 76, 16, 0
+	sq_note	91, 0, 73, 74, 18, 0
+	sq_beat
+	sq_note	10, 0, 74, 83, 21, 0
+	sq_note	25, 0, 73, 87, 16, 0
+	sq_note	40, 0, 71, 85, 13, 0
+	sq_note	56, 0, 73, 79, 19, 0
+	sq_note	68, 0, 71, 74, 17, 0
+	sq_note	88, 0, 69, 91, 38, 0
+	sq_beat
+	sq_note	42, 0, 81, 36, 69, 1
+	sq_note	42, 0, 73, 37, 67, 1
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 81, 102, 14, 0
+	sq_note	58, 0, 83, 84, 22, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0xdfe, 2
 	sq_cell	0x80, 118, 65535	; cell 15: song 1 track 10, 18 of 18
 	.byte	0x61, 0x05, 0x00	; bytes 4..6 of `sq_note	80, 0, 40, 97, 5, 0` (the event spans two cells)
 	sq_note	95, 0, 40, 122, 5, 0
@@ -1520,8 +1635,36 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 9, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0xe92, 110
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	20, 0	; data bytes of an event cut at the start
+	sq_beat
+	sq_note	34, 0, 76, 93, 13, 0
+	sq_note	49, 0, 78, 90, 23, 0
+	sq_note	64, 0, 76, 78, 15, 0
+	sq_note	77, 0, 74, 81, 53, 0
+	sq_beat
+	sq_note	36, 0, 73, 90, 57, 0
+	sq_note	89, 0, 69, 60, 68, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	44, 0, 78, 68, 47, 0
+	sq_note	84, 0, 74, 61, 52, 0
+	sq_beat
+	sq_note	40, 0, 69, 61, 58, 0
+	sq_note	92, 0, 79, 52, 59, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 76, 69, 50, 0
+	sq_note	90, 0, 73, 69, 51, 0
+	sq_beat
+	sq_note	44, 0, 71, 86, 53, 0
+	sq_note	90, 0, 73, 104, 19, 0
+	sq_beat
+	sq_note	44, 0, 73, 104, 27, 0
+	sq_note	64, 0, 74, 96, 32, 0
+	.byte	91	; data bytes of an event cut by the end
 	sq_cell	0x80, 119, 65535	; cell 16: song 1 track 12, 22 of 22
 	.byte	0x6c, 0x2f, 0x00	; bytes 4..6 of `sq_note	47, 0, 64, 108, 47, 0` (the event spans two cells)
 	sq_note	95, 0, 55, 88, 47, 0
@@ -1563,8 +1706,43 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 11, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0xfc8, 56
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	42, 0, 78, 72, 52, 0
+	sq_note	90, 0, 74, 75, 48, 0
+	sq_beat
+	sq_note	42, 0, 69, 66, 57, 0
+	sq_note	94, 0, 79, 61, 50, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0xffe, 2
 	sq_cell	0x80, 102, 65535	; cell 17: song 1 track 2, 7 of 7
 	sq_note	95, 0, 48, 98, 68, 0
 	sq_beat
@@ -1581,8 +1759,60 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 1, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x1035, 203
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 62, 89, 22, 0, 89
+	k5_note	0x90, 66, 99, 20, 0, 91
+	k5_note	0x90, 74, 92, 24, 0, 91
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x1047, 5
+	sq_beat
+	sq_note	44, 0, 73, 99, 30, 0
+	sq_note	68, 0, 71, 88, 27, 0
+	sq_note	93, 0, 69, 102, 22, 0
+	sq_beat
+	sq_note	19, 0, 67, 98, 25, 0
+	sq_note	44, 0, 66, 107, 23, 0
+	sq_note	67, 0, 64, 93, 28, 0
+	sq_note	87, 0, 62, 109, 37, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 66, 102, 36, 0
+	sq_note	0, 0, 69, 116, 32, 0
+	sq_note	0, 0, 74, 105, 36, 0
+	sq_note	0, 0, 71, 114, 30, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x109c, 2
+	sq_note	43, 0, 69, 80, 22, 0
+	sq_note	45, 0, 61, 62, 20, 0
+	sq_beat
+	sq_note	44, 0, 67, 78, 62, 0
+	sq_note	46, 0, 69, 71, 60, 0
+	sq_note	46, 0, 61, 70, 58, 0
+	sq_beat
+	sq_note	42, 0, 61, 75, 21, 0
+	sq_note	42, 0, 67, 88, 21, 0
+	sq_note	42, 0, 69, 81, 21, 0
+	sq_beat
+	sq_note	42, 0, 67, 98, 29, 0
+	sq_note	42, 0, 61, 78, 31, 0
+	sq_note	44, 0, 69, 90, 27, 0
+	sq_note	84, 0, 67, 96, 14, 0
+	sq_note	84, 0, 69, 89, 14, 0
+	sq_note	86, 0, 61, 62, 12, 0
+	sq_beat
+	sq_note	41, 0, 61, 85, 18, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x10fc, 4
 	sq_cell	0xff, 8, 123	; cell 18: song 1 track 8, 2 of 3
 	.byte	0x90, 0x52, 0x58, 0x1a, 0x00	; bytes 2..6 of `sq_note	95, 0, 82, 88, 26, 0` (the event spans two cells)
 	sq_note	95, 0, 94, 89, 22, 0
@@ -5261,8 +5491,36 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 6, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x4866, 154
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	49, 0, 38, 90, 17, 0
+	sq_note	49, 0, 18, 98, 12, 0
+	sq_note	49, 0, 77, 68, 10, 0
+	sq_note	72, 0, 77, 75, 12, 0
+	sq_beat
+	sq_note	0, 0, 36, 87, 15, 0
+	sq_note	0, 0, 18, 68, 11, 0
+	sq_note	0, 0, 77, 78, 10, 0
+	sq_note	48, 0, 38, 93, 15, 0
+	sq_note	48, 0, 18, 95, 12, 0
+	sq_note	48, 0, 77, 80, 12, 0
+	sq_note	73, 0, 77, 60, 7, 0
+	sq_beat
+	sq_note	0, 0, 36, 93, 13, 0
+	sq_note	0, 0, 18, 62, 10, 0
+	sq_note	0, 0, 77, 93, 13, 0
+	sq_note	48, 0, 38, 95, 14, 0
+	sq_note	48, 0, 18, 105, 17, 0
+	sq_note	48, 0, 77, 81, 14, 0
+	sq_note	72, 0, 77, 57, 8, 0
+	sq_beat
+	sq_note	1, 0, 36, 93, 8, 0
+	sq_note	1, 0, 18, 92, 11, 0
+	sq_note	1, 0, 77, 93, 13, 0
+	sq_note	49, 0, 38, 102, 10, 0
+	sq_note	49, 0, 18, 108, 13, 0
+	sq_note	49, 0, 77, 84, 15, 0
+	sq_note	72, 0, 77, 73, 10, 0
+	sq_beat
 	sq_cell	0x80, 71, 79	; cell 74: song 1 track 12, 10 of 22
 	.byte	0x65, 0x2f, 0x00	; bytes 4..6 of `sq_note	0, 0, 60, 101, 47, 0` (the event spans two cells)
 	sq_note	47, 0, 65, 79, 46, 0
@@ -7859,8 +8117,44 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 2, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x775f, 161
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	90, 25, 0, 43	; data bytes of an event cut at the start
+	k5_note	0x90, 61, 78, 22, 0, 43
+	k5_note	0x90, 69, 85, 23, 0, 90
+	k5_note	0x90, 67, 93, 18, 0, 91
+	k5_note	0x90, 69, 89, 17, 0, 91
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x777b, 5
+	sq_beat
+	sq_note	45, 0, 61, 69, 55, 0
+	sq_note	45, 0, 67, 83, 57, 0
+	sq_note	47, 0, 69, 71, 55, 0
+	sq_beat
+	sq_note	41, 0, 67, 85, 18, 0
+	sq_note	41, 0, 69, 80, 20, 0
+	sq_note	43, 0, 61, 69, 18, 0
+	sq_beat
+	sq_note	43, 0, 67, 86, 58, 0
+	sq_note	43, 0, 61, 72, 57, 0
+	sq_note	45, 0, 69, 72, 58, 0
+	sq_beat
+	sq_note	39, 0, 61, 79, 19, 0
+	sq_note	39, 0, 67, 86, 23, 0
+	sq_note	40, 0, 69, 83, 22, 0
+	sq_note	88, 0, 69, 96, 24, 0
+	sq_note	88, 0, 62, 76, 27, 0
+	sq_note	88, 0, 66, 93, 22, 0
+	sq_note	88, 0, 74, 90, 27, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	37, 0, 73, 99, 45, 0
+	sq_note	83, 0, 71, 90, 49, 0
+	sq_beat
+	sq_note	34, 0, 70, 91, 48, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x77fb, 5
 	sq_cell	0x80, 33, 65535	; cell 121: song 1 track 11, 6 of 6
 	sq_beat
 	sq_beat
@@ -7877,8 +8171,56 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 10, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x781c, 228
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	69, 14, 0, 43	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x7820, 5
+	sq_beat
+	sq_note	44, 0, 62, 72, 65, 0
+	sq_note	44, 0, 66, 82, 65, 0
+	sq_note	46, 0, 69, 74, 63, 0
+	sq_beat
+	sq_note	45, 0, 62, 68, 18, 0
+	sq_note	45, 0, 69, 76, 16, 0
+	sq_note	45, 0, 66, 84, 15, 0
+	sq_beat
+	sq_note	47, 0, 67, 81, 61, 0
+	sq_note	47, 0, 69, 72, 60, 0
+	sq_note	47, 0, 61, 63, 60, 0
+	sq_beat
+	sq_note	48, 0, 67, 83, 18, 0
+	sq_note	48, 0, 61, 72, 19, 0
+	sq_note	48, 0, 69, 78, 18, 0
+	sq_beat
+	sq_note	45, 0, 61, 69, 60, 0
+	sq_note	45, 0, 67, 85, 63, 0
+	sq_note	45, 0, 69, 79, 61, 0
+	sq_beat
+	sq_note	44, 0, 67, 87, 21, 0
+	sq_note	44, 0, 69, 80, 21, 0
+	sq_note	44, 0, 61, 62, 19, 0
+	sq_beat
+	sq_note	44, 0, 67, 78, 62, 0
+	sq_note	46, 0, 69, 71, 60, 0
+	sq_note	46, 0, 61, 70, 58, 0
+	sq_beat
+	sq_note	41, 0, 61, 75, 22, 0
+	sq_note	41, 0, 67, 88, 22, 0
+	sq_note	41, 0, 69, 81, 22, 0
+	sq_beat
+	sq_note	42, 0, 67, 98, 28, 0
+	sq_note	42, 0, 61, 78, 30, 0
+	sq_note	44, 0, 69, 90, 25, 0
+	sq_note	85, 0, 67, 96, 14, 0
+	sq_note	85, 0, 69, 89, 14, 0
+	sq_note	87, 0, 61, 62, 12, 0
+	sq_beat
+	sq_note	41, 0, 61, 85, 17, 0
+	sq_note	43, 0, 67, 99, 18, 0
+	sq_note	43, 0, 69, 95, 18, 0
+	sq_note	89, 0, 62, 89, 22, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x78fb, 5
 	sq_cell	0xff, 101, 65535	; cell 122: song 1 track 6, 4 of 4
 	sq_beat
 	sq_note	95, 0, 84, 108, 25, 0
@@ -7901,8 +8243,47 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 5, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x794a, 182
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	93, 15, 0, 34	; data bytes of an event cut at the start
+	k5_note	0x90, 66, 85, 18, 0, 47
+	k5_note	0x90, 65, 101, 18, 0, 77
+	k5_note	0x90, 66, 97, 15, 0, 78
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x7960, 5
+	sq_beat
+	sq_note	1, 0, 69, 99, 18, 0
+	sq_note	44, 0, 68, 95, 22, 0
+	sq_note	89, 0, 67, 102, 22, 0
+	sq_beat
+	sq_note	43, 0, 67, 103, 25, 0
+	sq_note	90, 0, 66, 106, 25, 0
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 62, 84, 40, 0
+	sq_note	49, 0, 57, 55, 37, 0
+	sq_note	51, 0, 54, 65, 40, 0
+	sq_note	92, 0, 57, 76, 32, 0
+	sq_note	92, 0, 64, 90, 35, 0
+	sq_note	94, 0, 55, 82, 35, 0
+	sq_beat
+	sq_note	43, 0, 65, 102, 37, 0
+	sq_note	46, 0, 56, 95, 39, 0
+	sq_note	90, 0, 60, 89, 20, 0
+	sq_note	90, 0, 66, 93, 25, 0
+	sq_note	91, 0, 57, 98, 20, 0
+	sq_note	91, 0, 62, 98, 27, 0
+	sq_beat
+	sq_note	93, 0, 74, 96, 27, 0
+	sq_note	93, 0, 69, 102, 25, 0
+	sq_note	93, 0, 72, 105, 27, 0
+	sq_note	93, 0, 62, 102, 24, 0
+	sq_note	95, 0, 66, 95, 25, 0
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 74, 70, 1, 2
+	sq_note	0, 0, 62, 59, 6, 2
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x79fd, 3
 	sq_cell	0x80, 18, 65535	; cell 123: song 1 track 8, 3 of 3
 	sq_beat
 	sq_beat
@@ -7964,8 +8345,17 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 7, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x7adf, 33
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x7adf, 5
+	sq_beat
+	sq_note	42, 0, 61, 75, 21, 0
+	sq_note	42, 0, 67, 88, 21, 0
+	sq_note	42, 0, 69, 81, 21, 0
+	sq_beat
+	sq_note	42, 0, 67, 98, 29, 0
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x7afe, 2
 	sq_cell	0x80, 113, 65535	; cell 124: song 1 track 5, 14 of 14
 	sq_cc	91, 0, 4, 1, 118
 	sq_beat
@@ -7998,8 +8388,34 @@ P_HANDY_SQT_p2:
 	sq_cc	78, 0, 4, 120, 0
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x7b7c, 132
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_note	45, 0, 61, 70, 20, 0
+	sq_beat
+	sq_note	46, 0, 67, 79, 70, 0
+	sq_note	47, 0, 61, 69, 65, 0
+	sq_note	47, 0, 69, 75, 67, 0
+	sq_beat
+	sq_note	43, 0, 67, 90, 25, 0
+	sq_note	43, 0, 61, 78, 21, 0
+	sq_note	43, 0, 69, 85, 23, 0
+	sq_note	89, 0, 67, 93, 19, 0
+	sq_note	91, 0, 69, 89, 17, 0
+	sq_note	91, 0, 61, 72, 15, 0
+	sq_beat
+	sq_note	45, 0, 61, 69, 55, 0
+	sq_note	45, 0, 67, 83, 57, 0
+	sq_note	47, 0, 69, 71, 55, 0
+	sq_beat
+	sq_note	42, 0, 67, 85, 17, 0
+	sq_note	42, 0, 69, 80, 19, 0
+	sq_note	44, 0, 61, 69, 17, 0
+	sq_beat
+	sq_note	43, 0, 67, 86, 60, 0
+	sq_note	43, 0, 61, 72, 56, 0
+	sq_note	45, 0, 69, 72, 58, 0
+	sq_beat
+	sq_note	38, 0, 61, 79, 22, 0
+	sq_note	38, 0, 67, 86, 25, 0
 	sq_cell	0x80, 117, 13	; cell 125: song 1 track 9, 25 of 26
 	.byte	0x4d, 0x52, 0x0d, 0x00	; bytes 3..6 of `sq_note	0, 0, 77, 82, 13, 0` (the event spans two cells)
 	sq_note	48, 0, 69, 72, 14, 0
@@ -8079,8 +8495,53 @@ P_HANDY_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"HANDY.sqt.p2.ref", 0x7d26, 218
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	74, 107, 59, 0, 48	; data bytes of an event cut at the start
+	k5_note	0x90, 60, 98, 77, 0, 48
+	k5_note	0x90, 66, 85, 84, 0, 48
+	k5_note	0x90, 62, 91, 82, 0, 48
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"HANDY.sqt.p2.ref", 0x7d3d, 5
+	sq_beat
+	sq_note	49, 0, 72, 101, 43, 0
+	sq_beat
+	sq_note	0, 0, 71, 90, 15, 0
+	sq_note	48, 0, 69, 93, 17, 0
+	sq_beat
+	sq_note	0, 0, 76, 102, 39, 0
+	sq_note	0, 0, 62, 95, 24, 0
+	sq_note	0, 0, 67, 87, 25, 0
+	sq_note	0, 0, 59, 83, 25, 0
+	sq_note	0, 0, 64, 93, 22, 0
+	sq_beat
+	sq_note	1, 0, 71, 99, 23, 0
+	sq_note	49, 0, 76, 110, 57, 0
+	sq_note	49, 0, 62, 87, 1, 1
+	sq_note	49, 0, 59, 75, 1, 1
+	sq_note	49, 0, 64, 86, 95, 0
+	sq_note	49, 0, 67, 78, 1, 1
+	sq_beat
+	sq_note	48, 0, 74, 98, 38, 0
+	sq_beat
+	sq_note	0, 0, 72, 84, 17, 0
+	sq_note	48, 0, 71, 89, 15, 0
+	sq_beat
+	sq_note	1, 0, 69, 99, 25, 0
+	sq_note	1, 0, 60, 92, 18, 0
+	sq_note	49, 0, 60, 86, 22, 0
+	sq_note	49, 0, 69, 85, 22, 0
+	sq_note	72, 0, 71, 82, 20, 0
+	sq_note	72, 0, 62, 86, 34, 0
+	sq_beat
+	sq_note	0, 0, 72, 93, 23, 0
+	sq_note	0, 0, 64, 93, 18, 0
+	sq_note	48, 0, 72, 84, 18, 0
+	sq_note	48, 0, 64, 87, 22, 0
+	sq_note	73, 0, 74, 82, 25, 0
+	sq_note	73, 0, 66, 87, 25, 0
+	sq_beat
+	sq_note	0, 0, 76, 92, 18, 0
+	.byte	0	; data bytes of an event cut by the end
 
 	.if	(. - P_HANDY_SQT_p2) - 32256
 	.error	"HANDY.SQT part 2: the payload is not 32256 bytes"

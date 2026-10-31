@@ -70,7 +70,7 @@ SeMenuTitleFunc:
 SeMenuTitleFunc_OnDraw:
 	jp	UpdSeSel_ProcessStep
 SeMenuTitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join3
+	jp	SeMenu_CopyWriteUpdate_Step3_Join4
 SeMenuTitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -92,15 +92,15 @@ SeEasyTitleFunc:
 	ret
 
 SeEasyTitleFunc_OnDraw:
-	jp	UpdSeSel_ExtendedOps_Data
+	jp	SeEasy_DrawPage
 SeEasyTitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join30
+	jp	SeMenu_CopyWriteUpdate_Step3_Join31
 SeEasyTitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
 	jp	SeEasyTitleFunc_DispatchSwitch
 SeEasyTitleFunc_Nop:
-	jp	SeMenu_CopyWriteUpdate_Step3_Return30
+	jp	SeMenu_CopyWriteUpdate_Step3_Return32
 
 SeTonTon1TitleFunc:
 	lda xsp, (xsp - 16)
@@ -118,7 +118,7 @@ SeTonTon1TitleFunc:
 SeTonTon1TitleFunc_OnDraw:
 	jp	SeMenu_AltUpdate
 SeTonTon1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join15
+	jp	SeMenu_CopyWriteUpdate_Step3_Join16
 SeTonTon1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -140,9 +140,9 @@ SeTonTon2TitleFunc:
 	ret
 
 SeTonTon2TitleFunc_OnDraw:
-	jp	SeMenu_AltUpdate_Data
+	jp	SeTonTon2_DrawPage
 SeTonTon2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join16
+	jp	SeMenu_CopyWriteUpdate_Step3_Join17
 SeTonTon2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -166,7 +166,7 @@ SeTonRan1TitleFunc:
 SeTonRan1TitleFunc_OnDraw:
 	jp	SeMenu_AltUpdate_Step3Plus_Join
 SeTonRan1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join17
+	jp	SeMenu_CopyWriteUpdate_Step3_Join18
 SeTonRan1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -190,7 +190,7 @@ SeTonRan2TitleFunc:
 SeTonRan2TitleFunc_OnDraw:
 	jp	SeMenu_AltUpdate_Step3Plus_Join2
 SeTonRan2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join18
+	jp	SeMenu_CopyWriteUpdate_Step3_Join19
 SeTonRan2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -214,7 +214,7 @@ SeTonHyb1TitleFunc:
 SeTonHyb1TitleFunc_OnDraw:
 	jp	SeMenu_ControllerUpdate
 SeTonHyb1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join19
+	jp	SeMenu_CopyWriteUpdate_Step3_Join20
 SeTonHyb1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -238,7 +238,7 @@ SePitPit1TitleFunc:
 SePitPit1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join
 SePitPit1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join4
+	jp	SeMenu_CopyWriteUpdate_Step3_Join5
 SePitPit1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -262,7 +262,7 @@ SePitEnv1TitleFunc:
 SePitEnv1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join2
 SePitEnv1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join5
+	jp	SeMenu_CopyWriteUpdate_Step3_Join6
 SePitEnv1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -286,7 +286,7 @@ SePitEnv2TitleFunc:
 SePitEnv2TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join3
 SePitEnv2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join6
+	jp	SeMenu_CopyWriteUpdate_Step3_Join7
 SePitEnv2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -310,7 +310,7 @@ SePitLfo1TitleFunc:
 SePitLfo1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join4
 SePitLfo1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join7
+	jp	SeMenu_CopyWriteUpdate_Step3_Join8
 SePitLfo1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -334,7 +334,7 @@ SeAmpAmp1TitleFunc:
 SeAmpAmp1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join5
 SeAmpAmp1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join8
+	jp	SeMenu_CopyWriteUpdate_Step3_Join9
 SeAmpAmp1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -358,7 +358,7 @@ SeAmpAmp2TitleFunc:
 SeAmpAmp2TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join6
 SeAmpAmp2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join9
+	jp	SeMenu_CopyWriteUpdate_Step3_Join10
 SeAmpAmp2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -382,7 +382,7 @@ SeAmpEnv1TitleFunc:
 SeAmpEnv1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join7
 SeAmpEnv1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join10
+	jp	SeMenu_CopyWriteUpdate_Step3_Join11
 SeAmpEnv1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -406,7 +406,7 @@ SeAmpEnv2TitleFunc:
 SeAmpEnv2TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join8
 SeAmpEnv2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join11
+	jp	SeMenu_CopyWriteUpdate_Step3_Join12
 SeAmpEnv2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -430,7 +430,7 @@ SeAmpLfo1TitleFunc:
 SeAmpLfo1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join9
 SeAmpLfo1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join12
+	jp	SeMenu_CopyWriteUpdate_Step3_Join13
 SeAmpLfo1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -454,7 +454,7 @@ SeFilLpq1TitleFunc:
 SeFilLpq1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join12
 SeFilLpq1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join20
+	jp	SeMenu_CopyWriteUpdate_Step3_Join21
 SeFilLpq1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -478,7 +478,7 @@ SeFilHpq1TitleFunc:
 SeFilHpq1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join13
 SeFilHpq1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join21
+	jp	SeMenu_CopyWriteUpdate_Step3_Join22
 SeFilHpq1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -502,7 +502,7 @@ SeFilL241TitleFunc:
 SeFilL241TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join14
 SeFilL241TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join22
+	jp	SeMenu_CopyWriteUpdate_Step3_Join23
 SeFilL241TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -526,7 +526,7 @@ SeFilH241TitleFunc:
 SeFilH241TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join15
 SeFilH241TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join23
+	jp	SeMenu_CopyWriteUpdate_Step3_Join24
 SeFilH241TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -550,7 +550,7 @@ SeFilBpf1TitleFunc:
 SeFilBpf1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join16
 SeFilBpf1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join24
+	jp	SeMenu_CopyWriteUpdate_Step3_Join25
 SeFilBpf1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -574,7 +574,7 @@ SeFilBcf1TitleFunc:
 SeFilBcf1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join17
 SeFilBcf1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join25
+	jp	SeMenu_CopyWriteUpdate_Step3_Join26
 SeFilBcf1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -598,7 +598,7 @@ SeFilFil2TitleFunc:
 SeFilFil2TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join18
 SeFilFil2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join26
+	jp	SeMenu_CopyWriteUpdate_Step3_Join27
 SeFilFil2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -622,7 +622,7 @@ SeFilEnv1TitleFunc:
 SeFilEnv1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join19
 SeFilEnv1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join27
+	jp	SeMenu_CopyWriteUpdate_Step3_Join28
 SeFilEnv1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -646,7 +646,7 @@ SeFilEnv2TitleFunc:
 SeFilEnv2TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join20
 SeFilEnv2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join28
+	jp	SeMenu_CopyWriteUpdate_Step3_Join29
 SeFilEnv2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -670,7 +670,7 @@ SeFilLfo1TitleFunc:
 SeFilLfo1TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join21
 SeFilLfo1TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join29
+	jp	SeMenu_CopyWriteUpdate_Step3_Join30
 SeFilLfo1TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -692,15 +692,15 @@ SeDigEffTitleFunc:
 	ret
 
 SeDigEffTitleFunc_OnDraw:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join
+	jp	SeMenu_CopyWriteUpdate_Step3_Join2
 SeDigEffTitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join31
+	jp	SeMenu_CopyWriteUpdate_Step3_Join32
 SeDigEffTitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
 	jp	SeDigEffTitleFunc_DispatchSwitch
 SeDigEffTitleFunc_Nop:
-	jp	SeMenu_CopyWriteUpdate_Step3_Return31
+	jp	SeMenu_CopyWriteUpdate_Step3_Return33
 
 SeCtr2TitleFunc:
 	lda xsp, (xsp - 16)
@@ -718,7 +718,7 @@ SeCtr2TitleFunc:
 SeCtr2TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join10
 SeCtr2TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join13
+	jp	SeMenu_CopyWriteUpdate_Step3_Join14
 SeCtr2TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -742,7 +742,7 @@ SeCtr3TitleFunc:
 SeCtr3TitleFunc_OnDraw:
 	jp	UpdSeSel_DetailedUpdate_SetDisplayState_Join11
 SeCtr3TitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join14
+	jp	SeMenu_CopyWriteUpdate_Step3_Join15
 SeCtr3TitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
@@ -764,15 +764,15 @@ SeCopyTitleFunc:
 	ret
 
 SeCopyTitleFunc_OnDraw:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join2
+	jp	SeMenu_CopyWriteUpdate_Step3_Join3
 SeCopyTitleFunc_OnHide:
-	jp	SeMenu_CopyWriteUpdate_Step3_Join32
+	jp	SeMenu_CopyWriteUpdate_Step3_Join33
 SeCopyTitleFunc_OnSwitchIn:
 	ld	wa, (xsp+4)
 	ld	bc, (xsp+6)
 	jp	SeCopyTitleFunc_DispatchSwitch
 SeCopyTitleFunc_Nop:
-	jp	SeMenu_CopyWriteUpdate_Step3_Return32
+	jp	SeMenu_CopyWriteUpdate_Step3_Return34
 
 SeWrtMemTitleFunc:
 	lda xsp, (xsp - 16)
@@ -788,7 +788,7 @@ SeWrtMemTitleFunc:
 	ret
 
 SeWrtMemTitleFunc_OnDraw:
-	jp	SeMenu_CopyWriteUpdate_Data
+	jp	SeWrtMem_DrawPage
 SeWrtMemTitleFunc_OnHide:
 	jp	SeMenu_CopyWriteUpdate_Step3_Return28
 SeWrtMemTitleFunc_OnSwitchIn:

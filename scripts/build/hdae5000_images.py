@@ -8,7 +8,9 @@ Yes. That is the whole point: an extractor that only goes one way leaves the blo
 input, so the readable form is a view rather than a source. This goes both ways, and `export`
 followed by `build` is required to be a no-op at the byte level (`verify` checks it).
 
-WHAT IS IN THERE (offsets into hdae5000/includes/code_29af2d_2fffff.bin):
+WHAT IS IN THERE (offsets into the ROM range 0x29AF2D.., which the deleted blob
+hdae5000/includes/code_29af2d_2fffff.bin held; scripts/build/retired_blobs.py reads it from the
+tracked original_ROMs/hd-ae5000_v2_06i.ic4 for `export` and `verify`, lane media-cleanup 2026-10-31):
 
     off 54881    1024 B   palette, 256 x RGBX          -> HDAE5000_Palette_Logo.txt
     off 55905   76800 B   320x240 8bpp  Logo           -> HDAE5000_Logo.png
@@ -29,7 +31,7 @@ THE ICON'S STRIDE IS LOAD-BEARING. It is 27 pixels wide in a 28-byte row. The 28
 each row is padding and is preserved separately in the sidecar, because it is not always 0
 and the ROM must come back exactly.
 
-    python3 scripts/build/hdae5000_images.py export    # blob -> png + txt (run once)
+    python3 scripts/build/hdae5000_images.py export    # reference image -> png + txt (maintenance only)
     python3 scripts/build/hdae5000_images.py build     # png + txt -> raw bins (build step)
     python3 scripts/build/hdae5000_images.py verify    # assert the round trip is byte-exact
 
@@ -49,7 +51,8 @@ import sys
 from PIL import Image
 
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
-BLOB = REPO / 'hdae5000' / 'includes' / 'code_29af2d_2fffff.bin'
+sys.path.insert(0, str(REPO / 'scripts' / 'build'))
+import retired_blobs  # noqa: E402
 ART = REPO / 'hdae5000' / 'images'
 GEN = REPO / 'hdae5000' / 'includes' / 'generated'
 
@@ -116,7 +119,7 @@ def write_palette_txt(path, data, name):
 
 
 def export():
-    blob = BLOB.read_bytes()
+    blob = retired_blobs.read('code_29af2d_2fffff')   # ROM 0x29AF2D..
     ART.mkdir(parents=True, exist_ok=True)
     pads = {}
     for name, off, ln, geom in ASSETS:
@@ -173,7 +176,7 @@ def build():
 
 
 def verify():
-    blob = BLOB.read_bytes()
+    blob = retired_blobs.read('code_29af2d_2fffff')   # ROM 0x29AF2D..
     bad = 0
     for name, off, ln, geom in ASSETS:
         want = blob[off:off + ln]

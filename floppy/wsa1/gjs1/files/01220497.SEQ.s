@@ -5,6 +5,9 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_01220497_SEQ:
@@ -42123,116 +42126,2248 @@ F_01220497_SEQ:
 	.byte	0x81, 0x81, 0x81, 0x81, 0x89, 0xa1, 0x81, 0x81, 0x89, 0x89, 0x81, 0x81, 0x89, 0x81, 0x81, 0x81
 	.byte	0x89, 0x81, 0x81, 0x81, 0x81, 0x89, 0x81, 0x81, 0x89, 0x81
 	seq_block	0xff, 26, 510	; block 561: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3ee05, 251
+; a stale copy: the same 251 bytes as block 422 (chain from block 459, 21 of 35), typed as that block is
+	.byte	0x06, 0x2b, 0x33, 0x1b, 0x01	; last 5 bytes of sq_note 0x90, 6, 43, 51, 27, 1 (split by a cell boundary)
+	sq_note	0x90, 45, 67, 84, 21, 0
+	sq_note	0x90, 46, 62, 79, 21, 0
+	sq_note	0x90, 48, 59, 72, 20, 0
+	sq_beat
+	sq_note	0x90, 4, 67, 93, 20, 1
+	sq_note	0x90, 4, 62, 127, 20, 1
+	sq_note	0x90, 4, 59, 123, 83, 0
+	sq_note	0x90, 92, 43, 89, 27, 0
+	sq_beat
+	sq_note	0x90, 44, 59, 35, 20, 0
+	sq_ev	0xb4, 89, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 2, 45, 89, 81, 6
+	sq_note	0x90, 3, 61, 96, 11, 1
+	sq_note	0x90, 4, 57, 89, 3, 1
+	sq_note	0x90, 4, 64, 111, 23, 1
+	sq_ev	0xb4, 55, 53, 4, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 57, 84, 54, 0
+	sq_note	0x90, 46, 61, 69, 24, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 77, 67, 0
+	sq_note	0x90, 44, 69, 84, 46, 0
+	sq_note	0x90, 47, 61, 84, 44, 0
+	sq_note	0x90, 47, 64, 111, 46, 0
+	sq_note	0x90, 94, 57, 79, 50, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 89, 56, 0
+	sq_note	0x90, 44, 69, 123, 82, 0
+	sq_note	0x90, 44, 64, 89, 73, 0
+	sq_beat
+	sq_note	0x90, 2, 57, 127, 43, 1
+	sq_note	0x90, 49, 61, 18, 13, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 93, 23, 0
+	sq_note	0x90, 1, 61, 84, 23, 0
+	sq_note	0x90, 2, 69, 84, 24, 0
+	sq_note	0x90, 46, 69, 102, 61, 0
+	sq_note	0x90, 47, 64, 111, 51, 0
+	sq_note	0x90, 48, 61, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 126, 42, 0
+	sq_note	0x90, 48, 59, 18, 17, 0
+	sq_ev	0xb4, 93, 53, 4, 0, 127
+	sq_note	0x90, 94, 69, 102, 77, 2
+	sq_note	0x90, 94, 67, 96, 73, 2
+	sq_note	0x90, 95, 62, 126, 44, 2
+	sq_note	0x90, 95, 59, 123, 17, 2
+	.byte	0x90, 0x5f	; first 2 bytes of sq_note 0x90, 95, 55, 127, 74, 1 (split by a cell boundary)
 	seq_block	0xdf, 29, 30	; block 562: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3ef05, 251
+; a stale copy: the same 251 bytes as block 423 (chain from block 222, 28 of 81), typed as that block is
+	.byte	0x00, 0x39, 0x4d, 0x16, 0x01	; last 5 bytes of sq_note 0x90, 0, 57, 77, 22, 1 (split by a cell boundary)
+	sq_ev	0xb4, 12, 53, 1, 0, 127
+	sq_ev	0xb4, 59, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 127, 48, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 126, 0, 1
+	sq_note	0x90, 0, 57, 108, 0, 1
+	sq_note	0x90, 0, 54, 127, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 42, 108, 48, 0
+	sq_note	0x90, 48, 57, 117, 72, 0
+	sq_note	0x90, 48, 54, 108, 48, 0
+	sq_note	0x90, 48, 61, 81, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 86, 72, 0
+	sq_note	0x90, 48, 57, 111, 72, 0
+	sq_note	0x90, 48, 54, 105, 72, 0
+	sq_note	0x90, 48, 61, 114, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 127, 48, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 127, 48, 0
+	sq_note	0x90, 0, 54, 127, 48, 0
+	sq_note	0x90, 0, 57, 127, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 127, 48, 0
+	sq_note	0x90, 48, 52, 55, 23, 0
+	sq_ev	0xb4, 85, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 56, 127, 71, 0
+	sq_note	0x90, 0, 59, 127, 71, 0
+	sq_note	0x90, 0, 52, 126, 47, 0
+	sq_note	0x90, 0, 40, 120, 47, 0
+	sq_ev	0xb4, 31, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 123, 47, 0
+	sq_note	0x90, 0, 40, 126, 23, 0
+	sq_note	0x90, 0, 52, 123, 47, 0
+	sq_note	0x90, 0, 59, 93, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 96, 48, 0
+	sq_note	0x90, 48, 52, 117, 47, 0
+	sq_note	0x90, 48, 59, 127, 71, 0
+	sq_note	0x90, 48, 56, 99, 71, 0
+	sq_note	0x90, 48, 64, 126, 71, 0
+	sq_ev	0xb4, 85, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 123, 48, 0
+	sq_ev	0xb4, 8, 53, 1, 127, 127
 	seq_block	0xbf, 644, 111	; block 563: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f005, 251
+; a stale copy: the same 251 bytes as block 424 (chain from block 222, 21 of 81), typed as that block is
+	.byte	0x7f	; last 1 bytes of sq_ev 0xb4, 91, 53, 1, 0, 127 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 1, 45, 77, 48, 0
+	sq_note	0x90, 3, 61, 89, 3, 1
+	sq_note	0x90, 4, 57, 84, 95, 0
+	sq_ev	0xb4, 37, 53, 1, 127, 127
+	sq_note	0x90, 88, 45, 72, 6, 1
+	sq_beat
+	sq_note	0x90, 93, 61, 86, 90, 0
+	sq_note	0x90, 93, 57, 117, 90, 0
+	sq_note	0x90, 94, 52, 120, 80, 0
+	sq_note	0x90, 95, 64, 89, 80, 0
+	sq_beat
+	sq_note	0x90, 92, 45, 58, 49, 0
+	sq_beat
+	sq_note	0x90, 43, 61, 69, 70, 0
+	sq_note	0x90, 44, 57, 66, 64, 0
+	sq_note	0x90, 44, 52, 66, 61, 0
+	sq_note	0x90, 91, 45, 64, 24, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 96, 91, 0
+	sq_note	0x90, 0, 57, 96, 92, 0
+	sq_note	0x90, 0, 52, 84, 86, 0
+	sq_note	0x90, 0, 64, 102, 84, 0
+	sq_note	0x90, 91, 45, 72, 47, 0
+	sq_beat
+	sq_note	0x90, 45, 61, 84, 41, 0
+	sq_note	0x90, 45, 57, 96, 41, 0
+	sq_note	0x90, 47, 52, 84, 24, 0
+	sq_note	0x90, 88, 45, 79, 59, 0
+	sq_beat
+	sq_note	0x90, 45, 55, 30, 16, 0
+	sq_ev	0xb4, 92, 53, 1, 0, 127
+	sq_note	0x90, 92, 61, 93, 10, 1
+	sq_note	0x90, 93, 57, 108, 1, 1
+	sq_note	0x90, 93, 55, 81, 1, 1
+	sq_note	0x90, 93, 43, 124, 58, 0
+	sq_beat
+	sq_ev	0xb4, 31, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 81, 9, 1
+	sq_note	0x90, 95, 55, 77, 80, 0
+	sq_beat
+	sq_note	0x90, 1, 61, 79, 79, 0
+	sq_note	0x90, 1, 57, 93, 78, 0
+	sq_note	0x90, 2, 64, 84, 73, 0
+	sq_note	0x90, 86, 43, 66, 54, 0
+	sq_beat
+	sq_note	0x90, 42, 61, 79, 58, 0
+	sq_note	0x90, 43, 55, 58, 60, 0
+	sq_note	0x90, 43, 57, 102, 58, 0
+	.byte	0x90, 0x52, 0x2b, 0x40	; first 4 bytes of sq_note 0x90, 82, 43, 64, 10, 1 (split by a cell boundary)
 	seq_block	0xf9, 441, 350	; block 564: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f105, 251
+; a stale copy: the same 251 bytes as block 425 (chain from block 489, 16 of 26), typed as that block is
+	.byte	0x37, 0x44, 0x00	; last 3 bytes of sq_note 0x90, 45, 57, 55, 68, 0 (split by a cell boundary)
+	sq_note	0x90, 45, 52, 79, 56, 0
+	sq_note	0x90, 48, 61, 55, 65, 0
+	sq_beat
+	sq_note	0x90, 48, 52, 61, 19, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 58, 23, 0
+	sq_note	0x90, 0, 57, 51, 21, 0
+	sq_note	0x90, 46, 61, 64, 41, 0
+	sq_note	0x90, 47, 57, 58, 43, 0
+	sq_beat
+	sq_note	0x90, 40, 52, 51, 18, 1
+	sq_ev	0xb4, 86, 53, 10, 0, 127
+	sq_note	0x90, 86, 55, 72, 0, 1
+	sq_note	0x90, 88, 61, 69, 11, 1
+	sq_beat
+	sq_ev	0xb4, 43, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 4, 52, 55, 44, 1
+	sq_note	0x90, 92, 55, 81, 72, 0
+	sq_note	0x90, 93, 61, 74, 92, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 8, 52, 64, 85, 0
+	sq_note	0x90, 54, 61, 74, 40, 0
+	sq_note	0x90, 54, 55, 77, 40, 0
+	sq_beat
+	sq_note	0x90, 45, 55, 72, 53, 0
+	sq_note	0x90, 46, 52, 69, 41, 0
+	sq_note	0x90, 47, 61, 66, 75, 0
+	sq_beat
+	sq_note	0x90, 40, 52, 43, 36, 1
+	sq_note	0x90, 93, 55, 64, 80, 0
+	sq_note	0x90, 93, 61, 74, 32, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 40, 54, 35, 50, 1
+	sq_ev	0xb4, 83, 53, 10, 0, 127
+	sq_note	0x90, 92, 61, 74, 32, 1
+	sq_note	0x90, 93, 57, 72, 32, 1
+	sq_beat
+	sq_ev	0xb4, 48, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 15, 54, 48, 38, 0
+	sq_note	0x90, 95, 54, 74, 91, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 72, 91, 0
+	sq_note	0x90, 0, 57, 84, 91, 0
+	sq_beat
+	sq_note	0x90, 52, 61, 72, 48, 0
+	sq_note	0x90, 52, 57, 74, 46, 0
+	sq_note	0x90, 54, 54, 66, 44, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 61, 65, 0
+	sq_note	0x90, 45, 54, 74, 52, 0
+	.byte	0x90, 0x2f, 0x39, 0x4f	; first 4 bytes of sq_note 0x90, 47, 57, 79, 56, 0 (split by a cell boundary)
 	seq_block	0xe6, 678, 387	; block 565: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f205, 251
+; a stale copy: the same 251 bytes as block 426 (chain from block 459, 25 of 35), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 53, 62, 89, 50, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 7, 55, 86, 57, 0
+	sq_ev	0xb4, 29, 53, 4, 0, 127
+	sq_note	0x90, 47, 67, 111, 74, 0
+	sq_note	0x90, 48, 62, 105, 54, 0
+	sq_note	0x90, 48, 71, 102, 78, 0
+	sq_ev	0xb4, 76, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 4, 55, 81, 56, 1
+	sq_note	0x90, 48, 62, 30, 18, 0
+	sq_beat
+	sq_note	0x90, 2, 67, 99, 23, 0
+	sq_note	0x90, 3, 72, 81, 23, 0
+	sq_note	0x90, 3, 62, 77, 23, 0
+	sq_note	0x90, 52, 71, 123, 52, 0
+	sq_note	0x90, 52, 67, 117, 44, 0
+	sq_note	0x90, 52, 62, 89, 35, 0
+	sq_beat
+	sq_note	0x90, 3, 55, 81, 34, 0
+	sq_beat
+	sq_note	0x90, 4, 61, 93, 10, 1
+	sq_note	0x90, 4, 54, 93, 67, 0
+	sq_note	0x90, 6, 69, 102, 64, 1
+	sq_note	0x90, 6, 66, 124, 50, 1
+	sq_ev	0xb4, 12, 53, 4, 0, 127
+	sq_ev	0xb4, 73, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 54, 64, 29, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 102, 75, 0
+	sq_note	0x90, 44, 73, 74, 63, 0
+	sq_note	0x90, 44, 69, 74, 57, 0
+	sq_note	0x90, 44, 66, 74, 53, 0
+	sq_beat
+	sq_note	0x90, 4, 54, 93, 50, 0
+	sq_note	0x90, 52, 78, 102, 52, 0
+	sq_note	0x90, 52, 73, 96, 56, 0
+	sq_note	0x90, 52, 69, 81, 56, 0
+	sq_note	0x90, 52, 66, 89, 52, 0
+	sq_beat
+	sq_note	0x90, 3, 54, 79, 45, 0
+	sq_note	0x90, 50, 73, 77, 57, 0
+	sq_note	0x90, 51, 69, 96, 54, 0
+	sq_note	0x90, 51, 66, 96, 50, 0
+	sq_beat
+	sq_note	0x90, 2, 54, 89, 48, 0
+	sq_note	0x90, 50, 73, 120, 55, 0
+	sq_note	0x90, 52, 69, 111, 52, 0
+	sq_note	0x90, 52, 66, 93, 49, 0
+	sq_beat
+	.byte	0x90, 0x02, 0x36, 0x5d, 0x2e	; first 5 bytes of sq_note 0x90, 2, 54, 93, 46, 0 (split by a cell boundary)
 	seq_block	0xb7, 445, 446	; block 566: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f305, 251
+; a stale copy: the same 251 bytes as block 427 (chain from block 488, 54 of 83), typed as that block is
+	.byte	0x46, 0x59, 0x2f, 0x00	; last 4 bytes of sq_note 0x90, 2, 70, 89, 47, 0 (split by a cell boundary)
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 77, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 0, 51, 125, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 89, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 48, 38, 89, 23, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 45, 117, 23, 0
+	sq_note	0x90, 48, 47, 117, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 47, 127, 23, 0
+	sq_note	0x90, 0, 45, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 72, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 48, 45, 127, 23, 0
+	sq_note	0x90, 48, 43, 127, 23, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 126, 47, 0
+	sq_note	0x90, 0, 43, 126, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_ev	0xb0, 0, 9, 3, 110, 127
+	.byte	0x90, 0x02, 0x46	; first 3 bytes of sq_note 0x90, 2, 70, 102, 47, 0 (split by a cell boundary)
 	seq_block	0x86, 679, 388	; block 567: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f405, 251
+; a stale copy: the same 251 bytes as block 428 (chain from block 246, 39 of 52), typed as that block is
+	.byte	0x3e	; last 1 bytes of sq_ev 0xd2, 69, 0, 62 (split by a cell boundary)
+	sq_ev	0xd2, 71, 0, 58
+	sq_ev	0xd2, 72, 0, 53
+	sq_ev	0xd2, 74, 0, 48
+	sq_ev	0xd2, 76, 0, 42
+	sq_ev	0xd2, 78, 0, 36
+	sq_ev	0xd2, 80, 0, 29
+	sq_ev	0xd2, 81, 0, 22
+	sq_ev	0xd2, 83, 0, 15
+	sq_ev	0xd2, 85, 0, 9
+	sq_ev	0xd2, 87, 0, 2
+	sq_ev	0xd2, 88, 0, 0
+	sq_note	0x90, 92, 81, 102, 64, 0
+	sq_beat
+	sq_ev	0xb4, 32, 53, 6, 127, 127
+	sq_ev	0xd2, 44, 0, 4
+	sq_ev	0xd2, 44, 0, 9
+	sq_ev	0xd2, 46, 0, 14
+	sq_ev	0xd2, 48, 0, 19
+	sq_ev	0xd2, 51, 0, 27
+	sq_ev	0xd2, 52, 0, 37
+	sq_ev	0xd2, 54, 0, 50
+	sq_ev	0xd2, 56, 0, 62
+	sq_ev	0xd2, 57, 0, 64
+	sq_note	0x90, 92, 81, 74, 33, 0
+	sq_beat
+	sq_ev	0xb4, 20, 53, 6, 0, 127
+	sq_ev	0xd2, 39, 0, 60
+	sq_ev	0xd2, 40, 0, 56
+	sq_ev	0xd2, 43, 0, 50
+	sq_ev	0xd2, 44, 0, 44
+	sq_ev	0xd2, 46, 0, 36
+	sq_ev	0xd2, 47, 0, 28
+	sq_note	0x90, 49, 81, 111, 55, 0
+	sq_ev	0xd2, 49, 0, 19
+	sq_ev	0xd2, 52, 0, 10
+	sq_ev	0xd2, 53, 0, 1
+	sq_ev	0xd2, 55, 0, 0
+	sq_ev	0xb4, 79, 53, 6, 127, 127
+	sq_ev	0xd2, 83, 0, 2
+	sq_ev	0xd2, 84, 0, 6
+	sq_ev	0xd2, 87, 0, 10
+	sq_ev	0xd2, 88, 0, 16
+	sq_ev	0xd2, 90, 0, 24
+	sq_ev	0xd2, 92, 0, 33
+	sq_ev	0xd2, 93, 0, 46
+	sq_beat
+	sq_ev	0xd2, 0, 0, 60
+	sq_ev	0xd2, 1, 0, 64
+	sq_note	0x90, 45, 81, 79, 32, 0
+	sq_ev	0xb4, 78, 53, 6, 0, 127
+	sq_ev	0xd2, 85, 0, 58
+	sq_ev	0xd2, 88, 0, 52
+	sq_ev	0xd2, 89, 0, 46
+	sq_ev	0xd2, 91, 0, 39
+	sq_ev	0xd2, 92, 0, 31
+	sq_note	0x90, 93, 81, 89, 54, 0
+	sq_ev	0xd2, 95, 0, 23
+	sq_beat
+	sq_ev	0xd2, 1, 0, 15
+	sq_ev	0xd2, 3, 0, 8
+	sq_ev	0xd2, 4, 0, 1
 	seq_block	0xff, 680, 493	; block 568: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f505, 251
+; a stale copy: the same 251 bytes as block 429 (chain from block 459, 28 of 35), typed as that block is
+	sq_note	0x90, 50, 69, 96, 23, 0
+	sq_note	0x90, 51, 81, 111, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 126, 26, 0
+	sq_note	0x90, 2, 81, 127, 27, 0
+	sq_note	0x90, 48, 69, 111, 53, 0
+	sq_note	0x90, 48, 81, 108, 65, 0
+	sq_beat
+	sq_note	0x90, 2, 55, 127, 62, 1
+	sq_note	0x90, 40, 69, 51, 18, 0
+	sq_note	0x90, 93, 69, 93, 20, 0
+	sq_note	0x90, 94, 81, 120, 20, 0
+	sq_beat
+	sq_note	0x90, 48, 69, 93, 43, 0
+	sq_note	0x90, 48, 81, 127, 47, 0
+	sq_note	0x90, 86, 55, 124, 57, 0
+	sq_beat
+	sq_note	0x90, 44, 69, 111, 67, 0
+	sq_note	0x90, 44, 81, 126, 74, 0
+	sq_ev	0xb4, 88, 53, 4, 0, 127
+	sq_note	0x90, 95, 54, 127, 54, 1
+	sq_beat
+	sq_ev	0xb4, 38, 53, 4, 127, 127
+	sq_note	0x90, 46, 69, 64, 20, 0
+	sq_beat
+	sq_note	0x90, 4, 69, 64, 20, 0
+	sq_note	0x90, 5, 81, 84, 18, 0
+	sq_note	0x90, 48, 69, 74, 57, 0
+	sq_note	0x90, 50, 81, 102, 59, 0
+	sq_beat
+	sq_note	0x90, 1, 54, 117, 61, 1
+	sq_note	0x90, 48, 69, 22, 12, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 89, 21, 0
+	sq_note	0x90, 0, 81, 89, 21, 0
+	sq_note	0x90, 46, 69, 124, 52, 0
+	sq_note	0x90, 47, 81, 124, 52, 0
+	sq_beat
+	sq_note	0x90, 3, 54, 89, 48, 0
+	sq_note	0x90, 46, 69, 126, 52, 0
+	sq_note	0x90, 46, 81, 124, 66, 0
+	sq_note	0x90, 93, 54, 89, 55, 1
+	sq_beat
+	sq_note	0x90, 42, 69, 26, 16, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 96, 22, 0
+	sq_note	0x90, 0, 81, 111, 22, 0
+	sq_note	0x90, 48, 69, 96, 41, 0
+	sq_note	0x90, 48, 81, 108, 93, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 99, 54, 0
+	.byte	0x90, 0x28, 0x45, 0x33, 0x0d	; first 5 bytes of sq_note 0x90, 40, 69, 51, 13, 0 (split by a cell boundary)
 	seq_block	0xec, 602, 391	; block 569: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f605, 251
+; a stale copy: the same 251 bytes as block 430 (chain from block 246, 44 of 52), typed as that block is
+	.byte	0x54	; last 1 bytes of sq_ev 0xd2, 56, 0, 84 (split by a cell boundary)
+	sq_ev	0xd2, 59, 0, 90
+	sq_ev	0xd2, 60, 0, 96
+	sq_ev	0xd2, 62, 0, 100
+	sq_ev	0xd2, 64, 0, 103
+	sq_ev	0xd2, 65, 0, 105
+	sq_ev	0xd2, 72, 0, 103
+	sq_ev	0xd2, 74, 0, 101
+	sq_ev	0xd2, 76, 0, 98
+	sq_ev	0xd2, 78, 0, 96
+	sq_ev	0xd2, 80, 0, 92
+	sq_ev	0xd2, 82, 0, 88
+	sq_ev	0xd2, 84, 0, 85
+	sq_ev	0xd2, 86, 0, 82
+	sq_ev	0xd2, 88, 0, 78
+	sq_ev	0xd2, 89, 0, 75
+	sq_ev	0xd2, 91, 0, 73
+	sq_ev	0xd2, 92, 0, 70
+	sq_ev	0xd2, 95, 0, 68
+	sq_beat
+	sq_ev	0xd2, 0, 0, 64
+	sq_note	0x90, 52, 86, 86, 16, 0
+	sq_beat
+	sq_note	0x90, 3, 91, 127, 82, 0
+	sq_ev	0xd2, 19, 0, 65
+	sq_ev	0xd2, 20, 0, 69
+	sq_ev	0xd2, 22, 0, 74
+	sq_ev	0xd2, 24, 0, 79
+	sq_ev	0xd2, 27, 0, 85
+	sq_ev	0xd2, 28, 0, 92
+	sq_ev	0xd2, 30, 0, 99
+	sq_ev	0xd2, 32, 0, 105
+	sq_ev	0xd2, 33, 0, 111
+	sq_ev	0xd2, 36, 0, 117
+	sq_ev	0xd2, 37, 0, 121
+	sq_ev	0xd2, 39, 0, 126
+	sq_ev	0xd2, 40, 0, 127
+	sq_ev	0xd2, 57, 0, 123
+	sq_ev	0xd2, 59, 0, 96
+	sq_ev	0xd2, 61, 0, 64
+	sq_beat
+	sq_note	0x90, 6, 88, 84, 29, 0
+	sq_note	0x90, 50, 91, 127, 80, 0
+	sq_ev	0xd2, 68, 0, 65
+	sq_ev	0xd2, 69, 0, 68
+	sq_ev	0xd2, 72, 0, 71
+	sq_ev	0xd2, 73, 0, 75
+	sq_ev	0xd2, 75, 0, 80
+	sq_ev	0xd2, 76, 0, 86
+	sq_ev	0xd2, 79, 0, 93
+	sq_ev	0xd2, 80, 0, 100
+	sq_ev	0xd2, 82, 0, 107
+	sq_ev	0xd2, 84, 0, 114
+	sq_ev	0xd2, 85, 0, 120
+	sq_ev	0xd2, 88, 0, 126
+	sq_ev	0xd2, 89, 0, 127
+	sq_beat
+	sq_ev	0xd2, 0, 0, 126
+	sq_ev	0xd2, 2, 0, 119
+	sq_ev	0xd2, 4, 0, 108
+	sq_ev	0xd2, 6, 0, 88
+	sq_ev	0xd2, 8, 0, 69
+	sq_ev	0xd2, 10, 0, 64
+	sq_note	0x90, 48, 88, 77, 26, 0
 	seq_block	0xff, 448, 573	; block 570: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f705, 251
+; a stale copy: the same 251 bytes as block 431 (chain from block 222, 60 of 81), typed as that block is
+	.byte	0x39, 0x4d, 0x30, 0x00	; last 4 bytes of sq_note 0x90, 0, 57, 77, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 0, 52, 93, 48, 0
+	sq_note	0x90, 0, 61, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 52, 102, 48, 0
+	sq_note	0x90, 48, 57, 93, 48, 0
+	sq_note	0x90, 48, 61, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 52, 55, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 96, 22, 1
+	sq_note	0x90, 0, 52, 72, 22, 1
+	sq_note	0x90, 0, 55, 81, 22, 1
+	sq_ev	0xb4, 1, 53, 1, 0, 127
+	sq_ev	0xb4, 55, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 55, 99, 72, 0
+	sq_note	0x90, 0, 61, 96, 72, 0
+	sq_note	0x90, 0, 52, 96, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 55, 93, 48, 0
+	sq_note	0x90, 48, 52, 74, 72, 0
+	sq_note	0x90, 48, 61, 120, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 102, 48, 0
+	sq_note	0x90, 0, 55, 124, 48, 0
+	sq_note	0x90, 0, 52, 84, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 61, 111, 48, 0
+	sq_note	0x90, 48, 55, 124, 48, 0
+	sq_note	0x90, 48, 52, 84, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 111, 46, 1
+	sq_note	0x90, 0, 57, 126, 22, 1
+	sq_note	0x90, 0, 54, 84, 22, 1
+	sq_ev	0xb4, 13, 53, 1, 0, 127
+	sq_ev	0xb4, 82, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 93, 72, 0
+	sq_note	0x90, 0, 57, 84, 72, 0
+	sq_note	0x90, 0, 54, 89, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 61, 86, 48, 0
+	sq_note	0x90, 48, 54, 77, 48, 0
+	sq_note	0x90, 48, 57, 108, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 77, 48, 0
+	sq_note	0x90, 0, 57, 102, 48, 0
+	sq_note	0x90, 0, 54, 114, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 57, 102, 48, 0
+	.byte	0x90, 0x30	; first 2 bytes of sq_note 0x90, 48, 61, 102, 48, 0 (split by a cell boundary)
 	seq_block	0xfe, 603, 531	; block 571: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f805, 251
+; a stale copy: the same 251 bytes as block 432 (chain from block 493, 28 of 35), typed as that block is
+	.byte	0x22, 0x00	; last 2 bytes of sq_note 0x90, 88, 81, 124, 34, 0 (split by a cell boundary)
+	sq_ev	0xb4, 89, 53, 14, 0, 127
+	sq_beat
+	sq_ev	0xb4, 24, 53, 14, 127, 127
+	sq_note	0x90, 40, 84, 102, 41, 0
+	sq_ev	0xb4, 50, 53, 14, 0, 127
+	sq_note	0x90, 88, 81, 89, 22, 1
+	sq_ev	0xb4, 95, 53, 14, 127, 127
+	sq_beat
+	sq_ev	0xb4, 40, 53, 14, 0, 127
+	sq_ev	0xb4, 83, 53, 14, 127, 127
+	sq_beat
+	sq_note	0x90, 44, 81, 74, 37, 0
+	sq_ev	0xb4, 62, 53, 14, 0, 127
+	sq_note	0x90, 92, 84, 93, 33, 0
+	sq_beat
+	sq_ev	0xb4, 3, 53, 14, 127, 127
+	sq_note	0x90, 44, 86, 120, 34, 0
+	sq_ev	0xb4, 68, 53, 14, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 86, 96, 77, 0
+	sq_ev	0xd2, 21, 0, 65
+	sq_ev	0xd2, 24, 0, 70
+	sq_ev	0xd2, 25, 0, 76
+	sq_ev	0xd2, 27, 0, 83
+	sq_ev	0xd2, 28, 0, 90
+	sq_ev	0xd2, 30, 0, 98
+	sq_ev	0xd2, 32, 0, 105
+	sq_ev	0xd2, 34, 0, 113
+	sq_ev	0xd2, 36, 0, 120
+	sq_ev	0xd2, 37, 0, 125
+	sq_ev	0xd2, 40, 0, 127
+	sq_ev	0xd2, 47, 0, 122
+	sq_ev	0xd2, 48, 0, 117
+	sq_ev	0xd2, 51, 0, 110
+	sq_ev	0xd2, 52, 0, 99
+	sq_ev	0xd2, 54, 0, 74
+	sq_ev	0xd2, 56, 0, 64
+	sq_note	0x90, 86, 84, 89, 49, 0
+	sq_beat
+	sq_note	0x90, 40, 81, 96, 63, 0
+	sq_ev	0xb4, 69, 53, 14, 127, 127
+	sq_beat
+	sq_note	0x90, 44, 81, 111, 36, 0
+	sq_ev	0xb4, 51, 53, 14, 0, 127
+	sq_note	0x90, 92, 84, 124, 35, 0
+	sq_beat
+	sq_ev	0xb4, 20, 53, 14, 127, 127
+	sq_note	0x90, 42, 86, 84, 25, 0
+	sq_ev	0xb4, 64, 53, 14, 0, 127
+	sq_ev	0xd2, 87, 0, 63
+	sq_ev	0xd2, 89, 0, 59
+	sq_ev	0xd2, 91, 0, 55
+	sq_ev	0xd2, 92, 0, 50
+	sq_ev	0xd2, 94, 0, 45
+	sq_beat
+	sq_ev	0xd2, 0, 0, 40
+	sq_ev	0xd2, 2, 0, 34
 	seq_block	0xff, 450, 496	; block 572: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3f905, 251
+; a stale copy: the same 251 bytes as block 433 (chain from block 489, 21 of 26), typed as that block is
+	.byte	0x5f, 0x3d, 0x4f, 0x14, 0x01	; last 5 bytes of sq_note 0x90, 95, 61, 79, 20, 1 (split by a cell boundary)
+	sq_beat
+	sq_ev	0xb4, 38, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 2, 54, 39, 28, 0
+	sq_note	0x90, 93, 54, 72, 89, 0
+	sq_note	0x90, 93, 61, 84, 94, 0
+	sq_note	0x90, 94, 57, 72, 94, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 52, 61, 74, 46, 0
+	sq_note	0x90, 53, 57, 89, 44, 0
+	sq_note	0x90, 53, 54, 72, 40, 0
+	sq_beat
+	sq_note	0x90, 51, 61, 74, 76, 0
+	sq_note	0x90, 51, 57, 69, 68, 0
+	sq_note	0x90, 52, 54, 64, 56, 0
+	sq_beat
+	sq_note	0x90, 52, 54, 35, 26, 0
+	sq_beat
+	sq_note	0x90, 6, 57, 79, 41, 0
+	sq_note	0x90, 6, 61, 79, 41, 0
+	sq_note	0x90, 7, 54, 66, 37, 0
+	sq_beat
+	sq_note	0x90, 1, 57, 72, 32, 0
+	sq_note	0x90, 2, 54, 66, 25, 0
+	sq_note	0x90, 4, 61, 64, 24, 0
+	sq_ev	0xb4, 93, 53, 10, 0, 127
+	sq_note	0x90, 95, 57, 84, 92, 0
+	sq_beat
+	sq_note	0x90, 0, 53, 72, 55, 0
+	sq_note	0x90, 2, 60, 89, 95, 0
+	sq_ev	0xb4, 47, 53, 10, 127, 127
+	sq_note	0x90, 95, 53, 35, 27, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 53, 72, 37, 0
+	sq_note	0x90, 0, 60, 84, 8, 1
+	sq_note	0x90, 0, 57, 89, 4, 1
+	sq_note	0x90, 93, 53, 58, 24, 0
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 0, 53, 10, 0, 127
+	sq_note	0x90, 0, 59, 74, 93, 0
+	sq_note	0x90, 1, 55, 84, 88, 0
+	sq_note	0x90, 1, 50, 84, 47, 0
+	sq_ev	0xb4, 41, 53, 10, 127, 127
+	sq_note	0x90, 88, 50, 48, 29, 0
+	sq_beat
+	sq_note	0x90, 92, 59, 69, 24, 1
+	sq_note	0x90, 92, 55, 77, 24, 1
+	sq_note	0x90, 93, 50, 66, 38, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 50, 58, 21, 0
+	.byte	0x90, 0x5c	; first 2 bytes of sq_note 0x90, 92, 53, 61, 77, 0 (split by a cell boundary)
 	seq_block	0xdb, 570, 605	; block 573: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3fa05, 251
+; a stale copy: the same 251 bytes as block 434 (chain from block 222, 61 of 81), typed as that block is
+	.byte	0x3d, 0x66, 0x30, 0x00	; last 4 bytes of sq_note 0x90, 48, 61, 102, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 54, 105, 48, 0
+	sq_beat
+	sq_ev	0xb4, 91, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 60, 96, 95, 0
+	sq_note	0x90, 0, 53, 120, 71, 0
+	sq_note	0x90, 0, 57, 105, 95, 0
+	sq_ev	0xb4, 45, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 53, 35, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 60, 93, 72, 0
+	sq_note	0x90, 0, 53, 84, 48, 0
+	sq_note	0x90, 0, 57, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 53, 48, 23, 0
+	sq_ev	0xb4, 93, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 55, 84, 22, 1
+	sq_note	0x90, 0, 59, 96, 22, 1
+	sq_note	0x90, 0, 50, 79, 71, 0
+	sq_ev	0xb4, 47, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 50, 55, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 111, 22, 1
+	sq_note	0x90, 0, 55, 111, 22, 1
+	sq_note	0x90, 0, 50, 51, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 50, 55, 23, 0
+	sq_ev	0xb4, 92, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 60, 89, 71, 0
+	sq_note	0x90, 0, 57, 84, 71, 0
+	sq_note	0x90, 0, 53, 96, 71, 0
+	sq_ev	0xb4, 52, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 53, 35, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 58, 72, 0
+	sq_note	0x90, 0, 53, 81, 48, 0
+	sq_note	0x90, 0, 60, 86, 72, 0
+	sq_note	0x90, 0, 57, 99, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 53, 30, 23, 0
+	sq_ev	0xb4, 94, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 55, 102, 0, 1
+	sq_note	0x90, 0, 50, 89, 72, 0
+	sq_note	0x90, 0, 59, 77, 0, 1
+	sq_ev	0xb4, 52, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 50, 35, 48, 0
+	sq_beat
+	.byte	0x90, 0x00, 0x3b	; first 3 bytes of sq_note 0x90, 0, 59, 117, 0, 1 (split by a cell boundary)
 	seq_block	0xe4, 353, 82	; block 574: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3fb05, 251
+; a stale copy: the same 251 bytes as block 435 (chain from block 488, 61 of 83), typed as that block is
+	.byte	0x00, 0x33, 0x7f, 0x17, 0x00	; last 5 bytes of sq_note 0x90, 0, 51, 127, 23, 0 (split by a cell boundary)
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 89, 23, 0
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 55, 127, 23, 0
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 58, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 114, 23, 0
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 79, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 69, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 0, 51, 125, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	.byte	0x90, 0x02	; first 2 bytes of sq_note 0x90, 2, 70, 102, 47, 0 (split by a cell boundary)
 	seq_block	0xdc, 682, 27	; block 575: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3fc05, 251
+; a stale copy: the same 251 bytes as block 436 (chain from block 459, 33 of 35), typed as that block is
+	.byte	0x54, 0x7c, 0x18, 0x00	; last 4 bytes of sq_note 0x90, 7, 84, 124, 24, 0 (split by a cell boundary)
+	sq_note	0x90, 52, 81, 64, 25, 0
+	sq_beat
+	sq_note	0x90, 2, 86, 84, 59, 0
+	sq_note	0x90, 45, 84, 96, 45, 1
+	sq_note	0x90, 95, 57, 127, 85, 6
+	sq_beat
+	sq_ev	0xb4, 1, 53, 4, 0, 127
+	sq_ev	0xb4, 48, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 3, 81, 108, 47, 0
+	sq_beat
+	sq_note	0x90, 52, 81, 79, 28, 0
+	sq_beat
+	sq_note	0x90, 2, 87, 127, 22, 0
+	sq_note	0x90, 4, 81, 124, 26, 0
+	sq_note	0x90, 50, 88, 93, 24, 0
+	sq_note	0x90, 50, 81, 72, 28, 0
+	sq_beat
+	sq_note	0x90, 1, 91, 127, 28, 0
+	sq_note	0x90, 4, 81, 84, 24, 0
+	sq_note	0x90, 49, 81, 61, 21, 0
+	sq_note	0x90, 92, 93, 111, 28, 0
+	sq_note	0x90, 93, 81, 102, 43, 0
+	sq_beat
+	sq_note	0x90, 47, 81, 39, 26, 0
+	sq_note	0x90, 48, 91, 127, 25, 0
+	sq_beat
+	sq_note	0x90, 2, 81, 79, 28, 0
+	sq_note	0x90, 4, 88, 127, 30, 0
+	sq_note	0x90, 48, 87, 108, 21, 0
+	sq_note	0x90, 50, 81, 55, 16, 0
+	sq_beat
+	sq_note	0x90, 0, 81, 89, 52, 0
+	sq_note	0x90, 1, 86, 124, 32, 0
+	sq_note	0x90, 48, 84, 102, 46, 0
+	sq_ev	0xb4, 94, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 2, 57, 102, 34, 1
+	sq_note	0x90, 2, 81, 127, 42, 1
+	sq_ev	0xb4, 59, 53, 4, 127, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 4, 53, 4, 0, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 10, 53, 4, 0, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	seq_block	0x80, 599, 684	; block 576: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3fd05, 251
+; a stale copy: the same 251 bytes as block 437 (chain from block 485, 43 of 61), typed as that block is
+	.byte	0x7f	; last 1 bytes of sq_ev 0xb4, 71, 53, 2, 0, 127 (split by a cell boundary)
+	sq_note	0x90, 88, 55, 51, 17, 1
+	sq_note	0x90, 91, 61, 64, 17, 1
+	sq_note	0x90, 93, 43, 58, 38, 0
+	sq_beat
+	sq_ev	0xb4, 48, 53, 2, 127, 127
+	sq_note	0x90, 88, 43, 43, 19, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 55, 51, 87, 0
+	sq_note	0x90, 3, 61, 58, 90, 0
+	sq_note	0x90, 4, 52, 51, 88, 0
+	sq_beat
+	sq_note	0x90, 3, 43, 48, 50, 0
+	sq_note	0x90, 48, 61, 72, 82, 0
+	sq_note	0x90, 48, 55, 66, 82, 0
+	sq_note	0x90, 49, 52, 61, 80, 0
+	sq_beat
+	sq_note	0x90, 38, 43, 39, 52, 0
+	sq_note	0x90, 90, 55, 66, 90, 0
+	sq_note	0x90, 91, 52, 61, 89, 0
+	sq_note	0x90, 91, 61, 72, 89, 0
+	sq_beat
+	sq_note	0x90, 93, 43, 51, 40, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 69, 81, 0
+	sq_note	0x90, 44, 55, 66, 45, 0
+	sq_note	0x90, 46, 52, 55, 37, 0
+	sq_note	0x90, 91, 43, 48, 28, 0
+	sq_beat
+	sq_note	0x90, 43, 54, 51, 66, 1
+	sq_ev	0xb4, 68, 53, 2, 0, 127
+	sq_note	0x90, 89, 57, 43, 21, 1
+	sq_note	0x90, 90, 61, 66, 25, 1
+	sq_note	0x90, 93, 42, 64, 40, 0
+	sq_beat
+	sq_ev	0xb4, 44, 53, 2, 127, 127
+	sq_note	0x90, 91, 42, 58, 13, 1
+	sq_beat
+	sq_note	0x90, 88, 57, 72, 94, 0
+	sq_note	0x90, 89, 61, 69, 2, 1
+	sq_note	0x90, 90, 54, 55, 92, 0
+	sq_beat
+	sq_note	0x90, 86, 42, 51, 64, 0
+	sq_beat
+	sq_note	0x90, 43, 61, 66, 90, 0
+	sq_note	0x90, 43, 57, 72, 87, 0
+	sq_note	0x90, 44, 54, 58, 87, 0
+	sq_beat
+	sq_note	0x90, 37, 42, 35, 50, 0
+	sq_note	0x90, 92, 54, 55, 89, 0
+	sq_note	0x90, 93, 61, 64, 91, 0
+	sq_note	0x90, 95, 57, 79, 88, 0
+	sq_beat
+	sq_beat
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 2, 42, 55, 32, 0 (split by a cell boundary)
 	seq_block	0x80, 683, 686	; block 577: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3fe05, 251
+; a stale copy: the same 251 bytes as block 438 (chain from block 486, 45 of 48), typed as that block is
+	.byte	0x37, 0x00, 0x40	; last 3 bytes of sq_ev 0xd2, 55, 0, 64 (split by a cell boundary)
+	sq_ev	0xd2, 59, 0, 61
+	sq_ev	0xd2, 61, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 64, 93, 23, 0
+	sq_note	0x90, 50, 66, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 72, 0
+	sq_beat
+	sq_note	0x90, 2, 71, 93, 48, 0
+	sq_note	0x90, 50, 69, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 71, 93, 90, 0
+	sq_ev	0xd2, 18, 0, 74
+	sq_ev	0xd2, 20, 0, 81
+	sq_ev	0xd2, 23, 0, 87
+	sq_ev	0xd2, 25, 0, 93
+	sq_ev	0xd2, 28, 0, 98
+	sq_ev	0xd2, 30, 0, 104
+	sq_ev	0xd2, 32, 0, 111
+	sq_ev	0xd2, 35, 0, 118
+	sq_ev	0xd2, 37, 0, 126
+	sq_ev	0xd2, 40, 0, 127
+	sq_ev	0xd2, 56, 0, 104
+	sq_ev	0xd2, 59, 0, 64
+	sq_ev	0xd2, 64, 0, 65
+	sq_ev	0xd2, 67, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 23, 0
+	sq_note	0x90, 50, 66, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 0, 1
+	sq_beat
+	sq_note	0x90, 2, 66, 93, 23, 0
+	sq_note	0x90, 50, 57, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 61, 93, 91, 0
+	sq_ev	0xd2, 6, 0, 48
+	sq_ev	0xd2, 8, 0, 39
+	sq_ev	0xd2, 11, 0, 30
+	sq_ev	0xd2, 13, 0, 22
+	sq_ev	0xd2, 16, 0, 15
+	sq_ev	0xd2, 18, 0, 9
+	sq_ev	0xd2, 21, 0, 5
+	sq_ev	0xd2, 24, 0, 0
+	sq_ev	0xd2, 55, 0, 21
+	sq_ev	0xd2, 57, 0, 64
+	sq_ev	0xd2, 60, 0, 73
+	sq_ev	0xd2, 62, 0, 64
+	sq_ev	0xd2, 64, 0, 58
+	sq_ev	0xd2, 67, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 64, 93, 23, 0
+	sq_note	0x90, 50, 66, 93, 23, 0
+	sq_note	0x90, 50, 64, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 72, 0
+	sq_beat
+	sq_note	0x90, 2, 71, 93, 48, 0
+	sq_note	0x90, 50, 69, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 71, 93, 18, 1
+	.byte	0xd2, 0x18	; first 2 bytes of sq_ev 0xd2, 24, 0, 83 (split by a cell boundary)
 	seq_block	0xff, 511, 600	; block 578: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x3ff05, 251
+; a stale copy: the same 251 bytes as block 439 (chain from block 490, 7 of 15), typed as that block is
+	.byte	0x50, 0x00	; last 2 bytes of sq_note 0x90, 42, 57, 74, 80, 0 (split by a cell boundary)
+	sq_note	0x90, 44, 54, 64, 73, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 61, 89, 72, 0
+	sq_note	0x90, 3, 57, 74, 80, 0
+	sq_note	0x90, 4, 54, 79, 75, 0
+	sq_beat
+	sq_ev	0xb4, 80, 53, 11, 0, 127
+	sq_note	0x90, 88, 53, 102, 75, 0
+	sq_note	0x90, 88, 60, 72, 12, 1
+	sq_note	0x90, 89, 57, 89, 5, 1
+	sq_beat
+	sq_ev	0xb4, 37, 53, 11, 127, 127
+	sq_note	0x90, 91, 53, 66, 27, 0
+	sq_beat
+	sq_note	0x90, 91, 60, 89, 11, 1
+	sq_note	0x90, 92, 57, 79, 1, 1
+	sq_note	0x90, 92, 53, 72, 39, 0
+	sq_beat
+	sq_note	0x90, 93, 53, 58, 19, 0
+	sq_beat
+	sq_ev	0xb4, 94, 53, 11, 0, 127
+	sq_beat
+	sq_note	0x90, 2, 59, 84, 92, 0
+	sq_note	0x90, 2, 55, 86, 91, 0
+	sq_note	0x90, 3, 50, 89, 63, 0
+	sq_ev	0xb4, 52, 53, 11, 127, 127
+	sq_beat
+	sq_note	0x90, 4, 50, 48, 31, 0
+	sq_beat
+	sq_note	0x90, 4, 55, 77, 6, 1
+	sq_note	0x90, 4, 59, 86, 0, 1
+	sq_note	0x90, 4, 50, 84, 44, 0
+	sq_beat
+	sq_note	0x90, 2, 50, 55, 22, 0
+	sq_ev	0xb4, 84, 53, 11, 0, 127
+	sq_note	0x90, 88, 52, 66, 70, 0
+	sq_note	0x90, 89, 61, 77, 28, 1
+	sq_note	0x90, 90, 57, 77, 27, 1
+	sq_beat
+	sq_ev	0xb4, 42, 53, 11, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 52, 35, 25, 0
+	sq_note	0x90, 94, 57, 79, 86, 0
+	sq_note	0x90, 95, 61, 74, 86, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 74, 80, 0
+	sq_beat
+	sq_note	0x90, 41, 61, 64, 58, 0
+	sq_note	0x90, 42, 52, 61, 55, 0
+	sq_note	0x90, 42, 57, 66, 59, 0
+	sq_beat
+	sq_note	0x90, 49, 57, 69, 89, 0
+	sq_note	0x90, 50, 52, 79, 84, 0
+	.byte	0x90, 0x32, 0x3d, 0x45, 0x59	; first 5 bytes of sq_note 0x90, 50, 61, 69, 89, 0 (split by a cell boundary)
 	seq_block	0x80, 23, 412	; block 579: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40005, 251
+; a stale copy: the same 251 bytes as block 440 (chain from block 222, 78 of 81), typed as that block is
+	.byte	0x01, 0x08, 0x0f, 0x7f	; last 4 bytes of sq_ev 0xb0, 57, 1, 8, 15, 127 (split by a cell boundary)
+	sq_note	0x90, 87, 43, 55, 36, 0
+	sq_beat
+	sq_ev	0xb0, 28, 1, 8, 14, 127
+	sq_note	0x90, 46, 55, 58, 48, 0
+	sq_note	0x90, 47, 61, 74, 92, 0
+	sq_note	0x90, 47, 52, 55, 47, 0
+	sq_note	0x90, 93, 43, 43, 30, 0
+	sq_ev	0xb0, 95, 1, 8, 13, 127
+	sq_beat
+	sq_note	0x90, 50, 52, 14, 11, 0
+	sq_ev	0xb0, 65, 1, 8, 12, 127
+	sq_ev	0xb4, 90, 53, 1, 0, 127
+	sq_note	0x90, 93, 42, 58, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 57, 39, 15, 1
+	sq_note	0x90, 2, 54, 51, 7, 1
+	sq_note	0x90, 2, 61, 58, 15, 1
+	sq_ev	0xb0, 36, 1, 8, 11, 127
+	sq_ev	0xb4, 40, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 64, 5, 1
+	sq_ev	0xb0, 6, 1, 8, 10, 127
+	sq_ev	0xb0, 72, 1, 8, 9, 127
+	sq_beat
+	sq_note	0x90, 0, 57, 66, 91, 0
+	sq_note	0x90, 1, 54, 58, 87, 0
+	sq_note	0x90, 2, 61, 69, 87, 0
+	sq_ev	0xb0, 43, 1, 8, 8, 127
+	sq_note	0x90, 92, 42, 51, 49, 0
+	sq_beat
+	sq_ev	0xb0, 13, 1, 8, 7, 127
+	sq_note	0x90, 45, 57, 74, 89, 0
+	sq_note	0x90, 46, 54, 58, 83, 0
+	sq_note	0x90, 48, 61, 69, 82, 0
+	sq_ev	0xb0, 80, 1, 8, 6, 127
+	sq_beat
+	sq_note	0x90, 38, 42, 61, 46, 0
+	sq_ev	0xb0, 51, 1, 8, 5, 127
+	sq_note	0x90, 88, 57, 64, 95, 0
+	sq_note	0x90, 88, 54, 58, 91, 0
+	sq_note	0x90, 88, 61, 74, 91, 0
+	sq_beat
+	sq_ev	0xb0, 21, 1, 8, 4, 127
+	sq_ev	0xb0, 88, 1, 8, 3, 127
+	sq_note	0x90, 95, 42, 51, 34, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 64, 73, 0
+	sq_note	0x90, 44, 54, 61, 45, 0
+	.byte	0x90, 0x2d, 0x3d, 0x54	; first 4 bytes of sq_note 0x90, 45, 61, 84, 77, 0 (split by a cell boundary)
 	seq_block	0x80, 305, 373	; block 580: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40105, 251
+; a stale copy: the same 251 bytes as block 441 (chain from block 246, 10 of 52), typed as that block is
+	.byte	0x00, 0x7f	; last 2 bytes of sq_ev 0xb4, 83, 53, 6, 0, 127 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 64, 96, 0, 1
+	sq_note	0x90, 0, 61, 72, 0, 1
+	sq_note	0x90, 0, 57, 74, 0, 1
+	sq_note	0x90, 0, 45, 108, 48, 0
+	sq_ev	0xb4, 36, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 117, 47, 1
+	sq_beat
+	sq_note	0x90, 0, 64, 79, 95, 0
+	sq_note	0x90, 0, 61, 102, 95, 0
+	sq_note	0x90, 0, 57, 102, 95, 0
+	sq_note	0x90, 0, 69, 77, 47, 1
+	sq_ev	0xb4, 0, 53, 6, 0, 127
+	sq_ev	0xb4, 38, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 66, 48, 0
+	sq_note	0x90, 48, 64, 72, 70, 1
+	sq_note	0x90, 48, 61, 74, 46, 1
+	sq_note	0x90, 48, 57, 69, 22, 1
+	sq_ev	0xb4, 59, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 93, 47, 0
+	sq_ev	0xb4, 5, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 127, 71, 1
+	sq_note	0x90, 0, 57, 74, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 95, 0
+	sq_note	0x90, 0, 57, 89, 95, 0
+	sq_note	0x90, 0, 69, 84, 47, 1
+	sq_note	0x90, 0, 64, 69, 95, 0
+	sq_ev	0xb4, 14, 53, 6, 0, 127
+	sq_ev	0xb4, 48, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 102, 48, 0
+	sq_note	0x90, 48, 64, 79, 71, 1
+	sq_note	0x90, 48, 61, 64, 71, 1
+	sq_note	0x90, 48, 57, 84, 71, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 111, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 111, 47, 1
+	sq_ev	0xb4, 72, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 64, 79, 23, 1
+	sq_note	0x90, 0, 61, 89, 95, 0
+	sq_note	0x90, 0, 57, 86, 95, 0
+	sq_note	0x90, 0, 69, 74, 95, 0
+	sq_ev	0xb4, 29, 53, 6, 127, 127
+	sq_beat
+	.byte	0x90, 0x00, 0x2d	; first 3 bytes of sq_note 0x90, 0, 45, 84, 47, 0 (split by a cell boundary)
 	seq_block	0x80, 45, 653	; block 581: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40205, 251
+; a stale copy: the same 251 bytes as block 442 (chain from block 493, 5 of 35), typed as that block is
+	.byte	0x00, 0x3e, 0x2b, 0x17, 0x00	; last 5 bytes of sq_note 0x90, 0, 62, 43, 23, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 66, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 79, 48, 0
+	sq_note	0x90, 48, 64, 61, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 69, 48, 0
+	sq_note	0x90, 48, 69, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 89, 48, 0
+	sq_note	0x90, 48, 66, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 66, 48, 0
+	sq_note	0x90, 48, 64, 64, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 84, 48, 0
+	sq_note	0x90, 48, 69, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 61, 48, 0
+	sq_note	0x90, 48, 66, 79, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 89, 48, 0
+	sq_note	0x90, 48, 64, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 58, 72, 0
+	sq_note	0x90, 48, 69, 64, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 66, 72, 0
+	sq_note	0x90, 48, 66, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 74, 48, 0
+	sq_note	0x90, 48, 64, 58, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 64, 48, 0
+	sq_note	0x90, 48, 69, 64, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 64, 72, 0
+	sq_note	0x90, 48, 66, 64, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 74, 48, 0
+	sq_note	0x90, 48, 64, 55, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 72, 48, 0
+	sq_note	0x90, 48, 69, 72, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 66, 72, 0
+	sq_note	0x90, 48, 66, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 66, 48, 0
+	sq_note	0x90, 48, 64, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 72, 48, 0
+	sq_note	0x90, 48, 69, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 66, 48, 0
+	sq_note	0x90, 48, 66, 64, 48, 0
+	sq_beat
+	.byte	0x90, 0x00, 0x45, 0x4a, 0x30	; first 5 bytes of sq_note 0x90, 0, 69, 74, 48, 0 (split by a cell boundary)
 	seq_block	0x80, 465, 35	; block 582: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40305, 251
+; a stale copy: the same 251 bytes as block 443 (chain from block 222, 35 of 81), typed as that block is
+	sq_note	0x90, 0, 57, 89, 48, 0
+	sq_note	0x90, 0, 62, 102, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 108, 48, 0
+	sq_note	0x90, 0, 62, 111, 48, 0
+	sq_note	0x90, 0, 54, 111, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 111, 48, 0
+	sq_note	0x90, 0, 54, 120, 48, 0
+	sq_note	0x90, 0, 62, 108, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 96, 48, 0
+	sq_note	0x90, 0, 54, 64, 48, 0
+	sq_note	0x90, 0, 62, 102, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 108, 48, 0
+	sq_note	0x90, 0, 54, 124, 48, 0
+	sq_note	0x90, 0, 62, 114, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 62, 93, 23, 0
+	sq_note	0x90, 0, 57, 102, 23, 0
+	sq_note	0x90, 0, 54, 64, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 89, 70, 0
+	sq_note	0x90, 0, 64, 96, 70, 0
+	sq_note	0x90, 0, 56, 86, 70, 0
+	sq_ev	0xb4, 12, 53, 1, 0, 127
+	sq_ev	0xb4, 54, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 59, 102, 48, 0
+	sq_note	0x90, 0, 64, 96, 48, 0
+	sq_note	0x90, 0, 56, 81, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 86, 48, 0
+	sq_note	0x90, 0, 59, 72, 48, 0
+	sq_note	0x90, 0, 64, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 89, 48, 0
+	sq_note	0x90, 0, 59, 77, 48, 0
+	sq_note	0x90, 0, 56, 93, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 96, 48, 0
+	sq_note	0x90, 0, 59, 81, 48, 0
+	sq_note	0x90, 0, 56, 120, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 111, 48, 0
+	sq_note	0x90, 0, 56, 69, 48, 0
+	sq_note	0x90, 0, 64, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 93, 48, 0
+	sq_note	0x90, 0, 56, 77, 48, 0
+	.byte	0x90, 0x00, 0x40, 0x6f, 0x30	; first 5 bytes of sq_note 0x90, 0, 64, 111, 48, 0 (split by a cell boundary)
 	seq_block	0x80, 375, 400	; block 583: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40405, 251
+; a stale copy: the same 251 bytes as block 444 (chain from block 486, 14 of 48), typed as that block is
+	sq_note	0x90, 0, 40, 66, 23, 0
+	sq_note	0x90, 48, 57, 64, 23, 0
+	sq_ev	0xb0, 92, 7, 3, 90, 127
+	sq_note	0x90, 92, 45, 74, 46, 6
+	sq_note	0x90, 92, 64, 93, 22, 4
+	sq_note	0x90, 92, 57, 89, 46, 5
+	sq_ev	0xb4, 93, 53, 7, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 61, 53, 7, 127, 127
+	sq_beat
+	sq_ev	0xb4, 68, 53, 7, 127, 127
+	sq_beat
+	sq_ev	0xb4, 21, 53, 7, 0, 127
+	sq_note	0x90, 92, 59, 88, 48, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 88, 48, 0
+	sq_note	0x90, 92, 64, 88, 0, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 20, 0, 61
+	sq_ev	0xd2, 22, 0, 58
+	sq_ev	0xd2, 24, 0, 54
+	sq_ev	0xd2, 26, 0, 50
+	sq_ev	0xd2, 28, 0, 45
+	sq_ev	0xd2, 31, 0, 38
+	sq_ev	0xd2, 32, 0, 32
+	sq_ev	0xd2, 35, 0, 26
+	sq_ev	0xd2, 36, 0, 20
+	sq_ev	0xd2, 39, 0, 13
+	sq_ev	0xd2, 40, 0, 8
+	sq_ev	0xd2, 42, 0, 2
+	sq_ev	0xd2, 44, 0, 0
+	sq_note	0x90, 92, 61, 88, 92, 0
+	sq_beat
+	sq_ev	0xd2, 41, 0, 3
+	sq_ev	0xd2, 44, 0, 31
+	sq_ev	0xd2, 45, 0, 64
+	sq_ev	0xd2, 47, 0, 72
+	sq_ev	0xd2, 49, 0, 64
+	sq_ev	0xd2, 51, 0, 58
+	sq_ev	0xd2, 53, 0, 64
+	sq_note	0x90, 92, 64, 88, 0, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 26, 0, 63
+	sq_ev	0xd2, 28, 0, 60
+	sq_ev	0xd2, 30, 0, 56
+	sq_ev	0xd2, 32, 0, 52
+	sq_ev	0xd2, 34, 0, 47
+	sq_ev	0xd2, 36, 0, 42
+	sq_ev	0xd2, 38, 0, 37
+	sq_ev	0xd2, 40, 0, 32
+	sq_ev	0xd2, 41, 0, 26
+	sq_ev	0xd2, 44, 0, 20
+	sq_ev	0xd2, 45, 0, 14
+	sq_ev	0xd2, 48, 0, 7
+	sq_ev	0xd2, 49, 0, 1
+	sq_ev	0xd2, 52, 0, 0
+	.byte	0x90, 0x5c, 0x3d, 0x58, 0x5c	; first 5 bytes of sq_note 0x90, 92, 61, 88, 92, 0 (split by a cell boundary)
 	seq_block	0x80, 654, 470	; block 584: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40505, 251
+; a stale copy: the same 251 bytes as block 445 (chain from block 488, 23 of 83), typed as that block is
+	.byte	0x75, 0x2f, 0x00	; last 3 bytes of sq_note 0x90, 50, 70, 117, 47, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 38, 86, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 117, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 123, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 120, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 89, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 99, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 111, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 86, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 84, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 79, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 124, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 2, 54, 127, 47, 0 (split by a cell boundary)
 	seq_block	0x80, 38, 53	; block 585: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40605, 251
+; a stale copy: the same 251 bytes as block 446 (chain from block 485, 29 of 61), typed as that block is
+	sq_note	0x90, 0, 45, 69, 48, 0
+	sq_note	0x90, 48, 61, 111, 0, 1
+	sq_note	0x90, 48, 64, 89, 0, 1
+	sq_note	0x90, 48, 57, 89, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 79, 48, 0
+	sq_ev	0xb4, 94, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 64, 84, 24, 1
+	sq_note	0x90, 0, 61, 81, 24, 1
+	sq_note	0x90, 0, 57, 66, 24, 1
+	sq_note	0x90, 0, 55, 74, 24, 1
+	sq_note	0x90, 0, 43, 96, 48, 0
+	sq_ev	0xb4, 36, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 79, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 64, 89, 0, 1
+	sq_note	0x90, 0, 61, 89, 0, 1
+	sq_note	0x90, 0, 57, 89, 0, 1
+	sq_note	0x90, 0, 55, 81, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 43, 58, 48, 0
+	sq_note	0x90, 48, 61, 77, 72, 0
+	sq_note	0x90, 48, 55, 72, 0, 1
+	sq_note	0x90, 48, 64, 89, 0, 1
+	sq_note	0x90, 48, 57, 89, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 43, 69, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 72, 0, 1
+	sq_note	0x90, 0, 64, 93, 72, 0
+	sq_note	0x90, 0, 57, 84, 0, 1
+	sq_note	0x90, 0, 55, 81, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 58, 48, 0
+	sq_note	0x90, 48, 61, 77, 47, 0
+	sq_note	0x90, 48, 57, 89, 47, 0
+	sq_note	0x90, 48, 55, 81, 23, 0
+	sq_note	0x90, 48, 64, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 55, 48, 0
+	sq_note	0x90, 48, 54, 3, 23, 0
+	sq_ev	0xb4, 86, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 54, 81, 23, 1
+	sq_note	0x90, 0, 61, 91, 23, 1
+	sq_note	0x90, 0, 57, 81, 23, 1
+	sq_note	0x90, 0, 42, 89, 47, 0
+	sq_note	0x90, 0, 64, 64, 23, 1
+	.byte	0xb4	; first 1 bytes of sq_ev 0xb4, 32, 53, 2, 127, 127 (split by a cell boundary)
 	seq_block	0x80, 657, 331	; block 586: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40705, 251
+; a stale copy: the same 251 bytes as block 447 (chain from block 246, 19 of 52), typed as that block is
+	.byte	0x34, 0x00, 0x0e	; last 3 bytes of sq_ev 0xd2, 52, 0, 14 (split by a cell boundary)
+	sq_ev	0xd2, 55, 0, 50
+	sq_ev	0xd2, 57, 0, 68
+	sq_ev	0xd2, 59, 0, 64
+	sq_ev	0xd2, 62, 0, 61
+	sq_ev	0xd2, 64, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 52, 93, 23, 0
+	sq_note	0x90, 50, 54, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 57, 93, 72, 0
+	sq_beat
+	sq_note	0x90, 2, 59, 93, 48, 0
+	sq_note	0x90, 50, 57, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 93, 65, 0
+	sq_ev	0xd2, 2, 0, 51
+	sq_ev	0xd2, 4, 0, 45
+	sq_ev	0xd2, 7, 0, 39
+	sq_ev	0xd2, 9, 0, 33
+	sq_ev	0xd2, 12, 0, 28
+	sq_ev	0xd2, 14, 0, 22
+	sq_ev	0xd2, 16, 0, 18
+	sq_ev	0xd2, 19, 0, 14
+	sq_ev	0xd2, 20, 0, 11
+	sq_ev	0xd2, 23, 0, 10
+	sq_ev	0xd2, 31, 0, 12
+	sq_ev	0xd2, 33, 0, 15
+	sq_ev	0xd2, 36, 0, 25
+	sq_ev	0xd2, 38, 0, 42
+	sq_ev	0xd2, 40, 0, 59
+	sq_ev	0xd2, 43, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 64, 93, 48, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb0, 0, 6, 3, 75, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 2, 53, 6, 127, 127
+	sq_note	0x90, 6, 40, 96, 57, 0
+	sq_note	0x90, 7, 52, 126, 57, 0
+	sq_note	0x90, 7, 47, 124, 57, 0
+	sq_note	0x90, 7, 64, 117, 62, 0
+	sq_note	0x90, 7, 59, 108, 62, 0
+	sq_beat
+	sq_note	0x90, 8, 47, 74, 33, 0
+	.byte	0x90, 0x08, 0x28, 0x3d, 0x22	; first 5 bytes of sq_note 0x90, 8, 40, 61, 34, 0 (split by a cell boundary)
 	seq_block	0xff, 273, 55	; block 587: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40805, 251
+; a stale copy: the same 251 bytes as block 448 (chain from block 287, 10 of 21), typed as that block is
+	.byte	0x40	; last 1 bytes of sq_ev 0xd2, 12, 0, 64 (split by a cell boundary)
+	sq_ev	0xd2, 16, 0, 72
+	sq_ev	0xd2, 18, 0, 66
+	sq_ev	0xd2, 20, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 0, 0, 71
+	sq_ev	0xd2, 2, 0, 77
+	sq_ev	0xd2, 4, 0, 87
+	sq_ev	0xd2, 7, 0, 97
+	sq_ev	0xd2, 9, 0, 109
+	sq_ev	0xd2, 12, 0, 122
+	sq_ev	0xd2, 14, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 8, 0, 124
+	sq_ev	0xd2, 11, 0, 70
+	sq_ev	0xd2, 13, 0, 56
+	sq_ev	0xd2, 16, 0, 64
+	sq_ev	0xd2, 18, 0, 74
+	sq_ev	0xd2, 20, 0, 67
+	sq_ev	0xd2, 22, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 7, 45, 120, 78, 25
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 91, 0, 65
+	sq_ev	0xd2, 93, 0, 69
+	sq_beat
+	sq_ev	0xd2, 0, 0, 75
+	sq_ev	0xd2, 2, 0, 82
+	sq_ev	0xd2, 4, 0, 90
+	sq_ev	0xd2, 6, 0, 99
+	sq_ev	0xd2, 9, 0, 109
+	sq_ev	0xd2, 12, 0, 120
+	sq_ev	0xd2, 14, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 5, 0, 98
+	sq_ev	0xd2, 8, 0, 64
+	sq_ev	0xd2, 12, 0, 65
+	sq_ev	0xd2, 17, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 4, 0, 66
+	sq_ev	0xd2, 6, 0, 71
+	sq_ev	0xd2, 8, 0, 78
+	sq_ev	0xd2, 11, 0, 86
+	sq_ev	0xd2, 13, 0, 96
+	sq_ev	0xd2, 16, 0, 107
+	sq_ev	0xd2, 18, 0, 118
+	sq_ev	0xd2, 20, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 8, 0, 80
+	sq_ev	0xd2, 11, 0, 61
+	sq_ev	0xd2, 12, 0, 64
+	sq_ev	0xd2, 16, 0, 72
+	sq_ev	0xd2, 18, 0, 66
+	sq_ev	0xd2, 20, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 0, 0, 71
+	sq_ev	0xd2, 2, 0, 77
+	sq_ev	0xd2, 4, 0, 87
+	sq_ev	0xd2, 7, 0, 97
+	sq_ev	0xd2, 9, 0, 109
+	sq_ev	0xd2, 12, 0, 122
+	sq_ev	0xd2, 14, 0, 127
+	sq_beat
+	sq_beat
 	seq_block	0x80, 663, 537	; block 588: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40905, 251
+; a stale copy: the same 251 bytes as block 449 (chain from block 222, 45 of 81), typed as that block is
+	.byte	0x47, 0x00	; last 2 bytes of sq_note 0x90, 48, 61, 81, 71, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 52, 120, 48, 0
+	sq_note	0x90, 48, 57, 96, 71, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 89, 23, 0
+	sq_note	0x90, 48, 52, 43, 23, 0
+	sq_ev	0xb4, 88, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 61, 105, 23, 1
+	sq_note	0x90, 0, 57, 89, 23, 1
+	sq_note	0x90, 0, 52, 96, 23, 1
+	sq_note	0x90, 0, 55, 123, 23, 1
+	sq_note	0x90, 0, 43, 102, 47, 0
+	sq_ev	0xb4, 38, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 111, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 126, 0, 1
+	sq_note	0x90, 0, 55, 91, 0, 1
+	sq_note	0x90, 0, 57, 84, 0, 1
+	sq_note	0x90, 0, 52, 96, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 43, 72, 48, 0
+	sq_note	0x90, 48, 61, 123, 72, 0
+	sq_note	0x90, 48, 57, 124, 72, 0
+	sq_note	0x90, 48, 55, 102, 0, 1
+	sq_note	0x90, 48, 52, 123, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 89, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 127, 0, 1
+	sq_note	0x90, 0, 57, 127, 0, 1
+	sq_note	0x90, 0, 52, 99, 0, 1
+	sq_note	0x90, 0, 55, 111, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 43, 79, 48, 0
+	sq_note	0x90, 48, 57, 125, 72, 0
+	sq_note	0x90, 48, 61, 114, 72, 0
+	sq_note	0x90, 48, 55, 127, 48, 0
+	sq_note	0x90, 48, 52, 77, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 74, 48, 0
+	sq_note	0x90, 48, 52, 64, 23, 0
+	sq_ev	0xb4, 92, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 61, 96, 23, 1
+	sq_note	0x90, 0, 52, 124, 23, 1
+	sq_note	0x90, 0, 42, 102, 47, 0
+	sq_note	0x90, 0, 57, 77, 23, 1
+	sq_note	0x90, 0, 54, 127, 23, 1
+	.byte	0xb4, 0x29, 0x35, 0x01, 0x7f	; first 5 bytes of sq_ev 0xb4, 41, 53, 1, 127, 127 (split by a cell boundary)
 	seq_block	0x80, 664, 47	; block 589: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40a05, 251
+; a stale copy: the same 251 bytes as block 450 (chain from block 485, 36 of 61), typed as that block is
+	.byte	0x38, 0x0b, 0x17, 0x00	; last 4 bytes of sq_note 0x90, 48, 56, 11, 23, 0 (split by a cell boundary)
+	sq_ev	0xb4, 95, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 56, 96, 71, 0
+	sq_note	0x90, 0, 64, 96, 71, 0
+	sq_note	0x90, 0, 59, 77, 71, 0
+	sq_note	0x90, 0, 52, 81, 71, 0
+	sq_ev	0xb4, 37, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 52, 79, 48, 0
+	sq_note	0x90, 0, 64, 84, 48, 0
+	sq_note	0x90, 0, 59, 79, 48, 0
+	sq_note	0x90, 0, 56, 74, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 96, 48, 0
+	sq_note	0x90, 0, 56, 89, 48, 0
+	sq_note	0x90, 0, 52, 84, 48, 0
+	sq_note	0x90, 0, 59, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 84, 48, 0
+	sq_note	0x90, 0, 59, 99, 48, 0
+	sq_note	0x90, 0, 52, 77, 48, 0
+	sq_note	0x90, 0, 56, 86, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 84, 48, 0
+	sq_note	0x90, 0, 64, 99, 48, 0
+	sq_note	0x90, 0, 59, 74, 48, 0
+	sq_note	0x90, 0, 56, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 84, 48, 0
+	sq_note	0x90, 0, 64, 89, 48, 0
+	sq_note	0x90, 0, 56, 84, 48, 0
+	sq_note	0x90, 0, 52, 77, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 69, 48, 0
+	sq_note	0x90, 0, 64, 102, 72, 0
+	sq_note	0x90, 0, 59, 89, 72, 0
+	sq_note	0x90, 0, 56, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 89, 48, 0
+	sq_note	0x90, 0, 64, 102, 72, 0
+	sq_note	0x90, 0, 59, 93, 72, 0
+	sq_note	0x90, 0, 56, 93, 72, 0
+	sq_ev	0xb4, 80, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 52, 124, 4, 1
+	sq_note	0x90, 0, 61, 120, 52, 1
+	sq_note	0x90, 0, 57, 125, 56, 1
+	sq_note	0x90, 0, 45, 127, 66, 0
+	sq_beat
+	.byte	0x90, 0x00, 0x2d	; first 3 bytes of sq_note 0x90, 0, 45, 124, 52, 1 (split by a cell boundary)
 	seq_block	0x80, 95, 591	; block 590: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40b05, 251
+; a stale copy: the same 251 bytes as block 451 (chain from block 486, 21 of 48), typed as that block is
+	.byte	0x7f, 0x22, 0x01	; last 3 bytes of sq_note 0x90, 94, 55, 127, 34, 1 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 127, 4, 1
+	sq_note	0x90, 0, 61, 114, 1, 1
+	sq_beat
+	sq_note	0x90, 0, 55, 120, 31, 0
+	sq_note	0x90, 48, 57, 14, 14, 0
+	sq_note	0x90, 92, 61, 123, 28, 1
+	sq_note	0x90, 92, 57, 124, 24, 1
+	sq_beat
+	sq_ev	0xb4, 0, 53, 7, 0, 127
+	sq_note	0x90, 0, 42, 127, 50, 0
+	sq_ev	0xb4, 49, 53, 7, 127, 127
+	sq_note	0x90, 92, 42, 99, 30, 6
+	sq_beat
+	sq_note	0x90, 90, 49, 111, 32, 5
+	sq_note	0x90, 91, 61, 126, 90, 0
+	sq_note	0x90, 91, 54, 96, 57, 0
+	sq_note	0x90, 91, 57, 123, 81, 0
+	sq_beat
+	sq_note	0x90, 92, 54, 55, 40, 0
+	sq_beat
+	sq_note	0x90, 40, 61, 99, 57, 0
+	sq_note	0x90, 41, 57, 96, 53, 0
+	sq_note	0x90, 93, 54, 74, 50, 0
+	sq_beat
+	sq_note	0x90, 43, 61, 102, 82, 0
+	sq_note	0x90, 45, 57, 123, 76, 0
+	sq_note	0x90, 91, 54, 126, 45, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 11, 61, 111, 36, 1
+	sq_note	0x90, 14, 57, 81, 82, 0
+	sq_beat
+	sq_note	0x90, 3, 54, 96, 37, 0
+	sq_note	0x90, 45, 57, 18, 15, 0
+	sq_beat
+	sq_note	0x90, 1, 40, 120, 54, 0
+	sq_ev	0xb4, 4, 53, 7, 0, 127
+	sq_note	0x90, 4, 59, 102, 43, 1
+	sq_note	0x90, 6, 56, 77, 36, 1
+	sq_note	0x90, 7, 57, 96, 11, 0
+	sq_ev	0xb4, 50, 53, 7, 127, 127
+	sq_note	0x90, 93, 40, 114, 86, 5
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 59, 125, 87, 0
+	sq_note	0x90, 0, 56, 77, 78, 0
+	sq_note	0x90, 0, 64, 124, 81, 0
+	sq_note	0x90, 2, 52, 124, 45, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 74, 45, 0
+	sq_note	0x90, 42, 59, 111, 63, 0
+	.byte	0x90, 0x2b, 0x40, 0x66, 0x3b	; first 5 bytes of sq_note 0x90, 43, 64, 102, 59, 0 (split by a cell boundary)
 	seq_block	0x80, 590, 79	; block 591: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40c05, 251
+; a stale copy: the same 251 bytes as block 452 (chain from block 486, 22 of 48), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 43, 64, 102, 59, 0 (split by a cell boundary)
+	sq_note	0x90, 43, 56, 96, 56, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 93, 45, 0
+	sq_note	0x90, 45, 59, 102, 64, 0
+	sq_note	0x90, 47, 64, 102, 59, 0
+	sq_note	0x90, 48, 56, 93, 56, 0
+	sq_beat
+	sq_note	0x90, 1, 52, 127, 51, 0
+	sq_note	0x90, 48, 59, 84, 60, 0
+	sq_note	0x90, 49, 56, 96, 54, 0
+	sq_note	0x90, 50, 64, 84, 52, 0
+	sq_beat
+	sq_note	0x90, 1, 52, 127, 48, 0
+	sq_note	0x90, 50, 59, 117, 44, 0
+	sq_note	0x90, 50, 64, 124, 57, 0
+	sq_note	0x90, 51, 56, 120, 36, 0
+	sq_beat
+	sq_note	0x90, 3, 52, 114, 35, 0
+	sq_note	0x90, 51, 61, 14, 16, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 127, 22, 1
+	sq_note	0x90, 1, 61, 124, 21, 1
+	sq_note	0x90, 4, 45, 127, 52, 0
+	sq_ev	0xb4, 9, 53, 7, 0, 127
+	sq_ev	0xb4, 62, 53, 7, 127, 127
+	sq_note	0x90, 91, 45, 108, 47, 1
+	sq_beat
+	sq_note	0x90, 91, 57, 125, 50, 1
+	sq_note	0x90, 91, 64, 127, 90, 0
+	sq_note	0x90, 91, 61, 124, 88, 0
+	sq_beat
+	sq_note	0x90, 92, 45, 74, 25, 4
+	sq_beat
+	sq_note	0x90, 43, 64, 125, 53, 0
+	sq_note	0x90, 44, 61, 96, 53, 0
+	sq_beat
+	sq_note	0x90, 1, 57, 69, 39, 0
+	sq_note	0x90, 45, 64, 127, 94, 0
+	sq_note	0x90, 47, 61, 108, 82, 0
+	sq_note	0x90, 93, 57, 120, 27, 1
+	sq_beat
+	sq_note	0x90, 93, 61, 127, 1, 1
+	sq_note	0x90, 93, 64, 93, 57, 1
+	sq_beat
+	sq_note	0x90, 93, 57, 127, 28, 0
+	sq_beat
+	sq_note	0x90, 47, 61, 14, 21, 0
+	sq_note	0x90, 93, 55, 77, 76, 0
+	sq_note	0x90, 94, 61, 96, 3, 1
+	sq_note	0x90, 95, 43, 102, 60, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 125, 3, 1
+	.byte	0xb4, 0x01, 0x35	; first 3 bytes of sq_ev 0xb4, 1, 53, 7, 0, 127 (split by a cell boundary)
 	seq_block	0x80, 258, 333	; block 592: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40d05, 251
+; a stale copy: the same 251 bytes as block 453 (chain from block 488, 38 of 83), typed as that block is
+	.byte	0x2f, 0x00	; last 2 bytes of sq_note 0x90, 50, 70, 117, 47, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 0, 51, 124, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 72, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_note	0x90, 72, 38, 89, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 102, 48, 0
+	sq_note	0x90, 0, 36, 127, 72, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 127, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 48, 0
+	sq_note	0x90, 0, 59, 127, 72, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 0, 59, 127, 71, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 72, 0
+	sq_note	0x90, 0, 59, 127, 72, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 127, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 48, 36, 100, 23, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 127, 48, 0
+	sq_note	0x90, 0, 38, 127, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 127, 23, 0
+	sq_note	0x90, 0, 59, 127, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	.byte	0x90, 0x30, 0x2d, 0x7f, 0x17	; first 5 bytes of sq_note 0x90, 48, 45, 127, 23, 0 (split by a cell boundary)
 	seq_block	0x80, 339, 285	; block 593: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40e05, 251
+; a stale copy: the same 251 bytes as block 454 (chain from block 486, 26 of 48), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 0, 45, 99, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 61, 127, 95, 0
+	sq_note	0x90, 48, 52, 77, 95, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 96, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 105, 23, 0
+	sq_note	0x90, 0, 52, 123, 95, 0
+	sq_note	0x90, 0, 57, 125, 95, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 72, 23, 0
+	sq_note	0x90, 48, 57, 117, 0, 1
+	sq_note	0x90, 48, 52, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 111, 48, 0
+	sq_note	0x90, 48, 52, 48, 23, 0
+	sq_ev	0xb4, 86, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 57, 99, 47, 1
+	sq_note	0x90, 0, 52, 84, 47, 1
+	sq_note	0x90, 0, 45, 84, 48, 0
+	sq_ev	0xb4, 36, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 89, 23, 0
+	sq_note	0x90, 0, 47, 14, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 124, 48, 0
+	sq_note	0x90, 0, 61, 125, 0, 1
+	sq_note	0x90, 0, 52, 108, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 84, 48, 0
+	sq_note	0x90, 48, 61, 105, 72, 0
+	sq_note	0x90, 48, 52, 99, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 77, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 102, 95, 0
+	sq_note	0x90, 0, 52, 89, 95, 0
+	sq_note	0x90, 0, 45, 123, 47, 0
+	sq_ev	0xb4, 11, 53, 7, 0, 127
+	sq_ev	0xb4, 38, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 120, 48, 0
+	sq_note	0x90, 48, 57, 108, 47, 0
+	sq_note	0x90, 48, 52, 81, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 117, 23, 0
+	sq_note	0x90, 48, 55, 58, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 55, 96, 46, 1
+	sq_note	0x90, 0, 62, 86, 46, 1
+	sq_note	0x90, 0, 59, 77, 46, 1
+	sq_note	0x90, 0, 43, 127, 46, 0
+	.byte	0xb4, 0x00, 0x35	; first 3 bytes of sq_ev 0xb4, 0, 53, 7, 0, 127 (split by a cell boundary)
 	seq_block	0x80, 432, 433	; block 594: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x40f05, 251
+; a stale copy: the same 251 bytes as block 455 (chain from block 246, 27 of 52), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 0, 61, 102, 95, 0 (split by a cell boundary)
+	sq_note	0x90, 0, 57, 102, 95, 0
+	sq_note	0x90, 0, 69, 77, 47, 1
+	sq_ev	0xb4, 0, 53, 6, 0, 127
+	sq_ev	0xb4, 38, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 66, 48, 0
+	sq_note	0x90, 48, 64, 72, 70, 1
+	sq_note	0x90, 48, 61, 74, 46, 1
+	sq_note	0x90, 48, 57, 69, 22, 1
+	sq_ev	0xb4, 59, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 93, 47, 0
+	sq_ev	0xb4, 5, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 127, 71, 1
+	sq_note	0x90, 0, 57, 74, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 95, 0
+	sq_note	0x90, 0, 57, 89, 95, 0
+	sq_note	0x90, 0, 69, 84, 47, 1
+	sq_note	0x90, 0, 64, 69, 95, 0
+	sq_ev	0xb4, 14, 53, 6, 0, 127
+	sq_ev	0xb4, 48, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 102, 48, 0
+	sq_note	0x90, 48, 64, 79, 71, 1
+	sq_note	0x90, 48, 61, 64, 71, 1
+	sq_note	0x90, 48, 57, 84, 71, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 111, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 111, 47, 1
+	sq_ev	0xb4, 72, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 64, 79, 23, 1
+	sq_note	0x90, 0, 61, 89, 95, 0
+	sq_note	0x90, 0, 57, 86, 95, 0
+	sq_note	0x90, 0, 69, 74, 95, 0
+	sq_ev	0xb4, 29, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 84, 47, 0
+	sq_ev	0xb4, 43, 53, 6, 0, 127
+	sq_note	0x90, 48, 64, 66, 70, 1
+	sq_note	0x90, 48, 61, 66, 70, 1
+	sq_note	0x90, 48, 57, 64, 70, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 66, 22, 0
+	sq_ev	0xb4, 0, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 93, 24, 1
+	.byte	0xb4, 0x54, 0x35, 0x06, 0x00	; first 5 bytes of sq_ev 0xb4, 84, 53, 6, 0, 127 (split by a cell boundary)
 	seq_block	0xff, 284, 3	; block 595: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41005, 251
+; a stale copy: the same 251 bytes as block 456 (chain from block 459, 17 of 35), typed as that block is
+	sq_note	0x90, 2, 67, 66, 24, 0
+	sq_note	0x90, 2, 62, 69, 24, 0
+	sq_note	0x90, 2, 69, 77, 25, 0
+	sq_note	0x90, 3, 59, 89, 23, 0
+	sq_note	0x90, 48, 59, 89, 47, 0
+	sq_note	0x90, 48, 67, 111, 50, 0
+	sq_note	0x90, 48, 62, 81, 54, 0
+	sq_note	0x90, 49, 69, 99, 50, 0
+	sq_beat
+	sq_note	0x90, 4, 55, 111, 28, 0
+	sq_note	0x90, 56, 57, 39, 87, 2
+	sq_ev	0xb4, 88, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 62, 84, 23, 3
+	sq_note	0x90, 1, 69, 74, 22, 3
+	sq_note	0x90, 1, 66, 77, 25, 3
+	sq_note	0x90, 6, 38, 93, 15, 7
+	sq_beat
+	sq_ev	0xb4, 42, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 12, 50, 72, 19, 1
+	sq_beat
+	sq_note	0x90, 6, 57, 22, 52, 0
+	sq_beat
+	sq_note	0x90, 4, 57, 96, 8, 1
+	sq_note	0x90, 4, 66, 84, 31, 1
+	sq_note	0x90, 4, 69, 72, 25, 1
+	sq_note	0x90, 4, 50, 84, 60, 0
+	sq_note	0x90, 4, 62, 74, 27, 1
+	sq_beat
+	sq_note	0x90, 16, 50, 48, 41, 0
+	sq_beat
+	sq_note	0x90, 8, 62, 79, 95, 0
+	sq_note	0x90, 8, 69, 79, 17, 1
+	sq_note	0x90, 9, 66, 72, 14, 1
+	sq_note	0x90, 9, 57, 96, 90, 0
+	sq_note	0x90, 9, 50, 66, 47, 0
+	sq_beat
+	sq_note	0x90, 3, 50, 64, 34, 0
+	sq_beat
+	sq_note	0x90, 0, 68, 58, 28, 1
+	sq_ev	0xb4, 1, 53, 4, 0, 127
+	sq_note	0x90, 2, 59, 58, 93, 0
+	sq_note	0x90, 3, 52, 64, 62, 1
+	sq_note	0x90, 4, 40, 55, 19, 7
+	sq_note	0x90, 4, 64, 69, 16, 1
+	sq_ev	0xb4, 74, 53, 4, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 11, 59, 74, 59, 0
+	sq_note	0x90, 12, 52, 58, 33, 0
+	.byte	0x90, 0x0c, 0x40, 0x4d, 0x42	; first 5 bytes of sq_note 0x90, 12, 64, 77, 66, 0 (split by a cell boundary)
 	seq_block	0xff, 60, 597	; block 596: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41105, 251
+; a stale copy: the same 251 bytes as block 457 (chain from block 493, 13 of 35), typed as that block is
+	.byte	0x32, 0x00	; last 2 bytes of sq_note 0x90, 92, 62, 125, 50, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 45, 60, 127, 31, 0
+	sq_ev	0xd2, 90, 0, 63
+	sq_ev	0xd2, 91, 0, 60
+	sq_ev	0xd2, 94, 0, 56
+	sq_beat
+	sq_ev	0xd2, 0, 0, 52
+	sq_ev	0xd2, 1, 0, 47
+	sq_note	0x90, 3, 64, 108, 64, 0
+	sq_ev	0xd2, 3, 0, 42
+	sq_ev	0xd2, 4, 0, 37
+	sq_ev	0xd2, 7, 0, 33
+	sq_ev	0xd2, 8, 0, 30
+	sq_ev	0xd2, 10, 0, 26
+	sq_ev	0xd2, 12, 0, 23
+	sq_ev	0xd2, 14, 0, 21
+	sq_ev	0xd2, 16, 0, 18
+	sq_ev	0xd2, 18, 0, 17
+	sq_ev	0xd2, 21, 0, 15
+	sq_ev	0xd2, 28, 0, 18
+	sq_ev	0xd2, 37, 0, 21
+	sq_ev	0xd2, 39, 0, 23
+	sq_ev	0xd2, 41, 0, 25
+	sq_ev	0xd2, 43, 0, 27
+	sq_ev	0xd2, 44, 0, 29
+	sq_ev	0xd2, 46, 0, 32
+	sq_ev	0xd2, 48, 0, 34
+	sq_ev	0xd2, 50, 0, 36
+	sq_ev	0xd2, 52, 0, 38
+	sq_ev	0xd2, 54, 0, 40
+	sq_ev	0xd2, 56, 0, 42
+	sq_ev	0xd2, 57, 0, 43
+	sq_ev	0xd2, 60, 0, 45
+	sq_ev	0xd2, 61, 0, 47
+	sq_ev	0xd2, 63, 0, 49
+	sq_ev	0xd2, 64, 0, 51
+	sq_ev	0xd2, 66, 0, 52
+	sq_ev	0xd2, 68, 0, 54
+	sq_ev	0xd2, 71, 0, 56
+	sq_ev	0xd2, 72, 0, 58
+	sq_ev	0xd2, 74, 0, 61
+	sq_ev	0xd2, 76, 0, 64
+	sq_note	0x90, 92, 67, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 47, 64, 61, 9, 0
+	sq_note	0x90, 92, 69, 108, 67, 0
+	sq_beat
+	sq_note	0x90, 89, 72, 93, 42, 0
+	sq_beat
+	sq_note	0x90, 40, 69, 84, 23, 0
+	sq_note	0x90, 94, 74, 127, 73, 0
+	sq_beat
+	sq_ev	0xd2, 20, 0, 65
+	sq_ev	0xd2, 21, 0, 68
+	sq_ev	0xd2, 23, 0, 70
+	sq_ev	0xd2, 24, 0, 73
+	sq_ev	0xd2, 27, 0, 76
+	sq_ev	0xd2, 28, 0, 79
+	sq_ev	0xd2, 31, 0, 81
+	sq_ev	0xd2, 32, 0, 84
+	sq_ev	0xd2, 34, 0, 87
+	sq_ev	0xd2, 36, 0, 90
+	.byte	0xd2, 0x26, 0x00	; first 3 bytes of sq_ev 0xd2, 38, 0, 93 (split by a cell boundary)
 	seq_block	0xff, 596, 485	; block 597: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41205, 251
+; a stale copy: the same 251 bytes as block 458 (chain from block 493, 14 of 35), typed as that block is
+	.byte	0x5d	; last 1 bytes of sq_ev 0xd2, 38, 0, 93 (split by a cell boundary)
+	sq_ev	0xd2, 40, 0, 95
+	sq_ev	0xd2, 41, 0, 96
+	sq_ev	0xd2, 47, 0, 95
+	sq_ev	0xd2, 48, 0, 93
+	sq_ev	0xd2, 50, 0, 90
+	sq_ev	0xd2, 52, 0, 87
+	sq_ev	0xd2, 54, 0, 84
+	sq_ev	0xd2, 56, 0, 80
+	sq_ev	0xd2, 57, 0, 77
+	sq_ev	0xd2, 59, 0, 73
+	sq_ev	0xd2, 60, 0, 67
+	sq_ev	0xd2, 63, 0, 64
+	sq_note	0x90, 92, 72, 105, 43, 0
+	sq_beat
+	sq_note	0x90, 44, 69, 127, 85, 0
+	sq_beat
+	sq_note	0x90, 48, 69, 124, 32, 0
+	sq_note	0x90, 92, 72, 127, 35, 0
+	sq_beat
+	sq_note	0x90, 44, 74, 114, 31, 0
+	sq_note	0x90, 93, 76, 77, 74, 0
+	sq_ev	0xd2, 94, 0, 61
+	sq_note	0x90, 95, 74, 22, 5, 0
+	sq_beat
+	sq_ev	0xd2, 0, 0, 57
+	sq_ev	0xd2, 2, 0, 52
+	sq_ev	0xd2, 4, 0, 47
+	sq_ev	0xd2, 6, 0, 43
+	sq_ev	0xd2, 8, 0, 39
+	sq_ev	0xd2, 9, 0, 36
+	sq_ev	0xd2, 11, 0, 34
+	sq_ev	0xd2, 13, 0, 31
+	sq_ev	0xd2, 15, 0, 30
+	sq_ev	0xd2, 16, 0, 28
+	sq_ev	0xd2, 20, 0, 27
+	sq_ev	0xd2, 22, 0, 26
+	sq_ev	0xd2, 28, 0, 25
+	sq_ev	0xd2, 41, 0, 31
+	sq_ev	0xd2, 43, 0, 33
+	sq_ev	0xd2, 45, 0, 35
+	sq_ev	0xd2, 47, 0, 39
+	sq_ev	0xd2, 49, 0, 42
+	sq_ev	0xd2, 51, 0, 46
+	sq_ev	0xd2, 52, 0, 50
+	sq_ev	0xd2, 54, 0, 55
+	sq_ev	0xd2, 56, 0, 59
+	sq_ev	0xd2, 59, 0, 62
+	sq_ev	0xd2, 60, 0, 64
+	sq_note	0x90, 92, 79, 127, 32, 0
+	sq_beat
+	sq_ev	0xd2, 32, 0, 63
+	sq_ev	0xd2, 33, 0, 60
+	sq_ev	0xd2, 35, 0, 57
+	sq_ev	0xd2, 37, 0, 54
+	sq_ev	0xd2, 39, 0, 50
+	sq_ev	0xd2, 41, 0, 46
+	sq_ev	0xd2, 43, 0, 43
+	sq_note	0x90, 44, 76, 102, 68, 0
+	sq_ev	0xd2, 44, 0, 39
+	sq_ev	0xd2, 46, 0, 37
+	sq_ev	0xd2, 48, 0, 34
+	.byte	0xd2, 0x32, 0x00	; first 3 bytes of sq_ev 0xd2, 50, 0, 32 (split by a cell boundary)
 	seq_block	0x80, 0, 268	; block 598: chain from block 598, 1 of 1
 	sq_ev	0xc0, 0, 4, 0, 0, 0
 	sq_ev	0xb0, 0, 4, 3, 100, 127
@@ -42466,80 +44601,1819 @@ F_01220497_SEQ:
 	sq_beat
 	sq_beat
 	seq_block	0x80, 552, 576	; block 599: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41405, 251
+; a stale copy: the same 251 bytes as block 460 (chain from block 485, 42 of 61), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 7, 61, 64, 76, 1
+	sq_note	0x90, 7, 57, 74, 77, 1
+	sq_note	0x90, 7, 45, 74, 63, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 6, 57, 64, 91, 0
+	sq_note	0x90, 7, 61, 79, 91, 0
+	sq_ev	0xb4, 65, 53, 2, 127, 127
+	sq_note	0x90, 90, 45, 58, 81, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 66, 0, 1
+	sq_note	0x90, 45, 57, 84, 94, 0
+	sq_beat
+	sq_note	0x90, 46, 45, 48, 49, 0
+	sq_note	0x90, 95, 61, 69, 77, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 79, 77, 0
+	sq_note	0x90, 0, 52, 66, 70, 0
+	sq_note	0x90, 90, 45, 48, 36, 0
+	sq_beat
+	sq_note	0x90, 45, 61, 66, 37, 0
+	sq_note	0x90, 47, 57, 79, 42, 0
+	sq_note	0x90, 48, 52, 66, 40, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 69, 39, 0
+	sq_note	0x90, 48, 52, 51, 59, 1
+	.byte	0xb4, 0x47, 0x35, 0x02, 0x00	; first 5 bytes of sq_ev 0xb4, 71, 53, 2, 0, 127 (split by a cell boundary)
 	seq_block	0x80, 578, 286	; block 600: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41505, 251
+; a stale copy: the same 251 bytes as block 461 (chain from block 490, 8 of 15), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 50, 61, 69, 89, 0 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 61, 79, 72, 0
+	sq_note	0x90, 3, 57, 79, 72, 0
+	sq_note	0x90, 4, 52, 69, 72, 0
+	sq_beat
+	sq_note	0x90, 41, 52, 58, 73, 1
+	sq_ev	0xb4, 81, 53, 11, 0, 127
+	sq_note	0x90, 90, 55, 84, 24, 1
+	sq_note	0x90, 91, 61, 84, 30, 1
+	sq_beat
+	sq_ev	0xb4, 47, 53, 11, 127, 127
+	sq_beat
+	sq_note	0x90, 93, 55, 61, 85, 0
+	sq_note	0x90, 94, 61, 81, 87, 0
+	sq_note	0x90, 94, 52, 72, 87, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 44, 61, 66, 53, 0
+	sq_note	0x90, 46, 55, 55, 48, 0
+	sq_note	0x90, 46, 52, 58, 48, 0
+	sq_beat
+	sq_note	0x90, 50, 55, 81, 79, 0
+	sq_note	0x90, 51, 52, 69, 79, 0
+	sq_note	0x90, 52, 61, 74, 80, 0
+	sq_beat
+	sq_note	0x90, 95, 55, 89, 70, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 89, 0
+	sq_note	0x90, 1, 52, 77, 72, 0
+	sq_beat
+	sq_note	0x90, 47, 54, 58, 83, 1
+	sq_ev	0xb4, 93, 53, 11, 0, 127
+	sq_beat
+	sq_note	0x90, 3, 57, 72, 33, 1
+	sq_note	0x90, 4, 61, 79, 40, 1
+	sq_ev	0xb4, 52, 53, 11, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 61, 74, 86, 0
+	sq_note	0x90, 3, 57, 77, 86, 0
+	sq_note	0x90, 4, 54, 69, 86, 0
+	sq_beat
+	sq_note	0x90, 47, 61, 79, 59, 0
+	sq_note	0x90, 47, 57, 74, 59, 0
+	sq_note	0x90, 48, 54, 64, 57, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 72, 79, 0
+	sq_note	0x90, 45, 61, 77, 80, 0
+	sq_note	0x90, 46, 54, 74, 73, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 61, 86, 76, 0
+	sq_note	0x90, 1, 57, 89, 85, 0
+	sq_note	0x90, 2, 54, 66, 77, 0
+	sq_beat
+	sq_ev	0xb4, 87, 53, 11, 0, 127
+	.byte	0x90, 0x5e, 0x39	; first 3 bytes of sq_note 0x90, 94, 57, 89, 15, 1 (split by a cell boundary)
 	seq_block	0x80, 514, 448	; block 601: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41605, 251
+; a stale copy: the same 251 bytes as block 462 (chain from block 222, 58 of 81), typed as that block is
+	.byte	0x01	; last 1 bytes of sq_note 0x90, 0, 52, 89, 22, 1 (split by a cell boundary)
+	sq_note	0x90, 0, 61, 93, 22, 1
+	sq_note	0x90, 0, 57, 102, 22, 1
+	sq_ev	0xb4, 2, 53, 1, 0, 127
+	sq_ev	0xb4, 59, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 74, 48, 0
+	sq_note	0x90, 0, 57, 84, 48, 0
+	sq_note	0x90, 0, 52, 111, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 57, 79, 48, 0
+	sq_note	0x90, 48, 52, 74, 48, 0
+	sq_note	0x90, 48, 61, 89, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 48, 0
+	sq_note	0x90, 0, 57, 102, 48, 0
+	sq_note	0x90, 0, 52, 93, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 57, 102, 48, 0
+	sq_note	0x90, 48, 52, 102, 48, 0
+	sq_note	0x90, 48, 61, 99, 48, 0
+	sq_beat
+	sq_ev	0xb4, 95, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 55, 66, 47, 1
+	sq_note	0x90, 0, 52, 66, 23, 1
+	sq_note	0x90, 0, 61, 89, 47, 1
+	sq_ev	0xb4, 52, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 102, 72, 0
+	sq_note	0x90, 0, 55, 96, 72, 0
+	sq_note	0x90, 0, 52, 77, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 61, 89, 48, 0
+	sq_note	0x90, 48, 55, 93, 48, 0
+	sq_note	0x90, 48, 52, 96, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 61, 102, 48, 0
+	sq_note	0x90, 0, 55, 114, 48, 0
+	sq_note	0x90, 0, 52, 99, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 55, 89, 48, 0
+	sq_note	0x90, 48, 61, 99, 48, 0
+	sq_note	0x90, 48, 52, 93, 48, 0
+	sq_beat
+	sq_ev	0xb4, 91, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 57, 124, 23, 1
+	sq_note	0x90, 0, 54, 111, 23, 1
+	sq_note	0x90, 0, 61, 114, 23, 1
+	sq_ev	0xb4, 60, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x18, 0x39, 0x7b	; first 4 bytes of sq_note 0x90, 24, 57, 123, 48, 0 (split by a cell boundary)
 	seq_block	0x80, 516, 569	; block 602: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41705, 251
+; a stale copy: the same 251 bytes as block 463 (chain from block 246, 43 of 52), typed as that block is
+	sq_ev	0xd2, 50, 0, 110
+	sq_ev	0xd2, 52, 0, 107
+	sq_ev	0xd2, 53, 0, 102
+	sq_ev	0xd2, 56, 0, 95
+	sq_ev	0xd2, 57, 0, 82
+	sq_ev	0xd2, 59, 0, 66
+	sq_ev	0xd2, 60, 0, 64
+	sq_beat
+	sq_note	0x90, 0, 84, 124, 33, 0
+	sq_note	0x90, 47, 86, 102, 54, 0
+	sq_ev	0xd2, 57, 0, 67
+	sq_ev	0xd2, 59, 0, 70
+	sq_ev	0xd2, 60, 0, 73
+	sq_ev	0xd2, 62, 0, 76
+	sq_ev	0xd2, 64, 0, 79
+	sq_ev	0xd2, 66, 0, 82
+	sq_ev	0xd2, 68, 0, 86
+	sq_ev	0xd2, 70, 0, 89
+	sq_ev	0xd2, 72, 0, 93
+	sq_ev	0xd2, 73, 0, 96
+	sq_ev	0xd2, 76, 0, 99
+	sq_ev	0xd2, 77, 0, 102
+	sq_ev	0xd2, 79, 0, 105
+	sq_ev	0xd2, 80, 0, 107
+	sq_ev	0xd2, 83, 0, 109
+	sq_ev	0xd2, 84, 0, 111
+	sq_ev	0xd2, 88, 0, 113
+	sq_ev	0xd2, 95, 0, 111
+	sq_beat
+	sq_ev	0xd2, 0, 0, 108
+	sq_ev	0xd2, 2, 0, 104
+	sq_ev	0xd2, 4, 0, 96
+	sq_ev	0xd2, 6, 0, 76
+	sq_ev	0xd2, 8, 0, 64
+	sq_note	0x90, 47, 84, 127, 32, 0
+	sq_note	0x90, 94, 86, 114, 70, 0
+	sq_beat
+	sq_ev	0xd2, 15, 0, 65
+	sq_ev	0xd2, 16, 0, 68
+	sq_ev	0xd2, 18, 0, 71
+	sq_ev	0xd2, 20, 0, 74
+	sq_ev	0xd2, 22, 0, 79
+	sq_ev	0xd2, 24, 0, 83
+	sq_ev	0xd2, 26, 0, 88
+	sq_ev	0xd2, 28, 0, 92
+	sq_ev	0xd2, 29, 0, 96
+	sq_ev	0xd2, 31, 0, 100
+	sq_ev	0xd2, 33, 0, 103
+	sq_ev	0xd2, 35, 0, 105
+	sq_ev	0xd2, 36, 0, 107
+	sq_ev	0xd2, 40, 0, 109
+	sq_ev	0xd2, 45, 0, 104
+	sq_ev	0xd2, 47, 0, 98
+	sq_ev	0xd2, 50, 0, 88
+	sq_ev	0xd2, 52, 0, 71
+	sq_ev	0xd2, 53, 0, 64
+	sq_beat
+	sq_note	0x90, 0, 84, 127, 33, 0
+	sq_note	0x90, 48, 86, 124, 62, 0
+	sq_ev	0xd2, 52, 0, 66
+	sq_ev	0xd2, 53, 0, 71
+	sq_ev	0xd2, 55, 0, 77
+	.byte	0xd2, 0x38, 0x00	; first 3 bytes of sq_ev 0xd2, 56, 0, 84 (split by a cell boundary)
 	seq_block	0x80, 452, 571	; block 603: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41805, 251
+; a stale copy: the same 251 bytes as block 464 (chain from block 493, 27 of 35), typed as that block is
+	sq_beat
+	sq_ev	0xd2, 0, 0, 6
+	sq_ev	0xd2, 2, 0, 0
+	sq_ev	0xb4, 24, 53, 14, 127, 127
+	sq_ev	0xd2, 40, 0, 4
+	sq_ev	0xd2, 41, 0, 10
+	sq_ev	0xd2, 44, 0, 18
+	sq_ev	0xd2, 45, 0, 33
+	sq_ev	0xd2, 47, 0, 61
+	sq_ev	0xd2, 48, 0, 64
+	sq_note	0x90, 89, 81, 108, 35, 0
+	sq_beat
+	sq_ev	0xd2, 36, 0, 55
+	sq_ev	0xd2, 38, 0, 48
+	sq_ev	0xd2, 40, 0, 39
+	sq_ev	0xb4, 40, 53, 14, 0, 127
+	sq_note	0x90, 41, 81, 89, 54, 0
+	sq_ev	0xd2, 42, 0, 28
+	sq_ev	0xd2, 44, 0, 17
+	sq_ev	0xd2, 46, 0, 8
+	sq_ev	0xd2, 48, 0, 0
+	sq_ev	0xd2, 84, 0, 1
+	sq_ev	0xb4, 85, 53, 14, 127, 127
+	sq_ev	0xd2, 86, 0, 5
+	sq_ev	0xd2, 88, 0, 11
+	sq_ev	0xd2, 90, 0, 20
+	sq_ev	0xd2, 92, 0, 34
+	sq_ev	0xd2, 94, 0, 56
+	sq_beat
+	sq_ev	0xd2, 0, 0, 63
+	sq_ev	0xd2, 2, 0, 64
+	sq_ev	0xd1, 15, 2
+	sq_ev	0xd1, 16, 3
+	sq_ev	0xd1, 19, 5
+	sq_ev	0xd1, 20, 6
+	sq_ev	0xd1, 24, 7
+	sq_ev	0xd1, 29, 8
+	sq_ev	0xd1, 31, 9
+	sq_ev	0xd1, 36, 10
+	sq_note	0x90, 40, 81, 81, 36, 0
+	sq_ev	0xd2, 81, 0, 55
+	sq_ev	0xd2, 83, 0, 49
+	sq_ev	0xd2, 84, 0, 43
+	sq_ev	0xd2, 86, 0, 37
+	sq_ev	0xd2, 88, 0, 29
+	sq_ev	0xd2, 90, 0, 22
+	sq_ev	0xd2, 92, 0, 14
+	sq_note	0x90, 92, 81, 111, 49, 0
+	sq_ev	0xd2, 93, 0, 7
+	sq_ev	0xd2, 95, 0, 0
+	sq_beat
+	sq_ev	0xb4, 4, 53, 14, 0, 127
+	sq_ev	0xd2, 37, 0, 2
+	sq_ev	0xd2, 39, 0, 5
+	sq_ev	0xd2, 40, 0, 10
+	sq_ev	0xb4, 42, 53, 14, 127, 127
+	sq_ev	0xd2, 43, 0, 19
+	sq_ev	0xd2, 45, 0, 38
+	sq_ev	0xd2, 47, 0, 64
+	sq_note	0x90, 91, 81, 86, 23, 0
+	sq_beat
+	sq_note	0x90, 41, 81, 89, 20, 0
+	.byte	0x90, 0x58, 0x51, 0x7c	; first 4 bytes of sq_note 0x90, 88, 81, 124, 34, 0 (split by a cell boundary)
 	seq_block	0x80, 518, 317	; block 604: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41905, 251
+; a stale copy: the same 251 bytes as block 465 (chain from block 486, 42 of 48), typed as that block is
+	.byte	0x29, 0x56, 0x30, 0x00	; last 4 bytes of sq_note 0x90, 0, 41, 86, 48, 0 (split by a cell boundary)
+	sq_ev	0xb4, 52, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 41, 72, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 60, 77, 0, 1
+	sq_note	0x90, 0, 57, 93, 0, 1
+	sq_note	0x90, 0, 53, 77, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 41, 51, 48, 0
+	sq_ev	0xb4, 93, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 62, 84, 95, 0
+	sq_note	0x90, 0, 59, 96, 95, 0
+	sq_note	0x90, 0, 43, 72, 48, 0
+	sq_note	0x90, 0, 55, 89, 95, 0
+	sq_ev	0xb4, 63, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 48, 23, 1
+	sq_ev	0xb4, 73, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 59, 77, 95, 0
+	sq_note	0x90, 0, 55, 77, 23, 1
+	sq_note	0x90, 0, 62, 74, 95, 0
+	sq_ev	0xb4, 31, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 69, 48, 0
+	sq_beat
+	sq_ev	0xb4, 0, 53, 7, 0, 127
+	sq_note	0x90, 0, 41, 74, 48, 0
+	sq_note	0x90, 0, 53, 48, 23, 1
+	sq_note	0x90, 0, 60, 64, 23, 1
+	sq_note	0x90, 0, 57, 74, 23, 1
+	sq_ev	0xb4, 72, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 41, 77, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 57, 84, 0, 1
+	sq_note	0x90, 0, 60, 77, 0, 1
+	sq_note	0x90, 0, 53, 58, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 41, 58, 23, 0
+	sq_ev	0xb4, 94, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 59, 89, 23, 1
+	sq_note	0x90, 0, 43, 72, 48, 0
+	sq_note	0x90, 0, 55, 72, 95, 0
+	sq_note	0x90, 0, 62, 84, 95, 0
+	sq_ev	0xb4, 79, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 55, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 55, 58, 0, 1
+	.byte	0x90, 0x00, 0x3e, 0x4f, 0x00	; first 5 bytes of sq_note 0x90, 0, 62, 79, 0, 1 (split by a cell boundary)
 	seq_block	0x80, 573, 395	; block 605: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41a05, 251
+; a stale copy: the same 251 bytes as block 466 (chain from block 222, 62 of 81), typed as that block is
+	.byte	0x75, 0x00, 0x01	; last 3 bytes of sq_note 0x90, 0, 59, 117, 0, 1 (split by a cell boundary)
+	sq_note	0x90, 0, 55, 125, 0, 1
+	sq_note	0x90, 0, 50, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 50, 55, 23, 0
+	sq_ev	0xb4, 88, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 60, 99, 95, 0
+	sq_note	0x90, 0, 57, 89, 95, 0
+	sq_note	0x90, 0, 53, 84, 71, 0
+	sq_ev	0xb4, 38, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 53, 30, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 89, 23, 1
+	sq_note	0x90, 0, 53, 102, 48, 0
+	sq_note	0x90, 0, 60, 89, 23, 1
+	sq_beat
+	sq_note	0x90, 0, 53, 55, 23, 0
+	sq_ev	0xb4, 91, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 50, 74, 95, 0
+	sq_note	0x90, 0, 59, 99, 95, 0
+	sq_note	0x90, 0, 55, 93, 95, 0
+	sq_ev	0xb4, 44, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 59, 120, 23, 1
+	sq_note	0x90, 0, 55, 86, 0, 1
+	sq_note	0x90, 0, 50, 74, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 50, 51, 23, 0
+	sq_ev	0xb4, 81, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 7, 45, 74, 36, 2
+	sq_note	0x90, 7, 52, 69, 49, 1
+	sq_note	0x90, 9, 57, 74, 47, 1
+	sq_beat
+	sq_note	0x90, 88, 57, 79, 94, 0
+	sq_note	0x90, 88, 52, 69, 92, 0
+	sq_beat
+	sq_ev	0xb4, 31, 53, 1, 127, 127
+	sq_note	0x90, 85, 45, 58, 75, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 69, 81, 0
+	sq_note	0x90, 43, 52, 74, 74, 0
+	sq_beat
+	sq_note	0x90, 40, 45, 48, 62, 0
+	sq_note	0x90, 91, 57, 69, 88, 0
+	sq_note	0x90, 91, 61, 69, 88, 0
+	sq_note	0x90, 92, 52, 64, 86, 0
+	sq_beat
+	sq_note	0x90, 95, 45, 55, 40, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 66, 71, 0
+	.byte	0x90, 0x2c, 0x39, 0x4f	; first 4 bytes of sq_note 0x90, 44, 57, 79, 56, 0 (split by a cell boundary)
 	seq_block	0x80, 533, 501	; block 606: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41b05, 251
+; a stale copy: the same 251 bytes as block 467 (chain from block 491, 13 of 20), typed as that block is
+	.byte	0x00, 0x57	; last 2 bytes of sq_ev 0xd2, 28, 0, 87 (split by a cell boundary)
+	sq_ev	0xd2, 30, 0, 88
+	sq_ev	0xd2, 37, 0, 90
+	sq_ev	0xd2, 49, 0, 91
+	sq_beat
+	sq_ev	0xd2, 11, 0, 94
+	sq_ev	0xd2, 20, 0, 96
+	sq_ev	0xd2, 28, 0, 98
+	sq_ev	0xd2, 40, 0, 99
+	sq_beat
+	sq_ev	0xd2, 11, 0, 84
+	sq_ev	0xd2, 13, 0, 68
+	sq_ev	0xd2, 16, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 95, 0, 66
+	sq_beat
+	sq_ev	0xd2, 1, 0, 70
+	sq_ev	0xd2, 4, 0, 73
+	sq_ev	0xd2, 6, 0, 76
+	sq_ev	0xd2, 8, 0, 78
+	sq_ev	0xd2, 11, 0, 80
+	sq_ev	0xd2, 14, 0, 82
+	sq_ev	0xd2, 16, 0, 83
+	sq_ev	0xd2, 20, 0, 86
+	sq_ev	0xd2, 30, 0, 88
+	sq_ev	0xd2, 43, 0, 89
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 18, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 6, 0, 65
+	sq_ev	0xd2, 8, 0, 69
+	sq_ev	0xd2, 11, 0, 72
+	sq_ev	0xd2, 13, 0, 75
+	sq_ev	0xd2, 16, 0, 77
+	sq_ev	0xd2, 18, 0, 80
+	sq_ev	0xd2, 20, 0, 81
+	sq_ev	0xd2, 25, 0, 83
+	sq_ev	0xd2, 28, 0, 84
+	sq_ev	0xd2, 60, 0, 87
+	sq_ev	0xd2, 72, 0, 88
+	sq_ev	0xd2, 89, 0, 91
+	sq_beat
+	sq_ev	0xd2, 6, 0, 92
+	sq_ev	0xd2, 73, 0, 91
+	sq_ev	0xd2, 85, 0, 89
+	sq_ev	0xd2, 88, 0, 87
+	sq_ev	0xd2, 90, 0, 84
+	sq_ev	0xd2, 92, 0, 80
+	sq_ev	0xd2, 95, 0, 74
+	sq_beat
+	sq_ev	0xd2, 1, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 7, 49, 123, 74, 29
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 92, 0, 66
+	sq_ev	0xd2, 95, 0, 69
+	sq_beat
+	sq_ev	0xd2, 1, 0, 72
+	sq_ev	0xd2, 4, 0, 74
+	sq_ev	0xd2, 6, 0, 77
+	sq_ev	0xd2, 8, 0, 79
+	sq_ev	0xd2, 12, 0, 81
+	sq_ev	0xd2, 14, 0, 83
+	sq_ev	0xd2, 18, 0, 85
+	sq_ev	0xd2, 20, 0, 86
+	.byte	0xd2, 0x1c, 0x00	; first 3 bytes of sq_ev 0xd2, 28, 0, 87 (split by a cell boundary)
 	seq_block	0xda, 686, 93	; block 607: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41c05, 251
+; a stale copy: the same 251 bytes as block 468 (chain from block 486, 47 of 48), typed as that block is
+	.byte	0x26, 0x00, 0x2a	; last 3 bytes of sq_ev 0xd2, 38, 0, 42 (split by a cell boundary)
+	sq_ev	0xd2, 40, 0, 59
+	sq_ev	0xd2, 43, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 76, 93, 24, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd1, 26, 1
+	sq_ev	0xd1, 28, 2
+	sq_ev	0xd1, 31, 3
+	sq_ev	0xd1, 33, 5
+	sq_ev	0xd1, 36, 7
+	sq_ev	0xd1, 38, 8
+	sq_ev	0xd1, 41, 10
+	sq_ev	0xd1, 44, 12
+	sq_ev	0xd1, 46, 14
+	sq_ev	0xd1, 49, 16
+	sq_ev	0xd1, 52, 17
+	sq_ev	0xd1, 54, 19
+	sq_ev	0xd1, 56, 20
+	sq_ev	0xd1, 59, 22
+	sq_ev	0xd1, 61, 23
+	sq_ev	0xd1, 64, 24
+	sq_ev	0xd1, 68, 26
+	sq_ev	0xd1, 71, 27
+	sq_ev	0xd1, 76, 29
+	sq_ev	0xd1, 83, 31
+	sq_ev	0xd1, 85, 32
+	sq_ev	0xd1, 88, 33
+	sq_ev	0xd1, 90, 35
+	sq_ev	0xd1, 92, 36
+	sq_ev	0xd1, 95, 37
+	sq_beat
+	sq_ev	0xd1, 1, 38
+	sq_ev	0xd1, 6, 40
+	sq_ev	0xd1, 8, 41
+	sq_ev	0xd1, 14, 42
+	sq_ev	0xd1, 16, 43
+	sq_ev	0xd1, 19, 44
+	sq_ev	0xd1, 21, 45
+	sq_ev	0xd1, 24, 47
+	sq_ev	0xd1, 26, 48
+	sq_ev	0xd1, 28, 49
+	sq_ev	0xd1, 33, 51
+	sq_ev	0xd1, 40, 52
+	sq_ev	0xd1, 42, 53
+	sq_ev	0xd1, 52, 54
+	sq_beat
+	sq_ev	0xd1, 7, 48
+	sq_ev	0xd1, 9, 46
+	sq_ev	0xd1, 12, 44
+	sq_ev	0xd1, 14, 42
+	sq_ev	0xd1, 16, 39
+	sq_ev	0xd1, 19, 36
+	sq_ev	0xd1, 21, 33
+	sq_ev	0xd1, 24, 29
+	sq_ev	0xd1, 26, 26
+	sq_ev	0xd1, 28, 23
+	sq_ev	0xd1, 31, 20
+	sq_ev	0xd1, 33, 16
+	sq_ev	0xd1, 36, 13
+	sq_ev	0xd1, 38, 9
+	sq_ev	0xd1, 40, 6
+	sq_ev	0xd1, 43, 3
+	sq_ev	0xd1, 45, 1
+	sq_ev	0xd1, 48, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	seq_block	0x80, 17, 92	; block 608: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41d05, 251
+; a stale copy: the same 251 bytes as block 469 (chain from block 488, 70 of 83), typed as that block is
+	.byte	0x17, 0x00	; last 2 bytes of sq_note 0x90, 48, 70, 77, 23, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 42, 93, 48, 0
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 48, 38, 105, 23, 0
+	sq_note	0x90, 48, 70, 61, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 48, 0
+	sq_note	0x90, 0, 42, 111, 48, 0
+	sq_note	0x90, 0, 70, 51, 23, 0
+	sq_note	0x90, 48, 70, 81, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 0, 42, 84, 23, 0
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 48, 70, 74, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 102, 23, 0
+	sq_note	0x90, 0, 70, 96, 23, 0
+	sq_note	0x90, 48, 38, 74, 23, 0
+	sq_note	0x90, 48, 70, 102, 23, 0
+	sq_note	0x90, 72, 38, 69, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 108, 23, 0
+	sq_note	0x90, 0, 42, 102, 23, 0
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 48, 70, 77, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 93, 23, 0
+	sq_note	0x90, 0, 42, 93, 23, 0
+	sq_note	0x90, 0, 70, 66, 23, 0
+	sq_note	0x90, 48, 70, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 117, 23, 0
+	sq_note	0x90, 0, 42, 125, 23, 0
+	sq_note	0x90, 0, 54, 127, 48, 0
+	sq_note	0x90, 48, 70, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 114, 23, 0
+	sq_note	0x90, 0, 70, 123, 23, 0
+	sq_note	0x90, 48, 38, 89, 23, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 108, 23, 0
+	sq_note	0x90, 0, 54, 123, 23, 0
+	sq_note	0x90, 48, 38, 89, 23, 0
+	sq_note	0x90, 48, 70, 66, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 124, 23, 0
+	sq_note	0x90, 0, 42, 124, 23, 0
+	.byte	0x90, 0x00, 0x46, 0x59, 0x17	; first 5 bytes of sq_note 0x90, 0, 70, 89, 23, 0 (split by a cell boundary)
 	seq_block	0xff, 358, 46	; block 609: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41e05, 251
+; a stale copy: the same 251 bytes as block 470 (chain from block 222, 70 of 81), typed as that block is
+	sq_note	0x90, 48, 52, 72, 73, 0
+	sq_note	0x90, 48, 61, 64, 80, 0
+	sq_note	0x90, 49, 57, 72, 78, 0
+	sq_beat
+	sq_ev	0xb0, 14, 1, 8, 121, 127
+	sq_note	0x90, 42, 45, 55, 39, 0
+	sq_ev	0xb0, 81, 1, 8, 120, 127
+	sq_note	0x90, 92, 61, 66, 92, 0
+	sq_note	0x90, 94, 57, 66, 91, 0
+	sq_note	0x90, 94, 52, 43, 85, 0
+	sq_beat
+	sq_ev	0xb0, 52, 1, 8, 119, 127
+	sq_beat
+	sq_note	0x90, 4, 45, 55, 33, 0
+	sq_ev	0xb0, 22, 1, 8, 118, 127
+	sq_note	0x90, 50, 61, 64, 66, 0
+	sq_note	0x90, 50, 57, 64, 69, 0
+	sq_note	0x90, 52, 52, 39, 31, 0
+	sq_ev	0xb0, 88, 1, 8, 117, 127
+	sq_beat
+	sq_note	0x90, 4, 45, 43, 37, 0
+	sq_note	0x90, 44, 52, 43, 60, 1
+	sq_ev	0xb0, 59, 1, 8, 116, 127
+	sq_ev	0xb4, 72, 53, 1, 0, 127
+	sq_note	0x90, 91, 55, 55, 15, 1
+	sq_note	0x90, 91, 61, 58, 20, 1
+	sq_note	0x90, 93, 43, 55, 40, 0
+	sq_beat
+	sq_ev	0xb0, 29, 1, 8, 115, 127
+	sq_ev	0xb4, 44, 53, 1, 127, 127
+	sq_note	0x90, 91, 43, 66, 15, 1
+	sq_beat
+	sq_ev	0xb0, 0, 1, 8, 114, 127
+	sq_ev	0xb0, 67, 1, 8, 113, 127
+	sq_beat
+	sq_note	0x90, 0, 61, 74, 91, 0
+	sq_note	0x90, 1, 55, 61, 89, 0
+	sq_note	0x90, 2, 52, 69, 89, 0
+	sq_ev	0xb0, 37, 1, 8, 112, 127
+	sq_note	0x90, 88, 43, 51, 51, 0
+	sq_beat
+	sq_ev	0xb0, 8, 1, 8, 111, 127
+	sq_note	0x90, 44, 61, 64, 90, 0
+	sq_note	0x90, 45, 55, 61, 85, 0
+	sq_note	0x90, 46, 52, 51, 85, 0
+	sq_ev	0xb0, 74, 1, 8, 110, 127
+	sq_beat
+	sq_note	0x90, 42, 43, 22, 50, 0
+	sq_ev	0xb0, 44, 1, 8, 109, 127
+	.byte	0x90, 0x5d	; first 2 bytes of sq_note 0x90, 93, 61, 69, 95, 0 (split by a cell boundary)
 	seq_block	0xbf, 46, 615	; block 610: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x41f05, 251
+; a stale copy: the same 251 bytes as block 471 (chain from block 222, 72 of 81), typed as that block is
+	.byte	0x26, 0x00	; last 2 bytes of sq_note 0x90, 94, 42, 58, 38, 0 (split by a cell boundary)
+	sq_beat
+	sq_ev	0xb0, 16, 1, 8, 95, 127
+	sq_note	0x90, 47, 61, 64, 56, 0
+	sq_note	0x90, 48, 57, 66, 49, 0
+	sq_note	0x90, 48, 54, 55, 29, 0
+	sq_ev	0xb0, 82, 1, 8, 94, 127
+	sq_beat
+	sq_note	0x90, 3, 42, 30, 26, 0
+	sq_note	0x90, 52, 52, 51, 55, 1
+	sq_ev	0xb0, 53, 1, 8, 93, 127
+	sq_ev	0xb4, 69, 53, 1, 0, 127
+	sq_note	0x90, 93, 57, 64, 14, 1
+	sq_note	0x90, 93, 61, 64, 16, 1
+	sq_note	0x90, 95, 40, 64, 35, 0
+	sq_beat
+	sq_ev	0xb0, 24, 1, 8, 92, 127
+	sq_ev	0xb4, 42, 53, 1, 127, 127
+	sq_ev	0xb0, 90, 1, 8, 91, 127
+	sq_beat
+	sq_note	0x90, 2, 40, 58, 92, 0
+	sq_ev	0xb0, 60, 1, 8, 90, 127
+	sq_note	0x90, 88, 61, 69, 93, 0
+	sq_note	0x90, 88, 52, 72, 90, 0
+	sq_note	0x90, 88, 57, 74, 93, 0
+	sq_beat
+	sq_ev	0xb0, 31, 1, 8, 89, 127
+	sq_note	0x90, 85, 40, 51, 90, 0
+	sq_beat
+	sq_ev	0xb0, 1, 1, 8, 88, 127
+	sq_note	0x90, 40, 61, 72, 89, 0
+	sq_note	0x90, 42, 52, 55, 88, 0
+	sq_note	0x90, 43, 57, 58, 88, 0
+	sq_ev	0xb0, 68, 1, 8, 87, 127
+	sq_beat
+	sq_ev	0xb0, 39, 1, 8, 86, 127
+	sq_note	0x90, 48, 40, 58, 44, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 58, 90, 0
+	sq_note	0x90, 0, 61, 66, 91, 0
+	sq_note	0x90, 0, 57, 61, 91, 0
+	sq_ev	0xb0, 9, 1, 8, 85, 127
+	sq_ev	0xb0, 76, 1, 8, 84, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 48, 32, 0
+	sq_ev	0xb0, 46, 1, 8, 83, 127
+	sq_note	0x90, 48, 61, 64, 95, 0
+	sq_note	0x90, 48, 57, 64, 92, 0
+	sq_note	0x90, 49, 52, 58, 41, 0
+	sq_note	0x90, 88, 40, 58, 38, 0
 	seq_block	0x80, 459, 103	; block 611: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42005, 251
+; a stale copy: the same 251 bytes as block 472 (chain from block 149, 27 of 28), typed as that block is
+	.byte	0x00, 0x21, 0x42, 0x17, 0x00	; last 5 bytes of sq_note 0x90, 0, 33, 66, 23, 0 (split by a cell boundary)
+	sq_ev	0xb4, 93, 53, 3, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 31, 96, 95, 0
+	sq_ev	0xb4, 78, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 31, 89, 23, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 72, 23, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 72, 23, 0
+	sq_ev	0xb4, 79, 53, 3, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 30, 84, 23, 1
+	sq_ev	0xb4, 63, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 30, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 30, 66, 23, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 30, 77, 23, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 25, 79, 47, 0
+	sq_ev	0xb4, 7, 53, 3, 0, 127
+	sq_note	0x90, 48, 26, 64, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 28, 89, 24, 1
+	sq_ev	0xb4, 76, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 28, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 28, 77, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 28, 77, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 28, 66, 48, 0
+	sq_note	0x90, 48, 30, 58, 23, 0
+	sq_ev	0xb4, 76, 53, 3, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 33, 74, 23, 1
+	sq_ev	0xb4, 68, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 33, 72, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 33, 64, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 33, 77, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 33, 79, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 31, 93, 22, 1
+	sq_ev	0xb4, 4, 53, 3, 0, 127
+	sq_ev	0xb4, 57, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 61, 48, 0
+	sq_beat
+	sq_note	0x90, 48, 31, 77, 48, 0
 	seq_block	0x81, 693, 21	; block 612: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42105, 251
+; a stale copy: the same 251 bytes as block 473 (chain from block 104, 19 of 25), typed as that block is
+	.byte	0x33, 0x36, 0x00	; last 3 bytes of sq_note 0x90, 2, 64, 51, 54, 0 (split by a cell boundary)
+	sq_note	0x90, 45, 66, 51, 59, 0
+	sq_note	0x90, 91, 69, 66, 55, 0
+	sq_beat
+	sq_note	0x90, 49, 64, 48, 65, 0
+	sq_beat
+	sq_note	0x90, 1, 66, 58, 58, 0
+	sq_note	0x90, 48, 69, 66, 59, 0
+	sq_beat
+	sq_note	0x90, 9, 64, 64, 58, 0
+	sq_note	0x90, 53, 66, 64, 59, 0
+	sq_beat
+	sq_note	0x90, 4, 69, 64, 47, 0
+	sq_note	0x90, 52, 64, 64, 57, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 58, 55, 0
+	sq_note	0x90, 48, 69, 51, 54, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 48, 59, 0
+	sq_note	0x90, 50, 66, 51, 56, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 69, 54, 0
+	sq_note	0x90, 52, 64, 43, 59, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 51, 54, 0
+	sq_note	0x90, 46, 69, 64, 45, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 24, 0, 57
+	sq_ev	0xd2, 26, 0, 52
+	sq_ev	0xd2, 28, 0, 46
+	sq_ev	0xd2, 31, 0, 40
+	sq_ev	0xd2, 33, 0, 33
+	sq_ev	0xd2, 36, 0, 27
+	sq_ev	0xd2, 38, 0, 21
+	sq_ev	0xd2, 40, 0, 15
+	sq_ev	0xd2, 43, 0, 10
+	sq_ev	0xd2, 45, 0, 5
+	sq_ev	0xd2, 48, 0, 1
+	sq_ev	0xd2, 50, 0, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 10, 66, 84, 95, 2
+	sq_ev	0xd2, 48, 0, 2
+	sq_ev	0xd2, 49, 0, 7
+	sq_ev	0xd2, 52, 0, 13
+	sq_ev	0xd2, 55, 0, 20
+	sq_ev	0xd2, 57, 0, 28
+	sq_ev	0xd2, 60, 0, 38
+	sq_ev	0xd2, 62, 0, 48
+	sq_ev	0xd2, 64, 0, 60
+	sq_ev	0xd2, 67, 0, 64
+	sq_beat
+	sq_ev	0xd2, 2, 0, 63
+	sq_ev	0xd2, 4, 0, 57
+	sq_ev	0xd2, 7, 0, 50
+	sq_ev	0xd2, 9, 0, 43
+	sq_ev	0xd2, 11, 0, 35
+	sq_ev	0xd2, 13, 0, 27
+	sq_ev	0xd2, 16, 0, 20
+	sq_ev	0xd2, 19, 0, 13
+	.byte	0xd2, 0x15, 0x00	; first 3 bytes of sq_ev 0xd2, 21, 0, 6 (split by a cell boundary)
 	seq_block	0xff, 695, 696	; block 613: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42205, 251
+; a stale copy: the same 251 bytes as block 474 (chain from block 485, 58 of 61), typed as that block is
+	.byte	0x48, 0x45, 0x00	; last 3 bytes of sq_note 0x90, 47, 61, 72, 69, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 55, 72, 73, 0
+	sq_note	0x90, 48, 52, 72, 45, 0
+	sq_ev	0xb0, 95, 2, 8, 114, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 66, 36, 0
+	sq_note	0x90, 47, 52, 14, 12, 0
+	sq_ev	0xb0, 65, 2, 8, 115, 127
+	sq_ev	0xb4, 89, 53, 2, 0, 127
+	sq_note	0x90, 95, 42, 64, 37, 0
+	sq_note	0x90, 95, 57, 58, 24, 1
+	sq_note	0x90, 95, 54, 61, 22, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 69, 24, 1
+	sq_ev	0xb0, 36, 2, 8, 116, 127
+	sq_ev	0xb4, 36, 53, 2, 127, 127
+	sq_note	0x90, 95, 42, 58, 92, 0
+	sq_beat
+	sq_ev	0xb0, 6, 2, 8, 117, 127
+	sq_ev	0xb0, 72, 2, 8, 118, 127
+	sq_note	0x90, 90, 54, 66, 95, 0
+	sq_note	0x90, 91, 61, 66, 95, 0
+	sq_note	0x90, 92, 57, 58, 94, 0
+	sq_beat
+	sq_ev	0xb0, 43, 2, 8, 119, 127
+	sq_note	0x90, 83, 42, 64, 46, 0
+	sq_beat
+	sq_ev	0xb0, 13, 2, 8, 120, 127
+	sq_note	0x90, 41, 54, 61, 89, 0
+	sq_note	0x90, 44, 61, 55, 83, 0
+	sq_note	0x90, 45, 57, 55, 85, 0
+	sq_ev	0xb0, 80, 2, 8, 121, 127
+	sq_beat
+	sq_note	0x90, 36, 42, 51, 43, 0
+	sq_ev	0xb0, 51, 2, 8, 122, 127
+	sq_note	0x90, 86, 61, 66, 91, 0
+	sq_note	0x90, 87, 54, 48, 91, 0
+	sq_note	0x90, 88, 57, 55, 92, 0
+	sq_beat
+	sq_ev	0xb0, 21, 2, 8, 123, 127
+	sq_ev	0xb0, 88, 2, 8, 124, 127
+	sq_beat
+	sq_note	0x90, 4, 42, 66, 35, 0
+	sq_note	0x90, 46, 57, 64, 62, 0
+	sq_note	0x90, 46, 61, 72, 56, 0
+	sq_note	0x90, 47, 54, 66, 47, 0
+	sq_ev	0xb0, 58, 2, 8, 125, 127
+	sq_note	0x90, 88, 42, 79, 38, 0
+	sq_beat
+	.byte	0xb0, 0x1c, 0x02, 0x08, 0x7e	; first 5 bytes of sq_ev 0xb0, 28, 2, 8, 126, 127 (split by a cell boundary)
 	seq_block	0xff, 616, 0xffff	; block 614: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42305, 251
+; a stale copy: the same 251 bytes as block 475 (chain from block 491, 20 of 20), typed as that block is
+	sq_note	0x90, 93, 49, 74, 83, 59
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 20
+	.byte	0x95, 0x5b, 0x2d, 0x4a, 0x5a, 0x05, 0xe0, 0x5d, 0x00, 0x12, 0x9c, 0x5d, 0x31, 0x4a, 0x53, 0x3b	; after the end of track
+	.byte	0x92, 0x5f, 0x39, 0x3d, 0x34, 0x02, 0x92, 0x5f, 0x3d, 0x30, 0x36, 0x02, 0x81, 0xe0, 0x05, 0x00
+	.byte	0x10, 0x92, 0x05, 0x2d, 0x37, 0x01, 0x02, 0x92, 0x05, 0x34, 0x33, 0x33, 0x02, 0x9f, 0x05, 0x28
+	.byte	0x7b, 0x29, 0x00, 0xe0, 0x08, 0x00, 0x0e, 0x99, 0x08, 0x36, 0x7f, 0x20, 0x00, 0xe0, 0x0a, 0x00
+	.byte	0x0c, 0x91, 0x0a, 0x34, 0x3a, 0x22, 0x05, 0x91, 0x0a, 0x2d, 0x54, 0x21, 0x05, 0x91, 0x0b, 0x3d
+	.byte	0x45, 0x1f, 0x05, 0x91, 0x0b, 0x39, 0x40, 0x1e, 0x05, 0xe0, 0x0c, 0x00, 0x0b, 0xb4, 0x0d, 0x35
+	.byte	0x01, 0x00, 0x7f, 0xe0, 0x11, 0x00, 0x09, 0xe0, 0x14, 0x00, 0x08, 0x90, 0x14, 0x3d, 0x3d, 0x36
+	.byte	0x06, 0xb4, 0x14, 0x35, 0x02, 0x00, 0x7f, 0xe0, 0x1d, 0x00, 0x07, 0xe0, 0x2c, 0x00, 0x0d, 0xe0
+	.byte	0x2e, 0x00, 0x0f, 0xe0, 0x30, 0x00, 0x11, 0xe0, 0x33, 0x00, 0x12, 0xe0, 0x35, 0x00, 0x14, 0xe0
+	.byte	0x38, 0x00
 	seq_block	0x80, 610, 276	; block 615: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42405, 251
+; a stale copy: the same 251 bytes as block 476 (chain from block 222, 73 of 81), typed as that block is
+	sq_beat
+	sq_ev	0xb0, 16, 1, 8, 82, 127
+	sq_note	0x90, 49, 52, 35, 51, 1
+	sq_ev	0xb0, 83, 1, 8, 81, 127
+	sq_note	0x90, 92, 45, 58, 37, 0
+	sq_note	0x90, 95, 61, 58, 14, 1
+	sq_beat
+	sq_note	0x90, 0, 57, 66, 11, 1
+	sq_ev	0xb4, 1, 53, 1, 0, 127
+	sq_ev	0xb0, 54, 1, 8, 80, 127
+	sq_ev	0xb4, 70, 53, 1, 127, 127
+	sq_note	0x90, 91, 45, 64, 7, 1
+	sq_beat
+	sq_ev	0xb0, 24, 1, 8, 79, 127
+	sq_ev	0xb0, 91, 1, 8, 78, 127
+	sq_note	0x90, 92, 61, 72, 90, 0
+	sq_note	0x90, 92, 52, 61, 85, 0
+	sq_note	0x90, 92, 57, 72, 88, 0
+	sq_beat
+	sq_ev	0xb0, 61, 1, 8, 77, 127
+	sq_note	0x90, 91, 45, 48, 40, 0
+	sq_beat
+	sq_ev	0xb0, 32, 1, 8, 76, 127
+	sq_note	0x90, 44, 61, 66, 84, 0
+	sq_note	0x90, 45, 57, 72, 84, 0
+	sq_note	0x90, 45, 52, 74, 80, 0
+	sq_beat
+	sq_ev	0xb0, 2, 1, 8, 75, 127
+	sq_note	0x90, 38, 45, 35, 42, 0
+	sq_ev	0xb0, 68, 1, 8, 74, 127
+	sq_note	0x90, 90, 61, 66, 91, 0
+	sq_note	0x90, 91, 57, 66, 90, 0
+	sq_note	0x90, 91, 52, 64, 86, 0
+	sq_beat
+	sq_ev	0xb0, 40, 1, 8, 73, 127
+	sq_note	0x90, 91, 45, 35, 39, 0
+	sq_beat
+	sq_ev	0xb0, 10, 1, 8, 72, 127
+	sq_note	0x90, 50, 61, 66, 49, 0
+	sq_note	0x90, 51, 57, 66, 50, 0
+	sq_note	0x90, 52, 52, 64, 36, 0
+	sq_ev	0xb0, 76, 1, 8, 71, 127
+	sq_note	0x90, 92, 45, 48, 41, 0
+	sq_beat
+	sq_ev	0xb0, 47, 1, 8, 70, 127
+	sq_note	0x90, 49, 52, 55, 55, 1
+	sq_ev	0xb4, 75, 53, 1, 0, 127
+	sq_note	0x90, 88, 55, 66, 17, 1
+	sq_note	0x90, 88, 61, 61, 17, 1
+	.byte	0x90, 0x5b	; first 2 bytes of sq_note 0x90, 91, 43, 58, 40, 0 (split by a cell boundary)
 	seq_block	0xff, 80, 614	; block 616: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42505, 251
+; a stale copy: the same 251 bytes as block 477 (chain from block 491, 19 of 20), typed as that block is
+	.byte	0x31, 0x7b, 0x52, 0x17	; last 4 bytes of sq_note 0x90, 7, 49, 123, 82, 23 (split by a cell boundary)
+	sq_ev	0xb0, 41, 12, 8, 34, 127
+	sq_beat
+	sq_ev	0xb0, 12, 12, 8, 33, 127
+	sq_ev	0xb0, 79, 12, 8, 32, 127
+	sq_beat
+	sq_ev	0xb0, 49, 12, 8, 31, 127
+	sq_beat
+	sq_ev	0xb0, 20, 12, 8, 30, 127
+	sq_ev	0xb0, 86, 12, 8, 29, 127
+	sq_beat
+	sq_ev	0xb0, 56, 12, 8, 28, 127
+	sq_beat
+	sq_ev	0xb0, 27, 12, 8, 27, 127
+	sq_ev	0xb0, 94, 12, 8, 26, 127
+	sq_beat
+	sq_ev	0xb0, 64, 12, 8, 25, 127
+	sq_beat
+	sq_ev	0xb0, 35, 12, 8, 24, 127
+	sq_beat
+	sq_ev	0xb0, 5, 12, 8, 23, 127
+	sq_beat
+	sq_ev	0xb0, 42, 12, 8, 21, 127
+	sq_beat
+	sq_ev	0xb0, 13, 12, 8, 20, 127
+	sq_ev	0xb0, 80, 12, 8, 19, 127
+	sq_beat
+	sq_ev	0xb0, 50, 12, 8, 18, 127
+	sq_beat
+	sq_ev	0xb0, 20, 12, 8, 17, 127
+	sq_ev	0xb0, 87, 12, 8, 16, 127
+	sq_beat
+	sq_ev	0xb0, 57, 12, 8, 15, 127
+	sq_beat
+	sq_ev	0xb0, 28, 12, 8, 14, 127
+	sq_ev	0xb0, 95, 12, 8, 13, 127
+	sq_beat
+	sq_ev	0xb0, 65, 12, 8, 12, 127
+	sq_beat
+	sq_ev	0xb0, 36, 12, 8, 11, 127
+	sq_beat
+	sq_ev	0xb0, 6, 12, 8, 10, 127
+	sq_ev	0xb0, 72, 12, 8, 9, 127
+	sq_beat
+	sq_ev	0xb0, 43, 12, 8, 8, 127
+	sq_beat
+	sq_ev	0xb0, 13, 12, 8, 7, 127
+	sq_ev	0xb0, 80, 12, 8, 6, 127
+	sq_beat
+	sq_ev	0xb0, 51, 12, 8, 5, 127
+	sq_beat
+	sq_ev	0xb0, 21, 12, 8, 4, 127
+	sq_ev	0xb0, 88, 12, 8, 3, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb0, 28, 12, 8, 1, 127
+	sq_beat
+	sq_ev	0xd2, 0, 0, 64
+	sq_ev	0xb0, 0, 12, 3, 95, 127
+	sq_note	0x90, 0, 45, 86, 2, 16
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	seq_block	0x80, 410, 16	; block 617: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42605, 251
+; a stale copy: the same 251 bytes as block 478 (chain from block 287, 20 of 21), typed as that block is
+	.byte	0x1c	; last 1 bytes of sq_note 0x90, 7, 45, 120, 72, 28 (split by a cell boundary)
+	sq_ev	0xb0, 41, 5, 8, 93, 127
+	sq_beat
+	sq_ev	0xb0, 12, 5, 8, 94, 127
+	sq_ev	0xb0, 79, 5, 8, 95, 127
+	sq_beat
+	sq_ev	0xb0, 49, 5, 8, 96, 127
+	sq_beat
+	sq_ev	0xb0, 20, 5, 8, 97, 127
+	sq_ev	0xb0, 86, 5, 8, 98, 127
+	sq_beat
+	sq_ev	0xb0, 56, 5, 8, 99, 127
+	sq_beat
+	sq_ev	0xb0, 27, 5, 8, 100, 127
+	sq_ev	0xd2, 91, 0, 65
+	sq_ev	0xd2, 93, 0, 69
+	sq_ev	0xb0, 94, 5, 8, 101, 127
+	sq_beat
+	sq_ev	0xd2, 0, 0, 75
+	sq_ev	0xd2, 2, 0, 82
+	sq_ev	0xd2, 4, 0, 90
+	sq_ev	0xd2, 6, 0, 99
+	sq_ev	0xd2, 9, 0, 109
+	sq_ev	0xd2, 12, 0, 120
+	sq_ev	0xd2, 14, 0, 127
+	sq_ev	0xb0, 64, 5, 8, 102, 127
+	sq_beat
+	sq_ev	0xb0, 35, 5, 8, 103, 127
+	sq_beat
+	sq_ev	0xb0, 5, 5, 8, 104, 127
+	sq_ev	0xd2, 5, 0, 98
+	sq_ev	0xd2, 8, 0, 64
+	sq_ev	0xd2, 12, 0, 65
+	sq_ev	0xd2, 17, 0, 64
+	sq_ev	0xb0, 72, 5, 8, 105, 127
+	sq_beat
+	sq_ev	0xb0, 42, 5, 8, 106, 127
+	sq_beat
+	sq_ev	0xb0, 13, 5, 8, 107, 127
+	sq_ev	0xb0, 80, 5, 8, 108, 127
+	sq_beat
+	sq_ev	0xb0, 50, 5, 8, 109, 127
+	sq_beat
+	sq_ev	0xb0, 20, 5, 8, 110, 127
+	sq_ev	0xb0, 87, 5, 8, 111, 127
+	sq_beat
+	sq_ev	0xb0, 57, 5, 8, 112, 127
+	sq_beat
+	sq_ev	0xd2, 4, 0, 66
+	sq_ev	0xd2, 6, 0, 71
+	sq_ev	0xd2, 8, 0, 78
+	sq_ev	0xd2, 11, 0, 86
+	sq_ev	0xd2, 13, 0, 96
+	sq_ev	0xd2, 16, 0, 107
+	sq_ev	0xd2, 18, 0, 118
+	sq_ev	0xd2, 20, 0, 127
+	sq_ev	0xb0, 28, 5, 8, 113, 127
+	sq_ev	0xb0, 95, 5, 8, 114, 127
+	sq_beat
+	sq_ev	0xb0, 65, 5, 8, 115, 127
+	sq_beat
+	sq_ev	0xd2, 8, 0, 80
+	sq_ev	0xd2, 11, 0, 61
+	sq_ev	0xd2, 12, 0, 64
 	seq_block	0xc0, 548, 296	; block 618: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42705, 251
+; a stale copy: the same 251 bytes as block 479 (chain from block 488, 80 of 83), typed as that block is
+	.byte	0x29, 0x09, 0x03, 0x34, 0x7f	; last 5 bytes of sq_ev 0xb0, 41, 9, 3, 52, 127 (split by a cell boundary)
+	sq_note	0x90, 48, 38, 89, 23, 0
+	sq_note	0x90, 48, 70, 89, 23, 0
+	sq_ev	0xb0, 63, 9, 3, 51, 127
+	sq_ev	0xb0, 84, 9, 3, 50, 127
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 22, 0
+	sq_note	0x90, 0, 42, 84, 22, 0
+	sq_note	0x90, 0, 70, 69, 23, 0
+	sq_ev	0xb0, 9, 9, 3, 49, 127
+	sq_ev	0xb0, 31, 9, 3, 48, 127
+	sq_note	0x90, 48, 70, 77, 23, 0
+	sq_ev	0xb0, 52, 9, 3, 47, 127
+	sq_ev	0xb0, 73, 9, 3, 46, 127
+	sq_ev	0xb0, 95, 9, 3, 45, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 111, 22, 0
+	sq_note	0x90, 0, 38, 123, 22, 0
+	sq_note	0x90, 0, 54, 123, 48, 0
+	sq_ev	0xb0, 20, 9, 3, 44, 127
+	sq_ev	0xb0, 41, 9, 3, 43, 127
+	sq_note	0x90, 48, 70, 66, 23, 0
+	sq_ev	0xb0, 63, 9, 3, 42, 127
+	sq_ev	0xb0, 84, 9, 3, 41, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 108, 22, 0
+	sq_note	0x90, 0, 70, 77, 23, 0
+	sq_ev	0xb0, 9, 9, 3, 40, 127
+	sq_ev	0xb0, 31, 9, 3, 39, 127
+	sq_note	0x90, 48, 38, 58, 22, 0
+	sq_note	0x90, 48, 70, 77, 23, 0
+	sq_ev	0xb0, 52, 9, 3, 38, 127
+	sq_note	0x90, 72, 38, 72, 22, 0
+	sq_ev	0xb0, 73, 9, 3, 37, 127
+	sq_ev	0xb0, 95, 9, 3, 36, 127
+	sq_beat
+	sq_note	0x90, 0, 36, 105, 22, 0
+	sq_note	0x90, 0, 42, 127, 46, 0
+	sq_note	0x90, 0, 54, 102, 48, 0
+	sq_ev	0xb0, 20, 9, 3, 35, 127
+	sq_ev	0xb0, 41, 9, 3, 34, 127
+	sq_note	0x90, 48, 70, 77, 23, 0
+	sq_ev	0xb0, 63, 9, 3, 33, 127
+	sq_ev	0xb0, 84, 9, 3, 32, 127
+	sq_beat
+	sq_note	0x90, 0, 36, 117, 22, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 0, 42, 127, 22, 0 (split by a cell boundary)
 	seq_block	0xff, 296, 366	; block 619: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42805, 251
+; a stale copy: the same 251 bytes as block 480 (chain from block 488, 82 of 83), typed as that block is
+	.byte	0x09, 0x03, 0x09, 0x7f	; last 4 bytes of sq_ev 0xb0, 95, 9, 3, 9, 127 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 42, 125, 23, 0
+	sq_note	0x90, 0, 38, 93, 23, 0
+	sq_note	0x90, 0, 54, 111, 48, 0
+	sq_ev	0xb0, 20, 9, 3, 8, 127
+	sq_ev	0xb0, 41, 9, 3, 7, 127
+	sq_note	0x90, 48, 70, 72, 23, 0
+	sq_ev	0xb0, 63, 9, 3, 6, 127
+	sq_ev	0xb0, 84, 9, 3, 5, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 127, 22, 0
+	sq_note	0x90, 0, 70, 84, 23, 0
+	sq_ev	0xb0, 9, 9, 3, 4, 127
+	sq_ev	0xb0, 31, 9, 3, 3, 127
+	sq_note	0x90, 48, 70, 89, 23, 0
+	sq_ev	0xb0, 52, 9, 3, 2, 127
+	sq_ev	0xb0, 73, 9, 3, 1, 127
+	sq_ev	0xb0, 95, 9, 3, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 54, 93, 48, 0
+	sq_note	0x90, 48, 70, 58, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 70, 89, 23, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 48, 70, 77, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 70, 81, 23, 0
+	sq_note	0x90, 48, 70, 96, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 49, 70, 81, 16, 0
+	sq_beat
+	sq_note	0x90, 4, 70, 61, 16, 0
+	sq_note	0x90, 48, 70, 84, 24, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 127, 28, 0
+	sq_note	0x90, 50, 70, 86, 15, 0
+	sq_beat
+	sq_note	0x90, 4, 70, 89, 14, 0
+	sq_note	0x90, 47, 70, 77, 23, 0
+	sq_note	0x90, 95, 54, 127, 26, 0
+	sq_beat
+	sq_note	0x90, 50, 70, 96, 18, 0
+	sq_beat
+	sq_note	0x90, 5, 70, 91, 20, 0
+	sq_note	0x90, 50, 70, 66, 21, 0
+	sq_note	0x90, 92, 54, 127, 26, 0
+	sq_beat
+	sq_note	0x90, 43, 70, 81, 16, 0
+	sq_note	0x90, 92, 70, 84, 17, 0
 	seq_block	0x80, 691, 299	; block 620: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42905, 251
+; a stale copy: the same 251 bytes as block 481 (chain from block 489, 25 of 26), typed as that block is
+	.byte	0x33, 0x24, 0x01	; last 3 bytes of sq_note 0x90, 36, 64, 51, 36, 1 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 38, 59, 26, 41, 1
+	sq_beat
+	sq_note	0x90, 29, 64, 43, 10, 1
+	sq_beat
+	sq_note	0x90, 22, 59, 35, 12, 1
+	sq_ev	0xb4, 49, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 13, 64, 58, 74, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 48, 2, 1
+	sq_note	0x90, 89, 64, 55, 74, 0
+	sq_beat
+	sq_note	0x90, 75, 59, 22, 4, 1
+	sq_beat
+	sq_note	0x90, 70, 64, 51, 76, 0
+	sq_beat
+	sq_note	0x90, 57, 59, 35, 85, 0
+	sq_beat
+	sq_note	0x90, 42, 64, 35, 73, 0
+	sq_beat
+	sq_note	0x90, 26, 59, 48, 83, 0
+	sq_beat
+	sq_note	0x90, 12, 64, 35, 71, 0
+	sq_note	0x90, 92, 59, 30, 80, 0
+	sq_beat
+	sq_note	0x90, 73, 64, 48, 73, 0
+	sq_beat
+	sq_note	0x90, 62, 59, 26, 87, 0
+	sq_beat
+	sq_note	0x90, 49, 64, 55, 64, 0
+	sq_beat
+	sq_note	0x90, 29, 59, 18, 82, 0
+	sq_beat
+	sq_note	0x90, 12, 64, 48, 77, 0
+	sq_beat
+	sq_note	0x90, 14, 59, 26, 88, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 35, 95, 0
+	sq_beat
+	sq_note	0x90, 26, 59, 14, 76, 0
+	sq_note	0x90, 95, 64, 51, 66, 0
+	sq_beat
+	sq_note	0x90, 68, 59, 30, 93, 0
+	sq_beat
+	sq_note	0x90, 55, 64, 48, 62, 0
+	sq_beat
+	sq_note	0x90, 38, 59, 30, 86, 0
+	sq_beat
+	sq_note	0x90, 17, 64, 48, 65, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 26, 90, 0
+	sq_note	0x90, 87, 64, 14, 67, 0
+	sq_beat
+	sq_note	0x90, 67, 59, 14, 89, 0
+	sq_beat
+	sq_note	0x90, 55, 64, 35, 66, 0
+	sq_beat
+	sq_note	0x90, 48, 59, 14, 46, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 16, 57, 51, 12, 1
+	sq_beat
+	sq_note	0x90, 8, 64, 48, 91, 3
+	sq_beat
+	sq_note	0x90, 60, 57, 58, 80, 0
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x0b, 0x39, 0x30, 0x59	; first 5 bytes of sq_note 0x90, 11, 57, 48, 89, 6 (split by a cell boundary)
 	seq_block	0x88, 322, 622	; block 621: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42a05, 251
+; a stale copy: the same 251 bytes as block 482 (chain from block 104, 23 of 25), typed as that block is
+	.byte	0x32, 0x00, 0x1e	; last 3 bytes of sq_ev 0xd2, 50, 0, 30 (split by a cell boundary)
+	sq_ev	0xd2, 52, 0, 27
+	sq_ev	0xd2, 55, 0, 24
+	sq_ev	0xd2, 57, 0, 22
+	sq_ev	0xd2, 60, 0, 20
+	sq_ev	0xd2, 62, 0, 18
+	sq_ev	0xd2, 64, 0, 16
+	sq_ev	0xd2, 67, 0, 14
+	sq_ev	0xd2, 69, 0, 12
+	sq_ev	0xd2, 72, 0, 11
+	sq_ev	0xd2, 74, 0, 10
+	sq_ev	0xd2, 79, 0, 8
+	sq_ev	0xd2, 81, 0, 7
+	sq_ev	0xd2, 86, 0, 5
+	sq_beat
+	sq_ev	0xd2, 0, 0, 3
+	sq_ev	0xd2, 7, 0, 1
+	sq_ev	0xd2, 9, 0, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 9, 54, 79, 26, 1
+	sq_ev	0xd2, 52, 0, 1
+	sq_ev	0xd2, 55, 0, 3
+	sq_ev	0xd2, 57, 0, 6
+	sq_ev	0xd2, 60, 0, 9
+	sq_ev	0xd2, 62, 0, 12
+	sq_ev	0xd2, 64, 0, 15
+	sq_ev	0xd2, 67, 0, 19
+	sq_ev	0xd2, 69, 0, 23
+	sq_ev	0xd2, 72, 0, 27
+	sq_ev	0xd2, 74, 0, 33
+	sq_ev	0xd2, 76, 0, 39
+	sq_ev	0xd2, 79, 0, 47
+	sq_ev	0xd2, 82, 0, 55
+	sq_ev	0xd2, 84, 0, 64
+	sq_beat
+	sq_note	0x90, 56, 57, 69, 56, 0
+	sq_beat
+	sq_note	0x90, 43, 52, 79, 9, 2
+	sq_ev	0xd2, 86, 0, 65
+	sq_ev	0xd2, 88, 0, 68
+	sq_ev	0xd2, 91, 0, 72
+	sq_ev	0xd2, 94, 0, 76
+	sq_beat
+	sq_ev	0xd2, 0, 0, 81
+	sq_ev	0xd2, 2, 0, 86
+	sq_ev	0xd2, 5, 0, 91
+	sq_ev	0xd2, 7, 0, 95
+	sq_ev	0xd2, 10, 0, 100
+	sq_ev	0xd2, 12, 0, 105
+	sq_ev	0xd2, 14, 0, 109
+	sq_ev	0xd2, 16, 0, 114
+	sq_ev	0xd2, 19, 0, 119
+	sq_ev	0xd2, 21, 0, 124
+	sq_ev	0xd2, 24, 0, 127
+	sq_ev	0xd2, 79, 0, 126
+	sq_ev	0xd2, 82, 0, 121
+	sq_ev	0xd2, 84, 0, 116
+	sq_ev	0xd2, 87, 0, 111
+	sq_ev	0xd2, 89, 0, 106
+	sq_ev	0xd2, 92, 0, 101
+	sq_ev	0xd2, 94, 0, 96
+	sq_beat
+	sq_ev	0xd2, 0, 0, 90
+	sq_ev	0xd2, 3, 0, 85
+	sq_ev	0xd2, 5, 0, 79
+	.byte	0xd2	; first 1 bytes of sq_ev 0xd2, 8, 0, 74 (split by a cell boundary)
 	seq_block	0x80, 621, 523	; block 622: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42b05, 251
+; a stale copy: the same 251 bytes as block 483 (chain from block 104, 24 of 25), typed as that block is
+	.byte	0x08, 0x00, 0x4a	; last 3 bytes of sq_ev 0xd2, 8, 0, 74 (split by a cell boundary)
+	sq_ev	0xd2, 10, 0, 70
+	sq_ev	0xd2, 12, 0, 65
+	sq_ev	0xd2, 15, 0, 64
+	sq_note	0x90, 89, 45, 69, 34, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 8, 57, 77, 61, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 17, 52, 61, 59, 1
+	sq_note	0x90, 20, 54, 22, 7, 0
+	sq_ev	0xd2, 48, 0, 65
+	sq_ev	0xd2, 51, 0, 69
+	sq_ev	0xd2, 53, 0, 74
+	sq_ev	0xd2, 56, 0, 79
+	sq_ev	0xd2, 58, 0, 85
+	sq_ev	0xd2, 60, 0, 91
+	sq_ev	0xd2, 63, 0, 97
+	sq_ev	0xd2, 65, 0, 103
+	sq_ev	0xd2, 68, 0, 109
+	sq_ev	0xd2, 70, 0, 115
+	sq_ev	0xd2, 72, 0, 120
+	sq_ev	0xd2, 75, 0, 125
+	sq_ev	0xd2, 77, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 4, 0, 114
+	sq_ev	0xd2, 6, 0, 87
+	sq_ev	0xd2, 8, 0, 69
+	sq_ev	0xd2, 11, 0, 64
+	sq_note	0x90, 16, 45, 84, 85, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 72, 0, 62
+	sq_ev	0xd2, 80, 0, 60
+	sq_ev	0xd2, 87, 0, 58
+	sq_ev	0xd2, 89, 0, 57
+	sq_ev	0xd2, 94, 0, 56
+	sq_beat
+	sq_ev	0xd2, 0, 0, 55
+	sq_ev	0xd2, 5, 0, 53
+	sq_ev	0xd2, 12, 0, 51
+	sq_ev	0xd2, 22, 0, 49
+	sq_ev	0xd2, 32, 0, 47
+	sq_ev	0xd2, 34, 0, 46
+	sq_ev	0xd2, 41, 0, 45
+	sq_ev	0xd2, 44, 0, 44
+	sq_ev	0xd2, 54, 0, 43
+	sq_ev	0xd2, 56, 0, 42
+	sq_ev	0xd2, 66, 0, 41
+	sq_ev	0xd2, 68, 0, 40
+	sq_ev	0xd2, 76, 0, 39
+	sq_ev	0xd2, 78, 0, 38
+	sq_ev	0xd2, 86, 0, 36
+	sq_beat
+	sq_ev	0xd2, 0, 0, 34
+	sq_ev	0xd2, 2, 0, 33
+	sq_ev	0xd2, 9, 0, 31
+	sq_ev	0xd2, 18, 0, 29
+	sq_ev	0xd2, 31, 0, 27
+	sq_ev	0xd2, 40, 0, 25
+	sq_ev	0xd2, 50, 0, 23
+	sq_ev	0xd2, 60, 0, 21
+	sq_ev	0xd2, 62, 0, 20
+	.byte	0xd2	; first 1 bytes of sq_ev 0xd2, 72, 0, 19 (split by a cell boundary)
 	seq_block	0x80, 12, 0xffff	; block 623: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x42c05, 251
+; a stale copy: the same 251 bytes as block 484 (chain from block 485, 61 of 61), typed as that block is
+	.byte	0x33, 0x17, 0x00	; last 3 bytes of sq_note 0x90, 12, 54, 51, 23, 0 (split by a cell boundary)
+	sq_beat
+	sq_ev	0xb4, 0, 53, 2, 0, 127
+	sq_note	0x90, 8, 41, 55, 91, 1
+	sq_note	0x90, 8, 53, 55, 88, 0
+	sq_note	0x90, 8, 60, 77, 91, 0
+	sq_note	0x90, 9, 57, 74, 89, 0
+	sq_ev	0xb4, 76, 53, 2, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 60, 77, 52, 0
+	sq_note	0x90, 3, 57, 86, 52, 0
+	sq_note	0x90, 3, 53, 66, 52, 0
+	sq_note	0x90, 94, 41, 66, 32, 0
+	sq_beat
+	sq_ev	0xb4, 87, 53, 2, 0, 127
+	sq_note	0x90, 88, 55, 48, 26, 1
+	sq_note	0x90, 92, 50, 35, 13, 1
+	sq_note	0x90, 92, 59, 51, 16, 1
+	sq_note	0x90, 92, 43, 26, 9, 2
+	sq_beat
+	sq_ev	0xb4, 74, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 89, 55, 89, 24, 1
+	sq_note	0x90, 92, 50, 74, 57, 0
+	sq_note	0x90, 92, 59, 89, 30, 1
+	sq_beat
+	sq_note	0x90, 91, 43, 22, 28, 0
+	sq_note	0x90, 94, 50, 35, 25, 0
+	sq_beat
+	sq_note	0x90, 92, 57, 43, 41, 8
+	sq_note	0x90, 93, 52, 51, 36, 8
+	sq_note	0x90, 93, 45, 30, 8, 8
+	sq_beat
+	sq_note	0x90, 0, 61, 48, 38, 8
+	sq_ev	0xb4, 0, 53, 2, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 19, 53, 2, 127, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 70, 53, 2, 0, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 90, 47, 0
+	.byte	0xe0, 0x06, 0x00, 0x57, 0xe0, 0x08, 0x00, 0x45, 0x91, 0x08, 0x29, 0x37, 0x2b, 0x02, 0x92, 0x08	; after the end of track
+	.byte	0x29
 	seq_block	0x80, 0, 18	; block 624: chain from block 624, 1 of 1
 	sq_ev	0xc0, 0, 2, 0, 22, 0
 	sq_ev	0xb0, 0, 2, 3, 90, 127
@@ -44629,8 +48503,60 @@ F_01220497_SEQ:
 	sq_beat
 	sq_beat
 	seq_block	0x80, 85, 94	; block 635: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x43805, 251
+; a stale copy: the same 251 bytes as block 496 (chain from block 222, 14 of 81), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 91, 45, 64, 48, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 37, 52, 55, 60, 1
+	sq_note	0x90, 92, 55, 51, 6, 1
+	sq_note	0x90, 93, 57, 72, 12, 1
+	sq_ev	0xb4, 93, 53, 1, 0, 127
+	sq_note	0x90, 93, 43, 64, 54, 0
+	sq_note	0x90, 95, 61, 72, 13, 1
+	sq_beat
+	sq_ev	0xb4, 43, 53, 1, 127, 127
+	sq_note	0x90, 84, 43, 35, 13, 1
+	sq_beat
+	sq_note	0x90, 90, 57, 69, 87, 0
+	sq_note	0x90, 91, 55, 89, 74, 0
+	sq_note	0x90, 91, 61, 72, 86, 0
+	sq_note	0x90, 92, 52, 84, 78, 0
+	sq_beat
+	sq_note	0x90, 84, 43, 39, 6, 2
+	sq_beat
+	sq_note	0x90, 43, 57, 51, 95, 0
+	sq_note	0x90, 43, 55, 66, 91, 0
+	sq_note	0x90, 45, 61, 61, 89, 0
+	sq_note	0x90, 47, 52, 39, 85, 0
+	sq_beat
+	sq_note	0x90, 91, 57, 69, 93, 0
+	sq_note	0x90, 92, 61, 74, 92, 0
+	sq_note	0x90, 92, 55, 66, 89, 0
+	sq_note	0x90, 95, 52, 64, 90, 0
+	sq_beat
+	sq_note	0x90, 86, 43, 61, 47, 0
+	sq_beat
+	sq_note	0x90, 45, 57, 69, 42, 0
+	sq_note	0x90, 45, 55, 77, 42, 0
+	sq_note	0x90, 46, 61, 72, 57, 0
+	sq_note	0x90, 48, 52, 89, 32, 0
+	sq_note	0x90, 91, 43, 66, 30, 0
+	sq_beat
+	sq_note	0x90, 42, 54, 30, 42, 1
+	sq_ev	0xb4, 79, 53, 1, 0, 127
+	sq_note	0x90, 88, 42, 58, 52, 0
+	sq_note	0x90, 89, 61, 74, 30, 1
+	sq_note	0x90, 90, 57, 72, 16, 1
+	sq_beat
+	sq_ev	0xb4, 32, 53, 1, 127, 127
+	sq_note	0x90, 88, 42, 64, 81, 2
+	sq_beat
+	sq_note	0x90, 43, 54, 18, 12, 0
+	sq_note	0x90, 93, 61, 72, 4, 1
+	sq_note	0x90, 93, 54, 72, 34, 0
+	sq_note	0x90, 93, 57, 79, 28, 0
+	sq_beat
+	sq_note	0x90, 51, 57, 51, 55, 0
+	.byte	0x90, 0x5e, 0x36, 0x33	; first 4 bytes of sq_note 0x90, 94, 54, 51, 10, 1 (split by a cell boundary)
 	seq_block	0x80, 630, 639	; block 636: chain from block 630, 2 of 3
 	sq_beat
 	sq_beat
@@ -44728,11 +48654,117 @@ F_01220497_SEQ:
 	sq_ev	0xd2, 40, 0, 82
 	.byte	0xd2, 0x2a	; first 2 bytes of sq_ev 0xd2, 42, 0, 76 (split by a cell boundary)
 	seq_block	0xff, 374, 20	; block 637: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x43a05, 251
+; a stale copy: the same 251 bytes as block 498 (chain from block 485, 16 of 61), typed as that block is
+	.byte	0x30, 0x00	; last 2 bytes of sq_note 0x90, 88, 57, 69, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 88, 55, 84, 48, 0
+	sq_note	0x90, 88, 61, 77, 46, 0
+	sq_note	0x90, 90, 52, 74, 45, 0
+	sq_beat
+	sq_note	0x90, 91, 43, 48, 91, 1
+	sq_beat
+	sq_note	0x90, 43, 57, 79, 45, 0
+	sq_note	0x90, 43, 55, 66, 45, 0
+	sq_note	0x90, 44, 61, 66, 42, 0
+	sq_note	0x90, 45, 52, 66, 44, 0
+	sq_beat
+	sq_note	0x90, 90, 57, 79, 88, 0
+	sq_note	0x90, 90, 55, 81, 80, 0
+	sq_note	0x90, 91, 52, 72, 70, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 48, 77, 0
+	sq_note	0x90, 81, 43, 39, 46, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 77, 53, 0
+	sq_note	0x90, 40, 55, 69, 48, 0
+	sq_note	0x90, 43, 61, 64, 67, 0
+	sq_note	0x90, 43, 52, 72, 28, 0
+	sq_note	0x90, 88, 43, 35, 28, 0
+	sq_beat
+	sq_note	0x90, 37, 52, 14, 10, 0
+	sq_note	0x90, 90, 57, 69, 81, 0
+	sq_note	0x90, 92, 54, 69, 85, 0
+	sq_note	0x90, 93, 42, 79, 37, 0
+	sq_note	0x90, 93, 61, 89, 91, 0
+	sq_beat
+	sq_ev	0xb4, 3, 53, 2, 0, 127
+	sq_ev	0xb4, 41, 53, 2, 127, 127
+	sq_note	0x90, 88, 42, 69, 7, 1
+	sq_beat
+	sq_note	0x90, 88, 61, 72, 92, 0
+	sq_note	0x90, 88, 54, 84, 82, 0
+	sq_note	0x90, 89, 57, 81, 86, 0
+	sq_beat
+	sq_note	0x90, 87, 42, 58, 89, 1
+	sq_beat
+	sq_note	0x90, 41, 64, 102, 59, 0
+	sq_note	0x90, 42, 57, 79, 59, 0
+	sq_note	0x90, 43, 54, 72, 59, 0
+	sq_beat
+	sq_note	0x90, 88, 61, 74, 87, 0
+	sq_note	0x90, 89, 57, 81, 89, 0
+	sq_note	0x90, 90, 54, 72, 84, 0
+	sq_beat
+	sq_note	0x90, 86, 42, 48, 44, 0
+	sq_beat
+	sq_note	0x90, 42, 57, 96, 56, 0
+	sq_note	0x90, 43, 61, 72, 62, 0
+	.byte	0x90, 0x2b	; first 2 bytes of sq_note 0x90, 43, 54, 74, 40, 0 (split by a cell boundary)
 	seq_block	0xff, 48, 290	; block 638: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x43b05, 251
+; a stale copy: the same 251 bytes as block 499 (chain from block 222, 17 of 81), typed as that block is
+	.byte	0x2d, 0x00	; last 2 bytes of sq_note 0x90, 36, 57, 72, 45, 0 (split by a cell boundary)
+	sq_note	0x90, 40, 52, 72, 27, 0
+	sq_note	0x90, 40, 61, 72, 62, 0
+	sq_note	0x90, 40, 55, 64, 39, 0
+	sq_note	0x90, 83, 43, 72, 31, 0
+	sq_beat
+	sq_note	0x90, 35, 54, 30, 69, 1
+	sq_ev	0xb4, 81, 53, 1, 0, 127
+	sq_note	0x90, 84, 57, 89, 23, 1
+	sq_note	0x90, 86, 61, 77, 28, 1
+	sq_note	0x90, 87, 42, 77, 56, 0
+	sq_beat
+	sq_ev	0xb4, 28, 53, 1, 127, 127
+	sq_note	0x90, 90, 42, 79, 10, 1
+	sq_beat
+	sq_note	0x90, 88, 61, 72, 10, 1
+	sq_note	0x90, 89, 57, 89, 5, 1
+	sq_note	0x90, 91, 54, 66, 0, 1
+	sq_beat
+	sq_note	0x90, 85, 42, 43, 17, 2
+	sq_beat
+	sq_note	0x90, 40, 61, 58, 0, 1
+	sq_note	0x90, 43, 57, 64, 91, 0
+	sq_note	0x90, 43, 54, 55, 87, 0
+	sq_beat
+	sq_note	0x90, 86, 61, 79, 4, 1
+	sq_note	0x90, 86, 57, 84, 2, 1
+	sq_note	0x90, 86, 54, 84, 1, 1
+	sq_beat
+	sq_note	0x90, 88, 42, 89, 46, 0
+	sq_beat
+	sq_note	0x90, 40, 61, 84, 10, 1
+	sq_note	0x90, 40, 57, 72, 8, 1
+	sq_note	0x90, 40, 54, 72, 40, 0
+	sq_note	0x90, 89, 42, 66, 64, 0
+	sq_beat
+	sq_note	0x90, 36, 54, 26, 16, 0
+	sq_ev	0xb4, 86, 53, 1, 0, 127
+	sq_note	0x90, 88, 61, 89, 23, 1
+	sq_note	0x90, 88, 52, 74, 0, 1
+	sq_note	0x90, 88, 57, 74, 21, 1
+	sq_note	0x90, 89, 40, 79, 62, 0
+	sq_beat
+	sq_ev	0xb4, 32, 53, 1, 127, 127
+	sq_note	0x90, 87, 40, 66, 29, 1
+	sq_beat
+	sq_note	0x90, 88, 61, 89, 16, 1
+	sq_note	0x90, 88, 57, 96, 9, 1
+	sq_note	0x90, 90, 52, 79, 95, 0
+	sq_beat
+	sq_note	0x90, 90, 40, 64, 3, 1
+	sq_beat
+	sq_note	0x90, 44, 61, 74, 5, 1
+	.byte	0x90, 0x2e	; first 2 bytes of sq_note 0x90, 46, 57, 84, 4, 1 (split by a cell boundary)
 	seq_block	0xff, 636, 102	; block 639: chain from block 630, 3 of 3
 	.byte	0x00, 0x4c	; last 2 bytes of sq_ev 0xd2, 42, 0, 76 (split by a cell boundary)
 	sq_ev	0xd2, 45, 0, 71
@@ -44806,14 +48838,227 @@ F_01220497_SEQ:
 	sq_ev	0xd2, 2, 0, 83
 	sq_ev	0xd2, 4, 0
 	seq_block	0x80, 489, 398	; block 640: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x43d05, 251
+; a stale copy: the same 251 bytes as block 501 (chain from block 489, 5 of 26), typed as that block is
+	.byte	0x37, 0x4d, 0x2a, 0x00	; last 4 bytes of sq_note 0x90, 48, 55, 77, 42, 0 (split by a cell boundary)
+	sq_note	0x90, 49, 57, 111, 14, 1
+	sq_note	0x90, 50, 61, 96, 14, 1
+	sq_note	0x90, 52, 64, 93, 92, 0
+	sq_note	0x90, 93, 43, 61, 47, 0
+	sq_beat
+	sq_note	0x90, 44, 55, 58, 22, 0
+	sq_ev	0xb4, 84, 53, 10, 0, 127
+	sq_note	0x90, 93, 42, 74, 56, 6
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 2, 53, 10, 127, 127
+	sq_note	0x90, 88, 61, 102, 9, 2
+	sq_note	0x90, 90, 57, 77, 92, 1
+	sq_note	0x90, 90, 54, 96, 71, 1
+	sq_ev	0xb4, 91, 53, 10, 0, 127
+	sq_beat
+	sq_ev	0xb4, 36, 53, 10, 127, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 85, 53, 10, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 93, 0
+	sq_note	0x90, 0, 57, 84, 91, 0
+	sq_note	0x90, 1, 64, 79, 90, 0
+	sq_ev	0xb4, 62, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 52, 61, 81, 60, 0
+	sq_note	0x90, 52, 57, 111, 57, 0
+	sq_beat
+	sq_note	0x90, 2, 42, 74, 38, 0
+	sq_ev	0xb4, 46, 53, 10, 0, 127
+	sq_beat
+	sq_note	0x90, 2, 45, 89, 74, 2
+	sq_note	0x90, 91, 52, 30, 32, 0
+	sq_beat
+	sq_note	0x90, 93, 52, 102, 16, 1
+	sq_note	0x90, 93, 61, 79, 24, 1
+	sq_note	0x90, 94, 57, 99, 22, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 45, 79, 75, 0
+	sq_note	0x90, 49, 57, 117, 3, 1
+	sq_note	0x90, 49, 52, 93, 92, 0
+	sq_note	0x90, 50, 61, 69, 6, 1
+	sq_beat
+	sq_note	0x90, 44, 45, 72, 87, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 9, 2
+	sq_note	0x90, 0, 57, 114, 6, 2
+	sq_note	0x90, 0, 64, 89, 10, 2
+	sq_beat
+	sq_note	0x90, 2, 45, 35, 95, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 91, 45, 89, 56, 1
+	sq_beat
+	sq_note	0x90, 93, 61, 99, 8, 1
 	seq_block	0x80, 362, 645	; block 641: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x43e05, 251
+; a stale copy: the same 251 bytes as block 502 (chain from block 485, 19 of 61), typed as that block is
+	.byte	0x7f	; last 1 bytes of sq_ev 0xb4, 88, 53, 2, 0, 127 (split by a cell boundary)
+	sq_note	0x90, 95, 57, 84, 20, 1
+	sq_beat
+	sq_note	0x90, 0, 54, 69, 19, 1
+	sq_note	0x90, 0, 52, 74, 19, 1
+	sq_note	0x90, 1, 61, 72, 21, 1
+	sq_note	0x90, 3, 42, 89, 46, 0
+	sq_ev	0xb4, 45, 53, 2, 127, 127
+	sq_note	0x90, 95, 42, 58, 1, 1
+	sq_beat
+	sq_note	0x90, 93, 57, 74, 95, 0
+	sq_note	0x90, 93, 54, 79, 95, 0
+	sq_note	0x90, 94, 61, 74, 95, 0
+	sq_note	0x90, 95, 52, 79, 95, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 42, 22, 49, 0
+	sq_note	0x90, 50, 57, 72, 63, 0
+	sq_note	0x90, 50, 54, 77, 61, 0
+	sq_note	0x90, 52, 52, 79, 60, 0
+	sq_note	0x90, 52, 61, 77, 62, 0
+	sq_beat
+	sq_note	0x90, 1, 42, 35, 0, 1
+	sq_note	0x90, 92, 57, 89, 92, 0
+	sq_note	0x90, 93, 54, 84, 92, 0
+	sq_note	0x90, 93, 52, 77, 92, 0
+	sq_note	0x90, 93, 61, 74, 92, 0
+	sq_beat
+	sq_note	0x90, 94, 42, 55, 41, 0
+	sq_beat
+	sq_note	0x90, 48, 57, 79, 52, 0
+	sq_note	0x90, 49, 54, 74, 46, 0
+	sq_note	0x90, 49, 52, 77, 37, 0
+	sq_note	0x90, 49, 61, 89, 60, 0
+	sq_note	0x90, 92, 42, 64, 42, 0
+	sq_beat
+	sq_note	0x90, 43, 52, 35, 21, 0
+	sq_ev	0xb4, 81, 53, 2, 0, 127
+	sq_note	0x90, 91, 57, 89, 15, 1
+	sq_note	0x90, 93, 52, 72, 9, 1
+	sq_note	0x90, 93, 61, 84, 13, 1
+	sq_note	0x90, 95, 40, 89, 56, 0
+	sq_beat
+	sq_ev	0xb4, 42, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 74, 11, 1
+	sq_beat
+	sq_note	0x90, 0, 57, 72, 94, 0
+	sq_note	0x90, 1, 52, 89, 94, 0
+	sq_note	0x90, 1, 61, 89, 94, 0
+	sq_note	0x90, 90, 40, 48, 46, 0
+	sq_beat
+	.byte	0x90, 0x2c, 0x39, 0x4d	; first 4 bytes of sq_note 0x90, 44, 57, 77, 65, 0 (split by a cell boundary)
 	seq_block	0x80, 385, 507	; block 642: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x43f05, 251
+; a stale copy: the same 251 bytes as block 503 (chain from block 246, 2 of 52), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xc0, 0, 6, 0, 30, 0
+	sq_note	0x90, 0, 59, 108, 95, 0
+	sq_note	0x90, 0, 40, 127, 47, 2
+	sq_note	0x90, 0, 52, 127, 47, 0
+	sq_note	0x90, 0, 64, 127, 95, 0
+	sq_ev	0xb4, 4, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 52, 77, 48, 0
+	sq_note	0x90, 0, 59, 79, 48, 0
+	sq_note	0x90, 0, 56, 79, 48, 0
+	sq_note	0x90, 0, 64, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 84, 48, 0
+	sq_note	0x90, 0, 59, 84, 48, 0
+	sq_note	0x90, 0, 64, 96, 48, 0
+	sq_note	0x90, 0, 52, 124, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 84, 48, 0
+	sq_note	0x90, 0, 59, 58, 48, 0
+	sq_note	0x90, 0, 56, 69, 48, 0
+	sq_note	0x90, 0, 40, 108, 48, 4
+	sq_note	0x90, 0, 64, 77, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 84, 48, 0
+	sq_note	0x90, 0, 64, 89, 48, 0
+	sq_note	0x90, 0, 56, 86, 48, 0
+	sq_note	0x90, 0, 52, 124, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 102, 48, 0
+	sq_note	0x90, 0, 52, 126, 48, 0
+	sq_note	0x90, 0, 59, 93, 48, 0
+	sq_note	0x90, 0, 64, 86, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 79, 48, 0
+	sq_note	0x90, 0, 64, 89, 48, 0
+	.byte	0x90, 0x00	; first 2 bytes of sq_note 0x90, 0, 59, 84, 48, 0 (split by a cell boundary)
 	seq_block	0x80, 632, 371	; block 643: chain from block 632, 2 of 2
 	sq_beat
 	sq_beat
@@ -44982,14 +49227,173 @@ F_01220497_SEQ:
 	sq_beat
 	sq_note	0x90, 0, 66, 64, 48, 0
 	seq_block	0xc0, 52, 563	; block 644: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44105, 251
+; a stale copy: the same 251 bytes as block 505 (chain from block 222, 20 of 81), typed as that block is
+	sq_note	0x90, 48, 54, 72, 54, 0
+	sq_note	0x90, 90, 42, 66, 30, 1
+	sq_beat
+	sq_note	0x90, 93, 61, 96, 3, 1
+	sq_note	0x90, 93, 57, 111, 0, 1
+	sq_note	0x90, 94, 54, 111, 94, 0
+	sq_note	0x90, 94, 64, 77, 94, 0
+	sq_beat
+	sq_note	0x90, 92, 42, 84, 42, 0
+	sq_beat
+	sq_note	0x90, 45, 61, 96, 4, 1
+	sq_note	0x90, 45, 57, 89, 3, 1
+	sq_note	0x90, 46, 54, 77, 45, 0
+	sq_note	0x90, 93, 42, 96, 53, 0
+	sq_beat
+	sq_note	0x90, 42, 54, 30, 14, 0
+	sq_ev	0xb4, 90, 53, 1, 0, 127
+	sq_note	0x90, 91, 61, 89, 28, 1
+	sq_note	0x90, 92, 57, 96, 23, 1
+	sq_note	0x90, 92, 52, 111, 17, 1
+	sq_note	0x90, 92, 40, 96, 61, 0
+	sq_beat
+	sq_ev	0xb4, 36, 53, 1, 127, 127
+	sq_note	0x90, 95, 40, 89, 30, 1
+	sq_beat
+	sq_note	0x90, 93, 61, 102, 0, 1
+	sq_note	0x90, 94, 57, 93, 0, 1
+	sq_note	0x90, 94, 52, 81, 90, 0
+	sq_note	0x90, 95, 64, 86, 87, 0
+	sq_beat
+	sq_note	0x90, 92, 40, 66, 49, 0
+	sq_beat
+	sq_note	0x90, 40, 61, 79, 74, 0
+	sq_note	0x90, 40, 52, 72, 63, 0
+	sq_note	0x90, 40, 57, 84, 71, 0
+	sq_note	0x90, 88, 40, 84, 14, 1
+	sq_beat
+	sq_note	0x90, 92, 57, 102, 0, 1
+	sq_note	0x90, 92, 61, 77, 0, 1
+	sq_note	0x90, 92, 52, 86, 92, 0
+	sq_note	0x90, 93, 64, 74, 91, 0
+	sq_beat
+	sq_note	0x90, 91, 40, 64, 42, 0
+	sq_beat
+	sq_note	0x90, 42, 61, 102, 65, 0
+	sq_note	0x90, 43, 57, 84, 65, 0
+	sq_note	0x90, 43, 52, 86, 50, 0
+	sq_note	0x90, 43, 64, 89, 51, 0
+	sq_note	0x90, 90, 40, 84, 30, 0
+	sq_beat
+	sq_note	0x90, 46, 52, 39, 46, 1
+	.byte	0xb4, 0x5b, 0x35, 0x01, 0x00	; first 5 bytes of sq_ev 0xb4, 91, 53, 1, 0, 127 (split by a cell boundary)
 	seq_block	0x80, 641, 293	; block 645: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44205, 251
+; a stale copy: the same 251 bytes as block 506 (chain from block 485, 20 of 61), typed as that block is
+	.byte	0x41, 0x00	; last 2 bytes of sq_note 0x90, 44, 57, 77, 65, 0 (split by a cell boundary)
+	sq_note	0x90, 44, 52, 77, 58, 0
+	sq_note	0x90, 45, 61, 72, 61, 0
+	sq_note	0x90, 91, 40, 64, 10, 1
+	sq_beat
+	sq_note	0x90, 92, 57, 84, 2, 1
+	sq_note	0x90, 92, 52, 84, 2, 1
+	sq_note	0x90, 93, 61, 79, 1, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 40, 61, 36, 0
+	sq_note	0x90, 50, 57, 79, 49, 0
+	sq_note	0x90, 51, 52, 79, 42, 0
+	sq_note	0x90, 52, 61, 74, 43, 0
+	sq_note	0x90, 91, 40, 84, 30, 0
+	sq_beat
+	sq_note	0x90, 47, 52, 22, 17, 0
+	sq_ev	0xb4, 73, 53, 2, 0, 127
+	sq_note	0x90, 91, 45, 61, 46, 0
+	sq_note	0x90, 92, 57, 66, 18, 1
+	sq_note	0x90, 92, 52, 69, 13, 1
+	sq_note	0x90, 92, 61, 74, 19, 1
+	sq_beat
+	sq_ev	0xb4, 31, 53, 2, 127, 127
+	sq_note	0x90, 92, 45, 61, 7, 1
+	sq_beat
+	sq_note	0x90, 89, 57, 89, 2, 1
+	sq_note	0x90, 89, 52, 89, 0, 1
+	sq_note	0x90, 91, 61, 84, 93, 0
+	sq_beat
+	sq_note	0x90, 88, 45, 51, 49, 0
+	sq_beat
+	sq_note	0x90, 42, 57, 84, 76, 0
+	sq_note	0x90, 44, 52, 84, 68, 0
+	sq_note	0x90, 44, 61, 84, 75, 0
+	sq_note	0x90, 85, 45, 69, 15, 1
+	sq_beat
+	sq_note	0x90, 89, 57, 84, 0, 1
+	sq_note	0x90, 89, 52, 79, 0, 1
+	sq_note	0x90, 91, 61, 72, 93, 0
+	sq_beat
+	sq_note	0x90, 92, 45, 55, 43, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 72, 57, 0
+	sq_note	0x90, 46, 52, 77, 43, 0
+	sq_note	0x90, 46, 61, 79, 47, 0
+	sq_note	0x90, 88, 45, 72, 47, 0
+	sq_beat
+	sq_note	0x90, 40, 52, 30, 23, 0
+	sq_ev	0xb4, 79, 53, 2, 0, 127
+	sq_note	0x90, 88, 55, 77, 11, 1
+	sq_note	0x90, 89, 57, 79, 20, 1
+	.byte	0x90, 0x59, 0x3d	; first 3 bytes of sq_note 0x90, 89, 61, 64, 21, 1 (split by a cell boundary)
 	seq_block	0xff, 83, 504	; block 646: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44305, 251
+; a stale copy: the same 251 bytes as block 507 (chain from block 488, 4 of 83), typed as that block is
+	.byte	0x00, 0x26, 0x66, 0x17, 0x00	; last 5 bytes of sq_note 0x90, 0, 38, 102, 23, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 44, 93, 23, 0
+	sq_note	0x90, 48, 38, 127, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 124, 23, 0
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 48, 38, 117, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 102, 23, 0
+	sq_note	0x90, 0, 36, 123, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 114, 23, 0
+	sq_note	0x90, 0, 38, 117, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 124, 23, 0
+	sq_note	0x90, 48, 38, 66, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 111, 23, 0
+	sq_note	0x90, 0, 36, 124, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 114, 23, 0
+	sq_note	0x90, 0, 36, 69, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 0, 44, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 102, 23, 0
+	sq_note	0x90, 48, 38, 117, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 117, 23, 0
+	sq_note	0x90, 0, 36, 79, 23, 0
+	sq_note	0x90, 48, 38, 81, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 79, 23, 0
+	sq_note	0x90, 0, 36, 111, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 124, 23, 0
+	sq_note	0x90, 0, 44, 120, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 81, 23, 0
+	sq_note	0x90, 48, 38, 43, 23, 0
+	sq_note	0x90, 72, 38, 72, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 93, 23, 0
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 120, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 108, 23, 0
+	sq_note	0x90, 0, 38, 123, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 44, 81, 23, 0
+	sq_note	0x90, 48, 38, 69, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 84, 23, 0
+	sq_note	0x90, 0, 44, 108, 23, 0
 	seq_block	0xff, 634, 97	; block 647: chain from block 634, 2 of 2
 	sq_beat
 	sq_beat
@@ -45243,159 +49647,3621 @@ F_01220497_SEQ:
 	sq_beat
 	sq_beat
 	seq_block	0x80, 111, 69	; block 648: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44505, 251
+; a stale copy: the same 251 bytes as block 509 (chain from block 222, 23 of 81), typed as that block is
+	.byte	0x01, 0x00, 0x7f	; last 3 bytes of sq_ev 0xb4, 93, 53, 1, 0, 127 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 3, 40, 86, 64, 0
+	sq_note	0x90, 4, 52, 79, 0, 1
+	sq_note	0x90, 4, 61, 77, 10, 1
+	sq_note	0x90, 4, 57, 89, 2, 1
+	sq_ev	0xb4, 40, 53, 1, 127, 127
+	sq_note	0x90, 95, 40, 69, 19, 1
+	sq_beat
+	sq_note	0x90, 95, 61, 84, 91, 0
+	sq_note	0x90, 95, 57, 96, 89, 0
+	sq_note	0x90, 95, 52, 86, 83, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 93, 75, 0
+	sq_note	0x90, 91, 40, 69, 52, 0
+	sq_beat
+	sq_note	0x90, 42, 61, 89, 68, 0
+	sq_note	0x90, 42, 57, 96, 64, 0
+	sq_note	0x90, 43, 52, 102, 58, 0
+	sq_note	0x90, 93, 40, 72, 27, 1
+	sq_beat
+	sq_note	0x90, 90, 61, 93, 3, 1
+	sq_note	0x90, 90, 57, 111, 3, 1
+	sq_note	0x90, 91, 52, 96, 0, 1
+	sq_note	0x90, 91, 64, 102, 91, 0
+	sq_beat
+	sq_note	0x90, 94, 40, 74, 37, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 77, 94, 0
+	sq_note	0x90, 44, 57, 84, 94, 0
+	sq_note	0x90, 45, 52, 89, 47, 0
+	sq_note	0x90, 88, 40, 96, 59, 0
+	sq_beat
+	sq_note	0x90, 37, 52, 55, 58, 1
+	sq_ev	0xb4, 79, 53, 1, 0, 127
+	sq_note	0x90, 90, 61, 96, 20, 1
+	sq_note	0x90, 90, 57, 124, 16, 1
+	sq_note	0x90, 91, 45, 96, 52, 0
+	sq_beat
+	sq_ev	0xb4, 25, 53, 1, 127, 127
+	sq_note	0x90, 90, 45, 84, 26, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 52, 96, 88, 0
+	sq_note	0x90, 0, 64, 93, 89, 0
+	sq_note	0x90, 0, 61, 77, 1, 1
+	sq_note	0x90, 0, 57, 96, 93, 0
+	sq_note	0x90, 90, 45, 64, 52, 0
+	sq_beat
+	sq_note	0x90, 41, 61, 102, 88, 0
+	sq_note	0x90, 42, 57, 102, 81, 0
+	sq_note	0x90, 43, 52, 84, 73, 0
+	sq_beat
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 36, 45, 58, 71, 0 (split by a cell boundary)
 	seq_block	0x80, 113, 474	; block 649: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44605, 251
+; a stale copy: the same 251 bytes as block 510 (chain from block 490, 3 of 15), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 57, 102, 8, 5
+	sq_note	0x90, 56, 64, 114, 56, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 57, 126, 63, 3
+	sq_note	0x90, 54, 64, 124, 10, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 57, 117, 36, 3
+	sq_note	0x90, 56, 64, 102, 70, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	seq_block	0x80, 307, 100	; block 650: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44705, 251
+; a stale copy: the same 251 bytes as block 511 (chain from block 486, 6 of 48), typed as that block is
+	.byte	0x30, 0x00	; last 2 bytes of sq_note 0x90, 0, 56, 99, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 0, 52, 120, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 123, 48, 0
+	sq_note	0x90, 0, 64, 125, 48, 0
+	sq_note	0x90, 0, 59, 108, 48, 0
+	sq_note	0x90, 0, 56, 102, 48, 0
+	sq_note	0x90, 0, 52, 124, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 120, 23, 0
+	sq_note	0x90, 0, 64, 108, 47, 0
+	sq_note	0x90, 0, 56, 84, 23, 0
+	sq_note	0x90, 0, 40, 120, 23, 0
+	sq_note	0x90, 0, 52, 108, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 111, 47, 1
+	sq_note	0x90, 0, 64, 84, 47, 1
+	sq_note	0x90, 0, 61, 77, 47, 1
+	sq_note	0x90, 0, 57, 84, 47, 1
+	sq_note	0x90, 0, 45, 84, 47, 0
+	sq_ev	0xb4, 4, 53, 7, 0, 127
+	sq_ev	0xb4, 45, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 124, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 108, 0, 1
+	sq_note	0x90, 0, 61, 77, 0, 1
+	sq_note	0x90, 0, 57, 96, 0, 1
+	sq_note	0x90, 0, 64, 108, 0, 1
+	sq_note	0x90, 0, 45, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 66, 48, 0
+	sq_note	0x90, 48, 61, 99, 48, 0
+	sq_note	0x90, 48, 57, 105, 48, 0
+	sq_note	0x90, 48, 52, 84, 48, 0
+	sq_note	0x90, 48, 64, 105, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 93, 48, 0
+	sq_note	0x90, 48, 61, 127, 72, 0
+	sq_note	0x90, 48, 57, 126, 72, 0
+	sq_note	0x90, 48, 52, 124, 48, 0
+	sq_note	0x90, 48, 64, 89, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 111, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 52, 117, 48, 0
+	sq_note	0x90, 0, 64, 114, 48, 0
+	sq_note	0x90, 0, 61, 111, 48, 0
+	sq_note	0x90, 0, 57, 102, 48, 0
+	sq_beat
+	.byte	0x90, 0x00, 0x2d, 0x54, 0x30	; first 5 bytes of sq_note 0x90, 0, 45, 84, 48, 0 (split by a cell boundary)
 	seq_block	0xfd, 370, 423	; block 651: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44805, 251
+; a stale copy: the same 251 bytes as block 512 (chain from block 488, 17 of 83), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 0, 49, 70, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 0, 36, 84, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 93, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 120, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 0, 36, 123, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 126, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 120, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 96, 48, 0
+	sq_note	0x90, 0, 36, 102, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 48, 38, 120, 48, 0 (split by a cell boundary)
 	seq_block	0xa5, 373, 418	; block 652: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44905, 251
+; a stale copy: the same 251 bytes as block 513 (chain from block 246, 12 of 52), typed as that block is
+	.byte	0x2b, 0x4a, 0x17, 0x00	; last 4 bytes of sq_note 0x90, 0, 43, 74, 23, 0 (split by a cell boundary)
+	sq_ev	0xb4, 92, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 62, 102, 23, 1
+	sq_note	0x90, 0, 57, 93, 23, 1
+	sq_note	0x90, 0, 54, 93, 23, 1
+	sq_note	0x90, 0, 38, 81, 48, 0
+	sq_ev	0xb4, 57, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 38, 84, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 72, 0, 1
+	sq_note	0x90, 0, 62, 69, 0, 1
+	sq_note	0x90, 0, 57, 84, 0, 1
+	sq_note	0x90, 0, 38, 58, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 79, 23, 0
+	sq_note	0x90, 48, 62, 79, 72, 0
+	sq_note	0x90, 48, 57, 89, 72, 0
+	sq_note	0x90, 48, 54, 86, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 64, 71, 0
+	sq_note	0x90, 0, 62, 77, 71, 0
+	sq_note	0x90, 0, 57, 79, 71, 0
+	sq_note	0x90, 0, 38, 74, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 66, 48, 0
+	sq_note	0x90, 48, 54, 89, 23, 0
+	sq_note	0x90, 48, 62, 89, 23, 0
+	sq_note	0x90, 48, 57, 96, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 58, 23, 0
+	sq_note	0x90, 48, 52, 35, 23, 0
+	sq_ev	0xb4, 88, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 89, 47, 0
+	sq_note	0x90, 0, 59, 79, 23, 1
+	sq_note	0x90, 0, 56, 96, 23, 1
+	sq_note	0x90, 0, 52, 102, 23, 1
+	sq_ev	0xb4, 33, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 77, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 72, 23, 1
+	sq_note	0x90, 0, 40, 72, 48, 0
+	sq_note	0x90, 0, 52, 74, 72, 0
+	sq_note	0x90, 0, 59, 64, 47, 1
+	sq_note	0x90, 0, 64, 66, 23, 2
+	sq_beat
+	sq_note	0x90, 0, 40, 84, 23, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 0, 52, 69, 47, 0 (split by a cell boundary)
 	seq_block	0x82, 581, 401	; block 653: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44a05, 251
+; a stale copy: the same 251 bytes as block 514 (chain from block 493, 6 of 35), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 0, 69, 74, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 64, 64, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 66, 48, 0
+	sq_note	0x90, 48, 69, 74, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 74, 48, 0
+	sq_note	0x90, 48, 66, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 79, 48, 0
+	sq_note	0x90, 48, 64, 55, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 72, 72, 0
+	sq_note	0x90, 48, 69, 72, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 64, 48, 0
+	sq_note	0x90, 48, 66, 55, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 79, 48, 0
+	sq_note	0x90, 48, 64, 51, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 66, 48, 0
+	sq_note	0x90, 48, 69, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 64, 48, 0
+	sq_note	0x90, 48, 66, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 89, 24, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 89, 24, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 72, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 77, 24, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 89, 24, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 79, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 89, 0, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 96, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 72, 24, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 89, 0, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 66, 23, 0
+	sq_beat
 	seq_block	0xc4, 376, 584	; block 654: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44b05, 251
+; a stale copy: the same 251 bytes as block 515 (chain from block 488, 22 of 83), typed as that block is
+	.byte	0x17, 0x00	; last 2 bytes of sq_note 0x90, 0, 36, 127, 23, 0 (split by a cell boundary)
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 117, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 79, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 111, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 74, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 124, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 84, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 64, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 81, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 108, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 58, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_note	0x90, 72, 38, 66, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	.byte	0x90, 0x32, 0x46	; first 3 bytes of sq_note 0x90, 50, 70, 117, 47, 0 (split by a cell boundary)
 	seq_block	0x80, 102, 312	; block 655: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44c05, 251
+; a stale copy: the same 251 bytes as block 516 (chain from block 491, 5 of 20), typed as that block is
+	.byte	0x00, 0x53	; last 2 bytes of sq_ev 0xd2, 14, 0, 83 (split by a cell boundary)
+	sq_ev	0xd2, 18, 0, 85
+	sq_ev	0xd2, 20, 0, 86
+	sq_ev	0xd2, 28, 0, 87
+	sq_ev	0xd2, 30, 0, 88
+	sq_ev	0xd2, 37, 0, 90
+	sq_ev	0xd2, 49, 0, 91
+	sq_beat
+	sq_ev	0xd2, 11, 0, 94
+	sq_ev	0xd2, 20, 0, 96
+	sq_ev	0xd2, 28, 0, 98
+	sq_ev	0xd2, 40, 0, 99
+	sq_beat
+	sq_ev	0xd2, 11, 0, 84
+	sq_ev	0xd2, 13, 0, 68
+	sq_ev	0xd2, 16, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 95, 0, 66
+	sq_beat
+	sq_ev	0xd2, 1, 0, 70
+	sq_ev	0xd2, 4, 0, 73
+	sq_ev	0xd2, 6, 0, 76
+	sq_ev	0xd2, 8, 0, 78
+	sq_ev	0xd2, 11, 0, 80
+	sq_ev	0xd2, 14, 0, 82
+	sq_ev	0xd2, 16, 0, 83
+	sq_ev	0xd2, 20, 0, 86
+	sq_ev	0xd2, 30, 0, 88
+	sq_ev	0xd2, 43, 0, 89
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 18, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 6, 0, 65
+	sq_ev	0xd2, 8, 0, 69
+	sq_ev	0xd2, 11, 0, 72
+	sq_ev	0xd2, 13, 0, 75
+	sq_ev	0xd2, 16, 0, 77
+	sq_ev	0xd2, 18, 0, 80
+	sq_ev	0xd2, 20, 0, 81
+	sq_ev	0xd2, 25, 0, 83
+	sq_ev	0xd2, 28, 0, 84
+	sq_ev	0xd2, 60, 0, 87
+	sq_ev	0xd2, 72, 0, 88
+	sq_ev	0xd2, 89, 0, 91
+	sq_beat
+	sq_ev	0xd2, 6, 0, 92
+	sq_ev	0xd2, 73, 0, 91
+	sq_ev	0xd2, 85, 0, 89
+	sq_ev	0xd2, 88, 0, 87
+	sq_ev	0xd2, 90, 0, 84
+	sq_ev	0xd2, 92, 0, 80
+	sq_ev	0xd2, 95, 0, 74
+	sq_beat
+	sq_ev	0xd2, 1, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 7, 49, 123, 74, 29
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 92, 0, 66
+	sq_ev	0xd2, 95, 0, 69
+	sq_beat
+	sq_ev	0xd2, 1, 0, 72
+	sq_ev	0xd2, 4, 0, 74
+	sq_ev	0xd2, 6, 0, 77
+	sq_ev	0xd2, 8, 0, 79
+	sq_ev	0xd2, 12, 0, 81
+	.byte	0xd2, 0x0e, 0x00	; first 3 bytes of sq_ev 0xd2, 14, 0, 83 (split by a cell boundary)
 	seq_block	0x80, 470, 321	; block 656: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44d05, 251
+; a stale copy: the same 251 bytes as block 517 (chain from block 488, 25 of 83), typed as that block is
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 126, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 117, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 69, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_note	0x90, 72, 38, 69, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 96, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 124, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 93, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 117, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	.byte	0x90, 0x02, 0x46, 0x66	; first 4 bytes of sq_note 0x90, 2, 70, 102, 47, 0 (split by a cell boundary)
 	seq_block	0xc1, 424, 586	; block 657: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44e05, 251
+; a stale copy: the same 251 bytes as block 518 (chain from block 246, 18 of 52), typed as that block is
+	.byte	0x32, 0x2d, 0x5d, 0x17, 0x00	; last 5 bytes of sq_note 0x90, 50, 45, 93, 23, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 2, 49, 93, 91, 0
+	sq_ev	0xd2, 6, 0, 48
+	sq_ev	0xd2, 8, 0, 39
+	sq_ev	0xd2, 11, 0, 30
+	sq_ev	0xd2, 13, 0, 22
+	sq_ev	0xd2, 16, 0, 15
+	sq_ev	0xd2, 18, 0, 9
+	sq_ev	0xd2, 21, 0, 5
+	sq_ev	0xd2, 24, 0, 0
+	sq_ev	0xd2, 55, 0, 21
+	sq_ev	0xd2, 57, 0, 64
+	sq_ev	0xd2, 60, 0, 73
+	sq_ev	0xd2, 62, 0, 64
+	sq_ev	0xd2, 64, 0, 58
+	sq_ev	0xd2, 67, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 52, 93, 23, 0
+	sq_note	0x90, 50, 54, 93, 23, 0
+	sq_note	0x90, 50, 52, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 57, 93, 72, 0
+	sq_beat
+	sq_note	0x90, 2, 59, 93, 48, 0
+	sq_note	0x90, 50, 57, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 59, 93, 18, 1
+	sq_ev	0xd2, 24, 0, 83
+	sq_ev	0xd2, 26, 0, 95
+	sq_ev	0xd2, 28, 0, 109
+	sq_ev	0xd2, 31, 0, 122
+	sq_ev	0xd2, 33, 0, 127
+	sq_ev	0xd2, 47, 0, 126
+	sq_ev	0xd2, 49, 0, 98
+	sq_ev	0xd2, 52, 0, 65
+	sq_ev	0xd2, 54, 0, 64
+	sq_ev	0xd2, 56, 0, 65
+	sq_ev	0xd2, 59, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 57, 93, 23, 0
+	sq_note	0x90, 50, 54, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 57, 93, 23, 1
+	sq_beat
+	sq_note	0x90, 2, 54, 93, 23, 0
+	sq_note	0x90, 50, 45, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 49, 93, 88, 0
+	sq_ev	0xd2, 8, 0, 55
+	sq_ev	0xd2, 11, 0, 47
+	sq_ev	0xd2, 13, 0, 38
+	sq_ev	0xd2, 16, 0, 29
+	sq_ev	0xd2, 18, 0, 21
+	sq_ev	0xd2, 20, 0, 15
+	sq_ev	0xd2, 23, 0, 9
+	sq_ev	0xd2, 25, 0, 6
+	sq_ev	0xd2, 28, 0, 4
+	sq_ev	0xd2, 31, 0, 2
+	sq_ev	0xd2, 36, 0, 1
+	sq_ev	0xd2, 48, 0, 2
+	sq_ev	0xd2, 50, 0, 4
+	.byte	0xd2	; first 1 bytes of sq_ev 0xd2, 52, 0, 14 (split by a cell boundary)
 	seq_block	0x84, 313, 402	; block 658: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x44f05, 251
+; a stale copy: the same 251 bytes as block 519 (chain from block 149, 11 of 28), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 0, 28, 64, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 30, 81, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 33, 69, 48, 2
+	sq_beat
+	sq_ev	0xb4, 88, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 33, 69, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 33, 79, 48, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 77, 70, 2
+	sq_ev	0xb4, 4, 53, 3, 0, 127
+	sq_beat
+	sq_ev	0xb4, 91, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 31, 84, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 74, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 66, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 30, 89, 22, 2
+	sq_ev	0xb4, 4, 53, 3, 0, 127
+	sq_beat
+	sq_ev	0xb4, 86, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 30, 64, 23, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 30, 61, 23, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 25, 61, 48, 0
+	sq_ev	0xb4, 12, 53, 3, 0, 127
+	sq_note	0x90, 48, 26, 79, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 28, 69, 71, 2
+	sq_beat
+	sq_ev	0xb4, 89, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 28, 96, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 28, 79, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 28, 69, 47, 0
+	sq_ev	0xb4, 34, 53, 3, 0, 127
+	sq_note	0x90, 48, 30, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 33, 89, 95, 2
+	sq_beat
+	sq_ev	0xb4, 82, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 33, 66, 72, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 33, 66, 72, 0
+	sq_beat
+	sq_note	0x90, 48, 33, 79, 48, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 31, 89, 95, 2
+	sq_ev	0xb4, 2, 53, 3, 0, 127
+	sq_beat
+	sq_ev	0xb4, 81, 53, 3, 127, 127
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x30	; first 2 bytes of sq_note 0x90, 48, 31, 79, 48, 0 (split by a cell boundary)
 	seq_block	0xd6, 342, 513	; block 659: in no chain
 	.fill	251, 1, 0x81
 	seq_block	0xc3, 14, 95	; block 660: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45105, 251
+; a stale copy: the same 251 bytes as block 521 (chain from block 486, 19 of 48), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 7, 52, 125, 59, 0
+	sq_note	0x90, 8, 59, 127, 67, 0
+	sq_note	0x90, 8, 64, 127, 67, 0
+	sq_note	0x90, 8, 40, 93, 63, 0
+	sq_ev	0xb4, 13, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 8, 52, 79, 51, 0
+	sq_note	0x90, 9, 59, 111, 54, 0
+	sq_note	0x90, 9, 40, 77, 47, 0
+	sq_note	0x90, 9, 64, 111, 50, 0
+	sq_beat
+	sq_note	0x90, 4, 52, 72, 42, 0
+	sq_note	0x90, 7, 40, 89, 40, 0
+	sq_note	0x90, 7, 64, 102, 41, 0
+	sq_note	0x90, 8, 59, 108, 41, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 96, 45, 0
+	sq_note	0x90, 4, 59, 124, 42, 0
+	sq_note	0x90, 4, 52, 111, 38, 0
+	sq_note	0x90, 4, 40, 127, 37, 0
+	sq_beat
+	sq_note	0x90, 2, 52, 77, 38, 0
+	sq_note	0x90, 3, 40, 117, 40, 0
+	sq_note	0x90, 3, 64, 102, 42, 0
+	sq_note	0x90, 4, 59, 126, 40, 0
+	sq_beat
+	sq_note	0x90, 4, 52, 77, 36, 0
+	sq_note	0x90, 5, 59, 117, 34, 0
+	sq_note	0x90, 6, 40, 123, 34, 0
+	sq_note	0x90, 6, 64, 89, 36, 0
+	sq_beat
+	sq_note	0x90, 4, 59, 93, 29, 0
+	sq_note	0x90, 4, 64, 117, 28, 0
+	sq_note	0x90, 4, 52, 126, 28, 0
+	sq_note	0x90, 6, 40, 126, 27, 0
+	sq_note	0x90, 95, 52, 77, 30, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 74, 21, 0
+	.byte	0x90, 0x00, 0x40, 0x5d, 0x1d	; first 5 bytes of sq_note 0x90, 0, 64, 93, 29, 0 (split by a cell boundary)
 	seq_block	0xe2, 321, 74	; block 661: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45205, 251
+; a stale copy: the same 251 bytes as block 522 (chain from block 488, 27 of 83), typed as that block is
+	.byte	0x7f, 0x2f, 0x00	; last 3 bytes of sq_note 0x90, 50, 70, 127, 47, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 36, 93, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 111, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 124, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 93, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 111, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 120, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 108, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 96, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 74, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 93, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 111, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 125, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 64, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_note	0x90, 72, 38, 74, 23, 0
+	sq_beat
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 0, 36, 127, 23, 0 (split by a cell boundary)
 	seq_block	0x80, 267, 671	; block 662: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45305, 251
+; a stale copy: the same 251 bytes as block 523 (chain from block 489, 11 of 26), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 90, 61, 74, 93, 1
+	sq_note	0x90, 91, 57, 66, 2, 2
+	sq_note	0x90, 92, 52, 84, 93, 1
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 40, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 47, 61, 64, 51, 0
+	sq_note	0x90, 48, 57, 55, 58, 0
+	sq_note	0x90, 48, 52, 61, 50, 0
+	sq_beat
+	sq_note	0x90, 52, 57, 72, 47, 0
+	sq_note	0x90, 52, 52, 84, 47, 0
+	sq_note	0x90, 53, 61, 89, 47, 0
+	sq_beat
+	sq_note	0x90, 93, 61, 79, 81, 0
+	sq_note	0x90, 93, 57, 72, 73, 0
+	.byte	0x90, 0x5e, 0x34, 0x59	; first 4 bytes of sq_note 0x90, 94, 52, 89, 53, 0 (split by a cell boundary)
 	seq_block	0xd7, 24, 588	; block 663: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45405, 251
+; a stale copy: the same 251 bytes as block 524 (chain from block 222, 44 of 81), typed as that block is
+	.byte	0x00, 0x34, 0x5b, 0x18, 0x01	; last 5 bytes of sq_note 0x90, 0, 52, 91, 24, 1 (split by a cell boundary)
+	sq_ev	0xb4, 32, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 102, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 89, 0, 1
+	sq_note	0x90, 0, 52, 111, 0, 1
+	sq_note	0x90, 0, 57, 105, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 40, 77, 48, 0
+	sq_note	0x90, 48, 61, 125, 0, 1
+	sq_note	0x90, 48, 57, 127, 0, 1
+	sq_note	0x90, 48, 52, 117, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 40, 79, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 108, 0, 1
+	sq_note	0x90, 0, 52, 105, 0, 1
+	sq_note	0x90, 0, 57, 84, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 40, 89, 48, 0
+	sq_note	0x90, 48, 61, 111, 0, 1
+	sq_note	0x90, 48, 52, 124, 48, 0
+	sq_note	0x90, 48, 57, 111, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 40, 84, 48, 0
+	sq_note	0x90, 48, 52, 48, 23, 0
+	sq_ev	0xb4, 81, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 61, 72, 23, 1
+	sq_note	0x90, 0, 52, 123, 23, 1
+	sq_note	0x90, 0, 57, 81, 23, 1
+	sq_note	0x90, 0, 45, 124, 47, 0
+	sq_ev	0xb4, 35, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 108, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 127, 0, 1
+	sq_note	0x90, 0, 57, 93, 0, 1
+	sq_note	0x90, 0, 52, 99, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 69, 48, 0
+	sq_note	0x90, 48, 61, 123, 0, 1
+	sq_note	0x90, 48, 57, 96, 0, 1
+	sq_note	0x90, 48, 52, 123, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 127, 0, 1
+	sq_note	0x90, 0, 52, 105, 0, 1
+	sq_note	0x90, 0, 57, 99, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 99, 23, 0
+	.byte	0x90, 0x30, 0x3d, 0x51	; first 4 bytes of sq_note 0x90, 48, 61, 81, 71, 0 (split by a cell boundary)
 	seq_block	0xff, 107, 589	; block 664: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45505, 251
+; a stale copy: the same 251 bytes as block 525 (chain from block 485, 35 of 61), typed as that block is
+	.byte	0x2b, 0x48, 0x30, 0x00	; last 4 bytes of sq_note 0x90, 0, 43, 72, 48, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 61, 74, 0, 1
+	sq_note	0x90, 0, 57, 102, 0, 1
+	sq_note	0x90, 0, 55, 79, 72, 0
+	sq_note	0x90, 0, 64, 81, 0, 1
+	sq_note	0x90, 0, 43, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 55, 48, 0
+	sq_note	0x90, 48, 61, 96, 72, 0
+	sq_note	0x90, 48, 57, 89, 48, 0
+	sq_note	0x90, 48, 55, 79, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 72, 48, 0
+	sq_note	0x90, 48, 54, 14, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 99, 94, 0
+	sq_note	0x90, 0, 61, 102, 94, 0
+	sq_note	0x90, 0, 42, 102, 46, 0
+	sq_note	0x90, 0, 57, 77, 94, 0
+	sq_ev	0xb4, 0, 53, 2, 0, 127
+	sq_ev	0xb4, 37, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 77, 0, 1
+	sq_note	0x90, 0, 61, 81, 0, 1
+	sq_note	0x90, 0, 57, 111, 0, 1
+	sq_note	0x90, 0, 64, 89, 72, 0
+	sq_note	0x90, 0, 42, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 58, 48, 0
+	sq_note	0x90, 48, 61, 64, 48, 0
+	sq_note	0x90, 48, 54, 64, 48, 0
+	sq_note	0x90, 48, 57, 96, 72, 0
+	sq_note	0x90, 72, 42, 72, 72, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 54, 81, 72, 0
+	sq_note	0x90, 0, 61, 108, 72, 0
+	sq_note	0x90, 0, 57, 114, 72, 0
+	sq_note	0x90, 0, 42, 77, 48, 0
+	sq_note	0x90, 0, 64, 84, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 72, 48, 0
+	sq_note	0x90, 48, 54, 72, 48, 0
+	sq_note	0x90, 48, 61, 89, 48, 0
+	sq_note	0x90, 48, 57, 93, 48, 0
+	sq_note	0x90, 48, 64, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 96, 23, 0
+	.byte	0x90, 0x30	; first 2 bytes of sq_note 0x90, 48, 56, 11, 23, 0 (split by a cell boundary)
 	seq_block	0xbd, 320, 403	; block 665: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45605, 251
+; a stale copy: the same 251 bytes as block 526 (chain from block 246, 22 of 52), typed as that block is
+	.byte	0x47, 0x00	; last 2 bytes of sq_note 0x90, 0, 49, 79, 71, 0 (split by a cell boundary)
+	sq_ev	0xb4, 8, 53, 6, 0, 127
+	sq_ev	0xb4, 69, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 88, 54, 114, 61, 0
+	sq_note	0x90, 90, 49, 84, 53, 0
+	sq_note	0x90, 91, 57, 126, 82, 0
+	sq_note	0x90, 92, 61, 127, 88, 0
+	sq_beat
+	sq_note	0x90, 89, 42, 89, 44, 4
+	sq_beat
+	sq_note	0x90, 44, 61, 124, 50, 0
+	sq_note	0x90, 45, 57, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 54, 84, 45, 0
+	sq_note	0x90, 1, 49, 66, 39, 3
+	sq_note	0x90, 45, 61, 124, 74, 0
+	sq_note	0x90, 47, 57, 84, 54, 0
+	sq_note	0x90, 95, 54, 117, 30, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 61, 93, 81, 0
+	sq_note	0x90, 3, 57, 127, 70, 0
+	sq_note	0x90, 93, 54, 117, 43, 0
+	sq_beat
+	sq_note	0x90, 52, 56, 14, 10, 0
+	sq_ev	0xb4, 88, 53, 6, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 59, 84, 67, 0
+	sq_note	0x90, 1, 56, 108, 61, 0
+	sq_note	0x90, 2, 52, 111, 53, 0
+	sq_note	0x90, 2, 40, 123, 59, 0
+	sq_ev	0xb4, 36, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 5, 59, 72, 38, 0
+	sq_note	0x90, 6, 56, 74, 32, 0
+	sq_note	0x90, 7, 52, 64, 30, 0
+	sq_note	0x90, 7, 40, 66, 31, 0
+	sq_beat
+	sq_note	0x90, 2, 59, 117, 47, 0
+	sq_note	0x90, 2, 56, 105, 44, 0
+	sq_note	0x90, 2, 52, 124, 39, 0
+	sq_note	0x90, 4, 40, 91, 38, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 102, 38, 0
+	sq_note	0x90, 0, 52, 96, 32, 0
+	sq_note	0x90, 0, 56, 84, 34, 0
+	sq_note	0x90, 0, 40, 105, 31, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 91, 43, 0
+	sq_note	0x90, 0, 52, 89, 32, 0
+	sq_note	0x90, 0, 56, 81, 37, 0
+	.byte	0x90, 0x00, 0x28	; first 3 bytes of sq_note 0x90, 0, 40, 96, 34, 0 (split by a cell boundary)
 	seq_block	0xf6, 281, 552	; block 666: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45705, 251
+; a stale copy: the same 251 bytes as block 527 (chain from block 485, 40 of 61), typed as that block is
+	.byte	0x7b, 0x2f, 0x00	; last 3 bytes of sq_note 0x90, 7, 43, 123, 47, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 7, 43, 114, 61, 1
+	sq_beat
+	sq_note	0x90, 4, 61, 127, 8, 1
+	sq_note	0x90, 4, 55, 127, 5, 1
+	sq_note	0x90, 4, 52, 111, 5, 1
+	sq_beat
+	sq_note	0x90, 8, 43, 96, 50, 0
+	sq_note	0x90, 52, 61, 127, 62, 0
+	sq_note	0x90, 52, 55, 127, 55, 0
+	sq_note	0x90, 52, 52, 96, 56, 0
+	sq_beat
+	sq_note	0x90, 4, 43, 111, 53, 0
+	sq_note	0x90, 52, 55, 127, 4, 1
+	sq_note	0x90, 52, 61, 99, 4, 1
+	sq_note	0x90, 52, 52, 124, 3, 1
+	sq_beat
+	sq_note	0x90, 4, 43, 126, 45, 1
+	sq_beat
+	sq_note	0x90, 5, 61, 120, 45, 1
+	sq_note	0x90, 5, 55, 127, 13, 1
+	sq_note	0x90, 6, 52, 124, 85, 0
+	sq_note	0x90, 95, 43, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 49, 54, 89, 87, 1
+	sq_beat
+	sq_note	0x90, 2, 61, 127, 46, 1
+	sq_note	0x90, 2, 57, 127, 46, 1
+	sq_note	0x90, 11, 42, 89, 40, 0
+	sq_beat
+	sq_note	0x90, 12, 42, 89, 9, 1
+	sq_beat
+	sq_note	0x90, 1, 61, 127, 7, 1
+	sq_note	0x90, 2, 54, 127, 3, 1
+	sq_note	0x90, 2, 57, 102, 7, 1
+	sq_note	0x90, 95, 42, 66, 45, 0
+	sq_beat
+	sq_note	0x90, 46, 61, 126, 60, 0
+	sq_note	0x90, 47, 57, 93, 60, 0
+	sq_note	0x90, 47, 54, 125, 57, 0
+	sq_beat
+	sq_note	0x90, 1, 42, 79, 46, 0
+	sq_note	0x90, 48, 57, 127, 22, 1
+	sq_note	0x90, 49, 61, 111, 23, 1
+	sq_note	0x90, 50, 54, 99, 18, 1
+	sq_beat
+	sq_note	0x90, 1, 42, 93, 30, 1
+	sq_beat
+	sq_note	0x90, 8, 61, 127, 43, 1
+	sq_note	0x90, 9, 57, 127, 41, 1
+	sq_note	0x90, 9, 54, 93, 79, 0
+	sq_beat
+	sq_note	0x90, 2, 42, 84, 60, 0
+	.byte	0x90, 0x30, 0x34, 0x59, 0x57	; first 5 bytes of sq_note 0x90, 48, 52, 89, 87, 1 (split by a cell boundary)
 	seq_block	0x80, 553, 434	; block 667: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45805, 251
+; a stale copy: the same 251 bytes as block 528 (chain from block 488, 41 of 83), typed as that block is
+	.byte	0x30, 0x26, 0x64, 0x30, 0x00	; last 5 bytes of sq_note 0x90, 48, 38, 100, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 0, 36, 84, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 93, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 120, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 0, 36, 123, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 126, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 120, 48, 0
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 70, 48, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 120, 48, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 49, 96, 48, 0
+	sq_note	0x90, 0, 36, 102, 48, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 102, 48, 0
+	.byte	0x90, 0x32, 0x46	; first 3 bytes of sq_note 0x90, 50, 70, 81, 47, 0 (split by a cell boundary)
 	seq_block	0x80, 404, 60	; block 668: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45905, 251
+; a stale copy: the same 251 bytes as block 529 (chain from block 493, 11 of 35), typed as that block is
+	.byte	0x42, 0x3d, 0x3b, 0x00	; last 4 bytes of sq_note 0x90, 43, 66, 61, 59, 0 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 69, 77, 43, 0
+	sq_note	0x90, 49, 64, 79, 55, 0
+	sq_beat
+	sq_note	0x90, 4, 66, 64, 45, 0
+	sq_note	0x90, 50, 69, 79, 45, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 74, 51, 0
+	sq_note	0x90, 45, 66, 72, 55, 0
+	sq_beat
+	sq_note	0x90, 1, 69, 74, 36, 0
+	sq_note	0x90, 48, 64, 61, 54, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 58, 58, 0
+	sq_note	0x90, 50, 69, 74, 46, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 79, 49, 0
+	sq_note	0x90, 44, 66, 74, 53, 0
+	sq_note	0x90, 93, 69, 84, 51, 0
+	sq_beat
+	sq_note	0x90, 47, 64, 72, 53, 0
+	sq_note	0x90, 93, 66, 69, 50, 0
+	sq_beat
+	sq_note	0x90, 44, 69, 81, 55, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 84, 56, 0
+	sq_note	0x90, 48, 66, 74, 55, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 84, 52, 0
+	sq_note	0x90, 49, 64, 79, 53, 0
+	sq_note	0x90, 95, 66, 72, 52, 0
+	sq_beat
+	sq_note	0x90, 47, 69, 74, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 77, 60, 0
+	sq_note	0x90, 48, 66, 69, 52, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 77, 58, 0
+	sq_note	0x90, 49, 64, 66, 54, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 74, 52, 0
+	sq_note	0x90, 48, 69, 81, 48, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 84, 54, 0
+	sq_note	0x90, 46, 66, 69, 58, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 79, 52, 0
+	sq_note	0x90, 52, 64, 66, 53, 0
+	sq_beat
+	sq_note	0x90, 2, 66, 66, 53, 0
+	sq_note	0x90, 50, 69, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 89, 51, 0
+	sq_note	0x90, 48, 66, 79, 49, 0
+	sq_note	0x90, 95, 69, 79, 50, 0
+	sq_beat
+	sq_note	0x90, 49, 64, 77, 49, 0
 	seq_block	0xff, 481, 380	; block 669: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45a05, 251
+; a stale copy: the same 251 bytes as block 530 (chain from block 222, 52 of 81), typed as that block is
+	.byte	0x5d, 0x30, 0x00	; last 3 bytes of sq_note 0x90, 0, 59, 93, 48, 0 (split by a cell boundary)
+	sq_note	0x90, 0, 56, 77, 48, 0
+	sq_note	0x90, 0, 64, 111, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 77, 47, 0
+	sq_note	0x90, 0, 56, 58, 47, 0
+	sq_note	0x90, 0, 64, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 56, 84, 48, 0
+	sq_note	0x90, 0, 59, 96, 48, 0
+	sq_note	0x90, 0, 64, 111, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 64, 89, 23, 0
+	sq_note	0x90, 0, 59, 89, 47, 0
+	sq_note	0x90, 0, 56, 66, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 89, 47, 0
+	sq_note	0x90, 0, 56, 91, 23, 0
+	sq_note	0x90, 0, 64, 86, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 93, 48, 0
+	sq_note	0x90, 0, 56, 102, 48, 0
+	sq_note	0x90, 0, 64, 84, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 96, 47, 0
+	sq_note	0x90, 0, 56, 69, 47, 0
+	sq_note	0x90, 0, 64, 89, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 111, 47, 0
+	sq_note	0x90, 0, 56, 77, 23, 0
+	sq_note	0x90, 0, 64, 96, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 105, 48, 0
+	sq_note	0x90, 0, 56, 108, 48, 0
+	sq_note	0x90, 0, 64, 89, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 59, 102, 47, 0
+	sq_note	0x90, 0, 56, 81, 23, 0
+	sq_note	0x90, 0, 64, 89, 23, 0
+	sq_ev	0xb4, 88, 53, 1, 0, 127
+	sq_ev	0xb0, 92, 1, 3, 80, 127
+	sq_beat
+	sq_note	0x90, 0, 61, 84, 23, 1
+	sq_note	0x90, 0, 57, 99, 23, 1
+	sq_note	0x90, 0, 52, 77, 23, 1
+	sq_beat
+	sq_ev	0xb4, 8, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 57, 66, 47, 0
+	sq_note	0x90, 0, 52, 66, 23, 0
+	sq_note	0x90, 0, 61, 79, 47, 0
+	sq_beat
+	sq_note	0x90, 48, 57, 58, 48, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 48, 52, 74, 48, 0 (split by a cell boundary)
 	seq_block	0xa0, 430, 520	; block 670: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45b05, 251
+; a stale copy: the same 251 bytes as block 531 (chain from block 287, 13 of 21), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb0, 0, 5, 3, 60, 127
+	sq_note	0x90, 7, 45, 120, 75, 29
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 91, 0, 65
+	sq_ev	0xd2, 93, 0, 69
+	sq_beat
+	sq_ev	0xd2, 0, 0, 75
+	sq_ev	0xd2, 2, 0, 82
+	sq_ev	0xd2, 4, 0, 90
+	sq_ev	0xd2, 6, 0, 99
+	sq_ev	0xd2, 9, 0, 109
+	sq_ev	0xd2, 12, 0, 120
+	sq_ev	0xd2, 14, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xd2, 5, 0, 98
+	sq_ev	0xd2, 8, 0, 64
+	sq_ev	0xd2, 12, 0, 65
+	sq_ev	0xd2, 17, 0, 64
+	sq_beat
 	seq_block	0xff, 662, 560	; block 671: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45c05, 251
+; a stale copy: the same 251 bytes as block 532 (chain from block 489, 12 of 26), typed as that block is
+	.byte	0x35, 0x00	; last 2 bytes of sq_note 0x90, 94, 52, 89, 53, 0 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_note	0x90, 40, 52, 35, 0, 2
+	sq_note	0x90, 87, 61, 64, 15, 1
+	sq_ev	0xb4, 88, 53, 10, 0, 127
+	sq_note	0x90, 88, 55, 64, 14, 1
+	sq_beat
+	sq_ev	0xb4, 61, 53, 10, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 52, 55, 44, 0
+	sq_note	0x90, 0, 61, 69, 68, 0
+	sq_note	0x90, 0, 55, 51, 56, 0
+	sq_note	0x90, 88, 52, 61, 5, 1
+	sq_beat
+	sq_note	0x90, 45, 61, 66, 46, 0
+	sq_note	0x90, 47, 55, 51, 44, 0
+	sq_beat
+	sq_note	0x90, 44, 61, 64, 49, 0
+	sq_note	0x90, 45, 52, 72, 46, 0
+	sq_note	0x90, 47, 55, 69, 44, 0
+	sq_beat
+	sq_note	0x90, 48, 52, 39, 28, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 64, 52, 0
+	sq_note	0x90, 2, 55, 55, 42, 0
+	sq_note	0x90, 2, 52, 74, 46, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 72, 45, 0
+	sq_note	0x90, 1, 52, 64, 25, 0
+	sq_note	0x90, 1, 55, 77, 31, 0
+	sq_note	0x90, 94, 57, 79, 22, 1
+	sq_note	0x90, 94, 54, 72, 22, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 64, 21, 1
+	sq_ev	0xb4, 8, 53, 10, 0, 127
+	sq_ev	0xb4, 57, 53, 10, 127, 127
+	sq_beat
+	sq_note	0x90, 88, 57, 72, 6, 1
+	sq_note	0x90, 89, 54, 64, 52, 0
+	sq_note	0x90, 90, 61, 66, 4, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 54, 48, 81, 0
+	sq_note	0x90, 44, 57, 64, 40, 0
+	sq_note	0x90, 44, 61, 64, 43, 0
+	sq_beat
+	sq_note	0x90, 49, 57, 89, 47, 0
+	sq_note	0x90, 49, 54, 79, 36, 0
+	sq_note	0x90, 50, 61, 79, 47, 0
+	sq_beat
+	sq_note	0x90, 49, 54, 14, 81, 0
+	sq_note	0x90, 88, 57, 64, 44, 0
+	sq_note	0x90, 89, 61, 66, 44, 0
+	sq_beat
+	sq_beat
+	.byte	0x90, 0x02, 0x39	; first 3 bytes of sq_note 0x90, 2, 57, 89, 27, 0 (split by a cell boundary)
 	seq_block	0xbf, 474, 511	; block 672: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45d05, 251
+; a stale copy: the same 251 bytes as block 533 (chain from block 490, 5 of 15), typed as that block is
+	.byte	0x7f, 0x08, 0x06	; last 3 bytes of sq_note 0x90, 92, 55, 127, 8, 6 (split by a cell boundary)
+	sq_note	0x90, 93, 52, 117, 10, 6
+	sq_note	0x90, 93, 61, 93, 23, 6
+	sq_beat
+	sq_ev	0xb4, 3, 53, 11, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 2, 53, 11, 127, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 57, 93, 14, 6
+	sq_note	0x90, 92, 54, 108, 12, 6
+	sq_note	0x90, 92, 61, 99, 15, 6
+	sq_beat
+	sq_ev	0xb4, 0, 53, 11, 0, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 14, 53, 11, 127, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 85, 53, 11, 0, 127
+	sq_note	0x90, 92, 57, 84, 10, 1
+	sq_note	0x90, 93, 53, 77, 69, 0
+	sq_note	0x90, 93, 60, 96, 18, 1
+	sq_beat
+	sq_ev	0xb4, 47, 53, 11, 127, 127
+	sq_beat
+	sq_note	0x90, 4, 53, 66, 32, 0
+	sq_beat
+	sq_note	0x90, 0, 53, 96, 42, 0
+	sq_note	0x90, 0, 60, 108, 8, 1
+	sq_note	0x90, 1, 57, 77, 1, 1
+	sq_note	0x90, 95, 53, 39, 22, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 55, 102, 2, 1
+	sq_note	0x90, 4, 50, 79, 38, 1
+	sq_note	0x90, 4, 59, 89, 6, 1
+	sq_ev	0xb4, 7, 53, 11, 0, 127
+	sq_ev	0xb4, 56, 53, 11, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 55, 84, 8, 1
+	sq_note	0x90, 4, 50, 69, 38, 0
+	sq_note	0x90, 4, 59, 79, 15, 1
+	sq_beat
+	sq_note	0x90, 0, 50, 35, 21, 0
+	sq_ev	0xb4, 89, 53, 11, 0, 127
+	sq_beat
+	sq_note	0x90, 2, 61, 69, 0, 1
+	sq_note	0x90, 2, 57, 74, 12, 1
+	sq_note	0x90, 2, 52, 66, 48, 0
+	sq_ev	0xb4, 47, 53, 11, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 52, 43, 28, 0
+	sq_beat
+	sq_note	0x90, 2, 52, 72, 71, 0
+	sq_note	0x90, 2, 57, 77, 81, 0
+	.byte	0x90, 0x03, 0x3d, 0x42, 0x4f	; first 5 bytes of sq_note 0x90, 3, 61, 66, 79, 0 (split by a cell boundary)
 	seq_block	0xfb, 254, 330	; block 673: in no chain
 	.fill	251, 1, 0x81
 	seq_block	0x80, 84, 526	; block 674: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x45f05, 251
+; a stale copy: the same 251 bytes as block 535 (chain from block 493, 19 of 35), typed as that block is
+	sq_beat
+	sq_ev	0xb4, 85, 53, 14, 0, 127
+	sq_note	0x90, 91, 61, 66, 16, 1
+	sq_note	0x90, 92, 57, 79, 12, 1
+	sq_note	0x90, 92, 54, 64, 9, 1
+	sq_beat
+	sq_ev	0xb4, 40, 53, 14, 127, 127
+	sq_beat
+	sq_note	0x90, 94, 61, 66, 84, 0
+	sq_note	0x90, 94, 57, 77, 83, 0
+	sq_note	0x90, 94, 54, 79, 82, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 45, 61, 61, 54, 0
+	sq_note	0x90, 45, 57, 84, 53, 0
+	sq_note	0x90, 47, 54, 64, 50, 0
+	sq_beat
+	sq_note	0x90, 46, 61, 66, 73, 0
+	sq_note	0x90, 47, 57, 72, 71, 0
+	sq_note	0x90, 47, 54, 69, 71, 0
+	sq_beat
+	sq_note	0x90, 92, 61, 64, 94, 0
+	sq_note	0x90, 92, 57, 84, 5, 1
+	sq_note	0x90, 93, 54, 72, 1, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 60, 81, 7, 1
+	sq_note	0x90, 93, 57, 102, 6, 1
+	sq_note	0x90, 93, 53, 72, 4, 1
+	sq_beat
+	sq_ev	0xb4, 1, 53, 14, 0, 127
+	sq_ev	0xb4, 60, 53, 14, 127, 127
+	sq_beat
+	sq_note	0x90, 94, 60, 84, 60, 0
+	sq_note	0x90, 95, 57, 93, 55, 0
+	sq_beat
+	sq_note	0x90, 0, 53, 55, 56, 0
+	sq_beat
+	sq_note	0x90, 88, 55, 55, 33, 1
+	sq_note	0x90, 88, 59, 74, 28, 1
+	sq_note	0x90, 89, 62, 72, 29, 1
+	sq_ev	0xb4, 94, 53, 14, 0, 127
+	sq_beat
+	sq_ev	0xb4, 60, 53, 14, 127, 127
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 33, 53, 14, 0, 127
+	sq_note	0x90, 49, 45, 89, 45, 0
+	sq_beat
+	sq_note	0x90, 0, 48, 105, 89, 0
+	sq_ev	0xd2, 48, 0, 66
+	sq_ev	0xd2, 51, 0, 67
+	sq_ev	0xd2, 52, 0, 68
+	sq_ev	0xd2, 54, 0, 70
+	sq_ev	0xd2, 56, 0, 71
+	sq_ev	0xd2, 57, 0, 73
+	sq_ev	0xd2, 60, 0, 75
+	sq_ev	0xd2, 62, 0, 76
+	sq_ev	0xd2, 65, 0, 78
 	seq_block	0xaa, 510, 678	; block 675: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46005, 251
+; a stale copy: the same 251 bytes as block 536 (chain from block 459, 23 of 35), typed as that block is
+	sq_note	0x90, 50, 66, 124, 67, 0
+	sq_note	0x90, 50, 61, 127, 51, 0
+	sq_beat
+	sq_note	0x90, 1, 54, 89, 41, 1
+	sq_note	0x90, 52, 61, 3, 11, 0
+	sq_beat
+	sq_note	0x90, 1, 69, 102, 25, 0
+	sq_note	0x90, 2, 66, 81, 25, 0
+	sq_note	0x90, 2, 61, 89, 27, 0
+	sq_note	0x90, 44, 69, 120, 44, 0
+	sq_note	0x90, 45, 66, 111, 40, 0
+	sq_note	0x90, 46, 61, 93, 36, 0
+	sq_note	0x90, 93, 54, 84, 40, 0
+	sq_beat
+	sq_ev	0xb4, 88, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 60, 89, 5, 1
+	sq_note	0x90, 1, 65, 125, 10, 1
+	sq_note	0x90, 2, 69, 102, 14, 1
+	sq_note	0x90, 4, 53, 124, 72, 0
+	sq_ev	0xb4, 37, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 30, 53, 22, 20, 0
+	sq_beat
+	sq_note	0x90, 6, 53, 61, 47, 0
+	sq_note	0x90, 48, 72, 124, 45, 0
+	sq_note	0x90, 50, 69, 108, 44, 0
+	sq_note	0x90, 50, 65, 124, 45, 0
+	sq_beat
+	sq_note	0x90, 2, 53, 66, 46, 0
+	sq_note	0x90, 52, 71, 124, 35, 1
+	sq_note	0x90, 52, 67, 81, 25, 1
+	sq_note	0x90, 52, 62, 89, 90, 0
+	sq_ev	0xb4, 63, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 4, 55, 72, 42, 2
+	sq_ev	0xb4, 20, 53, 4, 127, 127
+	sq_note	0x90, 91, 62, 14, 16, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 71, 120, 4, 1
+	sq_note	0x90, 4, 67, 127, 83, 0
+	sq_note	0x90, 4, 62, 125, 74, 0
+	sq_beat
+	sq_note	0x90, 2, 55, 105, 36, 0
+	sq_note	0x90, 50, 64, 35, 18, 0
+	sq_beat
+	sq_ev	0xb4, 0, 53, 4, 0, 127
+	sq_note	0x90, 4, 57, 124, 25, 1
+	sq_note	0x90, 6, 64, 108, 86, 1
+	sq_note	0x90, 6, 73, 125, 20, 2
+	.byte	0x90, 0x07, 0x45, 0x7c, 0x04	; first 5 bytes of sq_note 0x90, 7, 69, 124, 4, 2 (split by a cell boundary)
 	seq_block	0xff, 486, 288	; block 676: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46105, 251
+; a stale copy: the same 251 bytes as block 537 (chain from block 488, 51 of 83), typed as that block is
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 52, 127, 23, 0
+	sq_note	0x90, 0, 36, 108, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 89, 23, 0
+	sq_note	0x90, 0, 36, 66, 23, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 38, 72, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 51, 127, 23, 0
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 38, 96, 23, 0
+	sq_note	0x90, 50, 70, 81, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 48, 0
+	sq_note	0x90, 2, 70, 89, 47, 0
+	sq_note	0x90, 48, 45, 127, 23, 0
+	sq_note	0x90, 50, 70, 117, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 127, 23, 0
+	sq_note	0x90, 2, 54, 127, 47, 0
+	sq_note	0x90, 48, 36, 74, 23, 0
+	sq_note	0x90, 50, 70, 43, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 114, 23, 0
+	sq_note	0x90, 2, 70, 102, 47, 0
+	sq_note	0x90, 48, 43, 120, 23, 0
+	sq_note	0x90, 50, 70, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 0, 57, 127, 23, 0
+	.byte	0x90	; first 1 bytes of sq_note 0x90, 2, 54, 127, 47, 0 (split by a cell boundary)
 	seq_block	0x80, 487, 349	; block 677: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46205, 251
+; a stale copy: the same 251 bytes as block 538 (chain from block 486, 34 of 48), typed as that block is
+	sq_beat
+	sq_note	0x90, 0, 42, 58, 23, 0
+	sq_ev	0xb4, 95, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 60, 89, 23, 1
+	sq_note	0x90, 0, 57, 102, 23, 1
+	sq_note	0x90, 0, 41, 93, 71, 0
+	sq_note	0x90, 0, 53, 72, 23, 1
+	sq_ev	0xb4, 52, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 41, 30, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 57, 89, 0, 1
+	sq_note	0x90, 0, 60, 77, 23, 1
+	sq_note	0x90, 0, 53, 66, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 41, 58, 23, 0
+	sq_ev	0xb4, 88, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 58, 47, 0
+	sq_note	0x90, 0, 55, 72, 95, 0
+	sq_note	0x90, 0, 62, 79, 95, 0
+	sq_note	0x90, 0, 59, 79, 23, 1
+	sq_ev	0xb4, 39, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 43, 61, 48, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 72, 48, 0
+	sq_note	0x90, 0, 59, 74, 72, 0
+	sq_note	0x90, 0, 55, 72, 72, 0
+	sq_note	0x90, 0, 62, 84, 72, 0
+	sq_beat
+	sq_note	0x90, 0, 43, 58, 23, 0
+	sq_ev	0xb4, 91, 53, 7, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 57, 72, 47, 1
+	sq_note	0x90, 0, 52, 84, 23, 1
+	sq_note	0x90, 0, 61, 66, 47, 1
+	sq_note	0x90, 0, 45, 69, 48, 0
+	sq_note	0x90, 0, 64, 64, 23, 1
+	sq_ev	0xb4, 49, 53, 7, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 45, 48, 24, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 61, 0, 1
+	sq_note	0x90, 0, 57, 74, 0, 1
+	sq_note	0x90, 0, 52, 74, 0, 1
+	sq_note	0x90, 0, 64, 66, 0, 1
+	sq_beat
+	sq_note	0x90, 0, 45, 48, 23, 0
+	sq_note	0x90, 48, 57, 72, 48, 0
+	sq_note	0x90, 48, 52, 69, 48, 0
+	.byte	0x90, 0x30, 0x40, 0x40	; first 4 bytes of sq_note 0x90, 48, 64, 64, 48, 0 (split by a cell boundary)
 	seq_block	0xff, 675, 565	; block 678: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46305, 251
+; a stale copy: the same 251 bytes as block 539 (chain from block 459, 24 of 35), typed as that block is
+	.byte	0x02	; last 1 bytes of sq_note 0x90, 7, 69, 124, 4, 2 (split by a cell boundary)
+	sq_ev	0xb4, 61, 53, 4, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 57, 117, 65, 1
+	sq_note	0x90, 50, 64, 39, 20, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 84, 21, 0
+	sq_note	0x90, 4, 64, 64, 19, 0
+	sq_note	0x90, 4, 74, 66, 19, 0
+	sq_ev	0xb4, 40, 53, 4, 0, 127
+	sq_note	0x90, 49, 69, 125, 66, 0
+	sq_note	0x90, 49, 74, 77, 67, 0
+	sq_note	0x90, 50, 64, 89, 60, 0
+	sq_beat
+	sq_ev	0xb4, 2, 53, 4, 127, 127
+	sq_note	0x90, 4, 57, 81, 48, 0
+	sq_note	0x90, 50, 73, 120, 75, 0
+	sq_note	0x90, 51, 69, 117, 71, 0
+	sq_note	0x90, 51, 64, 120, 49, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 111, 47, 1
+	sq_note	0x90, 51, 64, 35, 16, 0
+	sq_beat
+	sq_note	0x90, 2, 64, 96, 23, 0
+	sq_note	0x90, 3, 74, 111, 24, 0
+	sq_note	0x90, 3, 69, 89, 23, 0
+	sq_note	0x90, 53, 69, 127, 47, 0
+	sq_note	0x90, 53, 64, 124, 45, 0
+	sq_note	0x90, 54, 73, 127, 47, 0
+	sq_beat
+	sq_note	0x90, 1, 57, 111, 52, 0
+	sq_note	0x90, 50, 62, 43, 16, 0
+	sq_ev	0xb4, 88, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 71, 124, 30, 2
+	sq_note	0x90, 0, 55, 99, 74, 0
+	sq_note	0x90, 0, 67, 99, 17, 2
+	sq_note	0x90, 0, 62, 96, 0, 2
+	sq_ev	0xb4, 65, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 55, 69, 32, 0
+	sq_beat
+	sq_note	0x90, 3, 55, 99, 62, 1
+	sq_note	0x90, 49, 62, 14, 18, 0
+	sq_beat
+	sq_note	0x90, 2, 72, 66, 17, 0
+	sq_note	0x90, 2, 67, 55, 15, 0
+	sq_note	0x90, 3, 62, 35, 17, 0
+	sq_note	0x90, 52, 72, 102, 53, 0
+	sq_note	0x90, 52, 67, 127, 52, 0
+	.byte	0x90, 0x35, 0x3e, 0x59, 0x32	; first 5 bytes of sq_note 0x90, 53, 62, 89, 50, 0 (split by a cell boundary)
 	seq_block	0x80, 346, 567	; block 679: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46405, 251
+; a stale copy: the same 251 bytes as block 540 (chain from block 246, 38 of 52), typed as that block is
+	.byte	0x04, 0x39, 0x4a, 0x06, 0x01	; last 5 bytes of sq_note 0x90, 4, 57, 74, 6, 1 (split by a cell boundary)
+	sq_note	0x90, 5, 61, 58, 6, 1
+	sq_note	0x90, 5, 54, 72, 3, 1
+	sq_ev	0xb4, 64, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 93, 61, 58, 45, 0
+	sq_note	0x90, 93, 57, 74, 43, 0
+	sq_note	0x90, 94, 54, 72, 37, 0
+	sq_note	0x90, 94, 64, 64, 37, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 47, 61, 64, 45, 0
+	sq_note	0x90, 47, 57, 72, 42, 0
+	sq_note	0x90, 49, 64, 66, 36, 0
+	sq_note	0x90, 49, 54, 61, 37, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 61, 55, 44, 0
+	sq_note	0x90, 48, 57, 74, 42, 0
+	sq_note	0x90, 48, 64, 64, 38, 0
+	sq_note	0x90, 49, 54, 74, 40, 0
+	sq_beat
+	sq_note	0x90, 51, 57, 79, 38, 0
+	sq_note	0x90, 52, 64, 66, 38, 0
+	sq_note	0x90, 52, 61, 66, 37, 0
+	sq_note	0x90, 52, 54, 64, 38, 0
+	sq_beat
+	sq_note	0x90, 90, 60, 66, 12, 1
+	sq_ev	0xb4, 91, 53, 6, 0, 127
+	sq_note	0x90, 92, 57, 79, 10, 1
+	sq_note	0x90, 92, 53, 66, 12, 1
+	sq_beat
+	sq_ev	0xb4, 73, 53, 6, 127, 127
+	sq_beat
+	sq_note	0x90, 93, 60, 72, 63, 0
+	sq_note	0x90, 93, 57, 89, 58, 0
+	sq_note	0x90, 94, 53, 72, 58, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 92, 55, 84, 87, 0
+	sq_note	0x90, 92, 59, 89, 86, 0
+	sq_note	0x90, 93, 62, 84, 83, 0
+	sq_ev	0xb4, 94, 53, 6, 0, 127
+	sq_beat
+	sq_ev	0xb4, 62, 53, 6, 127, 127
+	sq_beat
+	sq_ev	0xb4, 87, 53, 6, 0, 127
+	sq_note	0x90, 92, 55, 48, 64, 0
+	sq_note	0x90, 92, 62, 72, 70, 0
+	sq_note	0x90, 92, 59, 66, 67, 0
+	sq_beat
+	sq_ev	0xb4, 19, 53, 6, 127, 127
+	sq_beat
+	sq_ev	0xb4, 49, 53, 6, 0, 127
+	.byte	0xd2, 0x45, 0x00	; first 3 bytes of sq_ev 0xd2, 69, 0, 62 (split by a cell boundary)
 	seq_block	0xd7, 387, 568	; block 680: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46505, 251
+; a stale copy: the same 251 bytes as block 541 (chain from block 459, 27 of 35), typed as that block is
+	sq_ev	0xb4, 29, 53, 4, 127, 127
+	sq_note	0x90, 49, 81, 79, 26, 0
+	sq_note	0x90, 50, 69, 93, 26, 0
+	sq_beat
+	sq_note	0x90, 4, 81, 108, 24, 0
+	sq_note	0x90, 5, 69, 84, 23, 0
+	sq_note	0x90, 54, 69, 126, 54, 0
+	sq_note	0x90, 55, 81, 102, 67, 0
+	sq_beat
+	sq_note	0x90, 2, 57, 127, 10, 2
+	sq_note	0x90, 45, 69, 51, 19, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 102, 22, 0
+	sq_note	0x90, 1, 81, 102, 20, 0
+	sq_note	0x90, 48, 81, 127, 24, 0
+	sq_note	0x90, 48, 69, 99, 23, 0
+	sq_note	0x90, 95, 69, 123, 28, 0
+	sq_beat
+	sq_note	0x90, 0, 81, 111, 28, 0
+	sq_note	0x90, 48, 69, 93, 53, 0
+	sq_note	0x90, 48, 81, 127, 63, 0
+	sq_note	0x90, 91, 57, 127, 64, 1
+	sq_beat
+	sq_note	0x90, 35, 69, 39, 17, 0
+	sq_note	0x90, 90, 69, 108, 19, 0
+	sq_note	0x90, 92, 81, 127, 17, 0
+	sq_beat
+	sq_note	0x90, 47, 69, 127, 52, 0
+	sq_note	0x90, 47, 81, 127, 75, 0
+	sq_beat
+	sq_note	0x90, 0, 57, 93, 58, 0
+	sq_note	0x90, 48, 69, 66, 18, 0
+	sq_ev	0xb4, 88, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 55, 105, 62, 1
+	sq_note	0x90, 1, 69, 124, 23, 0
+	sq_note	0x90, 2, 81, 127, 23, 0
+	sq_ev	0xb4, 38, 53, 4, 127, 127
+	sq_note	0x90, 51, 69, 102, 22, 0
+	sq_note	0x90, 52, 81, 120, 22, 0
+	sq_beat
+	sq_note	0x90, 5, 69, 84, 21, 0
+	sq_note	0x90, 7, 81, 84, 19, 0
+	sq_note	0x90, 57, 69, 127, 53, 0
+	sq_note	0x90, 57, 81, 102, 73, 0
+	sq_beat
+	sq_note	0x90, 8, 55, 127, 55, 2
+	sq_note	0x90, 51, 69, 51, 19, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 117, 23, 0
+	sq_note	0x90, 2, 81, 89, 20, 0
 	seq_block	0xe1, 59, 453	; block 681: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46605, 251
+; a stale copy: the same 251 bytes as block 542 (chain from block 490, 12 of 15), typed as that block is
+	.byte	0x7f	; last 1 bytes of sq_ev 0xb4, 52, 53, 11, 127, 127 (split by a cell boundary)
+	sq_beat
+	sq_note	0x90, 0, 52, 55, 24, 0
+	sq_note	0x90, 88, 55, 77, 90, 0
+	sq_note	0x90, 89, 61, 74, 94, 0
+	sq_note	0x90, 90, 52, 66, 37, 0
+	sq_beat
+	sq_note	0x90, 88, 52, 58, 95, 0
+	sq_beat
+	sq_note	0x90, 40, 55, 89, 48, 0
+	sq_note	0x90, 40, 61, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 45, 52, 58, 44, 0
+	sq_note	0x90, 45, 55, 69, 56, 0
+	sq_note	0x90, 46, 61, 69, 70, 0
+	sq_beat
+	sq_note	0x90, 47, 52, 55, 12, 1
+	sq_beat
+	sq_note	0x90, 0, 61, 74, 60, 0
+	sq_note	0x90, 0, 55, 74, 58, 0
+	sq_beat
+	sq_note	0x90, 4, 55, 77, 31, 0
+	sq_note	0x90, 4, 61, 72, 47, 0
+	sq_note	0x90, 5, 52, 79, 24, 0
+	sq_beat
+	sq_note	0x90, 4, 61, 79, 17, 1
+	sq_note	0x90, 4, 57, 89, 17, 1
+	sq_note	0x90, 4, 54, 89, 34, 1
+	sq_ev	0xb4, 7, 53, 11, 0, 127
+	sq_ev	0xb4, 57, 53, 11, 127, 127
+	sq_beat
+	sq_note	0x90, 88, 54, 66, 44, 0
+	sq_note	0x90, 88, 57, 58, 1, 1
+	sq_note	0x90, 89, 61, 66, 1, 1
+	sq_beat
+	sq_note	0x90, 88, 54, 43, 93, 0
+	sq_beat
+	sq_note	0x90, 45, 61, 74, 46, 0
+	sq_note	0x90, 45, 57, 69, 44, 0
+	sq_beat
+	sq_note	0x90, 48, 61, 89, 93, 0
+	sq_note	0x90, 49, 54, 69, 40, 0
+	sq_note	0x90, 50, 57, 79, 75, 0
+	sq_beat
+	sq_note	0x90, 52, 54, 35, 32, 0
+	sq_beat
+	sq_note	0x90, 2, 61, 77, 47, 0
+	sq_note	0x90, 2, 57, 77, 46, 0
+	sq_note	0x90, 4, 54, 66, 40, 0
+	sq_beat
+	sq_note	0x90, 1, 61, 74, 29, 0
+	sq_note	0x90, 2, 54, 89, 27, 0
+	sq_note	0x90, 3, 57, 84, 34, 0
+	sq_ev	0xb4, 92, 53, 11, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 53, 77, 67, 0
 	seq_block	0xc0, 309, 575	; block 682: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46705, 251
+; a stale copy: the same 251 bytes as block 543 (chain from block 459, 32 of 35), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 50, 69, 84, 26, 0 (split by a cell boundary)
+	sq_note	0x90, 51, 75, 117, 21, 0
+	sq_note	0x90, 52, 76, 124, 25, 0
+	sq_beat
+	sq_note	0x90, 6, 74, 79, 29, 0
+	sq_note	0x90, 6, 69, 55, 41, 0
+	sq_note	0x90, 50, 72, 111, 20, 0
+	sq_ev	0xb4, 84, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 6, 69, 126, 43, 0
+	sq_note	0x90, 7, 65, 127, 55, 0
+	sq_note	0x90, 7, 74, 111, 31, 0
+	sq_ev	0xb4, 22, 53, 4, 127, 127
+	sq_note	0x90, 55, 72, 72, 24, 0
+	sq_beat
+	sq_note	0x90, 4, 69, 79, 29, 0
+	sq_note	0x90, 52, 67, 124, 27, 0
+	sq_beat
+	sq_ev	0xb4, 2, 53, 4, 0, 127
+	sq_note	0x90, 4, 55, 127, 57, 1
+	sq_note	0x90, 4, 69, 127, 56, 0
+	sq_note	0x90, 8, 67, 64, 10, 0
+	sq_ev	0xb4, 44, 53, 4, 127, 127
+	sq_note	0x90, 52, 67, 127, 29, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 96, 28, 0
+	sq_note	0x90, 52, 63, 64, 27, 0
+	sq_beat
+	sq_note	0x90, 0, 62, 93, 30, 0
+	sq_note	0x90, 50, 60, 127, 42, 1
+	sq_beat
+	sq_note	0x90, 4, 57, 127, 71, 1
+	sq_ev	0xb4, 32, 53, 4, 0, 127
+	sq_note	0x90, 93, 45, 127, 5, 3
+	sq_beat
+	sq_ev	0xb4, 12, 53, 4, 127, 127
+	sq_beat
+	sq_note	0x90, 91, 57, 124, 55, 4
+	sq_beat
+	sq_ev	0xb4, 0, 53, 4, 0, 127
+	sq_ev	0xb4, 34, 53, 4, 127, 127
+	sq_note	0x90, 49, 69, 66, 24, 0
+	sq_beat
+	sq_note	0x90, 2, 72, 127, 26, 0
+	sq_note	0x90, 50, 74, 108, 26, 0
+	sq_ev	0xb4, 91, 53, 4, 0, 127
+	sq_beat
+	sq_note	0x90, 3, 75, 127, 35, 0
+	sq_ev	0xb4, 30, 53, 4, 127, 127
+	sq_note	0x90, 51, 76, 74, 32, 0
+	sq_beat
+	sq_note	0x90, 4, 79, 127, 26, 0
+	sq_note	0x90, 53, 81, 105, 26, 0
+	sq_beat
+	.byte	0x90, 0x07	; first 2 bytes of sq_note 0x90, 7, 84, 124, 24, 0 (split by a cell boundary)
 	seq_block	0x80, 317, 577	; block 683: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46805, 251
+; a stale copy: the same 251 bytes as block 544 (chain from block 486, 44 of 48), typed as that block is
+	.byte	0x07, 0x7f, 0x7f	; last 3 bytes of sq_ev 0xb4, 92, 53, 7, 127, 127 (split by a cell boundary)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 34, 53, 7, 0, 127
+	sq_ev	0xd2, 56, 0, 63
+	sq_ev	0xd2, 60, 0, 60
+	sq_ev	0xd2, 62, 0, 55
+	sq_ev	0xd2, 64, 0, 51
+	sq_ev	0xd2, 66, 0, 45
+	sq_ev	0xd2, 68, 0, 40
+	sq_ev	0xd2, 72, 0, 33
+	sq_ev	0xd2, 74, 0, 27
+	sq_ev	0xd2, 77, 0, 19
+	sq_ev	0xd2, 80, 0, 12
+	sq_ev	0xd2, 82, 0, 5
+	sq_ev	0xd2, 84, 0, 0
+	sq_beat
+	sq_note	0x90, 7, 66, 79, 95, 0
+	sq_ev	0xd2, 54, 0, 13
+	sq_ev	0xd2, 56, 0, 51
+	sq_ev	0xd2, 59, 0, 64
+	sq_ev	0xd2, 64, 0, 61
+	sq_ev	0xd2, 66, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 69, 77, 2, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 2, 71, 93, 90, 0
+	sq_ev	0xd2, 26, 0, 72
+	sq_ev	0xd2, 28, 0, 81
+	sq_ev	0xd2, 31, 0, 91
+	sq_ev	0xd2, 33, 0, 100
+	sq_ev	0xd2, 36, 0, 109
+	sq_ev	0xd2, 38, 0, 119
+	sq_ev	0xd2, 40, 0, 127
+	sq_ev	0xd2, 57, 0, 89
+	sq_ev	0xd2, 60, 0, 64
+	sq_ev	0xd2, 64, 0, 69
+	sq_ev	0xd2, 67, 0, 67
+	sq_ev	0xd2, 69, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 23, 0
+	sq_note	0x90, 50, 66, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 0, 1
+	sq_beat
+	sq_note	0x90, 2, 66, 93, 23, 0
+	sq_note	0x90, 50, 57, 93, 23, 0
+	sq_ev	0xd2, 92, 0, 62
+	sq_ev	0xd2, 95, 0, 56
+	sq_beat
+	sq_ev	0xd2, 1, 0, 50
+	sq_note	0x90, 2, 61, 93, 91, 0
+	sq_ev	0xd2, 4, 0, 41
+	sq_ev	0xd2, 6, 0, 33
+	sq_ev	0xd2, 8, 0, 25
+	sq_ev	0xd2, 11, 0, 16
+	sq_ev	0xd2, 14, 0, 8
+	sq_ev	0xd2, 16, 0, 0
+	sq_ev	0xd2, 50, 0, 13
+	sq_ev	0xd2, 52, 0, 47
+	.byte	0xd2	; first 1 bytes of sq_ev 0xd2, 55, 0, 64 (split by a cell boundary)
 	seq_block	0x80, 576, 498	; block 684: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46905, 251
+; a stale copy: the same 251 bytes as block 545 (chain from block 485, 44 of 61), typed as that block is
+	.byte	0x02, 0x2a, 0x37, 0x20, 0x00	; last 5 bytes of sq_note 0x90, 2, 42, 55, 32, 0 (split by a cell boundary)
+	sq_note	0x90, 47, 61, 69, 45, 0
+	sq_note	0x90, 47, 57, 66, 45, 0
+	sq_note	0x90, 48, 54, 51, 37, 0
+	sq_note	0x90, 95, 42, 72, 34, 0
+	sq_beat
+	sq_note	0x90, 45, 52, 51, 58, 1
+	sq_ev	0xb4, 64, 53, 2, 0, 127
+	sq_note	0x90, 92, 61, 69, 15, 1
+	sq_note	0x90, 92, 57, 64, 15, 1
+	sq_note	0x90, 94, 40, 58, 39, 0
+	sq_beat
+	sq_ev	0xb4, 33, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 64, 22, 1
+	sq_note	0x90, 91, 61, 69, 85, 0
+	sq_note	0x90, 91, 57, 69, 81, 0
+	sq_note	0x90, 92, 52, 64, 77, 0
+	sq_beat
+	sq_note	0x90, 88, 40, 55, 18, 1
+	sq_beat
+	sq_note	0x90, 38, 52, 69, 5, 1
+	sq_note	0x90, 39, 57, 96, 7, 1
+	sq_note	0x90, 39, 61, 69, 10, 1
+	sq_note	0x90, 40, 64, 79, 85, 3
+	sq_ev	0xb4, 44, 53, 2, 0, 127
+	sq_beat
+	sq_ev	0xb4, 1, 53, 2, 127, 127
+	sq_note	0x90, 48, 40, 58, 62, 0
+	sq_beat
+	sq_note	0x90, 3, 61, 64, 5, 1
+	sq_note	0x90, 4, 57, 64, 95, 0
+	sq_note	0x90, 5, 52, 61, 91, 0
+	sq_beat
+	sq_note	0x90, 4, 40, 58, 45, 0
+	sq_note	0x90, 50, 52, 69, 50, 0
+	sq_note	0x90, 50, 61, 64, 4, 1
+	sq_note	0x90, 50, 57, 66, 4, 1
+	sq_beat
+	sq_note	0x90, 2, 40, 61, 47, 0
+	sq_note	0x90, 52, 52, 48, 49, 1
+	sq_ev	0xb4, 84, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 1, 45, 66, 38, 0
+	sq_note	0x90, 2, 61, 72, 12, 1
+	sq_note	0x90, 2, 57, 72, 8, 1
+	sq_ev	0xb4, 35, 53, 2, 127, 127
+	sq_note	0x90, 93, 45, 58, 19, 1
+	sq_beat
+	sq_note	0x90, 94, 52, 69, 84, 0
+	sq_note	0x90, 95, 61, 58, 89, 0
+	sq_beat
 	seq_block	0xc6, 498, 90	; block 685: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46a05, 251
+; a stale copy: the same 251 bytes as block 546 (chain from block 485, 46 of 61), typed as that block is
+	.byte	0x16, 0x01	; last 2 bytes of sq_note 0x90, 92, 61, 66, 22, 1 (split by a cell boundary)
+	sq_note	0x90, 92, 57, 74, 22, 1
+	sq_note	0x90, 93, 42, 69, 32, 0
+	sq_beat
+	sq_ev	0xb4, 32, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 0, 42, 74, 8, 1
+	sq_beat
+	sq_note	0x90, 1, 61, 66, 2, 1
+	sq_note	0x90, 1, 54, 72, 94, 0
+	sq_note	0x90, 2, 57, 74, 0, 1
+	sq_note	0x90, 91, 42, 64, 58, 0
+	sq_beat
+	sq_note	0x90, 45, 61, 69, 86, 0
+	sq_note	0x90, 47, 57, 84, 82, 0
+	sq_note	0x90, 47, 54, 69, 76, 0
+	sq_beat
+	sq_note	0x90, 44, 42, 43, 63, 0
+	sq_beat
+	sq_note	0x90, 0, 61, 69, 95, 0
+	sq_note	0x90, 1, 54, 74, 92, 0
+	sq_note	0x90, 2, 57, 66, 92, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 35, 39, 0
+	sq_note	0x90, 48, 61, 69, 90, 0
+	sq_note	0x90, 50, 57, 79, 71, 0
+	sq_note	0x90, 50, 54, 66, 42, 0
+	sq_beat
+	sq_note	0x90, 2, 42, 43, 40, 0
+	sq_note	0x90, 48, 52, 51, 64, 1
+	sq_ev	0xb4, 75, 53, 2, 0, 127
+	sq_note	0x90, 92, 61, 64, 23, 1
+	sq_note	0x90, 93, 57, 66, 20, 1
+	sq_note	0x90, 93, 40, 58, 48, 0
+	sq_beat
+	sq_ev	0xb4, 21, 53, 2, 127, 127
+	sq_note	0x90, 91, 40, 58, 21, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 52, 64, 94, 0
+	sq_note	0x90, 1, 61, 58, 95, 0
+	sq_note	0x90, 1, 57, 72, 95, 0
+	sq_note	0x90, 95, 40, 64, 70, 0
+	sq_beat
+	sq_note	0x90, 48, 52, 66, 80, 0
+	sq_note	0x90, 48, 61, 74, 89, 0
+	sq_note	0x90, 48, 57, 66, 86, 0
+	sq_beat
+	sq_note	0x90, 42, 40, 30, 57, 0
+	sq_note	0x90, 91, 61, 61, 3, 1
+	sq_note	0x90, 92, 57, 79, 95, 0
+	sq_note	0x90, 93, 52, 48, 86, 0
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 40, 43, 42, 0
 	seq_block	0xff, 577, 607	; block 686: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46b05, 251
+; a stale copy: the same 251 bytes as block 547 (chain from block 486, 46 of 48), typed as that block is
+	.byte	0x00, 0x53	; last 2 bytes of sq_ev 0xd2, 24, 0, 83 (split by a cell boundary)
+	sq_ev	0xd2, 26, 0, 95
+	sq_ev	0xd2, 28, 0, 109
+	sq_ev	0xd2, 31, 0, 122
+	sq_ev	0xd2, 33, 0, 127
+	sq_ev	0xd2, 47, 0, 126
+	sq_ev	0xd2, 49, 0, 98
+	sq_ev	0xd2, 52, 0, 65
+	sq_ev	0xd2, 54, 0, 64
+	sq_ev	0xd2, 56, 0, 65
+	sq_ev	0xd2, 59, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 23, 0
+	sq_note	0x90, 50, 66, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 23, 1
+	sq_beat
+	sq_note	0x90, 2, 66, 93, 23, 0
+	sq_note	0x90, 50, 57, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 61, 93, 88, 0
+	sq_ev	0xd2, 8, 0, 55
+	sq_ev	0xd2, 11, 0, 47
+	sq_ev	0xd2, 13, 0, 38
+	sq_ev	0xd2, 16, 0, 29
+	sq_ev	0xd2, 18, 0, 21
+	sq_ev	0xd2, 20, 0, 15
+	sq_ev	0xd2, 23, 0, 9
+	sq_ev	0xd2, 25, 0, 6
+	sq_ev	0xd2, 28, 0, 4
+	sq_ev	0xd2, 31, 0, 2
+	sq_ev	0xd2, 36, 0, 1
+	sq_ev	0xd2, 48, 0, 2
+	sq_ev	0xd2, 50, 0, 4
+	sq_ev	0xd2, 52, 0, 14
+	sq_ev	0xd2, 55, 0, 50
+	sq_ev	0xd2, 57, 0, 68
+	sq_ev	0xd2, 59, 0, 64
+	sq_ev	0xd2, 62, 0, 61
+	sq_ev	0xd2, 64, 0, 64
+	sq_beat
+	sq_note	0x90, 2, 64, 93, 23, 0
+	sq_note	0x90, 50, 66, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 2, 69, 93, 72, 0
+	sq_beat
+	sq_note	0x90, 2, 71, 93, 48, 0
+	sq_note	0x90, 50, 69, 93, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 73, 93, 65, 0
+	sq_ev	0xd2, 2, 0, 51
+	sq_ev	0xd2, 4, 0, 45
+	sq_ev	0xd2, 7, 0, 39
+	sq_ev	0xd2, 9, 0, 33
+	sq_ev	0xd2, 12, 0, 28
+	sq_ev	0xd2, 14, 0, 22
+	sq_ev	0xd2, 16, 0, 18
+	sq_ev	0xd2, 19, 0, 14
+	sq_ev	0xd2, 20, 0, 11
+	sq_ev	0xd2, 23, 0, 10
+	sq_ev	0xd2, 31, 0, 12
+	sq_ev	0xd2, 33, 0, 15
+	sq_ev	0xd2, 36, 0, 25
+	.byte	0xd2	; first 1 bytes of sq_ev 0xd2, 38, 0, 42 (split by a cell boundary)
 	seq_block	0xff, 502, 407	; block 687: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46c05, 251
+; a stale copy: the same 251 bytes as block 548 (chain from block 485, 49 of 61), typed as that block is
+	.byte	0x35, 0x02, 0x00, 0x7f	; last 4 bytes of sq_ev 0xb4, 1, 53, 2, 0, 127 (split by a cell boundary)
+	sq_note	0x90, 1, 61, 61, 16, 1
+	sq_ev	0xb4, 59, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 1, 40, 61, 9, 1
+	sq_note	0x90, 91, 57, 61, 89, 0
+	sq_note	0x90, 91, 52, 72, 89, 0
+	sq_note	0x90, 92, 61, 58, 89, 0
+	sq_beat
+	sq_note	0x90, 86, 40, 43, 94, 0
+	sq_beat
+	sq_note	0x90, 40, 57, 58, 85, 0
+	sq_note	0x90, 40, 52, 58, 85, 0
+	sq_note	0x90, 40, 61, 58, 85, 0
+	sq_beat
+	sq_note	0x90, 40, 40, 35, 59, 0
+	sq_note	0x90, 91, 52, 66, 91, 0
+	sq_note	0x90, 91, 61, 69, 91, 0
+	sq_note	0x90, 92, 57, 64, 92, 0
+	sq_beat
+	sq_note	0x90, 93, 40, 43, 43, 0
+	sq_beat
+	sq_note	0x90, 44, 57, 58, 71, 0
+	sq_note	0x90, 45, 52, 58, 55, 0
+	sq_note	0x90, 46, 61, 58, 74, 0
+	sq_beat
+	sq_note	0x90, 0, 45, 58, 43, 0
+	sq_note	0x90, 49, 52, 43, 53, 1
+	sq_ev	0xb4, 86, 53, 2, 0, 127
+	sq_note	0x90, 92, 57, 64, 17, 1
+	sq_note	0x90, 92, 61, 79, 17, 1
+	sq_beat
+	sq_ev	0xb0, 0, 2, 8, 0, 127
+	sq_note	0x90, 0, 45, 61, 45, 0
+	sq_ev	0xb4, 40, 53, 2, 127, 127
+	sq_ev	0xb0, 66, 2, 8, 1, 127
+	sq_note	0x90, 88, 45, 74, 27, 1
+	sq_beat
+	sq_ev	0xb0, 36, 2, 8, 2, 127
+	sq_note	0x90, 91, 52, 72, 89, 0
+	sq_note	0x90, 91, 57, 64, 93, 0
+	sq_note	0x90, 92, 61, 64, 88, 0
+	sq_beat
+	sq_ev	0xb0, 7, 2, 8, 3, 127
+	sq_ev	0xb0, 73, 2, 8, 4, 127
+	sq_note	0x90, 86, 45, 30, 70, 0
+	sq_beat
+	sq_ev	0xb0, 44, 2, 8, 5, 127
+	sq_note	0x90, 45, 57, 74, 90, 0
+	sq_note	0x90, 45, 52, 84, 84, 0
+	sq_note	0x90, 47, 61, 72, 85, 0
+	sq_beat
+	.byte	0xb0	; first 1 bytes of sq_ev 0xb0, 14, 2, 8, 6, 127 (split by a cell boundary)
 	seq_block	0xff, 359, 521	; block 688: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46d05, 251
+; a stale copy: the same 251 bytes as block 549 (chain from block 287, 17 of 21), typed as that block is
+	sq_ev	0xd2, 13, 0, 96
+	sq_ev	0xd2, 16, 0, 107
+	sq_ev	0xd2, 18, 0, 118
+	sq_ev	0xd2, 20, 0, 127
+	sq_ev	0xb0, 52, 5, 8, 21, 127
+	sq_beat
+	sq_ev	0xb0, 23, 5, 8, 22, 127
+	sq_ev	0xb0, 89, 5, 8, 23, 127
+	sq_beat
+	sq_ev	0xd2, 8, 0, 80
+	sq_ev	0xd2, 11, 0, 61
+	sq_ev	0xd2, 12, 0, 64
+	sq_ev	0xd2, 16, 0, 72
+	sq_ev	0xd2, 18, 0, 66
+	sq_ev	0xd2, 20, 0, 64
+	sq_ev	0xb0, 60, 5, 8, 24, 127
+	sq_beat
+	sq_ev	0xb0, 30, 5, 8, 25, 127
+	sq_beat
+	sq_ev	0xb0, 0, 5, 8, 26, 127
+	sq_ev	0xb0, 68, 5, 8, 27, 127
+	sq_beat
+	sq_ev	0xb0, 38, 5, 8, 28, 127
+	sq_beat
+	sq_ev	0xb0, 8, 5, 8, 29, 127
+	sq_ev	0xb0, 75, 5, 8, 30, 127
+	sq_beat
+	sq_ev	0xb0, 45, 5, 8, 31, 127
+	sq_beat
+	sq_ev	0xd2, 0, 0, 71
+	sq_ev	0xd2, 2, 0, 77
+	sq_ev	0xd2, 4, 0, 87
+	sq_ev	0xd2, 7, 0, 97
+	sq_ev	0xd2, 9, 0, 109
+	sq_ev	0xd2, 12, 0, 122
+	sq_ev	0xd2, 14, 0, 127
+	sq_ev	0xb0, 16, 5, 8, 32, 127
+	sq_ev	0xb0, 82, 5, 8, 33, 127
+	sq_beat
+	sq_ev	0xb0, 53, 5, 8, 34, 127
+	sq_beat
+	sq_ev	0xd2, 8, 0, 124
+	sq_ev	0xd2, 11, 0, 70
+	sq_ev	0xd2, 13, 0, 56
+	sq_ev	0xd2, 16, 0, 64
+	sq_ev	0xd2, 18, 0, 74
+	sq_ev	0xd2, 20, 0, 67
+	sq_ev	0xd2, 22, 0, 64
+	sq_ev	0xb0, 24, 5, 8, 35, 127
+	sq_ev	0xb0, 90, 5, 8, 36, 127
+	sq_beat
+	sq_ev	0xb0, 60, 5, 8, 37, 127
+	sq_beat
+	sq_ev	0xb0, 31, 5, 8, 38, 127
+	sq_beat
+	sq_ev	0xb0, 1, 5, 8, 39, 127
+	sq_ev	0xb0, 68, 5, 8, 40, 127
+	sq_beat
+	sq_ev	0xb0, 39, 5, 8, 41, 127
+	sq_beat
+	sq_ev	0xb0, 9, 5, 8, 42, 127
+	sq_ev	0xb0, 76, 5, 8, 43, 127
+	sq_beat
+	.byte	0xb0	; first 1 bytes of sq_ev 0xb0, 46, 5, 8, 44, 127 (split by a cell boundary)
 	seq_block	0xef, 360, 545	; block 689: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46e05, 251
+; a stale copy: the same 251 bytes as block 550 (chain from block 488, 73 of 83), typed as that block is
+	.byte	0x00, 0x24, 0x7f, 0x17, 0x00	; last 5 bytes of sq_note 0x90, 0, 36, 127, 23, 0 (split by a cell boundary)
+	sq_note	0x90, 0, 42, 127, 23, 0
+	sq_note	0x90, 0, 70, 96, 23, 0
+	sq_note	0x90, 48, 70, 77, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 124, 23, 0
+	sq_note	0x90, 0, 38, 126, 23, 0
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 93, 23, 0
+	sq_note	0x90, 0, 70, 77, 23, 0
+	sq_note	0x90, 48, 38, 126, 23, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 117, 23, 0
+	sq_note	0x90, 0, 54, 127, 23, 0
+	sq_note	0x90, 48, 38, 111, 23, 0
+	sq_note	0x90, 48, 70, 89, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 23, 0
+	sq_note	0x90, 0, 42, 111, 23, 0
+	sq_note	0x90, 0, 70, 84, 23, 0
+	sq_note	0x90, 48, 70, 72, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 38, 127, 23, 0
+	sq_note	0x90, 0, 42, 111, 23, 0
+	sq_note	0x90, 0, 54, 111, 48, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 84, 23, 0
+	sq_note	0x90, 0, 70, 61, 23, 0
+	sq_note	0x90, 48, 38, 111, 23, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 127, 47, 0
+	sq_note	0x90, 0, 42, 91, 23, 0
+	sq_note	0x90, 0, 54, 84, 48, 0
+	sq_note	0x90, 48, 70, 89, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 36, 111, 23, 0
+	sq_note	0x90, 0, 42, 84, 23, 0
+	sq_note	0x90, 0, 70, 89, 23, 0
+	sq_note	0x90, 48, 70, 84, 23, 0
+	sq_beat
+	sq_note	0x90, 0, 42, 91, 23, 0
+	sq_note	0x90, 0, 38, 125, 23, 0
+	sq_note	0x90, 0, 54, 127, 48, 0
+	sq_note	0x90, 48, 70, 72, 23, 0
+	sq_beat
+	.byte	0x90, 0x00	; first 2 bytes of sq_note 0x90, 0, 42, 91, 23, 0 (split by a cell boundary)
 	seq_block	0xff, 345, 692	; block 690: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x46f05, 251
+; a stale copy: the same 251 bytes as block 551 (chain from block 491, 16 of 20), typed as that block is
+	.byte	0x0c, 0x08, 0x66, 0x7f	; last 4 bytes of sq_ev 0xb0, 30, 12, 8, 102, 127 (split by a cell boundary)
+	sq_beat
+	sq_ev	0xb0, 0, 12, 8, 101, 127
+	sq_ev	0xb0, 68, 12, 8, 100, 127
+	sq_beat
+	sq_ev	0xb0, 38, 12, 8, 99, 127
+	sq_beat
+	sq_ev	0xb0, 8, 12, 8, 98, 127
+	sq_ev	0xb0, 75, 12, 8, 97, 127
+	sq_beat
+	sq_ev	0xb0, 45, 12, 8, 96, 127
+	sq_beat
+	sq_ev	0xd2, 6, 0, 65
+	sq_ev	0xd2, 8, 0, 69
+	sq_ev	0xd2, 11, 0, 72
+	sq_ev	0xd2, 13, 0, 75
+	sq_ev	0xb0, 16, 12, 8, 95, 127
+	sq_ev	0xd2, 16, 0, 77
+	sq_ev	0xd2, 18, 0, 80
+	sq_ev	0xd2, 20, 0, 81
+	sq_ev	0xd2, 25, 0, 83
+	sq_ev	0xd2, 28, 0, 84
+	sq_ev	0xd2, 60, 0, 87
+	sq_ev	0xd2, 72, 0, 88
+	sq_ev	0xb0, 82, 12, 8, 94, 127
+	sq_ev	0xd2, 89, 0, 91
+	sq_beat
+	sq_ev	0xd2, 6, 0, 92
+	sq_ev	0xb0, 53, 12, 8, 93, 127
+	sq_ev	0xd2, 73, 0, 91
+	sq_ev	0xd2, 85, 0, 89
+	sq_ev	0xd2, 88, 0, 87
+	sq_ev	0xd2, 90, 0, 84
+	sq_ev	0xd2, 92, 0, 80
+	sq_ev	0xd2, 95, 0, 74
+	sq_beat
+	sq_ev	0xd2, 1, 0, 64
+	sq_ev	0xb0, 24, 12, 8, 92, 127
+	sq_ev	0xb0, 90, 12, 8, 91, 127
+	sq_beat
+	sq_ev	0xb0, 60, 12, 8, 90, 127
+	sq_beat
+	sq_ev	0xb0, 31, 12, 8, 89, 127
+	sq_beat
+	sq_ev	0xb0, 1, 12, 8, 88, 127
+	sq_ev	0xb0, 68, 12, 8, 87, 127
+	sq_beat
+	sq_ev	0xb0, 39, 12, 8, 86, 127
+	sq_beat
+	sq_ev	0xb0, 9, 12, 8, 85, 127
+	sq_ev	0xb0, 76, 12, 8, 84, 127
+	sq_beat
+	sq_ev	0xb0, 46, 12, 8, 83, 127
+	sq_beat
+	sq_ev	0xb0, 16, 12, 8, 82, 127
+	sq_ev	0xb0, 83, 12, 8, 81, 127
+	sq_beat
+	sq_note	0x90, 7, 49, 123, 55, 29
+	sq_ev	0xb0, 54, 12, 8, 80, 127
+	sq_beat
+	sq_ev	0xb0, 24, 12, 8, 79, 127
+	sq_ev	0xb0, 91, 12, 8, 78, 127
+	sq_beat
 	seq_block	0xa0, 532, 620	; block 691: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47005, 251
+; a stale copy: the same 251 bytes as block 552 (chain from block 489, 24 of 26), typed as that block is
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 57, 72, 0, 7
+	sq_note	0x90, 48, 64, 84, 48, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 57, 84, 24, 7
+	sq_note	0x90, 48, 64, 66, 72, 6
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 57, 79, 0, 4
+	sq_note	0x90, 48, 64, 66, 48, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb0, 0, 10, 3, 90, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 12, 69, 72, 45, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 4, 71, 66, 45, 1
+	sq_ev	0xd2, 49, 0, 65
+	sq_ev	0xd2, 52, 0, 68
+	sq_ev	0xd2, 54, 0, 70
+	sq_ev	0xd2, 56, 0, 73
+	sq_ev	0xd2, 59, 0, 75
+	sq_ev	0xd2, 61, 0, 77
+	sq_ev	0xd2, 64, 0, 80
+	sq_ev	0xd2, 66, 0, 82
+	sq_ev	0xd2, 68, 0, 84
+	sq_ev	0xd2, 71, 0, 87
+	sq_ev	0xd2, 73, 0, 89
+	sq_ev	0xd2, 76, 0, 90
+	sq_ev	0xd2, 78, 0, 92
+	sq_ev	0xd2, 83, 0, 94
+	sq_ev	0xd2, 85, 0, 95
+	sq_ev	0xd2, 93, 0, 97
+	sq_beat
+	sq_ev	0xd2, 9, 0, 95
+	sq_ev	0xd2, 12, 0, 93
+	sq_ev	0xd2, 14, 0, 91
+	sq_ev	0xd2, 16, 0, 88
+	sq_ev	0xd2, 18, 0, 84
+	sq_ev	0xd2, 20, 0, 80
+	sq_ev	0xd2, 24, 0, 76
+	sq_ev	0xd2, 26, 0, 71
+	sq_ev	0xd2, 28, 0, 65
+	sq_ev	0xd2, 31, 0, 64
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 38, 64, 48, 28, 1
+	sq_beat
+	sq_note	0x90, 7, 59, 58, 81, 1
+	sq_beat
+	.byte	0x90, 0x24, 0x40	; first 3 bytes of sq_note 0x90, 36, 64, 51, 36, 1 (split by a cell boundary)
 	seq_block	0xe4, 690, 80	; block 692: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47105, 251
+; a stale copy: the same 251 bytes as block 553 (chain from block 491, 17 of 20), typed as that block is
+	sq_ev	0xb0, 61, 12, 8, 77, 127
+	sq_beat
+	sq_ev	0xb0, 32, 12, 8, 76, 127
+	sq_beat
+	sq_ev	0xb0, 2, 12, 8, 75, 127
+	sq_ev	0xb0, 68, 12, 8, 74, 127
+	sq_beat
+	sq_ev	0xb0, 40, 12, 8, 73, 127
+	sq_ev	0xd2, 92, 0, 66
+	sq_ev	0xd2, 95, 0, 69
+	sq_beat
+	sq_ev	0xd2, 1, 0, 72
+	sq_ev	0xd2, 4, 0, 74
+	sq_ev	0xd2, 6, 0, 77
+	sq_ev	0xd2, 8, 0, 79
+	sq_ev	0xb0, 10, 12, 8, 72, 127
+	sq_ev	0xd2, 12, 0, 81
+	sq_ev	0xd2, 14, 0, 83
+	sq_ev	0xd2, 18, 0, 85
+	sq_ev	0xd2, 20, 0, 86
+	sq_ev	0xd2, 28, 0, 87
+	sq_ev	0xd2, 30, 0, 88
+	sq_ev	0xd2, 37, 0, 90
+	sq_ev	0xd2, 49, 0, 91
+	sq_ev	0xb0, 76, 12, 8, 71, 127
+	sq_beat
+	sq_ev	0xd2, 11, 0, 94
+	sq_ev	0xd2, 20, 0, 96
+	sq_ev	0xd2, 28, 0, 98
+	sq_ev	0xd2, 40, 0, 99
+	sq_ev	0xb0, 47, 12, 8, 70, 127
+	sq_beat
+	sq_ev	0xd2, 11, 0, 84
+	sq_ev	0xd2, 13, 0, 68
+	sq_ev	0xd2, 16, 0, 64
+	sq_ev	0xb0, 17, 12, 8, 69, 127
+	sq_ev	0xb0, 84, 12, 8, 68, 127
+	sq_beat
+	sq_ev	0xb0, 54, 12, 8, 67, 127
+	sq_beat
+	sq_ev	0xb0, 25, 12, 8, 66, 127
+	sq_ev	0xb0, 92, 12, 8, 65, 127
+	sq_beat
+	sq_ev	0xb0, 62, 12, 8, 64, 127
+	sq_beat
+	sq_ev	0xb0, 32, 12, 8, 63, 127
+	sq_beat
+	sq_ev	0xb0, 3, 12, 8, 62, 127
+	sq_ev	0xb0, 69, 12, 8, 61, 127
+	sq_ev	0xd2, 95, 0, 66
+	sq_beat
+	sq_ev	0xd2, 1, 0, 70
+	sq_ev	0xd2, 4, 0, 73
+	sq_ev	0xd2, 6, 0, 76
+	sq_ev	0xd2, 8, 0, 78
+	sq_ev	0xd2, 11, 0, 80
+	sq_ev	0xd2, 14, 0, 82
+	sq_ev	0xd2, 16, 0, 83
+	sq_ev	0xd2, 20, 0, 86
+	sq_ev	0xd2, 30, 0, 88
+	sq_ev	0xb0, 40, 12, 8, 60, 127
+	sq_ev	0xd2, 43, 0, 89
+	sq_beat
+	.byte	0xb0, 0x0b	; first 2 bytes of sq_ev 0xb0, 11, 12, 8, 59, 127 (split by a cell boundary)
 	seq_block	0xff, 76, 612	; block 693: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47205, 251
+; a stale copy: the same 251 bytes as block 554 (chain from block 104, 18 of 25), typed as that block is
+	.byte	0x45, 0x42, 0x33, 0x00	; last 4 bytes of sq_note 0x90, 0, 69, 66, 51, 0 (split by a cell boundary)
+	sq_note	0x90, 48, 64, 43, 60, 0
+	sq_beat
+	sq_note	0x90, 4, 66, 48, 52, 0
+	sq_note	0x90, 7, 68, 26, 16, 0
+	sq_note	0x90, 50, 69, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 51, 59, 0
+	sq_note	0x90, 46, 66, 55, 59, 0
+	sq_beat
+	sq_note	0x90, 4, 69, 77, 79, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 64, 69, 57, 0
+	sq_note	0x90, 48, 66, 66, 48, 0
+	sq_beat
+	sq_note	0x90, 1, 69, 69, 51, 0
+	sq_note	0x90, 54, 64, 74, 50, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 74, 51, 0
+	sq_note	0x90, 49, 69, 69, 48, 0
+	sq_beat
+	sq_note	0x90, 6, 64, 58, 53, 0
+	sq_note	0x90, 48, 66, 58, 51, 0
+	sq_note	0x90, 95, 69, 58, 51, 0
+	sq_beat
+	sq_note	0x90, 50, 64, 51, 55, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 55, 56, 0
+	sq_note	0x90, 48, 69, 72, 50, 0
+	sq_beat
+	sq_note	0x90, 1, 64, 79, 55, 0
+	sq_note	0x90, 45, 66, 64, 56, 0
+	sq_note	0x90, 95, 69, 61, 58, 0
+	sq_beat
+	sq_note	0x90, 50, 64, 69, 56, 0
+	sq_note	0x90, 94, 66, 64, 58, 0
+	sq_beat
+	sq_note	0x90, 50, 69, 64, 51, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 72, 53, 0
+	sq_note	0x90, 47, 66, 58, 54, 0
+	sq_beat
+	sq_note	0x90, 0, 69, 72, 49, 0
+	sq_note	0x90, 49, 64, 39, 59, 0
+	sq_beat
+	sq_note	0x90, 0, 66, 55, 54, 0
+	sq_note	0x90, 48, 69, 58, 52, 0
+	sq_beat
+	sq_note	0x90, 4, 64, 51, 57, 0
+	sq_note	0x90, 48, 66, 51, 53, 0
+	sq_beat
+	sq_note	0x90, 1, 69, 66, 51, 0
+	sq_note	0x90, 52, 64, 51, 53, 0
+	sq_note	0x90, 93, 66, 61, 61, 0
+	sq_beat
+	sq_note	0x90, 45, 69, 61, 55, 0
+	sq_beat
+	.byte	0x90, 0x02, 0x40	; first 3 bytes of sq_note 0x90, 2, 64, 51, 54, 0 (split by a cell boundary)
 	seq_block	0xf6, 546, 547	; block 694: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47305, 251
+; a stale copy: the same 251 bytes as block 555 (chain from block 485, 55 of 61), typed as that block is
+	.byte	0x00	; last 1 bytes of sq_note 0x90, 91, 54, 72, 91, 0 (split by a cell boundary)
+	sq_beat
+	sq_ev	0xb0, 55, 2, 8, 73, 127
+	sq_note	0x90, 90, 42, 26, 62, 0
+	sq_beat
+	sq_ev	0xb0, 26, 2, 8, 74, 127
+	sq_note	0x90, 47, 61, 69, 3, 1
+	sq_note	0x90, 48, 54, 61, 0, 1
+	sq_note	0x90, 48, 57, 58, 4, 1
+	sq_ev	0xb0, 92, 2, 8, 75, 127
+	sq_beat
+	sq_note	0x90, 48, 42, 48, 62, 0
+	sq_ev	0xb0, 63, 2, 8, 76, 127
+	sq_beat
+	sq_note	0x90, 1, 61, 66, 93, 0
+	sq_note	0x90, 1, 57, 74, 94, 0
+	sq_note	0x90, 2, 54, 66, 90, 0
+	sq_ev	0xb0, 33, 2, 8, 77, 127
+	sq_note	0x90, 90, 42, 43, 39, 0
+	sq_beat
+	sq_ev	0xb0, 4, 2, 8, 78, 127
+	sq_note	0x90, 44, 61, 69, 83, 0
+	sq_note	0x90, 44, 57, 61, 78, 0
+	sq_note	0x90, 45, 54, 58, 46, 0
+	sq_ev	0xb0, 70, 2, 8, 79, 127
+	sq_note	0x90, 92, 42, 51, 38, 0
+	sq_beat
+	sq_ev	0xb0, 40, 2, 8, 80, 127
+	sq_ev	0xb4, 80, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 0, 40, 51, 42, 0
+	sq_note	0x90, 0, 52, 69, 15, 1
+	sq_note	0x90, 0, 57, 69, 22, 1
+	sq_note	0x90, 2, 61, 64, 14, 1
+	sq_ev	0xb0, 12, 2, 8, 81, 127
+	sq_ev	0xb4, 25, 53, 2, 127, 127
+	sq_ev	0xb0, 78, 2, 8, 82, 127
+	sq_beat
+	sq_note	0x90, 1, 40, 55, 9, 1
+	sq_ev	0xb0, 48, 2, 8, 83, 127
+	sq_note	0x90, 87, 57, 55, 8, 1
+	sq_note	0x90, 88, 61, 72, 4, 1
+	sq_note	0x90, 88, 52, 72, 0, 1
+	sq_beat
+	sq_ev	0xb0, 19, 2, 8, 84, 127
+	sq_ev	0xb0, 85, 2, 8, 85, 127
+	sq_note	0x90, 92, 40, 58, 89, 0
+	sq_beat
+	sq_note	0x90, 43, 57, 55, 91, 0
+	sq_note	0x90, 44, 61, 66, 91, 0
+	sq_note	0x90, 44, 52, 74, 85, 0
 	seq_block	0xfb, 547, 613	; block 695: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47405, 251
+; a stale copy: the same 251 bytes as block 556 (chain from block 485, 57 of 61), typed as that block is
+	.byte	0x34, 0x45, 0x5c, 0x00	; last 4 bytes of sq_note 0x90, 94, 52, 69, 92, 0 (split by a cell boundary)
+	sq_beat
+	sq_ev	0xb0, 27, 2, 8, 100, 127
+	sq_note	0x90, 93, 45, 43, 44, 0
+	sq_ev	0xb0, 94, 2, 8, 101, 127
+	sq_beat
+	sq_note	0x90, 45, 57, 51, 78, 0
+	sq_note	0x90, 46, 61, 66, 76, 0
+	sq_note	0x90, 47, 52, 66, 52, 0
+	sq_ev	0xb0, 64, 2, 8, 102, 127
+	sq_beat
+	sq_note	0x90, 4, 45, 51, 38, 0
+	sq_ev	0xb0, 35, 2, 8, 103, 127
+	sq_note	0x90, 52, 52, 26, 26, 0
+	sq_ev	0xb4, 92, 53, 2, 0, 127
+	sq_note	0x90, 94, 52, 58, 15, 1
+	sq_note	0x90, 94, 61, 51, 23, 1
+	sq_note	0x90, 95, 55, 64, 15, 1
+	sq_beat
+	sq_note	0x90, 1, 43, 61, 44, 0
+	sq_ev	0xb0, 5, 2, 8, 104, 127
+	sq_ev	0xb4, 42, 53, 2, 127, 127
+	sq_ev	0xb0, 72, 2, 8, 105, 127
+	sq_note	0x90, 94, 43, 61, 11, 1
+	sq_beat
+	sq_ev	0xb0, 42, 2, 8, 106, 127
+	sq_note	0x90, 92, 52, 61, 91, 0
+	sq_note	0x90, 93, 61, 66, 95, 0
+	sq_note	0x90, 95, 55, 72, 88, 0
+	sq_beat
+	sq_ev	0xb0, 13, 2, 8, 107, 127
+	sq_ev	0xb0, 80, 2, 8, 108, 127
+	sq_note	0x90, 84, 43, 61, 70, 0
+	sq_beat
+	sq_note	0x90, 45, 52, 64, 82, 0
+	sq_note	0x90, 45, 61, 77, 91, 0
+	sq_note	0x90, 47, 55, 72, 85, 0
+	sq_ev	0xb0, 50, 2, 8, 109, 127
+	sq_beat
+	sq_ev	0xb0, 20, 2, 8, 110, 127
+	sq_note	0x90, 41, 43, 51, 45, 0
+	sq_ev	0xb0, 87, 2, 8, 111, 127
+	sq_note	0x90, 90, 52, 69, 86, 0
+	sq_note	0x90, 90, 61, 69, 91, 0
+	sq_note	0x90, 91, 55, 66, 87, 0
+	sq_beat
+	sq_ev	0xb0, 57, 2, 8, 112, 127
+	sq_note	0x90, 91, 43, 64, 42, 0
+	sq_beat
+	sq_ev	0xb0, 28, 2, 8, 113, 127
+	.byte	0x90, 0x2f, 0x3d	; first 3 bytes of sq_note 0x90, 47, 61, 72, 69, 0 (split by a cell boundary)
 	seq_block	0xd7, 613, 12	; block 696: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47505, 251
+; a stale copy: the same 251 bytes as block 557 (chain from block 485, 59 of 61), typed as that block is
+	.byte	0x7f	; last 1 bytes of sq_ev 0xb0, 28, 2, 8, 126, 127 (split by a cell boundary)
+	sq_note	0x90, 50, 52, 22, 21, 0
+	sq_ev	0xb4, 94, 53, 2, 0, 127
+	sq_ev	0xb4, 95, 53, 2, 0, 127
+	sq_beat
+	sq_note	0x90, 7, 53, 51, 45, 1
+	sq_note	0x90, 7, 60, 72, 50, 1
+	sq_note	0x90, 7, 41, 77, 11, 4
+	sq_note	0x90, 8, 57, 79, 47, 1
+	sq_beat
+	sq_ev	0xb4, 32, 53, 2, 127, 127
+	sq_ev	0xb4, 78, 53, 2, 0, 127
+	sq_note	0x90, 91, 60, 48, 25, 1
+	sq_note	0x90, 92, 57, 64, 17, 1
+	sq_beat
+	sq_note	0x90, 2, 64, 61, 12, 1
+	sq_ev	0xb4, 51, 53, 2, 127, 127
+	sq_beat
+	sq_beat
+	sq_note	0x90, 3, 60, 61, 93, 0
+	sq_note	0x90, 4, 57, 72, 91, 0
+	sq_note	0x90, 4, 64, 74, 91, 0
+	sq_note	0x90, 95, 41, 72, 17, 1
+	sq_beat
+	sq_note	0x90, 92, 57, 72, 70, 0
+	sq_note	0x90, 93, 60, 66, 77, 0
+	sq_note	0x90, 93, 64, 79, 87, 0
+	sq_beat
+	sq_note	0x90, 88, 41, 18, 32, 0
+	sq_beat
+	sq_note	0x90, 91, 43, 51, 67, 6
+	sq_note	0x90, 91, 59, 61, 16, 1
+	sq_note	0x90, 93, 55, 48, 10, 1
+	sq_note	0x90, 94, 62, 55, 9, 1
+	sq_ev	0xb4, 95, 53, 2, 0, 127
+	sq_beat
+	sq_ev	0xb4, 79, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 91, 55, 51, 1, 1
+	sq_note	0x90, 92, 59, 72, 6, 1
+	sq_note	0x90, 93, 62, 55, 0, 1
+	sq_beat
+	sq_ev	0xb4, 17, 53, 2, 0, 127
+	sq_ev	0xb4, 71, 53, 2, 127, 127
+	sq_beat
+	sq_note	0x90, 94, 55, 55, 51, 0
+	sq_note	0x90, 95, 59, 64, 59, 0
+	sq_beat
+	sq_note	0x90, 0, 62, 69, 50, 0
+	sq_ev	0xb4, 1, 53, 2, 0, 127
+	sq_ev	0xb4, 47, 53, 2, 127, 127
+	sq_note	0x90, 92, 55, 14, 41, 0
+	sq_note	0x90, 92, 59, 55, 49, 0
+	.byte	0x90, 0x5d, 0x3e	; first 3 bytes of sq_note 0x90, 93, 62, 66, 44, 0 (split by a cell boundary)
 	seq_block	0xfe, 58, 0xffff	; block 697: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47605, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_data	67, 0
+	sq_note	0x90, 6, 60, 66, 17, 1
+	sq_note	0x90, 8, 57, 66, 9, 1
+	sq_note	0x90, 8, 64, 55, 16, 1
+	sq_beat
+	sq_note	0x90, 3, 53, 39, 24, 0
+	sq_note	0x90, 4, 41, 39, 34, 0
+	sq_ev	0xb4, 91, 53, 1, 0, 127
+	sq_beat
+	sq_note	0x90, 3, 55, 51, 72, 0
+	sq_note	0x90, 3, 62, 64, 19, 1
+	sq_note	0x90, 3, 59, 55, 24, 1
+	sq_note	0x90, 4, 43, 48, 31, 2
+	sq_ev	0xb4, 64, 53, 1, 127, 127
+	sq_beat
+	sq_note	0x90, 17, 55, 39, 27, 0
+	sq_beat
+	sq_note	0x90, 0, 62, 74, 94, 0
+	sq_note	0x90, 2, 59, 69, 2, 1
+	sq_note	0x90, 2, 55, 55, 35, 0
+	sq_note	0x90, 86, 55, 61, 27, 0
+	sq_note	0x90, 89, 43, 26, 28, 0
+	sq_beat
+	sq_note	0x90, 94, 52, 39, 63, 6
+	sq_note	0x90, 95, 45, 35, 74, 3
+	sq_beat
+	sq_note	0x90, 0, 57, 64, 51, 6
+	sq_ev	0xb4, 0, 53, 1, 0, 127
+	sq_note	0x90, 3, 61, 55, 34, 6
+	sq_beat
+	sq_ev	0xb4, 32, 53, 1, 127, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 87, 53, 1, 0, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0x81, 0x90, 0x39, 0x26, 0x5e, 0x21, 0x00, 0x81, 0x90, 0x08, 0x2b, 0x61, 0x0e, 0x00, 0x90, 0x34	; after the end of track
+	.byte	0x29, 0x68, 0x56, 0x00, 0x81, 0xd2, 0x35, 0x00, 0x40, 0x90, 0x37, 0x29, 0x43, 0x1d, 0x00, 0x81
+	.byte	0x90, 0x06, 0x29, 0x61, 0x07, 0x00, 0x81, 0x81, 0x90, 0x06, 0x29, 0x46, 0x06, 0x00, 0x90, 0x35
 	seq_block	0xff, 396, 0xffff	; block 698: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47705, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82, 47, 101, 83, 0
+	.byte	0x81, 0x90, 0x31, 0x2f, 0x4d, 0x2e, 0x00, 0x81, 0x90, 0x00, 0x32, 0x5f, 0x29, 0x00, 0x90, 0x33	; after the end of track
+	.byte	0x29, 0x5a, 0x5f, 0x03, 0x81, 0x81, 0x81, 0x81, 0x90, 0x33, 0x2b, 0x4a, 0x03, 0x02, 0x81, 0x81
+	.byte	0x90, 0x33, 0x29, 0x52, 0x5e, 0x01, 0x81, 0x81, 0x90, 0x33, 0x2b, 0x41, 0x16, 0x02, 0x81, 0x81
+	.byte	0x81, 0x90, 0x05, 0x29, 0x57, 0x24, 0x01, 0x81, 0x90, 0x33, 0x2b, 0x55, 0x5b, 0x00, 0x81, 0x90
+	.byte	0x38, 0x2b, 0x5d, 0x29, 0x00, 0x81, 0x90, 0x00, 0x29, 0x3b, 0x2d, 0x00, 0x90, 0x35, 0x28, 0x61
+	.byte	0x0c, 0x04, 0x81, 0x81, 0x81, 0x81, 0x81, 0x90, 0x08, 0x29, 0x5f, 0x49, 0x00, 0x81, 0x90, 0x02
+	.byte	0x29, 0x41, 0x05, 0x00, 0x90, 0x32, 0x2b, 0x68, 0x27, 0x01, 0x81, 0x81, 0x90, 0x03, 0x2b, 0x45
+	.byte	0x09, 0x00, 0x90, 0x34, 0x29, 0x60, 0x02, 0x01, 0x81, 0x90, 0x36, 0x30, 0x59, 0x29, 0x00, 0x81
+	.byte	0x90, 0x02, 0x29, 0x4b, 0x24, 0x00, 0x90, 0x30, 0x2b, 0x62, 0x4d, 0x01, 0x81, 0x81, 0x90, 0x37
+	.byte	0x32, 0x43, 0x08, 0x00, 0x90, 0x48, 0x2b, 0x55, 0x0b, 0x00, 0x81, 0x90, 0x05, 0x29, 0x5c, 0x47
+	.byte	0x00, 0x90, 0x5f, 0x29, 0x4d, 0x07, 0x00, 0x81, 0x90, 0x2e, 0x2b, 0x63, 0x07, 0x01, 0x81, 0x90
+	.byte	0x31, 0x32, 0x69, 0x26, 0x00, 0x90, 0x5a, 0x2b, 0x52, 0x26, 0x00, 0x81, 0x90, 0x2b, 0x2d, 0x68
+	.byte	0x04, 0x02, 0x81, 0x81, 0x90, 0x2e, 0x34, 0x58, 0x2a, 0x00, 0x90, 0x5c, 0x39, 0x5f, 0x59, 0x00
+	.byte	0x81, 0x90, 0x2c, 0x2d, 0x42, 0x06, 0x00, 0x90, 0x5c, 0x34, 0x4d, 0x2b, 0x00, 0x81, 0x90, 0x56
+	.byte	0x2d, 0x35, 0x07
 	seq_block	0x84, 27, 0xffff	; block 699: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47805, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 52, 107, 31, 0
+	sq_beat
+	sq_note	0x90, 48, 48, 104, 28, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 36, 81, 51, 0
+	sq_note	0x90, 49, 38, 103, 22, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 48, 40, 100, 37, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 40, 67, 8, 0
+	sq_note	0x90, 48, 40, 96, 39, 0
+	sq_beat
+	sq_note	0x90, 1, 40, 58, 5, 0
+	sq_note	0x90, 49, 52, 103, 32, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 79, 7, 0
+	sq_note	0x90, 49, 45, 110, 34, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 76, 18, 0
+	sq_note	0x90, 48, 47, 109, 83, 0
+	sq_beat
+	sq_note	0x90, 49, 47, 82, 46, 0
+	sq_beat
+	sq_note	0x90, 0, 50, 101, 38, 0
+	sq_note	0x90, 48, 40, 112, 26, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 1, 40, 74, 2, 0
+	sq_note	0x90, 48, 40, 102, 30, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 67, 4, 0
+	sq_note	0x90, 49, 52, 102, 32, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 74, 6, 0
+	sq_note	0x90, 49, 45, 127, 28, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 45, 66, 14, 0
+	sq_note	0x90, 49, 47, 105, 78, 0
+	sq_beat
+	sq_note	0x90, 48, 47, 68, 50, 0
+	sq_beat
+	sq_note	0x90, 0, 50, 91, 39, 0
+	sq_note	0x90, 48, 40, 108, 27, 1
+	sq_beat
+	sq_beat
+	sq_note	0x90, 0, 40, 86, 6, 0
+	sq_note	0x90, 49, 40, 90, 35, 0
+	sq_beat
+	sq_note	0x90, 49, 40, 99, 33, 0
+	sq_beat
+	sq_note	0x90, 0, 40, 73, 6, 0
+	sq_note	0x90, 48, 45, 108, 86, 0
+	sq_beat
+	.fill	1, 1, 0x90	; the first 1 bytes of an event (status 0x90), cut by the block's end
 	seq_block	0x0c, 0, 701	; block 700: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"gjs1.img", 0x47905, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_data	0
+	sq_note	0x90, 35, 74, 70, 87, 1
+	sq_note	0x90, 43, 81, 62, 91, 7
+	sq_note	0x90, 59, 86, 68, 36, 1
+	sq_note	0x90, 70, 88, 62, 65, 7
+	sq_note	0x90, 85, 93, 71, 65, 2
+	sq_beat
+	sq_beat
+	sq_note	0x90, 23, 73, 61, 0, 6
+	sq_beat
+	sq_note	0x90, 45, 69, 15, 77, 4
+	sq_note	0x90, 61, 76, 38, 59, 4
+	sq_note	0x90, 72, 85, 36, 59, 4
+	sq_note	0x90, 95, 93, 46, 34, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0xb4, 63, 53, 1, 0, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_ev	0x82
+	.byte	0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff	; after the end of track
+	.byte	0xff, 0x08, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff
+	.byte	0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff
+	.byte	0xff, 0x08, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff
+	.byte	0xff, 0x08, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff
+	.byte	0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff
+	.byte	0xff, 0x08, 0x00, 0xdf, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xdf
+	.byte	0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff
+	.byte	0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff
+	.byte	0xff, 0x08, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xff, 0xff, 0x08, 0x00, 0xff
+	.byte	0xff, 0x0c, 0x00, 0xff, 0xff, 0x0c, 0x00, 0xdf, 0xff

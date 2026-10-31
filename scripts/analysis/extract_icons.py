@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
 """
-Extract UI icons from KN5000 Table Data ROM.
+Render the KN5000 UI icons in colour, for the website gallery, from the committed source PNGs.
 
-Icon data discovered via DrawIcons routine analysis:
-- Icon table at 0x938000 (table_data ROM offset 0x138000)
-- 176 icons, each entry is 8 bytes:
-  - 2 bytes: bounding box width (for UI hit testing, NOT pixel width)
-  - 2 bytes: bounding box height (for UI hit testing, NOT pixel height)
-  - 4 bytes: pointer to pixel data
-- Color lookup table at 0xEAABF2 (maincpu ROM offset 0xAABF2)
-- ALL icons are 24x24 pixels at 4bpp (288 bytes each)
-  The DrawIcons routine has hardcoded loops: 12 bytes/row × 24 rows
+QUESTION ANSWERED: what do the 177 icons look like on screen?
+
+The source of the icon pixels is table_data/images/icons_png/IconPixels_NNN.png: palette-indexed
+PNGs whose pixel value is the ROM's 4-bit nibble (scripts/build/icon_images.py builds the ROM bytes
+from them).  This script only paints those nibbles with the colours the firmware shows, writing
+RGB renders and the sprite sheet into an output directory outside the source tree (`make gallery`
+writes the sheet into the website's gallery).
+
+Until 2026-10-31 this script read the reference ROM and wrote its renders into
+table_data/images/icons/, which were committed: 176 one-way renders, the sprite sheet and 14
+format-exploration renders (test_*.png).  They duplicated icons_png/ and were deleted (lane
+media-cleanup; notes/media-cleanup-2026-10-31/).  Their pixels are reproduced exactly by this
+script (notes/media-cleanup-2026-10-31/probes/compare_icon_renders.py).
+
+Format facts (discovered via the DrawIcons routine):
+- Icon table at 0x938000: 176 entries of {w16, h16, ptr32}, the w/h fields being UI hit-test
+  dimensions, not pixel dimensions; IconPixels_176_Unreferenced, the 177th run, has no entry.
+- ALL icons are 24x24 pixels at 4bpp (288 bytes each): DrawIcons has hardcoded loops,
+  12 bytes/row x 24 rows.
 
 Usage:
-    python extract_icons.py [output_dir]
-
-Default output_dir is table_data/images/icons/
+    python3 scripts/analysis/extract_icons.py OUTPUT_DIR          # Icon_NNN.png + IconSpriteSheet.png
+    python3 scripts/analysis/extract_icons.py --sheet SHEET.png   # the sprite sheet only
 """
 
-import os
 import sys
-import struct
 from pathlib import Path
 
 try:
@@ -29,13 +36,11 @@ except ImportError:
     print("Error: Pillow is required. Install with: pip install Pillow")
     sys.exit(1)
 
-
-# Icon table location in table_data ROM
-ICON_TABLE_OFFSET = 0x138000  # CPU address 0x938000
-ICON_TABLE_BASE = 0x800000    # table_data ROM base address
-
-# Color lookup table in maincpu ROM
-COLOR_LUT_OFFSET = 0xAABF2    # CPU address 0xEAABF2
+REPO = Path(__file__).resolve().parents[2]
+SRC = REPO / "table_data" / "images" / "icons_png"
+ICON_WIDTH = ICON_HEIGHT = 24
+N_TABLE_ICONS = 176          # IconTable entries; the sheet shows these
+N_ICONS = 177                # plus IconPixels_176_Unreferenced, the "E.L.S." signature
 
 
 # 16-color palette for icons
@@ -64,203 +69,43 @@ ICON_PALETTE = [
 ]
 
 
-def nibble_to_rgb(nibble: int) -> tuple:
-    """Convert 4-bit nibble value to RGB color.
-
-    Icons use 4bpp format with a 16-color CGA/EGA-style palette.
-    The palette is stored in the main ROM at 0xEB37DE.
-    """
-    return ICON_PALETTE[nibble & 0x0F]
-
-
-def extract_icons(table_data_rom: bytes, maincpu_rom: bytes, output_dir: Path):
-    """Extract all icons from the table data ROM."""
-
-    # Parse icon table
-    icons = []
-    offset = ICON_TABLE_OFFSET
-    icon_id = 0
-
-    while True:
-        # Read 8-byte entry
-        entry = struct.unpack_from('<HHII', table_data_rom, offset)[:3]
-        # Entry format: dim1, dim2, data_ptr (as 2 words)
-        entry = struct.unpack_from('<HHI', table_data_rom, offset)
-        dim1, dim2, data_ptr = entry
-
-        # Check for end of table (null entry)
-        if dim1 == 0 and dim2 == 0:
-            break
-
-        # Convert CPU address to ROM offset
-        data_offset = data_ptr - ICON_TABLE_BASE
-
-        icons.append({
-            'id': icon_id,
-            'dim1': dim1,
-            'dim2': dim2,
-            'data_ptr': data_ptr,
-            'data_offset': data_offset
-        })
-
-        offset += 8
-        icon_id += 1
-
-    print(f"Found {len(icons)} icons in table")
-
-    # Standard icon size: 24x24 pixels at 4bpp (2 pixels per byte)
-    ICON_WIDTH = 24
-    ICON_HEIGHT = 24
-    ICON_SIZE = (ICON_WIDTH * ICON_HEIGHT) // 2  # 288 bytes at 4bpp
-
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    for icon in icons:
-        icon_id = icon['id']
-        data_offset = icon['data_offset']
-
-        # ALL icons are 24x24 pixels - the DrawIcons routine has hardcoded loops:
-        # - Inner loop: IY from 0 to 0x0C (12 bytes = 24 pixels at 4bpp)
-        # - Outer loop: DE from 0 to 0x18 (24 rows)
-        # The dims field in the table is the bounding box for UI hit testing,
-        # NOT the pixel dimensions.
-        width = ICON_WIDTH
-        height = ICON_HEIGHT
-
-        # 4bpp format: 2 pixels per byte
-        byte_count = ICON_SIZE
-
-        # Extract pixel data
-        pixel_data = table_data_rom[data_offset:data_offset + byte_count]
-
-        if len(pixel_data) < byte_count:
-            print(f"  Warning: Icon {icon_id} has insufficient data")
-            continue
-
-        # Create image
-        img = Image.new('RGB', (width, height))
-        pixels = img.load()
-
-        # Decode 4bpp: high nibble = first pixel, low nibble = second pixel
-        byte_idx = 0
-        for y in range(height):
-            for x in range(0, width, 2):
-                if byte_idx < len(pixel_data):
-                    byte_val = pixel_data[byte_idx]
-                    # High nibble = first pixel, low nibble = second pixel
-                    p1 = (byte_val >> 4) & 0x0F
-                    p2 = byte_val & 0x0F
-                    pixels[x, y] = nibble_to_rgb(p1)
-                    if x + 1 < width:
-                        pixels[x + 1, y] = nibble_to_rgb(p2)
-                    byte_idx += 1
-
-        # Save icon
-        output_path = output_dir / f"Icon_{icon_id:03d}.png"
-        img.save(output_path)
-
-    print(f"Extracted {len(icons)} icons to {output_dir}")
-
-    # One additional 288-byte icon sits right after the last referenced one
-    # (ROM 0x944B88): yellow "E.L.S." lettering, apparently a developer
-    # signature.  No IconTable entry points at it (entry 176 is the null
-    # terminator), so extract it explicitly as Icon_176.png.
-    orphan_offset = icons[-1]['data_offset'] + ICON_SIZE
-    orphan = table_data_rom[orphan_offset:orphan_offset + ICON_SIZE]
-    img = Image.new('RGB', (ICON_WIDTH, ICON_HEIGHT))
-    pixels = img.load()
-    for y in range(ICON_HEIGHT):
-        for x in range(0, ICON_WIDTH, 2):
-            byte_val = orphan[(y * ICON_WIDTH + x) // 2]
-            pixels[x, y] = nibble_to_rgb((byte_val >> 4) & 0x0F)
-            pixels[x + 1, y] = nibble_to_rgb(byte_val & 0x0F)
-    img.save(output_dir / "Icon_176.png")
-    print(f"Extracted unreferenced signature icon to Icon_176.png")
-
-    # Generate summary
-    print("\nIcon summary:")
-    print(f"  Pixel size: {ICON_WIDTH}x{ICON_HEIGHT} (all icons)")
-    print(f"  Total icons: {len(icons)}")
-
-    # Find icons with non-standard bounding boxes
-    non_standard_bbox = [i for i in icons if i['dim1'] != 0x18 or i['dim2'] != 0x18]
-    if non_standard_bbox:
-        print(f"  Icons with non-standard bounding boxes: {len(non_standard_bbox)}")
-        for icon in non_standard_bbox:
-            print(f"    Icon {icon['id']}: bbox=({icon['dim1']}, {icon['dim2']})")
-
-    # Create sprite sheet for gallery (16 icons per row)
-    # All icons are 24x24, so include all of them
-    create_sprite_sheet(icons, output_dir, ICON_WIDTH, ICON_HEIGHT)
+def render(i):
+    """Icon i as an RGB image, painted from its committed indexed PNG."""
+    src = Image.open(SRC / f"IconPixels_{i:03d}.png")
+    assert src.mode == "P" and src.size == (ICON_WIDTH, ICON_HEIGHT), f"icon {i}: {src.mode} {src.size}"
+    img = Image.new("RGB", (ICON_WIDTH, ICON_HEIGHT))
+    img.putdata([ICON_PALETTE[v & 0x0F] for v in src.tobytes()])
+    return img
 
 
-def create_sprite_sheet(icons, output_dir: Path, icon_width: int, icon_height: int):
-    """Create a combined sprite sheet of all icons for the gallery.
-
-    All icons are 24x24 pixels regardless of their bounding box settings.
-    """
-    if not icons:
-        return
-
-    icons_per_row = 16
-    num_rows = (len(icons) + icons_per_row - 1) // icons_per_row
-
-    sheet_width = icons_per_row * icon_width
-    sheet_height = num_rows * icon_height
-
-    sheet = Image.new('RGB', (sheet_width, sheet_height), (128, 128, 128))
-
-    for idx, icon_info in enumerate(icons):
-        icon_id = icon_info['id']
-        icon_path = output_dir / f"Icon_{icon_id:03d}.png"
-        if icon_path.exists():
-            icon_img = Image.open(icon_path)
-            x = (idx % icons_per_row) * icon_width
-            y = (idx // icons_per_row) * icon_height
-            sheet.paste(icon_img, (x, y))
-
-    sprite_sheet_path = output_dir / "IconSpriteSheet.png"
-    sheet.save(sprite_sheet_path)
-    print(f"\nCreated sprite sheet: {sprite_sheet_path}")
-    print(f"  Size: {sheet_width}x{sheet_height} ({len(icons)} icons)")
+def sprite_sheet():
+    """The 176 table icons, 16 per row, on a mid-grey background (384x264)."""
+    per_row = 16
+    rows = (N_TABLE_ICONS + per_row - 1) // per_row
+    sheet = Image.new("RGB", (per_row * ICON_WIDTH, rows * ICON_HEIGHT), (128, 128, 128))
+    for i in range(N_TABLE_ICONS):
+        sheet.paste(render(i), ((i % per_row) * ICON_WIDTH, (i // per_row) * ICON_HEIGHT))
+    return sheet
 
 
 def main():
-    script_dir = Path(__file__).parent
-    project_dir = script_dir.parent.parent  # scripts/analysis/ -> repo root
-
-    # ROM file paths
-    table_data_path = project_dir / "original_ROMs" / "kn5000_table_data.rom"
-    maincpu_path = project_dir / "original_ROMs" / "kn5000_v10_program.rom"
-
-    if not table_data_path.exists():
-        print(f"Error: Table data ROM not found: {table_data_path}")
-        sys.exit(1)
-
-    if not maincpu_path.exists():
-        print(f"Error: Main CPU ROM not found: {maincpu_path}")
-        sys.exit(1)
-
-    # Output directory
-    if len(sys.argv) > 1:
-        output_dir = Path(sys.argv[1])
-    else:
-        output_dir = project_dir / "table_data" / "images" / "icons"
-
-    print(f"Loading ROMs...")
-    print(f"  Table data: {table_data_path}")
-    print(f"  Main CPU: {maincpu_path}")
-
-    with open(table_data_path, 'rb') as f:
-        table_data_rom = f.read()
-
-    with open(maincpu_path, 'rb') as f:
-        maincpu_rom = f.read()
-
-    print(f"Output directory: {output_dir}")
-    print()
-
-    extract_icons(table_data_rom, maincpu_rom, output_dir)
+    args = sys.argv[1:]
+    if len(args) == 2 and args[0] == "--sheet":
+        out = Path(args[1])
+        out.parent.mkdir(parents=True, exist_ok=True)
+        sprite_sheet().save(out)
+        print(f"extract_icons: wrote {out}")
+        return
+    if len(args) != 1:
+        sys.exit(__doc__)
+    out_dir = Path(args[0]).resolve()
+    if REPO / "table_data" in out_dir.parents or out_dir == REPO / "table_data":
+        sys.exit("extract_icons: renders are not source; write them outside table_data/")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for i in range(N_ICONS):
+        render(i).save(out_dir / f"Icon_{i:03d}.png")
+    sprite_sheet().save(out_dir / "IconSpriteSheet.png")
+    print(f"extract_icons: {N_ICONS} icons and IconSpriteSheet.png written to {out_dir}")
 
 
 if __name__ == "__main__":

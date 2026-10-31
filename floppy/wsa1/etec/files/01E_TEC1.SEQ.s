@@ -5,6 +5,9 @@
 ; SEQUENCER song blocks: the song store's heap of 256-byte blocks, written by DiskSave_Sequencer
 ; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain's start, next
 ; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).
+; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first
+; blocks of the free chain (the .SQF's +0xB8 free head is the first of them), and two files also hold
+; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).
 
 	.include	"wsa1_files.inc"
 F_01E_TEC1_SEQ:
@@ -343,17 +346,254 @@ F_01E_TEC1_SEQ:
 	.byte	0xb4, 0x00, 0x00, 0x18, 0xb4, 0x00, 0x00, 0x18, 0xb4, 0x00, 0x00, 0x18, 0xb4, 0x00, 0x00, 0x18
 	.byte	0xb4, 0x00, 0x00
 	seq_block	0xff, 8, 0xffff	; block 7: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"etec.img", 0x1d005, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_data	0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 61, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 21, 12, 0
+	sq_note	0x90, 47, 68, 41, 12, 0
+	sq_note	0x90, 71, 68, 31, 12, 0
+	sq_note	0x90, 95, 68, 58, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 36, 12, 0
+	sq_note	0x90, 47, 68, 66, 12, 0
+	sq_note	0x90, 71, 68, 46, 12, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_ev	0x82
+	.byte	0xff, 0xa6, 0x87, 0xff, 0xff, 0xa6, 0x87, 0xff, 0xff, 0xee, 0x87, 0xff, 0xff, 0xee, 0x87, 0xff	; after the end of track
+	.byte	0xff, 0xa6, 0x87, 0xff, 0xff, 0xa6, 0x87, 0xff, 0xff, 0xee, 0x87, 0xff, 0xff, 0xe6, 0x87, 0xff
+	.byte	0xff, 0xe6, 0x87, 0xff, 0xff, 0xe6, 0x87, 0xff, 0xff, 0xee, 0x87, 0xff, 0xff, 0xe6, 0x87, 0xff
+	.byte	0xff, 0xa6, 0x87, 0xff, 0xff, 0xe6, 0x87, 0xff, 0xff, 0xae, 0x97, 0xff, 0xff, 0xe6, 0x87, 0xff
+	.byte	0xff, 0xe6, 0x87, 0xff, 0xff, 0xa6, 0x87, 0xff, 0xff, 0xee, 0x87
 	seq_block	0xff, 9, 7	; block 8: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"etec.img", 0x1d105, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 61, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 21, 12, 0
+	sq_note	0x90, 47, 68, 41, 12, 0
+	sq_note	0x90, 71, 68, 31, 12, 0
+	sq_note	0x90, 95, 68, 58, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 36, 12, 0
+	sq_note	0x90, 47, 68, 66, 12, 0
+	sq_note	0x90, 71, 68, 46, 12, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	.byte	0x90, 0x2f, 0x44, 0x14, 0x26	; the first 5 bytes of an event (status 0x90), cut by the block's end
 	seq_block	0xf9, 10, 8	; block 9: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"etec.img", 0x1d205, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_data	0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 61, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 21, 12, 0
+	sq_note	0x90, 47, 68, 41, 12, 0
+	sq_note	0x90, 71, 68, 31, 12, 0
+	sq_note	0x90, 95, 68, 58, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 36, 12, 0
+	sq_note	0x90, 47, 68, 66, 12, 0
+	sq_note	0x90, 71, 68, 46, 12, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
 	seq_block	0xff, 33, 9	; block 10: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"etec.img", 0x1d305, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 61, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 21, 12, 0
+	sq_note	0x90, 47, 68, 41, 12, 0
+	sq_note	0x90, 71, 68, 31, 12, 0
+	sq_note	0x90, 95, 68, 58, 12, 0
+	sq_beat
+	sq_note	0x90, 23, 68, 36, 12, 0
+	sq_note	0x90, 47, 68, 66, 12, 0
+	sq_note	0x90, 71, 68, 46, 12, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 20, 38, 0
+	sq_note	0x90, 95, 68, 45, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 30, 38, 0
+	sq_note	0x90, 95, 68, 55, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 35, 38, 0
+	sq_note	0x90, 95, 68, 52, 38, 0
+	sq_beat
+	sq_note	0x90, 47, 68, 60, 38, 0
+	sq_note	0x90, 95, 68, 75, 38, 0
+	sq_beat
+	.byte	0x90, 0x2f, 0x44, 0x14, 0x26	; the first 5 bytes of an event (status 0x90), cut by the block's end
 	seq_block	0xff, 0, 12	; block 11: chain from block 11, 1 of 47
 	sq_note	0x90, 1, 36, 90, 38, 0
 	sq_note	0x90, 49, 36, 3, 38, 0
@@ -9682,5 +9922,63 @@ F_01E_TEC1_SEQ:
 	.byte	0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x82
 	.byte	0x4b, 0x0c, 0x00, 0x81, 0x90, 0x2f
 	seq_block	0x00, 0, 129	; block 128: in no chain
-	; census: opaque -- unknown-dump: a block in no chain (left over in the heap)
-	.incbin	"etec.img", 0x24905, 251
+; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
+	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
+	sq_data	90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 90, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 90, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0
+	sq_note	0x90, 49, 36, 3, 38, 0
+	sq_beat
+	sq_note	0x90, 1, 36, 90, 38, 0

@@ -3542,8 +3542,7 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm3.ic21", 0x5dbbc, 0x5dbbf	# stale bytes of an earlier write
+	.byte 0x0b, 0x00, 0x11	# [INFERENCE] the last 3 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	93
 	ev_note	0, 77, 82, 13, 0, 17
@@ -3612,9 +3611,10 @@
 	ev_at	53
 	ev_note	0, 64, 67, 12, 0, 17
 	ev_at	54
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_note	0, 67, 55, 18, 0, 17
-	ev_end	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x43d6..+0x475a
-	STREAM_HEADER 1, 0x226
+	ev_end
+	STREAM_HEADER 1, 0x226	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x43d7..+0x475a
 	ev_beat
 	ev_note 0, 72, 97, 10, 0, 17
 	ev_note 0, 79, 103, 13, 0, 17
@@ -3876,36 +3876,36 @@
 	STREAM_HEADER 3, 0x6e
 	ev_beat
 	ev_at 1
-	.byte 0x90, 0x30, 0x5b, 0x10, 0x00	# bytes 0..4 of `ev_note`
-	.byte 0x11	# stale tail of an earlier write; same bytes as 01custm5 Slot06 +0x4b7f..+0x4be6; bytes 5..5 of `ev_note`
-	ev_at 48
-	ev_note 0, 53, 100, 11, 0, 17
+	# stale events of an earlier write, at an event boundary of the donor record: 01ctmini Slot07 +0x475a..
+	ev_note	0, 48, 91, 16, 0, 17
+	ev_at	48
+	ev_note	0, 53, 100, 11, 0, 17
 	ev_beat
-	ev_at 1
-	ev_note 0, 58, 107, 12, 0, 17
-	ev_at 49
-	ev_note 0, 63, 105, 9, 0, 17
+	ev_at	1
+	ev_note	0, 58, 107, 12, 0, 17
+	ev_at	49
+	ev_note	0, 63, 105, 9, 0, 17
 	ev_beat
-	ev_note 0, 68, 105, 12, 0, 17
-	ev_at 49
-	ev_note 0, 73, 98, 10, 0, 17
+	ev_note	0, 68, 105, 12, 0, 17
+	ev_at	49
+	ev_note	0, 73, 98, 10, 0, 17
 	ev_beat
-	ev_at 2
-	ev_note 0, 78, 98, 9, 0, 17
-	ev_at 49
-	ev_note 0, 83, 107, 11, 0, 17
-	ev_at 54
-	ev_note 0, 79, 93, 13, 0, 17
-	ev_at 55
-	ev_note 0, 67, 92, 12, 0, 17
-	ev_note 0, 77, 93, 12, 0, 17
+	ev_at	2
+	ev_note	0, 78, 98, 9, 0, 17
+	ev_at	49
+	ev_note	0, 83, 107, 11, 0, 17
+	ev_at	54
+	ev_note	0, 79, 93, 13, 0, 17
+	ev_at	55
+	ev_note	0, 67, 92, 12, 0, 17
+	ev_note	0, 77, 93, 12, 0, 17
 	ev_beat
-	ev_at 2
-	ev_note 0, 84, 111, 9, 0, 17
-	ev_at 5
-	ev_note 0, 60, 93, 18, 0, 17
-	ev_note 0, 76, 102, 18, 0, 17
-	ev_note 0, 79, 107, 18, 0, 17
+	ev_at	2
+	ev_note	0, 84, 111, 9, 0, 17
+	ev_at	5
+	ev_note	0, 60, 93, 18, 0, 17
+	ev_note	0, 76, 102, 18, 0, 17
+	ev_note	0, 79, 107, 18, 0, 17
 	ev_beat
 	ev_beat
 	ev_beat

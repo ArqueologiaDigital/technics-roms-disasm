@@ -180,7 +180,8 @@ committed as `clean_checkout_proof-2026-10-31.txt`.  It printed `PASS: clean che
   rebuilt for an up-to-date object (the `media` target, a2e768e3a), and `hdae5000-images` /
   `tabledata-images` were output-less rules (e1eda9247).  They also found two kinds of tracked build state
   that the read-only phase must leave writable (open items): the `*.bin.patched` stamps and the MN10300
-  `src/constants.inc`.
+  `src/constants.inc`.  Both were closed by lane media-cleanup, whose rerun of this script with no exception
+  is recorded in `notes/media-cleanup-2026-10-31/` (`clean_checkout_proof-2026-10-31.txt` there).
 
 ## Gates in the lane worktree
 
@@ -282,29 +283,21 @@ Run on the merged branch, nothing written:
 
 ## Open questions and items left
 
-- **Tracked one-way renders of ROM bytes that are not converter outputs.**  `table_data/images/icons/` (191
-  PNGs, colour-mapped renders of the 176 icons plus a sprite sheet, written from the ROM by
-  `scripts/analysis/extract_icons.py`) duplicates `table_data/images/icons_png/`, which the build reads.  The
-  raw blobs `table_data/includes/icon_pixel_data.bin`, `icons_to_strings.bin`, `wallpaper1_to_icons.bin` and
-  `hdae5000/includes/code_29af2d_2fffff.bin` still hold pixels the PNGs now hold; no ROM build `.incbin`s
-  them for those pictures (they are `export` / `verify` inputs and the archived ASL's).  None is written from
-  a media file, so the decision does not cover them; removing them is the owner's call.
+- **Closed 2026-10-31 by lane media-cleanup** (`notes/media-cleanup-2026-10-31/README.md`), the four items
+  this lane left:
+  - *Tracked one-way renders and raw blobs.*  `table_data/images/icons/` (191 renders) and the eight verbatim
+    blobs (`table_data/includes/icon_pixel_data.bin`, `icons_to_strings.bin`, `wallpaper1_to_icons.bin`,
+    `hdae5000/includes/code_*.bin`, all byte-exact slices of tracked reference images) are deleted; their
+    maintenance readers use `scripts/build/retired_blobs.py`; `extract_icons.py` paints `icons_png/`.
+  - *The `.bin.patched` stamps* are untracked and ignored; a missing stamp makes `apply_c_divergence.py`
+    recompile the bin before patching it.
+  - *`src/constants.inc`* stays committed (generated source) and only `make constants` rewrites it.
+  - *`gen_fc4000_pages.py --apply`* is retired.
+  `clean_checkout_proof.sh` now makes every tracked file read-only in phase D, with no exceptions.
 - **Comments in the HD-AE5000 sources** (`hdae5000*/hdae5000_data_tables.s`) named the five extraction copies
   this lane deleted; corrected after lane hdae-ledgers was merged (comment-only; the Palette `.bin` mentions stay,
   those files are kept).  `notes/hdae5000-versions-2026-10-24/port-edits/00_filepanel_picture.py`, a dated port
   edit, still quotes the old comment.
-- **One-shot generators** that write pixel rows into sources (`notes/proma-2026-09-25/gen_fc4000_pages.py`
-  for the WSA1R widgets) would undo the respell if re-run as they are.
-- **Tracked build state that is not a media conversion** (found by the proof's read-only phase D, left
-  writable there, not changed by this lane):
-  - `v7/`, `v6/`, `v5/maincpu/includes/generated/*.bin.patched` (80): the idempotency stamps of
-    `apply_c_divergence.py` / `apply_v7_c_divergence.py`, swept into git by ab4e0f268.  Untracking them is
-    right in principle, but git would then delete them in every existing checkout, and a patched bin
-    without its stamp is patched a second time; it needs a `make clean` note or a stamp that checks the
-    bin's pre-patch hash.
-  - `kn7000/`, `kn2400/`, `kn6000/`, `kn6500/`, `hdsx3/src/constants.inc`: committed, and regenerated from
-    the reference ROM by `gen_constants.py` whenever the reference copy is newer (always, in a fresh clone);
-    the content comes out the same.
 - The palettes in `v*/maincpu/images/` (`Palette_8bit_RGBA*.bin`) and `hdae5000/images/HDAE5000_Palette*.bin`
   are data, not converter output, and stay tracked.
 

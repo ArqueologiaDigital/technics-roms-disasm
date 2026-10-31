@@ -1343,8 +1343,24 @@ P_02TANZEN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"02TANZEN.sqt.p2.ref", 0x18ab, 85
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	88, 58, 13, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 89, 81, 74, 15, 0
+	k5_note	0x90, 90, 88, 61, 14, 0
+	k5_note	0x90, 90, 84, 70, 13, 0
+	sq_beat
+	k5_note	0x90, 46, 79, 69, 64, 0
+	k5_note	0x90, 47, 84, 76, 65, 0
+	k5_note	0x90, 49, 88, 54, 60, 0
+	sq_beat
+	k5_note	0x90, 46, 84, 81, 14, 0
+	k5_note	0x90, 46, 88, 71, 13, 0
+	k5_note	0x90, 46, 80, 80, 10, 0
+	k5_note	0x90, 92, 88, 67, 68, 0
+	k5_note	0x90, 92, 84, 73, 70, 0
+	k5_note	0x90, 93, 81, 80, 64, 0
+	sq_beat
+	k5_note	0x90, 89, 79, 74, 30, 0
 	sq_cell	0xbf, 0, 27	; cell 26: song 1 track 2, 1 of 7
 	sq_beat
 	sq_beat
@@ -1908,8 +1924,19 @@ P_02TANZEN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"02TANZEN.sqt.p2.ref", 0x1fd1, 47
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 87, 64, 110, 19, 0
+	sq_beat
+	k5_note	0x90, 35, 62, 107, 13, 0
+	k5_note	0x90, 53, 64, 87, 19, 0
+	k5_note	0x90, 64, 62, 83, 16, 0
+	k5_note	0x90, 81, 60, 81, 51, 0
+	sq_beat
+	k5_note	0x90, 41, 57, 86, 45, 0
+	k5_note	0x90, 87, 55, 61, 88, 0
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 34	; cell 33: song 1 track 3, 1 of 8
 	sq_beat
 	sq_beat
@@ -2502,8 +2529,43 @@ P_02TANZEN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"02TANZEN.sqt.p2.ref", 0x278e, 114
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	k5_note	0x90, 84, 59, 81, 86, 0
+	k5_note	0x90, 84, 62, 84, 78, 0
+	k5_note	0x90, 85, 65, 72, 80, 0
+	k5_note	0x90, 86, 55, 70, 31, 1
+	sq_beat
+	k5_note	0x90, 84, 64, 79, 38, 0
+	k5_note	0x90, 85, 60, 81, 35, 0
+	sq_beat
+	sq_beat
+	k5_note	0x90, 93, 60, 72, 56, 3
+	k5_note	0x90, 94, 64, 65, 59, 3
+	k5_note	0x90, 94, 55, 66, 16, 12
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 79, 59, 59, 78, 7
+	k5_note	0x90, 80, 62, 72, 70, 7
+	k5_note	0x90, 81, 65, 58, 72, 7
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 79, 64, 79, 31, 0
+	k5_note	0x90, 79, 60, 80, 33, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 64, 70, 65, 3
+	.byte	144, 90, 60, 69	; the first 4 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 42	; cell 41: song 1 track 4, 1 of 7
 	sq_note	0, 0, 48, 64, 0, 4
 	sq_note	0, 0, 52, 64, 0, 4
@@ -3071,8 +3133,10 @@ P_02TANZEN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"02TANZEN.sqt.p2.ref", 0x2eef, 17
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	63, 88, 7, 0, 49	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"02TANZEN.sqt.p2.ref", 0x2ef4, 12
 	sq_cell	0x80, 0, 49	; cell 48: song 1 track 5, 1 of 3
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 2, 1
@@ -3454,8 +3518,86 @@ P_02TANZEN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"02TANZEN.sqt.p2.ref", 0x3193, 109
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xc1, 41, 72, 0, 1, 0
+	k5_ev	0xb4, 60, 24, 1, 2, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xb0, 27, 72, 5, 64, 64
+	k5_ev	0xb0, 42, 72, 5, 0, 64
+	k5_ev	0xb4, 60, 24, 1, 5, 127
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_ev	0xc1, 18, 72, 0, 3, 0
+	.byte	180	; the first 1 bytes of a KN5000-order event, cut by the end
 
 	.if	(. - P_02TANZEN_SQT_p2) - 12800
 	.error	"02TANZEN.SQT part 2: the payload is not 12800 bytes"

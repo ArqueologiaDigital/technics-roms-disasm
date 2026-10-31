@@ -235,8 +235,8 @@ the record starts are records now.
   (KssBgScreenProc answers it for MT_GetIcon, 942's DrawTitleBar draws ResIconTable[1]); `image_id` is read
   by nothing and is no id of 942's resource-id trie.
 - Recursive structures besides the resource-id trie are typed one level deep: the walk sees one loop
-  iteration; a "same kind" closure (a field of kind K pointing at kind K) would type the rest.  Resolved by
-  lane mn10300-typer (`deep_records`, `../mn10300-typer/README.md` 3d).
+  iteration; a "same kind" closure (a field of kind K pointing at kind K) would type the rest.
+  (Resolved: 35433d79e, `deep_records` / `chain_closure()`, `../mn10300-typer/README.md` 3d; open-items register 2026-10-31.)
 - 4-byte demo-stream events (func_485831BA_Table's three streams) are u8 rows: the reader indexes +0 of
   every 4-byte step (`asl2`), the other three bytes' readers were not traced.
   Resolved 2026-10-31 (lane mn10300-formats): they are the alphabetical sound lists, {char initial; u8 bank

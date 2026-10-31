@@ -47,15 +47,6 @@ ParamStr09_func	0xed219e	extensions/extension_data.s
 NakaParam_PmBankScreen	0xed21bc	extensions/extension_data.s
 NakaParam_PmBankScreen_Empty	0xed21c0	extensions/extension_data.s
 Boot_GetButtonComboCode	0xef0627	kn5000_v7_program.s
-SeqDMA_MultiWrite_NoteEvent_Done	0xef31ad	boot/system_handlers.s
-SeqDMA_MultiWrite_VoiceMap	0xef31b1	boot/system_handlers.s
-SeqDMA_MultiWrite_VoiceMap_Loop	0xef31c5	boot/system_handlers.s
-PerfMode_ParamHandler_5_Return	0xef6831	display/scoop_display.s
-PerfMode_EventTable_5	0xef6832	display/scoop_display.s
-PerfMode_ParamHandler_7	0xef68b2	display/scoop_display.s
-SndDispatch_Handler_2_Return	0xefb209	display/scoop_display.s
-SndDispatch_SubTable_2	0xefb20a	display/scoop_display.s
-SndDispatch_TableEntryBegin	0xefb222	display/scoop_display.s
 VoiceSlot_StatusRet_Helper3_Skip	0xefeef9	display/scoop_display.s
 DisplayStr_TempoString	0xefef10	display/scoop_display.s
 DisplayStr_BytecodeBlock_C_Tbl2	0xefef29	display/scoop_display.s
@@ -69,8 +60,6 @@ SMF_VoiceData_ReadTrackFailed	0xf23fc7	sequencer/smf_tonegen_core.s
 SMF_VoiceData_DispatchAndParse	0xf23fd1	sequencer/smf_tonegen_core.s
 SMF_VoiceData_DrainRemaining	0xf24046	sequencer/smf_tonegen_core.s
 Sequencer_Advance_UpdateRemaining	0xf24496	sequencer/smf_tonegen_core.s
-SMF_NoteOn_SlotFound_Underflow	0xf27abb	sequencer/smf_event_processor.s
-SMF_NoteOn_WriteEventBytes	0xf27ac1	sequencer/smf_event_processor.s
 SeqNote_AllocSub_SetBitAndFlags	0xf3aa6a	sequencer/sequencer_engine.s
 SeqNote_ProcessCurrentChannel	0xf3aa78	sequencer/sequencer_engine.s
 VoiceConfig_SlotCheck_ReadData	0xf3ab09	sequencer/sequencer_engine.s
@@ -89,7 +78,6 @@ VoiceType_ValidateCode	0xf3b2ae	sequencer/sequencer_engine.s
 VoiceType_ReturnZero	0xf3b2b8	sequencer/sequencer_engine.s
 VoiceType_CheckMatchFlag	0xf3b2bb	sequencer/sequencer_engine.s
 VoiceType_ReturnFFFF	0xf3b2c0	sequencer/sequencer_engine.s
-SeqNotePos_CheckMainChannel	0xf3b7c1	sequencer/sequencer_engine.s
 SeqNotePos_ClampAndWrite	0xf3b7ce	sequencer/sequencer_engine.s
 SeqPlay_AssignChordVoices	0xf3c62f	sequencer/sequencer_engine.s
 SeqPlay_Chord_ShiftDone	0xf3c662	sequencer/sequencer_engine.s
@@ -139,15 +127,6 @@ VoiceParam_B0_CheckType	0xf66a25	sequencer/accompaniment_engine.s
 VoiceParam_B0_Process	0xf66a43	sequencer/accompaniment_engine.s
 VoiceSlot_DispatchByType	0xf66abd	sequencer/accompaniment_engine.s
 TtMdExc_HandleClose	0xf7620c	midi/ac_listener_handlers.s
-BitmapAccita16	0xf7b069	ui/drawbar_panel_ui.s
-BitmapAccita16_DataPtr	0xf7b084	ui/drawbar_panel_ui.s
-BitmapAccita16_Width	0xf7b08a	ui/drawbar_panel_ui.s
-BitmapAccita16_Height	0xf7b090	ui/drawbar_panel_ui.s
-BitmapAccger16_DataPtr	0xf7b0b1	ui/drawbar_panel_ui.s
-BitmapAccger16_Width	0xf7b0b7	ui/drawbar_panel_ui.s
-BitmapAccger16_Height	0xf7b0bd	ui/drawbar_panel_ui.s
-Softver_ReturnZero	0xf7f017	ui/drawbar_panel_ui.s
-Softver_Epilogue	0xf7f019	ui/drawbar_panel_ui.s
 IvMPverProc	0xf7f01e	ui/drawbar_panel_ui.s
 MPver_ShowHide	0xf7f04c	ui/drawbar_panel_ui.s
 MPver_Paint	0xf7f079	ui/drawbar_panel_ui.s
@@ -155,8 +134,6 @@ MPver_SendEvent	0xf7f088	ui/drawbar_panel_ui.s
 MPver_GetText	0xf7f08e	ui/drawbar_panel_ui.s
 AcWelcomScreen_Init_CheckSubCpu	0xf7f13d	ui/drawbar_panel_ui.s
 AcWelcomScreen_SubCpuError	0xf7f5fd	ui/drawbar_panel_ui.s
-SysSureLngCheck_ReturnZero	0xfb7819	ui/ui_mode_handlers.s
-SureLngCheck	0xfb781c	ui/ui_mode_handlers.s
 MIDI_CHANNEL_HANDLER_JUMP_TABLE	0xfcef8f	midi/midi_serial_routines.s
 SoundMode_VoiceIterLoop	0xfd7d44	midi/midi_dispatch_handlers.s
 ApplyChannelEntry_CheckIdx	0xfe5787	audio/note_voice_mapping.s

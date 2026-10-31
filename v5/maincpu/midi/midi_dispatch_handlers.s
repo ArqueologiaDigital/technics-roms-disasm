@@ -1402,104 +1402,104 @@ BitMask_Ctrl0_ConfigExit:
 MidiCC_ChannelDispatch_Func09:
 	ld	l, (0x958d:16)
 	cp	l, 31
-	jr	ugt, MidiCC_ChannelDispatch_Ctrl0_Return
+	jr	ugt, MidiCC_ChannelDispatch_Func09_Return
 	ld	xix, MidiTx_PartTargets_Func09
 	extz	hl
 	sll	l, 2
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return
+	jr	z, MidiCC_ChannelDispatch_Func09_Return
 	bit	1, (0xfd59:16)
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return
+	jr	z, MidiCC_ChannelDispatch_Func09_Return
 	ld	e, (0x958e:16)
 	ld	w, 9:opc
 	calr	MidiChannel_ConfigureController
-MidiCC_ChannelDispatch_Ctrl0_Return:
+MidiCC_ChannelDispatch_Func09_Return:
 	ret
 MidiCC_ChannelDispatch_Func08:
 	ld	l, (0x958d:16)
 	cp	l, 31
-	jr	ugt, MidiCC_ChannelDispatch_Ctrl0_Return2
+	jr	ugt, MidiCC_ChannelDispatch_Func08_Return2
 	ld	xix, MidiTx_PartTargets_Func08
 	extz	hl
 	sll	l, 2
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return2
+	jr	z, MidiCC_ChannelDispatch_Func08_Return2
 	bit	2, (0xfd59:16)
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return2
+	jr	z, MidiCC_ChannelDispatch_Func08_Return2
 	ld	e, (0x958e:16)
 	ld	w, 8:opc
 	calr	MidiChannel_ConfigureController
-MidiCC_ChannelDispatch_Ctrl0_Return2:
+MidiCC_ChannelDispatch_Func08_Return2:
 	ret
 MidiCC_ChannelDispatch_Func12:
 	ld	l, (0x958d:16)
 	cp	l, 31
-	jr	ugt, MidiCC_ChannelDispatch_Ctrl0_Return3
+	jr	ugt, MidiCC_ChannelDispatch_Func12_Return3
 	ld	xix, MidiTx_PartTargets_Func12
 	extz	hl
 	sll	l, 2
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return3
+	jr	z, MidiCC_ChannelDispatch_Func12_Return3
 	bit	3, (0xfd59:16)
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return3
+	jr	z, MidiCC_ChannelDispatch_Func12_Return3
 	ld	e, (0x958e:16)
 	ld	w, 12:opc
 	calr	MidiChannel_ConfigureController
-MidiCC_ChannelDispatch_Ctrl0_Return3:
+MidiCC_ChannelDispatch_Func12_Return3:
 	ret
 MidiCC_ChannelDispatch_Func13:
 	ld	l, (0x958d:16)
 	cp	l, 31
-	jr	ugt, MidiCC_ChannelDispatch_Ctrl0_Return4
+	jr	ugt, MidiCC_ChannelDispatch_Func13_Return4
 	ld	xix, MidiTx_PartTargets_Func13
 	extz	hl
 	sll	l, 2
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return4
+	jr	z, MidiCC_ChannelDispatch_Func13_Return4
 	bit	3, (0xfd59:16)
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return4
+	jr	z, MidiCC_ChannelDispatch_Func13_Return4
 	ld	e, (0x958e:16)
 	ld	w, 13:opc
 	calr	MidiChannel_ConfigureController
-MidiCC_ChannelDispatch_Ctrl0_Return4:
+MidiCC_ChannelDispatch_Func13_Return4:
 	ret
 MidiCC_ChannelDispatch_Func14:
 	ld	l, (0x958d:16)
 	cp	l, 31
-	jr	ugt, MidiCC_ChannelDispatch_Ctrl0_Return5
+	jr	ugt, MidiCC_ChannelDispatch_Func14_Return5
 	ld	xix, MidiTx_PartTargets_Func14
 	extz	hl
 	sll	l, 2
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return5
+	jr	z, MidiCC_ChannelDispatch_Func14_Return5
 	bit	4, (0xfd59:16)
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return5
+	jr	z, MidiCC_ChannelDispatch_Func14_Return5
 	ld	e, (0x958e:16)
 	ld	w, 14:opc
 	calr	MidiChannel_ConfigureController
-MidiCC_ChannelDispatch_Ctrl0_Return5:
+MidiCC_ChannelDispatch_Func14_Return5:
 	ret
 MidiCC_ChannelDispatch_Func15:
 	ld	l, (0x958d:16)
 	cp	l, 31
-	jr	ugt, MidiCC_ChannelDispatch_Ctrl0_Return6
+	jr	ugt, MidiCC_ChannelDispatch_Func15_Return6
 	ld	xix, MidiTx_PartTargets_Func15
 	extz	hl
 	sll	l, 2
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return6
+	jr	z, MidiCC_ChannelDispatch_Func15_Return6
 	bit	4, (0xfd59:16)
-	jr	z, MidiCC_ChannelDispatch_Ctrl0_Return6
+	jr	z, MidiCC_ChannelDispatch_Func15_Return6
 	ld	e, (0x958e:16)
 	ld	w, 15:opc
 	calr	MidiChannel_ConfigureController
-MidiCC_ChannelDispatch_Ctrl0_Return6:
+MidiCC_ChannelDispatch_Func15_Return6:
 	ret
 	ret
 	ret
@@ -10302,8 +10302,8 @@ SysEx_ResetAndReturn_Helper3:
 SysEx_ResetAndReturn_Helper4:
 	ld	xwa, 0xbbfc
 	call	MidiPkt_SetXferTotal_Panel
-	jrl	MidiPkt_ArpConfigChain_Data_Helper
-SysEx_ResetAndReturn_Helper5:
+	jrl	MidiPkt_SendGroup_Panel
+SysEx_SendNothing:
 	ret
 SysEx_ResetAndReturn_Helper6:
 	ld	xwa, 0xbbfc
@@ -10369,12 +10369,12 @@ MidiPkt_ArpPopReturn:
 	popw_erp 0xfa
 	ret
 MidiPkt_ArpConfigChain_Data:
-	calr	MidiPkt_ArpConfigChain_Data_Helper
+	calr	MidiPkt_SendGroup_Panel
 	calr	MidiPkt_SendGroup_SoundRam
 	calr	MidiPkt_SendGroup_AccompBlocks
 	calr	MidiPkt_SendGroup_StyleImage
 	jrl	MidiPkt_ArpConfigChain_Data_Join
-MidiPkt_ArpConfigChain_Data_Helper:
+MidiPkt_SendGroup_Panel:
 	calr	MidiPkt_ArpConfigChain_Data_Helper2
 	calr	MidiPkt_ArpConfigChain_Data_Helper3
 	jrl	MidiPkt_ArpConfigChain_Data_Helper18
@@ -10863,7 +10863,7 @@ MidiPkt_ArpExtHandler_E_Data:
 	call	MidiPkt_SetXferTotal_StyleImage
 	ld	xwa, 0xbc2c
 	call	MidiPkt_SetXferBlock_StyleImageHeader
-	jrl	SeqChan_StepCmd_Field6_Data
+	jrl	SeqChan_XferStep_StyleImageBlock1
 MidiPkt_ArpExtHandler_E_Data_Skip:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 4:i3
@@ -10909,7 +10909,7 @@ MidiPkt_ArpExtHandler_H_Data:
 	call	MidiPkt_SetXferTotal_AccompBlocks
 	ld	xwa, 0xbc2c
 	call	MidiPkt_SetXferBlock_AccompAreaHeader
-	jrl	SeqChan_StepCmd_Field10_Data
+	jrl	SeqChan_XferStep_AccompBlock1
 MidiPkt_ArpExtHandler_H_Data_Skip:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 4:i3
@@ -10923,7 +10923,7 @@ MidiPkt_ArpExtHandler_I_Data:
 	jr	nz, MidiPkt_ArpExtHandler_I_Data_Skip
 	ld	xwa, 0xbc2c
 	call	MidiPkt_SetXferBlock_AccompBankTables
-	jrl	SeqChan_StepCmd_Field13_Data
+	jrl	SeqChan_XferStep_AccompBlock2
 MidiPkt_ArpExtHandler_I_Data_Skip:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 4:i3
@@ -10954,7 +10954,7 @@ MidiPkt_ArpExtHandler_K:
 	call	MidiPkt_SetXferTotal_SeqData
 	ld	xwa, 0xbc2c
 	call	MidiPkt_SetXferBlock_CurrentSong
-	jrl	SeqChan_StepCmd_Field11_Data
+	jrl	SeqChan_XferStep_CurrentSong
 MidiPkt_ArpExtHandler_K_Skip:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 4:i3
@@ -10968,7 +10968,7 @@ MidiPkt_ArpExtHandler_L:
 	jr	nz, MidiPkt_ArpExtHandler_L_Skip
 	ld	xwa, 0xbc2c
 	call	MidiPkt_SetXferBlock_SongSlots
-	jrl	SeqChan_StepCmd_Field12_Data
+	jrl	SeqChan_XferStep_SongSlots
 MidiPkt_ArpExtHandler_L_Skip:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 4:i3
@@ -11075,7 +11075,7 @@ SeqChan_StepCmd_Field5to6:
 	ld	de, 6:i3
 	call	MIDI_ReadChannelParam
 	ret
-SeqChan_StepCmd_Field6_Data:
+SeqChan_XferStep_StyleImageBlock1:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 7:i3
@@ -11123,7 +11123,7 @@ SeqChan_StepCmd_Field9to10:
 	ldw	de, 10
 	call	MIDI_ReadChannelParam
 	ret
-SeqChan_StepCmd_Field10_Data:
+SeqChan_XferStep_AccompBlock1:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ldw	de, 18
@@ -11139,7 +11139,7 @@ SeqChan_StepCmd_Field10_Data:
 	ldw	de, 19
 	call	MIDI_ReadChannelParam
 	ret
-SeqChan_StepCmd_Field13_Data:
+SeqChan_XferStep_AccompBlock2:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ldw	de, 19
@@ -11171,7 +11171,7 @@ SeqChan_StepCmd_Field20to21:
 	ldw	de, 21
 	call	MIDI_ReadChannelParam
 	ret
-SeqChan_StepCmd_Field11_Data:
+SeqChan_XferStep_CurrentSong:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ldw	de, 11
@@ -11190,7 +11190,7 @@ SeqChan_StepCmd_Field11_Data:
 	ldw	de, 12
 	call	MIDI_ReadChannelParam
 	ret
-SeqChan_StepCmd_Field12_Data:
+SeqChan_XferStep_SongSlots:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ldw	de, 12
@@ -11404,10 +11404,10 @@ MidiSysEx_FinishSoundRamXfer:
 	ld	bc, 3:i3
 	ldirw
 	bit	6, (0xbc5a:16)
-	jr	z, MidiSysEx_ProcessBlock_Epilogue
+	jr	z, MidiSysEx_FinishSoundRamXfer_Epilogue
 	calr	MidiSysEx_SendSoundRamEndCmd
 	res	6, (0xbc5a:16)
-MidiSysEx_ProcessBlock_Epilogue:
+MidiSysEx_FinishSoundRamXfer_Epilogue:
 	inc	6, xsp
 	ret
 MidiSysEx_ProcessBlock_Helper8:
@@ -12648,7 +12648,7 @@ SysEx_InitiateSend_SendPanelMemory:
 	call	SysEx_ResetAndReturn_Helper4
 	jr	SysEx_InitiateSend_Join
 SysEx_InitiateSend_SendNoData:
-	call	SysEx_ResetAndReturn_Helper5
+	call	SysEx_SendNothing
 	jr	SysEx_InitiateSend_Join
 SysEx_InitiateSend_Case6:
 	call	SysEx_ResetAndReturn_Helper6
@@ -12889,7 +12889,7 @@ SeqData_FormatOutput_Data_Helper_Case2:
 SeqData_FormatOutput_Data_Helper_Case3:
 	jrl	SeqData_FormatOutput_Data_Helper_Join3
 SeqData_FormatOutput_Data_Helper_Case4:
-	jrl	SeqData_FormatOutput_Data_Helper_Return
+	jrl	SeqData_FormatOutput_Data_Helper_Case7_Return
 SeqData_FormatOutput_Data_Helper_Case5:
 	jrl	SeqData_FormatOutput_Data_Helper_Join4
 SeqData_FormatOutput_Data_Helper_Case6:
@@ -12996,7 +12996,7 @@ SeqData_FormatOutput_Data_Helper_Join3:
 SeqData_FormatOutput_Data_Code_Epilogue3:
 	pop	qiz
 	ret
-SeqData_FormatOutput_Data_Helper_Return:
+SeqData_FormatOutput_Data_Helper_Case7_Return:
 	ret
 SeqData_FormatOutput_Data_Helper_Join4:
 	push	qiz
@@ -13979,7 +13979,7 @@ VoiceParam_AssSwb_MultiBlock_Data_Case2:
 VoiceParam_AssSwb_MultiBlock_Data_Case3:
 	jrl	VoiceParam_AssSwb_MultiBlock_Data_Join3
 VoiceParam_AssSwb_MultiBlock_Data_Case4:
-	jrl	VoiceParam_AssSwb_MultiBlock_Data_Return
+	jrl	VoiceParam_AssSwb_MultiBlock_Data_Case7_Return
 VoiceParam_AssSwb_MultiBlock_Data_Case5:
 	jrl	VoiceParam_AssSwb_MultiBlock_Data_Join4
 VoiceParam_AssSwb_MultiBlock_Data_Case6:
@@ -14086,7 +14086,7 @@ VoiceParam_AssSwb_MultiBlock_Data_Join3:
 VoiceParam_AssSwb_MultiBlock_Data_Code_Epilogue3:
 	pop	qiz
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Return:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Return:
 	ret
 VoiceParam_AssSwb_MultiBlock_Data_Join4:
 	push	qiz
@@ -14193,7 +14193,7 @@ VoiceParam_MultiBlock_Epilogue_Data:
 	lda	xsp, (xsp-12)
 	ld	c, (xwa+14)
 	cp	c, 1:i3
-	jr	nc, VoiceParam_AssSwb_MultiBlock_Data_Epilogue
+	jr	nc, VoiceParam_MultiBlock_Epilogue_Data_Epilogue
 	extz	bc
 	muls	bc, 6
 	lda	xde, (SeqAlt_PopIzSkip4Ret2_Data:24)
@@ -14212,7 +14212,7 @@ VoiceParam_MultiBlock_Epilogue_Data:
 	ld	(xbc+4), xwa
 	ld	xwa, xbc
 	calr	MidiPkt_EnqueueControl_3354
-VoiceParam_AssSwb_MultiBlock_Data_Epilogue:
+VoiceParam_MultiBlock_Epilogue_Data_Epilogue:
 	lda	xsp, (xsp+12)
 	ret
 VoiceParam_LookupAndEnqueue:

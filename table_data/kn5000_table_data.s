@@ -684,9 +684,11 @@ Icon_175:	desc_entry	28, 28, IconPixels_175
 	desc_entry	0, 0, 0		; terminator
 
 ; Icon pixel data: 4bpp, 2 pixels/byte, 12 bytes/row x 24 rows (288 bytes per
-; icon; DrawIcons hardcodes the geometry).  Emitted as offset/length slices of
-; includes/icon_pixel_data.bin so each icon is individually addressable.
-; Extracted gallery: table_data/images/icons/Icon_NNN.png.
+; icon; DrawIcons hardcodes the geometry).  Each run is built from its own
+; committed PNG, table_data/images/icons_png/IconPixels_NNN.png, whose pixel
+; values are the nibbles (scripts/build/icon_images.py), so each icon is
+; individually addressable.  Colour renders for the website gallery:
+; scripts/analysis/extract_icons.py.
 ; DrawIcons_Impl (v10 0xFABF9B) reaches each run through the +4 pointer of
 ; its IconTable entry.
 IconPixels_000:	.incbin "includes/generated/IconPixels_000.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_000.png
@@ -914,8 +916,16 @@ IconPixels_176_Unreferenced:	.incbin "includes/generated/IconPixels_176.bin"	; c
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
-; BACKING BLOB: includes/icons_to_strings.bin -- what is still live in it
+; BACKING BLOB: includes/icons_to_strings.bin -- what was still live in it
 ; -----------------------------------------------------------------------------
+; DELETED 2026-10-31 (lane media-cleanup, notes/media-cleanup-2026-10-31/): no
+; build read a byte of it (the NET RESULT below).  Its range is read from the
+; tracked original_ROMs/kn5000_table_data.rom by scripts/build/retired_blobs.py,
+; which checks the sha256 below, for the converters' export/verify, style_events.py
+; and audit_icons_blob_coverage.py.  The archived ASL mirror that bincluded it
+; already could not build (35 of its 48 binclude files were gone).  The rest of
+; this note is the record of what the file held.
+;
 ; 742,024 bytes; sha256
 ;   0df126455434ccc35a9f40609ec26dc68edc2a170910de602a6fbe814f31379d
 ; The file is a verbatim slice of the factory dump covering exactly the region
@@ -1082,7 +1092,7 @@ Composer_FactoryMemoryImage:	.incbin	"includes/generated/Composer_FactoryMemoryI
 ; The blocks run end to end from 0x9C4050 to 0x9F94CA, with one 0xFF alignment
 ; byte at 0x9C9017 and 2,869 bytes of 0xFF fill from 0x9F94CB to 0x9F9FFF.
 ;
-; The same bytes also survive verbatim in the dead tail of
+; The same bytes also survived verbatim in the dead tail of the deleted
 ; includes/icons_to_strings.bin (file offsets 0x7F2D8-0xB5287): a pre-conversion
 ; duplicate that no build reads -- see the backing-blob note in the region
 ; banner above.

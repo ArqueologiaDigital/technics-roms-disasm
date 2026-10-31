@@ -11,16 +11,16 @@ SECTIONS {
 
 CPANEL_CMD_INIT_CONFIGURE = 0x0000001F;
 CRTC_LINE_COMPARE = 0x00000018;
-NakaInst_BASS_ACCOMP1_ACCOMP2_ACCOMP3 = 0x00EF012B;
+NakaInst_BASS_ACCOMP1_ACCOMP2_ACCOMP3 = 0x00EF0101;
 NakaInst_NEXT = 0x00EE00C3;
 NakaInst_Param_EndFF = 0x00EE013B;
 NakaInst_Param_Repeat = 0x00EE009B;
 NakaInst_Param_Val0C = 0x00EE0111;
 Naka_Help_563_E300C0 = 0x00E300C0;
-Naka_PresentationRootState = 0x00EF013F;
-PlySngSel2Func = 0x00F30017;
+Naka_PresentationRootState = 0x00EF0115;
+PlySngSel2Func = 0x00F2FFED;
 Presentation_TagStrTable = 0x00EA0008;
-SendPartDataBlock_Data4 = 0x00FF00C0;
+SendPartDataBlock_Data4 = 0x00FEF8E6;
 SeqByteBlock_EffectsSeqData = 0x00F5008B;
 SeqByteBlock_PathNormalize = 0x00F500D7;
 WidgetCharMap_DataEntry1 = 0x00EB00D8;

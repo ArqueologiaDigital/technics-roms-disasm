@@ -4806,7 +4806,7 @@ AudioModeChange_Handler:
 	lda	xbc, (AudioVoiceHandler_Table:24)
 	ld	xhl, (xbc+wa)
 	ld	xbc, xhl
-	lda	xwa, (AudioInit_MixFallbackDefault_Code:24)
+	lda	xwa, (AudioVoiceHandler_NoneSentinel:24)
 	cp	xwa, xbc
 	ret	z
 	ld	wa, 0:i3
@@ -4845,7 +4845,7 @@ AudioSubsystem_Callback:
 	lda	xbc, (AudioVoiceHandler_Table:24)
 	ld	xhl, (xbc+wa)
 	ld	xbc, xhl
-	lda	xwa, (AudioInit_MixFallbackDefault_Code:24)
+	lda	xwa, (AudioVoiceHandler_NoneSentinel:24)
 	cp	xwa, xbc
 	ret	z
 	ld	wa, 0:i3

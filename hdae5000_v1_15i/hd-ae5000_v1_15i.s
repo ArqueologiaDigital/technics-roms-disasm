@@ -46,7 +46,7 @@
 	.equ HDAE5000_RAM_HdSignatureOk, 0x229d98	; 1 when sector 1 carries AA55AA55 F4F1F2F3 (HDAE5000_HD_CheckSignature)
 	.equ HDAE5000_RAM_WriteProtect, 0x229d99	; "WRITE PROTECTION" of HDAE5000_TitleInfo_Template, 0/1 = OFF/ON
 	.equ HDAE5000_RAM_WriteConfirm, 0x229d9a	; "WRITE CONFIRM" of HDAE5000_TitleInfo_Template, 0/1 = OFF/ON
-	.equ HDAE5000_RAM_QuickLoadMode, 0x229da9	; "QUICK LOAD MODE" (TitleInfo); one of the six setting bytes of sector 1
+	.equ HDAE5000_RAM_QuickLoadMode, 0x229da9	; "QUICK LOAD MODE" (TitleInfo); one of the three setting bytes of sector 1
 	.equ HDAE5000_RAM_LoadByNumberMode, 0x229daa	; "LOAD BY NUMBER MODE" (TitleInfo); sector-1 setting byte
 	.equ HDAE5000_RAM_JumpAfterLoad, 0x229dab	; "JUMP AFTER LOAD" (TitleInfo); sector-1 setting byte
 	.equ HDAE5000_RAM_SaveOptions, 0x22aa04	; 12-byte part-selection record of the save options: u16 mask, then flags 0x22AA4E+k (HDAE5000_TypeSel_*)
@@ -105,7 +105,7 @@
 	.equ HDAE5000_IO_PpiPortC, 0x160004	; 8255 port C: PC-link handshake inputs, bit 0 ready, bit 1 ack, bit 2 link present (HDAE5000_PPORT_SendByte)
 	.equ HDAE5000_IO_PpiControl, 0x160006	; 8255 control word: 0x90 = mode 0, port A input (HDAE5000_PPI_Init); 0x89 = port A output, port C low nibble input (HDAE5000_PPORT_InitPort / _CommandLoop)
 	.equ HDAE5000_RAM_DirListText, 0x22a088	; 24 rows x 21 bytes + NUL: "NNN:" and the 16-byte directory name at +4 (HDAE5000_DirList_BuildPage)
-	.equ HDAE5000_RAM_PartListText, 0x22b22c	; nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build
+	.equ HDAE5000_RAM_PartListText, 0x22b22c	; eight 14-byte tab-ended part names + NUL (v1.x; v2.x nine, 0x7F bytes), HDAE5000_PartList_Build
 	.equ HDAE5000_RAM_HdFreeScanBuffer, 0x200898	; 512-byte FAT sector buffer of HD_FindFreeCluster
 	.equ HDAE5000_RAM_HdFatCache, 0x200a98	; 512-byte cache of one FAT sector (HD_FatSetEntry / _FatNextCluster / _FreeChain)
 	.equ HDAE5000_RAM_HdXferClusters, 0x229c98	; clusters a write needs: ceil(HdXferBytes / ClusterBytes)
@@ -385,24 +385,18 @@ HDAE5000_ENTRY_4:
 	nop
 
 ; ============================================================================
-; CODE SECTION 1 (0x280020 - 0x28F575)
+; CODE SECTION 1 (from HDAE5000_Handler_Registration; the addresses are in the ELF)
 ;
 ; Key routines:
-;   0x280020  Handler_Registration - Register 11 handlers with main CPU workspace
-;   0x28030E  Alloc_Memory_1 - Bitmap resource descriptor, HDAE5000_Bitmap_TitleLogo
-;                             (A1 = 0x2A898E bitmap data, not a palette)
-;   0x28033B  Alloc_Memory_2 - Bitmap resource descriptor, HDAE5000_Bitmap_DriveMech
-;                             (A1 = 0x2BB98E bitmap data, not a palette)
-;   0x280368  Alloc_Memory_3 - Bitmap resource descriptor, HDAE5000_Bitmap_FilePanel
-;                             (A1 = 0x2CE98E bitmap data, not a palette)
-;   0x280395  BitmapHdd_icon - Bitmap resource descriptor, HDAE5000_Bitmap_HddIcon
-;                             (A1 = 0x2E198E bitmap data, not a palette; unlike
-;                              its three neighbours this one carries the
-;                              firmware's own registry name)
-;   0x2803C2  HDAE5000_UiState_Reset - (was Register_Frame; see its header)
-;   0x28F543  Alloc_Memory - Bitmap resource descriptor for the boot splash
-;                             (A1 = 0x2E61CE HDAE5000_Bitmap_BootSplash, A2 = 320,
-;                              A3 = 240 -- bitmap data, not a palette)
+;   Handler_Registration - register the module's handlers with the main CPU workspace
+;   Alloc_Memory_1 - Bitmap resource descriptor, HDAE5000_Bitmap_TitleLogo
+;   Alloc_Memory_2 - Bitmap resource descriptor, HDAE5000_Bitmap_DriveMech
+;   BitmapHdd_icon - Bitmap resource descriptor, HDAE5000_Bitmap_HddIcon (unlike its
+;                    two neighbours it carries the firmware's own registry name; v1.x
+;                    has no Alloc_Memory_3 / FilePanel picture)
+;   HDAE5000_UiState_Reset - (was Register_Frame; see its header)
+;   Alloc_Memory - Bitmap resource descriptor for the boot splash
+;                  (HDAE5000_Bitmap_BootSplash, 320 x 240 -- bitmap data, not a palette)
 ; ============================================================================
 
 ; ----------------------------------------------------------------------------

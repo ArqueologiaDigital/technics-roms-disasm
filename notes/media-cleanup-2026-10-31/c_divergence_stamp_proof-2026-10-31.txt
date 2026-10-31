@@ -1,0 +1,33 @@
+clone: 02319af1d notes: media-cleanup -- stamp proof: run the old patcher from scripts/build/ (it locates the tree from its own path)
+== 1 fresh build (0 stamps tracked)
+   apply_c_divergence v6: 25 bins, 0 already patched (skipped), 25 recompiled first (no valid stamp), 25 patched: 3439 pointer relocations, 10353 raw bytes
+   apply_c_divergence v7: 23 bins, 0 already patched (skipped), 23 recompiled first (no valid stamp), 23 patched: 845 pointer relocations, 1 raw bytes
+   apply_c_divergence v5: 29 bins, 0 already patched (skipped), 29 recompiled first (no valid stamp), 29 patched: 4149 pointer relocations, 11626 raw bytes
+   1: v7, v6, v5 byte-identical to their references
+== 2 second build, no change
+   make -q: ROMs up to date
+   apply_c_divergence v7: 23 bins, 23 already patched (skipped), 0 recompiled first (no valid stamp), 0 patched: 0 pointer relocations, 0 raw bytes
+   apply_c_divergence v6: 25 bins, 25 already patched (skipped), 0 recompiled first (no valid stamp), 0 patched: 0 pointer relocations, 0 raw bytes
+   apply_c_divergence v5: 29 bins, 29 already patched (skipped), 0 recompiled first (no valid stamp), 0 patched: 0 pointer relocations, 0 raw bytes
+   2: v7, v6, v5 byte-identical to their references
+== 3 three stamps deleted
+   v7: gui_display_struct_data.bin (533 relocations)
+   v6: naka_style_bitmaps.bin (1196 relocations)
+   v5: naka_style_bitmaps.bin (1196 relocations)
+   apply_c_divergence v7: 23 bins, 22 already patched (skipped), 1 recompiled first (no valid stamp), 1 patched: 533 pointer relocations, 0 raw bytes
+   apply_c_divergence v6: 25 bins, 24 already patched (skipped), 1 recompiled first (no valid stamp), 1 patched: 1196 pointer relocations, 2720 raw bytes
+   apply_c_divergence v5: 29 bins, 28 already patched (skipped), 1 recompiled first (no valid stamp), 1 patched: 1196 pointer relocations, 2739 raw bytes
+   3: v7, v6, v5 byte-identical to their references
+== 4 every stamp deleted (an older checkout after pulling this change)
+   apply_c_divergence v7: 23 bins, 0 already patched (skipped), 23 recompiled first (no valid stamp), 23 patched: 845 pointer relocations, 1 raw bytes
+   apply_c_divergence v6: 25 bins, 0 already patched (skipped), 25 recompiled first (no valid stamp), 25 patched: 3439 pointer relocations, 10353 raw bytes
+   apply_c_divergence v5: 29 bins, 0 already patched (skipped), 29 recompiled first (no valid stamp), 29 patched: 4149 pointer relocations, 11626 raw bytes
+   4: v7, v6, v5 byte-identical to their references
+== 5 negative control: the old patcher
+   old: apply_c_divergence v6: 25 bins, 0 already patched (skipped), 3439 pointer relocations, 10353 raw bytes
+   old patcher changed v6/maincpu/includes/generated/naka_style_bitmaps.bin: patched twice
+   new: apply_c_divergence v6: 25 bins, 0 already patched (skipped), 25 recompiled first (no valid stamp), 25 patched: 3439 pointer relocations, 10353 raw bytes
+   5: v7, v6, v5 byte-identical to their references
+   git status --porcelain: empty
+PASS
+exit 0

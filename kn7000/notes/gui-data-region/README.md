@@ -251,11 +251,11 @@ items; the bytes are what fell.
   or lies inside a typed item, as `Label` / `Label+N`.  The two generators read each other's output,
   so `make data-and-code-src` (`tools/regen_data_and_code.sh`) runs them alternately for all four
   builds until no labels.sym changes (two rounds).  Object, title and class ids in the code are
-  still numbers (EV_ / MT_ are named).
+  still numbers (EV_ / MT_ are named). (Resolved: 7643e9385, title / mode / class / function / object ids named in the code from `gui_code_ids.inc`; open-items register 2026-10-31.)
 - About half of the data region's bytes are still `.incbin_range` (see the lane report for the
   list): the built-in style / rhythm data (big-endian records like IC18's, around 0x486D0000 and
   0x48729988), tables the code indexes with computed offsets (0x485BC3EC: a 69 KB run of code
-  pointers and signed byte tables), and mostly-0xFF sparse tables.
+  pointers and signed byte tables), and mostly-0xFF sparse tables. (Resolved: `../data-final/README.md`, `../mn10300-typer/README.md`, 941's opaque data is now 2,174 pieces / 45,394 bytes; open-items register 2026-10-31.)
 - [INFERENCE] the rect's right / bottom are inclusive (from the full-screen objects only).
 - `D` (IvSDPlayTimer / IvSDFwdRewTimer) may be 1 byte rather than 2.
 - The object names this source gives the 6,309 objects with an empty ResName are invented

@@ -123,7 +123,7 @@ KN5000 `table_data/tone_database_aux.s:718`: bit 7 **SET → 6 bytes, CLEAR → 
 ⚠ These do not contradict cleanly — **the sizes differ too (4 vs 8)**. Either one tree has the
 polarity backwards, or the machines use different record formats and the WSA1 note's "same field"
 premise is itself wrong. WSA1 has its null (0 of 318 under inversion); KN5000 needs the equivalent.
-**Rule: the side with the reproducible measurement wins; if neither has one, NEITHER tree changes.**
+**Rule: the side with the reproducible measurement wins; if neither has one, NEITHER tree changes.** (Resolved: no contradiction, a two-bit (bit 6, bit 7) size table with the populations on opposite sides of bit 6, b8bb6f62a, prom_d/tone_database_aux.s; open-items register 2026-10-31.)
 
 ## Traps this project has paid for — carry them forward
 

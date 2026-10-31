@@ -1,0 +1,55 @@
+v9: 24 names only the block-delta fallback places
+  name                       guess    v10      equ      derived  code uses
+  BOOTSERIAL_RX_HEAD         0x0f77   0x0f77   -        -        0
+  BOOTSERIAL_RX_RING         0x0f79   0x0f79   -        -        0
+  BOOTSERIAL_RX_TAIL         0x0f75   0x0f75   -        -        0
+  BOOTSERIAL_TX_PENDING      0x0fd7   0x0fd7   -        -        0
+  BOOTSERIAL_TX_RING         0x0fd9   0x0fd9   -        -        0
+  BOOTSERIAL_TX_SEND_INDEX   0x0fd5   0x0fd5   -        -        0
+  PANEL_PART_18              0xfd7c   0xfd7c   0xfd7c   no       0
+  PANEL_REC_9A               0xffa4   0xffa4   0xffa4   no       0
+  PANEL_REC_C0               0xfdda   0xfdda   0xfdda   no       0
+  PANEL_REC_C1               0xfdee   0xfdee   0xfdee   no       0
+  PANEL_REC_C2               0xfe02   0xfe02   0xfe02   no       0
+  PANEL_REC_C3               0xfe16   0xfe16   0xfe16   no       0
+  PANEL_REC_C4               0xfe2a   0xfe2a   0xfe2a   no       0
+  PANEL_REC_C5               0xfe3e   0xfe3e   0xfe3e   no       0
+  PANEL_REC_CE               0xfef2   0xfef2   0xfef2   no       0
+  PANEL_REC_CF               0xff06   0xff06   0xff06   no       0
+  PANEL_REC_D0               0xff1a   0xff1a   0xff1a   no       0
+  PANEL_REC_D1               0xff2e   0xff2e   0xff2e   no       0
+  PANEL_REC_D2               0xff42   0xff42   0xff42   no       0
+  PANEL_REC_D3               0xff56   0xff56   0xff56   no       0
+  PANEL_REC_D4               0xff6a   0xff6a   0xff6a   no       0
+  PANEL_REC_D7               0xff7e   0xff7e   0xff7e   no       0
+  RHYTHM_PATTERN_SEL_A       0x348d   0x348d   -        -        0
+  RHYTHM_PATTERN_TYPE        0x348f   0x348f   -        -        0
+  names whose tree value differs from v10's or that code uses: 0
+v7: 25 names only the block-delta fallback places
+  name                       guess    v10      equ      derived  code uses
+  BOOTSERIAL_RX_HEAD         0x0f77   0x0f77   -        -        0
+  BOOTSERIAL_RX_RING         0x0f79   0x0f79   -        -        0
+  BOOTSERIAL_RX_TAIL         0x0f75   0x0f75   -        -        0
+  BOOTSERIAL_TX_PENDING      0x0fd7   0x0fd7   -        -        0
+  BOOTSERIAL_TX_RING         0x0fd9   0x0fd9   -        -        0
+  BOOTSERIAL_TX_SEND_INDEX   0x0fd5   0x0fd5   -        -        0
+  PANEL_PART_18              0xfd7c   0xfd7c   0xfd7c   no       0
+  PANEL_REC_68               0xfcf6   0xfcf6   0xfcf6   no       0
+  PANEL_REC_9A               0xffa4   0xffa4   0xffa4   no       0
+  PANEL_REC_C0               0xfdda   0xfdda   0xfdda   no       0
+  PANEL_REC_C1               0xfdee   0xfdee   0xfdee   no       0
+  PANEL_REC_C2               0xfe02   0xfe02   0xfe02   no       0
+  PANEL_REC_C3               0xfe16   0xfe16   0xfe16   no       0
+  PANEL_REC_C4               0xfe2a   0xfe2a   0xfe2a   no       0
+  PANEL_REC_C5               0xfe3e   0xfe3e   0xfe3e   no       0
+  PANEL_REC_CE               0xfef2   0xfef2   0xfef2   no       0
+  PANEL_REC_CF               0xff06   0xff06   0xff06   no       0
+  PANEL_REC_D0               0xff1a   0xff1a   0xff1a   no       0
+  PANEL_REC_D1               0xff2e   0xff2e   0xff2e   no       0
+  PANEL_REC_D2               0xff42   0xff42   0xff42   no       0
+  PANEL_REC_D3               0xff56   0xff56   0xff56   no       0
+  PANEL_REC_D4               0xff6a   0xff6a   0xff6a   no       0
+  PANEL_REC_D7               0xff7e   0xff7e   0xff7e   no       0
+  RHYTHM_PATTERN_SEL_A       0x33f1   0x348d   -        -        0
+  RHYTHM_PATTERN_TYPE        0x33f3   0x348f   -        -        0
+  names whose tree value differs from v10's or that code uses: 0

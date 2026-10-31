@@ -4113,162 +4113,162 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x961bd, 0x961c5	# stale bytes of an earlier write
+	# stale events of an earlier write between two typed pieces: they parse exactly as events
+	ev_bend	0, 0, 54
+	ev_at	87
+	ev_bend	0, 0, 64
+	ev_end
 	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Slot01 +0x7c47..+0x7c8d; bytes 16..23 of `PART_SETUP`
 	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.space 8
-	.ascii "  Whistle Min   ("	# bytes 0..29 of `TPAD_PAD`
-	.byte 0x02, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x07, 0x03, 0x0e, 0x00, 0x00, 0x00
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/03custm7.ic21", 0x9620b, 0x9620d	# stale bytes of an earlier write
-	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Slot14 +0x6cf8..+0x6d38; bytes 32..39 of `TPAD_PAD`
-	PART_SETUP 0x08, 127, 0x4e, 0x00, 0x20, 64, 40, 0, 89, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	.space 8
-	STREAM_HEADER 0, 0x1e1	# stale tail of an earlier write; same bytes as 03custm7 Slot03 +0x41df..+0x4d15
+	TPAD_PAD "  Whistle Min   ", 0x28, 0x02, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x07, 0x03, 0x0e, 0x00, 0x00, 0xad1	# stale `TPAD_PAD` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot01 +0x7c8d..
+	PART_SETUP 0x08, 127, 0x4e, 0x00, 0x20, 64, 40, 0, 89, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot01 +0x7c8d..
+	PART_SETUP 0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# stale tail of an earlier write; same bytes as 01ctmini Slot01 +0x7c8d..
+	.space 8	# stale tail of an earlier write; same bytes as 01ctmini Slot01 +0x7c8d..
+	STREAM_HEADER 0, 0x1e1	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01ctmini Slot01 +0x7c8d..
+	ev_beat	# stale tail of an earlier write; same bytes as 01ctmini Slot01 +0x7c8d..
+	# stale events of an earlier write, at an event boundary of the donor record: 01ctmini Slot01 +0x7c8d..
+	ev_note	0, 48, 53, 57, 0, 16
+	ev_note	1, 48, 87, 22, 1, 16
+	ev_at	10
+	ev_cc	0, 64, 127
+	ev_at	48
+	ev_note	0, 55, 63, 42, 0, 16
+	ev_at	74
+	ev_pc	1, 0x18, 0x1a, 0x20
+	ev_at	83
+	ev_note	1, 52, 78, 92, 0, 80
+	ev_at	84
+	ev_pc	1, 0x00, 0x08, 0x24
+	ev_at	88
+	ev_note	1, 55, 80, 86, 0, 80
+	ev_at	93
+	ev_note	1, 60, 81, 80, 0, 80
+	ev_at	95
+	ev_note	0, 64, 66, 16, 1, 16
+	ev_note	0, 67, 73, 95, 1, 16
 	ev_beat
-	ev_note 0, 48, 53, 57, 0, 16
-	ev_note 1, 48, 87, 22, 1, 16
-	ev_at 10
-	ev_cc 0, 64, 127
-	ev_at 48
-	ev_note 0, 55, 63, 42, 0, 16
-	ev_at 74
-	ev_pc 1, 0x18, 0x1a, 0x20
-	ev_at 83
-	ev_note 1, 52, 78, 92, 0, 80
-	ev_at 84
-	ev_pc 1, 0x00, 0x08, 0x24
-	ev_at 88
-	ev_note 1, 55, 80, 86, 0, 80
-	ev_at 93
-	ev_note 1, 60, 81, 80, 0, 80
-	ev_at 95
-	ev_note 0, 64, 66, 16, 1, 16
-	ev_note 0, 67, 73, 95, 1, 16
+	ev_note	0, 74, 59, 94, 0, 16
+	ev_note	0, 76, 62, 95, 1, 16
+	ev_at	2
+	ev_note	1, 64, 83, 83, 0, 80
+	ev_at	69
+	ev_pc	1, 0x18, 0x1a, 0x20
+	ev_at	82
+	ev_note	1, 52, 79, 105, 0, 80
+	ev_at	88
+	ev_note	1, 55, 81, 96, 0, 80
+	ev_at	93
+	ev_note	1, 60, 82, 99, 0, 80
+	ev_at	95
+	ev_note	0, 72, 58, 123, 0, 16
 	ev_beat
-	ev_note 0, 74, 59, 94, 0, 16
-	ev_note 0, 76, 62, 95, 1, 16
-	ev_at 2
-	ev_note 1, 64, 83, 83, 0, 80
-	ev_at 69
-	ev_pc 1, 0x18, 0x1a, 0x20
-	ev_at 82
-	ev_note 1, 52, 79, 105, 0, 80
-	ev_at 88
-	ev_note 1, 55, 81, 96, 0, 80
-	ev_at 93
-	ev_note 1, 60, 82, 99, 0, 80
-	ev_at 95
-	ev_note 0, 72, 58, 123, 0, 16
+	ev_note	1, 64, 84, 90, 0, 80
+	ev_at	60
+	ev_pc	1, 0x00, 0x50, 0x24
+	ev_at	86
+	ev_cc	0, 64, 0
 	ev_beat
-	ev_note 1, 64, 84, 90, 0, 80
-	ev_at 60
-	ev_pc 1, 0x00, 0x50, 0x24
-	ev_at 86
-	ev_cc 0, 64, 0
+	ev_note	0, 48, 54, 60, 0, 16
+	ev_note	1, 48, 82, 46, 1, 16
+	ev_at	25
+	ev_cc	0, 64, 127
+	ev_at	48
+	ev_note	0, 55, 57, 49, 0, 16
+	ev_at	81
+	ev_note	1, 52, 72, 93, 0, 80
+	ev_at	86
+	ev_note	1, 55, 74, 90, 0, 80
+	ev_at	91
+	ev_note	1, 60, 76, 93, 0, 80
 	ev_beat
-	ev_note 0, 48, 54, 60, 0, 16
-	ev_note 1, 48, 82, 46, 1, 16
-	ev_at 25
-	ev_cc 0, 64, 127
-	ev_at 48
-	ev_note 0, 55, 57, 49, 0, 16
-	ev_at 81
-	ev_note 1, 52, 72, 93, 0, 80
-	ev_at 86
-	ev_note 1, 55, 74, 90, 0, 80
-	ev_at 91
-	ev_note 1, 60, 76, 93, 0, 80
+	ev_note	0, 64, 67, 26, 1, 16
+	ev_note	1, 64, 78, 93, 0, 80
+	ev_at	1
+	ev_note	0, 79, 66, 80, 1, 16
+	ev_note	0, 76, 59, 77, 1, 16
+	ev_note	0, 74, 65, 92, 0, 16
+	ev_at	2
+	ev_pc	1, 0x59, 0x04, 0x20
+	ev_at	80
+	ev_note	1, 52, 78, 108, 0, 80
+	ev_at	87
+	ev_note	1, 55, 81, 97, 0, 80
+	ev_at	91
+	ev_note	1, 60, 82, 94, 0, 80
+	ev_at	95
+	ev_note	0, 72, 46, 115, 0, 16
+	ev_note	1, 64, 84, 85, 0, 80
 	ev_beat
-	ev_note 0, 64, 67, 26, 1, 16
-	ev_note 1, 64, 78, 93, 0, 80
-	ev_at 1
-	ev_note 0, 79, 66, 80, 1, 16
-	ev_note 0, 76, 59, 77, 1, 16
-	ev_note 0, 74, 65, 92, 0, 16
-	ev_at 2
-	ev_pc 1, 0x59, 0x04, 0x20
-	ev_at 80
-	ev_note 1, 52, 78, 108, 0, 80
-	ev_at 87
-	ev_note 1, 55, 81, 97, 0, 80
-	ev_at 91
-	ev_note 1, 60, 82, 94, 0, 80
-	ev_at 95
-	ev_note 0, 72, 46, 115, 0, 16
-	ev_note 1, 64, 84, 85, 0, 80
+	ev_at	81
+	ev_cc	0, 64, 0
 	ev_beat
-	ev_at 81
-	ev_cc 0, 64, 0
+	ev_note	0, 48, 46, 59, 0, 16
+	ev_note	1, 48, 86, 25, 1, 16
+	ev_at	20
+	ev_cc	0, 64, 127
+	ev_at	48
+	ev_note	0, 55, 71, 46, 0, 16
+	ev_at	82
+	ev_note	1, 52, 78, 93, 0, 80
+	ev_at	88
+	ev_note	1, 55, 80, 87, 0, 80
+	ev_at	93
+	ev_note	1, 60, 81, 81, 0, 80
+	ev_at	95
+	ev_note	0, 64, 62, 9, 1, 16
+	ev_note	0, 74, 65, 92, 0, 16
+	ev_note	0, 76, 61, 82, 1, 16
+	ev_note	0, 67, 67, 80, 1, 16
 	ev_beat
-	ev_note 0, 48, 46, 59, 0, 16
-	ev_note 1, 48, 86, 25, 1, 16
-	ev_at 20
-	ev_cc 0, 64, 127
-	ev_at 48
-	ev_note 0, 55, 71, 46, 0, 16
-	ev_at 82
-	ev_note 1, 52, 78, 93, 0, 80
-	ev_at 88
-	ev_note 1, 55, 80, 87, 0, 80
-	ev_at 93
-	ev_note 1, 60, 81, 81, 0, 80
-	ev_at 95
-	ev_note 0, 64, 62, 9, 1, 16
-	ev_note 0, 74, 65, 92, 0, 16
-	ev_note 0, 76, 61, 82, 1, 16
-	ev_note 0, 67, 67, 80, 1, 16
+	ev_at	2
+	ev_note	1, 64, 83, 84, 0, 80
+	ev_at	82
+	ev_note	1, 52, 79, 99, 0, 80
+	ev_at	88
+	ev_note	1, 55, 81, 93, 0, 80
+	ev_at	92
+	ev_note	1, 60, 82, 96, 0, 80
+	ev_at	95
+	ev_note	0, 72, 46, 119, 0, 16
 	ev_beat
-	ev_at 2
-	ev_note 1, 64, 83, 84, 0, 80
-	ev_at 82
-	ev_note 1, 52, 79, 99, 0, 80
-	ev_at 88
-	ev_note 1, 55, 81, 93, 0, 80
-	ev_at 92
-	ev_note 1, 60, 82, 96, 0, 80
-	ev_at 95
-	ev_note 0, 72, 46, 119, 0, 16
+	ev_note	1, 64, 84, 87, 0, 80
+	ev_at	78
+	ev_cc	0, 64, 0
 	ev_beat
-	ev_note 1, 64, 84, 87, 0, 80
-	ev_at 78
-	ev_cc 0, 64, 0
+	ev_note	0, 48, 58, 57, 0, 16
+	ev_note	1, 48, 88, 13, 1, 16
+	ev_at	25
+	ev_cc	0, 64, 127
+	ev_at	28
+	ev_pc	1, 0x11, 0x14, 0x20
+	ev_at	48
+	ev_note	0, 55, 68, 48, 0, 16
+	ev_at	58
+	ev_pc	1, 0x00, 0x08, 0x24
+	ev_at	95
+	ev_note	0, 64, 59, 59, 1, 16
+	ev_note	1, 64, 91, 70, 1, 80
 	ev_beat
-	ev_note 0, 48, 58, 57, 0, 16
-	ev_note 1, 48, 88, 13, 1, 16
-	ev_at 25
-	ev_cc 0, 64, 127
-	ev_at 28
-	ev_pc 1, 0x11, 0x14, 0x20
-	ev_at 48
-	ev_note 0, 55, 68, 48, 0, 16
-	ev_at 58
-	ev_pc 1, 0x00, 0x08, 0x24
-	ev_at 95
-	ev_note 0, 64, 59, 59, 1, 16
-	ev_note 1, 64, 91, 70, 1, 80
+	ev_at	1
+	ev_note	0, 74, 58, 96, 0, 16
+	ev_note	0, 76, 58, 50, 1, 16
+	ev_note	0, 79, 64, 53, 1, 16
+	ev_at	48
+	ev_note	1, 55, 77, 22, 1, 80
 	ev_beat
-	ev_at 1
-	ev_note 0, 74, 58, 96, 0, 16
-	ev_note 0, 76, 58, 50, 1, 16
-	ev_note 0, 79, 64, 53, 1, 16
-	ev_at 48
-	ev_note 1, 55, 77, 22, 1, 80
-	ev_beat
-	ev_at 1
-	ev_note 0, 72, 44, 83, 0, 16
-	ev_at 2
-	ev_note 1, 60, 88, 99, 0, 80
-	ev_at 51
-	ev_note 1, 52, 70, 51, 0, 80
-	ev_at 84
-	ev_pc 1, 0x00, 0x60, 0x24
-	ev_at 91
-	ev_cc 0, 64, 0
+	ev_at	1
+	ev_note	0, 72, 44, 83, 0, 16
+	ev_at	2
+	ev_note	1, 60, 88, 99, 0, 80
+	ev_at	51
+	ev_note	1, 52, 70, 51, 0, 80
+	ev_at	84
+	ev_pc	1, 0x00, 0x60, 0x24
+	ev_at	91
+	ev_cc	0, 64, 0
 	ev_end
-	STREAM_HEADER 1, 0x94
+	STREAM_HEADER 1, 0x94	# stale tail of an earlier write; same bytes as 01ctmini Slot00 +0x5668..+0x5fb9
 	ev_beat
 	ev_note 0, 44, 87, 34, 0, 0
 	ev_at 1

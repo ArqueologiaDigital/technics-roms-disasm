@@ -45,8 +45,10 @@ Bitstream (mirrors SLIDE4K except for the window/match geometry):
       never examined and may be nonzero (block 1 below ends with flag byte
       0xA0 of which only 1 element is consumed).
 
-Known SLIDE8K blocks (all in table_data/includes/icons_to_strings.bin, which
-is included at ROM 0x944D78; each decompresses to exactly 0x9000 bytes of
+Known SLIDE8K blocks (all in the ROM range 0x944D78.. that the deleted blob
+table_data/includes/icons_to_strings.bin held -- "file off" is into that range,
+which --all reads from original_ROMs/kn5000_table_data.rom through
+scripts/build/retired_blobs.py; each decompresses to exactly 0x9000 bytes of
 multilingual help/hint text — pointer table + string pool):
 
     file off  ROM addr   stream end  content
@@ -81,8 +83,8 @@ MAGIC = b"SLIDE8K\x00"
 # Paths for --all mode
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-ICONS_TO_STRINGS = os.path.join(
-    PROJECT_DIR, "table_data", "includes", "icons_to_strings.bin")
+sys.path.insert(0, SCRIPT_DIR)
+import retired_blobs  # noqa: E402
 
 # (file_offset, ROM address, language tag) of the six factory blocks
 KNOWN_BLOCKS = [
@@ -216,18 +218,21 @@ def main():
     ap.add_argument("--expected-size", type=lambda s: int(s, 0),
                     help="fail unless the payload is exactly this size")
     ap.add_argument("--all", action="store_true",
-                    help="extract all six known blocks from "
-                         "table_data/includes/icons_to_strings.bin")
-    ap.add_argument("--bin", default=ICONS_TO_STRINGS,
-                    help="override the source file for --all")
+                    help="extract all six known blocks from the table-data "
+                         "ROM range 0x944D78.. (the old icons_to_strings.bin)")
+    ap.add_argument("--bin",
+                    help="override the source file for --all (offsets as above)")
     ap.add_argument("--outdir", default=".",
                     help="output directory for --all (default: cwd)")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
 
     if args.all:
-        with open(args.bin, "rb") as f:
-            data = f.read()
+        if args.bin:
+            with open(args.bin, "rb") as f:
+                data = f.read()
+        else:
+            data = retired_blobs.read("icons_to_strings")
         os.makedirs(args.outdir, exist_ok=True)
         for idx, (off, rom, lang) in enumerate(KNOWN_BLOCKS):
             stem = f"slide8k_{idx:02d}_0x{rom:06x}_{lang}"

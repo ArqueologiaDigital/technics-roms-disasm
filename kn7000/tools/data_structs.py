@@ -321,7 +321,7 @@ def macro_lines(g):
         if vararg(g, f):
             out.append(f"\t{DIRECTIVE[f.sub]}\t\\{f.name}")
         elif f.kind in ("bytes", "text", "array"):
-            out.append(f"\t.ascii\t\\{f.name}")
+            out.append(f'\t.ascii\t"\\{f.name}"')     # kn7asm strips a quoted argument's quotes, as GNU as does
         else:
             out.append(f"\t{DIRECTIVE[f.width]}\t\\{f.name}")
     out += [".endm", ""]

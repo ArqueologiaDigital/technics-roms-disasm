@@ -1183,204 +1183,204 @@
 	ev_at 72
 	ev_note 1, 52, 102, 15, 0, 1
 	ev_end
-	.byte 0x0d, 0x00, 0x0a	# bytes 0..2 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4b6ab, 0x4b6bc	# stale bytes of an earlier write
-	.byte 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x36bc..+0x37fe; bytes 5..5 of `ev_note`
-	ev_at 8
-	ev_note 3, 72, 121, 30, 0, 1
-	ev_at 8
-	ev_note 4, 48, 93, 49, 0, 1
-	ev_at 52
-	ev_note 1, 51, 104, 46, 0, 1
-	ev_at 52
-	ev_note 2, 55, 89, 96, 0, 1
-	ev_note 2, 60, 91, 96, 0, 1
-	ev_note 2, 63, 99, 96, 0, 1
-	ev_at 52
-	ev_note 3, 67, 114, 32, 0, 1
-	ev_at 52
-	ev_note 4, 51, 78, 51, 0, 1
+	STREAM_HEADER 13, 0xaa6	# stale `STREAM_HEADER` of an earlier write, other values than the donor's line at the same place: 01custm5 Slot02 +0x36ab..
+	ev_beat	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x36ab..
+	ev_cc 2, 11, 110	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x36ab..
+	ev_cc 3, 11, 100	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x36ab..
+	ev_cc 4, 11, 100	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x36ab..
+	ev_at 8	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x36ab..
+	# stale events of an earlier write, at an event boundary of the donor record: 01custm5 Slot02 +0x36ab..
+	ev_note	1, 36, 107, 100, 2, 1
+	ev_at	8
+	ev_note	3, 72, 121, 30, 0, 1
+	ev_at	8
+	ev_note	4, 48, 93, 49, 0, 1
+	ev_at	52
+	ev_note	1, 51, 104, 46, 0, 1
+	ev_at	52
+	ev_note	2, 55, 89, 96, 0, 1
+	ev_note	2, 60, 91, 96, 0, 1
+	ev_note	2, 63, 99, 96, 0, 1
+	ev_at	52
+	ev_note	3, 67, 114, 32, 0, 1
+	ev_at	52
+	ev_note	4, 51, 78, 51, 0, 1
 	ev_beat
-	ev_note 6, 67, 101, 80, 0, 1
-	ev_note 5, 67, 100, 79, 0, 1
-	ev_at 5
-	ev_note 3, 63, 121, 38, 0, 1
-	ev_at 5
-	ev_note 4, 72, 100, 52, 0, 1
-	ev_note 4, 75, 102, 52, 0, 1
-	ev_note 4, 79, 96, 52, 0, 1
-	ev_note 4, 55, 87, 47, 0, 1
-	ev_at 52
-	ev_note 1, 51, 99, 46, 0, 1
-	ev_at 52
-	ev_note 2, 60, 90, 30, 0, 1
-	ev_note 2, 55, 87, 30, 0, 1
-	ev_note 2, 63, 97, 29, 0, 1
-	ev_at 52
-	ev_note 3, 67, 114, 18, 0, 1
-	ev_at 52
-	ev_note 4, 60, 78, 54, 0, 1
+	ev_note	6, 67, 101, 80, 0, 1
+	ev_note	5, 67, 100, 79, 0, 1
+	ev_at	5
+	ev_note	3, 63, 121, 38, 0, 1
+	ev_at	5
+	ev_note	4, 72, 100, 52, 0, 1
+	ev_note	4, 75, 102, 52, 0, 1
+	ev_note	4, 79, 96, 52, 0, 1
+	ev_note	4, 55, 87, 47, 0, 1
+	ev_at	52
+	ev_note	1, 51, 99, 46, 0, 1
+	ev_at	52
+	ev_note	2, 60, 90, 30, 0, 1
+	ev_note	2, 55, 87, 30, 0, 1
+	ev_note	2, 63, 97, 29, 0, 1
+	ev_at	52
+	ev_note	3, 67, 114, 18, 0, 1
+	ev_at	52
+	ev_note	4, 60, 78, 54, 0, 1
 	ev_beat
-	ev_note 6, 72, 107, 86, 0, 1
-	ev_note 5, 72, 109, 90, 0, 1
-	ev_at 3
-	ev_note 3, 72, 117, 15, 0, 1
-	ev_at 3
-	ev_note 4, 51, 93, 48, 0, 1
-	ev_at 29
-	ev_note 3, 72, 116, 14, 0, 1
-	ev_at 52
-	ev_note 1, 48, 97, 19, 0, 1
-	ev_at 52
-	ev_note 2, 60, 87, 27, 0, 1
-	ev_note 2, 63, 96, 29, 0, 1
-	ev_note 2, 55, 87, 29, 0, 1
-	ev_at 52
-	ev_note 3, 72, 111, 24, 0, 1
-	ev_at 52
-	ev_note 4, 55, 87, 46, 0, 1
+	ev_note	6, 72, 107, 86, 0, 1
+	ev_note	5, 72, 109, 90, 0, 1
+	ev_at	3
+	ev_note	3, 72, 117, 15, 0, 1
+	ev_at	3
+	ev_note	4, 51, 93, 48, 0, 1
+	ev_at	29
+	ev_note	3, 72, 116, 14, 0, 1
+	ev_at	52
+	ev_note	1, 48, 97, 19, 0, 1
+	ev_at	52
+	ev_note	2, 60, 87, 27, 0, 1
+	ev_note	2, 63, 96, 29, 0, 1
+	ev_note	2, 55, 87, 29, 0, 1
+	ev_at	52
+	ev_note	3, 72, 111, 24, 0, 1
+	ev_at	52
+	ev_note	4, 55, 87, 46, 0, 1
 	ev_beat
-	ev_note 6, 75, 102, 79, 0, 1
-	ev_note 5, 75, 104, 76, 0, 1
-	ev_at 4
-	ev_note 1, 48, 98, 11, 0, 1
-	ev_at 4
-	ev_note 4, 72, 102, 47, 0, 1
-	ev_note 4, 79, 93, 48, 0, 1
-	ev_note 4, 75, 102, 47, 0, 1
-	ev_note 4, 60, 87, 48, 0, 1
-	ev_at 29
-	ev_note 1, 48, 85, 20, 0, 1
-	ev_at 52
-	ev_note 2, 60, 95, 30, 0, 1
-	ev_note 2, 55, 90, 32, 0, 1
-	ev_note 2, 63, 97, 30, 0, 1
-	ev_at 52
-	ev_note 3, 67, 114, 26, 0, 1
-	ev_at 52
-	ev_note 4, 63, 87, 51, 0, 1
-	ev_at 76
-	ev_note 1, 48, 93, 20, 0, 1
+	ev_note	6, 75, 102, 79, 0, 1
+	ev_note	5, 75, 104, 76, 0, 1
+	ev_at	4
+	ev_note	1, 48, 98, 11, 0, 1
+	ev_at	4
+	ev_note	4, 72, 102, 47, 0, 1
+	ev_note	4, 79, 93, 48, 0, 1
+	ev_note	4, 75, 102, 47, 0, 1
+	ev_note	4, 60, 87, 48, 0, 1
+	ev_at	29
+	ev_note	1, 48, 85, 20, 0, 1
+	ev_at	52
+	ev_note	2, 60, 95, 30, 0, 1
+	ev_note	2, 55, 90, 32, 0, 1
+	ev_note	2, 63, 97, 30, 0, 1
+	ev_at	52
+	ev_note	3, 67, 114, 26, 0, 1
+	ev_at	52
+	ev_note	4, 63, 87, 51, 0, 1
+	ev_at	76
+	ev_note	1, 48, 93, 20, 0, 1
 	ev_beat
-	ev_note 6, 79, 90, 16, 2, 1
-	ev_note 5, 79, 99, 23, 2, 1
-	ev_at 4
-	.byte 0x91, 0x2b	# bytes 0..1 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4b7fe, 0x4b7ff	# stale bytes of an earlier write
-	.byte 0x36, 0x01, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x37ff..+0x39af; bytes 3..5 of `ev_note`
-	ev_at 4
-	ev_note 3, 72, 118, 26, 0, 1
-	ev_at 4
-	ev_note 4, 67, 90, 50, 0, 1
-	ev_at 52
-	ev_note 1, 55, 83, 29, 0, 1
-	ev_at 52
-	ev_note 2, 55, 87, 97, 0, 1
-	ev_note 2, 63, 99, 97, 0, 1
-	ev_note 2, 60, 91, 97, 0, 1
-	ev_at 52
-	ev_note 3, 67, 112, 27, 0, 1
-	ev_at 52
-	ev_note 4, 60, 86, 52, 0, 1
+	ev_note	6, 79, 90, 16, 2, 1
+	ev_note	5, 79, 99, 23, 2, 1
+	ev_at	4
+	ev_note	1, 43, 114, 54, 1, 1
+	ev_at	4
+	ev_note	3, 72, 118, 26, 0, 1
+	ev_at	4
+	ev_note	4, 67, 90, 50, 0, 1
+	ev_at	52
+	ev_note	1, 55, 83, 29, 0, 1
+	ev_at	52
+	ev_note	2, 55, 87, 97, 0, 1
+	ev_note	2, 63, 99, 97, 0, 1
+	ev_note	2, 60, 91, 97, 0, 1
+	ev_at	52
+	ev_note	3, 67, 112, 27, 0, 1
+	ev_at	52
+	ev_note	4, 60, 86, 52, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 51, 75, 9, 0, 1
-	ev_at 4
-	ev_note 3, 63, 120, 33, 0, 1
-	ev_at 4
-	ev_note 4, 72, 102, 49, 0, 1
-	ev_note 4, 79, 98, 50, 0, 1
-	ev_note 4, 75, 105, 49, 0, 1
-	ev_note 4, 63, 90, 42, 0, 1
-	ev_at 29
-	ev_note 1, 51, 90, 22, 0, 1
-	ev_at 53
-	ev_note 2, 55, 87, 33, 0, 1
-	ev_note 2, 63, 93, 31, 0, 1
-	ev_note 2, 60, 88, 31, 0, 1
-	ev_at 53
-	ev_note 3, 67, 114, 17, 0, 1
-	ev_at 53
-	ev_note 4, 60, 89, 53, 0, 1
-	ev_at 76
-	ev_note 1, 48, 87, 19, 0, 1
+	ev_at	4
+	ev_note	1, 51, 75, 9, 0, 1
+	ev_at	4
+	ev_note	3, 63, 120, 33, 0, 1
+	ev_at	4
+	ev_note	4, 72, 102, 49, 0, 1
+	ev_note	4, 79, 98, 50, 0, 1
+	ev_note	4, 75, 105, 49, 0, 1
+	ev_note	4, 63, 90, 42, 0, 1
+	ev_at	29
+	ev_note	1, 51, 90, 22, 0, 1
+	ev_at	53
+	ev_note	2, 55, 87, 33, 0, 1
+	ev_note	2, 63, 93, 31, 0, 1
+	ev_note	2, 60, 88, 31, 0, 1
+	ev_at	53
+	ev_note	3, 67, 114, 17, 0, 1
+	ev_at	53
+	ev_note	4, 60, 89, 53, 0, 1
+	ev_at	76
+	ev_note	1, 48, 87, 19, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 31, 106, 39, 1, 1
-	ev_at 4
-	ev_note 3, 72, 112, 11, 0, 1
-	ev_at 4
-	ev_note 4, 55, 90, 49, 0, 1
-	ev_at 29
-	ev_note 1, 48, 66, 8, 0, 1
-	ev_at 29
-	ev_note 3, 72, 104, 13, 0, 1
-	ev_at 53
-	ev_note 1, 48, 82, 19, 0, 1
-	ev_at 53
-	ev_note 2, 55, 87, 33, 0, 1
-	ev_note 2, 60, 93, 30, 0, 1
-	ev_note 2, 63, 97, 30, 0, 1
-	ev_at 53
-	ev_note 3, 72, 108, 20, 0, 1
-	ev_at 53
-	ev_note 4, 60, 87, 52, 0, 1
-	ev_at 76
-	ev_note 4, 72, 98, 24, 0, 1
-	ev_note 4, 75, 103, 24, 0, 1
-	ev_note 4, 79, 95, 24, 0, 1
+	ev_at	4
+	ev_note	1, 31, 106, 39, 1, 1
+	ev_at	4
+	ev_note	3, 72, 112, 11, 0, 1
+	ev_at	4
+	ev_note	4, 55, 90, 49, 0, 1
+	ev_at	29
+	ev_note	1, 48, 66, 8, 0, 1
+	ev_at	29
+	ev_note	3, 72, 104, 13, 0, 1
+	ev_at	53
+	ev_note	1, 48, 82, 19, 0, 1
+	ev_at	53
+	ev_note	2, 55, 87, 33, 0, 1
+	ev_note	2, 60, 93, 30, 0, 1
+	ev_note	2, 63, 97, 30, 0, 1
+	ev_at	53
+	ev_note	3, 72, 108, 20, 0, 1
+	ev_at	53
+	ev_note	4, 60, 87, 52, 0, 1
+	ev_at	76
+	ev_note	4, 72, 98, 24, 0, 1
+	ev_note	4, 75, 103, 24, 0, 1
+	ev_note	4, 79, 95, 24, 0, 1
 	ev_beat
-	ev_note 6, 75, 93, 91, 0, 1
-	ev_note 5, 75, 104, 93, 0, 1
-	ev_at 4
-	ev_note 1, 48, 79, 20, 0, 1
-	ev_at 4
-	ev_note 4, 72, 96, 49, 0, 1
-	ev_note 4, 75, 102, 49, 0, 1
-	ev_note 4, 79, 95, 49, 0, 1
-	ev_note 4, 51, 86, 28, 0, 1
-	ev_at 27
-	ev_note 4, 55, 87, 29, 0, 1
-	ev_at 53
-	ev_note 1, 48, 83, 17, 0, 1
-	ev_at 53
-	ev_note 2, 55, 87, 31, 0, 1
-	ev_note 2, 60, 93, 30, 0, 1
-	ev_note 2, 63, 99, 30, 0, 1
-	ev_at 53
-	ev_note 3, 67, 114, 26, 0, 1
-	ev_at 53
-	ev_note 4, 79, 96, 47, 0, 1
-	ev_note 4, 75, 105, 44, 0, 1
-	ev_note 4, 72, 102, 44, 0, 1
-	ev_note 4, 60, 89, 57, 0, 1
+	ev_note	6, 75, 93, 91, 0, 1
+	ev_note	5, 75, 104, 93, 0, 1
+	ev_at	4
+	ev_note	1, 48, 79, 20, 0, 1
+	ev_at	4
+	ev_note	4, 72, 96, 49, 0, 1
+	ev_note	4, 75, 102, 49, 0, 1
+	ev_note	4, 79, 95, 49, 0, 1
+	ev_note	4, 51, 86, 28, 0, 1
+	ev_at	27
+	ev_note	4, 55, 87, 29, 0, 1
+	ev_at	53
+	ev_note	1, 48, 83, 17, 0, 1
+	ev_at	53
+	ev_note	2, 55, 87, 31, 0, 1
+	ev_note	2, 60, 93, 30, 0, 1
+	ev_note	2, 63, 99, 30, 0, 1
+	ev_at	53
+	ev_note	3, 67, 114, 26, 0, 1
+	ev_at	53
+	ev_note	4, 79, 96, 47, 0, 1
+	ev_note	4, 75, 105, 44, 0, 1
+	ev_note	4, 72, 102, 44, 0, 1
+	ev_note	4, 60, 89, 57, 0, 1
 	ev_beat
-	ev_note 6, 74, 76, 91, 6, 1
-	ev_note 5, 74, 100, 80, 6, 1
-	ev_at 4
-	ev_note 1, 31, 107, 10, 1, 1
-	ev_at 4
-	ev_note 3, 63, 120, 10, 0, 1
-	ev_at 4
-	ev_note 4, 48, 90, 10, 0, 1
-	ev_at 14
-	ev_note 4, 43, 74, 44, 0, 1
-	ev_note 4, 55, 73, 4, 0, 1
-	ev_at 53
-	ev_note 2, 50, 89, 96, 0, 1
-	ev_note 2, 55, 90, 96, 0, 1
-	ev_note 2, 59, 97, 96, 0, 1
-	ev_at 53
-	ev_note 3, 62, 118, 25, 0, 1
-	ev_at 53
-	ev_note 4, 47, 90, 52, 0, 1
-	ev_at 76
-	.byte 0x91, 0x2f	# bytes 0..1 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4b9af, 0x4b9b5	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	ev_note	6, 74, 76, 91, 6, 1
+	ev_note	5, 74, 100, 80, 6, 1
+	ev_at	4
+	ev_note	1, 31, 107, 10, 1, 1
+	ev_at	4
+	ev_note	3, 63, 120, 10, 0, 1
+	ev_at	4
+	ev_note	4, 48, 90, 10, 0, 1
+	ev_at	14
+	ev_note	4, 43, 74, 44, 0, 1
+	ev_note	4, 55, 73, 4, 0, 1
+	ev_at	53
+	ev_note	2, 50, 89, 96, 0, 1
+	ev_note	2, 55, 90, 96, 0, 1
+	ev_note	2, 59, 97, 96, 0, 1
+	ev_at	53
+	ev_note	3, 62, 118, 25, 0, 1
+	ev_at	53
+	ev_note	4, 47, 90, 52, 0, 1
+	ev_at	76
+	ev_note	1, 47, 97, 19, 0, 1
+	ev_beat
+	ev_at	4
 	ev_note	3, 55, 106, 46, 0, 1
 	ev_at	4
 	ev_note	4, 74, 96, 52, 0, 1
@@ -1389,508 +1389,493 @@
 	ev_note	4, 50, 91, 43, 0, 1
 	ev_at	28
 	ev_note	1, 47, 69, 8, 0, 1
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4b9db, 0x4b9e0	# stale bytes of an earlier write
-	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x39e0..+0x3a73; bytes 4..5 of `ev_note`
-	ev_at 53
-	ev_note 2, 55, 89, 33, 0, 1
-	ev_note 2, 50, 88, 31, 0, 1
-	ev_note 2, 59, 97, 30, 0, 1
-	ev_at 53
-	ev_note 3, 62, 116, 19, 0, 1
-	ev_at 53
-	ev_note 4, 55, 87, 46, 0, 1
+	ev_at	53
+	ev_note	1, 47, 96, 22, 0, 1
+	ev_at	53
+	ev_note	2, 55, 89, 33, 0, 1
+	ev_note	2, 50, 88, 31, 0, 1
+	ev_note	2, 59, 97, 30, 0, 1
+	ev_at	53
+	ev_note	3, 62, 116, 19, 0, 1
+	ev_at	53
+	ev_note	4, 55, 87, 46, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 43, 69, 8, 0, 1
-	ev_at 4
-	ev_note 3, 67, 111, 11, 0, 1
-	ev_at 4
-	ev_note 4, 59, 90, 49, 0, 1
-	ev_at 28
-	ev_note 1, 43, 85, 22, 0, 1
-	ev_at 28
-	ev_note 3, 67, 105, 14, 0, 1
-	ev_at 53
-	ev_note 2, 50, 85, 35, 0, 1
-	ev_note 2, 55, 87, 33, 0, 1
-	ev_note 2, 59, 98, 33, 0, 1
-	ev_at 53
-	ev_note 3, 67, 108, 24, 0, 1
-	ev_at 53
-	ev_note 4, 55, 80, 49, 0, 1
-	ev_at 77
-	ev_note 1, 50, 71, 9, 0, 1
+	ev_at	4
+	ev_note	1, 43, 69, 8, 0, 1
+	ev_at	4
+	ev_note	3, 67, 111, 11, 0, 1
+	ev_at	4
+	ev_note	4, 59, 90, 49, 0, 1
+	ev_at	28
+	ev_note	1, 43, 85, 22, 0, 1
+	ev_at	28
+	ev_note	3, 67, 105, 14, 0, 1
+	ev_at	53
+	ev_note	2, 50, 85, 35, 0, 1
+	ev_note	2, 55, 87, 33, 0, 1
+	ev_note	2, 59, 98, 33, 0, 1
+	ev_at	53
+	ev_note	3, 67, 108, 24, 0, 1
+	ev_at	53
+	ev_note	4, 55, 80, 49, 0, 1
+	ev_at	77
+	ev_note	1, 50, 71, 9, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 50, 87, 24, 0, 1
-	ev_at 4
-	ev_note 4, 71, 103, 51, 0, 1
-	ev_note 4, 74, 96, 52, 0, 1
-	ev_note 4, 67, 104, 48, 0, 1
-	ev_note 4, 62, 88, 49, 0, 1
-	ev_at 52
-	.byte 0x91, 0x2f	# bytes 0..1 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4ba73, 0x4ba75	# stale bytes of an earlier write
-	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x3a75..+0x3a9b; bytes 4..5 of `ev_note`
-	ev_at 52
-	ev_note 2, 50, 85, 37, 0, 1
-	ev_note 2, 55, 90, 36, 0, 1
-	ev_note 2, 59, 99, 34, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 28, 0, 1
-	ev_at 52
-	ev_note 4, 59, 85, 55, 0, 1
-	ev_at 77
-	.byte 0x91, 0x2f	# bytes 0..1 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4ba9b, 0x4ba9d	# stale bytes of an earlier write
-	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x3a9d..+0x3b68; bytes 4..5 of `ev_note`
+	ev_at	4
+	ev_note	1, 50, 87, 24, 0, 1
+	ev_at	4
+	ev_note	4, 71, 103, 51, 0, 1
+	ev_note	4, 74, 96, 52, 0, 1
+	ev_note	4, 67, 104, 48, 0, 1
+	ev_note	4, 62, 88, 49, 0, 1
+	ev_at	52
+	ev_note	1, 47, 90, 14, 0, 1
+	ev_at	52
+	ev_note	2, 50, 85, 37, 0, 1
+	ev_note	2, 55, 90, 36, 0, 1
+	ev_note	2, 59, 99, 34, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 28, 0, 1
+	ev_at	52
+	ev_note	4, 59, 85, 55, 0, 1
+	ev_at	77
+	ev_note	1, 47, 80, 19, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 38, 109, 38, 1, 1
-	ev_at 4
-	ev_note 3, 59, 117, 37, 0, 1
-	ev_at 4
-	ev_note 4, 62, 69, 101, 0, 1
-	ev_at 28
-	ev_note 1, 43, 70, 9, 0, 1
-	ev_at 52
-	ev_note 1, 43, 76, 23, 0, 1
-	ev_at 52
-	ev_note 2, 55, 90, 96, 0, 1
-	ev_note 2, 59, 99, 96, 0, 1
-	ev_note 2, 50, 88, 96, 0, 1
-	ev_at 52
-	ev_note 3, 62, 120, 28, 0, 1
-	ev_at 52
-	ev_note 4, 67, 83, 47, 0, 1
+	ev_at	4
+	ev_note	1, 38, 109, 38, 1, 1
+	ev_at	4
+	ev_note	3, 59, 117, 37, 0, 1
+	ev_at	4
+	ev_note	4, 62, 69, 101, 0, 1
+	ev_at	28
+	ev_note	1, 43, 70, 9, 0, 1
+	ev_at	52
+	ev_note	1, 43, 76, 23, 0, 1
+	ev_at	52
+	ev_note	2, 55, 90, 96, 0, 1
+	ev_note	2, 59, 99, 96, 0, 1
+	ev_note	2, 50, 88, 96, 0, 1
+	ev_at	52
+	ev_note	3, 62, 120, 28, 0, 1
+	ev_at	52
+	ev_note	4, 67, 83, 47, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 43, 87, 18, 0, 1
-	ev_at 4
-	ev_note 3, 55, 108, 43, 0, 1
-	ev_at 4
-	ev_note 4, 67, 106, 45, 0, 1
-	ev_note 4, 74, 96, 46, 0, 1
-	ev_note 4, 71, 103, 45, 0, 1
-	ev_note 4, 59, 78, 49, 0, 1
-	ev_at 52
-	ev_note 1, 43, 78, 12, 0, 1
-	ev_at 52
-	ev_note 2, 50, 87, 31, 0, 1
-	ev_note 2, 55, 89, 30, 0, 1
-	ev_note 2, 59, 97, 30, 0, 1
-	ev_at 52
-	ev_note 3, 62, 117, 17, 0, 1
-	ev_at 52
-	ev_note 4, 62, 79, 50, 0, 1
-	ev_at 77
-	ev_note 1, 43, 81, 20, 0, 1
-	ev_at 77
-	ev_note 4, 67, 106, 22, 0, 1
-	ev_note 4, 74, 98, 24, 0, 1
-	ev_note 4, 71, 105, 22, 0, 1
+	ev_at	4
+	ev_note	1, 43, 87, 18, 0, 1
+	ev_at	4
+	ev_note	3, 55, 108, 43, 0, 1
+	ev_at	4
+	ev_note	4, 67, 106, 45, 0, 1
+	ev_note	4, 74, 96, 46, 0, 1
+	ev_note	4, 71, 103, 45, 0, 1
+	ev_note	4, 59, 78, 49, 0, 1
+	ev_at	52
+	ev_note	1, 43, 78, 12, 0, 1
+	ev_at	52
+	ev_note	2, 50, 87, 31, 0, 1
+	ev_note	2, 55, 89, 30, 0, 1
+	ev_note	2, 59, 97, 30, 0, 1
+	ev_at	52
+	ev_note	3, 62, 117, 17, 0, 1
+	ev_at	52
+	ev_note	4, 62, 79, 50, 0, 1
+	ev_at	77
+	ev_note	1, 43, 81, 20, 0, 1
+	ev_at	77
+	ev_note	4, 67, 106, 22, 0, 1
+	ev_note	4, 74, 98, 24, 0, 1
+	ev_note	4, 71, 105, 22, 0, 1
 	ev_beat
-	ev_at 5
-	ev_note 1, 35, 103, 31, 1, 1
-	ev_at 5
-	ev_note 3, 67, 111, 9, 0, 1
-	ev_at 5
-	ev_note 4, 55, 87, 51, 0, 1
-	ev_at 28
-	.byte 0x91, 0x2f, 0x61	# bytes 0..2 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4bb68, 0x4bb69	# stale bytes of an earlier write
-	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x3b69..+0x3c01; bytes 4..5 of `ev_note`
-	ev_at 28
-	ev_note 3, 67, 110, 13, 0, 1
-	ev_at 52
-	ev_note 2, 50, 86, 33, 0, 1
-	ev_note 2, 55, 88, 31, 0, 1
-	ev_note 2, 59, 100, 30, 0, 1
-	ev_at 52
-	ev_note 3, 67, 105, 17, 0, 1
-	ev_at 52
-	ev_note 4, 67, 103, 44, 0, 1
-	ev_note 4, 74, 95, 44, 0, 1
-	ev_note 4, 71, 104, 44, 0, 1
-	ev_note 4, 50, 87, 23, 0, 1
-	ev_at 77
-	ev_note 1, 43, 90, 19, 0, 1
-	ev_at 77
-	ev_note 4, 55, 78, 27, 0, 1
+	ev_at	5
+	ev_note	1, 35, 103, 31, 1, 1
+	ev_at	5
+	ev_note	3, 67, 111, 9, 0, 1
+	ev_at	5
+	ev_note	4, 55, 87, 51, 0, 1
+	ev_at	28
+	ev_note	1, 47, 97, 19, 0, 1
+	ev_at	28
+	ev_note	3, 67, 110, 13, 0, 1
+	ev_at	52
+	ev_note	2, 50, 86, 33, 0, 1
+	ev_note	2, 55, 88, 31, 0, 1
+	ev_note	2, 59, 100, 30, 0, 1
+	ev_at	52
+	ev_note	3, 67, 105, 17, 0, 1
+	ev_at	52
+	ev_note	4, 67, 103, 44, 0, 1
+	ev_note	4, 74, 95, 44, 0, 1
+	ev_note	4, 71, 104, 44, 0, 1
+	ev_note	4, 50, 87, 23, 0, 1
+	ev_at	77
+	ev_note	1, 43, 90, 19, 0, 1
+	ev_at	77
+	ev_note	4, 55, 78, 27, 0, 1
 	ev_beat
-	ev_at 5
-	ev_note 4, 47, 85, 55, 0, 1
-	ev_at 28
-	ev_note 1, 43, 94, 16, 0, 1
-	ev_at 52
-	ev_note 2, 50, 85, 28, 0, 1
-	ev_note 2, 55, 88, 30, 0, 1
-	ev_note 2, 59, 96, 28, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 25, 0, 1
-	ev_at 52
-	ev_note 4, 74, 99, 41, 0, 1
-	ev_note 4, 67, 102, 38, 0, 1
-	ev_note 4, 71, 105, 41, 0, 1
-	ev_note 4, 50, 90, 42, 0, 1
-	ev_at 77
-	ev_note 1, 43, 97, 24, 0, 1
+	ev_at	5
+	ev_note	4, 47, 85, 55, 0, 1
+	ev_at	28
+	ev_note	1, 43, 94, 16, 0, 1
+	ev_at	52
+	ev_note	2, 50, 85, 28, 0, 1
+	ev_note	2, 55, 88, 30, 0, 1
+	ev_note	2, 59, 96, 28, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 25, 0, 1
+	ev_at	52
+	ev_note	4, 74, 99, 41, 0, 1
+	ev_note	4, 67, 102, 38, 0, 1
+	ev_note	4, 71, 105, 41, 0, 1
+	ev_note	4, 50, 90, 42, 0, 1
+	ev_at	77
+	ev_note	1, 43, 97, 24, 0, 1
 	ev_beat
-	ev_at 5
-	.byte 0x91, 0x1f, 0x6b	# bytes 0..2 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4bc01, 0x4bc17	# stale bytes of an earlier write
-	.byte 0x00, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x3c17..+0x3eb1; bytes 4..5 of `ev_note`
-	ev_at 52
-	ev_note 2, 50, 89, 96, 0, 1
-	ev_note 2, 55, 91, 96, 0, 1
-	ev_note 2, 59, 99, 96, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 31, 0, 1
-	ev_at 52
-	ev_note 4, 47, 78, 49, 0, 1
+	ev_at	5
+	ev_note	1, 31, 107, 100, 2, 1
+	ev_at	5
+	ev_note	3, 67, 121, 30, 0, 1
+	ev_at	5
+	ev_note	4, 43, 93, 49, 0, 1
+	ev_at	52
+	ev_note	1, 47, 104, 44, 0, 1
+	ev_at	52
+	ev_note	2, 50, 89, 96, 0, 1
+	ev_note	2, 55, 91, 96, 0, 1
+	ev_note	2, 59, 99, 96, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 31, 0, 1
+	ev_at	52
+	ev_note	4, 47, 78, 49, 0, 1
 	ev_beat
-	ev_note 6, 67, 99, 87, 0, 1
-	ev_note 5, 67, 99, 95, 0, 1
-	ev_at 5
-	ev_note 3, 59, 121, 37, 0, 1
-	ev_at 5
-	ev_note 4, 67, 100, 52, 0, 1
-	ev_note 4, 71, 102, 52, 0, 1
-	ev_note 4, 74, 96, 52, 0, 1
-	ev_note 4, 50, 87, 47, 0, 1
-	ev_at 52
-	ev_note 1, 47, 99, 46, 0, 1
-	ev_at 52
-	ev_note 2, 55, 90, 30, 0, 1
-	ev_note 2, 50, 87, 30, 0, 1
-	ev_note 2, 59, 97, 28, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 19, 0, 1
-	ev_at 52
-	ev_note 4, 55, 78, 53, 0, 1
+	ev_note	6, 67, 99, 87, 0, 1
+	ev_note	5, 67, 99, 95, 0, 1
+	ev_at	5
+	ev_note	3, 59, 121, 37, 0, 1
+	ev_at	5
+	ev_note	4, 67, 100, 52, 0, 1
+	ev_note	4, 71, 102, 52, 0, 1
+	ev_note	4, 74, 96, 52, 0, 1
+	ev_note	4, 50, 87, 47, 0, 1
+	ev_at	52
+	ev_note	1, 47, 99, 46, 0, 1
+	ev_at	52
+	ev_note	2, 55, 90, 30, 0, 1
+	ev_note	2, 50, 87, 30, 0, 1
+	ev_note	2, 59, 97, 28, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 19, 0, 1
+	ev_at	52
+	ev_note	4, 55, 78, 53, 0, 1
 	ev_beat
-	ev_note 6, 71, 101, 84, 0, 1
-	ev_note 5, 71, 105, 84, 0, 1
-	ev_at 5
-	ev_note 3, 67, 117, 14, 0, 1
-	ev_at 5
-	ev_note 4, 47, 93, 47, 0, 1
-	ev_at 28
-	ev_note 3, 67, 116, 13, 0, 1
-	ev_at 52
-	ev_note 1, 43, 97, 20, 0, 1
-	ev_at 52
-	ev_note 2, 55, 87, 28, 0, 1
-	ev_note 2, 59, 96, 30, 0, 1
-	ev_note 2, 50, 87, 30, 0, 1
-	ev_at 52
-	ev_note 3, 67, 111, 24, 0, 1
-	ev_at 52
-	ev_note 4, 50, 87, 46, 0, 1
+	ev_note	6, 71, 101, 84, 0, 1
+	ev_note	5, 71, 105, 84, 0, 1
+	ev_at	5
+	ev_note	3, 67, 117, 14, 0, 1
+	ev_at	5
+	ev_note	4, 47, 93, 47, 0, 1
+	ev_at	28
+	ev_note	3, 67, 116, 13, 0, 1
+	ev_at	52
+	ev_note	1, 43, 97, 20, 0, 1
+	ev_at	52
+	ev_note	2, 55, 87, 28, 0, 1
+	ev_note	2, 59, 96, 30, 0, 1
+	ev_note	2, 50, 87, 30, 0, 1
+	ev_at	52
+	ev_note	3, 67, 111, 24, 0, 1
+	ev_at	52
+	ev_note	4, 50, 87, 46, 0, 1
 	ev_beat
-	ev_note 6, 74, 96, 93, 0, 1
-	ev_note 5, 74, 101, 94, 0, 1
-	ev_at 5
-	ev_note 1, 43, 98, 11, 0, 1
-	ev_at 5
-	ev_note 4, 67, 102, 46, 0, 1
-	ev_note 4, 74, 93, 49, 0, 1
-	ev_note 4, 71, 102, 46, 0, 1
-	ev_note 4, 55, 87, 49, 0, 1
-	ev_at 28
-	ev_note 1, 43, 85, 21, 0, 1
-	ev_at 52
-	ev_note 2, 55, 95, 30, 0, 1
-	ev_note 2, 50, 90, 32, 0, 1
-	ev_note 2, 59, 97, 30, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 24, 0, 1
-	ev_at 52
-	ev_note 4, 59, 87, 49, 0, 1
-	ev_at 76
-	ev_note 1, 43, 93, 22, 0, 1
+	ev_note	6, 74, 96, 93, 0, 1
+	ev_note	5, 74, 101, 94, 0, 1
+	ev_at	5
+	ev_note	1, 43, 98, 11, 0, 1
+	ev_at	5
+	ev_note	4, 67, 102, 46, 0, 1
+	ev_note	4, 74, 93, 49, 0, 1
+	ev_note	4, 71, 102, 46, 0, 1
+	ev_note	4, 55, 87, 49, 0, 1
+	ev_at	28
+	ev_note	1, 43, 85, 21, 0, 1
+	ev_at	52
+	ev_note	2, 55, 95, 30, 0, 1
+	ev_note	2, 50, 90, 32, 0, 1
+	ev_note	2, 59, 97, 30, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 24, 0, 1
+	ev_at	52
+	ev_note	4, 59, 87, 49, 0, 1
+	ev_at	76
+	ev_note	1, 43, 93, 22, 0, 1
 	ev_beat
-	ev_note 6, 77, 85, 29, 2, 1
-	ev_note 5, 77, 95, 20, 2, 1
-	ev_at 5
-	ev_note 1, 38, 114, 53, 1, 1
-	ev_at 5
-	ev_note 3, 67, 118, 27, 0, 1
-	ev_at 5
-	ev_note 4, 62, 90, 50, 0, 1
-	ev_at 52
-	ev_note 1, 50, 83, 27, 0, 1
-	ev_at 52
-	ev_note 2, 50, 87, 96, 0, 1
-	ev_note 2, 59, 99, 96, 0, 1
-	ev_note 2, 55, 91, 96, 0, 1
-	ev_at 52
-	ev_note 3, 62, 112, 25, 0, 1
-	ev_at 52
-	ev_note 4, 55, 86, 51, 0, 1
+	ev_note	6, 77, 85, 29, 2, 1
+	ev_note	5, 77, 95, 20, 2, 1
+	ev_at	5
+	ev_note	1, 38, 114, 53, 1, 1
+	ev_at	5
+	ev_note	3, 67, 118, 27, 0, 1
+	ev_at	5
+	ev_note	4, 62, 90, 50, 0, 1
+	ev_at	52
+	ev_note	1, 50, 83, 27, 0, 1
+	ev_at	52
+	ev_note	2, 50, 87, 96, 0, 1
+	ev_note	2, 59, 99, 96, 0, 1
+	ev_note	2, 55, 91, 96, 0, 1
+	ev_at	52
+	ev_note	3, 62, 112, 25, 0, 1
+	ev_at	52
+	ev_note	4, 55, 86, 51, 0, 1
 	ev_beat
-	ev_at 5
-	ev_note 1, 47, 75, 9, 0, 1
-	ev_at 5
-	ev_note 3, 59, 120, 35, 0, 1
-	ev_at 5
-	ev_note 4, 67, 102, 49, 0, 1
-	ev_note 4, 74, 98, 52, 0, 1
-	ev_note 4, 71, 105, 49, 0, 1
-	ev_note 4, 59, 90, 43, 0, 1
-	ev_at 29
-	ev_note 1, 47, 90, 22, 0, 1
-	ev_at 52
-	ev_note 2, 50, 87, 32, 0, 1
-	ev_note 2, 59, 93, 30, 0, 1
-	ev_note 2, 55, 88, 30, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 16, 0, 1
-	ev_at 52
-	ev_note 4, 55, 89, 52, 0, 1
-	ev_at 76
-	ev_note 1, 43, 87, 19, 0, 1
+	ev_at	5
+	ev_note	1, 47, 75, 9, 0, 1
+	ev_at	5
+	ev_note	3, 59, 120, 35, 0, 1
+	ev_at	5
+	ev_note	4, 67, 102, 49, 0, 1
+	ev_note	4, 74, 98, 52, 0, 1
+	ev_note	4, 71, 105, 49, 0, 1
+	ev_note	4, 59, 90, 43, 0, 1
+	ev_at	29
+	ev_note	1, 47, 90, 22, 0, 1
+	ev_at	52
+	ev_note	2, 50, 87, 32, 0, 1
+	ev_note	2, 59, 93, 30, 0, 1
+	ev_note	2, 55, 88, 30, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 16, 0, 1
+	ev_at	52
+	ev_note	4, 55, 89, 52, 0, 1
+	ev_at	76
+	ev_note	1, 43, 87, 19, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 26, 106, 42, 1, 1
-	ev_at 4
-	ev_note 3, 67, 112, 11, 0, 1
-	ev_at 4
-	ev_note 4, 50, 90, 47, 0, 1
-	ev_at 29
-	ev_note 1, 43, 66, 8, 0, 1
-	ev_at 29
-	ev_note 3, 67, 104, 14, 0, 1
-	ev_at 52
-	ev_note 1, 43, 82, 19, 0, 1
-	ev_at 52
-	ev_note 2, 50, 87, 33, 0, 1
-	ev_note 2, 55, 93, 32, 0, 1
-	ev_note 2, 59, 97, 32, 0, 1
-	ev_at 52
-	ev_note 3, 67, 108, 21, 0, 1
-	ev_at 52
-	ev_note 4, 55, 87, 55, 0, 1
-	ev_at 76
-	ev_note 4, 67, 98, 24, 0, 1
-	ev_note 4, 71, 103, 24, 0, 1
-	ev_note 4, 74, 95, 24, 0, 1
+	ev_at	4
+	ev_note	1, 26, 106, 42, 1, 1
+	ev_at	4
+	ev_note	3, 67, 112, 11, 0, 1
+	ev_at	4
+	ev_note	4, 50, 90, 47, 0, 1
+	ev_at	29
+	ev_note	1, 43, 66, 8, 0, 1
+	ev_at	29
+	ev_note	3, 67, 104, 14, 0, 1
+	ev_at	52
+	ev_note	1, 43, 82, 19, 0, 1
+	ev_at	52
+	ev_note	2, 50, 87, 33, 0, 1
+	ev_note	2, 55, 93, 32, 0, 1
+	ev_note	2, 59, 97, 32, 0, 1
+	ev_at	52
+	ev_note	3, 67, 108, 21, 0, 1
+	ev_at	52
+	ev_note	4, 55, 87, 55, 0, 1
+	ev_at	76
+	ev_note	4, 67, 98, 24, 0, 1
+	ev_note	4, 71, 103, 24, 0, 1
+	ev_note	4, 74, 95, 24, 0, 1
 	ev_beat
-	ev_note 6, 75, 95, 90, 0, 1
-	ev_note 5, 75, 97, 93, 0, 1
-	ev_at 4
-	ev_note 1, 43, 79, 20, 0, 1
-	ev_at 4
-	ev_note 4, 67, 96, 48, 0, 1
-	ev_note 4, 71, 102, 48, 0, 1
-	ev_note 4, 74, 95, 48, 0, 1
-	ev_note 4, 47, 86, 28, 0, 1
-	ev_at 29
-	ev_note 4, 50, 87, 30, 0, 1
-	ev_at 52
-	ev_note 1, 43, 83, 19, 0, 1
-	ev_at 52
-	ev_note 2, 50, 87, 32, 0, 1
-	ev_note 2, 55, 93, 32, 0, 1
-	ev_note 2, 59, 99, 30, 0, 1
-	ev_at 52
-	ev_note 3, 62, 114, 29, 0, 1
-	ev_at 52
-	ev_note 4, 74, 96, 48, 0, 1
-	ev_note 4, 71, 105, 45, 0, 1
-	ev_note 4, 67, 102, 45, 0, 1
-	ev_note 4, 55, 89, 53, 0, 1
+	ev_note	6, 75, 95, 90, 0, 1
+	ev_note	5, 75, 97, 93, 0, 1
+	ev_at	4
+	ev_note	1, 43, 79, 20, 0, 1
+	ev_at	4
+	ev_note	4, 67, 96, 48, 0, 1
+	ev_note	4, 71, 102, 48, 0, 1
+	ev_note	4, 74, 95, 48, 0, 1
+	ev_note	4, 47, 86, 28, 0, 1
+	ev_at	29
+	ev_note	4, 50, 87, 30, 0, 1
+	ev_at	52
+	ev_note	1, 43, 83, 19, 0, 1
+	ev_at	52
+	ev_note	2, 50, 87, 32, 0, 1
+	ev_note	2, 55, 93, 32, 0, 1
+	ev_note	2, 59, 99, 30, 0, 1
+	ev_at	52
+	ev_note	3, 62, 114, 29, 0, 1
+	ev_at	52
+	ev_note	4, 74, 96, 48, 0, 1
+	ev_note	4, 71, 105, 45, 0, 1
+	ev_note	4, 67, 102, 45, 0, 1
+	ev_note	4, 55, 89, 53, 0, 1
 	ev_beat
-	ev_note 6, 72, 78, 64, 5, 1
-	ev_note 5, 72, 91, 64, 5, 1
-	ev_at 4
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4beb1, 0x4beb8	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	ev_note	6, 72, 78, 64, 5, 1
+	ev_note	5, 72, 91, 64, 5, 1
+	ev_at	4
+	ev_note	1, 31, 107, 5, 0, 1
+	ev_at	4
 	ev_note	3, 59, 120, 5, 0, 1
 	ev_at	4
 	ev_note	4, 43, 90, 5, 0, 1
 	ev_at	9
 	ev_note	1, 36, 91, 106, 2, 1
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4becc, 0x4bed2	# stale bytes of an earlier write
-	.byte 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x3ec4..+0x3fea; bytes 5..5 of `ev_note`
-	ev_at 9
-	ev_note 4, 48, 74, 50, 0, 1
-	ev_note 4, 60, 73, 9, 0, 1
-	ev_at 53
-	ev_note 2, 55, 89, 96, 0, 1
-	ev_note 2, 60, 90, 96, 0, 1
-	ev_note 2, 63, 97, 96, 0, 1
-	ev_at 53
-	ev_note 3, 67, 118, 25, 0, 1
-	ev_at 53
-	ev_note 4, 51, 90, 50, 0, 1
-	ev_at 76
-	ev_note 1, 51, 97, 19, 0, 1
+	ev_at	9
+	ev_note	3, 63, 104, 28, 0, 1
+	ev_at	9
+	ev_note	4, 48, 74, 50, 0, 1
+	ev_note	4, 60, 73, 9, 0, 1
+	ev_at	53
+	ev_note	2, 55, 89, 96, 0, 1
+	ev_note	2, 60, 90, 96, 0, 1
+	ev_note	2, 63, 97, 96, 0, 1
+	ev_at	53
+	ev_note	3, 67, 118, 25, 0, 1
+	ev_at	53
+	ev_note	4, 51, 90, 50, 0, 1
+	ev_at	76
+	ev_note	1, 51, 97, 19, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 3, 60, 106, 47, 0, 1
-	ev_at 4
-	ev_note 4, 79, 96, 55, 0, 1
-	ev_note 4, 72, 102, 53, 0, 1
-	ev_note 4, 75, 104, 53, 0, 1
-	ev_note 4, 55, 91, 44, 0, 1
-	ev_at 29
-	ev_note 1, 51, 69, 8, 0, 1
-	ev_at 53
-	ev_note 1, 51, 96, 22, 0, 1
-	ev_at 53
-	ev_note 2, 60, 89, 33, 0, 1
-	ev_note 2, 55, 88, 33, 0, 1
-	ev_note 2, 63, 97, 31, 0, 1
-	ev_at 53
-	ev_note 3, 67, 116, 20, 0, 1
-	ev_at 53
-	ev_note 4, 60, 87, 47, 0, 1
+	ev_at	4
+	ev_note	3, 60, 106, 47, 0, 1
+	ev_at	4
+	ev_note	4, 79, 96, 55, 0, 1
+	ev_note	4, 72, 102, 53, 0, 1
+	ev_note	4, 75, 104, 53, 0, 1
+	ev_note	4, 55, 91, 44, 0, 1
+	ev_at	29
+	ev_note	1, 51, 69, 8, 0, 1
+	ev_at	53
+	ev_note	1, 51, 96, 22, 0, 1
+	ev_at	53
+	ev_note	2, 60, 89, 33, 0, 1
+	ev_note	2, 55, 88, 33, 0, 1
+	ev_note	2, 63, 97, 31, 0, 1
+	ev_at	53
+	ev_note	3, 67, 116, 20, 0, 1
+	ev_at	53
+	ev_note	4, 60, 87, 47, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 48, 69, 8, 0, 1
-	ev_at 4
-	ev_note 3, 72, 111, 11, 0, 1
-	ev_at 4
-	ev_note 4, 63, 90, 49, 0, 1
-	ev_at 28
-	ev_note 1, 48, 85, 22, 0, 1
-	ev_at 28
-	ev_note 3, 72, 105, 12, 0, 1
-	ev_at 53
-	ev_note 2, 55, 85, 36, 0, 1
-	ev_note 2, 60, 87, 33, 0, 1
-	ev_note 2, 63, 98, 33, 0, 1
-	ev_at 53
-	ev_note 3, 72, 108, 25, 0, 1
-	ev_at 53
-	ev_note 4, 60, 80, 49, 0, 1
-	ev_at 76
-	ev_note 1, 55, 71, 8, 0, 1
+	ev_at	4
+	ev_note	1, 48, 69, 8, 0, 1
+	ev_at	4
+	ev_note	3, 72, 111, 11, 0, 1
+	ev_at	4
+	ev_note	4, 63, 90, 49, 0, 1
+	ev_at	28
+	ev_note	1, 48, 85, 22, 0, 1
+	ev_at	28
+	ev_note	3, 72, 105, 12, 0, 1
+	ev_at	53
+	ev_note	2, 55, 85, 36, 0, 1
+	ev_note	2, 60, 87, 33, 0, 1
+	ev_note	2, 63, 98, 33, 0, 1
+	ev_at	53
+	ev_note	3, 72, 108, 25, 0, 1
+	ev_at	53
+	ev_note	4, 60, 80, 49, 0, 1
+	ev_at	76
+	ev_note	1, 55, 71, 8, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 55, 87, 24, 0, 1
-	ev_at 4
-	ev_note 4, 75, 103, 51, 0, 1
-	ev_note 4, 79, 96, 52, 0, 1
-	ev_note 4, 72, 104, 49, 0, 1
-	ev_note 4, 67, 88, 51, 0, 1
-	ev_at 53
-	ev_note 1, 51, 90, 11, 0, 1
-	ev_at 53
-	ev_note 2, 55, 85, 36, 0, 1
-	ev_note 2, 60, 90, 33, 0, 1
-	ev_note 2, 63, 99, 33, 0, 1
-	ev_at 53
-	ev_note 3, 67, 114, 25, 0, 1
-	ev_at 53
-	ev_note 4, 63, 85, 52, 0, 1
-	ev_at 76
-	ev_note 1, 51, 80, 18, 0, 1
+	ev_at	4
+	ev_note	1, 55, 87, 24, 0, 1
+	ev_at	4
+	ev_note	4, 75, 103, 51, 0, 1
+	ev_note	4, 79, 96, 52, 0, 1
+	ev_note	4, 72, 104, 49, 0, 1
+	ev_note	4, 67, 88, 51, 0, 1
+	ev_at	53
+	ev_note	1, 51, 90, 11, 0, 1
+	ev_at	53
+	ev_note	2, 55, 85, 36, 0, 1
+	ev_note	2, 60, 90, 33, 0, 1
+	ev_note	2, 63, 99, 33, 0, 1
+	ev_at	53
+	ev_note	3, 67, 114, 25, 0, 1
+	ev_at	53
+	ev_note	4, 63, 85, 52, 0, 1
+	ev_at	76
+	ev_note	1, 51, 80, 18, 0, 1
 	ev_beat
-	ev_at 4
-	.byte 0x91, 0x2b	# bytes 0..1 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4bff8, 0x4bff9	# stale bytes of an earlier write
-	.byte 0x27, 0x01, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x3feb..+0x409a; bytes 3..5 of `ev_note`
-	ev_at 4
-	ev_note 3, 63, 117, 38, 0, 1
-	ev_at 4
-	ev_note 4, 67, 69, 101, 0, 1
-	ev_at 28
-	ev_note 1, 48, 70, 9, 0, 1
-	ev_at 53
-	ev_note 1, 48, 76, 22, 0, 1
-	ev_at 53
-	ev_note 2, 60, 90, 96, 0, 1
-	ev_note 2, 63, 99, 96, 0, 1
-	ev_note 2, 55, 88, 96, 0, 1
-	ev_at 53
-	ev_note 3, 67, 120, 27, 0, 1
-	ev_at 53
-	ev_note 4, 72, 83, 46, 0, 1
+	ev_at	4
+	ev_note	1, 43, 109, 39, 1, 1
+	ev_at	4
+	ev_note	3, 63, 117, 38, 0, 1
+	ev_at	4
+	ev_note	4, 67, 69, 101, 0, 1
+	ev_at	28
+	ev_note	1, 48, 70, 9, 0, 1
+	ev_at	53
+	ev_note	1, 48, 76, 22, 0, 1
+	ev_at	53
+	ev_note	2, 60, 90, 96, 0, 1
+	ev_note	2, 63, 99, 96, 0, 1
+	ev_note	2, 55, 88, 96, 0, 1
+	ev_at	53
+	ev_note	3, 67, 120, 27, 0, 1
+	ev_at	53
+	ev_note	4, 72, 83, 46, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 1, 48, 87, 19, 0, 1
-	ev_at 4
-	ev_note 3, 60, 108, 44, 0, 1
-	ev_at 4
-	ev_note 4, 72, 106, 46, 0, 1
-	ev_note 4, 79, 96, 47, 0, 1
-	ev_note 4, 75, 103, 46, 0, 1
-	ev_note 4, 63, 78, 51, 0, 1
-	ev_at 53
-	ev_note 1, 48, 78, 13, 0, 1
-	ev_at 53
-	ev_note 2, 55, 87, 31, 0, 1
-	ev_note 2, 60, 89, 30, 0, 1
-	ev_note 2, 63, 97, 30, 0, 1
-	ev_at 53
-	ev_note 3, 67, 117, 16, 0, 1
-	ev_at 53
-	ev_note 4, 67, 79, 52, 0, 1
-	ev_at 77
-	ev_note 1, 48, 81, 22, 0, 1
-	ev_at 77
-	ev_note 4, 72, 106, 23, 0, 1
-	ev_note 4, 79, 98, 26, 0, 1
-	ev_note 4, 75, 105, 25, 0, 1
+	ev_at	4
+	ev_note	1, 48, 87, 19, 0, 1
+	ev_at	4
+	ev_note	3, 60, 108, 44, 0, 1
+	ev_at	4
+	ev_note	4, 72, 106, 46, 0, 1
+	ev_note	4, 79, 96, 47, 0, 1
+	ev_note	4, 75, 103, 46, 0, 1
+	ev_note	4, 63, 78, 51, 0, 1
+	ev_at	53
+	ev_note	1, 48, 78, 13, 0, 1
+	ev_at	53
+	ev_note	2, 55, 87, 31, 0, 1
+	ev_note	2, 60, 89, 30, 0, 1
+	ev_note	2, 63, 97, 30, 0, 1
+	ev_at	53
+	ev_note	3, 67, 117, 16, 0, 1
+	ev_at	53
+	ev_note	4, 67, 79, 52, 0, 1
+	ev_at	77
+	ev_note	1, 48, 81, 22, 0, 1
+	ev_at	77
+	ev_note	4, 72, 106, 23, 0, 1
+	ev_note	4, 79, 98, 26, 0, 1
+	ev_note	4, 75, 105, 25, 0, 1
 	ev_beat
-	ev_at 4
-	.byte 0x91, 0x27, 0x67	# bytes 0..2 of `ev_note`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/01custm5.ic21", 0x4c0a8, 0x4c0a9	# stale bytes of an earlier write
-	.byte 0x01, 0x01	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x409b..+0x77f2; bytes 4..5 of `ev_note`
-	ev_at 4
-	ev_note 3, 72, 111, 10, 0, 1
-	ev_at 4
-	ev_note 4, 60, 87, 51, 0, 1
-	ev_at 28
-	ev_note 1, 51, 97, 19, 0, 1
-	ev_at 28
-	ev_note 3, 72, 110, 12, 0, 1
-	ev_at 53
-	ev_note 2, 55, 86, 33, 0, 1
-	ev_note 2, 60, 88, 32, 0, 1
-	ev_note 2, 63, 100, 30, 0, 1
-	ev_at 53
-	ev_note 3, 72, 105, 16, 0, 1
-	ev_at 53
-	ev_note 4, 72, 103, 43, 0, 1
-	ev_note 4, 79, 95, 44, 0, 1
-	ev_note 4, 75, 104, 43, 0, 1
-	ev_note 4, 55, 87, 24, 0, 1
-	ev_at 77
-	ev_note 1, 48, 90, 19, 0, 1
-	ev_at 77
-	ev_note 4, 60, 78, 26, 0, 1
+	ev_at	4
+	ev_note	1, 39, 103, 30, 1, 1
+	ev_at	4
+	ev_note	3, 72, 111, 10, 0, 1
+	ev_at	4
+	ev_note	4, 60, 87, 51, 0, 1
+	ev_at	28
+	ev_note	1, 51, 97, 19, 0, 1
+	ev_at	28
+	ev_note	3, 72, 110, 12, 0, 1
+	ev_at	53
+	ev_note	2, 55, 86, 33, 0, 1
+	ev_note	2, 60, 88, 32, 0, 1
+	ev_note	2, 63, 100, 30, 0, 1
+	ev_at	53
+	ev_note	3, 72, 105, 16, 0, 1
+	ev_at	53
+	ev_note	4, 72, 103, 43, 0, 1
+	ev_note	4, 79, 95, 44, 0, 1
+	ev_note	4, 75, 104, 43, 0, 1
+	ev_note	4, 55, 87, 24, 0, 1
+	ev_at	77
+	ev_note	1, 48, 90, 19, 0, 1
+	ev_at	77
+	ev_note	4, 60, 78, 26, 0, 1
 	ev_beat
-	ev_at 4
-	ev_note 4, 51, 85, 54, 0, 1
-	ev_at 28
-	ev_note 1, 48, 94, 16, 0, 1
-	ev_at 52
-	ev_note 2, 55, 85, 28, 0, 1
-	ev_note 2, 60, 88, 29, 0, 1
-	ev_note 2, 63, 96, 28, 0, 1
-	ev_at 52
-	ev_note 3, 67, 114, 25, 0, 1
-	ev_at 52
-	ev_note 4, 79, 99, 40, 0, 1
-	ev_note 4, 72, 102, 39, 0, 1
-	ev_note 4, 75, 105, 40, 0, 1
-	ev_note 4, 55, 90, 42, 0, 1
-	ev_at 77
-	ev_note 1, 48, 97, 23, 0, 1
+	ev_at	4
+	ev_note	4, 51, 85, 54, 0, 1
+	ev_at	28
+	ev_note	1, 48, 94, 16, 0, 1
+	ev_at	52
+	ev_note	2, 55, 85, 28, 0, 1
+	ev_note	2, 60, 88, 29, 0, 1
+	ev_note	2, 63, 96, 28, 0, 1
+	ev_at	52
+	ev_note	3, 67, 114, 25, 0, 1
+	ev_at	52
+	ev_note	4, 79, 99, 40, 0, 1
+	ev_note	4, 72, 102, 39, 0, 1
+	ev_note	4, 75, 105, 40, 0, 1
+	ev_note	4, 55, 90, 42, 0, 1
+	ev_at	77
+	ev_note	1, 48, 97, 23, 0, 1
 	ev_end
-	STREAM_HEADER 14, 0x590
+	STREAM_HEADER 14, 0x590	# stale tail of an earlier write; same bytes as 01custm5 Slot02 +0x4144..+0x77f2
 	ev_beat
 	ev_note 1, 41, 114, 88, 2, 1
 	ev_note 2, 53, 102, 50, 0, 1

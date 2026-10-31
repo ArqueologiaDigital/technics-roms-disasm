@@ -79,7 +79,7 @@ def main():
         bad = [n for n in patch if open(os.path.join(GEN, n), "rb").read() != open(os.path.join(ref, n), "rb").read()]
         assert not bad, "patched bins differ from the certified finals: %s" % bad
         for n in patch:
-            assert open(os.path.join(GEN, n + ".patched")).read().strip() == \
+            assert open(os.path.join(GEN, n + ".patched")).read().split()[0] == \
                 hashlib.sha256(open(os.path.join(GEN, n), "rb").read()).hexdigest()
         print("rewrote %s; every patched bin equals its certified final" % os.path.relpath(JSON, REPO))
 

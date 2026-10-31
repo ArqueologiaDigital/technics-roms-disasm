@@ -522,7 +522,7 @@ problem or is an accident of the build is **not established**.
 * Code `0x15` of the half-width katakana face (§4.1), and code `0x66` of the
   katakana face (§4.2).
 * The fonts are in prom_b, so their bytes belong to that image's lane; this note
-  records only what prom_a's code proves about them.
+  records only what prom_a's code proves about them. (Resolved: by design: the twelve faces are typed in prom_b/wsa1_prom_b.s from prom_b/images/fonts/*.png, FINDINGS-prom_b-fonts-and-dsp-value-lists.md section 1 (00c2226f1); open-items register 2026-10-31.)
 
 ## The scripts
 

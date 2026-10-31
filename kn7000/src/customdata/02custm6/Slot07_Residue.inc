@@ -412,7 +412,7 @@
 	ev_at 64
 	ev_bend 3, 0, 64
 	ev_end
-	.ascii "TPAD"	# bytes 0..16 of `TPAD_HEADER`
+	.ascii "TPAD"	# stale tail of an earlier write; same bytes as 01ctmini Stale28 +0x89fc..; bytes 0..16 of `TPAD_HEADER`
 	.space 13
 	.byte 0x04, 0x16, 0x00, 0x04, 0x16, 0x00, 0x01, 0x00, 0x60, 0x10, 0x06, 0x10, 0x02, 0x00, 0x00, 0x00	# stale tail of an earlier write; same bytes as 01ctmini Slot06 +0x8ac0..+0x8ec5; bytes 17..111 of `TPAD_HEADER`
 	.byte 0x0f
@@ -585,17 +585,17 @@
 	ev_beat
 	ev_beat
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x1a75c, 0x1a75f	# stale bytes of an earlier write
+	.byte 0x43, 0x22, 0x00	# [INFERENCE] the last 3 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	1
 	ev_note	6, 62, 67, 33, 0, 1
 	ev_note	6, 67, 66, 34, 0, 1
 	ev_note	0, 82, 19, 11, 0, 0
 	ev_note	2, 60, 85, 12, 0, 1
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_note	0, 89, 72, 119, 0, 0
-	ev_at 2	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x5f62..+0x6003
-	ev_note 3, 60, 84, 16, 0, 1
+	ev_at	2
+	ev_note 3, 60, 84, 16, 0, 1	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x5f63..+0x6003
 	ev_at 48
 	ev_note 6, 67, 62, 33, 0, 1
 	ev_note 6, 60, 61, 34, 0, 1
@@ -630,996 +630,994 @@
 	ev_note 6, 60, 65, 32, 0, 1
 	ev_note 0, 82, 57, 14, 0, 0
 	ev_note 2, 60, 90, 11, 0, 1
-	ev_at 48	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x41f4..+0x4538
-	ev_note 6, 67, 61, 34, 0, 1
-	ev_note 6, 55, 60, 34, 0, 1
-	ev_note 6, 62, 60, 34, 0, 1
-	ev_note 0, 82, 64, 15, 0, 0
-	ev_at 48
-	ev_note 2, 67, 86, 9, 0, 1
-	ev_note 2, 55, 84, 12, 0, 1
+	# stale events of an earlier write, at an event boundary of the donor record: 02custm6 Slot06 +0x6003..
+	ev_at	48
+	ev_note	6, 67, 61, 34, 0, 1
+	ev_note	6, 55, 60, 34, 0, 1
+	ev_note	6, 62, 60, 34, 0, 1
+	ev_note	0, 82, 64, 15, 0, 0
+	ev_at	48
+	ev_note	2, 67, 86, 9, 0, 1
+	ev_note	2, 55, 84, 12, 0, 1
 	ev_beat
-	ev_note 6, 62, 59, 37, 0, 1
-	ev_note 6, 55, 59, 34, 0, 1
-	ev_note 6, 67, 59, 76, 0, 1
-	ev_note 0, 82, 46, 13, 0, 0
-	ev_note 2, 60, 89, 14, 0, 1
-	ev_at 48
-	ev_note 6, 55, 57, 23, 0, 1
-	ev_note 6, 60, 50, 30, 0, 1
-	ev_note 0, 82, 42, 11, 0, 0
-	ev_at 48
-	ev_note 2, 60, 90, 12, 0, 1
-	ev_note 3, 67, 86, 13, 0, 1
-	ev_note 4, 64, 63, 32, 0, 1
-	ev_at 95
-	ev_note 4, 67, 70, 19, 0, 1
+	ev_note	6, 62, 59, 37, 0, 1
+	ev_note	6, 55, 59, 34, 0, 1
+	ev_note	6, 67, 59, 76, 0, 1
+	ev_note	0, 82, 46, 13, 0, 0
+	ev_note	2, 60, 89, 14, 0, 1
+	ev_at	48
+	ev_note	6, 55, 57, 23, 0, 1
+	ev_note	6, 60, 50, 30, 0, 1
+	ev_note	0, 82, 42, 11, 0, 0
+	ev_at	48
+	ev_note	2, 60, 90, 12, 0, 1
+	ev_note	3, 67, 86, 13, 0, 1
+	ev_note	4, 64, 63, 32, 0, 1
+	ev_at	95
+	ev_note	4, 67, 70, 19, 0, 1
 	ev_beat
-	ev_note 6, 55, 49, 24, 0, 1
-	ev_note 6, 62, 46, 25, 0, 1
-	ev_note 6, 67, 47, 23, 0, 1
-	ev_note 1, 40, 85, 76, 0, 1
-	ev_note 0, 82, 62, 13, 0, 0
-	ev_note 2, 48, 78, 17, 0, 1
-	ev_note 2, 72, 93, 12, 0, 1
-	ev_at 44
-	ev_note 4, 64, 69, 24, 0, 1
-	ev_at 48
-	ev_note 6, 55, 46, 30, 0, 1
-	ev_note 6, 62, 44, 32, 0, 1
-	ev_note 6, 67, 41, 72, 0, 1
-	ev_note 0, 82, 39, 10, 0, 0
-	ev_at 48
-	ev_note 2, 60, 83, 12, 0, 1
-	ev_note 3, 67, 88, 12, 0, 1
-	ev_at 64
-	ev_note 1, 41, 84, 69, 0, 1
-	ev_at 93
-	ev_note 4, 67, 69, 30, 0, 1
-	ev_at 95
-	ev_note 3, 60, 72, 11, 0, 1
+	ev_note	6, 55, 49, 24, 0, 1
+	ev_note	6, 62, 46, 25, 0, 1
+	ev_note	6, 67, 47, 23, 0, 1
+	ev_note	1, 40, 85, 76, 0, 1
+	ev_note	0, 82, 62, 13, 0, 0
+	ev_note	2, 48, 78, 17, 0, 1
+	ev_note	2, 72, 93, 12, 0, 1
+	ev_at	44
+	ev_note	4, 64, 69, 24, 0, 1
+	ev_at	48
+	ev_note	6, 55, 46, 30, 0, 1
+	ev_note	6, 62, 44, 32, 0, 1
+	ev_note	6, 67, 41, 72, 0, 1
+	ev_note	0, 82, 39, 10, 0, 0
+	ev_at	48
+	ev_note	2, 60, 83, 12, 0, 1
+	ev_note	3, 67, 88, 12, 0, 1
+	ev_at	64
+	ev_note	1, 41, 84, 69, 0, 1
+	ev_at	93
+	ev_note	4, 67, 69, 30, 0, 1
+	ev_at	95
+	ev_note	3, 60, 72, 11, 0, 1
 	ev_beat
-	ev_note 6, 60, 41, 28, 0, 1
-	ev_note 6, 55, 41, 23, 0, 1
-	ev_note 0, 82, 53, 15, 0, 0
-	ev_note 2, 55, 68, 11, 0, 1
-	ev_note 2, 67, 74, 9, 0, 1
-	ev_at 32
-	ev_note 1, 43, 79, 51, 0, 1
-	ev_at 44
-	ev_note 4, 69, 70, 18, 0, 1
-	ev_at 47
-	ev_note 0, 83, 85, 37, 0, 0
-	ev_at 48
-	ev_note 6, 55, 33, 25, 0, 1
-	ev_note 6, 62, 36, 22, 0, 1
-	ev_note 6, 67, 31, 15, 0, 1
-	ev_note 0, 82, 36, 9, 0, 0
-	ev_at 48
-	ev_note 2, 60, 83, 12, 0, 1
-	ev_note 3, 67, 83, 8, 0, 1
-	ev_at 82
-	ev_bend 4, 64, 62
-	ev_at 83
-	ev_bend 4, 0, 61
-	ev_at 85
-	ev_bend 4, 0, 59
-	ev_at 87
-	ev_bend 4, 64, 57
-	ev_at 88
-	ev_bend 1, 0, 63
-	ev_bend 1, 64, 60
-	ev_at 89
-	ev_bend 4, 64, 55
-	ev_bend 4, 64, 53
-	ev_at 90
-	ev_bend 1, 64, 57
-	ev_at 90
-	ev_note 4, 72, 90, 73, 1, 1
-	ev_at 91
-	ev_bend 4, 0, 51
-	ev_at 92
-	ev_bend 1, 64, 54
-	ev_at 93
-	ev_bend 4, 64, 47
-	ev_at 94
-	ev_bend 1, 64, 49
-	ev_at 95
-	ev_bend 4, 0, 45
+	ev_note	6, 60, 41, 28, 0, 1
+	ev_note	6, 55, 41, 23, 0, 1
+	ev_note	0, 82, 53, 15, 0, 0
+	ev_note	2, 55, 68, 11, 0, 1
+	ev_note	2, 67, 74, 9, 0, 1
+	ev_at	32
+	ev_note	1, 43, 79, 51, 0, 1
+	ev_at	44
+	ev_note	4, 69, 70, 18, 0, 1
+	ev_at	47
+	ev_note	0, 83, 85, 37, 0, 0
+	ev_at	48
+	ev_note	6, 55, 33, 25, 0, 1
+	ev_note	6, 62, 36, 22, 0, 1
+	ev_note	6, 67, 31, 15, 0, 1
+	ev_note	0, 82, 36, 9, 0, 0
+	ev_at	48
+	ev_note	2, 60, 83, 12, 0, 1
+	ev_note	3, 67, 83, 8, 0, 1
+	ev_at	82
+	ev_bend	4, 64, 62
+	ev_at	83
+	ev_bend	4, 0, 61
+	ev_at	85
+	ev_bend	4, 0, 59
+	ev_at	87
+	ev_bend	4, 64, 57
+	ev_at	88
+	ev_bend	1, 0, 63
+	ev_bend	1, 64, 60
+	ev_at	89
+	ev_bend	4, 64, 55
+	ev_bend	4, 64, 53
+	ev_at	90
+	ev_bend	1, 64, 57
+	ev_at	90
+	ev_note	4, 72, 90, 73, 1, 1
+	ev_at	91
+	ev_bend	4, 0, 51
+	ev_at	92
+	ev_bend	1, 64, 54
+	ev_at	93
+	ev_bend	4, 64, 47
+	ev_at	94
+	ev_bend	1, 64, 49
+	ev_at	95
+	ev_bend	4, 0, 45
 	ev_beat
-	ev_note 6, 60, 28, 29, 2, 1
-	ev_note 6, 67, 29, 28, 2, 1
-	ev_note 6, 55, 29, 29, 2, 1
-	ev_note 1, 43, 93, 85, 2, 1
-	ev_bend 1, 0, 45
-	ev_note 0, 82, 57, 14, 0, 0
-	ev_note 2, 48, 78, 14, 0, 1
-	ev_note 2, 67, 89, 11, 0, 1
-	ev_at 1
-	ev_bend 4, 0, 42
-	ev_bend 4, 0, 39
-	ev_at 2
-	ev_bend 1, 64, 40
-	ev_bend 1, 0, 37
-	ev_at 3
-	ev_note 3, 60, 90, 13, 0, 1
-	ev_bend 4, 0, 38
-	ev_at 5
-	ev_bend 1, 0, 34
-	ev_bend 1, 64, 31
-	ev_at 7
-	ev_bend 1, 0, 29
-	ev_at 12
-	ev_bend 4, 0, 41
-	ev_at 14
-	ev_bend 4, 0, 43
-	ev_at 16
-	ev_bend 4, 0, 45
-	ev_at 18
-	ev_bend 4, 64, 46
-	ev_at 20
-	ev_bend 4, 64, 48
-	ev_bend 4, 64, 49
-	ev_at 21
-	ev_bend 1, 0, 32
-	ev_bend 1, 0, 33
-	ev_at 22
-	ev_bend 4, 64, 50
-	ev_at 24
-	ev_bend 4, 64, 51
-	ev_at 25
-	ev_bend 1, 0, 37
-	ev_at 26
-	ev_bend 4, 64, 52
-	ev_at 27
-	ev_bend 1, 64, 38
-	ev_at 28
-	ev_bend 4, 0, 53
-	ev_at 29
-	ev_bend 1, 64, 40
-	ev_at 30
-	ev_bend 4, 0, 54
-	ev_bend 4, 0, 55
-	ev_at 31
-	ev_bend 1, 64, 42
-	ev_bend 1, 0, 43
-	ev_at 32
-	ev_bend 4, 64, 55
-	ev_at 34
-	ev_bend 4, 64, 56
-	ev_at 35
-	ev_bend 1, 64, 44
-	ev_at 35
-	ev_bend 4, 0, 57
-	ev_at 39
-	ev_bend 4, 64, 57
-	ev_bend 4, 0, 58
-	ev_at 42
-	ev_bend 1, 0, 46
-	ev_at 44
-	ev_bend 1, 0, 47
-	ev_at 45
-	ev_bend 4, 64, 59
-	ev_at 46
-	ev_bend 1, 64, 47
-	ev_at 47
-	ev_bend 4, 64, 60
-	ev_at 48
-	ev_note 0, 82, 34, 15, 0, 0
-	ev_at 48
-	ev_note 2, 60, 73, 12, 0, 1
-	ev_at 49
-	ev_bend 4, 64, 61
-	ev_bend 4, 64, 62
-	ev_at 51
-	ev_note 3, 60, 90, 12, 0, 1
-	ev_bend 4, 0, 63
-	ev_at 52
-	ev_bend 1, 64, 48
-	ev_bend 1, 0, 49
-	ev_at 53
-	ev_bend 4, 64, 63
-	ev_at 59
-	ev_bend 4, 0, 64
-	ev_at 66
-	ev_bend 1, 0, 52
-	ev_at 67
-	ev_bend 1, 0, 53
-	ev_at 69
-	ev_bend 1, 64, 53
-	ev_bend 1, 0, 54
-	ev_at 75
-	ev_bend 1, 64, 54
-	ev_at 87
-	ev_bend 1, 0, 55
-	ev_bend 1, 64, 55
-	ev_at 91
-	ev_bend 1, 64, 56
+	ev_note	6, 60, 28, 29, 2, 1
+	ev_note	6, 67, 29, 28, 2, 1
+	ev_note	6, 55, 29, 29, 2, 1
+	ev_note	1, 43, 93, 85, 2, 1
+	ev_bend	1, 0, 45
+	ev_note	0, 82, 57, 14, 0, 0
+	ev_note	2, 48, 78, 14, 0, 1
+	ev_note	2, 67, 89, 11, 0, 1
+	ev_at	1
+	ev_bend	4, 0, 42
+	ev_bend	4, 0, 39
+	ev_at	2
+	ev_bend	1, 64, 40
+	ev_bend	1, 0, 37
+	ev_at	3
+	ev_note	3, 60, 90, 13, 0, 1
+	ev_bend	4, 0, 38
+	ev_at	5
+	ev_bend	1, 0, 34
+	ev_bend	1, 64, 31
+	ev_at	7
+	ev_bend	1, 0, 29
+	ev_at	12
+	ev_bend	4, 0, 41
+	ev_at	14
+	ev_bend	4, 0, 43
+	ev_at	16
+	ev_bend	4, 0, 45
+	ev_at	18
+	ev_bend	4, 64, 46
+	ev_at	20
+	ev_bend	4, 64, 48
+	ev_bend	4, 64, 49
+	ev_at	21
+	ev_bend	1, 0, 32
+	ev_bend	1, 0, 33
+	ev_at	22
+	ev_bend	4, 64, 50
+	ev_at	24
+	ev_bend	4, 64, 51
+	ev_at	25
+	ev_bend	1, 0, 37
+	ev_at	26
+	ev_bend	4, 64, 52
+	ev_at	27
+	ev_bend	1, 64, 38
+	ev_at	28
+	ev_bend	4, 0, 53
+	ev_at	29
+	ev_bend	1, 64, 40
+	ev_at	30
+	ev_bend	4, 0, 54
+	ev_bend	4, 0, 55
+	ev_at	31
+	ev_bend	1, 64, 42
+	ev_bend	1, 0, 43
+	ev_at	32
+	ev_bend	4, 64, 55
+	ev_at	34
+	ev_bend	4, 64, 56
+	ev_at	35
+	ev_bend	1, 64, 44
+	ev_at	35
+	ev_bend	4, 0, 57
+	ev_at	39
+	ev_bend	4, 64, 57
+	ev_bend	4, 0, 58
+	ev_at	42
+	ev_bend	1, 0, 46
+	ev_at	44
+	ev_bend	1, 0, 47
+	ev_at	45
+	ev_bend	4, 64, 59
+	ev_at	46
+	ev_bend	1, 64, 47
+	ev_at	47
+	ev_bend	4, 64, 60
+	ev_at	48
+	ev_note	0, 82, 34, 15, 0, 0
+	ev_at	48
+	ev_note	2, 60, 73, 12, 0, 1
+	ev_at	49
+	ev_bend	4, 64, 61
+	ev_bend	4, 64, 62
+	ev_at	51
+	ev_note	3, 60, 90, 12, 0, 1
+	ev_bend	4, 0, 63
+	ev_at	52
+	ev_bend	1, 64, 48
+	ev_bend	1, 0, 49
+	ev_at	53
+	ev_bend	4, 64, 63
+	ev_at	59
+	ev_bend	4, 0, 64
+	ev_at	66
+	ev_bend	1, 0, 52
+	ev_at	67
+	ev_bend	1, 0, 53
+	ev_at	69
+	ev_bend	1, 64, 53
+	ev_bend	1, 0, 54
+	ev_at	75
+	ev_bend	1, 64, 54
+	ev_at	87
+	ev_bend	1, 0, 55
+	ev_bend	1, 64, 55
+	ev_at	91
+	ev_bend	1, 64, 56
 	ev_beat
-	ev_note 0, 82, 42, 14, 0, 0
-	ev_note 2, 60, 89, 10, 0, 1
-	ev_at 3
-	ev_bend 1, 64, 57
-	ev_at 10
-	ev_bend 1, 0, 59
-	ev_bend 1, 64, 59
-	ev_at 14
-	ev_bend 1, 0, 60
-	ev_bend 1, 64, 60
-	ev_at 16
-	ev_bend 1, 0, 61
-	ev_at 22
-	ev_bend 1, 64, 61
-	ev_at 24
-	ev_bend 1, 0, 62
-	ev_at 34
-	ev_bend 1, 64, 62
-	ev_at 39
-	ev_bend 1, 0, 63
-	ev_at 41
-	ev_bend 1, 64, 63
-	ev_at 43
-	ev_note 3, 60, 78, 11, 0, 1
-	ev_at 48
-	ev_note 5, 55, 56, 20, 0, 1
-	ev_note 5, 60, 60, 19, 0, 1
-	ev_note 0, 82, 57, 13, 0, 0
-	ev_at 48
-	ev_note 2, 67, 92, 10, 0, 1
-	ev_note 2, 55, 76, 12, 0, 1
-	ev_at 51
-	ev_bend 1, 0, 64
-	ev_at 93
-	ev_note 3, 60, 81, 12, 0, 1
+	ev_note	0, 82, 42, 14, 0, 0
+	ev_note	2, 60, 89, 10, 0, 1
+	ev_at	3
+	ev_bend	1, 64, 57
+	ev_at	10
+	ev_bend	1, 0, 59
+	ev_bend	1, 64, 59
+	ev_at	14
+	ev_bend	1, 0, 60
+	ev_bend	1, 64, 60
+	ev_at	16
+	ev_bend	1, 0, 61
+	ev_at	22
+	ev_bend	1, 64, 61
+	ev_at	24
+	ev_bend	1, 0, 62
+	ev_at	34
+	ev_bend	1, 64, 62
+	ev_at	39
+	ev_bend	1, 0, 63
+	ev_at	41
+	ev_bend	1, 64, 63
+	ev_at	43
+	ev_note	3, 60, 78, 11, 0, 1
+	ev_at	48
+	ev_note	5, 55, 56, 20, 0, 1
+	ev_note	5, 60, 60, 19, 0, 1
+	ev_note	0, 82, 57, 13, 0, 0
+	ev_at	48
+	ev_note	2, 67, 92, 10, 0, 1
+	ev_note	2, 55, 76, 12, 0, 1
+	ev_at	51
+	ev_bend	1, 0, 64
+	ev_at	93
+	ev_note	3, 60, 81, 12, 0, 1
 	ev_beat
-	ev_note 5, 55, 57, 52, 4, 1
-	ev_note 5, 60, 57, 52, 4, 1
-	ev_note 0, 82, 33, 16, 0, 0
-	ev_note 2, 60, 88, 12, 0, 1
-	ev_at 46
-	ev_note 3, 72, 91, 12, 0, 1
-	ev_at 48
-	ev_note 0, 82, 37, 9, 0, 0
-	ev_at 48
-	ev_note 2, 60, 87, 12, 0, 1
+	ev_note	5, 55, 57, 52, 4, 1
+	ev_note	5, 60, 57, 52, 4, 1
+	ev_note	0, 82, 33, 16, 0, 0
+	ev_note	2, 60, 88, 12, 0, 1
+	ev_at	46
+	ev_note	3, 72, 91, 12, 0, 1
+	ev_at	48
+	ev_note	0, 82, 37, 9, 0, 0
+	ev_at	48
+	ev_note	2, 60, 87, 12, 0, 1
 	ev_beat
-	ev_note 0, 82, 56, 15, 0, 0
-	ev_note 2, 48, 78, 16, 0, 1
-	ev_note 2, 67, 90, 10, 0, 1
-	ev_at 48
-	ev_note 1, 48, 82, 59, 0, 1
-	ev_note 0, 82, 25, 10, 0, 0
-	ev_at 48
-	ev_note 2, 60, 80, 10, 0, 1
-	# stale events of an earlier write: no record holds them; they parse as events
+	ev_note	0, 82, 56, 15, 0, 0
+	ev_note	2, 48, 78, 16, 0, 1
+	ev_note	2, 67, 90, 10, 0, 1
+	ev_at	48
+	ev_note	1, 48, 82, 59, 0, 1
+	ev_note	0, 82, 25, 10, 0, 0
+	ev_at	48
+	ev_note	2, 60, 80, 10, 0, 1
 	ev_at	49
 	ev_note	3, 60, 80, 12, 0, 1
 	ev_beat
 	ev_note	1, 43, 82, 49, 1, 1
 	ev_note	0, 82, 54, 14, 0, 0
 	ev_note	2, 60, 83, 10, 0, 1
-	ev_at 1	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x4565..+0x46b4
-	ev_note 3, 60, 86, 12, 0, 1
-	ev_at 48
-	ev_note 0, 82, 57, 19, 0, 0
-	ev_at 48
-	ev_note 2, 67, 85, 11, 0, 1
-	ev_note 2, 55, 80, 12, 0, 1
-	ev_at 50
-	ev_note 3, 72, 98, 12, 0, 1
+	ev_at	1
+	ev_note	3, 60, 86, 12, 0, 1
+	ev_at	48
+	ev_note	0, 82, 57, 19, 0, 0
+	ev_at	48
+	ev_note	2, 67, 85, 11, 0, 1
+	ev_note	2, 55, 80, 12, 0, 1
+	ev_at	50
+	ev_note	3, 72, 98, 12, 0, 1
 	ev_beat
-	ev_note 0, 82, 35, 13, 0, 0
-	ev_note 2, 60, 86, 11, 0, 1
-	ev_at 48
-	ev_note 0, 82, 36, 10, 0, 0
-	ev_at 48
-	ev_note 2, 60, 76, 18, 0, 1
-	ev_at 49
-	ev_note 4, 72, 70, 15, 0, 1
-	ev_at 51
-	ev_note 3, 60, 80, 10, 0, 1
-	ev_at 84
-	ev_bend 4, 64, 59
-	ev_at 86
-	ev_bend 4, 0, 57
-	ev_at 88
-	ev_bend 4, 0, 55
-	ev_bend 4, 64, 52
-	ev_at 90
-	ev_bend 4, 0, 48
-	ev_at 91
-	ev_bend 4, 0, 43
-	ev_at 93
-	ev_bend 4, 0, 38
-	ev_at 95
-	ev_bend 4, 0, 34
+	ev_note	0, 82, 35, 13, 0, 0
+	ev_note	2, 60, 86, 11, 0, 1
+	ev_at	48
+	ev_note	0, 82, 36, 10, 0, 0
+	ev_at	48
+	ev_note	2, 60, 76, 18, 0, 1
+	ev_at	49
+	ev_note	4, 72, 70, 15, 0, 1
+	ev_at	51
+	ev_note	3, 60, 80, 10, 0, 1
+	ev_at	84
+	ev_bend	4, 64, 59
+	ev_at	86
+	ev_bend	4, 0, 57
+	ev_at	88
+	ev_bend	4, 0, 55
+	ev_bend	4, 64, 52
+	ev_at	90
+	ev_bend	4, 0, 48
+	ev_at	91
+	ev_bend	4, 0, 43
+	ev_at	93
+	ev_bend	4, 0, 38
+	ev_at	95
+	ev_bend	4, 0, 34
 	ev_beat
-	ev_note 1, 40, 93, 90, 0, 1
-	ev_note 0, 82, 56, 16, 0, 0
-	ev_note 2, 48, 78, 14, 0, 1
-	ev_note 2, 72, 100, 12, 0, 1
-	ev_note 3, 60, 81, 15, 0, 1
-	ev_at 1
-	ev_note 4, 74, 74, 92, 0, 1
-	ev_bend 4, 0, 30
-	ev_bend 4, 64, 26
-	ev_at 3
-	ev_bend 4, 0, 26
-	ev_at 9
-	ev_bend 4, 0, 31
-	ev_at 11
-	ev_bend 4, 0, 32
-	ev_at 13
-	ev_bend 4, 0, 33
-	ev_at 17
-	ev_bend 4, 0, 35
-	ev_at 18
-	ev_bend 4, 64, 37
-	ev_bend 4, 0, 39
-	ev_at 20
-	ev_bend 4, 64, 42
-	ev_at 22
-	ev_bend 4, 64, 46
-	ev_at 24
-	ev_bend 4, 64, 50
-	ev_at 26
-	ev_bend 4, 64, 54
-	ev_at 28
-	ev_bend 4, 64, 56
-	ev_bend 4, 0, 59
-	ev_at 30
-	ev_bend 4, 64, 61
-	ev_at 32
-	ev_bend 4, 64, 62
-	ev_at 34
-	ev_bend 4, 64, 63
-	ev_at 36
-	ev_bend 4, 0, 64
-	ev_at 43
-	ev_note 3, 72, 85, 10, 0, 1
-	ev_at 48
-	ev_note 0, 82, 39, 12, 0, 0
-	ev_at 48
-	ev_note 2, 67, 74, 8, 0, 1
-	ev_at 92
-	ev_note 3, 60, 79, 10, 0, 1
-	ev_at 95
-	ev_note 4, 72, 66, 36, 0, 1
+	ev_note	1, 40, 93, 90, 0, 1
+	ev_note	0, 82, 56, 16, 0, 0
+	ev_note	2, 48, 78, 14, 0, 1
+	ev_note	2, 72, 100, 12, 0, 1
+	ev_note	3, 60, 81, 15, 0, 1
+	ev_at	1
+	ev_note	4, 74, 74, 92, 0, 1
+	ev_bend	4, 0, 30
+	ev_bend	4, 64, 26
+	ev_at	3
+	ev_bend	4, 0, 26
+	ev_at	9
+	ev_bend	4, 0, 31
+	ev_at	11
+	ev_bend	4, 0, 32
+	ev_at	13
+	ev_bend	4, 0, 33
+	ev_at	17
+	ev_bend	4, 0, 35
+	ev_at	18
+	ev_bend	4, 64, 37
+	ev_bend	4, 0, 39
+	ev_at	20
+	ev_bend	4, 64, 42
+	ev_at	22
+	ev_bend	4, 64, 46
+	ev_at	24
+	ev_bend	4, 64, 50
+	ev_at	26
+	ev_bend	4, 64, 54
+	ev_at	28
+	ev_bend	4, 64, 56
+	ev_bend	4, 0, 59
+	ev_at	30
+	ev_bend	4, 64, 61
+	ev_at	32
+	ev_bend	4, 64, 62
+	ev_at	34
+	ev_bend	4, 64, 63
+	ev_at	36
+	ev_bend	4, 0, 64
+	ev_at	43
+	ev_note	3, 72, 85, 10, 0, 1
+	ev_at	48
+	ev_note	0, 82, 39, 12, 0, 0
+	ev_at	48
+	ev_note	2, 67, 74, 8, 0, 1
+	ev_at	92
+	ev_note	3, 60, 79, 10, 0, 1
+	ev_at	95
+	ev_note	4, 72, 66, 36, 0, 1
 	ev_beat
-	ev_note 1, 38, 93, 91, 0, 1
-	ev_note 0, 82, 56, 13, 0, 0
-	ev_note 2, 55, 75, 11, 0, 1
-	ev_note 2, 60, 74, 10, 0, 1
-	ev_at 34
-	ev_bend 1, 64, 63
-	ev_bend 1, 64, 62
-	ev_at 36
-	ev_bend 1, 0, 62
-	ev_at 38
-	ev_bend 1, 0, 61
-	ev_at 40
-	ev_bend 1, 64, 60
-	ev_at 42
-	ev_bend 1, 64, 59
-	ev_at 43
-	ev_bend 1, 0, 59
-	ev_bend 1, 64, 58
-	ev_at 45
-	ev_bend 1, 0, 58
-	ev_at 47
-	ev_bend 1, 0, 57
-	ev_at 47
-	ev_note 3, 67, 77, 8, 0, 1
-	ev_at 48
-	ev_note 0, 82, 29, 11, 0, 0
-	ev_at 48
-	ev_note 2, 67, 70, 7, 0, 1
-	ev_at 53	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x562f..+0x56ab
-	ev_bend 1, 0, 56
-	ev_at 55
-	ev_bend 1, 64, 55
-	ev_bend 1, 0, 55
-	ev_at 57
-	ev_bend 1, 0, 54
-	ev_at 59
-	ev_bend 1, 64, 53
-	ev_at 61
-	ev_bend 1, 0, 53
-	ev_at 63
-	ev_bend 1, 0, 52
-	ev_bend 1, 64, 50
-	ev_at 65
-	ev_bend 1, 0, 49
-	ev_at 67
-	ev_bend 1, 64, 47
-	ev_at 69
-	ev_bend 1, 0, 45
-	ev_at 71
-	ev_bend 1, 64, 40
-	ev_at 73
-	ev_bend 1, 0, 35
-	ev_bend 1, 0, 29
-	ev_at 74
-	ev_bend 1, 0, 25
-	ev_at 77
-	ev_bend 1, 0, 19
-	ev_at 78
-	ev_bend 1, 0, 14
-	ev_at 80
-	ev_bend 1, 0, 8
-	ev_at 82
-	ev_bend 1, 0, 5
-	ev_at 84
-	ev_bend 4, 64, 60
-	ev_at 86
-	ev_bend 1, 64, 37
-	ev_at 86
-	ev_bend 4, 64, 56
-	ev_at 88
-	ev_bend 1, 0, 63
-	ev_at 88
-	ev_bend 4, 64, 52
-	ev_at 90
-	ev_bend 1, 0, 64
-	ev_at 90
-	ev_bend 4, 64, 45
-	ev_at 92
-	ev_bend 4, 64, 38
-	ev_bend 4, 0, 32
-	ev_note 4, 67, 68, 102, 2, 1
-	ev_at 93
-	ev_bend 4, 0, 27
-	ev_at 95
-	ev_bend 4, 64, 25
+	ev_note	1, 38, 93, 91, 0, 1
+	ev_note	0, 82, 56, 13, 0, 0
+	ev_note	2, 55, 75, 11, 0, 1
+	ev_note	2, 60, 74, 10, 0, 1
+	ev_at	34
+	ev_bend	1, 64, 63
+	ev_bend	1, 64, 62
+	ev_at	36
+	ev_bend	1, 0, 62
+	ev_at	38
+	ev_bend	1, 0, 61
+	ev_at	40
+	ev_bend	1, 64, 60
+	ev_at	42
+	ev_bend	1, 64, 59
+	ev_at	43
+	ev_bend	1, 0, 59
+	ev_bend	1, 64, 58
+	ev_at	45
+	ev_bend	1, 0, 58
+	ev_at	47
+	ev_bend	1, 0, 57
+	ev_at	47
+	ev_note	3, 67, 77, 8, 0, 1
+	ev_at	48
+	ev_note	0, 82, 29, 11, 0, 0
+	ev_at	48
+	ev_note	2, 67, 70, 7, 0, 1
+	ev_at	53
+	ev_bend	1, 0, 56
+	ev_at	55
+	ev_bend	1, 64, 55
+	ev_bend	1, 0, 55
+	ev_at	57
+	ev_bend	1, 0, 54
+	ev_at	59
+	ev_bend	1, 64, 53
+	ev_at	61
+	ev_bend	1, 0, 53
+	ev_at	63
+	ev_bend	1, 0, 52
+	ev_bend	1, 64, 50
+	ev_at	65
+	ev_bend	1, 0, 49
+	ev_at	67
+	ev_bend	1, 64, 47
+	ev_at	69
+	ev_bend	1, 0, 45
+	ev_at	71
+	ev_bend	1, 64, 40
+	ev_at	73
+	ev_bend	1, 0, 35
+	ev_bend	1, 0, 29
+	ev_at	74
+	ev_bend	1, 0, 25
+	ev_at	77
+	ev_bend	1, 0, 19
+	ev_at	78
+	ev_bend	1, 0, 14
+	ev_at	80
+	ev_bend	1, 0, 8
+	ev_at	82
+	ev_bend	1, 0, 5
+	ev_at	84
+	ev_bend	4, 64, 60
+	ev_at	86
+	ev_bend	1, 64, 37
+	ev_at	86
+	ev_bend	4, 64, 56
+	ev_at	88
+	ev_bend	1, 0, 63
+	ev_at	88
+	ev_bend	4, 64, 52
+	ev_at	90
+	ev_bend	1, 0, 64
+	ev_at	90
+	ev_bend	4, 64, 45
+	ev_at	92
+	ev_bend	4, 64, 38
+	ev_bend	4, 0, 32
+	ev_note	4, 67, 68, 102, 2, 1
+	ev_at	93
+	ev_bend	4, 0, 27
+	ev_at	95
+	ev_bend	4, 64, 25
 	ev_beat
-	.byte 0x95	# bytes 0..0 of `ev_note`
-	.byte 0x40, 0x3c, 0x28, 0x09, 0x01	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x473e..+0x4797; bytes 1..5 of `ev_note`
-	ev_note 5, 67, 60, 39, 9, 1
-	ev_note 5, 72, 56, 42, 9, 1
-	ev_note 6, 55, 71, 32, 0, 1
-	ev_note 6, 67, 70, 32, 0, 1
-	ev_note 6, 62, 71, 32, 0, 1
-	ev_note 1, 36, 83, 65, 4, 1
-	ev_note 5, 60, 81, 11, 0, 1
-	ev_note 5, 55, 82, 12, 0, 1
-	ev_note 5, 48, 83, 11, 0, 1
-	ev_note 0, 82, 64, 14, 0, 0
-	ev_note 7, 87, 110, 18, 0, 0
-	ev_note 2, 48, 83, 14, 0, 1
-	ev_note 2, 60, 93, 12, 0, 1
-	ev_note 3, 60, 90, 11, 0, 1
-	ev_at 5	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x479d..+0x4810
-	ev_bend 4, 0, 36
-	ev_at 7
-	ev_bend 4, 64, 45
-	ev_at 9
-	ev_bend 4, 64, 52
-	ev_at 11
-	ev_bend 4, 64, 54
-	ev_at 13
-	ev_bend 4, 0, 55
-	ev_at 15
-	ev_bend 4, 64, 55
-	ev_bend 4, 0, 56
-	ev_at 17
-	ev_bend 4, 64, 56
-	ev_at 19
-	ev_bend 4, 64, 57
-	ev_at 20
-	ev_bend 4, 0, 58
-	ev_at 22
-	ev_bend 4, 64, 59
-	ev_at 23
-	ev_note 3, 60, 73, 10, 0, 1
-	ev_at 24
-	ev_bend 4, 64, 60
-	ev_bend 4, 0, 62
-	ev_at 26
-	ev_bend 4, 64, 62
-	ev_at 34
-	ev_bend 4, 64, 63
-	ev_at 40
-	ev_bend 4, 0, 64
-	ev_at 46
-	ev_note 3, 60, 81, 11, 0, 1
-	ev_at 48
-	ev_note 6, 55, 70, 33, 0, 1
-	ev_note 6, 62, 70, 32, 0, 1
-	ev_note 6, 67, 70, 32, 0, 1
-	ev_note 0, 82, 33, 11, 0, 0
-	ev_at 48
-	ev_note 7, 87, 98, 48, 0, 0
-	ev_at 48
-	ev_note 2, 60, 76, 7, 0, 1
-	ev_beat	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x4817..+0x48fa
-	ev_note 6, 67, 67, 33, 0, 1
-	ev_note 6, 55, 67, 33, 0, 1
-	ev_note 6, 60, 67, 36, 0, 1
-	ev_note 0, 82, 50, 11, 0, 0
-	ev_note 2, 67, 76, 7, 0, 1
-	ev_at 41
-	ev_note 0, 83, 69, 68, 0, 0
-	ev_at 48
-	ev_note 6, 55, 69, 33, 0, 1
-	ev_note 6, 67, 65, 34, 0, 1
-	ev_note 6, 62, 66, 34, 0, 1
-	ev_note 0, 82, 61, 15, 0, 0
-	ev_at 48
-	ev_note 2, 48, 75, 14, 0, 1
-	ev_note 2, 60, 100, 12, 0, 1
-	ev_at 52
-	ev_note 3, 67, 69, 8, 0, 1
+	ev_note	5, 64, 60, 40, 9, 1
+	ev_note	5, 67, 60, 39, 9, 1
+	ev_note	5, 72, 56, 42, 9, 1
+	ev_note	6, 55, 71, 32, 0, 1
+	ev_note	6, 67, 70, 32, 0, 1
+	ev_note	6, 62, 71, 32, 0, 1
+	ev_note	1, 36, 83, 65, 4, 1
+	ev_note	5, 60, 81, 11, 0, 1
+	ev_note	5, 55, 82, 12, 0, 1
+	ev_note	5, 48, 83, 11, 0, 1
+	ev_note	0, 82, 64, 14, 0, 0
+	ev_note	7, 87, 110, 18, 0, 0
+	ev_note	2, 48, 83, 14, 0, 1
+	ev_note	2, 60, 93, 12, 0, 1
+	ev_note	3, 60, 90, 11, 0, 1
+	ev_at	5
+	ev_bend	4, 0, 36
+	ev_at	7
+	ev_bend	4, 64, 45
+	ev_at	9
+	ev_bend	4, 64, 52
+	ev_at	11
+	ev_bend	4, 64, 54
+	ev_at	13
+	ev_bend	4, 0, 55
+	ev_at	15
+	ev_bend	4, 64, 55
+	ev_bend	4, 0, 56
+	ev_at	17
+	ev_bend	4, 64, 56
+	ev_at	19
+	ev_bend	4, 64, 57
+	ev_at	20
+	ev_bend	4, 0, 58
+	ev_at	22
+	ev_bend	4, 64, 59
+	ev_at	23
+	ev_note	3, 60, 73, 10, 0, 1
+	ev_at	24
+	ev_bend	4, 64, 60
+	ev_bend	4, 0, 62
+	ev_at	26
+	ev_bend	4, 64, 62
+	ev_at	34
+	ev_bend	4, 64, 63
+	ev_at	40
+	ev_bend	4, 0, 64
+	ev_at	46
+	ev_note	3, 60, 81, 11, 0, 1
+	ev_at	48
+	ev_note	6, 55, 70, 33, 0, 1
+	ev_note	6, 62, 70, 32, 0, 1
+	ev_note	6, 67, 70, 32, 0, 1
+	ev_note	0, 82, 33, 11, 0, 0
+	ev_at	48
+	ev_note	7, 87, 98, 48, 0, 0
+	ev_at	48
+	ev_note	2, 60, 76, 7, 0, 1
 	ev_beat
-	ev_note 6, 55, 67, 34, 0, 1
-	ev_note 6, 62, 67, 33, 0, 1
-	ev_note 6, 67, 66, 34, 0, 1
-	ev_note 0, 82, 19, 11, 0, 0
-	ev_note 2, 60, 90, 9, 0, 1
-	ev_note 3, 67, 85, 12, 0, 1
-	ev_at 48
-	ev_note 6, 67, 62, 33, 0, 1
-	ev_note 6, 60, 61, 34, 0, 1
-	ev_note 6, 55, 61, 36, 0, 1
-	ev_note 0, 82, 41, 12, 0, 0
-	ev_at 48
-	ev_note 2, 60, 89, 10, 0, 1
+	ev_note	6, 67, 67, 33, 0, 1
+	ev_note	6, 55, 67, 33, 0, 1
+	ev_note	6, 60, 67, 36, 0, 1
+	ev_note	0, 82, 50, 11, 0, 0
+	ev_note	2, 67, 76, 7, 0, 1
+	ev_at	41
+	ev_note	0, 83, 69, 68, 0, 0
+	ev_at	48
+	ev_note	6, 55, 69, 33, 0, 1
+	ev_note	6, 67, 65, 34, 0, 1
+	ev_note	6, 62, 66, 34, 0, 1
+	ev_note	0, 82, 61, 15, 0, 0
+	ev_at	48
+	ev_note	2, 48, 75, 14, 0, 1
+	ev_note	2, 60, 100, 12, 0, 1
+	ev_at	52
+	ev_note	3, 67, 69, 8, 0, 1
 	ev_beat
-	ev_note 6, 55, 60, 32, 0, 1
-	ev_note 6, 67, 60, 33, 0, 1
-	ev_note 6, 62, 60, 34, 0, 1
-	ev_note 0, 82, 67, 14, 0, 0
-	ev_note 2, 55, 78, 10, 0, 1
-	ev_note 2, 67, 85, 9, 0, 1
-	ev_at 48
-	ev_note 6, 55, 60, 33, 0, 1
-	ev_note 6, 62, 61, 37, 0, 1
-	ev_note 6, 67, 61, 38, 0, 1
-	ev_note 0, 82, 35, 15, 0, 0
-	ev_at 48
-	ev_note 2, 60, 86, 10, 0, 1
-	ev_note 3, 60, 76, 13, 0, 1
-	ev_at 93	# stale tail of an earlier write; same bytes as 02custm6 Slot06 +0x4908..+0x4e46
-	ev_note 0, 89, 80, 120, 0, 0
+	ev_note	6, 55, 67, 34, 0, 1
+	ev_note	6, 62, 67, 33, 0, 1
+	ev_note	6, 67, 66, 34, 0, 1
+	ev_note	0, 82, 19, 11, 0, 0
+	ev_note	2, 60, 90, 9, 0, 1
+	ev_note	3, 67, 85, 12, 0, 1
+	ev_at	48
+	ev_note	6, 67, 62, 33, 0, 1
+	ev_note	6, 60, 61, 34, 0, 1
+	ev_note	6, 55, 61, 36, 0, 1
+	ev_note	0, 82, 41, 12, 0, 0
+	ev_at	48
+	ev_note	2, 60, 89, 10, 0, 1
 	ev_beat
-	ev_note 6, 55, 64, 38, 0, 1
-	ev_note 6, 60, 65, 32, 0, 1
-	ev_note 0, 82, 57, 14, 0, 0
-	ev_note 2, 60, 105, 10, 0, 1
-	ev_at 1
-	ev_note 3, 60, 76, 11, 0, 1
-	ev_at 48
-	ev_note 6, 67, 61, 34, 0, 1
-	ev_note 6, 55, 60, 34, 0, 1
-	ev_note 6, 62, 60, 34, 0, 1
-	ev_note 0, 82, 64, 15, 0, 0
-	ev_at 48
-	ev_note 2, 67, 60, 4, 0, 1
-	ev_note 3, 67, 76, 12, 0, 1
+	ev_note	6, 55, 60, 32, 0, 1
+	ev_note	6, 67, 60, 33, 0, 1
+	ev_note	6, 62, 60, 34, 0, 1
+	ev_note	0, 82, 67, 14, 0, 0
+	ev_note	2, 55, 78, 10, 0, 1
+	ev_note	2, 67, 85, 9, 0, 1
+	ev_at	48
+	ev_note	6, 55, 60, 33, 0, 1
+	ev_note	6, 62, 61, 37, 0, 1
+	ev_note	6, 67, 61, 38, 0, 1
+	ev_note	0, 82, 35, 15, 0, 0
+	ev_at	48
+	ev_note	2, 60, 86, 10, 0, 1
+	ev_note	3, 60, 76, 13, 0, 1
+	ev_at	93
+	ev_note	0, 89, 80, 120, 0, 0
 	ev_beat
-	ev_note 6, 62, 59, 37, 0, 1
-	ev_note 6, 55, 59, 34, 0, 1
-	ev_note 6, 67, 59, 76, 0, 1
-	ev_note 0, 82, 46, 13, 0, 0
-	ev_note 2, 48, 73, 15, 0, 1
-	ev_note 2, 60, 90, 12, 0, 1
-	ev_at 48
-	ev_note 6, 55, 57, 23, 0, 1
-	ev_note 6, 60, 50, 30, 0, 1
-	ev_note 0, 82, 42, 11, 0, 0
-	ev_at 48
-	ev_note 2, 60, 93, 12, 0, 1
-	ev_at 50
-	ev_note 3, 60, 70, 9, 0, 1
-	ev_at 52
-	ev_note 4, 60, 65, 16, 0, 1
+	ev_note	6, 55, 64, 38, 0, 1
+	ev_note	6, 60, 65, 32, 0, 1
+	ev_note	0, 82, 57, 14, 0, 0
+	ev_note	2, 60, 105, 10, 0, 1
+	ev_at	1
+	ev_note	3, 60, 76, 11, 0, 1
+	ev_at	48
+	ev_note	6, 67, 61, 34, 0, 1
+	ev_note	6, 55, 60, 34, 0, 1
+	ev_note	6, 62, 60, 34, 0, 1
+	ev_note	0, 82, 64, 15, 0, 0
+	ev_at	48
+	ev_note	2, 67, 60, 4, 0, 1
+	ev_note	3, 67, 76, 12, 0, 1
 	ev_beat
-	ev_note 6, 55, 49, 24, 0, 1
-	ev_note 6, 62, 46, 25, 0, 1
-	ev_note 6, 67, 47, 23, 0, 1
-	ev_note 1, 40, 85, 76, 0, 1
-	ev_note 0, 82, 62, 13, 0, 0
-	ev_note 2, 72, 100, 13, 0, 1
-	ev_note 2, 55, 74, 10, 0, 1
-	ev_note 3, 60, 74, 13, 0, 1
-	ev_at 5
-	ev_note 4, 67, 52, 29, 0, 1
-	ev_at 45
-	ev_note 4, 60, 55, 18, 0, 1
-	ev_at 46
-	ev_note 3, 67, 72, 8, 0, 1
-	ev_at 48
-	ev_note 6, 55, 46, 30, 0, 1
-	ev_note 6, 62, 44, 32, 0, 1
-	ev_note 6, 67, 41, 72, 0, 1
-	ev_note 0, 82, 39, 10, 0, 0
-	ev_at 48
-	ev_note 2, 60, 89, 9, 0, 1
-	ev_at 64
-	ev_note 1, 41, 84, 69, 0, 1
-	ev_at 91
-	ev_note 4, 67, 67, 39, 0, 1
+	ev_note	6, 62, 59, 37, 0, 1
+	ev_note	6, 55, 59, 34, 0, 1
+	ev_note	6, 67, 59, 76, 0, 1
+	ev_note	0, 82, 46, 13, 0, 0
+	ev_note	2, 48, 73, 15, 0, 1
+	ev_note	2, 60, 90, 12, 0, 1
+	ev_at	48
+	ev_note	6, 55, 57, 23, 0, 1
+	ev_note	6, 60, 50, 30, 0, 1
+	ev_note	0, 82, 42, 11, 0, 0
+	ev_at	48
+	ev_note	2, 60, 93, 12, 0, 1
+	ev_at	50
+	ev_note	3, 60, 70, 9, 0, 1
+	ev_at	52
+	ev_note	4, 60, 65, 16, 0, 1
 	ev_beat
-	ev_note 6, 60, 41, 28, 0, 1
-	ev_note 6, 55, 41, 23, 0, 1
-	ev_note 0, 82, 53, 15, 0, 0
-	ev_note 2, 48, 73, 14, 0, 1
-	ev_note 2, 67, 71, 7, 0, 1
-	ev_at 1
-	ev_note 3, 67, 81, 10, 0, 1
-	ev_at 32
-	ev_note 1, 43, 79, 51, 0, 1
-	ev_at 38
-	ev_note 4, 69, 58, 16, 0, 1
-	ev_at 47
-	ev_note 3, 60, 80, 10, 0, 1
-	ev_at 48
-	ev_note 6, 55, 33, 25, 0, 1
-	ev_note 6, 62, 36, 22, 0, 1
-	ev_note 6, 67, 31, 15, 0, 1
-	ev_note 0, 82, 36, 9, 0, 0
-	ev_at 48
-	ev_note 2, 60, 88, 10, 0, 1
-	ev_at 78
-	ev_bend 4, 64, 62
-	ev_bend 4, 0, 61
-	ev_at 80
-	ev_bend 4, 64, 59
-	ev_at 82
-	ev_bend 4, 0, 58
-	ev_at 84
-	ev_bend 4, 0, 57
-	ev_at 86
-	ev_bend 4, 64, 55
-	ev_at 88
-	ev_bend 1, 0, 63
-	ev_bend 1, 64, 60
-	ev_at 88
-	ev_bend 4, 0, 55
-	ev_bend 4, 64, 53
-	ev_at 90
-	ev_bend 1, 64, 57
-	ev_at 90
-	ev_bend 4, 64, 52
-	ev_note 4, 72, 73, 76, 2, 1
-	ev_at 92
-	ev_bend 1, 64, 54
-	ev_at 92
-	ev_bend 4, 0, 51
-	ev_at 94
-	ev_bend 1, 64, 49
-	ev_at 94
-	ev_bend 4, 0, 50
+	ev_note	6, 55, 49, 24, 0, 1
+	ev_note	6, 62, 46, 25, 0, 1
+	ev_note	6, 67, 47, 23, 0, 1
+	ev_note	1, 40, 85, 76, 0, 1
+	ev_note	0, 82, 62, 13, 0, 0
+	ev_note	2, 72, 100, 13, 0, 1
+	ev_note	2, 55, 74, 10, 0, 1
+	ev_note	3, 60, 74, 13, 0, 1
+	ev_at	5
+	ev_note	4, 67, 52, 29, 0, 1
+	ev_at	45
+	ev_note	4, 60, 55, 18, 0, 1
+	ev_at	46
+	ev_note	3, 67, 72, 8, 0, 1
+	ev_at	48
+	ev_note	6, 55, 46, 30, 0, 1
+	ev_note	6, 62, 44, 32, 0, 1
+	ev_note	6, 67, 41, 72, 0, 1
+	ev_note	0, 82, 39, 10, 0, 0
+	ev_at	48
+	ev_note	2, 60, 89, 9, 0, 1
+	ev_at	64
+	ev_note	1, 41, 84, 69, 0, 1
+	ev_at	91
+	ev_note	4, 67, 67, 39, 0, 1
 	ev_beat
-	ev_note 6, 60, 28, 29, 2, 1
-	ev_note 6, 67, 29, 28, 2, 1
-	ev_note 6, 55, 29, 29, 2, 1
-	ev_bend 1, 0, 45
-	ev_note 0, 82, 57, 14, 0, 0
-	ev_note 1, 48, 94, 84, 2, 1
-	ev_note 2, 48, 73, 14, 0, 1
-	ev_note 2, 67, 93, 10, 0, 1
-	ev_at 2
-	ev_bend 1, 64, 40
-	ev_bend 1, 0, 37
-	ev_at 2
-	ev_note 3, 60, 85, 12, 0, 1
-	ev_at 5
-	ev_bend 1, 0, 34
-	ev_bend 1, 64, 31
-	ev_at 7
-	ev_bend 1, 0, 29
-	ev_at 21
-	ev_bend 1, 0, 32
-	ev_bend 1, 0, 33
-	ev_at 21
-	ev_bend 4, 64, 52
-	ev_at 23
-	ev_bend 4, 64, 53
-	ev_at 25
-	ev_bend 1, 0, 37
-	ev_at 25
-	ev_bend 4, 0, 54
-	ev_at 27
-	ev_bend 1, 64, 38
-	ev_at 27
-	ev_bend 4, 64, 54
-	ev_at 28
-	ev_bend 4, 0, 55
-	ev_at 29
-	ev_bend 1, 64, 40
-	ev_at 31
-	ev_bend 1, 64, 42
-	ev_bend 1, 0, 43
-	ev_at 35
-	ev_bend 1, 64, 44
-	ev_at 38
-	ev_bend 4, 0, 56
-	ev_at 40
-	ev_bend 4, 64, 56
-	ev_at 42
-	ev_bend 1, 0, 46
-	ev_at 42
-	ev_bend 4, 64, 57
-	ev_at 44
-	ev_bend 1, 0, 47
-	ev_at 44
-	ev_bend 4, 0, 58
-	ev_at 46
-	ev_bend 1, 64, 47
-	ev_at 46
-	ev_bend 4, 64, 58
-	ev_at 48
-	ev_note 0, 82, 34, 15, 0, 0
-	ev_at 48
-	ev_note 2, 60, 83, 10, 0, 1
-	ev_bend 4, 0, 59
-	ev_at 50
-	ev_bend 4, 64, 59
-	ev_bend 4, 64, 60
-	ev_at 52
-	ev_bend 1, 64, 48
-	ev_bend 1, 0, 49
-	ev_at 52
-	ev_bend 4, 0, 61
-	ev_at 53
-	ev_bend 4, 0, 62
-	ev_at 55
-	ev_bend 4, 64, 62
-	ev_at 57
-	ev_bend 4, 0, 63
-	ev_bend 4, 64, 63
-	ev_at 59
-	ev_bend 4, 0, 64
-	ev_at 66
-	ev_bend 1, 0, 52
-	ev_at 67
-	ev_bend 1, 0, 53
-	ev_at 69
-	ev_bend 1, 64, 53
-	ev_bend 1, 0, 54
-	ev_at 75
-	ev_bend 1, 64, 54
-	ev_at 87
-	ev_bend 1, 0, 55
-	ev_bend 1, 64, 55
-	ev_at 91
-	ev_bend 1, 64, 56
+	ev_note	6, 60, 41, 28, 0, 1
+	ev_note	6, 55, 41, 23, 0, 1
+	ev_note	0, 82, 53, 15, 0, 0
+	ev_note	2, 48, 73, 14, 0, 1
+	ev_note	2, 67, 71, 7, 0, 1
+	ev_at	1
+	ev_note	3, 67, 81, 10, 0, 1
+	ev_at	32
+	ev_note	1, 43, 79, 51, 0, 1
+	ev_at	38
+	ev_note	4, 69, 58, 16, 0, 1
+	ev_at	47
+	ev_note	3, 60, 80, 10, 0, 1
+	ev_at	48
+	ev_note	6, 55, 33, 25, 0, 1
+	ev_note	6, 62, 36, 22, 0, 1
+	ev_note	6, 67, 31, 15, 0, 1
+	ev_note	0, 82, 36, 9, 0, 0
+	ev_at	48
+	ev_note	2, 60, 88, 10, 0, 1
+	ev_at	78
+	ev_bend	4, 64, 62
+	ev_bend	4, 0, 61
+	ev_at	80
+	ev_bend	4, 64, 59
+	ev_at	82
+	ev_bend	4, 0, 58
+	ev_at	84
+	ev_bend	4, 0, 57
+	ev_at	86
+	ev_bend	4, 64, 55
+	ev_at	88
+	ev_bend	1, 0, 63
+	ev_bend	1, 64, 60
+	ev_at	88
+	ev_bend	4, 0, 55
+	ev_bend	4, 64, 53
+	ev_at	90
+	ev_bend	1, 64, 57
+	ev_at	90
+	ev_bend	4, 64, 52
+	ev_note	4, 72, 73, 76, 2, 1
+	ev_at	92
+	ev_bend	1, 64, 54
+	ev_at	92
+	ev_bend	4, 0, 51
+	ev_at	94
+	ev_bend	1, 64, 49
+	ev_at	94
+	ev_bend	4, 0, 50
 	ev_beat
-	ev_note 0, 82, 42, 14, 0, 0
-	ev_note 2, 60, 98, 9, 0, 1
-	ev_at 3
-	ev_bend 1, 64, 57
-	ev_at 10
-	ev_bend 1, 0, 59
-	ev_bend 1, 64, 59
-	ev_at 14
-	ev_bend 1, 0, 60
-	ev_bend 1, 64, 60
-	ev_at 16
-	ev_bend 1, 0, 61
-	ev_at 22
-	ev_bend 1, 64, 61
-	ev_at 24
-	ev_bend 1, 0, 62
-	ev_at 34
-	ev_bend 1, 64, 62
-	ev_at 39
-	ev_bend 1, 0, 63
-	ev_at 41
-	ev_bend 1, 64, 63
-	ev_at 46
-	ev_note 3, 67, 76, 9, 0, 1
-	ev_at 48
-	ev_note 5, 55, 56, 20, 0, 1
-	ev_note 5, 60, 60, 19, 0, 1
-	ev_note 0, 82, 57, 13, 0, 0
-	ev_at 48
-	ev_note 2, 55, 80, 10, 0, 1
-	ev_note 2, 67, 85, 8, 0, 1
-	ev_at 51
-	ev_bend 1, 0, 64
-	ev_at 94
-	ev_note 3, 67, 77, 10, 0, 1
+	ev_note	6, 60, 28, 29, 2, 1
+	ev_note	6, 67, 29, 28, 2, 1
+	ev_note	6, 55, 29, 29, 2, 1
+	ev_bend	1, 0, 45
+	ev_note	0, 82, 57, 14, 0, 0
+	ev_note	1, 48, 94, 84, 2, 1
+	ev_note	2, 48, 73, 14, 0, 1
+	ev_note	2, 67, 93, 10, 0, 1
+	ev_at	2
+	ev_bend	1, 64, 40
+	ev_bend	1, 0, 37
+	ev_at	2
+	ev_note	3, 60, 85, 12, 0, 1
+	ev_at	5
+	ev_bend	1, 0, 34
+	ev_bend	1, 64, 31
+	ev_at	7
+	ev_bend	1, 0, 29
+	ev_at	21
+	ev_bend	1, 0, 32
+	ev_bend	1, 0, 33
+	ev_at	21
+	ev_bend	4, 64, 52
+	ev_at	23
+	ev_bend	4, 64, 53
+	ev_at	25
+	ev_bend	1, 0, 37
+	ev_at	25
+	ev_bend	4, 0, 54
+	ev_at	27
+	ev_bend	1, 64, 38
+	ev_at	27
+	ev_bend	4, 64, 54
+	ev_at	28
+	ev_bend	4, 0, 55
+	ev_at	29
+	ev_bend	1, 64, 40
+	ev_at	31
+	ev_bend	1, 64, 42
+	ev_bend	1, 0, 43
+	ev_at	35
+	ev_bend	1, 64, 44
+	ev_at	38
+	ev_bend	4, 0, 56
+	ev_at	40
+	ev_bend	4, 64, 56
+	ev_at	42
+	ev_bend	1, 0, 46
+	ev_at	42
+	ev_bend	4, 64, 57
+	ev_at	44
+	ev_bend	1, 0, 47
+	ev_at	44
+	ev_bend	4, 0, 58
+	ev_at	46
+	ev_bend	1, 64, 47
+	ev_at	46
+	ev_bend	4, 64, 58
+	ev_at	48
+	ev_note	0, 82, 34, 15, 0, 0
+	ev_at	48
+	ev_note	2, 60, 83, 10, 0, 1
+	ev_bend	4, 0, 59
+	ev_at	50
+	ev_bend	4, 64, 59
+	ev_bend	4, 64, 60
+	ev_at	52
+	ev_bend	1, 64, 48
+	ev_bend	1, 0, 49
+	ev_at	52
+	ev_bend	4, 0, 61
+	ev_at	53
+	ev_bend	4, 0, 62
+	ev_at	55
+	ev_bend	4, 64, 62
+	ev_at	57
+	ev_bend	4, 0, 63
+	ev_bend	4, 64, 63
+	ev_at	59
+	ev_bend	4, 0, 64
+	ev_at	66
+	ev_bend	1, 0, 52
+	ev_at	67
+	ev_bend	1, 0, 53
+	ev_at	69
+	ev_bend	1, 64, 53
+	ev_bend	1, 0, 54
+	ev_at	75
+	ev_bend	1, 64, 54
+	ev_at	87
+	ev_bend	1, 0, 55
+	ev_bend	1, 64, 55
+	ev_at	91
+	ev_bend	1, 64, 56
 	ev_beat
-	ev_note 5, 55, 57, 52, 4, 1
-	ev_note 5, 60, 57, 52, 4, 1
-	ev_note 0, 82, 33, 16, 0, 0
-	ev_note 2, 60, 84, 10, 0, 1
-	ev_at 43
-	ev_note 3, 72, 86, 10, 0, 1
-	ev_at 48
-	ev_note 0, 82, 37, 9, 0, 0
-	ev_at 48
-	ev_note 2, 60, 88, 10, 0, 1
-	ev_at 90
-	ev_note 3, 72, 85, 12, 0, 1
+	ev_note	0, 82, 42, 14, 0, 0
+	ev_note	2, 60, 98, 9, 0, 1
+	ev_at	3
+	ev_bend	1, 64, 57
+	ev_at	10
+	ev_bend	1, 0, 59
+	ev_bend	1, 64, 59
+	ev_at	14
+	ev_bend	1, 0, 60
+	ev_bend	1, 64, 60
+	ev_at	16
+	ev_bend	1, 0, 61
+	ev_at	22
+	ev_bend	1, 64, 61
+	ev_at	24
+	ev_bend	1, 0, 62
+	ev_at	34
+	ev_bend	1, 64, 62
+	ev_at	39
+	ev_bend	1, 0, 63
+	ev_at	41
+	ev_bend	1, 64, 63
+	ev_at	46
+	ev_note	3, 67, 76, 9, 0, 1
+	ev_at	48
+	ev_note	5, 55, 56, 20, 0, 1
+	ev_note	5, 60, 60, 19, 0, 1
+	ev_note	0, 82, 57, 13, 0, 0
+	ev_at	48
+	ev_note	2, 55, 80, 10, 0, 1
+	ev_note	2, 67, 85, 8, 0, 1
+	ev_at	51
+	ev_bend	1, 0, 64
+	ev_at	94
+	ev_note	3, 67, 77, 10, 0, 1
 	ev_beat
-	ev_note 0, 82, 56, 15, 0, 0
-	ev_note 2, 48, 76, 14, 0, 1
-	ev_note 2, 67, 87, 8, 0, 1
-	ev_at 40
-	ev_note 0, 83, 80, 98, 0, 0
-	ev_at 44
-	ev_note 3, 67, 76, 10, 0, 1
-	ev_at 48
-	ev_note 1, 48, 82, 59, 0, 1
-	ev_note 0, 82, 25, 10, 0, 0
-	ev_at 48
-	ev_note 2, 60, 89, 12, 0, 1
-	ev_at 95
-	ev_note 3, 67, 81, 11, 0, 1
+	ev_note	5, 55, 57, 52, 4, 1
+	ev_note	5, 60, 57, 52, 4, 1
+	ev_note	0, 82, 33, 16, 0, 0
+	ev_note	2, 60, 84, 10, 0, 1
+	ev_at	43
+	ev_note	3, 72, 86, 10, 0, 1
+	ev_at	48
+	ev_note	0, 82, 37, 9, 0, 0
+	ev_at	48
+	ev_note	2, 60, 88, 10, 0, 1
+	ev_at	90
+	ev_note	3, 72, 85, 12, 0, 1
 	ev_beat
-	ev_note 1, 43, 82, 49, 1, 1
-	ev_note 0, 82, 54, 14, 0, 0
-	ev_note 2, 60, 88, 9, 0, 1
-	ev_at 48
-	ev_note 0, 82, 57, 19, 0, 0
-	ev_at 48
-	ev_note 2, 55, 78, 9, 0, 1
-	ev_note 2, 67, 88, 8, 0, 1
-	ev_at 50
-	ev_note 3, 72, 95, 12, 0, 1
+	ev_note	0, 82, 56, 15, 0, 0
+	ev_note	2, 48, 76, 14, 0, 1
+	ev_note	2, 67, 87, 8, 0, 1
+	ev_at	40
+	ev_note	0, 83, 80, 98, 0, 0
+	ev_at	44
+	ev_note	3, 67, 76, 10, 0, 1
+	ev_at	48
+	ev_note	1, 48, 82, 59, 0, 1
+	ev_note	0, 82, 25, 10, 0, 0
+	ev_at	48
+	ev_note	2, 60, 89, 12, 0, 1
+	ev_at	95
+	ev_note	3, 67, 81, 11, 0, 1
 	ev_beat
-	ev_note 0, 82, 35, 13, 0, 0
-	ev_note 2, 60, 87, 11, 0, 1
-	ev_at 42
-	ev_note 4, 67, 61, 26, 0, 1
-	ev_at 48
-	ev_note 0, 82, 36, 10, 0, 0
-	ev_at 48
-	ev_note 2, 60, 81, 16, 0, 1
-	ev_at 54
-	ev_note 3, 67, 71, 10, 0, 1
-	ev_at 81
-	ev_bend 4, 0, 62
-	ev_at 82
-	ev_bend 4, 0, 60
-	ev_at 84
-	ev_bend 4, 64, 58
-	ev_at 86
-	ev_bend 4, 64, 56
-	ev_bend 4, 0, 54
-	ev_at 88
-	ev_bend 4, 64, 50
-	ev_at 90
-	ev_bend 4, 64, 46
-	ev_at 92
-	ev_note 4, 74, 76, 97, 0, 1
-	ev_bend 4, 64, 42
-	ev_at 94
-	ev_bend 4, 64, 38
+	ev_note	1, 43, 82, 49, 1, 1
+	ev_note	0, 82, 54, 14, 0, 0
+	ev_note	2, 60, 88, 9, 0, 1
+	ev_at	48
+	ev_note	0, 82, 57, 19, 0, 0
+	ev_at	48
+	ev_note	2, 55, 78, 9, 0, 1
+	ev_note	2, 67, 88, 8, 0, 1
+	ev_at	50
+	ev_note	3, 72, 95, 12, 0, 1
 	ev_beat
-	ev_note 1, 40, 93, 90, 0, 1
-	ev_note 0, 82, 56, 16, 0, 0
-	ev_note 2, 48, 71, 16, 0, 1
-	ev_note 2, 72, 95, 11, 0, 1
-	ev_bend 4, 0, 36
-	ev_bend 4, 64, 34
-	ev_at 2
-	ev_bend 4, 0, 34
-	ev_at 3
-	ev_note 3, 67, 74, 10, 0, 1
-	ev_at 9
-	ev_bend 4, 0, 36
-	ev_bend 4, 0, 37
-	ev_at 19
-	ev_bend 4, 64, 42
-	ev_at 21
-	ev_bend 4, 64, 45
-	ev_at 23
-	ev_bend 4, 0, 49
-	ev_at 25
-	ev_bend 4, 64, 52
-	ev_at 27
-	ev_bend 4, 0, 54
-	ev_bend 4, 64, 55
-	ev_at 29
-	ev_bend 4, 0, 56
-	ev_at 31
-	ev_bend 4, 64, 56
-	ev_at 36
-	ev_bend 4, 64, 57
-	ev_bend 4, 0, 58
-	ev_at 38
-	ev_bend 4, 64, 58
-	ev_at 40
-	ev_bend 4, 64, 59
-	ev_at 42
-	ev_bend 4, 0, 61
-	ev_at 44
-	ev_bend 4, 0, 62
-	ev_at 45
-	ev_note 3, 72, 87, 10, 0, 1
-	ev_at 46
-	ev_bend 4, 64, 62
-	ev_bend 4, 0, 63
-	ev_at 48
-	ev_note 0, 82, 39, 12, 0, 0
-	ev_at 48
-	ev_note 2, 60, 89, 11, 0, 1
-	ev_bend 4, 64, 63
-	ev_at 50
-	ev_bend 4, 0, 64
-	ev_at 92
-	ev_note 4, 72, 71, 85, 0, 1
-	ev_at 93
-	ev_note 3, 67, 93, 9, 0, 1
+	ev_note	0, 82, 35, 13, 0, 0
+	ev_note	2, 60, 87, 11, 0, 1
+	ev_at	42
+	ev_note	4, 67, 61, 26, 0, 1
+	ev_at	48
+	ev_note	0, 82, 36, 10, 0, 0
+	ev_at	48
+	ev_note	2, 60, 81, 16, 0, 1
+	ev_at	54
+	ev_note	3, 67, 71, 10, 0, 1
+	ev_at	81
+	ev_bend	4, 0, 62
+	ev_at	82
+	ev_bend	4, 0, 60
+	ev_at	84
+	ev_bend	4, 64, 58
+	ev_at	86
+	ev_bend	4, 64, 56
+	ev_bend	4, 0, 54
+	ev_at	88
+	ev_bend	4, 64, 50
+	ev_at	90
+	ev_bend	4, 64, 46
+	ev_at	92
+	ev_note	4, 74, 76, 97, 0, 1
+	ev_bend	4, 64, 42
+	ev_at	94
+	ev_bend	4, 64, 38
 	ev_beat
-	ev_note 1, 38, 93, 91, 0, 1
-	ev_note 0, 82, 56, 13, 0, 0
-	ev_note 2, 48, 88, 15, 0, 1
-	ev_note 2, 67, 80, 9, 0, 1
-	ev_at 20
-	ev_note 3, 67, 86, 9, 0, 1
-	ev_at 34
-	ev_bend 1, 64, 63
-	ev_bend 1, 64, 62
-	ev_at 36
-	ev_bend 1, 0, 62
-	ev_at 38
-	ev_bend 1, 0, 61
-	ev_at 40
-	ev_bend 1, 64, 60
-	ev_at 42
-	ev_bend 1, 64, 59
-	ev_at 43
-	ev_bend 1, 0, 59
-	ev_bend 1, 64, 58
-	ev_at 44
-	ev_note 3, 67, 90, 9, 0, 1
-	ev_at 45
-	ev_bend 1, 0, 58
-	ev_at 47
-	ev_bend 1, 0, 57
-	ev_at 48
-	ev_note 0, 82, 29, 11, 0, 0
-	ev_at 48
-	ev_note 2, 60, 94, 13, 0, 1
-	ev_at 53
-	ev_bend 1, 0, 56
-	ev_at 55
-	ev_bend 1, 64, 55
-	ev_bend 1, 0, 55
-	ev_at 57
-	ev_bend 1, 0, 54
-	ev_at 59
-	ev_bend 1, 64, 53
-	ev_at 61
-	ev_bend 1, 0, 53
-	ev_at 63
-	ev_bend 1, 0, 52
-	ev_bend 1, 64, 50
-	ev_at 65
-	ev_bend 1, 0, 49
-	ev_at 67
-	ev_bend 1, 64, 47
-	ev_at 69
-	ev_bend 1, 0, 45
-	ev_at 71
-	ev_bend 1, 64, 40
-	ev_at 73
-	ev_bend 1, 0, 35
-	ev_bend 1, 0, 29
-	ev_at 74
-	ev_bend 1, 0, 25
-	ev_at 77
-	ev_bend 1, 0, 19
-	ev_at 78
-	ev_bend 1, 0, 14
-	ev_at 80
-	ev_bend 1, 0, 8
-	ev_at 82
-	ev_bend 1, 0, 5
-	ev_at 86
-	ev_bend 1, 64, 37
-	ev_at 88
-	ev_bend 1, 0, 63
-	ev_at 90
-	ev_bend 1, 0, 64
+	ev_note	1, 40, 93, 90, 0, 1
+	ev_note	0, 82, 56, 16, 0, 0
+	ev_note	2, 48, 71, 16, 0, 1
+	ev_note	2, 72, 95, 11, 0, 1
+	ev_bend	4, 0, 36
+	ev_bend	4, 64, 34
+	ev_at	2
+	ev_bend	4, 0, 34
+	ev_at	3
+	ev_note	3, 67, 74, 10, 0, 1
+	ev_at	9
+	ev_bend	4, 0, 36
+	ev_bend	4, 0, 37
+	ev_at	19
+	ev_bend	4, 64, 42
+	ev_at	21
+	ev_bend	4, 64, 45
+	ev_at	23
+	ev_bend	4, 0, 49
+	ev_at	25
+	ev_bend	4, 64, 52
+	ev_at	27
+	ev_bend	4, 0, 54
+	ev_bend	4, 64, 55
+	ev_at	29
+	ev_bend	4, 0, 56
+	ev_at	31
+	ev_bend	4, 64, 56
+	ev_at	36
+	ev_bend	4, 64, 57
+	ev_bend	4, 0, 58
+	ev_at	38
+	ev_bend	4, 64, 58
+	ev_at	40
+	ev_bend	4, 64, 59
+	ev_at	42
+	ev_bend	4, 0, 61
+	ev_at	44
+	ev_bend	4, 0, 62
+	ev_at	45
+	ev_note	3, 72, 87, 10, 0, 1
+	ev_at	46
+	ev_bend	4, 64, 62
+	ev_bend	4, 0, 63
+	ev_at	48
+	ev_note	0, 82, 39, 12, 0, 0
+	ev_at	48
+	ev_note	2, 60, 89, 11, 0, 1
+	ev_bend	4, 64, 63
+	ev_at	50
+	ev_bend	4, 0, 64
+	ev_at	92
+	ev_note	4, 72, 71, 85, 0, 1
+	ev_at	93
+	ev_note	3, 67, 93, 9, 0, 1
+	ev_beat
+	ev_note	1, 38, 93, 91, 0, 1
+	ev_note	0, 82, 56, 13, 0, 0
+	ev_note	2, 48, 88, 15, 0, 1
+	ev_note	2, 67, 80, 9, 0, 1
+	ev_at	20
+	ev_note	3, 67, 86, 9, 0, 1
+	ev_at	34
+	ev_bend	1, 64, 63
+	ev_bend	1, 64, 62
+	ev_at	36
+	ev_bend	1, 0, 62
+	ev_at	38
+	ev_bend	1, 0, 61
+	ev_at	40
+	ev_bend	1, 64, 60
+	ev_at	42
+	ev_bend	1, 64, 59
+	ev_at	43
+	ev_bend	1, 0, 59
+	ev_bend	1, 64, 58
+	ev_at	44
+	ev_note	3, 67, 90, 9, 0, 1
+	ev_at	45
+	ev_bend	1, 0, 58
+	ev_at	47
+	ev_bend	1, 0, 57
+	ev_at	48
+	ev_note	0, 82, 29, 11, 0, 0
+	ev_at	48
+	ev_note	2, 60, 94, 13, 0, 1
+	ev_at	53
+	ev_bend	1, 0, 56
+	ev_at	55
+	ev_bend	1, 64, 55
+	ev_bend	1, 0, 55
+	ev_at	57
+	ev_bend	1, 0, 54
+	ev_at	59
+	ev_bend	1, 64, 53
+	ev_at	61
+	ev_bend	1, 0, 53
+	ev_at	63
+	ev_bend	1, 0, 52
+	ev_bend	1, 64, 50
+	ev_at	65
+	ev_bend	1, 0, 49
+	ev_at	67
+	ev_bend	1, 64, 47
+	ev_at	69
+	ev_bend	1, 0, 45
+	ev_at	71
+	ev_bend	1, 64, 40
+	ev_at	73
+	ev_bend	1, 0, 35
+	ev_bend	1, 0, 29
+	ev_at	74
+	ev_bend	1, 0, 25
+	ev_at	77
+	ev_bend	1, 0, 19
+	ev_at	78
+	ev_bend	1, 0, 14
+	ev_at	80
+	ev_bend	1, 0, 8
+	ev_at	82
+	ev_bend	1, 0, 5
+	ev_at	86
+	ev_bend	1, 64, 37
+	ev_at	88
+	ev_bend	1, 0, 63
+	ev_at	90
+	ev_bend	1, 0, 64
 	ev_end
-	.byte 0x0d, 0x00	# bytes 0..1 of `STREAM_HEADER`
 	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x1b435, 0x1b453	# stale bytes of an earlier write
+	.incbin_range "baserom/customdata/02custm6.ic21", 0x1b433, 0x1b453	# stale bytes of an earlier write
 	ev_beat	# stale tail of an earlier write; same bytes as 01custm1 Slot10 +0x1679..+0x237f
 	ev_beat
 	ev_beat
@@ -2638,8 +2636,7 @@
 	ev_at 87
 	ev_bend 0, 0, 64
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x1c159, 0x1c15c	# stale bytes of an earlier write
+	.byte 0x07, 0x00, 0x10	# [INFERENCE] the last 3 data byte(s) of an event of an earlier, longer stream; its status byte lies under the newer stream that ends just before
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	79
 	ev_note	3, 64, 82, 21, 0, 80
@@ -5200,9 +5197,7 @@
 	ev_cc	4, 11, 89
 	ev_cc	5, 11, 93
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm6.ic21", 0x1e56c, 0x1e570	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 19, 0x838	# stale start of a stream of an earlier write, cut after 0x833 of its 0x838 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	0, 36, 99, 12, 0, 0
 	ev_note	7, 18, 82, 12, 0, 0
@@ -5890,10 +5885,11 @@
 	ev_cc	4, 11, 64
 	ev_at	88
 	ev_cc	3, 11, 64
+	# stale events of an earlier write: the last one runs into the next piece, which starts there on a line boundary of the donor record
 	ev_at	92
 	ev_cc	2, 64, 0
-	ev_end	# stale tail of an earlier write; same bytes as 01custm5 Slot01 +0x4050..+0x4d1e
-	TPAD_HEADER 0xccd
+	ev_end
+	TPAD_HEADER 0xccd	# stale tail of an earlier write; same bytes as 01custm5 Slot01 +0x4051..+0x4d1e
 	TPAD_BANK "  User Bank 2   "
 	TPAD_PAD "  Piano Minuet  ", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x2e0
 	PART_SETUP 0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

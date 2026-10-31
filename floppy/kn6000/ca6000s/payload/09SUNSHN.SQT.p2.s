@@ -1016,8 +1016,39 @@ P_09SUNSHN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SUNSHN.sqt.p2.ref", 0x118c, 116
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 80, 84, 54, 54, 0
+	k5_note	0x90, 82, 76, 66, 49, 0
+	k5_note	0x90, 83, 79, 71, 51, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 79, 54, 75, 1
+	k5_note	0x90, 91, 88, 56, 84, 1
+	k5_note	0x90, 91, 84, 64, 44, 4
+	k5_note	0x90, 94, 91, 41, 89, 2
+	sq_beat
+	sq_beat
+	k5_note	0x90, 83, 81, 51, 85, 1
+	sq_beat
+	k5_note	0x90, 86, 89, 60, 93, 0
+	sq_beat
+	k5_note	0x90, 84, 88, 52, 55, 0
+	k5_note	0x90, 86, 79, 69, 49, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 84, 68, 91, 1
+	k5_note	0x90, 90, 88, 56, 2, 3
+	k5_note	0x90, 90, 79, 57, 81, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 81, 55, 72, 1
+	k5_note	0x90, 91, 77, 51, 73, 1
+	sq_beat
+	.byte	144, 88, 86, 69, 95	; the first 5 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 20	; cell 19: song 1 track 2, 1 of 9
 	sq_sys	0, 0x85
 	sq_beat
@@ -1615,8 +1646,71 @@ P_09SUNSHN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SUNSHN.sqt.p2.ref", 0x1a26, 218
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	93, 2	; data bytes of an event cut at the start
+	k5_note	0x90, 90, 64, 61, 0, 2
+	sq_beat
+	sq_beat
+	k5_note	0x90, 91, 57, 66, 78, 1
+	sq_beat
+	k5_note	0x90, 88, 65, 72, 90, 0
+	sq_beat
+	k5_note	0x90, 85, 64, 45, 26, 1
+	k5_note	0x90, 86, 55, 60, 25, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 64, 69, 84, 2
+	k5_note	0x90, 89, 60, 79, 83, 1
+	k5_note	0x90, 89, 55, 71, 78, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 84, 53, 71, 80, 1
+	k5_note	0x90, 85, 57, 81, 75, 1
+	sq_beat
+	k5_note	0x90, 86, 62, 79, 91, 0
+	sq_beat
+	k5_note	0x90, 80, 60, 61, 19, 1
+	k5_note	0x90, 81, 55, 69, 16, 1
+	k5_note	0x90, 81, 52, 55, 12, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 67, 72, 76, 2
+	k5_note	0x90, 90, 64, 84, 87, 1
+	k5_note	0x90, 91, 60, 84, 87, 4
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 57, 96, 71, 1
+	sq_beat
+	k5_note	0x90, 87, 65, 100, 90, 0
+	sq_beat
+	k5_note	0x90, 82, 55, 88, 95, 0
+	k5_note	0x90, 83, 64, 90, 95, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 64, 88, 76, 2
+	k5_note	0x90, 90, 60, 90, 85, 1
+	k5_note	0x90, 90, 55, 80, 81, 1
+	sq_beat
+	sq_beat
+	k5_note	0x90, 89, 57, 92, 69, 1
+	k5_note	0x90, 90, 53, 75, 71, 1
+	sq_beat
+	k5_note	0x90, 86, 62, 96, 92, 0
+	sq_beat
+	k5_note	0x90, 83, 60, 72, 10, 1
+	k5_note	0x90, 83, 55, 86, 3, 1
+	k5_note	0x90, 83, 52, 72, 0, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	.byte	144, 91, 79, 66	; the first 4 bytes of a KN5000-order event, cut by the end
 	sq_cell	0x80, 0, 29	; cell 28: song 1 track 3, 1 of 6
 	sq_sys	0, 0x85
 	sq_beat
@@ -2120,8 +2214,15 @@ P_09SUNSHN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SUNSHN.sqt.p2.ref", 0x20f0, 16
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	72, 75, 14, 3	; data bytes of an event cut at the start
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 90, 67, 84, 51, 2
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 35	; cell 34: song 1 track 4, 1 of 2
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 48, 62, 34, 3
@@ -2983,8 +3084,95 @@ P_09SUNSHN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SUNSHN.sqt.p2.ref", 0x2a44, 188
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	k5_note	0x90, 0, 69, 105, 11, 0
+	k5_note	0x90, 2, 65, 90, 10, 0
+	k5_note	0x90, 34, 67, 108, 10, 0
+	k5_note	0x90, 36, 64, 98, 10, 0
+	k5_note	0x90, 65, 65, 103, 9, 0
+	k5_note	0x90, 67, 62, 96, 9, 0
+	k5_note	0x90, 95, 64, 105, 87, 0
+	k5_note	0x90, 95, 60, 90, 87, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	k5_note	0x90, 26, 69, 98, 7, 0
+	k5_note	0x90, 36, 65, 96, 9, 0
+	k5_note	0x90, 45, 69, 93, 9, 0
+	k5_note	0x90, 70, 69, 92, 8, 0
+	k5_note	0x90, 82, 65, 66, 15, 0
+	k5_note	0x90, 91, 69, 96, 13, 0
+	sq_beat
+	k5_note	0x90, 27, 67, 100, 12, 0
+	k5_note	0x90, 27, 64, 80, 12, 0
+	k5_note	0x90, 59, 65, 96, 10, 0
+	k5_note	0x90, 61, 62, 83, 9, 0
+	k5_note	0x90, 89, 64, 103, 41, 0
+	k5_note	0x90, 91, 60, 78, 40, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 45	; cell 44: song 1 track 8, 1 of 3
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 124
 	sq_8n	0, 0, 90, 0
@@ -3314,8 +3502,60 @@ P_09SUNSHN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"09SUNSHN.sqt.p2.ref", 0x2d21, 223
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_note	95, 0, 83, 88, 39, 1
+	sq_beat
+	sq_note	7, 0, 86, 80, 46, 1
+	sq_beat
+	sq_note	43, 0, 84, 73, 56, 0
+	sq_note	53, 0, 81, 80, 38, 0
+	sq_note	93, 0, 83, 78, 1, 1
+	sq_beat
+	sq_note	3, 0, 79, 64, 91, 0
+	sq_beat
+	sq_note	7, 0, 81, 78, 75, 0
+	sq_note	7, 0, 77, 74, 75, 0
+	sq_note	94, 0, 81, 69, 83, 1
+	sq_note	94, 0, 77, 73, 78, 1
+	sq_beat
+	sq_beat
+	sq_note	89, 0, 77, 80, 87, 1
+	sq_note	89, 0, 74, 82, 0, 2
+	sq_beat
+	sq_beat
+	sq_note	89, 0, 84, 86, 20, 0
+	sq_note	89, 0, 81, 76, 13, 0
+	sq_beat
+	sq_note	45, 0, 84, 76, 81, 0
+	sq_note	45, 0, 81, 80, 81, 0
+	sq_beat
+	sq_note	45, 0, 84, 80, 45, 0
+	sq_note	45, 0, 81, 82, 38, 0
+	sq_note	87, 0, 83, 62, 95, 0
+	sq_note	90, 0, 79, 71, 92, 0
+	sq_beat
+	sq_note	91, 0, 81, 78, 95, 0
+	sq_note	95, 0, 77, 74, 80, 0
+	sq_beat
+	sq_note	95, 0, 79, 68, 77, 3
+	sq_note	95, 0, 76, 82, 95, 0
+	sq_beat
+	sq_note	94, 0, 74, 82, 41, 0
+	sq_beat
+	sq_note	46, 0, 72, 80, 2, 1
+	sq_beat
+	sq_note	48, 0, 74, 88, 54, 0
+	sq_beat
+	sq_note	6, 0, 76, 88, 68, 0
+	sq_note	95, 0, 84, 76, 54, 1
+	sq_note	95, 0, 81, 78, 44, 1
+	sq_beat
+	sq_beat
+	sq_note	43, 0, 79, 66, 3, 0
+	sq_note	46, 0, 83, 73, 47, 0
+	sq_note	53, 0, 79, 66, 34, 0
+	sq_note	89, 0, 81, 78, 4, 1
 
 	.if	(. - P_09SUNSHN_SQT_p2) - 11776
 	.error	"09SUNSHN.SQT part 2: the payload is not 11776 bytes"

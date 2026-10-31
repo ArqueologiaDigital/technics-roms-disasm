@@ -115,7 +115,11 @@ symbols-check:
 # does not need this.
 # Recover the MILK framework's named-constant tables (colours, view flags, ...)
 # into a reference listing + an assembler include.
-constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
+# src/constants.inc is committed generated source (the firmware's own {name, value} tables as .equ
+# lines; the assembly names them).  Only this maintenance target rewrites it, from the reference
+# image; the build reads the committed file (lane media-cleanup, 2026-10-31: it used to be a file
+# target, so every fresh clone regenerated it the moment the reference copy was newer).
+constants: tools/gen_constants.py baserom/kn7000_program.rom
 	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
 
 program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
@@ -1002,5 +1006,5 @@ ic21-own-src: tools/gen_ic21own_s.py tools/gen_customdata_s.py $(IC21_OWN_REF) $
 
 # The probes behind the figures in src/ic21own/ic21.s and notes/ic21-own/README.md.
 ic21-own-probes: $(IC21_OWN_REF) $(CD_REFS) baserom/idd7000.img
-	@for p in regions regions2 templates custom names_kn5000 name_fields marker; do \
+	@for p in regions regions2 templates custom names_kn5000 name_fields marker name_origin ots_origin hp_parts section_map stream_rules; do \
 	  echo "==== notes/ic21-own-probes/$$p.py"; $(PYTHON) -I notes/ic21-own-probes/$$p.py || exit 1; done

@@ -195,7 +195,7 @@ P_02POLKA2_TM_p1_Kit:
 	.include	"tm/voice_5b152f015720.s"	; voice 126: Click 2
 	.include	"tm/voice_fca7ac854918.s"	; voice 127: Click 3
 	.byte	0	; [INFERENCE] the edit index (the KN5000 file has one here)
-	.short	0xb0c5	; not ~(LE16 sum of the sound records) (= 0x66c8)
+	.short	0xb0c5	; a stale checksum (the records give 0x66c8); no load reads it, PostTmTransLoad recomputes it
 
 	.if	(. - P_02POLKA2_TM_p1) - 47098
 	.error	"02POLKA2.TM part 1: the payload is not 47098 bytes"

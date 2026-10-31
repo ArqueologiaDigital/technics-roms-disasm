@@ -5680,9 +5680,7 @@
 	ev_at	71
 	ev_cc	3, 64, 0
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm2.ic21", 0x57c08, 0x57c0c	# stale bytes of an earlier write
-	# stale events of an earlier write: no record holds them; they parse as events
+	STREAM_HEADER 19, 0x7d4	# stale start of a stream of an earlier write, cut after 0x3f2 of its 0x7d4 bytes by the next write (no record holds it; it parses as events)
 	ev_beat
 	ev_note	0, 57, 95, 1, 0, 0
 	ev_note	0, 69, 87, 1, 0, 0
@@ -5919,5 +5917,4 @@
 	ev_note	7, 104, 83, 1, 0, 0
 	ev_beat
 	ev_note	0, 19, 50, 1, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
-	.incbin_range "baserom/customdata/02custm2.ic21", 0x57ffe, 0x58000	# stale bytes of an earlier write
+	.byte 0x90, 0x45	# the first 2 byte(s) of an event of an earlier write, cut by the end of the record's last block

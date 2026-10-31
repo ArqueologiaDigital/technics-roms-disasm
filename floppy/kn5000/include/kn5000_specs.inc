@@ -6,7 +6,7 @@
 ;   +0x000 name                     ascii  maincpu v10 SingleLoadSrc_ReadTmSoundName 0xF8A319 (16 B at 16 + 470*n); clamp 32..127 for offsets 0..15 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (p
 ;   +0x010 part_mode                bits   subcpu v1.42 Voice_SetVelocity 0x02C8E4 switches on &0xC0 (0x00 melodic, 0x40 drawbar, 0x80 drum kit, 0xC0 silent); bit 4 via Voice_Calc_LevelPair_PatchAtk 0x02
 ;   +0x011 partial_mask             bits   subcpu v1.42 mask table 0x00FB4E {0x01,0x04,0x10,0x40} = partial 0..3 present; EFFSlotScan_AssignPath 0x032295; table_data/tone_database_records.s header (RECOR
-;   +0x012 b_0x12                   hex    subcpu v1.42 Partial_Build_Present_Word 0x032B1E tests bits 1:0; TODO: reader known, meaning not; 0 in all 723 distinct corpus records
+;   +0x012 partial_flag_codes       bits   [INFERENCE] subcpu v1.42 Partial_Build_Present_Word 0x032B1E: four 2-bit codes, one per partial in the order of the +0x11 partial mask (bits 1:0 partial 0 .. 7:
 ;   +0x013 bend_type                dec    subcpu v1.42 Voice_Pitch_Compute_Inactive 0x023698 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp 0..66
 ;   +0x014 ctrl_part_switches_0     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
 ;   +0x015 ctrl_b1_0                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
@@ -67,7 +67,7 @@
 ;   +0x04c lfo_b1_8                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
 ;   +0x04d lfo_b2_onoff_8           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
 ;   +0x04e lfo_b3_wave_8            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-	.macro	tm_sound_0 name, part_mode, partial_mask, b_0x12, bend_type, ctrl_part_switches_0, ctrl_b1_0, ctrl_b2_0, ctrl_part_switches_1, ctrl_b1_1, ctrl_b2_1, ctrl_part_switches_2, ctrl_b1_2, ctrl_b2_2, ctrl_part_switches_3, ctrl_b1_3, ctrl_b2_3, ctrl_part_switches_4, ctrl_b1_4, ctrl_b2_4, ctrl_part_switches_5, ctrl_b1_5, ctrl_b2_5, ctrl_part_switches_6, ctrl_b1_6, ctrl_b2_6, octave_shift, program_lookup_nibbles, lfo_b0_0, lfo_b1_0, lfo_b2_onoff_0, lfo_b3_wave_0, lfo_b0_1, lfo_b1_1, lfo_b2_onoff_1, lfo_b3_wave_1, lfo_b0_2, lfo_b1_2, lfo_b2_onoff_2, lfo_b3_wave_2, lfo_b0_3, lfo_b1_3, lfo_b2_onoff_3, lfo_b3_wave_3, lfo_b0_4, lfo_b1_4, lfo_b2_onoff_4, lfo_b3_wave_4, lfo_b0_5, lfo_b1_5, lfo_b2_onoff_5, lfo_b3_wave_5, lfo_b0_6, lfo_b1_6, lfo_b2_onoff_6, lfo_b3_wave_6, lfo_b0_7, lfo_b1_7, lfo_b2_onoff_7, lfo_b3_wave_7, lfo_b0_8, lfo_b1_8, lfo_b2_onoff_8, lfo_b3_wave_8
+	.macro	tm_sound_0 name, part_mode, partial_mask, partial_flag_codes, bend_type, ctrl_part_switches_0, ctrl_b1_0, ctrl_b2_0, ctrl_part_switches_1, ctrl_b1_1, ctrl_b2_1, ctrl_part_switches_2, ctrl_b1_2, ctrl_b2_2, ctrl_part_switches_3, ctrl_b1_3, ctrl_b2_3, ctrl_part_switches_4, ctrl_b1_4, ctrl_b2_4, ctrl_part_switches_5, ctrl_b1_5, ctrl_b2_5, ctrl_part_switches_6, ctrl_b1_6, ctrl_b2_6, octave_shift, program_lookup_nibbles, lfo_b0_0, lfo_b1_0, lfo_b2_onoff_0, lfo_b3_wave_0, lfo_b0_1, lfo_b1_1, lfo_b2_onoff_1, lfo_b3_wave_1, lfo_b0_2, lfo_b1_2, lfo_b2_onoff_2, lfo_b3_wave_2, lfo_b0_3, lfo_b1_3, lfo_b2_onoff_3, lfo_b3_wave_3, lfo_b0_4, lfo_b1_4, lfo_b2_onoff_4, lfo_b3_wave_4, lfo_b0_5, lfo_b1_5, lfo_b2_onoff_5, lfo_b3_wave_5, lfo_b0_6, lfo_b1_6, lfo_b2_onoff_6, lfo_b3_wave_6, lfo_b0_7, lfo_b1_7, lfo_b2_onoff_7, lfo_b3_wave_7, lfo_b0_8, lfo_b1_8, lfo_b2_onoff_8, lfo_b3_wave_8
 .Lsa\@_name:
 	.ascii	"\name"
 .Lsb\@_name:
@@ -76,7 +76,7 @@
 	.endif
 	.byte	\part_mode
 	.byte	\partial_mask
-	.byte	\b_0x12
+	.byte	\partial_flag_codes
 	.byte	\bend_type
 	.byte	\ctrl_part_switches_0
 	.byte	\ctrl_b1_0
@@ -152,20 +152,20 @@
 ;   +0x058 lfo_b1_11                dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
 ;   +0x059 lfo_b2_onoff_11          bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
 ;   +0x05a lfo_b3_wave_11           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x05b b_0x5b                   dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C); TODO: no subcpu reader in table_
+;   +0x05b unread_5b                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). No sub-CPU reader: none in table
 ;   +0x05c level_offset             signed+64 subcpu v1.42 Level_Build_Reg0C0 0x0253FE: level offset centred on 0x40 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp 0..12
 ;   +0x05d algorithm_type           bits   subcpu v1.42 AlgoType_StateWrite 0x033557 and Partial_Build_Present_Word 0x032B1E read the low nibble
 ;   +0x05e partial_descriptor       hex    subcpu v1.42 Voice_Build_Partial_Descriptor 0x02B717 (ROM tables 0x012038/0x012057/0x012095); +0x5E/+0x60 also DSP_ChanFreq_WritePacket1 0x033B8B, +0x5F & 0x3F 
-;   +0x062 b_0x62                   hex    no reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); unclamped; TODO: no reader found
+;   +0x062 algo45_params            hex    [INFERENCE] subcpu v1.42 the parameters of algorithm types 4 and 5 (+0x5D low nibble): Algo_SubTable_DispatchB_Arm_Type45 reads +0x62 (L = 2 * value) and Algo_S
 ;   +0x064 secondary_param_a        dec    subcpu v1.42 Voice_SecondaryParam_Path2 0x033DAA
 ;   +0x065 secondary_param_b        dec    subcpu v1.42 Voice_SecondaryParam_Path2_Epilogue 0x033DD3
 ;   +0x066 partial_gate_ctl_0       dec    [INFERENCE] subcpu v1.42 Voice_Build_GateCommand 0x025589 and Voice_ComputePitch 0x026396 read it; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 
-;   +0x067 partial_b_0x01_0         dec    clamp 0..128; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFF
+;   +0x067 partial_unread_01_0      dec    clamp 0..128; no sub-CPU reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x068 partial_wave_0           dec    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: wave byte of the wave-select pair; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotSc
 ;   +0x069 partial_wave_family_0    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x06a partial_coarse_tune_0    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x06b partial_partial_detune_0 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x06c partial_b_0x06_0         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x06c partial_porta_sel_0      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
 ;   +0x06d partial_env2_start_level_0 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
 ;   +0x06e partial_env2_porta_level_0 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x06f partial_env2_seg1_a_0    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
@@ -177,7 +177,7 @@
 ;   +0x075 partial_env2_seg4_a_0    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
 ;   +0x076 partial_env2_seg4_b_0    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x077 partial_env2_key_scale_0 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x078 partial_env2_b_0x12_0    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x078 partial_filter_b12_0     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
 ;   +0x079 partial_env2_velocity_base_0 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
 ;   +0x07a partial_env2_velocity_depth_0 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
 ;   +0x07c partial_env2_egb_0x16_0  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -185,12 +185,12 @@
 ;   +0x07e partial_fine_detune_0    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x07f partial_pitch_curve_0    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x080 partial_pitch_params_0   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
-;   +0x083 partial_b_0x1d_0         signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
-;   +0x084 partial_b_0x1e_0         dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x08c partial_b_0x26_0         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x083 partial_unread_1d_0      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
+;   +0x084 partial_unread_1e_0      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
+;   +0x08c partial_unread_26_0      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x08d partial_env1_seg1_target_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
 ;   +0x08e partial_env1_seg1_rate_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-	.macro	tm_sound_1 lfo_b0_9, lfo_b1_9, lfo_b2_onoff_9, lfo_b3_wave_9, lfo_b0_10, lfo_b1_10, lfo_b2_onoff_10, lfo_b3_wave_10, lfo_b0_11, lfo_b1_11, lfo_b2_onoff_11, lfo_b3_wave_11, b_0x5b, level_offset, algorithm_type, partial_descriptor_0, partial_descriptor_1, partial_descriptor_2, partial_descriptor_3, b_0x62_0, b_0x62_1, secondary_param_a, secondary_param_b, partial_gate_ctl_0, partial_b_0x01_0, partial_wave_0, partial_wave_family_0, partial_coarse_tune_0, partial_partial_detune_0, partial_b_0x06_0, partial_env2_start_level_0, partial_env2_porta_level_0, partial_env2_seg1_a_0, partial_env2_seg1_b_0, partial_env2_seg2_a_0, partial_env2_seg2_b_0, partial_env2_seg3_a_0, partial_env2_seg3_b_0, partial_env2_seg4_a_0, partial_env2_seg4_b_0, partial_env2_key_scale_0, partial_env2_b_0x12_0, partial_env2_velocity_base_0, partial_env2_velocity_depth_0_0, partial_env2_velocity_depth_0_1, partial_env2_egb_0x16_0, partial_channel_detune_0, partial_fine_detune_0, partial_pitch_curve_0, partial_pitch_params_0_0, partial_pitch_params_0_1, partial_pitch_params_0_2, partial_b_0x1d_0, partial_b_0x1e_0_0, partial_b_0x1e_0_1, partial_b_0x1e_0_2, partial_b_0x1e_0_3, partial_b_0x1e_0_4, partial_b_0x1e_0_5, partial_b_0x1e_0_6, partial_b_0x1e_0_7, partial_b_0x26_0, partial_env1_seg1_target_0, partial_env1_seg1_rate_0
+	.macro	tm_sound_1 lfo_b0_9, lfo_b1_9, lfo_b2_onoff_9, lfo_b3_wave_9, lfo_b0_10, lfo_b1_10, lfo_b2_onoff_10, lfo_b3_wave_10, lfo_b0_11, lfo_b1_11, lfo_b2_onoff_11, lfo_b3_wave_11, unread_5b, level_offset, algorithm_type, partial_descriptor_0, partial_descriptor_1, partial_descriptor_2, partial_descriptor_3, algo45_params_0, algo45_params_1, secondary_param_a, secondary_param_b, partial_gate_ctl_0, partial_unread_01_0, partial_wave_0, partial_wave_family_0, partial_coarse_tune_0, partial_partial_detune_0, partial_porta_sel_0, partial_env2_start_level_0, partial_env2_porta_level_0, partial_env2_seg1_a_0, partial_env2_seg1_b_0, partial_env2_seg2_a_0, partial_env2_seg2_b_0, partial_env2_seg3_a_0, partial_env2_seg3_b_0, partial_env2_seg4_a_0, partial_env2_seg4_b_0, partial_env2_key_scale_0, partial_filter_b12_0, partial_env2_velocity_base_0, partial_env2_velocity_depth_0_0, partial_env2_velocity_depth_0_1, partial_env2_egb_0x16_0, partial_channel_detune_0, partial_fine_detune_0, partial_pitch_curve_0, partial_pitch_params_0_0, partial_pitch_params_0_1, partial_pitch_params_0_2, partial_unread_1d_0, partial_unread_1e_0_0, partial_unread_1e_0_1, partial_unread_1e_0_2, partial_unread_1e_0_3, partial_unread_1e_0_4, partial_unread_1e_0_5, partial_unread_1e_0_6, partial_unread_1e_0_7, partial_unread_26_0, partial_env1_seg1_target_0, partial_env1_seg1_rate_0
 	.byte	\lfo_b0_9
 	.byte	\lfo_b1_9
 	.byte	\lfo_b2_onoff_9
@@ -203,20 +203,20 @@
 	.byte	\lfo_b1_11
 	.byte	\lfo_b2_onoff_11
 	.byte	\lfo_b3_wave_11
-	.byte	\b_0x5b
+	.byte	\unread_5b
 	.byte	64 + (\level_offset)
 	.byte	\algorithm_type
 	.byte	\partial_descriptor_0, \partial_descriptor_1, \partial_descriptor_2, \partial_descriptor_3
-	.byte	\b_0x62_0, \b_0x62_1
+	.byte	\algo45_params_0, \algo45_params_1
 	.byte	\secondary_param_a
 	.byte	\secondary_param_b
 	.byte	\partial_gate_ctl_0
-	.byte	\partial_b_0x01_0
+	.byte	\partial_unread_01_0
 	.byte	\partial_wave_0
 	.byte	\partial_wave_family_0
 	.byte	(\partial_coarse_tune_0) & 0xff
 	.byte	\partial_partial_detune_0
-	.byte	\partial_b_0x06_0
+	.byte	\partial_porta_sel_0
 	.byte	(\partial_env2_start_level_0) & 0xff
 	.byte	(\partial_env2_porta_level_0) & 0xff
 	.byte	\partial_env2_seg1_a_0
@@ -228,7 +228,7 @@
 	.byte	\partial_env2_seg4_a_0
 	.byte	(\partial_env2_seg4_b_0) & 0xff
 	.byte	(\partial_env2_key_scale_0) & 0xff
-	.byte	(\partial_env2_b_0x12_0) & 0xff
+	.byte	(\partial_filter_b12_0) & 0xff
 	.byte	\partial_env2_velocity_base_0
 	.byte	\partial_env2_velocity_depth_0_0, \partial_env2_velocity_depth_0_1
 	.byte	(\partial_env2_egb_0x16_0) & 0xff
@@ -236,9 +236,9 @@
 	.byte	(\partial_fine_detune_0) & 0xff
 	.byte	\partial_pitch_curve_0
 	.byte	\partial_pitch_params_0_0, \partial_pitch_params_0_1, \partial_pitch_params_0_2
-	.byte	(\partial_b_0x1d_0) & 0xff
-	.byte	\partial_b_0x1e_0_0, \partial_b_0x1e_0_1, \partial_b_0x1e_0_2, \partial_b_0x1e_0_3, \partial_b_0x1e_0_4, \partial_b_0x1e_0_5, \partial_b_0x1e_0_6, \partial_b_0x1e_0_7
-	.byte	\partial_b_0x26_0
+	.byte	(\partial_unread_1d_0) & 0xff
+	.byte	\partial_unread_1e_0_0, \partial_unread_1e_0_1, \partial_unread_1e_0_2, \partial_unread_1e_0_3, \partial_unread_1e_0_4, \partial_unread_1e_0_5, \partial_unread_1e_0_6, \partial_unread_1e_0_7
+	.byte	\partial_unread_26_0
 	.byte	\partial_env1_seg1_target_0
 	.byte	\partial_env1_seg1_rate_0
 	.endm
@@ -255,7 +255,7 @@
 ;   +0x09b partial_env1_ega_0x35_0  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x09c partial_filter_type_0    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x09d partial_filter_key_follow_depth_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x09e partial_b_0x38_0         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x09e partial_unread_38_0      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x09f partial_level_scale_offset_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0a0 partial_level_scale_low_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0a1 partial_level_scale_high_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
@@ -271,7 +271,7 @@
 ;   +0x0ab partial_env3_seg4_a_0    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
 ;   +0x0ac partial_env3_seg4_b_0    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0ad partial_env3_key_scale_0 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0ae partial_env3_b_0x48_0    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x0ae partial_unread_48_0      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x0af partial_env3_velocity_base_0 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0b0 partial_env3_velocity_depth_0 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
 ;   +0x0b2 partial_env3_egc_0x4c_0  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -279,12 +279,12 @@
 ;   +0x0b4 partial_filter_slope_mode_0 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x0b5 partial_filter_pair_0    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
 ;   +0x0b7 partial_gate_ctl_1       dec    [INFERENCE] subcpu v1.42 Voice_Build_GateCommand 0x025589 and Voice_ComputePitch 0x026396 read it; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 
-;   +0x0b8 partial_b_0x01_1         dec    clamp 0..128; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFF
+;   +0x0b8 partial_unread_01_1      dec    clamp 0..128; no sub-CPU reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x0b9 partial_wave_1           dec    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: wave byte of the wave-select pair; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotSc
 ;   +0x0ba partial_wave_family_1    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x0bb partial_coarse_tune_1    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x0bc partial_partial_detune_1 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x0bd partial_b_0x06_1         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x0bd partial_porta_sel_1      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
 ;   +0x0be partial_env2_start_level_1 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
 ;   +0x0bf partial_env2_porta_level_1 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0c0 partial_env2_seg1_a_1    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
@@ -296,12 +296,12 @@
 ;   +0x0c6 partial_env2_seg4_a_1    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
 ;   +0x0c7 partial_env2_seg4_b_1    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0c8 partial_env2_key_scale_1 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x0c9 partial_env2_b_0x12_1    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x0c9 partial_filter_b12_1     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
 ;   +0x0ca partial_env2_velocity_base_1 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
 ;   +0x0cb partial_env2_velocity_depth_1 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
 ;   +0x0cd partial_env2_egb_0x16_1  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0ce partial_channel_detune_1 dec    subcpu v1.42 Voice_ApplyPortamento 0x026637; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x
-	.macro	tm_sound_2 partial_env1_seg2_target_0, partial_env1_seg2_rate_0, partial_env1_seg3_target_0, partial_env1_seg3_rate_0, partial_env1_level_0, partial_env1_key_scale_0_0, partial_env1_key_scale_0_1, partial_env1_velocity_ctl_0_0, partial_env1_velocity_ctl_0_1, partial_env1_velocity_ctl_0_2, partial_env1_depth_0_0, partial_env1_depth_0_1, partial_env1_ega_0x35_0, partial_filter_type_0, partial_filter_key_follow_depth_0, partial_b_0x38_0, partial_level_scale_offset_0, partial_level_scale_low_0, partial_level_scale_high_0, partial_level_scale_depth_0, partial_env3_start_level_0, partial_env3_porta_level_0, partial_env3_seg1_a_0, partial_env3_seg1_b_0, partial_env3_seg2_a_0, partial_env3_seg2_b_0, partial_env3_seg3_a_0, partial_env3_seg3_b_0, partial_env3_seg4_a_0, partial_env3_seg4_b_0, partial_env3_key_scale_0, partial_env3_b_0x48_0, partial_env3_velocity_base_0, partial_env3_velocity_depth_0_0, partial_env3_velocity_depth_0_1, partial_env3_egc_0x4c_0, partial_filter_cutoff_0, partial_filter_slope_mode_0, partial_filter_pair_0_0, partial_filter_pair_0_1, partial_gate_ctl_1, partial_b_0x01_1, partial_wave_1, partial_wave_family_1, partial_coarse_tune_1, partial_partial_detune_1, partial_b_0x06_1, partial_env2_start_level_1, partial_env2_porta_level_1, partial_env2_seg1_a_1, partial_env2_seg1_b_1, partial_env2_seg2_a_1, partial_env2_seg2_b_1, partial_env2_seg3_a_1, partial_env2_seg3_b_1, partial_env2_seg4_a_1, partial_env2_seg4_b_1, partial_env2_key_scale_1, partial_env2_b_0x12_1, partial_env2_velocity_base_1, partial_env2_velocity_depth_1_0, partial_env2_velocity_depth_1_1, partial_env2_egb_0x16_1, partial_channel_detune_1
+	.macro	tm_sound_2 partial_env1_seg2_target_0, partial_env1_seg2_rate_0, partial_env1_seg3_target_0, partial_env1_seg3_rate_0, partial_env1_level_0, partial_env1_key_scale_0_0, partial_env1_key_scale_0_1, partial_env1_velocity_ctl_0_0, partial_env1_velocity_ctl_0_1, partial_env1_velocity_ctl_0_2, partial_env1_depth_0_0, partial_env1_depth_0_1, partial_env1_ega_0x35_0, partial_filter_type_0, partial_filter_key_follow_depth_0, partial_unread_38_0, partial_level_scale_offset_0, partial_level_scale_low_0, partial_level_scale_high_0, partial_level_scale_depth_0, partial_env3_start_level_0, partial_env3_porta_level_0, partial_env3_seg1_a_0, partial_env3_seg1_b_0, partial_env3_seg2_a_0, partial_env3_seg2_b_0, partial_env3_seg3_a_0, partial_env3_seg3_b_0, partial_env3_seg4_a_0, partial_env3_seg4_b_0, partial_env3_key_scale_0, partial_unread_48_0, partial_env3_velocity_base_0, partial_env3_velocity_depth_0_0, partial_env3_velocity_depth_0_1, partial_env3_egc_0x4c_0, partial_filter_cutoff_0, partial_filter_slope_mode_0, partial_filter_pair_0_0, partial_filter_pair_0_1, partial_gate_ctl_1, partial_unread_01_1, partial_wave_1, partial_wave_family_1, partial_coarse_tune_1, partial_partial_detune_1, partial_porta_sel_1, partial_env2_start_level_1, partial_env2_porta_level_1, partial_env2_seg1_a_1, partial_env2_seg1_b_1, partial_env2_seg2_a_1, partial_env2_seg2_b_1, partial_env2_seg3_a_1, partial_env2_seg3_b_1, partial_env2_seg4_a_1, partial_env2_seg4_b_1, partial_env2_key_scale_1, partial_filter_b12_1, partial_env2_velocity_base_1, partial_env2_velocity_depth_1_0, partial_env2_velocity_depth_1_1, partial_env2_egb_0x16_1, partial_channel_detune_1
 	.byte	\partial_env1_seg2_target_0
 	.byte	\partial_env1_seg2_rate_0
 	.byte	\partial_env1_seg3_target_0
@@ -313,7 +313,7 @@
 	.byte	(\partial_env1_ega_0x35_0) & 0xff
 	.byte	\partial_filter_type_0
 	.byte	\partial_filter_key_follow_depth_0
-	.byte	\partial_b_0x38_0
+	.byte	\partial_unread_38_0
 	.byte	\partial_level_scale_offset_0
 	.byte	\partial_level_scale_low_0
 	.byte	\partial_level_scale_high_0
@@ -329,7 +329,7 @@
 	.byte	\partial_env3_seg4_a_0
 	.byte	(\partial_env3_seg4_b_0) & 0xff
 	.byte	(\partial_env3_key_scale_0) & 0xff
-	.byte	(\partial_env3_b_0x48_0) & 0xff
+	.byte	(\partial_unread_48_0) & 0xff
 	.byte	\partial_env3_velocity_base_0
 	.byte	\partial_env3_velocity_depth_0_0, \partial_env3_velocity_depth_0_1
 	.byte	(\partial_env3_egc_0x4c_0) & 0xff
@@ -337,12 +337,12 @@
 	.byte	\partial_filter_slope_mode_0
 	.byte	\partial_filter_pair_0_0, \partial_filter_pair_0_1
 	.byte	\partial_gate_ctl_1
-	.byte	\partial_b_0x01_1
+	.byte	\partial_unread_01_1
 	.byte	\partial_wave_1
 	.byte	\partial_wave_family_1
 	.byte	(\partial_coarse_tune_1) & 0xff
 	.byte	\partial_partial_detune_1
-	.byte	\partial_b_0x06_1
+	.byte	\partial_porta_sel_1
 	.byte	(\partial_env2_start_level_1) & 0xff
 	.byte	(\partial_env2_porta_level_1) & 0xff
 	.byte	\partial_env2_seg1_a_1
@@ -354,7 +354,7 @@
 	.byte	\partial_env2_seg4_a_1
 	.byte	(\partial_env2_seg4_b_1) & 0xff
 	.byte	(\partial_env2_key_scale_1) & 0xff
-	.byte	(\partial_env2_b_0x12_1) & 0xff
+	.byte	(\partial_filter_b12_1) & 0xff
 	.byte	\partial_env2_velocity_base_1
 	.byte	\partial_env2_velocity_depth_1_0, \partial_env2_velocity_depth_1_1
 	.byte	(\partial_env2_egb_0x16_1) & 0xff
@@ -365,9 +365,9 @@
 ;   +0x0cf partial_fine_detune_1    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x0d0 partial_pitch_curve_1    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x0d1 partial_pitch_params_1   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
-;   +0x0d4 partial_b_0x1d_1         signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
-;   +0x0d5 partial_b_0x1e_1         dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x0dd partial_b_0x26_1         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x0d4 partial_unread_1d_1      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
+;   +0x0d5 partial_unread_1e_1      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
+;   +0x0dd partial_unread_26_1      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x0de partial_env1_seg1_target_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
 ;   +0x0df partial_env1_seg1_rate_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x0e0 partial_env1_seg2_target_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
@@ -381,7 +381,7 @@
 ;   +0x0ec partial_env1_ega_0x35_1  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0ed partial_filter_type_1    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x0ee partial_filter_key_follow_depth_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x0ef partial_b_0x38_1         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x0ef partial_unread_38_1      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x0f0 partial_level_scale_offset_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0f1 partial_level_scale_low_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0f2 partial_level_scale_high_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
@@ -397,7 +397,7 @@
 ;   +0x0fc partial_env3_seg4_a_1    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
 ;   +0x0fd partial_env3_seg4_b_1    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0fe partial_env3_key_scale_1 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0ff partial_env3_b_0x48_1    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x0ff partial_unread_48_1      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x100 partial_env3_velocity_base_1 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x101 partial_env3_velocity_depth_1 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
 ;   +0x103 partial_env3_egc_0x4c_1  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -405,19 +405,19 @@
 ;   +0x105 partial_filter_slope_mode_1 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x106 partial_filter_pair_1    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
 ;   +0x108 partial_gate_ctl_2       dec    [INFERENCE] subcpu v1.42 Voice_Build_GateCommand 0x025589 and Voice_ComputePitch 0x026396 read it; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 
-;   +0x109 partial_b_0x01_2         dec    clamp 0..128; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFF
+;   +0x109 partial_unread_01_2      dec    clamp 0..128; no sub-CPU reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x10a partial_wave_2           dec    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: wave byte of the wave-select pair; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotSc
 ;   +0x10b partial_wave_family_2    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x10c partial_coarse_tune_2    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x10d partial_partial_detune_2 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x10e partial_b_0x06_2         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
-	.macro	tm_sound_3 partial_fine_detune_1, partial_pitch_curve_1, partial_pitch_params_1_0, partial_pitch_params_1_1, partial_pitch_params_1_2, partial_b_0x1d_1, partial_b_0x1e_1_0, partial_b_0x1e_1_1, partial_b_0x1e_1_2, partial_b_0x1e_1_3, partial_b_0x1e_1_4, partial_b_0x1e_1_5, partial_b_0x1e_1_6, partial_b_0x1e_1_7, partial_b_0x26_1, partial_env1_seg1_target_1, partial_env1_seg1_rate_1, partial_env1_seg2_target_1, partial_env1_seg2_rate_1, partial_env1_seg3_target_1, partial_env1_seg3_rate_1, partial_env1_level_1, partial_env1_key_scale_1_0, partial_env1_key_scale_1_1, partial_env1_velocity_ctl_1_0, partial_env1_velocity_ctl_1_1, partial_env1_velocity_ctl_1_2, partial_env1_depth_1_0, partial_env1_depth_1_1, partial_env1_ega_0x35_1, partial_filter_type_1, partial_filter_key_follow_depth_1, partial_b_0x38_1, partial_level_scale_offset_1, partial_level_scale_low_1, partial_level_scale_high_1, partial_level_scale_depth_1, partial_env3_start_level_1, partial_env3_porta_level_1, partial_env3_seg1_a_1, partial_env3_seg1_b_1, partial_env3_seg2_a_1, partial_env3_seg2_b_1, partial_env3_seg3_a_1, partial_env3_seg3_b_1, partial_env3_seg4_a_1, partial_env3_seg4_b_1, partial_env3_key_scale_1, partial_env3_b_0x48_1, partial_env3_velocity_base_1, partial_env3_velocity_depth_1_0, partial_env3_velocity_depth_1_1, partial_env3_egc_0x4c_1, partial_filter_cutoff_1, partial_filter_slope_mode_1, partial_filter_pair_1_0, partial_filter_pair_1_1, partial_gate_ctl_2, partial_b_0x01_2, partial_wave_2, partial_wave_family_2, partial_coarse_tune_2, partial_partial_detune_2, partial_b_0x06_2
+;   +0x10e partial_porta_sel_2      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
+	.macro	tm_sound_3 partial_fine_detune_1, partial_pitch_curve_1, partial_pitch_params_1_0, partial_pitch_params_1_1, partial_pitch_params_1_2, partial_unread_1d_1, partial_unread_1e_1_0, partial_unread_1e_1_1, partial_unread_1e_1_2, partial_unread_1e_1_3, partial_unread_1e_1_4, partial_unread_1e_1_5, partial_unread_1e_1_6, partial_unread_1e_1_7, partial_unread_26_1, partial_env1_seg1_target_1, partial_env1_seg1_rate_1, partial_env1_seg2_target_1, partial_env1_seg2_rate_1, partial_env1_seg3_target_1, partial_env1_seg3_rate_1, partial_env1_level_1, partial_env1_key_scale_1_0, partial_env1_key_scale_1_1, partial_env1_velocity_ctl_1_0, partial_env1_velocity_ctl_1_1, partial_env1_velocity_ctl_1_2, partial_env1_depth_1_0, partial_env1_depth_1_1, partial_env1_ega_0x35_1, partial_filter_type_1, partial_filter_key_follow_depth_1, partial_unread_38_1, partial_level_scale_offset_1, partial_level_scale_low_1, partial_level_scale_high_1, partial_level_scale_depth_1, partial_env3_start_level_1, partial_env3_porta_level_1, partial_env3_seg1_a_1, partial_env3_seg1_b_1, partial_env3_seg2_a_1, partial_env3_seg2_b_1, partial_env3_seg3_a_1, partial_env3_seg3_b_1, partial_env3_seg4_a_1, partial_env3_seg4_b_1, partial_env3_key_scale_1, partial_unread_48_1, partial_env3_velocity_base_1, partial_env3_velocity_depth_1_0, partial_env3_velocity_depth_1_1, partial_env3_egc_0x4c_1, partial_filter_cutoff_1, partial_filter_slope_mode_1, partial_filter_pair_1_0, partial_filter_pair_1_1, partial_gate_ctl_2, partial_unread_01_2, partial_wave_2, partial_wave_family_2, partial_coarse_tune_2, partial_partial_detune_2, partial_porta_sel_2
 	.byte	(\partial_fine_detune_1) & 0xff
 	.byte	\partial_pitch_curve_1
 	.byte	\partial_pitch_params_1_0, \partial_pitch_params_1_1, \partial_pitch_params_1_2
-	.byte	(\partial_b_0x1d_1) & 0xff
-	.byte	\partial_b_0x1e_1_0, \partial_b_0x1e_1_1, \partial_b_0x1e_1_2, \partial_b_0x1e_1_3, \partial_b_0x1e_1_4, \partial_b_0x1e_1_5, \partial_b_0x1e_1_6, \partial_b_0x1e_1_7
-	.byte	\partial_b_0x26_1
+	.byte	(\partial_unread_1d_1) & 0xff
+	.byte	\partial_unread_1e_1_0, \partial_unread_1e_1_1, \partial_unread_1e_1_2, \partial_unread_1e_1_3, \partial_unread_1e_1_4, \partial_unread_1e_1_5, \partial_unread_1e_1_6, \partial_unread_1e_1_7
+	.byte	\partial_unread_26_1
 	.byte	\partial_env1_seg1_target_1
 	.byte	\partial_env1_seg1_rate_1
 	.byte	\partial_env1_seg2_target_1
@@ -431,7 +431,7 @@
 	.byte	(\partial_env1_ega_0x35_1) & 0xff
 	.byte	\partial_filter_type_1
 	.byte	\partial_filter_key_follow_depth_1
-	.byte	\partial_b_0x38_1
+	.byte	\partial_unread_38_1
 	.byte	\partial_level_scale_offset_1
 	.byte	\partial_level_scale_low_1
 	.byte	\partial_level_scale_high_1
@@ -447,7 +447,7 @@
 	.byte	\partial_env3_seg4_a_1
 	.byte	(\partial_env3_seg4_b_1) & 0xff
 	.byte	(\partial_env3_key_scale_1) & 0xff
-	.byte	(\partial_env3_b_0x48_1) & 0xff
+	.byte	(\partial_unread_48_1) & 0xff
 	.byte	\partial_env3_velocity_base_1
 	.byte	\partial_env3_velocity_depth_1_0, \partial_env3_velocity_depth_1_1
 	.byte	(\partial_env3_egc_0x4c_1) & 0xff
@@ -455,12 +455,12 @@
 	.byte	\partial_filter_slope_mode_1
 	.byte	\partial_filter_pair_1_0, \partial_filter_pair_1_1
 	.byte	\partial_gate_ctl_2
-	.byte	\partial_b_0x01_2
+	.byte	\partial_unread_01_2
 	.byte	\partial_wave_2
 	.byte	\partial_wave_family_2
 	.byte	(\partial_coarse_tune_2) & 0xff
 	.byte	\partial_partial_detune_2
-	.byte	\partial_b_0x06_2
+	.byte	\partial_porta_sel_2
 	.endm
 
 ; SOUND MEMORY record (470 B), fields +0x10f..+0x14e
@@ -475,7 +475,7 @@
 ;   +0x117 partial_env2_seg4_a_2    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
 ;   +0x118 partial_env2_seg4_b_2    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x119 partial_env2_key_scale_2 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x11a partial_env2_b_0x12_2    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x11a partial_filter_b12_2     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
 ;   +0x11b partial_env2_velocity_base_2 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
 ;   +0x11c partial_env2_velocity_depth_2 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
 ;   +0x11e partial_env2_egb_0x16_2  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -483,9 +483,9 @@
 ;   +0x120 partial_fine_detune_2    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x121 partial_pitch_curve_2    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x122 partial_pitch_params_2   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
-;   +0x125 partial_b_0x1d_2         signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
-;   +0x126 partial_b_0x1e_2         dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x12e partial_b_0x26_2         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x125 partial_unread_1d_2      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
+;   +0x126 partial_unread_1e_2      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
+;   +0x12e partial_unread_26_2      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x12f partial_env1_seg1_target_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
 ;   +0x130 partial_env1_seg1_rate_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x131 partial_env1_seg2_target_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
@@ -499,7 +499,7 @@
 ;   +0x13d partial_env1_ega_0x35_2  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x13e partial_filter_type_2    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x13f partial_filter_key_follow_depth_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x140 partial_b_0x38_2         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x140 partial_unread_38_2      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x141 partial_level_scale_offset_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x142 partial_level_scale_low_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x143 partial_level_scale_high_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
@@ -514,7 +514,7 @@
 ;   +0x14c partial_env3_seg3_b_2    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
 ;   +0x14d partial_env3_seg4_a_2    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
 ;   +0x14e partial_env3_seg4_b_2    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-	.macro	tm_sound_4 partial_env2_start_level_2, partial_env2_porta_level_2, partial_env2_seg1_a_2, partial_env2_seg1_b_2, partial_env2_seg2_a_2, partial_env2_seg2_b_2, partial_env2_seg3_a_2, partial_env2_seg3_b_2, partial_env2_seg4_a_2, partial_env2_seg4_b_2, partial_env2_key_scale_2, partial_env2_b_0x12_2, partial_env2_velocity_base_2, partial_env2_velocity_depth_2_0, partial_env2_velocity_depth_2_1, partial_env2_egb_0x16_2, partial_channel_detune_2, partial_fine_detune_2, partial_pitch_curve_2, partial_pitch_params_2_0, partial_pitch_params_2_1, partial_pitch_params_2_2, partial_b_0x1d_2, partial_b_0x1e_2_0, partial_b_0x1e_2_1, partial_b_0x1e_2_2, partial_b_0x1e_2_3, partial_b_0x1e_2_4, partial_b_0x1e_2_5, partial_b_0x1e_2_6, partial_b_0x1e_2_7, partial_b_0x26_2, partial_env1_seg1_target_2, partial_env1_seg1_rate_2, partial_env1_seg2_target_2, partial_env1_seg2_rate_2, partial_env1_seg3_target_2, partial_env1_seg3_rate_2, partial_env1_level_2, partial_env1_key_scale_2_0, partial_env1_key_scale_2_1, partial_env1_velocity_ctl_2_0, partial_env1_velocity_ctl_2_1, partial_env1_velocity_ctl_2_2, partial_env1_depth_2_0, partial_env1_depth_2_1, partial_env1_ega_0x35_2, partial_filter_type_2, partial_filter_key_follow_depth_2, partial_b_0x38_2, partial_level_scale_offset_2, partial_level_scale_low_2, partial_level_scale_high_2, partial_level_scale_depth_2, partial_env3_start_level_2, partial_env3_porta_level_2, partial_env3_seg1_a_2, partial_env3_seg1_b_2, partial_env3_seg2_a_2, partial_env3_seg2_b_2, partial_env3_seg3_a_2, partial_env3_seg3_b_2, partial_env3_seg4_a_2, partial_env3_seg4_b_2
+	.macro	tm_sound_4 partial_env2_start_level_2, partial_env2_porta_level_2, partial_env2_seg1_a_2, partial_env2_seg1_b_2, partial_env2_seg2_a_2, partial_env2_seg2_b_2, partial_env2_seg3_a_2, partial_env2_seg3_b_2, partial_env2_seg4_a_2, partial_env2_seg4_b_2, partial_env2_key_scale_2, partial_filter_b12_2, partial_env2_velocity_base_2, partial_env2_velocity_depth_2_0, partial_env2_velocity_depth_2_1, partial_env2_egb_0x16_2, partial_channel_detune_2, partial_fine_detune_2, partial_pitch_curve_2, partial_pitch_params_2_0, partial_pitch_params_2_1, partial_pitch_params_2_2, partial_unread_1d_2, partial_unread_1e_2_0, partial_unread_1e_2_1, partial_unread_1e_2_2, partial_unread_1e_2_3, partial_unread_1e_2_4, partial_unread_1e_2_5, partial_unread_1e_2_6, partial_unread_1e_2_7, partial_unread_26_2, partial_env1_seg1_target_2, partial_env1_seg1_rate_2, partial_env1_seg2_target_2, partial_env1_seg2_rate_2, partial_env1_seg3_target_2, partial_env1_seg3_rate_2, partial_env1_level_2, partial_env1_key_scale_2_0, partial_env1_key_scale_2_1, partial_env1_velocity_ctl_2_0, partial_env1_velocity_ctl_2_1, partial_env1_velocity_ctl_2_2, partial_env1_depth_2_0, partial_env1_depth_2_1, partial_env1_ega_0x35_2, partial_filter_type_2, partial_filter_key_follow_depth_2, partial_unread_38_2, partial_level_scale_offset_2, partial_level_scale_low_2, partial_level_scale_high_2, partial_level_scale_depth_2, partial_env3_start_level_2, partial_env3_porta_level_2, partial_env3_seg1_a_2, partial_env3_seg1_b_2, partial_env3_seg2_a_2, partial_env3_seg2_b_2, partial_env3_seg3_a_2, partial_env3_seg3_b_2, partial_env3_seg4_a_2, partial_env3_seg4_b_2
 	.byte	(\partial_env2_start_level_2) & 0xff
 	.byte	(\partial_env2_porta_level_2) & 0xff
 	.byte	\partial_env2_seg1_a_2
@@ -526,7 +526,7 @@
 	.byte	\partial_env2_seg4_a_2
 	.byte	(\partial_env2_seg4_b_2) & 0xff
 	.byte	(\partial_env2_key_scale_2) & 0xff
-	.byte	(\partial_env2_b_0x12_2) & 0xff
+	.byte	(\partial_filter_b12_2) & 0xff
 	.byte	\partial_env2_velocity_base_2
 	.byte	\partial_env2_velocity_depth_2_0, \partial_env2_velocity_depth_2_1
 	.byte	(\partial_env2_egb_0x16_2) & 0xff
@@ -534,9 +534,9 @@
 	.byte	(\partial_fine_detune_2) & 0xff
 	.byte	\partial_pitch_curve_2
 	.byte	\partial_pitch_params_2_0, \partial_pitch_params_2_1, \partial_pitch_params_2_2
-	.byte	(\partial_b_0x1d_2) & 0xff
-	.byte	\partial_b_0x1e_2_0, \partial_b_0x1e_2_1, \partial_b_0x1e_2_2, \partial_b_0x1e_2_3, \partial_b_0x1e_2_4, \partial_b_0x1e_2_5, \partial_b_0x1e_2_6, \partial_b_0x1e_2_7
-	.byte	\partial_b_0x26_2
+	.byte	(\partial_unread_1d_2) & 0xff
+	.byte	\partial_unread_1e_2_0, \partial_unread_1e_2_1, \partial_unread_1e_2_2, \partial_unread_1e_2_3, \partial_unread_1e_2_4, \partial_unread_1e_2_5, \partial_unread_1e_2_6, \partial_unread_1e_2_7
+	.byte	\partial_unread_26_2
 	.byte	\partial_env1_seg1_target_2
 	.byte	\partial_env1_seg1_rate_2
 	.byte	\partial_env1_seg2_target_2
@@ -550,7 +550,7 @@
 	.byte	(\partial_env1_ega_0x35_2) & 0xff
 	.byte	\partial_filter_type_2
 	.byte	\partial_filter_key_follow_depth_2
-	.byte	\partial_b_0x38_2
+	.byte	\partial_unread_38_2
 	.byte	\partial_level_scale_offset_2
 	.byte	\partial_level_scale_low_2
 	.byte	\partial_level_scale_high_2
@@ -569,7 +569,7 @@
 
 ; SOUND MEMORY record (470 B), fields +0x14f..+0x18e
 ;   +0x14f partial_env3_key_scale_2 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x150 partial_env3_b_0x48_2    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x150 partial_unread_48_2      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x151 partial_env3_velocity_base_2 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x152 partial_env3_velocity_depth_2 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
 ;   +0x154 partial_env3_egc_0x4c_2  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -577,12 +577,12 @@
 ;   +0x156 partial_filter_slope_mode_2 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x157 partial_filter_pair_2    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
 ;   +0x159 partial_gate_ctl_3       dec    [INFERENCE] subcpu v1.42 Voice_Build_GateCommand 0x025589 and Voice_ComputePitch 0x026396 read it; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 
-;   +0x15a partial_b_0x01_3         dec    clamp 0..128; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFF
+;   +0x15a partial_unread_01_3      dec    clamp 0..128; no sub-CPU reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x15b partial_wave_3           dec    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: wave byte of the wave-select pair; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotSc
 ;   +0x15c partial_wave_family_3    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x15d partial_coarse_tune_3    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x15e partial_partial_detune_3 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x15f partial_b_0x06_3         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x15f partial_porta_sel_3      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
 ;   +0x160 partial_env2_start_level_3 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
 ;   +0x161 partial_env2_porta_level_3 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x162 partial_env2_seg1_a_3    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
@@ -594,7 +594,7 @@
 ;   +0x168 partial_env2_seg4_a_3    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
 ;   +0x169 partial_env2_seg4_b_3    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x16a partial_env2_key_scale_3 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x16b partial_env2_b_0x12_3    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x16b partial_filter_b12_3     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
 ;   +0x16c partial_env2_velocity_base_3 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
 ;   +0x16d partial_env2_velocity_depth_3 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
 ;   +0x16f partial_env2_egb_0x16_3  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -602,9 +602,9 @@
 ;   +0x171 partial_fine_detune_3    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x172 partial_pitch_curve_3    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x173 partial_pitch_params_3   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
-;   +0x176 partial_b_0x1d_3         signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
-;   +0x177 partial_b_0x1e_3         dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x17f partial_b_0x26_3         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x176 partial_unread_1d_3      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
+;   +0x177 partial_unread_1e_3      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
+;   +0x17f partial_unread_26_3      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x180 partial_env1_seg1_target_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
 ;   +0x181 partial_env1_seg1_rate_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x182 partial_env1_seg2_target_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
@@ -616,9 +616,9 @@
 ;   +0x189 partial_env1_velocity_ctl_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x18c partial_env1_depth_3     signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x03229
 ;   +0x18e partial_env1_ega_0x35_3  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-	.macro	tm_sound_5 partial_env3_key_scale_2, partial_env3_b_0x48_2, partial_env3_velocity_base_2, partial_env3_velocity_depth_2_0, partial_env3_velocity_depth_2_1, partial_env3_egc_0x4c_2, partial_filter_cutoff_2, partial_filter_slope_mode_2, partial_filter_pair_2_0, partial_filter_pair_2_1, partial_gate_ctl_3, partial_b_0x01_3, partial_wave_3, partial_wave_family_3, partial_coarse_tune_3, partial_partial_detune_3, partial_b_0x06_3, partial_env2_start_level_3, partial_env2_porta_level_3, partial_env2_seg1_a_3, partial_env2_seg1_b_3, partial_env2_seg2_a_3, partial_env2_seg2_b_3, partial_env2_seg3_a_3, partial_env2_seg3_b_3, partial_env2_seg4_a_3, partial_env2_seg4_b_3, partial_env2_key_scale_3, partial_env2_b_0x12_3, partial_env2_velocity_base_3, partial_env2_velocity_depth_3_0, partial_env2_velocity_depth_3_1, partial_env2_egb_0x16_3, partial_channel_detune_3, partial_fine_detune_3, partial_pitch_curve_3, partial_pitch_params_3_0, partial_pitch_params_3_1, partial_pitch_params_3_2, partial_b_0x1d_3, partial_b_0x1e_3_0, partial_b_0x1e_3_1, partial_b_0x1e_3_2, partial_b_0x1e_3_3, partial_b_0x1e_3_4, partial_b_0x1e_3_5, partial_b_0x1e_3_6, partial_b_0x1e_3_7, partial_b_0x26_3, partial_env1_seg1_target_3, partial_env1_seg1_rate_3, partial_env1_seg2_target_3, partial_env1_seg2_rate_3, partial_env1_seg3_target_3, partial_env1_seg3_rate_3, partial_env1_level_3, partial_env1_key_scale_3_0, partial_env1_key_scale_3_1, partial_env1_velocity_ctl_3_0, partial_env1_velocity_ctl_3_1, partial_env1_velocity_ctl_3_2, partial_env1_depth_3_0, partial_env1_depth_3_1, partial_env1_ega_0x35_3
+	.macro	tm_sound_5 partial_env3_key_scale_2, partial_unread_48_2, partial_env3_velocity_base_2, partial_env3_velocity_depth_2_0, partial_env3_velocity_depth_2_1, partial_env3_egc_0x4c_2, partial_filter_cutoff_2, partial_filter_slope_mode_2, partial_filter_pair_2_0, partial_filter_pair_2_1, partial_gate_ctl_3, partial_unread_01_3, partial_wave_3, partial_wave_family_3, partial_coarse_tune_3, partial_partial_detune_3, partial_porta_sel_3, partial_env2_start_level_3, partial_env2_porta_level_3, partial_env2_seg1_a_3, partial_env2_seg1_b_3, partial_env2_seg2_a_3, partial_env2_seg2_b_3, partial_env2_seg3_a_3, partial_env2_seg3_b_3, partial_env2_seg4_a_3, partial_env2_seg4_b_3, partial_env2_key_scale_3, partial_filter_b12_3, partial_env2_velocity_base_3, partial_env2_velocity_depth_3_0, partial_env2_velocity_depth_3_1, partial_env2_egb_0x16_3, partial_channel_detune_3, partial_fine_detune_3, partial_pitch_curve_3, partial_pitch_params_3_0, partial_pitch_params_3_1, partial_pitch_params_3_2, partial_unread_1d_3, partial_unread_1e_3_0, partial_unread_1e_3_1, partial_unread_1e_3_2, partial_unread_1e_3_3, partial_unread_1e_3_4, partial_unread_1e_3_5, partial_unread_1e_3_6, partial_unread_1e_3_7, partial_unread_26_3, partial_env1_seg1_target_3, partial_env1_seg1_rate_3, partial_env1_seg2_target_3, partial_env1_seg2_rate_3, partial_env1_seg3_target_3, partial_env1_seg3_rate_3, partial_env1_level_3, partial_env1_key_scale_3_0, partial_env1_key_scale_3_1, partial_env1_velocity_ctl_3_0, partial_env1_velocity_ctl_3_1, partial_env1_velocity_ctl_3_2, partial_env1_depth_3_0, partial_env1_depth_3_1, partial_env1_ega_0x35_3
 	.byte	(\partial_env3_key_scale_2) & 0xff
-	.byte	(\partial_env3_b_0x48_2) & 0xff
+	.byte	(\partial_unread_48_2) & 0xff
 	.byte	\partial_env3_velocity_base_2
 	.byte	\partial_env3_velocity_depth_2_0, \partial_env3_velocity_depth_2_1
 	.byte	(\partial_env3_egc_0x4c_2) & 0xff
@@ -626,12 +626,12 @@
 	.byte	\partial_filter_slope_mode_2
 	.byte	\partial_filter_pair_2_0, \partial_filter_pair_2_1
 	.byte	\partial_gate_ctl_3
-	.byte	\partial_b_0x01_3
+	.byte	\partial_unread_01_3
 	.byte	\partial_wave_3
 	.byte	\partial_wave_family_3
 	.byte	(\partial_coarse_tune_3) & 0xff
 	.byte	\partial_partial_detune_3
-	.byte	\partial_b_0x06_3
+	.byte	\partial_porta_sel_3
 	.byte	(\partial_env2_start_level_3) & 0xff
 	.byte	(\partial_env2_porta_level_3) & 0xff
 	.byte	\partial_env2_seg1_a_3
@@ -643,7 +643,7 @@
 	.byte	\partial_env2_seg4_a_3
 	.byte	(\partial_env2_seg4_b_3) & 0xff
 	.byte	(\partial_env2_key_scale_3) & 0xff
-	.byte	(\partial_env2_b_0x12_3) & 0xff
+	.byte	(\partial_filter_b12_3) & 0xff
 	.byte	\partial_env2_velocity_base_3
 	.byte	\partial_env2_velocity_depth_3_0, \partial_env2_velocity_depth_3_1
 	.byte	(\partial_env2_egb_0x16_3) & 0xff
@@ -651,9 +651,9 @@
 	.byte	(\partial_fine_detune_3) & 0xff
 	.byte	\partial_pitch_curve_3
 	.byte	\partial_pitch_params_3_0, \partial_pitch_params_3_1, \partial_pitch_params_3_2
-	.byte	(\partial_b_0x1d_3) & 0xff
-	.byte	\partial_b_0x1e_3_0, \partial_b_0x1e_3_1, \partial_b_0x1e_3_2, \partial_b_0x1e_3_3, \partial_b_0x1e_3_4, \partial_b_0x1e_3_5, \partial_b_0x1e_3_6, \partial_b_0x1e_3_7
-	.byte	\partial_b_0x26_3
+	.byte	(\partial_unread_1d_3) & 0xff
+	.byte	\partial_unread_1e_3_0, \partial_unread_1e_3_1, \partial_unread_1e_3_2, \partial_unread_1e_3_3, \partial_unread_1e_3_4, \partial_unread_1e_3_5, \partial_unread_1e_3_6, \partial_unread_1e_3_7
+	.byte	\partial_unread_26_3
 	.byte	\partial_env1_seg1_target_3
 	.byte	\partial_env1_seg1_rate_3
 	.byte	\partial_env1_seg2_target_3
@@ -670,7 +670,7 @@
 ; SOUND MEMORY record (470 B), fields +0x18f..+0x1ce
 ;   +0x18f partial_filter_type_3    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x190 partial_filter_key_follow_depth_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x191 partial_b_0x38_3         hex    unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_
+;   +0x191 partial_unread_38_3      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
 ;   +0x192 partial_level_scale_offset_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x193 partial_level_scale_low_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x194 partial_level_scale_high_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
@@ -686,7 +686,7 @@
 ;   +0x19e partial_env3_seg4_a_3    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
 ;   +0x19f partial_env3_seg4_b_3    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x1a0 partial_env3_key_scale_3 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x1a1 partial_env3_b_0x48_3    signed clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 Sound
+;   +0x1a1 partial_unread_48_3      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x1a2 partial_env3_velocity_base_3 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x1a3 partial_env3_velocity_depth_3 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
 ;   +0x1a5 partial_env3_egc_0x4c_3  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
@@ -722,10 +722,10 @@
 ;   +0x1ca vsel_zone3_family_2      hex    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone family/sub-bank byte; unclamped [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: su
 ;   +0x1cb vsel_thresholds_3        dec    subcpu v1.42 Velocity_Select_Split_Zone 0x022824: three ascending velocity thresholds -> zone 0..3; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 
 ;   +0x1ce vsel_zone0_wave_3        dec    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone wave byte; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.
-	.macro	tm_sound_6 partial_filter_type_3, partial_filter_key_follow_depth_3, partial_b_0x38_3, partial_level_scale_offset_3, partial_level_scale_low_3, partial_level_scale_high_3, partial_level_scale_depth_3, partial_env3_start_level_3, partial_env3_porta_level_3, partial_env3_seg1_a_3, partial_env3_seg1_b_3, partial_env3_seg2_a_3, partial_env3_seg2_b_3, partial_env3_seg3_a_3, partial_env3_seg3_b_3, partial_env3_seg4_a_3, partial_env3_seg4_b_3, partial_env3_key_scale_3, partial_env3_b_0x48_3, partial_env3_velocity_base_3, partial_env3_velocity_depth_3_0, partial_env3_velocity_depth_3_1, partial_env3_egc_0x4c_3, partial_filter_cutoff_3, partial_filter_slope_mode_3, partial_filter_pair_3_0, partial_filter_pair_3_1, vsel_thresholds_0_0, vsel_thresholds_0_1, vsel_thresholds_0_2, vsel_zone0_wave_0, vsel_zone0_family_0, vsel_zone1_wave_0, vsel_zone1_family_0, vsel_zone2_wave_0, vsel_zone2_family_0, vsel_zone3_wave_0, vsel_zone3_family_0, vsel_thresholds_1_0, vsel_thresholds_1_1, vsel_thresholds_1_2, vsel_zone0_wave_1, vsel_zone0_family_1, vsel_zone1_wave_1, vsel_zone1_family_1, vsel_zone2_wave_1, vsel_zone2_family_1, vsel_zone3_wave_1, vsel_zone3_family_1, vsel_thresholds_2_0, vsel_thresholds_2_1, vsel_thresholds_2_2, vsel_zone0_wave_2, vsel_zone0_family_2, vsel_zone1_wave_2, vsel_zone1_family_2, vsel_zone2_wave_2, vsel_zone2_family_2, vsel_zone3_wave_2, vsel_zone3_family_2, vsel_thresholds_3_0, vsel_thresholds_3_1, vsel_thresholds_3_2, vsel_zone0_wave_3
+	.macro	tm_sound_6 partial_filter_type_3, partial_filter_key_follow_depth_3, partial_unread_38_3, partial_level_scale_offset_3, partial_level_scale_low_3, partial_level_scale_high_3, partial_level_scale_depth_3, partial_env3_start_level_3, partial_env3_porta_level_3, partial_env3_seg1_a_3, partial_env3_seg1_b_3, partial_env3_seg2_a_3, partial_env3_seg2_b_3, partial_env3_seg3_a_3, partial_env3_seg3_b_3, partial_env3_seg4_a_3, partial_env3_seg4_b_3, partial_env3_key_scale_3, partial_unread_48_3, partial_env3_velocity_base_3, partial_env3_velocity_depth_3_0, partial_env3_velocity_depth_3_1, partial_env3_egc_0x4c_3, partial_filter_cutoff_3, partial_filter_slope_mode_3, partial_filter_pair_3_0, partial_filter_pair_3_1, vsel_thresholds_0_0, vsel_thresholds_0_1, vsel_thresholds_0_2, vsel_zone0_wave_0, vsel_zone0_family_0, vsel_zone1_wave_0, vsel_zone1_family_0, vsel_zone2_wave_0, vsel_zone2_family_0, vsel_zone3_wave_0, vsel_zone3_family_0, vsel_thresholds_1_0, vsel_thresholds_1_1, vsel_thresholds_1_2, vsel_zone0_wave_1, vsel_zone0_family_1, vsel_zone1_wave_1, vsel_zone1_family_1, vsel_zone2_wave_1, vsel_zone2_family_1, vsel_zone3_wave_1, vsel_zone3_family_1, vsel_thresholds_2_0, vsel_thresholds_2_1, vsel_thresholds_2_2, vsel_zone0_wave_2, vsel_zone0_family_2, vsel_zone1_wave_2, vsel_zone1_family_2, vsel_zone2_wave_2, vsel_zone2_family_2, vsel_zone3_wave_2, vsel_zone3_family_2, vsel_thresholds_3_0, vsel_thresholds_3_1, vsel_thresholds_3_2, vsel_zone0_wave_3
 	.byte	\partial_filter_type_3
 	.byte	\partial_filter_key_follow_depth_3
-	.byte	\partial_b_0x38_3
+	.byte	\partial_unread_38_3
 	.byte	\partial_level_scale_offset_3
 	.byte	\partial_level_scale_low_3
 	.byte	\partial_level_scale_high_3
@@ -741,7 +741,7 @@
 	.byte	\partial_env3_seg4_a_3
 	.byte	(\partial_env3_seg4_b_3) & 0xff
 	.byte	(\partial_env3_key_scale_3) & 0xff
-	.byte	(\partial_env3_b_0x48_3) & 0xff
+	.byte	(\partial_unread_48_3) & 0xff
 	.byte	\partial_env3_velocity_base_3
 	.byte	\partial_env3_velocity_depth_3_0, \partial_env3_velocity_depth_3_1
 	.byte	(\partial_env3_egc_0x4c_3) & 0xff
@@ -1385,9 +1385,9 @@
 ; kit record: one of 128 user drum instruments (80 B), fields +0x0..+0x4b
 ;   +0x000 entry_name               ascii  PercInst +0x00 13-char name; kit clamp 32..127 for entry offsets 0..12 [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI n
 ;   +0x00d entry_layer_mask         bits   subcpu v1.42 Voice_Allocate_Type2 0x02C12B: bit 0 = layer 0, bit 2 = layer 1, bit 5 = fixed level (Voice_WriteVolume_OrPan 0x026C16) [128 x 80-byte user drum in
-;   +0x00e entry_b_0x0e             dec    clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry
-;   +0x00f entry_b_0x0f             dec    clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry
-;   +0x010 entry_layer0_b_0x00      dec    clamp 0..128; no reader [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 
+;   +0x00e entry_unread_0e          dec    clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers; the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Ca
+;   +0x00f entry_unread_0f          dec    clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers; the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Ca
+;   +0x010 entry_layer0_unread_00   dec    clamp 0..128; no reader (the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no
 ;   +0x011 entry_layer0_wave        dec    subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 wave byte; clamp 0..127 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_Slo
 ;   +0x012 entry_layer0_wave_family hex    subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 family byte (0x40..0x4F percussion) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v
 ;   +0x013 entry_layer0_coarse_tune signed subcpu v1.42 Voice_Pitch_CopyBase 0x023809 (signed semitones); clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_S
@@ -1407,7 +1407,7 @@
 ;   +0x021 entry_layer0_filter_cutoff dec    subcpu v1.42 TVF_Build_Short 0x02413E [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F wr
 ;   +0x022 entry_layer0_filter_slope hex    subcpu v1.42 TVF_Build_Short 0x02413E [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F wr
 ;   +0x023 entry_layer0_filter_bias_depth hex    subcpu v1.42 TVF_Build_Short 0x02413E: bias, depth [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_
-;   +0x025 entry_layer1_b_0x00      dec    clamp 0..128; no reader [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 
+;   +0x025 entry_layer1_unread_00   dec    clamp 0..128; no reader (the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no
 ;   +0x026 entry_layer1_wave        dec    subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 wave byte; clamp 0..127 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_Slo
 ;   +0x027 entry_layer1_wave_family hex    subcpu v1.42 WaveSel_StageA1_FromToneSlot 0x032682 family byte (0x40..0x4F percussion) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v
 ;   +0x028 entry_layer1_coarse_tune signed subcpu v1.42 Voice_Pitch_CopyBase 0x023809 (signed semitones); clamp -50..50 [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_S
@@ -1441,7 +1441,7 @@
 ;   +0x049 entry_vsel1_zone0_family hex    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copie
 ;   +0x04a entry_vsel1_zone1_wave   dec    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copie
 ;   +0x04b entry_vsel1_zone1_family hex    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5 [layer 1 velocity-split record at entry +0x3A + 11*L: subcpu v1.42 CustomTone_CopySubUnitRecord 0x02E390 copie
-	.macro	tm_kit_entry_0 entry_name, entry_layer_mask, entry_b_0x0e, entry_b_0x0f, entry_layer0_b_0x00, entry_layer0_wave, entry_layer0_wave_family, entry_layer0_coarse_tune, entry_layer0_fine_tune, entry_layer0_channel_detune, entry_layer0_detune, entry_layer0_pitch_curve, entry_layer0_amp_seg0_target, entry_layer0_amp_seg1_target, entry_layer0_amp_seg1_rate, entry_layer0_amp_seg2_target, entry_layer0_amp_seg2_rate, entry_layer0_fixed_level, entry_layer0_amp_seg0_key_scale, entry_layer0_filter_type, entry_layer0_filter_key_follow_depth, entry_layer0_filter_cutoff, entry_layer0_filter_slope, entry_layer0_filter_bias_depth_0, entry_layer0_filter_bias_depth_1, entry_layer1_b_0x00, entry_layer1_wave, entry_layer1_wave_family, entry_layer1_coarse_tune, entry_layer1_fine_tune, entry_layer1_channel_detune, entry_layer1_detune, entry_layer1_pitch_curve, entry_layer1_amp_seg0_target, entry_layer1_amp_seg1_target, entry_layer1_amp_seg1_rate, entry_layer1_amp_seg2_target, entry_layer1_amp_seg2_rate, entry_layer1_fixed_level, entry_layer1_amp_seg0_key_scale, entry_layer1_filter_type, entry_layer1_filter_key_follow_depth, entry_layer1_filter_cutoff, entry_layer1_filter_slope, entry_layer1_filter_bias_depth_0, entry_layer1_filter_bias_depth_1, entry_vsel0_thresholds_0, entry_vsel0_thresholds_1, entry_vsel0_thresholds_2, entry_vsel0_zone0_wave, entry_vsel0_zone0_family, entry_vsel0_zone1_wave, entry_vsel0_zone1_family, entry_vsel0_zone2_wave, entry_vsel0_zone2_family, entry_vsel0_zone3_wave, entry_vsel0_zone3_family, entry_vsel1_thresholds_0, entry_vsel1_thresholds_1, entry_vsel1_thresholds_2, entry_vsel1_zone0_wave, entry_vsel1_zone0_family, entry_vsel1_zone1_wave, entry_vsel1_zone1_family
+	.macro	tm_kit_entry_0 entry_name, entry_layer_mask, entry_unread_0e, entry_unread_0f, entry_layer0_unread_00, entry_layer0_wave, entry_layer0_wave_family, entry_layer0_coarse_tune, entry_layer0_fine_tune, entry_layer0_channel_detune, entry_layer0_detune, entry_layer0_pitch_curve, entry_layer0_amp_seg0_target, entry_layer0_amp_seg1_target, entry_layer0_amp_seg1_rate, entry_layer0_amp_seg2_target, entry_layer0_amp_seg2_rate, entry_layer0_fixed_level, entry_layer0_amp_seg0_key_scale, entry_layer0_filter_type, entry_layer0_filter_key_follow_depth, entry_layer0_filter_cutoff, entry_layer0_filter_slope, entry_layer0_filter_bias_depth_0, entry_layer0_filter_bias_depth_1, entry_layer1_unread_00, entry_layer1_wave, entry_layer1_wave_family, entry_layer1_coarse_tune, entry_layer1_fine_tune, entry_layer1_channel_detune, entry_layer1_detune, entry_layer1_pitch_curve, entry_layer1_amp_seg0_target, entry_layer1_amp_seg1_target, entry_layer1_amp_seg1_rate, entry_layer1_amp_seg2_target, entry_layer1_amp_seg2_rate, entry_layer1_fixed_level, entry_layer1_amp_seg0_key_scale, entry_layer1_filter_type, entry_layer1_filter_key_follow_depth, entry_layer1_filter_cutoff, entry_layer1_filter_slope, entry_layer1_filter_bias_depth_0, entry_layer1_filter_bias_depth_1, entry_vsel0_thresholds_0, entry_vsel0_thresholds_1, entry_vsel0_thresholds_2, entry_vsel0_zone0_wave, entry_vsel0_zone0_family, entry_vsel0_zone1_wave, entry_vsel0_zone1_family, entry_vsel0_zone2_wave, entry_vsel0_zone2_family, entry_vsel0_zone3_wave, entry_vsel0_zone3_family, entry_vsel1_thresholds_0, entry_vsel1_thresholds_1, entry_vsel1_thresholds_2, entry_vsel1_zone0_wave, entry_vsel1_zone0_family, entry_vsel1_zone1_wave, entry_vsel1_zone1_family
 .Lsa\@_entry_name:
 	.ascii	"\entry_name"
 .Lsb\@_entry_name:
@@ -1449,9 +1449,9 @@
 	.error	"tm_kit_entry_0: entry_name is not 13 bytes"
 	.endif
 	.byte	\entry_layer_mask
-	.byte	\entry_b_0x0e
-	.byte	\entry_b_0x0f
-	.byte	\entry_layer0_b_0x00
+	.byte	\entry_unread_0e
+	.byte	\entry_unread_0f
+	.byte	\entry_layer0_unread_00
 	.byte	\entry_layer0_wave
 	.byte	\entry_layer0_wave_family
 	.byte	(\entry_layer0_coarse_tune) & 0xff
@@ -1471,7 +1471,7 @@
 	.byte	\entry_layer0_filter_cutoff
 	.byte	\entry_layer0_filter_slope
 	.byte	\entry_layer0_filter_bias_depth_0, \entry_layer0_filter_bias_depth_1
-	.byte	\entry_layer1_b_0x00
+	.byte	\entry_layer1_unread_00
 	.byte	\entry_layer1_wave
 	.byte	\entry_layer1_wave_family
 	.byte	(\entry_layer1_coarse_tune) & 0xff
@@ -1528,15 +1528,15 @@
 	.endm
 
 ; song slot +0x07..+0xff, fields +0x0..+0x4f
-;   +0x000 init_zero_07             hex    Part_InitVoiceDefaults (sequencer_engine.s:16142) writes 0 (BC=7); 0x00 in 153/153 slots; TODO: no reader found; meaning unknown
+;   +0x000 written_only_07          hex    Part_InitVoiceDefaults (sequencer_engine.s:16142) writes 0 (BC=7); 0x00 in 153/153 slots. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_r
 ;   +0x001 panel_model_code         hex    [INFERENCE] Part_InitVoiceDefaults writes Boot_ReadFDCStatus() = RAM 0x8e6a (kn5000_v10_program.s:1654); SoundBank_InitTrack_ByteFields (smf_playback.s:125) doe
 ;   +0x002 file_stem                ascii  [INFERENCE] measured: 31 of 153 slots hold an 8-character, "_"-padded DOS name stem plus NUL ("07STIMNG", "01HEITER", "04SOUL__"); the rest hold stale bytes (00
-;   +0x00b b_0x12                   hex    stale bytes (ff ff in 109/153); nothing writes or reads it; TODO: no writer/reader found
-;   +0x00d section0_offset16        u16    [INFERENCE] Part_InitVoiceDefaults writes 0 (BC=0x14), SoundBank_InitTrack_WordFields_Data the same; constant 0x0000 in 153/153; TODO: read as {offset/16, lengt
-;   +0x00f section0_length          u16    [INFERENCE] Part_InitVoiceDefaults writes 0x0100 (BC=0x16); constant in 153/153. 0x100 = the end of the song-parameter block (+0x100 is the name); TODO: no read
+;   +0x00b stale_12                 hex    RAM residue: ff ff in 109/153; nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: 0 ABS, 0 PART; the DISP candidates a
+;   +0x00d section0_offset16        u16    [INFERENCE] Part_InitVoiceDefaults writes 0 (BC=0x14), SoundBank_InitTrack_WordFields_Data the same; constant 0x0000 in 153/153. Read as the {offset/16, length}
+;   +0x00f section0_length          u16    [INFERENCE] Part_InitVoiceDefaults writes 0x0100 (BC=0x16); constant in 153/153. 0x100 = the end of the song-parameter block (+0x100 is the name). Written only:
 ;   +0x011 panel_section_offset16   u16    [INFERENCE] Part_InitVoiceDefaults writes 0x002e (BC=0x18); 0x2e * 16 = 0x2e0, the song panel copy (SEQ_SONG_RECORD+736 in Part_CopyToBuffer / BitMapOut_Compute
 ;   +0x013 panel_section_length     u16    [INFERENCE] Part_InitVoiceDefaults writes 0x0520 (BC=0x1a); Part_CopyToBuffer (sequencer_engine.s:15668) copies exactly 0x520 bytes from slot +0x2e0 (0x2e0 + 0x
-;   +0x015 w_0x1c                   u16    cleared (0) whenever a song is erased, beside the track mask: SeqTempo_ApplyAndReturn (sequencer_engine.s:12515, 12528), SeqBufPos_StoreResult, PartRelRange_Wri
+;   +0x015 password                 u16    the song password: FmmPasswordFunc (file_io/filename_password.s) on EVT_SET_PASSWORD writes the entered password into +0x1c of all ten slots (ClearAllSongSlots 
 ;   +0x017 track_mask               u16    SEQ_TRACK_MASK 0xf19e (ram_variables_by_use.s): bit t-1 = track t holds data (Chan_SetActiveBit); measured: 108 of 132 present tracks (+0xd0 bit 7) have their b
 ;   +0x019 track_assign_0           dec    SEQ_TRACK_ASSIGN 0xf1a0: TRACK ASSIGN of each of the 16 tracks (13 CHORD, 14 APC, 15 CONTROL, 16 RHYTHM; Seq_FindRhythmTrack); Part_WriteSubBlock32 / Part_ReadS
 ;   +0x01a track_assign_1           dec    SEQ_TRACK_ASSIGN 0xf1a0: TRACK ASSIGN of each of the 16 tracks (13 CHORD, 14 APC, 15 CONTROL, 16 RHYTHM; Seq_FindRhythmTrack); Part_WriteSubBlock32 / Part_ReadS
@@ -1570,17 +1570,17 @@
 ;   +0x036 track_table_30_13        dec    [INFERENCE] Part_WriteSubBlock48 / Part_VoiceSearchBlock (sequencer_engine.s:15988, 16008): a second 16-entry per-track byte table at slot +0x30 (0xf1b0); defau
 ;   +0x037 track_table_30_14        dec    [INFERENCE] Part_WriteSubBlock48 / Part_VoiceSearchBlock (sequencer_engine.s:15988, 16008): a second 16-entry per-track byte table at slot +0x30 (0xf1b0); defau
 ;   +0x038 track_table_30_15        dec    [INFERENCE] Part_WriteSubBlock48 / Part_VoiceSearchBlock (sequencer_engine.s:15988, 16008): a second 16-entry per-track byte table at slot +0x30 (0xf1b0); defau
-;   +0x039 w_0x40                   hex    varies (00 00 / 31 b1 / fe ff / b2 5c / 1e c8 ...); no writer or reader found; TODO: searched 0xf1c0..0xf1c1 refs and the slot accessors
-;   +0x03b init_zero_42             hex    PartInit_WriteZeroLoop in Part_InitVoiceDefaults zeroes +0x42..+0x4d; 0 in 153/153; TODO: no reader found
+;   +0x039 stale_40                 hex    RAM residue: varies (00 00 / 31 b1 / fe ff / b2 5c / 1e c8 ...); nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10: 0 
+;   +0x03b written_only_42          hex    PartInit_WriteZeroLoop in Part_InitVoiceDefaults zeroes +0x42..+0x4d; 0 in 153/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py
 ;   +0x047 event_used_size16        u16    SEQ_SONG_RECORD+78 (0xf1ce): SeqStep_FindAndCompact stores the used event-memory size / 16; MidiPkt_GetUsedSize_SeqEvents (midi_dispatch_handlers.s:10630) retur
 ;   +0x049 track_mask_50            u16    [INFERENCE] per-track bit mask (Bit16Mask_Table[t]) tested by AudioInit_GroupA_DefaultMapping (audioinit_routines.s:938) and PartCtrl_CheckBitmaskBit (audio_con
-;   +0x04b b_0x52                   dec    [INFERENCE] SeqParams_InitDefaults (v10 sequencer_engine.s:12015) and SeqInit_Return (sequencer_engine.s:18929..19143, Part_WriteByte/Part_WriteWord with BC = t
+;   +0x04b written_only_52          dec    SeqParams_InitDefaults (v10 sequencer_engine.s:12015) and SeqInit_Return (sequencer_engine.s:18929..19143, Part_WriteByte/Part_WriteWord with BC = this offset) 
 ;   +0x04c sqedt_trkmrg_track_a     dec    SQEDT_TRKMRG_TRACK_A 0xf1d3 (TT_SQTRKMRG source track A); default 1
 ;   +0x04d sqedt_trkmrg_track_b     dec    SQEDT_TRKMRG_TRACK_B 0xf1d4; default 2
 ;   +0x04e sqedt_trkmrg_track_c     dec    SQEDT_TRKMRG_TRACK_C 0xf1d5 (destination); default 3
 ;   +0x04f sqedt_mdel_track         dec    SQEDT_MDEL_TRACK 0xf1d6 (TT_SQMDEL)
-	.macro	sqt_slot_a_0 init_zero_07, panel_model_code, file_stem, b_0x12_0, b_0x12_1, section0_offset16, section0_length, panel_section_offset16, panel_section_length, w_0x1c, track_mask, track_assign_0, track_assign_1, track_assign_2, track_assign_3, track_assign_4, track_assign_5, track_assign_6, track_assign_7, track_assign_8, track_assign_9, track_assign_10, track_assign_11, track_assign_12, track_assign_13, track_assign_14, track_assign_15, track_table_30_0, track_table_30_1, track_table_30_2, track_table_30_3, track_table_30_4, track_table_30_5, track_table_30_6, track_table_30_7, track_table_30_8, track_table_30_9, track_table_30_10, track_table_30_11, track_table_30_12, track_table_30_13, track_table_30_14, track_table_30_15, w_0x40_0, w_0x40_1, init_zero_42_0, init_zero_42_1, init_zero_42_2, init_zero_42_3, init_zero_42_4, init_zero_42_5, init_zero_42_6, init_zero_42_7, init_zero_42_8, init_zero_42_9, init_zero_42_10, init_zero_42_11, event_used_size16, track_mask_50, b_0x52, sqedt_trkmrg_track_a, sqedt_trkmrg_track_b, sqedt_trkmrg_track_c, sqedt_mdel_track
-	.byte	\init_zero_07
+	.macro	sqt_slot_a_0 written_only_07, panel_model_code, file_stem, stale_12_0, stale_12_1, section0_offset16, section0_length, panel_section_offset16, panel_section_length, password, track_mask, track_assign_0, track_assign_1, track_assign_2, track_assign_3, track_assign_4, track_assign_5, track_assign_6, track_assign_7, track_assign_8, track_assign_9, track_assign_10, track_assign_11, track_assign_12, track_assign_13, track_assign_14, track_assign_15, track_table_30_0, track_table_30_1, track_table_30_2, track_table_30_3, track_table_30_4, track_table_30_5, track_table_30_6, track_table_30_7, track_table_30_8, track_table_30_9, track_table_30_10, track_table_30_11, track_table_30_12, track_table_30_13, track_table_30_14, track_table_30_15, stale_40_0, stale_40_1, written_only_42_0, written_only_42_1, written_only_42_2, written_only_42_3, written_only_42_4, written_only_42_5, written_only_42_6, written_only_42_7, written_only_42_8, written_only_42_9, written_only_42_10, written_only_42_11, event_used_size16, track_mask_50, written_only_52, sqedt_trkmrg_track_a, sqedt_trkmrg_track_b, sqedt_trkmrg_track_c, sqedt_mdel_track
+	.byte	\written_only_07
 	.byte	\panel_model_code
 .Lsa\@_file_stem:
 	.ascii	"\file_stem"
@@ -1588,12 +1588,12 @@
 	.if	(.Lsb\@_file_stem - .Lsa\@_file_stem) - 9
 	.error	"sqt_slot_a_0: file_stem is not 9 bytes"
 	.endif
-	.byte	\b_0x12_0, \b_0x12_1
+	.byte	\stale_12_0, \stale_12_1
 	.short	\section0_offset16
 	.short	\section0_length
 	.short	\panel_section_offset16
 	.short	\panel_section_length
-	.short	\w_0x1c
+	.short	\password
 	.short	\track_mask
 	.byte	\track_assign_0
 	.byte	\track_assign_1
@@ -1627,11 +1627,11 @@
 	.byte	\track_table_30_13
 	.byte	\track_table_30_14
 	.byte	\track_table_30_15
-	.byte	\w_0x40_0, \w_0x40_1
-	.byte	\init_zero_42_0, \init_zero_42_1, \init_zero_42_2, \init_zero_42_3, \init_zero_42_4, \init_zero_42_5, \init_zero_42_6, \init_zero_42_7, \init_zero_42_8, \init_zero_42_9, \init_zero_42_10, \init_zero_42_11
+	.byte	\stale_40_0, \stale_40_1
+	.byte	\written_only_42_0, \written_only_42_1, \written_only_42_2, \written_only_42_3, \written_only_42_4, \written_only_42_5, \written_only_42_6, \written_only_42_7, \written_only_42_8, \written_only_42_9, \written_only_42_10, \written_only_42_11
 	.short	\event_used_size16
 	.short	\track_mask_50
-	.byte	\b_0x52
+	.byte	\written_only_52
 	.byte	\sqedt_trkmrg_track_a
 	.byte	\sqedt_trkmrg_track_b
 	.byte	\sqedt_trkmrg_track_c
@@ -1657,9 +1657,9 @@
 ;   +0x068 sqedt_mcp_at             u16    SQEDT_MCP_AT 0xf1ef
 ;   +0x06a sqedt_qtz_track          dec    SQEDT_QTZ_TRACK 0xf1f1 (TT_SQQTZ; 0x11 = all)
 ;   +0x06b sqedt_qtz_from           u16    SQEDT_QTZ_FROM 0xf1f2
-;   +0x06d sqedt_qtz_count          u16    [INFERENCE] SEQ_SONG_RECORD+116, set to 1 beside SQEDT_QTZ_FROM / _LAST in SeqParams_InitDefaults; TODO: count by analogy with +0x59/+0x5e/+0x64/+0x6c; the TT_S
+;   +0x06d written_only_74          u16    SEQ_SONG_RECORD+116: SeqParams_InitDefaults writes 1 and SeqInit_Return (BC=0x74) the default, like the MDEL / MERS / MINS / MCP counts at +0x59 / +0x5e / +0x64
 ;   +0x06f sqedt_qtz_value          dec    SQEDT_QTZ_VALUE 0xf1f6; default 3
-;   +0x070 b_0x77                   dec    SeqInit_Return writes 0 (BC=0x77); 0 in 152/153; TODO: no reader found
+;   +0x070 written_only_77          dec    SeqInit_Return writes 0 (BC=0x77); 0 in 152/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)
 ;   +0x071 track_tail_cell_0        u16    Part_WriteWord_Indexed / Part_ReadWord_Indexed (sequencer_engine.s:15795..): word array at slot +0x78, entry t = track t+1; VoiceSlot_AssignToChannel / VoiceSlo
 ;   +0x073 track_tail_cell_1        u16    Part_WriteWord_Indexed / Part_ReadWord_Indexed (sequencer_engine.s:15795..): word array at slot +0x78, entry t = track t+1; VoiceSlot_AssignToChannel / VoiceSlo
 ;   +0x075 track_tail_cell_2        u16    Part_WriteWord_Indexed / Part_ReadWord_Indexed (sequencer_engine.s:15795..): word array at slot +0x78, entry t = track t+1; VoiceSlot_AssignToChannel / VoiceSlo
@@ -1694,13 +1694,13 @@
 ;   +0x0a0 track_tail_offset_15     dec    Part_WriteByte_Indexed / Part_ReadByte_Indexed: byte array at slot +0x98; VoiceSlot_AssignToChannel reads it as the write offset in the tail cell (5 = first pay
 ;   +0x0a1 sqedt_velocng_track      dec    SQEDT_VELOCNG_TRACK 0xf228 (TT_SQVELOCNG)
 ;   +0x0a2 sqedt_velocng_from       u16    SQEDT_VELOCNG_FROM 0xf229
-;   +0x0a4 sqedt_velocng_count      u16    [INFERENCE] SEQ_SONG_RECORD+171, set to 1 beside SQEDT_VELOCNG_FROM / _LAST in SeqParams_InitDefaults; TODO: count by analogy; the handler was not read
-;   +0x0a6 b_0xad                   dec    SeqParams_InitDefaults / SeqInit_Return write 0 (SEQ_SONG_RECORD+173); TODO: no reader found
+;   +0x0a4 written_only_ab          u16    SEQ_SONG_RECORD+171: SeqParams_InitDefaults writes 1, SeqInit_Return (BC=0xab) the default, as for the quantize word at +0x74; TT_SQVELOCNG keeps its range in S
+;   +0x0a6 written_only_ad          dec    SeqParams_InitDefaults / SeqInit_Return write 0 (SEQ_SONG_RECORD+173). No reader in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)
 ;   +0x0a7 sqedt_velocng_amount     dec    SQEDT_VELOCNG_AMOUNT 0xf22e
 ;   +0x0a8 free_list_head           u16    SEQ_FREE_LIST_HEAD 0xf22f: first free cell (one-based), 0xffff = none (DispatchHandler_ResolveSlot); measured = cell count + 1 in 90 of the 102 slots with event
 ;   +0x0aa free_blocks              u16    SEQ_FREE_BLOCKS 0xf231 (Part_SetAllVoicePos writes it into every slot); measured: cells in file + this = 1240 (0x4d8, the heap size) in 90 slots
-;   +0x0ac init_zero_b3             hex    SeqParams_InitDefaults and SeqInit_Return write 0 to +0xb3, +0xb4, +0xb5, +0xb6 (bytes); 0 in 152/153; TODO: no reader found
-	.macro	sqt_slot_a_1 sqedt_mdel_from, sqedt_mdel_count, sqedt_mers_track, sqedt_mers_from, sqedt_mers_count, sqedt_mers_choice, sqedt_mins_track_a, sqedt_mins_from, sqedt_mins_count, sqedt_mins_track_b, sqedt_mins_at, sqedt_mcp_track_a, sqedt_mcp_from, sqedt_mcp_count, sqedt_mcp_track_b, sqedt_mcp_at, sqedt_qtz_track, sqedt_qtz_from, sqedt_qtz_count, sqedt_qtz_value, b_0x77, track_tail_cell_0, track_tail_cell_1, track_tail_cell_2, track_tail_cell_3, track_tail_cell_4, track_tail_cell_5, track_tail_cell_6, track_tail_cell_7, track_tail_cell_8, track_tail_cell_9, track_tail_cell_10, track_tail_cell_11, track_tail_cell_12, track_tail_cell_13, track_tail_cell_14, track_tail_cell_15, track_tail_offset_0, track_tail_offset_1, track_tail_offset_2, track_tail_offset_3, track_tail_offset_4, track_tail_offset_5, track_tail_offset_6, track_tail_offset_7, track_tail_offset_8, track_tail_offset_9, track_tail_offset_10, track_tail_offset_11, track_tail_offset_12, track_tail_offset_13, track_tail_offset_14, track_tail_offset_15, sqedt_velocng_track, sqedt_velocng_from, sqedt_velocng_count, b_0xad, sqedt_velocng_amount, free_list_head, free_blocks, init_zero_b3_0, init_zero_b3_1, init_zero_b3_2, init_zero_b3_3
+;   +0x0ac written_only_b3          hex    SeqParams_InitDefaults and SeqInit_Return write 0 to +0xb3, +0xb4, +0xb5, +0xb6 (bytes); 0 in 152/153. No reader in v5..v10 (notes/kn5000-style-2026-10-31/probe
+	.macro	sqt_slot_a_1 sqedt_mdel_from, sqedt_mdel_count, sqedt_mers_track, sqedt_mers_from, sqedt_mers_count, sqedt_mers_choice, sqedt_mins_track_a, sqedt_mins_from, sqedt_mins_count, sqedt_mins_track_b, sqedt_mins_at, sqedt_mcp_track_a, sqedt_mcp_from, sqedt_mcp_count, sqedt_mcp_track_b, sqedt_mcp_at, sqedt_qtz_track, sqedt_qtz_from, written_only_74, sqedt_qtz_value, written_only_77, track_tail_cell_0, track_tail_cell_1, track_tail_cell_2, track_tail_cell_3, track_tail_cell_4, track_tail_cell_5, track_tail_cell_6, track_tail_cell_7, track_tail_cell_8, track_tail_cell_9, track_tail_cell_10, track_tail_cell_11, track_tail_cell_12, track_tail_cell_13, track_tail_cell_14, track_tail_cell_15, track_tail_offset_0, track_tail_offset_1, track_tail_offset_2, track_tail_offset_3, track_tail_offset_4, track_tail_offset_5, track_tail_offset_6, track_tail_offset_7, track_tail_offset_8, track_tail_offset_9, track_tail_offset_10, track_tail_offset_11, track_tail_offset_12, track_tail_offset_13, track_tail_offset_14, track_tail_offset_15, sqedt_velocng_track, sqedt_velocng_from, written_only_ab, written_only_ad, sqedt_velocng_amount, free_list_head, free_blocks, written_only_b3_0, written_only_b3_1, written_only_b3_2, written_only_b3_3
 	.short	\sqedt_mdel_from
 	.short	\sqedt_mdel_count
 	.byte	\sqedt_mers_track
@@ -1719,9 +1719,9 @@
 	.short	\sqedt_mcp_at
 	.byte	\sqedt_qtz_track
 	.short	\sqedt_qtz_from
-	.short	\sqedt_qtz_count
+	.short	\written_only_74
 	.byte	\sqedt_qtz_value
-	.byte	\b_0x77
+	.byte	\written_only_77
 	.short	\track_tail_cell_0
 	.short	\track_tail_cell_1
 	.short	\track_tail_cell_2
@@ -1756,28 +1756,28 @@
 	.byte	\track_tail_offset_15
 	.byte	\sqedt_velocng_track
 	.short	\sqedt_velocng_from
-	.short	\sqedt_velocng_count
-	.byte	\b_0xad
+	.short	\written_only_ab
+	.byte	\written_only_ad
 	.byte	\sqedt_velocng_amount
 	.short	\free_list_head
 	.short	\free_blocks
-	.byte	\init_zero_b3_0, \init_zero_b3_1, \init_zero_b3_2, \init_zero_b3_3
+	.byte	\written_only_b3_0, \written_only_b3_1, \written_only_b3_2, \written_only_b3_3
 	.endm
 
 ; song slot +0x07..+0xff, fields +0xb0..+0xf8
-;   +0x0b0 b_0xb7                   hex    stale bytes (ff/bf/00); nothing writes it; TODO: no writer/reader found
+;   +0x0b0 stale_b7                 hex    RAM residue (ff/bf/00); nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)
 ;   +0x0b1 punch_in_measure         u16    SEQ_PUNCH_IN_MEASURE 0xf238; default 1
 ;   +0x0b3 punch_out_measure        u16    SEQ_PUNCH_OUT_MEASURE 0xf23a; default 2
 ;   +0x0b5 play_flags               bits   SEQ_SONG_RECORD+188: bit 0 = punch-in recording (SeqAcc_StartPlayback sets, SeqAcc_StopPlayback clears, SeqAcc_SetupRepeatCount tests; sequencer_engine.s:142-17
 ;   +0x0b6 accomp_mode              hex    [INFERENCE] SEQ_SONG_RECORD+189: SongBank_CheckAccompanimentMode (ui_playback_modes.s:1075) and SetWall_Sync_CheckPanelBit compare it with 255; Part_InitVoiceDe
 ;   +0x0b7 song_flags               bits   [INFERENCE] SEQ_SONG_RECORD+190: SeqLoad_CheckAutoAccompFlag (sequencer_engine.s:27210) sets bit 0 when slot byte +6 < 3 and +5 != 0, clears bit 1; SeqInit_Retu
 ;   +0x0b8 count_in                 u16    SEQ_COUNT_IN 0xf23f (play-screen parameter 10); SeqInit_Return writes it as a word (BC=0xbf); 0 or 2 measured
-;   +0x0ba b_0xc1                   hex    six 0x20 in 100/153 slots, b3 23 20 00 20 20 in 53; no writer or reader found; TODO: the KN7000 .SQF has an 8-character slot name at +0xC1 (docs/kn5000-sequence
+;   +0x0ba stale_c1                 hex    six 0x20 in 100/153 slots, b3 23 20 00 20 20 in 53; nothing writes or reads it in v5..v10 (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10). The
 ;   +0x0c0 saved_current_song       dec    SeqStep_ReinitPartTable (seq_step_routines.s:3127) and SeqStep_ByteBlockEA5F write SEQ_CURRENT_SONG (0xffe3) here; MidiSysEx_RestoreSongSelection reads it back;
 ;   +0x0c1 saved_track_mask         u16    SeqStep_ReinitPartTable / SeqStep_ByteBlockEA5F write SEQ_TRACK_MASK_COPY (0xffec) here; MidiSysEx_RestoreSongSelection restores it
-;   +0x0c3 b_0xca                   hex    0 in 152/153; nothing writes or reads it; TODO: no writer/reader found
+;   +0x0c3 stale_ca                 hex    0 in 152/153; nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)
 ;   +0x0c4 bass_mode                hex    [INFERENCE] SEQ_SONG_RECORD+203: SongBank_CheckBassMode (ui_playback_modes.s:1098) compares it with 255 (SongBank_EnableBassMode); cleared with the track mask o
-;   +0x0c5 b_0xcc                   hex    00 00 ff ff / 0a f3 ff ff / fe ff fe bf (stale); nothing writes or reads it; TODO: no writer/reader found
+;   +0x0c5 stale_cc                 hex    RAM residue: 00 00 ff ff / 0a f3 ff ff / fe ff fe bf; nothing writes or reads it (notes/kn5000-style-2026-10-31/probes/sqt_field_refs.py, v5..v10)
 ;   +0x0c9 track_flags_0            bits   SEQ_TRACK_TABLE 0xf250, 16 x 3 bytes: bit 7 = the track holds data (Part_ReadVoiceBit7 / Part_SetClearVoiceBit7, SqStep_CheckCursorTrackUsed); SeqSlot_ClearF250
 ;   +0x0ca track_first_cell_0       u16    SEQ_TRACK_TABLE +1: Part_ReadVoiceWord / Part_WriteVoiceWord (slot + 0xd1 + 3*(t-1)), 0xffff when empty (SeqSlot_ClearF250Loop). Measured: for all 132 present t
 ;   +0x0cc track_flags_1            bits   SEQ_TRACK_TABLE 0xf250, 16 x 3 bytes: bit 7 = the track holds data (Part_ReadVoiceBit7 / Part_SetClearVoiceBit7, SqStep_CheckCursorTrackUsed); SeqSlot_ClearF250
@@ -1810,20 +1810,20 @@
 ;   +0x0f4 track_first_cell_14      u16    SEQ_TRACK_TABLE +1: Part_ReadVoiceWord / Part_WriteVoiceWord (slot + 0xd1 + 3*(t-1)), 0xffff when empty (SeqSlot_ClearF250Loop). Measured: for all 132 present t
 ;   +0x0f6 track_flags_15           bits   SEQ_TRACK_TABLE 0xf250, 16 x 3 bytes: bit 7 = the track holds data (Part_ReadVoiceBit7 / Part_SetClearVoiceBit7, SqStep_CheckCursorTrackUsed); SeqSlot_ClearF250
 ;   +0x0f7 track_first_cell_15      u16    SEQ_TRACK_TABLE +1: Part_ReadVoiceWord / Part_WriteVoiceWord (slot + 0xd1 + 3*(t-1)), 0xffff when empty (SeqSlot_ClearF250Loop). Measured: for all 132 present t
-	.macro	sqt_slot_a_2 b_0xb7, punch_in_measure, punch_out_measure, play_flags, accomp_mode, song_flags, count_in, b_0xc1_0, b_0xc1_1, b_0xc1_2, b_0xc1_3, b_0xc1_4, b_0xc1_5, saved_current_song, saved_track_mask, b_0xca, bass_mode, b_0xcc_0, b_0xcc_1, b_0xcc_2, b_0xcc_3, track_flags_0, track_first_cell_0, track_flags_1, track_first_cell_1, track_flags_2, track_first_cell_2, track_flags_3, track_first_cell_3, track_flags_4, track_first_cell_4, track_flags_5, track_first_cell_5, track_flags_6, track_first_cell_6, track_flags_7, track_first_cell_7, track_flags_8, track_first_cell_8, track_flags_9, track_first_cell_9, track_flags_10, track_first_cell_10, track_flags_11, track_first_cell_11, track_flags_12, track_first_cell_12, track_flags_13, track_first_cell_13, track_flags_14, track_first_cell_14, track_flags_15, track_first_cell_15
-	.byte	\b_0xb7
+	.macro	sqt_slot_a_2 stale_b7, punch_in_measure, punch_out_measure, play_flags, accomp_mode, song_flags, count_in, stale_c1_0, stale_c1_1, stale_c1_2, stale_c1_3, stale_c1_4, stale_c1_5, saved_current_song, saved_track_mask, stale_ca, bass_mode, stale_cc_0, stale_cc_1, stale_cc_2, stale_cc_3, track_flags_0, track_first_cell_0, track_flags_1, track_first_cell_1, track_flags_2, track_first_cell_2, track_flags_3, track_first_cell_3, track_flags_4, track_first_cell_4, track_flags_5, track_first_cell_5, track_flags_6, track_first_cell_6, track_flags_7, track_first_cell_7, track_flags_8, track_first_cell_8, track_flags_9, track_first_cell_9, track_flags_10, track_first_cell_10, track_flags_11, track_first_cell_11, track_flags_12, track_first_cell_12, track_flags_13, track_first_cell_13, track_flags_14, track_first_cell_14, track_flags_15, track_first_cell_15
+	.byte	\stale_b7
 	.short	\punch_in_measure
 	.short	\punch_out_measure
 	.byte	\play_flags
 	.byte	\accomp_mode
 	.byte	\song_flags
 	.short	\count_in
-	.byte	\b_0xc1_0, \b_0xc1_1, \b_0xc1_2, \b_0xc1_3, \b_0xc1_4, \b_0xc1_5
+	.byte	\stale_c1_0, \stale_c1_1, \stale_c1_2, \stale_c1_3, \stale_c1_4, \stale_c1_5
 	.byte	\saved_current_song
 	.short	\saved_track_mask
-	.byte	\b_0xca
+	.byte	\stale_ca
 	.byte	\bass_mode
-	.byte	\b_0xcc_0, \b_0xcc_1, \b_0xcc_2, \b_0xcc_3
+	.byte	\stale_cc_0, \stale_cc_1, \stale_cc_2, \stale_cc_3
 	.byte	\track_flags_0
 	.short	\track_first_cell_0
 	.byte	\track_flags_1

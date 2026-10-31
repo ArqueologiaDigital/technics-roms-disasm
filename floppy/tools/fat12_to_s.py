@@ -34,6 +34,7 @@ OUTPUT (all llvm-mc, assembled by floppy/Makefile)
   `.incbin` declared `census: opaque -- unknown-dump: ...` naming what the bytes are.
 """
 import argparse
+import hashlib
 import importlib.util
 import os
 import pathlib
@@ -41,6 +42,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import fat12lib  # noqa: E402
+
+
+# SHA-1 of bytes 0x3E..0x1FD of the stub floppy/tools/pc_boot_stub.s assembles to (the nine WSA1R disks'
+# boot code, notes/open-items/probes/wsa1_boot_sectors.py).
+PC_BOOT_STUB_SHA1 = '631c4b94c3526e28a7382af72f54f3907065fa22'
 
 
 def s_escape(b):
@@ -171,6 +177,11 @@ def boot_lines(img, ref):
             note = '\t\t; x86 `jmp $`: spins forever, the diskette does not boot a PC'
         L.append('\t.byte\t%s%s' % (hexb(code[:n]), note))
         L.append('\t.fill\t%d, 1, 0' % (len(code) - n))
+    elif code0 == 0x3E and hashlib.sha1(code).hexdigest() == PC_BOOT_STUB_SHA1:
+        L += ['\t; The PC boot stub of the image-making tool ("This is not a bootable disk ..."): 16-bit x86,',
+              '\t; disassembled in floppy/tools/pc_boot_stub.s, assembled by floppy/Makefile.',
+              '\t; census: generated -- llvm-mc -triple=i386, from floppy/tools/pc_boot_stub.s',
+              '\t.incbin\t"pc_boot_stub.bin", 0, %d' % len(code)]
     else:
         L += ['\t; census: opaque -- code: x86 boot code written by the formatting PC, not part of'
               ' any instrument firmware',

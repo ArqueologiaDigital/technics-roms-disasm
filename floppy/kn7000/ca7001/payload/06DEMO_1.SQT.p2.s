@@ -214,7 +214,8 @@ P_06DEMO_1_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"06DEMO_1.sqt.p2.ref", 0x258, 168
 	sq_cell	0x9c, 0, 5	; cell 4: song 1 track 2, 1 of 4
 	sq_beat
@@ -471,8 +472,10 @@ P_06DEMO_1_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06DEMO_1.sqt.p2.ref", 0x65f, 161
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	67	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06DEMO_1.sqt.p2.ref", 0x660, 160
 	sq_cell	0xe0, 0, 65535	; cell 8: song 1 track 3, 1 of 1
 	sq_beat
 	sq_beat
@@ -603,7 +606,8 @@ P_06DEMO_1_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"06DEMO_1.sqt.p2.ref", 0x786, 122
 	sq_cell	0x85, 0, 65535	; cell 9: song 1 track 4, 1 of 1
 	sq_beat
@@ -735,7 +739,8 @@ P_06DEMO_1_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"06DEMO_1.sqt.p2.ref", 0x886, 122
 	sq_cell	0x81, 0, 11	; cell 10: song 1 track 5, 1 of 3
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
@@ -945,7 +950,8 @@ P_06DEMO_1_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
 	.incbin	"06DEMO_1.sqt.p2.ref", 0xb50, 176
 	sq_cell	0xa4, 0, 65535	; cell 13: song 1 track 6, 1 of 1
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
@@ -1090,8 +1096,10 @@ P_06DEMO_1_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"06DEMO_1.sqt.p2.ref", 0xcdb, 37
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	36	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"06DEMO_1.sqt.p2.ref", 0xcdc, 36
 
 	.if	(. - P_06DEMO_1_SQT_p2) - 3328
 	.error	"06DEMO_1.SQT part 2: the payload is not 3328 bytes"

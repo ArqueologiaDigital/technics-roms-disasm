@@ -309,6 +309,13 @@ PM_PART_MASKS = [None, None, None, 0xFF, 0xDF, 0x03, 0xFF, 0xFF, 0xFF, 0x7F, 0xF
                  0x7F, 0x7F, 0x7F, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x3F]
 MASK_MISS = []
 TAIL_OLD = []
+CONVERTED = []
+# The largest count of a live stream in the ten KN7000 banks is 0x23B9 (probe stream_rules.py); a
+# "header" whose count exceeds one 32 KB block is taken for event bytes, not for a cut stream.
+MAX_STREAM = 0x8000
+# +0x90..+0x9F of func_48485B52_Block (program 941 0x48738FB8), the default 0xA0-byte setting that
+# func_48485B52 copies a KN6000 setting's 0x90 bytes over (PM_CONVERT_TAIL in panel_memory.inc)
+CONVERT_TAIL = bytes([0x17, 0, 0, 0x17, 0, 0, 0x06, 0, 0, 0x17, 0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
 
 
 def masked(vals, masks, what):
@@ -337,14 +344,23 @@ def gen_ots(o, r, lab, i, model):
     o.emit(None, "PM_SET8C " + ", ".join(f"{x:#04x}" for x in r[0x8C:0x8E]), r[0x8C:0x8E])
     if model == "kn7000":
         tails = [r[0x8F + 3 * k:0x92 + 3 * k] for k in range(4)]
+        if r[0x8E:0x90] == b"\xff\xff" and r[0x90:0xA0] == CONVERT_TAIL:
+            # func_48485B52 (KN6000 file -> KN7000 slot): the 0x90-byte KN6000 setting copied over the
+            # default func_48485B52_Block, so the KN6000 record's last two bytes, then the default's tail
+            CONVERTED.append(lab)
+            o.emit(None, "PM_KN6000_END", r[0x8E:0x90],
+                   "+0x8E..+0x8F: a KN6000 setting's end; func_48485B52 converted this setting from a KN6000 file")
+            o.emit(None, "PM_CONVERT_TAIL", r[0x90:0xA0], "+0x90..+0x9F: func_48485B52_Block's, the default it copied over")
+            return
         if all(t[0] & ~0x07 == 0 for t in tails):
             o.emit(None, f".byte {r[0x8E]:#04x}", r[0x8E:0x8F], "+0x8E: not written by func_4C02A0C4")
             for k, t in enumerate(tails):
                 o.emit(None, "PM_PART_TAIL " + ", ".join(f"{x:#04x}" for x in t), t, f"part {k}")
         else:
             TAIL_OLD.append(lab)
-            o.bytes_run(r[0x8E:0x9B], "+0x8E..+0x9A: not what program 941 writes here (PM_PART_TAIL x4: its "
-                                      "p23 masks 0x07 do not hold), so an older writer's bytes")
+            o.bytes_run(r[0x8E:0x9B], "+0x8E..+0x9A: not what programs 893 and 941 write here (PM_PART_TAIL x4: its "
+                                      "p23 masks 0x07 do not hold; their writers and tables are the same), so the bytes "
+                                      "of a writer older than program 893")
         o.emit(None, ".space 5, 0xff", r[0x9B:0xA0])
     else:
         o.emit(None, ".space 2, 0xff", r[0x8E:0x90])
@@ -565,6 +581,121 @@ class Cover:
                 best = (ci, rel, n)
         return best
 
+    # Macros whose arguments are the item's bytes one to one, so the same line can be spelled from
+    # other bytes; ranges[(kind, length)] = the (min, max) of each byte over the corpus's items.
+    REFORMAT = ("PART_SETUP", "PM_PART", "PM_PART_TAIL", "PM_ENTRIES", "PM_STYLE", "PM_SET77", "PM_FX", "PM_SET88",
+                "PM_SET8C", "STREAM_HEADER", "TCMP_VAR", "TCMP_STYLE", "TPAD_PAD", ".ascii")
+
+    def ranges_of(self):
+        if hasattr(self, "_ranges"):
+            return self._ranges
+        r = {}
+        for name, data, base, size, items, labels in self.recs:
+            for pos, k, text, _ in items:
+                kind = text.split(None, 1)[0]
+                if kind not in self.REFORMAT:
+                    continue
+                b = data[pos:pos + k]
+                cur = r.get((kind, k))
+                r[(kind, k)] = [(x, x) for x in b] if cur is None else \
+                    [(min(lo, x), max(hi, x)) for (lo, hi), x in zip(cur, b)]
+        self._ranges = r
+        return r
+
+    def reformat(self, kind, d, r, k, e):
+        """The donor line `kind` (k bytes) spelled from the residue's bytes d[r:r+k], when they have
+        the shape the corpus's items of that macro have: (text, length), else None.  An event line
+        starts a run of events instead: (lines, length)."""
+        if kind.startswith("ev_"):
+            q, nst = self.run_end(d, r, e)
+            return (parse_events(d, r, q), q - r) if q > r and nst >= 1 else None
+        if kind not in self.REFORMAT or r + k > e:
+            return None
+        b = d[r:r + k]
+        rg = self.ranges_of().get((kind, k))
+        if kind == ".ascii":
+            return (f".ascii {qstr(b)}", k) if all(0x20 <= x <= 0x7E for x in b) else None
+        if kind == ".byte" and k == 1:        # a one-byte field line (e.g. +0x8E of a setting)
+            return f".byte {b[0]:#04x}", k
+        in_range = rg is not None and all(lo <= x <= hi for (lo, hi), x in zip(rg, b))
+        if not in_range and not (kind == "PART_SETUP" and max(b) <= 0x7F):
+            return None
+        if kind == "PART_SETUP" and k == 24:
+            return part_setup(b), k
+        if kind in ("PM_PART", "PM_PART_TAIL", "PM_ENTRIES", "PM_SET77", "PM_FX", "PM_SET88", "PM_SET8C"):
+            return f"{kind} " + ", ".join(f"{x:#04x}" for x in b), k
+        if kind == "PM_STYLE" and k == 7 and b[1:3] == b"\x00\x20" and not b[4] & 0xCF:
+            return f"PM_STYLE {b[0]}, {b[3]:#04x}, {b[4] >> 4}, {b[5]:#04x}, {b[6]:#04x}", k
+        if kind == "STREAM_HEADER" and k == 4:
+            return f"STREAM_HEADER {b[0]}, {u24(b, 1):#x}", k
+        if kind == "TCMP_VAR" and k == 0x20 and b[0x0C:0x10] == bytes(4) and b[0x12:0x15] == bytes(3) \
+                and b[0x1A:0x20] == bytes(6):
+            args = [f"{x:#04x}" for x in b[0:12]] + [str(b[0x10]), str(b[0x11]), f"{u24(b, 0x15):#x}",
+                                                     f"{b[0x18]:#04x}", f"{b[0x19]:#04x}"]
+            return "TCMP_VAR " + ", ".join(args), k
+        if kind == "TCMP_STYLE" and k == 0x80 and b[0x50:0x64] == bytes(range(20)) and b[0x64:0x70] == bytes(12) \
+                and b[0x74:0x80] == bytes(12):
+            vn = [qstr(b[0x10 + 16 * i:0x20 + 16 * i]) for i in range(4)]
+            return (f"TCMP_STYLE {qstr(b[0:16])}, {', '.join(vn)}, {(b[0x70] << 8 | b[0x71]):#06x}, "
+                    f"{(b[0x72] << 8 | b[0x73]):#06x}"), k
+        if kind == "TPAD_PAD" and k == 0x28 and b[0x20:0x28] == bytes(8):
+            args = [qstr(b[0:16])] + [f"{x:#04x}" for x in b[0x10:0x1D]] + [f"{u24(b, 0x1D):#x}"]
+            return "TPAD_PAD " + ", ".join(args), k
+        return None
+
+    def put_reformat(self, o, d, r, got, kind, note):
+        text, n = got
+        if isinstance(text, list):
+            o.w(f"\t# stale events of an earlier write, at an event boundary of the donor record: {note}")
+            o.raw(text, n)
+        else:
+            o.emit(None, text, d[r:r + n], f"stale `{kind}` of an earlier write, other values than the donor's "
+                                            f"line at the same place: {note}")
+        COVER_STATS["shaped"] = COVER_STATS.get("shaped", 0) + n
+
+    def follow(self, o, d, m, r, e, tail):
+        """Donor match m ended at residue offset r in the middle of the donor line `tail` = (pos, k,
+        text): spell that line, and the donor's next lines in place, from the residue's own bytes as
+        long as they keep the line's shape (reformat); a line whose bytes equal the donor's keeps its
+        text.  When the partial line itself does not keep its shape, its matched bytes are spelled as
+        bytes, as before.  Returns the new residue offset."""
+        ci, off, n = m
+        name, data, base, size, items, labels = self.recs[ci]
+        shift = (r - n) - (base + off)      # residue offset = donor offset + shift
+        note = f"{name} +{off + n:#x}.."
+        pos0, k0, text0 = tail
+        q0 = pos0 + shift
+        got = self.reformat(text0.split(None, 1)[0], d, q0, k0, e)
+        if got is None:
+            o.bytes_run(data[pos0:pos0 + (r - q0)], f"stale tail of an earlier write; same bytes as {name} "
+                        f"+{pos0 - base:#x}..; bytes 0..{r - q0 - 1} of `{text0.split(None, 1)[0]}`")
+            COVER_STATS["donor"] += r - q0
+            return r
+        self.put_reformat(o, d, q0, got, text0.split(None, 1)[0], note)
+        r = q0 + got[1]
+        if text0.startswith("ev_"):
+            return r
+        for pos, k, text, comment in items:
+            if pos <= pos0:
+                continue
+            q = pos + shift
+            if q != r or q + k > e:
+                break
+            kind = text.split(None, 1)[0]
+            if data[pos:pos + k] == d[q:q + k]:
+                o.emit(None, numeric(text, labels), d[q:q + k], f"stale tail of an earlier write; same bytes as {note}")
+                COVER_STATS["donor"] += k
+                r = q + k
+                continue
+            got = self.reformat(kind, d, q, k, e)
+            if got is None:
+                break
+            self.put_reformat(o, d, q, got, kind, note)
+            r = q + got[1]
+            if kind.startswith("ev_"):
+                break                        # events realign; the main loop goes on from here
+        return r
+
     def emit(self, o, d, s, e, base=None):
         p, gap = s, s
         while p < e:
@@ -576,31 +707,116 @@ class Cover:
             if m is None:
                 p += 1
                 continue
-            if gap < p:
-                self.gap(o, d, gap, p)
-            self.donor(o, m)
-            p += m[2]
+            p0 = p
+            h = self.head(m, d, p, gap, e)
+            if h is not None:
+                r0, got, kind, note = h
+                if gap < r0:
+                    self.gap(o, d, gap, r0)
+                self.put_reformat(o, d, r0, got, kind, note)
+                p = gap = r0 + got[1]
+                if p > p0:
+                    continue
+                m = self.trim(m, p - p0)
+            else:
+                st = self.straddle(m, d, p, gap, e) if gap < p else None
+                if st is not None:
+                    t, q = st
+                    if gap < t:
+                        self.gap(o, d, gap, t)
+                    o.w("\t# stale events of an earlier write: the last one runs into the next piece, which "
+                        "starts there on a line boundary of the donor record")
+                    o.raw(parse_events(d, t, q), q - t)
+                    COVER_STATS["events"] += q - t
+                    m = self.trim(m, q - p)
+                    p = q
+                elif gap < p:
+                    self.gap(o, d, gap, p)
+            p = self.donor(o, m, d, p, e)
             gap = p
         if gap < e:
             self.gap(o, d, gap, e)
 
-    def donor(self, o, m):
+    def head(self, m, d, p, gap, e):
+        """When donor match m starts mid-line and that line's start lies in the gap before it, the
+        line spelled from the residue's bytes: (start, reformat result, kind, note), else None."""
         ci, off, n = m
+        name, data, base, size, items, labels = self.recs[ci]
+        a = base + off
+        for pos, k, text, comment in items:
+            if pos < a < pos + k:
+                r0 = p - (a - pos)
+                if r0 < gap:
+                    return None
+                kind = text.split(None, 1)[0]
+                got = self.reformat(kind, d, r0, k, e)
+                return None if got is None else (r0, got, kind, f"{name} +{pos - base:#x}..")
+            if pos >= a:
+                return None
+        return None
+
+    def straddle(self, m, d, p, gap, e):
+        """The gap before donor match m (at residue offset p) ends with the start of an event whose
+        rest is the match's first bytes: (t, q) when d[t:q] (gap <= t < p < q <= p + 6) parses as
+        events (a position byte followed by its status event, or a status event), and the donor has a
+        line starting at q's place; else None."""
+        ci, off, n = m
+        name, data, base, size, items, labels = self.recs[ci]
+        starts = {pos for pos, k, text, comment in items}
+        for t in range(max(gap, p - 6), p):
+            c = d[t]
+            if c in (0xF4, 0xF5):
+                continue
+            q, last = t, -1
+            while q <= p:
+                ev = event_line(d, q, len(d))
+                if ev is None:
+                    break
+                if d[q] < 0x80 and (q + 1 >= len(d) or d[q + 1] < 0x80 or d[q + 1] in (0xF4, 0xF5)):
+                    break
+                q += ev[1]
+            if p < q <= min(p + 6, p + n) and (base + off + (q - p)) in starts and parse_events(d, t, q):
+                return t, q
+        return None
+
+    @staticmethod
+    def trim(m, k):
+        ci, off, n = m
+        return ci, off + k, n - k
+
+    def donor(self, o, m, d, p, e):
+        """Spell donor match m at residue offset p with the donor's lines; when it ends mid-line,
+        follow the donor's structure (follow).  Returns the new residue offset."""
+        ci, off, n = m
+        if n <= 0:
+            return p
         name, data, base, size, items, labels = self.recs[ci]
         a, b = base + off, base + off + n
         first = True
         note = f"stale tail of an earlier write; same bytes as {name} +{off:#x}..+{off + n:#x}"
+        tail = None
         for pos, k, text, comment in items:
             if pos + k <= a or pos >= b:
                 continue
             lo, hi = max(pos, a), min(pos + k, b)
             if lo == pos and hi == pos + k:
                 o.emit(None, numeric(text, labels), data[pos:pos + k], note if first else None)
+            elif hi < pos + k and p + n < e and not (first and lo > pos):
+                tail = (pos, k, text)        # the line the match ends in: follow() spells it
+                break
             else:
                 o.bytes_run(data[lo:hi], (note + "; " if first else "") + f"bytes {lo - pos}..{hi - pos - 1} of `"
                             + text.split(None, 1)[0] + "`")
             first = False
-        COVER_STATS["donor"] += n
+        r = p + n
+        if tail is None:
+            COVER_STATS["donor"] += n
+            nxt = next(((pos, k, text) for pos, k, text, comment in items if pos == b), None)
+            if nxt is not None and r < e:      # the match ended on a line boundary: follow from the next line
+                r = self.follow(o, d, m, r, e, nxt)
+            return r
+        COVER_STATS["donor"] += tail[0] - a if tail[0] > a else 0
+        return self.follow(o, d, m, r, e, tail)
 
     @staticmethod
     def stream_at(d, h, e):
@@ -630,13 +846,47 @@ class Cover:
             return False
         return d[x + 0x28 + 5] == 0x40 and d[x + 0x40 + 5] == 0x40
 
+    def cut_stream_at(self, d, h, e):
+        """The length of a stream's start at h whose end the next write cut: {index < 20, u24
+        count, F4} right after a stream's end (F5: streams are contiguous) and events that parse,
+        with the stream rules, for 16 bytes or more or up to e; or None."""
+        if h + 5 > e or d[h] >= 20 or d[h + 4] != 0xF4 or u24(d, h + 1) > MAX_STREAM or self.stream_at(d, h, e) \
+                or d[h - 1] != 0xF5:
+            return None
+        q, nst = self.run_end(d, h + 4, e)
+        return q - h if (q - h - 4 >= 16 and nst >= 2) or (q == e and nst >= 1) else None
+
+    @staticmethod
+    def head_at(d, h, e):
+        """A stream header {index < 20, u24 count} whose stream goes on in the next piece: the F4
+        that starts every stream follows it (d[h + 4], also past e)."""
+        return h + 4 == e and h + 4 < len(d) and d[h] < 20 and d[h + 4] == 0xF4 and 2 <= u24(d, h + 1) <= MAX_STREAM \
+            and d[h - 1] == 0xF5
+
+    @staticmethod
+    def container_at(d, h, e):
+        """The length of a "TCMP" / "TPAD" container header at h (signature, zero descriptor, equal
+        u24BE length and top), whole (0x70) or cut by e (0x16 bytes or more), else None."""
+        if h + 0x16 > e or d[h:h + 4] not in (b"TCMP", b"TPAD") or d[h + 4:h + 0x10] != bytes(12) \
+                or d[h + 0x10:h + 0x13] != d[h + 0x13:h + 0x16]:
+            return None
+        return min(0x70, e - h)
+
+    @staticmethod
+    def pad_head_at(d, x, e):
+        """True when d[x:x+0x28] is the first 0x28 bytes of a TPAD pad record (TPAD_PAD): a printable
+        16-byte name and the eight zero bytes at +0x20."""
+        return x + 0x28 <= e and all(0x20 <= b <= 0x7E for b in d[x:x + 16]) and d[x + 0x20:x + 0x28] == bytes(8) \
+            and any(b != 0x20 for b in d[x:x + 16])
+
     def gap(self, o, d, s, e):
         """Bytes no record holds: whole streams and variation records, the tail of a stream before
-        one, events, else opaque."""
+        one, the cut start of a stream, container and pad headers, events, else opaque."""
         p = s
         while p < e:
             h = next((x for x in range(p, e) if self.stream_at(d, x, e) or self.var_at(d, x, e)
-                      or self.pad_at(d, x, e)), None)
+                      or self.pad_at(d, x, e) or self.cut_stream_at(d, x, e) or self.head_at(d, x, e)
+                      or self.container_at(d, x, e) or self.pad_head_at(d, x, e)), None)
             if h is None:
                 self.events_or_opaque(o, d, p, e, tail=False)
                 return
@@ -664,7 +914,49 @@ class Cover:
                 COVER_STATS["pad"] = COVER_STATS.get("pad", 0) + 0x60
                 p = h + 0x60
                 continue
+            if not (self.var_at(d, h, e) or self.pad_at(d, h, e) or self.stream_at(d, h, e)
+                    or self.cut_stream_at(d, h, e)):
+                if self.container_at(d, h, e):
+                    n = self.container_at(d, h, e)
+                    sig = d[h:h + 4].decode()
+                    if n == 0x70:
+                        model = (d[h:h + 4] + bytes(12) + d[h + 0x10:h + 0x16] + b"\x00\x01"
+                                 + (bytes([0, 0x60, 0x0D, 8, 4, 2, 2, 1, 2, 0x0F]) if sig == "TCMP"
+                                    else bytes([0, 0x60, 0x10, 6, 0x10, 2, 0, 0, 0, 0x0F])) + bytes(14) + b" " * 64)
+                        if model == d[h:h + 0x70]:
+                            o.emit(None, f"{sig}_HEADER {u24(d, h + 0x10):#x}", model,
+                                   f"stale {sig} container header of an earlier write (no record holds it)")
+                            COVER_STATS["shaped"] = COVER_STATS.get("shaped", 0) + n
+                            p = h + n
+                            continue
+                    o.bytes_run(d[h:h + min(n, 0x16)], f"stale start of a {sig}_HEADER of an earlier write: signature, "
+                                f"zero descriptor, length and top {u24(d, h + 0x10):#x} (cut by the next piece)")
+                    COVER_STATS["shaped"] = COVER_STATS.get("shaped", 0) + min(n, 0x16)
+                    p = h + min(n, 0x16)
+                    continue
+                if self.head_at(d, h, e):
+                    o.emit(None, f"STREAM_HEADER {d[h]}, {u24(d, h + 1):#x}", d[h:h + 4],
+                           "stale stream header of an earlier write; its stream (from the F4 after it) is the next piece")
+                    COVER_STATS["stream"] += 4
+                    p = h + 4
+                    continue
+                r = d[h:h + 0x28]
+                args = [qstr(r[0:16])] + [f"{x:#04x}" for x in r[0x10:0x1D]] + [f"{u24(r, 0x1D):#x}"]
+                o.emit(None, "TPAD_PAD " + ", ".join(args), r,
+                       "stale first 0x28 bytes of a pad record of an earlier write (name, settings, stream offset, zeros)")
+                COVER_STATS["pad"] = COVER_STATS.get("pad", 0) + 0x28
+                p = h + 0x28
+                continue
             n = self.stream_at(d, h, e)
+            if not n:
+                n = self.cut_stream_at(d, h, e)
+                o.emit(None, f"STREAM_HEADER {d[h]}, {u24(d, h + 1):#x}", d[h:h + 4],
+                       f"stale start of a stream of an earlier write, cut after {n - 4:#x} of its {u24(d, h + 1):#x} "
+                       "bytes by the next write (no record holds it; it parses as events)")
+                o.raw(parse_events(d, h + 4, h + n), n - 4)
+                COVER_STATS["stream"] += n
+                p = h + n
+                continue
             o.emit(None, f"STREAM_HEADER {d[h]}, {n - 4:#x}", d[h:h + 4],
                    "stale stream of an earlier write (no record holds it; it parses as events)")
             o.raw(parse_events(d, h + 4, h + n), n - 4)
@@ -674,8 +966,9 @@ class Cover:
     @staticmethod
     def run_end(d, p, e):
         """How far events parse from p, with the stream rules the firmware's own streams keep: a
-        position byte (0..95) is followed by an event, and positions rise within a beat.  Returns
-        (end, number of status events)."""
+        position byte (0..95) is followed by an event, and positions do not fall within a beat (the
+        live streams of the ten KN7000 banks repeat a position 43,611 times and lower one once,
+        probe kn7000/notes/ic21-own-probes/stream_rules.py).  Returns (end, number of status events)."""
         q, last, nst, ok = p, -1, 0, p
         while q < e:
             ev = event_line(d, q, e)
@@ -683,7 +976,7 @@ class Cover:
                 break
             c = d[q]
             if c < 0x80:
-                if c <= last or q + 1 >= e or d[q + 1] < 0x80 or d[q + 1] in (0xF4, 0xF5):
+                if c < last or q + 1 >= e or d[q + 1] < 0x80 or d[q + 1] in (0xF4, 0xF5):
                     break
                 last = c
             elif c == 0xF4:
@@ -697,13 +990,56 @@ class Cover:
                 break
         return ok, nst
 
+    @staticmethod
+    def exact_events(d, s, e):
+        """True when d[s:e] parses exactly as events, a position byte (0..95) being followed by a
+        status event (looking at d[e] for the last one) and positions not falling within a beat."""
+        items = parse_events(d, s, e)
+        if not items:
+            return False
+        q, last = s, -1
+        for line, k in items:
+            c = d[q]
+            if c < 0x80:
+                nxt = d[q + 1] if q + 1 < len(d) else 0
+                if c < last or nxt < 0x80 or nxt in (0xF4, 0xF5):
+                    return False
+                last = c
+            elif c == 0xF4:
+                last = -1
+            q += k
+        return True
+
     def events_or_opaque(self, o, d, s, e, tail):
         """d[s:e], which no record holds and which holds no whole stream: runs of at least 16 bytes
         and two status events that parse as events (ev_*), the rest opaque."""
         p, opq = s, s
+        # a short piece that parses exactly as events, the position rule looking past e: its
+        # neighbours are typed bytes of the same stream (two donor pieces, or a donor and the end)
+        if e - s <= 16 and self.exact_events(d, s, e):
+            o.w("\t# stale events of an earlier write between two typed pieces: they parse exactly as events")
+            o.raw(parse_events(d, s, e), e - s)
+            COVER_STATS["events"] += e - s
+            return
+        # right after a stream's end (F5): the data bytes of an event of an earlier, longer stream
+        # whose status byte the newer stream overwrote, when events parse after them
+        if s > 0 and d[s - 1] == 0xF5:
+            for k in range(1, 6):
+                if s + k < e and all(x < 0x80 for x in d[s:s + k]):
+                    q, nst = self.run_end(d, s + k, e)
+                    if q - (s + k) >= 6 and nst >= 1:
+                        o.emit(None, ".byte " + ", ".join(f"{x:#04x}" for x in d[s:s + k]), d[s:s + k],
+                               f"[INFERENCE] the last {k} data byte(s) of an event of an earlier, longer stream; its "
+                               "status byte lies under the newer stream that ends just before")
+                        COVER_STATS["events"] += k
+                        p = opq = s + k
+                        break
         while p < e:
             q, nst = self.run_end(d, p, e)
-            if q - p >= 16 and nst >= 2:
+            if q < e and q + 1 == e and d[q] < 0x80 and e < len(d) and 0x80 <= d[e] < 0xF4 and q > p:
+                q = e                         # a last position byte whose event is the next piece's first
+            short_bounded = q == e and nst >= 1 and e - p <= 16 and e < len(d) and 0x80 <= d[e] < 0xF4
+            if (q - p >= 16 and nst >= 2) or (q - p >= 2 and nst >= 1 and d[q - 1] == 0xF5) or short_bounded:
                 if opq < p:
                     o.incbin(None, p - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY[0]}")
                     COVER_STATS["opaque"] += p - opq
@@ -713,6 +1049,12 @@ class Cover:
                 p = opq = q
             else:
                 p += 1
+        if opq < e and e % BLOCK == 0 and 0x80 <= d[opq] < 0xF4 and opq + ev_len(d, opq) > e \
+                and all(x < 0x80 for x in d[opq + 1:e]):
+            o.emit(None, ".byte " + ", ".join(f"{x:#04x}" for x in d[opq:e]), d[opq:e],
+                   f"the first {e - opq} byte(s) of an event of an earlier write, cut by the end of the record's last block")
+            COVER_STATS["events"] += e - opq
+            opq = e
         if opq < e:
             o.incbin(None, e - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY[0]}")
             COVER_STATS["opaque"] += e - opq
@@ -755,13 +1097,15 @@ def main():
     cover = Cover(corpus)
     MASK_MISS.clear()
     TAIL_OLD.clear()
+    CONVERTED.clear()
     o, written, inc_dir = generate(a, load(a.rom), cover)
     open(a.out, "w").write("\n".join(o.lines) + "\n")
     for f in sorted(os.listdir(inc_dir)):
         if f.endswith(".inc") and f not in written:
             os.remove(os.path.join(inc_dir, f))
     print(f"wrote {a.out}: {len(o.lines)} lines; {len(MASK_MISS)} stored bytes outside their field mask, "
-          f"{len(TAIL_OLD)} settings without the 941 part tails; residue bytes {COVER_STATS}")
+          f"{len(TAIL_OLD)} settings without the 941 part tails, {len(CONVERTED)} converted from KN6000 settings; "
+          f"residue bytes {COVER_STATS}")
 
 
 def generate(a, d, cover, dry=False):
@@ -857,8 +1201,19 @@ def generate(a, d, cover, dry=False):
             o.fill_ff(BLOCK, f"block {b}: free, erased")
             b += 1
             continue
+        # A KN7000 bank can also hold a stale record in the KN6000 layout (0x90-byte one-touch
+        # settings): AstLoadHandler / LoadCst load a KN6000 file's records as they are, then
+        # func_48485B52 rebuilds each one in the KN7000 layout into newly allocated blocks
+        # (kn7000/notes/ic21-own/README.md); the original stays in its old, freed blocks.
+        rec_model = a.model
         try:
-            size, _, _ = parse_record(d, start, a.model)
+            try:
+                size, _, _ = parse_record(d, start, a.model)
+            except ValueError as e:
+                if a.model != "kn7000" or str(e) != "OTS size":
+                    raise
+                size, _, _ = parse_record(d, start, "kn6000")
+                rec_model = "kn6000"
             n = (size + BLOCK - 1) // BLOCK
             if any(d[0x2A + x] for x in range(b, b + n)) or b + n > NBLOCKS:
                 raise ValueError("overlaps a live block")
@@ -871,8 +1226,12 @@ def generate(a, d, cover, dry=False):
             continue
         name = printable(d[start + 4:start + 20])
         rec = d[start:start + 0x100]
-        record(f"Stale{b:02d}", start, a.model, f"{rec[0xA4]}, {rec[0xA5]}", None,
-                   f"blocks {b}..{b + n - 1}: free, holding a complete older record \"{name}\" that no slot points at")
+        layout = "" if rec_model == a.model else (
+            " in the KN6000 layout (0x90-byte one-touch settings): a record loaded from a KN6000 file, "
+            "left behind when func_48485B52 rebuilt it in the KN7000 layout")
+        record(f"Stale{b:02d}", start, rec_model, f"{rec[0xA4]}, {rec[0xA5]}", None,
+                   f"blocks {b}..{b + n - 1}: free, holding a complete older record \"{name}\" that no slot points at"
+                   + layout)
         residue(o, d, start + n * BLOCK, "residue past the stale record's end", cover, start, put, f"Stale{b:02d}_Residue")
         b += n
     if o.pos != len(d) and not dry:

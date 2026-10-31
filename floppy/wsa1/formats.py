@@ -40,12 +40,20 @@ def describe_mid(ctx):
          % struct.unpack('>HHH', ctx.data[8:14]), '',
          '%s:\t.incbin\t"%s.smf.mid"' % (ctx.label, ctx.extracted)]
     if n < len(ctx.data):
+        t = len(ctx.data) - n
+        if n < 1024 or ctx.data[n:] != ctx.data[n - 1024:n - 1024 + t]:
+            L += ['; The rest of the last 1024-byte output window, stale bytes of the window buffer.',
+                  '; census: opaque -- unknown-dump: stale SMF output-window bytes past the end of the file\'s last track',
+                  '\t.incbin\t"%s", 0x%x, %d' % (ctx.ref, ctx.offset + n, t)]
+            return L
         L += ['; The rest of the last 1024-byte output window.  The SMF writer flushes whole windows',
               '; (SmfOut_WindowsFlushed 0x126C counts them; the track length at 0xF7789A is computed from',
-              '; it), so the file is a multiple of 1024 bytes and these bytes are what the window buffer',
-              '; still held from earlier output.',
-              '; census: opaque -- unknown-dump: stale SMF output-window bytes past the end of the file\'s last track',
-              '\t.incbin\t"%s", 0x%x, %d' % (ctx.ref, ctx.offset + n, len(ctx.data) - n)]
+              '; it), so the file is a multiple of 1024 bytes, and the window buffer is reused for each',
+              '; window: past the end of the last track it still holds the previous window\'s bytes at',
+              '; the same offsets.  So these %d bytes are a copy of the SMF\'s bytes 0x%x..0x%x, 1024 earlier'
+              % (t, n - 1024, n - 1024 + t - 1),
+              '; (measured on all 13 padded files: notes/open-items/probes/stale_tails.py, "prev-1024 match").',
+              '\t.incbin\t"%s.smf.mid", 0x%x, %d\t; = the previous window\'s bytes' % (ctx.extracted, n - 1024, t)]
     return L
 
 
@@ -71,9 +79,15 @@ def describe_seq(ctx):
         toks = events.tokenize_seq(stream)
         for cc, part in zip(seq, events.cut(stream, toks, [(251 * k, 251 * (k + 1)) for k in range(len(seq))])):
             plan[cc] = [line for line, _ in part]
+    chained_body = {}
+    for cc in sorted(plan):
+        chained_body.setdefault(d[cell(cc) + 5:cell(cc) + 256], cc)
     L = ['; SEQUENCER song blocks: the song store\'s heap of 256-byte blocks, written by DiskSave_Sequencer',
          '; (prom_b SeqFile_WriteSeqCompacted relinks each copied block: previous 0 at a chain\'s start, next',
-         '; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).', '',
+         '; 0xFFFF at its end).  Each chain is one stream of events (macros: wsa1/include/wsa1_files.inc).',
+         '; A block in no chain is left over: the file is a whole number of kilobytes, so it ends with the first',
+         '; blocks of the free chain (the .SQF\'s +0xB8 free head is the first of them), and two files also hold',
+         '; blocks that are on neither list (notes/floppy-leftovers-2026-10-31/README.md).', '',
          '\t.include\t"wsa1_files.inc"', ctx.label + ':']
     for c in range(1, n + 1):
         b = cell(c)
@@ -87,9 +101,104 @@ def describe_seq(ctx):
         elif len(set(body)) == 1:
             L.append('\t.fill\t251, 1, 0x%02x' % body[0])
         else:
-            L.append('\t; census: opaque -- unknown-dump: a block in no chain (left over in the heap)')
-            L.append('\t.incbin\t"%s", 0x%x, 251' % (ctx.ref, ctx.offset + b + 5))
+            L += orphan_lines(d, n, c, body, owner, plan, chained_body, ctx.ref, ctx.offset + b + 5)
     return L
+
+
+# Statuses of the WSA1R song grammar with their data-byte counts, as the 443 chains of the nine disks hold them
+# (notes/floppy-leftovers-2026-10-31/probes/seq_statuses.py): beat 0x81, end 0x82 and notes 0x9n (5 data bytes,
+# running groups of 5) besides these.
+SEQ_STRICT = {0x80: 3, 0x87: 2, 0xB0: 5, 0xB4: 5, 0xC0: 5, 0xD0: 2, 0xD1: 2, 0xD2: 3}
+
+
+def strict_seq_tokens(body):
+    """events.tokenize_seq, stopped at the first token that is not an event of the song grammar (the rest is
+    one RAW run).  A data run is accepted only at the start (the end of an event of the block before) or at
+    the end (cut by the block's end)."""
+    out = []
+    for (p, n, text, why) in events.tokenize_seq(body):
+        st = body[p]
+        if text in ('PAD', 'RAW'):
+            out.append((p, n, text, why))
+            continue
+        want = 5 if st & 0xF0 == 0x90 else SEQ_STRICT.get(st, 0)
+        if text.startswith('sq_ev') and st != 0x82 and n - 1 < want and p + n == len(body):
+            out.append((p, n, 'PAD', 'the first %d bytes of an event (status 0x%02x), cut by the block\'s end' % (n, st)))
+            continue
+        ok = (text.startswith(('sq_beat', 'sq_note', 'sq_run'))
+              or (text.startswith('sq_data') and (p == 0 or p + n == len(body)))
+              or (text.startswith('sq_ev') and (st == 0x82 or SEQ_STRICT.get(st) == n - 1)))
+        if not ok:
+            out.append((p, len(body) - p, 'RAW', 'not an event of the song grammar: bytes of an earlier use of the store'))
+            return out
+        out.append((p, n, text, why))
+    return out
+
+
+def cmb_scan(body):
+    """Combination records (cmb_*) found in a block body, resynchronising over bytes they do not cover:
+    (lines, bytes covered by records)."""
+    L, q, raw, typed = [], 0, [], 0
+
+    def flush():
+        if raw:
+            L.extend(rows(bytes(raw)))
+            raw.clear()
+    while q < len(body):
+        if q + 2 <= len(body) and body[q:q + 2] == b'\xff\xff':
+            flush()
+            L.append('\t.byte\t0xff, 0xff\t; the end of a combination\'s record list')
+            q += 2
+            typed += 2
+            continue
+        if q + 2 <= len(body) and q + 2 + body[q + 1] <= len(body):
+            c = cmb_line(body[q], body[q + 1], body[q + 2:q + 2 + body[q + 1]])
+            if c:
+                flush()
+                L += c
+                typed += 2 + body[q + 1]
+                q += 2 + body[q + 1]
+                continue
+        raw.append(body[q])
+        q += 1
+    flush()
+    return L, typed
+
+
+def orphan_lines(d, n, c, body, owner, plan, chained_body, ref, base):
+    """A block in no chain.  On 7 of the 10 files these are the first blocks of the store's free chain (the .SQF's
+    +0xB8 free head is the first of them), written because the file is a whole number of kilobytes; on 01E_TEC1
+    and 01220497 also blocks that are neither chained nor on the free list (used + free < 1292).  The probes in
+    notes/floppy-leftovers-2026-10-31/probes/ measured both (seq_layout.py)."""
+    body0 = body
+    src = chained_body.get(body)
+    if src:
+        h = owner[src]
+        return ['; a stale copy: the same 251 bytes as block %d (chain from block %d, %d of %d), typed as that block is'
+                % (src, h[0], h[1] + 1, h[2])] + plan[src]
+    cl, typed = cmb_scan(body)
+    if typed * 2 >= len(body):
+        return ['; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the',
+                '; 5-byte block headers the free-chain set-up wrote over them'] + cl
+    head = []
+    if body[0] == 0x82:
+        # every free-chain block the files hold starts so (measured, probes/seq_layout.py): [INFERENCE] the
+        # store writes an end of track into a block it frees
+        head, body = ['\tsq_ev\t0x82\t; +5: an end of track, as every free block that held a song starts (measured)'], body[1:]
+    toks = strict_seq_tokens(body)
+    tail = []
+    if toks and toks[-1][2] == 'RAW':
+        p = toks[-1][0]
+        rest = body[p:]
+        toks = toks[:-1]
+        if len(set(rest)) == 1:
+            tail = ['\t.fill\t%d, 1, 0x%02x\t; not events: left over' % (len(rest), rest[0])]
+        else:
+            tail = ['; the rest (%d bytes) does not parse as events of the song grammar (stopped at status 0x%02x)' % (len(rest), rest[0]),
+                    '\t; census: opaque -- unknown-dump: free-block bytes that are not song events (left over in the store)',
+                    '\t.incbin\t"%s", 0x%x, %d' % (ref, base + len(body0) - len(rest), len(rest))]
+    lines = [x for x, _ in events.cut(body, toks, [(0, len(body))])[0]] if toks else []
+    return ['; events of an earlier song, in the song grammar where they parse (not reached: in no chain)'] + head + lines + tail
 
 
 # ---- SOUND (.TM): CPU 2's sound flash, 0xE80000-0xEBFFFF ------------------------------------------
@@ -159,9 +268,14 @@ def describe_tm(ctx):
         o = b * 0x10000
         L += ['', '%s_Bank%d:' % (ctx.label, b),
               '\t.ascii\t"WSA SOUND RAM S%d"\t; SoundRam_BankName_S%d, copied here by SoundRam_ClearFourBanks' % (b, b),
-              '; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)']
+              '; the names of USER %d sound groups %d-%d, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a'
+              % (b // 2 + 1, 8 * (b % 2), 8 * (b % 2) + 7),
+              '; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at',
+              '; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of',
+              '; the bank\'s 64 tones; SoundRam_ClearFourBanks does not write the names)',
+              '%s_Bank%d_GroupNames:' % (ctx.label, b)]
         for k in range(8):
-            L.append('\t.ascii\t%s' % s_esc(d[o + 16 + 16 * k:o + 32 + 16 * k]))
+            L.append('\t.ascii\t%s\t; USER %d group %d' % (s_esc(d[o + 16 + 16 * k:o + 32 + 16 * k]), b // 2 + 1, 8 * (b % 2) + k))
         for k in range(64):
             r = d[o + 0x90 + 0x2C9 * k:o + 0x90 + 0x2C9 * (k + 1)]
             L.append('\t.include\t"%s"\t; tone %d: %s' % (tone_item(r), k + 1, r[:16].decode('latin-1').strip()))
@@ -229,11 +343,28 @@ def describe_cmb(ctx):
             n += 1
         if n != 23:
             return None
-    L += ['; The rest of the file\'s last kilobyte.  [INFERENCE] the disk code moves the file in whole kilobytes',
-          '; (Disk_SetWindowLengthToKilobyte), and DiskLoad_Combination takes 0x16300 bytes of the 89 KB.  These 0x100',
-          '; bytes are what the staging buffer still held.',
-          '; census: opaque -- unknown-dump: stale staging-buffer bytes past the 0x16300-byte bank',
-          '\t.incbin\t"%s", 0x%x, %d' % (ctx.ref, ctx.offset + 0x16300, 0x100)]
+    if d[0x16300:0x16400] != d[0x13700:0x13800]:
+        L += ['; The rest of the file\'s last kilobyte: what the staging window still held.',
+              '; census: opaque -- unknown-dump: stale staging-buffer bytes past the 0x16300-byte bank',
+              '\t.incbin\t"%s", 0x%x, %d' % (ctx.ref, ctx.offset + 0x16300, 0x100)]
+        return L
+    L += ['; The rest of the file\'s last kilobyte, 0x16300..0x163FF: a stale copy of bytes 0x13700..0x137FF, the',
+          '; first 0x100 bytes of combination 112 (C112 above).  DiskSave_StreamLinkRamToFile (prom_a 0xFE2AA9, mode 1)',
+          '; fetches the bank from link RAM 0xEC0000 into the staging window in 8 chunks of 0x2C00 and a last one of',
+          '; 0x300, and writes each window to the file 0x400 bytes at a time.  The last chunk fills only window',
+          '; +0..+0x2FF, so the last 0x400 write carries window +0x300..+0x3FF from the chunk before, file',
+          '; 0x13400 + 0x300 = 0x13700.  Measured: true in all 13 .CMB files (notes/open-items/probes/stale_tails.py,',
+          '; notes/floppy-leftovers-2026-10-31/probes/wsa1_leftovers.py).  Typed below as the records it repeats.',
+          '%s_StaleCopyOfC112:' % ctx.label]
+    r, q = d[0x13700:0x13800], 0
+    while q < len(r):
+        t, ln = r[q], r[q + 1] if q + 1 < len(r) else None
+        if ln is not None and q + 2 + ln <= len(r) and cmb_line(t, ln, r[q + 2:q + 2 + ln]):
+            L += cmb_line(t, ln, r[q + 2:q + 2 + ln])
+            q += 2 + ln
+            continue
+        L += ['; the first %d bytes of the next record (tag 0x%02x), cut by the end of the copy' % (len(r) - q, t)] + rows(r[q:])
+        break
     return L
 
 

@@ -165,6 +165,8 @@ banks, at 0x4C2B7668, copied by func_4C03D5A1 as the KN6000's func_4C03D431 copi
 ## Open questions
 
 - The 24-byte sound-list records and the 144 KB they point at; the chord tables; the palettes.
+  (Resolved: 0fea0e82d, `siblings-data-final/README.md`: MusicStylistSetup, StylePanel_*, NoteConvRules'
+  tables; the palettes are the bitmap resources' `Bitmap_*_Palette` items; open-items register 2026-10-31.)
 - The code reaches many tables with computed offsets: their bounds come from labels the code
   names, so a table can still be split in two.
 - [INFERENCE] the bitmap pixel order; the TABLE-tone and voice-record field names are the

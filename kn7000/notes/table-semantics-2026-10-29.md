@@ -184,6 +184,8 @@ little-endian. The macros (`jk_param`, `jk_zone6`, `jk_zone8`, `tone_head`, `ton
    sends the slots below 0x40 to 0x98050000; `notes/mn10300-rest-probes/tg_side_bits.py`: all 5,215 zones
    name an existing wave entry on that side, the swapped reading leaves 2,120 that do not). A zone's
    comment names that side's `Main_Ppp_Eeee` or `Sub_Ppp_Eeee`.
+   (Measured the same way by lane sound, `../../notes/sound-probes/kn7000_zone_side.py`: of the zones whose entry
+   exists on one TG only, 242 of 242 and 416 of 416 agree; the kit path takes the side from the kit class.)
 
 **Static cross-check** (the open item of `wave-roms-2026-10-29.md`): all 3,753 zones of the 864
 zone lists and all 1,462 zones of the trailing zone array name an existing wave directory entry.
@@ -292,7 +294,7 @@ from table 83's assembled image, so they carry table 83's remaining generic byte
 
 ## Open questions
 
-- The 'JK' voice archive's records (the largest item left).
+- The 'JK' voice archive's records (the largest item left). (Resolved: ab0004a09..dd05c95d3, 0a47d3bdc, section "The 'JK' internal voice archive" above; open-items register 2026-10-31.)
 - ~~The plug-in's widget/descriptor tables (table 83, about 46 KB).~~ Typed 2026-10-30 (`data-final/README.md`).
 - 'ZZZJ': what the 220 records and their eight entries select.
 - The USER HP pictures' true box sizes (the view resources behind `GetBox`).

@@ -917,6 +917,10 @@ rebuilt_ROMs/kn5000_v8_program.llvm.rom: rebuilt_ROMs/kn5000_v8_program.llvm.elf
 v7-extract-bins: $(V7_C_DATA_BINS)
 	python3 scripts/build/apply_v7_c_divergence.py
 
+# the compiled bins before the json patches them (scripts/tools/port_symbolize_pointers.py relink --tree v7)
+v7-c-bins-raw: $(V7_C_DATA_BINS)
+v7-c-bins: v7-extract-bins
+
 rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v7/maincpu -o $@ v7/maincpu/kn5000_v7_program.s
@@ -1226,7 +1230,7 @@ STYLE_EVENT_SRC = $(wildcard custom_data/styles/*.styles)
 
 # `&:` is a GROUPED target (GNU make >= 4.3): one recipe produces all five, so the
 # script runs once rather than once per output.
-$(STYLE_EVENT_BINS) &: $(STYLE_EVENT_SRC) scripts/build/style_events.py
+$(STYLE_EVENT_BINS) &: $(STYLE_EVENT_SRC) scripts/build/style_events.py scripts/build/style_bank_layout.py
 	python3 scripts/build/style_events.py build
 
 style-events: $(STYLE_EVENT_BINS)
@@ -1295,7 +1299,7 @@ hdae5000-images: $(HDAE_IMAGE_BINS) $(KN5000_IMAGE_BINS)
 
 $(TABLEDATA_IMAGE_BINS) &: $(wildcard table_data/images/ui_bitmaps/*.png table_data/images/icons_png/*.png \
 		table_data/images/fonts/*.png) table_data/images/ui_bitmaps_manifest.json table_data/images/ui_bitmaps_padding.json \
-		table_data/fonts.s table_data/includes/icon_pixel_data.bin v10/maincpu/images/Palette_8bit_RGBA.bin \
+		table_data/fonts.s v10/maincpu/images/Palette_8bit_RGBA.bin \
 		scripts/build/ui_bitmaps_images.py scripts/build/icon_images.py scripts/build/font_images.py
 	python3 scripts/build/ui_bitmaps_images.py build
 	python3 scripts/build/icon_images.py build
@@ -1706,8 +1710,8 @@ demo-sidecars: decompress-demo-presets
 # Help databases (6 SLIDE8K-compressed multilingual help-text blocks)
 # ----------------------------------------------------------------------------
 # Five live blocks (english/german/french/spanish/indonesian) live at ROM
-# 0x988690/0x98BB3A/0x98F0DA/0x992A0C/0x9963FA inside the region covered by
-# table_data/includes/icons_to_strings.bin (file offsets 0x43918/0x46DC2/
+# 0x988690/0x98BB3A/0x98F0DA/0x992A0C/0x9963FA inside the range the deleted
+# table_data/includes/icons_to_strings.bin held (its file offsets 0x43918/0x46DC2/
 # 0x4A362/0x4DC94/0x51682); a sixth, german_stale, is a truncated remnant at
 # ROM 0x983B3A (file offset 0x3EDC2).  Each block is an 11-byte "SLIDE8K\0"
 # header + 24-bit BIG-endian decompressed size (always 0x9000) + an LZSS
@@ -1721,8 +1725,8 @@ demo-sidecars: decompress-demo-presets
 #   help_db_<lang>.bin -> help_db_<lang>_compressed.bin -> ROM
 #
 # The original payload slices live in original_ROMs/help_db_*_compressed.
-# original.bin (sliced once from icons_to_strings.bin at the offsets above,
-# header excluded, pad byte included).
+# original.bin (sliced once from that range at the offsets above, header
+# excluded, pad byte included).
 
 # The five live decompressed databases are themselves build products since 2026-10-29: their
 # source is the text listing help_db_<lang>.txt (scripts/build/help_db_text.py, whose `verify`
@@ -1735,8 +1739,21 @@ $(HELP_DB_PLAIN) &: $(HELP_DB_PLAIN:.bin=.txt) scripts/build/help_db_text.py
 verify-help-db-text:
 	python3 scripts/build/help_db_text.py verify
 
-$(HELP_DB_DIR)/help_db_%_compressed.bin: $(HELP_DB_DIR)/help_db_%.bin original_ROMs/help_db_%_compressed.original.bin
-	python3 scripts/build/compress_slide8k.py $< $@ --strict --reference original_ROMs/help_db_$*_compressed.original.bin
+# The five live streams are encoded from source with the factory encoder (compress_slide8k.py: lzss_j.encode,
+# Okumura's LZSS.C, which notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py shows makes every factory decision);
+# no reference is read.  HELP_DB_PAD_<lang> is the alignment byte after each stream, which the decoder never reads
+# (its value is the factory image's; nothing derives it).  verify-help-databases compares with the factory slices.
+HELP_DB_PAD_english    := 0x20
+HELP_DB_PAD_german     := 0x7f
+HELP_DB_PAD_french     := 0xcf
+HELP_DB_PAD_spanish    := 0xcd
+HELP_DB_PAD_indonesian := 0xce
+$(HELP_DB_COMPRESSED): $(HELP_DB_DIR)/help_db_%_compressed.bin: $(HELP_DB_DIR)/help_db_%.bin scripts/build/compress_slide8k.py floppy/tools/kd/lzss_j.py
+	python3 scripts/build/compress_slide8k.py $< $@ --pad $(HELP_DB_PAD_$*)
+# german_stale is cut at output 0x55E0 (help_databases.s), so its stream past that point encodes no source:
+# it is replayed from the factory slice, for verify-help-databases only.
+$(HELP_DB_STALE_COMPRESSED): $(HELP_DB_DIR)/help_db_german_stale.bin original_ROMs/help_db_german_stale_compressed.original.bin
+	python3 scripts/build/compress_slide8k.py $< $@ --strict --reference original_ROMs/help_db_german_stale_compressed.original.bin
 
 rebuild-help-databases: $(HELP_DB_COMPRESSED) $(HELP_DB_STALE_COMPRESSED)
 	@echo "Help databases recompressed (byte-identical via --strict --reference)."
@@ -1759,19 +1776,21 @@ verify-help-databases: $(HELP_DB_COMPRESSED) $(HELP_DB_STALE_COMPRESSED)
 		  && echo "  help db $$l OK" || echo "  help db $$l MISMATCH"; \
 	done
 
-# Regenerate the checked-in decompressed sources from the raw dump slice
-# (one-shot; only needed if icons_to_strings.bin or the tooling changes).
+# Regenerate the decompressed databases from the factory streams in the reference image (one-shot,
+# maintenance only; the offsets are ROM addresses minus 0x800000.  They used to be read from the
+# deleted table_data/includes/icons_to_strings.bin, at its file offsets 0x3EDC2.. = ROM 0x983B3A..).
 decompress-help-databases:
-	python3 scripts/build/decompress_slide8k.py table_data/includes/icons_to_strings.bin --offset 0x3EDC2 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_german_stale.bin
-	python3 scripts/build/decompress_slide8k.py table_data/includes/icons_to_strings.bin --offset 0x43918 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_english.bin
-	python3 scripts/build/decompress_slide8k.py table_data/includes/icons_to_strings.bin --offset 0x46DC2 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_german.bin
-	python3 scripts/build/decompress_slide8k.py table_data/includes/icons_to_strings.bin --offset 0x4A362 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_french.bin
-	python3 scripts/build/decompress_slide8k.py table_data/includes/icons_to_strings.bin --offset 0x4DC94 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_spanish.bin
-	python3 scripts/build/decompress_slide8k.py table_data/includes/icons_to_strings.bin --offset 0x51682 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_indonesian.bin
+	python3 scripts/build/decompress_slide8k.py original_ROMs/kn5000_table_data.rom --offset 0x183B3A --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_german_stale.bin
+	python3 scripts/build/decompress_slide8k.py original_ROMs/kn5000_table_data.rom --offset 0x188690 --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_english.bin
+	python3 scripts/build/decompress_slide8k.py original_ROMs/kn5000_table_data.rom --offset 0x18BB3A --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_german.bin
+	python3 scripts/build/decompress_slide8k.py original_ROMs/kn5000_table_data.rom --offset 0x18F0DA --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_french.bin
+	python3 scripts/build/decompress_slide8k.py original_ROMs/kn5000_table_data.rom --offset 0x192A0C --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_spanish.bin
+	python3 scripts/build/decompress_slide8k.py original_ROMs/kn5000_table_data.rom --offset 0x1963FA --expected-size 0x9000 --output $(HELP_DB_DIR)/help_db_indonesian.bin
 
 # ----------------------------------------------------------------------------
-# Blob coverage audit (table_data/includes/icons_to_strings.bin)
+# Blob coverage audit (ROM 0x944D78.., the deleted table_data/includes/icons_to_strings.bin)
 # ----------------------------------------------------------------------------
+# Reads that range from the reference image (scripts/build/retired_blobs.py).
 # Re-derives from the tree which bytes of the blob any build still reads, and
 # re-proves that its 221,104-byte tail past file offset 0x7F2D8 is the stale
 # demo-preset duplicate documented in table_data/kn5000_table_data.s.  Fails
@@ -1823,10 +1842,20 @@ rebuilt_ROMs/kn5000_custom_data.rebuilt.p: archive/asl/tmp94c241.inc archive/asl
 	rm -f rebuilt_ROMs/kn5000_custom_data.rebuilt.p
 	$(ASL) -i custom_data archive/asl/custom_data/kn5000_custom_data.asm -o rebuilt_ROMs/kn5000_custom_data.rebuilt.p
 
-rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.p: archive/asl/tmp94c241.inc archive/asl/hdae5000/hd-ae5000_v2_06i.asm
+# The archived ASL source bincludes five verbatim slices of the ROM (includes/code_*.bin).  They used
+# to be tracked blobs; since 2026-10-31 (lane media-cleanup) they are written here, git-ignored, from
+# the tracked reference image by scripts/build/retired_blobs.py, which checks each against the SHA-256
+# the deleted file had.  So this legacy mirror copies those ranges of the reference, as it always did.
+ASL_HDAE_SLICES := $(foreach n,code_2803c2_28f542 code_28f90c_2953e1 code_295642_2971a2 code_2971b7_29ae9e \
+	code_29af2d_2fffff,rebuilt_ROMs/asl-hdae5000/includes/$(n).bin)
+$(ASL_HDAE_SLICES): rebuilt_ROMs/asl-hdae5000/includes/%.bin: original_ROMs/hd-ae5000_v2_06i.ic4 scripts/build/retired_blobs.py
+	@mkdir -p $(@D)
+	python3 scripts/build/retired_blobs.py write $* $@
+
+rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.p: archive/asl/tmp94c241.inc archive/asl/hdae5000/hd-ae5000_v2_06i.asm $(ASL_HDAE_SLICES)
 	mkdir -p rebuilt_ROMs
 	rm -f rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.p
-	$(ASL) -i hdae5000 archive/asl/hdae5000/hd-ae5000_v2_06i.asm -o rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.p
+	$(ASL) -i hdae5000:rebuilt_ROMs/asl-hdae5000 archive/asl/hdae5000/hd-ae5000_v2_06i.asm -o rebuilt_ROMs/hd-ae5000_v2_06i.rebuilt.p
 
 rebuilt_ROMs/kn5000_custom_data.rebuilt.rom: rebuilt_ROMs/kn5000_custom_data.rebuilt.p
 	$(P2BIN) rebuilt_ROMs/kn5000_custom_data.rebuilt.p rebuilt_ROMs/kn5000_custom_data.rebuilt.rom
@@ -1844,6 +1873,7 @@ DOCS_GALLERY=$(DOCS_DIR)/assets/images/gallery
 
 gallery:
 	python scripts/build/convert_images.py $(DOCS_GALLERY)
+	python3 scripts/analysis/extract_icons.py --sheet $(DOCS_GALLERY)/IconSpriteSheet.png
 
 # Retired.  This target used to cd into a different project (kn5000_project) and
 # export ITS issues.jsonl, not this repo's.  The website has had no issues page

@@ -33,7 +33,7 @@ R = []
 R.append(F(0x00, 16, 'name', 'ascii', M + 'SingleLoadSrc_ReadTmSoundName 0xF8A319 (16 B at 16 + 470*n); clamp 32..127 for offsets 0..15 (' + CLAMP + ')', clamp={'min': 32, 'max': 127, 'value_mask': None}))
 R.append(F(0x10, 1, 'part_mode', 'bits', S + 'Voice_SetVelocity 0x02C8E4 switches on &0xC0 (0x00 melodic, 0x40 drawbar, 0x80 drum kit, 0xC0 silent); bit 4 via Voice_Calc_LevelPair_PatchAtk 0x025636; ' + TDB, clamp=cl('rec_head_common', 16)))
 R.append(F(0x11, 1, 'partial_mask', 'bits', S + 'mask table 0x00FB4E {0x01,0x04,0x10,0x40} = partial 0..3 present; EFFSlotScan_AssignPath 0x032295; ' + TDB, clamp=cl('rec_head_common', 17)))
-R.append(F(0x12, 1, 'b_0x12', 'hex', S + 'Partial_Build_Present_Word 0x032B1E tests bits 1:0', todo='reader known, meaning not; 0 in all 723 distinct corpus records', clamp=cl('rec_head_common', 18)))
+R.append(F(0x12, 1, 'partial_flag_codes', 'bits', S + 'Partial_Build_Present_Word 0x032B1E: four 2-bit codes, one per partial in the order of the +0x11 partial mask (bits 1:0 partial 0 .. 7:6 partial 3); code 1 sets bit 15 of that partial\'s slot flag word (Part_Slot_Flags, part record +0x80 + 0x25*p: VoiceFlags_Bit0Set .. _Bit6Set), any other code clears it. 0 in all 723 distinct corpus records; ROM tone records 0x40 x13 (partial 3 code 1), 0x10 x1. [INFERENCE: what bit 15 of the slot flags does was not traced]', True, clamp=cl('rec_head_common', 18)))
 R.append(F(0x13, 1, 'bend_type', 'dec', S + 'Voice_Pitch_Compute_Inactive 0x023698 (' + TDB + '); clamp 0..66', clamp=cl('rec_head_common', 19)))
 for nm, k, kind, ev, todo in (('ctrl_part_switches', 0, 'bits', 'byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; ' + S + 'Voice_PitchBend_BranchA 0x02A62E takes the address of group 0 (+0x14)', 'per-tone (1ST..4TH) switch reading of the 2-bit fields is an inference from the 0x55 pattern and the SeCtr2/SeCtr3 "1ST 2ND 3RD 4TH" captions'),
                               ('ctrl_b1', 1, 'bits', 'clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): ' + CLAMP, 'no subcpu reader identified; bit 7 is a flag (0x81 in group 0 of every record)'),
@@ -47,23 +47,23 @@ R.append(F(0x2B, 1, 'lfo_b0', 'dec', lfo_ev, inf=True, todo='which UI caption (s
 R.append(F(0x2C, 1, 'lfo_b1', 'dec', lfo_ev, inf=True, todo='caption not traced', rep=(12, 4), clamp=cl('rec_head_common', 44)))
 R.append(F(0x2D, 1, 'lfo_b2_onoff', 'bits', lfo_ev + '; bit 7 = ON/OFF, bits 6:0 = 0..50', inf=True, rep=(12, 4), clamp=cl('rec_head_common', 45)))
 R.append(F(0x2E, 1, 'lfo_b3_wave', 'bits', lfo_ev + '; bits 7:6 = wave (SIN TRI SQR SAW, inference), bits 5:0 = 0..30', inf=True, rep=(12, 4), clamp=cl('rec_head_common', 46)))
-R.append(F(0x5B, 1, 'b_0x5b', 'dec', 'clamp 0..127: ' + CLAMP, todo='no subcpu reader in ' + TDB, clamp=cl('rec_head_common', 91)))
+R.append(F(0x5B, 1, 'unread_5b', 'dec', 'clamp 0..127: ' + CLAMP + '. No sub-CPU reader: none in ' + TDB + ', and the record-pointer search ' + 'notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py' + ' (REC +0x5b) finds none (the one (xwa + 91) in v1.42, Voice_Chan_Fallback_WritePrecomputed, is a word of a voice structure)', clamp=cl('rec_head_common', 91)))
 R.append(F(0x5C, 1, 'level_offset', 'signed', S + 'Level_Build_Reg0C0 0x0253FE: level offset centred on 0x40 (' + TDB + '); clamp 0..127', bias=64, clamp=cl('rec_head_common', 92)))
 R.append(F(0x5D, 1, 'algorithm_type', 'bits', S + 'AlgoType_StateWrite 0x033557 and Partial_Build_Present_Word 0x032B1E read the low nibble', clamp='none'))
 R.append(F(0x5E, 4, 'partial_descriptor', 'hex', S + 'Voice_Build_Partial_Descriptor 0x02B717 (ROM tables 0x012038/0x012057/0x012095); +0x5E/+0x60 also DSP_ChanFreq_WritePacket1 0x033B8B, +0x5F & 0x3F AlgoType_AB_LoadIndex 0x033B70', todo='per-byte meaning not established; kept as one 4-byte field', clamp='none'))
-R.append(F(0x62, 2, 'b_0x62', 'hex', 'no reader in ' + TDB + '; unclamped', todo='no reader found', clamp='none'))
+R.append(F(0x62, 2, 'algo45_params', 'hex', S + 'the parameters of algorithm types 4 and 5 (+0x5D low nibble): Algo_SubTable_DispatchB_Arm_Type45 reads +0x62 (L = 2 * value) and Algo_SubTable_JumpTable2 +0x62, Algo_SubTable_Bit15_Arm_Type45 +0x63, through Part_PatchRecord_Ptr (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py; ' + TDB + ' had no reader); unclamped [INFERENCE: what the two values set in the algorithm was not traced]', True, clamp='none'))
 R.append(F(0x64, 1, 'secondary_param_a', 'dec', S + 'Voice_SecondaryParam_Path2 0x033DAA', clamp='none'))
 R.append(F(0x65, 1, 'secondary_param_b', 'dec', S + 'Voice_SecondaryParam_Path2_Epilogue 0x033DD3', clamp='none'))
 # partial blocks
 PB = 0x66
 P = [  # (blk off, size, name, kind, evidence, inference, todo, bias)
  (0x00, 1, 'gate_ctl', 'dec', S + 'Voice_Build_GateCommand 0x025589 and Voice_ComputePitch 0x026396 read it; clamp 0..50', True, 'name from the readers only; meaning not established', None),
- (0x01, 1, 'b_0x01', 'dec', 'clamp 0..128; no subcpu reader (' + TDB + ')', False, 'no reader found', None),
+ (0x01, 1, 'unread_01', 'dec', 'clamp 0..128; no sub-CPU reader (' + TDB + '; notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x01 lists only stores into a voice structure)', False, None, None),
  (0x02, 1, 'wave', 'dec', S + 'WaveSel_StageA1_FromPatchBlock 0x0325FC: wave byte of the wave-select pair; clamp 0..127', False, None, None),
  (0x03, 1, 'wave_family', 'hex', S + 'WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4', False, None, None),
- (0x04, 1, 'coarse_tune', 'signed', 'clamp -24..+24 (two\'s complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in ' + TDB, True, 'semitone reading from range and corpus only; no reader found', 0),
+ (0x04, 1, 'coarse_tune', 'signed', 'clamp -24..+24 (two\'s complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in ' + TDB + ' nor by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py (BLK +0x04)', True, 'semitone reading from range and corpus only; no reader found', 0),
  (0x05, 1, 'partial_detune', 'dec', S + 'Pitch_Apply_Partial_Detune 0x023A05', False, None, None),
- (0x06, 1, 'b_0x06', 'hex', 'unclamped; no subcpu reader', False, 'no reader found', None),
+ (0x06, 1, 'porta_sel', 'hex', 'unclamped; ' + S + 'Voice_Pitch_ApplyPortamento reads it through the voice slot\'s paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x06) [INFERENCE: the role of the 3-bit value was not traced]', True, None, None),
  (0x07, 1, 'env2_start_level', 'signed', S + 'Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in ' + TDB + '); clamp -50..50 and corpus values 0/+50/+30/-20 show a signed level; SePitEnv1 / SeFilEnv1 captions START PITCH / START', True, 'start-level reading is an inference; the header calls it a sign flag', 0),
  (0x08, 1, 'env2_porta_level', 'signed', S + 'Voice_PortaLevel_Compute 0x0248D5; clamp -50..50', False, None, 0)]
 for s in range(4):
@@ -73,7 +73,7 @@ for s in range(4):
     P.append((b, 1, 'env2_seg%d_b' % (s + 1), 'signed', S + rd + '; clamp -50..50', False, 'target vs rate not settled', 0))
 P += [
  (0x11, 1, 'env2_key_scale', 'signed', S + 'Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50', False, None, 0),
- (0x12, 1, 'env2_b_0x12', 'signed', 'clamp -50..50; no subcpu reader', False, 'no reader found', 0),
+ (0x12, 1, 'filter_b12', 'signed', 'clamp -50..50; ' + S + 'TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13 of the filter word beside the cutoff from +0x11 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x12) [INFERENCE: what the field selects in the filter was not traced]', True, None, 0),
  (0x13, 1, 'env2_velocity_base', 'dec', S + 'Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127', False, None, None),
  (0x14, 2, 'env2_velocity_depth', 'signed', S + 'Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each', False, 'two int8, not one int16', 0),
  (0x16, 1, 'env2_egb_0x16', 'signed', S + 'Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50', False, None, 0),
@@ -81,9 +81,9 @@ P += [
  (0x18, 1, 'fine_detune', 'signed', S + 'Voice_ComputePitch 0x026396 (signed detune); clamp -50..50', False, None, 0),
  (0x19, 1, 'pitch_curve', 'hex', S + 'Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table', False, None, None),
  (0x1A, 3, 'pitch_params', 'dec', S + 'Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each', False, 'three bytes, individual meaning not established', None),
- (0x1D, 1, 'b_0x1d', 'signed', 'clamp -50..50; no subcpu reader', False, 'no reader found', 0),
- (0x1E, 8, 'b_0x1e', 'dec', 'clamp 0..127 each; no subcpu reader for +0x1D..+0x26', False, 'no reader found', None),
- (0x26, 1, 'b_0x26', 'hex', 'unclamped; no subcpu reader', False, 'no reader found', None)]
+ (0x1D, 1, 'unread_1d', 'signed', 'clamp -50..50; no subcpu reader' + ' (' + TDB + '; notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x1d: none)', False, None, 0),
+ (0x1E, 8, 'unread_1e', 'dec', 'clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (' + TDB + '; notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x1e..+0x25: none)', False, None, None),
+ (0x26, 1, 'unread_26', 'hex', 'unclamped; no subcpu reader' + ' (' + TDB + '; notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x26: none)', False, None, None)]
 for s in range(3):
     P.append((0x27 + 2 * s, 1, 'env1_seg%d_target' % (s + 1), 'dec', S + 'Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100', False, None, None))
     P.append((0x28 + 2 * s, 1, 'env1_seg%d_rate' % (s + 1), 'dec', S + 'Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100', False, None, None))
@@ -95,7 +95,7 @@ P += [
  (0x35, 1, 'env1_ega_0x35', 'signed', S + 'Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50', False, None, 0),
  (0x36, 1, 'filter_type', 'bits', S + 'TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve', False, None, None),
  (0x37, 1, 'filter_key_follow_depth', 'dec', S + 'TVF_Calc_Cutoff 0x022C06; clamp 0..50', False, None, None),
- (0x38, 1, 'b_0x38', 'hex', 'unclamped; no subcpu reader', False, 'no reader found', None),
+ (0x38, 1, 'unread_38', 'hex', 'unclamped; no subcpu reader' + ' (' + TDB + '; notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x38: none)', False, None, None),
  (0x39, 1, 'level_scale_offset', 'dec', S + 'TVF_Calc_Cutoff 0x022C06; clamp 0..127', False, None, None),
  (0x3A, 1, 'level_scale_low', 'dec', S + 'TVF_Calc_Cutoff 0x022C06; clamp 0..127', False, None, None),
  (0x3B, 1, 'level_scale_high', 'dec', S + 'TVF_Calc_Cutoff 0x022C06; clamp 0..127', False, None, None),
@@ -108,7 +108,7 @@ for s in range(4):
     P.append((0x40 + 2 * s, 1, 'env3_seg%d_b' % (s + 1), 'signed', S + rd + '; clamp -50..50', False, 'target vs rate not settled', 0))
 P += [
  (0x47, 1, 'env3_key_scale', 'signed', S + 'Voice_StereoLevel_Compute 0x024664; clamp -50..50', False, None, 0),
- (0x48, 1, 'env3_b_0x48', 'signed', 'clamp -50..50; no subcpu reader', False, 'no reader found', 0),
+ (0x48, 1, 'unread_48', 'signed', 'clamp -50..50; no subcpu reader (' + TDB + '; notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x48: none)', False, None, 0),
  (0x49, 1, 'env3_velocity_base', 'dec', S + 'Voice_StereoLevel_Compute 0x024664; clamp 0..127', False, None, None),
  (0x4A, 2, 'env3_velocity_depth', 'signed', S + 'Voice_StereoLevel_Compute 0x024664; clamp -50..50 each', False, 'two int8', 0),
  (0x4C, 1, 'env3_egc_0x4c', 'signed', S + 'Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50', False, None, 0),
@@ -141,10 +141,10 @@ EEV = (' [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n
        'CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (' + TDA + ')]')
 K.append(F(EB + 0x00, 13, 'entry_name', 'ascii', 'PercInst +0x00 13-char name; kit clamp 32..127 for entry offsets 0..12' + EEV, rep=(128, 80), clamp={'min': 32, 'max': 127, 'value_mask': None}))
 K.append(F(EB + 0x0D, 1, 'entry_layer_mask', 'bits', S + 'Voice_Allocate_Type2 0x02C12B: bit 0 = layer 0, bit 2 = layer 1, bit 5 = fixed level (Voice_WriteVolume_OrPan 0x026C16)' + EEV, rep=(128, 80), clamp=cl('kit_entry', 13)))
-K.append(F(EB + 0x0E, 1, 'entry_b_0x0e', 'dec', 'clamp 0..127; no reader (' + TDA + ')' + EEV, todo='no reader found', rep=(128, 80), clamp=cl('kit_entry', 14)))
-K.append(F(EB + 0x0F, 1, 'entry_b_0x0f', 'dec', 'clamp 0..127; no reader (' + TDA + ')' + EEV, todo='no reader found', rep=(128, 80), clamp=cl('kit_entry', 15)))
+K.append(F(EB + 0x0E, 1, 'entry_unread_0e', 'dec', 'clamp 0..127; no reader (' + TDA + '; the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer\'s key scale and a wave-catalogue entry))' + EEV, rep=(128, 80), clamp=cl('kit_entry', 14)))
+K.append(F(EB + 0x0F, 1, 'entry_unread_0f', 'dec', 'clamp 0..127; no reader (' + TDA + '; the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer\'s key scale and a wave-catalogue entry))' + EEV, rep=(128, 80), clamp=cl('kit_entry', 15)))
 L = [
- (0x00, 1, 'b_0x00', 'dec', 'clamp 0..128; no reader', 'no reader found', None),
+ (0x00, 1, 'unread_00', 'dec', 'clamp 0..128; no reader (the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer\'s key scale and a wave-catalogue entry))', None, None),
  (0x01, 1, 'wave', 'dec', S + 'WaveSel_StageA1_FromToneSlot 0x032682 wave byte; clamp 0..127', None, None),
  (0x02, 1, 'wave_family', 'hex', S + 'WaveSel_StageA1_FromToneSlot 0x032682 family byte (0x40..0x4F percussion)', None, None),
  (0x03, 1, 'coarse_tune', 'signed', S + 'Voice_Pitch_CopyBase 0x023809 (signed semitones); clamp -50..50', None, 0),

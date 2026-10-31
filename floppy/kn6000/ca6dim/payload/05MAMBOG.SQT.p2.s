@@ -444,8 +444,255 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x208, 248
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 5	; cell 4: song 1 track 9, 1 of 33
 	sq_beat
 	sq_beat
@@ -2210,8 +2457,41 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x2366, 154
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_bend	83, 0, 0, 37
+	sq_bend	86, 0, 0, 24
+	sq_bend	86, 0, 0, 4
+	sq_bend	89, 0, 0, 0
+	sq_beat
+	sq_note	3, 0, 71, 103, 48, 0
+	sq_bend	7, 0, 0, 29
+	sq_bend	10, 0, 64, 48
+	sq_bend	13, 0, 0, 61
+	sq_bend	13, 0, 0, 64
+	sq_cc	20, 0, 16, 1, 16
+	sq_cc	23, 0, 16, 1, 25
+	sq_cc	23, 0, 16, 1, 32
+	sq_cc	26, 0, 16, 1, 39
+	sq_cc	29, 0, 16, 1, 45
+	sq_cc	30, 0, 16, 1, 49
+	sq_cc	33, 0, 16, 1, 53
+	sq_cc	33, 0, 16, 1, 55
+	sq_cc	42, 0, 16, 1, 47
+	sq_cc	46, 0, 16, 1, 38
+	sq_cc	46, 0, 16, 1, 27
+	sq_cc	49, 0, 16, 1, 14
+	sq_cc	49, 0, 16, 1, 1
+	sq_cc	52, 0, 16, 1, 0
+	sq_note	54, 0, 72, 98, 42, 0
+	sq_beat
+	sq_note	4, 0, 74, 96, 43, 0
+	sq_cc	47, 0, 16, 1, 15
+	sq_cc	47, 0, 16, 1, 26
+	sq_cc	50, 0, 16, 1, 36
+	sq_note	52, 0, 72, 101, 39, 0
+	sq_cc	55, 0, 16, 1, 47
+	sq_cc	55, 0, 16, 1, 55
+	.byte	58	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 38	; cell 37: song 1 track 10, 1 of 50
 	sq_cc	0, 0, 9, 11, 127
 	sq_note	5, 0, 74, 64, 0, 1
@@ -4748,8 +5028,10 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x55ed, 19
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	16, 1, 102, 14	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0x55f1, 15
 	sq_cell	0x80, 0, 88	; cell 87: song 1 track 11, 1 of 12
 	sq_cc	0, 0, 6, 11, 127
 	sq_beat
@@ -5592,8 +5874,53 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x6132, 206
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	16, 1, 50, 32	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0x6136, 4
+	sq_cc	32, 0, 16, 1, 35
+	sq_cc	35, 0, 16, 1, 25
+	sq_cc	39, 0, 16, 1, 15
+	sq_cc	39, 0, 16, 1, 3
+	sq_cc	42, 0, 16, 1, 0
+	sq_note	57, 0, 74, 101, 90, 0
+	sq_beat
+	sq_cc	44, 0, 16, 1, 21
+	sq_cc	48, 0, 16, 1, 34
+	sq_cc	48, 0, 16, 1, 47
+	sq_cc	51, 0, 16, 1, 59
+	sq_note	52, 0, 72, 98, 91, 0
+	sq_cc	55, 0, 16, 1, 69
+	sq_cc	55, 0, 16, 1, 77
+	sq_cc	58, 0, 16, 1, 82
+	sq_cc	61, 0, 16, 1, 87
+	sq_cc	61, 0, 16, 1, 91
+	sq_cc	64, 0, 16, 1, 95
+	sq_cc	64, 0, 16, 1, 98
+	sq_cc	67, 0, 16, 1, 101
+	sq_cc	70, 0, 16, 1, 103
+	sq_cc	71, 0, 16, 1, 104
+	sq_cc	74, 0, 16, 1, 106
+	sq_beat
+	sq_cc	7, 0, 16, 1, 104
+	sq_cc	8, 0, 16, 1, 103
+	sq_cc	11, 0, 16, 1, 101
+	sq_cc	14, 0, 16, 1, 98
+	sq_cc	14, 0, 16, 1, 95
+	sq_cc	17, 0, 16, 1, 91
+	sq_cc	17, 0, 16, 1, 86
+	sq_cc	20, 0, 16, 1, 80
+	sq_cc	24, 0, 16, 1, 71
+	sq_cc	24, 0, 16, 1, 61
+	sq_cc	27, 0, 16, 1, 49
+	sq_cc	30, 0, 16, 1, 37
+	sq_cc	31, 0, 16, 1, 24
+	sq_cc	33, 0, 16, 1, 11
+	sq_cc	34, 0, 16, 1, 0
+	sq_note	51, 0, 74, 103, 91, 0
+	sq_beat
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0x61fe, 2
 	sq_cell	0x80, 0, 100	; cell 99: song 1 track 12, 1 of 40
 	sq_cc	0, 0, 7, 11, 127
 	sq_beat
@@ -7680,8 +8007,23 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x89ba, 70
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0x89ba, 4
+	sq_cc	43, 0, 16, 1, 85
+	sq_cc	46, 0, 16, 1, 80
+	sq_cc	47, 0, 16, 1, 75
+	sq_cc	50, 0, 16, 1, 70
+	sq_cc	53, 0, 16, 1, 62
+	sq_cc	54, 0, 16, 1, 53
+	sq_note	58, 0, 76, 96, 9, 1
+	sq_cc	59, 0, 16, 1, 41
+	sq_cc	59, 0, 16, 1, 29
+	sq_cc	59, 0, 16, 1, 16
+	sq_cc	61, 0, 16, 1, 4
+	sq_cc	65, 0, 16, 1, 0
+	sq_beat
+	sq_bend	34, 0, 64, 62
 	sq_cell	0xff, 0, 140	; cell 139: song 1 track 13, 1 of 4
 	sq_cc	0, 0, 8, 11, 127
 	sq_beat
@@ -8188,8 +8530,84 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x8d7e, 130
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_sys	89, 0xf1, 2, 0, 0, 51, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 144	; cell 143: song 1 track 14, 1 of 4
 	sq_cc	0, 0, 10, 11, 127
 	sq_beat
@@ -8711,8 +9129,16 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x91e4, 28
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	sq_beat
+	sq_bend	81, 0, 64, 59
+	sq_bend	85, 0, 0, 57
+	sq_bend	85, 0, 64, 53
+	sq_bend	88, 0, 64, 49
+	sq_bend	88, 0, 0, 43
+	sq_bend	91, 0, 0, 37
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0x91fd, 3
 	sq_cell	0xff, 0, 148	; cell 147: song 1 track 15, 1 of 21
 	sq_cc	0, 0, 11, 11, 127
 	sq_beat
@@ -9950,8 +10376,59 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0xa635, 203
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	39, 35	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0xa637, 3
+	sq_bend	38, 0, 0, 29
+	sq_bend	38, 0, 0, 25
+	sq_bend	41, 0, 0, 19
+	sq_bend	42, 0, 0, 15
+	sq_bend	45, 0, 0, 10
+	sq_bend	48, 0, 0, 5
+	sq_bend	48, 0, 0, 2
+	sq_bend	51, 0, 0, 1
+	sq_bend	55, 0, 0, 0
+	sq_bend	61, 0, 0, 6
+	sq_bend	64, 0, 0, 16
+	sq_bend	65, 0, 64, 31
+	sq_bend	68, 0, 0, 55
+	sq_bend	68, 0, 0, 64
+	sq_beat
+	sq_note	1, 0, 71, 103, 56, 0
+	sq_bend	93, 0, 64, 60
+	sq_beat
+	sq_bend	0, 0, 64, 56
+	sq_bend	1, 0, 64, 53
+	sq_note	4, 0, 71, 107, 49, 0
+	sq_bend	4, 0, 0, 50
+	sq_bend	7, 0, 0, 47
+	sq_bend	7, 0, 64, 44
+	sq_bend	10, 0, 64, 42
+	sq_bend	11, 0, 64, 40
+	sq_bend	23, 0, 0, 47
+	sq_bend	23, 0, 0, 52
+	sq_bend	26, 0, 0, 56
+	sq_bend	30, 0, 0, 63
+	sq_bend	30, 0, 0, 64
+	sq_cc	46, 0, 16, 1, 9
+	sq_cc	49, 0, 16, 1, 14
+	sq_cc	50, 0, 16, 1, 19
+	sq_note	53, 0, 72, 93, 44, 0
+	sq_cc	53, 0, 16, 1, 23
+	sq_cc	56, 0, 16, 1, 25
+	sq_cc	57, 0, 16, 1, 27
+	sq_cc	66, 0, 16, 1, 19
+	sq_cc	69, 0, 16, 1, 14
+	sq_cc	72, 0, 16, 1, 6
+	sq_cc	73, 0, 16, 1, 0
+	sq_beat
+	sq_note	6, 0, 74, 96, 41, 0
+	sq_note	52, 0, 71, 99, 60, 0
+	sq_beat
+	sq_bend	2, 0, 0, 63
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0xa6fe, 2
 	sq_cell	0xff, 0, 169	; cell 168: song 1 track 16, 1 of 15
 	sq_cc	0, 0, 12, 11, 127
 	sq_beat
@@ -10925,8 +11402,55 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0xb52f, 209
+; after the end of track: stale events of an earlier version of the song (stale_tokens)
+	.byte	1, 122, 74	; data bytes of an event cut at the start
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0xb532, 4
+	sq_beat
+	sq_cc	15, 0, 16, 1, 117
+	sq_cc	15, 0, 16, 1, 106
+	sq_cc	18, 0, 16, 1, 94
+	sq_cc	21, 0, 16, 1, 81
+	sq_cc	21, 0, 16, 1, 67
+	sq_cc	24, 0, 16, 1, 51
+	sq_cc	25, 0, 16, 1, 33
+	sq_cc	27, 0, 16, 1, 17
+	sq_cc	31, 0, 16, 1, 1
+	sq_cc	31, 0, 16, 1, 0
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 74, 101, 41, 0
+	sq_note	94, 0, 76, 93, 20, 0
+	sq_beat
+	sq_cc	44, 0, 16, 1, 27
+	sq_cc	48, 0, 16, 1, 43
+	sq_note	51, 0, 76, 103, 90, 0
+	sq_cc	52, 0, 16, 1, 56
+	sq_cc	52, 0, 16, 1, 66
+	sq_cc	56, 0, 16, 1, 72
+	sq_cc	56, 0, 16, 1, 77
+	sq_cc	59, 0, 16, 1, 80
+	sq_cc	59, 0, 16, 1, 82
+	sq_cc	62, 0, 16, 1, 85
+	sq_cc	66, 0, 16, 1, 88
+	sq_cc	66, 0, 16, 1, 90
+	sq_cc	69, 0, 16, 1, 93
+	sq_cc	69, 0, 16, 1, 95
+	sq_cc	72, 0, 16, 1, 97
+	sq_cc	76, 0, 16, 1, 98
+	sq_cc	76, 0, 16, 1, 99
+	sq_cc	79, 0, 16, 1, 100
+	sq_cc	79, 0, 16, 1, 101
+	sq_cc	82, 0, 16, 1, 102
+	sq_cc	86, 0, 16, 1, 103
+	sq_cc	86, 0, 16, 1, 104
+	sq_cc	92, 0, 16, 1, 107
+	sq_beat
+	sq_cc	22, 0, 16, 1, 105
+	sq_cc	25, 0, 16, 1, 103
+	sq_cc	29, 0, 16, 1, 99
+	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
+	.incbin	"05MAMBOG.sqt.p2.ref", 0xb5fc, 4
 
 	.if	(. - P_05MAMBOG_SQT_p2) - 46592
 	.error	"05MAMBOG.SQT part 2: the payload is not 46592 bytes"

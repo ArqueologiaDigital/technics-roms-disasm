@@ -225,10 +225,16 @@ def structs():
         b0, b1 = blk['off'], blk['off'] + blk['size']
         _S['sqt_slot_b_head'] = Struct('sqt_slot_b_head', {'size': b0, 'fields': _part(rb['fields'], 0, b0)},
                                        'song slot +0x110 up to its panel block 0')
-        _S['sqt_slot_b_tail'] = Struct('sqt_slot_b_tail', {'size': rb['size'] - b1,
-                                                           'fields': _part(rb['fields'], b1, 1 << 30, b1)},
-                                       'song slot after its panel block 0, to +0x7ff')
+        # The song's copy of block 1's first records follows block 0; formats.py types it with the
+        # panel record macros, so the tail struct starts after it.
+        cp = [f for f in rb['fields'] if f['name'] == 'song_panel_block1_copy'][0]
+        b2 = cp['off'] + cp['size']
+        assert cp['off'] == b1
+        _S['sqt_slot_b_tail'] = Struct('sqt_slot_b_tail', {'size': rb['size'] - b2,
+                                                           'fields': _part(rb['fields'], b2, 1 << 30, b2)},
+                                       'song slot after its panel copy, to +0x7ff')
         _S['sqt_slot_b_tail'].panel = (rb['base'] + b0, blk['size'])
+        _S['sqt_slot_b_tail'].panel1 = (rb['base'] + b1, cp['size'])
     return _S
 
 

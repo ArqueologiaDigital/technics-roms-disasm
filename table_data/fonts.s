@@ -111,8 +111,8 @@ FontDescriptor_Table:
 	.long	0, 0
 
 ; -----------------------------------------------------------------------------
-; Glyph banks 0-5 (1bpp, column-major, chars 0x20-0xFF; offsets are into
-; includes/icons_to_strings.bin, whose file offset 0 = ROM 0x944D78)
+; Glyph banks 0-5 (1bpp, column-major, chars 0x20-0xFF; font_images.py's offsets
+; are from ROM 0x944D78, the start of the deleted includes/icons_to_strings.bin)
 ; -----------------------------------------------------------------------------
 Font0_Glyphs:	.incbin	"includes/generated/Font0_Glyphs.bin"	; 224 x 16 B (8x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font0_Glyphs.png
 Font1_Glyphs:	.incbin	"includes/generated/Font1_Glyphs.bin"	; 224 x 16 B (8x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font1_Glyphs.png
