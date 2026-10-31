@@ -473,8 +473,8 @@ Voice_Part_PoolPtr_ModeA:
 	.long 0x112d + 30*3		; part 25 -> pool 3
 	.long 0x112d + 30*17		; part 26 -> pool 17
 
-; --- 0x00F597-0x00F602  (Voice_Pitch_Table_High) -- 27 x u32 pointers, channel -> section record, mode B
-; ★ 0x00F597 is NOT a pitch table. Both tables have identical shape and are read by the same
+; --- 0x00F597-0x00F602  Voice_Part_PoolPtr_ModeB -- 27 x u32 pointers, channel -> section record, mode B
+; (It was called Voice_Pitch_Table_High; it is not a pitch table.) Both tables have identical shape and are read by the same
 ; code, ChanStruct_Init_BindPartPool (0x02205A) / _AltPtr (0x022088): index = channel*4,
 ; value = a 32-bit pointer stored at offset 0 of the 12-byte channel record at DRAM 0x1349 + ch*12.
 ; Every value is 0x112D + 30*k, i.e. a pointer to one of the 18 section records.
@@ -485,40 +485,40 @@ Voice_Part_PoolPtr_ModeA:
 ; Mode B gives channels 0..15 one section each -- a 16-part (GM-style) allocation; mode A folds
 ; everything into 4 sections -- the instrument's own keyboard-part allocation. The two quota
 ; tables above are the matching halves.
-Voice_Pitch_Table_High:
-	.byte 0x2d, 0x11, 0x00, 0x00
-	.byte 0x4b, 0x11, 0x00, 0x00
-	.byte 0x69, 0x11, 0x00, 0x00
-	.byte 0x87, 0x11, 0x00, 0x00
-	.byte 0xa5, 0x11, 0x00, 0x00
-	.byte 0xc3, 0x11, 0x00, 0x00
-	.byte 0xe1, 0x11, 0x00, 0x00
-	.byte 0xff, 0x11, 0x00, 0x00
-	.byte 0x1d, 0x12, 0x00, 0x00
-	.byte 0x3b, 0x12, 0x00, 0x00
-	.byte 0x59, 0x12, 0x00, 0x00
-	.byte 0x77, 0x12, 0x00, 0x00
-	.byte 0x95, 0x12, 0x00, 0x00
-	.byte 0xb3, 0x12, 0x00, 0x00
-	.byte 0xd1, 0x12, 0x00, 0x00
-	.byte 0xef, 0x12, 0x00, 0x00
-	.byte 0x77, 0x12, 0x00, 0x00
-	.byte 0x95, 0x12, 0x00, 0x00
-	.byte 0xb3, 0x12, 0x00, 0x00
-	.byte 0xd1, 0x12, 0x00, 0x00
-	.byte 0xef, 0x12, 0x00, 0x00
-	.byte 0x77, 0x12, 0x00, 0x00
-	.byte 0xd1, 0x12, 0x00, 0x00
-	.byte 0xef, 0x12, 0x00, 0x00
-	.byte 0xef, 0x12, 0x00, 0x00
-	.byte 0xef, 0x12, 0x00, 0x00
-	.byte 0x2b, 0x13, 0x00, 0x00
+Voice_Part_PoolPtr_ModeB:
+	.long 0x112d + 30*0		; part 0 -> pool 0
+	.long 0x112d + 30*1		; part 1 -> pool 1
+	.long 0x112d + 30*2		; part 2 -> pool 2
+	.long 0x112d + 30*3		; part 3 -> pool 3
+	.long 0x112d + 30*4		; part 4 -> pool 4
+	.long 0x112d + 30*5		; part 5 -> pool 5
+	.long 0x112d + 30*6		; part 6 -> pool 6
+	.long 0x112d + 30*7		; part 7 -> pool 7
+	.long 0x112d + 30*8		; part 8 -> pool 8
+	.long 0x112d + 30*9		; part 9 -> pool 9
+	.long 0x112d + 30*10		; part 10 -> pool 10
+	.long 0x112d + 30*11		; part 11 -> pool 11
+	.long 0x112d + 30*12		; part 12 -> pool 12
+	.long 0x112d + 30*13		; part 13 -> pool 13
+	.long 0x112d + 30*14		; part 14 -> pool 14
+	.long 0x112d + 30*15		; part 15 -> pool 15
+	.long 0x112d + 30*11		; part 16 -> pool 11
+	.long 0x112d + 30*12		; part 17 -> pool 12
+	.long 0x112d + 30*13		; part 18 -> pool 13
+	.long 0x112d + 30*14		; part 19 -> pool 14
+	.long 0x112d + 30*15		; part 20 -> pool 15
+	.long 0x112d + 30*11		; part 21 -> pool 11
+	.long 0x112d + 30*14		; part 22 -> pool 14
+	.long 0x112d + 30*15		; part 23 -> pool 15
+	.long 0x112d + 30*15		; part 24 -> pool 15
+	.long 0x112d + 30*15		; part 25 -> pool 15
+	.long 0x112d + 30*17		; part 26 -> pool 17
 
-; --- 0x00F603-0x00F632  (Voice_KeyTable_Remapping) -- FOUR 0xFF-terminated voice search-order lists
+; --- 0x00F603-0x00F632  Voice_StealPoolOrder + Voice_Search_Order_List_1..3 -- FOUR 0xFF-terminated voice search-order lists
 ; Not one table: four variable-length lists, each terminated by 0xFF, each element an index that
 ; the walker turns into `index<<2` and uses to fetch a chain-head pointer.
 ;   0x00F603 (8 B):  06 05 02 04 03 01 00 FF                          -- 7 entries, referenced
-;                    directly by NoteChain_FindNode_B (`lda_24 xwa,0x00f603`)
+;                    directly by Voice_FindStealCandidate (`lda_24 xwa,0x00f603`)
 ;   0x00F60B (15 B): 86 85 06 05 84 83 82 04 03 02 81 80 01 00 FF     -- 14 entries
 ;   0x00F61A (14 B): 86 85 06 05 84 83 82 04 03 02 81 80 01 FF        -- 13 entries
 ;   0x00F628 (11 B): 86 85 06 05 84 83 82 04 03 02 FF                 -- 10 entries
@@ -528,7 +528,7 @@ Voice_Pitch_Table_High:
 ; return the first non-null chain head (or 0 = "not found").
 ; --- 0x00F603-0x00F632  Voice-pool priority lists (0xFF-terminated byte lists)
 ; Four variable-length lists of pool indices in allocation-priority order:
-;   0x00F603..0x00F60A  06 05 02 04 03 01 00 FF   used by NoteChain_FindNode_B
+;   0x00F603..0x00F60A  06 05 02 04 03 01 00 FF   used by Voice_FindStealCandidate
 ;   0x00F60B..0x00F619  86 85 06 05 84 83 82 04 03 02 81 80 01 00 FF
 ;   0x00F61A..0x00F627  86 85 06 05 84 83 82 04 03 02 81 80 01 FF
 ;   0x00F628..0x00F632  86 85 06 05 84 83 82 04 03 02 FF
@@ -536,26 +536,26 @@ Voice_Pitch_Table_High:
 ; Voice_Find_Candidate (0x02229A). A byte with bit7 set selects the GLOBAL pool-head
 ; array at 0x130F, indexed by (byte & 0x7F)*4; a byte with bit7 clear selects the
 ; part-descriptor-local array, indexed by byte*4.
-Voice_KeyTable_Remapping:
+Voice_StealPoolOrder:
 	.byte 0x06, 0x05, 0x02, 0x04, 0x03, 0x01, 0x00, 0xff
 ; 0xFF-terminated search order, 14 entries, referenced from record 0 of the table at 0x00F633.
-; (Voice_SFX_ModulationTable record +0 pointer); walked by Voice_Find_Candidate (0x02229A) until 0xFF.
+; (Voice_LayerClassTable record +0 pointer); walked by Voice_Find_Candidate (0x02229A) until 0xFF.
 Voice_Search_Order_List_1:
 	.byte 0x86, 0x85, 0x06, 0x05, 0x84, 0x83, 0x82, 0x04
 	.byte 0x03, 0x02, 0x81, 0x80, 0x01, 0x00, 0xff
 ; 0xFF-terminated search order, 13 entries, referenced from record 1 of the table at 0x00F633.
-; (Voice_SFX_ModulationTable record +0 pointer); walked by Voice_Find_Candidate (0x02229A) until 0xFF.
+; (Voice_LayerClassTable record +0 pointer); walked by Voice_Find_Candidate (0x02229A) until 0xFF.
 Voice_Search_Order_List_2:
 	.byte 0x86
 	.byte 0x85, 0x06, 0x05, 0x84, 0x83, 0x82, 0x04, 0x03
 	.byte 0x02, 0x81, 0x80, 0x01, 0xff
 ; 0xFF-terminated search order, 10 entries, referenced from records 2..15 of the table at 0x00F633.
-; (Voice_SFX_ModulationTable record +0 pointer); walked by Voice_Find_Candidate (0x02229A) until 0xFF.
+; (Voice_LayerClassTable record +0 pointer); walked by Voice_Find_Candidate (0x02229A) until 0xFF.
 Voice_Search_Order_List_3:
 	.byte 0x86, 0x85, 0x06
 	.byte 0x05, 0x84, 0x83, 0x82, 0x04, 0x03, 0x02, 0xff
 
-; --- 0x00F633-0x00F692  (Voice_SFX_ModulationTable) -- 16 x 6-byte slot-type descriptors
+; --- 0x00F633-0x00F692  Voice_LayerClassTable -- 16 x 6-byte slot-type descriptors
 ; Indexing proved in Voice_Allocate_Nodes (0x022340; the `lda_24 xbc,0x00f633` is at
 ; 0x0223BE, the address the banner below cites): it takes the byte at
 ; (voice_msg + 2 + slot) & 0x0F, does `muls wa,0x6`, adds base 0x00F633.
@@ -573,21 +573,42 @@ Voice_Search_Order_List_3:
 ;   entry 1  -> 0x0000F61A, key 0x01, param 0x03
 ;   entry 2  -> 0x0000F628, key 0x02, param 0x04
 ;   entries 3..15 -> 0x0000F628, key 0x02, param 0x05 (all identical)
-; priority_key is passed to Voice_List_MoveToPool; node_param is stored in
-; (voice+0x26) at 0x022406.
-Voice_SFX_ModulationTable:
-	.byte 0x0b, 0xf6, 0x00, 0x00, 0x00, 0x03, 0x1a, 0xf6
-	.byte 0x00, 0x00, 0x01, 0x03, 0x28, 0xf6, 0x00, 0x00
-	.byte 0x02, 0x04, 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05
-	.byte 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05, 0x28, 0xf6
-	.byte 0x00, 0x00, 0x02, 0x05, 0x28, 0xf6, 0x00, 0x00
-	.byte 0x02, 0x05, 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05
-	.byte 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05, 0x28, 0xf6
-	.byte 0x00, 0x00, 0x02, 0x05, 0x28, 0xf6, 0x00, 0x00
-	.byte 0x02, 0x05, 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05
-	.byte 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05, 0x28, 0xf6
-	.byte 0x00, 0x00, 0x02, 0x05, 0x28, 0xf6, 0x00, 0x00
-	.byte 0x02, 0x05, 0x28, 0xf6, 0x00, 0x00, 0x02, 0x05
+; priority_key is the pool class the node joins when allocated (Voice_List_MoveToPool);
+; node_param, stored in (voice+0x26) at 0x022406, is the class it moves to when the note is
+; released (Voice_Reprioritise).  Pool classes: 0-2 sounding, 3-5 released, 6 decayed / free.
+Voice_LayerClassTable:
+	.long	Voice_Search_Order_List_1	; slot class 0
+	.byte	0, 3			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_2	; slot class 1
+	.byte	1, 3			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 2
+	.byte	2, 4			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 3
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 4
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 5
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 6
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 7
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 8
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 9
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 10
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 11
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 12
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 13
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 14
+	.byte	2, 5			; allocation pool key, released pool key
+	.long	Voice_Search_Order_List_3	; slot class 15
+	.byte	2, 5			; allocation pool key, released pool key
 
 ; --- 0x00F693-0x00F6A6  10 x u16 case offsets from Pitch_Get_Patch_Octave_Shift_JumpTable (0x022982).
 ; Read by Pitch_Get_Patch_Octave_Shift (0x02294E): WA = selector - 0x10, range-checked 0..9

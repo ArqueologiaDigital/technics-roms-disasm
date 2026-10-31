@@ -5306,7 +5306,7 @@ ChanStruct_Init_Entry_AltPtr:
 	ld a, (xsp + 4)
 	extz wa
 	sla wa, 2
-	lda xbc, (Voice_Pitch_Table_High:24)
+	lda xbc, (Voice_Part_PoolPtr_ModeB:24)
 	ld	xwa, (xbc+wa)
 	ld	(xhl+de), xwa
 
@@ -5543,10 +5543,12 @@ Voice_Manager_PollBank_Return:
 ;      XBC = pointer to a 0xFF-terminated byte list of pool indices in priority order
 ;            (the ROM lists live at 0x00F60B / 0x00F61A / 0x00F628).
 ; Out: XHL = pointer to a voice node, or 0 if every listed pool is empty.
-; Fast path: if the 32-bit global at 0x1345 is non-zero it is returned unconditionally
-;   (a forced/override node).
+; Fast path: the 32-bit word at 0x1345 is the FREE list, the class-6 head of pool 17
+;   (pool record 0x132B = 0x112D + 17*30, filled by Voice_Retire_ToFreePool): a free
+;   voice is always taken first.  (This was read as a "forced/override node".)
 ; Walk: for each byte b of the list - if bit7 is set the pool head is read from the
-;   global pointer array at 0x130F indexed by (b & 0x7F)*4, otherwise from the array
+;   class heads of pool 16 (record 0x130D, heads at 0x130F; the victims that
+;   Voice_Allocate_Nodes_StealAtQuota parks there) indexed by (b & 0x7F)*4, otherwise from the array
 ;   embedded in the part descriptor at (*XWA)+2 indexed by b*4. First non-null wins.
 ; Called only from Voice_Allocate_Nodes (0x0223CF).
 ; *** BUG-RELEVANT: this returning 0 is how 'stops allocating voices' manifests; it is
@@ -5611,28 +5613,28 @@ NoteChain_FindNode_NotFound:
 	ret
 
 ; FREE-VOICE / CANDIDATE-NODE SEARCH, secondary form (voice stealing).
-; In:  XWA = part descriptor; the local pool array is at XWA+2.
-; Out: XHL = first non-empty pool head, or 0.
-; Uses the fixed ROM priority list at 0x00F603 (06 05 02 04 03 01 00 FF) and, unlike
-; Voice_Find_Candidate, has no bit7 escape to the global array and no 0x1345 override.
-; Called from Voice_Allocate_Nodes_WalkNext (0x0224DF) when the part is already at its
+; In:  XWA = a 30-byte pool record (node+0x1D: +0 quota, +1 count, +2 seven class heads).
+; Out: XHL = first non-empty class head, or 0.
+; Uses the fixed ROM order Voice_StealPoolOrder (classes 6 5 2 4 3 1 0: decayed, released,
+; then sounding) and, unlike Voice_Find_Candidate, neither pool 16 nor the free list.
+; Called from Voice_Allocate_Nodes_StealAtQuota (0x0224DF) when the part is already at its
 ; polyphony limit, i.e. this is the steal-a-voice search.
-NoteChain_FindNode_B:
+Voice_FindStealCandidate:
 	inc 2, xwa
 	ld xde, xwa
-	lda xwa, (Voice_KeyTable_Remapping:24)
+	lda xwa, (Voice_StealPoolOrder:24)
 	ld xbc, xwa
 	cp (xbc), 0xFF
-	jr z, NoteChain_FindNode_B_NotFound
+	jr z, Voice_FindStealCandidate_NotFound
 
 ; Walk the 0x00F603 list, returning the first non-null local pool head.
-NoteChain_FindNode_B_Walk:
+Voice_FindStealCandidate_Walk:
 	ld a, (xbc)
 	extz wa
 	sla wa, 2
 	ld	xwa, (xde+wa)
 	or xwa, xwa
-	jr z, NoteChain_FindNode_B_Advance
+	jr z, Voice_FindStealCandidate_Advance
 	ld a, (xbc)
 	extz wa
 	sla wa, 2
@@ -5640,13 +5642,13 @@ NoteChain_FindNode_B_Walk:
 	ret
 
 ; Advance to the next list byte, stop on the 0xFF terminator.
-NoteChain_FindNode_B_Advance:
+Voice_FindStealCandidate_Advance:
 	inc 1, xbc
 	cp (xbc), 0xFF
-	jr nz, NoteChain_FindNode_B_Walk
+	jr nz, Voice_FindStealCandidate_Walk
 
 ; Not-found exit: XHL = 0.
-NoteChain_FindNode_B_NotFound:
+Voice_FindStealCandidate_NotFound:
 	ld xhl, 0:i3
 	ret
 
@@ -5721,7 +5723,7 @@ Voice_Allocate_Nodes_ProcessSlot:
 	and a, 0xF
 	extz wa
 	muls wa, 0x6
-	lda xbc, (Voice_SFX_ModulationTable:24)
+	lda xbc, (Voice_LayerClassTable:24)
 	exts xwa
 	add xwa, xbc
 	ld (xsp + 8), xwa
@@ -5830,7 +5832,7 @@ Voice_Allocate_Nodes_UpdateLists:
 	ld xwa, xiz
 	ld xbc, (4393:16)
 	calr DList_Relink_Adjacent_Offsets16
-	jr Voice_Allocate_Nodes_AdvancePriority
+	jr Voice_Allocate_Nodes_CountAgainstQuota
 
 ; Global chain was empty: this node becomes the head (0x1129) and self-links.
 Voice_Allocate_Nodes_SetGlobalHead:
@@ -5838,21 +5840,21 @@ Voice_Allocate_Nodes_SetGlobalHead:
 	ld xwa, xiz
 	calr DList_Unlink_SelfLink_Offsets16
 
-; Polyphony accounting: part active count is (part_desc+1), limit is (part_desc+0); if below the limit just increment it.
-Voice_Allocate_Nodes_AdvancePriority:
+; Polyphony accounting: the pool record (node+0x1D) holds the quota at +0 and the count at +1; below the quota just count the node.
+Voice_Allocate_Nodes_CountAgainstQuota:
 	ld xwa, (xiz + 29)
 	ld xbc, xwa
 	ld a, (xwa + 1)
 	cp a, (xbc)
-	jr nc, Voice_Allocate_Nodes_WalkNext
+	jr nc, Voice_Allocate_Nodes_StealAtQuota
 	ld xwa, (xiz + 29)
 	incm8 1, (xwa + 1)
 	jr Voice_Allocate_Nodes_WriteSlot
 
-; At the limit - steal: NoteChain_FindNode_B picks a victim node, it is re-keyed into the list at 0x130D with its own (node+0x21) key, the count is bumped and flag bit4 is set on it.
-Voice_Allocate_Nodes_WalkNext:
+; At the quota - steal: Voice_FindStealCandidate picks a victim in the same pool, it moves to pool 16 (record 0x130D) under its own class (node+0x21), the count is bumped and flag bit4 is set on it.
+Voice_Allocate_Nodes_StealAtQuota:
 	ld xwa, (xiz + 29)
-	calr NoteChain_FindNode_B
+	calr Voice_FindStealCandidate
 	ld xiz, xhl
 	ld xwa, xiz
 	or xwa, xwa

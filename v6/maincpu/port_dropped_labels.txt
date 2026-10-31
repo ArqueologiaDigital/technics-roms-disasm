@@ -70,7 +70,7 @@ VoiceConfig_EventTypeChk	0xf3ab5a	sequencer/sequencer_engine.s
 SeqNoteCh_HandleAccompVoice	0xf3b06a	sequencer/sequencer_engine.s
 SeqNote_SetDrumChannelPair	0xf3b09c	sequencer/sequencer_engine.s
 SeqNoteCh_DispatchEventType	0xf3b0a1	sequencer/sequencer_engine.s
-SeqNote_UpdatePositionA_Entry	0xf3b1f8	sequencer/sequencer_engine.s
+SeqNoteCh_HandleAccStartEvent	0xf3b1f8	sequencer/sequencer_engine.s
 VoiceType_CheckDrumOrControl	0xf3b273	sequencer/sequencer_engine.s
 VoiceType_CheckControlB0	0xf3b297	sequencer/sequencer_engine.s
 VoiceType_SetMatchFlag	0xf3b2ab	sequencer/sequencer_engine.s

@@ -4270,15 +4270,15 @@ SeqNoteCh_HandleProgramChange:
 
 SeqNoteCh_HandleOtherEvents:
 	cp e, 0x86
-	jrl z, SeqNote_UpdatePositionB_Entry
+	jrl z, SeqNoteCh_HandleAccStopEvent
 	ld	c, (xsp+18)
 	extz	bc
 	cp	e, 133
 	jrl	z, SeqNote_NoteOff_WritePart_Skip
 	cp e, 0xd2
-	jrl z, SeqNote_NoteOff_CheckActive2
+	jrl z, SeqNoteCh_HandleEventD2
 	cp e, 0x80
-	jrl z, SeqNote_NoteOff_CheckActive
+	jrl z, SeqNoteCh_HandleTempoEvent
 	cp e, 0xd3
 	jr z, SeqNoteCh_HandleEventD3
 	cp e, 0xd1
@@ -4341,7 +4341,7 @@ SeqNote_SendNoteOff:
 	ld (xsp + 4), 0x4
 	jrl SeqNote_WriteEventToBuffer
 
-SeqNote_NoteOff_CheckActive:
+SeqNoteCh_HandleTempoEvent:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
@@ -4349,11 +4349,11 @@ SeqNote_NoteOff_CheckActive:
 	ld	a, (xsp + 18)
 	extz wa
 	lda	xbc, (xsp + 8)
-	calr AccPedalConfig_ApplyTempo
+	calr SeqEvt_ApplyTempoEvent
 	ld (xsp + 4), l
 	jr SeqNote_ConditionalWriteToBuffer
 
-SeqNote_NoteOff_CheckActive2:
+SeqNoteCh_HandleEventD2:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
@@ -4366,7 +4366,7 @@ SeqNote_NoteOff_WritePart:
 	ld (xsp + 4), 0x5
 	jr SeqNote_WriteEventToBuffer
 
-; port: v7's label SeqNote_UpdatePositionA_Entry is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label SeqNoteCh_HandleAccStartEvent is not in v6 -- no v6 bytes correspond to what it named
 SeqNote_NoteOff_WritePart_Skip:
 	ld	wa, bc
 	calr Chan_IsActive
@@ -4378,7 +4378,7 @@ SeqNote_NoteOff_WritePart_Skip:
 	calr SeqNote_UpdatePlayPosition_A
 	jr SeqNote_ConditionalWriteToBuffer
 
-SeqNote_UpdatePositionB_Entry:
+SeqNoteCh_HandleAccStopEvent:
 	ld	a, (xsp + 18)
 	extz wa
 	calr Chan_IsActive
@@ -4586,7 +4586,7 @@ SeqNote_WriteChannelEvt:
 SeqNote_ProcessAlt_80Tempo:
 	ld wa, bc
 	ld xbc, xde
-	calr AccPedalConfig_ApplyTempo
+	calr SeqEvt_ApplyTempoEvent
 	ldfr_berp L, 0xfb
 	jrl SeqMidi_EmitEventToBuffer
 
@@ -4948,7 +4948,7 @@ AccPedalDirect_Return:
 	inc 4, xsp
 	ret
 
-AccPedalConfig_ApplyTempo:
+SeqEvt_ApplyTempoEvent:
 	pushw_erp 0xfa
 	ld e, (xbc + 2)
 	ld a, (xbc + 3)

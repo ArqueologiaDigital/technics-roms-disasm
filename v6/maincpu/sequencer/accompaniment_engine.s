@@ -21174,23 +21174,28 @@ ToneGen_MultiChan_CheckBit4:
 	cp d, 0x90
 	jr nz, ToneGen_MultiChan_WriteNoteOff
 	cp e, 0x90
-	jr z, VoiceCompare_Done
-	calr ToneGen_CompareVoiceBlocks
-	jr VoiceCompare_Done
+	jr z, ToneGen_MultiChan_Done
+	calr ToneGen_ReplaceCursorNoteEvent
+	jr ToneGen_MultiChan_Done
 
 ToneGen_MultiChan_WriteNoteOff:
 	cp e, 0x90
-	jr nz, VoiceCompare_Done
-	calr ToneGen_CompareVoiceBlocks
+	jr nz, ToneGen_MultiChan_Done
+	calr ToneGen_ReplaceCursorNoteEvent
 
-VoiceCompare_Done:
+ToneGen_MultiChan_Done:
 	ret
 
 ToneGen_MultiChan_WriteFinalNote:
 	nop
 	nop
 
-ToneGen_CompareVoiceBlocks:
+; ToneGen_ReplaceCursorNoteEvent: replaces the note event at the pattern cursor by its converted form:
+;   saves its bytes (ToneGen_SaveCursorEventBytes), deletes it (ToneGen_DeleteEventAtCursor), builds the
+;   0x90 / 0x91 event (ToneGen_BuildConvertedNoteEvent) and inserts it (ToneGen_StepWithBoundsCheck).
+;   Basis: callers + body -- ToneGen_WriteMultiChanParam calls it when the stored status differs from the
+;   one it computes.
+ToneGen_ReplaceCursorNoteEvent:
 	calr ToneGen_CompareVoiceBlocks_Helper
 	calr ToneGen_CompareVoiceBlocks_Helper2
 	calr ToneGen_CompareVoiceBlocks_Helper3
@@ -21584,9 +21589,9 @@ ToneGen_StepFwd_Alternate:
 	jr t, ToneGen_StepAlt_Return
 ToneGen_StepAlt_CheckBeat:
 	calr AccTiming_ScrollFourBarViewForward
-	calr ChordDetect_CheckDescending
-	calr ChordDetect_CheckRoot1
-	calr ChordDetect_CheckInversion1
+	calr AccTiming_ScrollFourBarViewBack
+	calr AccTiming_WrapFourBarViewToEnd
+	calr AccTiming_WrapFourBarViewToStart
 
 ToneGen_StepAlt_Return:
 	jr ToneGen_StepAlt_StoreResult
@@ -21598,10 +21603,10 @@ ToneGen_StepAlt_Overflow:
 	jr ToneGen_StepAlt_StoreResult
 
 ToneGen_StepAlt_OverflowDone:
-	calr ChordDetect_CheckAscending
-	calr ChordDetect_CheckMirror
-	calr ChordDetect_CheckRoot2
-	calr ChordDetect_CheckInversion2
+	calr AccTiming_ScrollTwoBarViewForward
+	calr AccTiming_ScrollTwoBarViewBack
+	calr AccTiming_WrapTwoBarViewToEnd
+	calr AccTiming_WrapTwoBarViewToStart
 
 ToneGen_StepAlt_StoreResult:
 	ld	(13966:16), c
@@ -21617,174 +21622,202 @@ ToneGen_StepAlt_Done:
 ;   = (0x343B) > C + 3), the previous measure D (0x36AB) was the view's last (C + 4) and the current one E (0x367E) is
 ;   D + 1, increments the view's first measure C (0x36AA). Basis: callers + body -- ToneGen_StepAlt_CheckBeat runs it
 ;   first among the four view checks used when (0x343D) <= 4 (the 0x20-pixel-per-measure layout of
-;   AccTiming_ComputeOffset, x = (measure - (0x36AA)) * width); ChordDetect_CheckAscending is the same test for the
+;   AccTiming_ComputeOffset, x = (measure - (0x36AA)) * width); AccTiming_ScrollTwoBarViewForward is the same test for the
 ;   two-measure (0x40) layout (D == C + 2).
 AccTiming_ScrollFourBarViewForward:
 	ld a, c
 	add a, 0x3
 	cp b, a
-	jr ule, RhythmParam_CheckExit6
+	jr ule, AccTiming_ScrollFourBarViewForward_Ret
 	inc 1, a
 	cp a, d
-	jr nz, RhythmParam_CheckExit6
+	jr nz, AccTiming_ScrollFourBarViewForward_Ret
 	ld a, d
 	inc 1, a
 	cp a, e
-	jr nz, RhythmParam_CheckExit6
+	jr nz, AccTiming_ScrollFourBarViewForward_Ret
 	inc 1, c
 
-RhythmParam_CheckExit6:
+AccTiming_ScrollFourBarViewForward_Ret:
 	ret
 
-RhythmParam_CheckExit6_Pad:
+AccTiming_ScrollFourBarViewForward_Pad:
 	nop
 	nop
 
-ChordDetect_CheckDescending:
+; AccTiming_ScrollFourBarViewBack: four-measure view: when C > 0, B > C + 2 and the play moved back from
+;   measure C + 1 (D) to C (E), scrolls the view one measure back, C = C - 1.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_ScrollFourBarViewBack:
 	cp c, 0:i3
-	jr z, ToneGen_NullRet2
+	jr z, AccTiming_ScrollFourBarViewBack_Ret
 	ld a, c
 	add a, 0x2
 	cp b, a
-	jr ule, ToneGen_NullRet2
+	jr ule, AccTiming_ScrollFourBarViewBack_Ret
 	ld a, c
 	inc 1, a
 	cp a, d
-	jr nz, ToneGen_NullRet2
+	jr nz, AccTiming_ScrollFourBarViewBack_Ret
 	ld a, d
 	dec 1, a
 	cp a, e
-	jr nz, ToneGen_NullRet2
+	jr nz, AccTiming_ScrollFourBarViewBack_Ret
 	dec 1, c
 
-ToneGen_NullRet2:
+AccTiming_ScrollFourBarViewBack_Ret:
 	ret
 
-ToneGen_NullRet2_Pad:
+AccTiming_ScrollFourBarViewBack_Pad:
 	nop
 	nop
 
-ChordDetect_CheckRoot1:
+; AccTiming_WrapFourBarViewToEnd: four-measure view: when C = 0 and the play wrapped from measure 1 (D)
+;   to B + 1 (E), shows the last four measures, C = B - 3.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_WrapFourBarViewToEnd:
 	cp c, 0:i3
-	jr nz, RhythmParam_CheckExit5
+	jr nz, AccTiming_WrapFourBarViewToEnd_Ret
 	cp d, 1:i3
-	jr nz, RhythmParam_CheckExit5
+	jr nz, AccTiming_WrapFourBarViewToEnd_Ret
 	ld a, b
 	inc 1, a
 	cp e, a
-	jr nz, RhythmParam_CheckExit5
+	jr nz, AccTiming_WrapFourBarViewToEnd_Ret
 	ld a, b
 	sub a, 0x3
 	ld c, a
 
-RhythmParam_CheckExit5:
+AccTiming_WrapFourBarViewToEnd_Ret:
 	ret
 
-RhythmParam_CheckExit5_Pad:
+AccTiming_WrapFourBarViewToEnd_Pad:
 	nop
 	nop
 
-ChordDetect_CheckInversion1:
+; AccTiming_WrapFourBarViewToStart: four-measure view: when C = B - 3 and the play wrapped from measure
+;   B + 1 (D) to 1 (E), shows the first four measures, C = 0.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_WrapFourBarViewToStart:
 	ld a, b
 	sub a, 0x3
 	cp c, a
-	jr nz, RhythmParam_CheckExit4
+	jr nz, AccTiming_WrapFourBarViewToStart_Ret
 	ld a, b
 	inc 1, a
 	cp d, a
-	jr nz, RhythmParam_CheckExit4
+	jr nz, AccTiming_WrapFourBarViewToStart_Ret
 	cp e, 1:i3
-	jr nz, RhythmParam_CheckExit4
+	jr nz, AccTiming_WrapFourBarViewToStart_Ret
 	ld c, 0x0:opc
 
-RhythmParam_CheckExit4:
+AccTiming_WrapFourBarViewToStart_Ret:
 	ret
 
-RhythmParam_CheckExit4_Pad:
+AccTiming_WrapFourBarViewToStart_Pad:
 	nop
 	nop
 
-ChordDetect_CheckAscending:
+; AccTiming_ScrollTwoBarViewForward: two-measure view: when B > C + 1 and the play moved from measure
+;   C + 2 (D) to C + 3 (E), scrolls the view one measure on, C = C + 1.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_ScrollTwoBarViewForward:
 	ld a, c
 	add a, 0x1
 	cp b, a
-	jr ule, RhythmParam_CheckExit3
+	jr ule, AccTiming_ScrollTwoBarViewForward_Ret
 	inc 1, a
 	cp a, d
-	jr nz, RhythmParam_CheckExit3
+	jr nz, AccTiming_ScrollTwoBarViewForward_Ret
 	ld a, d
 	inc 1, a
 	cp a, e
-	jr nz, RhythmParam_CheckExit3
+	jr nz, AccTiming_ScrollTwoBarViewForward_Ret
 	inc 1, c
 
-RhythmParam_CheckExit3:
+AccTiming_ScrollTwoBarViewForward_Ret:
 	ret
 
-RhythmParam_CheckExit3_Pad:
+AccTiming_ScrollTwoBarViewForward_Pad:
 	nop
 	nop
 
-ChordDetect_CheckMirror:
+; AccTiming_ScrollTwoBarViewBack: two-measure view: when C > 0, B > C and the play moved back from
+;   measure C + 1 (D) to C (E), C = C - 1.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_ScrollTwoBarViewBack:
 	cp c, 0:i3
-	jr z, Rhythm_NullRet
+	jr z, AccTiming_ScrollTwoBarViewBack_Ret
 	ld a, c
 	cp b, a
-	jr ule, Rhythm_NullRet
+	jr ule, AccTiming_ScrollTwoBarViewBack_Ret
 	ld a, c
 	inc 1, a
 	cp a, d
-	jr nz, Rhythm_NullRet
+	jr nz, AccTiming_ScrollTwoBarViewBack_Ret
 	ld a, d
 	dec 1, a
 	cp a, e
-	jr nz, Rhythm_NullRet
+	jr nz, AccTiming_ScrollTwoBarViewBack_Ret
 	dec 1, c
 
-Rhythm_NullRet:
+AccTiming_ScrollTwoBarViewBack_Ret:
 	ret
 
-Rhythm_NullRet_Pad:
+AccTiming_ScrollTwoBarViewBack_Pad:
 	nop
 	nop
 
-ChordDetect_CheckRoot2:
+; AccTiming_WrapTwoBarViewToEnd: two-measure view: when C = 0 and the play wrapped from measure 1 (D)
+;   to B + 1 (E), shows the last two measures, C = B - 1.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_WrapTwoBarViewToEnd:
 	cp c, 0:i3
-	jr nz, RhythmParam_CheckExit2
+	jr nz, AccTiming_WrapTwoBarViewToEnd_Ret
 	cp d, 1:i3
-	jr nz, RhythmParam_CheckExit2
+	jr nz, AccTiming_WrapTwoBarViewToEnd_Ret
 	ld a, b
 	inc 1, a
 	cp e, a
-	jr nz, RhythmParam_CheckExit2
+	jr nz, AccTiming_WrapTwoBarViewToEnd_Ret
 	ld a, b
 	dec 1, a
 	ld c, a
 
-RhythmParam_CheckExit2:
+AccTiming_WrapTwoBarViewToEnd_Ret:
 	ret
 
-RhythmParam_CheckExit2_Pad:
+AccTiming_WrapTwoBarViewToEnd_Pad:
 	nop
 	nop
 
-ChordDetect_CheckInversion2:
+; AccTiming_WrapTwoBarViewToStart: two-measure view: when C = B - 1 and the play wrapped from measure
+;   B + 1 (D) to 1 (E), shows the first two measures, C = 0.
+;   Called by ToneGen_StepFwd_Alternate with C = the first measure of the composer's measure view,
+;   B = the section's last measure, D = the previous and E = the current play measure; returns C.
+AccTiming_WrapTwoBarViewToStart:
 	ld a, b
 	dec 1, a
 	cp c, a
-	jr nz, RhythmParam_ValidExit
+	jr nz, AccTiming_WrapTwoBarViewToStart_Ret
 	ld a, b
 	inc 1, a
 	cp d, a
-	jr nz, RhythmParam_ValidExit
+	jr nz, AccTiming_WrapTwoBarViewToStart_Ret
 	cp e, 1:i3
-	jr nz, RhythmParam_ValidExit
+	jr nz, AccTiming_WrapTwoBarViewToStart_Ret
 	ld c, 0x0:opc
 
-RhythmParam_ValidExit:
+AccTiming_WrapTwoBarViewToStart_Ret:
 	ret
 
-RhythmParam_ValidExit_Pad:
+AccTiming_WrapTwoBarViewToStart_Pad:
 	nop
 	nop
 
@@ -24783,51 +24816,36 @@ CmpStep_ClearSustainBlockFlag:
 RhythmVariation_Select_Code_Helper2:
 	and	(0x3415:16), 247
 	ret
-AccScreen_DataBlock_Helper3:
+; CmpStep_MoveRecPartTowardBass: XIZ-preserving call of CmpStep_MoveRecPartTowardBass_Impl (record part one
+;   step toward BAS). Basis: callers + body -- AccDraw_SecondarySub_Handler08 (TT_CMSTEP switch 8) calls it.
+CmpStep_MoveRecPartTowardBass:
 	push	xiz
-	calr	RhythmVariation_Select_Helper6
+	calr	CmpStep_MoveRecPartTowardBass_Impl
 	pop	xiz
 	ret
-RhythmVariation_Select_Helper6:
+; CmpStep_MoveRecPartTowardBass_Impl: replaces the composer STEP title's record part (CMP_RECORD_PART) by
+;   its predecessor through the 32-byte map CmpStep_RecPartTowardBass_Map (DRM 16 -> AC3 4 -> AC2 2 ->
+;   AC1 1 -> BAS 8, BAS stays), then AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState and
+;   DrumKit_UpdateStatusFlags. Basis: callers + body -- the opposite step of
+;   CmpStep_MoveRecPartTowardDrums_Impl; its XIZ wrapper is CmpStep_MoveRecPartTowardBass.
+CmpStep_MoveRecPartTowardBass_Impl:
 	ld	xhl, 0:i3
 	ld	l, (14051:16)
 	and	l, 31
-	add	xhl, RhythmVariation_InlineCode_Code
+	add	xhl, CmpStep_RecPartTowardBass_Map
 	ld	a, (xhl)
 	ld	(14051:16), a
 	call	AudioInit_SelectAndDispatch
 	call	AudioMode_ResetVoiceState
 	calr	DrumKit_UpdateStatusFlags
 	ret
-RhythmVariation_InlineCode_Code:
-	nop
-	ld	(1:8), 0:io
-	push	sr
-	nop
-	nop
-	nop
-	ld	(P0:8), 0:io
-	nop
-	nop
-	nop
-	nop
-	nop
-	.byte 0x04
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
+; Indexed by CMP_RECORD_PART & 31 (CmpStep_MoveRecPartTowardBass_Impl); only the part codes
+; 1 AC1, 2 AC2, 4 AC3, 8 BAS and 16 DRM are ever read.
+CmpStep_RecPartTowardBass_Map:
+	.byte	0x00, 0x08, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00	; AC1 -> BAS, AC2 -> AC1, AC3 -> AC2
+	.byte	0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; BAS stays
+	.byte	0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; DRM -> AC3
+	.zero	8
 CmpStep_MoveRecPartTowardDrums:
 	push	xiz
 	calr	RhythmVariation_Select_Code_Sub_Helper
@@ -24837,46 +24855,20 @@ RhythmVariation_Select_Code_Sub_Helper:
 	ld	xhl, 0:i3
 	ld	l, (14051:16)
 	and	l, 31
-	add	xhl, RhythmVariation_InlineCode_Code2
+	add	xhl, CmpStep_RecPartTowardDrums_Map
 	ld	a, (xhl)
 	ld	(14051:16), a
 call	AudioInit_SelectAndDispatch
 call	AudioMode_ResetVoiceState
 	calr	DrumKit_UpdateStatusFlags
 	ret
-RhythmVariation_InlineCode_Code2:
-	nop
-	push	sr
-	.byte 0x04
-	nop
-	rcf
-	nop
-	nop
-	nop
-	.byte 0x01
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	rcf
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
+; Indexed by CMP_RECORD_PART & 31 (CmpStep_MoveRecPartTowardDrums_Impl); only the part codes
+; 1 AC1, 2 AC2, 4 AC3, 8 BAS and 16 DRM are ever read.
+CmpStep_RecPartTowardDrums_Map:
+	.byte	0x00, 0x02, 0x04, 0x00, 0x10, 0x00, 0x00, 0x00	; AC1 -> AC2, AC2 -> AC3, AC3 -> DRM
+	.byte	0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; BAS -> AC1
+	.byte	0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; DRM stays
+	.zero	8
 	ret
 AccDraw_StepNoteValue_Wrap:
 	push	xiz
@@ -34377,7 +34369,7 @@ AccDraw_SecondarySub_Handler08:
 	jr	nz, AccDraw_SecondarySub_Handler08_Return
 	bit	3, (0x36e3:16)
 	jr	nz, AccDraw_SecondarySub_Handler08_Return
-	call	AccScreen_DataBlock_Helper3
+	call	CmpStep_MoveRecPartTowardBass
 	or	(0xe2f6:16), 16
 AccDraw_SecondarySub_Handler08_Return:
 	ret
