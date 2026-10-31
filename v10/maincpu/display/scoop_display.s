@@ -2720,7 +2720,7 @@ SwbtB2_CodeA8_Listener:
 	push	xhl
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	ld	(3519:16), a
-	call	SysEx_BytecodeDispatcher
+	call	SqStep_PanelButtonDispatch
 	ld	(3519:16), 0
 	pop	xhl
 	ld	wa, (SWBTWR_PAYLOAD_2:16)
@@ -2766,7 +2766,7 @@ SwbtBank2_PostCallback:
 	andmi16	(xiy), 65532
 	cp	(xiy), wa
 	jrl	z, SwbtBank2_PostCallback_Skip5
-	call	SysEx_BytecodeDispatcher
+	call	SqStep_PanelButtonDispatch
 SwbtBank2_PostCallback_Skip4:
 	ldw	(4360:16), 0
 SwbtBank2_PostCallback_Skip5:
@@ -2802,7 +2802,7 @@ PerfMode_Handler_EvtB_Helper:
 	and	a, (SWBTWR_PAYLOAD_3:16)
 	ld	(3520:16), a
 	push	xhl
-	call	SysEx_BytecodeDispatcher
+	call	SqStep_PanelButtonDispatch
 	pop	xhl
 PerfMode_Handler_EvtB_Skip6:
 	ld	(3520:16), 0
@@ -6778,7 +6778,7 @@ SqStep_CheckRhythmOrControlTrack_Epilogue:
 ;   (DisplayStr_CopyStyleSectionName), modes 1-2 set pop-up 5 and draw the RHYTHM label plus the name
 ;   (DisplayStr_BytecodeBlock_C), mode 3 sets pop-up 15 (DisplayStr_StyleSectionInit); XHL kept. Basis: callers + body
 ;   -- TempoRingBuf_OnStyleSectionEvent, the section path of SqStep_ProcessRhythmSectionEvent and
-;   SysEx_BytecodeDispatcher_Helper2 each set 0x3728 and then call it.
+;   SqStep_PanelButtonDispatch_Helper2 each set 0x3728 and then call it.
 DisplayStr_ShowStyleSectionName:
 	push	xhl
 	ld	a, (SQSTEP_DISPLAY_MODE:16)
@@ -7037,7 +7037,7 @@ SqStep_AddStepToClock:
 	inc	1, a
 SqStep_AddStepToClock_Return2:
 	ret
-SysEx_BytecodeDispatcher_Helper:
+SqStep_PanelButtonDispatch_Helper:
 	push	xwa
 	push	xhl
 	push	xbc
@@ -8022,7 +8022,7 @@ SqStep_RestoreOnLeave_Skip4:
 SqStep_RestoreOnLeave_Skip5:
 	cp	a, 0:i3
 	jrl	nz, SqStep_RestoreOnLeave_Return2
-	call	SysEx_BytecodeDispatcher_Tbl2_Sub4
+	call	SqStep_PanelButtonDispatch_Tbl2_Sub4
 SqStep_RestoreOnLeave_Return2:
 	ret
 ; SqStep_RestoreTrackType: When 0x28BE is not 0xFF (a track's type was switched on entry), sets the type of the
@@ -8125,24 +8125,30 @@ SysEx_DecrementCounter:
 SubCPU_CmdCountdownRet:
 	ret
 
-SysEx_BytecodeDispatcher:
+; SqStep_PanelButtonDispatch: The TT_SQSTEP (step-record) panel-button action dispatcher.  Takes the lowest set
+;   bit of the first non-zero request mask: 0x0DBF (note-length buttons, stored by SwbtB2_CodeA8_Listener) ->
+;   sends F0 50 87 <SqStep_ButtonRhythmModeBytes[bit] | 2> to the sub CPU (MIDI_SendSysExFromW) and selects that
+;   note length; 0x0DC0 (stored by PerfMode_Handler_EvtB) -> MemoryConfig_Handler_Table[bit]; the word 0x1108 ->
+;   _Helper2's action switch.  Called only from those two listeners and SwbtBank2_PostCallback, all gated on
+;   title 0x8A (TT_SQSTEP).  Was named SysEx_BytecodeDispatcher; renamed 2026-10-31 (kn5000-nl6 lead).
+SqStep_PanelButtonDispatch:
 	xor	wa, wa
 	ld	xiy, 3519
 	cp	(xiy), a
-	jrl	nz, SysEx_BytecodeDispatcher_Skip2
+	jrl	nz, SqStep_PanelButtonDispatch_Skip2
 	ld	xiy, 3520
 	cp	(xiy), a
-	jrl	nz, SysEx_BytecodeDispatcher_Skip3
+	jrl	nz, SqStep_PanelButtonDispatch_Skip3
 	ld	xiy, 4360
 	cp	(xiy), wa
-	jrl	nz, SysEx_BytecodeDispatcher_Skip4
-	jp	SysEx_BytecodeDispatcher_Return
-SysEx_BytecodeDispatcher_Skip2:
-	call	SysEx_BytecodeDispatcher_Helper
+	jrl	nz, SqStep_PanelButtonDispatch_Skip4
+	jp	SqStep_PanelButtonDispatch_Return
+SqStep_PanelButtonDispatch_Skip2:
+	call	SqStep_PanelButtonDispatch_Helper
 	call	SqStep_LowestSetBitOfByte
 	xor	h, h
 	push	xix
-	ld	xix, SysInit_BytecodeBlock
+	ld	xix, SqStep_ButtonRhythmModeBytes
 	ld	w, (xix+hl)
 	pop	xix
 	or	w, 2
@@ -8150,24 +8156,24 @@ SysEx_BytecodeDispatcher_Skip2:
 	call	MIDI_SendSysExFromW
 	pop	xhl
 	push	xde
-	ld	xde, SysEx_BytecodeDispatcher_Tbl2
+	ld	xde, SqStep_PanelButtonDispatch_Tbl2
 	ld	w, (xde+hl)
 	pop	xde
 	ld	(3425:16), w
 	ld	(3432:16), 1
-	call	SysEx_BytecodeDispatcher_Helper3
+	call	SqStep_PanelButtonDispatch_Helper3
 	push	xhl
 	call	SNS_Init_Startup
 	pop	xhl
-	call	SysEx_BytecodeDispatcher_Helper4
+	call	SqStep_PanelButtonDispatch_Helper4
 	call	SqStep_AdvanceBySelectedNoteLength
 	ld	(3434:16), 0
 	call	MemConfig_Handler_5_Helper12
 	call	MemConfig_Handler_5_Helper11
 	ld	w, 0:opc
-	jp	SysEx_BytecodeDispatcher_Join
-SysEx_BytecodeDispatcher_Skip3:
-	call	SysEx_BytecodeDispatcher_Helper
+	jp	SqStep_PanelButtonDispatch_Join
+SqStep_PanelButtonDispatch_Skip3:
+	call	SqStep_PanelButtonDispatch_Helper
 	push	xiy
 	call	MemConfig_Handler_4_Helper
 	pop	xiy
@@ -8179,43 +8185,43 @@ SysEx_BytecodeDispatcher_Skip3:
 	ld	xhl, (xix+hl)
 	pop xix
 	call	(xhl)
-	jp	SysEx_BytecodeDispatcher_Join
-SysEx_BytecodeDispatcher_Skip4:
-	call	SysEx_BytecodeDispatcher_Helper
+	jp	SqStep_PanelButtonDispatch_Join
+SqStep_PanelButtonDispatch_Skip4:
+	call	SqStep_PanelButtonDispatch_Helper
 	call	SqStep_LowestSetBitOfWord
-	call	SysEx_BytecodeDispatcher_Helper5
-	call	SysEx_BytecodeDispatcher_Helper6
-	call	SysEx_BytecodeDispatcher_Helper7
+	call	SqStep_PanelButtonDispatch_Helper5
+	call	SqStep_PanelButtonDispatch_Helper6
+	call	SqStep_PanelButtonDispatch_Helper7
 	cp	l, 2:i3
-	jrl	z, SysEx_BytecodeDispatcher_Skip
+	jrl	z, SqStep_PanelButtonDispatch_Skip
 	cp	l, 3:i3
-	jrl	z, SysEx_BytecodeDispatcher_Skip
+	jrl	z, SqStep_PanelButtonDispatch_Skip
 	cp	l, 10
-	jrl	z, SysEx_BytecodeDispatcher_Skip
+	jrl	z, SqStep_PanelButtonDispatch_Skip
 	call	MemConfig_Handler_4_Helper
-SysEx_BytecodeDispatcher_Skip:
-	call	SysEx_BytecodeDispatcher_Helper2
+SqStep_PanelButtonDispatch_Skip:
+	call	SqStep_PanelButtonDispatch_Helper2
 	ld	(3434:16), 0
 	call	MemConfig_Handler_5_Helper12
 	call	MemConfig_Handler_5_Helper11
-SysEx_BytecodeDispatcher_Join:
+SqStep_PanelButtonDispatch_Join:
 	cp	w, 255
-	jrl	nz, SysEx_BytecodeDispatcher_Skip5
+	jrl	nz, SqStep_PanelButtonDispatch_Skip5
 	call	SysInit_SendAllNotesAndReset
-	jp	SysEx_BytecodeDispatcher_Return
-SysEx_BytecodeDispatcher_Skip5:
+	jp	SqStep_PanelButtonDispatch_Return
+SqStep_PanelButtonDispatch_Skip5:
 	call	AccPedal_CheckBitAndUpdate
 	ld	a, (SQSTEP_BEAT:16)
 	cp	(SQSTEP_CLOCK:16), 48
-	jrl	nz, SysEx_BytecodeDispatcher_Skip6
+	jrl	nz, SqStep_PanelButtonDispatch_Skip6
 	or	a, 128
-SysEx_BytecodeDispatcher_Skip6:
+SqStep_PanelButtonDispatch_Skip6:
 	ld	(0x3719:16), a
 	call	DisplayStr_ShowMeasureNumber_B
 	call	Display_UpdateRegion3
-SysEx_BytecodeDispatcher_Return:
+SqStep_PanelButtonDispatch_Return:
 	ret
-	; Handler dispatch table, 24 B.  Read by SysEx_BytecodeDispatcher (0xEFAADB): `ld xix, MemoryConfig_Handler_Table`
+	; Handler dispatch table, 24 B.  Read by SqStep_PanelButtonDispatch (0xEFAADB): `ld xix, MemoryConfig_Handler_Table`
 	; indexed with stride 4 (`sla hl, 2`)
 	; 6 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 MemoryConfig_Handler_Table:
@@ -8226,7 +8232,7 @@ MemoryConfig_Handler_Table:
 	.long	MemConfig_Handler_4
 	.long	MemConfig_Handler_5
 SystemInit_Handler_Table_Helper:
-	ld	xiy, SysEx_BytecodeDispatcher_Tbl
+	ld	xiy, SqStep_PanelButtonDispatch_Tbl
 	ld	xix, 3471
 	ld	a, 176:opc
 	ld	(xix), a
@@ -8239,18 +8245,18 @@ SystemInit_Handler_Table_Helper:
 	ld	(xix+2), 72
 	ld	a, 5:opc
 	cp	hl, 48
-	jrl	c, SysEx_BytecodeDispatcher_Skip7
+	jrl	c, SqStep_PanelButtonDispatch_Skip7
 	ld	a, 6:opc
-SysEx_BytecodeDispatcher_Skip7:
+SqStep_PanelButtonDispatch_Skip7:
 	ld	(xix+3), a
 	xor	w, w
 	ld	a, (xiy+hl)
 	bit	7, a
-	jrl	z, SysEx_BytecodeDispatcher_Skip8
+	jrl	z, SqStep_PanelButtonDispatch_Skip8
 	ormi8	(xix), 1
 	ld	(xix+4), w
 	jp	MemoryConfig_Handler_Table_Join
-SysEx_BytecodeDispatcher_Skip8:
+SqStep_PanelButtonDispatch_Skip8:
 	ld	(xix+4), a
 MemoryConfig_Handler_Table_Join:
 	ldfr_lerp	xiy, 56
@@ -8258,11 +8264,11 @@ MemoryConfig_Handler_Table_Join:
 	ld	a, (xiy+1)
 	ldto_lerp	xiy, 56
 	bit	7, a
-	jrl	z, SysEx_BytecodeDispatcher_Skip9
+	jrl	z, SqStep_PanelButtonDispatch_Skip9
 	ormi8	(xix), 2
 	ld	(xix+5), w
 	jp	MemoryConfig_Handler_Table_Join2
-SysEx_BytecodeDispatcher_Skip9:
+SqStep_PanelButtonDispatch_Skip9:
 	ld	(xix+5), a
 MemoryConfig_Handler_Table_Join2:
 	push	xiy
@@ -8289,9 +8295,9 @@ MemoryConfig_Handler_Table_Join2:
 	ld	w, (xiy+3)
 	ldto_lerp	xiy, 56
 	ret
-	; Byte data, 97 B.  Read by SysEx_BytecodeDispatcher (0xEFAADB): `ld xiy, SysEx_BytecodeDispatcher_Tbl`
-	; reader SysEx_BytecodeDispatcher: `ld xiy, SysEx_BytecodeDispatcher_Tbl` then `lda xiy, (xiy+hl)`
-SysEx_BytecodeDispatcher_Tbl:
+	; Byte data, 97 B.  Read by SqStep_PanelButtonDispatch (0xEFAADB): `ld xiy, SqStep_PanelButtonDispatch_Tbl`
+	; reader SqStep_PanelButtonDispatch: `ld xiy, SqStep_PanelButtonDispatch_Tbl` then `lda xiy, (xiy+hl)`
+SqStep_PanelButtonDispatch_Tbl:
 	.byte	0x04, 0x04, 0x00, 0x03, 0x00, 0x04, 0x00, 0x00, 0x08, 0x08, 0x00, 0x03, 0x00, 0x08, 0x00, 0x00
 	.byte	0x10, 0x10, 0x00, 0x05, 0x00, 0x10, 0x2f, 0x02, 0x20, 0x20, 0x00, 0x05, 0x00, 0x20, 0x2f, 0x02
 	.byte	0x40, 0x40, 0x00, 0x04, 0x00, 0x40, 0x2f, 0x01, 0x80, 0x80, 0x00, 0x04, 0x00, 0x80, 0x2f, 0x01
@@ -9390,7 +9396,7 @@ SystemInit_Handler_Table:
 	.long	SystemInit_StepHandler_3
 	.long	SystemInit_StepHandler_4
 	.long	SystemInit_StepHandler_5
-SysEx_BytecodeDispatcher_Helper2:
+SqStep_PanelButtonDispatch_Helper2:
 	push	xhl
 	ld	a, l
 	ld	xhl, VoiceCtrl_ParamSetupBytecode_Tbl4
@@ -9426,8 +9432,8 @@ SystemInit_StepHandler_5:
 	push	xiy
 	push	xiz
 	ld	l, 5:opc
-	call	SysEx_BytecodeDispatcher_Helper3
-	call	SysEx_BytecodeDispatcher_Helper4
+	call	SqStep_PanelButtonDispatch_Helper3
+	call	SqStep_PanelButtonDispatch_Helper4
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -9466,17 +9472,17 @@ SystemInit_StepHandler_3_Helper:
 	ld	d, a
 	xor	e, e
 	call	VoiceCtrl_ParamSetupBytecode_Tbl4_Sub
-	call	SysEx_BytecodeDispatcher_Helper4
+	call	SqStep_PanelButtonDispatch_Helper4
 	popw	wa
 SystemInit_StepHandler_0_Skip:
 	exts	wa
 	ld	bc, wa
 	ld	l, 96:opc
-	call	SysEx_BytecodeDispatcher_Tbl2_Sub2
+	call	SqStep_PanelButtonDispatch_Tbl2_Sub2
 SystemInit_StepHandler_0_Skip2:
 	or	(0x0d53:16), 64
 	ret
-SysEx_BytecodeDispatcher_Helper3:
+SqStep_PanelButtonDispatch_Helper3:
 	xor	h, h
 	sla	hl, 2
 	extz	xhl
@@ -9519,16 +9525,15 @@ SystemInit_StepHandler_0_Return:
 SystemInit_StepHandler_0_Tbl:
 	.byte	0x00, 0x04, 0x60, 0x04, 0x00, 0x03, 0x60, 0x03, 0x00, 0x02, 0x60, 0x02, 0x30, 0x01, 0x90, 0x01
 	.byte	0x00, 0x01, 0x60, 0x01, 0x30, 0x00, 0x30, 0x01
-	; Byte data, 6 B.  Read by SysEx_BytecodeDispatcher (0xEFAADB): `ld xix, SysInit_BytecodeBlock`
-	; reader SysEx_BytecodeDispatcher: `ld xix, SysInit_BytecodeBlock` then `ld w, (xix+hl)`
-SysInit_BytecodeBlock:
-	.ascii	"P@0 "
-	.byte	0x10, 0x00
-	; Byte data, 6 B.  Read by SysEx_BytecodeDispatcher (0xEFAADB): `ld xde, SysEx_BytecodeDispatcher_Tbl2`
-	; reader SysEx_BytecodeDispatcher: `ld xde, SysEx_BytecodeDispatcher_Tbl2` then `ld w, (xde+hl)`
-SysEx_BytecodeDispatcher_Tbl2:
+	; Rhythm-mode byte per TT_SQSTEP note-length button (bit 0..5 of 0x0DBF): SqStep_PanelButtonDispatch sends
+	; F0 50 87 <byte | 2> (MIDI_SendSysExFromW), which Voice_SetRhythmMode reads in the sub CPU (bits 7-4).
+SqStep_ButtonRhythmModeBytes:
+	.byte	0x50, 0x40, 0x30, 0x20, 0x10, 0x00
+	; Byte data, 6 B.  Read by SqStep_PanelButtonDispatch (0xEFAADB): `ld xde, SqStep_PanelButtonDispatch_Tbl2`
+	; reader SqStep_PanelButtonDispatch: `ld xde, SqStep_PanelButtonDispatch_Tbl2` then `ld w, (xde+hl)`
+SqStep_PanelButtonDispatch_Tbl2:
 	.byte	0x01, 0x02, 0x03, 0x05, 0x04, 0x06
-SysEx_BytecodeDispatcher_Helper4:
+SqStep_PanelButtonDispatch_Helper4:
 	ld	b, (0xcef1:16)
 	sla	b, 1
 	ld	c, b
@@ -9567,7 +9572,7 @@ SystemInit_StepHandler_0_Skip3:
 	ld	l, c
 	xor	c, c
 	ex8	c, b
-SysEx_BytecodeDispatcher_Tbl2_Sub2:
+SqStep_PanelButtonDispatch_Tbl2_Sub2:
 	ld	a, (SQSTEP_CLOCK:16)
 	ld	(3578:16), a
 	add	a, l
@@ -9589,7 +9594,7 @@ SystemInit_StepHandler_0_Skip4:
 	call	MemConfig_Handler_5_Helper6
 SystemInit_StepHandler_0_Return2:
 	ret
-SysEx_BytecodeDispatcher_Tbl2_Join:
+SqStep_PanelButtonDispatch_Tbl2_Join:
 	call	VoiceSlot_ReadParamsWithSaveRestore_Helper3
 	cp	w, 255
 	jrl	z, SystemInit_StepHandler_0_Skip5
@@ -9600,7 +9605,7 @@ SystemInit_StepHandler_0_Skip5:
 	cp	a, 129
 	jrl	nz, SystemInit_StepHandler_0_Return3
 	call	VoiceSlot_LoadAndDispatch
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join
 SystemInit_StepHandler_0_Return3:
 	ret
 ; SqStep_WriteWrapMarkerAtCursor: Writes one 0x81 unit marker into the track at the song-data cursor without counting
@@ -9631,7 +9636,7 @@ SystemInit_StepHandler_0_Skip7:
 ; SqStep_WriteClockWrapMarker: Counts one clock wrap (word 0x0D58 += 1) and writes one 0x81 event: falls into
 ;   SqStep_WriteWrapMarker, which passes the one-byte record {0x81} at 0x0E48 (W = 1) to
 ;   SystemInit_StepHandler_0_Helper2, all registers preserved. Basis: callers + body -- SqStep_WriteClockWrapMarkers
-;   calls it once per 96-clock unit of the step (0x0DCD), and SysEx_BytecodeDispatcher_Tbl2_Sub2 each time the clock
+;   calls it once per 96-clock unit of the step (0x0DCD), and SqStep_PanelButtonDispatch_Tbl2_Sub2 each time the clock
 ;   0x0D57 passes 96; the meaning of 0x81 is taken from that pairing only, as in SqStep_WriteClockWrapMarkers.
 SqStep_WriteClockWrapMarker:
 	incw	1, (SQSTEP_WRAP_COUNT:16)
@@ -9658,7 +9663,7 @@ SqStep_WriteWrapMarker:
 	pop	xhl
 	pop	xwa
 	ret
-SysEx_BytecodeDispatcher_Helper5:
+SqStep_PanelButtonDispatch_Helper5:
 	cp	l, 2:i3
 	jrl	z, SystemInit_StepHandler_0_Skip8
 	cp	l, 10
@@ -9685,7 +9690,7 @@ SystemInit_StepHandler_0_Skip11:
 	ld	l, 4:opc
 SystemInit_StepHandler_0_Return4:
 	ret
-SysEx_BytecodeDispatcher_Helper6:
+SqStep_PanelButtonDispatch_Helper6:
 	cp	l, 7:i3
 	jrl	nz, SystemInit_StepHandler_0_Return5
 	call	VoiceSlot_CheckCursorAtTrackStart
@@ -9701,7 +9706,7 @@ SystemInit_StepHandler_0_Skip12:
 	ld	l, 3:opc
 SystemInit_StepHandler_0_Return5:
 	ret
-SysEx_BytecodeDispatcher_Helper7:
+SqStep_PanelButtonDispatch_Helper7:
 	cp	l, 10
 	jrl	nz, SystemInit_StepHandler_0_Return6
 	call	VoiceSlot_CheckCursorAtTrackStart
@@ -9737,14 +9742,14 @@ ClockConfig_Handler_0_Tbl2_Helper2:
 	ld	xix, 0x0cbe
 	ld	(xix+iz), a
 	pop	xix
-SysEx_BytecodeDispatcher_Tbl2_Join2:
+SqStep_PanelButtonDispatch_Tbl2_Join2:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 132
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Skip
 	call	VoiceSlot_StepCursorBack
 	cp	w, 255
 	jrl	z, ClockConfig_Handler_0_Tbl2_Helper2_Return
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join2
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join2
 ClockConfig_Handler_0_Tbl2_Helper2_Skip:
 	cp	a, 129
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Return
@@ -9776,7 +9781,7 @@ ClockConfig_Handler_0_Tbl2_Helper2_Loop:
 	cp	(xix+iz), 0x0d
 	pop	xix
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Loop
-SysEx_BytecodeDispatcher_Tbl2_Sub4:
+SqStep_PanelButtonDispatch_Tbl2_Sub4:
 	call	SqStep_CheckCursorTrackUsed
 	cp	w, 0:i3
 	jrl	nz, SystemInit_StepHandler_0_Return7
@@ -9794,27 +9799,27 @@ SysEx_BytecodeDispatcher_Tbl2_Sub4:
 	ld	xix, 3262
 	ld	(xix+iz), 0x05
 	pop	xix
-SysEx_BytecodeDispatcher_Tbl2_Join3:
+SqStep_PanelButtonDispatch_Tbl2_Join3:
 	ld	a, 1:opc
 	call	VoiceSlot_SaveState
 	call	VoiceSlot_ReadCurrentParams
 	ld	w, a
 	and	a, 240
 	cp	a, 176
-	jrl	z, SysEx_BytecodeDispatcher_Tbl2_Sub4_Skip2
-SysEx_BytecodeDispatcher_Tbl2_Join4:
+	jrl	z, SqStep_PanelButtonDispatch_Tbl2_Sub4_Skip2
+SqStep_PanelButtonDispatch_Tbl2_Join4:
 	call	VoiceSlot_DispatchRet
 	cp	w, 255
 	jrl	z, SystemInit_StepHandler_0_Return7
-SysEx_BytecodeDispatcher_Tbl2_Join5:
+SqStep_PanelButtonDispatch_Tbl2_Join5:
 	call	VoiceSlot_FlagCheck
 	cp	a, 130
 	jrl	z, SystemInit_StepHandler_0_Return7
 	cp	a, 132
 	jrl	z, SystemInit_StepHandler_0_Return7
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join3
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join3
 	jp	SystemInit_StepHandler_0_Return7
-SysEx_BytecodeDispatcher_Tbl2_Sub4_Skip2:
+SqStep_PanelButtonDispatch_Tbl2_Sub4_Skip2:
 	and	w, 1
 	rrc	w
 	ld	(3528:16), w
@@ -9861,7 +9866,7 @@ SystemInit_StepHandler_0_Loop2:
 SystemInit_StepHandler_0_Skip17:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join4
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join4
 SystemInit_StepHandler_0_Skip18:
 	call	VoiceSlot_FlagCheck
 	cp	(3658:16), a
@@ -9885,7 +9890,7 @@ SystemInit_StepHandler_0_Skip19:
 	ld	xiy, 3471
 	ld	(SQSTEP_RECORD_LENGTH:16), 0
 	ld	(xiy), a
-SysEx_BytecodeDispatcher_Tbl2_Join6:
+SqStep_PanelButtonDispatch_Tbl2_Join6:
 	inc	1, xiy
 	inc	1, (SQSTEP_RECORD_LENGTH:16)
 	push	xiy
@@ -9894,7 +9899,7 @@ SysEx_BytecodeDispatcher_Tbl2_Join6:
 	bit	7, a
 	jrl	nz, SystemInit_StepHandler_0_Skip20
 	ld	(xiy), a
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join6
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join6
 SystemInit_StepHandler_0_Skip20:
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
@@ -9910,7 +9915,7 @@ SystemInit_StepHandler_0_Skip20:
 	call	SystemInit_StepHandler_0_Helper2
 	ld	a, 1:opc
 	call	VoiceSlot_RestoreState
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join5
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join5
 SystemInit_StepHandler_0_Return7:
 	ret
 PortConfig_DataTable_A_Helper:
@@ -9934,9 +9939,9 @@ PortConfig_DataTable_A_Helper:
 	ret
 ; SqStep_LowestSetBitOfByte: Returns L = the index (0..7) of the lowest set bit of the byte at XIY, or 0xFF when it is
 ;   0; A and BC are preserved. Basis: callers + body -- the TT_SQSTEP panel-button dispatcher
-;   (SysEx_BytecodeDispatcher) calls it on the button masks 0x0DBF / 0x0DC0 that SwbtB2_CodeA8_Listener /
+;   (SqStep_PanelButtonDispatch) calls it on the button masks 0x0DBF / 0x0DC0 that SwbtB2_CodeA8_Listener /
 ;   PerfMode_Handler_EvtB_Helper store from the panel payload, and uses L to index its per-button tables
-;   (SysInit_BytecodeBlock, SysEx_BytecodeDispatcher_Tbl2, MemoryConfig_Handler_Table);
+;   (SqStep_ButtonRhythmModeBytes, SqStep_PanelButtonDispatch_Tbl2, MemoryConfig_Handler_Table);
 ;   SqStep_AdvanceBySelectedNoteLength calls it on 0x0DBF and stops at L = 0xFF.
 SqStep_LowestSetBitOfByte:
 	pushw	bc
@@ -9962,8 +9967,8 @@ SqStep_LowestSetBitOfByte_Return:
 	ret
 ; SqStep_LowestSetBitOfWord: Returns L = the index (0..15) of the lowest set bit of the 16-bit mask at XIY (low byte
 ;   first), or 0xFF when it is 0; A, BC and XIY are preserved. Basis: callers + body -- the TT_SQSTEP dispatcher
-;   (SysEx_BytecodeDispatcher) calls it on the request mask 0x1108 and passes L, after the Helper5-7 remaps, to the
-;   action dispatch SysEx_BytecodeDispatcher_Helper2; same scan as SqStep_LowestSetBitOfByte over two bytes.
+;   (SqStep_PanelButtonDispatch) calls it on the request mask 0x1108 and passes L, after the Helper5-7 remaps, to the
+;   action dispatch SqStep_PanelButtonDispatch_Helper2; same scan as SqStep_LowestSetBitOfByte over two bytes.
 SqStep_LowestSetBitOfWord:
 	push	xiy
 	pushw	bc
@@ -10004,15 +10009,15 @@ SqStep_LowestSetBitOfWord_Skip23:
 	jp	SqStep_LowestSetBitOfWord_Join8
 SqStep_LowestSetBitOfWord_Return2:
 	ret
-; Calls SysEx_BytecodeDispatcher_Tbl2_Helper for the part number byte at 0xeee, then sets bit 0
+; Calls SqStep_PanelButtonDispatch_Tbl2_Helper for the part number byte at 0xeee, then sets bit 0
 ; of 0x8d88 and of 0x266a.
 SystemInit_StepHandler_0_Helper2:
 	ld	a, (SEQ_CURSOR_TRACK:16)
-	call	SysEx_BytecodeDispatcher_Tbl2_Helper
+	call	SqStep_PanelButtonDispatch_Tbl2_Helper
 	or	(0x8d88:16), 1
 	or	(0x266a:16), 1
 	ret
-SysEx_BytecodeDispatcher_Tbl2_Helper:
+SqStep_PanelButtonDispatch_Tbl2_Helper:
 	pushw	bc
 	ld	(4353:16), xiy
 	ld	(SEQ_CURSOR_TRACK:16), a
@@ -10020,10 +10025,10 @@ SysEx_BytecodeDispatcher_Tbl2_Helper:
 	call	VoiceSlot_ComputeWordIndex
 	ld	xix, 0xf1f8
 	xor	b, b
-SysEx_BytecodeDispatcher_Tbl2_Join9:
+SqStep_PanelButtonDispatch_Tbl2_Join9:
 	ld	iy, (xix+iz)
 	cp iy, 65535
-	jrl	z, SysEx_BytecodeDispatcher_Tbl2_Helper_Skip3
+	jrl	z, SqStep_PanelButtonDispatch_Tbl2_Helper_Skip3
 	ld	(0x28ba:16), iy
 	srl	xiz, 1
 	ldfr_lerp xix, 56
@@ -10034,10 +10039,10 @@ SysEx_BytecodeDispatcher_Tbl2_Join9:
 	sla	iz, 1
 	ld	(0x28bc:16), wa
 	ld	xix, 3230
-SysEx_BytecodeDispatcher_Tbl2_Join10:
+SqStep_PanelButtonDispatch_Tbl2_Join10:
 	ld	de, (xix+iz)
 	cp de, 65535
-	jrl	nz, SysEx_BytecodeDispatcher_Tbl2_Helper_Skip
+	jrl	nz, SqStep_PanelButtonDispatch_Tbl2_Helper_Skip
 	ld	(xix+iz), iy
 	srl	iz, 1
 	ldfr_lerp xix, 56
@@ -10045,8 +10050,8 @@ SysEx_BytecodeDispatcher_Tbl2_Join10:
 	ld (xix+32), 5
 	ldto_lerp	xix, 56
 	sla	iz, 1
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join10
-SysEx_BytecodeDispatcher_Tbl2_Helper_Skip:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join10
+SqStep_PanelButtonDispatch_Tbl2_Helper_Skip:
 	srl	iz, 1
 	ldfr_lerp	xix, 56
 	lda	xix, (xix+iz)
@@ -10065,7 +10070,7 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip:
 	sla	iz, 1
 	add	wa, bc
 	cp	wa, 255
-	jrl	ugt, SysEx_BytecodeDispatcher_Tbl2_Helper_Skip2
+	jrl	ugt, SqStep_PanelButtonDispatch_Tbl2_Helper_Skip2
 	ld	iy, (xix+iz)
 	ld (10399:16), iy
 	ld	(0x28b6:16), wa
@@ -10093,8 +10098,8 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip:
 	call	VoiceSlot_InitAndProcess
 	xor	w, w
 	popw	bc
-	jp	SysEx_BytecodeDispatcher_Tbl2_Return3
-SysEx_BytecodeDispatcher_Tbl2_Helper_Skip2:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Return3
+SqStep_PanelButtonDispatch_Tbl2_Helper_Skip2:
 	sub	wa, 251
 	ld	(0x28b6:16), wa
 	pushw	de
@@ -10138,7 +10143,7 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip2:
 	call	VoiceSlot_InitAndProcess
 	xor	w, w
 	popw	bc
-	jp	SysEx_BytecodeDispatcher_Tbl2_Return3
+	jp	SqStep_PanelButtonDispatch_Tbl2_Return3
 SystemInit_StepHandler_0_Loop7:
 	ld	w, 104:opc
 	call	MIDI_SendSysExFromW
@@ -10148,8 +10153,8 @@ SystemInit_StepHandler_0_Loop7:
 	ld	a, TT_MESAGE:opc
 	call	UI_InterruptTitleByIndex
 	popw	bc
-	jp	SysEx_BytecodeDispatcher_Tbl2_Return3
-SysEx_BytecodeDispatcher_Tbl2_Helper_Skip3:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Return3
+SqStep_PanelButtonDispatch_Tbl2_Helper_Skip3:
 	push	xix
 	call	DispatchHandler_JumpToSubHandler
 	ld	iy, ix
@@ -10188,8 +10193,8 @@ SysEx_BytecodeDispatcher_Tbl2_Helper_Skip3:
 	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ldw	(xhl+1), 0
 	ldw (xhl+3), 65535
-	jp	SysEx_BytecodeDispatcher_Tbl2_Join9
-SysEx_BytecodeDispatcher_Tbl2_Return3:
+	jp	SqStep_PanelButtonDispatch_Tbl2_Join9
+SqStep_PanelButtonDispatch_Tbl2_Return3:
 	ret
 
 VoiceSlot_InitAndProcess:
@@ -12004,7 +12009,7 @@ VoiceSlot_CompareSavedMarkerCount_Epilogue2:
 ;   track has no block ((0x0C9E)[track] = 0 or 0xFFFF), or the cursor block's previous-block link (+1) is 0 and the
 ;   offset (0x0CBE)[track] is 5, the first event after the 5-byte block header; otherwise W = 255. Basis: callers +
 ;   body -- ScoopDisp_StepMeasureBack, VoiceSlot_TableSetup, MemConfig_Handler_1_Helper4 and
-;   SysEx_BytecodeDispatcher_Helper5/6/7 test W = 0 / 255 as 'at track start', the latter adding 0x0D58 = 0 and clock
+;   SqStep_PanelButtonDispatch_Helper5/6/7 test W = 0 / 255 as 'at track start', the latter adding 0x0D58 = 0 and clock
 ;   0x0D57 = 0.
 VoiceSlot_CheckCursorAtTrackStart:
 	pushw	wa

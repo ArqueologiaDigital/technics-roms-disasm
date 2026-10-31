@@ -17924,7 +17924,7 @@ SendPartDataBlocks_LoadReg:
 	pushw	hl
 	ld	wa, ix
 	ld	bc, iy
-	calr	SendChannelPressure_Prologue
+	calr	SndPart_SendProgramChange
 	jr	SendPartDataBlocks_NextIter
 SendPartDataBlocks_LoadIter3:
 	ld	wa, iz
@@ -18042,23 +18042,30 @@ MIDI_SendChannelPressure:
 	call	MIDI_PostSendStub
 	inc	6, xsp
 	ret
-SendChannelPressure_Prologue:
+; SndPart_SendProgramChange: Selects a part's sound in the sub CPU.  In: WA = part, BC = program, DE = bank, and a
+;   pushed word = the part's DIGITAL EFFECT switch (Lsw 0x05E; 0xFFFF = not set -> 0, other non-zero -> 0x7F,
+;   popped by `retd 2`).  Clamps program/bank with SndParam_ApplyMaskClamp, then sends the 5-byte record
+;   {5, 0xC0, part, program, bank, effect} through MIDI_SendCmdPacket (the sub CPU's Voice_ProgChange path).
+;   Parts 2, 0x15 and 0x16 then re-run MidiEvent_ConfigChannel.  Only caller: Song_SendPartDataBlocks (the pending
+;   program/bank tables 0xCFD0 / 0xD010 that SndPart_SetParam fills).  Was named SendChannelPressure_Prologue;
+;   renamed 2026-10-31 (kn5000-8dy).
+SndPart_SendProgramChange:
 	lda	xsp, (xsp - 12)
 	pushw	iz
 	ld	(xsp + 12), wa
 	ld	iz, (xsp + 18)
 	cp	iz, 0xffff
-	jr	nz, SendChannelPressure_InitVal
+	jr	nz, SndPart_SendProgramChange_EffectSet
 	ld	iz, 0:i3
-	jr	SendChannelPressure_LoadParam
-SendChannelPressure_InitVal:
+	jr	SndPart_SendProgramChange_Build
+SndPart_SendProgramChange_EffectSet:
 	ld	wa, 0:i3
 	cp	iz, 0:i3
-	jr	z, SendChannelPressure_LoadReg
+	jr	z, SndPart_SendProgramChange_StoreEffect
 	ldw	wa, 0x7f
-SendChannelPressure_LoadReg:
+SndPart_SendProgramChange_StoreEffect:
 	ld	iz, wa
-SendChannelPressure_LoadParam:
+SndPart_SendProgramChange_Build:
 	ld	(xsp + 10), c
 	ld	(xsp + 8), e
 	lda	xwa, (xsp + 10)
