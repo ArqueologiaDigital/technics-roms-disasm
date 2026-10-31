@@ -4,7 +4,10 @@
 QUESTION ANSWERED: can the KN5000's icon sheet be PNGs in the repo and still rebuild the ROM
 byte for byte?
 
-The icons were 177 offset/length slices of `includes/icon_pixel_data.bin`, 288 bytes each.
+The icons were 177 offset/length slices of `includes/icon_pixel_data.bin`, 288 bytes each.  That
+blob is gone (lane media-cleanup, 2026-10-31): the PNGs are the source, and `export` / `verify` read
+the same bytes from the tracked reference image through scripts/build/retired_blobs.py.  `build`
+reads nothing but the PNGs.
 The format is 24x24 at 4 BITS PER PIXEL: 12 bytes per row, high nibble first (matching
 scripts/analysis/extract_icons.py, which drew them one way only).
 
@@ -12,7 +15,7 @@ PNGs are written in PIL mode 'P' with a 16-entry palette, so a pixel's value IS 
 nibble. `verify` asserts export-then-build is a no-op at the byte level, which is the property
 that lets the PNG be the build's source instead of a picture of the blob.
 
-    python3 scripts/build/icon_images.py export   # blob -> 177 PNGs (run once)
+    python3 scripts/build/icon_images.py export   # reference image -> 177 PNGs (maintenance only)
     python3 scripts/build/icon_images.py build    # PNGs -> bins (build step)
     python3 scripts/build/icon_images.py verify   # assert the round trip is exact
 """
@@ -22,12 +25,16 @@ import sys
 from PIL import Image
 
 REPO = pathlib.Path(__file__).resolve().parent.parent.parent
-BLOB = REPO / 'table_data' / 'includes' / 'icon_pixel_data.bin'
+sys.path.insert(0, str(REPO / 'scripts' / 'build'))
+import retired_blobs  # noqa: E402
 IMG = REPO / 'table_data' / 'images' / 'icons_png'
 GEN = REPO / 'table_data' / 'includes' / 'generated'
 W = H = 24
 STRIDE = 12          # bytes per row: 24 pixels at 4bpp
 SIZE = STRIDE * H    # 288
+# IconPixels_000 .. IconPixels_175 are IconTable's 176 entries; IconPixels_176_Unreferenced is the
+# 177th run, which no entry points at (table_data/kn5000_table_data.s).
+NICONS = 177
 
 # A readable 16-colour ramp. It only affects how the PNG LOOKS; the stored value is the
 # ROM nibble either way, so the round trip does not depend on it.
@@ -35,7 +42,12 @@ PALETTE = bytes(sum(([v, v, v] for v in range(0, 256, 17)), []))
 
 
 def count():
-    return BLOB.stat().st_size // SIZE
+    return NICONS
+
+
+def blob():
+    """The ROM's icon pixels (maintenance only: export and verify)."""
+    return retired_blobs.read('icon_pixel_data')
 
 
 def unpack(data):
@@ -59,10 +71,10 @@ def pack(px):
 
 def export():
     IMG.mkdir(parents=True, exist_ok=True)
-    blob = BLOB.read_bytes()
+    data = blob()
     for i in range(count()):
         img = Image.new('P', (W, H))
-        img.frombytes(unpack(blob[i * SIZE:(i + 1) * SIZE]))
+        img.frombytes(unpack(data[i * SIZE:(i + 1) * SIZE]))
         img.putpalette(PALETTE)
         img.save(IMG / f'IconPixels_{i:03d}.png')
     print(f"exported {count()} icons to {IMG.relative_to(REPO)}")
@@ -87,8 +99,8 @@ def build():
 
 
 def verify():
-    blob = BLOB.read_bytes()
-    bad = [i for i in range(count()) if rebuild(i) != blob[i * SIZE:(i + 1) * SIZE]]
+    data = blob()
+    bad = [i for i in range(count()) if rebuild(i) != data[i * SIZE:(i + 1) * SIZE]]
     if bad:
         sys.exit(f"{len(bad)} of {count()} icons do not round-trip: {bad[:8]}")
     print(f"ROUND TRIP EXACT: all {count()} icons rebuild their ROM bytes ({count() * SIZE:,} B)")

@@ -142,7 +142,12 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 # its labels.sym.  data-and-code-src runs the two alternately until labels.sym stops
 # changing (../kn7000/tools/regen_sibling_data_and_code.sh).  The committed files are
 # the result; the build does not need this.
-constants src/constants.inc: $(TOOLS)/gen_constants.py baserom/$(ROM)
+# src/constants.inc is committed generated source (the firmware's own {name, value} tables as .equ
+# lines; the assembly names them).  Only this maintenance target rewrites it, from the reference
+# image; the build reads the committed file (lane media-cleanup, 2026-10-31: it used to be a file
+# target, so every fresh clone regenerated it the moment the reference copy was newer).
+.PHONY: constants
+constants: $(TOOLS)/gen_constants.py baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_constants.py baserom/$(ROM) --base $(BASE) --scan 0x180000:0x1a0000 \
 	    --model SX-KN6000 --inc src/constants.inc
 data-src: $(TOOLS)/gen_data_s.py $(TOOLS)/milk_model.py src/constants.inc baserom/$(ROM)

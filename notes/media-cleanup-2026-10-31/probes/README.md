@@ -1,0 +1,6 @@
+# media-cleanup probes
+
+| script                        | question it answers                                                                                                                                                                                   | run (repository root)                                                                         |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| `compare_icon_renders.py`     | do the 191 deleted `table_data/images/icons/` renders hold anything the committed `icons_png/` does not?  PASS = every `Icon_NNN.png` and the sprite sheet reproduce                                  | `python3 notes/media-cleanup-2026-10-31/probes/compare_icon_renders.py`                       |
+| `c_divergence_stamp_proof.sh` | with the stamps untracked: fresh clone builds v7/v6/v5 byte-identical, a second build patches nothing, a missing stamp costs a recompile not a second patch; the old patcher double-patches (control) | `notes/media-cleanup-2026-10-31/probes/c_divergence_stamp_proof.sh ~/compartilhado/tmp/<dir>` |

@@ -34,7 +34,7 @@ into its own inputs, so the byte-match gate could not fail for 979,096 B (46.69%
 is gone; verify with `python3 scripts/analysis/rom_provenance_poison.py v7`, which must report
 0 differing bytes.
 
-    python3 scripts/build/apply_v7_c_divergence.py
+    python3 scripts/build/apply_v7_c_divergence.py      (= apply_c_divergence.py v7)
 
 THE REMAINING WORK is to make the C v7-aware so this file empties: the relocations say exactly
 which pointers need it. Do NOT grow the raw section to paper over new divergence.
@@ -51,61 +51,18 @@ without reading the ROM. Now:
 The C files without a link script (gui_display_struct_data, tonegen_param_table, sepaout_config,
 style_ui_screendata_ctlonly, se_name_editor, sound_config_lookup) still spell their pointers as v10
 numbers. Run regenerate_v7_c_divergence.py after any change to v7's C or link scripts.
+
+UPDATE 2026-10-31 (lane media-cleanup). The patching is apply_c_divergence.py's, run on v7: the same
+json format, and a stamp that also records the json entry it applied, so a bin without a valid stamp
+is compiled again instead of being patched a second time.  The stamps are no longer tracked.
 """
-import json
 import pathlib
 import sys
 
-REPO = pathlib.Path(__file__).resolve().parent.parent.parent
-GEN = REPO / 'v7' / 'maincpu' / 'includes' / 'generated'
-PATCH = REPO / 'v7' / 'maincpu' / 'includes' / 'v7_c_divergence.json'
-
-
-def main():
-    patch = json.loads(PATCH.read_text())
-    nrel = nraw = 0
-    nskip = 0
-    for name, ent in sorted(patch.items()):
-        target = GEN / name
-        if not target.exists():
-            sys.exit(f"apply_v7_c_divergence: {target} missing -- build the C bins first")
-        # !! IDEMPOTENCY STAMP. The relocations below are RELATIVE (v += delta),
-        # so running this twice applies delta twice. The .bin is regenerated from
-        # C only when the .c is newer, so on an incremental build make skips the
-        # regeneration and this script patches an ALREADY-PATCHED file. Measured
-        # 2026-08-23: style_ui_screendata_ctlonly.bin drifted -42 per build, and
-        # after seven builds the v7 ROM differed from the original by 136,782
-        # bytes -- entirely from this, not from any source edit.
-        #
-        # It cannot be made absolute: reading the ROM to compute the target value
-        # would make the ROM an input to its own reconstruction, which is exactly
-        # what the poison rule forbids. So instead the script records what it
-        # produced and refuses to patch that same content twice.
-        import hashlib
-        stamp = target.with_suffix(target.suffix + '.patched')
-        cur = target.read_bytes()
-        if stamp.exists() and stamp.read_text().strip() == hashlib.sha256(cur).hexdigest():
-            nskip += 1
-            continue
-        data = bytearray(cur)
-        size = ent['size']
-        if len(data) < size:
-            data.extend(b'\x00' * (size - len(data)))
-        del data[size:]
-        for off, delta in ent.get('reloc', []):
-            v = int.from_bytes(data[off:off + 4], 'little')
-            data[off:off + 4] = ((v + delta) & 0xFFFFFFFF).to_bytes(4, 'little')
-            nrel += 1
-        for off, val in ent.get('raw', {}).items():
-            data[int(off)] = val
-            nraw += 1
-        target.write_bytes(bytes(data))
-        import hashlib as _h
-        stamp.write_text(_h.sha256(bytes(data)).hexdigest() + "\n")
-    print(f"apply_v7_c_divergence: {len(patch)} bins, {nskip} already patched (skipped), "
-          f"{nrel:,} pointer relocations, "
-          f"{nraw:,} raw bytes ({(nrel * 4 + nraw) * 100.0 / 2097152:.2f}% of the v7 ROM)")
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import apply_c_divergence  # noqa: E402
 
 
 if __name__ == '__main__':
-    main()
+    sys.argv = [sys.argv[0], 'v7']
+    apply_c_divergence.main()

@@ -148,7 +148,12 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 # ---- the typed data region (../kn7000/tools/gen_data_s.py) ------------------------
 # constants: the MILK framework's own {name, value} tables (CL_ BD_ ES_ VF_ ...), at
 # file 0x15000..0x17000 in this image.
-constants src/constants.inc: $(TOOLS)/gen_constants.py baserom/$(ROM)
+# src/constants.inc is committed generated source (the firmware's own {name, value} tables as .equ
+# lines; the assembly names them).  Only this maintenance target rewrites it, from the reference
+# image; the build reads the committed file (lane media-cleanup, 2026-10-31: it used to be a file
+# target, so every fresh clone regenerated it the moment the reference copy was newer).
+.PHONY: constants
+constants: $(TOOLS)/gen_constants.py baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_constants.py baserom/$(ROM) --base $(BASE) --scan 0x15000:0x17000 \
 	    --model SX-KN2400/KN2600 --inc src/constants.inc > /dev/null
 data-src: $(TOOLS)/gen_data_s.py $(TOOLS)/milk_model.py baserom/$(ROM) src/constants.inc

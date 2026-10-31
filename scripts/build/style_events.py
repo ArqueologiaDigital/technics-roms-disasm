@@ -108,12 +108,13 @@ SECTIONS = {'section_0':    (0x00000, 0x17000),
 ROM = REPO / 'original_ROMs' / 'kn5000_custom_data.ic19'
 
 # One more bank in the SAME format, living inside table_data rather than IC19:
-# Composer_FactoryMemoryImage, a 64 KB slice of includes/icons_to_strings.bin. It was
+# Composer_FactoryMemoryImage, the 64 KB at ROM 0x9B4000 (it was a slice of the deleted
+# includes/icons_to_strings.bin; export and verify read it from original_ROMs/kn5000_table_data.rom). It was
 # classified "partially understood -- no field spec, no parser" until the IC19 container was
 # solved; the identical rules decode it with 168/168 pointers, 84/84 back-links and 7,457
 # events, none malformed. Its section nibble is 0 rather than 1.
 EXTRA = {'Composer_FactoryMemoryImage':
-         (REPO / 'table_data' / 'includes' / 'icons_to_strings.bin', 0x6F288, 0x10000,
+         (REPO / 'original_ROMs' / 'kn5000_table_data.rom', 0x9B4000 - 0x800000, 0x10000,
           REPO / 'table_data' / 'includes' / 'generated')}
 PAYLOAD = 249
 ARGS = {0x90: 5, 0x91: 7, 0x81: 0, 0xD1: 2, 0xD2: 2, 0xD3: 2}

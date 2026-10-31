@@ -36,7 +36,8 @@
 ; beyond the text the records carry; prom_b's PtrTable_F006CD / PtrArray_F00C4E
 ; words that land inside DigitalEffect_Frame (0xFC4082, 0xFC4097, 0xFC4480 ...)
 ; are not record starts of this framing and are not explained here.
-; Regenerate / re-check: notes/proma-2026-09-25/gen_fc4000_pages.py (repo root).
+; Re-check: notes/proma-2026-09-25/gen_fc4000_pages.py (repo root).  Its --apply,
+; which wrote this span in its 2026-09-25 form, is retired: this file is the source.
 ; ==============================================================================
 
 ; DigitalEffect_Frame -- display list, 24 record(s), 180 bytes, interpreter A

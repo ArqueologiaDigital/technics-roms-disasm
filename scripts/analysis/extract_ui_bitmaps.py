@@ -2,8 +2,9 @@
 """
 Extract the DrawBitmap/DrawFrameSP graphics from the KN5000 Table Data ROM.
 
-Two descriptor tables live inside table_data/includes/wallpaper1_to_icons.bin
-(see table_data/ui_bitmaps.s for the full disassembly of the region):
+Two descriptor tables live inside ROM 0x912C00.., the range the deleted
+table_data/includes/wallpaper1_to_icons.bin held, read here from the tracked
+reference image through scripts/build/retired_blobs.py (see table_data/ui_bitmaps.s for the full disassembly of the region):
 
 - BitmapDescriptorTable @ 0x913000: 34 x {w16, h16, ptr32} + null terminator,
   indexed by DrawBitmap/DrawBitmapFast (maincpu ui/drawing_primitives.s)
@@ -18,9 +19,12 @@ is a template color replaced at draw time by DrawFrameSP's color argument
 Output file names follow the labels in table_data/ui_bitmaps.s.
 
 Usage:
-    python extract_ui_bitmaps.py [output_root]
+    python extract_ui_bitmaps.py OUTPUT_ROOT
 
-Default output_root is table_data/images/ (creates ui_bitmaps/ and ui_frames/).
+Writes colour renders into OUTPUT_ROOT/ui_bitmaps/ and OUTPUT_ROOT/ui_frames/.  OUTPUT_ROOT is
+required and must not be table_data/images/: since 2026-10-30 table_data/images/ui_bitmaps/ holds
+the palette-indexed PNGs the build converts (scripts/build/ui_bitmaps_images.py), and these RGB
+renders written over them would break the build.
 """
 
 import struct
@@ -34,7 +38,8 @@ except ImportError:
     sys.exit(1)
 
 REPO = Path(__file__).resolve().parents[2]
-BLOB = REPO / "table_data/includes/wallpaper1_to_icons.bin"
+sys.path.insert(0, str(REPO / "scripts" / "build"))
+import retired_blobs  # noqa: E402
 PALETTE = REPO / "v10/maincpu/images/Palette_8bit_RGBA.bin"
 BLOB_BASE = 0x912C00
 
@@ -100,8 +105,12 @@ def extract_table(blob, pal, table_addr, labels, out_dir):
 
 
 def main():
-    out_root = Path(sys.argv[1]) if len(sys.argv) > 1 else REPO / "table_data/images"
-    blob = BLOB.read_bytes()
+    if len(sys.argv) != 2:
+        sys.exit(__doc__)
+    out_root = Path(sys.argv[1]).resolve()
+    if out_root == (REPO / "table_data/images").resolve():
+        sys.exit("extract_ui_bitmaps: refusing to write over the build's source PNGs in table_data/images/")
+    blob = retired_blobs.read("wallpaper1_to_icons")
     pal = load_palette()
     extract_table(blob, pal, BITMAP_TABLE, BITMAP_LABELS, out_root / "ui_bitmaps")
     extract_table(blob, pal, FRAME_TABLE, FRAME_LABELS, out_root / "ui_frames")

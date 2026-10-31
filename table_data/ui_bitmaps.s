@@ -3,11 +3,10 @@
 ; =============================================================================
 ; This region was formerly a single opaque blob, includes/wallpaper1_to_icons.bin,
 ; whose name ("gap between Wallpaper_1 and the icons") hid two live UI drawing
-; sources and six factory images.  The build still emits the pixel runs as
-; offset/length .incbin slices of that same file, so the blob stays byte-exact
-; on disk for the archived ASL mirror (which bincludes it whole).  A better
-; name for the file would be ui_bitmaps_and_frames.bin (comment-only proposal;
-; renaming would break the ASL mirror build).
+; sources and six factory images.  The pixel runs are built from committed
+; PNGs (table_data/images/ui_bitmaps/, scripts/build/ui_bitmaps_images.py), and
+; the blob was deleted on 2026-10-31 (lane media-cleanup): nothing read it but
+; the archived ASL mirror, which no longer builds.
 ;
 ; LAYOUT:
 ;   0x912C00  Wallpaper_1 trailer: zeros + five 16-entry shade-ramp tables
@@ -202,7 +201,7 @@ BitmapDescriptorTable:
 	desc_entry	32, 32, Bitmap_SoundIcon_Microphone	; 33
 	desc_entry	0, 0, 0		; terminator
 
-; Bitmap pixel runs (0x913118): 8bpp slices of the on-disk blob.
+; Bitmap pixel runs (0x913118): 8bpp, each built from its PNG.
 ; Entry 0 is byte-identical to v10/maincpu/images/BitmapWormWearingHat.bin
 ; (the maincpu ROM carries its own copy at 0xea9f20).
 Bitmap_WormWearingHat:			.incbin "includes/generated/Bitmap_WormWearingHat.bin"	; 24x24 -- green worm in a straw hat (easter egg; same bytes as maincpu 0xea9f20 copy); census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_WormWearingHat.png

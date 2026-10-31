@@ -27,10 +27,21 @@ QUESTION THIS ANSWERS
     objects tile 0xFC4000..0xFC52F8 -- and with --apply writes the typed source.
 
 RUN
-    make gate-wsa1        # builds the ELF srcmap.py reads
     python3 notes/proma-2026-09-25/gen_fc4000_pages.py           # check + summary
-    python3 notes/proma-2026-09-25/gen_fc4000_pages.py --apply   # rewrite wsa1_prom_a.s
-    make gate-wsa1 && make -C wsa1 images-check
+
+--apply IS RETIRED (2026-10-31, lane media-cleanup).  It wrote this span's typed source into
+wsa1_prom_a.s in the 2026-09-25 form.  The source has moved on since, and re-running it would
+have undone all of it:
+    98cabf6d5  the span moved to its own module,
+               wsa1/prom_a/modules/fc4000_fc53ff_digital_effect_screen_data.s;
+    6e9ea3b49  the display lists became one macro per record kind (include/wsa1_gui.inc);
+    6f6138c09  the RAM cells and table pointers they spelled as numbers were named;
+    cfb2e8ab1  the eight Widget_* pictograms became `.incbin "images/Widget_*.bin"` of bins
+               scripts/build/wsa1_bitmaps.py builds from images/Widget_*.png (the .png is the
+               source; the `.byte` rows this script emitted are gone);
+    and the inline `; ADDR` comments it wrote are not allowed any more.
+That module file is the authoritative source and is edited by hand.  The check above still
+reads only the reference ROMs, so it still answers this script's question.
 """
 import argparse
 import os
@@ -255,218 +266,14 @@ def check():
     return starts, recstarts
 
 
-def esc(t):
-    return t.replace("\\", "\\\\").replace('"', '\\"')
-
-
-def emit(starts, recstarts):
-    lab = dict(starts)
-    for o in OBJ:
-        if o[0] == "list":
-            for x in o[6]:
-                lab.setdefault(x, "DLRec_%06X" % x)
-    # record starts that arrays point at get a label too
-    for o in OBJ:
-        if o[0] in ("pairs", "ptrs"):
-            n = o[2] * (2 if o[0] == "pairs" else 1)
-            for k in range(n):
-                v = u32(o[1] + 4 * k)
-                lab.setdefault(v, "DLRec_%06X" % v)
-
-    endof = {o[2]: o[4] for o in OBJ if o[0] == "list"}
-    refs = {}                      # address -> ["Array[k]", ...] for inner-record headers
-    for o in OBJ:
-        if o[0] in ("pairs", "ptrs"):
-            n = o[2] * (2 if o[0] == "pairs" else 1)
-            for k in range(n):
-                v = u32(o[1] + 4 * k)
-                refs.setdefault(v, []).append("%s[%d]" % (o[3], k // 2 if o[0] == "pairs" else k))
-        if o[0] == "list" and o[3] == "B":
-            for p, op, ln in walk(o[1], o[2]):
-                if op in (2, 3) and ln >= 11 and LO <= u32(p + 7) < HI:
-                    pass
-    for v in list(refs):
-        uniq = []
-        for x in refs[v]:
-            if x not in uniq:
-                uniq.append(x)
-        refs[v] = ["pointed at by " + ", ".join(uniq[:6]) + (" +%d more" % (len(uniq) - 6) if len(uniq) > 6 else "")]
-    for o in OBJ:
-        if o[0] == "list":
-            for x in o[6]:
-                if x not in refs:
-                    refs[x] = ["an inner entry point or end named in the list's Read-by line"]
-
-    def L(v):
-        return lab[v]
-
-    def LE(v):
-        """a list END: the list's own `_End` symbol when a list ends there"""
-        return endof[v] + "_End" if v in endof else lab[v]
-
-    O = []
-    O += """; ==============================================================================
-; 0xFC4000-0xFC52F7 -- THE SOUND EDIT "DIGITAL EFFECT" AND "COPY" PAGES' SCREEN
-; DATA: display lists, their bound/record arrays, name tables, eight widgets
-; ==============================================================================
-;
-; ★ READ BY PROM_B.  This span's header used to record its reader as an open
-; question, because prom_a's own control-flow graph reaches none of it.  Its
-; readers are prom_b routines, whose source writes these addresses as
-; DECIMAL immediates (`ld xiy, 16531456` is `ld XIY,0x00FC4000`) -- so no hex
-; search could find them:
-;   SoundEditDigitalEffect_Paint 0xF099F5, SoundEditDigitalEffect_RepaintField
-;   0xF09AA5, sub_F09AF1 0xF09AF1 (via PtrTable_F09B7B), SoundEditCopy_Paint
-;   0xF09B9B, SoundEditCopy_RepaintField 0xF09C08, sub_F09CA9 0xF09CA9
-;   (DispatchTable_F5B9F8[0]) with prom_b 0xF5BF6D, and sub_F5CADD at 0xF5CBAD.
-; The DIGITAL EFFECT type is (0x27B6) = (0x27A6) & 0x0F; every per-type array
-; below is indexed by it, and 12 entries is the extent every one of them shares.
-; Inside the span, interpreter-B records point at the name and rectangle
-; tables (op 02: +2 variable, +4 mask, +5 shift, +7 long -> string table,
-; +0x0B entry width; op 03: +7 long -> 8-byte entries -- the handler table in
-; wsa1/notes/FINDINGS-ui-display-list-interpreter-b.md), and those pointers are
-; `.long <label>` here, so the byte gate now checks every table's position.
-; Interpreter A is DisplayList_Run (prom_b 0xF31A09, thunk T_DisplayList_Run
-; 0xF417F0), B is 0xF31AF0 (T_DisplayListB_Run 0xF417F4).
-;
-; ⚠ CORRECTIONS to the framing this replaces (notes/gen_prom_a_fc4000_module.py):
-;   * the "13 entries x 13 bytes" name table is 12 x 13 (DigitalEffect_TypeNames,
-;     width 13 from its record) + 2 x 6 ("MONO  " / "STEREO", width 6 from a
-;     second record) -- 168 bytes, so it ends at 0xFC48D6, the byte before
-;     Widget_FC48D7, and the one-byte overlap the two framings had is gone;
-;   * "Unclassified_FC48D8" was bytes 1-12 of Widget_FC48D7;
-;   * "Bitmap1bpp_FC48E4, 172 rows x 15 bytes" was the other seven widgets and,
-;     from 0xFC4BA7, the COPY page's display lists and tables.  Lane IMAGE had
-;     already shown the widget half (images/Widget_FC48D7.png ..); the rest is
-;     named here by its prom_b readers.
-; ⚠ What is NOT claimed: which field or effect parameter each record draws
-; beyond the text the records carry; prom_b's PtrTable_F006CD / PtrArray_F00C4E
-; words that land inside DigitalEffect_Frame (0xFC4082, 0xFC4097, 0xFC4480 ...)
-; are not record starts of this framing and are not explained here.
-; Regenerate / re-check: notes/proma-2026-09-25/gen_fc4000_pages.py (repo root).
-; ==============================================================================""".split("\n")
-    for o in OBJ:
-        k = o[0]
-        O.append("")
-        if k == "list":
-            _, s, e, it, name, rdr, inner = o
-            recs = walk(s, e)
-            O += ["; %s -- display list, %d record(s), %d bytes, interpreter %s" % (name, len(recs), e - s, it),
-                  "; Read by: " + rdr + ".",
-                  "; Framing: the length bytes walk from 0x%06X and land exactly on 0x%06X." % (s, e)]
-            if s == LO:
-                O.append("; (was `DisplayList_FC4000`, the label of this whole span until 2026-09-25)")
-            O.append("%s:" % name)
-            H = HA if it == "A" else HB
-            for p, op, ln in recs:
-                if p != s and p in lab:
-                    O.append("; %s -- a record (op %02X, %d bytes) inside %s," % (lab[p], op, ln, name))
-                    O.append(";          %s" % "; ".join(refs.get(p, ["an entry point of it named in its header"])))
-                    O.append("%s:" % lab[p])
-                raw = ROM[p - B:p - B + ln]
-                hd = H[op] if op < len(H) else None
-                O.append("\t.byte 0x%02X, 0x%02X%s; %06X  op %02X, %d bytes%s" % (
-                    op, ln, " " * 29, p, op, ln, ", handler 0x%06X" % hd if hd else ""))
-                if it == "B" and op in (2, 3) and ln in (15, 11) and LO <= u32(p + 7) < HI:
-                    O.append("\t.short 0x%04X%s; %06X  variable" % (raw[2] | raw[3] << 8, " " * 30, p + 2))
-                    O.append("\t.byte 0x%02X, 0x%02X, 0x%02X%s; %06X  mask, shift, +6" % (
-                        raw[4], raw[5], raw[6], " " * 21, p + 4))
-                    O.append("\t.long %-38s; %06X  %s" % (L(u32(p + 7)), p + 7,
-                                                           "string table" if op == 2 else "8-byte entries"))
-                    if op == 2:
-                        O.append("\t.short %d, 0x%04X%s; %06X  entry width, +0x0D" % (
-                            raw[11] | raw[12] << 8, raw[13] | raw[14] << 8, " " * 24, p + 11))
-                    continue
-                i = 2
-                while i < ln:
-                    j = i
-                    if 0x20 <= raw[i] <= 0x7E:
-                        while j < ln and 0x20 <= raw[j] <= 0x7E:
-                            j += 1
-                        if j - i >= 2:
-                            O.append('\t.ascii "%s"%s; %06X' % (esc(raw[i:j].decode("ascii")),
-                                                               " " * max(1, 33 - (j - i)), p + i))
-                            i = j
-                            continue
-                        j = i + 1
-                    while j < ln and not (0x20 <= raw[j] <= 0x7E and j + 1 < ln and 0x20 <= raw[j + 1] <= 0x7E):
-                        j += 1
-                    O.append("\t.byte %s%s; %06X" % (", ".join("0x%02X" % c for c in raw[i:j]),
-                                                     " " * max(1, 36 - 6 * (j - i)), p + i))
-                    i = j
-            O.append("\t.set %s_End, .%s; %06X  end marker: the byte after the last record" % (
-                name, " " * max(1, 30 - len(name)), e))
-        elif k in ("pairs", "ptrs"):
-            _, s, n, name, rdr = o
-            what = "(start, end) display-list bounds" if k == "pairs" else "pointers"
-            O += ["; %s -- %d %s, %d bytes" % (name, n, what, size(o)),
-                  "; Read by: " + rdr + ".",
-                  "; COUNT %d is the extent to the next object of this framing; every entry lands" % n,
-                  "; on a list or record boundary (gen_fc4000_pages.py checks each one)."]
-            O.append("%s:" % name)
-            for j in range(n):
-                if k == "pairs":
-                    a, b2 = u32(s + 8 * j), u32(s + 8 * j + 4)
-                    O.append("\t.long %s, %s%s; %06X  [%2d]" % (L(a), LE(b2), " " * max(1, 36 - len(L(a)) - len(LE(b2))),
-                                                               s + 8 * j, j))
-                else:
-                    v = u32(s + 4 * j)
-                    isend = name == "DigitalEffect_FrameEnds" or (name.startswith("SegmentBounds_") and j > 0)
-                    O.append("\t.long %-38s; %06X  [%2d]" % (LE(v) if isend else L(v), s + 4 * j, j))
-        elif k == "names":
-            _, s, n, w, name, rdr = o
-            O += ["; %s -- %d names x %d characters, fixed width, no terminator" % (name, n, w),
-                  "; Read by: " + rdr + ".",
-                  "; COUNT %d is the extent to the next object (the mask bounds the index only" % n,
-                  "; loosely); the width is the record's own +0x0B field, checked by the generator."]
-            O.append("%s:" % name)
-            for j in range(n):
-                t = ROM[s + w * j - B:s + w * j + w - B].decode("ascii")
-                O.append('\t.ascii "%s"%s; %06X  [%d]' % (esc(t), " " * max(1, 34 - w), s + w * j, j))
-        elif k == "rects":
-            _, s, n, name, rdr = o
-            O += ["; %s -- %d x 8-byte entries, four LE16 each (x0, y0, x1, y1 pixel" % (name, n),
-                  "; coordinates, by their values: x in 0xCD..0x123, y ascending)",
-                  "; Read by: " + rdr + "; the handler indexes it with `sla 3,HL`.",
-                  "; COUNT %d is the extent to the next object." % n]
-            O.append("%s:" % name)
-            for j in range(n):
-                ws = [ROM[s + 8 * j + 2 * q - B] | ROM[s + 8 * j + 2 * q + 1 - B] << 8 for q in range(4)]
-                O.append("\t.short 0x%04X, 0x%04X, 0x%04X, 0x%04X%s; %06X  [%d]" % (
-                    tuple(ws) + (" " * 6, s + 8 * j, j)))
-        elif k == "widgets":
-            _, s, n = o
-            O += ["; Widget_FC48D7 .. Widget_FC4B4D -- EIGHT 48x15 1-bpp pictograms, 90 bytes each",
-                  "; Read by: sub_F09AF1 (prom_b 0xF09AF1): `ld XBC,0x00F09B7B / ld XIY,(XBC+D)` then",
-                  ";   `ld A,3 / ld BC,6 / ld HL,0x0F / swi 7` -- SWI7 service 3,",
-                  ";   LCD_Svc_03_BlitColumns (0xF8EDB4): 6 columns of 15 bytes, column-major.",
-                  ";   PtrTable_F09B7B holds exactly these eight addresses, stride 90 = 6*15;",
-                  ";   the index comes through IndexMap_F09B3B, whose largest value is 7.",
-                  "; The `.byte` rows are checked against images/Widget_*.png by",
-                  "; `python3 scripts/build/wsa1_bitmaps.py check` (lane IMAGE, 2026-09-02, which",
-                  "; first showed this; see notes/FINDINGS-image-files.md section 4).  One row",
-                  "; per 15-byte column below."]
-            O += ["; Drawn, they are (lane IMAGE's reading): a flat bar, a cylinder, tapered",
-                  "; wedges, a parallelogram, a spool, an arrow, a bolt."]
-            for w in range(n):
-                a = s + 90 * w
-                O.append("; Widget_%06X -- widget %d: read through PtrTable_F09B7B[%d] (prom_b 0xF09B7B)," % (a, w, w))
-                O.append(";          48x15 pixels, 6 columns x 15 bytes; images/Widget_%06X.png" % a)
-                O.append("Widget_%06X:" % a)
-                for c in range(6):
-                    r = ROM[a + 15 * c - B:a + 15 * c + 15 - B]
-                    O.append("\t.byte %s  ; %06X" % (", ".join("0x%02x" % x for x in r), a + 15 * c))
-    return O
-
-
-def u8(x):
-    return x.encode("utf-8").decode("latin-1")
-
-
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--apply", action="store_true", help="retired; see the module docstring")
     a = ap.parse_args()
+    if a.apply:
+        sys.exit("gen_fc4000_pages.py --apply is retired: the authoritative source is "
+                 "wsa1/prom_a/modules/fc4000_fc53ff_digital_effect_screen_data.s, edited by hand "
+                 "(see this script's docstring for what replaced each part of its output)")
     starts, recstarts = check()
     print("tiling 0x%06X-0x%06X: OK, %d objects; every list walks exactly; every array entry "
           "and every op-02/03 table pointer lands on a boundary; op-02 widths match" % (LO, HI, len(OBJ)))
@@ -474,17 +281,6 @@ def main():
         print("  0x%06X %-7s %5d B  %s" % (o[1], o[0], size(o),
                                           o[4] if o[0] in ("list", "names") else
                                           ("Widget_*" if o[0] == "widgets" else o[3])))
-    if not a.apply:
-        return
-    O = [u8(x) for x in emit(starts, recstarts)]
-    m = srcmap.load()
-    Ls = m.lines
-    h = next(i for i, l in enumerate(Ls) if l.startswith("; 0xFC4000-0xFC52F7 -- DSP-effect / SOUND EDIT"))
-    assert Ls[h - 1].startswith("; -----")
-    e = next(i for i in range(h, len(Ls)) if Ls[i].startswith("; 0xFC52F8-0xFC53FF -- 264 bytes of 0x0E"))
-    new = Ls[:h - 1] + O + [""] + Ls[e:]
-    open(srcmap.SRC, "w", encoding="latin-1").write("\n".join(new))
-    print("applied: %d lines -> %d" % (e - h + 1, len(O)))
 
 
 if __name__ == "__main__":
