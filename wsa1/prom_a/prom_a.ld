@@ -1,5 +1,9 @@
 /* prom_a.ld -- linker script for Technics SX-WSA1R wsa1_prom_a.ic12
  *
+ * ⚠ NOT A LINK INPUT SINCE 2026-10-31.  prom_a and prom_b are linked together by
+ * maincpu/maincpu.ld (scripts/tools/join_maincpu_link.py); this file stays as the
+ * record of this image's base and of the memory-map evidence below.
+ *
  * IC12, program EPROM, boot image of CPU 1 (IC1, "MICROCOMPUTER (MAIN)",
  * Toshiba TMP95C061 / TLCS-900/H).
  *
@@ -58,17 +62,6 @@ SECTIONS {
   /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }
 
-/* Cross-ROM: prom_b routines prom_a reaches by number, several PC-relatively (calr / jr).
- * A `.set` constant would be folded into the 16-bit displacement and rejected; a symbol
- * defined here is relocated by ld.lld instead (scripts/tools/link_prom_a_to_prom_b.py,
- * 2026-10-03).  Cross-ref: wsa1/prom_b/wsa1_prom_b.s. */
-T_ModuleInit_Phase2Veneer = 0xF40034;
-T_EditValue_SetBit = 0xF42C7C;
-T_CallbackQueue_ResetAndRestartTask2 = 0xF42E80;
-ButtonTable_SequencerMedley_Nop = 0xF7E2D8;
-PromB_LCD_ScreenRedraw_Begin = 0xF7E2D9;
-PromB_LCD_ScreenRedraw_End = 0xF7E2E7;
-LCD_ClearCurrentLayer = 0xF7E2ED;
-TrackGrid_DrawPartLabels = 0xF7E354;
-Blink_EnableThenStop_Copy = 0xF7F237;
-Blink_DisableThenStop = 0xF7F245;
+/* prom_b symbols prom_a references are resolved by the joint link,
+ * maincpu/maincpu.ld (scripts/tools/join_maincpu_link.py, 2026-10-31); this script is
+ * now only the record of prom_a's own window. */

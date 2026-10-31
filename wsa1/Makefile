@@ -108,21 +108,30 @@ rebuilt_ROMs/wsa1_prom_a.llvm.o: $(PROM_A_SRC) $(COMMON_INC) $(KERNEL_SRC) $(MAI
 	@mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I . -I prom_a -o $@ $<
 
-rebuilt_ROMs/wsa1_prom_a.llvm.elf: rebuilt_ROMs/wsa1_prom_a.llvm.o prom_a/prom_a.ld
-	$(LLVM_LLD) -T prom_a/prom_a.ld -o $@ $<
-
-rebuilt_ROMs/wsa1_prom_a.llvm.rom: rebuilt_ROMs/wsa1_prom_a.llvm.elf
-	$(LLVM_OBJCOPY) -O binary $< $@
 
 rebuilt_ROMs/wsa1_prom_b.llvm.o: $(PROM_B_SRC) $(COMMON_INC) $(MAINCPU_SHARED) $(WSA1_IMAGE_BINS) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I . -I prom_b -o $@ $<
 
-rebuilt_ROMs/wsa1_prom_b.llvm.elf: rebuilt_ROMs/wsa1_prom_b.llvm.o prom_b/prom_b.ld
-	$(LLVM_LLD) -T prom_b/prom_b.ld -o $@ $<
+# CPU 1's two EPROMs are ONE link (maincpu/maincpu.ld): a name either image uses for the
+# other's code is resolved by ld.lld, not copied in as a number (scripts/tools/join_maincpu_link.py).
+# The two images and the per-image ELF views the tools read are cut out of the one ELF.
+# Each object exports exactly the labels the other image names (prom_X/exports.syms), made global
+# AFTER assembly: declared `.global` in the source, a short branch to the label would be relaxed to
+# its long form and change the bytes (the tool's docstring has the measurement).
+rebuilt_ROMs/wsa1_prom_%.link.o: rebuilt_ROMs/wsa1_prom_%.llvm.o prom_%/exports.syms
+	$(LLVM_OBJCOPY) --globalize-symbols=prom_$*/exports.syms $< $@
 
-rebuilt_ROMs/wsa1_prom_b.llvm.rom: rebuilt_ROMs/wsa1_prom_b.llvm.elf
-	$(LLVM_OBJCOPY) -O binary $< $@
+rebuilt_ROMs/wsa1_maincpu.llvm.elf: rebuilt_ROMs/wsa1_prom_b.link.o rebuilt_ROMs/wsa1_prom_a.link.o maincpu/maincpu.ld
+	$(LLVM_LLD) -T maincpu/maincpu.ld -o $@ rebuilt_ROMs/wsa1_prom_b.link.o rebuilt_ROMs/wsa1_prom_a.link.o
+
+MAINCPU_ELFS = rebuilt_ROMs/wsa1_prom_a.llvm.elf rebuilt_ROMs/wsa1_prom_b.llvm.elf
+MAINCPU_ROMS = rebuilt_ROMs/wsa1_prom_a.llvm.rom rebuilt_ROMs/wsa1_prom_b.llvm.rom
+$(MAINCPU_ELFS): rebuilt_ROMs/wsa1_prom_%.llvm.elf: rebuilt_ROMs/wsa1_maincpu.llvm.elf
+	$(LLVM_OBJCOPY) -j .prom_$* $< $@
+
+$(MAINCPU_ROMS): rebuilt_ROMs/wsa1_prom_%.llvm.rom: rebuilt_ROMs/wsa1_maincpu.llvm.elf
+	$(LLVM_OBJCOPY) -O binary -j .prom_$* $< $@
 
 rebuilt_ROMs/wsa1_prom_c.llvm.o: $(PROM_C_SRC) $(COMMON_INC) $(KERNEL_SRC) $(DSP_SRC) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs

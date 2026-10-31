@@ -36,9 +36,31 @@ processors run is written once, in `kernel/kernel.s`.
 
 ## What is joined, and what is not
 
-The two images stay **separately linked**.  They are different chips with
-different `ORIGIN`s and they are assembled by two rules in the `Makefile`.  The
-join is not about producing one binary; it is about presenting one program:
+★ **Since 2026-10-31 they are ONE link** (phase B3, `notes/PLAN-join-and-split.md` §10).
+The two images are still assembled as two objects, but `maincpu/maincpu.ld` links
+them together (output sections `.prom_b` at `0xF00000`, `.prom_a` at `0xF80000`)
+and the `Makefile` cuts both EPROM images, and the per-image ELF views the tools
+read, out of the one ELF.  Until then each image carried the other's labels as
+numbers -- 1,809 `.set` lines in prom_b, 1,811 in prom_a, 10 more in `prom_a.ld` --
+which the byte gate checked by VALUE but nothing checked by NAME.  Now each image
+lists the labels the other references in `prom_X/exports.syms`, those are made
+global after assembly, and a renamed or missing name fails the link:
+
+    python3 scripts/tools/join_maincpu_link.py --selftest      # the link's invariants
+    python3 scripts/tools/join_maincpu_link.py --proof 130735749  # all 3,630 old equates == the joined ELF
+
+⚠ Two things it measured, and both are in the tool and the sources:
+
+* **The exports are not `.global` in the source.**  llvm-mc leaves a branch to a
+  global label to the linker and relaxes `jr` to `jrl`; declared in the source the
+  exports grew prom_a by 6 bytes and prom_b by 1.  `llvm-objcopy
+  --globalize-symbols` after assembly keeps every encoding.
+* **One branch is not relocatable at all.**  prom_b's last instruction, `jr z` at
+  `0xF7FFFE`, falls across the chip boundary, and the tlcs900 backend has no 8-bit
+  PC-relative relocation.  It keeps a local equate, and `maincpu.ld` ASSERTs it
+  equals prom_a's exported label.
+
+The rest of the join, from before:
 
 * **One macro base.**  `include/tlcs900_mem_ops.inc` is the TLCS-900
   byte-emitter set, and `prom_a`, `prom_b` and `kernel/kernel.s` all include it.
@@ -98,7 +120,11 @@ it silently measures a tree with them missing.  `notes/reachability.py` knows;
 
 ## What this is NOT, yet
 
-`prom_a/wsa1_prom_a.s` and `prom_b/wsa1_prom_b.s` are still **one listing each**,
+⚠ SUPERSEDED (2026-10-24): both images are now split into per-module sources,
+`prom_a/modules/` and `prom_b/modules/` (`scripts/tools/split_cpu1_images.py`,
+`notes/cpu1-module-split-2026-10-24/`).  The paragraph below is the record of why it waited.
+
+`prom_a/wsa1_prom_a.s` and `prom_b/wsa1_prom_b.s` were still **one listing each**,
 11 MB and 8 MB, where `prom_c/` has been split into per-subject sources
 (`prom_c/boot/`, `prom_c/midi/`, `prom_c/voice/`, ...) and the KN5000's
 `v10/maincpu/` is split the same way.  Splitting these two the same way is the
