@@ -372,6 +372,9 @@ class Gen:
                     pairs.append(tuple(line.split()))
         self.prev_data_label = {}       # name -> address of the previous build's data labels
         self.label_pairs = [(n, int(v, 16)) for n, v in pairs]   # (the instruction-start oracle's anchors)
+        # code addresses the code labels both func_<ADDR> and loc_<ADDR>: a prologue gen_program_s.py names
+        # func_ only because the typed data points at it (code_refs.txt), with the loc_ name kept as an .equ
+        self.loc_alias = {a for n, a in self.label_pairs if n == f"loc_{a:08X}"}
         for n, v in pairs:
             a = int(v, 16)
             if self.in_data(a):
@@ -568,6 +571,12 @@ class Gen:
         if v in self.extern:
             if self.in_code(v) and self.extern[v] == f"loc_{v:08X}":
                 self.code_targets.add(v)      # a label only because the data names it: keep it so
+            elif self.in_code(v) and self.extern[v] == f"func_{v:08X}" and v in self.loc_alias:
+                # (lane mn10300-typer) a pointed-to prologue: func_<ADDR> exists only while the data lists
+                # the address in code_refs.txt, so the data spells it by its loc_ name and keeps it listed
+                # (spelling it func_ drops it from code_refs, and the next code generation drops the label)
+                self.code_targets.add(v)
+                return f"loc_{v:08X}"
             return self.extern[v]
         if self.in_code(v):
             # gen_program_s.py labels it loc_<ADDR> (code_refs.txt)
