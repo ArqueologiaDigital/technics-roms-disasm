@@ -15,7 +15,10 @@ subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "analysis", "hdae5
 s = read("hdae5000_init_data.s")
 s = re.sub(rb"; File/name editing scalars and buffers  \(RAM 0x[0-9a-f]+ onwards\)",
            b"; File/name editing buffers (v1.x has no file-format version words in front of them)", s)
-s, n = re.subn(rb"; Tail of the ROM \(0x[0-9a-f]+-0x2fffff\)\n(?:;[^\n]*\n)*?;   it is 0x00 fill up to the 0x300000 ROM end\.\n",
+# (since 2026-10-31 the v2.x text goes on: "ROM end.  The ROM header's second long / names
+# HDAE5000_Init_Data_End.", which the v1 text below says too)
+s, n = re.subn(rb"; Tail of the ROM \(0x[0-9a-f]+-0x2fffff\)\n(?:;[^\n]*\n)*?;   it is 0x00 fill up to the 0x300000 ROM end\."
+               rb"(?:  The ROM header's second long\n;   names HDAE5000_Init_Data_End\.)?\n",
                b"; Tail of the ROM\n;   The .data image ends here: the boot copy loop copies it from HDAE5000_DataSegmentImage\n"
                b";   up to HDAE5000_Init_Data_End, which the ROM header's second long also names.  The\n"
                b";   0x000e word after it is the first thing past the copied window and is never\n"

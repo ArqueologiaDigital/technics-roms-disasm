@@ -240,27 +240,18 @@ InitializeYoko:
 	call RegisterTitle
 	lda xsp, (xsp + 0x0e)
 	ret
-	cp	xbc, 0x1e0009f
-	jr	nz, InitializeYoko_Skip
+PartSelLangCheck:
+	cp	xbc, EVT_GET_LANGUAGE_PTR
+	jr	nz, PartSelLang_ReturnZero
 	lda	xhl, (PartSelLangCheck_PtrTable:24)
 	ret
-InitializeYoko_Skip:
+PartSelLang_ReturnZero:
 	ld	xhl, 0:i3
 	ret
-PartSelLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, PartSelLang_ReturnZero
-	lda	xhl, (AfterLangCheck_PtrTable:24)
-	ret
-
-PartSelLang_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
 AfterLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, AfterLang_ReturnZero
-	lda	xhl, (TrAsPreLangCheck_PtrTable:24)
+	lda	xhl, (AfterLangCheck_PtrTable:24)
 	ret
 
 AfterLang_ReturnZero:
@@ -270,7 +261,7 @@ AfterLang_ReturnZero:
 TrAsPreLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, TrAsPreLang_ReturnZero
-	lda	xhl, (AtentionLangCheck_PtrTable:24)
+	lda	xhl, (TrAsPreLangCheck_PtrTable:24)
 	ret
 
 TrAsPreLang_ReturnZero:
@@ -280,7 +271,7 @@ TrAsPreLang_ReturnZero:
 AtentionLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, AtentionLang_ReturnZero
-	lda	xhl, (AreYouSureLangCheck_PtrTable:24)
+	lda	xhl, (AtentionLangCheck_PtrTable:24)
 	ret
 
 AtentionLang_ReturnZero:
@@ -290,7 +281,7 @@ AtentionLang_ReturnZero:
 AreYouSureLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, AreYouSureLang_ReturnZero
-	lda	xhl, (GmOnSureLangCheck_PtrTable:24)
+	lda	xhl, (AreYouSureLangCheck_PtrTable:24)
 	ret
 
 AreYouSureLang_ReturnZero:
@@ -300,7 +291,7 @@ AreYouSureLang_ReturnZero:
 GmOnSureLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, GmOnSureLang_ReturnZero
-	lda	xhl, (GmOffSureLangCheck_PtrTable:24)
+	lda	xhl, (GmOnSureLangCheck_PtrTable:24)
 	ret
 
 GmOnSureLang_ReturnZero:
@@ -309,10 +300,16 @@ GmOnSureLang_ReturnZero:
 
 GmOffSureLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, GmOffSureLang_ReturnZero
+	lda	xhl, (GmOffSureLangCheck_PtrTable:24)
+	ret
 
-; port: v6's label GmOffSureLang_ReturnZero is not in v5 -- no v5 bytes correspond to what it named
+GmOffSureLang_ReturnZero:
+	ld xhl, 0:i3
+	ret
 
-; port: v6's label TrAsSureLangCheck is not in v5 -- no v5 bytes correspond to what it named
+TrAsSureLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr	nz, TrAsSureLang_ReturnZero	; -> 0xF2A9D5
 	ld	a, (10327:16)
 	extz	wa

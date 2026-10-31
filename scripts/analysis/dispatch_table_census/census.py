@@ -16,11 +16,12 @@ TABLE DETECTORS (each a separate, stated rule)
      `.long` lines of one file, broken at any label definition.  A word is a
      POINTER if its value lies in an image of the same CPU address space:
        KN5000 main: maincpu(same version) / hdae5000 / table_data / custom_data
-                    (table_data's own boot block also at +0x600000);
-       KN5000 sub : v142 / subboot, and v141 / subboot (v1.41 and v1.42 are alternative
+                    (table_data's own boot block also at +0x600000); an older HD-AE5000
+                    (hdae_v201 / _v115 / _v110) in place of hdae5000, with maincpu v10;
+       KN5000 sub : v142 / subboot, and v141 / subboot, v140 / subboot (alternative
                     payloads, never loaded together; subboot itself looks only in v142);
        WSA1 CPU1: prom_a / prom_b;  WSA1 CPU2: prom_c.
-     v142 and v141 only: an all-numeric run is constants (0x400.. collides with numbers).
+     sub-CPU payloads only: an all-numeric run is constants (0x400.. collides with numbers).
   J  jump-vector runs framed as code: >= 4 consecutive contiguous equal-length
      unconditional `jp imm24` / `jp imm16` / `jrl T` / `jr T` lines; plus the prom_b
      routine directory 0xF40000-0xF44018 as ONE table (`jp` slots are jumps, its
@@ -103,7 +104,8 @@ RUN (from the repository root; `make dispatch-census` does the first and the --s
   python3 scripts/analysis/dispatch_table_census/census.py --compare docs/coverage/dispatch-census-<date>.json
         # exit 1 when an image's not-used tables, unused targets or not-used unframed runs ROSE, or an image of
         # the old snapshot is no longer measured (GONE).  An image the old snapshot does not have (v141, added
-        # 2026-10-24) is printed as `new` with its figures and is not a rise: its first snapshot is its baseline
+        # 2026-10-24; v8, v6, v5, v140, hdae_v201, hdae_v115 and hdae_v110, added 2026-10-31) is printed as
+        # `new` with its figures and is not a rise: its first snapshot is its baseline
 
 PROVENANCE
   Written 2026-10-05 by a measurement lane (scratch ~/compartilhado/tmp/jumptable-census-2026-10-05/, harvested to
@@ -120,8 +122,11 @@ import sys
 HERE = os.environ.get("DISPATCH_CENSUS_DIR") or os.path.join(os.environ.get("TMPDIR") or os.path.expanduser("~/compartilhado/tmp"),
                                                              "dispatch-table-census")   # build_maps.py's OUT
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-KEYS = ["v10", "v9", "v7", "v142", "v141", "subboot", "tabledata", "customdata", "hdae5000",
-        "prom_a", "prom_b", "prom_c"]
+KEYS = ["v10", "v9", "v8", "v7", "v6", "v5", "v142", "v141", "v140", "subboot", "tabledata", "customdata",
+        "hdae5000", "hdae_v201", "hdae_v115", "hdae_v110", "prom_a", "prom_b", "prom_c"]
+MAINCPU = ("v10", "v9", "v8", "v7", "v6", "v5")
+SUBCPU = ("v142", "v141", "v140")             # alternative sub-CPU payloads, never loaded together
+HDAE = ("hdae5000", "hdae_v201", "hdae_v115", "hdae_v110")    # alternative HD-AE5000 ROMs
 
 BYTECMT = re.compile(r'^\s*(\S+:)?\s*\.byte\b[^;\n]*;\s*(?:MAME:|unidasm:|=\s*|[0-9A-F]{6}\s+[0-9a-f]{2}(?: [0-9a-f]{2})*\s{2,})?\s*(ld|lda|ldw|ldb|push|pop|call|calr|jp|jr|jrl|ret|reti|add|sub|and|or|xor|cp|inc|dec|bit|set|res|tset|ex|mul|div|sll|srl|sla|sra|rlc|rrc|rl|rr|ldir|lddr|ldi|ldd|swi|ei|nop|halt|link|unlk|djnz|scc|neg|cpl|extz|exts|mirr|paa|incf|decf|ldf|ldc|ldx)\b', re.I)
 NUM = re.compile(r'^[-+]?\s*(0x[0-9a-fA-F]+|[0-9]+)$')
@@ -167,14 +172,15 @@ def space(key):
     """[(image, delta)]: a target address A is looked up in image's map at A - delta.
     table_data's boot block runs at +0x600000 (BOOT_RESET_HANDLER = RESET_HANDLER +
     0x600000 in table_data/kn5000_table_data.s), so its own tables use that view."""
-    if key in ("v10", "v9", "v7"):
+    if key in MAINCPU:
         return [(key, 0), ("hdae5000", 0), ("tabledata", 0), ("customdata", 0)]
     if key == "tabledata":
         return [("tabledata", 0), ("tabledata", 0x600000), ("hdae5000", 0), ("customdata", 0)]
-    if key in ("hdae5000", "customdata"):
-        return [(key, 0)] + [(k, 0) for k in ("v10", "hdae5000", "tabledata", "customdata") if k != key]
-    if key in ("v142", "v141", "subboot"):
-        return [(key, 0), ("subboot" if key in ("v142", "v141") else "v142", 0)]
+    if key in HDAE or key == "customdata":
+        return [(key, 0)] + [(k, 0) for k in ("v10", "hdae5000", "tabledata", "customdata")
+                             if k != key and not (key in HDAE and k == "hdae5000")]
+    if key in SUBCPU or key == "subboot":
+        return [(key, 0), ("subboot" if key in SUBCPU else "v142", 0)]
     if key in ("prom_a", "prom_b"):
         return [(key, 0), ("prom_b" if key == "prom_a" else "prom_a", 0)]
     return [(key, 0)]
@@ -450,12 +456,12 @@ def detect_A(key):
                 e = mk_entry(key, val, numeric, op)
                 if e is None:
                     continue
-                if numeric and key in ("v142", "v141"):
+                if numeric and key in SUBCPU:
                     e["v142num"] = True     # kept only if the table also has a symbolic pointer
                 e["at"] = lo + 4 * k
                 ents.append(e)
         if any(e.get("v142num") for e in ents) and all(e.get("v142num") for e in ents):
-            ents = []                       # v142/v141: an all-numeric run is constants, not pointers
+            ents = []                       # sub-CPU payloads: an all-numeric run is constants, not pointers
         name = label_of(m, rows, i0)
         out.append(dict(kind="A", addr=rows[i0][0], name=name, nwords=nwords,
                         file="%s:%d" % (rows[i0][2], rows[i0][3] + 1), ents=ents))
@@ -685,9 +691,11 @@ def detect_D(key, skip_addrs):
     return tables
 
 
-TREES = {"v10": "v10/maincpu", "v9": "v9/maincpu", "v7": "v7/maincpu",
-         "hdae5000": "hdae5000", "tabledata": "table_data", "customdata": "custom_data",
-         "v142": "v142/subcpu", "v141": "v141/subcpu", "subboot": "subcpu/boot"}
+TREES = {"v10": "v10/maincpu", "v9": "v9/maincpu", "v8": "v9/maincpu", "v7": "v7/maincpu",
+         "v6": "v6/maincpu", "v5": "v5/maincpu",
+         "hdae5000": "hdae5000", "hdae_v201": "hdae5000_v2_01i", "hdae_v115": "hdae5000_v1_15i",
+         "hdae_v110": "hdae5000_v1_10i", "tabledata": "table_data", "customdata": "custom_data",
+         "v142": "v142/subcpu", "v141": "v141/subcpu", "v140": "v140/subcpu", "subboot": "subcpu/boot"}
 _LD = {}
 
 

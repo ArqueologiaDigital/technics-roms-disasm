@@ -892,7 +892,8 @@ HDAE5000_LyricBoxObj_Init:
 ;   The .data image ends at 0x2fa133 - HDAE5000_Clear_Work_Buffer copies
 ;   exactly 0x0c82 bytes.  The 0x000e word at 0x2fa134 is the first thing
 ;   past the copied window and is never transferred to RAM; everything after
-;   it is 0x00 fill up to the 0x300000 ROM end.
+;   it is 0x00 fill up to the 0x300000 ROM end.  The ROM header's second long
+;   names HDAE5000_Init_Data_End.
 ; ----------------------------------------------------------------------------
 HDAE5000_Init_Data_End:
 	.short 14

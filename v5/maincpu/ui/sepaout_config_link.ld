@@ -16,62 +16,62 @@ SECTIONS {
 }
 
 /* Display/UI handler pointers */
-Display_InitGraphicsAndScreen  = 0x00F22238;
+Display_InitGraphicsAndScreen  = 0x00F22121;
 Display_CallConditionalCompare = 0x00F22147;
-Display_CallPollAudioUpdate    = 0x00F2226B;
-SqTrSel_CaseA                 = 0x00F22278;
+Display_CallPollAudioUpdate    = 0x00F22154;
+SqTrSel_CaseA                 = 0x00F22161;
 
 /* Language check string pointers */
-PartSelLangCheck      = 0x00F2A902;
-AfterLangCheck        = 0x00F2A913;
-TrAsPreLangCheck      = 0x00F2A924;
-AtentionLangCheck     = 0x00F2A935;
-AreYouSureLangCheck   = 0x00F2A946;
-GmOnSureLangCheck     = 0x00F2A957;
-GmOffSureLangCheck    = 0x00F2A968;
-TrAsSureLangCheck     = 0x00F2A979;
+PartSelLangCheck      = 0x00F2A6B7;
+AfterLangCheck        = 0x00F2A6C8;
+TrAsPreLangCheck      = 0x00F2A6D9;
+AtentionLangCheck     = 0x00F2A6EA;
+AreYouSureLangCheck   = 0x00F2A6FB;
+GmOnSureLangCheck     = 0x00F2A70C;
+GmOffSureLangCheck    = 0x00F2A71D;
+TrAsSureLangCheck     = 0x00F2A72E;
 
 /* Sequencer/song function handlers */
-SqTrAsPsSongFunc      = 0x00F2CC5E;
-DemoSongSelFunc       = 0x00F2CBEC;
-SmfMuteChSelFunc      = 0x00F2CBFD;
-SqAftSetFunc          = 0x00F2CCBE;
-MuteChSetFunc         = 0x00F2CD23;
-SMFMuteOnOffFunc      = 0x00F2CE0C;
-Rt1MuteFunc           = 0x00F2CE91;
-Rt2MuteFunc           = 0x00F2CED0;
-DocOrchMuteFunc       = 0x00F2CF0F;
-PdOrchMuteFunc        = 0x00F2CF4F;
-SeqNamingCheck        = 0x00F2CFB9;
-SeqNameOKFunc         = 0x00F2CF8F;
-TrAsGridCheck         = 0x00F2C44D;
-DemoMedDspCheck       = 0x00F2D088;
-DPPlayDspCheck        = 0x00F2D100;
-DPPauseDspCheck       = 0x00F2D178;
+SqTrAsPsSongFunc      = 0x00F2C9CA;
+DemoSongSelFunc       = 0x00F2C958;
+SmfMuteChSelFunc      = 0x00F2C969;
+SqAftSetFunc          = 0x00F2CA2A;
+MuteChSetFunc         = 0x00F2CA8F;
+SMFMuteOnOffFunc      = 0x00F2CB78;
+Rt1MuteFunc           = 0x00F2CBFD;
+Rt2MuteFunc           = 0x00F2CC3C;
+DocOrchMuteFunc       = 0x00F2CC7B;
+PdOrchMuteFunc        = 0x00F2CCBB;
+SeqNamingCheck        = 0x00F2CD25;
+SeqNameOKFunc         = 0x00F2CCFB;
+TrAsGridCheck         = 0x00F2C201;
+DemoMedDspCheck       = 0x00F2CDF4;
+DPPlayDspCheck        = 0x00F2CE6C;
+DPPauseDspCheck       = 0x00F2CEE4;
 
 /* UI box region boundary/end labels */
-ComposerBox_End               = 0x00F2B579;
-MeasureBoxFunc                = 0x00F2B670;
-MeasureBoxFunc_End            = 0x00F2B6A6;
-AcDiskFileName_End            = 0x00F2B74D;
-AcDocSongName_End             = 0x00F2B942;
-AcPDSongName_End              = 0x00F2BA90;
-AcSmfFileName_End             = 0x00F2B7F4;
-AcSmfSongName_End             = 0x00F2B89B;
-AcDocFileNo_End               = 0x00F2B9E9;
-IvNamingExitProc              = 0x00F2BB37;
-TrAsGridChk_End               = 0x00F2C973;
-AcDemoSong_End                = 0x00F2CAD1;
-AcCurSong_End                 = 0x00F2CB45;
-VoiceConfig_End               = 0x00F2CA32;
-TrAsGrid_BoxProc              = 0x00F2BEF4;
-SqAftSetFunc_End              = 0x00F2CDB0;
-Audio_ExternalCallback_End    = 0x00F2AA08;
-LyricsBoxFuncProc_Boundary    = 0x00F2B1E0;
-LyricsBoxFunc_End             = 0x00F2B39B;
-SongNameBox_End               = 0x00F2B48A;
-SeqNameOK_End                 = 0x00F2D012;
-DemoMedDsp_End                = 0x00F2D1F0;
+ComposerBox_End               = 0x00F2B32E;
+MeasureBoxFunc                = 0x00F2B425;
+MeasureBoxFunc_End            = 0x00F2B45B;
+AcDiskFileName_End            = 0x00F2B502;
+AcDocSongName_End             = 0x00F2B6F7;
+AcPDSongName_End              = 0x00F2B845;
+AcSmfFileName_End             = 0x00F2B5A9;
+AcSmfSongName_End             = 0x00F2B650;
+AcDocFileNo_End               = 0x00F2B79E;
+IvNamingExitProc              = 0x00F2B8EC;
+TrAsGridChk_End               = 0x00F2C6DF;
+AcDemoSong_End                = 0x00F2C83D;
+AcCurSong_End                 = 0x00F2C8B1;
+VoiceConfig_End               = 0x00F2C79E;
+TrAsGrid_BoxProc              = 0x00F2BCA9;
+SqAftSetFunc_End              = 0x00F2CB1C;
+Audio_ExternalCallback_End    = 0x00F2A7BD;
+LyricsBoxFuncProc_Boundary    = 0x00F2AF95;
+LyricsBoxFunc_End             = 0x00F2B150;
+SongNameBox_End               = 0x00F2B23F;
+SeqNameOK_End                 = 0x00F2CD7E;
+DemoMedDsp_End                = 0x00F2CF5C;
 
 /* Debug string pointer */
-DbgStr_PartSelLangCheck       = 0x00E206FC;
+DbgStr_PartSelLangCheck       = 0x00E206FA;

@@ -33,6 +33,7 @@ RUN
     Prints a summary, then the moved / pile / orphan rows (--all: also the
     unreferenced new labels).  Exit status 0 always: this is a review list.
 """
+import bisect
 import collections
 import glob
 import os
@@ -175,8 +176,17 @@ def main():
             rows["pile"].append((b, n, r, ""))
     # A new label may stand where a v2.06i label of the same routine stood: the tool
     # names a branch target it cannot map.  Suggest the old name when the old label is
-    # missing or unreferenced here, sits within 0x400 bytes, and its v2.06i code starts
-    # with the same three instruction shapes as the new label's.
+    # missing or unreferenced here, sits within 0x400 bytes, belongs to the routine of the
+    # same name (the nearest routine-level label at or below it, in each build), and its
+    # v2.06i code starts with the same three instruction shapes as the new label's.  The
+    # routine test (2026-10-31) dropped v1.15i's .Lts925_close -> .Lec_process: three
+    # generic workspace loads that matched a label of HDAE5000_Smf_ReadHeader, which v1.x
+    # does not have.
+    def enclosing(names):
+        at = sorted(names.items())
+        keys = [a for a, _ in at]
+        return lambda x: at[bisect.bisect_right(keys, x) - 1][1] if keys and x >= keys[0] else None
+    rout_a, rout_b = enclosing(routine_names(sa)), enclosing(routine_names(sb))
     for b, n, r, info in rows["new"]:
         if b >= eb:
             continue
@@ -186,6 +196,8 @@ def main():
             if m in sb and refs.get(m, 0):
                 continue
             if m.startswith("__") or abs(sb.get(m, a) - b) > 0x400 and abs(a - b) > 0x1000:
+                continue
+            if rout_a(a) != rout_b(b):
                 continue
             if shapes(da, ia, a, code_end=ea) == here and (best is None or abs(a - b) < abs(sa[best] - b)):
                 best = m
