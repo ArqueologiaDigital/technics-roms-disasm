@@ -10,7 +10,7 @@ SECTIONS {
 }
 
 NakaInst_Param_EndFF = 0x00EE013B;
-Naka_PresentationRootState = 0x00EF013F;
+Naka_PresentationRootState = 0x00EF0115;
 SeqByteBlock_EffectsSeqData = 0x00F5008B;
 SeqByteBlock_EffectsSeqDotExt = 0x00F500B5;
 NakaWidget_CmpMeas = 0x00E190EA;

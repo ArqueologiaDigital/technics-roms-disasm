@@ -9,5 +9,5 @@ SECTIONS {
     /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) }
 }
 
-Naka_PresentationRootState = 0x00EF013F;
-PlySngSel2Func = 0x00F30017;
+Naka_PresentationRootState = 0x00EF0115;
+PlySngSel2Func = 0x00F2FFED;
