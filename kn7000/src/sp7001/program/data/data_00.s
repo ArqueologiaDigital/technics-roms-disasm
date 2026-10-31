@@ -5833,3616 +5833,4219 @@ SndRecTriFieldGet2_Table_2_p0_p24_0:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x13"
 	tab_u16	3072, 5120, 12800, 24064, 29184	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_0
-SndRecTriFieldGet2_Table_2_p0_0:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Room1      \x00\x00", f18=16, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_0, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_0:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Room1      \x00\x00", f18=16, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_0
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_0
 SndRecTriFieldGet2_Table_2_p0_p24_1:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x19"
 	tab_u16	3072, 5632, 12800, 23040, 28160	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_1
-SndRecTriFieldGet2_Table_2_p0_1:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Room2      \x00\x00", f18=16, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_1, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_1:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Room2      \x00\x00", f18=16, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_1, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_1
 SndRecTriFieldGet2_Table_2_p0_p24_2:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="#"
 	tab_u16	11520, 6656, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_2
-SndRecTriFieldGet2_Table_2_p0_2:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Plate1     \x00\x00", f18=18, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_2, f28=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_2:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Plate1     \x00\x00", f18=18, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_2, f28=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_2
 SndRecTriFieldGet2_Table_2_p0_p24_3:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="*"
 	tab_u16	11520, 5632, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_3
-SndRecTriFieldGet2_Table_2_p0_3:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Plate2     \x00\x00", f18=18, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_3, f28=1, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_3:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Plate2     \x00\x00", f18=18, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_3, f28=1, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_3
 SndRecTriFieldGet2_Table_2_p0_p24_4:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="#"
 	tab_u16	2816, 5376, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_4
-SndRecTriFieldGet2_Table_2_p0_4:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Concert1    \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_4, f28=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_4:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Concert1    \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_4, f28=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_4
 SndRecTriFieldGet2_Table_2_p0_p24_5:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="'"
 	tab_u16	15360, 5888, 20480, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_5
-SndRecTriFieldGet2_Table_2_p0_5:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Concert2    \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_5, f28=2, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_5:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Concert2    \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_5, f28=2, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_5
 SndRecTriFieldGet2_Table_2_p0_p24_6:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="-"
 	tab_u16	11520, 3584, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_6
-SndRecTriFieldGet2_Table_2_p0_6:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Dark1      \x00\x00", f18=22, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_6, f28=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_6:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Dark1      \x00\x00", f18=22, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_6, f28=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_6
 SndRecTriFieldGet2_Table_2_p0_p24_7:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="7"
 	tab_u16	23040, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_7
-SndRecTriFieldGet2_Table_2_p0_7:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Dark2      \x00\x00", f18=22, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_7, f28=3, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_7:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Dark2      \x00\x00", f18=22, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_7, f28=3, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_7
 SndRecTriFieldGet2_Table_2_p0_p24_8:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0=")"
 	tab_u16	6400, 5376, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_8
-SndRecTriFieldGet2_Table_2_p0_8:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Bright1     \x00\x00", f18=24, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_8, f28=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_8:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Bright1     \x00\x00", f18=24, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_8, f28=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_8
 SndRecTriFieldGet2_Table_2_p0_p24_9:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="-"
 	tab_u16	7680, 5888, 12800, 12800, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_9
-SndRecTriFieldGet2_Table_2_p0_9:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Bright2     \x00\x00", f18=24, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_9, f28=4, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_9:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Bright2     \x00\x00", f18=24, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_9, f28=4, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_9
 SndRecTriFieldGet2_Table_2_p0_p24_10:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="A"
 	tab_u16	25600, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_10
-SndRecTriFieldGet2_Table_2_p0_10:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Long1      \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_10, f28=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_10:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Long1      \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_10, f28=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_10
 SndRecTriFieldGet2_Table_2_p0_p24_11:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="K"
 	tab_u16	31744, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_11
-SndRecTriFieldGet2_Table_2_p0_11:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Long2      \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_11, f28=5, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_11:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Long2      \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_11, f28=5, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_11
 SndRecTriFieldGet2_Table_2_p0_p24_12:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="-"
 	tab_u16	11520, 4096, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_12
-SndRecTriFieldGet2_Table_2_p0_12:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Large Hall1   \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_12, f28=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_12:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Large Hall1   \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_12, f28=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_12
 SndRecTriFieldGet2_Table_2_p0_p24_13:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="7"
 	tab_u16	23040, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_13
-SndRecTriFieldGet2_Table_2_p0_13:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Large Hall2   \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_13, f28=6, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_13:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Large Hall2   \x00\x00", f18=20, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_13, f28=6, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_13
 SndRecTriFieldGet2_Table_2_p0_p24_14:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="-"
 	tab_u16	5120, 4096, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_14
-SndRecTriFieldGet2_Table_2_p0_14:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Live Stage   \x00\x00", f18=30, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_14, f28=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_14:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Live Stage   \x00\x00", f18=30, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_14, f28=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_14
 SndRecTriFieldGet2_Table_2_p0_p24_15:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="7"
 	tab_u16	64000, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_15
-SndRecTriFieldGet2_Table_2_p0_15:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Stadium     \x00\x00", f18=30, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_15, f28=7, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_15:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Stadium     \x00\x00", f18=30, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_15, f28=7, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_15
 SndRecTriFieldGet2_Table_2_p0_p24_16:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3072, 10240, 5120, 5120, 21504	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_16
-SndRecTriFieldGet2_Table_2_p0_16:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Medium Gate   \x00\x00", f18=8, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_16, f28=9, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_16:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Medium Gate   \x00\x00", f18=8, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_16, f28=9, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_16
 SndRecTriFieldGet2_Table_2_p0_p24_17:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	3072, 10240, 5120, 7680, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_17
-SndRecTriFieldGet2_Table_2_p0_17:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Short Gate   \x00\x00", f18=8, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_17, f28=9, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_17:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Short Gate   \x00\x00", f18=8, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_17, f28=9, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_17
 SndRecTriFieldGet2_Table_2_p0_p24_18:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="7"
 	tab_u16	3072, 2560, 1280, 3840, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_18
-SndRecTriFieldGet2_Table_2_p0_18:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Long Gate    \x00\x00", f18=8, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_18, f28=9, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_18:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Long Gate    \x00\x00", f18=8, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_18, f28=9, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_18
 SndRecTriFieldGet2_Table_2_p0_p24_19:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_19
-SndRecTriFieldGet2_Table_2_p0_19:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_19, f28=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_19:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_19, f28=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_19
 SndRecTriFieldGet2_Table_2_p0_p24_20:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_20
-SndRecTriFieldGet2_Table_2_p0_20:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_20, f28=16, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_20:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_20, f28=16, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_20
 SndRecTriFieldGet2_Table_2_p0_p24_21:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_21
-SndRecTriFieldGet2_Table_2_p0_21:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_21, f28=16, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_21:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_21, f28=16, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_21
 SndRecTriFieldGet2_Table_2_p0_p24_22:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_22
-SndRecTriFieldGet2_Table_2_p0_22:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_22, f28=16, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_22:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_22, f28=16, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_22
 SndRecTriFieldGet2_Table_2_p0_p24_23:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_23
-SndRecTriFieldGet2_Table_2_p0_23:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_23, f28=16, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_23:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_23, f28=16, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_23
 SndRecTriFieldGet2_Table_2_p0_p24_24:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_24
-SndRecTriFieldGet2_Table_2_p0_24:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_24, f28=16, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_24:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_24, f28=16, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_24
 SndRecTriFieldGet2_Table_2_p0_p24_25:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_25
-SndRecTriFieldGet2_Table_2_p0_25:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_25, f28=16, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_25:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_25, f28=16, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_25
 SndRecTriFieldGet2_Table_2_p0_p24_26:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_26
-SndRecTriFieldGet2_Table_2_p0_26:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_26, f28=16, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_26:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_26, f28=16, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_26
 SndRecTriFieldGet2_Table_2_p0_p24_27:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_27
-SndRecTriFieldGet2_Table_2_p0_27:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_27, f28=16, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_27:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_27, f28=16, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_27
 SndRecTriFieldGet2_Table_2_p0_p24_28:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_28
-SndRecTriFieldGet2_Table_2_p0_28:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_28, f28=16, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_28:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_28, f28=16, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_28
 SndRecTriFieldGet2_Table_2_p0_p24_29:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_29
-SndRecTriFieldGet2_Table_2_p0_29:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_29, f28=16, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_29:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_29, f28=16, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_29
 SndRecTriFieldGet2_Table_2_p0_p24_30:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_30
-SndRecTriFieldGet2_Table_2_p0_30:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_30, f28=16, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_30:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_30, f28=16, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_30
 SndRecTriFieldGet2_Table_2_p0_p24_31:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_31
-SndRecTriFieldGet2_Table_2_p0_31:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_31, f28=16, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_31:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_31, f28=16, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_31
 SndRecTriFieldGet2_Table_2_p0_p24_32:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_32
-SndRecTriFieldGet2_Table_2_p0_32:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_32, f28=16, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_32:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_32, f28=16, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_32
 SndRecTriFieldGet2_Table_2_p0_p24_33:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_33
-SndRecTriFieldGet2_Table_2_p0_33:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_33, f28=16, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_33:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_33, f28=16, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_33
 SndRecTriFieldGet2_Table_2_p0_p24_34:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_34
-SndRecTriFieldGet2_Table_2_p0_34:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_34, f28=16, index_=15, x30="\x00\x00"
+
+Str_Normal8:	.asciz "    Normal8     "
+# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x190675, 0x190684
+
 SndRecTriFieldGet2_Table_2_p0_p24_35:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_35
-SndRecTriFieldGet2_Table_2_p0_35:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_35, f28=16, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_34:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_35, f28=16, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_34
 SndRecTriFieldGet2_Table_2_p0_p24_36:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_36
-SndRecTriFieldGet2_Table_2_p0_36:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_36, f28=16, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_35:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_36, f28=16, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_35
 SndRecTriFieldGet2_Table_2_p0_p24_37:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_37
-SndRecTriFieldGet2_Table_2_p0_37:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_37, f28=16, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_36:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_37, f28=16, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_36
 SndRecTriFieldGet2_Table_2_p0_p24_38:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_38
-SndRecTriFieldGet2_Table_2_p0_38:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_38, f28=16, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_37:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_38, f28=16, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_37
 SndRecTriFieldGet2_Table_2_p0_p24_39:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_39
-SndRecTriFieldGet2_Table_2_p0_39:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_39, f28=16, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_38:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_39, f28=16, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_38
 SndRecTriFieldGet2_Table_2_p0_p24_40:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_40
-SndRecTriFieldGet2_Table_2_p0_40:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_40, f28=16, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_39:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_40, f28=16, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_39
 SndRecTriFieldGet2_Table_2_p0_p24_41:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_41
-SndRecTriFieldGet2_Table_2_p0_41:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_41, f28=16, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_40:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_41, f28=16, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_40
 SndRecTriFieldGet2_Table_2_p0_p24_42:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_42
-SndRecTriFieldGet2_Table_2_p0_42:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_42, f28=16, index_=23, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_41:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_42, f28=16, index_=23
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_41
 SndRecTriFieldGet2_Table_2_p0_p24_43:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_43
-SndRecTriFieldGet2_Table_2_p0_43:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_43, f28=16, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_42:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_43, f28=16, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_42
 SndRecTriFieldGet2_Table_2_p0_p24_44:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_44
-SndRecTriFieldGet2_Table_2_p0_44:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_44, f28=16, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_43:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_44, f28=16, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_43
 SndRecTriFieldGet2_Table_2_p0_p24_45:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_45
-SndRecTriFieldGet2_Table_2_p0_45:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_45, f28=16, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_44:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_45, f28=16, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_44
 SndRecTriFieldGet2_Table_2_p0_p24_46:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 7936, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_46
-SndRecTriFieldGet2_Table_2_p0_46:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_46, f28=16, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_45:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_46, f28=16, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_45
 SndRecTriFieldGet2_Table_2_p0_p24_47:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 8960, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_47
-SndRecTriFieldGet2_Table_2_p0_47:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_47, f28=16, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_46:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_47, f28=16, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_46
 SndRecTriFieldGet2_Table_2_p0_p24_48:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_48
-SndRecTriFieldGet2_Table_2_p0_48:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_48, f28=16, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_47:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_48, f28=16, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_47
 SndRecTriFieldGet2_Table_2_p0_p24_49:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_49
-SndRecTriFieldGet2_Table_2_p0_49:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_49, f28=16, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_48:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_49, f28=16, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_48
 SndRecTriFieldGet2_Table_2_p0_p24_50:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_50
-SndRecTriFieldGet2_Table_2_p0_50:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_50, f28=16, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_49:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_50, f28=16, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_49
 SndRecTriFieldGet2_Table_2_p0_p24_51:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 7936, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_51
-SndRecTriFieldGet2_Table_2_p0_51:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_51, f28=16, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_50:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_51, f28=16, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_50
 SndRecTriFieldGet2_Table_2_p0_p24_52:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 8960, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_52
-SndRecTriFieldGet2_Table_2_p0_52:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_52, f28=16, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_51:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_52, f28=16, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_51
 SndRecTriFieldGet2_Table_2_p0_p24_53:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_53
-SndRecTriFieldGet2_Table_2_p0_53:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_53, f28=16, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_52:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_53, f28=16, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_52
 SndRecTriFieldGet2_Table_2_p0_p24_54:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_54
-SndRecTriFieldGet2_Table_2_p0_54:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_54, f28=16, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_53:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_54, f28=16, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_53
 SndRecTriFieldGet2_Table_2_p0_p24_55:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_55
-SndRecTriFieldGet2_Table_2_p0_55:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_55, f28=16, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_54:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_55, f28=16, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_54
 SndRecTriFieldGet2_Table_2_p0_p24_56:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	6144, 7936, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_56
-SndRecTriFieldGet2_Table_2_p0_56:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_56, f28=16, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_55:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_56, f28=16, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_55
 SndRecTriFieldGet2_Table_2_p0_p24_57:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	6144, 8960, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_57
-SndRecTriFieldGet2_Table_2_p0_57:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_57, f28=16, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_56:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_57, f28=16, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_56
 SndRecTriFieldGet2_Table_2_p0_p24_58:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 768, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_58
-SndRecTriFieldGet2_Table_2_p0_58:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_58, f28=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_57:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_58, f28=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_57
 SndRecTriFieldGet2_Table_2_p0_p24_59:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 1024, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_59
-SndRecTriFieldGet2_Table_2_p0_59:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_59, f28=17, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_58:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_59, f28=17, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_58
 SndRecTriFieldGet2_Table_2_p0_p24_60:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1280, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_60
-SndRecTriFieldGet2_Table_2_p0_60:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_60, f28=17, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_59:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_60, f28=17, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_59
 SndRecTriFieldGet2_Table_2_p0_p24_61:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_61
-SndRecTriFieldGet2_Table_2_p0_61:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_61, f28=17, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_60:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_61, f28=17, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_60
 SndRecTriFieldGet2_Table_2_p0_p24_62:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1792, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_62
-SndRecTriFieldGet2_Table_2_p0_62:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_62, f28=17, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_61:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_62, f28=17, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_61
 SndRecTriFieldGet2_Table_2_p0_p24_63:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2048, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_63
-SndRecTriFieldGet2_Table_2_p0_63:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_63, f28=17, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_62:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_63, f28=17, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_62
 SndRecTriFieldGet2_Table_2_p0_p24_64:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2304, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_64
-SndRecTriFieldGet2_Table_2_p0_64:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_64, f28=17, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_63:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_64, f28=17, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_63
 SndRecTriFieldGet2_Table_2_p0_p24_65:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2560, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_65
-SndRecTriFieldGet2_Table_2_p0_65:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_65, f28=17, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_64:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_65, f28=17, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_64
 SndRecTriFieldGet2_Table_2_p0_p24_66:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 768, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_66
-SndRecTriFieldGet2_Table_2_p0_66:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_66, f28=17, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_65:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_66, f28=17, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_65
 SndRecTriFieldGet2_Table_2_p0_p24_67:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 1024, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_67
-SndRecTriFieldGet2_Table_2_p0_67:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_67, f28=17, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_66:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_67, f28=17, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_66
 SndRecTriFieldGet2_Table_2_p0_p24_68:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1280, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_68
-SndRecTriFieldGet2_Table_2_p0_68:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_68, f28=17, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_67:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_68, f28=17, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_67
 SndRecTriFieldGet2_Table_2_p0_p24_69:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_69
-SndRecTriFieldGet2_Table_2_p0_69:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_69, f28=17, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_68:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_69, f28=17, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_68
 SndRecTriFieldGet2_Table_2_p0_p24_70:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1792, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_70
-SndRecTriFieldGet2_Table_2_p0_70:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_70, f28=17, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_69:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_70, f28=17, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_69
 SndRecTriFieldGet2_Table_2_p0_p24_71:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2048, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_71
-SndRecTriFieldGet2_Table_2_p0_71:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_71, f28=17, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_70:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_71, f28=17, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_70
 SndRecTriFieldGet2_Table_2_p0_p24_72:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2304, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_72
-SndRecTriFieldGet2_Table_2_p0_72:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_72, f28=17, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_71:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_72, f28=17, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_71
 SndRecTriFieldGet2_Table_2_p0_p24_73:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	13824, 2560, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_73
-SndRecTriFieldGet2_Table_2_p0_73:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_73, f28=17, index_=15, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_72:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_73, f28=17, index_=15
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_72
 SndRecTriFieldGet2_Table_2_p0_p24_74:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 768, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_74
-SndRecTriFieldGet2_Table_2_p0_74:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_74, f28=17, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_73:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_74, f28=17, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_73
 SndRecTriFieldGet2_Table_2_p0_p24_75:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 1024, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_75
-SndRecTriFieldGet2_Table_2_p0_75:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_75, f28=17, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_74:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_75, f28=17, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_74
 SndRecTriFieldGet2_Table_2_p0_p24_76:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1280, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_76
-SndRecTriFieldGet2_Table_2_p0_76:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_76, f28=17, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_75:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_76, f28=17, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_75
 SndRecTriFieldGet2_Table_2_p0_p24_77:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_77
-SndRecTriFieldGet2_Table_2_p0_77:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_77, f28=17, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_76:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_77, f28=17, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_76
 SndRecTriFieldGet2_Table_2_p0_p24_78:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1792, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_78
-SndRecTriFieldGet2_Table_2_p0_78:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_78, f28=17, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_77:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_78, f28=17, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_77
 SndRecTriFieldGet2_Table_2_p0_p24_79:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2048, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_79
-SndRecTriFieldGet2_Table_2_p0_79:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_79, f28=17, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_78:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_79, f28=17, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_78
 SndRecTriFieldGet2_Table_2_p0_p24_80:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2304, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_80
-SndRecTriFieldGet2_Table_2_p0_80:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_80, f28=17, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_79:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_80, f28=17, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_79
 SndRecTriFieldGet2_Table_2_p0_p24_81:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2560, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_81
-SndRecTriFieldGet2_Table_2_p0_81:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_81, f28=17, index_=23, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_80:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=83, f20=5, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_81, f28=17, index_=23
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_80
 SndRecTriFieldGet2_Table_2_p0_p24_82:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_82
-SndRecTriFieldGet2_Table_2_p0_82:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_82, f28=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_81:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_82, f28=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_81
 SndRecTriFieldGet2_Table_2_p0_p24_83:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_83
-SndRecTriFieldGet2_Table_2_p0_83:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_83, f28=18, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_82:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_83, f28=18, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_82
 SndRecTriFieldGet2_Table_2_p0_p24_84:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_84
-SndRecTriFieldGet2_Table_2_p0_84:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_84, f28=18, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_83:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_84, f28=18, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_83
 SndRecTriFieldGet2_Table_2_p0_p24_85:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_85
-SndRecTriFieldGet2_Table_2_p0_85:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_85, f28=18, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_84:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_85, f28=18, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_84
 SndRecTriFieldGet2_Table_2_p0_p24_86:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_86
-SndRecTriFieldGet2_Table_2_p0_86:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_86, f28=18, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_85:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_86, f28=18, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_85
 SndRecTriFieldGet2_Table_2_p0_p24_87:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_87
-SndRecTriFieldGet2_Table_2_p0_87:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_87, f28=18, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_86:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_87, f28=18, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_86
 SndRecTriFieldGet2_Table_2_p0_p24_88:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_88
-SndRecTriFieldGet2_Table_2_p0_88:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_88, f28=18, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_87:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_88, f28=18, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_87
 SndRecTriFieldGet2_Table_2_p0_p24_89:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_89
-SndRecTriFieldGet2_Table_2_p0_89:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_89, f28=18, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_88:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_89, f28=18, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_88
 SndRecTriFieldGet2_Table_2_p0_p24_90:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_90
-SndRecTriFieldGet2_Table_2_p0_90:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_90, f28=18, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_89:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_90, f28=18, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_89
 SndRecTriFieldGet2_Table_2_p0_p24_91:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_91
-SndRecTriFieldGet2_Table_2_p0_91:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_91, f28=18, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_90:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_91, f28=18, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_90
 SndRecTriFieldGet2_Table_2_p0_p24_92:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 512, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_92
-SndRecTriFieldGet2_Table_2_p0_92:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_92, f28=18, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_91:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_92, f28=18, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_91
 SndRecTriFieldGet2_Table_2_p0_p24_93:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_93
-SndRecTriFieldGet2_Table_2_p0_93:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_93, f28=18, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_92:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_93, f28=18, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_92
 SndRecTriFieldGet2_Table_2_p0_p24_94:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_94
-SndRecTriFieldGet2_Table_2_p0_94:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_94, f28=18, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_93:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_94, f28=18, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_93
 SndRecTriFieldGet2_Table_2_p0_p24_95:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_95
-SndRecTriFieldGet2_Table_2_p0_95:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_95, f28=18, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_94:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_95, f28=18, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_94
 SndRecTriFieldGet2_Table_2_p0_p24_96:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_96
-SndRecTriFieldGet2_Table_2_p0_96:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_96, f28=18, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_95:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_96, f28=18, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_95
 SndRecTriFieldGet2_Table_2_p0_p24_97:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_97
-SndRecTriFieldGet2_Table_2_p0_97:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_97, f28=18, index_=15, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_96:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_97, f28=18, index_=15
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_96
 SndRecTriFieldGet2_Table_2_p0_p24_98:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_98
-SndRecTriFieldGet2_Table_2_p0_98:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_98, f28=18, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_97:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_98, f28=18, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_97
 SndRecTriFieldGet2_Table_2_p0_p24_99:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_99
-SndRecTriFieldGet2_Table_2_p0_99:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_99, f28=18, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_98:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_99, f28=18, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_98
 SndRecTriFieldGet2_Table_2_p0_p24_100:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 1024, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_100
-SndRecTriFieldGet2_Table_2_p0_100:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_100, f28=18, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_99:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_100, f28=18, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_99
 SndRecTriFieldGet2_Table_2_p0_p24_101:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_101
-SndRecTriFieldGet2_Table_2_p0_101:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_101, f28=18, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_100:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_101, f28=18, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_100
 SndRecTriFieldGet2_Table_2_p0_p24_102:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_102
-SndRecTriFieldGet2_Table_2_p0_102:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_102, f28=18, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_101:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_102, f28=18, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_101
 SndRecTriFieldGet2_Table_2_p0_p24_103:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_103
-SndRecTriFieldGet2_Table_2_p0_103:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_103, f28=18, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_102:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_103, f28=18, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_102
 SndRecTriFieldGet2_Table_2_p0_p24_104:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_104
-SndRecTriFieldGet2_Table_2_p0_104:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_104, f28=18, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_103:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_104, f28=18, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_103
 SndRecTriFieldGet2_Table_2_p0_p24_105:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_105
-SndRecTriFieldGet2_Table_2_p0_105:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_105, f28=18, index_=23, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_104:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_105, f28=18, index_=23
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_104
 SndRecTriFieldGet2_Table_2_p0_p24_106:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_106
-SndRecTriFieldGet2_Table_2_p0_106:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_106, f28=18, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_105:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_106, f28=18, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_105
 SndRecTriFieldGet2_Table_2_p0_p24_107:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_107
-SndRecTriFieldGet2_Table_2_p0_107:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_107, f28=18, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_106:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_107, f28=18, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_106
 SndRecTriFieldGet2_Table_2_p0_p24_108:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_108
-SndRecTriFieldGet2_Table_2_p0_108:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_108, f28=18, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_107:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_108, f28=18, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_107
 SndRecTriFieldGet2_Table_2_p0_p24_109:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_109
-SndRecTriFieldGet2_Table_2_p0_109:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_109, f28=18, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_108:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_109, f28=18, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_108
 SndRecTriFieldGet2_Table_2_p0_p24_110:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_110
-SndRecTriFieldGet2_Table_2_p0_110:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_110, f28=18, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_109:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_110, f28=18, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_109
 SndRecTriFieldGet2_Table_2_p0_p24_111:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_111
-SndRecTriFieldGet2_Table_2_p0_111:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_111, f28=18, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_110:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_111, f28=18, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_110
 SndRecTriFieldGet2_Table_2_p0_p24_112:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_112
-SndRecTriFieldGet2_Table_2_p0_112:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_112, f28=18, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_111:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_112, f28=18, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_111
 SndRecTriFieldGet2_Table_2_p0_p24_113:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_113
-SndRecTriFieldGet2_Table_2_p0_113:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_113, f28=18, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_112:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_113, f28=18, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_112
 SndRecTriFieldGet2_Table_2_p0_p24_114:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_114
-SndRecTriFieldGet2_Table_2_p0_114:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_114, f28=18, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_113:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_114, f28=18, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_113
 SndRecTriFieldGet2_Table_2_p0_p24_115:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_115
-SndRecTriFieldGet2_Table_2_p0_115:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_115, f28=18, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_114:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_115, f28=18, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_114
 SndRecTriFieldGet2_Table_2_p0_p24_116:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_116
-SndRecTriFieldGet2_Table_2_p0_116:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_116, f28=18, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_115:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_116, f28=18, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_115
 SndRecTriFieldGet2_Table_2_p0_p24_117:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_117
-SndRecTriFieldGet2_Table_2_p0_117:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_117, f28=18, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_116:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_117, f28=18, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_116
 SndRecTriFieldGet2_Table_2_p0_p24_118:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_118
-SndRecTriFieldGet2_Table_2_p0_118:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_118, f28=18, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_117:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_118, f28=18, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_117
 SndRecTriFieldGet2_Table_2_p0_p24_119:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_119
-SndRecTriFieldGet2_Table_2_p0_119:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_119, f28=18, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_118:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_119, f28=18, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_118
 SndRecTriFieldGet2_Table_2_p0_p24_120:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_120
-SndRecTriFieldGet2_Table_2_p0_120:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_120, f28=18, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_119:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=6, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_120, f28=18, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_119
 SndRecTriFieldGet2_Table_2_p0_p24_121:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_121
-SndRecTriFieldGet2_Table_2_p0_121:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_121, f28=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_120:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_121, f28=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_120
 SndRecTriFieldGet2_Table_2_p0_p24_122:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_122
-SndRecTriFieldGet2_Table_2_p0_122:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_122, f28=19, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_121:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_122, f28=19, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_121
 SndRecTriFieldGet2_Table_2_p0_p24_123:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_123
-SndRecTriFieldGet2_Table_2_p0_123:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_123, f28=19, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_122:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_123, f28=19, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_122
 SndRecTriFieldGet2_Table_2_p0_p24_124:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_124
-SndRecTriFieldGet2_Table_2_p0_124:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_124, f28=19, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_123:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_124, f28=19, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_123
 SndRecTriFieldGet2_Table_2_p0_p24_125:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_125
-SndRecTriFieldGet2_Table_2_p0_125:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_125, f28=19, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_124:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_125, f28=19, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_124
 SndRecTriFieldGet2_Table_2_p0_p24_126:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_126
-SndRecTriFieldGet2_Table_2_p0_126:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_126, f28=19, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_125:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_126, f28=19, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_125
 SndRecTriFieldGet2_Table_2_p0_p24_127:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_127
-SndRecTriFieldGet2_Table_2_p0_127:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_127, f28=19, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_126:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_127, f28=19, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_126
 SndRecTriFieldGet2_Table_2_p0_p24_128:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_128
-SndRecTriFieldGet2_Table_2_p0_128:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_128, f28=19, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_127:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_128, f28=19, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_127
 SndRecTriFieldGet2_Table_2_p0_p24_129:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_129
-SndRecTriFieldGet2_Table_2_p0_129:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_129, f28=19, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_128:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_129, f28=19, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_128
 SndRecTriFieldGet2_Table_2_p0_p24_130:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_130
-SndRecTriFieldGet2_Table_2_p0_130:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_130, f28=19, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_129:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_130, f28=19, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_129
 SndRecTriFieldGet2_Table_2_p0_p24_131:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_131
-SndRecTriFieldGet2_Table_2_p0_131:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_131, f28=19, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_130:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_131, f28=19, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_130
 SndRecTriFieldGet2_Table_2_p0_p24_132:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_132
-SndRecTriFieldGet2_Table_2_p0_132:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_132, f28=19, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_131:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_132, f28=19, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_131
 SndRecTriFieldGet2_Table_2_p0_p24_133:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_133
-SndRecTriFieldGet2_Table_2_p0_133:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_133, f28=19, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_132:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=14, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_133, f28=19, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_132
 SndRecTriFieldGet2_Table_2_p0_p24_134:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_134
-SndRecTriFieldGet2_Table_2_p0_134:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_134, f28=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_133:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_134, f28=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_133
 SndRecTriFieldGet2_Table_2_p0_p24_135:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 7680, 5120, 10240, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_135
-SndRecTriFieldGet2_Table_2_p0_135:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_135, f28=20, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_134:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_135, f28=20, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_134
 SndRecTriFieldGet2_Table_2_p0_p24_136:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_136
-SndRecTriFieldGet2_Table_2_p0_136:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_136, f28=20, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_135:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_136, f28=20, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_135
 SndRecTriFieldGet2_Table_2_p0_p24_137:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_137
-SndRecTriFieldGet2_Table_2_p0_137:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_137, f28=20, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_136:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_137, f28=20, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_136
 SndRecTriFieldGet2_Table_2_p0_p24_138:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_138
-SndRecTriFieldGet2_Table_2_p0_138:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_138, f28=20, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_137:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_138, f28=20, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_137
 SndRecTriFieldGet2_Table_2_p0_p24_139:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 14080, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_139
-SndRecTriFieldGet2_Table_2_p0_139:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_139, f28=20, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_138:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_139, f28=20, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_138
 SndRecTriFieldGet2_Table_2_p0_p24_140:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_140
-SndRecTriFieldGet2_Table_2_p0_140:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_140, f28=20, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_139:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_140, f28=20, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_139
 SndRecTriFieldGet2_Table_2_p0_p24_141:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 8960, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_141
-SndRecTriFieldGet2_Table_2_p0_141:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_141, f28=20, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_140:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_141, f28=20, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_140
 SndRecTriFieldGet2_Table_2_p0_p24_142:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_142
-SndRecTriFieldGet2_Table_2_p0_142:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_142, f28=20, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_141:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_142, f28=20, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_141
 SndRecTriFieldGet2_Table_2_p0_p24_143:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 8960, 5120, 10240, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_143
-SndRecTriFieldGet2_Table_2_p0_143:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_143, f28=20, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_142:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_143, f28=20, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_142
 SndRecTriFieldGet2_Table_2_p0_p24_144:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 8960, 8960, 15360, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_144
-SndRecTriFieldGet2_Table_2_p0_144:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_144, f28=20, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_143:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_144, f28=20, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_143
 SndRecTriFieldGet2_Table_2_p0_p24_145:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 8960, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_145
-SndRecTriFieldGet2_Table_2_p0_145:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_145, f28=20, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_144:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_145, f28=20, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_144
 SndRecTriFieldGet2_Table_2_p0_p24_146:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 8960, 8960, 15360, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_146
-SndRecTriFieldGet2_Table_2_p0_146:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_146, f28=20, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_145:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_146, f28=20, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_145
 SndRecTriFieldGet2_Table_2_p0_p24_147:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 14080, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_147
-SndRecTriFieldGet2_Table_2_p0_147:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_147, f28=20, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_146:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_147, f28=20, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_146
 SndRecTriFieldGet2_Table_2_p0_p24_148:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_148
-SndRecTriFieldGet2_Table_2_p0_148:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_148, f28=20, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_147:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_148, f28=20, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_147
 SndRecTriFieldGet2_Table_2_p0_p24_149:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 11520, 8960, 15360, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_149
-SndRecTriFieldGet2_Table_2_p0_149:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_149, f28=20, index_=15, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_148:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_149, f28=20, index_=15
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_148
 SndRecTriFieldGet2_Table_2_p0_p24_150:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_150
-SndRecTriFieldGet2_Table_2_p0_150:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_150, f28=20, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_149:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_150, f28=20, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_149
 SndRecTriFieldGet2_Table_2_p0_p24_151:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 8960, 5120, 10240, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_151
-SndRecTriFieldGet2_Table_2_p0_151:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_151, f28=20, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_150:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_151, f28=20, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_150
 SndRecTriFieldGet2_Table_2_p0_p24_152:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 8960, 8960, 15360, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_152
-SndRecTriFieldGet2_Table_2_p0_152:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_152, f28=20, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_151:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_152, f28=20, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_151
 SndRecTriFieldGet2_Table_2_p0_p24_153:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 8960, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_153
-SndRecTriFieldGet2_Table_2_p0_153:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_153, f28=20, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_152:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_153, f28=20, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_152
 SndRecTriFieldGet2_Table_2_p0_p24_154:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 8960, 8960, 15360, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_154
-SndRecTriFieldGet2_Table_2_p0_154:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_154, f28=20, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_153:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_154, f28=20, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_153
 SndRecTriFieldGet2_Table_2_p0_p24_155:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 14080, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_155
-SndRecTriFieldGet2_Table_2_p0_155:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_155, f28=20, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_154:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_155, f28=20, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_154
 SndRecTriFieldGet2_Table_2_p0_p24_156:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_156
-SndRecTriFieldGet2_Table_2_p0_156:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_156, f28=20, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_155:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_156, f28=20, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_155
 SndRecTriFieldGet2_Table_2_p0_p24_157:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 11520, 8960, 15360, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_157
-SndRecTriFieldGet2_Table_2_p0_157:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_157, f28=20, index_=23, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_156:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_157, f28=20, index_=23
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_156
 SndRecTriFieldGet2_Table_2_p0_p24_158:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7168, 16640, 25344, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_158
-SndRecTriFieldGet2_Table_2_p0_158:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_158, f28=20, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_157:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_158, f28=20, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_157
 SndRecTriFieldGet2_Table_2_p0_p24_159:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_159
-SndRecTriFieldGet2_Table_2_p0_159:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_159, f28=20, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_158:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_159, f28=20, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_158
 SndRecTriFieldGet2_Table_2_p0_p24_160:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	1024, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_160
-SndRecTriFieldGet2_Table_2_p0_160:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_160, f28=20, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_159:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_160, f28=20, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_159
 SndRecTriFieldGet2_Table_2_p0_p24_161:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 7680, 4864, 9728, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_161
-SndRecTriFieldGet2_Table_2_p0_161:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_161, f28=20, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_160:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_161, f28=20, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_160
 SndRecTriFieldGet2_Table_2_p0_p24_162:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 10240, 6400, 12800, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_162
-SndRecTriFieldGet2_Table_2_p0_162:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_162, f28=20, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_161:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_162, f28=20, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_161
 SndRecTriFieldGet2_Table_2_p0_p24_163:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7936, 16640, 25344, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_163
-SndRecTriFieldGet2_Table_2_p0_163:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_163, f28=20, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_162:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_163, f28=20, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_162
 SndRecTriFieldGet2_Table_2_p0_p24_164:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_164
-SndRecTriFieldGet2_Table_2_p0_164:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_164, f28=20, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_163:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_164, f28=20, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_163
 SndRecTriFieldGet2_Table_2_p0_p24_165:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	1024, 8960, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_165
-SndRecTriFieldGet2_Table_2_p0_165:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_165, f28=20, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_164:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_165, f28=20, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_164
 SndRecTriFieldGet2_Table_2_p0_p24_166:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 8960, 4864, 9728, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_166
-SndRecTriFieldGet2_Table_2_p0_166:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_166, f28=20, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_165:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_166, f28=20, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_165
 SndRecTriFieldGet2_Table_2_p0_p24_167:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 15360, 6400, 12800, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_167
-SndRecTriFieldGet2_Table_2_p0_167:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_167, f28=20, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_166:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_167, f28=20, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_166
 SndRecTriFieldGet2_Table_2_p0_p24_168:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7936, 16640, 25344, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_168
-SndRecTriFieldGet2_Table_2_p0_168:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_168, f28=20, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_167:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_168, f28=20, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_167
 SndRecTriFieldGet2_Table_2_p0_p24_169:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_169
-SndRecTriFieldGet2_Table_2_p0_169:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_169, f28=20, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_168:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_169, f28=20, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_168
 SndRecTriFieldGet2_Table_2_p0_p24_170:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	1024, 8960, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_170
-SndRecTriFieldGet2_Table_2_p0_170:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_170, f28=20, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_169:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_170, f28=20, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_169
 SndRecTriFieldGet2_Table_2_p0_p24_171:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 8960, 4864, 9728, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_171
-SndRecTriFieldGet2_Table_2_p0_171:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_171, f28=20, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_170:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_171, f28=20, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_170
 SndRecTriFieldGet2_Table_2_p0_p24_172:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 15360, 6400, 12800, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_172
-SndRecTriFieldGet2_Table_2_p0_172:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_172, f28=20, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_171:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_172, f28=20, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_171
 SndRecTriFieldGet2_Table_2_p0_p24_173:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_173
-SndRecTriFieldGet2_Table_2_p0_173:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_173, f28=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_172:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_173, f28=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_172
 SndRecTriFieldGet2_Table_2_p0_p24_174:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 7680, 5120, 10240, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_174
-SndRecTriFieldGet2_Table_2_p0_174:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_174, f28=21, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_173:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_174, f28=21, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_173
 SndRecTriFieldGet2_Table_2_p0_p24_175:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_175
-SndRecTriFieldGet2_Table_2_p0_175:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_175, f28=21, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_174:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_175, f28=21, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_174
 SndRecTriFieldGet2_Table_2_p0_p24_176:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_176
-SndRecTriFieldGet2_Table_2_p0_176:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_176, f28=21, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_175:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_176, f28=21, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_175
 SndRecTriFieldGet2_Table_2_p0_p24_177:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_177
-SndRecTriFieldGet2_Table_2_p0_177:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_177, f28=21, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_176:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_177, f28=21, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_176
 SndRecTriFieldGet2_Table_2_p0_p24_178:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 14080, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_178
-SndRecTriFieldGet2_Table_2_p0_178:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_178, f28=21, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_177:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_178, f28=21, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_177
 SndRecTriFieldGet2_Table_2_p0_p24_179:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_179
-SndRecTriFieldGet2_Table_2_p0_179:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_179, f28=21, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_178:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_179, f28=21, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_178
 SndRecTriFieldGet2_Table_2_p0_p24_180:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 8960, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_180
-SndRecTriFieldGet2_Table_2_p0_180:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_180, f28=21, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_179:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_180, f28=21, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_179
 SndRecTriFieldGet2_Table_2_p0_p24_181:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7168, 16640, 25344, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_181
-SndRecTriFieldGet2_Table_2_p0_181:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_181, f28=21, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_180:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_181, f28=21, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_180
 SndRecTriFieldGet2_Table_2_p0_p24_182:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_182
-SndRecTriFieldGet2_Table_2_p0_182:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_182, f28=21, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_181:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_182, f28=21, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_181
 SndRecTriFieldGet2_Table_2_p0_p24_183:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	1024, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_183
-SndRecTriFieldGet2_Table_2_p0_183:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_183, f28=21, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_182:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_183, f28=21, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_182
 SndRecTriFieldGet2_Table_2_p0_p24_184:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 7680, 4864, 9728, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_184
-SndRecTriFieldGet2_Table_2_p0_184:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_184, f28=21, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_183:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_184, f28=21, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_183
 SndRecTriFieldGet2_Table_2_p0_p24_185:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 10240, 6400, 12800, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_185
-SndRecTriFieldGet2_Table_2_p0_185:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_185, f28=21, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_184:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=7, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_185, f28=21, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_184
 SndRecTriFieldGet2_Table_2_p0_p24_186:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	768, 2816, 6144, 5632, 7168, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_186
-SndRecTriFieldGet2_Table_2_p0_186:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus1     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_186, f28=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_185:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus1     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_186, f28=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_185
 SndRecTriFieldGet2_Table_2_p0_p24_187:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 2816, 6144, 5632, 7168, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_187
-SndRecTriFieldGet2_Table_2_p0_187:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus2     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_187, f28=22, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_186:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus2     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_187, f28=22, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_186
 SndRecTriFieldGet2_Table_2_p0_p24_188:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	768, 2816, 7168, 5632, 8192, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_188
-SndRecTriFieldGet2_Table_2_p0_188:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus3     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_188, f28=22, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_187:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus3     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_188, f28=22, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_187
 SndRecTriFieldGet2_Table_2_p0_p24_189:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	768, 2048, 7680, 4864, 7680, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_189
-SndRecTriFieldGet2_Table_2_p0_189:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus4     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_189, f28=22, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_188:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Chorus4     \x00\x00", f18=82, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_189, f28=22, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_188
 SndRecTriFieldGet2_Table_2_p0_p24_190:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	5120, 1024, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_190
-SndRecTriFieldGet2_Table_2_p0_190:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus1   \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_190, f28=22, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_189:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus1   \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_190, f28=22, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_189
 SndRecTriFieldGet2_Table_2_p0_p24_191:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="L"
 	tab_u16	2816, 1024, 2560, 2560, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_191
-SndRecTriFieldGet2_Table_2_p0_191:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus2   \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_191, f28=22, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_190:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus2   \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_191, f28=22, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_190
 SndRecTriFieldGet2_Table_2_p0_p24_192:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="L"
 	tab_u16	19456, 2816, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_192
-SndRecTriFieldGet2_Table_2_p0_192:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus3   \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_192, f28=22, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_191:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus3   \x00\x00", f18=1, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_192, f28=22, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_191
 SndRecTriFieldGet2_Table_2_p0_p24_193:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	2816, 5632, 2560, 2560, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_193
-SndRecTriFieldGet2_Table_2_p0_193:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus4   \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_193, f28=22, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_192:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   GM Chorus4   \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_193, f28=22, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_192
 SndRecTriFieldGet2_Table_2_p0_p24_194:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	12288, 12288, 60416, 60671, 60671, 60671, 25599, 25344, 512, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_194
-SndRecTriFieldGet2_Table_2_p0_194:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="Feedback Chorus \x00\x00", f18=64, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_194, f28=22, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_193:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="Feedback Chorus \x00\x00", f18=64, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_194, f28=22, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_193
 SndRecTriFieldGet2_Table_2_p0_p24_195:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 15360, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_195
-SndRecTriFieldGet2_Table_2_p0_195:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Flanger     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_195, f28=22, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_194:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Flanger     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_195, f28=22, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_194
 SndRecTriFieldGet2_Table_2_p0_p24_196:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_196
-SndRecTriFieldGet2_Table_2_p0_196:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste1    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_196, f28=25, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_195:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste1    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_196, f28=25
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_195
 SndRecTriFieldGet2_Table_2_p0_p24_197:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_197
-SndRecTriFieldGet2_Table_2_p0_197:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste2    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_197, f28=25, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_196:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste2    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_197, f28=25, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_196
 SndRecTriFieldGet2_Table_2_p0_p24_198:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_198
-SndRecTriFieldGet2_Table_2_p0_198:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste3    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_198, f28=25, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_197:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste3    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_198, f28=25, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_197
 SndRecTriFieldGet2_Table_2_p0_p24_199:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_199
-SndRecTriFieldGet2_Table_2_p0_199:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste4    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_199, f28=25, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_198:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste4    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_199, f28=25, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_198
 SndRecTriFieldGet2_Table_2_p0_p24_200:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_200
-SndRecTriFieldGet2_Table_2_p0_200:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste5    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_200, f28=25, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_199:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste5    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_200, f28=25, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_199
 SndRecTriFieldGet2_Table_2_p0_p24_201:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_201
-SndRecTriFieldGet2_Table_2_p0_201:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste6    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_201, f28=25, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_200:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste6    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_201, f28=25, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_200
 SndRecTriFieldGet2_Table_2_p0_p24_202:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_202
-SndRecTriFieldGet2_Table_2_p0_202:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste7    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_202, f28=25, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_201:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste7    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_202, f28=25, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_201
 SndRecTriFieldGet2_Table_2_p0_p24_203:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_203
-SndRecTriFieldGet2_Table_2_p0_203:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste8    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_203, f28=25, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_202:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste8    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_203, f28=25, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_202
 SndRecTriFieldGet2_Table_2_p0_p24_204:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_204
-SndRecTriFieldGet2_Table_2_p0_204:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste9    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_204, f28=25, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_203:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Celeste9    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_204, f28=25, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_203
 SndRecTriFieldGet2_Table_2_p0_p24_205:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_205
-SndRecTriFieldGet2_Table_2_p0_205:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste10    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_205, f28=25, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_204:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste10    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_205, f28=25, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_204
 SndRecTriFieldGet2_Table_2_p0_p24_206:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_206
-SndRecTriFieldGet2_Table_2_p0_206:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste11    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_206, f28=25, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_205:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste11    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_206, f28=25, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_205
 SndRecTriFieldGet2_Table_2_p0_p24_207:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 7936, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_207
-SndRecTriFieldGet2_Table_2_p0_207:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste12    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_207, f28=25, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_206:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste12    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_207, f28=25, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_206
 SndRecTriFieldGet2_Table_2_p0_p24_208:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_208
-SndRecTriFieldGet2_Table_2_p0_208:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste13    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_208, f28=25, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_207:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Celeste13    \x00\x00", f18=44, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_208, f28=25, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_207
 SndRecTriFieldGet2_Table_2_p0_p24_209:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	7680, 1536, 15360, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_209
-SndRecTriFieldGet2_Table_2_p0_209:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.1   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_209, f28=27, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_208:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.1   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_209, f28=27
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_208
 SndRecTriFieldGet2_Table_2_p0_p24_210:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	10240, 1024, 8960, 5120, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_210
-SndRecTriFieldGet2_Table_2_p0_210:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.2   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_210, f28=27, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_209:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.2   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_210, f28=27, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_209
 SndRecTriFieldGet2_Table_2_p0_p24_211:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 2048, 8960, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_211
-SndRecTriFieldGet2_Table_2_p0_211:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.3   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_211, f28=27, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_210:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.3   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_211, f28=27, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_210
 SndRecTriFieldGet2_Table_2_p0_p24_212:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	7680, 2816, 8960, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_212
-SndRecTriFieldGet2_Table_2_p0_212:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.4   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_212, f28=27, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_211:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.4   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_212, f28=27, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_211
 SndRecTriFieldGet2_Table_2_p0_p24_213:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 3328, 8960, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_213
-SndRecTriFieldGet2_Table_2_p0_213:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.5   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_213, f28=27, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_212:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.5   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_213, f28=27, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_212
 SndRecTriFieldGet2_Table_2_p0_p24_214:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	23040, 4096, 8960, 14080, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_214
-SndRecTriFieldGet2_Table_2_p0_214:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.6   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_214, f28=27, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_213:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.6   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_214, f28=27, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_213
 SndRecTriFieldGet2_Table_2_p0_p24_215:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	7680, 4096, 8960, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_215
-SndRecTriFieldGet2_Table_2_p0_215:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.7   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_215, f28=27, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_214:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.7   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_215, f28=27, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_214
 SndRecTriFieldGet2_Table_2_p0_p24_216:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 4608, 11520, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_216
-SndRecTriFieldGet2_Table_2_p0_216:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.8   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_216, f28=27, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_215:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.8   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_216, f28=27, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_215
 SndRecTriFieldGet2_Table_2_p0_p24_217:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	25344, 4096, 7936, 16640, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_217
-SndRecTriFieldGet2_Table_2_p0_217:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.9   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_217, f28=27, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_216:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Mod. Cel.9   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_217, f28=27, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_216
 SndRecTriFieldGet2_Table_2_p0_p24_218:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	20480, 3328, 6400, 11520, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_218
-SndRecTriFieldGet2_Table_2_p0_218:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.10   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_218, f28=27, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_217:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.10   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_218, f28=27, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_217
 SndRecTriFieldGet2_Table_2_p0_p24_219:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	7680, 1024, 8960, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_219
-SndRecTriFieldGet2_Table_2_p0_219:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.11   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_219, f28=27, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_218:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.11   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_219, f28=27, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_218
 SndRecTriFieldGet2_Table_2_p0_p24_220:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	9728, 1024, 8960, 4864, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_220
-SndRecTriFieldGet2_Table_2_p0_220:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.12   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_220, f28=27, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_219:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.12   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_220, f28=27, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_219
 SndRecTriFieldGet2_Table_2_p0_p24_221:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	12800, 4608, 15360, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_221
-SndRecTriFieldGet2_Table_2_p0_221:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.13   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_221, f28=27, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_220:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mod. Cel.13   \x00\x00", f18=45, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_221, f28=27, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_220
 SndRecTriFieldGet2_Table_2_p0_p24_222:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_222
-SndRecTriFieldGet2_Table_2_p0_222:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_222, f28=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_221:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_222, f28=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_221
 SndRecTriFieldGet2_Table_2_p0_p24_223:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_223
-SndRecTriFieldGet2_Table_2_p0_223:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_223, f28=32, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_222:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_223, f28=32, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_222
 SndRecTriFieldGet2_Table_2_p0_p24_224:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_224
-SndRecTriFieldGet2_Table_2_p0_224:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_224, f28=32, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_223:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_224, f28=32, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_223
 SndRecTriFieldGet2_Table_2_p0_p24_225:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_225
-SndRecTriFieldGet2_Table_2_p0_225:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_225, f28=32, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_224:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_225, f28=32, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_224
 SndRecTriFieldGet2_Table_2_p0_p24_226:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_226
-SndRecTriFieldGet2_Table_2_p0_226:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_226, f28=32, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_225:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_226, f28=32, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_225
 SndRecTriFieldGet2_Table_2_p0_p24_227:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_227
-SndRecTriFieldGet2_Table_2_p0_227:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_227, f28=32, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_226:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_227, f28=32, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_226
 SndRecTriFieldGet2_Table_2_p0_p24_228:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_228
-SndRecTriFieldGet2_Table_2_p0_228:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_228, f28=32, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_227:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_228, f28=32, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_227
 SndRecTriFieldGet2_Table_2_p0_p24_229:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_229
-SndRecTriFieldGet2_Table_2_p0_229:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_229, f28=32, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_228:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_229, f28=32, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_228
 SndRecTriFieldGet2_Table_2_p0_p24_230:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_230
-SndRecTriFieldGet2_Table_2_p0_230:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_230, f28=32, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_229:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_230, f28=32, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_229
 SndRecTriFieldGet2_Table_2_p0_p24_231:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_231
-SndRecTriFieldGet2_Table_2_p0_231:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_231, f28=32, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_230:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_231, f28=32, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_230
 SndRecTriFieldGet2_Table_2_p0_p24_232:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_232
-SndRecTriFieldGet2_Table_2_p0_232:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_232, f28=32, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_231:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_232, f28=32, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_231
 SndRecTriFieldGet2_Table_2_p0_p24_233:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_233
-SndRecTriFieldGet2_Table_2_p0_233:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_233, f28=32, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_232:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_233, f28=32, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_232
 SndRecTriFieldGet2_Table_2_p0_p24_234:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_234
-SndRecTriFieldGet2_Table_2_p0_234:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_234, f28=32, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_233:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_234, f28=32, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_233
 SndRecTriFieldGet2_Table_2_p0_p24_235:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_235
-SndRecTriFieldGet2_Table_2_p0_235:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_235, f28=32, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_234:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_235, f28=32, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_234
 SndRecTriFieldGet2_Table_2_p0_p24_236:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_236
-SndRecTriFieldGet2_Table_2_p0_236:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_236, f28=32, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_235:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_236, f28=32, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_235
 SndRecTriFieldGet2_Table_2_p0_p24_237:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_237
-SndRecTriFieldGet2_Table_2_p0_237:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_237, f28=32, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_236:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_237, f28=32, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_236
 SndRecTriFieldGet2_Table_2_p0_p24_238:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_238
-SndRecTriFieldGet2_Table_2_p0_238:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_238, f28=32, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_237:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_238, f28=32, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_237
 SndRecTriFieldGet2_Table_2_p0_p24_239:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_239
-SndRecTriFieldGet2_Table_2_p0_239:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_239, f28=32, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_238:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_239, f28=32, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_238
 SndRecTriFieldGet2_Table_2_p0_p24_240:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_240
-SndRecTriFieldGet2_Table_2_p0_240:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_240, f28=32, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_239:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_240, f28=32, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_239
 SndRecTriFieldGet2_Table_2_p0_p24_241:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_241
-SndRecTriFieldGet2_Table_2_p0_241:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_241, f28=32, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_240:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_241, f28=32, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_240
 SndRecTriFieldGet2_Table_2_p0_p24_242:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_242
-SndRecTriFieldGet2_Table_2_p0_242:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_242, f28=32, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_241:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_242, f28=32, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_241
 SndRecTriFieldGet2_Table_2_p0_p24_243:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_243
-SndRecTriFieldGet2_Table_2_p0_243:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_243, f28=32, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_242:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_243, f28=32, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_242
 SndRecTriFieldGet2_Table_2_p0_p24_244:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_244
-SndRecTriFieldGet2_Table_2_p0_244:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_244, f28=32, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_243:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_244, f28=32, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_243
 SndRecTriFieldGet2_Table_2_p0_p24_245:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_245
-SndRecTriFieldGet2_Table_2_p0_245:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_245, f28=32, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_244:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_245, f28=32, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_244
 SndRecTriFieldGet2_Table_2_p0_p24_246:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_246
-SndRecTriFieldGet2_Table_2_p0_246:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_246, f28=32, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_245:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_246, f28=32, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_245
 SndRecTriFieldGet2_Table_2_p0_p24_247:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_247
-SndRecTriFieldGet2_Table_2_p0_247:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_247, f28=32, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_246:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_247, f28=32, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_246
 SndRecTriFieldGet2_Table_2_p0_p24_248:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_248
-SndRecTriFieldGet2_Table_2_p0_248:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_248, f28=32, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_247:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_248, f28=32, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_247
 SndRecTriFieldGet2_Table_2_p0_p24_249:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_249
-SndRecTriFieldGet2_Table_2_p0_249:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_249, f28=32, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_248:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_249, f28=32, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_248
 SndRecTriFieldGet2_Table_2_p0_p24_250:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_250
-SndRecTriFieldGet2_Table_2_p0_250:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_250, f28=32, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_249:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_250, f28=32, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_249
 SndRecTriFieldGet2_Table_2_p0_p24_251:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_251
-SndRecTriFieldGet2_Table_2_p0_251:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_251, f28=32, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_250:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_251, f28=32, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_250
 SndRecTriFieldGet2_Table_2_p0_p24_252:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_252
-SndRecTriFieldGet2_Table_2_p0_252:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_252, f28=32, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_251:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_252, f28=32, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_251
 SndRecTriFieldGet2_Table_2_p0_p24_253:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_253
-SndRecTriFieldGet2_Table_2_p0_253:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_253, f28=32, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_252:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_253, f28=32, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_252
 SndRecTriFieldGet2_Table_2_p0_p24_254:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_254
-SndRecTriFieldGet2_Table_2_p0_254:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_254, f28=32, index_=45, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_253:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_254, f28=32, index_=45
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_253
 SndRecTriFieldGet2_Table_2_p0_p24_255:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_255
-SndRecTriFieldGet2_Table_2_p0_255:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_255, f28=32, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_254:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_255, f28=32, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_254
 SndRecTriFieldGet2_Table_2_p0_p24_256:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_256
-SndRecTriFieldGet2_Table_2_p0_256:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_256, f28=32, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_255:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_256, f28=32, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_255
 SndRecTriFieldGet2_Table_2_p0_p24_257:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_257
-SndRecTriFieldGet2_Table_2_p0_257:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_257, f28=32, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_256:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_257, f28=32, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_256
 SndRecTriFieldGet2_Table_2_p0_p24_258:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_258
-SndRecTriFieldGet2_Table_2_p0_258:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_258, f28=32, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_257:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_258, f28=32, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_257
 SndRecTriFieldGet2_Table_2_p0_p24_259:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_259
-SndRecTriFieldGet2_Table_2_p0_259:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_259, f28=32, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_258:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_259, f28=32, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_258
 SndRecTriFieldGet2_Table_2_p0_p24_260:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_260
-SndRecTriFieldGet2_Table_2_p0_260:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_260, f28=32, index_=53, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_259:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=5, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_260, f28=32, index_=53
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_259
 SndRecTriFieldGet2_Table_2_p0_p24_261:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	19712, 16384, 11520, 1792, 2560, 2560, 15360, 10240, 1536, 18432, 20224, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_261
-SndRecTriFieldGet2_Table_2_p0_261:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Standard     \x00\x00", f18=53, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_261, f28=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_260:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Standard     \x00\x00", f18=53, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_261, f28=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_260
 SndRecTriFieldGet2_Table_2_p0_p24_262:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	19712, 14848, 9984, 1792, 6144, 8960, 15360, 9984, 1792, 6144, 8960, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_262
-SndRecTriFieldGet2_Table_2_p0_262:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Single Rotor   \x00\x00", f18=53, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_262, f28=34, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_261:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Single Rotor   \x00\x00", f18=53, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_262, f28=34, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_261
 SndRecTriFieldGet2_Table_2_p0_p24_263:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="#"
 	tab_u16	15360, 15360, 11520, 1792, 1280, 2560, 14080, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_263
-SndRecTriFieldGet2_Table_2_p0_263:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Distorted    \x00\x00", f18=53, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_263, f28=34, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_262:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Distorted    \x00\x00", f18=53, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_263, f28=34, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_262
 SndRecTriFieldGet2_Table_2_p0_p24_264:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	19200, 15360, 11520, 1792, 1280, 2560, 14848, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_264
-SndRecTriFieldGet2_Table_2_p0_264:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Bright  Twin  \x00\x00", f18=134, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_264, f28=34, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_263:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Bright  Twin  \x00\x00", f18=134, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_264, f28=34, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_263
 SndRecTriFieldGet2_Table_2_p0_p24_265:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	19200, 16384, 11520, 1792, 1280, 2560, 14080, 10240, 1536, 11520, 17920, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_265
-SndRecTriFieldGet2_Table_2_p0_265:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Normal Twin   \x00\x00", f18=138, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_265, f28=34, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_264:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Normal Twin   \x00\x00", f18=138, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_265, f28=34, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_264
 SndRecTriFieldGet2_Table_2_p0_p24_266:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	17920, 15360, 11520, 1792, 1280, 2560, 15360, 10240, 1536, 11520, 17408, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_266
-SndRecTriFieldGet2_Table_2_p0_266:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mellow Twin   \x00\x00", f18=135, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_266, f28=34, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_265:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mellow Twin   \x00\x00", f18=135, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_266, f28=34, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_265
 SndRecTriFieldGet2_Table_2_p0_p24_267:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	19712, 15360, 11520, 1792, 1536, 2048, 14336, 10240, 1536, 12544, 18688, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_267
-SndRecTriFieldGet2_Table_2_p0_267:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Brilliant Twin \x00\x00", f18=136, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_267, f28=34, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_266:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Brilliant Twin \x00\x00", f18=136, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_267, f28=34, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_266
 SndRecTriFieldGet2_Table_2_p0_p24_268:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	16640, 16384, 11520, 1792, 1024, 2560, 12800, 10240, 1536, 15360, 15360, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_268
-SndRecTriFieldGet2_Table_2_p0_268:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Standard    \x00\x00", f18=15, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_268, f28=34, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_267:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Standard    \x00\x00", f18=15, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_268, f28=34, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_267
 SndRecTriFieldGet2_Table_2_p0_p24_269:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="0"
 	tab_u16	15360, 17920, 9984, 1792, 6144, 8960, 15360, 9984, 1792, 6144, 8960, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_269
-SndRecTriFieldGet2_Table_2_p0_269:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Single Rotor   \x00\x00", f18=15, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_269, f28=34, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_268:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Single Rotor   \x00\x00", f18=15, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_269, f28=34, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_268
 SndRecTriFieldGet2_Table_2_p0_p24_270:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	14080, 17920, 11520, 1792, 1280, 2560, 15360, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_270
-SndRecTriFieldGet2_Table_2_p0_270:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Distorted    \x00\x00", f18=15, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_270, f28=34, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_269:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Distorted    \x00\x00", f18=15, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_270, f28=34, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_269
 SndRecTriFieldGet2_Table_2_p0_p24_271:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	16640, 15360, 11520, 1792, 1280, 2560, 14848, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_271
-SndRecTriFieldGet2_Table_2_p0_271:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Bright Twin   \x00\x00", f18=128, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_271, f28=34, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_270:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Bright Twin   \x00\x00", f18=128, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_271, f28=34, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_270
 SndRecTriFieldGet2_Table_2_p0_p24_272:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15872, 17920, 11520, 1792, 2560, 2560, 15360, 10240, 1536, 18432, 20224, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_272
-SndRecTriFieldGet2_Table_2_p0_272:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mellow Twin   \x00\x00", f18=129, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_272, f28=34, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_271:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Mellow Twin   \x00\x00", f18=129, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_272, f28=34, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_271
 SndRecTriFieldGet2_Table_2_p0_p24_273:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	19456, 19456, 11520, 1792, 2560, 2560, 15360, 10240, 1536, 18432, 20224, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_273
-SndRecTriFieldGet2_Table_2_p0_273:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Brilliant Twin \x00\x00", f18=137, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_273, f28=34, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_272:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Brilliant Twin \x00\x00", f18=137, f20=14, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_273, f28=34, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_272
 SndRecTriFieldGet2_Table_2_p0_p24_274:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_274
-SndRecTriFieldGet2_Table_2_p0_274:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_274, f28=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_273:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_274, f28=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_273
 SndRecTriFieldGet2_Table_2_p0_p24_275:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_275
-SndRecTriFieldGet2_Table_2_p0_275:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_275, f28=35, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_274:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_275, f28=35, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_274
 SndRecTriFieldGet2_Table_2_p0_p24_276:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_276
-SndRecTriFieldGet2_Table_2_p0_276:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_276, f28=35, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_275:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_276, f28=35, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_275
 SndRecTriFieldGet2_Table_2_p0_p24_277:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_277
-SndRecTriFieldGet2_Table_2_p0_277:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_277, f28=35, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_276:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_277, f28=35, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_276
 SndRecTriFieldGet2_Table_2_p0_p24_278:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_278
-SndRecTriFieldGet2_Table_2_p0_278:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_278, f28=35, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_277:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_278, f28=35, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_277
 SndRecTriFieldGet2_Table_2_p0_p24_279:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_279
-SndRecTriFieldGet2_Table_2_p0_279:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_279, f28=35, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_278:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_279, f28=35, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_278
 SndRecTriFieldGet2_Table_2_p0_p24_280:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_280
-SndRecTriFieldGet2_Table_2_p0_280:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_280, f28=35, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_279:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_280, f28=35, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_279
 SndRecTriFieldGet2_Table_2_p0_p24_281:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_281
-SndRecTriFieldGet2_Table_2_p0_281:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_281, f28=35, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_280:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_281, f28=35, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_280
 SndRecTriFieldGet2_Table_2_p0_p24_282:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_282
-SndRecTriFieldGet2_Table_2_p0_282:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_282, f28=35, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_281:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_282, f28=35, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_281
 SndRecTriFieldGet2_Table_2_p0_p24_283:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_283
-SndRecTriFieldGet2_Table_2_p0_283:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_283, f28=35, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_282:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_283, f28=35, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_282
 SndRecTriFieldGet2_Table_2_p0_p24_284:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_284
-SndRecTriFieldGet2_Table_2_p0_284:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_284, f28=35, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_283:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_284, f28=35, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_283
 SndRecTriFieldGet2_Table_2_p0_p24_285:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_285
-SndRecTriFieldGet2_Table_2_p0_285:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_285, f28=35, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_284:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_285, f28=35, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_284
 SndRecTriFieldGet2_Table_2_p0_p24_286:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_286
-SndRecTriFieldGet2_Table_2_p0_286:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_286, f28=35, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_285:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_286, f28=35, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_285
 SndRecTriFieldGet2_Table_2_p0_p24_287:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_287
-SndRecTriFieldGet2_Table_2_p0_287:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_287, f28=35, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_286:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_287, f28=35, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_286
 SndRecTriFieldGet2_Table_2_p0_p24_288:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_288
-SndRecTriFieldGet2_Table_2_p0_288:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_288, f28=35, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_287:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_288, f28=35, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_287
 SndRecTriFieldGet2_Table_2_p0_p24_289:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_289
-SndRecTriFieldGet2_Table_2_p0_289:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_289, f28=35, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_288:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_289, f28=35, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_288
 SndRecTriFieldGet2_Table_2_p0_p24_290:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_290
-SndRecTriFieldGet2_Table_2_p0_290:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_290, f28=35, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_289:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_290, f28=35, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_289
 SndRecTriFieldGet2_Table_2_p0_p24_291:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_291
-SndRecTriFieldGet2_Table_2_p0_291:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_291, f28=35, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_290:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_291, f28=35, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_290
 SndRecTriFieldGet2_Table_2_p0_p24_292:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_292
-SndRecTriFieldGet2_Table_2_p0_292:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_292, f28=35, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_291:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_292, f28=35, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_291
 SndRecTriFieldGet2_Table_2_p0_p24_293:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_293
-SndRecTriFieldGet2_Table_2_p0_293:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_293, f28=35, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_292:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_293, f28=35, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_292
 SndRecTriFieldGet2_Table_2_p0_p24_294:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_294
-SndRecTriFieldGet2_Table_2_p0_294:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_294, f28=35, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_293:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_294, f28=35, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_293
 SndRecTriFieldGet2_Table_2_p0_p24_295:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_295
-SndRecTriFieldGet2_Table_2_p0_295:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_295, f28=35, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_294:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_295, f28=35, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_294
 SndRecTriFieldGet2_Table_2_p0_p24_296:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_296
-SndRecTriFieldGet2_Table_2_p0_296:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_296, f28=35, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_295:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_296, f28=35, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_295
 SndRecTriFieldGet2_Table_2_p0_p24_297:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_297
-SndRecTriFieldGet2_Table_2_p0_297:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_297, f28=35, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_296:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_297, f28=35, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_296
 SndRecTriFieldGet2_Table_2_p0_p24_298:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_298
-SndRecTriFieldGet2_Table_2_p0_298:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_298, f28=35, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_297:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_298, f28=35, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_297
 SndRecTriFieldGet2_Table_2_p0_p24_299:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_299
-SndRecTriFieldGet2_Table_2_p0_299:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_299, f28=35, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_298:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_299, f28=35, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_298
 SndRecTriFieldGet2_Table_2_p0_p24_300:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 23040, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_300
-SndRecTriFieldGet2_Table_2_p0_300:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_300, f28=35, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_299:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_300, f28=35, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_299
 SndRecTriFieldGet2_Table_2_p0_p24_301:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_301
-SndRecTriFieldGet2_Table_2_p0_301:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_301, f28=35, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_300:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_301, f28=35, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_300
 SndRecTriFieldGet2_Table_2_p0_p24_302:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_302
-SndRecTriFieldGet2_Table_2_p0_302:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_302, f28=35, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_301:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_302, f28=35, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_301
 SndRecTriFieldGet2_Table_2_p0_p24_303:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_303
-SndRecTriFieldGet2_Table_2_p0_303:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_303, f28=35, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_302:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_303, f28=35, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_302
 SndRecTriFieldGet2_Table_2_p0_p24_304:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_304
-SndRecTriFieldGet2_Table_2_p0_304:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_304, f28=35, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_303:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_304, f28=35, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_303
 SndRecTriFieldGet2_Table_2_p0_p24_305:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_305
-SndRecTriFieldGet2_Table_2_p0_305:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_305, f28=35, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_304:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_305, f28=35, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_304
 SndRecTriFieldGet2_Table_2_p0_p24_306:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 23040, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_306
-SndRecTriFieldGet2_Table_2_p0_306:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_306, f28=35, index_=45, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_305:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_306, f28=35, index_=45
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_305
 SndRecTriFieldGet2_Table_2_p0_p24_307:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_307
-SndRecTriFieldGet2_Table_2_p0_307:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_307, f28=35, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_306:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_307, f28=35, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_306
 SndRecTriFieldGet2_Table_2_p0_p24_308:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_308
-SndRecTriFieldGet2_Table_2_p0_308:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_308, f28=35, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_307:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_308, f28=35, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_307
 SndRecTriFieldGet2_Table_2_p0_p24_309:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_309
-SndRecTriFieldGet2_Table_2_p0_309:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_309, f28=35, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_308:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_309, f28=35, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_308
 SndRecTriFieldGet2_Table_2_p0_p24_310:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_310
-SndRecTriFieldGet2_Table_2_p0_310:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_310, f28=35, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_309:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_310, f28=35, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_309
 SndRecTriFieldGet2_Table_2_p0_p24_311:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_311
-SndRecTriFieldGet2_Table_2_p0_311:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_311, f28=35, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_310:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_311, f28=35, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_310
 SndRecTriFieldGet2_Table_2_p0_p24_312:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 23040, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_312
-SndRecTriFieldGet2_Table_2_p0_312:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_312, f28=35, index_=53, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_311:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=4, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_312, f28=35, index_=53
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_311
 SndRecTriFieldGet2_Table_2_p0_p24_313:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_313
-SndRecTriFieldGet2_Table_2_p0_313:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo1    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_313, f28=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_312:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo1    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_313, f28=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_312
 SndRecTriFieldGet2_Table_2_p0_p24_314:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	2560, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_314
-SndRecTriFieldGet2_Table_2_p0_314:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo2    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_314, f28=37, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_313:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo2    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_314, f28=37, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_313
 SndRecTriFieldGet2_Table_2_p0_p24_315:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_315
-SndRecTriFieldGet2_Table_2_p0_315:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo3    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_315, f28=37, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_314:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo3    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_315, f28=37, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_314
 SndRecTriFieldGet2_Table_2_p0_p24_316:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	6144, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_316
-SndRecTriFieldGet2_Table_2_p0_316:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo4    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_316, f28=37, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_315:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo4    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_316, f28=37, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_315
 SndRecTriFieldGet2_Table_2_p0_p24_317:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	6400, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_317
-SndRecTriFieldGet2_Table_2_p0_317:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo5    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_317, f28=37, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_316:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo5    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_317, f28=37, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_316
 SndRecTriFieldGet2_Table_2_p0_p24_318:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	7680, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_318
-SndRecTriFieldGet2_Table_2_p0_318:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo6    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_318, f28=37, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_317:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo6    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_318, f28=37, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_317
 SndRecTriFieldGet2_Table_2_p0_p24_319:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	10496, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_319
-SndRecTriFieldGet2_Table_2_p0_319:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo7    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_319, f28=37, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_318:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo7    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_319, f28=37, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_318
 SndRecTriFieldGet2_Table_2_p0_p24_320:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	12800, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_320
-SndRecTriFieldGet2_Table_2_p0_320:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo8    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_320, f28=37, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_319:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Tremolo8    \x00\x00", f18=40, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_320, f28=37, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_319
 SndRecTriFieldGet2_Table_2_p0_p24_321:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_321
-SndRecTriFieldGet2_Table_2_p0_321:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan1    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_321, f28=37, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_320:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan1    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_321, f28=37, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_320
 SndRecTriFieldGet2_Table_2_p0_p24_322:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	256, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_322
-SndRecTriFieldGet2_Table_2_p0_322:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan2    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_322, f28=37, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_321:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan2    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_322, f28=37, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_321
 SndRecTriFieldGet2_Table_2_p0_p24_323:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	512, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_323
-SndRecTriFieldGet2_Table_2_p0_323:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan3    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_323, f28=37, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_322:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan3    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_323, f28=37, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_322
 SndRecTriFieldGet2_Table_2_p0_p24_324:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_324
-SndRecTriFieldGet2_Table_2_p0_324:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan4    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_324, f28=37, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_323:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan4    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_324, f28=37, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_323
 SndRecTriFieldGet2_Table_2_p0_p24_325:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	1536, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_325
-SndRecTriFieldGet2_Table_2_p0_325:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan5    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_325, f28=37, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_324:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan5    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_325, f28=37, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_324
 SndRecTriFieldGet2_Table_2_p0_p24_326:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	2048, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_326
-SndRecTriFieldGet2_Table_2_p0_326:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan6    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_326, f28=37, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_325:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan6    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_326, f28=37, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_325
 SndRecTriFieldGet2_Table_2_p0_p24_327:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	3072, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_327
-SndRecTriFieldGet2_Table_2_p0_327:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan7    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_327, f28=37, index_=38, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_326:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Auto Pan7    \x00\x00", f18=48, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_327, f28=37, index_=38
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_326
 SndRecTriFieldGet2_Table_2_p0_p24_328:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	8192, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_328
-SndRecTriFieldGet2_Table_2_p0_328:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato1    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_328, f28=39, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_327:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato1    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_328, f28=39
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_327
 SndRecTriFieldGet2_Table_2_p0_p24_329:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\n"
 	tab_u16	10752, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_329
-SndRecTriFieldGet2_Table_2_p0_329:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato2    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_329, f28=39, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_328:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato2    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_329, f28=39, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_328
 SndRecTriFieldGet2_Table_2_p0_p24_330:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x06"
 	tab_u16	14336, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_330
-SndRecTriFieldGet2_Table_2_p0_330:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato3    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_330, f28=39, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_329:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato3    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_330, f28=39, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_329
 SndRecTriFieldGet2_Table_2_p0_p24_331:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x05"
 	tab_u16	15360, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_331
-SndRecTriFieldGet2_Table_2_p0_331:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato4    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_331, f28=39, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_330:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato4    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_331, f28=39, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_330
 SndRecTriFieldGet2_Table_2_p0_p24_332:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	5120, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_332
-SndRecTriFieldGet2_Table_2_p0_332:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato5    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_332, f28=39, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_331:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato5    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_332, f28=39, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_331
 SndRecTriFieldGet2_Table_2_p0_p24_333:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	8960, 46080, 23040, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_333
-SndRecTriFieldGet2_Table_2_p0_333:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato6    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_333, f28=39, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_332:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato6    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_333, f28=39, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_332
 SndRecTriFieldGet2_Table_2_p0_p24_334:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\n"
 	tab_u16	5632, 32000, 23040, 512, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_334
-SndRecTriFieldGet2_Table_2_p0_334:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato7    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_334, f28=39, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_333:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato7    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_334, f28=39, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_333
 SndRecTriFieldGet2_Table_2_p0_p24_335:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x13"
 	tab_u16	6400, 14592, 46080, 256, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_335
-SndRecTriFieldGet2_Table_2_p0_335:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato8    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_335, f28=39, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_334:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Vibrato8    \x00\x00", f18=50, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_335, f28=39, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_334
 SndRecTriFieldGet2_Table_2_p0_p24_336:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x01"
 	tab_u16	20480, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_336
-SndRecTriFieldGet2_Table_2_p0_336:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.1   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_336, f28=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_335:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.1   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_336, f28=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_335
 SndRecTriFieldGet2_Table_2_p0_p24_337:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x07"
 	tab_u16	23040, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_337
-SndRecTriFieldGet2_Table_2_p0_337:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.2   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_337, f28=41, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_336:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.2   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_337, f28=41, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_336
 SndRecTriFieldGet2_Table_2_p0_p24_338:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0=":"
 	tab_u16	23040, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_338
-SndRecTriFieldGet2_Table_2_p0_338:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.3   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_338, f28=41, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_337:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.3   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_338, f28=41, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_337
 SndRecTriFieldGet2_Table_2_p0_p24_339:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="E"
 	tab_u16	23040, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_339
-SndRecTriFieldGet2_Table_2_p0_339:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.4   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_339, f28=41, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_338:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Ring Mod.4   \x00\x00", f18=54, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_339, f28=41, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_338
 SndRecTriFieldGet2_Table_2_p0_p24_340:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	3840, 17408, 15872, 23040, 0, 256, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_340
-SndRecTriFieldGet2_Table_2_p0_340:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup1     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_340, f28=41, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_339:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup1     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_340, f28=41, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_339
 SndRecTriFieldGet2_Table_2_p0_p24_341:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	3840, 17408, 15872, 23040, 0, 256, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_341
-SndRecTriFieldGet2_Table_2_p0_341:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup2     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_341, f28=41, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_340:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup2     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_341, f28=41, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_340
 SndRecTriFieldGet2_Table_2_p0_p24_342:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	3840, 17408, 15872, 23040, 256, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_342
-SndRecTriFieldGet2_Table_2_p0_342:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup3     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_342, f28=41, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_341:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup3     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_342, f28=41, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_341
 SndRecTriFieldGet2_Table_2_p0_p24_343:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0=":"
 	tab_u16	2048, 7936, 9472, 23040, 256, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_343
-SndRecTriFieldGet2_Table_2_p0_343:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup4     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_343, f28=41, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_342:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Mixup4     \x00\x00", f18=56, f20=9, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_343, f28=41, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_342
 SndRecTriFieldGet2_Table_2_p0_p24_344:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_344
-SndRecTriFieldGet2_Table_2_p0_344:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_344, f28=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_343:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_344, f28=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_343
 SndRecTriFieldGet2_Table_2_p0_p24_345:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_345
-SndRecTriFieldGet2_Table_2_p0_345:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_345, f28=42, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_344:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_345, f28=42, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_344
 SndRecTriFieldGet2_Table_2_p0_p24_346:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_346
-SndRecTriFieldGet2_Table_2_p0_346:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_346, f28=42, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_345:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_346, f28=42, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_345
 SndRecTriFieldGet2_Table_2_p0_p24_347:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_347
-SndRecTriFieldGet2_Table_2_p0_347:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_347, f28=42, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_346:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_347, f28=42, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_346
 SndRecTriFieldGet2_Table_2_p0_p24_348:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_348
-SndRecTriFieldGet2_Table_2_p0_348:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_348, f28=42, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_347:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_348, f28=42, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_347
 SndRecTriFieldGet2_Table_2_p0_p24_349:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_349
-SndRecTriFieldGet2_Table_2_p0_349:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_349, f28=42, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_348:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_349, f28=42, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_348
 SndRecTriFieldGet2_Table_2_p0_p24_350:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_350
-SndRecTriFieldGet2_Table_2_p0_350:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_350, f28=42, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_349:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_350, f28=42, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_349
 SndRecTriFieldGet2_Table_2_p0_p24_351:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_351
-SndRecTriFieldGet2_Table_2_p0_351:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_351, f28=42, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_350:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_351, f28=42, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_350
 SndRecTriFieldGet2_Table_2_p0_p24_352:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_352
-SndRecTriFieldGet2_Table_2_p0_352:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_352, f28=42, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_351:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_352, f28=42, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_351
 SndRecTriFieldGet2_Table_2_p0_p24_353:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_353
-SndRecTriFieldGet2_Table_2_p0_353:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_353, f28=42, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_352:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_353, f28=42, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_352
 SndRecTriFieldGet2_Table_2_p0_p24_354:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_354
-SndRecTriFieldGet2_Table_2_p0_354:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_354, f28=42, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_353:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_354, f28=42, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_353
 SndRecTriFieldGet2_Table_2_p0_p24_355:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_355
-SndRecTriFieldGet2_Table_2_p0_355:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_355, f28=42, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_354:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_355, f28=42, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_354
 SndRecTriFieldGet2_Table_2_p0_p24_356:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_356
-SndRecTriFieldGet2_Table_2_p0_356:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_356, f28=42, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_355:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=13, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_356, f28=42, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_355
 SndRecTriFieldGet2_Table_2_p0_p24_357:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_357
-SndRecTriFieldGet2_Table_2_p0_357:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_357, f28=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_356:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_357, f28=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_356
 SndRecTriFieldGet2_Table_2_p0_p24_358:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_358
-SndRecTriFieldGet2_Table_2_p0_358:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_358, f28=43, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_357:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_358, f28=43, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_357
 SndRecTriFieldGet2_Table_2_p0_p24_359:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_359
-SndRecTriFieldGet2_Table_2_p0_359:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_359, f28=43, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_358:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_359, f28=43, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_358
 SndRecTriFieldGet2_Table_2_p0_p24_360:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_360
-SndRecTriFieldGet2_Table_2_p0_360:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_360, f28=43, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_359:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_360, f28=43, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_359
 SndRecTriFieldGet2_Table_2_p0_p24_361:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_361
-SndRecTriFieldGet2_Table_2_p0_361:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_361, f28=43, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_360:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_361, f28=43, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_360
 SndRecTriFieldGet2_Table_2_p0_p24_362:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_362
-SndRecTriFieldGet2_Table_2_p0_362:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_362, f28=43, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_361:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_362, f28=43, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_361
 SndRecTriFieldGet2_Table_2_p0_p24_363:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_363
-SndRecTriFieldGet2_Table_2_p0_363:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_363, f28=43, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_362:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_363, f28=43, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_362
 SndRecTriFieldGet2_Table_2_p0_p24_364:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_364
-SndRecTriFieldGet2_Table_2_p0_364:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_364, f28=43, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_363:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_364, f28=43, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_363
 SndRecTriFieldGet2_Table_2_p0_p24_365:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_365
-SndRecTriFieldGet2_Table_2_p0_365:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_365, f28=43, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_364:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_365, f28=43, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_364
 SndRecTriFieldGet2_Table_2_p0_p24_366:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_366
-SndRecTriFieldGet2_Table_2_p0_366:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_366, f28=43, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_365:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_366, f28=43, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_365
 SndRecTriFieldGet2_Table_2_p0_p24_367:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_367
-SndRecTriFieldGet2_Table_2_p0_367:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_367, f28=43, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_366:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_367, f28=43, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_366
 SndRecTriFieldGet2_Table_2_p0_p24_368:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_368
-SndRecTriFieldGet2_Table_2_p0_368:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_368, f28=43, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_367:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_368, f28=43, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_367
 SndRecTriFieldGet2_Table_2_p0_p24_369:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 23040, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_369
-SndRecTriFieldGet2_Table_2_p0_369:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_369, f28=43, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_368:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=11, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_369, f28=43, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_368
 SndRecTriFieldGet2_Table_2_p0_p24_370:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x08"
 	tab_u16	7168, 8192, 3584, 3840, 5888, 5888, 4864, 3840, 5376, 5376, 5376, 3840, 6144, 6144, 5632, 8704	# [0]
 	tab_u16	11264, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_370
-SndRecTriFieldGet2_Table_2_p0_370:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Make Up     \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_370, f28=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_369:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Make Up     \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_370, f28=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_369
 SndRecTriFieldGet2_Table_2_p0_p24_371:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\n"
 	tab_u16	1024, 1024, 3584, 3840, 6144, 6144, 3840, 3840, 6144, 4608, 4864, 3840, 1024, 0, 5632, 6144	# [0]
 	tab_u16	6144, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_371
-SndRecTriFieldGet2_Table_2_p0_371:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Middle Cut   \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_371, f28=48, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_370:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Middle Cut   \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_371, f28=48, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_370
 SndRecTriFieldGet2_Table_2_p0_p24_372:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x09"
 	tab_u16	768, 768, 3072, 3840, 10752, 12288, 4096, 3840, 10496, 12288, 4352, 3840, 6144, 6144, 4864, 0	# [0]
 	tab_u16	0, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_372
-SndRecTriFieldGet2_Table_2_p0_372:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Radio      \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_372, f28=48, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_371:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Radio      \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_372, f28=48, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_371
 SndRecTriFieldGet2_Table_2_p0_p24_373:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x03"
 	tab_u16	3584, 4864, 2816, 3840, 6144, 6144, 3584, 3840, 6144, 8704, 4096, 2560, 6144, 7168, 5376, 10240	# [0]
 	tab_u16	3072, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_373
-SndRecTriFieldGet2_Table_2_p0_373:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Treble Boost  \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_373, f28=48, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_372:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Treble Boost  \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_373, f28=48, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_372
 SndRecTriFieldGet2_Table_2_p0_p24_374:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	7168, 7168, 2304, 3840, 5120, 2560, 3072, 3840, 5120, 5120, 4096, 3840, 1024, 1024, 4608, 6144	# [0]
 	tab_u16	6144, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_374
-SndRecTriFieldGet2_Table_2_p0_374:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Treble Cut   \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_374, f28=48, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_373:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Treble Cut   \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_374, f28=48, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_373
 SndRecTriFieldGet2_Table_2_p0_p24_375:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x05"
 	tab_u16	6144, 6144, 2816, 3840, 6144, 6144, 3584, 3840, 6144, 6144, 5120, 3840, 512, 0, 5888, 6144	# [0]
 	tab_u16	6144, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_375
-SndRecTriFieldGet2_Table_2_p0_375:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   No Hi Hat    \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_375, f28=48, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_374:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   No Hi Hat    \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_375, f28=48, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_374
 SndRecTriFieldGet2_Table_2_p0_p24_376:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x07"
 	tab_u16	0, 0, 2816, 3840, 6144, 6144, 3584, 3840, 6144, 6144, 4352, 3840, 6144, 6144, 6400, 5120	# [0]
 	tab_u16	2560, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_376
-SndRecTriFieldGet2_Table_2_p0_376:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Bass Cut    \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_376, f28=48, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_375:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Bass Cut    \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_376, f28=48, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_375
 SndRecTriFieldGet2_Table_2_p0_p24_377:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x04"
 	tab_u16	7424, 8704, 4864, 3840, 10752, 12288, 5888, 3840, 12288, 12288, 6144, 3840, 6144, 6144, 6656, 12288	# [0]
 	tab_u16	12288, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_377
-SndRecTriFieldGet2_Table_2_p0_377:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Too Bright   \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_377, f28=48, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_376:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Too Bright   \x00\x00", f18=39, f20=20, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_377, f28=48, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_376
 SndRecTriFieldGet2_Table_2_p0_p24_378:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x05"
 	tab_u16	6144, 2816, 3840, 6144, 3584, 3840, 6144, 4352, 3840, 6144, 5888, 6144, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_378
-SndRecTriFieldGet2_Table_2_p0_378:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     5 Band     \x00\x00", f18=79, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_378, f28=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_377:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     5 Band     \x00\x00", f18=79, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_378, f28=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_377
 SndRecTriFieldGet2_Table_2_p0_p24_379:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 256, 7680, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_379
-SndRecTriFieldGet2_Table_2_p0_379:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_379, f28=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_378:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_379, f28=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_378
 SndRecTriFieldGet2_Table_2_p0_p24_380:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 7680, 15360, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_380
-SndRecTriFieldGet2_Table_2_p0_380:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_380, f28=51, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_379:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_380, f28=51, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_379
 SndRecTriFieldGet2_Table_2_p0_p24_381:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 256, 7680, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_381
-SndRecTriFieldGet2_Table_2_p0_381:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_381, f28=51, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_380:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_381, f28=51, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_380
 SndRecTriFieldGet2_Table_2_p0_p24_382:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 7680, 15360, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_382
-SndRecTriFieldGet2_Table_2_p0_382:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_382, f28=51, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_381:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_382, f28=51, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_381
 SndRecTriFieldGet2_Table_2_p0_p24_383:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 256, 7680, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_383
-SndRecTriFieldGet2_Table_2_p0_383:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_383, f28=51, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_382:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_383, f28=51, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_382
 SndRecTriFieldGet2_Table_2_p0_p24_384:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 7680, 15360, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_384
-SndRecTriFieldGet2_Table_2_p0_384:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_384, f28=51, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_383:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_384, f28=51, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_383
 SndRecTriFieldGet2_Table_2_p0_p24_385:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	23040, 12800, 12800, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_385
-SndRecTriFieldGet2_Table_2_p0_385:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer1    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_385, f28=53, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_384:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer1    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_385, f28=53, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_384
 SndRecTriFieldGet2_Table_2_p0_p24_386:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	23040, 25344, 2560, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_386
-SndRecTriFieldGet2_Table_2_p0_386:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer2    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_386, f28=53, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_385:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer2    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_386, f28=53, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_385
 SndRecTriFieldGet2_Table_2_p0_p24_387:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	23040, 2560, 25344, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_387
-SndRecTriFieldGet2_Table_2_p0_387:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer3    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_387, f28=53, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_386:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer3    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_387, f28=53, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_386
 SndRecTriFieldGet2_Table_2_p0_p24_388:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\\"
 	tab_u16	12800, 25344, 25344, 5120, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_388
-SndRecTriFieldGet2_Table_2_p0_388:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer4    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_388, f28=53, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_387:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer4    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_388, f28=53, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_387
 SndRecTriFieldGet2_Table_2_p0_p24_389:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="Z"
 	tab_u16	12800, 25344, 25344, 7680, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_389
-SndRecTriFieldGet2_Table_2_p0_389:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer5    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_389, f28=53, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_388:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer5    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_389, f28=53, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_388
 SndRecTriFieldGet2_Table_2_p0_p24_390:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
 	tab_u16	12800, 25344, 25344, 11520, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_390
-SndRecTriFieldGet2_Table_2_p0_390:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer6    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_390, f28=53, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_389:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Enhancer6    \x00\x00", f18=3, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_390, f28=53, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_389
 SndRecTriFieldGet2_Table_2_p0_p24_391:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	22016, 5120, 4096, 17920, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_391
-SndRecTriFieldGet2_Table_2_p0_391:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Exciter1    \x00\x00", f18=35, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_391, f28=55, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_390:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Exciter1    \x00\x00", f18=35, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_391, f28=55
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_390
 SndRecTriFieldGet2_Table_2_p0_p24_392:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	22016, 5888, 4096, 22016, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_392
-SndRecTriFieldGet2_Table_2_p0_392:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Exciter2    \x00\x00", f18=35, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_392, f28=55, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_391:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Exciter2    \x00\x00", f18=35, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_392, f28=55, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_391
 SndRecTriFieldGet2_Table_2_p0_p24_393:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	22016, 6144, 4608, 25344, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_393
-SndRecTriFieldGet2_Table_2_p0_393:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Exciter3    \x00\x00", f18=35, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_393, f28=55, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_392:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Exciter3    \x00\x00", f18=35, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_393, f28=55, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_392
 SndRecTriFieldGet2_Table_2_p0_p24_394:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 15360, 25344, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_394
-SndRecTriFieldGet2_Table_2_p0_394:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah1      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_394, f28=56, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_393:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah1      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_394, f28=56, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_393
 SndRecTriFieldGet2_Table_2_p0_p24_395:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	3840, 25344, 15360, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_395
-SndRecTriFieldGet2_Table_2_p0_395:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah2      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_395, f28=56, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_394:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah2      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_395, f28=56, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_394
 SndRecTriFieldGet2_Table_2_p0_p24_396:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	12800, 25344, 15360, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_396
-SndRecTriFieldGet2_Table_2_p0_396:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah3      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_396, f28=56, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_395:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah3      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_396, f28=56, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_395
 SndRecTriFieldGet2_Table_2_p0_p24_397:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 7680, 15360, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_397
-SndRecTriFieldGet2_Table_2_p0_397:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah4      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_397, f28=56, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_396:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah4      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_397, f28=56, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_396
 SndRecTriFieldGet2_Table_2_p0_p24_398:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 15360, 25344, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_398
-SndRecTriFieldGet2_Table_2_p0_398:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah5      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_398, f28=56, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_397:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah5      \x00\x00", f18=52, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_398, f28=56, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_397
 SndRecTriFieldGet2_Table_2_p0_p24_399:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	512, 0, 15360, 25344, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_399
-SndRecTriFieldGet2_Table_2_p0_399:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah1      \x00\x00", f18=51, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_399, f28=56, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_398:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah1      \x00\x00", f18=51, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_399, f28=56, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_398
 SndRecTriFieldGet2_Table_2_p0_p24_400:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	512, 3840, 15360, 25344, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_400
-SndRecTriFieldGet2_Table_2_p0_400:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah2      \x00\x00", f18=51, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_400, f28=56, index_=38, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_399:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah2      \x00\x00", f18=51, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_400, f28=56, index_=38
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_399
 SndRecTriFieldGet2_Table_2_p0_p24_401:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	512, 12800, 15360, 25344, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_401
-SndRecTriFieldGet2_Table_2_p0_401:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah3      \x00\x00", f18=51, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_401, f28=56, index_=39, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_400:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah3      \x00\x00", f18=51, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_401, f28=56, index_=39
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_400
 SndRecTriFieldGet2_Table_2_p0_p24_402:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 20480, 10240, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_402
-SndRecTriFieldGet2_Table_2_p0_402:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_402, f28=57, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_401:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_402, f28=57
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_401
 SndRecTriFieldGet2_Table_2_p0_p24_403:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 10240, 20480, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_403
-SndRecTriFieldGet2_Table_2_p0_403:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_403, f28=57, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_402:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 2Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_403, f28=57, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_402
 SndRecTriFieldGet2_Table_2_p0_p24_404:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 20480, 10240, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_404
-SndRecTriFieldGet2_Table_2_p0_404:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_404, f28=57, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_403:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_404, f28=57, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_403
 SndRecTriFieldGet2_Table_2_p0_p24_405:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 10240, 20480, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_405
-SndRecTriFieldGet2_Table_2_p0_405:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_405, f28=57, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_404:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 3Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_405, f28=57, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_404
 SndRecTriFieldGet2_Table_2_p0_p24_406:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 20480, 10240, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_406
-SndRecTriFieldGet2_Table_2_p0_406:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_406, f28=57, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_405:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_406, f28=57, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_405
 SndRecTriFieldGet2_Table_2_p0_p24_407:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 10240, 20480, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_407
-SndRecTriFieldGet2_Table_2_p0_407:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_407, f28=57, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_406:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  For 4Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_407, f28=57, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_406
 SndRecTriFieldGet2_Table_2_p0_p24_408:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_408
-SndRecTriFieldGet2_Table_2_p0_408:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah1      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_408, f28=58, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_407:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah1      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_408, f28=58
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_407
 SndRecTriFieldGet2_Table_2_p0_p24_409:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_409
-SndRecTriFieldGet2_Table_2_p0_409:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah2      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_409, f28=58, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_408:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah2      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_409, f28=58, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_408
 SndRecTriFieldGet2_Table_2_p0_p24_410:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_410
-SndRecTriFieldGet2_Table_2_p0_410:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah3      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_410, f28=58, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_409:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah3      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_410, f28=58, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_409
 SndRecTriFieldGet2_Table_2_p0_p24_411:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="Z"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_411
-SndRecTriFieldGet2_Table_2_p0_411:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah4      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_411, f28=58, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_410:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah4      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_411, f28=58, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_410
 SndRecTriFieldGet2_Table_2_p0_p24_412:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 20480, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_412
-SndRecTriFieldGet2_Table_2_p0_412:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah5      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_412, f28=58, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_411:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah5      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_412, f28=58, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_411
 SndRecTriFieldGet2_Table_2_p0_p24_413:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 17920, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_413
-SndRecTriFieldGet2_Table_2_p0_413:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah6      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_413, f28=58, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_412:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah6      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_413, f28=58, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_412
 SndRecTriFieldGet2_Table_2_p0_p24_414:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 12800, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_414
-SndRecTriFieldGet2_Table_2_p0_414:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah7      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_414, f28=58, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_413:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah7      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_414, f28=58, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_413
 SndRecTriFieldGet2_Table_2_p0_p24_415:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	0, 12800, 25344, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_415
-SndRecTriFieldGet2_Table_2_p0_415:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah8      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_415, f28=58, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_414:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Wah8      \x00\x00", f18=144, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_415, f28=58, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_414
 SndRecTriFieldGet2_Table_2_p0_p24_416:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 20480, 25344, 17920, 16384, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_416
-SndRecTriFieldGet2_Table_2_p0_416:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Normal     \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_416, f28=64, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_415:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Normal     \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_416, f28=64
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_415
 SndRecTriFieldGet2_Table_2_p0_p24_417:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 10240, 15360, 19200, 17664, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_417
-SndRecTriFieldGet2_Table_2_p0_417:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Mild      \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_417, f28=64, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_416:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Mild      \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_417, f28=64, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_416
 SndRecTriFieldGet2_Table_2_p0_p24_418:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 25344, 17920, 18432, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_418
-SndRecTriFieldGet2_Table_2_p0_418:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Hard      \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_418, f28=64, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_417:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Hard      \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_418, f28=64, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_417
 SndRecTriFieldGet2_Table_2_p0_p24_419:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 25344, 17920, 18432, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_419
-SndRecTriFieldGet2_Table_2_p0_419:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Bright     \x00\x00", f18=130, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_419, f28=64, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_418:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Bright     \x00\x00", f18=130, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_419, f28=64, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_418
 SndRecTriFieldGet2_Table_2_p0_p24_420:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	8192, 2560, 2560, 25344, 17920, 19456, 19968, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_420
-SndRecTriFieldGet2_Table_2_p0_420:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Fat       \x00\x00", f18=131, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_420, f28=64, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_419:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Fat       \x00\x00", f18=131, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_420, f28=64, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_419
 SndRecTriFieldGet2_Table_2_p0_p24_421:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x08"
 	tab_u16	2304, 2560, 2560, 25344, 17920, 18432, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_421
-SndRecTriFieldGet2_Table_2_p0_421:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_421, f28=64, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_420:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=32, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_421, f28=64, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_420
 SndRecTriFieldGet2_Table_2_p0_p24_422:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 18432, 25344, 17408, 16384, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_422
-SndRecTriFieldGet2_Table_2_p0_422:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Normal     \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_422, f28=64, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_421:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Normal     \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_422, f28=64, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_421
 SndRecTriFieldGet2_Table_2_p0_p24_423:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 14080, 20480, 18432, 17408, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_423
-SndRecTriFieldGet2_Table_2_p0_423:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Mild      \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_423, f28=64, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_422:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Mild      \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_423, f28=64, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_422
 SndRecTriFieldGet2_Table_2_p0_p24_424:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 25344, 17920, 17920, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_424
-SndRecTriFieldGet2_Table_2_p0_424:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Hard      \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_424, f28=64, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_423:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Hard      \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_424, f28=64, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_423
 SndRecTriFieldGet2_Table_2_p0_p24_425:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 15360, 25344, 17920, 15360, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_425
-SndRecTriFieldGet2_Table_2_p0_425:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Bright     \x00\x00", f18=132, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_425, f28=64, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_424:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Bright     \x00\x00", f18=132, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_425, f28=64, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_424
 SndRecTriFieldGet2_Table_2_p0_p24_426:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 25344, 17920, 17920, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_426
-SndRecTriFieldGet2_Table_2_p0_426:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Fat       \x00\x00", f18=133, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_426, f28=64, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_425:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Fat       \x00\x00", f18=133, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_426, f28=64, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_425
 SndRecTriFieldGet2_Table_2_p0_p24_427:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x08"
 	tab_u16	2304, 2560, 2560, 25344, 17920, 17920, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_427
-SndRecTriFieldGet2_Table_2_p0_427:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_427, f28=64, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_426:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=33, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_427, f28=64, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_426
 SndRecTriFieldGet2_Table_2_p0_p24_428:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 15360, 25344, 18944, 15360, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_428
-SndRecTriFieldGet2_Table_2_p0_428:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Normal     \x00\x00", f18=34, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_428, f28=65, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_427:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Normal     \x00\x00", f18=34, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_428, f28=65
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_427
 SndRecTriFieldGet2_Table_2_p0_p24_429:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x06"
 	tab_u16	1792, 2560, 2560, 25344, 17920, 18944, 19968, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_429
-SndRecTriFieldGet2_Table_2_p0_429:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=34, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_429, f28=65, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_428:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=34, f20=10, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_429, f28=65, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_428
 SndRecTriFieldGet2_Table_2_p0_p24_430:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	16384, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_430
-SndRecTriFieldGet2_Table_2_p0_430:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud1      \x00\x00", f18=100, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_430, f28=65, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_429:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud1      \x00\x00", f18=100, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_430, f28=65, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_429
 SndRecTriFieldGet2_Table_2_p0_p24_431:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	18944, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_431
-SndRecTriFieldGet2_Table_2_p0_431:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud2      \x00\x00", f18=101, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_431, f28=65, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_430:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud2      \x00\x00", f18=101, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_431, f28=65, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_430
 SndRecTriFieldGet2_Table_2_p0_p24_432:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_432
-SndRecTriFieldGet2_Table_2_p0_432:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud3      \x00\x00", f18=102, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_432, f28=65, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_431:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud3      \x00\x00", f18=102, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_432, f28=65, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_431
 SndRecTriFieldGet2_Table_2_p0_p24_433:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_433
-SndRecTriFieldGet2_Table_2_p0_433:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud4      \x00\x00", f18=103, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_433, f28=65, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_432:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Loud4      \x00\x00", f18=103, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_433, f28=65, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_432
 SndRecTriFieldGet2_Table_2_p0_p24_434:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	16384, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_434
-SndRecTriFieldGet2_Table_2_p0_434:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=100, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_434, f28=65, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_433:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=100, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_434, f28=65, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_433
 SndRecTriFieldGet2_Table_2_p0_p24_435:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	18944, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_435
-SndRecTriFieldGet2_Table_2_p0_435:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=101, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_435, f28=65, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_434:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=101, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_435, f28=65, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_434
 SndRecTriFieldGet2_Table_2_p0_p24_436:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_436
-SndRecTriFieldGet2_Table_2_p0_436:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=102, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_436, f28=65, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_435:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=102, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_436, f28=65, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_435
 SndRecTriFieldGet2_Table_2_p0_p24_437:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_437
-SndRecTriFieldGet2_Table_2_p0_437:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=103, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_437, f28=65, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_436:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=103, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_437, f28=65, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_436
 SndRecTriFieldGet2_Table_2_p0_p24_438:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	16384, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_438
-SndRecTriFieldGet2_Table_2_p0_438:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft1      \x00\x00", f18=100, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_438, f28=65, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_437:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft1      \x00\x00", f18=100, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_438, f28=65, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_437
 SndRecTriFieldGet2_Table_2_p0_p24_439:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	18944, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_439
-SndRecTriFieldGet2_Table_2_p0_439:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft2      \x00\x00", f18=101, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_439, f28=65, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_438:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft2      \x00\x00", f18=101, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_439, f28=65, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_438
 SndRecTriFieldGet2_Table_2_p0_p24_440:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_440
-SndRecTriFieldGet2_Table_2_p0_440:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft3      \x00\x00", f18=102, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_440, f28=65, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_439:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft3      \x00\x00", f18=102, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_440, f28=65, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_439
 SndRecTriFieldGet2_Table_2_p0_p24_441:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_441
-SndRecTriFieldGet2_Table_2_p0_441:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft4      \x00\x00", f18=103, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_441, f28=65, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_440:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Soft4      \x00\x00", f18=103, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_441, f28=65, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_440
 SndRecTriFieldGet2_Table_2_p0_p24_442:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_442
-SndRecTriFieldGet2_Table_2_p0_442:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter1    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_442, f28=68, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_441:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter1    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_442, f28=68
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_441
 SndRecTriFieldGet2_Table_2_p0_p24_443:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\n"
 	tab_u16	4608, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_443
-SndRecTriFieldGet2_Table_2_p0_443:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter2    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_443, f28=68, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_442:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter2    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_443, f28=68, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_442
 SndRecTriFieldGet2_Table_2_p0_p24_444:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x05"
 	tab_u16	1280, 2560, 10240, 2560, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_444
-SndRecTriFieldGet2_Table_2_p0_444:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter3    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_444, f28=68, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_443:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter3    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_444, f28=68, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_443
 SndRecTriFieldGet2_Table_2_p0_p24_445:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	12800, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_445
-SndRecTriFieldGet2_Table_2_p0_445:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter4    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_445, f28=68, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_444:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Limiter4    \x00\x00", f18=41, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_445, f28=68, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_444
 SndRecTriFieldGet2_Table_2_p0_p24_446:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_446
-SndRecTriFieldGet2_Table_2_p0_446:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.1     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_446, f28=69, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_445:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.1     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_446, f28=69
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_445
 SndRecTriFieldGet2_Table_2_p0_p24_447:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0B"
 	tab_u16	5120, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_447
-SndRecTriFieldGet2_Table_2_p0_447:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.2     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_447, f28=69, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_446:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.2     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_447, f28=69, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_446
 SndRecTriFieldGet2_Table_2_p0_p24_448:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x05"
 	tab_u16	3584, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_448
-SndRecTriFieldGet2_Table_2_p0_448:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.3     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_448, f28=69, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_447:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.3     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_448, f28=69, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_447
 SndRecTriFieldGet2_Table_2_p0_p24_449:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_449
-SndRecTriFieldGet2_Table_2_p0_449:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.4     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_449, f28=69, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_448:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Comp.4     \x00\x00", f18=36, f20=7, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_449, f28=69, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_448
 SndRecTriFieldGet2_Table_2_p0_p24_450:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	1024, 25088, 25088, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_450
-SndRecTriFieldGet2_Table_2_p0_450:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker1 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_450, f28=70, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_449:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker1 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_450, f28=70
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_449
 SndRecTriFieldGet2_Table_2_p0_p24_451:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0C"
 	tab_u16	1024, 25088, 10240, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_451
-SndRecTriFieldGet2_Table_2_p0_451:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker2 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_451, f28=70, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_450:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker2 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_451, f28=70, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_450
 SndRecTriFieldGet2_Table_2_p0_p24_452:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x04"
 	tab_u16	3072, 25088, 25088, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_452
-SndRecTriFieldGet2_Table_2_p0_452:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker3 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_452, f28=70, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_451:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker3 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_452, f28=70, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_451
 SndRecTriFieldGet2_Table_2_p0_p24_453:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x04"
 	tab_u16	3072, 25088, 10240, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_453
-SndRecTriFieldGet2_Table_2_p0_453:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker4 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_453, f28=70, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_452:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Slow Attacker4 \x00\x00", f18=37, f20=6, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_453, f28=70, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_452
 SndRecTriFieldGet2_Table_2_p0_p24_454:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0=","
 	tab_u16	11265, 11265, 11265, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_454
-SndRecTriFieldGet2_Table_2_p0_454:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_454, f28=72, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_453:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_454, f28=72
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_453
 SndRecTriFieldGet2_Table_2_p0_p24_455:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x96"
 	tab_u16	38400, 38400, 38400, 55296, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_455
-SndRecTriFieldGet2_Table_2_p0_455:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_455, f28=72, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_454:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_455, f28=72, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_454
 SndRecTriFieldGet2_Table_2_p0_p24_456:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 55296, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_456
-SndRecTriFieldGet2_Table_2_p0_456:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_456, f28=72, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_455:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_456, f28=72, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_455
 SndRecTriFieldGet2_Table_2_p0_p24_457:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xFA"
 	tab_u16	64000, 64000, 64000, 55296, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_457
-SndRecTriFieldGet2_Table_2_p0_457:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_457, f28=72, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_456:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_457, f28=72, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_456
 SndRecTriFieldGet2_Table_2_p0_p24_458:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	16385, 16385, 16385, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_458
-SndRecTriFieldGet2_Table_2_p0_458:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_458, f28=72, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_457:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_458, f28=72, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_457
 SndRecTriFieldGet2_Table_2_p0_p24_459:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="T"
 	tab_u16	21505, 21505, 21505, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_459
-SndRecTriFieldGet2_Table_2_p0_459:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_459, f28=72, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_458:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_459, f28=72, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_458
 SndRecTriFieldGet2_Table_2_p0_p24_460:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_460
-SndRecTriFieldGet2_Table_2_p0_460:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_460, f28=72, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_459:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_460, f28=72, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_459
 SndRecTriFieldGet2_Table_2_p0_p24_461:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 47617, 55551, 47871, 55551, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_461
-SndRecTriFieldGet2_Table_2_p0_461:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_461, f28=72, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_460:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_461, f28=72, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_460
 SndRecTriFieldGet2_Table_2_p0_p24_462:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0=","
 	tab_u16	11265, 11265, 11265, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_462
-SndRecTriFieldGet2_Table_2_p0_462:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_462, f28=72, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_461:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_462, f28=72, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_461
 SndRecTriFieldGet2_Table_2_p0_p24_463:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x96"
 	tab_u16	38400, 38400, 38400, 55296, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_463
-SndRecTriFieldGet2_Table_2_p0_463:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_463, f28=72, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_462:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_463, f28=72, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_462
 SndRecTriFieldGet2_Table_2_p0_p24_464:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 55296, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_464
-SndRecTriFieldGet2_Table_2_p0_464:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_464, f28=72, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_463:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_464, f28=72, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_463
 SndRecTriFieldGet2_Table_2_p0_p24_465:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xFA"
 	tab_u16	64000, 64000, 64000, 55296, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_465
-SndRecTriFieldGet2_Table_2_p0_465:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_465, f28=72, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_464:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_465, f28=72, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_464
 SndRecTriFieldGet2_Table_2_p0_p24_466:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	16385, 16385, 16385, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_466
-SndRecTriFieldGet2_Table_2_p0_466:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_466, f28=72, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_465:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_466, f28=72, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_465
 SndRecTriFieldGet2_Table_2_p0_p24_467:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="T"
 	tab_u16	21505, 21505, 21505, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_467
-SndRecTriFieldGet2_Table_2_p0_467:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_467, f28=72, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_466:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_467, f28=72, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_466
 SndRecTriFieldGet2_Table_2_p0_p24_468:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_468
-SndRecTriFieldGet2_Table_2_p0_468:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_468, f28=72, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_467:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_468, f28=72, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_467
 SndRecTriFieldGet2_Table_2_p0_p24_469:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 47617, 55551, 47871, 55551, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_469
-SndRecTriFieldGet2_Table_2_p0_469:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_469, f28=72, index_=15, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_468:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_469, f28=72, index_=15
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_468
 SndRecTriFieldGet2_Table_2_p0_p24_470:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0=","
 	tab_u16	11265, 11265, 11265, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_470
-SndRecTriFieldGet2_Table_2_p0_470:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_470, f28=72, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_469:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_470, f28=72, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_469
 SndRecTriFieldGet2_Table_2_p0_p24_471:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x96"
 	tab_u16	38400, 38400, 38400, 55296, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_471
-SndRecTriFieldGet2_Table_2_p0_471:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_471, f28=72, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_470:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_471, f28=72, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_470
 SndRecTriFieldGet2_Table_2_p0_p24_472:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 55296, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_472
-SndRecTriFieldGet2_Table_2_p0_472:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_472, f28=72, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_471:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_472, f28=72, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_471
 SndRecTriFieldGet2_Table_2_p0_p24_473:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xFA"
 	tab_u16	64000, 64000, 64000, 55296, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_473
-SndRecTriFieldGet2_Table_2_p0_473:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_473, f28=72, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_472:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_473, f28=72, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_472
 SndRecTriFieldGet2_Table_2_p0_p24_474:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="@"
 	tab_u16	16385, 16385, 16385, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_474
-SndRecTriFieldGet2_Table_2_p0_474:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_474, f28=72, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_473:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_474, f28=72, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_473
 SndRecTriFieldGet2_Table_2_p0_p24_475:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="T"
 	tab_u16	21505, 21505, 21505, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_475
-SndRecTriFieldGet2_Table_2_p0_475:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_475, f28=72, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_474:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_475, f28=72, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_474
 SndRecTriFieldGet2_Table_2_p0_p24_476:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_476
-SndRecTriFieldGet2_Table_2_p0_476:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_476, f28=72, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_475:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_476, f28=72, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_475
 SndRecTriFieldGet2_Table_2_p0_p24_477:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 47617, 55551, 47871, 55551, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_477
-SndRecTriFieldGet2_Table_2_p0_477:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_477, f28=72, index_=23, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_476:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_477, f28=72, index_=23
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_476
 SndRecTriFieldGet2_Table_2_p0_p24_478:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="#"
 	tab_u16	12800, 8960, 12800, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_478
-SndRecTriFieldGet2_Table_2_p0_478:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_478, f28=72, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_477:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_478, f28=72, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_477
 SndRecTriFieldGet2_Table_2_p0_p24_479:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="A"
 	tab_u16	25088, 16640, 25088, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_479
-SndRecTriFieldGet2_Table_2_p0_479:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_479, f28=72, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_478:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_479, f28=72, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_478
 SndRecTriFieldGet2_Table_2_p0_p24_480:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="U"
 	tab_u16	32768, 21760, 32768, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_480
-SndRecTriFieldGet2_Table_2_p0_480:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_480, f28=72, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_479:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_480, f28=72, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_479
 SndRecTriFieldGet2_Table_2_p0_p24_481:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	38400, 16384, 24576, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_481
-SndRecTriFieldGet2_Table_2_p0_481:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_481, f28=72, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_480:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_481, f28=72, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_480
 SndRecTriFieldGet2_Table_2_p0_p24_482:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_482
-SndRecTriFieldGet2_Table_2_p0_482:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_482, f28=72, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_481:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_482, f28=72, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_481
 SndRecTriFieldGet2_Table_2_p0_p24_483:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_483
-SndRecTriFieldGet2_Table_2_p0_483:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep14     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_483, f28=72, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_482:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep14     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_483, f28=72, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_482
 SndRecTriFieldGet2_Table_2_p0_p24_484:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_484
-SndRecTriFieldGet2_Table_2_p0_484:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep15     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_484, f28=72, index_=38, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_483:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep15     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_484, f28=72, index_=38
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_483
 SndRecTriFieldGet2_Table_2_p0_p24_485:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_485
-SndRecTriFieldGet2_Table_2_p0_485:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep16     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_485, f28=72, index_=39, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_484:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep16     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_485, f28=72, index_=39
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_484
 SndRecTriFieldGet2_Table_2_p0_p24_486:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="#"
 	tab_u16	12800, 8960, 12800, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_486
-SndRecTriFieldGet2_Table_2_p0_486:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_486, f28=72, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_485:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_486, f28=72, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_485
 SndRecTriFieldGet2_Table_2_p0_p24_487:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="A"
 	tab_u16	25088, 16640, 25088, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_487
-SndRecTriFieldGet2_Table_2_p0_487:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_487, f28=72, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_486:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_487, f28=72, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_486
 SndRecTriFieldGet2_Table_2_p0_p24_488:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="U"
 	tab_u16	32768, 21760, 32768, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_488
-SndRecTriFieldGet2_Table_2_p0_488:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_488, f28=72, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_487:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_488, f28=72, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_487
 SndRecTriFieldGet2_Table_2_p0_p24_489:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	38400, 16384, 24576, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_489
-SndRecTriFieldGet2_Table_2_p0_489:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_489, f28=72, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_488:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_489, f28=72, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_488
 SndRecTriFieldGet2_Table_2_p0_p24_490:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_490
-SndRecTriFieldGet2_Table_2_p0_490:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_490, f28=72, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_489:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_490, f28=72, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_489
 SndRecTriFieldGet2_Table_2_p0_p24_491:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_491
-SndRecTriFieldGet2_Table_2_p0_491:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_491, f28=72, index_=45, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_490:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_491, f28=72, index_=45
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_490
 SndRecTriFieldGet2_Table_2_p0_p24_492:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_492
-SndRecTriFieldGet2_Table_2_p0_492:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_492, f28=72, index_=46, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_491:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_492, f28=72, index_=46
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_491
 SndRecTriFieldGet2_Table_2_p0_p24_493:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_493
-SndRecTriFieldGet2_Table_2_p0_493:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_493, f28=72, index_=47, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_492:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_493, f28=72, index_=47
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_492
 SndRecTriFieldGet2_Table_2_p0_p24_494:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="#"
 	tab_u16	12800, 8960, 12800, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_494
-SndRecTriFieldGet2_Table_2_p0_494:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_494, f28=72, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_493:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_494, f28=72, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_493
 SndRecTriFieldGet2_Table_2_p0_p24_495:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="A"
 	tab_u16	25088, 16640, 25088, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_495
-SndRecTriFieldGet2_Table_2_p0_495:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_495, f28=72, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_494:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_495, f28=72, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_494
 SndRecTriFieldGet2_Table_2_p0_p24_496:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="U"
 	tab_u16	32768, 21760, 32768, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_496
-SndRecTriFieldGet2_Table_2_p0_496:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_496, f28=72, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_495:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_496, f28=72, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_495
 SndRecTriFieldGet2_Table_2_p0_p24_497:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	38400, 16384, 24576, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_497
-SndRecTriFieldGet2_Table_2_p0_497:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_497, f28=72, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_496:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_497, f28=72, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_496
 SndRecTriFieldGet2_Table_2_p0_p24_498:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_498
-SndRecTriFieldGet2_Table_2_p0_498:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_498, f28=72, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_497:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_498, f28=72, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_497
 SndRecTriFieldGet2_Table_2_p0_p24_499:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_499
-SndRecTriFieldGet2_Table_2_p0_499:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_499, f28=72, index_=53, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_498:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_499, f28=72, index_=53
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_498
 SndRecTriFieldGet2_Table_2_p0_p24_500:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_500
-SndRecTriFieldGet2_Table_2_p0_500:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_500, f28=72, index_=54, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_499:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_500, f28=72, index_=54
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_499
 SndRecTriFieldGet2_Table_2_p0_p24_501:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_501
-SndRecTriFieldGet2_Table_2_p0_501:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_501, f28=72, index_=55, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_500:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_501, f28=72, index_=55
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_500
 SndRecTriFieldGet2_Table_2_p0_p24_502:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 40960, 40960, 53248, 47359, 53503, 47359, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_502
-SndRecTriFieldGet2_Table_2_p0_502:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep17     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_502, f28=73, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_501:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep17     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_502, f28=73
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_501
 SndRecTriFieldGet2_Table_2_p0_p24_503:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 54016, 48383, 54271, 48383, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_503
-SndRecTriFieldGet2_Table_2_p0_503:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep18     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_503, f28=73, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_502:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep18     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_503, f28=73, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_502
 SndRecTriFieldGet2_Table_2_p0_p24_504:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	6145, 6145, 6145, 56321, 51967, 56575, 51967, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_504
-SndRecTriFieldGet2_Table_2_p0_504:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep19     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_504, f28=73, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_503:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep19     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_504, f28=73, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_503
 SndRecTriFieldGet2_Table_2_p0_p24_505:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 57857, 54271, 58111, 54271, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_505
-SndRecTriFieldGet2_Table_2_p0_505:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep20     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_505, f28=73, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_504:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep20     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_505, f28=73, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_504
 SndRecTriFieldGet2_Table_2_p0_p24_506:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 40960, 40960, 53248, 47359, 53503, 47359, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_506
-SndRecTriFieldGet2_Table_2_p0_506:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal17    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_506, f28=73, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_505:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal17    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_506, f28=73, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_505
 SndRecTriFieldGet2_Table_2_p0_p24_507:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 54016, 48383, 54271, 48383, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_507
-SndRecTriFieldGet2_Table_2_p0_507:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal18    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_507, f28=73, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_506:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal18    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_507, f28=73, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_506
 SndRecTriFieldGet2_Table_2_p0_p24_508:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	6145, 6145, 6145, 56321, 51967, 56575, 51967, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_508
-SndRecTriFieldGet2_Table_2_p0_508:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal19    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_508, f28=73, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_507:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal19    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_508, f28=73, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_507
 SndRecTriFieldGet2_Table_2_p0_p24_509:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 57857, 54271, 58111, 54271, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_509
-SndRecTriFieldGet2_Table_2_p0_509:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal20    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_509, f28=73, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_508:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal20    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_509, f28=73, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_508
 SndRecTriFieldGet2_Table_2_p0_p24_510:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 40960, 40960, 53248, 47359, 53503, 47359, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_510
-SndRecTriFieldGet2_Table_2_p0_510:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow17    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_510, f28=73, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_509:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow17    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_510, f28=73, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_509
 SndRecTriFieldGet2_Table_2_p0_p24_511:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 54016, 48383, 54271, 48383, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_511
-SndRecTriFieldGet2_Table_2_p0_511:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow18    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_511, f28=73, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_510:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow18    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_511, f28=73, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_510
 SndRecTriFieldGet2_Table_2_p0_p24_512:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x18"
 	tab_u16	6145, 6145, 6145, 56321, 51967, 56575, 51967, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_512
-SndRecTriFieldGet2_Table_2_p0_512:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow19    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_512, f28=73, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_511:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow19    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_512, f28=73, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_511
 SndRecTriFieldGet2_Table_2_p0_p24_513:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 57857, 54271, 58111, 54271, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_513
-SndRecTriFieldGet2_Table_2_p0_513:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow20    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_513, f28=73, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_512:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow20    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_513, f28=73, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_512
 SndRecTriFieldGet2_Table_2_p0_p24_514:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_514
-SndRecTriFieldGet2_Table_2_p0_514:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_514, f28=76, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_513:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep1      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_514, f28=76
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_513
 SndRecTriFieldGet2_Table_2_p0_p24_515:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_515
-SndRecTriFieldGet2_Table_2_p0_515:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_515, f28=76, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_514:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep2      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_515, f28=76, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_514
 SndRecTriFieldGet2_Table_2_p0_p24_516:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_516
-SndRecTriFieldGet2_Table_2_p0_516:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_516, f28=76, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_515:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep3      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_516, f28=76, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_515
 SndRecTriFieldGet2_Table_2_p0_p24_517:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_517
-SndRecTriFieldGet2_Table_2_p0_517:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_517, f28=76, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_516:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep4      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_517, f28=76, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_516
 SndRecTriFieldGet2_Table_2_p0_p24_518:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="x"
 	tab_u16	30720, 61440, 61440, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_518
-SndRecTriFieldGet2_Table_2_p0_518:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_518, f28=76, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_517:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep5      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_518, f28=76, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_517
 SndRecTriFieldGet2_Table_2_p0_p24_519:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x8C"
 	tab_u16	35840, 6144, 6145, 50177, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_519
-SndRecTriFieldGet2_Table_2_p0_519:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_519, f28=76, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_518:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep6      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_519, f28=76, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_518
 SndRecTriFieldGet2_Table_2_p0_p24_520:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 16384, 16385, 50177, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_520
-SndRecTriFieldGet2_Table_2_p0_520:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_520, f28=76, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_519:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep7      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_520, f28=76, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_519
 SndRecTriFieldGet2_Table_2_p0_p24_521:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xAF"
 	tab_u16	44800, 24064, 24065, 50177, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_521
-SndRecTriFieldGet2_Table_2_p0_521:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_521, f28=76, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_520:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep8      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_521, f28=76, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_520
 SndRecTriFieldGet2_Table_2_p0_p24_522:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_522
-SndRecTriFieldGet2_Table_2_p0_522:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_522, f28=76, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_521:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal1     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_522, f28=76, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_521
 SndRecTriFieldGet2_Table_2_p0_p24_523:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_523
-SndRecTriFieldGet2_Table_2_p0_523:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_523, f28=76, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_522:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal2     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_523, f28=76, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_522
 SndRecTriFieldGet2_Table_2_p0_p24_524:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_524
-SndRecTriFieldGet2_Table_2_p0_524:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_524, f28=76, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_523:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal3     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_524, f28=76, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_523
 SndRecTriFieldGet2_Table_2_p0_p24_525:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_525
-SndRecTriFieldGet2_Table_2_p0_525:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_525, f28=76, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_524:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal4     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_525, f28=76, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_524
 SndRecTriFieldGet2_Table_2_p0_p24_526:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="x"
 	tab_u16	30720, 61440, 61440, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_526
-SndRecTriFieldGet2_Table_2_p0_526:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_526, f28=76, index_=12, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_525:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal5     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_526, f28=76, index_=12
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_525
 SndRecTriFieldGet2_Table_2_p0_p24_527:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x8C"
 	tab_u16	35840, 6144, 6145, 50177, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_527
-SndRecTriFieldGet2_Table_2_p0_527:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_527, f28=76, index_=13, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_526:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal6     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_527, f28=76, index_=13
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_526
 SndRecTriFieldGet2_Table_2_p0_p24_528:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 16384, 16385, 50177, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_528
-SndRecTriFieldGet2_Table_2_p0_528:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_528, f28=76, index_=14, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_527:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal7     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_528, f28=76, index_=14
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_527
 SndRecTriFieldGet2_Table_2_p0_p24_529:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xAF"
 	tab_u16	44800, 24064, 24065, 50177, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_529
-SndRecTriFieldGet2_Table_2_p0_529:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_529, f28=76, index_=15, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_528:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal8     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_529, f28=76, index_=15
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_528
 SndRecTriFieldGet2_Table_2_p0_p24_530:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_530
-SndRecTriFieldGet2_Table_2_p0_530:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_530, f28=76, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_529:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow1    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_530, f28=76, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_529
 SndRecTriFieldGet2_Table_2_p0_p24_531:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_531
-SndRecTriFieldGet2_Table_2_p0_531:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_531, f28=76, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_530:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow2    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_531, f28=76, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_530
 SndRecTriFieldGet2_Table_2_p0_p24_532:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_532
-SndRecTriFieldGet2_Table_2_p0_532:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_532, f28=76, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_531:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow3    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_532, f28=76, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_531
 SndRecTriFieldGet2_Table_2_p0_p24_533:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_533
-SndRecTriFieldGet2_Table_2_p0_533:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_533, f28=76, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_532:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow4    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_533, f28=76, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_532
 SndRecTriFieldGet2_Table_2_p0_p24_534:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="x"
 	tab_u16	30720, 61440, 61440, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_534
-SndRecTriFieldGet2_Table_2_p0_534:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_534, f28=76, index_=20, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_533:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow5    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_534, f28=76, index_=20
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_533
 SndRecTriFieldGet2_Table_2_p0_p24_535:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x8C"
 	tab_u16	35840, 6144, 6145, 50177, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_535
-SndRecTriFieldGet2_Table_2_p0_535:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_535, f28=76, index_=21, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_534:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow6    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_535, f28=76, index_=21
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_534
 SndRecTriFieldGet2_Table_2_p0_p24_536:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 16384, 16385, 50177, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_536
-SndRecTriFieldGet2_Table_2_p0_536:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_536, f28=76, index_=22, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_535:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow7    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_536, f28=76, index_=22
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_535
 SndRecTriFieldGet2_Table_2_p0_p24_537:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xAF"
 	tab_u16	44800, 24064, 24065, 50177, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_537
-SndRecTriFieldGet2_Table_2_p0_537:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_537, f28=76, index_=23, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_536:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow8    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_537, f28=76, index_=23
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_536
 SndRecTriFieldGet2_Table_2_p0_p24_538:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 25600, 38400, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_538
-SndRecTriFieldGet2_Table_2_p0_538:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_538, f28=76, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_537:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep9      \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_538, f28=76, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_537
 SndRecTriFieldGet2_Table_2_p0_p24_539:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 15360, 23040, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_539
-SndRecTriFieldGet2_Table_2_p0_539:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_539, f28=76, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_538:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep10     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_539, f28=76, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_538
 SndRecTriFieldGet2_Table_2_p0_p24_540:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	15360, 20480, 30720, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_540
-SndRecTriFieldGet2_Table_2_p0_540:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_540, f28=76, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_539:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep11     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_540, f28=76, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_539
 SndRecTriFieldGet2_Table_2_p0_p24_541:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	23040, 30720, 46080, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_541
-SndRecTriFieldGet2_Table_2_p0_541:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_541, f28=76, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_540:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep12     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_541, f28=76, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_540
 SndRecTriFieldGet2_Table_2_p0_p24_542:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_542
-SndRecTriFieldGet2_Table_2_p0_542:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_542, f28=76, index_=36, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_541:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep13     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_542, f28=76, index_=36
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_541
 SndRecTriFieldGet2_Table_2_p0_p24_543:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_543
-SndRecTriFieldGet2_Table_2_p0_543:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep14     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_543, f28=76, index_=37, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_542:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep14     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_543, f28=76, index_=37
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_542
 SndRecTriFieldGet2_Table_2_p0_p24_544:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_544
-SndRecTriFieldGet2_Table_2_p0_544:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep15     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_544, f28=76, index_=38, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_543:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep15     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_544, f28=76, index_=38
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_543
 SndRecTriFieldGet2_Table_2_p0_p24_545:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_545
-SndRecTriFieldGet2_Table_2_p0_545:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep16     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_545, f28=76, index_=39, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_544:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep16     \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_545, f28=76, index_=39
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_544
 SndRecTriFieldGet2_Table_2_p0_p24_546:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 25600, 38400, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_546
-SndRecTriFieldGet2_Table_2_p0_546:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_546, f28=76, index_=40, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_545:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal9     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_546, f28=76, index_=40
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_545
 SndRecTriFieldGet2_Table_2_p0_p24_547:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 15360, 23040, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_547
-SndRecTriFieldGet2_Table_2_p0_547:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_547, f28=76, index_=41, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_546:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal10    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_547, f28=76, index_=41
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_546
 SndRecTriFieldGet2_Table_2_p0_p24_548:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	15360, 20480, 30720, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_548
-SndRecTriFieldGet2_Table_2_p0_548:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_548, f28=76, index_=42, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_547:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_548, f28=76, index_=42
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_547
 SndRecTriFieldGet2_Table_2_p0_p24_549:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	23040, 30720, 46080, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_549
-SndRecTriFieldGet2_Table_2_p0_549:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_549, f28=76, index_=43, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_548:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_549, f28=76, index_=43
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_548
 SndRecTriFieldGet2_Table_2_p0_p24_550:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_550
-SndRecTriFieldGet2_Table_2_p0_550:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_550, f28=76, index_=44, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_549:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_550, f28=76, index_=44
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_549
 SndRecTriFieldGet2_Table_2_p0_p24_551:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_551
-SndRecTriFieldGet2_Table_2_p0_551:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_551, f28=76, index_=45, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_550:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_551, f28=76, index_=45
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_550
 SndRecTriFieldGet2_Table_2_p0_p24_552:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_552
-SndRecTriFieldGet2_Table_2_p0_552:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_552, f28=76, index_=46, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_551:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_552, f28=76, index_=46
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_551
 SndRecTriFieldGet2_Table_2_p0_p24_553:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_553
-SndRecTriFieldGet2_Table_2_p0_553:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_553, f28=76, index_=47, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_552:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_553, f28=76, index_=47
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_552
 SndRecTriFieldGet2_Table_2_p0_p24_554:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 25600, 38400, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_554
-SndRecTriFieldGet2_Table_2_p0_554:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_554, f28=76, index_=48, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_553:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Shallow9    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_554, f28=76, index_=48
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_553
 SndRecTriFieldGet2_Table_2_p0_p24_555:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 15360, 23040, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_555
-SndRecTriFieldGet2_Table_2_p0_555:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_555, f28=76, index_=49, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_554:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow10    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_555, f28=76, index_=49
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_554
 SndRecTriFieldGet2_Table_2_p0_p24_556:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	15360, 20480, 30720, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_556
-SndRecTriFieldGet2_Table_2_p0_556:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_556, f28=76, index_=50, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_555:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow11    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_556, f28=76, index_=50
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_555
 SndRecTriFieldGet2_Table_2_p0_p24_557:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	23040, 30720, 46080, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_557
-SndRecTriFieldGet2_Table_2_p0_557:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_557, f28=76, index_=51, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_556:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow12    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_557, f28=76, index_=51
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_556
 SndRecTriFieldGet2_Table_2_p0_p24_558:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_558
-SndRecTriFieldGet2_Table_2_p0_558:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_558, f28=76, index_=52, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_557:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow13    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_558, f28=76, index_=52
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_557
 SndRecTriFieldGet2_Table_2_p0_p24_559:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_559
-SndRecTriFieldGet2_Table_2_p0_559:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_559, f28=76, index_=53, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_558:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow14    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_559, f28=76, index_=53
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_558
 SndRecTriFieldGet2_Table_2_p0_p24_560:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_560
-SndRecTriFieldGet2_Table_2_p0_560:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_560, f28=76, index_=54, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_559:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow15    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_560, f28=76, index_=54
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_559
 SndRecTriFieldGet2_Table_2_p0_p24_561:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_561
-SndRecTriFieldGet2_Table_2_p0_561:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_561, f28=76, index_=55, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_560:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow16    \x00\x00", f18=9, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_561, f28=76, index_=55
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_560
 SndRecTriFieldGet2_Table_2_p0_p24_562:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_562
-SndRecTriFieldGet2_Table_2_p0_562:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep17     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_562, f28=77, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_561:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep17     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_562, f28=77
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_561
 SndRecTriFieldGet2_Table_2_p0_p24_563:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_563
-SndRecTriFieldGet2_Table_2_p0_563:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep18     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_563, f28=77, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_562:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep18     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_563, f28=77, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_562
 SndRecTriFieldGet2_Table_2_p0_p24_564:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_564
-SndRecTriFieldGet2_Table_2_p0_564:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep19     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_564, f28=77, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_563:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep19     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_564, f28=77, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_563
 SndRecTriFieldGet2_Table_2_p0_p24_565:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_565
-SndRecTriFieldGet2_Table_2_p0_565:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep20     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_565, f28=77, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_564:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Deep20     \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_565, f28=77, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_564
 SndRecTriFieldGet2_Table_2_p0_p24_566:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_566
-SndRecTriFieldGet2_Table_2_p0_566:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal17    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_566, f28=77, index_=8, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_565:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal17    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_566, f28=77, index_=8
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_565
 SndRecTriFieldGet2_Table_2_p0_p24_567:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_567
-SndRecTriFieldGet2_Table_2_p0_567:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal18    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_567, f28=77, index_=9, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_566:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal18    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_567, f28=77, index_=9
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_566
 SndRecTriFieldGet2_Table_2_p0_p24_568:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_568
-SndRecTriFieldGet2_Table_2_p0_568:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal19    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_568, f28=77, index_=10, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_567:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal19    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_568, f28=77, index_=10
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_567
 SndRecTriFieldGet2_Table_2_p0_p24_569:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_569
-SndRecTriFieldGet2_Table_2_p0_569:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal20    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_569, f28=77, index_=11, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_568:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal20    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_569, f28=77, index_=11
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_568
 SndRecTriFieldGet2_Table_2_p0_p24_570:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_570
-SndRecTriFieldGet2_Table_2_p0_570:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow17    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_570, f28=77, index_=16, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_569:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow17    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_570, f28=77, index_=16
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_569
 SndRecTriFieldGet2_Table_2_p0_p24_571:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_571
-SndRecTriFieldGet2_Table_2_p0_571:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow18    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_571, f28=77, index_=17, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_570:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow18    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_571, f28=77, index_=17
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_570
 SndRecTriFieldGet2_Table_2_p0_p24_572:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_572
-SndRecTriFieldGet2_Table_2_p0_572:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow19    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_572, f28=77, index_=18, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_571:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow19    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_572, f28=77, index_=18
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_571
 SndRecTriFieldGet2_Table_2_p0_p24_573:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_573
-SndRecTriFieldGet2_Table_2_p0_573:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow20    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_573, f28=77, index_=19, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_572:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Shallow20    \x00\x00", f18=12, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_573, f28=77, index_=19
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_572
 SndRecTriFieldGet2_Table_2_p0_p24_574:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x88"
 	tab_u16	4096, 38913, 8193, 2, 7680, 15360, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_574
-SndRecTriFieldGet2_Table_2_p0_574:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi1     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_574, f28=81, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_573:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi1     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_574, f28=81
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_573
 SndRecTriFieldGet2_Table_2_p0_p24_575:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 0, 7680, 15360, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_575
-SndRecTriFieldGet2_Table_2_p0_575:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi2     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_575, f28=81, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_574:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi2     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_575, f28=81, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_574
 SndRecTriFieldGet2_Table_2_p0_p24_576:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 25344, 15360, 7680, 0, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_576
-SndRecTriFieldGet2_Table_2_p0_576:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi3     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_576, f28=81, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_575:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi3     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_576, f28=81, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_575
 SndRecTriFieldGet2_Table_2_p0_p24_577:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 0, 15360, 7680, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_577
-SndRecTriFieldGet2_Table_2_p0_577:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi4     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_577, f28=81, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_576:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi4     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_577, f28=81, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_576
 SndRecTriFieldGet2_Table_2_p0_p24_578:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 25344, 7680, 15360, 0, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_578
-SndRecTriFieldGet2_Table_2_p0_578:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi5     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_578, f28=81, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_577:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi5     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_578, f28=81, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_577
 SndRecTriFieldGet2_Table_2_p0_p24_579:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="D"
 	tab_u16	34816, 52224, 4096, 1, 15360, 7680, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_579
-SndRecTriFieldGet2_Table_2_p0_579:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi6     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_579, f28=81, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_578:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi6     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_579, f28=81, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_578
 SndRecTriFieldGet2_Table_2_p0_p24_580:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="D"
 	tab_u16	34816, 52224, 4096, 25345, 7680, 15360, 0, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_580
-SndRecTriFieldGet2_Table_2_p0_580:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi7     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_580, f28=81, index_=6, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_579:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi7     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_580, f28=81, index_=6
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_579
 SndRecTriFieldGet2_Table_2_p0_p24_581:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="D"
 	tab_u16	34816, 52224, 4096, 25345, 7680, 15360, 0, 55296, 50431, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_581
-SndRecTriFieldGet2_Table_2_p0_581:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi8     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_581, f28=81, index_=7, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_580:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Multi8     \x00\x00", f18=10, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_581, f28=81, index_=7
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_580
 SndRecTriFieldGet2_Table_2_p0_p24_582:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 13055, 10240, 1536, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_582
-SndRecTriFieldGet2_Table_2_p0_582:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Delay+Chorus  \x00\x00", f18=64, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_582, f28=82, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_581:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Delay+Chorus  \x00\x00", f18=64, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_582, f28=82
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_581
 SndRecTriFieldGet2_Table_2_p0_p24_583:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 20735, 20480, 512, 15360, 12800, 46080, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_583
-SndRecTriFieldGet2_Table_2_p0_583:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Delay+Flanger  \x00\x00", f18=66, f20=16, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_583, f28=82, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_582:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Delay+Flanger  \x00\x00", f18=66, f20=16, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_583, f28=82, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_582
 SndRecTriFieldGet2_Table_2_p0_p24_584:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 10495, 1536, 23040, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_584
-SndRecTriFieldGet2_Table_2_p0_584:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Delay+Vibrato  \x00\x00", f18=67, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_584, f28=83, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_583:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Delay+Vibrato  \x00\x00", f18=67, f20=13, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_584, f28=83
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_583
 SndRecTriFieldGet2_Table_2_p0_p24_585:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 20735, 20480, 1024, 15360, 12800, 46080, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_585
-SndRecTriFieldGet2_Table_2_p0_585:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Delay+Phaser  \x00\x00", f18=68, f20=16, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_585, f28=83, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_584:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="  Delay+Phaser  \x00\x00", f18=68, f20=16, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_585, f28=83, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_584
 SndRecTriFieldGet2_Table_2_p0_p24_586:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 25344, 5120, 11264, 11265, 55297, 50431, 55551, 50431, 25599, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_586
-SndRecTriFieldGet2_Table_2_p0_586:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Autowah+Delay  \x00\x00", f18=70, f20=12, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_586, f28=84, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_585:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Autowah+Delay  \x00\x00", f18=70, f20=12, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_586, f28=84
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_585
 SndRecTriFieldGet2_Table_2_p0_p24_587:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 5120, 19712, 3072, 11264, 11265, 50177, 55551, 50431, 55551, 21759, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_587
-SndRecTriFieldGet2_Table_2_p0_587:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Comp+Dst+Delay \x00\x00", f18=80, f20=15, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_587, f28=85, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_586:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Comp+Dst+Delay \x00\x00", f18=80, f20=15, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_587, f28=85
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_586
 SndRecTriFieldGet2_Table_2_p0_p24_588:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 5120, 19712, 3072, 11264, 11265, 50177, 55551, 50431, 55551, 21759, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_588
-SndRecTriFieldGet2_Table_2_p0_588:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Comp+Ovd+Delay \x00\x00", f18=81, f20=15, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_588, f28=85, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_587:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Comp+Ovd+Delay \x00\x00", f18=81, f20=15, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_588, f28=85, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_587
 SndRecTriFieldGet2_Table_2_p0_p24_589:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 24064, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_Table_2_p0_p24_589
-SndRecTriFieldGet2_Table_2_p0_589:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="Vocal Harmonizer\x00\x00", f18=124, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_589, f28=90, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_588:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="Vocal Harmonizer\x00\x00", f18=124, f20=11, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_589, f28=90
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_588
 SndRecTriFieldGet2_Table_2_p0_p24_590:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x1D"
 	tab_u16	7424, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_590
-SndRecTriFieldGet2_Table_2_p0_590:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Voice Changer1 \x00\x00", f18=120, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_590, f28=90, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_589:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Voice Changer1 \x00\x00", f18=120, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_590, f28=90, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_589
 SndRecTriFieldGet2_Table_2_p0_p24_591:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\xE3"
 	tab_u16	58367, 21759, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_591
-SndRecTriFieldGet2_Table_2_p0_591:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Voice Changer2 \x00\x00", f18=120, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_591, f28=90, index_=5, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_590:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0=" Voice Changer2 \x00\x00", f18=120, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_591, f28=90, index_=5
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_590
 SndRecTriFieldGet2_Table_2_p0_p24_592:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="T"
 	tab_u16	20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_592
-SndRecTriFieldGet2_Table_2_p0_592:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="Brass simulator1\x00\x00", f18=121, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_592, f28=90, index_=33, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_591:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="Brass simulator1\x00\x00", f18=121, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_592, f28=90, index_=33
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_591
 SndRecTriFieldGet2_Table_2_p0_p24_593:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	6144, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_593
-SndRecTriFieldGet2_Table_2_p0_593:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="Brass simulator2\x00\x00", f18=122, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_593, f28=90, index_=34, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_592:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="Brass simulator2\x00\x00", f18=122, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_593, f28=90, index_=34
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_592
 SndRecTriFieldGet2_Table_2_p0_p24_594:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x0E"
 	tab_u16	6144, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_594
-SndRecTriFieldGet2_Table_2_p0_594:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="Brass simulator3\x00\x00", f18=123, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_594, f28=90, index_=35, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_593:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="Brass simulator3\x00\x00", f18=123, f20=4, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_594, f28=90, index_=35
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_593
 SndRecTriFieldGet2_Table_2_p0_p24_595:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_595
-SndRecTriFieldGet2_Table_2_p0_595:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Room      \x00\x00", f18=88, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_595, f28=91, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_594:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Room      \x00\x00", f18=88, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_595, f28=91
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_594
 SndRecTriFieldGet2_Table_2_p0_p24_596:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_596
-SndRecTriFieldGet2_Table_2_p0_596:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Karaoke     \x00\x00", f18=89, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_596, f28=91, index_=1, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_595:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Karaoke     \x00\x00", f18=89, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_596, f28=91, index_=1
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_595
 SndRecTriFieldGet2_Table_2_p0_p24_597:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_597
-SndRecTriFieldGet2_Table_2_p0_597:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Stage      \x00\x00", f18=90, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_597, f28=91, index_=2, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_596:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="     Stage      \x00\x00", f18=90, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_597, f28=91, index_=2
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_596
 SndRecTriFieldGet2_Table_2_p0_p24_598:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_598
-SndRecTriFieldGet2_Table_2_p0_598:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Cave      \x00\x00", f18=91, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_598, f28=91, index_=3, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_597:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="      Cave      \x00\x00", f18=91, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_598, f28=91, index_=3
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_597
 SndRecTriFieldGet2_Table_2_p0_p24_599:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="T"
 	tab_u16	20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_599
-SndRecTriFieldGet2_Table_2_p0_599:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Spreader    \x00\x00", f18=57, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_599, f28=100, index_=4, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_598:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Spreader    \x00\x00", f18=57, f20=2, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_599, f28=100, index_=4
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_598
 SndRecTriFieldGet2_Table_2_p0_p24_600:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="\x00"
 	tab_u16	0	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_600
-SndRecTriFieldGet2_Table_2_p0_600:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
-	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Non Effect   \x00\x00", x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_600, f28=111, index_=32, x30="\x00\x00"
+SndRecTriFieldGet2_Table_2_p0_599:	# REC_SndRecTriFieldGet2_Table_2_p0 (30 bytes)
+	REC_SndRecTriFieldGet2_Table_2_p0	x0="   Non Effect   \x00\x00", x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_600, f28=111, index_=32
+	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_599
 func_4841202C_Table_2_p0_p4_0:	# REC_func_4841202C_Table_2_p0_p4 (32 bytes), then 4 x s8 the code indexes from +20 (read by func_4841259A 0x4841259A `movhu (0x16, a1), d0`; func_484125E0 0x484125E0 `movhu (0x18, a1), d0` (+6))
 	REC_func_4841202C_Table_2_p0_p4	x0="ETC \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00c\x00\xFF\x00\x00\xFF\x00\x00"
 	tab_s8	0, 0, 0, 0	# [0]
@@ -39401,606 +40004,3 @@ Field_AcFavorite_end:	.asciz ""
 
 ClassFields_AcFavorite:
 	.long	Field_AcFavorite_end
-
-Field_AcFavBank_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFavBank_end
-
-ClassFields_AcFavBank:
-	.long	Field_AcFavBank_end
-
-Field_AcFavCategory_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFavCategory_end
-
-ClassFields_AcFavCategory:
-	.long	Field_AcFavCategory_end
-
-Field_AcFavItem_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFavItem_end
-
-ClassFields_AcFavItem:
-	.long	Field_AcFavItem_end
-
-Field_AcFavScreen_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFavScreen_end
-
-ClassFields_AcFavScreen:
-	.long	Field_AcFavScreen_end
-
-ClassSig_AcFavorite:	.asciz ""
-ClassSig_AcFavBank:	.asciz ""
-ClassSig_AcFavCategory:	.asciz ""
-ClassSig_AcFavItem:	.asciz ""
-ClassSig_AcFavScreen:	.asciz ""
-ClassName_AcFavorite:	.asciz "AcFavorite"
-ClassName_AcFavBank:	.asciz "AcFavBank"
-ClassName_AcFavCategory:	.asciz "AcFavCategory"
-ClassName_AcFavItem:	.asciz "AcFavItem"
-ClassName_AcFavScreen:	.asciz "AcFavScreen"
-	.align	4, 0xFF	# pad after ClassName_AcFavScreen
-Str_EV_FAVBANK:	.asciz "EV_FAVBANK"
-Str_EV_FAVCATEGORY:	.asciz "EV_FAVCATEGORY"
-	.align	4, 0xFF	# pad after Str_EV_FAVCATEGORY
-Str_MT_GetFavParam:	.asciz "MT_GetFavParam"
-Str_MT_StoreFavMem:	.asciz "MT_StoreFavMem"
-Str_MT_FavMenuMain:	.asciz "MT_FavMenuMain"
-Str_MT_StyleOut:	.asciz "MT_StyleOut"
-Str_MT_GetItemString:	.asciz "MT_GetItemString"
-Str_MT_GetFavFunc:	.asciz "MT_GetFavFunc"
-FnName_AcFavoriteProc:	.asciz "AcFavoriteProc"
-FnName_AcFavBankProc:	.asciz "AcFavBankProc"
-FnName_AcFavCategoryProc:	.asciz "AcFavCategoryProc"
-FnName_AcFavItemProc:	.asciz "AcFavItemProc"
-FnName_AcFavScreenProc:	.asciz "AcFavScreenProc"
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x2024D5, 0x2024D8
-FnName_FavSetFunc:	.asciz "FavSetFunc"
-FnName_FavBankNamingFunc:	.asciz "FavBankNamingFunc"
-FnName_FavSetText:	.asciz "FavSetText"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x202500, 0x202504
-FnName_TtFavorite:	.asciz "TtFavorite"
-FnName_TtCtFavorite:	.asciz "TtCtFavorite"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x20251C, 0x202520
-Str_FAVORITES_2:	.asciz "FAVORITES"
-	.align	4, 0xFF	# pad after Str_FAVORITES_2
-
-	TtlScreen	TtFavorite, sub=TtFavorite_Favorite1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtFavorite_window, title=Str_FAVORITES_2, icon=189	# title "FAVORITES"
-		AcFavorite	TtFavorite_Favorite1, super=TtFavorite, next=TtFavorite_Favorite2, flag=VF_Const, X=8, Y=30, W=222, H=34, color=CL_Silver, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=TtFavorite_Favorite1_selected
-		AcFavorite	TtFavorite_Favorite2, super=TtFavorite, next=TtFavorite_Favorite3, prev=TtFavorite_Favorite1, flag=VF_Const, X=8, Y=73, W=222, H=34, color=CL_Silver, index=1, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=TtFavorite_Favorite2_selected
-		AcFavorite	TtFavorite_Favorite3, super=TtFavorite, next=TtFavorite_Favorite4, prev=TtFavorite_Favorite2, flag=VF_Const, X=8, Y=116, W=222, H=34, color=CL_Silver, index=2, font=4, fontcolor=CL_Black, editsw=ES_Left3, selected=TtFavorite_Favorite3_selected
-		AcFavorite	TtFavorite_Favorite4, super=TtFavorite, next=TtFavorite_Favorite5, prev=TtFavorite_Favorite3, flag=VF_Const, X=8, Y=159, W=222, H=34, color=CL_Silver, index=3, font=4, fontcolor=CL_Black, editsw=ES_Left4, selected=TtFavorite_Favorite4_selected
-		AcFavorite	TtFavorite_Favorite5, super=TtFavorite, next=TtFavorite_Favorite6, prev=TtFavorite_Favorite4, flag=VF_Const, X=8, Y=202, W=222, H=34, color=CL_Silver, index=4, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=TtFavorite_Favorite5_selected
-		AcFavorite	TtFavorite_Favorite6, super=TtFavorite, next=TtFavorite_Favorite7, prev=TtFavorite_Favorite5, flag=VF_Const, X=410, Y=30, W=222, H=34, color=CL_Silver, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=TtFavorite_Favorite6_selected
-		AcFavorite	TtFavorite_Favorite7, super=TtFavorite, next=TtFavorite_Favorite8, prev=TtFavorite_Favorite6, flag=VF_Const, X=410, Y=73, W=222, H=34, color=CL_Silver, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=TtFavorite_Favorite7_selected
-		AcFavorite	TtFavorite_Favorite8, super=TtFavorite, next=TtFavorite_Favorite9, prev=TtFavorite_Favorite7, flag=VF_Const, X=410, Y=116, W=222, H=34, color=CL_Silver, index=7, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=TtFavorite_Favorite8_selected
-		AcFavorite	TtFavorite_Favorite9, super=TtFavorite, next=TtFavorite_Favorite10, prev=TtFavorite_Favorite8, flag=VF_Const, X=410, Y=159, W=222, H=34, color=CL_Silver, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=TtFavorite_Favorite9_selected
-		AcFavorite	TtFavorite_Favorite10, super=TtFavorite, next=TtFavorite_IndexEditSw1, prev=TtFavorite_Favorite9, flag=VF_Const, X=410, Y=202, W=222, H=34, color=CL_Silver, index=9, font=4, fontcolor=CL_Black, editsw=ES_Right5, selected=TtFavorite_Favorite10_selected
-		AcIndexEditSw	TtFavorite_IndexEditSw1, super=TtFavorite, sub=TtFavorite_Label_1, next=TtFavorite_IndexEditSw2, prev=TtFavorite_Favorite10, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7
-
-Str_1:	.asciz "1"
-	.align	4, 0xFF	# pad after Str_1
-
-			VwLabel	TtFavorite_Label_1, super=TtFavorite_IndexEditSw1, flag=VF_Const, X=253, Y=219, W=15, H=19, str=Str_1, font=4, fontcolor=CL_Black	# str "1"
-		AcIndexEditSw	TtFavorite_IndexEditSw2, super=TtFavorite, sub=TtFavorite_Label_2, next=TtFavorite_IndexEditSw3, prev=TtFavorite_IndexEditSw1, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom8
-
-Str_2_8:	.asciz "2"
-	.align	4, 0xFF	# pad after Str_2_8
-
-			VwLabel	TtFavorite_Label_2, super=TtFavorite_IndexEditSw2, flag=VF_Const, X=292, Y=219, W=15, H=19, str=Str_2_8, font=4, fontcolor=CL_Black	# str "2"
-		AcIndexEditSw	TtFavorite_IndexEditSw3, super=TtFavorite, sub=TtFavorite_Label_3, next=TtFavorite_IndexEditSw4, prev=TtFavorite_IndexEditSw2, flag=VF_Const, X=324, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom9
-
-Str_3:	.asciz "3"
-	.align	4, 0xFF	# pad after Str_3
-
-			VwLabel	TtFavorite_Label_3, super=TtFavorite_IndexEditSw3, flag=VF_Const, X=332, Y=219, W=15, H=19, str=Str_3, font=4, fontcolor=CL_Black	# str "3"
-		AcIndexEditSw	TtFavorite_IndexEditSw4, super=TtFavorite, sub=TtFavorite_Label_4, next=TtFavorite_FavBank1, prev=TtFavorite_IndexEditSw3, flag=VF_Const, X=364, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom10
-
-Str_4_7:	.asciz "4"
-	.align	4, 0xFF	# pad after Str_4_7
-
-			VwLabel	TtFavorite_Label_4, super=TtFavorite_IndexEditSw4, flag=VF_Const, X=372, Y=219, W=15, H=19, str=Str_4_7, font=4, fontcolor=CL_Black	# str "4"
-		AcFavBank	TtFavorite_FavBank1, super=TtFavorite, next=TtFavorite_Label_BANK, prev=TtFavorite_IndexEditSw4, flag=VF_Const, X=236, Y=90, W=168, H=122, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=1, fontcolor=CL_White, row=4, selected=TtFavorite_FavBank1_selected
-
-Str_BANK:	.asciz "BANK"
-	.align	4, 0xFF	# pad after Str_BANK
-
-		VwLabel	TtFavorite_Label_BANK, super=TtFavorite, prev=TtFavorite_FavBank1, flag=VF_Const, X=294, Y=70, W=48, H=19, str=Str_BANK, font=4, fontcolor=CL_Text	# str "BANK"
-
-Str_FAVORITES_SETTING:	.asciz "FAVORITES SETTING"
-	.align	4, 0xFF	# pad after Str_FAVORITES_SETTING
-
-	AcFavScreen	TtCtFavorite, sub=TtCtFavorite_FavBank1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtCtFavorite_window, title=Str_FAVORITES_SETTING, icon=189	# title "FAVORITES SETTING"
-		AcFavBank	TtCtFavorite_FavBank1, super=TtCtFavorite, next=TtCtFavorite_IndexEditSw1, flag=VF_Const, X=12, Y=70, W=225, H=118, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, row=4, selected=TtCtFavorite_FavBank1_selected
-		AcIndexEditSw	TtCtFavorite_IndexEditSw1, super=TtCtFavorite, sub=TtCtFavorite_Label_1, next=TtCtFavorite_IndexEditSw2, prev=TtCtFavorite_FavBank1, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom3
-
-Str_1_2:	.asciz "1"
-	.align	4, 0xFF	# pad after Str_1_2
-
-			VwLabel	TtCtFavorite_Label_1, super=TtCtFavorite_IndexEditSw1, flag=VF_Const, X=92, Y=219, W=15, H=19, str=Str_1_2, font=4, fontcolor=CL_Black	# str "1"
-		AcIndexEditSw	TtCtFavorite_IndexEditSw2, super=TtCtFavorite, sub=TtCtFavorite_Label_2, next=TtCtFavorite_IndexEditSw3, prev=TtCtFavorite_IndexEditSw1, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4
-
-Str_2_9:	.asciz "2"
-	.align	4, 0xFF	# pad after Str_2_9
-
-			VwLabel	TtCtFavorite_Label_2, super=TtCtFavorite_IndexEditSw2, flag=VF_Const, X=132, Y=219, W=15, H=19, str=Str_2_9, font=4, fontcolor=CL_Black	# str "2"
-		AcIndexEditSw	TtCtFavorite_IndexEditSw3, super=TtCtFavorite, sub=TtCtFavorite_Label_3, next=TtCtFavorite_IndexEditSw4, prev=TtCtFavorite_IndexEditSw2, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5
-
-Str_3_2:	.asciz "3"
-	.align	4, 0xFF	# pad after Str_3_2
-
-			VwLabel	TtCtFavorite_Label_3, super=TtCtFavorite_IndexEditSw3, flag=VF_Const, X=172, Y=219, W=15, H=19, str=Str_3_2, font=4, fontcolor=CL_Black	# str "3"
-		AcIndexEditSw	TtCtFavorite_IndexEditSw4, super=TtCtFavorite, sub=TtCtFavorite_Label_4, next=TtCtFavorite_ScreenMenu_BANK_NAMING, prev=TtCtFavorite_IndexEditSw3, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom6
-
-Str_4_8:	.asciz "4"
-	.align	4, 0xFF	# pad after Str_4_8
-
-			VwLabel	TtCtFavorite_Label_4, super=TtCtFavorite_IndexEditSw4, flag=VF_Const, X=212, Y=219, W=15, H=19, str=Str_4_8, font=4, fontcolor=CL_Black	# str "4"
-
-Str_BANK_NAMING:	.asciz "BANK NAMING"
-
-		AcScreenMenu	TtCtFavorite_ScreenMenu_BANK_NAMING, super=TtCtFavorite, next=TtCtFavorite_Label_BANK, prev=TtCtFavorite_IndexEditSw4, flag=VF_Const, X=8, Y=205, W=65, H=32, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Left5, selected=TtCtFavorite_ScreenMenu_BANK_NAMING_selected, str=Str_BANK_NAMING, screen=FavBankNaming_id	# str "BANK NAMING"
-
-Str_BANK_2:	.asciz "BANK"
-	.align	4, 0xFF	# pad after Str_BANK_2
-
-		VwLabel	TtCtFavorite_Label_BANK, super=TtCtFavorite, next=TtCtFavorite_FuncEditSw1, prev=TtCtFavorite_ScreenMenu_BANK_NAMING, flag=VF_Const, X=94, Y=50, W=48, H=19, str=Str_BANK_2, font=4, fontcolor=CL_Text	# str "BANK"
-		AcFuncEditSw	TtCtFavorite_FuncEditSw1, super=TtCtFavorite, next=TtCtFavorite_FuncEditSw2, prev=TtCtFavorite_Label_BANK, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_FavSetFunc
-		AcFuncEditSw	TtCtFavorite_FuncEditSw2, super=TtCtFavorite, sub=TtCtFavorite_Label_SET, next=TtCtFavorite_IndexWideES1, prev=TtCtFavorite_FuncEditSw1, flag=VF_Const, X=608, Y=189, W=32, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit, func=FN_FavSetFunc
-
-Str_SET_2:	.asciz "SET"
-
-			VwLabel	TtCtFavorite_Label_SET, super=TtCtFavorite_FuncEditSw2, flag=VF_Const, X=601, Y=198, W=37, H=19, str=Str_SET_2, font=4, fontcolor=CL_White	# str "SET"
-		AcIndexWideES	TtCtFavorite_IndexWideES1, super=TtCtFavorite, next=TtCtFavorite_IndexWideES2, prev=TtCtFavorite_FuncEditSw2, flag=VF_Const, X=284, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom10, style=14
-		AcIndexWideES	TtCtFavorite_IndexWideES2, super=TtCtFavorite, next=TtCtFavorite_FavCategory1, prev=TtCtFavorite_IndexWideES1, flag=VF_Const, X=444, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom14, style=14
-		AcFavCategory	TtCtFavorite_FavCategory1, super=TtCtFavorite, next=TtCtFavorite_FavItem1, prev=TtCtFavorite_IndexWideES2, flag=VF_Const, X=276, Y=58, W=127, H=157, color=CL_WallPattern, border=BD_3D_UP2, index=4, fontcolor=CL_White, align=1, row=8, selected=TtCtFavorite_FavCategory1_selected
-		AcFavItem	TtCtFavorite_FavItem1, super=TtCtFavorite, next=TtCtFavorite_Label_CATEGORY, prev=TtCtFavorite_FavCategory1, flag=VF_Const, X=412, Y=58, W=173, H=157, color=CL_WallPattern, border=BD_3D_UP2, index=5, fontcolor=CL_White, align=1, row=8, selected=TtCtFavorite_FavItem1_selected
-
-Str_CATEGORY_2:	.asciz "CATEGORY"
-	.align	4, 0xFF	# pad after Str_CATEGORY_2
-
-		VwLabel	TtCtFavorite_Label_CATEGORY, super=TtCtFavorite, next=TtCtFavorite_Label_ITEM, prev=TtCtFavorite_FavItem1, flag=VF_Const, X=294, Y=38, W=92, H=19, str=Str_CATEGORY_2, font=4, fontcolor=CL_Text	# str "CATEGORY"
-
-Str_ITEM_2:	.asciz "ITEM"
-	.align	4, 0xFF	# pad after Str_ITEM_2
-
-		VwLabel	TtCtFavorite_Label_ITEM, super=TtCtFavorite, next=TtCtFavorite_Box1, prev=TtCtFavorite_Label_CATEGORY, flag=VF_Const, X=462, Y=38, W=48, H=19, str=Str_ITEM_2, font=4, fontcolor=CL_Text	# str "ITEM"
-		VwBox	TtCtFavorite_Box1, super=TtCtFavorite, next=TtCtFavorite_IndexPushSw1, prev=TtCtFavorite_Label_ITEM, flag=VF_Const, X=388, Y=45, W=72, H=2, color=CL_Text, index=0xFFFF
-		AcIndexPushSw	TtCtFavorite_IndexPushSw1, super=TtCtFavorite, prev=TtCtFavorite_Box1, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, sw=TtCtFavorite_IndexPushSw1_sw
-
-Str_FAVORITES_BANK_NAMING:	.asciz "FAVORITES BANK NAMING"
-	.align	4, 0xFF	# pad after Str_FAVORITES_BANK_NAMING
-
-	TtlScreen	FavBankNaming, sub=FavBankNaming_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=FavBankNaming_window, title=Str_FAVORITES_BANK_NAMING, icon=189	# title "FAVORITES BANK NAMING"
-		IvNaming	FavBankNaming_Naming1, super=FavBankNaming, next=FavBankNaming_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=488, Y=0, W=32, H=32, func=FN_FavBankNamingFunc
-		AcFuncEditSw	FavBankNaming_FuncEditSw1, super=FavBankNaming, next=FavBankNaming_FuncEditSw2, prev=FavBankNaming_Naming1, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_FavBankNamingFunc
-		AcFuncEditSw	FavBankNaming_FuncEditSw2, super=FavBankNaming, prev=FavBankNaming_FuncEditSw1, flag=VF_Const, X=608, Y=188, W=32, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit, func=FN_FavBankNamingFunc
-
-	Window	FavPreview, sub=FavPreview_Favorite1, flag=VF_Const, X=0, Y=30, W=640, H=210, color=CL_WallPattern, index=0xFFFF, parent=FavPreview_parent, child=FavPreview_child
-		AcFavorite	FavPreview_Favorite1, super=FavPreview, next=FavPreview_Favorite2, flag=VF_Const, X=8, Y=30, W=222, H=34, color=CL_Silver, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=FavPreview_Favorite1_selected
-		AcFavorite	FavPreview_Favorite2, super=FavPreview, next=FavPreview_Favorite3, prev=FavPreview_Favorite1, flag=VF_Const, X=8, Y=73, W=222, H=34, color=CL_Silver, index=1, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=FavPreview_Favorite2_selected
-		AcFavorite	FavPreview_Favorite3, super=FavPreview, next=FavPreview_Favorite4, prev=FavPreview_Favorite2, flag=VF_Const, X=8, Y=116, W=222, H=34, color=CL_Silver, index=2, font=4, fontcolor=CL_Black, editsw=ES_Left3, selected=FavPreview_Favorite3_selected
-		AcFavorite	FavPreview_Favorite4, super=FavPreview, next=FavPreview_Favorite5, prev=FavPreview_Favorite3, flag=VF_Const, X=8, Y=159, W=222, H=34, color=CL_Silver, index=3, font=4, fontcolor=CL_Black, editsw=ES_Left4, selected=FavPreview_Favorite4_selected
-		AcFavorite	FavPreview_Favorite5, super=FavPreview, next=FavPreview_Favorite6, prev=FavPreview_Favorite4, flag=VF_Const, X=8, Y=202, W=222, H=34, color=CL_Silver, index=4, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=FavPreview_Favorite5_selected
-		AcFavorite	FavPreview_Favorite6, super=FavPreview, next=FavPreview_Favorite7, prev=FavPreview_Favorite5, flag=VF_Const, X=410, Y=30, W=222, H=34, color=CL_Silver, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=FavPreview_Favorite6_selected
-		AcFavorite	FavPreview_Favorite7, super=FavPreview, next=FavPreview_Favorite8, prev=FavPreview_Favorite6, flag=VF_Const, X=410, Y=73, W=222, H=34, color=CL_Silver, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=FavPreview_Favorite7_selected
-		AcFavorite	FavPreview_Favorite8, super=FavPreview, next=FavPreview_Favorite9, prev=FavPreview_Favorite7, flag=VF_Const, X=410, Y=116, W=222, H=34, color=CL_Silver, index=7, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=FavPreview_Favorite8_selected
-		AcFavorite	FavPreview_Favorite9, super=FavPreview, next=FavPreview_LanguageText1, prev=FavPreview_Favorite8, flag=VF_Const, X=410, Y=159, W=222, H=34, color=CL_Silver, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=FavPreview_Favorite9_selected
-		AcLanguageText	FavPreview_LanguageText1, super=FavPreview, next=FavPreview_IndexPushSw1, prev=FavPreview_Favorite9, flag=VF_Const, X=236, Y=34, W=168, H=204, color=CL_WallPattern, index=0xFFFF, font=5, fontcolor=CL_Text, alignment=1, lines=12, func=FN_FavSetText
-		AcIndexPushSw	FavPreview_IndexPushSw1, super=FavPreview, next=FavPreview_Label_SET, prev=FavPreview_LanguageText1, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, sw=FavPreview_IndexPushSw1_sw
-
-Str_SET_3:	.asciz "SET"
-
-		VwLabel	FavPreview_Label_SET, super=FavPreview, prev=FavPreview_IndexPushSw1, flag=VF_Const, X=601, Y=198, W=37, H=19, str=Str_SET_3, font=4, fontcolor=CL_White	# str "SET"
-
-Str_FAVORITES_SETTING_2:	.asciz "FAVORITES SETTING"
-	.align	4, 0xFF	# pad after Str_FAVORITES_SETTING_2
-
-	AcFavScreen	TtCtFavoritePR, sub=TtCtFavoritePR_FuncEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtCtFavoritePR_window, title=Str_FAVORITES_SETTING_2, icon=189	# title "FAVORITES SETTING"
-		AcFuncEditSw	TtCtFavoritePR_FuncEditSw1, super=TtCtFavoritePR, next=TtCtFavoritePR_FuncEditSw2, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_FavSetFunc
-		AcFuncEditSw	TtCtFavoritePR_FuncEditSw2, super=TtCtFavoritePR, sub=TtCtFavoritePR_Label_SET, next=TtCtFavoritePR_IndexWideES1, prev=TtCtFavoritePR_FuncEditSw1, flag=VF_Const, X=608, Y=189, W=32, H=23, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Exit, func=FN_FavSetFunc
-
-Str_SET_4:	.asciz "SET"
-
-			VwLabel	TtCtFavoritePR_Label_SET, super=TtCtFavoritePR_FuncEditSw2, flag=VF_Const, X=601, Y=198, W=37, H=19, str=Str_SET_4, font=4, fontcolor=CL_White	# str "SET"
-		AcIndexWideES	TtCtFavoritePR_IndexWideES1, super=TtCtFavoritePR, next=TtCtFavoritePR_FavCategory1, prev=TtCtFavoritePR_FuncEditSw2, flag=VF_Const, X=124, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom6, style=14
-		AcFavCategory	TtCtFavoritePR_FavCategory1, super=TtCtFavoritePR, next=TtCtFavoritePR_FavItem1, prev=TtCtFavoritePR_IndexWideES1, flag=VF_Const, X=96, Y=78, W=171, H=117, color=CL_WallPattern, border=BD_3D_UP2, index=4, font=4, fontcolor=CL_White, align=1, row=3, selected=TtCtFavoritePR_FavCategory1_selected
-		AcFavItem	TtCtFavoritePR_FavItem1, super=TtCtFavoritePR, next=TtCtFavoritePR_Label_CATEGORY, prev=TtCtFavoritePR_FavCategory1, flag=VF_Const, X=288, Y=114, W=233, H=45, color=CL_WallPattern, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_White, align=1, row=1, selected=TtCtFavoritePR_FavItem1_selected
-
-Str_CATEGORY_3:	.asciz "CATEGORY"
-	.align	4, 0xFF	# pad after Str_CATEGORY_3
-
-		VwLabel	TtCtFavoritePR_Label_CATEGORY, super=TtCtFavoritePR, next=TtCtFavoritePR_Label_ITEM, prev=TtCtFavoritePR_FavItem1, flag=VF_Const, X=134, Y=50, W=92, H=19, str=Str_CATEGORY_3, font=4, fontcolor=CL_Text	# str "CATEGORY"
-
-Str_ITEM_3:	.asciz "ITEM"
-	.align	4, 0xFF	# pad after Str_ITEM_3
-
-		VwLabel	TtCtFavoritePR_Label_ITEM, super=TtCtFavoritePR, next=TtCtFavoritePR_Box1, prev=TtCtFavoritePR_Label_CATEGORY, flag=VF_Const, X=314, Y=50, W=48, H=19, str=Str_ITEM_3, font=4, fontcolor=CL_Text	# str "ITEM"
-		VwBox	TtCtFavoritePR_Box1, super=TtCtFavoritePR, next=TtCtFavoritePR_IndexPushSw1, prev=TtCtFavoritePR_Label_ITEM, flag=VF_Const, X=236, Y=57, W=72, H=2, color=CL_Text, index=0xFFFF
-		AcIndexPushSw	TtCtFavoritePR_IndexPushSw1, super=TtCtFavoritePR, prev=TtCtFavoritePR_Box1, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, sw=TtCtFavoritePR_IndexPushSw1_sw
-
-Str_FAVORITES_3:	.asciz "FAVORITES"
-	.align	4, 0xFF	# pad after Str_FAVORITES_3
-
-	TtlScreen	TtFavoritePR, sub=TtFavoritePR_Favorite1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=TtFavoritePR_window, title=Str_FAVORITES_3, icon=189	# title "FAVORITES"
-		AcFavorite	TtFavoritePR_Favorite1, super=TtFavoritePR, next=TtFavoritePR_Favorite2, flag=VF_Const, X=8, Y=30, W=238, H=34, color=CL_Silver, font=4, fontcolor=CL_Black, editsw=ES_Left1, selected=TtFavoritePR_Favorite1_selected
-		AcFavorite	TtFavoritePR_Favorite2, super=TtFavoritePR, next=TtFavoritePR_Favorite3, prev=TtFavoritePR_Favorite1, flag=VF_Const, X=8, Y=73, W=238, H=34, color=CL_Silver, index=1, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=TtFavoritePR_Favorite2_selected
-		AcFavorite	TtFavoritePR_Favorite3, super=TtFavoritePR, next=TtFavoritePR_Favorite4, prev=TtFavoritePR_Favorite2, flag=VF_Const, X=8, Y=116, W=238, H=34, color=CL_Silver, index=2, font=4, fontcolor=CL_Black, editsw=ES_Left3, selected=TtFavoritePR_Favorite3_selected
-		AcFavorite	TtFavoritePR_Favorite4, super=TtFavoritePR, next=TtFavoritePR_Favorite5, prev=TtFavoritePR_Favorite3, flag=VF_Const, X=8, Y=159, W=238, H=34, color=CL_Silver, index=3, font=4, fontcolor=CL_Black, editsw=ES_Left4, selected=TtFavoritePR_Favorite4_selected
-		AcFavorite	TtFavoritePR_Favorite5, super=TtFavoritePR, next=TtFavoritePR_Favorite6, prev=TtFavoritePR_Favorite4, flag=VF_Const, X=8, Y=202, W=238, H=34, color=CL_Silver, index=4, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=TtFavoritePR_Favorite5_selected
-		AcFavorite	TtFavoritePR_Favorite6, super=TtFavoritePR, next=TtFavoritePR_Favorite7, prev=TtFavoritePR_Favorite5, flag=VF_Const, X=394, Y=30, W=238, H=34, color=CL_Silver, index=5, font=4, fontcolor=CL_Black, editsw=ES_Right1, selected=TtFavoritePR_Favorite6_selected
-		AcFavorite	TtFavoritePR_Favorite7, super=TtFavoritePR, next=TtFavoritePR_Favorite8, prev=TtFavoritePR_Favorite6, flag=VF_Const, X=394, Y=73, W=238, H=34, color=CL_Silver, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=TtFavoritePR_Favorite7_selected
-		AcFavorite	TtFavoritePR_Favorite8, super=TtFavoritePR, next=TtFavoritePR_Favorite9, prev=TtFavoritePR_Favorite7, flag=VF_Const, X=394, Y=116, W=238, H=34, color=CL_Silver, index=7, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=TtFavoritePR_Favorite8_selected
-		AcFavorite	TtFavoritePR_Favorite9, super=TtFavoritePR, next=TtFavoritePR_Favorite10, prev=TtFavoritePR_Favorite8, flag=VF_Const, X=394, Y=159, W=238, H=34, color=CL_Silver, index=8, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=TtFavoritePR_Favorite9_selected
-		AcFavorite	TtFavoritePR_Favorite10, super=TtFavoritePR, prev=TtFavoritePR_Favorite9, flag=VF_Const, X=394, Y=202, W=238, H=34, color=CL_Silver, index=9, font=4, fontcolor=CL_Black, editsw=ES_Right5, selected=TtFavoritePR_Favorite10_selected
-
-RN_TtFavorite:	.asciz "TtFavorite"
-RN_empty_1135:	.asciz ""
-RN_empty_1136:	.asciz ""
-RN_empty_1137:	.asciz ""
-RN_empty_1138:	.asciz ""
-RN_empty_1139:	.asciz ""
-RN_empty_1140:	.asciz ""
-RN_empty_1141:	.asciz ""
-RN_empty_1142:	.asciz ""
-RN_empty_1143:	.asciz ""
-RN_empty_1144:	.asciz ""
-RN_empty_1145:	.asciz ""
-RN_empty_1146:	.asciz ""
-RN_empty_1147:	.asciz ""
-RN_empty_1148:	.asciz ""
-RN_empty_1149:	.asciz ""
-RN_empty_1150:	.asciz ""
-RN_empty_1151:	.asciz ""
-RN_empty_1152:	.asciz ""
-RN_empty_1153:	.asciz ""
-RN_empty_1154:	.asciz ""
-RN_TtCtFavorite:	.asciz "TtCtFavorite"
-RN_empty_1155:	.asciz ""
-RN_empty_1156:	.asciz ""
-RN_empty_1157:	.asciz ""
-RN_empty_1158:	.asciz ""
-RN_empty_1159:	.asciz ""
-RN_empty_1160:	.asciz ""
-RN_empty_1161:	.asciz ""
-RN_empty_1162:	.asciz ""
-RN_empty_1163:	.asciz ""
-RN_empty_1164:	.asciz ""
-RN_empty_1165:	.asciz ""
-RN_empty_1166:	.asciz ""
-RN_empty_1167:	.asciz ""
-RN_empty_1168:	.asciz ""
-RN_empty_1169:	.asciz ""
-RN_empty_1170:	.asciz ""
-RN_empty_1171:	.asciz ""
-RN_empty_1172:	.asciz ""
-RN_empty_1173:	.asciz ""
-RN_empty_1174:	.asciz ""
-RN_empty_1175:	.asciz ""
-RN_empty_1176:	.asciz ""
-RN_FavBankNaming:	.asciz "FavBankNaming"
-RN_empty_1177:	.asciz ""
-RN_empty_1178:	.asciz ""
-RN_empty_1179:	.asciz ""
-RN_FavPreview:	.asciz "FavPreview"
-RN_empty_1180:	.asciz ""
-RN_empty_1181:	.asciz ""
-RN_empty_1182:	.asciz ""
-RN_empty_1183:	.asciz ""
-RN_empty_1184:	.asciz ""
-RN_empty_1185:	.asciz ""
-RN_empty_1186:	.asciz ""
-RN_empty_1187:	.asciz ""
-RN_empty_1188:	.asciz ""
-RN_empty_1189:	.asciz ""
-RN_empty_1190:	.asciz ""
-RN_empty_1191:	.asciz ""
-RN_TtCtFavoritePR:	.asciz "TtCtFavoritePR"
-RN_empty_1192:	.asciz ""
-RN_empty_1193:	.asciz ""
-RN_empty_1194:	.asciz ""
-RN_empty_1195:	.asciz ""
-RN_empty_1196:	.asciz ""
-RN_empty_1197:	.asciz ""
-RN_empty_1198:	.asciz ""
-RN_empty_1199:	.asciz ""
-RN_empty_1200:	.asciz ""
-RN_empty_1201:	.asciz ""
-RN_TtFavoritePR:	.asciz "TtFavoritePR"
-RN_empty_1202:	.asciz ""
-RN_empty_1203:	.asciz ""
-RN_empty_1204:	.asciz ""
-RN_empty_1205:	.asciz ""
-RN_empty_1206:	.asciz ""
-RN_empty_1207:	.asciz ""
-RN_empty_1208:	.asciz ""
-RN_empty_1209:	.asciz ""
-RN_empty_1210:	.asciz ""
-RN_empty_1211:	.asciz ""
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x20353E, 0x203540
-Str_OTB_FAVORITE:	.asciz "OTB_FAVORITE"
-Str_iapfav:	.asciz "iapfav"
-Str_TT_FAVORITE:	.asciz "TT_FAVORITE"
-Str_TT_CTFAVORITE:	.asciz "TT_CTFAVORITE"
-	.align	4, 0xFF	# pad after Str_TT_CTFAVORITE
-
-AcFavoriteProc_Table:
-	.long	func_4849D4C3
-	.long	func_4849D4C3
-	.long	func_4849D564
-	.long	func_4849D697
-	.long	func_4849DA9E
-	.long	func_4849DCE8
-	.long	func_4849DE51
-	.long	func_4849E0CF
-	.long	func_4849E182
-	.long	func_4849E2F2
-	.long	func_4849D4C3
-	.long	func_4849D4C3
-	.long	func_4849D4C3
-	.long	func_4849D4C3
-	.long	func_4849D4C3
-	.long	func_4849D4C3
-
-Str_SOUND_MENU_2:	.asciz "SOUND MENU"
-Str_SOUND_PART_SETTING:	.asciz "SOUND PART SETTING"
-Str_MIXER_17:	.asciz "MIXER"
-Str_TECHNI_CHORD_3:	.asciz "TECHNI-CHORD"
-Str_MASTER_TUNING_4:	.asciz "MASTER TUNING"
-Str_KEY_SCALING_3:	.asciz "KEY SCALING"
-Str_SOUND_LOAD_OPTION_6:	.asciz "SOUND LOAD OPTION"
-Str_REVERB_EFFECT_MENU:	.asciz "REVERB & EFFECT MENU"
-Str_SOUND_DSP_13:	.asciz "SOUND DSP"
-Str_MULTI_DSP:	.asciz "MULTI DSP"
-Str_CHORUS_9:	.asciz "CHORUS"
-Str_REVERB_8:	.asciz "REVERB"
-Str_EQUALIZER_7:	.asciz "EQUALIZER"
-Str_MIC_REVERB_EFFECT_5:	.asciz "MIC REVERB & EFFECT"
-Str_ALLOCATION_3:	.asciz "ALLOCATION"
-Str_SOUND_EDIT_MENU_2:	.asciz "SOUND EDIT MENU"
-Str_CONTROL_MENU_2:	.asciz "CONTROL MENU"
-Str_INITIAL_6:	.asciz "INITIAL"
-Str_OVERALL_TOUCH_SENSITIVITY_3:	.asciz "OVERALL TOUCH SENSITIVITY"
-Str_FOOT_CONTROLLERS_3:	.asciz "FOOT CONTROLLERS"
-Str_MUSIC_STYLE_ARRANGER_MODE_3:	.asciz "MUSIC STYLE ARRANGER MODE"
-Str_PANEL_MEMORY_MODE_3:	.asciz "PANEL MEMORY MODE"
-Str_FADE_IN_OUT_SETTING_3:	.asciz "FADE IN/OUT SETTING"
-Str_MIDI_MENU_2:	.asciz "MIDI MENU"
-Str_MIDI_PART_SETTING:	.asciz "MIDI PART SETTING"
-Str_CONTROL_MESSAGES_3:	.asciz "CONTROL MESSAGES"
-Str_REALTIME_MESSAGES_3:	.asciz "REALTIME MESSAGES"
-Str_COMMON_SETTING_3:	.asciz "COMMON SETTING"
-Str_INPUT_OUTPUT_SETTING_3:	.asciz "INPUT/OUTPUT SETTING"
-Str_MIDI_PRESETS_3:	.asciz "MIDI PRESETS"
-Str_MODE_SETTING_4:	.asciz "MODE SETTING"
-Str_PROGRAM_CHANGE_MIDI_OUT_3:	.asciz "PROGRAM CHANGE MIDI OUT"
-Str_PANEL_MEMORY_OUTPUT_3:	.asciz "PANEL MEMORY OUTPUT"
-Str_COMPUTER_CONNECTION_3:	.asciz "COMPUTER CONNECTION"
-Str_CUSTOMIZE_MENU_2:	.asciz "CUSTOMIZE MENU"
-Str_HOME_PAGE_SETTING_4:	.asciz "HOME PAGE SETTING"
-Str_DISPLAY_TIME_OUT_4:	.asciz "DISPLAY TIME OUT"
-Str_WALLPAPER_SETTING_4:	.asciz "WALLPAPER SETTING"
-Str_CUSTOM_PANEL_MODE_4:	.asciz "CUSTOM PANEL MODE"
-Str_MIDI_SETTING_LOAD_OPTION_4:	.asciz "MIDI SETTING LOAD OPTION"
-Str_DATA_PROTECTION_4:	.asciz "DATA PROTECTION"
-Str_LANGUAGE_SETTING_4:	.asciz "LANGUAGE SETTING"
-Str_DISK_PREFERENCE_2:	.asciz "DISK PREFERENCE"
-Str_DISK_MENU_3:	.asciz "DISK MENU"
-Str_LOAD_23:	.asciz "LOAD"
-Str_SAVE_TECHNICS_FORMAT:	.asciz "SAVE TECHNICS FORMAT"
-Str_SAVE_SMF_FORMAT_0:	.asciz "SAVE SMF FORMAT 0"
-Str_DIRECT_PLAY_3:	.asciz "DIRECT PLAY"
-Str_SONG_MEDLEY_8:	.asciz "SONG MEDLEY"
-Str_DISK_TOOLS_3:	.asciz "DISK TOOLS"
-Str_CUSTOM_STYLE_LOAD_SAVE_4:	.asciz "CUSTOM STYLE LOAD/SAVE"
-Str_MUSIC_STYLIST_2:	.asciz "MUSIC STYLIST"
-Str_MUSICAL_CATEGORY_3:	.asciz "MUSICAL CATEGORY"
-Str_MUSICAL_ERA_3:	.asciz "MUSICAL ERA"
-Str_ALPHABETICAL_LIST_3:	.asciz "ALPHABETICAL LIST"
-Str_CUSTOM_STYLIST_3:	.asciz "CUSTOM STYLIST"
-Str_VOCALIST_WORKSTATION_2:	.asciz "VOCALIST WORKSTATION"
-Str_CHORD_FINDER_4:	.asciz "CHORD FINDER"
-Str_PADS_MENU_2:	.asciz "PADS MENU"
-Str_COMPILE_SET_2:	.asciz "COMPILE SET"
-Str_PHRASE_COPY_3:	.asciz "PHRASE COPY"
-Str_SEQ_TO_PAD_COPY_3:	.asciz "SEQ TO PAD COPY"
-Str_COMPOSER_MENU_2:	.asciz "COMPOSER MENU"
-Str_EASY_COMPOSER_3:	.asciz "EASY COMPOSER"
-Str_PATTERN_COPY_3:	.asciz "PATTERN COPY"
-Str_CUSTOM_STYLE_COPY_4:	.asciz "CUSTOM STYLE COPY"
-Str_SEQ_TO_COMPOSER_COPY_3:	.asciz "SEQ TO COMPOSER COPY"
-Str_LOAD_SINGLE_COMPOSER_3:	.asciz "LOAD SINGLE COMPOSER"
-Str_SEQUENCER_MENU:	.asciz "SEQUENCER MENU"
-Str_RECORD_EDIT_3:	.asciz "RECORD & EDIT"
-Str_COPY_PASTE_3:	.asciz "COPY & PASTE"
-Str_RANGE_EDIT_3:	.asciz "RANGE EDIT"
-Str_PANEL_WRITE_3:	.asciz "PANEL WRITE"
-Str_TRACK_MIXER_3:	.asciz "TRACK MIXER"
-Str_REALTIME_RECORD_3:	.asciz "REALTIME RECORD"
-Str_PUNCH_RECORD_3:	.asciz "PUNCH RECORD"
-Str_STEP_RECORD_6:	.asciz "STEP RECORD"
-Str_TRACK_ASSIGN_4:	.asciz "TRACK ASSIGN"
-Str_QUANTIZE_8:	.asciz "QUANTIZE"
-Str_SONG_SELECT_10:	.asciz "SONG SELECT"
-Str_SONG_CLEAR_4:	.asciz "SONG CLEAR"
-Str_TRACK_CLEAR_4:	.asciz "TRACK CLEAR"
-Str_NOTE_EDIT_4:	.asciz "NOTE EDIT"
-Str_DRUM_EDIT_4:	.asciz "DRUM EDIT"
-Str_AFTER_TOUCH_SETTING_3:	.asciz "AFTER TOUCH SETTING"
-Str_TRACK_COPY_3:	.asciz "TRACK COPY"
-Str_SONG_COPY_3:	.asciz "SONG COPY"
-Str_TRACK_MERGE_3:	.asciz "TRACK MERGE"
-Str_MEASURE_COPY_5:	.asciz "MEASURE COPY"
-Str_MEASURE_ERASE_5:	.asciz "MEASURE ERASE"
-Str_MEASURE_DELETE_5:	.asciz "MEASURE DELETE"
-Str_MEASURE_INSERT_5:	.asciz "MEASURE INSERT"
-Str_APC_TO_SMF_CONVERT_5:	.asciz "APC TO SMF CONVERT"
-Str_NOTE_CHANGE_3:	.asciz "NOTE CHANGE"
-Str_VELOCITY_CHANGE_3:	.asciz "VELOCITY CHANGE"
-Str_TRANSPOSE_6:	.asciz "TRANSPOSE"
-Str_ADVANCE_DELAY_3:	.asciz "ADVANCE/DELAY"
-Str_SEPARATE_OUT_SETTING_3:	.asciz "SEPARATE OUT SETTING"
-Str_MONITOR_SETTING_3:	.asciz "MONITOR SETTING"
-Str_APC_REVERB_SETTING_3:	.asciz "APC REVERB SETTING"
-Str_SD_MENU_3:	.asciz "SD MENU"
-Str_SD_LOAD_2:	.asciz "SD LOAD"
-Str_SD_SAVE_TECHNICS_FORMAT:	.asciz "SD SAVE TECHNICS FORMAT"
-Str_SD_SAVE_SMF_FORMAT_0:	.asciz "SD SAVE SMF FORMAT 0"
-Str_SD_SONG_MEDLEY_3:	.asciz "SD SONG MEDLEY"
-Str_SD_AUDIO_PLAY_4:	.asciz "SD-AUDIO PLAY"
-Str_SD_SOUND_PLAY_5:	.asciz "SD-SOUND PLAY"
-Str_SD_TOOLS_3:	.asciz "SD TOOLS"
-Str_SD_PREFERENCES_3:	.asciz "SD PREFERENCES"
-Str_SD_FAVORITE_SONGS:	.asciz "SD FAVORITE SONGS"
-Str_SD_CUSTOM_STYLE_LOAD_SAVE_2:	.asciz "SD CUSTOM STYLE LOAD/SAVE"
-Str_VIDEO_OUT_SETTNG:	.asciz "VIDEO OUT SETTNG"
-Str_ORGAN_STYLIST_3:	.asciz "ORGAN STYLIST"
-data_48603C4A:
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x203C4A, 0x203C4C
-
-func_4849DE51_Table:	# 114 x REC_func_4849DE51_Table (24 bytes each); read by ApDeleteEvent 0x48429901 `call func_484288AC_entry, [d2,d3,a2,a3], 0x54`; ChangeMode 0x4842B345 `call ApDeleteEvent_entry, [d2], 0x18`; ChangeTitle 0x4842B3F1 `call ApDeleteEvent_entry, [d2], 0x18` (+18)
-	REC_func_4849DE51_Table	text=Str_SOUND_MENU_2, f4=21, key=0xE0003, title=0xF0008, event=0x5000C	# [0]
-	REC_func_4849DE51_Table	text=Str_SOUND_PART_SETTING, f4=2, key=0xE0003, title=0xF0009, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MIXER_17, f4=7, key=0xE0003, title=0xF000C, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_TECHNI_CHORD_3, f4=24, key=0xE0003, title=0xF000D, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MASTER_TUNING_4, f4=9, key=0xE0003, title=0xF000A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_KEY_SCALING_3, f4=132, key=0xE0003, title=0xF000B, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SOUND_LOAD_OPTION_6, f4=209, key=0xE0003, title=0xF003A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_REVERB_EFFECT_MENU, f4=206, key=0xE0014, title=0xF0078, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_SOUND_DSP_13, f4=208, key=0xE0014, title=0xF007C, event=0x5000D	# [8]
-	REC_func_4849DE51_Table	text=Str_MULTI_DSP, f4=12, key=0xE0014, title=0xF007B, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_CHORUS_9, f4=207, key=0xE0014, title=0xF007A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_REVERB_8, f4=23, key=0xE0014, title=0xF0079, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_EQUALIZER_7, f4=13, key=0xE0014, title=0xF007D, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MIC_REVERB_EFFECT_5, f4=155, key=0xE0014, title=0xF007E, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_ALLOCATION_3, f4=210, key=0xE0014, title=0xF0039, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SOUND_EDIT_MENU_2, f4=15, key=0xE000E, title=0xF0011, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_CONTROL_MENU_2, f4=147, key=0xE0005, title=0xF0024, event=0x5000C	# [16]
-	REC_func_4849DE51_Table	text=Str_INITIAL_6, f4=14, key=0xE0005, title=0xF0025, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_OVERALL_TOUCH_SENSITIVITY_3, f4=10, key=0xE0005, title=0xF0027, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_FOOT_CONTROLLERS_3, f4=129, key=0xE0005, title=0xF0026, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MUSIC_STYLE_ARRANGER_MODE_3, f4=50, key=0xE0005, title=0xF0028, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PANEL_MEMORY_MODE_3, f4=49, key=0xE0005, title=0xF0029, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_FADE_IN_OUT_SETTING_3, f4=156, key=0xE0005, title=0xF002A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MIDI_MENU_2, f4=25, key=0xE0004, title=0xF0050, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_MIDI_PART_SETTING, f4=103, key=0xE0004, title=0xF0051, event=0x5000D	# [24]
-	REC_func_4849DE51_Table	text=Str_CONTROL_MESSAGES_3, f4=134, key=0xE0004, title=0xF0052, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_REALTIME_MESSAGES_3, f4=27, key=0xE0004, title=0xF0053, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_COMMON_SETTING_3, f4=26, key=0xE0004, title=0xF0054, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_INPUT_OUTPUT_SETTING_3, f4=104, key=0xE0004, title=0xF0055, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MIDI_PRESETS_3, f4=30, key=0xE0004, title=0xF0056, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MODE_SETTING_4, f4=186, key=0xE0004, title=0xF0058, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PROGRAM_CHANGE_MIDI_OUT_3, f4=29, key=0xE0004, title=0xF0059, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PANEL_MEMORY_OUTPUT_3, f4=105, key=0xE0004, title=0xF005B, event=0x5000D	# [32]
-	REC_func_4849DE51_Table	text=Str_COMPUTER_CONNECTION_3, f4=135, key=0xE0004, title=0xF005A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_CUSTOMIZE_MENU_2, f4=187, key=0xE000D, title=0xF0030, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_HOME_PAGE_SETTING_4, f4=188, key=0xE000D, title=0xF000F, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_DISPLAY_TIME_OUT_4, f4=148, key=0xE000D, title=0xF0033, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_WALLPAPER_SETTING_4, f4=133, key=0xE000D, title=0xF0034, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_CUSTOM_PANEL_MODE_4, f4=192, key=0xE000D, title=0xF0032, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MIDI_SETTING_LOAD_OPTION_4, f4=136, key=0xE000D, title=0xF0035, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_DATA_PROTECTION_4, f4=190, key=0xE000D, title=0xF002B, event=0x5000D	# [40]
-	REC_func_4849DE51_Table	text=Str_LANGUAGE_SETTING_4, f4=191, key=0xE000D, title=0xF0036, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_DISK_PREFERENCE_2, f4=232, key=0xE0006, title=0xF006D, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_DISK_MENU_3, f4=149, key=0xE0006, title=0xF0060, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_LOAD_23, f4=44, key=0xE0006, title=0xF0061, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SAVE_TECHNICS_FORMAT, f4=45, key=0xE0006, title=0xF0067, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SAVE_SMF_FORMAT_0, f4=45, key=0xE0006, title=0xF0069, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_DIRECT_PLAY_3, f4=46, key=0xE0006, title=0xF006E, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SONG_MEDLEY_8, f4=58, key=0xE0006, title=0xF0071, event=0x5000D	# [48]
-	REC_func_4849DE51_Table	text=Str_DISK_TOOLS_3, f4=231, key=0xE0006, title=0xF006A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_CUSTOM_STYLE_LOAD_SAVE_4, f4=193, key=0xE0006, title=0xF0075, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MUSIC_STYLIST_2, f4=162, key=0xE0010, title=0xF0041, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_MUSICAL_CATEGORY_3, f4=163, key=0xE0010, title=0xF0042, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MUSICAL_ERA_3, f4=184, key=0xE0010, title=0xF0044, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_ALPHABETICAL_LIST_3, f4=164, key=0xE0010, title=0xF0043, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_CUSTOM_STYLIST_3, f4=185, key=0xE0010, title=0xF0045, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_VOCALIST_WORKSTATION_2, f4=142, key=0xE0000, title=0xF00D4, event=0x5000E	# [56]
-	REC_func_4849DE51_Table	text=Str_CHORD_FINDER_4, f4=176, key=0xE0000, title=0xF00EE, event=0x5000E
-	REC_func_4849DE51_Table	text=Str_PADS_MENU_2, f4=197, key=0xE0009, title=0xF00DA, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_COMPILE_SET_2, f4=167, key=0xE0009, title=0xF00DC, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PHRASE_COPY_3, f4=198, key=0xE0009, title=0xF00E4, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SEQ_TO_PAD_COPY_3, f4=178, key=0xE0009, title=0xF00DE, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_COMPOSER_MENU_2, f4=77, key=0xE0007, title=0xF00B0, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_EASY_COMPOSER_3, f4=81, key=0xE0007, title=0xF00BA, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PATTERN_COPY_3, f4=82, key=0xE0007, title=0xF00B8, event=0x5000D	# [64]
-	REC_func_4849DE51_Table	text=Str_CUSTOM_STYLE_COPY_4, f4=161, key=0xE0007, title=0xF00BE, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SEQ_TO_COMPOSER_COPY_3, f4=83, key=0xE0007, title=0xF00B9, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_LOAD_SINGLE_COMPOSER_3, f4=84, key=0xE0007, title=0xF0062, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SEQUENCER_MENU, f4=51, key=0xE0008, title=0xF0080, event=0x5000C
-	REC_func_4849DE51_Table	text=Str_RECORD_EDIT_3, f4=202, key=0xE0008, title=0xF0093, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_COPY_PASTE_3, f4=203, key=0xE0008, title=0xF00A5, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_RANGE_EDIT_3, f4=204, key=0xE0008, title=0xF00A6, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PANEL_WRITE_3, f4=70, key=0xE0008, title=0xF008D, event=0x5000D	# [72]
-	REC_func_4849DE51_Table	text=Str_TRACK_MIXER_3, f4=7, key=0xE0008, title=0xF007F, event=0x5000E
-	REC_func_4849DE51_Table	text=Str_REALTIME_RECORD_3, f4=52, key=0xE0008, title=0xF0085, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_PUNCH_RECORD_3, f4=53, key=0xE0008, title=0xF0087, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_STEP_RECORD_6, f4=54, key=0xE0008, title=0xF0089, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_TRACK_ASSIGN_4, f4=57, key=0xE0008, title=0xF008B, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_QUANTIZE_8, f4=61, key=0xE0008, title=0xF009C, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SONG_SELECT_10, f4=55, key=0xE0008, title=0xF008E, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SONG_CLEAR_4, f4=63, key=0xE0008, title=0xF0090, event=0x5000D	# [80]
-	REC_func_4849DE51_Table	text=Str_TRACK_CLEAR_4, f4=64, key=0xE0008, title=0xF009A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_NOTE_EDIT_4, f4=4, key=0xE0008, title=0xF0094, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_DRUM_EDIT_4, f4=17, key=0xE0008, title=0xF0097, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_AFTER_TOUCH_SETTING_3, f4=110, key=0xE0008, title=0xF0092, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_TRACK_COPY_3, f4=205, key=0xE0008, title=0xF0084, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SONG_COPY_3, f4=67, key=0xE0008, title=0xF0091, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_TRACK_MERGE_3, f4=69, key=0xE0008, title=0xF009B, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MEASURE_COPY_5, f4=71, key=0xE0008, title=0xF00A2, event=0x5000D	# [88]
-	REC_func_4849DE51_Table	text=Str_MEASURE_ERASE_5, f4=72, key=0xE0008, title=0xF00A1, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MEASURE_DELETE_5, f4=73, key=0xE0008, title=0xF00A3, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MEASURE_INSERT_5, f4=74, key=0xE0008, title=0xF00A4, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_APC_TO_SMF_CONVERT_5, f4=201, key=0xE0008, title=0xF00A8, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_NOTE_CHANGE_3, f4=65, key=0xE0008, title=0xF009F, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_VELOCITY_CHANGE_3, f4=139, key=0xE0008, title=0xF009E, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_TRANSPOSE_6, f4=62, key=0xE0008, title=0xF009D, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_ADVANCE_DELAY_3, f4=66, key=0xE0008, title=0xF00A0, event=0x5000D	# [96]
-	REC_func_4849DE51_Table	text=Str_SEPARATE_OUT_SETTING_3, f4=215, key=0xE0003, title=0xF00E9, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_MONITOR_SETTING_3, f4=214, key=0xE0003, title=0xF00FE, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_APC_REVERB_SETTING_3, f4=230, key=0xE0003, title=0xF0103, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_MENU_3, f4=219, key=0xE0018, title=0xF0104, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_LOAD_2, f4=220, key=0xE0018, title=0xF0105, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_SAVE_TECHNICS_FORMAT, f4=221, key=0xE0018, title=0xF0108, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_SAVE_SMF_FORMAT_0, f4=221, key=0xE0018, title=0xF0109, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_SONG_MEDLEY_3, f4=222, key=0xE0018, title=0xF0110, event=0x5000D	# [104]
-	REC_func_4849DE51_Table	text=Str_SD_AUDIO_PLAY_4, f4=218, key=0xE0018, title=0xF0116, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_SOUND_PLAY_5, f4=216, key=0xE0018, title=0xF011A, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_TOOLS_3, f4=224, key=0xE0018, title=0xF010B, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_PREFERENCES_3, f4=226, key=0xE0018, title=0xF0112, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_FAVORITE_SONGS, f4=225, key=0xE0018, title=0xF011F, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_SD_CUSTOM_STYLE_LOAD_SAVE_2, f4=223, key=0xE0018, title=0xF0111, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_VIDEO_OUT_SETTNG, f4=229, key=0xE000D, title=0xF0102, event=0x5000D
-	REC_func_4849DE51_Table	text=Str_ORGAN_STYLIST_3, f4=213, key=0xE0010, title=0xF0057, event=0x5000D	# [112]
-	REC_func_4849DE51_Table	text=data_48603C4A, f4=2, key=0xE0000, title=0xF0000, event=0x5000D
-
-AcFavScreenProc_Records_p0_p8_0:	# REC_AcFavScreenProc_Records_p0_p8 (4 bytes)
-	REC_AcFavScreenProc_Records_p0_p8	f0=67, x1="URR"
-
-Str_ENT_SOUND:	.asciz "ENT SOUND"
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x20470A, 0x204714
-
-AcFavScreenProc_Records_p0_0:	# REC_AcFavScreenProc_Records_p0 (8 bytes), then 22 x u32 the code indexes from +0 (read by AcFavScreenProc 0x4849E4B4 `calls (a0)`; AcFavScreenProc 0x4849E4B4 `mov (4, a1), a3` (+2))
-	REC_AcFavScreenProc_Records_p0	x0="\x03\x00\x00\x00\x00\x00 \x00"
-	tab_u32	1214269180, 0, 0, 1214269194, 0, 0, 1214269195, 0, 0, 1214269196, 0, 0, 1214269197, 0, 0, 1214269198	# [0]
-	tab_u32	0, 0, 1214269199, 0, 0, 1214269200	# [16]
-AcFavScreenProc_Records_p0_p8_1:	# REC_AcFavScreenProc_Records_p0_p8 (4 bytes)
-	REC_AcFavScreenProc_Records_p0_p8	f0=67, x1="URR"
-
-Str_ENT_RHYTHM:	.asciz "ENT RHYTHM"
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x204783, 0x20478C
-
-AcFavScreenProc_Records_p0_1:	# REC_AcFavScreenProc_Records_p0 (8 bytes), then 22 x u32 the code indexes from +0 (read by AcFavScreenProc 0x4849E4B4 `calls (a0)`; AcFavScreenProc 0x4849E4B4 `mov (4, a1), a3` (+2))
-	REC_AcFavScreenProc_Records_p0	x0="\x04\x00\x00\x00\x00\x00\x00\x00"
-	tab_u32	1214269300, 0, 0, 1214269315, 0, 0, 1214269316, 0, 0, 1214269317, 0, 0, 1214269318, 0, 0, 1214269319	# [0]
-	tab_u32	0, 0, 1214269320, 0, 0, 1214269321	# [16]
-AcFavScreenProc_Records_p0_p8_2:	# REC_AcFavScreenProc_Records_p0_p8 (4 bytes)
-	REC_AcFavScreenProc_Records_p0_p8	f0=67, x1="URR"
-
-Str_ENT_STYLE:	.asciz "ENT STYLE"
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x2047FA, 0x204804

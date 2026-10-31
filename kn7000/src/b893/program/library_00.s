@@ -5917,12 +5917,12 @@ PfDoubleToDecimal_entry:
     inc     d1
     nop
     lne
-    mov     func_4C002B5B_Table_4, a2
+    mov     Pow10Table, a2
     mov     (a2), d0
     mov     (4, a2), d1
     mov     d0, (0x1c, sp)
     mov     d1, (0x20, sp)
-    mov     func_4C002B5B_Table_5, a0
+    mov     Pow10Table+8, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x24, sp)

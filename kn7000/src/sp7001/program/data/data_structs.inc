@@ -3451,14 +3451,6 @@
 	.long	\p12
 .endm
 
-# REC_PfDoubleToDecimal_Records: 8-byte records (PfDoubleToDecimal_Records, 1 records); fields, and what reads them:
-#   +0   LibF64Div_d0 u32            PfDoubleToDecimal 0x4C002B70 `mov (-8, a0), d0`; PfDoubleToDecimal 0x4C002B70 `mov (8, a0), d0`
-#   +4   LibF64Div_d1 u32            PfDoubleToDecimal 0x4C002B70 `mov (-4, a0), d1`; PfDoubleToDecimal 0x4C002B70 `mov (0xc, a0), d1`
-.macro REC_PfDoubleToDecimal_Records LibF64Div_d0=0, LibF64Div_d1=0
-	.long	\LibF64Div_d0
-	.long	\LibF64Div_d1
-.endm
-
 # REC_func_4C02FD14_Records: 256-byte records (func_4C02FD14_Records, 7 records); fields, and what reads them:
 #   +0   index        256 x 1 (u8)   func_4C02FD14 0x4C02FD14 `movbu (d1, a0), d1`; TgElemLevelBaseCalc 0x4C031385 `movbu (d0, a0), d1` (+1)
 .macro REC_func_4C02FD14_Records index:vararg
@@ -4287,7 +4279,7 @@
 	.ascii	\x0
 .endm
 
-# REC_SndRecTriFieldGet2_Table_2_p0: 32-byte records (SndRecTriFieldGet2_Table_2_p0, 601 records); fields, and what reads them:
+# REC_SndRecTriFieldGet2_Table_2_p0: 30-byte records (SndRecTriFieldGet2_Table_2_p0, 600 records); fields, and what reads them:
 #   +0   x0           u8[18]         no reader seen
 #   +18  f18          u16            func_48412187 0x48412187 `movhu (0x12, a0), d0`
 #   +20  f20          u16            SndRecCountGet 0x48411EC2 `movhu (0x14, a0), d0`; func_48412DF8 0x48412DF8 `movhu (0x14, a0), d0`
@@ -4295,8 +4287,7 @@
 #   +24  index        ptr            func_484122B6 0x484122B6 `mov (0x18, a0), a0`; func_484122B6 0x484122B6 `mov (0x18, a0), a1`
 #   +28  f28          s8             func_48412A17 0x48412A17 `movbu (0x1c, a0), d1`
 #   +29  index_       s8             func_48412A17 0x48412A17 `movbu (0x1d, a0), d0`
-#   +30  x30          u8[2]          no reader seen
-.macro REC_SndRecTriFieldGet2_Table_2_p0 x0, f18=0, f20=0, x22, index=0, f28=0, index_=0, x30
+.macro REC_SndRecTriFieldGet2_Table_2_p0 x0, f18=0, f20=0, x22, index=0, f28=0, index_=0
 	.ascii	\x0
 	.word	\f18
 	.word	\f20
@@ -4304,7 +4295,6 @@
 	.long	\index
 	.byte	\f28
 	.byte	\index_
-	.ascii	\x30
 .endm
 
 # REC_func_4841202C_Table_2_p0_p4: 32-byte records (func_4841202C_Table_2_p0_p4, 91 records); fields, and what reads them:

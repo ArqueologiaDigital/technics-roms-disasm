@@ -6966,10 +6966,11 @@ SndRecTriFieldGet2_Table_2_p0_p24_165:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_165
 SndRecTriFieldGet2_Table_2_p0_165:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
 	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal11    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_165, f28=20, index_=42, x30="\x00\x00"
-SndRecTriFieldGet2_Table_2_p0_p24_166:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_48412274 0x48412274 `movhu (d0, a0), d0`; func_48412274 0x48412274 `movhu (d0, a1), d0`)
+SndRecTriFieldGet2_Table_2_p0_p24_166:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 6 x u16 the code indexes from +0 (read by func_48412274 0x48412274 `movhu (d0, a0), d0`; func_48412274 0x48412274 `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_Table_2_p0_p24	x0="c"
-	tab_u16	1024, 8960, 4864, 9728, 0, 19456, 20480	# [0]
-	.align	4, 0x00	# pad after SndRecTriFieldGet2_Table_2_p0_p24_166
+	tab_u16	1024, 8960, 4864, 9728, 0, 19456	# [0]
+# census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn7000_program_b893.rom", 0x190675, 0x190678
 SndRecTriFieldGet2_Table_2_p0_166:	# REC_SndRecTriFieldGet2_Table_2_p0 (32 bytes)
 	REC_SndRecTriFieldGet2_Table_2_p0	x0="    Normal12    \x00\x00", f18=2, f20=8, x22="\x00\x00", index=SndRecTriFieldGet2_Table_2_p0_p24_166, f28=20, index_=43, x30="\x00\x00"
 SndRecTriFieldGet2_Table_2_p0_p24_167:	# REC_SndRecTriFieldGet2_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_48412274 0x48412274 `movhu (d0, a0), d0`; func_48412274 0x48412274 `movhu (d0, a1), d0`)

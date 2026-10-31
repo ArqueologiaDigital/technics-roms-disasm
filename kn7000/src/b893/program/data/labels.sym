@@ -1257,7 +1257,7 @@
 0x48590618  SndRecTriFieldGet2_Table_2_p0_164  32
 0x48590638  SndRecTriFieldGet2_Table_2_p0_p24_165  15
 0x48590648  SndRecTriFieldGet2_Table_2_p0_165  32
-0x48590668  SndRecTriFieldGet2_Table_2_p0_p24_166  15
+0x48590668  SndRecTriFieldGet2_Table_2_p0_p24_166  13
 0x48590678  SndRecTriFieldGet2_Table_2_p0_166  32
 0x48590698  SndRecTriFieldGet2_Table_2_p0_p24_167  15
 0x485906A8  SndRecTriFieldGet2_Table_2_p0_167  32
@@ -42835,10 +42835,7 @@
 0x486BB684  func_4C002055_Table  16
 0x486BB694  func_4C002B5B_Table_2  8
 0x486BB69C  func_4C002B5B_Table_3  8
-0x486BB6A4  func_4C002B5B_Table_4  8
-0x486BB6AC  func_4C002B5B_Table_5  928
-0x486BBA4C  Str_n5  3
-0x486BBA4F  Str_a9X_B  8
+0x486BB6A4  Pow10Table  2472
 0x486BC04C  Str_empty_287  3
 0x486BC05C  func_4C00496E_Table  6
 0x486BC062  func_4C00469B_Table  6

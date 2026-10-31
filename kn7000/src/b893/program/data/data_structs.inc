@@ -3467,14 +3467,6 @@
 	.long	\p12
 .endm
 
-# REC_func_4C002B5B_Table_4: 8-byte records (func_4C002B5B_Table_4, 1 records); fields, and what reads them:
-#   +0   LibF64Div_d0 u32            PfDoubleToDecimal 0x4C002B5B `mov (-8, a0), d0`; PfDoubleToDecimal 0x4C002B5B `mov (8, a0), d0`
-#   +4   LibF64Div_d1 u32            PfDoubleToDecimal 0x4C002B5B `mov (-4, a0), d1`; PfDoubleToDecimal 0x4C002B5B `mov (0xc, a0), d1`
-.macro REC_func_4C002B5B_Table_4 LibF64Div_d0=0, LibF64Div_d1=0
-	.long	\LibF64Div_d0
-	.long	\LibF64Div_d1
-.endm
-
 # REC_func_4C02FCA7_Records: 256-byte records (func_4C02FCA7_Records, 7 records); fields, and what reads them:
 #   +0   index        256 x 1 (u8)   func_4C02FCA7 0x4C02FCA7 `movbu (d1, a0), d1`; TgElemLevelBaseCalc 0x4C031318 `movbu (d0, a0), d1` (+1)
 .macro REC_func_4C02FCA7_Records index:vararg
