@@ -1925,15 +1925,17 @@ MidiOut_SerializeAndSend_Exit:
 	popw iz
 	ret
 
-MidiThru_Disable:
+; Clears bit 6 of 0xb7e2: MIDI_SYSTEM_MESSAGE_HANDLER takes received clock and transport bytes
+; (0xf8..0xfc) again.  The opposite of MidiIn_IgnoreClockTransport.
+MidiIn_AcceptClockTransport:
 	res 6, (0xb7e2:16)
 	ret
 
 ; Sets bit 6 of 0xb7e2.  While it is set MIDI_SYSTEM_MESSAGE_HANDLER ignores received clock and
 ; transport bytes (0xf8..0xfc; active sensing is still taken).  CDlike_InitModeAndLoadBank sets
 ; the same bit and CDlike_ExitModeAndRestore clears it.  Both callers run it after the voice
-; tables are initialised.  TODO: the name is not supported by the code; nothing here is MIDI thru.
-MidiThru_Enable:
+; tables are initialised.
+MidiIn_IgnoreClockTransport:
 	set 6, (0xb7e2:16)
 	ret
 

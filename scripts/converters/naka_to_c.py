@@ -120,11 +120,11 @@ FIELD_DEFS = {
 }
 
 # NAKA type name mapping
-TYPE_NAMES = {
-    0x16: "DIAGLIST", 0x1D: "MENU_ITEM", 0x1E: "PANEL",
-    0x2B: "LABEL", 0x2E: "VALUE", 0x2F: "OPTION",
-    0x30: "SLIDER", 0x31: "GROUP", 0x34: "CONTAINER",
-    0x48: "0x48", 0x66: "LIST", 0x6C: "BITMAP",
+TYPE_NAMES = {  # the firmware class names (naka_types.h / shared/macros.s NAKA_TYPE_*)
+    0x16: "PsNumEditBox", 0x1D: "AcTitleMenu", 0x1E: "PsEditSwBox",
+    0x2B: "Label", 0x2E: "Line", 0x2F: "Frame",
+    0x30: "EditSw", 0x31: "Box", 0x34: "TtlScreen",
+    0x48: "IvExitMode", 0x66: "AcLanguageText", 0x6C: "VwUserBitmapByName",
 }
 
 
@@ -159,7 +159,7 @@ def parse_assembly(filepath, start_line=0, end_line=None):
     [
         {
             'type': int,          # NAKA type code
-            'type_name': str,     # e.g. 'NAKA_TYPE_CONTAINER'
+            'type_name': str,     # e.g. 'NAKA_TYPE_TtlScreen'
             'line': int,          # line number in source
             'labels_before': [],  # labels defined before this widget
             'labels_inside': [],  # labels defined within (inline strings)

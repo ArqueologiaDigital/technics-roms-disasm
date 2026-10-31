@@ -71,8 +71,8 @@ shared with `dxi97p` and `wzs87e` (below). Only a reader that indexes the locato
 them. The locator and remap tables are byte-identical in v5, v6, v7, v8, v9 and v10
 (`probes/locator_selection_probe.py`).
 
-**The names the panel shows.** `AccStyle_VelocityTableMain` (0xE4935F, `[program 128][bank 8]` of u16) is
-misnamed: `AccStyle_LookupVelocityTable` reads it at RAM 0x90ea (program) and 0x90eb (bank) and stores the low byte
+**The names the panel shows.** `AccStyle_PanelRhythmTable` (0xE4935F, `[program 128][bank 8]` of u16) is
+misnamed: `AccStyle_LookupPanelRhythm` reads it at RAM 0x90ea (program) and 0x90eb (bank) and stores the low byte
 at 0x90ee and the high byte at 0x90ef. `RhythmROM_PatternDisp_Handle90` and `SndParam_ResolveVoiceEntry` then pass
 those to `AccVoice_DispatchEntry` as L = rhythm group and H = number. For groups 0..13 that reaches
 `AccVoice_ComputedCopy`, which copies `AccVoice_RomRecords13[group * 20 + number]`. `MainGetRhyGrpName` takes the
@@ -170,9 +170,10 @@ generic = 0, opaque = 0 and generated = 0. The tree has no binary include to cla
 
 ## Open questions
 
-1. Rename `AccStyle_VelocityTableMain` / `AccStyle_LookupVelocityTable` in v10/v9/v7 (and their siblings
-   `_Ext` / `_High`): they map (program, bank) to the panel's (rhythm group, number). This was left alone here
-   because it is outside this lane's tree.
+1. Done 2026-10-31 (lane kn5000-a, `scripts/renaming/rename_accstyle_panel_rhythm.sed`, v10/v9/v7/v6/v5):
+   `AccStyle_VelocityTableMain` / `_Ext` / `_High` are now `AccStyle_PanelRhythmTable` / `_Ext` / `_High` and
+   `AccStyle_LookupVelocityTable` is `AccStyle_LookupPanelRhythm`: they map (program, bank) to the panel's
+   (rhythm group, number).
 2. +0x3E3..+0x3F2: no reader. Tried: a displacement search over v10 sequencer and UI code for 0x3e3..0x3f2 /
    995..1010; and comparing the four u16 with per-part sums of distinct-track bytes, note counts and beats for five
    records (no match). It may be authoring metadata.
@@ -213,7 +214,7 @@ gives the layout the firmware's pointers address, and all 46,056 of them land on
 *Selecting a style.* A style is chosen by (bank, program); the panel stores them at 0xFC5B / 0xFC5A. In the
 program ROM, `VoiceParam_BankProgramWords` remaps the pair and `RhythmROM_BankProgramLocators` (8 banks x 128
 programs) gives the record. A zero locator means offset 0: bank 0, program 90 is the first record, "8Bt Standard".
-`AccStyle_VelocityTableMain` gives the panel's rhythm group and number for each pair, and the names come from
+`AccStyle_PanelRhythmTable` gives the panel's rhythm group and number for each pair, and the names come from
 `AccVoice_RomRecords16` / `AccVoice_RomRecords13` ("STANDARD ROCK", "Simple 8 Beat", ...). The 12 bytes the firmware
 checks at boot (`00 01 04 05 83 00 01 04 05 83 00 01`) are the start of the first record.
 

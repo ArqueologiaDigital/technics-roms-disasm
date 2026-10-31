@@ -2829,12 +2829,12 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint8_t AccStyle_RamImage_1E7800_Tail[3072];
     /* ---------------------------------------------------------------------
-     * AccStyle_VelocityTableMain -- 128 x 8 u16.
-     * AccStyle_LookupVelocityTable (v10/v9 0xF55C4F, v7 0xF5584B), for byte
+     * AccStyle_PanelRhythmTable -- 128 x 8 u16.
+     * AccStyle_LookupPanelRhythm (v10/v9 0xF55C4F, v7 0xF5584B), for byte
      * 0x90EA < 128: index = 0x90EA * 8 + (byte 0x90EB & 7); the word goes to
      * 0x90EE/0x90EF.
      * --------------------------------------------------------------------- */
-    uint16_t AccStyle_VelocityTableMain[128][8];
+    uint16_t AccStyle_PanelRhythmTable[128][8];
     /* ---------------------------------------------------------------------
      * AccStyle_TempoWordTable -- 378 u16. AccStyle_LookupTempo_AddAndStore
      * (v10/v9 0xF55C17, v7 0xF55813): index =
@@ -2844,25 +2844,25 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint16_t AccStyle_TempoWordTable[378];
     /* ---------------------------------------------------------------------
-     * AccStyle_VelocityTableExt -- 16 x 8 u16. AccStyle_Velocity_ExtClamp
+     * AccStyle_PanelRhythmTable_Ext -- 16 x 8 u16. AccStyle_LookupPanelRhythm_ExtClamp
      * (v10/v9 0xF55C90, v7 0xF5588C), for 128 <= byte 0x90EA < 240: row =
      * 0x90EA & 0x7F (0 if above 0x0B), column = byte 0x90EB & 7 -- so rows
      * 0..11 are reachable.
      * --------------------------------------------------------------------- */
-    uint16_t AccStyle_VelocityTableExt[16][8];
+    uint16_t AccStyle_PanelRhythmTable_Ext[16][8];
     /* ---------------------------------------------------------------------
-     * AccStyle_VelocityTableHigh -- 5 u16. AccStyle_Velocity_HighClamp
+     * AccStyle_PanelRhythmTable_High -- 5 u16. AccStyle_LookupPanelRhythm_HighClamp
      * (v10/v9 0xF55CBA, v7 0xF558B6), for byte 0x90EA >= 240: index = 0x90EA
      * & 0x0F (0 if above 4).
      * --------------------------------------------------------------------- */
-    uint16_t AccStyle_VelocityTableHigh[5];
+    uint16_t AccStyle_PanelRhythmTable_High[5];
     /* ---------------------------------------------------------------------
-     * AccStyle_VelocityTableHigh_Tail -- 23 bytes after
-     * AccStyle_VelocityTableHigh that no code reference reaches (searched:
+     * AccStyle_PanelRhythmTable_High_Tail -- 23 bytes after
+     * AccStyle_PanelRhythmTable_High that no code reference reaches (searched:
      * every label and positional-label name anchored on the historical
      * labels of this span, in all v10 .s files). Contents not established.
      * --------------------------------------------------------------------- */
-    uint8_t AccStyle_VelocityTableHigh_Tail[23];
+    uint8_t AccStyle_PanelRhythmTable_High_Tail[23];
     /* ---------------------------------------------------------------------
      * AccTone_ExtendAndDispatch_Body_Table -- read by
      * AccTone_ExtendAndDispatch_Body (v10/v9 0xF5D740, v7 0xF5D33C) (`lda
@@ -8307,7 +8307,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     },
 
-    .AccStyle_VelocityTableMain = {
+    .AccStyle_PanelRhythmTable = {
         /* 0 */ { 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A },
         /* 1 */ { 0x020A, 0x020A, 0x020A, 0x020A, 0x020A, 0x020A, 0x020A, 0x020A },
         /* 2 */ { 0x010A, 0x010A, 0x010A, 0x010A, 0x010A, 0x010A, 0x010A, 0x010A },
@@ -8489,7 +8489,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x0080, 0x0080,
     },
 
-    .AccStyle_VelocityTableExt = {
+    .AccStyle_PanelRhythmTable_Ext = {
         /* 0 */ { 0x000F, 0x000E, 0x0C0E, 0x180E, 0x240E, 0x300E, 0x3C0E, 0x480E },
         /* 1 */ { 0x010F, 0x010E, 0x0D0E, 0x190E, 0x250E, 0x310E, 0x3D0E, 0x490E },
         /* 2 */ { 0x020F, 0x020E, 0x0E0E, 0x1A0E, 0x260E, 0x320E, 0x3E0E, 0x4A0E },
@@ -8508,9 +8508,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         /* 15 */ { 0x000F, 0x000F, 0x000F, 0x000F, 0x000F, 0x000F, 0x000F, 0x000F },
     },
 
-    .AccStyle_VelocityTableHigh = { 0x000F, 0x010F, 0x020F, 0x030F, 0x040F },
+    .AccStyle_PanelRhythmTable_High = { 0x000F, 0x010F, 0x020F, 0x030F, 0x040F },
 
-    .AccStyle_VelocityTableHigh_Tail = {
+    .AccStyle_PanelRhythmTable_High_Tail = {
         0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00,
         0x0F, 0x00, 0x0F, 0x00, 0x0F, 0x00, 0xFF,
     },

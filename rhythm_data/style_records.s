@@ -9,7 +9,7 @@
 ; checks (every record starts with them).
 ; Labels: Style_B<bank>P<program>_<id>, the (bank, program) that selects the record; <id> is the
 ; record's own id at +0x3DB without its trailing "1n" / "1v".  The comment above each record gives
-; the panel's name for it: AccStyle_VelocityTableMain maps (program, bank) to (rhythm group, number),
+; the panel's name for it: AccStyle_PanelRhythmTable maps (program, bank) to (rhythm group, number),
 ; AccVoice_RomRecords16 names the group and AccVoice_RomRecords13 the style (AccVoice_ComputedCopy).
 ; Each record is two halves (style_half); half 0 serves sections 0-3, half 1 sections 4-7
 ; (AccStyle_ReadParamOffset_Data: slot offsets 0..19, then 0x400..0x413).  Record layout:

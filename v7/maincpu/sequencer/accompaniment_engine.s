@@ -75,7 +75,14 @@ AccStyle_TempoMultiplierTable:
 	.byte 0xa0, 0x00, 0xb4, 0x00, 0xc8, 0x00, 0xdc, 0x00
 	.byte 0xf0, 0x00, 0x04, 0x01, 0x18, 0x01, 0x68, 0x01
 
-AccStyle_LookupVelocityTable:
+; AccStyle_LookupPanelRhythm: the panel's (rhythm group, number) of the selected style.
+;   In:  RAM 0x90ea = program, 0x90eb = bank (low 3 bits).
+;   Out: 0x90ee = rhythm group, 0x90ef = number (the low / high byte of the table word), which
+;        RhythmROM_PatternDisp_Handle90 and SndParam_ResolveVoiceEntry pass to AccVoice_DispatchEntry.
+;   Programs 0..127 read AccStyle_PanelRhythmTable[program][bank], 128..239
+;   AccStyle_PanelRhythmTable_Ext[program & 0x7f, 0 above 11][bank], 240.. AccStyle_PanelRhythmTable_High
+;   [program & 0x0f, 0 above 4].
+AccStyle_LookupPanelRhythm:
 	push XHL
 	push XWA
 	cp (0x904e:16), 0x80
@@ -88,42 +95,42 @@ AccStyle_LookupVelocityTable:
 	and A,0x07
 	add XHL,XWA
 	sla XHL, 0x01
-	add XHL,AccStyle_VelocityTableMain
+	add XHL,AccStyle_PanelRhythmTable
 	ld WA,(XHL)
-	jr t, AccStyle_Velocity_StoreResult
-AccStyle_Velocity_ExtendedRange:
+	jr t, AccStyle_LookupPanelRhythm_Store
+AccStyle_LookupPanelRhythm_Ext:
 .Lc_f55875:
 	cp (0x904e:16), 0xf0
-	jr nc, AccStyle_Velocity_HighRange
+	jr nc, AccStyle_LookupPanelRhythm_High
 	xor XHL,XHL
 	ld l, (0x904e:16)
 	and L,0x7f
 	cp L,0x0b
-	jr ule, AccStyle_Velocity_ExtClamp
+	jr ule, AccStyle_LookupPanelRhythm_ExtClamp
 	xor L,L
-AccStyle_Velocity_ExtClamp:
+AccStyle_LookupPanelRhythm_ExtClamp:
 	sla	xhl, 3
 	xor	xwa, xwa
 	ld	a, (36943:16)
 	and	a, 7
 	add	xhl, xwa
 	sla	xhl, 1
-	add	xhl, AccStyle_VelocityTableExt
+	add	xhl, AccStyle_PanelRhythmTable_Ext
 	ld	wa, (xhl)
-	jr	AccStyle_Velocity_StoreResult
-AccStyle_Velocity_HighRange:
+	jr	AccStyle_LookupPanelRhythm_Store
+AccStyle_LookupPanelRhythm_High:
 	xor	xhl, xhl
 	ld	l, (36942:16)
 	and	l, 15
 	cp	l, 4:i3
-	jr	ule, AccStyle_Velocity_HighClamp
+	jr	ule, AccStyle_LookupPanelRhythm_HighClamp
 	xor	l, l
-AccStyle_Velocity_HighClamp:
+AccStyle_LookupPanelRhythm_HighClamp:
 	sla xhl, 1
-	add xhl, AccStyle_VelocityTableHigh
+	add xhl, AccStyle_PanelRhythmTable_High
 	ld wa, (xhl)
 
-AccStyle_Velocity_StoreResult:
+AccStyle_LookupPanelRhythm_Store:
 	ld	(36946:16), a
 	ld	(36947:16), w
 	pop	xwa
@@ -10276,7 +10283,7 @@ AccVoice_ROMLookup_OffsetTable:
 AccVoice_ROMLookup_Data:	.byte	0xa0, 0x00, 0x00, 0x00, 0x00, 0x01
 
 
-	naka_header NAKA_TYPE_0x00
+	naka_header NAKA_TYPE_Object
 	.byte 0x00, 0x00, 0xc0, 0x01
 	.byte 0x00, 0x00, 0x20, 0x02, 0x00, 0x00, 0x80, 0x02
 	.byte 0x00, 0x00, 0xe0, 0x02, 0x00, 0x00, 0x40, 0x03

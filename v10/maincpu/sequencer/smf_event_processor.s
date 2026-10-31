@@ -10922,12 +10922,12 @@ Rhythm_LookupTempoVelocity_Wrap:
 	pop xiz
 	ret
 
-; Calls AccStyle_LookupVelocityTable with XIZ preserved.
+; Calls AccStyle_LookupPanelRhythm with XIZ preserved.
 ; Called from SndParam_FetchCheckRhythm, SndParamResolve_CheckRhythm, SndBuf_WriteParamEntries_Skip,
 ; MainGetRhythmName, RhythmROM_PatternDisp_Check91, BitMapOut_ApplyPatch_Return and 1 more site.
 Rhythm_DispatchNote_Finalize:
 	push xiz
-	call AccStyle_LookupVelocityTable
+	call AccStyle_LookupPanelRhythm
 	pop xiz
 	ret
 

@@ -237,7 +237,8 @@ ids are named in every GUI C file.
 ## Open questions
 
 - `RectX2Proc`'s internal labels are `TabDraw_TopEdge*`, borrowed from unrelated code. This lane did not rename
-  them.
+  them.  (Done 2026-10-31, lane kn5000-a: they take RectY2Proc's case names, `RectX2Proc_OnGetPropMember` ...,
+  in v10/v9/v7/v6/v5; `scripts/renaming/rename_rectx2proc_locals.sed`.)
 - Is the font index table (`FontIDProc_FontNameTable`, in DRAM) rewritten at run time? The names assume the boot
   image.
 - These routine names changed in the second pass, and the documentation site still uses the old ones in

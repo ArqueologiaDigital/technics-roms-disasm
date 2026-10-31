@@ -80,11 +80,18 @@ AccStyle_TempoMultiplierTable:
 	.short 0x0000, 0x0014, 0x0028, 0x003c, 0x0050, 0x0064, 0x0078, 0x008c
 	.short 0x00a0, 0x00b4, 0x00c8, 0x00dc, 0x00f0, 0x0104, 0x0118, 0x0168
 
-AccStyle_LookupVelocityTable:
+; AccStyle_LookupPanelRhythm: the panel's (rhythm group, number) of the selected style.
+;   In:  RAM 0x90ea = program, 0x90eb = bank (low 3 bits).
+;   Out: 0x90ee = rhythm group, 0x90ef = number (the low / high byte of the table word), which
+;        RhythmROM_PatternDisp_Handle90 and SndParam_ResolveVoiceEntry pass to AccVoice_DispatchEntry.
+;   Programs 0..127 read AccStyle_PanelRhythmTable[program][bank], 128..239
+;   AccStyle_PanelRhythmTable_Ext[program & 0x7f, 0 above 11][bank], 240.. AccStyle_PanelRhythmTable_High
+;   [program & 0x0f, 0 above 4].
+AccStyle_LookupPanelRhythm:
 	push xhl
 	push xwa
 	cp (0x90ea:16), 128
-	jr nc, AccStyle_Velocity_ExtendedRange
+	jr nc, AccStyle_LookupPanelRhythm_Ext
 	xor xhl, xhl
 	ld l, (0x90ea:16)
 	sla xhl, 3
@@ -93,45 +100,45 @@ AccStyle_LookupVelocityTable:
 	and a, 0x7
 	add xhl, xwa
 	sla xhl, 1
-	add xhl, AccStyle_VelocityTableMain
+	add xhl, AccStyle_PanelRhythmTable
 	ld wa, (xhl)
-	jr AccStyle_Velocity_StoreResult
+	jr AccStyle_LookupPanelRhythm_Store
 
-AccStyle_Velocity_ExtendedRange:
+AccStyle_LookupPanelRhythm_Ext:
 	cp (0x90ea:16), 240
-	jr nc, AccStyle_Velocity_HighRange
+	jr nc, AccStyle_LookupPanelRhythm_High
 	xor xhl, xhl
 	ld l, (0x90ea:16)
 	and l, 0x7f
 	cp l, 0xb
-	jr ule, AccStyle_Velocity_ExtClamp
+	jr ule, AccStyle_LookupPanelRhythm_ExtClamp
 	xor l, l
 
-AccStyle_Velocity_ExtClamp:
+AccStyle_LookupPanelRhythm_ExtClamp:
 	sla xhl, 3
 	xor xwa, xwa
 	ld a, (0x90eb:16)
 	and a, 0x7
 	add xhl, xwa
 	sla xhl, 1
-	add xhl, AccStyle_VelocityTableExt
+	add xhl, AccStyle_PanelRhythmTable_Ext
 	ld wa, (xhl)
-	jr AccStyle_Velocity_StoreResult
+	jr AccStyle_LookupPanelRhythm_Store
 
-AccStyle_Velocity_HighRange:
+AccStyle_LookupPanelRhythm_High:
 	xor xhl, xhl
 	ld l, (0x90ea:16)
 	and l, 0xf
 	cp l, 4:i3
-	jr ule, AccStyle_Velocity_HighClamp
+	jr ule, AccStyle_LookupPanelRhythm_HighClamp
 	xor l, l
 
-AccStyle_Velocity_HighClamp:
+AccStyle_LookupPanelRhythm_HighClamp:
 	sla xhl, 1
-	add xhl, AccStyle_VelocityTableHigh
+	add xhl, AccStyle_PanelRhythmTable_High
 	ld wa, (xhl)
 
-AccStyle_Velocity_StoreResult:
+AccStyle_LookupPanelRhythm_Store:
 	ld (0x90ee:16), a
 	ld (0x90ef:16), w
 	pop xwa
@@ -10642,7 +10649,7 @@ AccVoice_ROMLookup_OffsetTable:
 AccVoice_ROMLookup_Data:	.byte	0xa0, 0x00, 0x00, 0x00, 0x00, 0x01
 
 
-	naka_header NAKA_TYPE_0x00
+	naka_header NAKA_TYPE_Object
 	.byte 0x00, 0x00, 0xc0, 0x01
 	.byte 0x00, 0x00, 0x20, 0x02, 0x00, 0x00, 0x80, 0x02
 	.byte 0x00, 0x00, 0xe0, 0x02, 0x00, 0x00, 0x40, 0x03
@@ -10704,7 +10711,7 @@ AccVoice_IndexedTableLookup_Data:
 ; table at +0x02. 336 B = 84 entries, ending exactly where the routine
 ; that reads +0x2C8 begins. The values are the ramp 0xA0, 0x100, 0x160,
 ; ... step 0x60.
-; Seven `naka_header NAKA_TYPE_0x00` invocations inside this range were a
+; Seven `naka_header NAKA_TYPE_Object` invocations inside this range were a
 ; misframe and are gone: the macro emits 00 00 60 01, and each sat at an
 ; offset 2 mod 4 from this table base, i.e. straddling two entries. The
 ; bytes they emitted are unchanged.

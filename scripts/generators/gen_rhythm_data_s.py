@@ -53,7 +53,7 @@ N_SLOTS = 19
 # AccVoice_LocatorTable is not in this ROM: the (bank, program) -> record map comes from the program ROM.
 LOCATOR_SYM = 0xE45142      # RhythmROM_BankProgramLocators [bank 8][program 128] {u16 hi, u16 lo}
 REMAP_SYM = 0xE4638A        # VoiceParam_BankProgramWords [bank 8][program 128] -> u16 bank << 8 | program
-PANEL_MAP_SYM = 0xE4935F    # AccStyle_VelocityTableMain [program 128][bank 8] -> u16 number << 8 | group
+PANEL_MAP_SYM = 0xE4935F    # AccStyle_PanelRhythmTable [program 128][bank 8] -> u16 number << 8 | group
 NAMES13_SYM = 0xE47147      # AccVoice_RomRecords13 [group * 20 + number] 13-char style names
 GROUPS16_SYM = 0xE47047     # AccVoice_RomRecords16 [group] 16-char rhythm-group names
 
@@ -430,7 +430,7 @@ def main():
     L.append("; checks (every record starts with them).")
     L.append("; Labels: Style_B<bank>P<program>_<id>, the (bank, program) that selects the record; <id> is the")
     L.append("; record's own id at +0x3DB without its trailing \"1n\" / \"1v\".  The comment above each record gives")
-    L.append("; the panel's name for it: AccStyle_VelocityTableMain maps (program, bank) to (rhythm group, number),")
+    L.append("; the panel's name for it: AccStyle_PanelRhythmTable maps (program, bank) to (rhythm group, number),")
     L.append("; AccVoice_RomRecords16 names the group and AccVoice_RomRecords13 the style (AccVoice_ComputedCopy).")
     L.append("; Each record is two halves (style_half); half 0 serves sections 0-3, half 1 sections 4-7")
     L.append("; (AccStyle_ReadParamOffset_Data: slot offsets 0..19, then 0x400..0x413).  Record layout:")

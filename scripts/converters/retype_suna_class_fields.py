@@ -7,7 +7,7 @@ QUESTION ANSWERED
     0xE17322), 24 bytes each: +0 routine, +4 naka_header, +8 u16, +10 u16,
     +12 name string, +16 instance-code string, +20 property descriptor
     (StrDesc_*).  In ui_widgets/naka_property_descriptors.s the two u16 of the
-    records with a `naka_header NAKA_TYPE_0x12` line are decoded as
+    records with a `naka_header NAKA_TYPE_PsParaBox` line are decoded as
     instructions -- `ld d, 0:opc / nop / nop` (24 00 00 00) and
     `ld h, 0:opc / push sr / nop` (26 00 02 00) -- in v10, v9 and v7.
     This rewrites them as `.short 36, 0` / `.short 38, 2`, reading the values
@@ -42,7 +42,7 @@ def run(v, apply_it):
     lines = open(path, "rb").read().decode("latin-1").split("\n")
     edits = []
     for i, l in enumerate(lines, 1):
-        if l.strip() != "naka_header NAKA_TYPE_0x12" or i not in addr:
+        if l.strip() != "naka_header NAKA_TYPE_PsParaBox" or i not in addr:
             continue
         a = addr[i]
         if not LO <= a < LO + N * SZ:

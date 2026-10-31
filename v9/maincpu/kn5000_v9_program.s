@@ -2063,7 +2063,7 @@ PlayHalt_SkipSetFlag:
 	call Voice_InitTablePair
 	call Voice_InitTableGroup
 	call MIDI_SendAllSoundOff
-	call MidiThru_Enable
+	call MidiIn_IgnoreClockTransport
 	inc 2, xsp
 	ret
 
@@ -2075,7 +2075,7 @@ PlayStandBy:
 PlayStandBy_SkipClearFlag:
 	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
-	jp MidiThru_Disable
+	jp MidiIn_AcceptClockTransport
 
 EditSwRefresh:
 	call CPanel_InitButtonState_SaveRegs

@@ -31,17 +31,17 @@
 
 /* ── Type codes ─────────────────────────────────────────────── */
 
-#define NAKA_TYPE_DIAGLIST   0x16
-#define NAKA_TYPE_MENU_ITEM  0x1d
-#define NAKA_TYPE_PANEL      0x1e
-#define NAKA_TYPE_LABEL      0x2b
-#define NAKA_TYPE_VALUE      0x2e
-#define NAKA_TYPE_OPTION     0x2f
-#define NAKA_TYPE_SLIDER     0x30
-#define NAKA_TYPE_GROUP      0x31
-#define NAKA_TYPE_CONTAINER  0x34
-#define NAKA_TYPE_LIST       0x66
-#define NAKA_TYPE_BITMAP     0x6c
+#define NAKA_TYPE_PsNumEditBox       0x16
+#define NAKA_TYPE_AcTitleMenu        0x1d
+#define NAKA_TYPE_PsEditSwBox        0x1e
+#define NAKA_TYPE_Label              0x2b
+#define NAKA_TYPE_Line               0x2e
+#define NAKA_TYPE_Frame              0x2f
+#define NAKA_TYPE_EditSw             0x30
+#define NAKA_TYPE_Box                0x31
+#define NAKA_TYPE_TtlScreen          0x34
+#define NAKA_TYPE_AcLanguageText     0x66
+#define NAKA_TYPE_VwUserBitmapByName 0x6c
 
 /* ── Constants ──────────────────────────────────────────────── */
 

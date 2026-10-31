@@ -8660,7 +8660,7 @@ FileIO_DiskRemoved:
 ;   Calls, in order: SeqBuf_Init, NoteMap_SendAllNotesOff, Part_ReinitAllActive,
 ;   AccWrap_PlayModeDispatch, AccompSeq_StopSequence, AudioInit_RefreshToneBank,
 ;   NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
-;   MIDI_SendAllSoundOff and MidiThru_Enable.
+;   MIDI_SendAllSoundOff and MidiIn_IgnoreClockTransport.
 InitializeOperationState:
 	dec 2, xsp
 	ld (xsp), a
@@ -8680,13 +8680,13 @@ InitOp_SkipSetFlag:
 	call Voice_InitTablePair
 	call Voice_InitTableGroup
 	call MIDI_SendAllSoundOff
-	call MidiThru_Enable
+	call MidiIn_IgnoreClockTransport
 	inc 2, xsp
 	ret
 
 ; Undoes InitializeOperationState after a disk operation: clears bits 2 and 3 of 0x28a7,
-; re-initialises the playback state (SeqAcc_InitPlaybackState) and turns MIDI thru off
-; (MidiThru_Disable, tail jump).
+; re-initialises the playback state (SeqAcc_InitPlaybackState) and accepts received MIDI clock and transport again
+; (MidiIn_AcceptClockTransport, tail jump).
 CancelOperationCleanup:
 	ld a, (SEQ_RTMCFG:16)
 	bit 2, a
@@ -8697,7 +8697,7 @@ CancelOperationCleanup:
 CancelOp_ClearSeq:
 	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
-	jp MidiThru_Disable
+	jp MidiIn_AcceptClockTransport
 
 ; Calls CPanel_InitButtonState_SaveRegs, then tail-jumps to RefreshSwEvent, which clears the
 ; TRANSITION_* state, deletes queued EVT_SW_ON / EVT_SW_IN / EVT_SW_OFF events and posts

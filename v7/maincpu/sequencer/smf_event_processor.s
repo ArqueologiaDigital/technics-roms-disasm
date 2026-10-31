@@ -10776,7 +10776,7 @@ Rhythm_LookupTempoVelocity_Wrap:
 
 Rhythm_DispatchNote_Finalize:
 	push xiz
-	call AccStyle_LookupVelocityTable
+	call AccStyle_LookupPanelRhythm
 	pop xiz
 	ret
 

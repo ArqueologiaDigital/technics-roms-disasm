@@ -4,7 +4,7 @@
 Replaces patterns like:
     .byte 0xNN, 0x00, 0x60, 0x01, ...remaining...
 with:
-    naka_header NAKA_TYPE_XXX
+    naka_header NAKA_TYPE_<ClassName>
     .byte ...remaining...
 
 When the header bytes appear on the same line as body bytes, splits the line:
@@ -18,20 +18,25 @@ import sys
 import os
 import glob
 
-# Map type byte values to named constants (semantic names known)
-NAMED_TYPES = {
-    0x16: 'NAKA_TYPE_DIAGLIST',
-    0x1d: 'NAKA_TYPE_MENU_ITEM',
-    0x1e: 'NAKA_TYPE_PANEL',
-    0x2b: 'NAKA_TYPE_LABEL',
-    0x2e: 'NAKA_TYPE_VALUE',
-    0x2f: 'NAKA_TYPE_OPTION',
-    0x30: 'NAKA_TYPE_SLIDER',
-    0x31: 'NAKA_TYPE_GROUP',
-    0x34: 'NAKA_TYPE_CONTAINER',
-    0x66: 'NAKA_TYPE_LIST',
-    0x6c: 'NAKA_TYPE_BITMAP',
-}
+# Type byte TT of class id 0x016000TT -> the firmware's class name (InitializeRoot's class table,
+# scripts/analysis/nakarest_objtab_map.py --classes; v10/maincpu/shared/macros.s defines them all)
+ROOT_CLASS_NAMES = (
+    'Object', 'Function', 'ApFunction', 'MainFunction', 'Class', 'SupportClass', 'Mode', 'Title',
+    'ResBitmap', 'ResFrame', 'ResIcon', 'ResFont', 'ResEvent', 'ResMethod', 'ResString', 'ResName',
+    'Viewable', 'VwBox', 'PsParaBox', 'AcLswBox', 'AcTempoBox', 'PsEditBox', 'PsNumEditBox', 'PsTblEditBox',
+    'AcOnOffBox', 'AcNumEditBox', 'AcLswEditBox', 'AcRamEditBox', 'PsMenuBox', 'AcTitleMenu', 'PsEditSwBox', 'AcIndexEditSw',
+    'AcFuncEditSw', 'PsWideESBox', 'AcIndexWideES', 'AcFuncWideES', 'PsPageBox', 'AcWindowPage', 'PsToggleBox', 'PsInvisibleBox',
+    'IvPageControl', 'IvMainEditSw', 'AcSoundName', 'Label', 'Bitmap', 'Icon', 'Line', 'Frame',
+    'EditSw', 'Box', 'GroupBox', 'Screen', 'TtlScreen', 'Window', 'TextBox', 'StringBox',
+    'ModeEdit', 'TitleEdit', 'AcRhythmName', 'AcPmemName', 'AcMixerVol', 'VwMenuBox', 'VwEditSwBox', 'VwWideESBox',
+    'AcModeMenu', 'AcScreenMenu', 'AcWindowMenu', 'AcBitEditBox', 'AcFuncToggle', 'PsWideToggle', 'DbMemo', 'IvExit',
+    'IvExitMode', 'IvExitScreen', 'IvFixWin', 'AcNamingWindow', 'PsCursorBox', 'IvNaming', 'AcIndexToggle', 'AcRamBox',
+    'PsRadioBox', 'AcStrRadioBox', 'IvCatchEvent', 'PsListBox', 'PsGridBox', 'AcListBox', 'AcGridBox', 'DbDebugMenu',
+    'PsTrackSwitch', 'AcTrackSwitch', 'IvDirmdScreen', 'IvTrackSwitch', 'IvExitWindow', 'DbMemoryDump', 'IvInterrupt', 'IvIntReminder',
+    'IvIntError', 'IvIntComplete', 'IvIntVari', 'IvIntEasySet', 'IvShowHide', 'PsTextBox', 'AcLanguageText', 'TrTransposeBox',
+    'TrChordBox', 'VwUserBitmap', 'IvScreen', 'IvIntWelcome', 'VwUserBitmapByName',
+)
+NAMED_TYPES = {tt: 'NAKA_TYPE_' + n for tt, n in enumerate(ROOT_CLASS_NAMES)}
 
 
 def type_name(byte_val):
