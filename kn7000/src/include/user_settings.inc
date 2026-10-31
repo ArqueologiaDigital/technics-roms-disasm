@@ -152,7 +152,7 @@
 # start, and func_4849E435 and the MT_GetString case of the bank list (0x4849D1B5, "1:%s|2:%s|...")
 # read it with strcpy / sprintf; the items start at +0x14.
 .macro FAV_BANK name, w10
-	.ascii	\name
+	.ascii	"\name"
 	.long	\w10
 .endm
 # An item: {u32 kind, u32 value}, at bank +0x14 + i*8.  AcFavoriteProc dispatches on the kind

@@ -78,7 +78,7 @@
 .macro REC_func_97805FD0_L26_Var f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_97833B38_entry_L34_Records: 160-byte records (func_97833B38_entry_L34_Records, 9 records); fields, and what reads them:
@@ -93,14 +93,14 @@
 #   +8   proc         ptr            no reader seen
 .macro REC_func_97834719_Table p0=0, x4, proc=0
 	.long	\p0
-	.ascii	\x4
+	.ascii	"\x4"
 	.long	\proc
 .endm
 
 # REC_data_978AFD7C_p0: 2-byte records (data_978AFD7C_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[2]          no reader seen
 .macro REC_data_978AFD7C_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_AcKssPleaseWaitProc_L1dc_Table_p0: 4-byte records (AcKssPleaseWaitProc_L1dc_Table_p0, 1 records); fields, and what reads them:
@@ -110,13 +110,13 @@
 .macro REC_AcKssPleaseWaitProc_L1dc_Table_p0 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_names_978A31BC_p0: 1-byte records (names_978A31BC_p0, 4 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_names_978A31BC_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_KssSetSfx_DISPProc_L822_Table_p0: 4-byte records (KssSetSfx_DISPProc_L822_Table_p0, 4 records); fields, and what reads them:
@@ -128,13 +128,13 @@
 # REC_KssCopyFdToHD_DISPProc_L709_Table_p0: 1-byte records (KssCopyFdToHD_DISPProc_L709_Table_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_KssCopyFdToHD_DISPProc_L709_Table_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0: 1-byte records (KssCopySmfFdToHD_DISPProc_L47a_Table_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_func_97833B38_entry_L34_Records_p0: 6433-byte records (func_97833B38_entry_L34_Records_p0, 3 records); fields, and what reads them:
@@ -144,7 +144,7 @@
 .macro REC_func_97833B38_entry_L34_Records_p0 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_97834719_Table_p0: 1-byte records (func_97834719_Table_p0, 1 records); fields, and what reads them:
@@ -160,7 +160,7 @@
 .macro REC_func_97834719_Table_p136 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_97827B50_ArgA1: 8-byte records (func_97827B50_ArgA1, 82 records); fields, and what reads them:

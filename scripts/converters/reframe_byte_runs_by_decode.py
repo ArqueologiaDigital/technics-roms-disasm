@@ -23,7 +23,9 @@ QUESTION ANSWERED / JOB IT DOES
       5. every label in the replaced lines must fall on a decoded instruction start (it is kept, in front of
          that instruction); a label inside a decoded instruction refuses the run;
       6. call / jp targets and relative branch targets that are a label's address are written as the label;
-         others stay numeric for symbolize_numeric_branches.py.
+         others stay numeric for symbolize_numeric_branches.py;
+      7. the instruction lines it writes are put in the tree's form (v7_byte_region_to_insns.respell, i.e.
+         scripts/tools/respell_v7_new_lines_like_v10.respell_lines), not left in llvm-objdump's.
     Comment lines inside the replaced lines are kept, in front of the first instruction.  A trailing
     comment on a `.byte` line that only says what the bytes decode to, or that the backend cannot spell
     them, is dropped with the bytes.  `make gate` is the proof that no byte moved.
@@ -231,10 +233,15 @@ def main():
             total["bytes"] += nbytes
             print("%s:%d converted %d bytes: %s" % (rel, i + 1, nbytes, " / ".join(t for _, t, _ in out)))
             i = kend
-        if a.apply and edits:
+        if edits:
+            mine = set()
             for s, e, new in sorted(edits, reverse=True):
                 L[s:e] = new
-            open(path, "wb").write("\n".join(L).encode("latin-1"))
+                mine = {x + len(new) - (e - s) for x in mine}      # later edits' lines move with this one
+                mine |= {s + q for q, t in enumerate(new) if not t.lstrip().startswith(";") and not t.endswith(":")}
+            R.respell(L, mine, v)
+            if a.apply:
+                open(path, "wb").write("\n".join(L).encode("latin-1"))
     print("converted %(converted)d runs (%(bytes)d bytes from the run start to re-convergence), "
           "refused %(refused)d" % total)
     return 0

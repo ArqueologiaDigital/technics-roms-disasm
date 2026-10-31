@@ -20,7 +20,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_PfParseSpec_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C02E85D_Records: 8-byte records (func_4C02E85D_Records, 128 records); fields, and what reads them:
@@ -28,7 +28,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C02E85D_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_TgGlobalParamCommand_Records: 8-byte records (TgGlobalParamCommand_Records, 64 records); fields, and what reads them:
@@ -44,7 +44,7 @@
 #   +4   x4           u8[12]         no reader seen
 .macro REC_TgChipResetSideA_Table f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_TgPartProgramHandlerDispatch_Records: 8-byte records (TgPartProgramHandlerDispatch_Records, 16 records); fields, and what reads them:
@@ -52,7 +52,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_TgPartProgramHandlerDispatch_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_TgPartProgramApply_Records: 8-byte records (TgPartProgramApply_Records, 16 records); fields, and what reads them:
@@ -60,7 +60,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_TgPartProgramApply_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_TgSlotAllocate_Records: 8-byte records (TgSlotAllocate_Records, 16 records); fields, and what reads them:
@@ -72,7 +72,7 @@
 	.long	\TgVoiceNodePick_a1
 	.byte	\TgVoiceNodeToClassRing_d0
 	.byte	\f5
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_func_4C01B941_Records: 8-byte records (func_4C01B941_Records, 64 records); fields, and what reads them:
@@ -80,7 +80,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C01B941_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C01C252_Records: 8-byte records (func_4C01C252_Records, 32 records); fields, and what reads them:
@@ -88,7 +88,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C01C252_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C01D21E_Records: 8-byte records (func_4C01D21E_Records, 16 records); fields, and what reads them:
@@ -96,7 +96,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C01D21E_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C01E048_Records: 8-byte records (func_4C01E048_Records, 16 records); fields, and what reads them:
@@ -104,7 +104,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C01E048_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C01E0A4_Records: 8-byte records (func_4C01E0A4_Records, 16 records); fields, and what reads them:
@@ -112,7 +112,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C01E0A4_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C01E82A_Records: 8-byte records (func_4C01E82A_Records, 16 records); fields, and what reads them:
@@ -120,13 +120,13 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C01E82A_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C020EB6_Records: 8-byte records (func_4C020EB6_Records, 6 records); fields, and what reads them:
 #   +0   s0           char[8]        func_4C020EB6 0x4C020EB6 `call memcpy_entry, [a2,a3], 8`
 .macro REC_func_4C020EB6_Records s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_func_4C021761_Records: 8-byte records (func_4C021761_Records, 16 records); fields, and what reads them:
@@ -134,7 +134,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C021761_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C024DD8_Records_4: 8-byte records (func_4C024DD8_Records_4, 64 records); fields, and what reads them:
@@ -142,7 +142,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C024DD8_Records_4 f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C024DD8_Records: 8-byte records (func_4C024DD8_Records, 64 records); fields, and what reads them:
@@ -150,7 +150,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C024DD8_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C024DD8_Records_5: 8-byte records (func_4C024DD8_Records_5, 32 records); fields, and what reads them:
@@ -158,7 +158,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C024DD8_Records_5 f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C024DD8_Records_2: 8-byte records (func_4C024DD8_Records_2, 32 records); fields, and what reads them:
@@ -166,7 +166,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C024DD8_Records_2 f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C024DD8_Records_3: 8-byte records (func_4C024DD8_Records_3, 16 records); fields, and what reads them:
@@ -174,7 +174,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C024DD8_Records_3 f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C024DD8_Records_6: 8-byte records (func_4C024DD8_Records_6, 16 records); fields, and what reads them:
@@ -182,7 +182,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4C024DD8_Records_6 f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4C02A0C4_Records: 3-byte records (func_4C02A0C4_Records, 26 records); fields, and what reads them:
@@ -276,7 +276,7 @@
 	.long	\p4
 	.byte	\f8
 	.byte	\f9
-	.ascii	\x10
+	.ascii	"\x10"
 .endm
 
 # REC_func_4C02B542_Records: 12-byte records (func_4C02B542_Records, 8 records); fields, and what reads them:
@@ -290,7 +290,7 @@
 	.long	\p4
 	.byte	\f8
 	.byte	\f9
-	.ascii	\x10
+	.ascii	"\x10"
 .endm
 
 # REC_func_4C02B422_Records: 8-byte records (func_4C02B422_Records, 5 records); fields, and what reads them:
@@ -300,7 +300,7 @@
 .macro REC_func_4C02B422_Records f0=0, f4=0, x5
 	.long	\f0
 	.byte	\f4
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_func_48413A30_Records: 2-byte records (func_48413A30_Records, 128 records); fields, and what reads them:
@@ -520,7 +520,7 @@
 	.word	\f6
 	.long	\p8
 	.word	\GetPaletteRGB_d0
-	.ascii	\x14
+	.ascii	"\x14"
 .endm
 
 # REC_func_48426217_Records: 8-byte records (func_48426217_Records, 32 records); fields, and what reads them:
@@ -634,7 +634,7 @@
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 	.long	\p4
 	.long	\p8
 .endm
@@ -663,8 +663,8 @@
 #   +0   s0           char[16]       func_48440E4D 0x48440E4D `call memcpy_entry, [a2,a3], 8`; func_48440F4B 0x48440F4B `call memcpy_entry, [a2,a3], 8`
 #   +16  x16          u8[1]          no reader seen
 .macro REC_func_48440E4D_Records s0, x16
-	.ascii	\s0
-	.ascii	\x16
+	.ascii	"\s0"
+	.ascii	"\x16"
 .endm
 
 # REC_func_48440AD7_Table: 8-byte records (func_48440AD7_Table, 16 records); fields, and what reads them:
@@ -760,7 +760,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_func_4844D7A4_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_484517F6_Records: 8-byte records (func_484517F6_Records, 16 records); fields, and what reads them:
@@ -858,14 +858,14 @@
 # REC_func_484717B3_Table: 4-byte records (func_484717B3_Table, 2 records); fields, and what reads them:
 #   +0   s0           char[4]        func_48471EF5 0x48471EF5 `call memcpy_entry, [a2,a3], 8`
 .macro REC_func_484717B3_Table s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_TechniChordDuet2_Records: 12-byte records (TechniChordDuet2_Records, 28 records); fields, and what reads them:
 #   +0   x0           u8[4]          no reader seen
 #   +4   a4           8 x 1 (s8)     TechniChordDuet2 0x48473283 `movbu (d0, a0), d1`
 .macro REC_TechniChordDuet2_Records x0, a4:vararg
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\a4
 .endm
 
@@ -885,7 +885,7 @@
 #   +0   x0           u8[4]          no reader seen
 #   +4   a4           8 x 1 (s8)     TechniChordCountry 0x484732EB `movbu (d0, a0), d1`
 .macro REC_TechniChordCountry_Records x0, a4:vararg
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\a4
 .endm
 
@@ -1006,9 +1006,9 @@
 	.word	\key
 	.word	\key_
 	.word	\f4
-	.ascii	\x6
+	.ascii	"\x6"
 	.long	\p8
-	.ascii	\x12
+	.ascii	"\x12"
 .endm
 
 # REC_DbMemoryDumpProc_Records: 8-byte records (DbMemoryDumpProc_Records, 16 records); fields, and what reads them:
@@ -1036,9 +1036,9 @@
 #   +12  text         ptr            CheckMessage 0x4848A27D `mov (0x1c, a0), d1`; MessageText 0x4848A368 `mov (0xc, a0), d0`
 .macro MessageBoxDef kind=0, x2, error_no=0, x6, header=0, text=0
 	.word	\kind
-	.ascii	\x2
+	.ascii	"\x2"
 	.word	\error_no
-	.ascii	\x6
+	.ascii	"\x6"
 	.long	\header
 	.long	\text
 .endm
@@ -1241,7 +1241,7 @@
 #   +8   name         ptr            AcHpPartsListProc 0x48496238 `mov (8, a0), a1`
 .macro HomePagePart view=0, part_no, name=0
 	.long	\view
-	.ascii	\part_no
+	.ascii	"\part_no"
 	.long	\name
 .endm
 
@@ -1259,7 +1259,7 @@
 #   +4   text         ptr            AcFootSwProc 0x48494FA4 `mov (4, a1), a0`
 .macro REC_AcFootSwProc_Table f0=0, x2, text=0
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 	.long	\text
 .endm
 
@@ -1287,7 +1287,7 @@
 .macro REC_AcEffectTypeProc_Table f0=0, f4=0, x6, text=0
 	.long	\f0
 	.word	\f4
-	.ascii	\x6
+	.ascii	"\x6"
 	.long	\text
 .endm
 
@@ -1600,7 +1600,7 @@
 .macro REC_PanelTypeDetect_Records f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelTypeDetect_Records_2: 8-byte records (PanelTypeDetect_Records_2, 4 records); fields, and what reads them:
@@ -1610,7 +1610,7 @@
 .macro REC_PanelTypeDetect_Records_2 f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelTypeDetect_Records_3: 8-byte records (PanelTypeDetect_Records_3, 2 records); fields, and what reads them:
@@ -1620,7 +1620,7 @@
 .macro REC_PanelTypeDetect_Records_3 f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelTypeDetect_Records_4: 8-byte records (PanelTypeDetect_Records_4, 5 records); fields, and what reads them:
@@ -1630,7 +1630,7 @@
 .macro REC_PanelTypeDetect_Records_4 f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelTypeDetect_Records_5: 8-byte records (PanelTypeDetect_Records_5, 4 records); fields, and what reads them:
@@ -1640,7 +1640,7 @@
 .macro REC_PanelTypeDetect_Records_5 f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelTypeDetect_Records_6: 8-byte records (PanelTypeDetect_Records_6, 2 records); fields, and what reads them:
@@ -1650,7 +1650,7 @@
 .macro REC_PanelTypeDetect_Records_6 f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelTypeDetect_Records_7: 8-byte records (PanelTypeDetect_Records_7, 4 records); fields, and what reads them:
@@ -1660,7 +1660,7 @@
 .macro REC_PanelTypeDetect_Records_7 f0=0, key=0, x5
 	.long	\f0
 	.byte	\key
-	.ascii	\x5
+	.ascii	"\x5"
 .endm
 
 # REC_PanelExtSwShadowInit_Table: 4-byte records (PanelExtSwShadowInit_Table, 6 records); fields, and what reads them:
@@ -1668,7 +1668,7 @@
 #   +1   x1           u8[3]          no reader seen
 .macro REC_PanelExtSwShadowInit_Table f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484ADFC8_Records: 8-byte records (func_484ADFC8_Records, 64 records); fields, and what reads them:
@@ -1716,9 +1716,9 @@
 #   +2   f2           u8             AcMidiPartGridBoxProc 0x484CF3FA `movbu (2, a0), d1`; AcMidiPartGridBoxProc 0x484CF3FA `movbu (2, a2), d1` (+1)
 #   +3   x3           u8[7]          no reader seen
 .macro REC_AcMidiPartGridBoxProc_Records a0, f2=0, x3
-	.ascii	\a0
+	.ascii	"\a0"
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 .endm
 
 # REC_MidiControlGrid_Records: 36-byte records (MidiControlGrid_Records, 3 records); fields, and what reads them:
@@ -1726,7 +1726,7 @@
 #   +4   x4           u8[32]         no reader seen
 .macro REC_MidiControlGrid_Records key=0, x4
 	.long	\key
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_AcMidiPartGridBoxProc_Records_2: 8-byte records (AcMidiPartGridBoxProc_Records_2, 16 records); fields, and what reads them:
@@ -2223,7 +2223,7 @@
 #   +0   x0           u8[16]         no reader seen
 #   +16  dividend     u16            func_48504F37 0x48504F37 `movhu (0x10, a0), d0`; func_48504F37 0x48504F37 `movhu (0x10, a0), d2` (+4)
 .macro REC_GetTitleNow_Records x0, dividend=0
-	.ascii	\x0
+	.ascii	"\x0"
 	.word	\dividend
 .endm
 
@@ -2614,7 +2614,7 @@
 .macro REC_func_4851B159_Records f0=0, f2=0, x3
 	.word	\f0
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 .endm
 
 # REC_FmmSmfMedleyFunc_Records: 8-byte records (FmmSmfMedleyFunc_Records, 16 records); fields, and what reads them:
@@ -2673,7 +2673,7 @@
 #   +4   proc         ptr            DiskLoadDispatch 0x4852CFE4 `mov (4, a0), a1`
 .macro REC_DiskFileHandlerTable f0=0, x1, proc=0
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 	.long	\proc
 .endm
 
@@ -2683,7 +2683,7 @@
 #   +4   proc         ptr            func_4852DD7C 0x4852DD7C `mov (4, a0), a1`
 .macro REC_func_4852DD7C_Table_2 f0=0, x1, proc=0
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 	.long	\proc
 .endm
 
@@ -3262,7 +3262,7 @@
 .macro REC_func_4855113E_Records f0=0, f2=0, x3
 	.word	\f0
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 .endm
 
 # REC_func_48562663_Table: 8-byte records (func_48562663_Table, 11 records); fields, and what reads them:
@@ -3271,7 +3271,7 @@
 #   +4   proc         ptr            func_48562663 0x48562663 `mov (4, a0), a1`
 .macro REC_func_48562663_Table f0=0, x1, proc=0
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 	.long	\proc
 .endm
 
@@ -3281,7 +3281,7 @@
 #   +4   proc         ptr            func_48562906 0x48562906 `mov (4, a0), a1`
 .macro REC_func_48562906_Table_2 f0=0, x1, proc=0
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 	.long	\proc
 .endm
 
@@ -3324,11 +3324,11 @@
 #   +12  f12          s16            func_4856E588 0x4856E588 `movhu (0xc, a0), d0`; func_4856E6D0 0x4856E6D0 `movhu (0xc, a0), d0`
 #   +14  x14          u8[2]          no reader seen
 .macro REC_func_4856E6D0_Records x0, f4=0, f8=0, f12=0, x14
-	.ascii	\x0
+	.ascii	"\x0"
 	.long	\f4
 	.long	\f8
 	.word	\f12
-	.ascii	\x14
+	.ascii	"\x14"
 .endm
 
 # REC_R12OctaveFunc_Records: 8-byte records (R12OctaveFunc_Records, 16 records); fields, and what reads them:
@@ -3384,7 +3384,7 @@
 #   +4   x4           u8[4]          no reader seen
 .macro REC_AcSswImgListProc_Records f0=0, x4
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_4857F2FE_Records: 8-byte records (func_4857F2FE_Records, 5 records); fields, and what reads them:
@@ -3476,7 +3476,7 @@
 #   +4   f4           u8             TgPartEgRampBuild 0x4C039D7E `movbu (4, a0), d1`
 #   +5   index        u8             TgPartEgRampBuild 0x4C039D7E `movbu (5, a0), d2`
 .macro REC_TgPartEgRampBuild_Records a0, f4=0, index=0
-	.ascii	\a0
+	.ascii	"\a0"
 	.byte	\f4
 	.byte	\index
 .endm
@@ -3536,17 +3536,17 @@
 	.byte	\f12
 	.byte	\flags__
 	.byte	\f14
-	.ascii	\x15
+	.ascii	"\x15"
 	.byte	\f18
 	.byte	\flags___
 	.byte	\f20
 	.byte	\f21
-	.ascii	\x22
+	.ascii	"\x22"
 	.byte	\f25
 	.byte	\f26
 	.byte	\f27
 	.byte	\f28
-	.ascii	\x29
+	.ascii	"\x29"
 .endm
 
 # REC_TgPartGlidePlan_Records: 12-byte records (TgPartGlidePlan_Records, 128 records); fields, and what reads them:
@@ -3558,7 +3558,7 @@
 	.long	\f0
 	.long	\f4
 	.word	\f8
-	.ascii	\x10
+	.ascii	"\x10"
 .endm
 
 # REC_func_4840DE66_Table: 16-byte records (func_4840DE66_Table, 2 records); fields, and what reads them:
@@ -3566,7 +3566,7 @@
 #   +1   x1           u8[15]         no reader seen
 .macro REC_func_4840DE66_Table f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_4840DE66_Records: 16-byte records (func_4840DE66_Records, 2 records); fields, and what reads them:
@@ -3574,7 +3574,7 @@
 #   +1   x1           u8[15]         no reader seen
 .macro REC_func_4840DE66_Records f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_4840D7B5_Records: 64-byte records (func_4840D7B5_Records, 2 records); fields, and what reads them:
@@ -3582,7 +3582,7 @@
 #   +1   x1           u8[63]         no reader seen
 .macro REC_func_4840D7B5_Records index=0, x1
 	.byte	\index
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_48412A17_Records: 128-byte records (func_48412A17_Records, 8 records); fields, and what reads them:
@@ -3635,7 +3635,7 @@
 #   +0   s0           char[20]       func_484373B7 0x484373B7 `call strcpy_entry, [a2], 4`
 #   +20  a20          6 x 4 (u32)    func_4843752C 0x4843752C `mov (d1, a0), d0`
 .macro REC_func_484373B7_Records s0, a20:vararg
-	.ascii	\s0
+	.ascii	"\s0"
 	.long	\a20
 .endm
 
@@ -3646,10 +3646,10 @@
 #   +18  x18          u8[2]          no reader seen
 #   +20  index        ptr            func_48435AFF 0x48435AFF `mov (0x14, a0), a0`
 .macro REC_GenreStyleTable s0, x16, f17=0, x18, index=0
-	.ascii	\s0
-	.ascii	\x16
+	.ascii	"\s0"
+	.ascii	"\x16"
 	.byte	\f17
-	.ascii	\x18
+	.ascii	"\x18"
 	.long	\index
 .endm
 
@@ -3758,7 +3758,7 @@
 	.word	\era_pos
 	.word	\letter
 	.word	\letter_pos
-	.ascii	\x22
+	.ascii	"\x22"
 .endm
 
 # REC_PostEvent_Records: 12-byte records (PostEvent_Records, 10 records); fields, and what reads them:
@@ -3770,7 +3770,7 @@
 	.long	\text
 	.long	\p4
 	.word	\key
-	.ascii	\x10
+	.ascii	"\x10"
 .endm
 
 # REC_CmpPrtCpyEditFunc_Table: 2-byte records (CmpPrtCpyEditFunc_Table, 12 records); fields, and what reads them:
@@ -3784,19 +3784,19 @@
 # REC_EQGainEditCheck_Records: 6-byte records (EQGainEditCheck_Records, 27 records); fields, and what reads them:
 #   +0   s0           char[6]        EQFcEditCheck 0x4856B107 `call strcpy_entry, [a2], 4`
 .macro REC_EQGainEditCheck_Records s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_EQQEditCheck_Records: 6-byte records (EQQEditCheck_Records, 32 records); fields, and what reads them:
 #   +0   s0           char[6]        EQQEditCheck 0x4856B28E `call strcpy_entry, [a2], 4`
 .macro REC_EQQEditCheck_Records s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_EQGainEditCheck_Records_2: 6-byte records (EQGainEditCheck_Records_2, 49 records); fields, and what reads them:
 #   +0   s0           char[6]        EQGainEditCheck 0x4856AF80 `call strcpy_entry, [a2], 4`
 .macro REC_EQGainEditCheck_Records_2 s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_KernelServiceHash: 8-byte records (KernelServiceHash, 16 records); fields, and what reads them:
@@ -3812,7 +3812,7 @@
 #   +1   x1           u8[3]          no reader seen
 .macro REC_func_48400084_Records f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_4844DB20_Records: 2-byte records (func_4844DB20_Records, 3 records); fields, and what reads them:
@@ -3876,7 +3876,7 @@
 .macro REC_func_484102CD_Records f0=0, index=0, x2
 	.byte	\f0
 	.byte	\index
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_484102CD_Records_2: 19-byte records (func_484102CD_Records_2, 10 records); fields, and what reads them:
@@ -3886,7 +3886,7 @@
 .macro REC_func_484102CD_Records_2 f0=0, index=0, x2
 	.byte	\f0
 	.byte	\index
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_484102CD_Records_3: 19-byte records (func_484102CD_Records_3, 10 records); fields, and what reads them:
@@ -3896,7 +3896,7 @@
 .macro REC_func_484102CD_Records_3 f0=0, index=0, x2
 	.byte	\f0
 	.byte	\index
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_484102CD_Records_4: 19-byte records (func_484102CD_Records_4, 10 records); fields, and what reads them:
@@ -3906,7 +3906,7 @@
 .macro REC_func_484102CD_Records_4 f0=0, index=0, x2
 	.byte	\f0
 	.byte	\index
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_484136FF_Records: 13-byte records (func_484136FF_Records, 9 records); fields, and what reads them:
@@ -3914,7 +3914,7 @@
 #   +1   x1           u8[12]         no reader seen
 .macro REC_func_484136FF_Records PutM3Em_d1=0, x1
 	.byte	\PutM3Em_d1
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484288AC_Table: 56-byte records (func_484288AC_Table, 4 records); fields, and what reads them:
@@ -3942,7 +3942,7 @@
 	.word	\key__
 	.word	\f6
 	.word	\f8
-	.ascii	\x10
+	.ascii	"\x10"
 	.long	\index
 	.long	\f16
 	.long	\f20
@@ -3992,19 +3992,19 @@
 #   +28  text         ptr            func_4846D7FB 0x4846D7FB `mov (a2), a1`
 #   +32  x32          u8[8]          no reader seen
 .macro REC_func_4846D7FB_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 	.long	\p20
 	.long	\p24
 	.long	\text
-	.ascii	\x32
+	.ascii	"\x32"
 .endm
 
 # REC_data_486D0670_p0: 2-byte records (data_486D0670_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[2]          no reader seen
 .macro REC_data_486D0670_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_ResourceIdTrieNode_485897BC_p0: 20-byte records (ResourceIdTrieNode_485897BC_p0, 63 records); fields, and what reads them:
@@ -4086,9 +4086,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_p0_s4: 4-byte records (func_4C01B941_Table_p0_s4, 3 records); fields, and what reads them:
@@ -4096,9 +4096,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_p0_s4 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_2_p0: 4-byte records (func_4C01B941_Table_2_p0, 1 records); fields, and what reads them:
@@ -4106,9 +4106,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_2_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_5_p0: 4-byte records (func_4C01B941_Table_5_p0, 2 records); fields, and what reads them:
@@ -4116,9 +4116,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_5_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_6_p0: 8-byte records (func_4C01B941_Table_6_p0, 5 records); fields, and what reads them:
@@ -4126,9 +4126,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_6_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_7_p0: 4-byte records (func_4C01B941_Table_7_p0, 1 records); fields, and what reads them:
@@ -4136,9 +4136,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_7_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_8_p0: 8-byte records (func_4C01B941_Table_8_p0, 6 records); fields, and what reads them:
@@ -4146,9 +4146,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_8_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_8_p0_s4: 4-byte records (func_4C01B941_Table_8_p0_s4, 3 records); fields, and what reads them:
@@ -4156,9 +4156,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_8_p0_s4 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_10_p0: 4-byte records (func_4C01B941_Table_10_p0, 1 records); fields, and what reads them:
@@ -4166,9 +4166,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_10_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_11_p0: 8-byte records (func_4C01B941_Table_11_p0, 4 records); fields, and what reads them:
@@ -4176,9 +4176,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_11_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_3_p0: 8-byte records (func_4C01B941_Table_3_p0, 7 records); fields, and what reads them:
@@ -4186,9 +4186,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_3_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_3_p0_s4: 4-byte records (func_4C01B941_Table_3_p0_s4, 6 records); fields, and what reads them:
@@ -4196,9 +4196,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_3_p0_s4 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_12_p0: 4-byte records (func_4C01B941_Table_12_p0, 2 records); fields, and what reads them:
@@ -4206,9 +4206,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_12_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_13_p0: 8-byte records (func_4C01B941_Table_13_p0, 6 records); fields, and what reads them:
@@ -4216,9 +4216,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_13_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_14_p0: 8-byte records (func_4C01B941_Table_14_p0, 12 records); fields, and what reads them:
@@ -4226,9 +4226,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_14_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_14_p0_s4: 4-byte records (func_4C01B941_Table_14_p0_s4, 1 records); fields, and what reads them:
@@ -4236,9 +4236,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_14_p0_s4 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_4_p0: 8-byte records (func_4C01B941_Table_4_p0, 13 records); fields, and what reads them:
@@ -4246,9 +4246,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_4_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_15_p0: 8-byte records (func_4C01B941_Table_15_p0, 2 records); fields, and what reads them:
@@ -4256,9 +4256,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_15_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_16_p0: 8-byte records (func_4C01B941_Table_16_p0, 3 records); fields, and what reads them:
@@ -4266,9 +4266,9 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[6]          no reader seen
 .macro REC_func_4C01B941_Table_16_p0 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4C01B941_Table_16_p0_s4: 4-byte records (func_4C01B941_Table_16_p0_s4, 2 records); fields, and what reads them:
@@ -4276,15 +4276,15 @@
 #   +1   f1           u8             func_4C01B941 0x4C01B941 `movbu (a0), d0`
 #   +2   x2           u8[2]          no reader seen
 .macro REC_func_4C01B941_Table_16_p0_s4 x0, f1=0, x2
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_SndRecTriFieldGet2_Table_p0_p24: 1-byte records (SndRecTriFieldGet2_Table_p0_p24, 601 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_SndRecTriFieldGet2_Table_p0_p24 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_SndRecTriFieldGet2_Table_p0: 32-byte records (SndRecTriFieldGet2_Table_p0, 601 records); fields, and what reads them:
@@ -4297,20 +4297,20 @@
 #   +29  index_       s8             func_48412A17 0x48412A17 `movbu (0x1d, a0), d0`
 #   +30  x30          u8[2]          no reader seen
 .macro REC_SndRecTriFieldGet2_Table_p0 x0, f18=0, f20=0, x22, index=0, f28=0, index_=0, x30
-	.ascii	\x0
+	.ascii	"\x0"
 	.word	\f18
 	.word	\f20
-	.ascii	\x22
+	.ascii	"\x22"
 	.long	\index
 	.byte	\f28
 	.byte	\index_
-	.ascii	\x30
+	.ascii	"\x30"
 .endm
 
 # REC_func_4841202C_Table_2_p0_p4: 32-byte records (func_4841202C_Table_2_p0_p4, 91 records); fields, and what reads them:
 #   +0   x0           u8[32]         no reader seen
 .macro REC_func_4841202C_Table_2_p0_p4 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_func_4841202C_Table_2_p0: 16-byte records (func_4841202C_Table_2_p0, 91 records); fields, and what reads them:
@@ -4325,28 +4325,28 @@
 #   +12  f12          s8             func_48412113 0x48412113 `movbu (0xc, a0), d0`
 #   +13  x13          u8[3]          no reader seen
 .macro REC_func_4841202C_Table_2_p0 x0, f1=0, x2, text=0, f8=0, f9=0, f10=0, f11=0, f12=0, x13
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 	.long	\text
 	.byte	\f8
 	.byte	\f9
 	.byte	\f10
 	.byte	\f11
 	.byte	\f12
-	.ascii	\x13
+	.ascii	"\x13"
 .endm
 
 # REC_func_48440257_Records_p4: 180-byte records (func_48440257_Records_p4, 2 records); fields, and what reads them:
 #   +0   x0           u8[180]        no reader seen
 .macro REC_func_48440257_Records_p4 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_func_48440257_Records_p8: 15-byte records (func_48440257_Records_p8, 3 records); fields, and what reads them:
 #   +0   x0           u8[15]         no reader seen
 .macro REC_func_48440257_Records_p8 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_func_48440659_Result: 21-byte records (func_48440659_Result, 1 records); fields, and what reads them:
@@ -4358,11 +4358,11 @@
 #   +19  key_         u8             func_4844085D 0x4844085D `movbu (0x13, a1), d2`
 #   +20  f20          u8             func_4844085D 0x4844085D `movbu (0x14, a1), d0`
 .macro REC_func_48440659_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
-	.ascii	\s0
+	.ascii	"\s0"
 	.byte	\key
 	.byte	\f3
 	.byte	\f4
-	.ascii	\x5
+	.ascii	"\x5"
 	.byte	\key_
 	.byte	\f20
 .endm
@@ -4376,7 +4376,7 @@
 # REC_func_4845FE5B_Table_p0: 96-byte records (func_4845FE5B_Table_p0, 6 records); fields, and what reads them:
 #   +0   x0           u8[96]         no reader seen
 .macro REC_func_4845FE5B_Table_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # NoteConvTable: 4-byte records (NoteConvRules_p4, 21 records); fields, and what reads them:
@@ -4388,27 +4388,27 @@
 # REC_data_48736608_p0_p36: 2-byte records (data_48736608_p0_p36, 1 records); fields, and what reads them:
 #   +0   x0           u8[2]          no reader seen
 .macro REC_data_48736608_p0_p36 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_data_48736608_p0_p40: 2-byte records (data_48736608_p0_p40, 1 records); fields, and what reads them:
 #   +0   x0           u8[2]          no reader seen
 .macro REC_data_48736608_p0_p40 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_data_48736608_p0: 40-byte records (data_48736608_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[36]         no reader seen
 #   +36  p36          ptr            no reader seen
 .macro REC_data_48736608_p0 x0, p36=0
-	.ascii	\x0
+	.ascii	"\x0"
 	.long	\p36
 .endm
 
 # REC_FlashChipIdTable_p8: 280-byte records (FlashChipIdTable_p8, 2 records); fields, and what reads them:
 #   +0   s0           char[280]      func_4847F7B8 0x4847F7B8 `call memcpy_entry, [a2,a3], 8`
 .macro REC_FlashChipIdTable_p8 s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_AcNamingEditSwProc_Table_p0_p0: 4-byte records (AcNamingEditSwProc_Table_p0_p0, 1 records); fields, and what reads them:
@@ -4416,7 +4416,7 @@
 #   +1   x1           u8[3]          no reader seen
 .macro REC_AcNamingEditSwProc_Table_p0_p0 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_4848A025_Table_p0: 4-byte records (func_4848A025_Table_p0, 1 records); fields, and what reads them:
@@ -4426,19 +4426,19 @@
 .macro REC_func_4848A025_Table_p0 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_4848B12D_Records_p4_p0: 34-byte records (func_4848B12D_Records_p4_p0, 27 records); fields, and what reads them:
 #   +0   x0           u8[34]         no reader seen
 .macro REC_func_4848B12D_Records_p4_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_data_50001850_p0: 1-byte records (data_50001850_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_data_50001850_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_names_500019A0_p0: 4-byte records (names_500019A0_p0, 4 records); fields, and what reads them:
@@ -4450,13 +4450,13 @@
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 .endm
 
 # REC_TtNormal_Records_p0: 4-byte records (TtNormal_Records_p0, 4 records); fields, and what reads them:
 #   +0   x0           u8[4]          no reader seen
 .macro REC_TtNormal_Records_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_AcFavScreenProc_Records_p0_p8: 4-byte records (AcFavScreenProc_Records_p0_p8, 18 records); fields, and what reads them:
@@ -4464,13 +4464,13 @@
 #   +1   x1           u8[3]          no reader seen
 .macro REC_AcFavScreenProc_Records_p0_p8 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_AcFavScreenProc_Records_p0: 8-byte records (AcFavScreenProc_Records_p0, 18 records); fields, and what reads them:
 #   +0   x0           u8[8]          no reader seen
 .macro REC_AcFavScreenProc_Records_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_AcFavScreenProc_Records_p4: 1-byte records (AcFavScreenProc_Records_p4, 1 records); fields, and what reads them:
@@ -4490,7 +4490,7 @@
 	.byte	\PanelBtnSuppressCheck_d0
 	.byte	\index
 	.byte	\f6
-	.ascii	\x7
+	.ascii	"\x7"
 .endm
 
 # REC_func_484C01F1_Result: 18-byte records (func_484C01F1_Result, 213 records); fields, and what reads them:
@@ -4536,13 +4536,13 @@
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
-	.ascii	\x3
+	.ascii	"\x3"
 .endm
 
 # REC_data_48664204_p0: 1-byte records (data_48664204_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_data_48664204_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_data_48664260_p0: 4-byte records (data_48664260_p0, 1 records); fields, and what reads them:
@@ -4550,7 +4550,7 @@
 #   +1   x1           u8[3]          no reader seen
 .macro REC_data_48664260_p0 key=0, x1
 	.byte	\key
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_StartFeatureDemo_Table_p0: 1258-byte records (StartFeatureDemo_Table_p0, 10 records); fields, and what reads them:
@@ -4560,7 +4560,7 @@
 .macro REC_StartFeatureDemo_Table_p0 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_VoiceDirRemapFind_Table_p0: 8-byte records (VoiceDirRemapFind_Table_p0, 984 records); fields, and what reads them:
@@ -4570,7 +4570,7 @@
 .macro REC_VoiceDirRemapFind_Table_p0 p0=0, key=0, x6
 	.long	\p0
 	.word	\key
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_VoiceDirClassFind_Table_p0: 8-byte records (VoiceDirClassFind_Table_p0, 570 records); fields, and what reads them:
@@ -4580,7 +4580,7 @@
 .macro REC_VoiceDirClassFind_Table_p0 p0=0, key=0, x6
 	.long	\p0
 	.word	\key
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_VoiceDirIndexFind_Table_p0: 8-byte records (VoiceDirIndexFind_Table_p0, 570 records); fields, and what reads them:
@@ -4590,7 +4590,7 @@
 .macro REC_VoiceDirIndexFind_Table_p0 p0=0, key=0, x6
 	.long	\p0
 	.word	\key
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_VoiceDirRefFind_Table_p0: 12-byte records (VoiceDirRefFind_Table_p0, 645 records); fields, and what reads them:
@@ -4600,7 +4600,7 @@
 .macro REC_VoiceDirRefFind_Table_p0 p0=0, key=0, x6
 	.long	\p0
 	.word	\key
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_VoiceDirPartRefFind_Table_p0: 12-byte records (VoiceDirPartRefFind_Table_p0, 582 records); fields, and what reads them:
@@ -4610,7 +4610,7 @@
 .macro REC_VoiceDirPartRefFind_Table_p0 p0=0, key=0, x8
 	.long	\p0
 	.long	\key
-	.ascii	\x8
+	.ascii	"\x8"
 .endm
 
 # REC_func_4857F5ED_Table_p0: 1-byte records (func_4857F5ED_Table_p0, 1 records); fields, and what reads them:
@@ -4642,7 +4642,7 @@
 #   +1   x1           u8[3]          no reader seen
 .macro REC_func_4857FB88_Table_2_p0 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_4857FC4F_Table_2_p0: 1-byte records (func_4857FC4F_Table_2_p0, 1 records); fields, and what reads them:
@@ -4674,7 +4674,7 @@
 #   +1   x1           u8[7]          no reader seen
 .macro REC_func_485819F0_Table_p0 flags=0, x1
 	.byte	\flags
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0: 99-byte records (func_484061F9_Table_p0, 31 records); fields, and what reads them:
@@ -4682,7 +4682,7 @@
 #   +1   x1           u8[98]         no reader seen
 .macro REC_func_484061F9_Table_p0 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s94: 94-byte records (func_484061F9_Table_p0_s94, 3 records); fields, and what reads them:
@@ -4690,7 +4690,7 @@
 #   +1   x1           u8[93]         no reader seen
 .macro REC_func_484061F9_Table_p0_s94 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s85: 85-byte records (func_484061F9_Table_p0_s85, 4 records); fields, and what reads them:
@@ -4698,7 +4698,7 @@
 #   +1   x1           u8[84]         no reader seen
 .macro REC_func_484061F9_Table_p0_s85 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s71: 71-byte records (func_484061F9_Table_p0_s71, 8 records); fields, and what reads them:
@@ -4706,7 +4706,7 @@
 #   +1   x1           u8[70]         no reader seen
 .macro REC_func_484061F9_Table_p0_s71 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s69: 69-byte records (func_484061F9_Table_p0_s69, 1 records); fields, and what reads them:
@@ -4714,7 +4714,7 @@
 #   +1   x1           u8[68]         no reader seen
 .macro REC_func_484061F9_Table_p0_s69 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s57: 57-byte records (func_484061F9_Table_p0_s57, 9 records); fields, and what reads them:
@@ -4722,7 +4722,7 @@
 #   +1   x1           u8[56]         no reader seen
 .macro REC_func_484061F9_Table_p0_s57 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s43: 43-byte records (func_484061F9_Table_p0_s43, 3 records); fields, and what reads them:
@@ -4730,7 +4730,7 @@
 #   +1   x1           u8[42]         no reader seen
 .macro REC_func_484061F9_Table_p0_s43 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s42: 42-byte records (func_484061F9_Table_p0_s42, 1 records); fields, and what reads them:
@@ -4738,7 +4738,7 @@
 #   +1   x1           u8[41]         no reader seen
 .macro REC_func_484061F9_Table_p0_s42 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_484061F9_Table_p0_s15: 15-byte records (func_484061F9_Table_p0_s15, 2 records); fields, and what reads them:
@@ -4746,7 +4746,7 @@
 #   +1   x1           u8[14]         no reader seen
 .macro REC_func_484061F9_Table_p0_s15 f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_TgSlotAllocate_Records_p0: 15-byte records (TgSlotAllocate_Records_p0, 2 records); fields, and what reads them:
@@ -4756,7 +4756,7 @@
 .macro REC_TgSlotAllocate_Records_p0 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_TgSlotAllocate_Records_p0_s14: 14-byte records (TgSlotAllocate_Records_p0_s14, 1 records); fields, and what reads them:
@@ -4766,7 +4766,7 @@
 .macro REC_TgSlotAllocate_Records_p0_s14 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_TgSlotAllocate_Records_p0_s11: 11-byte records (TgSlotAllocate_Records_p0_s11, 1 records); fields, and what reads them:
@@ -4776,19 +4776,19 @@
 .macro REC_TgSlotAllocate_Records_p0_s11 f0=0, f1=0, x2
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_func_48412CA5_Result_p20: 1-byte records (func_48412CA5_Result_p20, 4 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_func_48412CA5_Result_p20 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_func_48412CA5_Result: 20-byte records (func_48412CA5_Result, 5 records); fields, and what reads them:
 #   +0   x0           u8[20]         no reader seen
 .macro REC_func_48412CA5_Result x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_MemStyleAreaVarStreamsInit_Selected: 13-byte records (MemStyleAreaVarStreamsInit_Selected, 2 records); fields, and what reads them:
@@ -4798,17 +4798,17 @@
 #   +3   index__      u8             LoadU24BE 0x48440363 `movbu (a0), d0`
 #   +4   x4           u8[9]          no reader seen
 .macro REC_MemStyleAreaVarStreamsInit_Selected s0, index=0, index_=0, index__=0, x4
-	.ascii	\s0
+	.ascii	"\s0"
 	.byte	\index
 	.byte	\index_
 	.byte	\index__
-	.ascii	\x4
+	.ascii	"\x4"
 .endm
 
 # REC_func_48449462_Records_p0: 128-byte records (func_48449462_Records_p0, 12 records); fields, and what reads them:
 #   +0   x0           u8[128]        no reader seen
 .macro REC_func_48449462_Records_p0 x0
-	.ascii	\x0
+	.ascii	"\x0"
 .endm
 
 # REC_func_4C0216A3_Selected: 12-byte records (func_4C0216A3_Selected, 8 records); fields, and what reads them:
@@ -4837,14 +4837,14 @@
 #   +6   f6           u16            func_4847C4F0 0x4847C4F0 `movhu (6, a0), d0`
 .macro REC_StyleGenreTable_p4_p4 f0=0, x2, f6=0
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 	.word	\f6
 .endm
 
 # REC_StyleGenreTable_p4_p12: 1-byte records (StyleGenreTable_p4_p12, 10 records); fields, and what reads them:
 #   +0   s0           char[1]        StyleListBoxGetItem 0x4847C216 `call strcpy_entry, [a2], 4`
 .macro REC_StyleGenreTable_p4_p12 s0
-	.ascii	\s0
+	.ascii	"\s0"
 .endm
 
 # REC_StyleAlphabetTable_p4: 2-byte records (StyleAlphabetTable_p4, 29 records); fields, and what reads them:
@@ -4858,7 +4858,7 @@
 #   +2   x2           u8[408]        no reader seen
 .macro REC_PostEvent_Records_p4 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s386: 386-byte records (PostEvent_Records_p4_s386, 1 records); fields, and what reads them:
@@ -4866,7 +4866,7 @@
 #   +2   x2           u8[384]        no reader seen
 .macro REC_PostEvent_Records_p4_s386 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s322: 322-byte records (PostEvent_Records_p4_s322, 1 records); fields, and what reads them:
@@ -4874,7 +4874,7 @@
 #   +2   x2           u8[320]        no reader seen
 .macro REC_PostEvent_Records_p4_s322 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s258: 258-byte records (PostEvent_Records_p4_s258, 1 records); fields, and what reads them:
@@ -4882,7 +4882,7 @@
 #   +2   x2           u8[256]        no reader seen
 .macro REC_PostEvent_Records_p4_s258 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s138: 138-byte records (PostEvent_Records_p4_s138, 1 records); fields, and what reads them:
@@ -4890,7 +4890,7 @@
 #   +2   x2           u8[136]        no reader seen
 .macro REC_PostEvent_Records_p4_s138 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s74: 74-byte records (PostEvent_Records_p4_s74, 1 records); fields, and what reads them:
@@ -4898,7 +4898,7 @@
 #   +2   x2           u8[72]         no reader seen
 .macro REC_PostEvent_Records_p4_s74 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s68: 68-byte records (PostEvent_Records_p4_s68, 1 records); fields, and what reads them:
@@ -4906,7 +4906,7 @@
 #   +2   x2           u8[66]         no reader seen
 .macro REC_PostEvent_Records_p4_s68 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_PostEvent_Records_p4_s58: 58-byte records (PostEvent_Records_p4_s58, 1 records); fields, and what reads them:
@@ -4914,7 +4914,7 @@
 #   +2   x2           u8[56]         no reader seen
 .macro REC_PostEvent_Records_p4_s58 f0=0, x2
 	.word	\f0
-	.ascii	\x2
+	.ascii	"\x2"
 .endm
 
 # REC_GetFocusObject_Records_p4: 12-byte records (GetFocusObject_Records_p4, 1 records); fields, and what reads them:
@@ -4924,9 +4924,9 @@
 #   +8   x8           u8[4]          no reader seen
 .macro REC_GetFocusObject_Records_p4 f0=0, x1, text=0, x8
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 	.long	\text
-	.ascii	\x8
+	.ascii	"\x8"
 .endm
 
 # MusicStylistPanelData: 160-byte records (StyleRecordTable_p0, 1080 records); fields, and what reads them:
@@ -4939,14 +4939,14 @@
 #   +137 f137         u8             func_4C02AD3C 0x4C02AD3C `movbu (1, a0), d0`
 #   +138 x138         u8[22]         no reader seen
 .macro MusicStylistPanelData x0, f78=0, x79, tempo_lo=0, tempo_hi=0, x119, f137=0, x138
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f78
-	.ascii	\x79
+	.ascii	"\x79"
 	.byte	\tempo_lo
 	.byte	\tempo_hi
-	.ascii	\x119
+	.ascii	"\x119"
 	.byte	\f137
-	.ascii	\x138
+	.ascii	"\x138"
 .endm
 
 # REC_func_4845127C_Result: 34-byte records (func_4845127C_Result, 2 records); fields, and what reads them:
@@ -4954,7 +4954,7 @@
 #   +1   x1           u8[33]         no reader seen
 .macro REC_func_4845127C_Result f0=0, x1
 	.byte	\f0
-	.ascii	\x1
+	.ascii	"\x1"
 .endm
 
 # REC_func_4848B12D_Records_p4: 4-byte records (func_4848B12D_Records_p4, 27 records); fields, and what reads them:
@@ -4974,10 +4974,10 @@
 #   +16  stksz        u32            func_4C03D154 0x4C03D154 `mov (0x10, a2), d0`
 .macro T_CTSK exinf=0, tskatr, task=0, itskpri=0, x14, stksz=0
 	.long	\exinf
-	.ascii	\tskatr
+	.ascii	"\tskatr"
 	.long	\task
 	.word	\itskpri
-	.ascii	\x14
+	.ascii	"\x14"
 	.long	\stksz
 .endm
 
@@ -4991,7 +4991,7 @@
 .macro REC_func_4C03C7EF_ArgA0 f0=0, f4=0, x6, f8=0
 	.long	\f0
 	.word	\f4
-	.ascii	\x6
+	.ascii	"\x6"
 	.long	\f8
 .endm
 
@@ -5004,7 +5004,7 @@
 .macro REC_func_4C03C7EF_ArgA0_s8 f0=0, f4=0, x6
 	.long	\f0
 	.word	\f4
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_func_4847F7FC_ArgA0: 2-byte records (func_4847F7FC_ArgA0, 2 records); fields, and what reads them:
@@ -5026,11 +5026,11 @@
 #   +20  f20          u32            func_4C03C8D0 0x4C03C8D0 `mov (4, a3), d0`
 .macro REC_func_4C03C8D0_ArgA0 f0=0, x4, proc=0, f12=0, f16=0, x18, f20=0
 	.long	\f0
-	.ascii	\x4
+	.ascii	"\x4"
 	.long	\proc
 	.long	\f12
 	.word	\f16
-	.ascii	\x18
+	.ascii	"\x18"
 	.long	\f20
 .endm
 
@@ -5042,11 +5042,11 @@
 #   +5   f5           u8             func_4844416A 0x4844416A `movbu (3, a0), d0`
 #   +6   x6           u8[2]          no reader seen
 .macro REC_func_4844416A_ArgA0 x0, f3=0, f4=0, f5=0, x6
-	.ascii	\x0
+	.ascii	"\x0"
 	.byte	\f3
 	.byte	\f4
 	.byte	\f5
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_func_48401F32_ArgA0_s4: 4-byte records (func_48401F32_ArgA0_s4, 35 records); fields, and what reads them:
@@ -5163,7 +5163,7 @@
 	.long	\TgVoiceRegWrite_d0__
 	.long	\TgVoiceRegWrite_d0___
 	.word	\TgVoiceRegWrite_d0____
-	.ascii	\x18
+	.ascii	"\x18"
 .endm
 
 # REC_TgGlobalRegsA0LoadB_ArgA0: 20-byte records (TgGlobalRegsA0LoadB_ArgA0, 1 records); fields, and what reads them:
@@ -5172,9 +5172,9 @@
 #   +16  TgVoiceRegWriteB_d0 u16            TgGlobalRegsA0LoadB 0x4C037FBB `movhu (0x10, a2), d0`
 #   +18  x18          u8[2]          no reader seen
 .macro REC_TgGlobalRegsA0LoadB_ArgA0 x0, TgVoiceRegWriteB_d0=0, x18
-	.ascii	\x0
+	.ascii	"\x0"
 	.word	\TgVoiceRegWriteB_d0
-	.ascii	\x18
+	.ascii	"\x18"
 .endm
 
 # REC_LoadU24BE_ArgA0: 3-byte records (LoadU24BE_ArgA0, 2 records); fields, and what reads them:
@@ -5199,9 +5199,9 @@
 .macro REC_func_48472D43_ArgA0 f0=0, f1=0, x2, f4=0, x6
 	.byte	\f0
 	.byte	\f1
-	.ascii	\x2
+	.ascii	"\x2"
 	.word	\f4
-	.ascii	\x6
+	.ascii	"\x6"
 .endm
 
 # REC_DiskDriveCtrlHandler_ArgA0: 4-byte records (DiskDriveCtrlHandler_ArgA0, 8 records); fields, and what reads them:
@@ -5223,7 +5223,7 @@
 	.word	\f0
 	.word	\SdResponseScan_d0
 	.byte	\f4
-	.ascii	\x5
+	.ascii	"\x5"
 	.byte	\f9
 .endm
 
@@ -5238,5 +5238,5 @@
 	.word	\f0
 	.word	\SdResponseScan_d0
 	.byte	\f4
-	.ascii	\x5
+	.ascii	"\x5"
 .endm

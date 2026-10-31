@@ -19,7 +19,12 @@ QUESTION ANSWERED / JOB IT DOES
       4. absolute call / jp targets and 24-bit memory or immediate operands that are exactly a label's
          address are written as that label (a descriptive name before a structural one); relative branch
          targets that are a label's address likewise.  Other branch targets stay numeric, for
-         scripts/converters/symbolize_numeric_branches.py to name.
+         scripts/converters/symbolize_numeric_branches.py to name;
+      5. the lines are written in the tree's form, not llvm-objdump's: scripts/tools/
+         respell_v7_new_lines_like_v10.respell_lines (tab after the mnemonic, `call cc, (X:24)`, each
+         number in v10's notation where the same label's v10 block has the same instruction, hex for RAM
+         operands, masks and large constants elsewhere; v10 sources get the fallback rules only).  Until
+         2026-10-31 that was a separate post-process (step 8 of analysis/v7-harmonize-2026-10-24).
     --apply rewrites the file (latin-1 in and out).  `make gate` is the proof that no byte moved.
 
 RUN
@@ -40,6 +45,14 @@ STRUCT = re.compile(r'_(Skip|Join|Loop|Return|Helper|Epilogue|Entry|Tail|Next|Do
 LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):(.*)$')
 BYTES = re.compile(r'^\s*\.byte\s+(.*?)\s*(;.*)?$')
 REL = {"jr", "jrl", "calr", "djnz"}
+sys.path.insert(0, os.path.join(REPO, "scripts", "tools"))
+import respell_v7_new_lines_like_v10 as RS  # noqa: E402
+
+
+def respell(L, idx, tree):
+    """Write the instruction lines L[i], i in idx, in the tree's form (RS.respell_lines; v10 is not matched
+    against itself)."""
+    return RS.respell_lines(L, set(idx), RS.load_v10_blocks() if tree != "v10" else {})
 
 
 def tree_of(path):
@@ -211,7 +224,9 @@ def main():
             ops = re.sub(r'(?<![\w+-])(\d{8}|0x[0-9a-f]{6})(?=(:24)?\)|$|\s*,)', sub, ops)
         lines.append("\t%s\t%s" % (mn, ops) if ops else "\t%s" % mn)
     new = L[:first] + kept + lines + L[j:]
-    for l in lines:
+    at0 = first + len(kept)
+    respell(new, range(at0, at0 + len(lines)), v)
+    for l in new[at0:at0 + len(lines)]:
         print(l)
     if a.apply:
         open(a.file, "wb").write("\n".join(new).encode("latin-1"))

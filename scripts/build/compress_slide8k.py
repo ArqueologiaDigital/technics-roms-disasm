@@ -12,10 +12,20 @@ v10/maincpu/boot/system_handlers.s SLIDE_Decompress_8K_Init for the decoder).
 By default the output does NOT include the 11-byte header; pass --with-header
 to prepend "SLIDE8K\\0" + the 24-bit big-endian decompressed size.
 
+Without a reference the stream is made by floppy/tools/kd/lzss_j.py's encode(),
+H. Okumura's LZSS.C binary-tree encoder with N = 8192, F = 10: the SX-KN7000's
+'J KD' coder.  It is also the factory SLIDE8K encoder: re-encoding the five live
+help databases reproduces every factory decision and every stream byte the
+decoder reads (notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py, 2026-10-31;
+the truncated german_stale block too, up to output 0x55E0 where it is cut).
+--pad BYTE appends the one alignment byte that follows each factory stream;
+the decoder never reads it, so its value is recorded in the Makefile.
+
 If a reference compressed file is provided, the compressor replays the
-original encoder's literal-vs-match decisions for byte-identical output.
-Two properties of the factory streams make plain re-encoding insufficient,
-and both are handled here:
+original encoder's literal-vs-match decisions instead.  The build uses that
+only for the truncated german_stale remnant (verify-help-databases), whose
+stream past output 0x55E0 was overwritten and so encodes no source text.  Two
+properties a reference stream can have are handled by the replay:
 
   * The last flag byte may be only partially consumed (the decoder stops on
     the decompressed-size header field, mid-group), and its never-read high
@@ -245,10 +255,19 @@ def find_longest_match(data, pos, window, window_pos, total_out):
 
 def compress_slide8k(data):
     """
-    Compress data using the SLIDE8K (LZSS) algorithm, greedy longest-match.
+    Compress data with the factory SLIDE8K encoder: lzss_j.encode, Okumura's
+    LZSS.C with N = 8192, F = 10 (see the module docstring for the evidence).
+    """
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__)))), "floppy", "tools", "kd"))
+    import lzss_j
+    return lzss_j.encode(bytes(data))
 
-    NOTE: produces a VALID stream, but not necessarily the same bytes the
-    factory encoder emitted — use --reference for byte-identical rebuilds.
+
+def compress_slide8k_greedy(data):
+    """
+    Greedy longest-match SLIDE8K: a VALID stream, but not the factory bytes
+    (kept for comparison; the build uses compress_slide8k).
     """
     window = bytearray(WINDOW_SIZE)
     window_pos = WINDOW_START_POS
@@ -323,6 +342,7 @@ def main():
         print("                      file for byte-identical output (if input matches)")
         print("  --strict            Hard error if the reference cannot be replayed")
         print("  --with-header       Prepend 'SLIDE8K\\0' + 24-bit BE size header")
+        print("  --pad BYTE          Append one alignment byte (the factory streams' pad)")
         sys.exit(1)
 
     global STRICT
@@ -334,6 +354,12 @@ def main():
     if '--with-header' in sys.argv:
         with_header = True
         sys.argv.remove('--with-header')
+
+    pad = None
+    if '--pad' in sys.argv:
+        i = sys.argv.index('--pad')
+        pad = int(sys.argv[i + 1], 0)
+        del sys.argv[i:i + 2]
 
     input_file = sys.argv[1]
     output_file = sys.argv[2]
@@ -370,6 +396,8 @@ def main():
         if with_header:
             f.write(make_header(len(data)))
         f.write(compressed)
+        if pad is not None:
+            f.write(bytes([pad]))
 
     print(f"Written to: {output_file}")
 

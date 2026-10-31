@@ -54,9 +54,10 @@ The first byte of the magic names the model: `I` is the KN6000, `J` the KN7000. 
   - no end marker.
 
   Okumura's LZSS.C binary-tree encoder with N = 8192 and F = 10 reproduces every stream with no reference
-  (`floppy/tools/kd/lzss_j.py`). [INFERENCE] The KN5000's SLIDE8K is probably the same coder. Its current
-  compressor replays reference decisions (`scripts/build/compress_slide8k.py`), so trying `lzss_j.encode` on it
-  is cheap.
+  (`floppy/tools/kd/lzss_j.py`). The KN5000's SLIDE8K is the same coder, encoder included (measured 2026-10-31,
+  `notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py`: the five live help databases re-encode to every factory
+  decision and stream byte), so `scripts/build/compress_slide8k.py` now builds them with `lzss_j.encode` and no
+  reference.
 - **'I K\1' / 'J K\1'** (.AST, .CST). A u32 inflated size, then one deflate part.
   - .AST: the two u32 at +8/+0xC are not read back by any routine found. On the KN7000 they look like a
     program-ROM address and a RAM address (0x48582CD3, 0x5006F220), so [INFERENCE] they are left-over stack
@@ -209,8 +210,7 @@ No byte is generic any more, but many fields have only a neutral name: an offset
   - the .SQT event reader and record head: no sequencer-player routine is named in `kn7000_manual.sym`, so the
     event lengths stay measured (since done: the lengths are the firmware's table 0x485B9328, lane
     kn67-field-names; the high bit below, 2026-10-31);
-  - kn7asm quote stripping: changing it alters every kn7000 source that passes `.ascii \name` (CUSTOM records,
-    styles), which belongs to those trees' lanes.
+  - kn7asm quote stripping: done 2026-10-31 (lane open4/misc), see the open questions below.
 
 ## Open questions
 
@@ -232,13 +232,13 @@ No byte is generic any more, but many fields have only a neutral name: an offset
 - ~~What the 8 lines at the start of each WSA1R sound bank are.~~ Answered 2026-10-31: the USER 1 / USER 2
   sound-group names (16 per USER bank, 8 per 64 KB bank), read by `UserSoundBank_RemoteGroupNameAddr` and
   `SoundGroupName_Lookup`.
-- Whether 'J KD' is the KN5000's SLIDE8K. If so, `scripts/build/compress_slide8k.py` could use `lzss_j.encode`
-  instead of replaying reference decisions.
-- **Macro strings across the two assemblers.** llvm-mc strips the quotes from a quoted macro argument, and
-  kn7asm keeps them. So no `.ascii \name` macro serves both. The shared includes therefore leave names out of
-  the macros (VOICE_HEAD_TAIL, SOUND_HEAD, PMR_NAME_HEAD / _TAIL), and the floppy sources write `.ascii`
-  themselves. Giving kn7asm the GNU behaviour (quotes stripped, `"\name"` re-quotes) would let one macro take
-  the name.
+- ~~Whether 'J KD' is the KN5000's SLIDE8K.~~ **CLOSED 2026-10-31** (lane open4/misc,
+  `notes/misc-2026-10-31/README.md`): it is, encoder included; `compress_slide8k.py` uses `lzss_j.encode`.
+- ~~**Macro strings across the two assemblers.**~~ **CLOSED 2026-10-31** (lane open4/misc,
+  `notes/misc-2026-10-31/README.md`): kn7asm now strips a quoted macro argument's quotes as GNU as and llvm-mc
+  do (`"\name"` re-quotes), and every kn7asm macro body that wrote `.ascii \name` writes `.ascii "\name"`.
+  One macro can now take the name in both assemblers. Moving the shared callers to it (VOICE_HEAD_TAIL,
+  SOUND_HEAD, PMR_NAME_HEAD / _TAIL) is a separate regeneration, listed there.
 
 ## Shared files touched
 

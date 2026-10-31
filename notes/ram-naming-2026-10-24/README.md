@@ -61,7 +61,12 @@ that the instruction shapes match.
 `name_kn5000_ram.py`'s older fallback still applies: a name with no vote whose voted neighbours within 0x100
 (at least five) all moved by one delta takes that delta. As more names were added, more neighbours voted, so
 this fallback now places a few names that it left out before. It placed them only where nothing numeric
-used them, so no operand changed because of it. The fallback deserves a review (follow-up 4).
+used them, so no operand changed because of it. **Reviewed 2026-10-31 (follow-up 4, lane open4/misc):** the
+fallback is now off unless `--infer-block-delta` is given; without it the script only lists the names it would
+place. `notes/misc-2026-10-31/probes/ram_block_delta_review.py` lists them: 24 in v9 and 25 in v7, every one
+of them used by no code line, and every one at v10's address in the tree (or with no `.equ` of its own), so the
+fallback had changed no source line. Its only non-zero guesses were v7's RHYTHM_PATTERN_SEL_A / _TYPE (-0x9C),
+which no v7 line spells.
 
 ## Results
 
@@ -123,8 +128,9 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
 3. Data lines were out of this lane's scope. `SndParam_BlockRamPtrs` (`ui_widgets/widget_dispatch.s`) could
    become `.long PANEL_PART_RT1, ...`. Many routine headers still quote the addresses as numbers (`0x0D57`
    where the code now says `SQSTEP_CLOCK`), and a header lane could respell them.
-4. Review `name_kn5000_ram.py`'s block-delta fallback (above). It could be limited to names that already have
-   a vote in another tree, or dropped.
+4. ~~Review `name_kn5000_ram.py`'s block-delta fallback.~~ **CLOSED 2026-10-31**: off by default
+   (`--infer-block-delta` restores it); the names it alone placed are listed above and in
+   `notes/misc-2026-10-31/probes/ram_block_delta_review.out.txt`.
 5. The sequencer edit titles' parameters (0x25FA-0x2662, `EVT_GET_RAM_ADDRESS` per title in
    `SqedtFunc_StateChainB_On*`) form one table per title, and could be named record by record from those
    switch tables.
