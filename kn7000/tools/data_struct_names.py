@@ -242,7 +242,8 @@ def auto_name(g, f):
         if vals:
             if not hasattr(gen, "_code_addrs"):
                 gen._code_addrs = set(gen.code_labels.values())
-            if all(gen.in_code(v) or v in gen._code_addrs for v in vals):
+            # (code_labels holds every label file's names, data ones too: a code target is outside the data)
+            if all((gen.in_code(v) or v in gen._code_addrs) and not gen.in_data(v) for v in vals):
                 return "proc"
             if all(gen.in_data(v) and _is_str(gen, v) for v in vals):
                 return "text"
