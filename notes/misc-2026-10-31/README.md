@@ -186,3 +186,23 @@ by llvm-mc).  Switching them is a regeneration of every one of those trees and o
 gates; it changes no byte and no field meaning, and is left as an ordinary ACTIONABLE follow-up (no blocker).  The
 include comments that said the two assemblers disagree (`voice_record.inc`, `panel_memory.inc` and its generator
 `floppy/tools/kd/gen_panel_macros.py`) now say they agree.
+
+## Gates and censuses (in this worktree)
+
+| command                                                                                       | result                                                                |
+|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| `make -j4 gate` (with the help-database change)                                               | exit 0, every KN5000 image 100.00 %                                   |
+| `make gate-kn7000 gate-kn6000 gate-kn6500 gate-kn2400 gate-hdsx3` (new kn7asm, quoted bodies) | exit 0, every image OK                                                |
+| `make -C kn7000 symbols-check`                                                                | exit 0                                                                |
+| `python3 scripts/analysis/data_incbin_census.py` (read-only)                                  | generic 0 in every tree                                               |
+| `python3 scripts/analysis/doc_quality_census.py --compare` (read-only)                        | program935 / program893 new; v6 / v5 (a) +1 / +3, already in the base |
+
+## Follow-ups this lane leaves (no blocker)
+
+- Move the shared callers to name-carrying macros (VOICE_HEAD, and SOUND_HEAD / PMR_NAME with a name
+  parameter): a regeneration of the trees listed under N-a23b8d58.
+- `scripts/build/compress_lzss.py` could build the SLIDE4K streams with `lzss_j.encode` (N = 4096, F = 18)
+  too; the two preset slices with bytes past their stream (presets 17 and 18) need those tails from a
+  source of their own first.
+- The repo-root CLAUDE.md Architecture table's v6 / v5 verbatim figures (now 13,756 B / 15,910 B), and the
+  Mines CLAUDE.md "LLVM Backend Bugs (Active Workarounds)" section (both resolved), for whoever edits CLAUDE.md.
