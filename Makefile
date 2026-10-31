@@ -36,6 +36,9 @@ CLANG=$(LLVM_BIN)/clang
 KN5000_IMAGE_BINS := $(shell python3 scripts/build/kn5000_image_outputs.py)
 KN5000_IMAGE_CONVERTERS := scripts/build/indexed_images.py scripts/build/mono_images.py scripts/build/se_bitmaps.py \
 	scripts/build/kn5000_image_outputs.py v10/maincpu/images/Palette_8bit_RGBA.bin
+# ... and the ones hdae5000_images.py and the table_data picture converters write into includes/generated/
+HDAE_IMAGE_BINS      := $(shell python3 scripts/build/kn5000_image_outputs.py hdae)
+TABLEDATA_IMAGE_BINS := $(shell python3 scripts/build/kn5000_image_outputs.py tabledata)
 
 .PHONY: all llvm-all paramblocks screendata naka clean clean-asl clean-all
 .PHONY: wsa1 wsa1-clean everything gate gate-wsa1 gate-all
@@ -1280,17 +1283,27 @@ $$(addprefix $(1)/maincpu/includes/generated/,naka_technichord_strings.bin naka_
 endef
 $(foreach t,$(C_BITMAP_TREES),$(eval $(call C_BITMAP_RULES,$(t))))
 
-hdae5000-images:
+# The HD-AE5000 pictures and palettes (hdae5000_images.py) and the table_data UI bitmaps, icons and fonts:
+# real grouped outputs since lane media-build (2026-10-31), so a deleted one is rebuilt (`media`, below);
+# `hdae5000-images` / `tabledata-images` stay as the names the objects use.
+$(HDAE_IMAGE_BINS) &: $(wildcard hdae5000*/images/*.png hdae5000*/images/*.txt) hdae5000/images/row_padding.json \
+		scripts/build/hdae5000_images.py
 	python3 scripts/build/hdae5000_images.py build
+	@touch $(HDAE_IMAGE_BINS)
 # HDAE5000_Bitmap_Button01 comes from its PNG through indexed_images.py (lane media-files)
-hdae5000-images: $(KN5000_IMAGE_BINS)
+hdae5000-images: $(HDAE_IMAGE_BINS) $(KN5000_IMAGE_BINS)
 
-# The wallpapers are built from their committed PNGs the same way; see
-# scripts/build/indexed_images.py, whose `verify` asserts the round trip.
-tabledata-images: $(KN5000_IMAGE_BINS)
+$(TABLEDATA_IMAGE_BINS) &: $(wildcard table_data/images/ui_bitmaps/*.png table_data/images/icons_png/*.png \
+		table_data/images/fonts/*.png) table_data/images/ui_bitmaps_manifest.json table_data/images/ui_bitmaps_padding.json \
+		table_data/fonts.s table_data/includes/icon_pixel_data.bin v10/maincpu/images/Palette_8bit_RGBA.bin \
+		scripts/build/ui_bitmaps_images.py scripts/build/icon_images.py scripts/build/font_images.py
 	python3 scripts/build/ui_bitmaps_images.py build
 	python3 scripts/build/icon_images.py build
 	python3 scripts/build/font_images.py build
+	@touch $(TABLEDATA_IMAGE_BINS)
+# The wallpapers are built from their committed PNGs the same way; see
+# scripts/build/indexed_images.py, whose `verify` asserts the round trip.
+tabledata-images: $(TABLEDATA_IMAGE_BINS) $(KN5000_IMAGE_BINS)
 
 rebuilt_ROMs/hd-ae5000_v2_06i.llvm.o: $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
@@ -1572,7 +1585,7 @@ llvm-all: original_ROMs/kn5000_waveform_rom.ic307 rebuilt_ROMs/kn5000_waveform_i
 # missing intermediate for an object that is otherwise up to date -- while assert_images_assemble.py,
 # which assembles the sources directly, needs every file they `.incbin`.
 .PHONY: media
-media: $(KN5000_IMAGE_BINS) $(FTBMP_BMPS) waveform/build/pcm/.built \
+media: $(KN5000_IMAGE_BINS) $(HDAE_IMAGE_BINS) $(TABLEDATA_IMAGE_BINS) $(FTBMP_BMPS) waveform/build/pcm/.built \
 	$(foreach t,$(C_BITMAP_TREES),$(t)/maincpu/includes/generated/pictures/.stamp)
 llvm-all: media
 gate: verify-ic307-reference
