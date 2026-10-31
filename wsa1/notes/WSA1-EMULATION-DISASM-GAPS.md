@@ -468,7 +468,20 @@ is converted in `prom_c/wsa1_prom_c.s`.
 
 ---
 
-### I. What does status word value 2 mean at the key-scan port? -- PRIORITY 3
+### I. What does status word value 2 mean at the key-scan port? -- PRIORITY 3 -- READER HALF ANSWERED 2026-10-31; VALUE 2 BLOCKED
+
+> ★ **`0x008517` has no reader** (lane open4/wsa1-b, `notes/open4-b-probes/prom_c_ram_cell_census.py`,
+> 18 checks).  The `or (0x008517),0x03` at `0xF997A9` is the only instruction in prom_c that addresses
+> it, under every spelling the decoded listing shows.  The one way left to reach it is as element 61 of
+> the 61-byte velocity table at `0x0084DA` (`0x84DA + 61 = 0x8517`): its builder stops at index 60
+> (`cp (XIZ+0xfe),0x003D`), and `ToneGen_VelocityFromTouch` reads it with the key index, so `0x8517`
+> would be read only for a key code one past the 61-key range -- not a designed reader.  `0x8518` is the
+> first byte of the link module's RAM, and RESET zeroes all of `0x80-0x1007F`.  So the two bits are a
+> write-only "a note-on was dropped" mark that nothing in this image collects.
+> **BLOCKED: what status word value 2 means.**  The key-scan port is a chip select of IC4
+> (TC183C230002, `NKSCE`), which has no datasheet; it needs that datasheet or a bus capture of the
+> port on an SX-WSA1R (in storage abroad, no date).
+
 
 **Question.** `KeyScan_ReadEvent` compares the whole status word against **2** at `0xF9979A`,
 and treats that exactly like a touch byte of `0xFF`: a note-on is dropped and `(0x008517) |= 3`,
@@ -514,7 +527,20 @@ table, the `0x7E0008-0x7E0017` row.
 
 ---
 
-### K. What is CPU 2's P8 bit 2 wired to? -- PRIORITY 3
+### K. What is CPU 2's P8 bit 2 wired to? -- PRIORITY 3 -- ANSWERED 2026-10-31
+
+> ★ **MIDI2SNS, a loop-current sense on the MIDI 2 OUT jack.**  Service manual page 20 (sheet II-9):
+> IC2 pin 13 (P82) carries net `MIDI2SNS` (with pin 11 TXD0 = `MIDI2OUT`, pin 12 RXD0 = `MIDI2IN`).
+> Page 19 (sheet II-7) draws its source: Q12 (2SB709AR) has its base-emitter across R71 (150 ohm) in
+> the +5MI feed to JK3 pin 5, the MIDI 2 OUT current source; Q12 drives Q11 (2SD601AQ), whose emitter
+> is `MIDI2SNS` (R73 220K to ground, C91 0.1 uF on the base).  So the bit is high while a receiver on
+> MIDI 2 OUT draws loop current -- a cable to a powered MIDI IN, with the line active, which the same
+> routine's active sensing (arm 1) keeps it.  `MIDI_Watchdogs_And_TransportSwitch` turns its edges into
+> START (`0xFA`) and STOP (`0xFB`) on link channel 6.  For the driver: an input the player could
+> "plug", not a pedal.  Why a cable-sense edge should start and stop CPU 1's sequencer is not stated
+> by anything in the ROM.  Crop: `notes/open4-b-probes/wsa1_sch_open4_crops.py` (`midi2_out_sense.png`,
+> `ic2_midi_nets.png`); header updated in `prom_c/midi/midi_serial_port.s`.
+
 
 **Question.** `MIDI_Watchdogs_And_TransportSwitch` (`0xF99543`) does `res 2,(P8)`, reads P8, and
 on a change of bit 2 sends MIDI **START** (`0xFA`) or **STOP** (`0xFB`) on link channel 6. A
@@ -576,7 +602,27 @@ CPU 1's half is whatever handler its own link dispatcher gives channel 5, in pro
 
 ---
 
-### N. Which pin carries INT6, and which carries INT7? -- PRIORITY 2
+### N. Which pin carries INT6, and which carries INT7? -- PRIORITY 2 -- ANSWERED 2026-10-31
+
+> ★ **INT6 is IC1 pin 40 and INT7 is pin 41, both on port B (PB4 and PB5), and INT6 is the panel's
+> SCK wire, inverted.**  Service manual page 19 (sheet II-7/II-8): pins 36-42 are INT4 (`HDINT`, tied
+> to ground through R301 0 ohm), INT5 (`FDINT`), PB2 (`FDRST`), PB3 (`FDTC`), INT6, INT7 (`FDDRQ`) and
+> PB6 (`HDIORDY`) -- the TMP96C141-family port B order PB0/TI4/INT4, PB1/TI5/INT5, PB2/TO4, PB3/TO5,
+> PB4/TI6/INT6, PB5/TI7/INT7, PB6/TO6 (that order is an inference from the labels; no TMP95C061
+> databook is in these trees).  So `PBCR = 0x0C` makes the two strobes outputs and leaves INT4-INT7
+> inputs: MAME's header is right and nothing on this board contradicts it.
+> **Pin 40 is driven by IC9**, a TC7S14F Schmitt inverter whose input is the control panel's `SCK`
+> wire (CN3 / CP1 CN1 pin 3, also IC1 pin 16 SCLK1 through R31, pulled up by R40 4.7K) through R22 10K
+> / C70 0.01 uF / R23 100.  The panel requests the link by holding SCK low while CPU 1 has SCLK1's pin
+> function off, and the firmware's two "line free" tests read that one wire from both sides: P8 bit 5
+> (SCLK1) high and PB bit 4 (INT6) low (`SC1_WaitTxDrain`, twin of the KN5000's
+> `CPanel_WaitTXReady`).
+> ⚠ **Correction to the emulation side:** `kn7000_mame` `notes/wsa1-probes/wsa1_sch_cpu_ports.sh` and
+> `wsa1.cpp` say "pin 40 INT6 tied to +5D".  That was two drawn segments on one row -- IC9's output
+> turning up into pin 40, and the +5D net leaving pin 44 (VCC) -- read as one line.  The pixel test in
+> `notes/open4-b-probes/wsa1_sch_open4_crops.py` shows the 98-pixel gap between them.  (That repository
+> is not edited from here.)
+
 
 **Question.** CPU 1 uses both external interrupts and this tree cannot say which package pins they
 arrive on. INT6 is the control panel's request line: the SC1 module writes `INTE67 = 0x85` (INT6 at
@@ -628,7 +674,34 @@ events by group id, so a converted display list that reacts to one group would n
 
 ---
 
-### P. What do the seven SC1 command bytes mean, and what does the panel answer? -- PRIORITY 2
+### P. What do the seven SC1 command bytes mean, and what does the panel answer? -- PRIORITY 2 -- COMMANDS MAPPED 2026-10-31; THE REPLY BLOCKED
+
+> ★ **Every command is a KN5000 control-panel command of the same type**, read as the KN5000
+> protocol's `[panel 7:5 | type 4:0]` (`../technics-docs/control-panel-protocol.md`; the senders in
+> `v10/maincpu/ui/cpanel_routines.s`):
+>
+> | WSA1R sends   | KN5000 counterpart                                             | match                                             |
+> |---------------|----------------------------------------------------------------|---------------------------------------------------|
+> | `(0xDF,0xD2)` | `(0x1F,0xDA)`, sent by `CPanel_InitHardware` before the rest   | type 0x1F; parameter differs in bit 3             |
+> | `(0xDF,0x1A)` | `(0x1F,0x1A)`                                                  | type and parameter                                |
+> | --            | `(0x1D,0x00)`                                                  | the WSA1R does not send it                        |
+> | `(0xDD,0x03)` | `(0xDD,0x03)` "setup mode, both panels"                        | byte-identical                                    |
+> | `(0xDE,0x80)` | `(0x1E,0x80)`                                                  | type and parameter                                |
+> | `(0xE0,0x00)` | `(0xE0,0x00)`, `CPanel_PanelDetection` / `PanelDet_ProbeRight` | byte-identical, same 6-tick wait, same flag bit 3 |
+> | `(0xE3,0x00)` | --                                                             | type 3 (extended read), parameter unused there    |
+> | `(0xE2,0x08)` | `(0xE2,0x04)` / `(0xE2,0x11)`                                  | type 2 (analog register query)                    |
+> | `(0xE3,0x10)` | `(0xE3,0x10)`, last command of `CPanel_ReadAllButtons`         | byte-identical                                    |
+> | `(0xEF,0x00)` | --                                                             | type 0x0F, never sent by the KN5000               |
+>
+> The WSA1R's init commands use panel field `110`, the one the KN5000 uses only for its `(0xDD,0x03)`
+> to both panels, and its queries use `111`, the KN5000's right-panel field -- so the rack's single
+> panel MCU answers at the KN5000 right panel's address.  (`110` = broadcast is an inference from that
+> one KN5000 use.)  `SC1_Cmd_E0_ReadStatus` is the KN5000's right-panel probe even to the flag bit it
+> sets.  Headers updated in `prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s`.
+> **BLOCKED: what the panel answers, and what the parameters 0xD2, 0x08 and type 0x0F configure.**
+> That is the M37471M2196S's own program, whose mask ROM is not dumped (the KN5000 panel MCUs are
+> undumped too, so `kn5000_cpanel.cpp` cannot settle it either).
+
 
 **Question.** CPU 1 opens the link with `(0xDF,0xD2) (0xDF,0x1A) (0xDD,0x03) (0xDE,0x80)`
 (`SC1_ConfigurePort`, prom_b `0xF5A8ED`-`0xF5A92C`) and later sends `(0xE0,0x00)`,
@@ -670,7 +743,25 @@ wire-address table (`0xF8A109` / `0xF8A189`) assigns to `0xD7` in both variants.
 
 ---
 
-### R. What distinguishes SC1 states 0x04, 0x0C and 0x14? -- PRIORITY 3
+### R. What distinguishes SC1 states 0x04, 0x0C and 0x14? -- PRIORITY 3 -- ANSWERED 2026-10-31
+
+> ★ **They are the KN5000 panel driver's `CPanel_SM_StartTX`, `CPanel_SM_TXDelay1` and
+> `CPanel_SM_TXDelay2`, instruction for instruction.**  `CPANEL_STATE_MACHINE_TABLE`
+> (`v10/maincpu/ui/cpanel_routines.s`) has the same eleven slots in the same order -- Idle, StartTX,
+> SendByte1, TXDelay1, SendByteN, TXDelay2, TXComplete, Idle, RXByte1, RXByteN, Idle -- and the three
+> WSA1 states differ from their twins only in the port bits (P8 bits 3/5, TXD1/SCLK1, where the
+> TMP94C241 has PF bits 4/6) and the request interrupt (INT6 where the KN5000 has INTA).  Each SC1BUF
+> write in them is a dummy byte used as an 8-bit-time TIMER with the pins deselected:
+> state 0x04 arms the word and then samples SCK (P8 bit 5) -- low means the panel is holding the clock
+> to request the link (gap N), so the transfer is abandoned (bus-collision check);
+> state 0x0C is the gap after the first byte;
+> state 0x14 is the gap after the last byte, and it also re-arms the request interrupt
+> (`INTE67 = 0x85`, as the KN5000 re-arms INTA with `INTEAB = 0x05`), which is the one functional
+> difference from 0x0C besides its second dummy write.
+> Renamed `SC1_State04_StartTx`, `SC1_State0C_TxGap1`, `SC1_State14_TxGap2`
+> (`scripts/renaming/rename_wsa1_open4_b.sed`).  No logic capture is needed for the roles; the pin
+> timing itself would still need one.
+
 
 **Question.** `notes/FINDINGS-prom_b-sc1-link.md` names these three POSITIONALLY and says the
 difference is "one SC1BUF write and which of P8CR/P8FC bits 3 and 5 are cleared, and that is not
@@ -789,7 +880,22 @@ survey. This is the natural companion to gap O.
 
 ---
 
-### W. Is the write side of 0x7B0004 the uPD765 DSR? -- PRIORITY 3 (NEW), an emulation-side ANSWER to check
+### W. Is the write side of 0x7B0004 the uPD765 DSR? -- PRIORITY 3 (NEW), an emulation-side ANSWER to check -- CHECKED AND CONFIRMED 2026-10-31
+
+> ★ **The refutation test passes** (`notes/prom_a_fdc_checks.py` section 8, 13 new checks).  0x7B0004
+> is spelled at exactly three places in prom_a and none in prom_b: one read (`Dev7B_ReadStatus`) and
+> two stores of `A`.  The shadowed writer's four callers push `0x80` (three: `Fdc_PulseControlReset`,
+> `Fdc_ResetAndIdentifyMedia`, `Fdc_Op10_TestControllerPresent`), `0x00` (reached from the
+> high-density path `0xFE5690`) and `0x02` (the 720 KB path `0xFE56B2`); the plain writer is reached
+> only through `Fdc_WriteDsr` from two routines nothing calls.  No fourth value, and no 0x00/0x02 off a
+> geometry path.  The board agrees: IC8, `D72070GF3BE`, has register-select pins A0, A1 and A2
+> (pins 4-6), so the firmware's +4 and +5 are the chip's registers 4 and 5 -- MSR/DSR and FIFO in the
+> AT register layout -- and not a two-register 765 where +4 would mean nothing.  Named in the source:
+> `Dev7B_WriteDsr`, `Dev7B_WriteDsr_Shadowed`, `Fdc_WriteDsr`, `Fdc_WriteDsr_IfNoError`,
+> `Fdc_WriteDsr_AndReadResult`.  ⚠ The uncalled `Fdc_WriteDsr_AndReadResult` reads a result byte after
+> its write, which is the shape of a uPD7206x auxiliary command; it is unreachable, so it does not
+> bear on the live path.  ⚠ No uPD72070 datasheet is in these trees.
+
 
 ★ **This one is a proposed ANSWER, not a question, and it should be checked rather than
 re-derived.** `notes/FINDINGS-prom_a-fdc.md` sec.5 and sec.9 record the write side of `0x7B0004` as
@@ -819,7 +925,17 @@ parses these constants out of the ROM and is the place to add the assertion.
 
 ---
 
-### X. Why are the three SCAN opcodes in the device -> RAM group? -- PRIORITY 4 (NEW, was inside gap B)
+### X. Why are the three SCAN opcodes in the device -> RAM group? -- PRIORITY 4 (NEW, was inside gap B) -- CLOSED 2026-10-31 AS A TABLE ODDITY
+
+> ★ **No SCAN is ever issued, so the direction is never exercised** (`notes/prom_a_fdc_checks.py`
+> section 9).  `0x605A18` (`Fdc_CommandByte`) is spelled 21 times in prom_a and never in prom_b; five
+> of those instructions store to it: four immediates, `0xC6`, `0xC5`, `0x4D`, `0x4D` (READ DATA, WRITE
+> DATA, FORMAT TRACK twice), and `Fdc_IssueCommand`'s argument, which its eight call sites fix to
+> `0x03 0x04 0x07 0x0F 0x13 0x4D 0xC5 0xC6`.  The other 16 are pointer loads used with displacements of
+> 1 or more, and byte reads.  So the SCAN entries in `Dev7A_StartDma` and `Fdc_SendSectorIdParams` are
+> a generic driver's table for commands this firmware never sends, and whether they would be right on
+> the real part is unobservable from this ROM.
+
 
 **Question.** `Dev7A_StartDma` (`0xFE596A`) puts `0xD1`/`0xD9`/`0xDD` -- SCAN EQUAL, SCAN LOW OR
 EQUAL, SCAN HIGH OR EQUAL -- in the *device -> RAM* arm, but a SCAN's data phase needs the HOST to
@@ -939,7 +1055,13 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
 * **Which of IC1 "MAIN" and IC2 "SUB" fetches which ROM pair.** Affects only naming today. (Resolved: IC1 = MAIN with IC12/IC13, IC2 = SUB with IC28/IC21, wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 2; open-items register 2026-10-31.)
 * **Whether CPU 1's `0x7F0000` and CPU 2's `0x00E00000` are one dual-ported chip or two.** The
   driver models two, which is the assumption that fails loudly if it is wrong (values written by
-  one processor never appear to the other).
+  one processor never appear to the other). (Resolved 2026-10-31, open4/wsa1-b: NEITHER -- on the
+  SX-WSA1R MAIN board both decoder outputs are unconnected.  `0x7F0000` is IC18 (D74HC138GS) Y7, pin
+  7, and `0x00E00000` is IC27 (D74HC139GS) 2Y0, pin 12; both are drawn as stubs with no net (service
+  manual pages 20 and 21), and the parts list has no further RAM or latch.  So the 4x32 register file
+  the shared `DSP_ChannelRegs` driver writes there goes nowhere on this machine: writes vanish and a
+  read returns whatever the bus floats to.  `notes/open4-b-probes/wsa1_sch_open4_crops.py`
+  (`ic18_outputs.png`, `ic27_outputs.png`).)
 * ~~**The six analogue controls** read through `ADREG0`-`ADREG3` plus
   `(0x600000)`/`(0x600001)`.~~ **PARTLY ANSWERED.** They report through the same 32-entry curve
   dispatcher (`0xF89800`, thunk `0xF405F0`) as the panel's own analogue wires, with bits 7:6 of the
@@ -949,6 +1071,12 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
   scan at `0xF8DC25` skips all four ADREG channels, and the two software channels are parked at
   `0x80` by `AnalogScan_InitSoftChannels` and written by the display-list interpreter at prom_b
   `0xF57C87`. What each of the six IS, on the variant that has them, is still unknown.
+  (Rack half resolved 2026-10-31, open4/wsa1-b: on the SX-WSA1R MAIN board IC1's AN0-AN3 (pins
+  20-23) are each tied to ground through a 0 ohm part fitted at C66-C69 (service manual page 19,
+  `cn3_sck_to_ic9.png` in `notes/open4-b-probes/wsa1_sch_open4_crops.py`), which is why variant 2
+  skips them; the board's only joystick, the REAL TIME CREATOR (VR2 on MB2, `JOYX`/`JOYY`), goes to
+  CPU 2's AN1/AN2, not to CPU 1.  BLOCKED for the keyboard: what the four channels carry on an
+  SX-WSA1 needs the SX-WSA1 (keyboard) service manual or the instrument; neither is in these trees.)
 * **What a disk written by this machine LOOKS like.** The firmware programmes three standard
   geometries and formats with the conventional `0xE5` filler, so a disk it writes should be
   readable by ordinary tools -- but no SX-WSA1 or SX-WSA1R disk image exists in these trees, and the
@@ -958,7 +1086,12 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
   that `Fdc_Request`'s unit 1 goes to `0x7E0008`, which is *not* the floppy controller. Whether that
   is a second storage device on the board, an option, or a port that is empty on every machine ever
   built, nothing here can say -- and the boot path never issues a unit-1 request, so the firmware
-  does not say either.
+  does not say either. (Resolved 2026-10-31, open4/wsa1-b: on the SX-WSA1R the hard disk is an
+  UNPOPULATED OPTION.  The MAIN board carries the decode (`HDCS` = IC18 Y6, 0x7E0000) and the nets
+  `HDINT` (IC1 pin 36, INT4) and `HDIORDY` (pin 42, PB6), but `HDINT` is strapped to ground through
+  R301 (0 ohm) at the CPU pin, the electrical parts list (OCR of the service manual) has no drive and
+  no IDE connector or 40-way cable, and the specification page lists only the 3.5-inch floppy drive.
+  `int6_ic9_ic1.png` in `notes/open4-b-probes/wsa1_sch_open4_crops.py`.)
 * **Whether the floppy subsystem works at all on a machine stuck at `ALL INITIAL SETTING!`.** Both
   variants sit on that message with the battery-RAM checksums failed. It is not known whether the
   disk menu is even reachable from that state on real hardware, so gap V's negative measurement may
@@ -967,7 +1100,12 @@ Recorded as vague on purpose, rather than dressed up as questions with false pre
   `KeyEvents_ToLink` throws every key event away. So the keybed is deaf for the first 1000 MAIN
   passes after power-on -- harmless, and measured to clear in well under a second of emulated
   time. Nothing converted writes it. If something re-arms it at runtime, the keyboard would go
-  deaf again and the emulator would look broken.
+  deaf again and the emulator would look broken. (Resolved 2026-10-31, open4/wsa1-b: never re-armed
+  at run time.  Its only writers are `KeyEvents_ToLink`'s `decw 1,(0x00e2e1)` and `RamImage_Copy`
+  (`0xF989EF`, ROM `0xFCB4EA` -> RAM `0xE2DF`, `0x10D8` bytes), which only RESET calls; the watchdog and
+  SWI 1 vectors jump to RESET, so a reboot is the one way it comes back.  The nearest lower base,
+  `0x00E2A1`, is a 62-byte block ending at `0xE2DE`.
+  `notes/open4-b-probes/prom_c_ram_cell_census.py`.)
 
 ---
 

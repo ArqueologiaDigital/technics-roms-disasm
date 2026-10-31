@@ -1983,8 +1983,9 @@ SC1_Vtable_Unused_Ret:
 ;          masked: (0xDF,0xD2), (0xDF,0x1A), (0xDD,0x03), (0xDE,0x80).
 ; Evidence: the register numbers are MAME's names for this part; the queue
 ;          descriptor layout is argued in the module banner above.
-; KN5000 twin: CPanel_SendInitSequence (v10/maincpu/ui/cpanel_routines.s)
-;          sends (0x1F,0xDA) (0x1F,0x1A) (0x1D,0x00) (0xDD,0x03) (0x1E,0x80).
+; KN5000 twin: CPanel_InitHardware (v10/maincpu/ui/cpanel_routines.s) sends
+;          (0x1F,0xDA) and then CPanel_SendInitSequence (0x1F,0x1A) (0x1D,0x00)
+;          (0xDD,0x03) (0x1E,0x80).
 ;          Read as [panel 7:5 | type 4:0], this module sends the same types
 ;          0x1F, 0x1F, 0x1D, 0x1E with the same parameters 0x1A, 0x03, 0x80,
 ;          and (0xDD,0x03) is byte-identical; it addresses panel field 110

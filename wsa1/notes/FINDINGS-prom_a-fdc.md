@@ -113,7 +113,7 @@ consistent with N above.
 | address | direction | what |
 |---|---|---|
 | `0x7B0004` | read | **Main Status Register**: bit 7 RQM, bit 6 DIO, bit 5 EXM, bit 4 CB, bits 3-0 drive busy |
-| `0x7B0004` | write | a **control register**. Written with `0x80`, `0x02` and `0x00`; it does not read back, which is why `Dev7B_WriteDsr_Shadowed` keeps a copy at `(0x605B09)`. ⚠ **Which bit does what is NOT established.** What is established is that the `0x80` write is followed by the standard post-reset sequence |
+| `0x7B0004` | write | a **control register**. Written with `0x80`, `0x02` and `0x00`; it does not read back, which is why `Dev7B_WriteDsr_Shadowed` keeps a copy at `(0x605B09)`. ⚠ **Which bit does what is NOT established.** (Resolved 2026-10-31: the data rate select register, section 9.) What is established is that the `0x80` write is followed by the standard post-reset sequence |
 | `0x7B0005` | read/write | **Data Register** — command, parameter and result bytes |
 | `0x7A0000` | read/write | the **same data register on the DMA-acknowledged decode**. Two paths reach it and both move one byte per INT7: micro-DMA channel 0 (`Dev7A_Dma_DeviceToRam` / `_RamToDevice`) and the programmed-I/O handler `Fdc_ServiceDataByte` (`0xFE67F9`), which ends its transfer with the same `PortB3_Pulse` + `uDMA0_ArmOnINT7` pair `INTTC0_uDMA0Done` uses |
 | PA bit 3 (SFR `0x1E`) | write | set by operation 7, cleared by operation 6. ⚠ **not established** — the obvious reading is drive motor or drive select, and it is not claimed |
@@ -238,7 +238,7 @@ writer (`notes/FINDINGS-dev7b-and-int5.md`); at the 488.28 Hz of
   names a chip. `kn7000_mame/notes/WSA1-EMULATION-DISASM-GAPS.md` records that
   the SX-WSA1R has a **uPD72070**, which is consistent — but note the driver's
   validator implements the **base** uPD765 opcode map, not the enhanced one.
-* **Which bit of the control register at `0x7B0004` does what.**
+* ~~**Which bit of the control register at `0x7B0004` does what.**~~ (Resolved 2026-10-31, open4/wsa1-b: it is the data rate select register -- bit 7 software reset, `0x00`/`0x02` the 500/250 kbit/s rate codes, each on its geometry's path; gap W of `notes/WSA1-EMULATION-DISASM-GAPS.md`, `notes/prom_a_fdc_checks.py` section 8.)
 * **What PA bit 3 drives.**
 * **`(0x605A59)` and `(0x605AEC)`** — both written and never read anywhere in
   prom_a or prom_b (`notes/prom_a_addr_census.py 0x605A59` → 3 writes, 0 reads;

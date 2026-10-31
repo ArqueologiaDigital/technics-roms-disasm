@@ -306,7 +306,10 @@ and `HARDWARE-QUESTIONS-PENDING-FELIPE.md`); listed here only so this plan is co
 * **WSA1R panel SC1 command semantics (gap P), keybed status value 2 (gap I), P8 bit 2
   transport switch (gap K), DATA-dial 0xD7 encoding (gap Q)** — all modelled with
   documented inferences; settling any needs the panel MCU dump, the FDD/panel connector
-  sheets, or Felipe.
+  sheets, or Felipe.  (2026-10-31, open4/wsa1-b: gap K is answered -- P8 bit 2 is MIDI2SNS,
+  the MIDI 2 OUT loop-current sense; gap P's commands are mapped onto the KN5000's and only the
+  panel's reply stays blocked on the MCU dump; gap I's reader is answered, value 2 is not.
+  `notes/WSA1-EMULATION-DISASM-GAPS.md`.)
 
 ---
 
