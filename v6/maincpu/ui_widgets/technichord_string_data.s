@@ -483,11 +483,14 @@ StrTable_WelcomVersion:
 ; StrTable_WelcomVersion is ResName slot 0x3ef (11 entries, InitializeMurai): the element names ("Welcom",
 ; "AllInitial", "MPVersion", "MPver", ...) of Viewable slot 0xef, whose table Murai_ViewableTable_0EF has its NULL
 ; end at the same index 11.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x3c, 0x64, 0xe8, 0x00, 0x3a, 0x64, 0xe8, 0x00
-	.byte	0x38, 0x64, 0xe8, 0x00, 0x36, 0x64, 0xe8, 0x00
-	.byte	0x2a, 0x64, 0xe8, 0x00, 0x28, 0x64, 0xe8, 0x00
-	.byte	0x26, 0x64, 0xe8, 0x00, 0x24, 0x64, 0xe8, 0x00
+	.long	Str_Version_Welcom
+	.long	Str_Version_Empty8
+	.long	Str_Version_Empty7
+	.long	Str_Version_Empty6
+	.long	Str_Version_AllInitial
+	.long	Str_Version_Empty5
+	.long	Str_Version_Empty4
+	.long	WelcomVersion_NameListEnd
 WelcomVersion_NameListEnd:	.incbin "includes/generated/naka_technichord_strings.bin", 0x5B2, 0x2
 ; [nakarest] Str_Version_MPver  +0x5b4..+0x5ba (0xe86502, 6 B)
 ; [nakarest] name string, entry 10 of ResName slot 0x3ef (table 0xe864d0, 11 entries,

@@ -52,8 +52,7 @@ SeqRingBuf_WriteDispatch_Table:
 	.long SeqDMA_Nop			; 7: unused
 
 SLIDE_STRING:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x53, 0x4c, 0x49, 0x44, 0x45, 0x00
+	.asciz	"SLIDE"
 FILETYPE_SIG_PROGRAM_1:		aligned_string "Technics KN5000 Program  DATA FILE 1/2"
 FILETYPE_SIG_PROGRAM_2:		aligned_string "Technics KN5000 Program  DATA FILE 2/2"
 FILETYPE_SIG_PROGRAM_PCK:	aligned_string "Technics KN5000 Program  DATA FILE PCK"

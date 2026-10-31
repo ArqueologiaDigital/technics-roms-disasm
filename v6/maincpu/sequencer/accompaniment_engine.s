@@ -13163,8 +13163,8 @@ AccTuning_ComplexBytecodeData_Loop2:
 	and	a, 0x1
 	cp	a, 1:i3
 	jr	nz, AccTuning_ComplexBytecodeData_Skip4
-; TODO(port): v6 bytes with no v7 line -- disassemble
 AccTuning_ComplexBytecodeData_Join:
+; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0xc1, 0x1c, 0x33, 0x21, 0xc9, 0x06, 0xc1, 0x5b
 ; port: v7's label AccTuning_ComplexBytecodeData_Skip2 is not in v6 -- no v6 bytes correspond to what it named
 ; TODO(port): v6 bytes with no v7 line -- disassemble
