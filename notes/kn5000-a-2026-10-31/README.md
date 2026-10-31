@@ -173,3 +173,15 @@ reproduces it) says them per field:
 - +0x3e3..+0x3f2: no reader anywhere in v10; declared authoring metadata.
 - 8beats / 6beats: every locator reader but Rhythm_LoadCurrentTimeSig remaps; that one reads only the time
   signature.  No path plays them: leftovers.
+
+## Accompaniment per-lane RAM (N-11e956be)
+
+`ram/acc_lane_names.txt` (applied with `scripts/tools/add_kn5000_ram_names.py`, which derived v7's addresses,
+0x9c lower, from the same instructions): `ACC_LANE_BAR[6]` 0x32b5 and its working copy `ACC_CUR_BAR` 0x33da
+(AccVoice_SavePartStateN / RestorePartStateN, incremented by AccVoice_HandleBarEndEvent at a bar wrap),
+`ACC_LANE_MEASURE[6]` 0x33eb and `ACC_CUR_MEASURE` 0x33ea (AccVoice_IncrementBarCounter wraps it at record byte
++13), `ACC_CH_TURNOVER[4]` 0x32c3 / `ACC_CH_CEILING[4]` 0x32c7 and their working copies 0x32cb / 0x32cc (IC14
+part_sound +5 / +6, above), `ACC_CH_CC3[4]` 0x332f and `ACC_CUR_CC3` 0x3333 (the last 0xD3, controller selector 3,
+value of the pattern, sent as `0xdn 0x03 v`).  The headers that call them "program" (AccVoice_SendProgChange) and
+"volume" (Rhythm_SendVolume_Dn) are not settled by this lane: the bytes come from 0xD3 events, which the IC19
+analysis reads as damper [INFERENCE]; the names stay neutral.  v6 / v5 have no ram_variables_by_use.s yet.

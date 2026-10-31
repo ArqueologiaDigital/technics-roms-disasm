@@ -1040,7 +1040,7 @@ PanelMemory_RecallKeepStyle:
 	lda	xix, (PANEL_STYLE:16)
 	ld	xwa, xix
 	sub	xwa, xbc
-	lda	xde, (0x03c8e4:24)
+	lda	xde, (PANEL_RECALL_BACKUP:24)
 	add	xwa, xde
 	ld	a, (xwa)
 	ld	(xix), a

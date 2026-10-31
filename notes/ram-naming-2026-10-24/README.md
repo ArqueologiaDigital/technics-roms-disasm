@@ -119,7 +119,10 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
    that analysis starts.
 2. The remaining per-lane arrays of the accompaniment engine: 0x32B5[6], 0x33EB[6], and the D4-D7
    rhythm-channel quads (0x32C3, 0x32C7, 0x332F). Name them once their contents are understood. The lane
-   records named here show the pattern.
+   records named here show the pattern.  (Done 2026-10-31, lane kn5000-a: ACC_LANE_BAR[6] / ACC_CUR_BAR, ACC_LANE_MEASURE[6] / ACC_CUR_MEASURE,
+   ACC_CH_TURNOVER[4] / ACC_CUR_TURNOVER and ACC_CH_CEILING[4] / ACC_CUR_CEILING (the IC14 part_sound bytes +5 / +6),
+   ACC_CH_CC3[4] / ACC_CUR_CC3 (the last controller-3 value per channel); v10 / v9 / v7 via add_kn5000_ram_names.py,
+   names list `notes/kn5000-a-2026-10-31/ram/acc_lane_names.txt`.)
 3. Data lines were out of this lane's scope. `SndParam_BlockRamPtrs` (`ui_widgets/widget_dispatch.s`) could
    become `.long PANEL_PART_RT1, ...`. Many routine headers still quote the addresses as numbers (`0x0D57`
    where the code now says `SQSTEP_CLOCK`), and a header lane could respell them.  (Done 2026-10-31, lane kn5000-a: `scripts/tools/name_kn5000_panel_records.py` spells the table as

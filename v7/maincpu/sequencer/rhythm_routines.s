@@ -133,10 +133,10 @@ Rhythm_SetupAllChannels:
 
 Rhythm_SetupChannel_D7:
 	ld XHL,0x00002bf8
-	ld a, (0x3227:16)
-	ld (0x322f:16), a
-	ld a, (0x322b:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xfb
 	or (0x3258:16), 0x08
 	ld (ACC_PART_BIT:16), 0x04
@@ -144,10 +144,10 @@ Rhythm_SetupChannel_D7:
 	ret
 Rhythm_SetupChannel_D4:
 	ld XHL,0x00002cf8
-	ld a, (0x3228:16)
-	ld (0x322f:16), a
-	ld a, (0x322c:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+1:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+1:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xf7
 	or (0x3258:16), 0x04
 	ld (ACC_PART_BIT:16), 0x08
@@ -155,20 +155,20 @@ Rhythm_SetupChannel_D4:
 	ret
 Rhythm_SetupChannel_D5:
 	ld XHL,0x00002df8
-	ld a, (0x3229:16)
-	ld (0x322f:16), a
-	ld a, (0x322d:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+2:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+2:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xf3
 	ld (ACC_PART_BIT:16), 0x10
 	calr RhythmEvt_ProcessNote
 	ret
 Rhythm_SetupChannel_D6:
 	ld XHL,0x00002ef8
-	ld a, (0x322a:16)
-	ld (0x322f:16), a
-	ld a, (0x322e:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+3:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+3:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xf3
 	ld (ACC_PART_BIT:16), 0x20
 	calr RhythmEvt_ProcessNote
@@ -395,7 +395,7 @@ Rhythm_CrossVoice_Apply:
 .Lc_f54bfa:
 	push XIY
 	ld W,A
-	add w, (0x322f:16)
+	add w, (ACC_CUR_TURNOVER:16)
 	inc 1,W
 	sub W,0x0c
 	ld (0x3292:16), w
@@ -543,7 +543,7 @@ Rhythm_Transp_CheckZero:
 
 Rhythm_Transp_Apply:
 	dec	1, a
-	cp	a, (12847:16)
+	cp	a, (ACC_CUR_TURNOVER:16)
 	jr	ugt, Rhythm_Transp_NegativeOctave	; -> 0xF54D83
 	add	w, a
 	bit	7, w
@@ -560,10 +560,10 @@ Rhythm_Transp_NegativeOctave:
 	add w, 0xc
 
 Rhythm_Transp_WrapCheck:
-	cp (0x3230:16), 12
+	cp (ACC_CUR_CEILING:16), 12
 	jr c, Rhythm_Transp_FinalCheck
 Rhythm_Transp_WrapLoop:
-	cp w, (0x3230:16)
+	cp w, (ACC_CUR_CEILING:16)
 	jr c, Rhythm_Transp_FinalCheck
 	sub w, 12
 	jr Rhythm_Transp_WrapLoop
@@ -761,10 +761,10 @@ Rhythm_FourChannelDispatch:
 	ret
 
 Rhythm_DispatchCh_D7:
-	ld a, (0x3227:16)
-	ld (0x322f:16), a
-	ld a, (0x322b:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xfb
 	or (0x3258:16), 0x08
 	ld W, 0x97:opc
@@ -777,10 +777,10 @@ Rhythm_DispatchCh_D7_Loop:
 	jr	c, Rhythm_DispatchCh_D7_Loop
 	ret
 Rhythm_DispatchCh_D4:
-	ld a, (0x3228:16)
-	ld (0x322f:16), a
-	ld a, (0x322c:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+1:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+1:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xf7
 	or (0x3258:16), 0x04
 	ld W, 0x94:opc
@@ -793,10 +793,10 @@ Rhythm_DispatchCh_D4_Loop:
 	jr	c, Rhythm_DispatchCh_D4_Loop
 	ret
 Rhythm_DispatchCh_D5:
-	ld a, (0x3229:16)
-	ld (0x322f:16), a
-	ld a, (0x322d:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+2:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+2:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xf3
 	ld W, 0x95:opc
 	ld XIX,0x000030e8
@@ -808,10 +808,10 @@ Rhythm_DispatchCh_D5_Loop:
 	jr	c, Rhythm_DispatchCh_D5_Loop
 	ret
 Rhythm_DispatchCh_D6:
-	ld a, (0x322a:16)
-	ld (0x322f:16), a
-	ld a, (0x322e:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+3:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+3:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xf3
 	ld W, 0x96:opc
 	ld XIX,0x00003130
@@ -1012,7 +1012,7 @@ Rhythm_AllNotesOff_Dispatch:
 	ret
 
 Rhythm_AllNotesOff_D7:
-	cp (0x3293:16), 0x00
+	cp (ACC_CH_CC3:16), 0x00
 	jr z, Rhythm_AllNotesOff_D7_Skip
 	ld A, 0xd7:opc
 	ld W, 0x03:opc
@@ -1022,7 +1022,7 @@ Rhythm_AllNotesOff_D7_Skip:
 	ret
 
 Rhythm_AllNotesOff_D4:
-	cp (0x3294:16), 0x00
+	cp (ACC_CH_CC3+1:16), 0x00
 	jr z, Rhythm_AllNotesOff_D4_Skip
 	ld A, 0xd4:opc
 	ld W, 0x03:opc
@@ -1032,7 +1032,7 @@ Rhythm_AllNotesOff_D4_Skip:
 	ret
 
 Rhythm_AllNotesOff_D5:
-	cp (0x3295:16), 0x00
+	cp (ACC_CH_CC3+2:16), 0x00
 	jr z, Rhythm_AllNotesOff_D5_Skip
 	ld A, 0xd5:opc
 	ld W, 0x03:opc
@@ -1042,7 +1042,7 @@ Rhythm_AllNotesOff_D5_Skip:
 	ret
 
 Rhythm_AllNotesOff_D6:
-	cp (0x3296:16), 0x00
+	cp (ACC_CH_CC3+3:16), 0x00
 	jr z, Rhythm_AllNotesOff_D6_Done
 	ld A, 0xd6:opc
 	ld W, 0x03:opc
@@ -1059,41 +1059,41 @@ Rhythm_SendVolume_Dispatch:
 	ret
 
 Rhythm_SendVolume_D7:
-	cp (0x3293:16), 0x00
+	cp (ACC_CH_CC3:16), 0x00
 	jr z, Rhythm_SendVolume_D7_Skip
 	ld A, 0xd7:opc
 	ld W, 0x03:opc
-	ld e, (0x3293:16)
+	ld e, (ACC_CH_CC3:16)
 	call Rhythm_Send3ByteMsg
 Rhythm_SendVolume_D7_Skip:
 	ret
 
 Rhythm_SendVolume_D4:
-	cp (0x3294:16), 0x00
+	cp (ACC_CH_CC3+1:16), 0x00
 	jr z, Rhythm_SendVolume_D4_Skip
 	ld A, 0xd4:opc
 	ld W, 0x03:opc
-	ld e, (0x3294:16)
+	ld e, (ACC_CH_CC3+1:16)
 	call Rhythm_Send3ByteMsg
 Rhythm_SendVolume_D4_Skip:
 	ret
 
 Rhythm_SendVolume_D5:
-	cp (0x3295:16), 0x00
+	cp (ACC_CH_CC3+2:16), 0x00
 	jr z, Rhythm_SendVolume_D5_Skip
 	ld A, 0xd5:opc
 	ld W, 0x03:opc
-	ld e, (0x3295:16)
+	ld e, (ACC_CH_CC3+2:16)
 	call Rhythm_Send3ByteMsg
 Rhythm_SendVolume_D5_Skip:
 	ret
 
 Rhythm_SendVolume_D6:
-	cp (0x3296:16), 0x00
+	cp (ACC_CH_CC3+3:16), 0x00
 	jr z, Rhythm_SendVolume_D6_Done
 	ld A, 0xd6:opc
 	ld W, 0x03:opc
-	ld e, (0x3296:16)
+	ld e, (ACC_CH_CC3+3:16)
 	call Rhythm_Send3ByteMsg
 Rhythm_SendVolume_D6_Done:
 	ret
@@ -1106,7 +1106,7 @@ Rhythm_NoteOffMax_Dispatch:
 	ret
 
 Rhythm_NoteOffMax_D7:
-	cp (0x3293:16), 0x00
+	cp (ACC_CH_CC3:16), 0x00
 	jr z, Rhythm_NoteOffMax_D7_Skip
 	ld A, 0x90:opc
 	ld W, 0x7f:opc
@@ -1116,7 +1116,7 @@ Rhythm_NoteOffMax_D7_Skip:
 	ret
 
 Rhythm_NoteOffMax_D4:
-	cp (0x3294:16), 0x00
+	cp (ACC_CH_CC3+1:16), 0x00
 	jr z, Rhythm_NoteOffMax_D4_Skip
 	ld A, 0x90:opc
 	ld W, 0x7f:opc
@@ -1126,7 +1126,7 @@ Rhythm_NoteOffMax_D4_Skip:
 	ret
 
 Rhythm_NoteOffMax_D5:
-	cp (0x3295:16), 0x00
+	cp (ACC_CH_CC3+2:16), 0x00
 	jr z, Rhythm_NoteOffMax_D5_Skip
 	ld A, 0x90:opc
 	ld W, 0x7f:opc
@@ -1136,7 +1136,7 @@ Rhythm_NoteOffMax_D5_Skip:
 	ret
 
 Rhythm_NoteOffMax_D6:
-	cp (0x3296:16), 0x00
+	cp (ACC_CH_CC3+3:16), 0x00
 	jr z, Rhythm_NoteOffMax_D6_Done
 	ld A, 0x90:opc
 	ld W, 0x7f:opc

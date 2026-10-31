@@ -1120,9 +1120,9 @@ RhythmPart2_LoadAndStore:
 	ld a, (0x3251:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3252:16)
-	ld (0x32c3:16), a
+	ld (ACC_CH_TURNOVER:16), a
 	ld a, (0x3253:16)
-	ld (0x32c7:16), a
+	ld (ACC_CH_CEILING:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart2_ProcessRingBuf
@@ -1201,9 +1201,9 @@ RhythmPart3_LoadAndStore:
 	ld a, (0x3258:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3259:16)
-	ld (0x32c4:16), a
+	ld (ACC_CH_TURNOVER+1:16), a
 	ld a, (0x325a:16)
-	ld (0x32c8:16), a
+	ld (ACC_CH_CEILING+1:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart3_ProcessRingBuf
@@ -1259,9 +1259,9 @@ RhythmPart4_LoadAndStore:
 	ld a, (0x325f:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3260:16)
-	ld (0x32c5:16), a
+	ld (ACC_CH_TURNOVER+2:16), a
 	ld a, (0x3261:16)
-	ld (0x32c9:16), a
+	ld (ACC_CH_CEILING+2:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart4_ProcessRingBuf
@@ -1317,9 +1317,9 @@ RhythmPart5_LoadAndStore:
 	ld a, (0x3266:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3267:16)
-	ld (0x32c6:16), a
+	ld (ACC_CH_TURNOVER+3:16), a
 	ld a, (0x3268:16)
-	ld (0x32ca:16), a
+	ld (ACC_CH_CEILING+3:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart5_ProcessRingBuf
@@ -1441,10 +1441,10 @@ Rhythm_SendChanPressure:
 	ld e, 0x0:opc
 	calr Rhythm_Send3ByteMsg
 	ld a, 0x0:opc
-	ld (0x332f:16), a
-	ld (0x3330:16), a
-	ld (0x3331:16), a
-	ld (0x3332:16), a
+	ld (ACC_CH_CC3:16), a
+	ld (ACC_CH_CC3+1:16), a
+	ld (ACC_CH_CC3+2:16), a
+	ld (ACC_CH_CC3+3:16), a
 	ret
 
 ; Resets the six accompaniment ring buffers, reads the voice registers back
