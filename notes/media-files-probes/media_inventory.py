@@ -1,46 +1,58 @@
 #!/usr/bin/env python3
-"""media_inventory.py -- every picture, sound and MIDI item in the sources, and the standalone file behind it.
+"""media_inventory.py -- every picture, sound and MIDI item in the sources, the committed media file behind it,
+and the build step that converts it.
 
 QUESTION IT ANSWERS
   "For every tree of the data census, which items are pictures, PCM recordings, fonts drawn as bitmaps or
-   MIDI streams, and does a file that an ordinary viewer or sound program opens (PNG, JPEG, BMP, WAV, MID)
-   back each one in the build, or does the source still hold or pull the bytes some other way?"
+   MIDI streams; is each one's standalone file (PNG, JPEG, BMP, WAV, MID) COMMITTED; does the build read it
+   directly or convert it at build time; and is every file a converter derives from it UNTRACKED?"
   Set up 2026-10-30 (lane media-files) for the owner's request: "'Media: pictures and PCM' <== I want these
   to be represented as standalone files that could be opened by the user on normal media viewers / sound
   apps.  Then included in the source listing (maybe with a lossless conversion step if necessary)".
+  Extended 2026-10-31 (lane media-build) for the owner's decision: "Images and wav files must be commited
+  and the conversion must happen as a build step."
 
 WHAT IT READS
   1. Every `.incbin` of every census tree, through scripts/analysis/data_incbin_census.py (its TREES, its
      classes and markers).  An include is a media item when
-       - its file is a media file (class `media`: .png .jpg .bmp .wav .mid ...), or
+       - its file is a media file (class `media`: .png .jpg .bmp .wav .mid ...): read DIRECTLY, or
        - its marker names a media file it is made from (`census: generated -- <tool>, from <file>.png`,
-         "from the .png beside it"; the census's `from_media` flag), or
+         "from the .png beside it"; the census's `from_media` flag): CONVERTED AT BUILD by <tool>, and the
+         include's own file is the converter's output, or
        - it is declared `census: opaque -- pcm` (a PCM body still read from a dump: NOT backed), or
        - its label or path or marker reads like a picture or a sound (vocabulary below) and none of the
          above holds: NOT backed, until it is converted or given a verdict in REVIEWED.
-     A backed item names its file; the probe says whether that file is on disk now (WAVs are git-ignored
-     and appear after `make waveform-wav` / `make -C kn7000 wave-wav` or a build).
-  2. The WSA1R's pictures and fonts, which are `.byte` rows checked against committed PNGs by
-     wsa1/scripts/build/wsa1_bitmaps.py and wsa1_fonts.py (`check`, run by `make gate-wsa1`): their manifests
-     are imported.  The ranges wsa1_bitmaps.py REFUSES (geometry not established) are listed as such.
+  2. The KN5000 NAKA GUI C pictures (scripts/build/c_bitmaps.py): the C `#include`s a git-ignored .inc that
+     the build writes from the PNG.
   3. Typed rows (`.byte` / `.word` / `tab_u8` ... after a label, no `.incbin`) whose label reads like a
-     picture or a sound: each must be covered by 2. or carry a verdict in REVIEWED, else it is reported
-     as a candidate.  This is a name heuristic: a picture under a name that says nothing is not seen.
+     picture or a sound: each must carry a verdict in REVIEWED, else it is reported as a candidate.  This is
+     a name heuristic: a picture under a name that says nothing is not seen.  The WSA1R ranges
+     wsa1_bitmaps.py REFUSES (geometry not established) are listed as such.
+  4. `git ls-files`, for the two counts the decision is about:
+       - untracked media: a media file the build reads (directly, or as a converter's input) that is not
+         committed;
+       - tracked derived outputs: a file a converter writes that IS committed.  Checked three ways: the
+         include path of every CONVERTED item, resolved against the tracked files the way the census sizes
+         it; the output lists of the converters (kn5000_image_outputs.py, c_bitmaps.py's .inc files,
+         wsa1_bitmaps.py outputs, ftbmp_images.py, the WAV manifests' raw items); and every tracked non-media
+         file with the same path stem as a tracked picture in the same directory (the shape the 213 tracked
+         .bin files of 2026-10-30 had).
 
 VOCABULARY  Bitmap Glyph Font Icon Picture Pixels Logo Wallpaper Image Sprite Cursor Pcm PCM Sample Wave
 
 OUTPUT
-  A table per tree (pictures / sounds / MIDI: backed, not backed) and, below it, every item not backed and
-  every candidate without a verdict.  Exit 1 when either list is not empty.  --list prints every item.
+  A table per tree (pictures / sounds / MIDI: read directly, converted at build, not backed), the two counts,
+  and every item not backed, every untracked media file, every tracked derived output and every candidate
+  without a verdict.  Exit 1 when any of those lists is not empty.  --list prints every item.
 
 RUN
-  python3 notes/media-files-probes/media_inventory.py            (about 30 s; build the trees first so the
-                                                                   generated files exist, or the "on disk"
-                                                                   column reads no)
+  python3 notes/media-files-probes/media_inventory.py            (about 30 s; build the trees first for the
+                                                                   byte sizes of converter outputs)
   python3 notes/media-files-probes/media_inventory.py --list
 """
 import argparse
 import importlib.util
+import os
 import re
 import subprocess
 import sys
@@ -82,6 +94,7 @@ REVIEWED = [
      "parameter or pointer records of a sound or an effect; 'Wave' / 'Sample' names the sound, the rows hold no samples"),
     (r'^(AcSndImageProc_Table|DrawBitmapSPFast16_Impl\w*_Table|DrawIcons_PixelPairTable|ResBitmapTable|ResIconTable|'
      r'ResFontTable|ResFont05Kern|Font5_KernTable|FontDescriptor_Table|FontTable|IconBitmapNamePtrTable|'
+     r'DrawBitmapSPFast16_Impl\w*_Table_\d+|'
      r'IconIDProc_NameTable|OrganTabImages|RhythmImages|SoundImages|TcdImages|PictureDirectory|TableRomImageEnd|'
      r'VwIconListProc_Records|RoundCornerPixels|CMPMSPCMN_ResNames)$',
      "a directory, lookup, kerning or dispatch table about pictures or fonts, not pixels (the pixels it names are files)"),
@@ -103,7 +116,6 @@ REVIEWED = [
     (r'^DLText_GlyphPairs_\w+$', "WSA1R: character codes of a display-list text, not pixels"),
     (r'^(ParamCursorRects|ParamCursorRect_Single|OctaveIcon_BlackKeyX|CurveBitmapSelector)$',
      "WSA1R: rectangles, key offsets or a pointer table about a picture, not pixels"),
-    (r'^Bitmap_Drawbar[AB]$', "WSA1R: REFUSED by wsa1_bitmaps.py, its picture geometry is not established (listed below)"),
     (r'_(paintok|onoff|sel_num|aicok|cursor|list|selected)$', "a GUI object's state field, not pixels"),
     (r'^(FnName_|Str_|IconBitmapName_)', "a name or text string, not pixels"),
     (r'^SqStep_CellFlagGlyphs$', "three character codes (' ', '*', 0x91), not pixels"),
@@ -151,15 +163,59 @@ def label_of(src, ln):
     return ""
 
 
+_CANDS = {}
+
+
+def candidates(name, src, tree):
+    """the paths the census's locate() tries for an include `name` of `src`, in its order, plus the tree's
+    extra -I directories; repo-relative strings (cached per including directory)"""
+    key = (name, str(Path(src).parent), tree)
+    if key in _CANDS:
+        return _CANDS[key]
+    out = []
+    chain = []
+    d = Path(src).parent
+    while True:
+        chain.append(d)
+        if str(d) in ("", "."):
+            break
+        d = d.parent
+    for i, d in enumerate(chain):
+        out += [d / name, d / "media" / name]
+        for sub in chain[:i + 1]:
+            out.append(d / "build" / sub.relative_to(d) / name)
+    for td in CEN.TREES.get(tree, []):
+        base = Path(td)
+        base = base.parent if base.suffix == ".s" else base
+        out += [base / name, base / "includes" / name, base / "build" / name, base.parent / name,
+                base.parent.parent / name]
+    for d in CEN.EXTRA_INCLUDE.get(tree, ()):
+        out.append(Path(d) / name)
+    res = []
+    for c in out:
+        r = os.path.normpath(str(c))
+        if r not in res and not r.startswith(".."):
+            res.append(r)
+    _CANDS[key] = res
+    return res
+
+
+def rel(p):
+    return Path(p).resolve().relative_to(ROOT).as_posix()
+
+
 def resolve(name, src, tree):
     """the media file a marker names, on disk, or None"""
-    cands = [ROOT / name, (ROOT / src).parent / name]
-    for d in CEN.TREES.get(tree, []):
-        base = ROOT / d
-        base = base.parent if base.suffix == ".s" else base
-        cands += [base / name, base / "includes" / name, base.parent / name, base.parent.parent / name]
-    for c in cands:
-        if c.is_file():
+    for c in candidates(name, src, tree):
+        if (ROOT / c).is_file():
+            return ROOT / c
+    return None
+
+
+def tracked_match(name, src, tree, tracked_set):
+    """the first candidate path of `name` that is a tracked file, or None"""
+    for c in candidates(name, src, tree):
+        if c in tracked_set:
             return c
     return None
 
@@ -172,11 +228,14 @@ def incbin_items(res):
             ext = path.rsplit(".", 1)[-1].lower() if "." in path else ""
             lab = None
             kind, backed, file = None, None, None
+            how, tool = None, None
             if cls == "media":
                 kind = "picture" if ext in PICT_EXT else "sound" if ext in SOUND_EXT else "midi" if ext in MIDI_EXT else "other"
                 backed, file = True, path
                 on = CEN.locate(path, r["file"], CEN.TREES[tree], CEN.EXTRA_INCLUDE.get(tree, ())) is not None
+                how = "direct"
             elif cls == "generated" and r.get("from_media"):
+                how, tool = "converted at build", why.split(",")[0].split(" from ")[0].strip()
                 m = FROM.search(why)
                 if m and m.group(1):
                     mext = m.group(1).lower()
@@ -206,7 +265,8 @@ def incbin_items(res):
                     backed, on = False, False
             if kind:
                 items.append(dict(tree=tree, src=f'{r["file"]}:{r["line"]}', label=lab or label_of(r["file"], r["line"]),
-                                  kind=kind, backed=backed, file=file, on_disk=on, size=r["size"] or 0, how="incbin"))
+                                  kind=kind, backed=backed, file=file, on_disk=on, size=r["size"] or 0,
+                                  how=how or "not backed", tool=tool, inc=path, inc_src=r["file"]))
     return items
 
 
@@ -222,30 +282,46 @@ def c_bitmap_items():
             n *= x
         items.append(dict(tree=f"kn5000-{t}", src=str(path.relative_to(ROOT)), label=name, kind="picture",
                           backed=True, file=str(p.relative_to(ROOT)), on_disk=p.is_file(), size=n,
-                          how="C initializer written from PNG"))
+                          how="converted at build", tool="scripts/build/c_bitmaps.py (C #include)",
+                          derived=str(cb.inc_path(t, name).relative_to(ROOT))))
     return items
 
 
-def wsa1_items():
+def wsa1_ranges():
+    """the WSA1R picture and font ranges (for the typed-row filter) and the ranges wsa1_bitmaps.py refuses"""
     sys.path.insert(0, str(ROOT / "wsa1/scripts/build"))
     wb = load("wsa1_bitmaps", ROOT / "wsa1/scripts/build/wsa1_bitmaps.py")
     wf = load("wsa1_fonts", ROOT / "wsa1/scripts/build/wsa1_fonts.py")
-    items, ranges = [], []
-    for e in wb.build_manifest():
-        n = e["bc"] * e["hl"]
-        p = wb.png_path(e)
-        ranges.append((e["img"], e["addr"], e["addr"] + n))
-        items.append(dict(tree="wsa1", src=f"prom_{e['img']} {e['addr']:#08x}", label=e["name"], kind="picture",
-                          backed=True, file=str(p.relative_to(ROOT)), on_disk=p.is_file(), size=n,
-                          how="rows checked against PNG"))
-    for name, base, pitch, w, cells, svc, note in wf.FACES:
-        p = wf.sheet_path(name)
-        ranges.append(("b", base, base + pitch * cells))
-        items.append(dict(tree="wsa1", src=f"prom_b {base:#08x}", label=name, kind="picture (font)", backed=True,
-                          file=str(p.relative_to(ROOT)), on_disk=p.is_file(), size=pitch * cells,
-                          how="rows checked against PNG"))
-    refused = [(a, b) for a, b in wb.REFUSED]
-    return items, ranges, refused
+    ranges = [(e["img"], e["addr"], e["addr"] + e["bc"] * e["hl"]) for e in wb.build_manifest()]
+    ranges += [("b", base, base + pitch * cells) for _n, base, pitch, _w, cells, _s, _x in wf.FACES]
+    return ranges, list(wb.REFUSED), wb, wf
+
+
+def converter_outputs(wb, wf):
+    """(output, converter) for every file a media converter writes, from the converters' own lists"""
+    out = []
+    sys.path.insert(0, str(ROOT / "scripts/build"))
+    ko = load("kn5000_image_outputs", ROOT / "scripts/build/kn5000_image_outputs.py")
+    out += [(o, "kn5000_image_outputs.py") for o in ko.outputs()]
+    ft = load("ftbmp_images", ROOT / "scripts/build/ftbmp_images.py")
+    out += [(rel(ft.IMAGES / f"{n}.BMP"), "ftbmp_images.py") for n in ft.NAMES]
+    cb = load("c_bitmaps", ROOT / "scripts/build/c_bitmaps.py")
+    out += [(rel(cb.inc_path(t, n)), "c_bitmaps.py") for t, n in cb.items()]
+    out += [(rel(wb.bin_path(e)), "wsa1_bitmaps.py") for e in wb.build_manifest()]
+    out += [(rel(wf.sheet_path(n[0]).with_suffix(".bin")), "wsa1_fonts.py") for n in wf.FACES]
+    pw = load("pcm_wav", ROOT / "scripts/build/pcm_wav.py")
+    for man, pcmdir in (("waveform/wav_manifest.tsv", "waveform/build/pcm"),
+                        ("kn7000/src/wave/main_wav.tsv", "kn7000/build/wav_pcm/main"),
+                        ("kn7000/src/wave/sub_wav.tsv", "kn7000/build/wav_pcm/sub")):
+        out += [(f"{pcmdir}/{r['label']}.pcm", "pcm_wav.py") for r in pw.read_manifest(ROOT / man)]
+    return out
+
+
+def stem_twins(files):
+    """tracked non-media files with the same path stem as a tracked picture or sound in the same directory"""
+    media = {f.rsplit(".", 1)[0] for f in files if f.rsplit(".", 1)[-1].lower() in PICT_EXT | SOUND_EXT}
+    return [f for f in files if "." in f and f.rsplit(".", 1)[-1].lower() not in PICT_EXT | SOUND_EXT | MIDI_EXT
+            and f.rsplit(".", 1)[0] in media and not f.endswith((".md", ".txt", ".json", ".tsv"))]
 
 
 def row_candidates(files, wsa1_ranges):
@@ -297,44 +373,86 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--list", action="store_true")
     a = ap.parse_args()
+    files = tracked()
+    tset = set(files)
     res = CEN.census()
     c_items = c_bitmap_items()
     c_names = {it["label"] for it in c_items}
     items = [it for it in incbin_items(res) if it["label"] not in c_names] + c_items
-    w_items, w_ranges, refused = wsa1_items()
-    items += w_items
-    cands = row_candidates(tracked(), w_ranges)
-    by = defaultdict(lambda: defaultdict(lambda: [0, 0, 0, 0]))
+    w_ranges, refused, wb, wf = wsa1_ranges()
+    cands = row_candidates(files, w_ranges)
+
+    # committed?  and the converter output of every converted item, tracked or not
+    untracked_media, tracked_derived = [], []
+    for it in items:
+        if not it["backed"]:
+            continue
+        if it.get("inc_src") and it["how"] == "direct":
+            f = tracked_match(it["inc"], it["inc_src"], it["tree"], tset)
+            it["committed"] = f is not None
+        else:
+            f = it["file"] if it["file"] in tset else (rel(ROOT / it["file"]) if (ROOT / it["file"]).exists() else None)
+            if it["file"] and f is None and it.get("inc_src"):
+                g = resolve(it["file"], it["inc_src"], it["tree"])
+                f = rel(g) if g is not None else None
+            it["committed"] = f is not None and f in tset
+        if not it["committed"]:
+            untracked_media.append(it)
+        if it["how"] == "converted at build" and it.get("inc_src"):
+            # the include names the converter's output: it must not resolve to a tracked file
+            d = tracked_match(it["inc"], it["inc_src"], it["tree"], tset)
+            if d is not None:
+                tracked_derived.append((d, f"{it['tree']} {it['src']} ({it['tool']})"))
+        if it.get("derived") and it["derived"] in tset:
+            tracked_derived.append((it["derived"], f"{it['tree']} {it['label']} ({it['tool']})"))
+    for o, tool in converter_outputs(wb, wf):
+        if o in tset:
+            tracked_derived.append((o, tool))
+    for f in stem_twins(files):
+        tracked_derived.append((f, "same stem as a tracked picture or sound beside it"))
+    tracked_derived = sorted(set(tracked_derived))
+
+    by = defaultdict(lambda: defaultdict(lambda: [0, 0, 0, 0, 0, 0]))
     for it in items:
         k = it["kind"].split()[0].rstrip("?")
         c = by[it["tree"]][k]
-        c[0 if it["backed"] else 1] += 1
-        c[2 if it["backed"] else 3] += it["size"]
+        slot = 0 if it["how"] == "direct" else 1 if it["how"] == "converted at build" else 2
+        c[slot] += 1
+        c[3 + slot] += it["size"]
     kinds = ["picture", "sound", "midi"]
-    head = ["tree"] + [f"{k}s backed" for k in kinds] + [f"{k}s NOT backed" for k in kinds]
+    head = ["tree"] + [f"{k}s: direct / converted / NOT backed" for k in kinds]
     body = []
     for t in CEN.TREES:
         if t not in by:
             continue
         c = by[t]
-        body.append([t] + [f"{c[k][0]} / {c[k][2]:,}" for k in kinds] + [f"{c[k][1]} / {c[k][3]:,}" for k in kinds])
+        body.append([t] + [f"{c[k][0]} / {c[k][1]} / {c[k][2]}" for k in kinds])
     w = [max(len(r[i]) for r in [head] + body) for i in range(len(head))]
-    print("items / bytes; backed = a standalone media file is the build's input (directly or through a converter)\n")
+    print("items; direct = the build reads the committed media file itself (JPEG, BMP, MID);\n"
+          "converted = a committed converter turns the committed media file (PNG, WAV) into the bytes at build time\n")
     print("| " + " | ".join(h.ljust(w[i]) for i, h in enumerate(head)) + " |")
     print("|" + "|".join("-" * (x + 2) for x in w) + "|")
     for r in body:
         print("| " + " | ".join(x.ljust(w[i]) for i, x in enumerate(r)) + " |")
-    tot = [sum(1 for it in items if it["backed"]), sum(1 for it in items if not it["backed"])]
-    print(f"\nall trees: {tot[0]} items backed by a standalone file, {tot[1]} not")
-    missing = [it for it in items if it["backed"] and not it["on_disk"]]
-    if missing:
-        print(f"  ({len(missing)} backing files are not on disk now: generated ones appear after a build, "
-              f"e.g. {missing[0]['file']})")
+    nd = sum(1 for it in items if it["how"] == "direct")
+    nc = sum(1 for it in items if it["how"] == "converted at build")
     bad = [it for it in items if not it["backed"]]
+    print(f"\nall trees: {nd + nc} items backed by a committed media file ({nd} read directly, "
+          f"{nc} converted at build), {len(bad)} not backed")
+    print(f"untracked media files the build reads: {len(untracked_media)}")
+    print(f"tracked files a converter derives from media: {len({f for f, _ in tracked_derived})}")
     if bad:
         print("\nNOT BACKED:")
         for it in bad:
             print(f"  {it['tree']:18} {it['kind']:9} {it['label']:40} {it['src']}")
+    if untracked_media:
+        print("\nUNTRACKED MEDIA (the build reads them, git does not have them):")
+        for it in untracked_media[:50]:
+            print(f"  {it['tree']:18} {it['label']:40} {it['file']}")
+    if tracked_derived:
+        print("\nTRACKED DERIVED OUTPUTS:")
+        for f, why in tracked_derived[:80]:
+            print(f"  {f}  <- {why}")
     print(f"\nWSA1R pictures that wsa1_bitmaps.py refuses to draw (geometry not established; their bytes stay rows):")
     for what, why in refused:
         print(f"  {what}: {why[:140]}{'...' if len(why) > 140 else ''}")
@@ -346,12 +464,12 @@ def main():
     if a.list:
         print("\nEVERY ITEM:")
         for it in items:
-            print(f"{it['tree']}\t{it['kind']}\t{'backed' if it['backed'] else 'NOT backed'}\t{it['label']}\t{it['src']}\t"
-                  f"{it['file'] or '-'}\t{'on disk' if it['on_disk'] else 'not on disk'}\t{it['size']}\t{it['how']}")
+            print(f"{it['tree']}\t{it['kind']}\t{it['how']}\t{it['label']}\t{it['src']}\t{it['file'] or '-'}\t"
+                  f"{'committed' if it.get('committed') else 'NOT committed'}\t{it['size']}\t{it.get('tool') or '-'}")
         for c in cands:
             if c["verdict"]:
                 print(f"{c['tree']}\tcandidate\treviewed\t{c['label']}\t{c['src']}\t{c['verdict']}")
-    return 1 if bad or open_c else 0
+    return 1 if bad or open_c or untracked_media or tracked_derived else 0
 
 
 if __name__ == "__main__":

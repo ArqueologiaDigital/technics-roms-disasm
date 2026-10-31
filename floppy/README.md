@@ -15,27 +15,30 @@ make -C floppy src-kn5000       # regenerate floppy/kn5000/<disk>/ from the refe
 
 ## Layout
 
-| path                             | what                                                                  |
-|----------------------------------|-----------------------------------------------------------------------|
-| `Makefile`                       | the generic rules, one template per model and one per disk            |
-| `tools/fat12.inc`                | macros: position asserts, the FAT12 packer, `fat_dirent`, `fat_lfn`   |
-| `tools/fat12lib.py`              | image reader (BPB, FATs, directory tree, chains); never normalises    |
-| `tools/fat12_to_s.py`            | the generator: image -> `<model>/<disk>/*.s`                          |
-| `tools/fat12_extract.py`         | image -> files, into `build/<model>/<disk>/` (for media includes)    |
-| `tools/sha1_gate.py`             | the gate: rebuilt image SHA-1 == recorded SHA-1                       |
-| `<model>/disks.mk`               | disk list, softlist name, SHA-1 per disk, describer module            |
-| `<model>/formats.py`             | the model's format describers (`describe(ctx)`)                       |
-| `<model>/include/*.inc`          | the model's format macros (on the include path of every disk)         |
-| `<model>/<disk>/disk.s`          | generated: the whole image, in disk order                             |
-| `<model>/<disk>/boot.s`          | generated: boot sector                                                |
-| `<model>/<disk>/fat.s`           | generated: one FAT copy as cluster chains (or `fat1.s`, `fat2.s` ...) |
-| `<model>/<disk>/root.s`          | generated: root directory                                             |
-| `<model>/<disk>/dir_<path>.s`    | generated: a subdirectory's entries                                   |
-| `<model>/<disk>/files/<unit>.s`  | generated: one unit per file                                          |
-| `<model>/baserom/<disk>.img`     | git-ignored reference, copied from the softlist zip with a SHA-1 check |
-| `build/`                         | git-ignored output                                                    |
+| path                            | what                                                                                               |
+|---------------------------------|----------------------------------------------------------------------------------------------------|
+| `Makefile`                      | the generic rules, one template per model and one per disk                                         |
+| `tools/fat12.inc`               | macros: position asserts, the FAT12 packer, `fat_dirent`, `fat_lfn`                                |
+| `tools/fat12lib.py`             | image reader (BPB, FATs, directory tree, chains); never normalises                                 |
+| `tools/fat12_to_s.py`           | the generator: image -> `<model>/<disk>/*.s`                                                       |
+| `tools/fat12_extract.py`        | image -> files, into `build/<model>/<disk>/` (non-media payloads; the source of `media-<model>`)   |
+| `tools/fat12_media.py`          | `update`: the media files the sources `.incbin` -> `<model>/<disk>/media/`; `check`: all committed |
+| `tools/sha1_gate.py`            | the gate: rebuilt image SHA-1 == recorded SHA-1                                                    |
+| `<model>/disks.mk`              | disk list, softlist name, SHA-1 per disk, describer module                                         |
+| `<model>/formats.py`            | the model's format describers (`describe(ctx)`)                                                    |
+| `<model>/include/*.inc`         | the model's format macros (on the include path of every disk)                                      |
+| `<model>/<disk>/disk.s`         | generated: the whole image, in disk order                                                          |
+| `<model>/<disk>/boot.s`         | generated: boot sector                                                                             |
+| `<model>/<disk>/fat.s`          | generated: one FAT copy as cluster chains (or `fat1.s`, `fat2.s` ...)                              |
+| `<model>/<disk>/root.s`         | generated: root directory                                                                          |
+| `<model>/<disk>/dir_<path>.s`   | generated: a subdirectory's entries                                                                |
+| `<model>/<disk>/files/<unit>.s` | generated: one unit per file                                                                       |
+| `<model>/<disk>/media/`         | committed: the disk's BMP, JPEG and MIDI files, on the include path ahead of `build/`              |
+| `<model>/baserom/<disk>.img`    | git-ignored reference, copied from the softlist zip with a SHA-1 check                             |
+| `build/`                        | git-ignored output                                                                                 |
 
-The committed `<model>/<disk>/` trees are exactly what `make src-<model>` writes. To change one,
+The committed `<model>/<disk>/` trees are exactly what `make src-<model>` writes (and their `media/`, what
+`make media-<model>` writes). To change one,
 change the generator, the describer or a macro, then regenerate. Do not edit the output.
 
 ## The assembler: llvm-mc
@@ -114,17 +117,17 @@ It returns the unit's source as a string or a list of lines, or `None` to leave 
 generic `.incbin`. A describer is written once per format, and every disk that holds the format
 uses it. `ctx` carries these fields:
 
-| field           | meaning                                                                         |
-|-----------------|---------------------------------------------------------------------------------|
-| `ctx.data`      | the file's bytes                                                                |
-| `ctx.entry`     | its `fat12lib.Entry` (`name`, `ext`, `size`, `attr`, `cluster`, `time`, `date`) |
-| `ctx.path`      | `NAME.EXT` (with `DIR/` prefixes)                                               |
-| `ctx.unit`      | the unit name                                                                   |
-| `ctx.label`     | a label prefix unique within the disk (`F_<unit>`); prefix every label with it  |
-| `ctx.ref`       | the reference file name to `.incbin` (`<disk>.img`)                             |
-| `ctx.offset`    | the file's first byte in the reference                                          |
-| `ctx.extracted` | the name of the file's own copy under `build/<model>/<disk>/` (on `-I`)         |
-| `ctx.disk`      | the disk name                                                                   |
+| field           | meaning                                                                                                                                                       |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ctx.data`      | the file's bytes                                                                                                                                              |
+| `ctx.entry`     | its `fat12lib.Entry` (`name`, `ext`, `size`, `attr`, `cluster`, `time`, `date`)                                                                               |
+| `ctx.path`      | `NAME.EXT` (with `DIR/` prefixes)                                                                                                                             |
+| `ctx.unit`      | the unit name                                                                                                                                                 |
+| `ctx.label`     | a label prefix unique within the disk (`F_<unit>`); prefix every label with it                                                                                |
+| `ctx.ref`       | the reference file name to `.incbin` (`<disk>.img`)                                                                                                           |
+| `ctx.offset`    | the file's first byte in the reference                                                                                                                        |
+| `ctx.extracted` | the name of the file's own copy under `build/<model>/<disk>/` (on `-I`); a media file of that name is committed in `<model>/<disk>/media/`, which comes first |
+| `ctx.disk`      | the disk name                                                                                                                                                 |
 
 A unit must emit exactly `ctx.entry.size` bytes, and `disk.s` asserts that it does. Prefer
 `.incbin "<ctx.extracted>", offset-in-file, n` to `.incbin "<ctx.ref>", ctx.offset + ..., n`:
@@ -136,18 +139,30 @@ naming the firmware routine that reads the structure. A module may also set `BOO
 comment lines put at the top of every `boot.s`, to say which firmware routine writes that boot
 sector.
 
+## Media files
+
+The owner, 2026-10-31: *"Images and wav files must be commited and the conversion must happen as a build
+step."*  A file a unit `.incbin`s as a picture or a MIDI file (a `.bmp`, `.jpg`, `.mid` name, census class
+`media`) is committed in `<model>/<disk>/media/` under the name the `.incbin` uses: the extracted name
+(`APFEL.bmp`, `PIC01.jpg`) or a KD_CUT's (`01BLLOON.hmp.bmp`, `DANCE___.mid.smf.mid`).  That directory is on
+the disk's include path ahead of `build/<model>/<disk>/`, so the build reads the committed file; the
+KD_CUT byte ranges are no longer build prerequisites.  `make -C floppy media-<model>` (maintenance) rewrites
+the directory from the references; `gate-<model>` checks that every media include has its file
+(`tools/fat12_media.py check`).  After `src-<model>`, run `media-<model>` too.  2026-10-31: 131 files,
+5,062,376 B (KN5000 29, WSA1R 16, KN6000 85, KN7000 1).
+
 ## Census
 
 `scripts/analysis/data_incbin_census.py` has one `TREES` row per model (`kn5000-floppy` =
 `floppy/kn5000`, `wsa1-floppy`, `kn6000-floppy`, `kn7000-floppy`). `.fill` and typed records are
 not includes and are not counted. Every `.incbin` is counted:
 
-| line                                                  | counts as |
-|-------------------------------------------------------|-----------|
-| an `.incbin` of an extracted `.bmp` (or other media)  | media     |
-| `census: generated -- <tool>` on it or above it       | generated |
-| `census: opaque -- <kind>: <why>` on it or above it   | opaque    |
-| anything else, such as a file left to `default_unit`  | generic   |
+| line                                                 | counts as |
+|------------------------------------------------------|-----------|
+| an `.incbin` of an extracted `.bmp` (or other media) | media     |
+| `census: generated -- <tool>` on it or above it      | generated |
+| `census: opaque -- <kind>: <why>` on it or above it  | opaque    |
+| anything else, such as a file left to `default_unit` | generic   |
 
 ## Adding a model
 

@@ -31,10 +31,16 @@ CLASSES (first match wins)
               table shows how much of `generated` a user can open in an ordinary viewer or sound program.
               Example: every PCM recording of the KN5000 and KN7000 wave ROMs, from its WAV file
               (scripts/build/pcm_wav.py).  Not counted there: the 39 pictures per KN5000 maincpu revision that
-              the compiled C holds as initializers, which scripts/build/c_bitmaps.py writes from PNGs before
-              clang runs; their includes are compiled C (notes/media-files-probes/media_inventory.py lists them).
+              the compiled C holds as initializers, which `#include` a .inc that scripts/build/c_bitmaps.py
+              writes from the PNG before clang runs; their includes are compiled C
+              (notes/media-files-probes/media_inventory.py lists them).
+              Since 2026-10-31 (lane media-build; the owner: "Images and wav files must be commited and the
+              conversion must happen as a build step") the media file named in the marker is committed and
+              the include's own file -- the converter's output -- is a git-ignored build product; the
+              inventory above checks both.
   media       the file has a self-describing format a viewer reads directly: jpg jpeg bmp png gif tif wav aif mid
               (the file IS the semantic representation; its container is documented by its own standard).
+              It is committed (a floppy disk's under <model>/<disk>/media/ since 2026-10-31).
   opaque      the line, or the comment line right above, carries `census: opaque -- <kind>: <why>`: the bytes have
               no better representation than themselves.  The reason is mandatory and is listed in the report.
               Accepted kinds: pcm (sample bodies), compressed (an entropy-coded stream with no committed
