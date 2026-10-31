@@ -902,6 +902,11 @@ CmdHandler_Stub_Cmd5:
 
 ; ==============================================================================
 ; INIT_TONE_GEN (0xFF84A8) - Initialize tone generator at 0x130000
+; Byte for byte the payload's DSP_Init_Channels, with the same argument mix-up: the
+; pattern pointer goes in XWA and the channel in BC, but TONE_GEN_WRITE takes the
+; channel in A and the source in XBC.  MEASURED in MAME 2026-10-31
+; (notes/open4-kn5000-b/hwaudio/probes/subcpu_130000_writes.txt): the four calls all
+; write registers 0x50-0x57 with 0x00, then the loop writes 0x01 to 0x1F/0x3F/0x5F/0x7F.
 ; ==============================================================================
 
 INIT_TONE_GEN:

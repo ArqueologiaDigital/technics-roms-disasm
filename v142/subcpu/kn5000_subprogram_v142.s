@@ -492,9 +492,10 @@ AudioCmd_40_5F_Done:
 ; DSP_Init_Channels - Initialize DSP channel configuration
 ; Entry: None
 ; Exit:  None
-; Notes: Writes test pattern 0x5A5A5A5A to 4 channels via DSP_Write_Channel
-;        Then initializes 4 channel base registers at 0x00130000
-;        Memory-mapped DSP register space at 0x00130000
+; Notes: MEANT to write the pattern 0x5A5A5A5A to the 8 registers of each of the 4 channels of
+;        the 0x130000 block, then 0x01 to each channel's register ch*0x20+0x1F.  Only the second
+;        half works: see the CORRECTION under DSP_Write_Channel.  The block's owning chip is not
+;        identified (subcpu/boot/kn5000_subcpu_boot.s, TONE_GEN_BASE).
 ; ----------------------------------------------------------------------------
 DSP_Init_Channels:	; 01FC95h
 	link	xiz, 0xfff8
@@ -548,7 +549,13 @@ DSP_Init_Channels_Loop:
 ; DSP_Init_Channels_FromBootTable calls it that way (A = ch, XBC = &table[ch]).  Note that
 ; DSP_Init_Channels above passes the pattern pointer in XWA and the channel in BC -- taken
 ; literally, each of its four calls selects the register group from the low byte of the
-; pointer and reads 8 bytes from address BC = 0..3.  Not checked on an emulator.
+; pointer and reads 8 bytes from address BC = 0..3.  MEASURED in MAME 2026-10-31
+; (notes/open4-kn5000-b/hwaudio/probes/subcpu_130000_writes.txt): all four calls write registers
+; 0x10-0x17 (the pointer's low byte selects channel 0), with data 0x00 read from SFR addresses
+; 0-10, and the 0x5A5A5A5A pattern never reaches the block.  The mode loop below then writes
+; 0x1F1F / 0x0101 as two 16-bit stores per channel: latch 0x1F/0x3F/0x5F/0x7F, data 0x01.
+; Over a cold boot these 72 writes (at 4.993 s) and the boot ROM's 72 same-shaped ones are
+; the only accesses to 0x130000-0x130003; nothing reads the block.
 DSP_Write_Channel:	; 01FCDEh
 	pushw de
 	sll a, 5	; Channel * 32 (register spacing)
