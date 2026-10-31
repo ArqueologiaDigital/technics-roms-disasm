@@ -9,7 +9,7 @@
 ;   Initialization:
 ;     CPanel_InitHardware       - Initialize serial port and buffers
 ;     CPanel_SendInitSequence   - Send initialization sequence to panels
-;     CPanel_InitLEDBuffer      - Initialize LED TX buffer
+;     CPanel_SendFramePolled      - Send one 2-byte frame, polled (unused)
 ;     CPanel_InitButtonState    - Initialize button state arrays
 ;
 ;   Button Handling:
@@ -162,7 +162,13 @@ CPanel_SendInitSequence:
 	or (CPANEL_PROTOCOL_FLAGS:16), 1
 	ei	0
 	ret
-CPanel_InitLEDBuffer:
+; Sends WA (A first, then W) to the panels as one 2-byte frame on SC1 without the interrupt state machine:
+; stores WA at CPANEL_LED_TX_BUFFER, pulses PF6 (SCLK1 / CTS1) low for two DELAY_300_LOOPS, switches PF4/PF6
+; to TxD1/SCLK1 on the internal baud-rate clock, writes buffer[CPANEL_LED_READ_PTR] and the next byte to
+; SC1BUF with a polled delay between them, then returns SCLK1 to the input clock and releases the pins.  It
+; is not an LED-buffer initialiser.  No caller in this build: no reference in the sources and no copy of
+; its address in the ROM image (notes/open4-kn5000-b/cpanel/README.md).
+CPanel_SendFramePolled:
 	ld (CPANEL_LED_TX_BUFFER:16), wa
 	and (PFFC_VALUE:16), 191
 	ldb_d8 a, (PFFC_VALUE)
@@ -1199,6 +1205,17 @@ EncPkt_DispatchThunk:
 	pop xde
 	ret
 
+; Panel frame types 6 and 7 (header bits 5:4 = 11): a run of segment or controller reports in one frame.
+;   H0: bits 7:6 panel select (as in a button frame), bits 3:0 = N - 1 (N = 1..16 data bytes; bit 3 is
+;       also the low type bit, so type 7 is simply a run longer than 8)
+;   H1: bits 4:0 = first segment (bit 4 clear) or first controller id (bit 4 set); bits 7:5 ignored
+;   D0..D(N-1): the state of segment/id H1+i
+; CPanel_SM_RXByte1 sizes the frame as (H0 & 0x0F) + 3 bytes.  On entry A = bytes waiting; the frame waits
+; until all N + 2 are in.  Each data byte becomes one record {(H0 & 0xC0) | (H1 + i), value, changed}:
+; segment bytes are swapped into STATE_OF_CPANEL_BUTTONS (0x8E4A + segment, +0x10 for the left panel) and
+; changed = old ^ new; controller bytes go through CPanel_EncoderDispatch (no record when it returns 0xFFFF)
+; with changed = 0xFF.  The suppression of unchanged segments under CPANEL_TX_RX_FLAGS bit 4 never runs:
+; nothing in the firmware sets that bit.
 CPanel_RX_MultiBytePacket:
 	ld w, a
 	ld	a, (xde+iy)
@@ -1264,7 +1281,7 @@ MBytePkt_WriteEventByte:
 	ex (xhl), a
 	xor a, (xhl)
 	inc 1, hl
-	bit 4, (CPANEL_TX_RX_FLAGS:16)
+	bit 4, (CPANEL_TX_RX_FLAGS:16)	; never set by any code: the drop below is dead
 	jr z, MBytePkt_CommitAndContinue
 	cp a, 0:i3
 	jr nz, MBytePkt_CommitAndContinue

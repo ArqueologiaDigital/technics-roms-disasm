@@ -6,7 +6,7 @@
 ; It drives the control panel, not the tone generator.
 ;
 ; LED_WriteToPanel(xwa -> 3-byte LED frame) writes the frame one byte at a time
-; through Seq_TimerEventLoop, and calls CPanel_Poll between bytes whenever the
+; through CPanel_LedQueue_PushByte, and calls CPanel_Poll between bytes whenever the
 ; timer loop reports 0xFFFF -- i.e. it services the panel link while waiting.
 ;
 ; The entry and its three internal branch targets are ONE routine and are kept
@@ -22,7 +22,7 @@ LED_WriteToPanel:
 	ld a, (xiz)
 	extz wa
 	pushw wa
-	call Seq_TimerEventLoop
+	call CPanel_LedQueue_PushByte
 	inc 2, xsp
 	cp hl, 0xffff
 	jr nz, LED_WriteSecondByte
@@ -42,7 +42,7 @@ LED_WriteSecondByte:
 	ld a, (xiz + 1)
 	extz wa
 	pushw wa
-	call Seq_TimerEventLoop
+	call CPanel_LedQueue_PushByte
 	inc 2, xsp
 	cp hl, 0xffff
 	jr nz, LED_WriteDone
@@ -61,7 +61,7 @@ LED_WriteThirdByte:
 	ld a, (xwa)
 	extz wa
 	pushw wa
-	call Seq_TimerEventLoop
+	call CPanel_LedQueue_PushByte
 	inc 2, xsp
 
 LED_WriteDone:

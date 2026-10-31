@@ -6586,7 +6586,7 @@ SwbtB2_Code93_Listeners:
 	.long SwbtB2_Code93_NopListener
 	.long CharMap_ActivePreamb_LoadDRAM
 	.long UIState_KeyScan_Dispatch
-	.long Encoder_ApplySystemModeSettings
+	.long Encoder_OnTouchSensitivityChange
 	.long 0xffffffff
 ; code 0x98: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code98_Listeners:
