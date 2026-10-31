@@ -170,7 +170,7 @@ func_485401CC_entry:
     ret     0, 0x14
 loc_485401F0:
     call    func_484566D5_entry, 0, 0x10
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+34)
+    movhu   d0, (Str_d_2)
     mov     -1, d0
     mov     0x00e50000, d1
     call    ApDeleteEvent_entry, [d2], 0x18
@@ -189,7 +189,7 @@ loc_485401F0:
     beq     loc_4854023D
     ret     0, 0x14
 loc_4854023D:
-    movhu   (AcSeqTrackNumBoxProc_Table+34), d0
+    movhu   (Str_d_2), d0
     cmp     0, d0
     bne     loc_48540271
     movbu   (func_4853F2A1_Table), d0
@@ -1228,7 +1228,7 @@ loc_48540CB9:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4853FA2B_entry, [d2], 0x18
-    movbu   (AcStepRecBoxProc_Table+13), d0
+    movbu   (MainSEQ_SetLyricsFlag_Var), d0
     cmp     0, d0
     bne     loc_48540CEA
     jmp     loc_48540D75
@@ -1276,7 +1276,7 @@ loc_48540D5F:
     cmp     0, d0
     beq     loc_48540D75
     clr     d0
-    movbu   d0, (AcStepRecBoxProc_Table+13)
+    movbu   d0, (MainSEQ_SetLyricsFlag_Var)
     bra     loc_48540D75
     bra     loc_48540D76
 loc_48540D75:
@@ -1323,7 +1323,7 @@ loc_48540DC4:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4853FA2B_entry, [d2], 0x18
-    movbu   (AcStepRecBoxProc_Table+13), d0
+    movbu   (MainSEQ_SetLyricsFlag_Var), d0
     cmp     0, d0
     bne     loc_48540DF5
     jmp     loc_48540E80
@@ -1371,7 +1371,7 @@ loc_48540E6A:
     cmp     0, d0
     beq     loc_48540E80
     clr     d0
-    movbu   d0, (AcStepRecBoxProc_Table+13)
+    movbu   d0, (MainSEQ_SetLyricsFlag_Var)
     bra     loc_48540E80
     bra     loc_48540E81
 loc_48540E80:
@@ -1890,7 +1890,7 @@ func_48541357:
 func_48541357_entry:
     mov     d0, d2
     call    func_4846557D, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     cmp     0x95, d0
@@ -1988,7 +1988,7 @@ func_48541485:
     add     -0x14, sp
 func_48541485_entry:
     call    func_484671B3, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     mov     SeqSRUpdate_id, d0
     mov     0x0176000a, d1
     call    ApDeleteEvent_entry, [d2], 0x18
@@ -2003,18 +2003,18 @@ func_485414C1:
     movm    [d2], (sp)
     add     -0x10, sp
 func_485414C1_entry:
-    movhu   (AcStepRecBoxProc_Table+14), d2
+    movhu   (func_485414C1_Var), d2
     mov     d0, d1
     exth    d2
     extbu   d1
     cmp     d1, d2
     beq     loc_485414FD
     extbu   d0
-    movhu   d0, (AcStepRecBoxProc_Table+14)
+    movhu   d0, (func_485414C1_Var)
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4853FA2B_entry, [d2], 0x18
-    movbu   (AcStepRecBoxProc_Table+12), d0
+    movbu   (MdSeq_Var), d0
     cmp     0, d0
     bne     loc_485414FD
     call    GetTitleNow_entry, 0, 0x10
@@ -3586,7 +3586,7 @@ func_48542540:
     add     -0x14, sp
 func_48542540_entry:
     call    func_4846557D, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     cmp     0x95, d0
@@ -3595,14 +3595,14 @@ func_48542540_entry:
     beq     loc_48542585
     bra     loc_485425A0
 loc_48542568:
-    movhu   (AcSeqTrackNumBoxProc_Table+36), d0
+    movhu   (AcNoteEditBoxProc_Table_6), d0
     mov     0x00e6000a, d1
     mov     d0, (0x10, sp)
     mov     SeqNoteEditData_id, d0
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_485425A0
 loc_48542585:
-    movhu   (AcSeqTrackNumBoxProc_Table+36), d0
+    movhu   (AcNoteEditBoxProc_Table_6), d0
     mov     0x00e6000a, d1
     mov     d0, (0x10, sp)
     mov     SeqDrumEditData_id, d0
@@ -3981,7 +3981,7 @@ loc_4854292D:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542992
@@ -3996,7 +3996,7 @@ loc_4854296F:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542992
@@ -4207,7 +4207,7 @@ loc_48542B82:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542BE7
@@ -4222,7 +4222,7 @@ loc_48542BC4:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4846557D, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    func_485425A3_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542BE7
@@ -6422,12 +6422,12 @@ loc_48543F1B:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_484671B3, 0, 0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
-    movhu   (AcSeqTrackNumBoxProc_Table+36), d0
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
+    movhu   (AcNoteEditBoxProc_Table_6), d0
     cmp     1, d0
     bge     loc_48543F62
     mov     1, d0
-    movhu   d0, (AcSeqTrackNumBoxProc_Table+36)
+    movhu   d0, (AcNoteEditBoxProc_Table_6)
 loc_48543F62:
     call    func_4854159B_entry, [d2,d3,a2,a3], 0x30
     clr     d0

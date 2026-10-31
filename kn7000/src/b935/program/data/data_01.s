@@ -3132,7 +3132,7 @@ Text_PITCHBEND_WHEEL_VALUE:	# 13 strings of 29 characters, NUL-terminated
 Str_KEYBOAD_NOTE_VELOCITY_AFTER_TOUCH:	.asciz "KEYBOAD: NOTE =      VELOCITY =      AFTER TOUCH ="
 	.align	4, 0xFF	# pad after Str_KEYBOAD_NOTE_VELOCITY_AFTER_TOUCH
 
-ptrs_4860CF7C:
+InOutTestWindowProc_Table_16:
 	.long	Str_APC_SEQ_VOLUME_VALUE
 	.long	Text_PITCHBEND_WHEEL_VALUE
 	.long	Text_PITCHBEND_WHEEL_VALUE+30
@@ -3147,20 +3147,25 @@ ptrs_4860CF7C:
 	.long	Text_PITCHBEND_WHEEL_VALUE+300
 	.long	Text_PITCHBEND_WHEEL_VALUE+330
 	.long	Text_PITCHBEND_WHEEL_VALUE+360
+	.long	Str_KEYBOAD_NOTE_VELOCITY_AFTER_TOUCH
 
-InOutTestWindowProc_Var:	# u32, a constant; read / written by InOutTestWindowProc 0x484A1ABC: `mov (InOutTestWindowProc_Var), a0`
-	.long	0x4860cf48
-InOutTestWindowProc_Var_2:	# u16, a constant; read / written by InOutTestWindowProc 0x484A1ABC: `movhu (a2), d0`
-	.word	15
-InOutTestWindowProc_Var_3:	# u16, a constant; read / written by InOutTestWindowProc 0x484A1ABC: `movhu (2, a2), d0`
-	.word	40
-InOutTestWindowProc_Var_4:	# u16, a constant; read / written by InOutTestWindowProc 0x484A1ABC: `movhu (a1), d0`
-	.word	15
+InOutTestWindowProc_Var_2:	# 15 x REC_InOutTestWindowProc_Var_2 (4 bytes each); read by InOutTestWindowProc 0x484A1ABC `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1ABC `movhu (2, a2), d0`; InOutTestWindowProc 0x484A1ABC `movhu (a1), d0` (+1)
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=40	# [0]
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=64
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=88
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=112
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=136
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=160
+	REC_InOutTestWindowProc_Var_2	f0=15, f2=184
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=40
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=64	# [8]
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=88
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=112
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=136
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=160
+	REC_InOutTestWindowProc_Var_2	f0=340, f2=184
+	REC_InOutTestWindowProc_Var_2	f0=142, f2=220
 
-InOutTestWindowProc_Table_16:	# 27 x u16, 15..340; read by InOutTestWindowProc 0x484A1ABC: `movhu (2, a1), d0`
-	tab_u16	64, 15, 88, 15, 112, 15, 136, 15, 160, 15, 184, 340	# [0]
-	tab_u16	40, 340, 64, 340, 88, 340, 112, 340, 136, 340, 160, 340	# [12]
-	tab_u16	184, 142, 220	# [24]
 InOutTestWindowProc_Table_4:	# 2 x u16, 40..250; read by InOutTestWindowProc 0x484A1ABC: `movhu  (a1), d0`
 	tab_u16	250, 40
 InOutTestWindowProc_Table_5:	# 2 x u16, 64..250; read by InOutTestWindowProc 0x484A1ABC: `movhu  (a0), d0`
@@ -3336,7 +3341,10 @@ Str_4_LOW_SOUND_check_2octave_w_o_Touch_and:	.asciz "(4)LOW SOUND check(-2octave
 Str_5_NORMAL_SOUND_check_with_TOUCH:	.asciz "(5)NORMAL SOUND check with TOUCH"
 	.align	4, 0xFF	# pad after Str_5_NORMAL_SOUND_check_with_TOUCH
 Str_6_SINE_WAVE_at_16dB_DOWN_level_w_o_Touch:	.asciz "(6)SINE WAVE at 16dB DOWN level(w/o Touch and Key note)"
-Str_p_45:	.asciz "\xBB p"
+
+SdTestFilter_Table:	# 1 x u32, 7348411..7348411; read by SdTestFilter 0x484A3A20: `mov   (d0, a0), d0`
+	tab_u32	7348411
+
 Str_CcEv_8:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_8
 data_4860D5A0:
@@ -4823,10 +4831,10 @@ Str_OFF_168:	.asciz "OFF"
 Str_ON_127:	.asciz "ON "
 Str_3d_216:	.asciz "%3d"
 Str_3d_215:	.asciz "%3d"
-Str_empty_1304:	.asciz " "
-# census: opaque -- unknown-dump: 34 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x211DF6, 0x211E18
 
+TouchFilter_Table:	# 9 x u32, 0..44; read by TouchFilter 0x484A97D6: `mov   (d0, a0), d0`
+	tab_u32	32, 32, 33, 44, 36, 40, 34, 0	# [0]
+	tab_u32	9	# [8]
 FSWAssGridCheck_Table:	# 256 x u8, 0..0; read by FSWAssGridCheck 0x484A9ABC: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
@@ -4986,27 +4994,26 @@ MSAModeBoxProc_Table_3:	# 256 x u8, 0..0; read by MSAModeBoxProc 0x484AA59D: `mo
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
-MSAFilter_Table:	# 4 x u32, 1..161; read by MSAFilter 0x484AA83A: `mov   (d0, a0), d0`
-	tab_u32	161, 1, 2, 3
-
-Str_Stores_sound_balance_settings_only_5:	.asciz "Stores sound & balance settings only."
-Str_Speichert_nur_Klang_und_Lautst_rkeeinste:	.asciz "Speichert nur Klang- und Lautst\xE4rkeeinstellungen."
-Str_Stores_sound_balance_settings_only_4:	.asciz "Stores sound & balance settings only."
-Str_Stores_sound_balance_settings_only_3:	.asciz "Stores sound & balance settings only."
-Str_Stores_sound_balance_settings_only_2:	.asciz "Stores sound & balance settings only."
-Str_Stores_sound_balance_settings_only:	.asciz "Stores sound & balance settings only."
-data_486124EC:
-# census: opaque -- unknown-dump: 44 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2124EC, 0x212518
+MSAFilter_Table:	# 75 x u32, 1..4278231969; read by MSAFilter 0x484AA83A: `mov   (d0, a0), d0`
+	tab_u32	161, 1, 2, 3, 1919906899, 1931506533, 1684960623, 1646274080	# [0]
+	tab_u32	1851878497, 1931502947, 1769239653, 544434030, 2037149295, 1884487726, 1751345509, 544502373	# [8]
+	tab_u32	544372078, 1851878475, 1965043047, 1277191278, 1937012065, 1802691700, 1852400997, 1818588275	# [16]
+	tab_u32	1735292268, 3042917, 1919906899, 1931506533, 1684960623, 1646274080, 1851878497, 1931502947	# [24]
+	tab_u32	1769239653, 544434030, 2037149295, 1951596590, 1936028271, 1970238240, 639657070, 1818321440	# [32]
+	tab_u32	1701015137, 1952805664, 1735289204, 1852776563, 3045740, 1919906899, 1931506533, 1684960623	# [40]
+	tab_u32	1646274080, 1851878497, 1931502947, 1769239653, 544434030, 2037149295, 1951596590, 1936028271	# [48]
+	tab_u32	1970238240, 639657070, 1818321440, 1701015137, 1952805664, 1735289204, 1852776563, 3045740	# [56]
+	tab_u32	2795877797, 3383096229, 3500532900, 4087736741, 3753949605, 3399805636, 4070885796, 3752118726	# [64]
+	tab_u32	3081031869, 3114589860, 4278231969	# [72]
 
 ptrs_48612518:
-	.long	Str_Stores_sound_balance_settings_only_5
-	.long	Str_Speichert_nur_Klang_und_Lautst_rkeeinste
-	.long	Str_Stores_sound_balance_settings_only_4
-	.long	Str_Stores_sound_balance_settings_only_3
-	.long	Str_Stores_sound_balance_settings_only_2
-	.long	Str_Stores_sound_balance_settings_only
-	.long	data_486124EC
+	.long	MSAFilter_Table+16
+	.long	MSAFilter_Table+54
+	.long	MSAFilter_Table+104
+	.long	MSAFilter_Table+142
+	.long	MSAFilter_Table+180
+	.long	MSAFilter_Table+218
+	.long	MSAFilter_Table+256
 
 Str_Stores_to_total_setting_including_Rhythm_5:	.asciz "Stores to total setting including Rhythm, Transpose & tempo."
 Str_Speichert_die_gesamte_Einstellung_einsch:	.asciz "Speichert die gesamte Einstellung einschlie\xDFlich Rhythmus, Transpose & Tempo."
@@ -5398,11 +5405,16 @@ PanelCtrlLatch30_Table:	# 64 x u8, 0..62; read by PanelCtrlLatch30 0x484AD6FE: `
 	tab_u8	47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62	# [48]
 
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklm_2:	.asciz "?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{}\x7F\x7F"
-# census: opaque -- unknown-dump: 63 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2134C9, 0x213508
-Str_ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklm:	.asciz "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}\x7F\x7F\x1B"
-# census: opaque -- unknown-dump: 22 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x21354A, 0x213560
+# census: opaque -- unknown-dump: 127 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn7000_program_b935.rom", 0x2134C9, 0x213548
+
+PanelExtSwShadowInit_Records:	# 6 x REC_PanelExtSwShadowInit_Records (4 bytes each); read by PanelExtSwShadowInit 0x484AD76E `movbu (a1), d0`
+	REC_PanelExtSwShadowInit_Records	f0=27, x1="\x00\x00\x00"
+	REC_PanelExtSwShadowInit_Records	f0=27, x1="\x00\x00\x00"
+	REC_PanelExtSwShadowInit_Records	f0=28, x1="\x00\x00\x00"
+	REC_PanelExtSwShadowInit_Records	f0=29, x1="\x00\x00\x00"
+	REC_PanelExtSwShadowInit_Records	f0=30, x1="\x00\x00\x00"
+	REC_PanelExtSwShadowInit_Records	f0=31, x1="\x00\x00\x00"
 
 PanelWireNormTable:	# 128 x u8, a sparse map by index: 28 entries set, the rest 0xFF (none); read by PanelWireNormalize_entry 0x484AD9D4: `movbu  (d1, a0), d0`
 	map8	0, 12
@@ -5974,8 +5986,13 @@ MsgTable_48614F40:	# 3 x {u32 key, code address}: a dispatch table; read by func
 	.long	16, func_484B0A35
 	.space	8, 0x00
 
-func_484AE78B_Var:	# REC_func_484AE78B_ArgA0 (16 bytes): the layout func_484AE78B 0x484AE78B reads through its argument a0 (passed by func_484AE69D 0x484AE69D `call func_484AE78B_entry, [d2,a2], 0x10`, +1 more calls)
-	REC_func_484AE78B_ArgA0	f0=4, proc=func_484B123C, x8="\x00\x00\x00\x00"
+func_484AE78B_Var:	# REC_func_484AE78B_ArgA0 (8 bytes): the layout func_484AE78B 0x484AE78B reads through its argument a0 (passed by func_484AE69D 0x484AE69D `call func_484AE78B_entry, [d2,a2], 0x10`, +1 more calls)
+	REC_func_484AE78B_ArgA0	f0=4, proc=func_484B123C
+	# then 1 x u32 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
+	tab_u32	0	# +8
+
+func_484AE78B_Var_2:	# u32, a constant; read / written by func_484AE78B 0x484AE78B: `mov (4, a2), d0`
+	.long	0
 
 MsgTable_48614F70:	# 3 x {u32 key, code address}: a dispatch table; read by func_484AE74A 0x484AE74A `call func_484AE78B_entry, [d2,a2], 0x10`; func_484AE78B 0x484AE78B `mov (a2), d0`
 	.long	4, func_484B12AA
@@ -7372,335 +7389,392 @@ SysEx_486168C4:	.byte	0xF0, 0x50, 0x2C, 0x20, 0x31, 0x1F, 0x7F, 0x30, 0x00, 0x00
 
 func_484C01AF_Result_s16_46:	# REC_func_484C01AF_Result_s16 (16 bytes)
 	REC_func_484C01AF_Result_s16	f0=0xFFFFFF, f4=4, f6=23, memcpy_a1=SysEx_486168C4, flags=26840, f14=18529
-data_486168EC:
-	# 12 bytes read by func_484BA3F2 0x484BA3F2 `movhu (0x10, a0), d2` (+0, s16); func_484BA69A 0x484BA69A `movhu (0x10, a0), d2` (+0, s16); func_484BAE3B 0x484BAE3B `movhu (0x10, a0), d2` (+0, s16) (+23 more); the read fields at their widths (s16), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
-	tab_s16	16880, 17151, 18, 32512, 0, -9	# +0
+
+func_484BA3F2_Block:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 0, 0, 127, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_85:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=8, f4=2, f6=16, memcpy_a1=data_486168EC, flags=2, f16=6
+	REC_func_484C01AF_Result	f0=8, f4=2, f6=16, memcpy_a1=func_484BA3F2_Block, flags=2, f16=6
 	.align	4, 0x00	# pad after func_484C01AF_Result_85
-data_4861690C:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x21690C, 0x21691C
+
+func_484BA3F2_Block_2:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 0, 0, 0, 0, 0	# [0]
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn7000_program_b935.rom", 0x216918, 0x21691C
+
 func_484C01AF_Result_86:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f4=2, f6=4, memcpy_a1=data_4861690C, flags=2, f16=127
+	REC_func_484C01AF_Result	f4=2, f6=4, memcpy_a1=func_484BA3F2_Block_2, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_86
-data_48616930:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216930, 0x21693C
+
+func_484BA3F2_Block_3:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 4, 0, 255, 247, 255	# [0]
+
 func_484C01AF_Result_87:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=32769, f4=2, f6=3, memcpy_a1=data_48616930, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=32769, f4=2, f6=3, memcpy_a1=func_484BA3F2_Block_3, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_87
-data_48616950:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216950, 0x21695C
+
+func_484BA3F2_Block_4:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 5, 0, 255, 247, 255	# [0]
+
 func_484C01AF_Result_88:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=3, f4=2, f6=5, memcpy_a1=data_48616950, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=3, f4=2, f6=5, memcpy_a1=func_484BA3F2_Block_4, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_88
-data_48616970:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216970, 0x21697C
+
+func_484BA3F2_Block_5:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 0, 127, 0, 65, 247, 255	# [0]
+
 func_484C01AF_Result_89:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=8, f4=2, f6=2, memcpy_a1=data_48616970, flags=2, f16=6
+	REC_func_484C01AF_Result	f0=8, f4=2, f6=2, memcpy_a1=func_484BA3F2_Block_5, flags=2, f16=6
 	.align	4, 0x00	# pad after func_484C01AF_Result_89
-data_48616990:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216990, 0x21699C
+
+func_484BA3F2_Block_6:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 48, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_90:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40960, f4=2, f6=6, memcpy_a1=data_48616990, flags=2, f16=7
+	REC_func_484C01AF_Result	f0=40960, f4=2, f6=6, memcpy_a1=func_484BA3F2_Block_6, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484C01AF_Result_90
-data_486169B0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2169B0, 0x2169BC
+
+func_484BA3F2_Block_7:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 49, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_91:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40960, f4=2, f6=6, memcpy_a1=data_486169B0, flags=2, f16=7
+	REC_func_484C01AF_Result	f0=40960, f4=2, f6=6, memcpy_a1=func_484BA3F2_Block_7, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484C01AF_Result_91
-data_486169D0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2169D0, 0x2169DC
+
+func_484BA3F2_Block_8:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 50, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_92:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_486169D0, flags=2, f16=7
+	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=func_484BA3F2_Block_8, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484C01AF_Result_92
-data_486169F0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2169F0, 0x2169FC
+
+func_484BA3F2_Block_9:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 51, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_93:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_486169F0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=func_484BA3F2_Block_9, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_93
-data_48616A10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216A10, 0x216A1C
+
+func_484BA3F2_Block_10:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 52, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_94:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_48616A10, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=func_484BA3F2_Block_10, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_94
-data_48616A30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216A30, 0x216A3C
+
+func_484BA3F2_Block_11:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 53, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_95:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_48616A30, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=func_484BA3F2_Block_11, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_95
-data_48616A50:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216A50, 0x216A5C
+
+func_484BA3F2_Block_12:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 55, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_96:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=data_48616A50, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=40977, f4=2, f6=8, memcpy_a1=func_484BA3F2_Block_12, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_96
-data_48616A70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216A70, 0x216A7C
+
+func_484BA3F2_Block_13:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 56, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_97:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41216, f4=2, f6=7, memcpy_a1=data_48616A70, flags=2, f16=7
+	REC_func_484C01AF_Result	f0=41216, f4=2, f6=7, memcpy_a1=func_484BA3F2_Block_13, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484C01AF_Result_97
-data_48616A90:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216A90, 0x216A9C
+
+func_484BA3F2_Block_14:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 57, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_98:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616A90, flags=2, f16=7
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_14, flags=2, f16=7
 	.align	4, 0x00	# pad after func_484C01AF_Result_98
-data_48616AB0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216AB0, 0x216ABC
+
+func_484BA3F2_Block_15:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 58, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_99:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616AB0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_15, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_99
-data_48616AD0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216AD0, 0x216ADC
+
+func_484BA3F2_Block_16:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 59, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_100:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616AD0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_16, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_100
-data_48616AF0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216AF0, 0x216AFC
+
+func_484BA3F2_Block_17:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 60, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_101:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616AF0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_17, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_101
-data_48616B10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216B10, 0x216B1C
+
+func_484BA3F2_Block_18:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 61, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_102:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616B10, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_18, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_102
-data_48616B30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216B30, 0x216B3C
+
+func_484BA3F2_Block_19:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 62, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_103:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616B30, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_19, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_103
-data_48616B50:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216B50, 0x216B5C
+
+func_484BA3F2_Block_20:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 63, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_104:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616B50, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_20, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_104
-data_48616B70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216B70, 0x216B7C
+
+func_484BA3F2_Block_21:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 1, 64, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_105:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=data_48616B70, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=41233, f4=2, f6=9, memcpy_a1=func_484BA3F2_Block_21, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_105
-data_48616B90:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216B90, 0x216B9C
+
+func_484BA3F2_Block_22:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 21, 0, 255, 247, 255	# [0]
+
 func_484C01AF_Result_106:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xC00000, f4=2, f6=15, memcpy_a1=data_48616B90, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xC00000, f4=2, f6=15, memcpy_a1=func_484BA3F2_Block_22, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_106
-data_48616BB0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216BB0, 0x216BBC
+
+func_484BA3F2_Block_23:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 31, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_107:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xFFFFFF, f4=2, f6=14, memcpy_a1=data_48616BB0, flags=2, f14=1, f16=95
+	REC_func_484C01AF_Result	f0=0xFFFFFF, f4=2, f6=14, memcpy_a1=func_484BA3F2_Block_23, flags=2, f14=1, f16=95
 	.align	4, 0x00	# pad after func_484C01AF_Result_107
-data_48616BD0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216BD0, 0x216BDC
+
+func_484BA3F2_Block_24:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 48, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_141_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB0004C, f4=2, f6=10, memcpy_a1=data_48616BD0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB0004C, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_24, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_141_2
-data_48616BF0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216BF0, 0x216BFC
+
+func_484BA3F2_Block_25:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 49, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_142_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB0004D, f4=2, f6=10, memcpy_a1=data_48616BF0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB0004D, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_25, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_142_2
-data_48616C10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216C10, 0x216C1C
+
+func_484BA3F2_Block_26:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 50, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_143_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB0004A, f4=2, f6=10, memcpy_a1=data_48616C10, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB0004A, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_26, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_143_2
-data_48616C30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216C30, 0x216C3C
+
+func_484BA3F2_Block_27:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 51, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_144_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB00047, f4=2, f6=10, memcpy_a1=data_48616C30, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB00047, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_27, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_144_2
-data_48616C50:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216C50, 0x216C5C
+
+func_484BA3F2_Block_28:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 52, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_145_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB00049, f4=2, f6=10, memcpy_a1=data_48616C50, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB00049, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_28, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_145_2
-data_48616C70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216C70, 0x216C7C
+
+func_484BA3F2_Block_29:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 53, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_146_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB0004B, f4=2, f6=10, memcpy_a1=data_48616C70, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB0004B, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_29, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_146_2
-data_48616C90:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216C90, 0x216C9C
+
+func_484BA3F2_Block_30:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 54, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_147_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB00048, f4=2, f6=10, memcpy_a1=data_48616C90, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB00048, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_30, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_147_2
-data_48616CB0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216CB0, 0x216CBC
+
+func_484BA3F2_Block_31:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 55, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_148_2:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0xB0004E, f4=2, f6=10, memcpy_a1=data_48616CB0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0xB0004E, f4=2, f6=10, memcpy_a1=func_484BA3F2_Block_31, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_148_2
-data_48616CD0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216CD0, 0x216CDC
+
+func_484BA3F2_Block_32:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 64, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_108:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C0, f4=2, f6=11, memcpy_a1=data_48616CD0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C0, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_32, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_108
-data_48616CF0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216CF0, 0x216CFC
+
+func_484BA3F2_Block_33:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 65, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_109:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C1, f4=2, f6=11, memcpy_a1=data_48616CF0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C1, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_33, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_109
-data_48616D10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216D10, 0x216D1C
+
+func_484BA3F2_Block_34:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 66, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_110:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C2, f4=2, f6=11, memcpy_a1=data_48616D10, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C2, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_34, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_110
-data_48616D30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216D30, 0x216D3C
+
+func_484BA3F2_Block_35:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 67, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_111:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C3, f4=2, f6=11, memcpy_a1=data_48616D30, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C3, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_35, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_111
-data_48616D50:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216D50, 0x216D5C
+
+func_484BA3F2_Block_36:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 68, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_112:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C4, f4=2, f6=11, memcpy_a1=data_48616D50, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C4, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_36, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_112
-data_48616D70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216D70, 0x216D7C
+
+func_484BA3F2_Block_37:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 69, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_113:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C5, f4=2, f6=11, memcpy_a1=data_48616D70, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C5, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_37, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_113
-data_48616D90:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216D90, 0x216D9C
+
+func_484BA3F2_Block_38:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 70, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_114:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C6, f4=2, f6=11, memcpy_a1=data_48616D90, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C6, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_38, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_114
-data_48616DB0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216DB0, 0x216DBC
+
+func_484BA3F2_Block_39:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 71, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_115:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C7, f4=2, f6=11, memcpy_a1=data_48616DB0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C7, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_39, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_115
-data_48616DD0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216DD0, 0x216DDC
+
+func_484BA3F2_Block_40:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 72, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_116:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C8, f4=2, f6=11, memcpy_a1=data_48616DD0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C8, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_40, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_116
-data_48616DF0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216DF0, 0x216DFC
+
+func_484BA3F2_Block_41:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 73, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_117:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000C9, f4=2, f6=11, memcpy_a1=data_48616DF0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000C9, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_41, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_117
-data_48616E10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216E10, 0x216E1C
+
+func_484BA3F2_Block_42:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 74, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_118:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000CA, f4=2, f6=11, memcpy_a1=data_48616E10, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000CA, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_42, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_118
-data_48616E30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216E30, 0x216E3C
+
+func_484BA3F2_Block_43:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 16, 75, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_119:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x2000CB, f4=2, f6=11, memcpy_a1=data_48616E30, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x2000CB, f4=2, f6=11, memcpy_a1=func_484BA3F2_Block_43, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_119
-data_48616E50:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216E50, 0x216E5C
+
+func_484BA3F2_Block_44:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 32, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_120:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200260, f4=2, f6=12, memcpy_a1=data_48616E50, flags=2, f14=40, f16=88
+	REC_func_484C01AF_Result	f0=0x200260, f4=2, f6=12, memcpy_a1=func_484BA3F2_Block_44, flags=2, f14=40, f16=88
 	.align	4, 0x00	# pad after func_484C01AF_Result_120
-data_48616E70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216E70, 0x216E7C
+
+func_484BA3F2_Block_45:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 33, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_121:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200261, f4=2, f6=12, memcpy_a1=data_48616E70, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200261, f4=2, f6=12, memcpy_a1=func_484BA3F2_Block_45, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_121
-data_48616E90:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216E90, 0x216E9C
+
+func_484BA3F2_Block_46:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 34, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_122:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200262, f4=2, f6=12, memcpy_a1=data_48616E90, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200262, f4=2, f6=12, memcpy_a1=func_484BA3F2_Block_46, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_122
-data_48616EB0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216EB0, 0x216EBC
+
+func_484BA3F2_Block_47:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 36, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_123:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200263, f4=2, f6=12, memcpy_a1=data_48616EB0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200263, f4=2, f6=12, memcpy_a1=func_484BA3F2_Block_47, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_123
-data_48616ED0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216ED0, 0x216EDC
+
+func_484BA3F2_Block_48:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 37, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_124:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200264, f4=2, f6=12, memcpy_a1=data_48616ED0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200264, f4=2, f6=12, memcpy_a1=func_484BA3F2_Block_48, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_124
-data_48616EF0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216EF0, 0x216EFC
+
+func_484BA3F2_Block_49:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 38, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_125:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200265, f4=2, f6=12, memcpy_a1=data_48616EF0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200265, f4=2, f6=12, memcpy_a1=func_484BA3F2_Block_49, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_125
-data_48616F10:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216F10, 0x216F1C
+
+func_484BA3F2_Block_50:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 64, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_126:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200260, f4=2, f6=13, memcpy_a1=data_48616F10, flags=2, f14=40, f16=88
+	REC_func_484C01AF_Result	f0=0x200260, f4=2, f6=13, memcpy_a1=func_484BA3F2_Block_50, flags=2, f14=40, f16=88
 	.align	4, 0x00	# pad after func_484C01AF_Result_126
-data_48616F30:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216F30, 0x216F3C
+
+func_484BA3F2_Block_51:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 65, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_127:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200261, f4=2, f6=13, memcpy_a1=data_48616F30, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200261, f4=2, f6=13, memcpy_a1=func_484BA3F2_Block_51, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_127
-data_48616F50:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216F50, 0x216F5C
+
+func_484BA3F2_Block_52:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 66, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_128:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200262, f4=2, f6=13, memcpy_a1=data_48616F50, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200262, f4=2, f6=13, memcpy_a1=func_484BA3F2_Block_52, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_128
-data_48616F70:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216F70, 0x216F7C
+
+func_484BA3F2_Block_53:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 68, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_129:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200263, f4=2, f6=13, memcpy_a1=data_48616F70, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200263, f4=2, f6=13, memcpy_a1=func_484BA3F2_Block_53, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_129
-data_48616F90:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216F90, 0x216F9C
+
+func_484BA3F2_Block_54:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 69, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_130:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200264, f4=2, f6=13, memcpy_a1=data_48616F90, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200264, f4=2, f6=13, memcpy_a1=func_484BA3F2_Block_54, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_130
-data_48616FB0:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x216FB0, 0x216FBC
+
+func_484BA3F2_Block_55:	# 12 bytes, copied whole by func_484BA3F2 0x484BA3F2: memcpy(.., 12); func_484BA69A 0x484BA69A: memcpy(.., 12); func_484BA7E7 0x484BA7E7: memcpy(.., 12)
+	tab_u8	240, 65, 255, 66, 18, 64, 32, 70, 0, 0, 247, 255	# [0]
+
 func_484C01AF_Result_131:	# REC_func_484C01AF_Result (18 bytes)
-	REC_func_484C01AF_Result	f0=0x200265, f4=2, f6=13, memcpy_a1=data_48616FB0, flags=2, f16=127
+	REC_func_484C01AF_Result	f0=0x200265, f4=2, f6=13, memcpy_a1=func_484BA3F2_Block_55, flags=2, f16=127
 	.align	4, 0x00	# pad after func_484C01AF_Result_131
 
 SysEx_48616FD0:	.byte	0xF0, 0x43, 0x10, 0x4C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7	# MIDI SysEx
@@ -9511,8 +9585,15 @@ Str_TT_MDCOMP:	.asciz "TT_MDCOMP"
 	.align	4, 0xFF	# pad after Str_TT_MDCOMP
 Str_TT_MDPMLCTL:	.asciz "TT_MDPMLCTL"
 
-DrawDesignBox_Table:	# REC_DrawString_ArgA0 (8 bytes): the layout DrawString 0x48425351 reads through its argument a0 (passed by DrawStringCentered 0x48425854 `call DrawString_entry, [d2,d3,a2,a3], 0x30`); the layout DrawStringCentered 0x48425854 reads through its argument a0 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls); +1 more routines
-	REC_DrawString_ArgA0	f0=565, f2=6, f4=634, f6=23
+DrawDesignBox_Table:	# s16, a constant; read / written by DrawString 0x48425351: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu (a0), d0` ...
+	.word	565
+DrawString_Impl_Var_5:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu (a0), d1` ...
+	.word	6
+DrawString_Impl_Var_6:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu d0, (a0)`
+	.word	634
+DrawString_Impl_Var_7:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu d0, (a0)`
+	.word	23
+
 DrawStringCentered_Var:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
 	REC_DrawStringCentered_ArgA1	f0=600, f2=15
 
@@ -9868,8 +9949,15 @@ ptrs_48627C08:
 	.long	Str_Apakah_yakin_akan_dihapus_3
 	.long	data_48627BF7
 
-DrawString_ArgA0_1:	# REC_DrawString_ArgA0 (8 bytes): the layout DrawString 0x48425351 reads through its argument a0 (passed by DrawStringCentered 0x48425854 `call DrawString_entry, [d2,d3,a2,a3], 0x30`); the layout DrawStringCentered 0x48425854 reads through its argument a0 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls); +1 more routines
-	REC_DrawString_ArgA0	f0=590, f2=168, f4=629, f6=186
+DrawString_ArgA0_1:	# s16, a constant; read / written by DrawString 0x48425351: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu (a0), d0` ...
+	.word	590
+DrawString_Impl_Var_8:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu (a0), d1` ...
+	.word	168
+DrawString_Impl_Var_9:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu d0, (a0)`
+	.word	629
+DrawString_Impl_Var_10:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu d0, (a0)`
+	.word	186
+
 DrawStringCentered_Var_3:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
 	REC_DrawStringCentered_ArgA1	f0=613, f2=177
 DrawStringCentered_Var_5:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
@@ -22406,9 +22494,9 @@ func_485045C4_Records:	# 2 x REC_func_485045C4_Records (48 bytes each); read by 
 	REC_func_485045C4_Records	proc=func_4843C15E, proc_=func_4843C433, proc__=func_48436E56, proc___=func_48436FA7, proc____=func_484370B0, proc_____=func_484371B3, proc______=func_4843713D, proc_______=func_48437201, proc________=func_48436B5F, proc_________=func_48436F3D, proc__________=loc_48436BCF, proc___________=loc_48436BBA
 	REC_func_485045C4_Records	proc=func_4843258C, proc_=func_484326B7, proc__=func_484393D7, proc___=func_48439522, proc____=func_48439629, proc_____=func_4843972A, proc______=func_484396B4, proc_______=func_48439778, proc________=func_484390B7, proc_________=func_484394BC, proc__________=loc_48439138, proc___________=loc_48439123
 
-func_48504A8E_Table:	# 6 x u32, 1111..1147; read by func_48504A8E 0x48504A8E: `mov   (d1, a0), d2`
+func_48504A8E_Table:	# 6 x u32, 1111..1147; read by func_4850455F 0x4850455F: `mov   (d0, a3), d0`; func_4850455F 0x4850455F: `mov   (d2, a3), d0` ...
 	tab_u32	1111, 1115, 1119, 1123, 1127, 1147
-func_4850455F_Table:	# 6 x u32, 1114..1148; read by func_4850455F_entry 0x48504159: `mov   (d0, a0), d0`
+func_4850455F_Table:	# 6 x u32, 1114..1148; read by func_4850455F 0x4850455F: `mov   (d0, a0), d0`
 	tab_u32	1114, 1118, 1122, 1126, 1130, 1148
 func_48504EF5_Table:	# 70 x u16, 25..46972; read by func_48504EF5 0x48504EF5: `movhu  (d0, a1), d0`; func_48504EF5 0x48504EF5: `movhu  (d0, a2), d0`
 	tab_u16	25, 50, 80, 95, 46972, 46880, 46880, 46880, 46880, 46880, 46880, 46880	# [0]
@@ -22422,7 +22510,7 @@ func_48504385_Table_4:
 	.long	func_48504EF5_Table+8
 	.long	func_48504EF5_Table+74
 
-func_48504385_Table:	# 4 x u32, 1133..1136; read by func_48504385_entry 0x48504159: `mov   (d0, a0), d0`
+func_48504385_Table:	# 4 x u32, 1133..1136; read by func_48504385 0x48504385: `mov   (d0, a0), d0`
 	tab_u32	1133, 1134, 1135, 1136
 func_48504385_Table_2:	# 4 x u32, 1108..1139; read by func_48504385 0x48504385: `mov   (d0, a0), d0`
 	tab_u32	1108, 1109, 1138, 1139
@@ -22440,7 +22528,7 @@ func_48502E5D_Var_2:
 Str_empty_932:	.asciz "                                                                 "
 	.align	4, 0xFF	# pad after Str_empty_932
 
-func_485044DC_Table:	# 4 x u32, 1107..1140; read by func_485044DC 0x485044DC: `mov (d0, a3), d0`; func_485044DC 0x485044DC: `mov (d2, a3), d0`
+func_485044DC_Table:	# 4 x u32, 1107..1140; read by func_485044DC 0x485044DC: `mov   (d0, a3), d0`; func_485044DC 0x485044DC: `mov   (d2, a3), d0`
 	tab_u32	1107, 1110, 1137, 1140
 func_48502E5D_Var_3:
 	# a string, 4 bytes with its pad, read by func_485038EF 0x485038EF `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_485038EF 0x485038EF `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_4850455F 0x4850455F `call func_485038EF_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
@@ -31325,7 +31413,7 @@ Str_FAVORITES_8:	.asciz "FAVORITES       "
 Str_HOME_PAGE_6:	.asciz "HOME PAGE       "
 Str_ALL_CUSTOM_STYLE_5:	.asciz "ALL CUSTOM STYLE"
 
-ptrs_486632C4:
+AcFileSfxBoxProc_Table:
 	.long	Text_table
 	.long	Text_table+17
 	.long	Text_table+34
@@ -31585,7 +31673,7 @@ Text_NOW:	# 15 strings of 10 characters, NUL-terminated
 	.asciz	"          "
 	.align	4, 0xFF	# pad after Text_NOW
 
-ptrs_48663880:
+func_4851DC5B_Table:
 	.long	Text_NOW
 	.long	Text_NOW+11
 	.long	Text_NOW+22
@@ -32077,19 +32165,10 @@ func_4852B704_Var:	# 11 x REC_func_4852B704_Var (8 bytes each); read by func_485
 	REC_func_4852B704_Var	text=Str_JK_2, f6=3
 	REC_func_4852B704_Var	text=Str_I_K_2, f6=3
 
-data_486641C4_p0_0:	# REC_data_486641C4_p0 (4 bytes)
-	REC_data_486641C4_p0	key=73, x1="K \x00"
-
-func_4852BB95_Var:	# u32, a constant; read / written by func_4852BB95 0x4852BB95: `mov (func_4852BB95_Var), a0`
-	.long	0x486641c0
-func_4852BB95_Var_2:	# u16, a constant; read / written by func_4852BB95 0x4852BB95: `movhu (func_4852BB95_Var_2), d0`
-	.word	4
-func_4852BB95_Var_3:	# u16, a constant; read / written by func_4852BB95 0x4852BB95: `movhu (func_4852BB95_Var_3), d0`; func_4852BB95 0x4852BB95: `movhu (func_4852BB95_Var_3), d1`
-	.word	3
-
-Str_SSW_ACT:	.asciz "SSW-ACT"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2641D4, 0x2641DC
+data_486641C4_p0_0:	# REC_data_486641C4_p0 (1 bytes), then 27 x s8 the code indexes from +0 (read by func_4852BB95 0x4852BB95 `movbu (d2, a0), d1`)
+	REC_data_486641C4_p0	x0="I"
+	tab_s8	75, 32, 0, -64, 65, 102, 72, 4, 0, 3, 0, 83, 83, 87, 45, 65	# [0]
+	tab_s8	67, 84, 0, -52, 65, 102, 72, 0, 0, 7, 0	# [16]
 
 func_4852B4A0_Table:	# 7 x REC_func_4852B4A0_Table (8 bytes each); read by func_4852B4A0 0x4852B4A0 `movhu (d3, a0), d0`; func_4852BB01 0x4852BB01 `movhu (4, a3), d0`; func_4852BB01 0x4852BB01 `movhu (a3), d0` (+4)
 	REC_func_4852B4A0_Table	f0=24, index=5, index_=8, index__=12
@@ -32148,18 +32227,18 @@ Str_rb_57:	.asciz "rb"
 Str_rb_56:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_56
 
-DiskFileHandlerTable:	# 11 x {u32 key, code address}: a dispatch table; read by DiskLoadDispatch 0x4852CFA2 `calls (a1)`; DiskLoadDispatch 0x4852CFA2 `movbu (d0, a2), d0` (+1)
-	.long	6, func_4852CAB2
-	.long	4, func_4852C928
-	.long	0, func_4852BB95
-	.long	1, func_4852BE34
-	.long	5, func_4852C84F
-	.long	3, func_4852C776
-	.long	2, func_4852C10B
-	.long	7, func_4852C066
-	.long	8, func_4852CB94
-	.long	9, HmpFileLoad
-	.long	10, AstLoadHandler
+DiskFileHandlerTable:	# 11 x REC_DiskFileHandlerTable (8 bytes each); read by DiskLoadDispatch 0x4852CFA2 `calls (a1)`; DiskLoadDispatch 0x4852CFA2 `mov (4, a0), a1`; DiskLoadDispatch 0x4852CFA2 `movbu (d0, a2), d0` (+1)
+	REC_DiskFileHandlerTable	f0=6, x1="\x00\x00\x00", proc=func_4852CAB2	# [0]
+	REC_DiskFileHandlerTable	f0=4, x1="\x00\x00\x00", proc=func_4852C928
+	REC_DiskFileHandlerTable	x1="\x00\x00\x00", proc=func_4852BB95
+	REC_DiskFileHandlerTable	f0=1, x1="\x00\x00\x00", proc=func_4852BE34
+	REC_DiskFileHandlerTable	f0=5, x1="\x00\x00\x00", proc=func_4852C84F
+	REC_DiskFileHandlerTable	f0=3, x1="\x00\x00\x00", proc=func_4852C776
+	REC_DiskFileHandlerTable	f0=2, x1="\x00\x00\x00", proc=func_4852C10B
+	REC_DiskFileHandlerTable	f0=7, x1="\x00\x00\x00", proc=func_4852C066
+	REC_DiskFileHandlerTable	f0=8, x1="\x00\x00\x00", proc=func_4852CB94	# [8]
+	REC_DiskFileHandlerTable	f0=9, x1="\x00\x00\x00", proc=HmpFileLoad
+	REC_DiskFileHandlerTable	f0=10, x1="\x00\x00\x00", proc=AstLoadHandler
 
 Str_J_K_3:	.asciz "J K"
 Str_J_K_2:	.asciz "J K"
@@ -32188,18 +32267,18 @@ Str_wb_15:	.asciz "wb"
 Str_wb_14:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_14
 
-func_4852DD3A_Table_2:	# 11 x {u32 key, code address}: a dispatch table; read by func_4852DD3A 0x4852DD3A `calls (a1)`; func_4852DD3A 0x4852DD3A `movbu (d0, a2), d0` (+1)
-	.long	0, func_4852D20A
-	.long	1, func_4852D33D
-	.long	5, func_4852D8BA
-	.long	3, func_4852D808
-	.long	4, func_4852D96C
-	.long	2, func_4852D6DA
-	.long	6, func_4852D5D1
-	.long	7, func_4852D463
-	.long	8, func_4852D4DD
-	.long	9, func_4852D557
-	.long	10, func_4852DBD7
+func_4852DD3A_Table_2:	# 11 x REC_func_4852DD3A_Table_2 (8 bytes each); read by func_4852DD3A 0x4852DD3A `calls (a1)`; func_4852DD3A 0x4852DD3A `mov (4, a0), a1`; func_4852DD3A 0x4852DD3A `movbu (d0, a2), d0` (+1)
+	REC_func_4852DD3A_Table_2	x1="\x00\x00\x00", proc=func_4852D20A	# [0]
+	REC_func_4852DD3A_Table_2	f0=1, x1="\x00\x00\x00", proc=func_4852D33D
+	REC_func_4852DD3A_Table_2	f0=5, x1="\x00\x00\x00", proc=func_4852D8BA
+	REC_func_4852DD3A_Table_2	f0=3, x1="\x00\x00\x00", proc=func_4852D808
+	REC_func_4852DD3A_Table_2	f0=4, x1="\x00\x00\x00", proc=func_4852D96C
+	REC_func_4852DD3A_Table_2	f0=2, x1="\x00\x00\x00", proc=func_4852D6DA
+	REC_func_4852DD3A_Table_2	f0=6, x1="\x00\x00\x00", proc=func_4852D5D1
+	REC_func_4852DD3A_Table_2	f0=7, x1="\x00\x00\x00", proc=func_4852D463
+	REC_func_4852DD3A_Table_2	f0=8, x1="\x00\x00\x00", proc=func_4852D4DD	# [8]
+	REC_func_4852DD3A_Table_2	f0=9, x1="\x00\x00\x00", proc=func_4852D557
+	REC_func_4852DD3A_Table_2	f0=10, x1="\x00\x00\x00", proc=func_4852DBD7
 
 Str_rb_30:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_30
@@ -38951,10 +39030,8 @@ Str_MELODY:	.asciz ": MELODY "
 	.align	4, 0xFF	# pad after Str_MELODY
 Str_CONTROL_3:	.asciz ": CONTROL"
 	.align	4, 0xFF	# pad after Str_CONTROL_3
-Str_RHYTHM_13:
-	# a string, 12 bytes with its pad, read by AcSeqStepTrkBoxProc 0x4853EB04 `call strcpy_entry, [a2], 4` (+0, arg a1); AcSeqStepTrkBoxProc 0x4853EB04 `mov Str_RHYTHM_13, a1` (+0, as a base); handed to strcpy
-	.asciz	": RHYTHM "
-	.align	4, 0xFF
+Str_RHYTHM_13:	.asciz ": RHYTHM "
+	.align	4, 0xFF	# pad after Str_RHYTHM_13
 Str_CHORD_5:
 	# a string, 12 bytes with its pad, read by AcSeqStepTrkBoxProc 0x4853EB04 `call strcpy_entry, [a2], 4` (+0, arg a1); AcSeqStepTrkBoxProc 0x4853EB04 `mov Str_CHORD_5, a1` (+0, as a base); handed to strcpy
 	.asciz	": CHORD  "

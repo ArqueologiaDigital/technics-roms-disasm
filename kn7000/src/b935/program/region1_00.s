@@ -36749,8 +36749,8 @@ func_4841617C_entry:
 loc_4841618B:
     clr     d2
     clr     d1
-    mov     Str_P_24, a2
-    mov     (Str_P_24), a0
+    mov     func_4841617C_Table, a2
+    mov     (func_4841617C_Table), a0
     mov     -1, d3
     cmp     d3, a0
     beq     loc_484161BE
@@ -37006,7 +37006,7 @@ loc_484163E4:
     bra     loc_48416446
 loc_484163FF:
     inc4    a1
-    cmp     MainMmmControl_Table+1024, a1
+    cmp     func_484165A4_Var, a1
     lcs
     bra     loc_48416446
 loc_48416409:
@@ -37024,7 +37024,7 @@ loc_4841641F:
     cmp     a0, d0
     beq     loc_48416446
     inc4    a1
-    cmp     MainMmmControl_Table+1024, a1
+    cmp     func_484165A4_Var, a1
     lcs
     bra     loc_48416446
 loc_48416430:
@@ -37033,7 +37033,7 @@ loc_48416430:
     mov     0xff000000, d0
     mov     d0, (a0)
     inc4    a0
-    cmp     MainMmmControl_Table+1024, a0
+    cmp     func_484165A4_Var, a0
     lcs
 loc_48416446:
     mov     d3, d0
@@ -37191,22 +37191,22 @@ func_484165A4:
     mov     d0, d1
     cmp     0, d1
     bne     loc_484165B1
-    mov     (MainMmmControl_Table+1028), a0
+    mov     (func_484165A4_Var_2), a0
     bra     loc_484165E0
 loc_484165B1:
-    mov     (MainMmmControl_Table+1028), a0
+    mov     (func_484165A4_Var_2), a0
     cmp     d0, a0
     bcc     loc_484165C3
     mov     0xffffffff, a0
     bra     loc_484165E0
 loc_484165C3:
-    mov     (MainMmmControl_Table+1024), a0
-    mov     (MainMmmControl_Table+1028), d0
+    mov     (func_484165A4_Var), a0
+    mov     (func_484165A4_Var_2), d0
     sub     d1, d0
-    mov     d0, (MainMmmControl_Table+1028)
+    mov     d0, (func_484165A4_Var_2)
     mov     a0, d0
     add     d1, d0
-    mov     d0, (MainMmmControl_Table+1024)
+    mov     d0, (func_484165A4_Var)
 loc_484165E0:
     retf    0, 0
 # Malloc  (CPU 0x484165e3)
@@ -37225,7 +37225,7 @@ Malloc_entry:
     lsr     2, d2
     exth    d0
     call    func_4C03C5AF, 0, 0
-    mov     (MainMmmControl_Table+1032), a2
+    mov     (Malloc_Var), a2
     asl2    d2
     cmp     0, a2
     beq     loc_4841661D
@@ -37260,11 +37260,11 @@ loc_4841661D:
     mov     a0, (a2)
     mov     d2, (a1)
 loc_48416640:
-    mov     (MainMmmControl_Table+1032), a0
+    mov     (Malloc_Var), a0
     cmp     a0, a2
     bne     loc_48416652
     mov     (a2), d0
-    mov     d0, (MainMmmControl_Table+1032)
+    mov     d0, (Malloc_Var)
     bra     loc_48416680
 loc_48416652:
     mov     (a2), d0
@@ -37314,7 +37314,7 @@ loc_484166A5:
     exth    d0
     mov     1, d1
     call    func_4C03C5AF, 0, 0
-    mov     (MainMmmControl_Table+1032), a2
+    mov     (Malloc_Var), a2
     mov     8, d0
     sub     d0, d2
     cmp     0, a2
@@ -37322,7 +37322,7 @@ loc_484166A5:
     mov     d2, a0
     clr     d0
     mov     d0, (a0)
-    mov     a0, (MainMmmControl_Table+1032)
+    mov     a0, (Malloc_Var)
     movhu   (0x5002a004), d0
     mov     1, d1
     exth    d0
@@ -37363,7 +37363,7 @@ loc_4841670F:
     mov     (a2), d0
     mov     d2, a0
     mov     d0, (a0)
-    mov     (MainMmmControl_Table+1032), a0
+    mov     (Malloc_Var), a0
     mov     (4, a0), d0
     mov     d3, a0
     mov     (a0), d1
@@ -37376,7 +37376,7 @@ loc_48416739:
     mov     d2, a0
     mov     a2, (a0)
 loc_4841673D:
-    mov     d2, (MainMmmControl_Table+1032)
+    mov     d2, (Malloc_Var)
     movhu   (0x5002a004), d0
     mov     1, d1
     exth    d0
@@ -38443,7 +38443,7 @@ loc_48416FD4:
     clr     d0
     ret     [d2,d3,a2,a3], 0x38
 loc_48416FEA:
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     0, d0
     beq     loc_48417049
     mov     (0x48, sp), a0
@@ -38644,7 +38644,7 @@ loc_484171FD:
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484172AE
 loc_48417217:
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     0, d0
     beq     loc_48417253
     mov     (GroupBoxProc_Var_5), d0
@@ -38661,7 +38661,7 @@ loc_48417253:
     clr     d0
     ret     [d2,d3,a2,a3], 0x38
 loc_48417257:
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     0, d0
     beq     loc_48417293
     mov     (GroupBoxProc_Var_6), d0
@@ -38694,7 +38694,7 @@ loc_484172B2:
     beq     loc_484172FF
     jmp     loc_4841733F
 loc_484172BF:
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     0, d0
     beq     loc_484172FB
     mov     (GroupBoxProc_Var_5), d0
@@ -38711,7 +38711,7 @@ loc_484172FB:
     clr     d0
     ret     [d2,d3,a2,a3], 0x38
 loc_484172FF:
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     0, d0
     beq     loc_4841733B
     mov     (GroupBoxProc_Var_6), d0
@@ -38812,7 +38812,7 @@ loc_484173F5:
     mov     a3, d0
     mov     EV_SWOFF, d1
     call    SendEvent_entry, [d2,d3], 0x24
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     0, d0
     beq     loc_48417496
     mov     (GroupBoxProc_Var_3), d0
@@ -38966,10 +38966,10 @@ SetDialEnable:
     add     -0x14, sp
 SetDialEnable_entry:
     mov     d0, d2
-    mov     (MainMmmControl_Table+1036), d0
+    mov     (GroupBoxProc_Var_8), d0
     cmp     d2, d0
     beq     loc_48417633
-    mov     d2, (MainMmmControl_Table+1036)
+    mov     d2, (GroupBoxProc_Var_8)
     cmp     0, d2
     bne     loc_4841760C
     mov     (SetDialEnable_Var), d0
@@ -39004,7 +39004,7 @@ SetDialFocus_entry:
     mov     (GroupBoxProc_Var_7), d1
     cmp     d0, d1
     beq     loc_48417687
-    mov     (MainMmmControl_Table+1036), d1
+    mov     (GroupBoxProc_Var_8), d1
     mov     d0, (GroupBoxProc_Var_7)
     cmp     0, d1
     beq     loc_48417687

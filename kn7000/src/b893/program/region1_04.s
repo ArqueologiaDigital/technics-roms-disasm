@@ -9505,7 +9505,7 @@ loc_48487B07:
     asl2    d1
     mov     Str_s_02X, d0
     mov     d0, (0xc, sp)
-    mov     Str_S_H_S_H_S_H_S_H_s_02X, a0
+    mov     DbMemoryDumpProc_Table_4, a0
     mov     (d1, a0), d0
     mov     d0, (0x10, sp)
     mov     d2, d0
@@ -9522,7 +9522,7 @@ loc_48487B3E:
     mov     d0, (0xc, sp)
     mov     d2, d0
     asl2    d0
-    mov     Str_S_H_S_H_S_H_S_H_s_02X, a0
+    mov     DbMemoryDumpProc_Table_4, a0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
     mov     d2, d0
@@ -13952,8 +13952,8 @@ func_4848AB61_entry:
 loc_4848AB70:
     clr     d2
     clr     d1
-    mov     Str_P_21, a2
-    mov     (Str_P_21), a0
+    mov     func_4848AB61_Table, a2
+    mov     (func_4848AB61_Table), a0
     mov     -1, d3
     cmp     d3, a0
     beq     loc_4848ABA3
@@ -19175,7 +19175,7 @@ loc_4848DCC8:
 loc_4848DCCA:
     mov     d2, a0
     add     a0, a0
-    add     data_50001850_p0_1, a0
+    add     TtSqmixer_Table, a0
     movhu   d0, (-2, a0)
     inc     d2
     mov     d2, d1
@@ -19213,7 +19213,7 @@ loc_4848DD16:
     cmp     0x12, d0
     bne     loc_4848DD68
 loc_4848DD3C:
-    movhu   (data_50001850_p0_1+96), d0
+    movhu   (TtSqmixer_Table+96), d0
     cmp     1, d0
     beq     loc_4848DD68
     mov     0x90008041, d0
@@ -19232,25 +19232,25 @@ loc_4848DD68:
     ret     [d2,d3], 0x18
 
 func_4848DD6C:
-    mov     (data_50001850_p0_1+100), a0
+    mov     (func_4848DD6C_Var), a0
     exth    d0
     asl     4, d0
     add     d0, a0
     retf    0, 0
 
 func_4848DD7B:
-    mov     a0, (data_50001850_p0_1+100)
+    mov     a0, (func_4848DD6C_Var)
     retf    0, 0
 
 func_4848DD84:
     exth    d0
-    mov     (data_50001850_p0_1+104), a0
+    mov     (func_4848DD84_Var), a0
     add     d0, d0
     movhu   (d0, a0), d0
     retf    0, 0
 
 func_4848DD91:
-    mov     a0, (data_50001850_p0_1+104)
+    mov     a0, (func_4848DD84_Var)
     retf    0, 0
 # AcMixerScreenProc  (CPU 0x4848dd9a)
 AcMixerScreenProc:
@@ -19513,7 +19513,7 @@ loc_4848E04F:
     cmp     0xffff, d0
     beq     loc_4848E0B5
     movhu   (0x5006b5d4), d0
-    movhu   d0, (data_50001850_p0_1+96)
+    movhu   d0, (TtSqmixer_Table+96)
     mov     0x00008041, d0
     movhu   (0x5006b5d8), d1
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
@@ -34238,8 +34238,8 @@ func_48497297_entry:
 loc_484972A6:
     clr     d2
     clr     d1
-    mov     Str_P_19, a2
-    mov     (Str_P_19), a0
+    mov     func_48497297_Table, a2
+    mov     (func_48497297_Table), a0
     mov     -1, d3
     cmp     d3, a0
     beq     loc_484972D9

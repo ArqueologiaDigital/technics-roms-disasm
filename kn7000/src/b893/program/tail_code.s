@@ -492,9 +492,15 @@ KernelStart:
 #   dispatcher.
 KernelInitHook:
     ret     0, 0
-# func_487B7692  (CPU 0x487b7692): no symbol file names this function
+# KernelTickIsrDefault  (CPU 0x487b7692)
 #   in the data region's tail: no traced path enters it: it follows an unconditional instruction and decodes, to the next function, into code that ends in a return or jump
-func_487B7692:
+#   [INFERENCE] The kernel's default system-tick interrupt handler: acknowledges
+#   interrupt group 6 (clears bits 4..7 of G6ICR 0x34000118), calls func_4C03DC87 (wakes
+#   the task (0x50380000) points at) and returns with `rets` (LibIrqScheduler calls
+#   handlers with `calls (a2)` from the RAM table 0x50380B64).  Nothing enters it: no word
+#   of the image holds its address, and func_48447F33 installs KernelTickHandler for the
+#   same interrupt (number 1, G6ICR) through the def_int service func_4C03DB21.
+KernelTickIsrDefault:
     movhu   (0x34000118), d0
     and     0xff0f, d0
     movhu   d0, (0x34000118)

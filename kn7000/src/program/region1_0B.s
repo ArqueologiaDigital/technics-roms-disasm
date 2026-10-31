@@ -49907,11 +49907,11 @@ loc_4857F319:
     jmp     loc_4857F49D
 loc_4857F322:
     mov     a0, d0
-    mov     (ptrs_486AF1FC), a0
+    mov     (func_4857F2FE_Records), a0
     mov     d0, (0x5009cf80)
     clr     d2
     cmp     0, a0
-    mov     ptrs_486AF1FC, a2
+    mov     func_4857F2FE_Records, a2
     bne     loc_4857F33E
     jmp     loc_4857F480
 loc_4857F33E:
@@ -50304,7 +50304,7 @@ loc_4857F609:
     mov     d0, (0x18, sp)
     inc     d0
     mov     d0, (0x1c, sp)
-    mov     ptrs_486AF2B4, a3
+    mov     func_4857F5ED_Table, a3
 loc_4857F61F:
     mov     a2, d0
     mov     (0x10c, sp), a0
@@ -50466,7 +50466,7 @@ func_4857F73D:
     mov     a0, d0
     add     0x68, d0
     mov     d0, (0x18, sp)
-    mov     ptrs_486AF2C8, a2
+    mov     func_4857F73D_Table, a2
 loc_4857F76B:
     mov     d3, d0
     mov     (0x108, sp), a0
@@ -50666,7 +50666,7 @@ loc_4857F8F2:
     mov     d0, (0x1c, sp)
     mov     sp, a3
     add     0x6c, a3
-    mov     ptrs_486AF2DC, a2
+    mov     func_4857F8B5_Table_2, a2
 loc_4857F902:
     mov     d3, d0
     mov     (0x10c, sp), a0
@@ -50904,7 +50904,7 @@ loc_4857FAED:
     bgt     loc_4857FB2C
     mov     d2, d0
     asl2    d0
-    mov     ptrs_486AF848, a0
+    mov     func_4857FA7E_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4857FB12:
@@ -50998,7 +50998,7 @@ func_4857FB88:
     mov     d0, (0x18, sp)
     mov     sp, a3
     add     0xe8, a3
-    mov     ptrs_486AF48C, a2
+    mov     func_4857FB88_Table_2, a2
 loc_4857FBC6:
     mov     d3, d0
     mov     (0x188, sp), a0
@@ -51101,7 +51101,7 @@ func_4857FC4F:
     mov     d0, (0x18, sp)
     mov     sp, a3
     add     0xec, a3
-    mov     ptrs_486AF520, a2
+    mov     func_4857FC4F_Table_2, a2
 loc_4857FC92:
     mov     d3, d0
     mov     (0x18c, sp), a0
@@ -51220,7 +51220,7 @@ func_4857FD55:
     mov     a0, d0
     add     0x68, d0
     mov     d0, (0x18, sp)
-    mov     ptrs_486AF5B4, a2
+    mov     func_4857FD55_Table, a2
 loc_4857FD83:
     mov     d3, d0
     mov     (0x108, sp), a0
