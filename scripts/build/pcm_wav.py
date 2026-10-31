@@ -16,6 +16,8 @@ run it.
     pcm_wav.py extract MANIFEST REF WAVDIR [--missing]   reference -> WAVs (--missing: only absent ones)
     pcm_wav.py build   MANIFEST WAVDIR PCMDIR            WAVs -> the raw items the source .incbin's
     pcm_wav.py verify  MANIFEST REF                      assert REF -> WAV -> raw == REF, in memory
+    pcm_wav.py retag   MANIFEST WAVDIR                   rewrite each WAV's header chunks (rate, smpl, INFO)
+                                                         from the manifest, keeping its samples exactly
 
 THE MANIFEST is a committed TSV, one row per recording, written by the tree's generator
 (kn7000/tools/gen_wave_s.py; scripts/generators/gen_ic307_wav_manifest.py).  It holds no sample
@@ -178,6 +180,27 @@ def build(manifest, wavdir, pcmdir):
     print(f"pcm_wav.py: {len(rows)} WAV file(s) from {wavdir} -> {pcmdir} ({total:,} bytes of samples)")
 
 
+def retag(manifest, wavdir):
+    """WAVs -> the same WAVs with the manifest's header metadata; the samples (the build's input) stay as
+    they are, and each rewritten file is checked to give back the same raw item"""
+    rows = read_manifest(manifest)
+    wavdir = Path(wavdir)
+    n = 0
+    for r in rows:
+        p = wavdir / r["wav"]
+        old = p.read_bytes()
+        raw = wav_to_rom(old, r, str(p))
+        new = make_wav(raw, r)
+        if wav_to_rom(new, r, str(p)) != raw:
+            raise WavError(f"{p}: retag would change the samples")
+        if new != old:
+            tmp = p.with_suffix(".wav.tmp")
+            tmp.write_bytes(new)
+            tmp.replace(p)
+            n += 1
+    print(f"pcm_wav.py retag: {n} of {len(rows)} WAV file(s) in {wavdir} rewritten, samples unchanged")
+
+
 def verify(manifest, ref):
     rows = read_manifest(manifest)
     img = Path(ref).read_bytes()
@@ -198,12 +221,15 @@ def main():
     a.add_argument("--missing", action="store_true")
     b = sub.add_parser("build"); b.add_argument("manifest"); b.add_argument("wavdir"); b.add_argument("pcmdir")
     v = sub.add_parser("verify"); v.add_argument("manifest"); v.add_argument("ref")
+    t = sub.add_parser("retag"); t.add_argument("manifest"); t.add_argument("wavdir")
     o = ap.parse_args()
     try:
         if o.cmd == "extract":
             extract(o.manifest, o.ref, o.wavdir, o.missing)
         elif o.cmd == "build":
             build(o.manifest, o.wavdir, o.pcmdir)
+        elif o.cmd == "retag":
+            retag(o.manifest, o.wavdir)
         else:
             return verify(o.manifest, o.ref)
     except WavError as e:

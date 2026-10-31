@@ -22,6 +22,8 @@
 #   gen_wave_s.py main baserom/kn7000_wave_main.bin src/wave/main.s
 #   gen_wave_s.py sub  baserom/kn7000_wave_sub.bin  src/wave/sub.s
 #
+# src/wave/root_rates.tsv, when present, gives each recording's header rate and unity note
+# (tools/wave_root_rates.py writes it).
 # src/wave/ic307_names.tsv, when present, names recordings after the KN5000 IC307 wave that holds the
 # same audio (written by ../scripts/generators/gen_ic307_wav_manifest.py); the name goes into the WAV's
 # file name and comment only, not into the source labels.
@@ -41,8 +43,10 @@ TG = {
     "sub":  dict(prefix="Sub", ref="baserom/kn7000_wave_sub.bin", tg="sub", tgname="SUB",
                  title="the SUB tone generator (0x98040000): IC207 (Y) + IC208 (X)"),
 }
-# the WAV header's sample rate: nominal, the rate the pitch law below plays a recording at when the
-# tone generator steps one source sample per output sample (output rate 44.1 kHz)
+# the WAV header's sample rate and smpl unity note: the tone generator's read rate at the recording's
+# root key, from src/wave/root_rates.tsv (tools/wave_root_rates.py: the pitch law, the entry's pitch
+# exponent E and the tone database's key mapping; notes/sound-2026-10-31/README.md).  Without that file,
+# the nominal rate below and the note at which the pitch law reads one source sample per output sample.
 WAV_RATE = 44100
 C7_HZ = 2093.0045                   # pitch18 0x1E200 = note 96 (kn7000_mame notes/g13-waves-2026-10-20)
 
@@ -52,6 +56,20 @@ def unity_note(E):
     The TG's pitch law (kn7000_mame g13, fitted in emulation: 478 of 556 traced voices) is
     rate = 2^((pitch18 - 0x1E200) / 0x3000 + E - 9) * C7 / 44100; rate = 1 at this note."""
     return 96 + 12 * (math.log2(WAV_RATE / C7_HZ) - (E - 9))
+
+
+def load_rates(path):
+    """{label: (rate, unity, root, rate_hz, basis)} from root_rates.tsv, or {} without it"""
+    out = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("#") or line.startswith("label\t"):
+                    continue
+                r = line.rstrip("\n").split("\t")
+                if r[5] != "-":
+                    out[r[0]] = (r[5], r[6], r[3], r[4], r[8])
+    return out
 
 
 def loop_of(words, P):
@@ -110,7 +128,7 @@ def pfield(P):
     return f"PFMT | {e}<<4 | " + ("PCM8 | " if f else "") + GRAN[k]
 
 
-def page_source(s, p, pre, ref, tg, names):
+def page_source(s, p, pre, ref, tg, names, rates):
     base = p * PAGE
     pg = f"{pre}_P{p:02X}"
     n = s[base] // 4
@@ -200,6 +218,9 @@ def page_source(s, p, pre, ref, tg, names):
         Es = sorted({(ents[j][1] >> 4) & 0xFF for j in users[B]})
         # one E for all its entries, and a MIDI note (Main_P00_E0AF's P reads as E 47: left out)
         unity = f"{unity_note(Es[0]):.4f}" if len(Es) == 1 and 0 <= unity_note(Es[0]) < 128 else "-"
+        rate = str(WAV_RATE)
+        if lab in rates:
+            rate, unity, root, hz, basis = rates[lab]
         loops, seen, beyond = [], set(), 0
         for j in users[B]:
             lp = loop_of(recs[j], ents[j][1])
@@ -212,12 +233,15 @@ def page_source(s, p, pre, ref, tg, names):
                 loops.append(f"{j}:{lp[0]}:{lp[1] - 1}")
         cmt = (f"KN7000 {tg['tgname']} tone generator, page 0x{p:02X}, entr{'y' if len(users[B]) == 1 else 'ies'} {who} "
                f"(select 0x{p:02X}{users[B][0]:03X}); {kind}; pitch exponent E {', '.join(map(str, Es))}")
+        if lab in rates:
+            cmt += (f"; {rates[lab][3]} Hz at root key {rates[lab][2]} (TG read rate; "
+                    f"{'from the tone database' if 'zone(s)' in rates[lab][4] else 'pitch exponent only'})")
         if k5:
             cmt += f"; the same audio as KN5000 IC307 {k5} (which holds every other word)"
         if beyond:
             cmt += f"; {beyond} loop(s) end past this item, left out"
         rows.append([lab, f"{2 * (base + a):#x}", f"{2 * (base + b):#x}", "8" if kind == "8-bit" else "16",
-                     str(WAV_RATE), wav, unity, ",".join(loops) or "-", cmt])
+                     rate, wav, unity, ",".join(loops) or "-", cmt])
     if fill:
         w(f"{pg}_Fill:\t.space\t{2 * fill}, 0xff\t; erased fill to the page end")
     return out, dict(n=n, n8=n8, recs=len(starts), recwords=pos - 4 * n, fill=2 * fill), rows
@@ -235,9 +259,10 @@ def main():
     if len(s) != NPAGES * PAGE:
         sys.exit(f"{sys.argv[2]}: {2 * len(s):#x} bytes, expected {2 * NPAGES * PAGE:#x}")
     names = load_names(os.path.join(os.path.dirname(sys.argv[3]), "ic307_names.tsv"))
+    rates = load_rates(os.path.join(os.path.dirname(sys.argv[3]), "root_rates.tsv"))
     body, stats, rows = [], [], []
     for p in range(NPAGES):
-        lines, st, rr = page_source(s, p, tg["prefix"], tg["ref"], tg, names)
+        lines, st, rr = page_source(s, p, tg["prefix"], tg["ref"], tg, names, rates)
         body += lines
         stats.append(st)
         rows += rr
