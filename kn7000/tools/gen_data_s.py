@@ -885,7 +885,38 @@ class Gen:
                 return out
             lab = self.name_at(a, "ResourceIdTrie" if a == root else f"ResourceIdTrieNode_{a:08X}")
             self.add(a, b - a, lab, "trie table", render)
+        if not P.get("readers_ext"):
+            self.trie_leaves(sorted(set(leaves.values())))
         print(f"gen_data_s: resource-id trie: {len(tables)} tables in {len(runs)} runs, {len(leaves)} leaves")
+
+    def trie_leaves(self, leaves):
+        """(the siblings, lane mn10300-rest) The parameter-id trie's leaves, which the KN7000 builds type
+        through the reads of ResourceIdFind's return value (readers_ext): here each leaf from its address
+        up to the next leaf (at most 32 bytes), {u32 id; u16 type; u16 kind; the rest by type}: GetM3Em
+        reads +4 (`movhu (4, a0), d1`), the kind-0 handler +8 / +0xA (min, max) and +0xC..+0xF (block,
+        offset, mask, shift), type 1 +0xC a RAM pointer (probes kn6000_opaque.py / kn2400_opaque.py)."""
+        m = self.m
+        for i, a in enumerate(leaves):
+            e = min(leaves[i + 1] if i + 1 < len(leaves) else a + 32, a + 32)
+            n = e - a
+            while n > 8 and not self.free(a, n):
+                n -= 4
+            if n < 8 or not self.free(a, n) or not self.in_data(a):
+                continue
+            o = self.off(a)
+            if int.from_bytes(m.rom[o:o + 4], "little") >> 24:
+                continue                        # (not an id: 24 bits)
+
+            def render(g, it, o=o, n=n):
+                r = g.rom
+                lid, typ, knd = int.from_bytes(r[o:o + 4], "little"), int.from_bytes(r[o + 4:o + 6], "little"), \
+                    int.from_bytes(r[o + 6:o + 8], "little")
+                out = [f"{it.label}:\t# a parameter-id trie leaf (ResourceIdFind): id 0x{lid:06X}, type {typ}, kind {knd}",
+                       f"\t.long\t0x{lid:06X}", f"\t.short\t{typ}, {knd}"]
+                for k in range(8, n, 16):
+                    out.append("\t.byte\t" + ", ".join(f"0x{x:02x}" for x in r[o + k:o + min(n, k + 16)]) + f"\t# +{k}")
+                return out
+            self.add(a, n, self.name_at(a, f"ResourceIdLeaf_{a:08X}"), "trie leaf", render)
 
     def support_classes(self):
         """(KN7000 program builds) the SupportClass table, registry slot 0xD (InitSptClassTable,

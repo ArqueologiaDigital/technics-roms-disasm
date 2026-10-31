@@ -40,7 +40,7 @@ sys.path.insert(0, os.path.join(HERE, "..", "mn10300-formats-probes"))
 import typer_stats as TS          # noqa: E402
 import field_names_census as FN   # noqa: E402
 
-RULES = ("top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text", "field_pos", "field_slots", "field_bra", "field_keyloop",
+RULES = ("top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text", "sibling_trie", "builtin_pads", "field_pos", "field_slots", "field_bra", "field_keyloop",
          "field_merge", "field_screen")
 
 
