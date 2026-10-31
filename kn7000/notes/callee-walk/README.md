@@ -196,15 +196,19 @@ the new records' pointer fields name 6 more code addresses (`code_refs.txt`: +6,
 
 - **A pointer the routine stores.**  SetApTimer / KillApTimer (a timer record's message argument),
   RegisterObjectTable, PutM3Em (a queue), zlib's `_tr_init` (`s->l_desc.stat_desc = &static_l_desc`) keep the
-  address in memory, and whoever loads it from there later reads the block.  The walk does not follow a
-  store to memory and a load back, so these stay rows, with the reason in their header.
+  address in memory, and whoever loads it from there later reads the block.  Lane mn10300-typer's `mem_ptrs`
+  follows a store to memory and a load back (`../mn10300-typer/README.md`, 3a); it finds SetApTimer's message
+  field, but the only load of it, in ApTimer, hands it to ProcCall, a dispatch through a function pointer, so
+  these blocks still stay rows, with the reason in their header.
 - **Library routines.**  memcpy / strcpy / LibStrlen and the like: the bytes are copied or measured, the
   layout is the copy's reader's.  Kept as rows (or `copied_blocks()`'s typed copies).
-- **Arrays indexed by a loop counter.**  The linear walk takes a counter's first value as a constant
+- ~~**Arrays indexed by a loop counter.**~~ (resolved by lane mn10300-typer, `loop_index`: the counter is an
+  induction variable at the loop head, its start kept.)  The linear walk takes a counter's first value as a constant
   (DrawBitmapSPFast16_Impl's palette loop starts at index 0x20), so such a callee shows one field at +0;
   `arg_kinds()` leaves that to the rows.  A loop-head rule that widens the constants a loop changes would
   turn these into indexed arrays.
-- **Loop-stepped records.**  `param_steps` records a parameter pointer a loop steps by N >= 2 (an array of
+- ~~**Loop-stepped records.**~~ (resolved by lane mn10300-typer, `step_arrays`: arrays of N-byte records,
+  counted by the loop or by the block's extent.)  `param_steps` records a parameter pointer a loop steps by N >= 2 (an array of
   N-byte records), but `arg_kinds()` does not yet write the block as an array of them: the count is not known
   from the walk.
 - **Field names.**  Fields are offset-named except `T_CTSK`'s; naming the others needs reading each routine.

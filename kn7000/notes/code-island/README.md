@@ -179,22 +179,14 @@ and WSA1 images only (no MN10300 tree), so this lane cannot move it.
 
 ## Left open
 
-- **Text typed as pointers** (`P`, mid-instruction): three struct fields hold printable text that
-  happens to read as a code address, e.g. `REC_StartFeatureDemo_Table_p0`'s `p28=loc_48533C3E`, which is
-  the four characters `"><SH"` of the feature demo's XML script (90 records); `loc_48474952` ("RIGH"),
-  `loc_48535550`; and the KN2400's `ptrs_48501B38`, two words typed as pointers by value, the second
-  `loc_48717F40`.  Not code in data: data_structs.py takes a field for a
-  pointer when every record's word there is an address, and the generators then invent an `.equ
-  loc_<ADDR>` for a target inside an instruction.  A fix belongs in the struct typer (a field inside a run
-  of text is text).
-- **func_487B8FB2** (and the KN6000's twin after func_4C3F779E): what enters it.  It is code by its
-  bytes, not by any traced path [INFERENCE: an interrupt entry written to a vector at run time].
-- **Pointer-walk bounds in the data typer**: with a rule "an address the code compares a stepped pointer
-  with (`cmp Addr, aN`) ends the array", KN7000 tables end at their walker's bound instead of running into
-  the small tables after them (a trial run on 941, not kept: MainMmmControl_Table 260 -> 256 entries,
-  func_485371AC_Table 12 -> 6, func_4850DF34_Table 7 -> 5, with the FE_* tables after them typed on their
-  own).  Left out of this lane because it changes many regenerated lines that have nothing to do with code
-  islands; KernelServiceHash's end comes from the `KernelRamLayout` name instead.  Worth a lane of its own.
+- ~~**Text typed as pointers**~~ (`P`, mid-instruction): resolved by lane mn10300-typer
+  (`../mn10300-typer/README.md`, item 1): a word is a pointer into code only on an instruction start
+  (`tools/mn10300_insn_len.py`); `"><SH"`, `"RIGH"`, `"PUSH"` and the KN2400's `ptrs_48501B38` word are text
+  again, and every tree's `P` is 0.
+- ~~**func_487B8FB2**~~: resolved by lane mn10300-typer (item 4): `KernelTickIsrDefault`, the kernel's
+  default tick ISR, which nothing installs (func_48447F33 def_ints KernelTickHandler for the same interrupt).
+- ~~**Pointer-walk bounds in the data typer**~~: resolved by lane mn10300-typer (item 2, `array_end`), with
+  the line churn measured and explained there.
 
 ## Website page draft
 
