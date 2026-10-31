@@ -1436,8 +1436,7 @@ class Gen:
             for k in range(r["count"]):
                 v = u32(r["table"] + 4 * k)
                 rows.append(f"0x{slot:x}\t0x{4 * k:x}\t{hm.sym_by_addr.get(v) or f'func_{v:08X}'}")
-        with open(os.path.join(outdir, "host_calls.tsv"), "w") as f:
-            f.write("\n".join(rows) + "\n")
+        self.write(os.path.join(outdir, "host_calls.tsv"), rows)
 
     def code_read(self, a, n):
         """(lane mn10300-rest) True when an instruction of the converted code reads or indexes the n bytes at
@@ -1991,18 +1990,21 @@ class Gen:
                         tnames[t].append(nm)
         kname = {"program": "FxProgram", "script": "FxScript", "script!": "FxScript", "map": "FxMap",
                  "bytes": "FxStreamBytes"}
+        def fxname(a, base):
+            # (the name a previous generation gave this block stays: a fixpoint with the code)
+            return self.name_at(a, base) if self.fixed.get(a) == base else self.rename_at(a, base)
         for a, e, kind, recs, who in spans:
             types = sorted(w for w in who if isinstance(w, int))
             if a in names:
                 lab = self.name_at(a, names[a])
             elif types:
-                lab = self.rename_at(a, f"{kname[kind]}_{types[0]:03d}")
+                lab = fxname(a, f"{kname[kind]}_{types[0]:03d}")
             elif who:
                 w = sorted(who)[0]
-                lab = self.rename_at(a, f"FxUnitIdleProgram{w.split()[1]}" if w.startswith("unit") else
+                lab = fxname(a, f"FxUnitIdleProgram{w.split()[1]}" if w.startswith("unit") else
                                      f"{kname[kind]}_{a:08X}")
             else:
-                lab = self.rename_at(a, f"{kname[kind]}Orphan_{a:08X}")
+                lab = fxname(a, f"{kname[kind]}Orphan_{a:08X}")
             what = ", ".join(f"type {t}" + (f" ({' / '.join(tnames[t])})" if tnames.get(t) else "") for t in types[:6])
             if len(types) > 6:
                 what += f" and {len(types) - 6} more types"

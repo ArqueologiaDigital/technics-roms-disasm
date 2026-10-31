@@ -51,6 +51,11 @@ PROFILES = {
     "sp7001plugin": ("src/sp7001/plugin/data", "notes/sp7001-plugin-menu-map.md",
                      "SP7001 table-flash XAPR plug-in (Key Soft Service, table 83) GUI menu map"),
 }
+# (lane mn10300-rest) a plug-in's host: the gui_ids.inc whose `# screen X` comments say which screen a title
+# the plug-in names but does not register opens (the host's RegisterTitle calls)
+HOST_IDS = {"hdsx3": "../kn6000/src/program/data/gui_ids.inc",
+            "sp7001plugin": "src/sp7001/program/data/gui_ids.inc"}
+HOST_SCREENS = {}
 HEADING = "KN7000 GUI menu map (program build 941)"
 BLOCKS = "OT blocks"           # what a Viewable table is called (the KN6000 has no OT blocks)
 LINK_FIELDS = ("title", "exit", "titleNow1", "titleExit1", "titleNow2", "titleExit2", "titleNow3",
@@ -212,7 +217,8 @@ def render(titles, objs, order, block_of):
     for t in sorted(titles):
         if not t.startswith("TT_"):
             continue
-        rows.append((t, titles[t] or "", ", ".join(leads.get(t, [])[:6]) + (" ..." if len(leads.get(t, [])) > 6 else "")))
+        scr = titles[t] or (f"{HOST_SCREENS[t]} (the host's)" if t in HOST_SCREENS else "")
+        rows.append((t, scr, ", ".join(leads.get(t, [])[:6]) + (" ..." if len(leads.get(t, [])) > 6 else "")))
     w = [max(len(x) for x in col) for col in zip(("title", "screen", "led to from"), *rows)]
     L[-2] = "| " + " | ".join(h.ljust(w[i]) for i, h in enumerate(("title", "screen", "led to from"))) + " |"
     L[-1] = "|" + "|".join("-" * (x + 2) for x in w) + "|"
@@ -234,6 +240,12 @@ def main():
         SRC = os.path.normpath(os.path.join(KN7, src))
         a.out = a.out or os.path.normpath(os.path.join(KN7, out))
     a.out = a.out or OUT
+    hp = HOST_IDS.get(a.profile) if a.profile else None
+    if hp and os.path.exists(os.path.join(KN7, hp)):
+        for ln in open(os.path.join(KN7, hp), encoding="latin-1"):
+            mo = re.match(r"\.equ\s+(TT_\w+),\s*\S+\s*#\s*screen\s+(\S+)", ln)
+            if mo:
+                HOST_SCREENS[mo.group(1)] = mo.group(2)
     _m, titles, objs, order, block_of = read_source()
     text = render(titles, objs, order, block_of)
     if a.check:

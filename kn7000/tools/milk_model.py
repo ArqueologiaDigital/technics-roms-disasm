@@ -239,6 +239,7 @@ def parse_calls(src_glob, by_name, mem=None):
     for f in sorted(glob.glob(src_glob)):
         regval, stack, func = {}, {}, None
         for i, l in enumerate(open(f, encoding="latin-1").read().split("\n")):
+            l = l.split("#", 1)[0].rstrip()      # (a plug-in's `calls (aN)  # host ...` comments)
             m = re.match(r"^([A-Za-z_]\w*):", l)
             # a function label resets the tracker; a branch label (loc_..., and
             # gen_image_s.py's <entry>_L<hex>) does not
