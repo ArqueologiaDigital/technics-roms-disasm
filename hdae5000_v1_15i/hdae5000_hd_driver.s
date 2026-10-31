@@ -709,9 +709,9 @@ HDAE5000_HDAETitleFunc:
 	; Set initial disk status
 	ld xwa, HDAE5000_OBJ_HDDMENU			; 40 00 00 7f 00
 	ld	(0x23d2d2), xwa
-	cp (0x22ad52:24), 0x01; c2 52 ad 22 3f 01
+	cp (HDAE5000_RAM_FlsAutoLoadPending:24), 0x01; c2 52 ad 22 3f 01
 	jrl nz, .Lri_done			; 7e xx xx
-	cp (0x22ad53:24), 0x01; c2 53 ad 22 3f 01
+	cp (HDAE5000_RAM_FlsSeqStopPending:24), 0x01; c2 53 ad 22 3f 01
 	jrl nz, .Lri_done			; 7e xx xx
 	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD			; 40 34 01 7f 00
 	ld	(0x23d2d2), xwa
@@ -759,14 +759,14 @@ HDAE5000_HDAETitleFunc:
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
 
-	; Check disk presence flags
-	cp (0x22ad52:24), 0x01; c2 52 ad 22 3f 01
+	; an FLS AUTO LOAD chain is pending and the sequencer stopped meanwhile?
+	cp (HDAE5000_RAM_FlsAutoLoadPending:24), 0x01; c2 52 ad 22 3f 01
 	jr nz, .Lri_done			; 6e xx
-	cp (0x22ad53:24), 0x01; c2 53 ad 22 3f 01
+	cp (HDAE5000_RAM_FlsSeqStopPending:24), 0x01; c2 53 ad 22 3f 01
 	jr nz, .Lri_done			; 6e xx
 
-	; Clear flag and register event 0x01CA0000
-	ld (0x22ad53:24), 0x00; f2 53 ad 22 00 00
+	; then clear the stop flag and post EVT_HDAE_SEQ_STOP to the FLS load page
+	ld (HDAE5000_RAM_FlsSeqStopPending:24), 0x00; f2 53 ad 22 00 00
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)

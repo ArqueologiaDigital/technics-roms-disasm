@@ -507,9 +507,10 @@ AudioCmd_40_5F_Done:
 ; DSP_Init_Channels - Initialize DSP channel configuration
 ; Entry: None
 ; Exit:  None
-; Notes: Writes test pattern 0x5A5A5A5A to 4 channels via DSP_Write_Channel
-;        Then initializes 4 channel base registers at 0x00130000
-;        Memory-mapped DSP register space at 0x00130000
+; Notes: MEANT to write the pattern 0x5A5A5A5A to the 8 registers of each of the 4 channels of
+;        the 0x130000 block, then 0x01 to each channel's register ch*0x20+0x1F.  Only the second
+;        half works: see the CORRECTION under DSP_Write_Channel.  The block's owning chip is not
+;        identified (subcpu/boot/kn5000_subcpu_boot.s, TONE_GEN_BASE).
 ; ----------------------------------------------------------------------------
 DSP_Init_Channels:	; 01FC95h
 	link	xiz, 0xfff8
@@ -563,7 +564,13 @@ DSP_Init_Channels_Loop:
 ; DSP_Init_Channels_FromBootTable calls it that way (A = ch, XBC = &table[ch]).  Note that
 ; DSP_Init_Channels above passes the pattern pointer in XWA and the channel in BC -- taken
 ; literally, each of its four calls selects the register group from the low byte of the
-; pointer and reads 8 bytes from address BC = 0..3.  Not checked on an emulator.
+; pointer and reads 8 bytes from address BC = 0..3.  MEASURED in MAME 2026-10-31
+; (notes/open4-kn5000-b/hwaudio/probes/subcpu_130000_writes.txt): all four calls write registers
+; 0x10-0x17 (the pointer's low byte selects channel 0), with data 0x00 read from SFR addresses
+; 0-10, and the 0x5A5A5A5A pattern never reaches the block.  The mode loop below then writes
+; 0x1F1F / 0x0101 as two 16-bit stores per channel: latch 0x1F/0x3F/0x5F/0x7F, data 0x01.
+; Over a cold boot these 72 writes (at 4.993 s) and the boot ROM's 72 same-shaped ones are
+; the only accesses to 0x130000-0x130003; nothing reads the block.
 DSP_Write_Channel:	; 01FCDEh
 	pushw de
 	sll a, 5	; Channel * 32 (register spacing)
@@ -2255,10 +2262,11 @@ FIFO1K_PutBytes:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (Payload_Bss_Start+0x1db8:24)
+FIFO1K_PutBytes_Loop:
 	ld	a, (xiy)
 	calr	FIFO_Engine1K_Put
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, FIFO1K_PutBytes_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -2368,10 +2376,11 @@ FIFO256_PutBytes:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (Payload_Bss_Start+0x21c2:24)
+FIFO256_PutBytes_Loop:
 	ld	a, (xiy)
 	calr	FIFO_Engine256_Put
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, FIFO256_PutBytes_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -2478,10 +2487,11 @@ FIFO512_PutBytes:
 	ld	bc, (xiz+8)
 	ld	xiy, (xiz+10)
 	lda	xde, (Payload_Bss_Start+0x22cc:24)
+FIFO512_PutBytes_Loop:
 	ld	a, (xiy)
 	calr	FIFO_Engine512_Put
 	inc	1, xiy
-	djnz16	bc, -10
+	djnz16	bc, FIFO512_PutBytes_Loop
 	pop	xde
 	pop	xix
 	pop	xiy
@@ -3047,8 +3057,9 @@ E2_Wait_MSTAT1_Set:
 ; ===========================================================================
 ; InterCPU_E1_DMA_Transfer - E1 command bulk data transfer (Sub→Main CPU)
 ; ===========================================================================
-; Entry: XWA = destination address (in main CPU memory)
-;        XDE = source address (in sub CPU memory)
+; Entry: XWA = source address in sub CPU memory (kept at (0x1110): the phase-2 DMA source)
+;        XDE = destination address in main CPU memory (stored at (0x10DE) with BC: the
+;              6-byte header phase 1 sends, DMA channel 2 source register 0x08 = 0x10DE)
 ;        BC = byte count
 ; Exit:  Data transferred to main CPU via two-phase E1 protocol
 ; Notes: Called from Cmd_Check_E2_Pending to send response data.
@@ -5316,7 +5327,7 @@ ChanStruct_Init_Entry_AltPtr:
 	ld a, (xsp + 4)
 	extz wa
 	sla wa, 2
-	lda xbc, (Voice_Pitch_Table_High:24)
+	lda xbc, (Voice_Part_PoolPtr_ModeB:24)
 	ld	xwa, (xbc+wa)
 	ld	(xhl+de), xwa
 
@@ -5553,10 +5564,12 @@ Voice_Manager_PollBank_Return:
 ;      XBC = pointer to a 0xFF-terminated byte list of pool indices in priority order
 ;            (the ROM lists live at 0x00F60B / 0x00F61A / 0x00F628).
 ; Out: XHL = pointer to a voice node, or 0 if every listed pool is empty.
-; Fast path: if the 32-bit global at 0x1345 is non-zero it is returned unconditionally
-;   (a forced/override node).
+; Fast path: the 32-bit word at 0x1345 is the FREE list, the class-6 head of pool 17
+;   (pool record 0x132B = 0x112D + 17*30, filled by Voice_Retire_ToFreePool): a free
+;   voice is always taken first.  (This was read as a "forced/override node".)
 ; Walk: for each byte b of the list - if bit7 is set the pool head is read from the
-;   global pointer array at 0x130F indexed by (b & 0x7F)*4, otherwise from the array
+;   class heads of pool 16 (record 0x130D, heads at 0x130F; the victims that
+;   Voice_Allocate_Nodes_StealAtQuota parks there) indexed by (b & 0x7F)*4, otherwise from the array
 ;   embedded in the part descriptor at (*XWA)+2 indexed by b*4. First non-null wins.
 ; Called only from Voice_Allocate_Nodes (0x0223CF).
 ; *** BUG-RELEVANT: this returning 0 is how 'stops allocating voices' manifests; it is
@@ -5621,28 +5634,28 @@ NoteChain_FindNode_NotFound:
 	ret
 
 ; FREE-VOICE / CANDIDATE-NODE SEARCH, secondary form (voice stealing).
-; In:  XWA = part descriptor; the local pool array is at XWA+2.
-; Out: XHL = first non-empty pool head, or 0.
-; Uses the fixed ROM priority list at 0x00F603 (06 05 02 04 03 01 00 FF) and, unlike
-; Voice_Find_Candidate, has no bit7 escape to the global array and no 0x1345 override.
-; Called from Voice_Allocate_Nodes_WalkNext (0x0224DF) when the part is already at its
+; In:  XWA = a 30-byte pool record (node+0x1D: +0 quota, +1 count, +2 seven class heads).
+; Out: XHL = first non-empty class head, or 0.
+; Uses the fixed ROM order Voice_StealPoolOrder (classes 6 5 2 4 3 1 0: decayed, released,
+; then sounding) and, unlike Voice_Find_Candidate, neither pool 16 nor the free list.
+; Called from Voice_Allocate_Nodes_StealAtQuota (0x0224DF) when the part is already at its
 ; polyphony limit, i.e. this is the steal-a-voice search.
-NoteChain_FindNode_B:
+Voice_FindStealCandidate:
 	inc 2, xwa
 	ld xde, xwa
-	lda xwa, (Voice_KeyTable_Remapping:24)
+	lda xwa, (Voice_StealPoolOrder:24)
 	ld xbc, xwa
 	cp (xbc), 0xFF
-	jr z, NoteChain_FindNode_B_NotFound
+	jr z, Voice_FindStealCandidate_NotFound
 
 ; Walk the 0x00F603 list, returning the first non-null local pool head.
-NoteChain_FindNode_B_Walk:
+Voice_FindStealCandidate_Walk:
 	ld a, (xbc)
 	extz wa
 	sla wa, 2
 	ld	xwa, (xde+wa)
 	or xwa, xwa
-	jr z, NoteChain_FindNode_B_Advance
+	jr z, Voice_FindStealCandidate_Advance
 	ld a, (xbc)
 	extz wa
 	sla wa, 2
@@ -5650,13 +5663,13 @@ NoteChain_FindNode_B_Walk:
 	ret
 
 ; Advance to the next list byte, stop on the 0xFF terminator.
-NoteChain_FindNode_B_Advance:
+Voice_FindStealCandidate_Advance:
 	inc 1, xbc
 	cp (xbc), 0xFF
-	jr nz, NoteChain_FindNode_B_Walk
+	jr nz, Voice_FindStealCandidate_Walk
 
 ; Not-found exit: XHL = 0.
-NoteChain_FindNode_B_NotFound:
+Voice_FindStealCandidate_NotFound:
 	ld xhl, 0:i3
 	ret
 
@@ -5731,7 +5744,7 @@ Voice_Allocate_Nodes_ProcessSlot:
 	and a, 0xF
 	extz wa
 	muls wa, 0x6
-	lda xbc, (Voice_SFX_ModulationTable:24)
+	lda xbc, (Voice_LayerClassTable:24)
 	exts xwa
 	add xwa, xbc
 	ld (xsp + 8), xwa
@@ -5840,7 +5853,7 @@ Voice_Allocate_Nodes_UpdateLists:
 	ld xwa, xiz
 	ld xbc, (4393:16)
 	calr DList_Relink_Adjacent_Offsets16
-	jr Voice_Allocate_Nodes_AdvancePriority
+	jr Voice_Allocate_Nodes_CountAgainstQuota
 
 ; Global chain was empty: this node becomes the head (0x1129) and self-links.
 Voice_Allocate_Nodes_SetGlobalHead:
@@ -5848,21 +5861,21 @@ Voice_Allocate_Nodes_SetGlobalHead:
 	ld xwa, xiz
 	calr DList_Unlink_SelfLink_Offsets16
 
-; Polyphony accounting: part active count is (part_desc+1), limit is (part_desc+0); if below the limit just increment it.
-Voice_Allocate_Nodes_AdvancePriority:
+; Polyphony accounting: the pool record (node+0x1D) holds the quota at +0 and the count at +1; below the quota just count the node.
+Voice_Allocate_Nodes_CountAgainstQuota:
 	ld xwa, (xiz + 29)
 	ld xbc, xwa
 	ld a, (xwa + 1)
 	cp a, (xbc)
-	jr nc, Voice_Allocate_Nodes_WalkNext
+	jr nc, Voice_Allocate_Nodes_StealAtQuota
 	ld xwa, (xiz + 29)
 	incm8 1, (xwa + 1)
 	jr Voice_Allocate_Nodes_WriteSlot
 
-; At the limit - steal: NoteChain_FindNode_B picks a victim node, it is re-keyed into the list at 0x130D with its own (node+0x21) key, the count is bumped and flag bit4 is set on it.
-Voice_Allocate_Nodes_WalkNext:
+; At the quota - steal: Voice_FindStealCandidate picks a victim in the same pool, it moves to pool 16 (record 0x130D) under its own class (node+0x21), the count is bumped and flag bit4 is set on it.
+Voice_Allocate_Nodes_StealAtQuota:
 	ld xwa, (xiz + 29)
-	calr NoteChain_FindNode_B
+	calr Voice_FindStealCandidate
 	ld xiz, xhl
 	ld xwa, xiz
 	or xwa, xwa
@@ -11152,7 +11165,7 @@ Voice_PortaLevel_ScaleAndPack:
 ; 0x0451EE, 0x0451F0, 0x0451F2, 0x0451F4, 0x0451F6, 0x0451DC, 0x0451DE (TG regs 0x8C0,
 ; 0x500, 0x900, 0x940, 0x980, 0x9C0, 0xA00, 0xA40, 0x440, 0x480).
 ; In: XWA = per-voice record, XHL = its tone record. Then it selects the reg-0x180 value
-; from the per-voice routing byte at 0x04138E + channel*0x11F: value 1 -> voice+43 = 0,
+; from the part's TG pan mode byte (CC 0x9D) at 0x04138E + channel*0x11F: value 1 -> voice+43 = 0,
 ; value 2 -> voice+43 = 0x7F, anything else -> voice+43 = tonerec[0]. voice+43 is stored to
 ; 0x0451D8 (TG reg 0x180) and 0x0451E0 (TG reg 0x4C0) is zeroed.
 ; NOT teardown-only, and "silence" is not established. The only two callers are
@@ -12004,7 +12017,7 @@ Voice1_UpdatePitch_WriteAltFreq:
 	call ToneGen_WriteExtParams_15
 
 ; Shared tail (also the no-slot bail-out target of Voice_SubVoice_ResolveSlot). Reads the
-; per-voice routing byte at 0x04138E + channel*0x11F to pick the reg-0x180 value.
+; part's TG pan mode byte (CC 0x9D) at 0x04138E + channel*0x11F to pick the reg-0x180 value.
 Voice1_UpdatePitch_WriteStereoField:
 	ld xwa, (xsp + 22)
 	ld a, (xwa + 4)
@@ -12434,6 +12447,8 @@ Voice_ComputePitchBend2_Write:
 	ld (Payload_Bss_Start+0x635c:24), de
 	ret
 
+; A = channel (part), BC = a voice's gate/control word.  Returns HL = BC patched by the part's gate routing
+; mode byte (CC 0x9B, 0x04138D + part*0x11F): see Voice_CC_SetGateRoutingMode.
 Voice_Apply_GateRouting:
 	ld e, a
 	extz de
@@ -17931,12 +17946,13 @@ VoiceCC_DataTable_0280FE_Next:
 	nop
 	pop	xiz
 	ret
-; WA = voice, XBC = source record (always 0x0451CC at the call sites).
-; Writes TG register 0x04 (latch voice+0x0100) from XBC+0x08 and register 0x05
-; (latch voice+0x0140) from XBC+0x0A.  Both call sites (0x028FC6, 0x028FDA) invoke it
-; immediately after TVF_Emit_Registers (0x024444) / _DispatchB (0x024554), which is
-; what identifies registers 4/5 as the stereo pan pair.
-ToneGen_WriteVoice_Pan_Pair:
+; ToneGen_WriteVoice_TvfPair: Writes voice WA's TVF (filter) register pair: TG 0x100 + voice <- (XBC + 8) and
+;   0x140 + voice <- (XBC + 10), each latch / data write with P6.7 low / high and a three-`nop` settling gap.
+;   Basis: callers + body -- TVF_Refresh_Sounding_Voices calls it with XBC = the staging record 0x0451CC right
+;   after TVF_Emit_Registers / Voice_PanReg_WriteDispatchB put the clamped cutoff word and the second filter
+;   word at staging +8 / +10; 0x100 / 0x140 is the filter pair (tone-generator.md).  Was
+;   ToneGen_WriteVoice_Pan_Pair: those registers are not the pan.
+ToneGen_WriteVoice_TvfPair:
 	dec	4, xsp
 	pushw	iz
 	ld	(xsp+2), xbc
@@ -17950,8 +17966,8 @@ ToneGen_WriteVoice_Pan_Pair:
 	ld	xwa, (xsp+2)
 	ld	wa, (xwa+8)
 	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Pan_Pair_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Pan_Pair_Next:
+	jr	ToneGen_WriteVoice_TvfPair_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
+ToneGen_WriteVoice_TvfPair_Next:
 	nop
 	nop
 	nop
@@ -17964,8 +17980,8 @@ ToneGen_WriteVoice_Pan_Pair_Next:
 	ld	xwa, (xsp+2)
 	ld	wa, (xwa+10)
 	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Pan_Pair_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Pan_Pair_Next2:
+	jr	ToneGen_WriteVoice_TvfPair_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
+ToneGen_WriteVoice_TvfPair_Next2:
 	nop
 	nop
 	nop
@@ -19029,10 +19045,13 @@ Voice_CC_SetModWheelRange_Else:
 	andw	(xbc+wa), 0xfffd
 	ret
 
-; Voice_CC_SetReverbDepth -- CC 0x91: Store reverb depth
-; Stores value at voice + 0x7F (base 0x04137F). Range 0x00-0x7F.
-; WA = part, C = CC 0x91 value 0..0x7F.  Stores the byte at 0x04137F + part*0x11F (part+0x17).
-Voice_CC_SetReverbDepth:
+; WA = part, C = CC 0x91 value.  Stores the byte at 0x04137F + part*0x11F (part+0x17): the part's own
+; velocity-switch configuration, the per-part twin of the global byte 0x04134B (Voice_SetVelSwitchConfig,
+; F0 50 91).  Its only readers are the Voice_Env_ApplyVelocity_Type0/_Type2 dispatchers (sub-cases 2 and 3):
+; bit 3 (type 0/1) or bit 4 (type 2) set = do nothing, else bit 0 (case 2) or bit 0 with bit 1 clear
+; (case 3) installs the patch's +0x2A octave-shift nibble.  Main-CPU sender: SwbtB2_Code9A_Listener (parts
+; 0..2).  Was called "reverb depth" (no reader supports that), renamed 2026-10-31.
+Voice_CC_SetVelSwitchConfig:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (Payload_Bss_Start+0x2509:24)
@@ -19067,9 +19086,12 @@ Voice_CC_SetSustainLength:
 	ld	(xde+wa), c
 	ret
 
-; Voice_CC_SetDelayDepth -- CC 0x9B: Store delay depth at voice+0x25
-; WA = part, C = CC 0x9B value.  Stores the byte at 0x04138D + part*0x11F (part+0x25).
-Voice_CC_SetDelayDepth:
+; WA = part, C = CC 0x9B value.  Stores the byte at 0x04138D + part*0x11F (part+0x25).  Its only reader is
+; Voice_Apply_GateRouting, which patches the gate/control word of every voice of the part: low nibble 0 = force
+; bits [11:9] to 7, 1 = leave them, 2 = force them to 1; high nibble 0x00 / 0x10 / 0x20 does the same to
+; [14:12].  Reset value 1.  No main-CPU sender was found in v10 (the CC numbers above 0x7F cannot arrive
+; from MIDI IN).  Was called "delay depth", renamed 2026-10-31.
+Voice_CC_SetGateRoutingMode:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (Payload_Bss_Start+0x2517:24)
@@ -19096,9 +19118,12 @@ VoiceCC_SetKeyScaling_ClearBit:
 	andw	(xbc+wa), 0xfeff
 	ret
 
-; Voice_CC_SetDelayFeedback -- CC 0x9D: Store delay feedback at voice+0x26
-; WA = part, C = CC 0x9D value.  Stores the byte at 0x04138E + part*0x11F (part+0x26).
-Voice_CC_SetDelayFeedback:
+; WA = part, C = CC 0x9D value.  Stores the byte at 0x04138E + part*0x11F (part+0x26).  Its readers
+; (Voice_Level_ClearAllOutputRegs, Voice1_UpdatePitch_WriteStereoField, Voice_Step_ExprRamp) choose the low 7
+; bits of the voice's TG register 0x180 (pan on technics-docs/tone-generator.md, 0x40 = centre): 1 = 0x00,
+; 2 = 0x7F, anything else = the voice's own value.  Reset value 0.  No main-CPU sender was found in v10.
+; Was called "delay feedback", renamed 2026-10-31.
+Voice_CC_SetTgPanMode:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (Payload_Bss_Start+0x2518:24)
@@ -19743,10 +19768,10 @@ Voice_AllNotes_SustainRetrigger_Exit:
 ; XWA = part record (voice list at +5).  Walks the list, classifies each voice by
 ; (voice+0x01)&0x3C and calls TVF_Emit_Registers (0x024444) for 4/0x20 or
 ; Voice_PanReg_WriteDispatchB (0x024554) for 0x10, then pushes the result to TG registers
-; 4 and 5 via ToneGen_WriteVoice_Pan_Pair with XBC = the staging record 0x0451CC.
+; 0x100/0x140 + voice (the filter pair) via ToneGen_WriteVoice_TvfPair with XBC = the staging record 0x0451CC.
 ; TVF_Refresh_Sounding_Voices: Re-emits the TVF (filter) registers of every voice in a part's voice list: classes
 ;   (voice+1) & 0x3C = 4 / 0x20 through TVF_Emit_Registers, 0x10 through Voice_PanReg_WriteDispatchB (class 8
-;   skipped), then TG 0x100/0x140 via ToneGen_WriteVoice_Pan_Pair -- the filter counterpart of
+;   skipped), then TG 0x100/0x140 via ToneGen_WriteVoice_TvfPair -- the filter counterpart of
 ;   Pitch_Refresh_Sounding_Voices. Basis: caller + body -- AudioChannel_Handler_Cmd03 calls it after storing the
 ;   part's cutoff offset part+0x1F, which TVF_Emit_Offset_Reg100 adds to the cutoff field.
 ;   (scripts/lanes/verify_mislabel_markers.py lists the old name.)
@@ -19783,7 +19808,7 @@ VoiceCC_DataTable_028F75_Skip:
 	ld	a, (xiz)
 	extz	wa
 	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Pan_Pair
+	calr	ToneGen_WriteVoice_TvfPair
 	jr	VoiceCC_DataTable_028F75_Join
 VoiceCC_DataTable_028F75_Skip2:
 	ld	xwa, xbc
@@ -19791,7 +19816,7 @@ VoiceCC_DataTable_028F75_Skip2:
 	ld	a, (xiz)
 	extz	wa
 	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Pan_Pair
+	calr	ToneGen_WriteVoice_TvfPair
 VoiceCC_DataTable_028F75_Join:
 	inc	1, xiz
 	cp8_imm_ri	xiz, 0x40	; cp (XIZ),0x40
@@ -21824,8 +21849,9 @@ Voice_PortamentoSlots_WriteHW_Exit:
 ; Notes: Handles standard MIDI CCs: Mod Wheel(1), Volume(7), Pan(10),
 ;        Expression(11), Sustain(64), and the KN5000 part parameters the main CPU's SndPart_SetParam sends
 ;        as the controller of their Lsw number: 0x5B reverb send, 0x5D DSP-effect send, 0x80 bend range,
-;        0x81 tuning, 0x82 key shift, 0x95 glide pedal, 0x97 sustain length, 0x9C key scaling (0x5E, 0x91,
-;        0x9B and 0x9D are not sent by SndPart_SetParam; their meaning is not established)
+;        0x81 tuning, 0x82 key shift, 0x95 glide pedal, 0x97 sustain length, 0x9C key scaling.  0x91 (the
+;        part's velocity-switch configuration) comes from SwbtB2_Code9A_Listener; 0x9B (gate routing override)
+;        and 0x9D (TG pan override) are read by the voice code but no main-CPU sender was found in v10
 ; ===========================================================================
 ; MIDI Control Change entry point, called from MIDI_Dispatch (0x034D93 family).
 ; XWA -> 4-byte message: +0 status, +1 part 0..0x19, +2 controller, +3 value.
@@ -21843,17 +21869,17 @@ Voice_CtrlChange:
 	jrl nc, Voice_CC_Exit
 	ld a, (xiz + 2)
 	cp a, 0x9D
-	jrl z, Voice_CC_9D
+	jrl z, Voice_CC_TgPanMode
 	cp a, 0x9C
 	jrl z, Voice_CC_KeyScaling
 	cp a, 0x9B
-	jrl z, Voice_CC_9B
+	jrl z, Voice_CC_GateRoutingMode
 	cp a, 0x97
 	jrl z, Voice_CC_SustainLength
 	cp a, 0x95
 	jrl z, Voice_CC_GlidePedal
 	cp a, 0x91
-	jrl z, Voice_CC_91
+	jrl z, Voice_CC_VelSwitchConfig
 	cp a, 0x5E
 	jrl z, Voice_CC_Portamento
 	cp a, 0x5D
@@ -22054,8 +22080,8 @@ Voice_CC_KeyShift:
 	calr Voice_CC_SetKeyShift
 	jr Voice_CC_Exit
 
-; CC 0x91 (proprietary): reverb depth -> Voice_CC_SetReverbDepth.
-Voice_CC_91:
+; CC 0x91 (proprietary): the part's velocity-switch configuration -> Voice_CC_SetVelSwitchConfig.
+Voice_CC_VelSwitchConfig:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22063,7 +22089,7 @@ Voice_CC_91:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetReverbDepth
+	calr Voice_CC_SetVelSwitchConfig
 	jr Voice_CC_Exit
 
 ; CC 0x95: the part's GLIDE PEDAL switch (main-CPU Lsw 0x603, sent as 0 / 0x7F) -> Voice_CC_SetGlidePedal.
@@ -22090,8 +22116,8 @@ Voice_CC_SustainLength:
 	calr Voice_CC_SetSustainLength
 	jr Voice_CC_Exit
 
-; CC 0x9B: delay depth -> Voice_CC_SetDelayDepth.
-Voice_CC_9B:
+; CC 0x9B (proprietary): the part's gate-word routing override -> Voice_CC_SetGateRoutingMode.
+Voice_CC_GateRoutingMode:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22099,7 +22125,7 @@ Voice_CC_9B:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetDelayDepth
+	calr Voice_CC_SetGateRoutingMode
 	jr Voice_CC_Exit
 
 ; CC 0x9C: the part's KEY SCALING switch (main-CPU Lsw 0x602, sent as 0 / 0x7F) -> Voice_CC_SetKeyScaling.
@@ -22114,8 +22140,8 @@ Voice_CC_KeyScaling:
 	calr Voice_CC_SetKeyScaling
 	jr Voice_CC_Exit
 
-; CC 0x9D: delay feedback -> Voice_CC_SetDelayFeedback.
-Voice_CC_9D:
+; CC 0x9D (proprietary): the part's TG register 0x180 (pan) override -> Voice_CC_SetTgPanMode.
+Voice_CC_TgPanMode:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22123,7 +22149,7 @@ Voice_CC_9D:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetDelayFeedback
+	calr Voice_CC_SetTgPanMode
 
 ; Common exit: pop XIZ, ret.  Also the landing pad for the five ignored channel-mode CCs.
 Voice_CC_Exit:
@@ -22689,10 +22715,10 @@ Voice_SystemMsg_Ignore:
 ; DSP_Config_Init, DSP_Reset, Voice_Reset_Engine(0), DSP_ResetWriteBufferPtr,
 ; VoiceSlot_ClearAll and `0x041342 = 0`), and from CC 0x79.
 ; Per part 0..0x19 it applies, in order: mod wheel 0, volume 0x7F, pan 0x40, expression 0x7F,
-; sustain 0, sostenuto 0, soft 0, portamento 0, Voice_PortamentoSlots_WriteHW,
-; Voice_NoteState_Clear, Voice_SetLFO_ActiveFlag, portamento rate 2, portamento depth 0x80,
-; portamento time 0x40, reverb depth 0, chorus enable 0, chorus depth 6, delay depth 1,
-; delay enable 0, delay feedback 0.
+; sustain 0, reverb send 0, DSP-effect send 0, portamento 0, Voice_PortamentoSlots_WriteHW,
+; Voice_NoteState_Clear, Voice_SetLFO_ActiveFlag, bend range 2, tuning 0x80 (centre),
+; key shift 0x40 (none), velocity-switch configuration 0, glide pedal 0, sustain length 6, gate routing
+; mode 1, key scaling 0, TG pan mode 0.
 ; Then globally: Voice_SetPolyphonyMode(2), the two ret-stubs with 0x7F,
 ; Voice_SetMasterTuneAndApply(0x40), Voice_SetPitchBendRange(0), Voice_SetKeyShiftEnable(0),
 ; ScaleTune_Set_Global_Mode(0), Voice_SetRhythmMode(0), Voice_SetVelSwitchConfig(0),
@@ -22765,7 +22791,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetReverbDepth
+	calr Voice_CC_SetVelSwitchConfig
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
@@ -22777,7 +22803,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 1:i3
-	calr Voice_CC_SetDelayDepth
+	calr Voice_CC_SetGateRoutingMode
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
@@ -22785,7 +22811,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetDelayFeedback
+	calr Voice_CC_SetTgPanMode
 	inc1b_erp 0xFB
 	cp_erpb 0xFB, 0x1A
 	jrl c, Voice_ResetAllControllers_LoopBody
@@ -28120,11 +28146,11 @@ ToneGen_WriteReg0840_Shadow2E_Next:
 ; ** Not present in either symbol source; it lives inside the same misidentified .byte blob. **
 ; WA = channel, XBC = shadow; writes 0x0100 + ch <- +0x08 and 0x0140 + ch <- +0x0A.
 ; Unreferenced in v142.
-; ToneGen_WriteVoice_TvfRegs_Dup: Unreferenced, instruction-for-instruction copy of ToneGen_WriteVoice_Pan_Pair:
+; ToneGen_WriteVoice_TvfRegs_Dup: Unreferenced, instruction-for-instruction copy of ToneGen_WriteVoice_TvfPair:
 ;   writes the voice's TVF (filter) register pair, TG 0x100+ch <- shadow +0x08 and 0x140+ch <- +0x0A. Basis: the live
 ;   twin's callers -- TVF_Refresh_Sounding_Voices (TVF_Refresh_Sounding_Voices) calls the twin right after
 ;   TVF_Emit_Registers / Voice_PanReg_WriteDispatchB have put the clamped cutoff word and the second filter word into
-;   0x0451D4 / 0x0451D6 = staging +0x08 / +0x0A. (The twin's 'Pan' name is contradicted by the same evidence.)
+;   0x0451D4 / 0x0451D6 = staging +0x08 / +0x0A.
 ToneGen_WriteVoice_TvfRegs_Dup:
 	dec	4, xsp
 	pushw iz
@@ -41907,8 +41933,6 @@ DSP_System_Init_Continue:
 	call VoiceSlot_ClearAll
 	ld (Payload_Bss_Start+0x24cc:24), 0x00
 	jp Voice_ResetAllControllers
-; A stray one-byte `ret` immediately after DSP_System_Init's tail-jump.  No caller and no
-; table reference anywhere in the authoritative source -- alignment padding or dead code.
 ; DSP_InitHandler_NullStub: A lone `ret`: the do-nothing handler that entries 1-3 of
 ;   DSP_InitHandler_Pointers point to beside entry 0 = DSP_System_Init -- same shape as DSP2_InitTask_NullStub /
 ;   DSP_ResetTask_NullStub. Basis: table + body; the old header's 'no caller and no table reference' is wrong.

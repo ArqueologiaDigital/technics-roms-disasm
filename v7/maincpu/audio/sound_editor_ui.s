@@ -7540,7 +7540,7 @@ SeMenu_PopupDialog_Close_Data:
 	ld	xhl, (xbc+wa)
 	call	(xhl)
 SeMenu_ValueEditor_Init:
-	cp	(0x8c9c:16), 32
+	cp	(ACTIVE_TITLE:16), 32
 
 	jrl	nz, SeMenu_ValueEditor_Data3
 
@@ -8542,9 +8542,9 @@ SeMenu_DrawKeyboardOctave:
 	popw iy
 	popw ix
 	ld C, 0x05:opc
-	ld XIZ,SeMenu_ShowConfirmDialog_Code
+	ld XIZ,SeMenu_KeyboardOctave_BlackKeyX
 .Lc_f0f2e0:
-SeMenu_ShowConfirmDialog_Data_Code_Loop2:
+SeMenu_DrawKeyboardOctave_BlackKeyLoop:
 	ld HL,(XIZ)
 	ld DE,(XIZ+0x02)
 	add XIZ,0x00000004
@@ -8586,23 +8586,16 @@ SeMenu_DrawKeyboardOctave_Loop:
 	dec	1, c
 	jr	nz, SeMenu_DrawKeyboardOctave_Loop
 	ret
-SeMenu_ShowConfirmDialog_Code:
-	pop	sr
-	nop
-	halt
-	nop
-	reti
-	nop
-	push	0
-	retd	4352
-	nop
-	zcf
-	nop
-	pop_a
-	nop
-	ldf	0
-	pop_f
-	nop
+; SeMenu_KeyboardOctave_BlackKeyX: 5 x {x1, x2}: the x offsets of the five black keys in one 28-px octave
+;   of the sound editor's mini keyboard (C#, D#, F#, G#, A#). Basis: reader + bytes --
+;   SeMenu_DrawKeyboardOctave draws each as an op-09 line from (IX + x1, IY + 1) to (IX + x2, IY + 7).
+;   (Was disassembled as 13 dead instruction lines, SeMenu_ShowConfirmDialog_Code.)
+SeMenu_KeyboardOctave_BlackKeyX:
+	.short	3, 5
+	.short	7, 9
+	.short	15, 17
+	.short	19, 21
+	.short	23, 25
 ; SeMenu_DrawSelectedPartEnvCurve: Draws the current part's (0x65D) envelope-curve picture: its frame, then by bits
 ;   7-5 of the part's curve-type byte (0x662+part, 0x668+part in 4-part mode) a SeEnvCurve_BitmapTable bitmap or (type
 ;   3) a framed box, at that part's cell. Basis: callers + body.
@@ -9628,7 +9621,7 @@ SeFilBpf1_DrawStaticScreen:
 	ld	xiy, SeFilBpf1_Records
 	ld	xix, SeFilBcf1_Records
 	call	SeGfx_DrawStaticList
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilBpf1_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilBpf1_DrawStaticScreen_Skip:
@@ -9650,7 +9643,7 @@ SeFilBcf1_DrawStaticScreen:
 	ld	xiy, SeFilBcf1_Records
 	ld	xix, SeEnv1_DrawEnvelopeLayout_Records3
 	call	SeGfx_DrawStaticList
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilBcf1_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilBcf1_DrawStaticScreen_Skip:
@@ -10696,7 +10689,7 @@ SePitFilEnv2_DrawField:
 SeCtr2_DrawStaticScreen:
 	; data, not code: SeCtr2_DrawStaticScreen is reached only as data (1 data), and its instruction decode held normal (scripts/converters/data_as_code_to_bytes.py).
 	call	SeMenu_EqEdit_SetupHelper1
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeCtr2_DrawStaticScreen_Skip
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeCtr2_PageFrame

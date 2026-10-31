@@ -1,0 +1,43 @@
+armed 19 taps
+HIT  RESET_HANDLER                    t=  0.000000 s  pc=EF03C6  XIZ=00000000
+NEAR Boot_InitIOPorts                 t=  0.003487 s  pc=EF050B  XIZ=00000000
+HIT  SubCPU_Send_Payload              t=  0.600227 s  pc=EF068A  XIZ=000200AD
+NEAR sub:RESET_ENTRY                  t=  0.600391 s  pc=FF842F  XIZ=00000000
+sample frame 60 t=1.000 mainPC=EF3436 subPC=FF842D
+sample frame 120 t=2.000 mainPC=EF344E subPC=FF8429
+HIT  SLIDE_Parse_Header               t=  2.064647 s  pc=EF41E3  XIZ=00050000
+NEAR SLIDE_Decompress_4K_Done         t=  2.068192 s  pc=EF40B5  XIZ=003E0007
+sample frame 180 t=2.999 mainPC=EF4083 subPC=FF8414
+HIT  SLIDE_Decompress_4K_Done         t=  3.085985 s  pc=EF40B8  XIZ=003E000B
+HIT  SubCPU_Payload_TransferPart2     t=  3.086011 s  pc=EF072A  XIZ=00050000
+NEAR SubCPU_Payload_DelayLoop_Long    t=  3.959312 s  pc=EF077D  XIZ=00050000
+HIT  sub:PAYLOAD_ENTRY                t=  3.960601 s  pc=000400  XIZ=00000000
+HIT  sub:RESET                        t=  3.960601 s  pc=01F924  XIZ=00000000
+NEAR SubCPU_Payload_Done              t=  3.960771 s  pc=EF0787  XIZ=00000001
+HIT  SubCPU_Payload_DelayLoop_Long    t=  3.960771 s  pc=EF0781  XIZ=00000001
+NEAR sub:Audio_System_Init            t=  3.968435 s  pc=01FAC7  XIZ=00000000
+HIT  sub:Audio_System_Init            t=  3.968435 s  pc=01FACB  XIZ=00000000
+HIT  sub:DSP_System_Init              t=  3.968456 s  pc=034C45  XIZ=00000000
+sample frame 240 t=3.999 mainPC=EF0789 subPC=0383B6
+HIT  SubCPU_Payload_Verify            t=  4.864515 s  pc=EF092B  XIZ=000200AD
+HIT  ScreenGroup_Dispatch             t=  4.865145 s  pc=FDDB46  XIZ=000200AD
+sample frame 300 t=4.999 mainPC=EF3441 subPC=03D22E
+HIT  InitializeGraphics               t=  5.505162 s  pc=FAA547  XIZ=00130000
+NEAR Boot_DisplayScreen               t=  5.741250 s  pc=EF061E  XIZ=000200AD
+HIT  Boot_DisplayScreen               t=  5.741250 s  pc=EF0620  XIZ=000200AD
+sample frame 360 t=6.145 mainPC=FC4EE5 subPC=036044
+sample frame 420 t=7.337 mainPC=FDFBD6 subPC=01F8DC
+HIT  MainLoop                         t=  7.693235 s  pc=EF1245  XIZ=000200AD
+HIT  AcWelcomScreenProc               t=  7.748644 s  pc=F7F4A6  XIZ=00EF0000
+sample frame 480 t=8.528 mainPC=FE1F35 subPC=03D11E
+sample frame 540 t=9.719 mainPC=F99408 subPC=01F87B
+sample frame 600 t=10.910 mainPC=FAA356 subPC=01F861
+sample frame 660 t=12.101 mainPC=F55748 subPC=026D3E
+sample frame 720 t=13.293 mainPC=FACE29 subPC=021C2F
+sample frame 780 t=14.484 mainPC=F568ED subPC=01FB37
+sample frame 840 t=15.675 mainPC=FEBF7F subPC=01F8DB
+sample frame 900 t=16.866 mainPC=F572E6 subPC=034D24
+not reached in 16.866 s of emulated time:
+  Boot_InitIOPorts
+  SubCPU_Payload_Done
+  sub:RESET_ENTRY

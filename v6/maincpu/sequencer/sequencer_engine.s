@@ -4270,15 +4270,15 @@ SeqNoteCh_HandleProgramChange:
 
 SeqNoteCh_HandleOtherEvents:
 	cp e, 0x86
-	jrl z, SeqNote_UpdatePositionB_Entry
+	jrl z, SeqNoteCh_HandleAccStopEvent
 	ld	c, (xsp+18)
 	extz	bc
 	cp	e, 133
 	jrl	z, SeqNote_NoteOff_WritePart_Skip
 	cp e, 0xd2
-	jrl z, SeqNote_NoteOff_CheckActive2
+	jrl z, SeqNoteCh_HandleEventD2
 	cp e, 0x80
-	jrl z, SeqNote_NoteOff_CheckActive
+	jrl z, SeqNoteCh_HandleTempoEvent
 	cp e, 0xd3
 	jr z, SeqNoteCh_HandleEventD3
 	cp e, 0xd1
@@ -4341,7 +4341,7 @@ SeqNote_SendNoteOff:
 	ld (xsp + 4), 0x4
 	jrl SeqNote_WriteEventToBuffer
 
-SeqNote_NoteOff_CheckActive:
+SeqNoteCh_HandleTempoEvent:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
@@ -4349,11 +4349,11 @@ SeqNote_NoteOff_CheckActive:
 	ld	a, (xsp + 18)
 	extz wa
 	lda	xbc, (xsp + 8)
-	calr AccPedalConfig_ApplyTempo
+	calr SeqEvt_ApplyTempoEvent
 	ld (xsp + 4), l
 	jr SeqNote_ConditionalWriteToBuffer
 
-SeqNote_NoteOff_CheckActive2:
+SeqNoteCh_HandleEventD2:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
@@ -4366,7 +4366,7 @@ SeqNote_NoteOff_WritePart:
 	ld (xsp + 4), 0x5
 	jr SeqNote_WriteEventToBuffer
 
-; port: v7's label SeqNote_UpdatePositionA_Entry is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label SeqNoteCh_HandleAccStartEvent is not in v6 -- no v6 bytes correspond to what it named
 SeqNote_NoteOff_WritePart_Skip:
 	ld	wa, bc
 	calr Chan_IsActive
@@ -4378,7 +4378,7 @@ SeqNote_NoteOff_WritePart_Skip:
 	calr SeqNote_UpdatePlayPosition_A
 	jr SeqNote_ConditionalWriteToBuffer
 
-SeqNote_UpdatePositionB_Entry:
+SeqNoteCh_HandleAccStopEvent:
 	ld	a, (xsp + 18)
 	extz wa
 	calr Chan_IsActive
@@ -4586,7 +4586,7 @@ SeqNote_WriteChannelEvt:
 SeqNote_ProcessAlt_80Tempo:
 	ld wa, bc
 	ld xbc, xde
-	calr AccPedalConfig_ApplyTempo
+	calr SeqEvt_ApplyTempoEvent
 	ldfr_berp L, 0xfb
 	jrl SeqMidi_EmitEventToBuffer
 
@@ -4948,7 +4948,7 @@ AccPedalDirect_Return:
 	inc 4, xsp
 	ret
 
-AccPedalConfig_ApplyTempo:
+SeqEvt_ApplyTempoEvent:
 	pushw_erp 0xfa
 	ld e, (xbc + 2)
 	ld a, (xbc + 3)
@@ -8320,7 +8320,7 @@ PartVoiceStatus_ShiftDone:
 	ld	(xbc), 211
 	ld	(xbc+1), 0
 	lda	xde, (xbc+2)
-	ld	a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld	a, (ANALOG_EXPRESSION_PEDAL_VALUE:16)
 	ld	(xde), a
 	res	7, a
 	ld	(xde), a
@@ -12882,31 +12882,34 @@ SeqVoice_InitReturnZero:
 	ld wa, 0:i3
 	jrl Part_InitVoiceDefaults
 
-; AppEvent extended handler
-AppEvent_ExtendedHandler:
-	ld xwa, AppEvent_ExtendedHandler_Table
-	jr Part_LoadAndApplyVoiceTable
-SeqPart_ByteBlockA95A_Helper:
-	ld xwa, AppEvent_ExtendedHandler_Table_2
-	jr Part_LoadAndApplyVoiceTable
+; SeqError_MapViaTableE: GLOBAL_ERROR_CODE = SeqError_MapTableE[SEQ_ERROR_CODE] (SeqError_MapToGlobal). Basis:
+;   callers + body -- the velocity-edit exit (SeqPart_VelEditReturn).
+SeqError_MapViaTableE:
+	ld xwa, SeqError_MapTableE
+	jr SeqError_MapToGlobal
+SeqError_MapViaTableF:
+	ld xwa, SeqError_MapTableF
+	jr SeqError_MapToGlobal
 
-Part_ApplyVoiceTableB:
-	ld xwa, Part_ApplyVoiceTableB_Table
-	jr Part_LoadAndApplyVoiceTable
+SeqError_MapViaTableB:
+	ld xwa, SeqError_MapTableB
+	jr SeqError_MapToGlobal
 
-Part_ApplyVoiceTableA:
-	ld xwa, Part_ApplyVoiceTableA_Table
-	jr Part_LoadAndApplyVoiceTable
+SeqError_MapViaTableA:
+	ld xwa, SeqError_MapTableA
+	jr SeqError_MapToGlobal
 
-Part_ApplyVoiceTableC:
-	ld xwa, Part_ApplyVoiceTableC_Table
-	jr Part_LoadAndApplyVoiceTable
+SeqError_MapViaTableC:
+	ld xwa, SeqError_MapTableC
+	jr SeqError_MapToGlobal
 
-SeqVoice_ApplyTableEntry:
-	ld xwa, SeqVoice_ApplyTableEntry_Table
-	jr Part_LoadAndApplyVoiceTable
+SeqError_MapViaTableD:
+	ld xwa, SeqError_MapTableD
+	jr SeqError_MapToGlobal
 
-Part_LoadAndApplyVoiceTable:
+; SeqError_MapToGlobal: GLOBAL_ERROR_CODE = (XWA)[SEQ_ERROR_CODE]: translates the sequencer's error code into
+;   the global one through the table each SeqError_MapViaTable* entry above loads. Basis: callers + body.
+SeqError_MapToGlobal:
 	ld c, (SEQ_ERROR_CODE:16)
 
 	extz bc
@@ -21601,7 +21604,7 @@ AppEvent_ToggleSetStatus:
 	call ApPostEvent
 	ld a, (xsp + 4)
 	extz wa
-	jr SeqState_Case4
+	jr AppEvent_DispatchToVoiceHandler
 
 AppEvent_HandleStateChange:
 	ld	iz, (0x288c:16)
@@ -21613,7 +21616,6 @@ AppEvent_HandleStateChange:
 	cp	(0x288c:16), iz
 	jrl z, AppEvent_PopIzSkip2Ret
 
-; Sequencer state case 0
 AppEvent_HandleStateChange_Join:
 	ld de, 1:i3
 	ld a, (xsp + 4)
@@ -21621,7 +21623,6 @@ AppEvent_HandleStateChange_Join:
 	jr z, AppEvent_HandleStateChange_Join2
 	slaa de
 
-; Sequencer state case 1
 AppEvent_HandleStateChange_Join2:
 	ld wa, de
 	and	de, (0x288c:16)
@@ -21629,7 +21630,6 @@ AppEvent_HandleStateChange_Join2:
 	ld l, 0x1:opc
 	jr AppEvent_HandleStateChange_Join3
 
-; Sequencer state case 2
 AppEvent_HandleStateChange_Skip:
 	and wa, bc
 	ld l, 0x0:opc
@@ -21637,7 +21637,6 @@ AppEvent_HandleStateChange_Skip:
 	jr z, AppEvent_HandleStateChange_Join3
 	ld l, 0x2:opc
 
-; Sequencer state case 3
 AppEvent_HandleStateChange_Join3:
 	ld h, 0x0:opc
 	extz xhl
@@ -21652,8 +21651,7 @@ AppEvent_HandleStateChange_Join3:
 	ld a, (xsp + 4)
 	extz wa
 
-; Sequencer state case 4
-SeqState_Case4:
+AppEvent_DispatchToVoiceHandler:
 	calr SeqVoice_DispatchEventToHandler
 	jrl AppEvent_PopIzSkip2Ret
 
@@ -28993,7 +28991,7 @@ SeqPart_CompareLong:
 	call Part_StealAndReallocVoices
 	ld wa, iz
 	call Part_StealAndReallocVoices
-	call Part_ApplyVoiceTableA
+	call SeqError_MapViaTableA
 	call SeqVoice_InitReturnZero
 
 SeqPart_CompareLongReturn:
@@ -29354,7 +29352,7 @@ SeqPart_InitWithValidation:
 	cp hl, 0:i3
 	jr z, SeqPart_InitValidOk
 	ld (SEQ_ERROR_CODE:16), 3
-	call Part_ApplyVoiceTableA
+	call SeqError_MapViaTableA
 	call SeqVoice_InitReturnZero
 	ldw hl, 0xffff
 	ret
@@ -29381,7 +29379,7 @@ SeqPart_CheckVoiceType:
 
 SeqPart_CheckVoiceIsDrum:
 	ld (SEQ_ERROR_CODE:16), 9
-	call Part_ApplyVoiceTableA
+	call SeqError_MapViaTableA
 	call SeqVoice_InitReturnZero
 	ld l, 0xff:opc
 	ret
@@ -29421,7 +29419,7 @@ SeqPart_CheckBothCompatible:
 	calr SeqPart_SetupWithDispatch
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, SeqPart_CompatReturn
-	call Part_ApplyVoiceTableA
+	call SeqError_MapViaTableA
 	call SeqVoice_InitReturnZero
 	ldw hl, 0xffff
 	ret
@@ -29436,7 +29434,7 @@ SeqPart_SetupLeftPos:
 	call Part_ValidateVoiceChannel
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, SeqPart_SetupLeftDone
-	call Part_ApplyVoiceTableA
+	call SeqError_MapViaTableA
 	call SeqVoice_InitReturnZero
 	ldw hl, 0xffff
 	ret
@@ -29453,7 +29451,7 @@ SeqPart_SetupRightPos:
 	call Part_ValidateVoiceChannel
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, SeqPart_SetupRightDone
-	call Part_ApplyVoiceTableA
+	call SeqError_MapViaTableA
 	call SeqVoice_InitReturnZero
 	ldw hl, 0xffff
 	ret
@@ -29654,7 +29652,7 @@ SeqPart_ByteBlockA207_Code_Skip9:
 SeqPart_ByteBlockA207_Join:
 	ldmm8	SEQ_ERROR_CODE, 9756
 SeqPart_ByteBlockA207_Join2:
-	call	SeqVoice_ApplyTableEntry
+	call	SeqError_MapViaTableD
 	call	SeqVoice_InitReturnZero
 	pop	qiz
 	ret
@@ -29891,7 +29889,7 @@ SeqPart_SingleLoadReturn:
 	ldmm8	SEQ_ERROR_CODE, 9756
 
 SeqPart_SingleLoadCleanup:
-	call SeqVoice_ApplyTableEntry
+	call SeqError_MapViaTableD
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret
@@ -30449,7 +30447,7 @@ SeqPart_ByteBlockA95A_Code_Epilogue:
 	pop qiz
 	ret
 SeqPart_ByteBlockA95A_Code_Helper:
-	call	SeqPart_ByteBlockA95A_Helper
+	call	SeqError_MapViaTableF
 	call	SeqVoice_InitReturnZero
 	res	0, (10333:16)
 	res	1, (10333:16)
@@ -31190,7 +31188,7 @@ SeqPart_DualLoadNavigate:
 	calr SeqPart_MainNavigate
 
 SeqPart_DualLoadExit:
-	call Part_ApplyVoiceTableB
+	call SeqError_MapViaTableB
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret
@@ -32392,7 +32390,7 @@ SeqPart_TransposeReturn:
 	ldmm8	SEQ_ERROR_CODE, 9756
 
 SeqPart_TransposeExit:
-	call Part_ApplyVoiceTableC
+	call SeqError_MapViaTableC
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret
@@ -32563,7 +32561,7 @@ SeqPart_VelEditStartWalk:
 	ldmm8	SEQ_ERROR_CODE, 9756
 
 SeqPart_VelEditReturn:
-	call AppEvent_ExtendedHandler
+	call SeqError_MapViaTableE
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret
@@ -33233,7 +33231,7 @@ SeqPart_PartSelectReturn:
 	ldmm8	SEQ_ERROR_CODE, 9756
 
 SeqPart_PartSelectExit:
-	call SeqVoice_ApplyTableEntry
+	call SeqError_MapViaTableD
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret
@@ -33426,7 +33424,7 @@ SeqPart_VoiceCheckMultiDone:
 	ldmm8	SEQ_ERROR_CODE, 9756
 
 SeqPart_VoiceCheckReturn:
-	call SeqVoice_ApplyTableEntry
+	call SeqError_MapViaTableD
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret
@@ -33601,7 +33599,7 @@ SeqPart_VoiceCheckWalkLoop:
 	ldmm8	SEQ_ERROR_CODE, 9756
 
 SeqPart_VoiceCheckWalkDone:
-	call SeqVoice_ApplyTableEntry
+	call SeqError_MapViaTableD
 	call SeqVoice_InitReturnZero
 	popw_erp 0xfa
 	ret

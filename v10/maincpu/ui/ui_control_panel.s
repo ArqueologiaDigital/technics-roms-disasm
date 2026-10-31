@@ -857,15 +857,20 @@ DrawLine_Execute:
 	inc 8, xsp
 	retd 0x2
 
-DrawProgressRectH:
+; Arrow_DrawHorizontal: Paints ArrowProc's arrow into the client box at XWA (four words): DE percent of the box width is the
+;   head, a fan of DrawLineHelper lines one pixel apart that widen towards the base, the rest is the
+;   shaft on the box's centre line; BC and the two pushed words go to DrawLineHelper, the first pushed
+;   word also picks the pointing direction (1, 2, 3) (retd 4). Basis: callers + body -- ArrowProc's
+;   EVT_PAINT calls it when view word +24 is 0 with DE = instance +28 and BC = view +22.
+Arrow_DrawHorizontal:
 	lda xsp, (xsp - 30)
 	push xiz
 	ld (xsp + 32), bc
 	ld bc, (xsp + 38)
 	cp bc, 3:i3
-	jr z, DrawProgH_Mode3Setup
+	jr z, Arrow_DrawHorizontal_Mode3Setup
 	cp bc, 2:i3
-	jr z, DrawProgH_Mode2Setup
+	jr z, Arrow_DrawHorizontal_Mode2Setup
 	cp bc, 1:i3
 	scc16 nz, bc
 	ld (xsp + 8), bc
@@ -875,7 +880,7 @@ DrawProgressRectH:
 	ld bc, 4:i3
 	ldirw
 
-DrawProgH_CalcDimensions:
+Arrow_DrawHorizontal_CalcDimensions:
 	lda xhl, (xsp + 24)
 	ld bc, (xhl + 4)
 	ld wa, bc
@@ -899,19 +904,19 @@ DrawProgH_CalcDimensions:
 	ld (xsp + 4), wa
 	sub (xsp + 4), iz
 	cpw (xsp + 8), 0x0
-	jr z, DrawProgH_SetLeftPos
+	jr z, Arrow_DrawHorizontal_SetLeftPos
 	ld (xsp + 20), bc
 	ldw (xsp + 6), 0xffff
-	jr DrawProgH_SetupCenter
+	jr Arrow_DrawHorizontal_SetupCenter
 
-DrawProgH_Mode2Setup:
+Arrow_DrawHorizontal_Mode2Setup:
 	ldw (xsp + 8), 0x1
-	jr DrawProgH_InitFromRect
+	jr Arrow_DrawHorizontal_InitFromRect
 
-DrawProgH_Mode3Setup:
+Arrow_DrawHorizontal_Mode3Setup:
 	ldw (xsp + 8), 0x0
 
-DrawProgH_InitFromRect:
+Arrow_DrawHorizontal_InitFromRect:
 	ldw (xsp + 10), 0x1
 	lda xhl, (xsp + 24)
 	ld bc, (xwa + 2)
@@ -922,14 +927,14 @@ DrawProgH_InitFromRect:
 	ld (xhl + 4), bc
 	ld wa, (xwa + 4)
 	ld (xhl + 6), wa
-	jr DrawProgH_CalcDimensions
+	jr Arrow_DrawHorizontal_CalcDimensions
 
-DrawProgH_SetLeftPos:
+Arrow_DrawHorizontal_SetLeftPos:
 	ld wa, (xhl)
 	ld (xsp + 20), wa
 	ldw (xsp + 6), 0x1
 
-DrawProgH_SetupCenter:
+Arrow_DrawHorizontal_SetupCenter:
 	lda xhl, (xsp + 16)
 	lda xiy, (xsp + 20)
 	ld wa, (xiy)
@@ -956,9 +961,9 @@ DrawProgH_SetupCenter:
 	ld (xhl + 2), bc
 	ldw (xsp + 14), 0x0
 	cp iz, 0:i3
-	jr ule, DrawProgH_AfterLoop1
+	jr ule, Arrow_DrawHorizontal_AfterLoop1
 
-DrawProgH_Loop1:
+Arrow_DrawHorizontal_Loop1:
 	lda xwa, (xsp + 20)
 	lda xbc, (xsp + 16)
 	pushm (xsp + 10)
@@ -969,26 +974,26 @@ DrawProgH_Loop1:
 	add (xsp + 16), wa
 	incw 1, (xsp + 14)
 	cp (xsp + 14), iz
-	jr c, DrawProgH_Loop1
+	jr c, Arrow_DrawHorizontal_Loop1
 
-DrawProgH_AfterLoop1:
+Arrow_DrawHorizontal_AfterLoop1:
 	lda xwa, (xsp + 24)
 	lda xbc, (xsp + 20)
 	cpw (xsp + 8), 0x0
-	jr z, DrawProgH_SkipFill1
+	jr z, Arrow_DrawHorizontal_SkipFill1
 	ld wa, (xwa + 4)
 	sub wa, iz
 	ld (xbc), wa
 	ldw (xsp + 6), 0xffff
-	jr DrawProgH_AfterFill1
+	jr Arrow_DrawHorizontal_AfterFill1
 
-DrawProgH_SkipFill1:
+Arrow_DrawHorizontal_SkipFill1:
 	ld wa, (xwa)
 	add wa, iz
 	ld (xbc), wa
 	ldw (xsp + 6), 0x1
 
-DrawProgH_AfterFill1:
+Arrow_DrawHorizontal_AfterFill1:
 	lda xix, (xsp + 16)
 	lda xhl, (xsp + 20)
 	ld wa, (xhl)
@@ -1006,9 +1011,9 @@ DrawProgH_AfterFill1:
 	ld (xix + 2), bc
 	ldw (xsp + 14), 0x0
 	cpw (xsp + 4), 0x0
-	jr ule, DrawProgH_AfterLoop2
+	jr ule, Arrow_DrawHorizontal_AfterLoop2
 
-DrawProgH_Loop2:
+Arrow_DrawHorizontal_Loop2:
 	lda xwa, (xsp + 20)
 	lda xbc, (xsp + 16)
 	pushm (xsp + 10)
@@ -1019,9 +1024,9 @@ DrawProgH_Loop2:
 	incw 1, (xsp + 14)
 	ld wa, (xsp + 14)
 	cp wa, (xsp + 4)
-	jr c, DrawProgH_Loop2
+	jr c, Arrow_DrawHorizontal_Loop2
 
-DrawProgH_AfterLoop2:
+Arrow_DrawHorizontal_AfterLoop2:
 	lda xix, (xsp + 16)
 	lda xhl, (xsp + 20)
 	ld wa, (xhl)
@@ -1039,9 +1044,9 @@ DrawProgH_AfterLoop2:
 	ld (xix + 2), bc
 	ldw (xsp + 14), 0x0
 	cpw (xsp + 4), 0x0
-	jr ule, DrawProgH_AfterLoop3
+	jr ule, Arrow_DrawHorizontal_AfterLoop3
 
-DrawProgH_Loop3:
+Arrow_DrawHorizontal_Loop3:
 	lda xwa, (xsp + 20)
 	lda xbc, (xsp + 16)
 	pushm (xsp + 10)
@@ -1052,22 +1057,27 @@ DrawProgH_Loop3:
 	incw 1, (xsp + 14)
 	ld wa, (xsp + 14)
 	cp wa, (xsp + 4)
-	jr c, DrawProgH_Loop3
+	jr c, Arrow_DrawHorizontal_Loop3
 
-DrawProgH_AfterLoop3:
+Arrow_DrawHorizontal_AfterLoop3:
 	pop xiz
 	lda xsp, (xsp + 30)
 	retd 0x4
 
-DrawProgressRectV:
+; Arrow_DrawVertical: Paints ArrowProc's arrow into the client box at XWA (four words): DE percent of the box height is the
+;   head, a fan of DrawLineHelper lines one pixel apart that widen towards the base, the rest is the
+;   shaft on the box's centre line; BC and the two pushed words go to DrawLineHelper, the first pushed
+;   word also picks the pointing direction (1, 2, 3) (retd 4). Basis: callers + body -- ArrowProc's
+;   EVT_PAINT calls it when view word +24 is set with DE = instance +28 and BC = view +22.
+Arrow_DrawVertical:
 	lda xsp, (xsp - 32)
 	push xiz
 	ld (xsp + 34), bc
 	ld bc, (xsp + 40)
 	cp bc, 3:i3
-	jr z, DrawProgV_Mode3Setup
+	jr z, Arrow_DrawVertical_Mode3Setup
 	cp bc, 2:i3
-	jr z, DrawProgV_Mode2Setup
+	jr z, Arrow_DrawVertical_Mode2Setup
 	cp bc, 1:i3
 	scc16 nz, bc
 	ld (xsp + 6), bc
@@ -1077,7 +1087,7 @@ DrawProgressRectV:
 	ld bc, 4:i3
 	ldirw
 
-DrawProgV_CalcDimensions:
+Arrow_DrawVertical_CalcDimensions:
 	lda xhl, (xsp + 26)
 	lda xix, (xhl + 4)
 	ld bc, (xix)
@@ -1103,21 +1113,21 @@ DrawProgV_CalcDimensions:
 	ldto_werp WA, 0xfa
 	sub (xsp + 4), wa
 	cpw (xsp + 6), 0x0
-	jr z, DrawProgV_SetTopPos
+	jr z, Arrow_DrawVertical_SetTopPos
 	ld (xsp + 22), bc
 	ld wa, (xix)
 	subw_erp WA, 0xfa
 	ld (xsp + 18), wa
-	jr DrawProgV_SetupCenter
+	jr Arrow_DrawVertical_SetupCenter
 
-DrawProgV_Mode2Setup:
+Arrow_DrawVertical_Mode2Setup:
 	ldw (xsp + 6), 0x1
-	jr DrawProgV_InitFromRect
+	jr Arrow_DrawVertical_InitFromRect
 
-DrawProgV_Mode3Setup:
+Arrow_DrawVertical_Mode3Setup:
 	ldw (xsp + 6), 0x0
 
-DrawProgV_InitFromRect:
+Arrow_DrawVertical_InitFromRect:
 	ldw (xsp + 8), 0x1
 	lda xhl, (xsp + 26)
 	ld bc, (xwa + 2)
@@ -1128,16 +1138,16 @@ DrawProgV_InitFromRect:
 	ld (xhl + 4), bc
 	ld wa, (xwa + 4)
 	ld (xhl + 6), wa
-	jr DrawProgV_CalcDimensions
+	jr Arrow_DrawVertical_CalcDimensions
 
-DrawProgV_SetTopPos:
+Arrow_DrawVertical_SetTopPos:
 	ld wa, (xhl)
 	ld (xsp + 22), wa
 	ld wa, (xhl)
 	addw_erp WA, 0xfa
 	ld (xsp + 18), wa
 
-DrawProgV_SetupCenter:
+Arrow_DrawVertical_SetupCenter:
 	ld bc, (xiy)
 	ld wa, (xde)
 	sub wa, bc
@@ -1218,16 +1228,16 @@ DrawProgV_SetupCenter:
 	lda xbc, (xsp + 22)
 	lda xde, (xsp + 18)
 	cpw (xsp + 6), 0x0
-	jr z, DrawProgV_SkipFill
+	jr z, Arrow_DrawVertical_SkipFill
 	ld wa, (xwa + 4)
 	subw_erp WA, 0xfa
 	ld (xbc), wa
 	sub wa, (xsp + 4)
 	inc 1, wa
 	ld (xde), wa
-	jr DrawProgV_AfterFill
+	jr Arrow_DrawVertical_AfterFill
 
-DrawProgV_SkipFill:
+Arrow_DrawVertical_SkipFill:
 	ld wa, (xwa)
 	addw_erp WA, 0xfa
 	ld (xbc), wa
@@ -1235,7 +1245,7 @@ DrawProgV_SkipFill:
 	dec 1, wa
 	ld (xde), wa
 
-DrawProgV_AfterFill:
+Arrow_DrawVertical_AfterFill:
 	lda xwa, (xsp + 22)
 	lda xhl, (xsp + 26)
 	lda xde, (xhl + 2)
@@ -1277,12 +1287,12 @@ ArrowProc:
 	push xiz
 	ld (xsp + 16), xwa
 	cp xbc, EVT_PAINT
-	jr z, DrawDouble_Inner
+	jr z, ArrowProc_Inner
 	ld xwa, (xsp + 16)
 	call InheritedProc
-	jr DrawDouble_Return
+	jr ArrowProc_Return
 
-DrawDouble_Inner:
+ArrowProc_Inner:
 	ld xwa, (xsp + 16)
 	call InheritedProc
 	ld xwa, (xsp + 16)
@@ -1299,21 +1309,21 @@ DrawDouble_Inner:
 	ld de, (xbc + 28)
 	ld bc, (xiz + 22)
 	cpw (xiz + 24), 0x0
-	jr z, DrawDouble_SkipV
+	jr z, ArrowProc_SkipV
 	pushm (xix)
 	pushm (xhl)
-	calr DrawProgressRectV
-	jr DrawDouble_AfterV
+	calr Arrow_DrawVertical
+	jr ArrowProc_AfterV
 
-DrawDouble_SkipV:
+ArrowProc_SkipV:
 	pushm (xix)
 	pushm (xhl)
-	calr DrawProgressRectH
+	calr Arrow_DrawHorizontal
 
-DrawDouble_AfterV:
+ArrowProc_AfterV:
 	ld xhl, 0:i3
 
-DrawDouble_Return:
+ArrowProc_Return:
 	pop xiz
 	lda xsp, (xsp + 16)
 	ret
@@ -2154,9 +2164,9 @@ RefreshApTask:
 	ld (0xe3e4:16), 255
 	ld (0xe3e6:16), 255
 	ld xwa, 0:i3
-	ld (TRANSITION_PROGRESS:24), xwa
-	ld (TRANSITION_TIMER:24), xwa
-	ld (TRANSITION_FLAGS:24), xwa
+	ld (PANEL_SW_HELD_UP:24), xwa
+	ld (PANEL_SW_HELD_DOWN:24), xwa
+	ld (PANEL_SW_HELD_BOTH:24), xwa
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SW_ON
 	call DeleteEvent
@@ -2188,9 +2198,9 @@ RefreshApTask:
 
 RefreshSwEvent:
 	ld xwa, 0:i3
-	ld (TRANSITION_PROGRESS:24), xwa
-	ld (TRANSITION_TIMER:24), xwa
-	ld (TRANSITION_FLAGS:24), xwa
+	ld (PANEL_SW_HELD_UP:24), xwa
+	ld (PANEL_SW_HELD_DOWN:24), xwa
+	ld (PANEL_SW_HELD_BOTH:24), xwa
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SW_ON
 	call DeleteEvent
@@ -2747,19 +2757,19 @@ MainTitleControl:
 	ld xwa, xde
 	and xwa, 0xffff
 	cp xbc, EVT_MAIN_LOOP_COUNT
-	jrl z, MainTitleCtrl_HandleBB
+	jrl z, MainTitleCtrl_OnMainLoopCount
 	ld hl, wa
 	cp xbc, EVT_SET_TITLE_FLAG
-	jrl z, MainTitleCtrl_HandleBA
+	jrl z, MainTitleCtrl_OnSetTitleFlag
 	cp xbc, EVT_OTHER_PART_LED
-	jrl z, MainTitleCtrl_HandleAB
+	jrl z, MainTitleCtrl_OnOtherPartLed
 	ld a, (CURRENT_TITLE:16)
 	cp xbc, EVT_ACTIVATE_STATE
 	jrl z, SeqState_DemoModeHandler
 	cp xbc, EVT_RETURN_TITLE
-	jr z, MainTitleCtrl_SaveAndTransition
+	jr z, MainTitleCtrl_OnInterruptOrReturnTitle
 	cp xbc, EVT_INTERRUPT_TITLE
-	jr z, MainTitleCtrl_SaveAndTransition
+	jr z, MainTitleCtrl_OnInterruptOrReturnTitle
 	cp xbc, EVT_CHANGE_TITLE
 	jr z, MainTitleCtrl_ChangeTitle
 	cp xbc, EVT_CHANGE_MODE
@@ -2769,44 +2779,36 @@ MainTitleControl:
 	ldw wa, 0x48
 	call CtrlPanel_SetIndicatorBit
 	ld xwa, 0:i3
-	ld (TRANSITION_FLAGS:24), xwa
-	ld (TRANSITION_TIMER:24), xwa
-	ld (TRANSITION_PROGRESS:24), xwa
+	ld (PANEL_SW_HELD_BOTH:24), xwa
+	ld (PANEL_SW_HELD_DOWN:24), xwa
+	ld (PANEL_SW_HELD_UP:24), xwa
 	jrl UIWidget_ReturnZero
 
-; =============================================================================
-; MainTitleCtrl_ChangeTitle - Screen transition state handler
-;
-; Manages state transitions for the sequencer/demo screen mode changes.
-; Saves current display state bytes (SFR 36150-36153) and clears animation
-; state variables at 0x0274a2, 0x02749e, 0x02749a. Calls CtrlPanel_SetIndicatorBit
-; to initiate the actual screen transition, then AudioMode_ResetVoiceState for cleanup.
-;
-; Animation state addresses:
-;   0x02749a - Transition progress counter
-;   0x02749e - Transition timer
-;   0x0274a2 - Transition type/flags
-;   0x0274a8-0x0274ae - Additional transition parameters
-; =============================================================================
+; MainTitleCtrl_ChangeTitle -- MainTitleControl's EVT_CHANGE_TITLE case (L = new title id).
+;   PREVIOUS_TITLE := CURRENT_TITLE (held in A), ACTIVE_TITLE_PREVIOUS := ACTIVE_TITLE, then CURRENT_TITLE
+;   and ACTIVE_TITLE := L.  EVT_INTERRUPT_TITLE and EVT_RETURN_TITLE (MainTitleCtrl_OnInterruptOrReturnTitle)
+;   change only ACTIVE_TITLE.  Both then request panel indicator 0x61 (CtrlPanel_SetIndicatorBit), clear the
+;   three held-switch masks PANEL_SW_HELD_* and call AudioMode_ResetVoiceState.  The change itself is
+;   immediate: no fade, slide or timed transition is started here or by any reader of these variables.
 MainTitleCtrl_ChangeTitle:
 	ld (PREVIOUS_TITLE:16), a
 	ldmm8 ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE
 	ld (CURRENT_TITLE:16), l
 	ld (ACTIVE_TITLE:16), l
 	ldw wa, 0x61
-	jr MainTitleCtrl_SetIndicatorAndClear
+	jr MainTitleCtrl_FinishTitleChange
 
-MainTitleCtrl_SaveAndTransition:
+MainTitleCtrl_OnInterruptOrReturnTitle:
 	ldmm8 ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE
 	ld (ACTIVE_TITLE:16), l
 	ldw wa, 0x61
 
-MainTitleCtrl_SetIndicatorAndClear:
+MainTitleCtrl_FinishTitleChange:
 	call CtrlPanel_SetIndicatorBit
 	ld xwa, 0:i3
-	ld (TRANSITION_FLAGS:24), xwa
-	ld (TRANSITION_TIMER:24), xwa
-	ld (TRANSITION_PROGRESS:24), xwa
+	ld (PANEL_SW_HELD_BOTH:24), xwa
+	ld (PANEL_SW_HELD_DOWN:24), xwa
+	ld (PANEL_SW_HELD_UP:24), xwa
 	call AudioMode_ResetVoiceState
 	jrl UIWidget_ReturnZero
 
@@ -2822,44 +2824,44 @@ SeqDemo_SaveCurrentState:
 	ldmm8 PREVIOUS_MODE, CURRENT_MODE
 	jr UIWidget_ReturnZero
 
-MainTitleCtrl_HandleAB:
-	ld (0x0274ac:24), de
-	ldw (0x0274ae:24), 0x000a
+MainTitleCtrl_OnOtherPartLed:
+	ld (OTHER_PART_LED_PENDING:24), de
+	ldw (OTHER_PART_LED_DELAY:24), 0x000a
 	jr UIWidget_ReturnZero
 
-MainTitleCtrl_HandleBA:
-	ld (0x0274a8:24), de
-	ldw (0x0274aa:24), 0x000a
+MainTitleCtrl_OnSetTitleFlag:
+	ld (TITLE_FLAGS_PENDING:24), de
+	ldw (TITLE_FLAGS_DELAY:24), 0x000a
 	jr UIWidget_ReturnZero
 
-MainTitleCtrl_HandleBB:
-	ld wa, (0x0274aa:24)
+MainTitleCtrl_OnMainLoopCount:
+	ld wa, (TITLE_FLAGS_DELAY:24)
 	cp wa, 0:i3
-	jr z, MainTitleCtrl_CheckSecondTimer
+	jr z, MainTitleCtrl_CountOtherPartLedDelay
 	dec 1, wa
-	ld (0x0274aa:24), wa
+	ld (TITLE_FLAGS_DELAY:24), wa
 	cp wa, 0:i3
-	jr nz, MainTitleCtrl_CheckSecondTimer
-	ld wa, (0x0274a8:24)
-	ld (0x0274a6:24), wa
+	jr nz, MainTitleCtrl_CountOtherPartLedDelay
+	ld wa, (TITLE_FLAGS_PENDING:24)
+	ld (TITLE_FLAGS_LATCHED:24), wa
 
-MainTitleCtrl_CheckSecondTimer:
-	ld wa, (0x0274ae:24)
+MainTitleCtrl_CountOtherPartLedDelay:
+	ld wa, (OTHER_PART_LED_DELAY:24)
 	cp wa, 0:i3
 	jr z, UIWidget_ReturnZero
 	dec 1, wa
-	ld (0x0274ae:24), wa
+	ld (OTHER_PART_LED_DELAY:24), wa
 	cp wa, 0:i3
 	jr nz, UIWidget_ReturnZero
-	cpw (0x274ac:24), 0
-	jr z, MainTitleCtrl_ClearIndicatorBit
+	cpw (OTHER_PART_LED_PENDING:24), 0
+	jr z, MainTitleCtrl_OtherPartLedOff
 	set 0, (0x8f5c:16)
-	jr MainTitleCtrl_SetIndicator60
+	jr MainTitleCtrl_RequestOtherPartLed
 
-MainTitleCtrl_ClearIndicatorBit:
+MainTitleCtrl_OtherPartLedOff:
 	res 0, (0x8f5c:16)
 
-MainTitleCtrl_SetIndicator60:
+MainTitleCtrl_RequestOtherPartLed:
 	ldw wa, 0x60
 	call CtrlPanel_SetIndicatorBit
 
@@ -2868,7 +2870,7 @@ UIWidget_ReturnZero:
 	ret
 
 CtrlPanel_GetSelectionState:
-	ld wa, (0x0274a6:24)
+	ld wa, (TITLE_FLAGS_LATCHED:24)
 	bit 0, wa
 	jr z, CtrlPanel_CheckBit1
 	ld hl, 1:i3

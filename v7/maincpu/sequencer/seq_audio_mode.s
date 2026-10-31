@@ -111,27 +111,27 @@ AccPedal_ProcessAllChanges:
 	bit	0, (xhl+wa)
 	jrl z, AccPedal_ReadBankAndReturn
 	xor a, a
-	bit 0, (0x325f:16)
+	bit 0, (ACC_REQ_FILLIN:16)
 	jr z, AccPedal_CheckBit1Left
 	or a, 64
 AccPedal_CheckBit1Left:
-	bit 1, (0x325f:16)
+	bit 1, (ACC_REQ_FILLIN:16)
 	jr z, AccPedal_CheckBit0Right
 	or a, 128
 AccPedal_CheckBit0Right:
-	bit 0, (0x3261:16)
+	bit 0, (ACC_REQ_ENDING:16)
 	jr z, AccPedal_CheckBit1Right
 	or a, 16
 AccPedal_CheckBit1Right:
-	bit 1, (0x3261:16)
+	bit 1, (ACC_REQ_ENDING:16)
 	jr z, AccPedal_CheckBit0Aux
 	or a, 32
 AccPedal_CheckBit0Aux:
-	bit 0, (0x3263:16)
+	bit 0, (ACC_REQ_INTRO:16)
 	jr z, AccPedal_CheckBit1Aux
 	or a, 4
 AccPedal_CheckBit1Aux:
-	bit 1, (0x3263:16)
+	bit 1, (ACC_REQ_INTRO:16)
 	jr z, AccPedal_ApplyChangeMask
 	or a, 8
 AccPedal_ApplyChangeMask:
@@ -147,7 +147,7 @@ AccPedal_ApplyChangeMask:
 	calr Rhythm_QueuePartChangeEvent
 
 AccPedal_CheckAuxBit2:
-	bit 2, (0x3263:16)
+	bit 2, (ACC_REQ_INTRO:16)
 	jr z, AccPedal_ClearAllPedalFlags
 	and (PANEL_STYLE+6:16), 0xfb
 	ld e, 72:opc
@@ -157,9 +157,9 @@ AccPedal_CheckAuxBit2:
 	calr Rhythm_QueuePartChangeEvent
 AccPedal_ClearAllPedalFlags:
 	xor	a, a
-	ld	(12895:16), a
-	ld	(12897:16), a
-	ld	(12899:16), a
+	ld	(ACC_REQ_FILLIN:16), a
+	ld	(ACC_REQ_ENDING:16), a
+	ld	(ACC_REQ_INTRO:16), a
 AccPedal_ReadBankAndReturn:
 	calr AccVoice_ReadBankAssign
 	ret
@@ -176,8 +176,8 @@ AccVoice_StoreBankAssign:
 	ld	(12774:16), a
 	ret
 AccChannel_CompareAndMarkDirty:
-	ld a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and A,0x3f
 	jr nz, AccChannel_StoreCurrentState
 	ld a, (ACC_PENDING_STYLE:16)
@@ -193,7 +193,7 @@ AccChannel_CompareAndMarkDirty:
 	jr z, AccChannel_StoreCurrentState
 AccChannel_MarkDirtyAndSync:
 .Lc_f534c3:
-	calr AccChannel_SetDirtyIfActive
+	calr AccSection_DeferToBarUnlessFirstBeat
 	calr AccChannel_CheckActivitySetDirty
 	calr AccChannel_CheckPartIndexDirty
 	or (0x3270:16), 0x01
@@ -240,26 +240,26 @@ AccChannel_StoreStateIfChanged_Store:
 	ld (0x324c:16), a
 AccChannel_StoreStateIfChanged_Return:
 	ret
-AccChannel_SetDirtyIfActive:
+AccSection_DeferToBarUnlessFirstBeat:
 	ld wa, (0x3247:16)
 	and W,0x07
 	cp w, 0:i3
-	jr z, AccChannel_SetDirtyDone
-	or (0x328a:16), 0x3f
-AccChannel_SetDirtyDone:
+	jr z, AccSection_DeferToBarUnlessFirstBeat_Return
+	or (ACC_DEFER_ENDING_LANES:16), 0x3f
+AccSection_DeferToBarUnlessFirstBeat_Return:
 	ret
 
 AccChannel_CheckActivitySetDirty:
-	ld a, (0x3276:16)
-	or a, (0x3277:16)
-	or a, (0x327a:16)
-	or a, (0x327b:16)
-	or a, (0x327c:16)
+	ld a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_INTRO2:16)
 	and A,0x3f
 	jr z, AccChannel_ActivityCheckDone
 	cp (ACC_PENDING_STYLE:16), 0x80
 	jr c, AccChannel_ActivityCheckDone
-	or (0x328a:16), 0x3f
+	or (ACC_DEFER_ENDING_LANES:16), 0x3f
 AccChannel_ActivityCheckDone:
 	ret
 
@@ -267,136 +267,136 @@ AccChannel_CheckPartIndexDirty:
 	ld a, (ACC_BEATS_PER_BAR:16)
 	cp a, 1:i3
 	jr nz, AccChannel_PartIndexDone
-	or (0x328a:16), 0x3f
+	or (ACC_DEFER_ENDING_LANES:16), 0x3f
 AccChannel_PartIndexDone:
 	ret
 
-AccVoice_ProcessPedalChanges:
-	bit 0, (0x3263:16)
+AccSection_LatchIntroRequests:
+	bit 0, (ACC_REQ_INTRO:16)
 	jr z, .Lc_f535a1
-	bit 0, (0x3264:16)
+	bit 0, (ACC_REQ_INTRO_PREV:16)
 	jr nz, .Lc_f535a1
 	xor A,A
-	ld (0x326d:16), a
-	ld (0x326f:16), a
-	and (0x326e:16), 0xf3
-	and (0x328b:16), 0xc0
+	ld (ACC_PENDING_FILLIN:16), a
+	ld (ACC_PENDING_ENDING:16), a
+	and (ACC_PENDING_INTRO:16), 0xf3
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 	bit 0, (0x3270:16)
 	jr nz, .Lc_f53596
-	and (0x328a:16), 0xc0
-AccVoice_Pedal0_SetAndCheck:
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+AccSection_LatchIntro1_SetAndCheck:
 .Lc_f53596:
-	or (0x326e:16), 0x01
-	calr AccVoice_CheckBitsAndSetFlags
+	or (ACC_PENDING_INTRO:16), 0x01
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
-AccVoice_Pedal0_Done:
+AccSection_LatchIntro1_Done:
 .Lc_f535a1:
-	bit 1, (0x3263:16)
+	bit 1, (ACC_REQ_INTRO:16)
 	jr z, .Lc_f535d7
-	bit 1, (0x3264:16)
+	bit 1, (ACC_REQ_INTRO_PREV:16)
 	jr nz, .Lc_f535d7
 	xor A,A
-	ld (0x326d:16), a
-	ld (0x326f:16), a
-	and (0x326e:16), 0xf6
-	and (0x328b:16), 0xc0
+	ld (ACC_PENDING_FILLIN:16), a
+	ld (ACC_PENDING_ENDING:16), a
+	and (ACC_PENDING_INTRO:16), 0xf6
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 	bit 0, (0x3270:16)
 	jr nz, .Lc_f535cc
-	and (0x328a:16), 0xc0
-AccVoice_Pedal1_SetAndCheck:
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+AccSection_LatchCountIn_SetAndCheck:
 .Lc_f535cc:
-	or (0x326e:16), 0x04
-	calr AccVoice_CheckBitsAndSetFlags
+	or (ACC_PENDING_INTRO:16), 0x04
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
-AccVoice_Pedal1_Done:
+AccSection_LatchCountIn_Done:
 .Lc_f535d7:
-	bit 2, (0x3263:16)
-	jr z, AccVoice_Pedal2_Done
-	bit 2, (0x3264:16)
-	jr nz, AccVoice_Pedal2_Done
+	bit 2, (ACC_REQ_INTRO:16)
+	jr z, AccSection_LatchIntro2_Done
+	bit 2, (ACC_REQ_INTRO_PREV:16)
+	jr nz, AccSection_LatchIntro2_Done
 	xor A,A
-	ld (0x326d:16), a
-	ld (0x326f:16), a
-	and (0x326e:16), 0xfa
-	and (0x328b:16), 0xc0
+	ld (ACC_PENDING_FILLIN:16), a
+	ld (ACC_PENDING_ENDING:16), a
+	and (ACC_PENDING_INTRO:16), 0xfa
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 	bit 0, (0x3270:16)
 	jr nz, .Lc_f53602
-	and (0x328a:16), 0xc0
-AccVoice_Pedal2_SetAndCheck:
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+AccSection_LatchIntro2_SetAndCheck:
 .Lc_f53602:
-	or (0x326e:16), 0x08
-	calr AccVoice_CheckBitsAndSetFlags
+	or (ACC_PENDING_INTRO:16), 0x08
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
 
 
 
-AccVoice_Pedal2_Done:
+AccSection_LatchIntro2_Done:
 	ret
 
-AccVoice_ProcessLeftPedalChanges:
-	bit 0, (0x325f:16)
+AccSection_LatchFillInRequests:
+	bit 0, (ACC_REQ_FILLIN:16)
 	jr z, .Lc_f53644
-	bit 0, (0x3260:16)
+	bit 0, (ACC_REQ_FILLIN_PREV:16)
 	jr nz, .Lc_f53644
 	xor A,A
-	ld (0x326e:16), a
-	ld (0x326f:16), a
-	and (0x326d:16), 0xfd
-	and (0x328b:16), 0xc0
+	ld (ACC_PENDING_INTRO:16), a
+	ld (ACC_PENDING_ENDING:16), a
+	and (ACC_PENDING_FILLIN:16), 0xfd
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 	bit 0, (0x3270:16)
 	jr nz, .Lc_f53639
-	and (0x328a:16), 0xc0
-AccVoice_LeftPedal0_SetAndCheck:
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+AccSection_LatchFillIn1_SetAndCheck:
 .Lc_f53639:
-	or (0x326d:16), 0x01
-	calr AccVoice_CheckBitsAndSetFlags
+	or (ACC_PENDING_FILLIN:16), 0x01
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
-AccVoice_LeftPedal0_Done:
+AccSection_LatchFillIn1_Done:
 .Lc_f53644:
-	bit 1, (0x325f:16)
-	jr z, AccVoice_LeftPedal1_Done
-	bit 1, (0x3260:16)
-	jr nz, AccVoice_LeftPedal1_Done
+	bit 1, (ACC_REQ_FILLIN:16)
+	jr z, AccSection_LatchFillIn2_Done
+	bit 1, (ACC_REQ_FILLIN_PREV:16)
+	jr nz, AccSection_LatchFillIn2_Done
 	xor A,A
-	ld (0x326e:16), a
-	ld (0x326f:16), a
-	and (0x326d:16), 0xfe
-	and (0x328b:16), 0xc0
+	ld (ACC_PENDING_INTRO:16), a
+	ld (ACC_PENDING_ENDING:16), a
+	and (ACC_PENDING_FILLIN:16), 0xfe
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 	bit 0, (0x3270:16)
 	jr nz, .Lc_f5366f
-	and (0x328a:16), 0xc0
-AccVoice_LeftPedal1_SetAndCheck:
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+AccSection_LatchFillIn2_SetAndCheck:
 .Lc_f5366f:
-	or (0x326d:16), 0x02
-	calr AccVoice_CheckBitsAndSetFlags
+	or (ACC_PENDING_FILLIN:16), 0x02
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
 
 
 
-AccVoice_LeftPedal1_Done:
+AccSection_LatchFillIn2_Done:
 	ret
 
 AccVoice_CheckChannelSetActive:
-	ld a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and A,0x3f
 	jr z, AccVoice_ChannelActiveDone
 	or (0x3273:16), 0x01
 AccVoice_ChannelActiveDone:
 	ret
 
-AccVoice_CheckBitsAndSetFlags:
+AccSection_DeferToBarIfLastBeat:
 	ld de, (0x3247:16)
 	and D,0x07
 	inc 1,D
 	cp d, (ACC_BEATS_PER_BAR:16)
-	jr nz, AccVoice_BitsCheckDone
-	or (0x328b:16), 0x3f
-AccVoice_BitsCheckDone:
+	jr nz, AccSection_DeferToBarIfLastBeat_Return
+	or (ACC_DEFER_SECTION_LANES:16), 0x3f
+AccSection_DeferToBarIfLastBeat_Return:
 	ret
 
 AccPitch_CheckTransposeFlags:
-	bit 6, (0x33d4:16)
+	bit 6, (ACC_SECTION_BUTTONS_HELD:16)
 	jr nz, .Lc_f536c0
 	bit 6, (0x31e5:16)
 	jr z, .Lc_f536c0
@@ -407,7 +407,7 @@ AccPitch_CheckTransposeFlags:
 	or (0x328d:16), 0x3f
 AccPitch_UpdateCheck:
 .Lc_f536c0:
-	bit 7, (0x33d4:16)
+	bit 7, (ACC_SECTION_BUTTONS_HELD:16)
 	jr nz, AccPitch_FinalReturn
 	bit 7, (0x31e5:16)
 	jr z, AccPitch_FinalReturn
@@ -419,39 +419,39 @@ AccPitch_UpdateCheck:
 AccPitch_FinalReturn:
 	ret
 
-AccChord_ProcessKeyChanges:
-	bit 0, (0x3261:16)
+AccSection_LatchEndingRequests:
+	bit 0, (ACC_REQ_ENDING:16)
 	jr z, .Lc_f5370b
-	bit 0, (0x3262:16)
+	bit 0, (ACC_REQ_ENDING_PREV:16)
 	jr nz, .Lc_f5370b
 	xor A,A
-	ld (0x326e:16), a
-	ld (0x326d:16), a
-	and (0x328b:16), 0xc0
-	and (0x326f:16), 0xfd
-	and (0x328a:16), 0xc0
-	or (0x326f:16), 0x01
-	calr AccChannel_SetDirtyIfActive
-AccChord_KeyChange0_Done:
+	ld (ACC_PENDING_INTRO:16), a
+	ld (ACC_PENDING_FILLIN:16), a
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_PENDING_ENDING:16), 0xfd
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+	or (ACC_PENDING_ENDING:16), 0x01
+	calr AccSection_DeferToBarUnlessFirstBeat
+AccSection_LatchEnding1_Done:
 .Lc_f5370b:
-	bit 1, (0x3261:16)
-	jr z, AccChord_KeyChange1_Done
-	bit 1, (0x3262:16)
-	jr nz, AccChord_KeyChange1_Done
+	bit 1, (ACC_REQ_ENDING:16)
+	jr z, AccSection_LatchEnding2_Done
+	bit 1, (ACC_REQ_ENDING_PREV:16)
+	jr nz, AccSection_LatchEnding2_Done
 	xor A,A
-	ld (0x326e:16), a
-	ld (0x326d:16), a
-	and (0x328b:16), 0xc0
-	and (0x326f:16), 0xfe
-	and (0x328a:16), 0xc0
-	or (0x326f:16), 0x02
-	calr AccChannel_SetDirtyIfActive
-AccChord_KeyChange1_Done:
+	ld (ACC_PENDING_INTRO:16), a
+	ld (ACC_PENDING_FILLIN:16), a
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_PENDING_ENDING:16), 0xfe
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0
+	or (ACC_PENDING_ENDING:16), 0x02
+	calr AccSection_DeferToBarUnlessFirstBeat
+AccSection_LatchEnding2_Done:
 	ret
 
 AccChord_ResolveVoiceAndDispatch:
 	ld	a, (ACC_STYLE_NUMBER:16)
-	ld	w, (12939:16)
+	ld	w, (ACC_DEFER_SECTION_LANES:16)
 	and	w, 63
 	jr	z, AccChord_CheckRange
 	ld	a, (12875:16)
@@ -469,64 +469,64 @@ AccChord_DispatchVoiceChange:
 	calr AccPatch_SetVoiceParam
 	ld c, a
 	xor a, a
-	bit 0, (0x326e:16)
+	bit 0, (ACC_PENDING_INTRO:16)
 	jr z, AccChord_CheckVoiceBit2
 	cp c, (0x32c8:16)
 	jr z, AccChord_CheckVoiceBit2
-	and (0x326e:16), 0xfe
-	and (0x328b:16), 0xc0
-	and (0x3263:16), 0xfe
+	and (ACC_PENDING_INTRO:16), 0xfe
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_REQ_INTRO:16), 0xfe
 	or a, 4
 AccChord_CheckVoiceBit2:
-	bit 2, (0x326e:16)
+	bit 2, (ACC_PENDING_INTRO:16)
 	jr z, AccChord_CheckLeftPedal0
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
 	bit_dri 0, 0x03, 0xec, 0xe4
 	jr z, AccChord_CheckLeftPedal0
-	and (0x326e:16), 0xfb
-	and (0x328b:16), 0xc0
-	and (0x3263:16), 0xfd
+	and (ACC_PENDING_INTRO:16), 0xfb
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_REQ_INTRO:16), 0xfd
 	or a, 8
 AccChord_CheckLeftPedal0:
-	bit 0, (0x326d:16)
+	bit 0, (ACC_PENDING_FILLIN:16)
 	jr z, AccChord_CheckLeftPedal1
 	cp c, (0x32cc:16)
 	jr z, AccChord_CheckLeftPedal1
-	and (0x326d:16), 0xfe
-	and (0x328b:16), 0xc0
-	and (0x325f:16), 0xfe
+	and (ACC_PENDING_FILLIN:16), 0xfe
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_REQ_FILLIN:16), 0xfe
 	or a, 64
 AccChord_CheckLeftPedal1:
-	bit 1, (0x326d:16)
+	bit 1, (ACC_PENDING_FILLIN:16)
 	jr z, AccChord_CheckKeyChange0
 	cp c, (0x32ce:16)
 	jr z, AccChord_CheckKeyChange0
-	and (0x326d:16), 0xfd
-	and (0x328b:16), 0xc0
-	and (0x325f:16), 0xfd
+	and (ACC_PENDING_FILLIN:16), 0xfd
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_REQ_FILLIN:16), 0xfd
 	or a, 128
 AccChord_CheckKeyChange0:
-	bit 0, (0x326f:16)
+	bit 0, (ACC_PENDING_ENDING:16)
 	jr z, RhythmPart_ProcessBit0
 	cp c, (0x32d0:16)
 	jr z, RhythmPart_ProcessBit0
-	and (0x326f:16), 0xfe
-	and (0x3261:16), 0xfe
+	and (ACC_PENDING_ENDING:16), 0xfe
+	and (ACC_REQ_ENDING:16), 0xfe
 	or a, 16
 	bit 0, (0x3270:16)
 	jr nz, RhythmPart_ProcessBit0
-	and (0x328b:16), 0xc0
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 RhythmPart_ProcessBit0:
-	bit 1, (0x326f:16)
+	bit 1, (ACC_PENDING_ENDING:16)
 	jr z, RhythmPart_ProcessBit1
 	cp c, (0x32d2:16)
 	jr z, RhythmPart_ProcessBit1
-	and (0x326f:16), 0xfd
-	and (0x3261:16), 0xfd
+	and (ACC_PENDING_ENDING:16), 0xfd
+	and (ACC_REQ_ENDING:16), 0xfd
 	or a, 32
 	bit 0, (0x3270:16)
 	jr nz, RhythmPart_ProcessBit1
-	and (0x328b:16), 0xc0
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
 RhythmPart_ProcessBit1:
 	cp a, 0:i3
 	jr z, AccChord_CheckExtraDirtyBit3
@@ -539,13 +539,13 @@ RhythmPart_ProcessBit1:
 	calr Rhythm_QueuePartChangeEvent
 
 AccChord_CheckExtraDirtyBit3:
-	bit 3, (0x326e:16)
+	bit 3, (ACC_PENDING_INTRO:16)
 	jr z, AccChord_CheckPitchDirty
 	cp c, (0x32ca:16)
 	jr z, AccChord_CheckPitchDirty
-	and (0x326e:16), 0xf7
-	and (0x328b:16), 0xc0
-	and (0x3263:16), 0xfb
+	and (ACC_PENDING_INTRO:16), 0xf7
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0
+	and (ACC_REQ_INTRO:16), 0xfb
 	and (PANEL_STYLE+5:16), 0xfb
 	ld a, 0:opc
 	ld w, 0:opc
@@ -556,14 +556,14 @@ AccChord_CheckPitchDirty:
 	ld a, (0x328d:16)
 	and a, 63
 	jr z, AccChord_NullRet
-	bit 0, (0x325f:16)
+	bit 0, (ACC_REQ_FILLIN:16)
 	jr z, AccChord_CheckPitchLeftPedal1
 	cp c, (0x32cc:16)
 	jr z, AccChord_NullRet
 	and (0x328d:16), 0xc0
 	jr AccChord_NullRet
 AccChord_CheckPitchLeftPedal1:
-	bit 1, (0x325f:16)
+	bit 1, (ACC_REQ_FILLIN:16)
 	jr z, AccChord_NullRet
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
 	bit_dri 0, 0x03, 0xec, 0xe4
@@ -591,34 +591,34 @@ AccChord_CompareDone:
 	ret
 
 AccentVoice_DetectAndMarkChange:
-	ld a, (ACC_SECTION_REQUEST:16)
+	ld a, (ACC_VARIATION_REQUEST:16)
 	cp a, (0x326a:16)
 	jr z, AccentVoice_UpdateParamIndex
-	ld a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and A,0x3f
 	jr nz, AccentVoice_UpdateParamIndex
 	cp (ACC_STYLE_NUMBER:16), 0xf0
 	jr nc, AccentVoice_UpdateParamIndex
 	cp (ACC_STYLE_NUMBER:16), 0x80
 	jr nc, AccentVoice_UpdateParamIndex
-	bit 0, (0x3265:16)
+	bit 0, (ACC_STYLE_ARRANGER_ON:16)
 	jr z, .Lc_f538fe
-	ld a, (0x3276:16)
-	or a, (0x3277:16)
+	ld a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
 	and A,0x3f
 	jr nz, AccentVoice_UpdateParamIndex
 AccentVoice_CheckModeChange:
 .Lc_f538fe:
-	ld a, (ACC_SECTION_REQUEST:16)
+	ld a, (ACC_VARIATION_REQUEST:16)
 	and A,0x03
 	cp a, (0x329c:16)
 	jr z, AccentVoice_UpdateParamIndex
-	or (0x3271:16), 0x01
+	or (ACC_VARIATION_CHANGE_PENDING:16), 0x01
 AccentVoice_UpdateParamIndex:
-	ld	a, (ACC_SECTION_REQUEST:16)
+	ld	a, (ACC_VARIATION_REQUEST:16)
 	and	a, 3
-	ld	(12958:16), a
+	ld	(ACC_VARIATION_NEXT:16), a
 	ret
 AccVoice_ResolveParamAddr:
 	push xwa

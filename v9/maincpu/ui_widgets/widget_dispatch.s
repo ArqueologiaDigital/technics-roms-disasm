@@ -1183,10 +1183,10 @@ SndParam_Register2Handlers:
 SndParam_EncodeHandlers:
 	.long SndParam_EncodeFieldDirect_Data
 	.long SndParam_EncodeFieldSub_Data
-	.long SndParam_ClampReverbTime
+	.long SndParam_GetStyleTempoClamped
 	.long SndParam_DecodeField_Data
 	.long SndParam_DecodeFieldAlt_Data
-	.long SndParam_ClampDelayTime
+	.long SndParam_GetStyleTempoClamped2
 ; 6 x u32 routine pointers, one per record type; SndParam_DispatchTypeDE5 (0xFCD2F9):
 ; `lda xde,(<this>); lda xde, (xde+bc); ld xhl,(xde); call (xhl)`.
 ; Extent: up to the next table's base (each base is loaded by its own reader).
@@ -1201,7 +1201,7 @@ SndParam_WriteHandlers:
 ; SndParam_ReadRegField (0xFCD9C1) does `ld c,(xwa+4); sla bc,2; lda xde,(<this>);
 ; ld_rrl xde,xde,bc; or xde,xde; ret z` (20 sites in all, e.g.
 ; SndParam_ResolveWidgetVariant2_Data_Skip2 0xFCD990).  Entry 0x48 is also read directly by
-; SndParam_ClampReverbTime (0xFCE9B0) and SndParam_ClampDelayTime (0xFCEA43)
+; SndParam_GetStyleTempoClamped (0xFCE9B0) and SndParam_GetStyleTempoClamped2 (0xFCEA43)
 ; (`ldl_da xwa,(<this>+0x120)`).  Entries 0-22 equal PartRecord_RamPtrTable's
 ; (0xF9B6 + 0x1A*i).  256 entries = exactly up to the string that follows.
 SndParam_BlockRamPtrs:
@@ -1224,7 +1224,7 @@ SndParam_BlockRamPtrs:
 	.long 0x00000000, 0x00000000, 0x00000000, 0x0000fc54	; 0x40
 	.long 0x0000fc26, 0x0000fc32, 0x0000fc3e, 0x0000fc4a	; 0x44
 ; SndParam_StyleRecordRamPtr: Entry 0x48 of SndParam_BlockRamPtrs = 0xFC5A, the RAM address of panel record 0x48
-;   (style + tempo). SndParam_ClampReverbTime and SndParam_ClampDelayTime load it directly and clamp the record's +8
+;   (style + tempo). SndParam_GetStyleTempoClamped and SndParam_GetStyleTempoClamped2 load it directly and clamp the record's +8
 ;   word (& 0x1FF) to 40..300: the tempo. Basis: readers + bytes -- `ld xwa, (<this>); ld hl, (xwa+8)`;
 ;   SeqTimer_PostTempoUpdate writes the tempo to 0xFC62 = 0xFC5A + 8 via record 0x48 field 8.
 SndParam_StyleRecordRamPtr:
@@ -6641,7 +6641,7 @@ SwbtB2_Code93_Listeners:
 	.long SwbtB2_Code93_NopListener
 	.long CharMap_ActivePreamb_LoadDRAM
 	.long UIState_KeyScan_Dispatch
-	.long Encoder_ApplySystemModeSettings
+	.long Encoder_OnTouchSensitivityChange
 	.long 0xffffffff
 ; code 0x98: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code98_Listeners:
@@ -8258,7 +8258,10 @@ Harmony_HandlerTable:
 ; ld a,(xiz); ld w,(xiz+1)`: +0 = code (0 = no match, the scan then tries the
 ; next lowest note), +1 = bit 7 flag, bits 0-6 value (`and w,0x7f`).
 ; 4096 bytes = 2048 x 2 exactly up to the next referenced object.
-; [INFERENCE] the fingered-chord recognition table (chord type, root offset).
+; The fingered-chord recognition table: +0 = chord type (1-based row of ChordTables_TypeIntervals),
+; +1 bits 0-6 = root offset in semitones above the reference note, bit 7 = accept without trying
+; fewer notes.  Checked on all 292 non-zero entries by
+; notes/open4-kn5000-b/engine/probes/chord_table_check.py (types 31-39 have no voicing row).
 ChordRecog_IntervalMaskTable:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -8607,7 +8610,7 @@ SendEpilogueB_SwitchOffsets:
 	.short	SndParam_ApplySystemParam_QueueReverbOnOff - MIDI_SendEpilogue_Code
 	.short	SndParam_ApplySystemParam_QueueRotarySpeed - MIDI_SendEpilogue_Code
 	.short	SndParam_ApplySystemParam_QueueAcousticIllusionOnOff - MIDI_SendEpilogue_Code
-	.short	SendEpilogue_Data_Case5 - MIDI_SendEpilogue_Code
+	.short	SndParam_ApplySystemParam_SendFadeLevel - MIDI_SendEpilogue_Code
 	.short	SndParam_ApplySystemParam_SendEqualizerOnOff - MIDI_SendEpilogue_Code
 ; 12-byte per-semitone tables (one byte per pitch class C..B; 0x80 = centre).
 ; ScaleTune_TypeToOffsetTable (0xFEBC56) maps its selector byte (0x80, 5, 4, 3,
@@ -9521,7 +9524,7 @@ SoundRam_InitFuncTable:
 	.long SendPartDataBlock_Return4
 	.long SendPartDataBlock_DoGetError
 	.long SendPartDataBlock_Return5
-; 16 x u8.  HdaeRom_DataHandler_Helper (0xFEFC1D): `lda xhl,(<this>);
+; 16 x u8.  SoundRam_ConvertSounds_Helper (0xFEFC1D): `lda xhl,(<this>);
 ; ld_rrb c,xhl,bc`.
 HdaeRom_DataByteMap:
 	.byte 1, 1, 1, 1, 1, 1, 0, 0
@@ -9563,42 +9566,42 @@ SoundRam_DefaultRecord:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-; 6 x s16 switch offsets.  HdaeRom_DataHandler (0xFF0243): `ld_rrw ..,xix,..; lda xix,(0xFF028F);
-; jp_rr 8,xix,..` -- targets 0xFF028F + offset (no labels yet).
-HdaeRomData_SwitchOffsets:
-	.short	HdaeRom_DataHandler_ConvertKn2000MkaMkb - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_ConvertKn2000MkaMkb - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_ConvertKn2000MkaMkb - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_Skip - HdaeRom_DataDispatch
-	.short	HdaeRom_DataDispatch - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_Skip - HdaeRom_DataDispatch
-; 6 x s16 switch offsets.  HdaeRom_AltHandler (0xFF0437): `ld_rrw ..,xix,..; lda xix,(0xFF0470);
-; jp_rr 8,xix,..` -- targets 0xFF0470 + offset (no labels yet).
-HdaeRomAlt_SwitchOffsets:
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltHandler_Kn5000Image - HdaeRom_AltDispatch
-; 6 x s16 switch offsets.  TmFlash_BulkTransferToSubCPU_Skip2 (0xFF079A): `ld_rrw ..,xix,..; lda xix,(0xFF07FB);
-; jp_rr 8,xix,..` -- targets 0xFF07FB + offset (no labels yet).
-TmFlashBulkA_SwitchOffsets:
-	.short	TmFlash_BulkTransferToSubCPU_Case1 - VoiceParam_DispatchTable1
-	.short	TmFlash_BulkTransferToSubCPU_Case1 - VoiceParam_DispatchTable1
-	.short	TmFlash_BulkTransferToSubCPU_Case1 - VoiceParam_DispatchTable1
-	.short	VoiceParam_DispatchTable1 - VoiceParam_DispatchTable1
-	.short	TmFlash_BulkTransferToSubCPU_Case5 - VoiceParam_DispatchTable1
-	.short	VoiceParam_DispatchTable1 - VoiceParam_DispatchTable1
-; 6 x s16 switch offsets.  TmFlash_BulkTransferToSubCPU_Epilogue2 (0xFF085E): `ld_rrw ..,xix,..; lda xix,(0xFF08A9);
-; jp_rr 8,xix,..` -- targets 0xFF08A9 + offset (no labels yet).
-TmFlashBulkB_SwitchOffsets:
-	.short	TmFlash_BulkTransferToSubCPU_Switch2_Case1 - VoiceParam_DispatchTable1_Code
-	.short	TmFlash_BulkTransferToSubCPU_Switch2_Case1 - VoiceParam_DispatchTable1_Code
-	.short	TmFlash_BulkTransferToSubCPU_Switch2_Case1 - VoiceParam_DispatchTable1_Code
-	.short	VoiceParam_DispatchTable1_Code - VoiceParam_DispatchTable1_Code
-	.short	TmFlash_BulkTransferToSubCPU_Switch2_Case5 - VoiceParam_DispatchTable1_Code
-	.short	VoiceParam_DispatchTable1_Code - VoiceParam_DispatchTable1_Code
+; SoundRam_ConvertSounds_CaseTable: 6 x s16 case offsets of SoundRam_ConvertSounds's switch on image id - 1
+;   (KN2000, MKA, MKB, KN3000, KN1500, KN5000), relative to SoundRam_ConvertSounds_Kn1500.
+SoundRam_ConvertSounds_CaseTable:
+	.short	SoundRam_ConvertSounds_Kn2000MkaMkb - SoundRam_ConvertSounds_Kn1500
+	.short	SoundRam_ConvertSounds_Kn2000MkaMkb - SoundRam_ConvertSounds_Kn1500
+	.short	SoundRam_ConvertSounds_Kn2000MkaMkb - SoundRam_ConvertSounds_Kn1500
+	.short	SoundRam_ConvertSounds_Skip - SoundRam_ConvertSounds_Kn1500
+	.short	SoundRam_ConvertSounds_Kn1500 - SoundRam_ConvertSounds_Kn1500
+	.short	SoundRam_ConvertSounds_Skip - SoundRam_ConvertSounds_Kn1500
+; SoundRam_ConvertUserKit_CaseTable: 6 x s16 case offsets of SoundRam_ConvertUserKit's switch on image id - 1,
+;   relative to SoundRam_ConvertUserKit_Kn3000.
+SoundRam_ConvertUserKit_CaseTable:
+	.short	SoundRam_ConvertUserKit_Unsupported - SoundRam_ConvertUserKit_Kn3000
+	.short	SoundRam_ConvertUserKit_Unsupported - SoundRam_ConvertUserKit_Kn3000
+	.short	SoundRam_ConvertUserKit_Unsupported - SoundRam_ConvertUserKit_Kn3000
+	.short	SoundRam_ConvertUserKit_Kn3000 - SoundRam_ConvertUserKit_Kn3000
+	.short	SoundRam_ConvertUserKit_Unsupported - SoundRam_ConvertUserKit_Kn3000
+	.short	SoundRam_ConvertUserKit_Kn5000 - SoundRam_ConvertUserKit_Kn3000
+; SoundRam_GetRecordAddress_CaseTable: 6 x s16 case offsets of SoundRam_GetRecordAddress's switch on image
+;   id - 1, relative to SoundRam_GetRecordAddress_Kn5000Kn3000.
+SoundRam_GetRecordAddress_CaseTable:
+	.short	SoundRam_GetRecordAddress_Kn2000MkaMkb - SoundRam_GetRecordAddress_Kn5000Kn3000
+	.short	SoundRam_GetRecordAddress_Kn2000MkaMkb - SoundRam_GetRecordAddress_Kn5000Kn3000
+	.short	SoundRam_GetRecordAddress_Kn2000MkaMkb - SoundRam_GetRecordAddress_Kn5000Kn3000
+	.short	SoundRam_GetRecordAddress_Kn5000Kn3000 - SoundRam_GetRecordAddress_Kn5000Kn3000
+	.short	SoundRam_GetRecordAddress_Kn1500 - SoundRam_GetRecordAddress_Kn5000Kn3000
+	.short	SoundRam_GetRecordAddress_Kn5000Kn3000 - SoundRam_GetRecordAddress_Kn5000Kn3000
+; SoundRam_GetRecordOffsetAndSize_CaseTable: 6 x s16 case offsets of SoundRam_GetRecordOffsetAndSize's switch
+;   on image id - 1, relative to SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000.
+SoundRam_GetRecordOffsetAndSize_CaseTable:
+	.short	SoundRam_GetRecordOffsetAndSize_Kn2000MkaMkb - SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000
+	.short	SoundRam_GetRecordOffsetAndSize_Kn2000MkaMkb - SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000
+	.short	SoundRam_GetRecordOffsetAndSize_Kn2000MkaMkb - SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000
+	.short	SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000 - SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000
+	.short	SoundRam_GetRecordOffsetAndSize_Kn1500 - SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000
+	.short	SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000 - SoundRam_GetRecordOffsetAndSize_Kn5000Kn3000
 	.byte 0xff	; pad
 ; 256-entry character-class table in the C-library <ctype.h> layout: 0x01 upper,
 ; 0x02 lower, 0x04 digit, 0x08 space, 0x10 punct, 0x20 control, 0x40 blank,

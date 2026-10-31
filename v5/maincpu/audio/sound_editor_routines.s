@@ -63,7 +63,7 @@ SeMenuTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -87,7 +87,7 @@ SeEasyTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -111,7 +111,7 @@ SeTonTon1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -135,7 +135,7 @@ SeTonTon2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -159,7 +159,7 @@ SeTonRan1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -183,7 +183,7 @@ SeTonRan2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -207,7 +207,7 @@ SeTonHyb1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -231,7 +231,7 @@ SePitPit1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -255,7 +255,7 @@ SePitEnv1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -279,7 +279,7 @@ SePitEnv2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -303,7 +303,7 @@ SePitLfo1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -327,7 +327,7 @@ SeAmpAmp1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -351,7 +351,7 @@ SeAmpAmp2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -375,7 +375,7 @@ SeAmpEnv1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -399,7 +399,7 @@ SeAmpEnv2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -423,7 +423,7 @@ SeAmpLfo1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -447,7 +447,7 @@ SeFilLpq1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -471,7 +471,7 @@ SeFilHpq1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -495,7 +495,7 @@ SeFilL241TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -519,7 +519,7 @@ SeFilH241TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -543,7 +543,7 @@ SeFilBpf1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -567,7 +567,7 @@ SeFilBcf1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -591,7 +591,7 @@ SeFilFil2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -615,7 +615,7 @@ SeFilEnv1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -639,7 +639,7 @@ SeFilEnv2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -663,7 +663,7 @@ SeFilLfo1TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -687,7 +687,7 @@ SeDigEffTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -711,7 +711,7 @@ SeCtr2TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -735,7 +735,7 @@ SeCtr3TitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -759,7 +759,7 @@ SeCopyTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -783,7 +783,7 @@ SeWrtMemTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 
@@ -807,7 +807,7 @@ SeWrtSndTitleFunc:
 	ldirw
 	lda xwa, (xsp)
 	ld xbc, xhl
-	call DirmdEmulator_Entry
+	call DirmdEmulator
 	lda xsp, (xsp + 16)
 	ret
 

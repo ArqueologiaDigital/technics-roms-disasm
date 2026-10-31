@@ -1,0 +1,26 @@
+0x32fb ACC_REQ_FILLIN ; FILL IN requests, bit 0 = FILL IN 1, bit 1 = FILL IN 2: PANEL_STYLE+5 bits 6 / 7, copied every tick (SeqTick_ReadControlState); AccSection_LatchFillInRequests latches a newly set bit
+0x32fc ACC_REQ_FILLIN_PREV ; ACC_REQ_FILLIN of the previous tick (Rhythm_SaveState); Rhythm_SaveState also moves bit 0 / 1 when one fill hands over to the other
+0x32fd ACC_REQ_ENDING ; ENDING requests, bit 0 = ENDING 1, bit 1 = ENDING 2: PANEL_STYLE+5 bits 4 / 5 (SeqTick_ReadControlState); AccSection_LatchEndingRequests latches a newly set bit
+0x32fe ACC_REQ_ENDING_PREV ; ACC_REQ_ENDING of the previous tick (Rhythm_SaveState)
+0x32ff ACC_REQ_INTRO ; intro requests, bit 0 = INTRO 1, bit 1 = COUNT IN, bit 2 = INTRO 2: PANEL_STYLE+5 bits 2 / 3 and PANEL_STYLE+6 bit 2 (SeqTick_ReadControlState); AccSection_LatchIntroRequests latches a newly set bit
+0x3300 ACC_REQ_INTRO_PREV ; ACC_REQ_INTRO of the previous tick (Rhythm_SaveState)
+0x3301 ACC_STYLE_ARRANGER_ON ; bit 0 = MUSIC STYLE ARRANGER on (PANEL_REC_98+3 bit 0, SeqTick_ReadControlState): then FILL IN 1 / 2 step the variation down / up (AccSection_SwitchNow, AccVoice_SetChordChangeFlags)
+0x3309 ACC_PENDING_FILLIN ; latched fill-in waiting to start, bit 0 = FILL IN 1, bit 1 = FILL IN 2 (AccSection_LatchFillInRequests sets it, AccSection_StartFillIn clears it)
+0x330a ACC_PENDING_INTRO ; latched intro waiting to start, bit 0 = INTRO 1, bit 2 = COUNT IN, bit 3 = INTRO 2 (AccSection_LatchIntroRequests sets it, AccSection_StartIntro clears it)
+0x330b ACC_PENDING_ENDING ; latched ending waiting to start, bit 0 = ENDING 1, bit 1 = ENDING 2 (AccSection_LatchEndingRequests sets it, AccSection_StartEnding clears it)
+0x330d ACC_VARIATION_CHANGE_PENDING ; bit 0: ACC_VARIATION_REQUEST moved to a variation not playing (AccentVoice_DetectAndMarkChange); the lanes raise the switch at their bar end and AccSection_SwitchAtBarLine loads it
+0x3312 ACC_LANES_FILLIN1 ; the lanes (bits 0-5) still playing FILL IN 1: AccSection_StartFillIn sets 0x3f, a lane clears its bit at the section's end marker, Rhythm_SaveState retires the section when the byte reaches 0
+0x3313 ACC_LANES_FILLIN2 ; the lanes still playing FILL IN 2 (as ACC_LANES_FILLIN1)
+0x3314 ACC_LANES_ENDING1 ; the lanes still playing ENDING 1 (AccSection_StartEnding sets 0x3f)
+0x3315 ACC_LANES_ENDING2 ; the lanes still playing ENDING 2
+0x3316 ACC_LANES_INTRO1 ; the lanes still playing INTRO 1 (AccSection_StartIntro sets 0x3f)
+0x3317 ACC_LANES_COUNTIN ; the lanes still playing the COUNT IN
+0x3318 ACC_LANES_INTRO2 ; the lanes still playing INTRO 2
+0x3326 ACC_DEFER_ENDING_LANES ; lanes whose pending ending (or style change) waits for their bar line: AccSection_DeferToBarUnlessFirstBeat sets bits 0-5 unless the engine beat is 0; AccSection_SwitchAtBarLine clears it
+0x3327 ACC_DEFER_SECTION_LANES ; lanes whose pending intro / fill-in waits for their bar line: AccSection_DeferToBarIfLastBeat sets bits 0-5 when the press comes on the last beat; AccSection_SwitchAtBarLine clears it
+0x333a ACC_VARIATION_NEXT ; the variation index 0..3 to load: ACC_VARIATION_REQUEST & 3 (AccentVoice_DetectAndMarkChange), stepped -1 / +1 (clamped) by FILL IN 1 / 2 under the arranger (AccSection_SwitchNow)
+0x3470 ACC_SECTION_BUTTONS_HELD ; section buttons held: bit 0 INTRO 2, 2 INTRO 1, 3 COUNT IN, 4 ENDING 1, 5 ENDING 2, 6 FILL IN 1, 7 FILL IN 2 (AccSection_Request* set them, AccSection_Release* clear them); a held FILL IN restarts the fill at an arranger step
+0x347e ACC_CTL_EVENT_VALUE ; new value of the style-record (0x48) field-5 / 6 switch event being handled (AccStyleCtl_OnSwitchEvent)
+0x347f ACC_CTL_EVENT_MASK ; its mask of changed bits (0xff read as 0); a button is pressed when its bit is set in both, released when set only here
+0x348a ACC_CTL_EVENT_FIELD ; its field of record 0x48: 5 or 6 (AccStyleCtl_OnSwitchEvent; AccPedal_RawHandler stores 3)
+0x90f8 PANEL_EVENT_SOURCE ; source of the switch event being applied: 127 = the front panel (Audio_InitAllDefaults and the queue drain store it), 0xff = the switch-write path, else the event's own byte (VoiceMode_ParamDispatch); the INTRO & ENDING buttons choose intro or ending by the transport only for 127

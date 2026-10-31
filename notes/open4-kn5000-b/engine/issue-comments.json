@@ -1,0 +1,26 @@
+{
+ "kn5000-rlb": "2026-10-31 (lane open4/kn5000-b, sub-lane engine): traced. The allocator is Voice_Allocate_Nodes over 64 voice nodes (0x148D, 39 B) in 18 pools of 30 B at 0x112D (+0 quota, +1 count, seven class heads); each of 27 parts points to a pool (Voice_Part_PoolPtr_ModeA/_ModeB); pool 16 holds stolen voices, pool 17 is the free list (0x1345, which the old header read as a 'forced/override node'). Classes = voice state: 0-2 sounding, 3-5 released, 6 decayed/free. Per layer, Voice_LayerClassTable gives a search list (free first, then decayed > released > sounding, stolen before own); at the pool quota Voice_FindStealCandidate moves the pool's lowest-ranked voice to pool 16. Quotas by mode (system sub-command 0x09): A 32/16/4/12, B 16 pools summing to 64. Reaping: Voice_Manager_PollBank. The issue's '16 voice slots at 0x4A4C' is the held-key map, not the allocator. Renames and table respellings in v142 (v141/v140 regenerated). Notes and the website draft for audio-subsystem.md: notes/open4-kn5000-b/engine/README.md section kn5000-rlb. Repo-side work complete; leave open until the draft is published.",
+ "kn5000-wgc": "2026-10-31 (lane open4/kn5000-b, sub-lane engine): storage consolidated (song slots 0xAB000, current record 0xF180, 1,240 blocks of 256 B at 0xB0000 with flags/prev/next + 251 data bytes, per-track cursors 0x0C9E/0x0CBE) with two new song-record fields read off SeqTrack_AdvanceCursor: +0x78 per-track tail block, +0x98 per-track write offset. Events: byte 1 is the tick (0..95, 96 per beat); 0x80 = tempo (SeqEvt_ApplyTempoEvent, was AccPedalConfig_ApplyTempo), 0x85/0x86 = accompaniment start/stop (SEQ_RTMCFG bit 1), 0x9n note with 14-bit duration, 0xBn panel-parameter change, 0xCn record select, 0xD2 pitch-bend shaped; measured on the 72 KN5000 SQT files (probes/sqt_event_census.py). Not settled: which controllers 0xD0/0xD1/0xD3 become in the sub CPU (proposed new issue). Notes + website draft for sequencer.md: notes/open4-kn5000-b/engine/README.md section kn5000-wgc. Repo-side work complete; leave open until the draft is published.",
+ "kn5000-98j": "2026-10-31 (lane open4/kn5000-b, sub-lane engine): chord recognition decoded. AccChord_ReadAndStoreKeys only latches the result; the recognizer is the Chord_* group in audio/note_voice_mapping.s: up to 4 held notes of distinct pitch class -> 11-bit interval mask (Voice_ComputeNoteBitPosition) -> ChordRecog_IntervalMaskTable {chord type 1..41, root offset; bit 7 = accept at once} -> voicing from Chord_Tables (G3..F#4, bass A1..G#2). Probe notes/open4-kn5000-b/engine/probes/chord_table_check.py checks all 292 table entries; the 41 chord types are named on the interval rows in the source. NOT done in this lane: the play-time intro/variation/fill/ending switching over STYLE_SECTION and the transposition of Rhythm-ROM pattern notes to the chord (proposed as a new issue). Website draft for accompaniment-engine.md: notes/open4-kn5000-b/engine/README.md section kn5000-98j.",
+ "kn5000-nl6": "2026-10-31 (lane open4/kn5000-b, sub-lane engine), four leads done in v10/v9/v7/v6/v5: ChordDetect_* are the composer measure-view scroll/wrap routines -> AccTiming_{Scroll,Wrap}{Four,Two}BarView*; RhythmVariation_InlineCode_Code/_Code2 are 32-byte record-part maps -> respelled as .byte (CmpStep_RecPartTowardBass_Map / _TowardDrums_Map); VoiceSlot_FinalRetZ -> SeqTrack_ReadByteAndAdvance (song-memory cursor read); ToneGen_CompareVoiceBlocks -> ToneGen_ReplaceCursorNoteEvent. Evidence: notes/open4-kn5000-b/engine/README.md section kn5000-nl6.",
+ "new-issues": [
+  {
+   "parent": "kn5000-wgc",
+   "title": "Song controller events 0xD0/0xD1/0xD3: which sub-CPU records they become",
+   "description": "Split from kn5000-wgc (2026-10-31). The song player forwards 0xD0/0xD1/0xD3 (tick, value) unchanged to the sub-CPU batch via SeqBuf_WriteMidiEvent; trace Audio_ReinitAndProcessEvents / VoiceMode_ParamDispatch to name them (aftertouch, modulation, pedal?) and settle 0xBn/0xCn's two value bytes."
+  },
+  {
+   "parent": "kn5000-nl6",
+   "title": "Rename the VoiceSlot_* song-memory family in display/scoop_display.s",
+   "description": "Split from kn5000-nl6 (2026-10-31). About 1,200 VoiceSlot_* references in v10 display/scoop_display.s (VoiceSlot_ReadCurrentParams, _WriteCurrentParam, _UpdateCurrentPointer, _ComputeWordIndex ...) are the sequencer's song-memory cursor and block-chain routines, not voice slots (see SeqTrack_ReadByteAndAdvance / SeqTrack_AdvanceCursor)."
+  },
+  {
+   "parent": "kn5000-rlb",
+   "title": "Main-CPU sender of sub-CPU system sub-command 0x09 (voice allocation mode A/B)",
+   "description": "Split from kn5000-rlb (2026-10-31). Voice_SetPolyphonyMode (sub CPU) switches the pool quotas between mode A (32/16/4/12) and mode B (16 pools); find which main-CPU path sends system sub-command 0x09 and when."
+  }
+ ],
+ "superseded-new-issues": [
+  "'Accompaniment: play-time section switching ... and pattern transposition to the chord' was not created: sub-lane accvar did the section switching and replaced the rest with two narrower issues (notes/open4-kn5000-b/accvar/issue-comments.json)."
+ ]
+}

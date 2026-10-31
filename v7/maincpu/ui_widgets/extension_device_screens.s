@@ -1124,8 +1124,8 @@ PanelInput_EventIndexByHeader:	.incbin "includes/generated/naka_extension_device
 ; [nakarest] Readers: source references CPanel_EncoderDispatch (midi/midi_encoder_routines.s:
 ; [nakarest] `lda xde, (ENCODER_HANDLER_TABLE:24)`).
 ENCODER_HANDLER_TABLE:	.incbin "includes/generated/naka_extension_device.bin", 0x38F0, 0x80
-; ENCODER_LUT_MODWHEEL -- 36 x u8: entries 0..35 of the 128-entry modulation-wheel curve (raw position -> CC value)
-; Encoder_ProcessModwheel indexes it with (~raw) >> 1 and stores the byte in MIDI_CC_MODWHEEL_VALUE.
+; ENCODER_LUT_EXPRESSION_PEDAL -- 36 x u8: entries 0..35 of the 128-entry expression-pedal curve (raw position -> value)
+; Encoder_ProcessExpressionPedal indexes it with (~raw) >> 1 and stores the byte in ANALOG_EXPRESSION_PEDAL_VALUE.
 ; Entries 36..127 are the `.byte` rows after this blob in extensions/extension_data.s; the curve is non-decreasing.
-ENCODER_LUT_MODWHEEL:	.incbin "includes/generated/naka_extension_device.bin", 0x3970, 0x24
+ENCODER_LUT_EXPRESSION_PEDAL:	.incbin "includes/generated/naka_extension_device.bin", 0x3970, 0x24
 ; External label offsets within the binary blob above.

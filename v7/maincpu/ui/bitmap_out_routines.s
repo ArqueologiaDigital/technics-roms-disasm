@@ -951,7 +951,7 @@ BitMapOut_CopyExtTable_Check:
 	ld	bc, 0:i3
 	jr	PanelMemory_RecallRecords_Join
 PanelMemory_RecallRecords_Loop:
-	lda	xwa, (0xfcf6:16)
+	lda	xwa, (PANEL_REC_68:16)
 	ld	de, bc
 	extz	xde
 	add	xde, xwa
@@ -991,7 +991,7 @@ PanelMemory_RecallRecords_Join:
 	add	xde, xwa
 	ld	a, (xde)
 	ld	(xbc), a
-	lda	xbc, (0xfd0c:16)
+	lda	xbc, (PANEL_MSP:16)
 	lda	xde, (xbc+3)
 	ld	xhl, xde
 	sub	xhl, (xsp+4)
@@ -1013,7 +1013,7 @@ PanelMemory_RecallRecords_Join:
 	add	xde, xwa
 	ld	a, (xde)
 	ld	(xbc), a
-	lda	xbc, (0xfd2c:16)
+	lda	xbc, (PANEL_REC_71:16)
 	ld	xde, xbc
 	sub	xde, (xsp+4)
 	ld	xhl, xix
@@ -1036,11 +1036,11 @@ PanelMemory_RecallKeepStyle:
 	pop	xix
 	pop	xhl
 	pop	xde
-	lda	xbc, (0xf9a0:16)
-	lda	xix, (0xfc5a:16)
+	lda	xbc, (PANEL_RECORDS:16)
+	lda	xix, (PANEL_STYLE:16)
 	ld	xwa, xix
 	sub	xwa, xbc
-	lda	xde, (0x03c8e4:24)
+	lda	xde, (PANEL_RECALL_BACKUP:24)
 	add	xwa, xde
 	ld	a, (xwa)
 	ld	(xix), a
@@ -1067,7 +1067,7 @@ PanelMemory_RecallKeepStyle:
 	and	a, 0x7
 	or	l, a
 	ld	(xix), l
-	lda	xix, (0xfd0c:16)
+	lda	xix, (PANEL_MSP:16)
 	lda	xhl, (xix+8)
 	ld	xwa, xhl
 	sub	xwa, xbc
@@ -3575,14 +3575,14 @@ BitMapOut_UpdateWidget_Finalize_Join:
 	call	ApPostEvent
 	ret
 ; PanelMemory_PreSlotLoad: Empty hook (ret) run before one panel memory is read from a .PMT file; WA = destination
-;   memory index. Basis: callers + body -- FileIO_ByteBlock_DemoProc1 (the single-memory load reached from
+;   memory index. Basis: callers + body -- SingleLoad_LoadPanelMemory (the single-memory load reached from
 ;   SLDstBankList) calls it right before reading the memory into 0x1ED400 + size*index, the slot where the whole-file
 ;   load calls PrePmLoad (also a bare ret).
 PanelMemory_PreSlotLoad:
 	ret
 ; PanelMemory_PostSlotLoad: Hook run after one panel memory was read: BC < 0 (read failed) restores memory WA from its
 ;   ROM default (VoiceData_InitAndCopyParams), otherwise validates it (PanelTlv_ValidatePanelMemory). Basis: callers +
-;   body -- FileIO_ByteBlock_DemoProc1 passes WA = destination index and BC = the read result, in the place PostPmLoad
+;   body -- SingleLoad_LoadPanelMemory passes WA = destination index and BC = the read result, in the place PostPmLoad
 ;   (which calls PanelTlv_ValidatePanelMemories) takes for a whole-file load.
 PanelMemory_PostSlotLoad:
 	extz	wa

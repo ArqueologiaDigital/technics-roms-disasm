@@ -3109,17 +3109,24 @@ MultiPass_Return:
 	pop xiz
 	lda xsp, (xsp + 28)
 	ret
-FileIO_ByteBlock_DemoProc1:
+; SingleLoad_LoadPanelMemory: Single-loads one panel memory of the selected .PMT file, memory WA of the file
+;   into memory BC: checks the file signature, then reads one entry (entry size at RAM 0x1ED35D) from file
+;   176 + WA * size into 0x1ED350 + 176 + BC * size between PanelMemory_PreSlotLoad and
+;   PanelMemory_PostSlotLoad; returns HL = read result, 0xFF98 with no file selected, 0xFF9A on a wrong
+;   signature. Basis: callers + body -- SingleLoadDst_PanelMemListProc runs it for parameter 10 when the ALL
+;   flag is clear, with WA = SLOAD_SRC_PMEM_POS and BC = SLOAD_DST_PMEM_POS (SingleLoad_LoadPanelMemBank is
+;   the ALL-mode bank load).
+SingleLoad_LoadPanelMemory:
 	lda	xsp, (xsp-36)
 	push	xiz
 	ld	(xsp+36), bc
 	ld	(xsp+38), wa
 	call	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip
+	jr	ge, SingleLoad_LoadPanelMemory_Skip
 	ldw	hl, 65432
-	jrl	FileIO_ByteBlock_DemoProc1_Epilogue
-FileIO_ByteBlock_DemoProc1_Skip:
+	jrl	SingleLoad_LoadPanelMemory_Epilogue
+SingleLoad_LoadPanelMemory_Skip:
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -3137,14 +3144,14 @@ FileIO_ByteBlock_DemoProc1_Skip:
 	ld	xbc, Resource_RegionPad
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip2
+	jr	ge, SingleLoad_LoadPanelMemory_Skip2
 	call	FileIO_ReturnError
-	jrl	FileIO_ByteBlock_DemoProc1_Epilogue
-FileIO_ByteBlock_DemoProc1_Skip2:
+	jrl	SingleLoad_LoadPanelMemory_Epilogue
+SingleLoad_LoadPanelMemory_Skip2:
 	ld	wa, 1:i3
 	calr	FileIO_CheckRegionSignature
 	cp	hl, 0:i3
-	jr	z, FileIO_ByteBlock_DemoProc1_Skip3
+	jr	z, SingleLoad_LoadPanelMemory_Skip3
 	ld	wa, (2020189:24)
 	extz	xwa
 	ld	(xsp+8), xwa
@@ -3166,7 +3173,7 @@ FileIO_ByteBlock_DemoProc1_Skip2:
 	call	FileIO_SeekAndReadBlock
 	ld	iz, hl
 	cp	iz, 0:i3
-	jr	lt, FileIO_ByteBlock_DemoProc1_Join
+	jr	lt, SingleLoad_LoadPanelMemory_Join
 	ld	wa, (xsp+36)
 	extz	wa
 	call	PanelMemory_PreSlotLoad
@@ -3180,13 +3187,13 @@ FileIO_ByteBlock_DemoProc1_Skip2:
 	extz	wa
 	ld	bc, iz
 	call	PanelMemory_PostSlotLoad
-	jr	FileIO_ByteBlock_DemoProc1_Join
-FileIO_ByteBlock_DemoProc1_Skip3:
+	jr	SingleLoad_LoadPanelMemory_Join
+SingleLoad_LoadPanelMemory_Skip3:
 	ldw	iz, 65434
-FileIO_ByteBlock_DemoProc1_Join:
+SingleLoad_LoadPanelMemory_Join:
 	call	FileIO_CloseHandle
 	ld	hl, iz
-FileIO_ByteBlock_DemoProc1_Epilogue:
+SingleLoad_LoadPanelMemory_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
@@ -3196,7 +3203,7 @@ FileIO_ByteBlock_DemoProc1_Epilogue:
 ;   PanelMemory_PreBankLoad and PanelMemory_PostBankLoad; returns HL = read result, 0xFF98 with no file selected,
 ;   0xFF9A on a wrong signature. Basis: callers + body -- SingleLoadDst_PanelMemListProc runs it for parameter 10 (the
 ;   execute SingleLoadDstFunc sends) in ALL mode with WA = source bank (0x8960 / 8) and BC = destination bank (0x8966
-;   / 8); FileIO_ByteBlock_DemoProc1 is the one-memory load.
+;   / 8); SingleLoad_LoadPanelMemory is the one-memory load.
 SingleLoad_LoadPanelMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz
@@ -3222,7 +3229,7 @@ SingleLoad_LoadPanelMemBank_Skip4:
 	ld	de, 1:i3
 	call	FileIO_ReadHeader
 	lda	xwa, (xsp+12)
-	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb
+	ld	xbc, SingleLoad_LoadPanelMemory_Str_rb
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
 	jr	ge, SingleLoad_LoadPanelMemBank_Skip5
@@ -3330,7 +3337,7 @@ SingleLoad_LoadSong_Skip7:
 	ld	de, 2:i3
 	call	FileIO_ReadHeader
 	lda	xwa, (xsp+8)
-	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb_2
+	ld	xbc, SingleLoad_LoadPanelMemory_Str_rb_2
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
 	jr	ge, SingleLoad_LoadSong_Skip8
@@ -3427,7 +3434,7 @@ SingleLoad_LoadComposerPattern_Skip12:
 	ld	de, 3:i3
 	call	FileIO_ReadHeader
 	lda	xwa, (xsp+2)
-	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb_3
+	ld	xbc, SingleLoad_LoadPanelMemory_Str_rb_3
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
 	jr	ge, SingleLoad_LoadComposerPattern_Skip13
@@ -3484,7 +3491,7 @@ SingleLoad_LoadSoundMemEntry_Skip15:
 	ld	de, 4:i3
 	call	FileIO_ReadHeader
 	lda	xwa, (xsp+16)
-	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb_4
+	ld	xbc, SingleLoad_LoadPanelMemory_Str_rb_4
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
 	jr	ge, SingleLoad_LoadSoundMemEntry_Skip16
@@ -3613,7 +3620,7 @@ SingleLoad_LoadSoundMemBank_Skip20:
 	ld	de, 4:i3
 	call	FileIO_ReadHeader
 	lda	xwa, (xsp+12)
-	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb_5
+	ld	xbc, SingleLoad_LoadPanelMemory_Str_rb_5
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
 	jr	ge, SingleLoad_LoadSoundMemBank_Skip21

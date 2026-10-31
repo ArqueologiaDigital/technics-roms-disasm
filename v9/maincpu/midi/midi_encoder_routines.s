@@ -5,22 +5,23 @@
 ; routines for the KN5000 Main CPU.
 ;
 ; The encoder system works as follows:
-; 1. Raw ADC values come from analog controllers (modwheel, volume, etc.)
+; 1. Raw A/D values come from the CPL board MCU (bend, modulation, MAIN VOLUME) and the main
+;    CPU A/D (expression pedal AN0, after touch AN1)
 ; 2. CPanel_EncoderDispatch routes to encoder-specific handlers
 ; 3. Each handler uses lookup tables to convert raw -> MIDI CC values
 ; 4. Processed values are stored in MIDI_CC_*_VALUE variables
 ;
 ; Routines:
 ;   CPanel_EncoderDispatch    - Dispatch to encoder-specific handler
-;   Encoder_ProcessModwheel   - Process modulation wheel (ID 2)
-;   Encoder_ProcessVolume     - Process volume slider (ID 5)
-;   Encoder_ClampScaleAndNormalize      - Clamp value to configured range
-;   Encoder_ProcessBreath     - Process breath controller (ID 25)
-;   Encoder_ProcessFoot       - Process foot controller (ID 26)
-;   Encoder_ProcessExpression - Process expression (ID 27)
+;   Encoder_ProcessExpressionPedal   - Expression pedal, CPU AN0 (ID 2)
+;   Encoder_ProcessAfterTouch     - After touch, CPU AN1 (ID 5)
+;   Encoder_AfterTouch_ApplyThresholdCurve      - After-touch threshold and curve
+;   Encoder_ProcessPitchBend     - Pitch bend wheel, CPL AD1 (ID 25)
+;   Encoder_ProcessModulation       - Modulation wheel, CPL AD2 (ID 26)
+;   Encoder_ProcessMainVolume - MAIN VOLUME, CPL AD3 (ID 27)
 ;   Encoder_PassthroughIdentity       - Simple passthrough (ID 31)
 ;   Encoder_ReturnDefaultConstant         - Return constant 1 (default/unused)
-;   Encoder_ApplySystemModeSettings        - Select processing mode based on system state
+;   Encoder_OnTouchSensitivityChange        - Record 0x93 listener: bend range, after-touch curve/threshold
 ;
 ; Required includes before this file:
 ;   - midi_encoder_constants.asm (or equivalent EQU definitions)
@@ -51,62 +52,62 @@ CPanel_EncoderDispatch:
 ; using lookup tables. Called via ENCODER_HANDLER_TABLE dispatch.
 ; ============================================================================
 
-; Encoder_ProcessModwheel - Process modulation wheel input (Encoder ID 2)
+; Encoder_ProcessExpressionPedal - Expression pedal (main CPU AN0, ID 2, AnalogIn_PollExpressionPedal)
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
-Encoder_ProcessModwheel:
+Encoder_ProcessExpressionPedal:
 	ldw hl, 0xffff	; Default return = no change
 	cpl a	; Invert input value
 	ld c, a
-	ld (ENCODER_RAW_MODWHEEL:16), c; Store raw value
+	ld (ENCODER_RAW_EXPRESSION_PEDAL:16), c; Store raw value
 	srl a, 1	; Divide by 2
 	extz wa
-	lda xbc, (ENCODER_LUT_MODWHEEL:24); Lookup table address
+	lda xbc, (ENCODER_LUT_EXPRESSION_PEDAL:24); Lookup table address
 	ld	a, (xbc+wa)	; Get processed value from table
-	ld c, (MIDI_CC_MODWHEEL_VALUE:16); Get current value
+	ld c, (ANALOG_EXPRESSION_PEDAL_VALUE:16); Get current value
 	res 7, c	; Clear change flag
 	cp c, a	; Compare with new value
 	ret z	; Return if unchanged
-	ld (MIDI_CC_MODWHEEL_VALUE:16), a; Store new value
+	ld (ANALOG_EXPRESSION_PEDAL_VALUE:16), a; Store new value
 	ld l, a
 	extz hl	; Return value in HL
 	ret
-Encoder_ProcessModwheel_End:
+Encoder_ProcessExpressionPedal_End:
 
-; Encoder_ProcessVolume - Process volume/expression slider (Encoder ID 5)
+; Encoder_ProcessAfterTouch - After-touch sensor (main CPU AN1, ID 5, AnalogIn_PollAfterTouch)
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
-Encoder_ProcessVolume:
+Encoder_ProcessAfterTouch:
 	pushw iz
 	ldw iz, 0xffff	; Default return = no change
-	ld (ENCODER_RAW_VOLUME:16), a; Store raw value
+	ld (ENCODER_RAW_AFTERTOUCH:16), a; Store raw value
 	extz wa
-	lda xbc, (ENCODER_LUT_VOLUME:24); Lookup table address
+	lda xbc, (ENCODER_LUT_AFTERTOUCH:24); Lookup table address
 	ld	a, (xbc+wa)	; Get processed value
-	calr Encoder_ClampScaleAndNormalize	; Clamp to valid range
+	calr Encoder_AfterTouch_ApplyThresholdCurve	; Clamp to valid range
 	ld a, l
-	cp a, (MIDI_CC_VOLUME_VALUE:16)	; Compare with current
-	jr z, Encoder_ProcessVolume_NoChange
-	ld (MIDI_CC_VOLUME_VALUE:16), a; Store new value
+	cp a, (ANALOG_AFTERTOUCH_VALUE:16)	; Compare with current
+	jr z, Encoder_ProcessAfterTouch_NoChange
+	ld (ANALOG_AFTERTOUCH_VALUE:16), a; Store new value
 	ldfr_berp A, 0xf8
 	extz iz	; IZ = new value
 
-Encoder_ProcessVolume_NoChange:
+Encoder_ProcessAfterTouch_NoChange:
 	ld hl, iz	; Return value in HL
 	popw iz
 	ret
 
-; Encoder_ClampScaleAndNormalize - Clamp value L to minimum in ENCODER_RANGE_LIMIT
+; Encoder_AfterTouch_ApplyThresholdCurve - Applies the AFTER TOUCH threshold and curve: (max(v, threshold) - threshold) * 256 / 236 * curve_mult[ENCODER_AFTERTOUCH_CURVE] / 20, clamped to 127
 ; Input: L = value to clamp, A = raw lookup value
 ; Output: HL = clamped and scaled value
-Encoder_ClampScaleAndNormalize:
+Encoder_AfterTouch_ApplyThresholdCurve:
 	ld l, a
-	ld c, (ENCODER_RANGE_LIMIT:16); Get minimum limit
+	ld c, (ENCODER_AFTERTOUCH_THRESHOLD:16); Get minimum limit
 	cp l, c	; Compare with limit
-	jr nc, Encoder_PerformScaling	; Skip if >= limit
+	jr nc, Encoder_AfterTouch_Scale	; Skip if >= limit
 	ld l, c	; Clamp to minimum
 
-Encoder_PerformScaling:
+Encoder_AfterTouch_Scale:
 	sub l, c	; Subtract minimum
 	ld h, 0x0:opc
 	extz xhl
@@ -114,10 +115,10 @@ Encoder_PerformScaling:
 	ld xwa, xhl
 	ld xbc, 0xec	; Divisor
 	call Math_DivideU32	; Division routine
-	ld a, (ENCODER_VOLUME_MODE:16); Get mode value
+	ld a, (ENCODER_AFTERTOUCH_CURVE:16); Get mode value
 	extz wa
 	add wa, wa	; Double for word table index
-	lda xbc, (ENCODER_LUT_BREATH_INDEX:24); Index table
+	lda xbc, (ENCODER_LUT_AFTERTOUCH_CURVE_MULT:24); Index table
 	ld	bc, (xbc+wa)	; Get index offset
 	extz xbc
 	ld xwa, xhl
@@ -129,26 +130,29 @@ Encoder_PerformScaling:
 	ret ule	; Return if <= 127
 	ld xhl, 0x7f	; Clamp to 127
 	ret
-Encoder_ClampScaleAndNormalize_End:
+Encoder_AfterTouch_ApplyThresholdCurve_End:
 
-; Encoder_ProcessBreath - Process breath controller input
+; Encoder_ProcessPitchBend - Pitch bend wheel (CPL AD1, frame 0xD1, ID 25).  While a part is being recorded
+; (CMP_RECORD_PART bits 0-3) or (0x7f0b) is set, rescales to 64 + (v/2 - 64) * (n/12) for bend range n =
+; ENCODER_BEND_RANGE (none when 0); else passes the curve value through.  PanelAction_PitchBend splits the byte
+; into a 14-bit bend.
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
-Encoder_ProcessBreath:
+Encoder_ProcessPitchBend:
 	ldw hl, 0xffff	; Default return = no change
 	cpl a	; Invert input
-	ld (ENCODER_RAW_BREATH:16), a; Store raw value
+	ld (ENCODER_RAW_PITCHBEND:16), a; Store raw value
 	extz wa
-	lda xbc, (ENCODER_LUT_BREATH_VALUE:24); Lookup table
+	lda xbc, (ENCODER_LUT_PITCHBEND:24); Lookup table
 	ld	a, (xbc+wa)	; Get processed value
 	ld c, (CMP_RECORD_PART:16); Get system mode flags
 	and c, 0xf	; Mask relevant bits
-	jr nz, Encoder_ProcessBreath_WithModeAdjustment	; If mode active, process
+	jr nz, Encoder_ProcessPitchBend_ScaleToBendRange	; If mode active, process
 	cp (0x7f0b:16), 0; Check alternate condition
-	jr z, Encoder_ProcessBreath_SimplePassthrough	; Simple processing if clear
+	jr z, Encoder_ProcessPitchBend_Passthrough	; Simple processing if clear
 
-Encoder_ProcessBreath_WithModeAdjustment:
-	ld c, (ENCODER_BREATH_MODE:16); Get breath mode
+Encoder_ProcessPitchBend_ScaleToBendRange:
+	ld c, (ENCODER_BEND_RANGE:16); bend range
 	cp c, 0:i3
 	ret z	; Return if disabled
 	srl a, 1	; Divide by 2
@@ -157,66 +161,66 @@ Encoder_ProcessBreath_WithModeAdjustment:
 	dec 1, c	; Decrement mode for index
 	extz bc
 	add bc, bc	; Word index
-	lda xwa, (ENCODER_LUT_BREATH_MULT:24); Multiplier table
+	lda xwa, (ENCODER_LUT_BEND_RANGE_MULT:24); Multiplier table
 	ld	de, (xwa+bc)	; Get multiplier
 	mul xhl, de	; Multiply
-	lda xwa, (ENCODER_LUT_BREATH_OFFSET:24); Offset table
+	lda xwa, (ENCODER_LUT_BEND_RANGE_OFFSET:24); Offset table
 	ld	wa, (xwa+bc)	; Get offset
 	sub hl, wa	; Subtract offset
 	add hl, 0x4080	; Add center offset
 	srl hl, 8	; Divide by 256
 	add hl, hl	; Double
 	ld a, l
-	ld (MIDI_CC_BREATH_VALUE:16), a; Store result
-	jr Encoder_ProcessBreath_Return
+	ld (ANALOG_PITCHBEND_VALUE:16), a; Store result
+	jr Encoder_ProcessPitchBend_Return
 
-Encoder_ProcessBreath_SimplePassthrough:
-	cp (MIDI_CC_BREATH_VALUE:16), a	; Compare with current
+Encoder_ProcessPitchBend_Passthrough:
+	cp (ANALOG_PITCHBEND_VALUE:16), a	; Compare with current
 	ret z	; Return if unchanged
-	ld (MIDI_CC_BREATH_VALUE:16), a; Store new value
+	ld (ANALOG_PITCHBEND_VALUE:16), a; Store new value
 	ld l, a
 	extz hl
 
-Encoder_ProcessBreath_Return:
+Encoder_ProcessPitchBend_Return:
 	ret
-Encoder_ProcessBreath_End:
+Encoder_ProcessPitchBend_End:
 
-; Encoder_ProcessFoot - Process foot controller input
+; Encoder_ProcessModulation - Modulation wheel (CPL AD2, frame 0xD2, ID 26)
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value, or 0xffff if unchanged
-Encoder_ProcessFoot:
+Encoder_ProcessModulation:
 	ldw hl, 0xffff	; Default return = no change
-	ld (ENCODER_RAW_FOOT:16), a; Store raw value
+	ld (ENCODER_RAW_MODULATION:16), a; Store raw value
 	srl a, 1	; Divide by 2
 	extz wa
-	lda xbc, (ENCODER_LUT_FOOT:24); Lookup table
+	lda xbc, (ENCODER_LUT_MODULATION:24); Lookup table
 	ld	a, (xbc+wa)	; Get processed value
-	ld c, (MIDI_CC_FOOT_VALUE:16); Get current value
+	ld c, (ANALOG_MODULATION_VALUE:16); Get current value
 	res 7, c	; Clear change flag
 	cp c, a	; Compare
 	ret z	; Return if unchanged
-	ld (MIDI_CC_FOOT_VALUE:16), a; Store new value
+	ld (ANALOG_MODULATION_VALUE:16), a; Store new value
 	ld l, a
 	extz hl	; Return value in HL
 	ret
-Encoder_ProcessFoot_End:
+Encoder_ProcessModulation_End:
 
-; Encoder_ProcessExpression - Process expression controller input
+; Encoder_ProcessMainVolume - MAIN VOLUME slider (CPL AD3, VR1, frame 0xD3, ID 27)
 ; Input: A = raw encoder value
 ; Output: HL = processed MIDI CC value (always returns value, no skip)
-Encoder_ProcessExpression:
+Encoder_ProcessMainVolume:
 	cpl a	; Invert input
 	ld c, a
-	ld (ENCODER_RAW_EXPRESSION:16), c; Store raw value
+	ld (ENCODER_RAW_MAIN_VOLUME:16), c; Store raw value
 	srl a, 1	; Divide by 2
 	extz wa
-	lda xbc, (ENCODER_LUT_EXPRESSION:24); Lookup table
+	lda xbc, (ENCODER_LUT_MAIN_VOLUME:24); Lookup table
 	ld	a, (xbc+wa)	; Get processed value
-	ld (MIDI_CC_EXPRESSION_VALUE:16), a; Store value
+	ld (ANALOG_MAIN_VOLUME_VALUE:16), a; Store value
 	extz wa
 	ld hl, wa	; Return value in HL
 	ret
-Encoder_ProcessExpression_End:
+Encoder_ProcessMainVolume_End:
 
 ; Encoder_PassthroughIdentity - Simple passthrough: returns input value in HL
 ; Input: A = value
@@ -234,42 +238,44 @@ Encoder_ReturnDefaultConstant:
 	ret
 Encoder_ReturnDefaultConstant_End:
 
-; Encoder_ApplySystemModeSettings - Select processing mode based on system state
-; Reads mode value from 0xc07d and configures encoder processing accordingly
-Encoder_ApplySystemModeSettings:
+; Encoder_OnTouchSensitivityChange - Record 0x93 listener: bend range, after-touch curve/threshold
+; Listener of record 0x93 (OVERALL TOUCH SENSITIVITY) in SwbtB2_Code93_Listeners: SWBTWR_PAYLOAD_1 = byte
+; offset, _2 = new value, _3 = changed bits.  +4 bits 0-3 -> ENCODER_BEND_RANGE, +5 -> ENCODER_AFTERTOUCH_CURVE,
+; +6 bits 0-6 -> ENCODER_AFTERTOUCH_THRESHOLD.
+Encoder_OnTouchSensitivityChange:
 	ld a, (SWBTWR_PAYLOAD_1:16); Get mode selector
 	cp a, 6:i3
-	jr z, Encoder_ConfigureRangeLimit	; Jump if mode 6
+	jr z, Encoder_SetAfterTouchThreshold	; Jump if mode 6
 	cp a, 5:i3
-	jr z, Encoder_ConfigureVolumeMode	; Jump if mode 5
+	jr z, Encoder_SetAfterTouchCurve	; Jump if mode 5
 	cp a, 4:i3
 	ret nz	; Return if not mode 4
-	; Mode 4: Configure breath mode
+	; byte +4: bend range
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	and a, 0xf	; Mask low nibble
 	ret z	; Return if zero
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	and a, 0xf	; Mask low nibble
-	ld (ENCODER_BREATH_MODE:16), a; Set breath mode
+	ld (ENCODER_BEND_RANGE:16), a; bend range
 	ret
 
-Encoder_ConfigureVolumeMode:
+Encoder_SetAfterTouchCurve:
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	and a, 0xff	; Full byte check
 	ret z	; Return if zero
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	and a, 0xff	; Full byte
-	ld (ENCODER_VOLUME_MODE:16), a; Set volume mode
+	ld (ENCODER_AFTERTOUCH_CURVE:16), a; Set volume mode
 	ret
 
-Encoder_ConfigureRangeLimit:
+Encoder_SetAfterTouchThreshold:
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	res 7, a	; Clear bit 7
 	cp a, 0:i3
 	ret z	; Return if zero
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	res 7, a	; Clear bit 7
-	ld (ENCODER_RANGE_LIMIT:16), a; Set range limit
+	ld (ENCODER_AFTERTOUCH_THRESHOLD:16), a; Set range limit
 	ret
 
 ; End of MIDI encoder routines

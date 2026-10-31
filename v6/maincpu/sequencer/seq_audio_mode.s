@@ -193,7 +193,7 @@ AccChannel_CompareAndMarkDirty:
 	jr z, AccChannel_StoreCurrentState
 AccChannel_MarkDirtyAndSync:
 .Lc_f534c3:
-	calr AccChannel_SetDirtyIfActive
+	calr AccSection_DeferToBarUnlessFirstBeat
 	calr AccChannel_CheckActivitySetDirty
 	calr AccChannel_CheckPartIndexDirty
 	or	(0x3254:16), 0x01
@@ -240,13 +240,13 @@ AccChannel_StoreStateIfChanged_Store:
 	ld	(0x3230:16), a
 AccChannel_StoreStateIfChanged_Return:
 	ret
-AccChannel_SetDirtyIfActive:
+AccSection_DeferToBarUnlessFirstBeat:
 	ld	wa, (0x322b:16)
 	and W,0x07
 	cp w, 0:i3
-	jr z, AccChannel_SetDirtyDone
+	jr z, AccSection_DeferToBarUnlessFirstBeat_Return
 	or	(0x326e:16), 0x3f
-AccChannel_SetDirtyDone:
+AccSection_DeferToBarUnlessFirstBeat_Return:
 	ret
 
 AccChannel_CheckActivitySetDirty:
@@ -271,7 +271,7 @@ AccChannel_CheckPartIndexDirty:
 AccChannel_PartIndexDone:
 	ret
 
-AccVoice_ProcessPedalChanges:
+AccSection_LatchIntroRequests:
 	bit	0, (0x3247:16)
 	jr z, .Lc_f535a1
 	bit	0, (0x3248:16)
@@ -284,12 +284,12 @@ AccVoice_ProcessPedalChanges:
 	bit	0, (0x3254:16)
 	jr nz, .Lc_f53596
 	and	(0x326e:16), 0xc0
-AccVoice_Pedal0_SetAndCheck:
+AccSection_LatchIntro1_SetAndCheck:
 .Lc_f53596:
 	or	(0x3252:16), 0x01
-	calr AccVoice_CheckBitsAndSetFlags
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
-AccVoice_Pedal0_Done:
+AccSection_LatchIntro1_Done:
 .Lc_f535a1:
 	bit	1, (0x3247:16)
 	jr z, .Lc_f535d7
@@ -303,17 +303,17 @@ AccVoice_Pedal0_Done:
 	bit	0, (0x3254:16)
 	jr nz, .Lc_f535cc
 	and	(0x326e:16), 0xc0
-AccVoice_Pedal1_SetAndCheck:
+AccSection_LatchCountIn_SetAndCheck:
 .Lc_f535cc:
 	or	(0x3252:16), 0x04
-	calr AccVoice_CheckBitsAndSetFlags
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
-AccVoice_Pedal1_Done:
+AccSection_LatchCountIn_Done:
 .Lc_f535d7:
 	bit	2, (0x3247:16)
-	jr z, AccVoice_Pedal2_Done
+	jr z, AccSection_LatchIntro2_Done
 	bit	2, (0x3248:16)
-	jr nz, AccVoice_Pedal2_Done
+	jr nz, AccSection_LatchIntro2_Done
 	xor A,A
 	ld	(0x3251:16), a
 	ld	(0x3253:16), a
@@ -322,18 +322,18 @@ AccVoice_Pedal1_Done:
 	bit	0, (0x3254:16)
 	jr nz, .Lc_f53602
 	and	(0x326e:16), 0xc0
-AccVoice_Pedal2_SetAndCheck:
+AccSection_LatchIntro2_SetAndCheck:
 .Lc_f53602:
 	or	(0x3252:16), 0x08
-	calr AccVoice_CheckBitsAndSetFlags
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
 
 
 
-AccVoice_Pedal2_Done:
+AccSection_LatchIntro2_Done:
 	ret
 
-AccVoice_ProcessLeftPedalChanges:
+AccSection_LatchFillInRequests:
 	bit	0, (0x3243:16)
 	jr z, .Lc_f53644
 	bit	0, (0x3244:16)
@@ -346,17 +346,17 @@ AccVoice_ProcessLeftPedalChanges:
 	bit	0, (0x3254:16)
 	jr nz, .Lc_f53639
 	and	(0x326e:16), 0xc0
-AccVoice_LeftPedal0_SetAndCheck:
+AccSection_LatchFillIn1_SetAndCheck:
 .Lc_f53639:
 	or	(0x3251:16), 0x01
-	calr AccVoice_CheckBitsAndSetFlags
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
-AccVoice_LeftPedal0_Done:
+AccSection_LatchFillIn1_Done:
 .Lc_f53644:
 	bit	1, (0x3243:16)
-	jr z, AccVoice_LeftPedal1_Done
+	jr z, AccSection_LatchFillIn2_Done
 	bit	1, (0x3244:16)
-	jr nz, AccVoice_LeftPedal1_Done
+	jr nz, AccSection_LatchFillIn2_Done
 	xor A,A
 	ld	(0x3252:16), a
 	ld	(0x3253:16), a
@@ -365,15 +365,15 @@ AccVoice_LeftPedal0_Done:
 	bit	0, (0x3254:16)
 	jr nz, .Lc_f5366f
 	and	(0x326e:16), 0xc0
-AccVoice_LeftPedal1_SetAndCheck:
+AccSection_LatchFillIn2_SetAndCheck:
 .Lc_f5366f:
 	or	(0x3251:16), 0x02
-	calr AccVoice_CheckBitsAndSetFlags
+	calr AccSection_DeferToBarIfLastBeat
 	calr AccVoice_CheckChannelSetActive
 
 
 
-AccVoice_LeftPedal1_Done:
+AccSection_LatchFillIn2_Done:
 	ret
 
 AccVoice_CheckChannelSetActive:
@@ -385,14 +385,14 @@ AccVoice_CheckChannelSetActive:
 AccVoice_ChannelActiveDone:
 	ret
 
-AccVoice_CheckBitsAndSetFlags:
+AccSection_DeferToBarIfLastBeat:
 	ld	de, (0x322b:16)
 	and D,0x07
 	inc 1,D
 	cp d, (0x0433:16)
-	jr nz, AccVoice_BitsCheckDone
+	jr nz, AccSection_DeferToBarIfLastBeat_Return
 	or	(0x326f:16), 0x3f
-AccVoice_BitsCheckDone:
+AccSection_DeferToBarIfLastBeat_Return:
 	ret
 
 AccPitch_CheckTransposeFlags:
@@ -419,7 +419,7 @@ AccPitch_UpdateCheck:
 AccPitch_FinalReturn:
 	ret
 
-AccChord_ProcessKeyChanges:
+AccSection_LatchEndingRequests:
 	bit	0, (0x3245:16)
 	jr z, .Lc_f5370b
 	bit	0, (0x3246:16)
@@ -431,13 +431,13 @@ AccChord_ProcessKeyChanges:
 	and	(0x3253:16), 0xfd
 	and	(0x326e:16), 0xc0
 	or	(0x3253:16), 0x01
-	calr AccChannel_SetDirtyIfActive
-AccChord_KeyChange0_Done:
+	calr AccSection_DeferToBarUnlessFirstBeat
+AccSection_LatchEnding1_Done:
 .Lc_f5370b:
 	bit	1, (0x3245:16)
-	jr z, AccChord_KeyChange1_Done
+	jr z, AccSection_LatchEnding2_Done
 	bit	1, (0x3246:16)
-	jr nz, AccChord_KeyChange1_Done
+	jr nz, AccSection_LatchEnding2_Done
 	xor A,A
 	ld	(0x3252:16), a
 	ld	(0x3251:16), a
@@ -445,8 +445,8 @@ AccChord_KeyChange0_Done:
 	and	(0x3253:16), 0xfe
 	and	(0x326e:16), 0xc0
 	or	(0x3253:16), 0x02
-	calr AccChannel_SetDirtyIfActive
-AccChord_KeyChange1_Done:
+	calr AccSection_DeferToBarUnlessFirstBeat
+AccSection_LatchEnding2_Done:
 	ret
 
 AccChord_ResolveVoiceAndDispatch:

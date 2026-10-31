@@ -221,9 +221,9 @@ FDTest_CfgName_FDDTest:	aligned_string "FDD_TEST"
 	.long FDTest_TestTitle_Terminator
 FDTest_TestTitle_Terminator:	aligned_string ""
 FDTest_String_TestTitleFunc:	aligned_string "TestTitleFunc"
-; TitleFunc_ActionDispatch_Str_TitleNew: Factory-test diagnostic message "\nTitle new" (leading LF), the text its
+; TestTitleFunc_OnTitleNew_Str_TitleNew: Factory-test diagnostic message "\nTitle new" (leading LF), the text its
 ;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_ActionDispatch_Str_TitleNew:
+TestTitleFunc_OnTitleNew_Str_TitleNew:
 	.byte 0x0a
 	aligned_string "Title new"
 ; TestTitleFunc_OnTitleOld_Str_TitleOld: Factory-test diagnostic message "\nTitle old" (leading LF), the text its
@@ -251,50 +251,50 @@ TestTitleFunc_OnTitleInterrupt_Str_TitleINTERUPT:
 TestTitleFunc_OnTitleInterruptReturn_Str_TitleINTERUPT_RETURN:
 	.byte 0x0a
 	aligned_string "Title INTERUPT RETURN"
-; TitleFunc_LifecycleTable_Str_TBIOS_Test: Factory-test diagnostic message "\nTBIOS Test" (leading LF), the text its
+; TestTitleFunc_OnTbiosTest_Str_TBIOS_Test: Factory-test diagnostic message "\nTBIOS Test" (leading LF), the text its
 ;   owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_LifecycleTable_Str_TBIOS_Test:
+TestTitleFunc_OnTbiosTest_Str_TBIOS_Test:
 	.byte 0x0a
 	aligned_string "TBIOS Test"
-; TitleFunc_LifecycleDispatch_OnStopFddTest_Str_STOP_FDD_TEST: Factory-test diagnostic message "\nSTOP FDD TEST"
+; TestTitleFunc_OnStopFddTest_Str_STOP_FDD_TEST: Factory-test diagnostic message "\nSTOP FDD TEST"
 ;   (leading LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_LifecycleDispatch_OnStopFddTest_Str_STOP_FDD_TEST:
+TestTitleFunc_OnStopFddTest_Str_STOP_FDD_TEST:
 	.byte 0x0a
 	aligned_string "STOP FDD TEST"
-; TitleFunc_LifecycleDispatch_OnFddTestLoop_Str_START_FDD_TEST_LOOP: Factory-test diagnostic message "\nSTART FDD TEST
+; TestTitleFunc_OnFddTestLoop_Str_START_FDD_TEST_LOOP: Factory-test diagnostic message "\nSTART FDD TEST
 ;   LOOP" (leading LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_LifecycleDispatch_OnFddTestLoop_Str_START_FDD_TEST_LOOP:
+TestTitleFunc_OnFddTestLoop_Str_START_FDD_TEST_LOOP:
 	.byte 0x0a
 	aligned_string "START FDD TEST LOOP"
-; TitleFunc_LifecycleDispatch_OnListDirectory_Str_DIR: Factory-test diagnostic message "\nDIR" (leading LF), the text
+; TestTitleFunc_OnListDirectory_Str_DIR: Factory-test diagnostic message "\nDIR" (leading LF), the text
 ;   its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_LifecycleDispatch_OnListDirectory_Str_DIR:
+TestTitleFunc_OnListDirectory_Str_DIR:
 	.byte	0x0a, 0x44, 0x49, 0x52, 0x00, 0xff
-; TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test: Factory-test diagnostic message "\nDebug Test" (leading LF),
+; TestTitleFunc_OnFormat2dd_Str_Debug_Test: Factory-test diagnostic message "\nDebug Test" (leading LF),
 ;   the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test:	.byte	0x0a
+TestTitleFunc_OnFormat2dd_Str_Debug_Test:	.byte	0x0a
 	aligned_string "Debug Test"
-; TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test: Factory-test diagnostic message "\nDebug Test" (leading LF),
+; TestTitleFunc_OnFormat2hd_Str_Debug_Test: Factory-test diagnostic message "\nDebug Test" (leading LF),
 ;   the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
-TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test:
+TestTitleFunc_OnFormat2hd_Str_Debug_Test:
 	.byte 0x0a
 	.asciz "Debug Test"
-TitleFunc_LifecycleDispatch_CaseTable:
-	.short	TitleFunc_LifecycleTable - TitleFunc_LifecycleTable
-	.short	TitleFunc_LifecycleDispatch_OnStopFddTest - TitleFunc_LifecycleTable
-	.short	TitleFunc_LifecycleDispatch_OnFddTestLoop - TitleFunc_LifecycleTable
-	.short	TitleFunc_LifecycleDispatch_OnListDirectory - TitleFunc_LifecycleTable
-	.short	TitleFunc_LifecycleDispatch_OnFormat2dd - TitleFunc_LifecycleTable
-	.short	TitleFunc_LifecycleDispatch_OnFormat2hd - TitleFunc_LifecycleTable
-	.short	TitleFunc_LifecycleDispatch_OnListLswFiles - TitleFunc_LifecycleTable
-	.short	TitleFunc_Return - TitleFunc_LifecycleTable
-TestTitleFunc_CaseTable:
-	.short	TitleFunc_ActionDispatch - TitleFunc_ActionDispatch
-	.short	TestTitleFunc_OnTitleOld - TitleFunc_ActionDispatch
-	.short	TestTitleFunc_OnTitleInactivate - TitleFunc_ActionDispatch
-	.short	TestTitleFunc_OnTitleActivate - TitleFunc_ActionDispatch
-	.short	TestTitleFunc_OnTitleInterrupt - TitleFunc_ActionDispatch
-	.short	TestTitleFunc_OnTitleInterruptReturn - TitleFunc_ActionDispatch
+TestTitleFunc_SwitchCaseTable:
+	.short	TestTitleFunc_OnTbiosTest - TestTitleFunc_OnTbiosTest
+	.short	TestTitleFunc_OnStopFddTest - TestTitleFunc_OnTbiosTest
+	.short	TestTitleFunc_OnFddTestLoop - TestTitleFunc_OnTbiosTest
+	.short	TestTitleFunc_OnListDirectory - TestTitleFunc_OnTbiosTest
+	.short	TestTitleFunc_OnFormat2dd - TestTitleFunc_OnTbiosTest
+	.short	TestTitleFunc_OnFormat2hd - TestTitleFunc_OnTbiosTest
+	.short	TestTitleFunc_OnListLswFiles - TestTitleFunc_OnTbiosTest
+	.short	TitleFunc_Return - TestTitleFunc_OnTbiosTest
+TestTitleFunc_StateCaseTable:
+	.short	TestTitleFunc_OnTitleNew - TestTitleFunc_OnTitleNew
+	.short	TestTitleFunc_OnTitleOld - TestTitleFunc_OnTitleNew
+	.short	TestTitleFunc_OnTitleInactivate - TestTitleFunc_OnTitleNew
+	.short	TestTitleFunc_OnTitleActivate - TestTitleFunc_OnTitleNew
+	.short	TestTitleFunc_OnTitleInterrupt - TestTitleFunc_OnTitleNew
+	.short	TestTitleFunc_OnTitleInterruptReturn - TestTitleFunc_OnTitleNew
 ListDir2_Entry_Str_A_HAMA_LSW:
 	aligned_string "A:\\HAMA\\*.LSW"
 ; RunTestCounters_Display_Str_TEST_Finishd: Factory-test diagnostic message "\nTEST Finishd!!" (leading LF), the text
@@ -376,9 +376,9 @@ FDTestDialogProc_CaseTable:
 	.short	FDTestDlg_Unhandled - FDTestDlg_DefaultCase
 	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
 	.short	FDTestDlg_DefaultCase - FDTestDlg_DefaultCase
-RegHamaTitle1_Entry_Str_TEST_HAMA:
+FDTest_Format2ddAndLabel_Str_TEST_HAMA:
 	aligned_string "TEST_HAMA"
-RegHamaTitle2_Entry_Str_TESTHAMA2HD:
+FDTest_Format2hdAndLabel_Str_TESTHAMA2HD:
 	aligned_string "TESTHAMA2HD"
 HamaEvtDisp_LifecycleCheck_Str_LOAD:
 	.ascii	"LOAD"

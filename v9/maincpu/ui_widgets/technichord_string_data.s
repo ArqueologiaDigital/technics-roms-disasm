@@ -3013,8 +3013,8 @@ MPver_GetText_Str_MPv:		.incbin "includes/generated/naka_technichord_strings.bin
 ; -----------------------------------------------------------------------------
 WelcomeGlyph_C:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F12, 0x22
 ; -----------------------------------------------------------------------------
-; [nakarest_retype] Bitmap_Digit1
-; Bitmap_Digit1  --  'I', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
+; [nakarest_retype] WelcomeGlyph_I
+; WelcomeGlyph_I  --  'I', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
 ;
 ; What it is: the letter I, read from the bit pictures in the C
 ; (upside-down there, because the rows are stored bottom-up). The label
@@ -3028,12 +3028,12 @@ WelcomeGlyph_C:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F
 ; after AcWelcomScreen_RenderBytecode (v10/v9 0xf7f649, v7 0xf7f245)
 ; pass width 0x10 and height 0x11.
 ;
-; Typed in naka_technichord_strings.c as uint8_t Bitmap_Digit1[17][2].
+; Typed in naka_technichord_strings.c as uint8_t WelcomeGlyph_I[17][2].
 ; -----------------------------------------------------------------------------
-Bitmap_Digit1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F34, 0x22
+WelcomeGlyph_I:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F34, 0x22
 ; -----------------------------------------------------------------------------
-; [nakarest_retype] Bitmap_DigitL
-; Bitmap_DigitL  --  'L', 'N', 'O', 3 glyphs of 16 x 17 pixels, 1 bpp, 102 bytes
+; [nakarest_retype] WelcomeGlyph_L
+; WelcomeGlyph_L  --  'L', 'N', 'O', 3 glyphs of 16 x 17 pixels, 1 bpp, 102 bytes
 ;
 ; What it is: the letters L/N/O, read from the bit pictures in the C
 ; (upside-down there, because the rows are stored bottom-up). Glyphs 1
@@ -3049,9 +3049,9 @@ Bitmap_Digit1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F3
 ; pass width 0x10 and height 0x11.
 ;
 ; Typed in naka_technichord_strings.c as uint8_t
-; Bitmap_DigitL[3][17][2].
+; WelcomeGlyph_L[3][17][2].
 ; -----------------------------------------------------------------------------
-Bitmap_DigitL:				.incbin "includes/generated/naka_technichord_strings.bin", 0x17F56, 0x22
+WelcomeGlyph_L:				.incbin "includes/generated/naka_technichord_strings.bin", 0x17F56, 0x22
 ; WelcomeGlyph_N: Welcome-screen glyph 'N': 16 x 17 px, 1 bpp, one big-endian word per row, rows stored bottom-up (34
 ;   bytes), drawn by DrawBitmapSP2 from the welcome-script op handlers. Basis: readers + bytes -- the handlers pass it
 ;   with width 16 / height 17, and the bitmap rendered bottom-up is the letter N.
@@ -3061,8 +3061,8 @@ WelcomeGlyph_N:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F
 ;   with width 16 / height 17, and the bitmap rendered bottom-up is the letter O.
 WelcomeGlyph_O:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F9A, 0x22
 ; -----------------------------------------------------------------------------
-; [nakarest_retype] Bitmap_DigitR
-; Bitmap_DigitR  --  'R', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
+; [nakarest_retype] WelcomeGlyph_R
+; WelcomeGlyph_R  --  'R', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
 ;
 ; What it is: the letter R, read from the bit pictures in the C
 ; (upside-down there, because the rows are stored bottom-up). Drawn by
@@ -3075,16 +3075,16 @@ WelcomeGlyph_O:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F
 ; after AcWelcomScreen_RenderBytecode (v10/v9 0xf7f649, v7 0xf7f245)
 ; pass width 0x10 and height 0x11.
 ;
-; Typed in naka_technichord_strings.c as uint8_t Bitmap_DigitR[17][2].
+; Typed in naka_technichord_strings.c as uint8_t WelcomeGlyph_R[17][2].
 ; -----------------------------------------------------------------------------
-Bitmap_DigitR:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17FBC, 0x22
+WelcomeGlyph_R:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17FBC, 0x22
 ; -----------------------------------------------------------------------------
-; [nakarest_retype] Bitmap_DigitD
-; Bitmap_DigitD  --  'U', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
+; [nakarest_retype] WelcomeGlyph_U
+; WelcomeGlyph_U  --  'U', 1 glyph of 16 x 17 pixels, 1 bpp, 34 bytes
 ;
 ; What it is: the letter U, read from the bit pictures in the C
 ; (upside-down there, because the rows are stored bottom-up). The old
-; Bitmap_DigitD slice ran 0x121c bytes: this glyph and the five objects
+; WelcomeGlyph_U slice ran 0x121c bytes: this glyph and the five objects
 ; that follow it, which are split off below. Drawn by the welcome-script
 ; op handlers: 'U' by op 11 alone and ops 9/12 only when op == 12
 ; (COLOUR).
@@ -3095,9 +3095,9 @@ Bitmap_DigitR:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17FB
 ; after AcWelcomScreen_RenderBytecode (v10/v9 0xf7f649, v7 0xf7f245)
 ; pass width 0x10 and height 0x11.
 ;
-; Typed in naka_technichord_strings.c as uint8_t Bitmap_DigitD[17][2].
+; Typed in naka_technichord_strings.c as uint8_t WelcomeGlyph_U[17][2].
 ; -----------------------------------------------------------------------------
-Bitmap_DigitD:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17FDE, 0x22
+WelcomeGlyph_U:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17FDE, 0x22
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] WelcomeScript_Steps_A
 ; WelcomeScript_Steps_A  --  186 welcome_step_t records x 12 bytes = 2232 bytes
@@ -3108,8 +3108,8 @@ Bitmap_DigitD:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17FD
 ;
 ; Reader: AcWelcomScreenProc (v10/v9 0xf7f4a6, v7 0xf7f0a2), on its init
 ; message (0x1c00001), calls Get_Region_Code and stores the table
-; address at 0x024786: Bitmap_DigitD+0x22 when the region code is 2,
-; Bitmap_DigitD+0x8da otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
+; address at 0x024786: WelcomeGlyph_U+0x22 when the region code is 2,
+; WelcomeGlyph_U+0x8da otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
 ; loads; those names are .set in shared/positional_labels.s). The step
 ; index lives at 0x024784; a step is table + 12*index (add, add, sll 2).
 ; AcWelcomScreen_Select_NextStep (v10/v9 0xf7f9c9, v7 0xf7f5c5)
@@ -3144,8 +3144,8 @@ WelcomeScript_Steps_A:	.incbin "includes/generated/naka_technichord_strings.bin"
 ;
 ; Reader: AcWelcomScreenProc (v10/v9 0xf7f4a6, v7 0xf7f0a2), on its init
 ; message (0x1c00001), calls Get_Region_Code and stores the table
-; address at 0x024786: Bitmap_DigitD+0x22 when the region code is 2,
-; Bitmap_DigitD+0x8da otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
+; address at 0x024786: WelcomeGlyph_U+0x22 when the region code is 2,
+; WelcomeGlyph_U+0x8da otherwise (the two `ld xwa, Bitmap_DigitD_0x...`
 ; loads; those names are .set in shared/positional_labels.s). The step
 ; index lives at 0x024784; a step is table + 12*index (add, add, sll 2).
 ; AcWelcomScreen_Select_NextStep (v10/v9 0xf7f9c9, v7 0xf7f5c5)
@@ -4853,34 +4853,34 @@ LoadFileVariant_Str_wb:	.incbin "includes/generated/naka_technichord_strings.bin
 MultiPass_LoopNext_Str_wb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A2FA, 0x4	; "wb"
 ; [nakarest] Resource_RegionPad  +0x1a2fe..+0x1a302 (0xea024c, 4 B)
 ; [nakarest] Text (4 B at 0xea024c), first string "rb"; no registered NAKA table points into it;
-; [nakarest] reached through source references FileIO_ByteBlock_DemoProc1_Skip
+; [nakarest] reached through source references SingleLoad_LoadPanelMemory_Skip
 ; [nakarest] (demo/file_demo_proc.s: `.long Resource_RegionPad`).
 Resource_RegionPad:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A2FE, 0x4
 ; [nakarest] naka_technichord_strings+0x1a302  +0x1a302..+0x1a306 (0xea0250, 4 B)
 ; [nakarest] Text (4 B at 0xea0250), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references SingleLoad_LoadPanelMemBank_Skip4
-; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb`).
-FileIO_ByteBlock_DemoProc1_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A302, 0x4	; "rb"
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, SingleLoad_LoadPanelMemory_Str_rb`).
+SingleLoad_LoadPanelMemory_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A302, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a306  +0x1a306..+0x1a30a (0xea0254, 4 B)
 ; [nakarest] Text (4 B at 0xea0254), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references SingleLoad_LoadSong_Skip7
-; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_2`).
-FileIO_ByteBlock_DemoProc1_Str_rb_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A306, 0x4	; "rb"
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, SingleLoad_LoadPanelMemory_Str_rb_2`).
+SingleLoad_LoadPanelMemory_Str_rb_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A306, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a30a  +0x1a30a..+0x1a30e (0xea0258, 4 B)
 ; [nakarest] Text (4 B at 0xea0258), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references SingleLoad_LoadComposerPattern_Skip12
-; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_3`).
-FileIO_ByteBlock_DemoProc1_Str_rb_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A30A, 0x4	; "rb"
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, SingleLoad_LoadPanelMemory_Str_rb_3`).
+SingleLoad_LoadPanelMemory_Str_rb_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A30A, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a30e  +0x1a30e..+0x1a312 (0xea025c, 4 B)
 ; [nakarest] Text (4 B at 0xea025c), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references SingleLoad_LoadSoundMemEntry_Skip15
-; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_4`).
-FileIO_ByteBlock_DemoProc1_Str_rb_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A30E, 0x4	; "rb"
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, SingleLoad_LoadPanelMemory_Str_rb_4`).
+SingleLoad_LoadPanelMemory_Str_rb_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A30E, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a312  +0x1a312..+0x1a316 (0xea0260, 4 B)
 ; [nakarest] Text (4 B at 0xea0260), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references SingleLoad_LoadSoundMemBank_Skip20
-; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_5`).
-FileIO_ByteBlock_DemoProc1_Str_rb_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A312, 0x4	; "rb"
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, SingleLoad_LoadPanelMemory_Str_rb_5`).
+SingleLoad_LoadPanelMemory_Str_rb_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A312, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a316  +0x1a316..+0x1a31a (0xea0264, 4 B)
 ; [nakarest] Text (4 B at 0xea0264), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references LoadSecondary_OpenFile (demo/file_demo_proc.s:
@@ -5555,126 +5555,126 @@ FmmSmfFileNameFunc_CaseTable:
 	.short	FmmSmfFileNameFunc_OnOnWindow - SmfFN_JumpTable
 	.short	FmmSmfFileNameFunc_OnOffWindow - SmfFN_JumpTable
 	.short	FmmSmfFileNameFunc_OnWhichWindow - SmfFN_JumpTable
-; WPScan_SlotFlagBits -- 4 x u8: for scan slots 0..3, the bit number tested and recorded (1 << value)
-; WP_ScanAvailability: the slot is considered when CheckFileSystemStatus's flag word has bit `value`; the value also
+; SingleLoad_AreaFlagBits -- 4 x u8: for scan slots 0..3, the bit number tested and recorded (1 << value)
+; SingleLoad_ScanAreas: the slot is considered when CheckFileSystemStatus's flag word has bit `value`; the value also
 ; picks the check (3: FileIO_ValidateAndOpenFile, 2: signature + region, other: signature); a pass sets the bit in
-; RAM 0x89F6.  WP_FindNextSlot walks the slots round-robin for the next bit present in 0x89F6.
-WPScan_SlotFlagBits:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A85C, 0x4
+; RAM 0x89F6.  SingleLoad_FindNextArea walks the slots round-robin for the next bit present in 0x89F6.
+SingleLoad_AreaFlagBits:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A85C, 0x4
 ; SingleLoad_MemoryBankNames -- 3 x uint32_t: 15-column name of memory bank 0-2 {"   MEMORY-A    ", "   MEMORY-B    ",
-; "   MEMORY-C    "}. WP_GetPresetName1 (file_io/wallpaper.s) stores the marker byte E, copies entry [BC] after it
+; "   MEMORY-C    "}. SingleLoad_GetComposerBankName (file_io/wallpaper.s) stores the marker byte E, copies entry [BC] after it
 ; and pads to 16; its two callers in file_io/single_load.s pass bank = list position / entries per bank
 ; (10 in both callers: the COMPOSER source and destination lists, 3 banks x 10).
 SingleLoad_MemoryBankNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A860, 0xC
 ; [nakarest] Str_MemorySlot_C  +0x1a86c..+0x1a87c (0xea07ba, 16 B)
 ; [nakarest] Text (16 B at 0xea07ba), first string " MEMORY-C "; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in SingleLoad_MemoryBankNames (at 0xea07b6),
-; [nakarest] which is read by WP_GetPresetName1 (file_io/wallpaper.s: `ld xbc,
+; [nakarest] which is read by SingleLoad_GetComposerBankName (file_io/wallpaper.s: `ld xbc,
 ; [nakarest] SingleLoad_MemoryBankNames`).
 Str_MemorySlot_C:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A86C, 0x10
 ; [nakarest] Str_MemorySlot_B  +0x1a87c..+0x1a88c (0xea07ca, 16 B)
 ; [nakarest] Text (16 B at 0xea07ca), first string " MEMORY-B "; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in SingleLoad_MemoryBankNames (at 0xea07b2),
-; [nakarest] which is read by WP_GetPresetName1 (file_io/wallpaper.s: `ld xbc,
+; [nakarest] which is read by SingleLoad_GetComposerBankName (file_io/wallpaper.s: `ld xbc,
 ; [nakarest] SingleLoad_MemoryBankNames`).
 Str_MemorySlot_B:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A87C, 0x10
 ; [nakarest] Str_MemorySlot_A  +0x1a88c..+0x1a89c (0xea07da, 16 B)
 ; [nakarest] Text (16 B at 0xea07da), first string " MEMORY-A "; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in SingleLoad_MemoryBankNames (at 0xea07ae),
-; [nakarest] which is read by WP_GetPresetName1 (file_io/wallpaper.s: `ld xbc,
+; [nakarest] which is read by SingleLoad_GetComposerBankName (file_io/wallpaper.s: `ld xbc,
 ; [nakarest] SingleLoad_MemoryBankNames`).
 Str_MemorySlot_A:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A88C, 0x10
 ; PtrTbl_VariationNames -- 10 x u32: the name of variation slot 0-9 of a single-load bank: "VARI 1".."VARI 4", then
-; six distinct "" strings. WP_GetPresetPtr (file_io/wallpaper.s) returns entry [index]; the single-load source and
+; six distinct "" strings. SingleLoad_GetVariationName (file_io/wallpaper.s) returns entry [index]; the single-load source and
 ; destination bank lists (file_io/single_load.s) pass index = item mod items-per-bank and append the name to the
 ; bank path with FileIO_BuildFilePath.
 PtrTbl_VariationNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A89C, 0x28
 ; Str_Variation10_Empty -- 2 x char: "" + 0xFF fill, PtrTbl_VariationNames[9] (the 10th variation slot, unnamed)
 Str_Variation10_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8C4, 0x2
-; WP_VariationName8_Empty -- 2 x char: "" + 0xFF fill, the name WP_GetPresetPtr returns for index 8
+; Str_Variation9_Empty -- 2 x char: "" + 0xFF fill, the name SingleLoad_GetVariationName returns for index 8
 ; PtrTbl_VariationNames = {"VARI 1".."VARI 4", then six distinct ""}; the single-load list appends it to a path
-; and, for indices >= 4, names the entry with WP_GetBankMemName instead.
-WP_VariationName8_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8C6, 0x2
+; and, for indices >= 4, names the entry with SingleLoad_GetComposerSectionName instead.
+Str_Variation9_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8C6, 0x2
 ; Str_Variation8_Empty -- 2 x char: "" plus a 0xFF alignment pad; PtrTbl_VariationNames[7], an unnamed variation slot.
-; WP_GetPresetPtr (file_io/wallpaper.s) returns it; the single-load bank list appends it with FileIO_BuildFilePath.
+; SingleLoad_GetVariationName (file_io/wallpaper.s) returns it; the single-load bank list appends it with FileIO_BuildFilePath.
 Str_Variation8_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8C8, 0x2
 ; Str_Variation7_Empty -- 2 x char: "" plus a 0xFF alignment pad; PtrTbl_VariationNames[6], an unnamed variation slot.
 Str_Variation7_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8CA, 0x2
 ; Str_Variation6_Empty -- 2 x char: "" plus a 0xFF alignment pad; PtrTbl_VariationNames[5], an unnamed variation slot.
 Str_Variation6_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8CC, 0x2
 ; Str_Variation5_Empty -- 2 x char: "" + 0xFF fill, name of variation index 4 (the 5th) in PtrTbl_VariationNames
-; WP_GetPresetPtr (file_io/wallpaper.s) returns PtrTbl_VariationNames[index]; entries 0-3 are "VARI 1".."VARI 4",
+; SingleLoad_GetVariationName (file_io/wallpaper.s) returns PtrTbl_VariationNames[index]; entries 0-3 are "VARI 1".."VARI 4",
 ; entries 4-9 each point at their own empty string, this is entry 4's.
 Str_Variation5_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8CE, 0x2
 ; [nakarest] Str_Variation4  +0x1a8d0..+0x1a8d8 (0xea081e, 8 B)
 ; [nakarest] Text (8 B at 0xea081e), first string "VARI 4"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in PtrTbl_VariationNames (at 0xea07f6), which is
-; [nakarest] read by WP_GetPresetPtr (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
+; [nakarest] read by SingleLoad_GetVariationName (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
 Str_Variation4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8D0, 0x8
 ; [nakarest] Str_Variation3  +0x1a8d8..+0x1a8e0 (0xea0826, 8 B)
 ; [nakarest] Text (8 B at 0xea0826), first string "VARI 3"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in PtrTbl_VariationNames (at 0xea07f2), which is
-; [nakarest] read by WP_GetPresetPtr (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
+; [nakarest] read by SingleLoad_GetVariationName (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
 Str_Variation3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8D8, 0x8
 ; [nakarest] Str_Variation2  +0x1a8e0..+0x1a8e8 (0xea082e, 8 B)
 ; [nakarest] Text (8 B at 0xea082e), first string "VARI 2"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in PtrTbl_VariationNames (at 0xea07ee), which is
-; [nakarest] read by WP_GetPresetPtr (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
+; [nakarest] read by SingleLoad_GetVariationName (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
 Str_Variation2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8E0, 0x8
 ; [nakarest] Str_Variation1  +0x1a8e8..+0x1a8f0 (0xea0836, 8 B)
 ; [nakarest] Text (8 B at 0xea0836), first string "VARI 1"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in PtrTbl_VariationNames (at 0xea07ea), which is
-; [nakarest] read by WP_GetPresetPtr (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
+; [nakarest] read by SingleLoad_GetVariationName (file_io/wallpaper.s: `ld xbc, PtrTbl_VariationNames`).
 Str_Variation1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8E8, 0x8
-; WP_SectionNameTable -- 10 x pointer: 16-character name of style section 0-9 for WP_GetBankMemName: 4 "INTRO 1", 5 "INTRO 2",
+; SingleLoad_StyleSectionNames -- 10 x pointer: 16-character name of style section 0-9 for SingleLoad_GetComposerSectionName: 4 "INTRO 1", 5 "INTRO 2",
 ; 6 "FILL IN 1", 7 "FILL IN 2", 8 "ENDING 1", 9 "ENDING 2" (centred); entries 0-3 are "" and unused, because sections 0-3
 ; are read from RAM (0x948A0 + 96 * (4 * bank + section)). The name is copied with FileIO_CopyString, then padded to 16.
-WP_SectionNameTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8F0, 0x28
+SingleLoad_StyleSectionNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A8F0, 0x28
 ; [nakarest] Str_Ending2  +0x1a918..+0x1a92a (0xea0866, 18 B)
 ; [nakarest] Text (18 B at 0xea0866), first string " ENDING 2 "; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in WP_SectionNameTable (at 0xea0862).
+; [nakarest] into it; reached through 1 data word in SingleLoad_StyleSectionNames (at 0xea0862).
 Str_Ending2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A918, 0x12
 ; [nakarest] Str_Ending1  +0x1a92a..+0x1a93c (0xea0878, 18 B)
 ; [nakarest] Text (18 B at 0xea0878), first string " ENDING 1 "; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in WP_SectionNameTable (at 0xea085e).
+; [nakarest] into it; reached through 1 data word in SingleLoad_StyleSectionNames (at 0xea085e).
 Str_Ending1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A92A, 0x12
 ; [nakarest] Str_FillIn2  +0x1a93c..+0x1a94e (0xea088a, 18 B)
 ; [nakarest] Text (18 B at 0xea088a), first string " FILL IN 2 "; no registered NAKA table
-; [nakarest] points into it; reached through 1 data word in WP_SectionNameTable (at
+; [nakarest] points into it; reached through 1 data word in SingleLoad_StyleSectionNames (at
 ; [nakarest] 0xea085a).
 Str_FillIn2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A93C, 0x12
 ; [nakarest] Str_FillIn1  +0x1a94e..+0x1a960 (0xea089c, 18 B)
 ; [nakarest] Text (18 B at 0xea089c), first string " FILL IN 1 "; no registered NAKA table
-; [nakarest] points into it; reached through 1 data word in WP_SectionNameTable (at
+; [nakarest] points into it; reached through 1 data word in SingleLoad_StyleSectionNames (at
 ; [nakarest] 0xea0856).
 Str_FillIn1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A94E, 0x12
 ; [nakarest] Str_Intro2  +0x1a960..+0x1a972 (0xea08ae, 18 B)
 ; [nakarest] Text (18 B at 0xea08ae), first string " INTRO 2 "; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in WP_SectionNameTable (at 0xea0852).
+; [nakarest] into it; reached through 1 data word in SingleLoad_StyleSectionNames (at 0xea0852).
 Str_Intro2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A960, 0x12
 ; [nakarest] Str_Intro1  +0x1a972..+0x1a986 (0xea08c0, 20 B)
 ; [nakarest] Text (20 B at 0xea08c0), first string " INTRO 1 "; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in WP_SectionNameTable (at 0xea084e); 1
-; [nakarest] data word in WP_SectionNameTable (at 0xea084a), which is read by
-; [nakarest] WP_GetBankMemName_FromROM (file_io/wallpaper.s: `ld xbc, WP_SectionNameTable`).
+; [nakarest] into it; reached through 1 data word in SingleLoad_StyleSectionNames (at 0xea084e); 1
+; [nakarest] data word in SingleLoad_StyleSectionNames (at 0xea084a), which is read by
+; [nakarest] SingleLoad_GetComposerSectionName_FromROM (file_io/wallpaper.s: `ld xbc, SingleLoad_StyleSectionNames`).
 Str_Intro1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A972, 0x14
-; WP_SectionName_Vari3Blank -- 1 x char[2]: "" + 0xFF pad, entry 2 of WP_SectionNameTable
-; (entries 4-9: INTRO 1/2, FILL IN 1/2, ENDING 1/2); WP_GetBankMemName (file_io/wallpaper.s) only reads
+; Str_StyleSection2_Empty -- 1 x char[2]: "" + 0xFF pad, entry 2 of SingleLoad_StyleSectionNames
+; (entries 4-9: INTRO 1/2, FILL IN 1/2, ENDING 1/2); SingleLoad_GetComposerSectionName (file_io/wallpaper.s) only reads
 ; the ROM table for DE >= 4, so entries 0-3 (variations) are placeholders
-WP_SectionName_Vari3Blank:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A986, 0x2
-; WP_BankMemName1_Empty -- 2 x char: "" + 0xFF fill, entry 1 of WP_SectionNameTable
-; ({"" x4, INTRO 1/2, FILL IN 1/2, ENDING 1/2}).  WP_GetBankMemName takes names 0..3 from RAM 0x948A0 and only
+Str_StyleSection2_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A986, 0x2
+; Str_StyleSection1_Empty -- 2 x char: "" + 0xFF fill, entry 1 of SingleLoad_StyleSectionNames
+; ({"" x4, INTRO 1/2, FILL IN 1/2, ENDING 1/2}).  SingleLoad_GetComposerSectionName takes names 0..3 from RAM 0x948A0 and only
 ; indexes this ROM table with DE >= 4, so entries 0..3 are placeholders this reader never reaches.
-WP_BankMemName1_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A988, 0x2
-; Str_BankMem0_Empty -- 2 x char: "" plus a 0xFF alignment pad, WP_SectionNameTable[0] (not a pointer table).
-; Entries 0-3 of that table are "" because WP_GetBankMemName (file_io/wallpaper.s) takes slots 0-3 from RAM 0x948A0
+Str_StyleSection1_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A988, 0x2
+; Str_StyleSection0_Empty -- 2 x char: "" plus a 0xFF alignment pad, SingleLoad_StyleSectionNames[0] (not a pointer table).
+; Entries 0-3 of that table are "" because SingleLoad_GetComposerSectionName (file_io/wallpaper.s) takes slots 0-3 from RAM 0x948A0
 ; and uses the ROM table only for slots 4-9 (INTRO 1 .. ENDING 2).
-Str_BankMem0_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A98A, 0x2
+Str_StyleSection0_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A98A, 0x2
 ; [nakarest] naka_technichord_strings+0x1a98c  +0x1a98c..+0x1a9ea (0xea08da, 94 B)
 ; [nakarest] A table of 3 pointers into this piece (94 B at 0xea08da), then text; entry 0 points
 ; [nakarest] at " MEMORY A "; no registered NAKA table points into it; reached through source
-; [nakarest] references WP_GetPresetName3 (file_io/wallpaper.s: `ld xbc,
-; [nakarest] WP_GetPresetName3_PtrTable`).
-WP_GetPresetName3_PtrTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A98C, 0x5E	; 3 x 32-bit pointer
+; [nakarest] references SingleLoad_GetSoundMemBankName (file_io/wallpaper.s: `ld xbc,
+; [nakarest] SingleLoad_SoundMemBankNames`).
+SingleLoad_SoundMemBankNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A98C, 0x5E	; 3 x 32-bit pointer
 ; [nakarest] naka_technichord_strings+0x1a9ea  +0x1a9ea..+0x1a9ee (0xea0938, 4 B)
 ; [nakarest] Text (4 B at 0xea0938), first string ": "; no registered NAKA table points into it;
 ; [nakarest] reached through source references SLSrcBankList_FuncBody (file_io/single_load.s:

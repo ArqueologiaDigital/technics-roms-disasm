@@ -91,16 +91,16 @@ extern const char StsSplitCheck;
 extern const char Tempo_AdjustEffect;
 extern const char Tempo_AdjustEffect_WideArg;
 extern const char Tempo_AdjustEndMeasure;
-extern const char Tempo_AdjustQuantize;
-extern const char Tempo_AdjustQuantize_WideArg;
+extern const char SeqToComposer_StepTranspose;
+extern const char SeqToComposer_StepTranspose_WideArg;
 extern const char Tempo_AdjustStartMeasure;
-extern const char Tempo_DecrementTimeSigNum;
+extern const char SeqToComposer_DecMemoryNo;
 extern const char Tempo_EditBPM;
 extern const char Tempo_EditBPMApply;
 extern const char Tempo_EditParam84;
 extern const char Tempo_EditParam92;
 extern const char Tempo_EditParam93;
-extern const char Tempo_IncrementTimeSigNum;
+extern const char SeqToComposer_IncMemoryNo;
 extern const char Tempo_TimeSigCodeBlock;
 extern const char TimeSig_ProcNop;
 extern const char TtComSet;
@@ -1288,23 +1288,23 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     char SqplyFunc_FormatRhythmPattern_Str_2[12];
     /* ---------------------------------------------------------------------
-     * SqplyFunc_FormatIntro_Str -- NUL-terminated string(s), 6 bytes, used
-     * by SqplyFunc_FormatIntro (v10/v9 0xF3483A, v7 0xF34810) (`ld xwa,
-     * SqplyFunc_FormatIntro_Str`).
+     * SqplyFunc_FormatPunchIn_Str -- NUL-terminated string(s), 6 bytes, used
+     * by SqplyFunc_FormatPunchIn (v10/v9 0xF3483A, v7 0xF34810) (`ld xwa,
+     * SqplyFunc_FormatPunchIn_Str`).
      * --------------------------------------------------------------------- */
-    char SqplyFunc_FormatIntro_Str[6];
+    char SqplyFunc_FormatPunchIn_Str[6];
     /* ---------------------------------------------------------------------
-     * SqplyFunc_FormatEnding_Str -- NUL-terminated string(s), 6 bytes, used
-     * by SqplyFunc_FormatEnding (v10/v9 0xF3484A, v7 0xF34820) (`ld xwa,
-     * SqplyFunc_FormatEnding_Str`).
+     * SqplyFunc_FormatPunchOut_Str -- NUL-terminated string(s), 6 bytes, used
+     * by SqplyFunc_FormatPunchOut (v10/v9 0xF3484A, v7 0xF34820) (`ld xwa,
+     * SqplyFunc_FormatPunchOut_Str`).
      * --------------------------------------------------------------------- */
-    char SqplyFunc_FormatEnding_Str[6];
+    char SqplyFunc_FormatPunchOut_Str[6];
     /* ---------------------------------------------------------------------
-     * SqplyFunc_FormatFillIn_Str -- NUL-terminated string(s), 6 bytes, used
-     * by SqplyFunc_FormatFillIn (v10/v9 0xF34864, v7 0xF3483A) (`ld xwa,
-     * SqplyFunc_FormatFillIn_Str`).
+     * SqplyFunc_FormatCountIn_Str -- NUL-terminated string(s), 6 bytes, used
+     * by SqplyFunc_FormatCountIn (v10/v9 0xF34864, v7 0xF3483A) (`ld xwa,
+     * SqplyFunc_FormatCountIn_Str`).
      * --------------------------------------------------------------------- */
-    char SqplyFunc_FormatFillIn_Str[6];
+    char SqplyFunc_FormatCountIn_Str[6];
     /* ---------------------------------------------------------------------
      * SqplyFunc_HandlePartQuery_CaseTable -- jump table of a compiled
      * `switch` in SqplyFunc_HandlePartQuery (v10/v9 0xF3498E, v7 0xF34964)
@@ -1894,47 +1894,47 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint8_t PartSubBlkA_WriteLoop48_Table[48];
     /* ---------------------------------------------------------------------
-     * SeqVoice_ApplyTableEntry_Table -- read by SeqVoice_ApplyTableEntry
+     * SeqError_MapTableD -- read by SeqError_MapViaTableD
      * (v10/v9 0xF3FF42, v7 0xF3FF34) (`ld xwa,
-     * SeqVoice_ApplyTableEntry_Table`). 12 bytes to the next
+     * SeqError_MapTableD`). 12 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t SeqVoice_ApplyTableEntry_Table[12];
+    uint8_t SeqError_MapTableD[12];
     /* ---------------------------------------------------------------------
-     * AppEvent_ExtendedHandler_Table -- read by AppEvent_ExtendedHandler
+     * SeqError_MapTableE -- read by SeqError_MapViaTableE
      * (v10/v9 0xF3FF1F, v7 0xF3FF11) (`ld xwa,
-     * AppEvent_ExtendedHandler_Table`). 12 bytes to the next
+     * SeqError_MapTableE`). 12 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t AppEvent_ExtendedHandler_Table[12];
+    uint8_t SeqError_MapTableE[12];
     /* ---------------------------------------------------------------------
-     * AppEvent_ExtendedHandler_Table_2 -- read by AppEvent_ExtendedHandler
+     * SeqError_MapTableF -- read by SeqError_MapViaTableE
      * (v10/v9 0xF3FF1F, v7 0xF3FF11) (`ld xwa,
-     * AppEvent_ExtendedHandler_Table_2`). 12 bytes to the next
+     * SeqError_MapTableF`). 12 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t AppEvent_ExtendedHandler_Table_2[12];
+    uint8_t SeqError_MapTableF[12];
     /* ---------------------------------------------------------------------
-     * Part_ApplyVoiceTableB_Table -- read by Part_ApplyVoiceTableB (v10/v9
+     * SeqError_MapTableB -- read by SeqError_MapViaTableB (v10/v9
      * 0xF3FF2D, v7 0xF3FF1F) (`ld xwa,
-     * Part_ApplyVoiceTableB_Table`). 12 bytes to the next
+     * SeqError_MapTableB`). 12 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t Part_ApplyVoiceTableB_Table[12];
+    uint8_t SeqError_MapTableB[12];
     /* ---------------------------------------------------------------------
-     * Part_ApplyVoiceTableA_Table -- read by Part_ApplyVoiceTableA (v10/v9
+     * SeqError_MapTableA -- read by SeqError_MapViaTableA (v10/v9
      * 0xF3FF34, v7 0xF3FF26) (`ld xwa,
-     * Part_ApplyVoiceTableA_Table`). 12 bytes to the next
+     * SeqError_MapTableA`). 12 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t Part_ApplyVoiceTableA_Table[12];
+    uint8_t SeqError_MapTableA[12];
     /* ---------------------------------------------------------------------
-     * Part_ApplyVoiceTableC_Table -- read by Part_ApplyVoiceTableC (v10/v9
+     * SeqError_MapTableC -- read by SeqError_MapViaTableC (v10/v9
      * 0xF3FF3B, v7 0xF3FF2D) (`ld xwa,
-     * Part_ApplyVoiceTableC_Table`). 12 bytes to the next
+     * SeqError_MapTableC`). 12 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t Part_ApplyVoiceTableC_Table[12];
+    uint8_t SeqError_MapTableC[12];
     /* ---------------------------------------------------------------------
      * SeqPlay_WriteErrorToVoiceTable_Data -- read by
      * SeqPlay_WriteErrorToVoiceTable (v10/v9 0xF43A46, v7 0xF43A38) (`lda
@@ -2754,7 +2754,7 @@ typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------
      * AccStyle_ApplyExt_SkipClamp_Table -- read by
      * AccStyle_ApplyExt_SkipClamp (v10/v9 0xF560C5, v7 0xF55CC1) (`ld xhl,
-     * AccStyle_ApplyExt_SkipClamp_Table`), AccVoice_Reassign_Mode2 (v10/v9
+     * AccStyle_ApplyExt_SkipClamp_Table`), AccSection_StartComposerIntro_Mode2 (v10/v9
      * 0xF58AFD, v7 0xF586F9) (`ld xhl, AccStyle_ApplyExt_SkipClamp_Table`),
      * AccTone_FoundMatch_IncRet (v10/v9 0xF5D7F4, v7 0xF5D3F0) (`lda xbc,
      * (AccStyle_ApplyExt_SkipClamp_Table:24)`), AccPedal_ProcessAllChanges
@@ -2911,7 +2911,7 @@ typedef struct __attribute__((packed)) {
     uint8_t AccTone_ExtendAndDispatch_PopRet_Table[4];
     /* ---------------------------------------------------------------------
      * TimeSig_ProcTable -- 24 u32 code addresses (Tempo_AdjustStartMeasure,
-     * Tempo_AdjustEndMeasure, Tempo_AdjustQuantize, Tempo_AdjustEffect,
+     * Tempo_AdjustEndMeasure, SeqToComposer_StepTranspose, Tempo_AdjustEffect,
      * ...). TimeSig_DisplayStrings (v10/v9 0xF65909, v7 0xF65505): `ld
      * xde,<this>; add xde,xbc; ld xhl,(xde); call (xhl)`.
      * --------------------------------------------------------------------- */
@@ -3262,7 +3262,7 @@ typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------
      * CmpStepTitleFunc_ProcTable (+0x32, ROM 0xE4C104): CmpStepTitleFunc
      * (v10/v9 0xF6A2E2, v7 0xF69EDE): ldirw 8 words to its frame and passes
-     * the copy to DirmdEmulator_Entry (v10/v9 0xF9AE97, v7 0xF9AA8A). Four
+     * the copy to DirmdEmulator (v10/v9 0xF9AE97, v7 0xF9AA8A). Four
      * code addresses inside CmpStepTitleFunc's own region (0xF6A2FF =
      * CmpStep_DataBlock, 0xF6A32C, 0xF6A339, 0xF6A346 in v10/v9; v7
      * relocates them by -0x404 through v7_c_divergence.json) -- code entry
@@ -5643,11 +5643,11 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .SqplyFunc_FormatRhythmPattern_Str_2 = "  -1 \0"
         " %3d ",
 
-    .SqplyFunc_FormatIntro_Str = " %3d ",
+    .SqplyFunc_FormatPunchIn_Str = " %3d ",
 
-    .SqplyFunc_FormatEnding_Str = " %3d ",
+    .SqplyFunc_FormatPunchOut_Str = " %3d ",
 
-    .SqplyFunc_FormatFillIn_Str = " %3d ",
+    .SqplyFunc_FormatCountIn_Str = " %3d ",
 
     .SqplyFunc_HandlePartQuery_CaseTable = { 0x0000, 0x000F, 0x0013, 0xFF6B, 0x0000, 0x000F, 0x0013, 0x0000 },
 
@@ -5892,17 +5892,17 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
     },
 
-    .SeqVoice_ApplyTableEntry_Table = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0xFF, 0xFF, 0xFF },
+    .SeqError_MapTableD = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0xFF, 0xFF, 0xFF },
 
-    .AppEvent_ExtendedHandler_Table = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0xFF, 0xFF, 0xFF },
+    .SeqError_MapTableE = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0xFF, 0xFF, 0xFF },
 
-    .AppEvent_ExtendedHandler_Table_2 = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x35, 0xFF, 0xFF },
+    .SeqError_MapTableF = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x35, 0xFF, 0xFF },
 
-    .Part_ApplyVoiceTableB_Table = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x1D, 0xFF, 0xFF },
+    .SeqError_MapTableB = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x1D, 0xFF, 0xFF },
 
-    .Part_ApplyVoiceTableA_Table = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x1C, 0xFF, 0xFF },
+    .SeqError_MapTableA = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x1C, 0xFF, 0xFF },
 
-    .Part_ApplyVoiceTableC_Table = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x1B, 0xFF, 0xFF },
+    .SeqError_MapTableC = { 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0x23, 0xFF, 0x1B, 0xFF, 0xFF },
 
     .SeqData_ErrorCodeRemap = { 0x00, 0x00, 0x02, 0x03, 0x04, 0x05, 0x06, 0x00, 0x00, 0x09, 0x0A, 0x0B },
 
@@ -8550,12 +8550,12 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         NAKA_ADDR(Tempo_AdjustStartMeasure),
         NAKA_ADDR(Tempo_AdjustEndMeasure),
         NAKA_ADDR(TimeSig_ProcNop),
-        NAKA_ADDR(Tempo_AdjustQuantize),
+        NAKA_ADDR(SeqToComposer_StepTranspose),
         NAKA_ADDR(TimeSig_ProcNop),
         NAKA_ADDR(Tempo_AdjustEffect),
         NAKA_ADDR(TimeSig_ProcNop),
-        NAKA_ADDR(Tempo_IncrementTimeSigNum),
-        NAKA_ADDR(Tempo_DecrementTimeSigNum),
+        NAKA_ADDR(SeqToComposer_IncMemoryNo),
+        NAKA_ADDR(SeqToComposer_DecMemoryNo),
         NAKA_ADDR(Tempo_TimeSigCodeBlock),
         NAKA_ADDR(Tempo_EditParam84),
         NAKA_ADDR(Tempo_EditBPM),
@@ -8567,7 +8567,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         NAKA_ADDR(Tempo_EditParam92),
         NAKA_ADDR(Tempo_EditParam93),
         NAKA_ADDR(TimeSig_ProcNop),
-        NAKA_ADDR(Tempo_AdjustQuantize_WideArg),
+        NAKA_ADDR(SeqToComposer_StepTranspose_WideArg),
         NAKA_ADDR(TimeSig_ProcNop),
         NAKA_ADDR(Tempo_AdjustEffect_WideArg),
     },

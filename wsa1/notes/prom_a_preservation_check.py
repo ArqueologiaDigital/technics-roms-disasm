@@ -2117,7 +2117,7 @@ RENAMES = {
     "sub_FBA133": "Divide32_Unsigned_Quotient_Copy2",
     "sub_FE0019": "LCD_SwiTextCall_SaveRegs_Copy",
     "sub_F5D77F": "SoundEditController_PaintHeader_Copy",
-    "sub_F6F476": "OldCopy_BStore_Workspace_SaveToBank",
+    "sub_F6F476": "MidiFile_SaveWorkspaceToBank",
     "sub_F71D4F": "ClearRam10D3_34Bytes_Copy",
     "sub_FEFA4E": "EditScreen_MeasureNumberAt0",
     "sub_FEFA93": "EditScreen_MeasureNumberAt1",
