@@ -13769,7 +13769,7 @@ SwbtWr_StubRet_C:
 SwbtWr_WriteBankSelect:
 	ld (MIDI_MSG_STATUS:16), 176
 	ld (MIDI_MSG_DATA1:16), 0
-	ld a, (MIDI_CC_EXPRESSION_VALUE:16)
+	ld a, (ANALOG_MAIN_VOLUME_VALUE:16)
 	res 7, a
 	ld (MIDI_MSG_DATA2:16), a
 	ld (MIDI_MSG_DATA3:16), 127
@@ -13784,7 +13784,7 @@ SwbtWr_WriteBankSelect:
 	pop xde
 	ld (MIDI_MSG_STATUS:16), 176
 	ld (MIDI_MSG_DATA1:16), 1
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (ANALOG_EXPRESSION_PEDAL_VALUE:16)
 	res 7, a
 	ld (MIDI_MSG_DATA2:16), a
 	ld (MIDI_MSG_DATA3:16), 127

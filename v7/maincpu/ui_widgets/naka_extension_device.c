@@ -10,10 +10,10 @@
 
 /* ── External symbols (resolved by linker script) ── */
 
-extern const char PanelAction_Event22;
-extern const char PanelAction_Event23;
-extern const char PanelAction_ModWheel;
-extern const char PanelAction_Volume;
+extern const char PanelAction_PitchBend;
+extern const char PanelAction_Modulation;
+extern const char PanelAction_ExpressionPedal;
+extern const char PanelAction_AfterTouch;
 extern const char PanelAction_FootSwitch1;
 extern const char PanelAction_FootSwitch2;
 extern const char PanelAction_FootController1;
@@ -54,11 +54,11 @@ extern const char Audio_NullHandler_C;
 extern const char Encoder_AlignByte;
 extern const char Encoder_MarkInvalid;
 extern const char Encoder_PassthroughIdentity;
-extern const char Encoder_ProcessBreath;
-extern const char Encoder_ProcessExpression;
-extern const char Encoder_ProcessFoot;
-extern const char Encoder_ProcessModwheel;
-extern const char Encoder_ProcessVolume;
+extern const char Encoder_ProcessPitchBend;
+extern const char Encoder_ProcessMainVolume;
+extern const char Encoder_ProcessModulation;
+extern const char Encoder_ProcessExpressionPedal;
+extern const char Encoder_ProcessAfterTouch;
 extern const char Encoder_ReturnDefaultConstant;
 extern const char Encoder_Stub1;
 extern const char Encoder_Stub2;
@@ -1504,7 +1504,7 @@ typedef struct __attribute__((packed)) {
     uint8_t PanelInput_EventIndexByHeader[128];
     uint32_t ENCODER_HANDLER_TABLE[32];  /* 32 pointers */
     /* Modulation-wheel curve, entries 0..35 of 128: MIDI CC value for (~raw) >> 1; entries 36..127 continue in extensions/extension_data.s */
-    uint8_t ENCODER_LUT_MODWHEEL[36];
+    uint8_t ENCODER_LUT_EXPRESSION_PEDAL[36];
 } naka_extension_device_t;
 
 #define SELF(field) \
@@ -6229,12 +6229,12 @@ const naka_extension_device_t naka_extension_device_data
     },
 
     .PanelActions_Event22 = {
-        { 0xB1, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelAction_Event22) },  /* event 22 */
+        { 0xB1, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelAction_PitchBend) },  /* event 22 */
         { 0xFF, 0xFF, 0xFF, 0xFF, NAKA_ADDR(Encoder_AlignByte) },  /* end */
     },
 
     .PanelActions_Event23 = {
-        { 0xB2, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Event23) },  /* event 23 */
+        { 0xB2, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Modulation) },  /* event 23 */
         { 0xFF, 0xFF, 0xFF, 0xFF, NAKA_ADDR(Encoder_AlignByte) },  /* end */
     },
 
@@ -6254,12 +6254,12 @@ const naka_extension_device_t naka_extension_device_data
     },
 
     .PanelActions_Event26 = {
-        { 0xB0, 0x01, 0x00, 0x7F, NAKA_ADDR(PanelAction_ModWheel) },  /* event 26 */
+        { 0xB0, 0x01, 0x00, 0x7F, NAKA_ADDR(PanelAction_ExpressionPedal) },  /* event 26 */
         { 0xFF, 0xFF, 0xFF, 0xFF, NAKA_ADDR(Encoder_AlignByte) },  /* end */
     },
 
     .PanelActions_Event27 = {
-        { 0xB4, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Volume) },  /* event 27 */
+        { 0xB4, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_AfterTouch) },  /* event 27 */
         { 0xFF, 0xFF, 0xFF, 0xFF, NAKA_ADDR(Encoder_AlignByte) },  /* end */
     },
 
@@ -6589,13 +6589,10 @@ const naka_extension_device_t naka_extension_device_data
     .ENCODER_HANDLER_TABLE = {
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
-        NAKA_ADDR(Encoder_ProcessModwheel),
+        NAKA_ADDR(Encoder_ProcessExpressionPedal),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
-        NAKA_ADDR(Encoder_ProcessVolume),
-        NAKA_ADDR(Encoder_ReturnDefaultConstant),
-        NAKA_ADDR(Encoder_ReturnDefaultConstant),
-        NAKA_ADDR(Encoder_ReturnDefaultConstant),
+        NAKA_ADDR(Encoder_ProcessAfterTouch),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
@@ -6612,16 +6609,19 @@ const naka_extension_device_t naka_extension_device_data
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
-        NAKA_ADDR(Encoder_ProcessBreath),
-        NAKA_ADDR(Encoder_ProcessFoot),
-        NAKA_ADDR(Encoder_ProcessExpression),
+        NAKA_ADDR(Encoder_ReturnDefaultConstant),
+        NAKA_ADDR(Encoder_ReturnDefaultConstant),
+        NAKA_ADDR(Encoder_ReturnDefaultConstant),
+        NAKA_ADDR(Encoder_ProcessPitchBend),
+        NAKA_ADDR(Encoder_ProcessModulation),
+        NAKA_ADDR(Encoder_ProcessMainVolume),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_ReturnDefaultConstant),
         NAKA_ADDR(Encoder_PassthroughIdentity),
     },
 
-    .ENCODER_LUT_MODWHEEL = {
+    .ENCODER_LUT_EXPRESSION_PEDAL = {
         0x00, 0x02, 0x03, 0x04, 0x05, 0x06, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0E,
         0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D,
         0x1D, 0x1E, 0x1F, 0x20,

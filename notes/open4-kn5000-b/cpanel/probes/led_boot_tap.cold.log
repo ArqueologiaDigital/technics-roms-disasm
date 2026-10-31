@@ -1,0 +1,24 @@
+LED t=0.0519 sent row=0 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=1 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=2 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=3 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=4 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=5 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=6 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=7 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=8 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=9 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=10 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=11 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=12 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=13 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=14 old=-- new=0x00 pc=EF0B9B
+LED t=0.0519 sent row=15 old=-- new=0x00 pc=EF0B9B
+LED t=7.7541 sent row=2 old=0x00 new=0x01 pc=FC71A3
+LED t=7.7541 sent row=3 old=0x00 new=0x01 pc=FC71A3
+LED t=7.7542 sent row=6 old=0x00 new=0x08 pc=FC71A3
+LED t=7.7542 sent row=7 old=0x00 new=0x01 pc=FC71A3
+LED t=7.7543 sent row=10 old=0x00 new=0x44 pc=FC71A3
+LED t=7.9205 sent row=6 old=0x08 new=0x09 pc=FC71A3
+LED t=12.8686 sent row=5 old=0x00 new=0x01 pc=FC71A3
+LED final image rows 0..15: 00 00 01 01 00 01 09 01 00 00 44 00 00 00 00 00 
