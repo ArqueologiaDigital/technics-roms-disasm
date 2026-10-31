@@ -11334,7 +11334,7 @@ HDAE5000_PPORT_Svc17_FormatHd_Join:
 ; the mode request the main CPU's own boot makes (HDAE5000_RequestMode does
 ; the same after cancelling a queued one).
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_Svc18:
+HDAE5000_PPORT_Svc18_RequestNormalMode:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
@@ -11693,7 +11693,7 @@ HDAE5000_PPORT_Svc25_ReadFileHD_Done:
 ; In:  WA = directory, BC = song (passed through)
 ; Out: HL = 0
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_Svc27:
+HDAE5000_PPORT_Svc27_DeleteSongParts:
 	pushw 0x0000
 	pushw 0x0001
 	ld de, (HDAE5000_RAM_PportInfoBlock:24)
@@ -12043,7 +12043,7 @@ HDAE5000_PPORT_ServiceTable:
 	ret
 	nop
 .Lpps_handler_18:
-	call HDAE5000_PPORT_Svc18
+	call HDAE5000_PPORT_Svc18_RequestNormalMode
 	ret
 	nop
 .Lpps_handler_19:
@@ -12097,7 +12097,7 @@ HDAE5000_PPORT_ServiceTable:
 .Lpps_handler_27:
 	ld wa, bc
 	ld bc, de
-	call HDAE5000_PPORT_Svc27
+	call HDAE5000_PPORT_Svc27_DeleteSongParts
 	ld wa, hl
 	ret
 	nop

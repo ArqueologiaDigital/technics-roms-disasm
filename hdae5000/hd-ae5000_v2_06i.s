@@ -417,7 +417,7 @@
 ;   0x28FB26  HDAE5000_FlsItem_SongRecord - Get entry address with validation
 ;   0x28FBB1  HDAE5000_FlsItem_IsSet - Validate entry at coordinates
 ;   0x29501C  HDAE5000_PPORT_ServicePending - PPORT state machine entry
-;   0x295009  HDAE5000_PPORT_Svc27 - PPORT utility function
+;   0x295009  HDAE5000_PPORT_Svc27_DeleteSongParts - PPORT utility function
 ;   0x295046  HDAE5000_PPORT_SwitchToLink - context switch main -> PC link
 ;   0x295058  HDAE5000_PPORT_YieldToMain - context switch PC link -> main
 ;   0x2950CC  HDAE5000_PPORT_ReturnToLink - resume the link, detect its end
