@@ -3,7 +3,7 @@
 ; 03FOLKS2.TM -- 29696 bytes, clusters 618..675.
 
 ; A sound RAM image of another model (the KN5000 imports it: its loader accepts
-; the "KN3000 SOUND RAM" / "KN1500 SOUND RAM" headers, SoundRam_IdentifyImage).
+; the "KN3000 SOUND RAM" / "KN1500 SOUND RAM" headers, SendPartDataBlock_InitVal4).
 ; Its 29696-byte layout is not established.
 F_03FOLKS2_TM_Header:
 	.ascii	"KN3000 SOUND RAM"	; model signature

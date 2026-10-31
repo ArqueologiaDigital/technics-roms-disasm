@@ -131,11 +131,11 @@ for z in range(4):
 K = []
 K.append(F(0x000, 16, 'kit_name', 'ascii', M + 'SingleLoadSrc_ReadTmUserKitName 0xF8A394 (16 B at file 0x4980); ' + S + 'Audio_Cmd_PatchByte_Write_And_Echo 0x03021F echoes kit-record bytes to 0x1E0000 + 0x4980 + offset', clamp={'min': 32, 'max': 127, 'value_mask': None}))
 K.append(F(0x010, 1, 'part_mode', 'hex', S + 'Voice_SetVelocity 0x02C8E4: 0x80 = drum kit (' + TDA + ')', clamp='none'))
-K.append(F(0x011, 1, 'b_0x11', 'dec', M + 'SoundRam_ConvertKn3000DrumKit 0xFF03FB inserts this byte (shifts +0x11..0x72A6 up one) and stores 1 when converting a KN3000-format image; ROM kits hold 0..6 here, no reader (' + TDA + ')', todo='no reader found', clamp='none'))
+K.append(F(0x011, 1, 'b_0x11', 'dec', M + 'HdaeRom_DataDispatch_Block3 0xFF03FB inserts this byte (shifts +0x11..0x72A6 up one) and stores 1 when converting a KN3000-format image; ROM kits hold 0..6 here, no reader (' + TDA + ')', todo='no reader found', clamp='none'))
 for nm, k, kind in (('ctrl_part_switches', 0, 'bits'), ('ctrl_b1', 1, 'bits'), ('ctrl_b2', 2, 'dec')):
     K.append(F(0x012 + k, 1, nm, kind, 'kit twin of the sound record\'s +0x14 groups: same clamp ranges with period 3 over kit offsets 18..38 (' + KCLAMP + '); identical in all 26 ROM kits (' + TDA + ')', inf=True, todo='no reader found', rep=(7, 3), clamp=cl('kit_head', 18 + k) if str(18 + k) in CL['kit_head'] else 'none'))
 K.append(F(0x027, 1, 'note_inst', 'dec', S + 'ToneDB_Find_SubToneRecord 0x032AE0 reads rec[0x27+2n] for MIDI note n; ToneDB_Resolve_NamedToneRecord 0x032A08 -> DrumKit_NoteMapA[slot&0x1F][wave] (' + TDA + ')', rep=(128, 2), clamp='none'))
-K.append(F(0x028, 1, 'note_bank', 'bits', S + 'ToneDB_Find_SubToneRecord 0x032AE0 reads rec[0x28+2n]: bits 4:0 = NoteMapA row, bit 5 = user RAM entry; ' + M + 'SoundRam_ConvertKn3000DrumKit 0xFF03FB forces bits 5:4 = 10 on all 128', todo='bit 6 (0x60..0x6E seen) not explained', rep=(128, 2), clamp='none'))
+K.append(F(0x028, 1, 'note_bank', 'bits', S + 'ToneDB_Find_SubToneRecord 0x032AE0 reads rec[0x28+2n]: bits 4:0 = NoteMapA row, bit 5 = user RAM entry; ' + M + 'HdaeRom_DataDispatch_Block3 0xFF03FB forces bits 5:4 = 10 on all 128', todo='bit 6 (0x60..0x6E seen) not explained', rep=(128, 2), clamp='none'))
 EB = 0x127
 EEV = (' [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: ' + M + 'SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; ' + S +
        'CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (' + TDA + ')]')
@@ -244,7 +244,7 @@ doc['notes'] = (
  'The clamp tables (ParamSx_*) give a (min, max, value_mask) per offset; they are range ARGUMENTS of the call at 0xFEEE06 -> 0xFEEC3F, whose body as decoded (ld HL,WA; cpl BC; and HL,BC; retd 4) does not apply them, so they document the intended ranges rather than enforce them; "observed.in_clamp_range" tests them on the corpus. '
  'KINDS: signed = int8 two\'s complement unless "bias" is 64 (stored value - 64). bits = flags/packed fields named in evidence. REPEAT: a field with repeat {count, stride} stands for count copies at off + k*stride, named <name>_<k>. '
  'Field tiling of both blocks is checked by gen_tm_spec.py (every byte exactly once after repeat expansion). '
- 'Old-format images: SoundRam_ConvertUserSounds 0xFF024E dispatches on the 16-B id (SoundRam_Id_KN2000 / MKA / MKB / KN3000 / KN1500 / KN5000); KN3000 images lack the kit +0x11 byte (SoundRam_ConvertKn3000DrumKit 0xFF03FB inserts it), KN1500 records are 289 B (SoundRam_ConvertKn1500Record 0xFEF9B4), KN2000/MKA/MKB 144 B (SoundRam_ConvertKn2000Record 0xFEFD77). '
+ 'Old-format images: HdaeRom_DataHandler 0xFF024E dispatches on the 16-B id (SoundRam_Id_KN2000 / MKA / MKB / KN3000 / KN1500 / KN5000); KN3000 images lack the kit +0x11 byte (HdaeRom_DataDispatch_Block3 0xFF03FB inserts it), KN1500 records are 289 B (SoundRam_ConvertKn1500Record 0xFEF9B4), KN2000/MKA/MKB 144 B (SoundRam_ConvertKn2000Record 0xFEFD77). '
  'Producers: scratch scripts clamp_ranges.py (ROM tables + unidasm) and gen_tm_spec.py under ~/compartilhado/tmp/data-floppy-kn5000/agentA/scripts/ (not committed by this agent).')
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 json.dump(doc, open(OUT, 'w'), indent=1)

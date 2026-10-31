@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,017
-#   semantic names ........... 53,570 (99.2%)
+#   symbols .................. 54,019
+#   semantic names ........... 53,572 (99.2%)
 #   positional names ......... 447
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -15941,10 +15941,12 @@ SoundRam_Id_KN3000 00EED54A
 SoundRam_Id_KN1500 00EED55B
 SoundRam_Id_KN5000 00EED56C
 SoundRam_InitFuncTable 00EED57D
-SoundRam_Kn2000NibbleMap 00EED58D
+HdaeRom_DataByteMap 00EED58D
 SoundRam_DefaultRecord 00EED59D
-SoundRam_ConvertUserSounds_Cases 00EED747
-SoundRam_ConvertUserDrumKit_Cases 00EED753
+HdaeRomData_SwitchOffsets 00EED747
+HdaeRom_DispatchOffsetTable 00EED747
+HdaeRomAlt_SwitchOffsets 00EED753
+HdaeRom_AltDispatchOffsetTable 00EED753
 TmFlashBulkA_SwitchOffsets 00EED75F
 TmFlashBulkB_SwitchOffsets 00EED76B
 CType_ClassTable 00EED778
@@ -53357,9 +53359,9 @@ SoundRam_ConvertKn1500Record 00FEF9A9
 SoundRam_ConvertKn1500Record_Loop2 00FEFA2A
 SoundRam_ConvertKn1500Record_Loop 00FEFA5C
 SoundRam_ConvertKn1500Record_Skip 00FEFADE
-SoundRam_RemapKn2000RecordFields 00FEFC1D
-SoundRam_RemapKn2000RecordFields_Skip 00FEFC33
-SoundRam_RemapKn2000RecordFields_Skip2 00FEFC39
+HdaeRom_DataHandler_Helper 00FEFC1D
+HdaeRom_DataHandler_Helper_Skip 00FEFC33
+HdaeRom_DataHandler_Helper_Skip2 00FEFC39
 SendPartDataBlock_Return5_Loop2 00FEFC9A
 SendPartDataBlock_Return5_Loop3 00FEFCA7
 SoundRam_FillDefaultRecord 00FEFD1D
@@ -53378,9 +53380,9 @@ SoundRam_ConvertKn2000Record_Skip4 00FEFF00
 SendPartDataBlock_Return5_Skip4 00FEFF2B
 SoundRam_ConvertKn1500Record_Loop3 00FEFF44
 SoundRam_ConvertKn2000Record_Skip5 00FEFF55
-SoundRam_ConvertKn2000Record_Skip6 00FEFF62
-SoundRam_ConvertKn2000Record_Join3 00FEFF6D
-SoundRam_ConvertKn2000Record_Skip7 00FEFF86
+HdaeRom_DataHandler_Helper2_Entry 00FEFF62
+HdaeRom_DataHandler_Helper2_Entry_Join3 00FEFF6D
+HdaeRom_DataHandler_Helper2_Entry_Skip6 00FEFF86
 SendPartDataBlock_Return5_Skip5 00FEFFDA
 SendPartDataBlock_Return5_Skip6 00FEFFE2
 SendPartDataBlock_Data2 00FEFFF5
@@ -53396,50 +53398,50 @@ SendPartDataBlock_Return5_Entry2_Code_Skip2 00FF00DB
 SendPartDataBlock_Data5 00FF00F4
 SendPartDataBlock_Return5_Entry2_Code_Skip3 00FF0106
 SendPartDataBlock_Return5_Skip10 00FF010E
-SoundRam_IdentifyImage 00FF0123
-SoundRam_IdentifyImage_Kn5000Loop 00FF012A
-SoundRam_IdentifyImage_Kn5000Done 00FF0144
-SoundRam_IdentifyImage_TryKn1500 00FF014D
-SoundRam_IdentifyImage_Kn1500Loop 00FF0154
-SoundRam_IdentifyImage_Kn1500Done 00FF016E
-SoundRam_IdentifyImage_TryKn3000 00FF0177
-SoundRam_IdentifyImage_Kn3000Loop 00FF017E
-SoundRam_IdentifyImage_Kn3000Done 00FF0198
-SoundRam_IdentifyImage_TryKn2000 00FF01A1
-SoundRam_IdentifyImage_Kn2000Loop 00FF01A8
-SoundRam_IdentifyImage_Kn2000Done 00FF01C6
-SoundRam_IdentifyImage_TryMka 00FF01CD
-SoundRam_IdentifyImage_MkaLoop 00FF01D4
-SoundRam_IdentifyImage_MkaDone 00FF01F2
-SoundRam_IdentifyImage_TryMkb 00FF01F9
-SoundRam_IdentifyImage_MkbLoop 00FF0200
-SoundRam_IdentifyImage_MkbDone 00FF021E
-SoundRam_IdentifyImage_Unknown 00FF0225
-SoundRam_StoreChecksum 00FF0228
-SoundRam_StoreChecksum_Loop 00FF0235
-SoundRam_ConvertUserSounds 00FF0243
-SoundRam_ConvertUserSounds_Kn1500 00FF0284
-SoundRam_ConvertUserSounds_Kn1500Loop 00FF029E
-SoundRam_ConvertUserSounds_Kn2000MkaMkb 00FF02F3
-SoundRam_ConvertUserSounds_Kn2000Loop 00FF030B
-SoundRam_ConvertUserSounds_Kn2000One 00FF0358
-SoundRam_ConvertUserSounds_Kn2000OneLoop 00FF0364
-SoundRam_ConvertUserSounds_Kn2000OneNext 00FF03B5
-SoundRam_ConvertUserSounds_Done 00FF03C3
-SoundRam_ConvertUserSounds_BadImage 00FF03C7
-SoundRam_ConvertUserSounds_Epilogue 00FF03CA
+SendPartDataBlock_InitVal4 00FF0123
+SendPartDataBlock_LoadReg2 00FF012A
+SendPartDataBlock_Compare2 00FF0144
+SendPartDataBlock_InitVal5 00FF014D
+SendPartDataBlock_LoadReg3 00FF0154
+SendPartDataBlock_Compare3 00FF016E
+SendPartDataBlock_InitVal6 00FF0177
+SendPartDataBlock_LoadReg4 00FF017E
+SendPartDataBlock_Compare4 00FF0198
+SendPartDataBlock_InitVal7 00FF01A1
+SendPartDataBlock_LoadReg5 00FF01A8
+SendPartDataBlock_Compare5 00FF01C6
+SendPartDataBlock_InitVal8 00FF01CD
+SendPartDataBlock_LoadReg6 00FF01D4
+SendPartDataBlock_Compare6 00FF01F2
+SendPartDataBlock_InitVal9 00FF01F9
+SendPartDataBlock_LoadReg7 00FF0200
+SendPartDataBlock_Compare7 00FF021E
+SendPartDataBlock_ClearByte5 00FF0225
+SendPartDataBlock_SetWord7 00FF0228
+SendPartDataBlock_Block11 00FF0235
+HdaeRom_DataHandler 00FF0243
+HdaeRom_DataDispatch 00FF0284
+HdaeRom_DataDispatch_Loop2 00FF029E
+HdaeRom_DataHandler_ConvertKn2000MkaMkb 00FF02F3
+HdaeRom_DataHandler_Loop3 00FF030B
+HdaeRom_DataHandler_Skip2 00FF0358
+HdaeRom_DataHandler_Loop 00FF0364
+HdaeRom_DataHandler_Join 00FF03B5
+HdaeRom_DataHandler_Skip 00FF03C3
+HdaeRom_DataDispatch_SetWord 00FF03C7
+HdaeRom_DataHandler_Epilogue 00FF03CA
 SoundRam_WriteIdAndChecksum 00FF03D1
-SoundRam_WriteIdAndChecksum_CopyId 00FF03E0
-SoundRam_ConvertKn3000DrumKit 00FF03ED
-SoundRam_ConvertKn3000DrumKit_ShiftLoop 00FF0400
-SoundRam_ConvertKn3000DrumKit_SetFlags 00FF040D
-SoundRam_ConvertKn3000DrumKit_FlagLoop 00FF0415
-SoundRam_ConvertUserDrumKit 00FF0437
-SoundRam_ConvertUserDrumKit_Kn3000 00FF0462
-SoundRam_ConvertUserDrumKit_Kn5000Image 00FF046A
-SoundRam_ConvertUserDrumKit_BadImage 00FF046E
-SoundRam_ConvertUserDrumKit_WriteId 00FF0471
-SoundRam_ConvertUserDrumKit_CopyId 00FF0480
+HdaeRom_DataDispatch_SetWord_Loop 00FF03E0
+HdaeRom_DataDispatch_Block3 00FF03ED
+HdaeRom_DataDispatch_Block3_Loop2 00FF0400
+HdaeRom_DataDispatch_Block3_Skip 00FF040D
+HdaeRom_DataDispatch_Block3_Loop 00FF0415
+HdaeRom_AltHandler 00FF0437
+HdaeRom_AltDispatch 00FF0462
+HdaeRom_AltHandler_Kn5000Image 00FF046A
+HdaeRom_AltDispatch_SetWord 00FF046E
+HdaeRom_AltHandler_Join 00FF0471
+HdaeRom_AltDispatch_SetWord_Loop 00FF0480
 PreTmLoad 00FF0491
 PostTmLoad 00FF0492
 PostTmLoad_Send 00FF04C8
