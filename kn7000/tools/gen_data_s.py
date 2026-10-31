@@ -4904,8 +4904,8 @@ class Gen:
             self.reader_row_refs()
         self.gaps()
         n = self.emit(outdir)
-        if self.host is not None:
-            self.host_calls_tsv(outdir)
+        if self.host is not None and P.get("scheme") == "naka":
+            self.host_calls_tsv(outdir)       # (gen_image_s.py's plug-ins: the HD-SX3)
         kinds = collections.Counter()
         for it in self.items.values():
             kinds[it.kind] += it.size

@@ -275,7 +275,11 @@ def parse_calls(src_glob, by_name, mem=None):
             m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), (a\d)\), (a\d)$", l) if HOST_CALLS else None
             if m:
                 off = int(m.group(1), 0)
-                if off >= 0x1000 and off & 0xF == 0xC:
+                # the Function table's record: slot 1 in the KN7000 scheme (+0x1C), 0x100 in the NAKA one
+                home = 0x1C if SCHEME == "kn7000" else 0x100C
+                if off == home:
+                    regval[m.group(3)] = ("hosttab", 0x100)
+                elif off >= 0x1000 and off & 0xF == 0xC:
                     regval[m.group(3)] = ("hosttab", (off - 0xC) // 16)
                 elif regval.get(m.group(2)) == ("hosttab", 0x100):
                     regval[m.group(3)] = ("host", HOST_CALLS.get(off))
