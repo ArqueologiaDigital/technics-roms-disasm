@@ -81,7 +81,7 @@ s**, with the dot of the `i` on row 89. (The image is 40 byte-columns × 240
 rows = 9,600 bytes, i.e. 320 × 240, which the source header already states from
 the blit site's own `BC = 40` / `HL = 240`.)
 
-⚠ **What images 0 and 1 say is NOT established.** The preview in the source
+⚠ **What images 0 and 1 say** (resolved below, under Open: `WSA`). The preview in the source
 shows a large italic script logotype in four glyph-like clusters. This tree does
 not name it; anyone who wants to read it can run the previews the source already
 carries, or re-render at full resolution from the generator.
@@ -97,8 +97,26 @@ shows what the data looks like without anyone running a tool.
 
 ## Open
 
-* What the script logotype reads. A photograph of a real SX-WSA1 or SX-WSA1R at
-  power-on settles it in a second, and Felipe's hardware testimony outranks
-  anything inferred here.
-* Which layer `(0x2540)` selects at 0xF94131 — the first blit's destination
-  layer is whatever was selected before it, and that was not traced.
+* ~~What the script logotype reads.~~ (Resolved: it reads **`WSA`** in a
+  brush script, the model name of the SX-WSA1 / SX-WSA1R. Read by eye from the
+  OR of the committed PNGs `prom_a/images/SplashImage_DitherA.png` and
+  `_DitherB.png` (cfb2e8ab1, lane IMAGE 2026-09-02, already in the
+  `prom_a/modules/ff8000_fffeff_splash_bitmaps.s` header);
+  `python3 notes/open4-d-probes/splash_layer_and_logo.py --render <png>` writes
+  that composite. A photograph of a real unit at power-on still outranks a
+  reading by eye.)
+* ~~Which layer `(0x2540)` selects at 0xF94131.~~ (Resolved 2026-10-31, lane
+  open4/wsa1-d: **layer 0**, base `0x0000` = SAD1.) `Paint_PowerOnSplash`
+  writes no `(0x2540)` on its first-Enter path, so the blit uses the layer
+  already selected, and the routine only works for layer 0: it blits DitherA at
+  IX 0 and DitherB at IX `0x4C00`, then scrolls layer 0 back to SAD `0x0000`
+  and layer 2 forward to SAD `0x4C00`, each starting exactly one window
+  (`0x2580`) away — so the halves must be at display RAM `0x0000` and `0x4C00`,
+  which is base `0x0000`, layer 0's SAD word as `LCD_Init_SED1330` leaves it.
+  Layer 1 (base `0x2600`) or 2 (`0x4C00`) would leave both halves outside the
+  windows the scrolls end on. Consistent with that: RESET zeroes
+  `0x0080-0x51FF` (so `(0x2540)` = 0 at power-on), and the main-task module's
+  only writers of `(0x2540)`, in `VersionScreen_Show`, store 0. Checked by
+  `python3 notes/open4-d-probes/splash_layer_and_logo.py --selftest` (19
+  checks). The halves therefore slide in from opposite directions, DitherA on
+  layer 0 and DitherB on layer 2, and meet when both scrolls end.
