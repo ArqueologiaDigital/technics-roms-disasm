@@ -668,6 +668,14 @@ FUNC_DOC = {
         "[INFERENCE] An empty hook (`ret 0, 0`) KernelInit calls before it starts the",
         "dispatcher.",
     ),
+    "KernelTickIsrDefault": (
+        "[INFERENCE] The kernel's default system-tick interrupt handler: acknowledges",
+        "interrupt group 6 (clears bits 4..7 of G6ICR 0x34000118), calls func_4C03DC87 (wakes",
+        "the task (0x50380000) points at) and returns with `rets` (LibIrqScheduler calls",
+        "handlers with `calls (a2)` from the RAM table 0x50380B64).  Nothing enters it: no word",
+        "of the image holds its address, and func_48447F33 installs KernelTickHandler for the",
+        "same interrupt (number 1, G6ICR) through the def_int service func_4C03DB21.",
+    ),
     "IndexSwEventHandler": (
         "The balance (index-switch) UP/DOWN handler. It rebuilds the",
         "both-buttons-held accumulator 0x50021FE0 = (0x50021FDC & 0x50021FD8)",

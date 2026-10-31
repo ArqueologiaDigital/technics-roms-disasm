@@ -65,6 +65,22 @@ CALLEE (Reader(callee=True), lane callee-walk 2026-10-30; profile key `readers_c
       layout (ptr_records(only_arg=True)), unless the routine is a library one, reads nothing at a
       fixed offset, reads it byte by byte in a loop, or reads only its first field.
 
+TYPER (lane mn10300-typer 2026-10-31; flags of Reader, set from gen_data_s.FEATURES)
+  * array_end: `cmp End, aN` and a branch back (bcs / blt / bne, or the Lcc of a setlb loop) taken while
+    aN is below End, aN holding data address B at the loop head and B + s at the compare: a ("bound", B)
+    access, off End - B, width s (loop_bound); `cmp aM, aN` within one parameter's block gives the
+    parameter's record count (param_count);
+  * loop_index: a constant c in a data register the loop writes (loop_scan) is an induction variable at
+    the head (loop_head): unknown (c = 0), or S(1) starting at c, which keeps the first element's offset;
+    a pointer plus a scaled index keeps the scale (an access's bound for a parameter's indexed array);
+    `cmp N, dR` before the branch back, dR from c, one `inc dR` in the loop: N - c iterations (loop_count);
+  * mem_ptrs: a slot (a fixed word, a field of a record a pointer field leads to, a field of a block a
+    parameter points at) that every store fills with data addresses, NULL or the storing function's own
+    parameter (standing for what its callers pass) gives a load from it those addresses (memory_slots;
+    field_stores for a field gen_data_s keys, a T value otherwise);
+  * chains: an address register holding P(K) at a loop head and P(field f of it) at the branch back walks
+    a chain of records of kind K through f (loop_close): a "chain" access.
+
 Keys:
   ("abs", x)              the fixed address x (offset folded in)
   ("rec", b, s)           field o of the s-byte records at b (s None: unscaled)
@@ -107,9 +123,15 @@ def A(x):
     return ("A", x)
 
 
-def S(s, bound=None):
-    """An unknown index times s; bound: the index is below it (a `cmp` before it, or a byte)."""
-    return ("S", s, bound)
+def S(s, bound=None, start=0):
+    """An unknown index times s; bound: the index is below it (a `cmp` before it, or a byte); start
+    (loop_index): the bytes the index's first value contributes -- a loop counter that starts at a
+    constant c gives start c * s, the offset of the first element the loop reaches."""
+    return ("S", s, bound) if not start else ("S", s, bound, start)
+
+
+def s_start(v):
+    return v[3] if v is not None and v[0] == "S" and len(v) > 3 else 0
 
 
 def I(b, s, o, inner=None, bound=None):
@@ -172,8 +194,10 @@ def _num(t):
 
 class Reader:
     """The accesses of one program build's converted code."""
+    DYN_STRIDE = False       # (loop_index) a pointer plus a scaled index keeps the scale (add())
 
-    def __init__(self, src_glob, labels, in_data, distinct=False, ext=False, callee=False):
+    def __init__(self, src_glob, labels, in_data, distinct=False, ext=False, callee=False, array_end=False,
+                 mem_ptrs=False, loop_index=False, chains=False, word=None):
         self.in_data = in_data          # CPU address -> bool
         self.distinct = distinct
         self.labels = labels            # name -> CPU address (data and code)
@@ -196,6 +220,26 @@ class Reader:
         # (callee) the steps a loop adds to a parameter pointer: {(function, slot): {step}}
         self.param_steps = collections.defaultdict(set)
         self._lab_line, self._psteps, self._line = {}, [], 0
+        # (array_end) the address registers at each label / setlb of the function, and a pending
+        # `cmp Addr, aN` (register, Addr, aN's address) for the instruction after it
+        self.array_end = array_end
+        self._lab_state, self._cmpa = {}, None
+        # (lane mn10300-typer) mem_ptrs: a data address stored to a RAM global, a zero-initialised data
+        # word or a field of a record reached from one, and loaded back (memslots below); loop_index: a
+        # constant in a data register the loop writes is its induction variable at the loop head, not
+        # that constant; chains: a pointer a loop advances through its own field (a list); word(a): the
+        # initial 32-bit value of data address a (the image's), or None
+        self.mem_ptrs, self.loop_index, self.chains, self.word = mem_ptrs, loop_index, chains, word
+        Reader.DYN_STRIDE = loop_index
+        self.mem_ptr = {}             # slot -> frozenset of the data addresses stored there
+        self.field_stores = {}        # a pointer field ("fld", key, off) -> the data addresses stored in it
+        self._mstore, self._mbad = collections.defaultdict(set), set()
+        self._mparam, self._pvals = collections.defaultdict(set), collections.defaultdict(set)
+        self.mem_origin = {}          # frozenset -> the first function storing it (gen_data_s names the kind)
+        self._mfunc = {}
+        self.param_count = collections.defaultdict(set)   # (function, slot) -> {(step, count)}
+        self._scan_memo = {}
+        self._lab_dpre = {}
         files = [open(f, encoding="latin-1").read().split("\n") for f in sorted(glob.glob(src_glob))]
         # (callee) the functions: what a `call` names, or a `# Name  (CPU ...)` header; a branch to any
         # other named label (`bne DrawString_DrawNow`) is a branch inside the function, whose state the
@@ -212,8 +256,23 @@ class Reader:
         for _round in range(2 if self.rets_t else 0):
             self._ret, self._retbad = collections.defaultdict(set), set()
             self._retv = collections.defaultdict(set)
+            self._mstore, self._mbad, self._mfunc = collections.defaultdict(set), set(), {}
+            self._mparam, self._pvals = collections.defaultdict(set), collections.defaultdict(set)
             for lines in files:
                 self.walk(lines)
+            if self.mem_ptrs:
+                self.mem_ptr = self.memory_slots()
+                # a slot that is a field the walk keys (a data word, a field of a record a pointer leads
+                # to): its stored addresses are more targets of that field (gen_data_s field_targets)
+                self.field_stores = {}
+                for k, v in self.mem_ptr.items():
+                    if k[0] == "g" and self.in_data(k[1]):
+                        self.field_stores[("fld", ("abs", k[1]), 0)] = v
+                    elif k[0] == "p":
+                        self.field_stores[("fld", ("ptr", k[1]), k[2])] = v
+                self.mem_origin = {}
+                for k, v in sorted(self.mem_ptr.items(), key=repr):
+                    self.mem_origin.setdefault(v, self._mfunc.get(k))
             self.accesses, self.calls = [], collections.Counter()
             self.rets = collections.defaultdict(list)
             self.returns = {f: a for f, a in self._ret.items() if a and f not in self._retbad
@@ -449,7 +508,10 @@ class Reader:
         y = None if y is not None and y[0] == "D" else y
         for p, q in ((x, y), (y, x)):
             if p is not None and p[0] == "P" and (q is None or q[0] == "S"):
-                return P(p[1], p[2], True)
+                # (dyn: the index's scale when the walk knows it -- an array of that many bytes a
+                # record or a parameter holds, read with an index: mem() keeps it as the access's bound)
+                return P(p[1], p[2] + s_start(q), q[1] if Reader.DYN_STRIDE and q is not None and q[1] >= 2
+                         and p[3] in (False, q[1]) else True)
         if x is None or y is None:
             # an address plus an unknown register: an index with no known stride
             for p, q in ((x, y), (y, x)):
@@ -469,22 +531,25 @@ class Reader:
                 if p[0] == "P":
                     return P(p[1], p[2] + q[1], p[3])
                 if p[0] == "S":
-                    return None
+                    return S(p[1], p[2], s_start(p) + q[1]) if s_start(p) else None
             if q[0] == "S":
+                st0 = s_start(q)
                 if p[0] == "A":
-                    return I(p[1], q[1], 0, None, q[2])
+                    # (loop_index) the array is at Base; the loop's first element at +start (a field
+                    # offset of start modulo the stride: a counter from 1 reads element 1 first)
+                    return I(p[1], q[1], st0, None, q[2])
                 if p[0] == "I":
                     # a second index: the record stride is the larger, the other an array in the record
                     s = p[2]
                     if s is None:
-                        return I(p[1], q[1], p[3], None, q[2])
+                        return I(p[1], q[1], p[3] + st0, None, q[2])
                     if q[1] > s:
-                        return I(p[1], q[1], p[3], s, q[2])
-                    return I(p[1], s, p[3], q[1], p[5])
+                        return I(p[1], q[1], p[3] + st0, s, q[2])
+                    return I(p[1], s, p[3] + st0, q[1], p[5])
                 if p[0] == "P":
                     return P(p[1], p[2])
                 if p[0] == "S":
-                    return S(min(p[1], q[1]))
+                    return S(min(p[1], q[1]), None, s_start(p) + st0)
         return None
 
     @staticmethod
@@ -496,7 +561,7 @@ class Reader:
         if x[0] == "C":
             return C(x[1] * k)
         if x[0] == "S":
-            return S(x[1] * k, x[2] or bound)
+            return S(x[1] * k, x[2] or bound, s_start(x) * k)
         return None
 
     # -- the walk ------------------------------------------------------------------
@@ -514,7 +579,8 @@ class Reader:
         dead = False             # the previous instruction never falls through
         last_load = {}           # register -> index into self.accesses of the load that set it
         ijmp = None              # (callee) the state at the function's computed jump
-        for ln in lines:
+        heads = self.loop_scan(lines) if (self.loop_index or self.callee) else {}
+        for k_line, ln in enumerate(lines):
             self._line += 1
             code = ln.split("#", 1)[0].rstrip()
             mh = re.match(r"# (\S+)\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
@@ -546,6 +612,7 @@ class Reader:
                     # (callee) the frame the prologue (`movm [..], (sp)`, `add -N, sp`) sets up
                     self._spd, self._frame = 0, None
                     self._lab_line, self._psteps = {}, []
+                    self._lab_state, self._cmpa = {}, None
                     # the arguments: a pointer in a0 / a1 / d0 / d1 is followed into the
                     # callers (resolve_params)
                     # (a data register may as well hold an index: "D", a pointer only when used as one)
@@ -585,6 +652,10 @@ class Reader:
                                 st["a0"] = ("U", a0)
                 dead = False
                 self._lab_line[n] = self._line
+                if self.array_end or self.chains:
+                    self._lab_state[n] = {r: st.get(r) for r in REGS if r[0] == "a"}
+                if k_line in heads:
+                    self.loop_head(n, heads[k_line], st)
                 code = code[ml.end():].strip()
                 if not code:
                     continue
@@ -616,9 +687,20 @@ class Reader:
                 elif re.fullmatch(r"l(eq|ne|lt|gt|ge|le|cs|cc|hi|ls|ra)", op) and "#setlb" in self._lab_line:
                     back = self._lab_line["#setlb"]
                 if back is not None:
+                    cnt = self.loop_count(op, args, st) if self.loop_index else None
                     for ln_, key_, c_ in self._psteps:
                         if ln_ > back:
                             self.param_steps[key_].add(c_)
+                            if cnt:
+                                self.param_count[key_].add((c_, cnt))
+            if op == "setlb" and k_line in heads:
+                self.loop_head("#setlb", heads[k_line], st)
+                if self.chains:
+                    self._lab_state["#setlb"] = {r: st.get(r) for r in REGS if r[0] == "a"}
+            if self.array_end:
+                self.loop_bound(op, args, st, site or func, cpu, code.strip())
+            if self.chains:
+                self.loop_close(op, args, st, site or func, cpu, code.strip())
             if (op.startswith("b") or op == "jmp") and args and (LOCAL.search(args[0]) or (
                     self.callee and re.fullmatch(r"[A-Za-z_]\w*", args[0]) and args[0] not in self.funcs
                     and not args[0].endswith("_entry"))) and op not in ("btst", "bset", "bclr"):
@@ -632,6 +714,272 @@ class Reader:
                 v = st.get("a0")
                 self.rets[func] += list(v[1]) if v is not None and v[0] == "U" else [v]
             self.step(op, args, st, last_load, site or func, cpu, code.strip())
+
+    # -- loops (lane mn10300-typer) ----------------------------------------------------
+    BRANCH_OP = re.compile(r"^(?:b(?!tst$|set$|clr$)[a-z]+|bra|jmp)$")
+    LCC_OP = re.compile(r"^l(?:eq|ne|lt|gt|ge|le|cs|cc|hi|ls|ra)$")
+
+    def loop_scan(self, lines):
+        """{line index (in `lines`) of a loop head -- a label a later branch of the same stretch of code
+        jumps back to, or a setlb an Lcc returns to --: (the registers written in the loop, {register:
+        the number of `inc R` / `add 1, R` among its writes}, the registers written otherwise)}.  A
+        loop is at most 2,000 lines long; labels are forgotten at a `# Name  (CPU ...)` header (a new
+        function)."""
+        key = id(lines)
+        if key in self._scan_memo:
+            return self._scan_memo[key]
+        labels, heads, setlb, parsed = {}, {}, None, []
+        for k, ln in enumerate(lines):
+            if re.match(r"# \S+\s+\((?:lib )?CPU 0x", ln):
+                labels, setlb = {}, None
+            code = ln.split("#", 1)[0].strip()
+            ml = re.match(r"^([A-Za-z_.$][\w.$]*):", code)
+            if ml:
+                labels[ml.group(1)] = k
+                code = code[ml.end():].strip()
+            if not code:
+                parsed.append(None)
+                continue
+            parts = code.split(None, 1)
+            op = parts[0]
+            args = [x.strip() for x in self.split_args(parts[1])] if len(parts) > 1 else []
+            parsed.append((op, args))
+            if op == "setlb":
+                setlb = k
+            tgt = None
+            if self.BRANCH_OP.match(op) and args and args[0] in labels:
+                tgt = labels[args[0]]
+            elif self.LCC_OP.match(op) and setlb is not None:
+                tgt = setlb
+            if tgt is None or not 0 <= k - tgt < 2000:
+                continue
+            wr, inc, oth = heads.get(tgt, (set(), collections.Counter(), set()))
+            for q in parsed[tgt:k + 1]:
+                if q is None:
+                    continue
+                o2, a2 = q
+                if o2 in ("call", "calls"):
+                    wr |= set(SCRATCH)
+                    oth |= set(SCRATCH)
+                    continue
+                if not a2 or a2[-1] not in REGS or o2 in ("cmp", "btst", "bset", "bclr") or \
+                        self.BRANCH_OP.match(o2) or self.LCC_OP.match(o2):
+                    continue
+                r = a2[-1]
+                wr.add(r)
+                if (o2 == "inc" and len(a2) == 1) or (o2 == "add" and len(a2) == 2 and _num(a2[0]) == 1):
+                    inc[r] += 1
+                else:
+                    oth.add(r)
+            heads[tgt] = (wr, inc, oth)
+        self._scan_memo[key] = heads
+        return heads
+
+    def loop_head(self, name, info, st):
+        """At a loop head (label `name`, or "#setlb"): keep the data registers' values for loop_count(),
+        and (loop_index) forget a constant in a data register the loop writes -- it is the loop's
+        induction variable there, an index the walk does not know, not the value it starts at
+        (DrawBitmapSPFast16_Impl's palette index starts at 0x20)."""
+        self._lab_dpre[name] = ({r: st.get(r) for r in REGS if r[0] == "d"}, info)
+        if self.loop_index:
+            for r in info[0]:
+                if r[0] == "d" and st.get(r) is not None and st[r][0] == "C":
+                    # (an index from 0 is the unknown index the ext setlb rule already gives; one from c
+                    # keeps c, the first element the loop reaches; a bound a `cmp` of an earlier loop
+                    # gave the register is not this loop's)
+                    st[r] = S(1, None, st[r][1]) if st[r][1] else None
+                    st.pop("#b" + r, None)
+
+    def loop_count(self, op, args, st):
+        """(loop_index, at a branch back) The number of times the loop runs when its counter is proven:
+        the instruction before is `cmp N, dR`, the branch repeats while dR < N (or != N), dR held a
+        constant c <= N - 2 at the head and the loop writes it only by one `inc dR` / `add 1, dR`: N - c
+        times.  Else None."""
+        pc = st.get("#cmp")
+        if pc is None or op not in self.LOOP_WHILE_BELOW:
+            return None
+        lab = "#setlb" if op.startswith("l") else (args[0] if args else None)
+        pre = self._lab_dpre.get(lab)
+        if pre is None:
+            return None
+        vals, (wr, inc, oth) = pre
+        reg, n = pc
+        v0 = vals.get(reg)
+        if v0 is not None and v0[0] == "C" and 0 <= v0[1] and inc.get(reg) == 1 and reg not in oth and n - v0[1] >= 2:
+            return n - v0[1]
+        return None
+
+    def loop_close(self, op, args, st, func, cpu, insn):
+        """(chains) At a branch back to a loop head: an address register that held a pointer P(K) at the
+        head and holds the pointer loaded from field f of it now (`mov (f, a0), a0`) walks a chain of
+        records of one kind through their field f (a list): recorded as a "chain" access of ("ptr", K)
+        at offset f; gen_data_s.py types every record the chain reaches as that kind."""
+        if self.BRANCH_OP.match(op) and args and args[0] in self._lab_state and args[0] in self._lab_line:
+            lab = args[0]
+        elif self.LCC_OP.match(op) and "#setlb" in self._lab_state:
+            lab = "#setlb"
+        else:
+            return
+        for r, h in self._lab_state[lab].items():
+            c = st.get(r)
+            if h is None or c is None or h[0] != "P" or c[0] != "P" or h[2] or c[2] or h[3] or c[3]:
+                continue
+            if c[1][0] == "fld" and c[1][1] == ("ptr", h[1]) and h[1][0] in ("fld", "tgt"):
+                self.record(("ptr", h[1]), c[1][2], 0, "chain", func, cpu, insn)
+
+    # -- memory slots (mem_ptrs, lane mn10300-typer) ----------------------------------------
+    def memory_slots(self):
+        """(After a collecting walk) {slot: frozenset of data addresses}: the slots every store fills
+        with a data address (or NULL), a set the walk knows, or a parameter of the storing function --
+        which stands for the data addresses its callers pass in it [INFERENCE: the calls that pass
+        something else are not counted against it].  A ("pf", (F, slot), off) store, to field off of
+        the block parameter `slot` of F points at, is a store to each block its callers pass there."""
+        vals = collections.defaultdict(set)
+        bad = set(self._mbad)
+        for k, v in self._mstore.items():
+            vals[k] |= v
+        for k, ps in self._mparam.items():
+            for p in ps:
+                vals[k] |= {x for x in self._pvals.get(p, ()) if self.in_data(x)}
+        out = collections.defaultdict(set)
+        for k, v in vals.items():
+            if k[0] == "pf":
+                (F, r), off = k[1], k[2]
+                if k in bad:
+                    for b in self._pvals.get((F, r), ()):
+                        bad.add(("g", b + off))
+                    continue
+                for b in self._pvals.get((F, r), ()):
+                    out[("g", b + off)] |= v
+                    self._mfunc.setdefault(("g", b + off), self._mfunc.get(k))
+            else:
+                out[k] |= v
+        return {k: frozenset(v) for k, v in out.items() if v and k not in bad and len(v) <= TGT_MAX}
+
+    def abs_addr(self, tok):
+        """Any address `tok` names (Label, Label+N or a number), not only a data address."""
+        tok = tok.strip()
+        m = re.fullmatch(r"([A-Za-z_]\w*)\s*([+-]\s*(?:0x[0-9a-fA-F]+|\d+))?", tok)
+        if m:
+            a = self.labels.get(m.group(1))
+            if a is None:
+                return None
+            return a + (int(m.group(2).replace(" ", ""), 0) if m.group(2) else 0)
+        v = _num(tok)
+        return v & 0xFFFFFFFF if v is not None else None
+
+    def slot_key(self, tok, st, stores=False):
+        """The memory word a `mov` operand names, when it is one the walk can find again in another
+        function: ("g", address) for a fixed address (`(0x500A1CF0)`, `(Label)`, `(8, aN)` with aN a
+        known address), ("f", slot, off) for field off of a record whose address was loaded from such a
+        slot ("M" below).  Not the stack, not an index, not a parameter's record."""
+        m = self.MEM.match(tok)
+        if not m or m.group("idx"):
+            return None
+        if m.group("abs") is not None:
+            a = self.abs_addr(m.group("abs"))
+            return ("g", a) if a is not None else None
+        if m.group("base") == "sp":
+            return None
+        v = st.get(m.group("base"))
+        off = int(m.group("off"), 0) if m.group("off") else 0
+        if v is None:
+            return None
+        if v[0] == "M":
+            return ("f", v[1], off)
+        if v[0] == "A":
+            return ("g", v[1] + off)
+        if v[0] == "C" and v[1] >= 0x10000:
+            return ("g", (v[1] + off) & 0xFFFFFFFF)       # a fixed address the walk holds as a number (RAM)
+        if v[0] == "P" and v[1][0] == "param":
+            return ("pf", v[1][1:], v[2] + off) if stores and not v[3] else None
+        if v[0] == "P" and not self.rooted(("ptr", v[1])):
+            return ("p", v[1], v[2] + off)               # a field of the records a pointer field leads to
+        return None
+
+    def step(self, op, args, st, last_load, func, cpu, insn):
+        """_step, and (mem_ptrs) what a `mov` to / from a memory slot stores or gives back: a load from
+        a slot that every store fills with data addresses (or NULL) holds one of them (a T value), when
+        the walk knew nothing better (a zero-initialised data word: not the 0 it starts as); a load of an
+        address register from another slot outside the stack holds an "M" value, a record only this rule
+        follows (its fields are slots too).  "M" is no address: no other rule reads it."""
+        msk = None
+        if self.mem_ptrs and op in WIDTH and len(args) == 2:
+            src, dst = args
+            if dst in REGS and src.startswith("(") and op == "mov":
+                msk = (dst, self.slot_key(src, st))
+            elif dst.startswith("("):
+                sk = self.slot_key(dst, st, stores=True)
+                if sk is not None:
+                    v = st.get(src) if src in REGS else None
+                    vs = addrs_of(v) if op == "mov" else None
+                    if vs is not None:
+                        self._mstore[sk] |= vs
+                        self._mfunc.setdefault(sk, func)
+                    elif op == "mov" and v is not None and v[0] in "PD" and v[1][0] == "param" and not v[2] \
+                            and (v[0] == "D" or not v[3]):
+                        self._mparam[sk].add(v[1][1:])        # the storing function's own parameter
+                        self._mfunc.setdefault(sk, func)
+                    else:
+                        self._mbad.add(sk)
+        self._step(op, args, st, last_load, func, cpu, insn)
+        if msk is not None and msk[1] is not None:
+            dst, sk = msk
+            vs = self.mem_ptr.get(sk)
+            cur = st.get(dst)
+            if sk[0] == "p" or (sk[0] == "g" and self.in_data(sk[1])):
+                pass                     # a field the walk keys: field_stores gives gen_data_s its targets
+            elif vs is not None and cur is None:
+                st[dst] = T(vs)
+            elif cur is None and dst[0] == "a":
+                st[dst] = ("M", sk)
+
+    # the branches that repeat a loop while the stepped pointer is below (or not at) the address compared
+    LOOP_WHILE_BELOW = {"bcs", "blt", "bne", "lcs", "llt", "lne"}
+
+    def loop_bound(self, op, args, st, func, cpu, insn):
+        """(array_end, lane mn10300-typer) A pointer loop proven to end at an address: `cmp End, aN`
+        followed by a branch back to a label above (or an Lcc back to its setlb) taken while aN < End
+        (bcs / blt / bne and their Lcc forms), aN holding the data address B at that label and B + s at
+        the compare (stepped only by constants on the way: the walk would otherwise not know it), with
+        End - B a whole number (>= 2) of s.  Recorded as a ("bound", B) access, off = End - B,
+        width = s: the array the loop walks is (End - B) / s records of s bytes from B.  A loop that
+        tests before its body (`cmp End, aN` / a forward exit / `bra` back) is not taken: its step is not
+        seen before the compare [the KernelWaitRelease probe loop and the MainMmmControl loops are the
+        bottom-tested kind]."""
+        pend, self._cmpa = self._cmpa, None
+        if op == "setlb":
+            self._lab_state["#setlb"] = {r: st.get(r) for r in REGS if r[0] == "a"}
+            return
+        if op == "cmp" and len(args) == 2 and args[1] in ("a0", "a1", "a2", "a3"):
+            v, p = (st.get(args[0]) if args[0] in REGS else self.imm(args[0])), st.get(args[1])
+            if v is not None and v[0] == "A" and p is not None and p[0] == "A":
+                self._cmpa = (args[1], v[1], p[1], insn)
+            elif v is not None and p is not None and v[0] == p[0] == "P" and v[1] == p[1] and v[1][0] == "param" \
+                    and not v[3] and not p[3]:
+                # (a parameter's block: the end the loop compares with is the parameter plus a constant)
+                self._cmpa = (args[1], ("param", v[1], v[2]), p[2], insn)
+            return
+        if pend is None or op not in self.LOOP_WHILE_BELOW or not (args or op.startswith("l")):
+            return
+        lab = "#setlb" if op.startswith("l") else args[0]
+        if lab not in self._lab_state or (lab != "#setlb" and lab not in self._lab_line):
+            return                       # not a branch back
+        reg, end, p, cmp_insn = pend
+        b = self._lab_state[lab].get(reg)
+        if isinstance(end, tuple):
+            # `cmp aM, aN` within one parameter's block: the loop runs (end - start) / step times
+            _k, key, e_off = end
+            if b is not None and b[0] == "P" and b[1] == key and not b[3]:
+                step = p - b[2]
+                if 1 <= step <= 4096 and e_off > b[2] and (e_off - b[2]) % step == 0 and (e_off - b[2]) // step >= 2:
+                    self.param_count[key[1:]].add((step, (e_off - b[2]) // step))
+            return
+        if b is None or b[0] != "A":
+            return
+        b, step = b[1], p - b[1]
+        if 1 <= step <= 4096 and end > b and (end - b) % step == 0 and (end - b) // step >= 2:
+            self.record(("bound", b), end - b, step, "bound", func, cpu, cmp_insn)
 
     def join_addrs(self, a, b, done):
         """(callee without ext: the siblings) what a label two paths reach with states a and b holds
@@ -717,7 +1065,7 @@ class Reader:
         if v[0] == "I":
             return ("rec", v[1], v[2]), v[3] + off, v[4], v[5]
         if v[0] == "P":
-            return ("ptr", v[1]), v[2] + off, (-1 if v[3] else None), None
+            return ("ptr", v[1]), v[2] + off, (-1 if v[3] else None), (v[3] if type(v[3]) is int else None)
         if v[0] == "D":
             return ("ptr", v[1]), v[2] + off, None, None
         return None
@@ -731,7 +1079,7 @@ class Reader:
     LESS = {"blt": 0, "bcs": 0, "bge": 0, "bcc": 0, "llt": 0, "lcs": 0, "lge": 0, "lcc": 0,
             "ble": 1, "bls": 1, "bgt": 1, "bhi": 1, "lle": 1, "lls": 1, "lgt": 1, "lhi": 1}
 
-    def step(self, op, args, st, last_load, func, cpu, insn):
+    def _step(self, op, args, st, last_load, func, cpu, insn):
         R = lambda t: t in REGS     # noqa: E731
         pc = st.pop("#cmp", None)
         if op == "cmp" and len(args) == 2 and R(args[1]) and _num(args[0]) is not None and 0 < _num(args[0]) < 65536:
@@ -903,6 +1251,18 @@ class Reader:
             tgt = re.sub(r"_entry$", "", tgt)
             self.calls[tgt] += 1
             consts = {r: st[r][1] for r in ("d0", "d1") if st.get(r) and st[r][0] == "C"}
+            if self.mem_ptrs:
+                for r in ("a0", "a1", "d0", "d1"):
+                    v_ = st.get(r)
+                    vs = addrs_of(v_) or ({v_[1]} if v_ is not None and v_[0] == "C" and v_[1] >= 0x10000 else None)
+                    if vs:
+                        self._pvals[(tgt, r)] |= vs
+                for k_, sv in st.items():
+                    if k_.startswith("sp:") and sv and sv[1] == 4 and _num(k_[3:]) is not None \
+                            and 16 <= _num(k_[3:]) < 0x100:
+                        vs = addrs_of(sv[0])
+                        if vs:
+                            self._pvals[(tgt, f"sp{_num(k_[3:])}")] |= vs
             for r in ("a0", "a1", "d0", "d1"):
                 v = st.get(r)
                 if v is None or v[0] not in "AIPD":

@@ -25,7 +25,10 @@ The evidence is tools/data_readers.py: an access through base + index * stride
     record; a field passed to strncpy / memcpy / strcpy / strcmp is a char
     array (of the constant length the call is given, when it fits);
   * bytes no reader touches are kept: as a pointer when every record holds a
-    program / RAM-image address or 0 there (4-aligned), else as bytes;
+    program / RAM-image address or 0 there (4-aligned), else as bytes; a code
+    address counts only when it is the first byte of an instruction
+    (gen_data_s.is_addr, tools/mn10300_insn_len.py: lane mn10300-typer, the
+    feature demo's script text "><SH" = 0x48533C3E is no pointer);
   * the array runs from its base while every record is free, its pointer
     fields hold addresses or 0, and no other array's base, symbol-file name or
     typed item is reached (gen_data_s.Gen.struct_arrays).  [INFERENCE] an
@@ -87,7 +90,10 @@ def readers(g, labels_path, src_glob):
     # (lane callee-walk, `readers_callee`) stack arguments and the layout each callee reads through
     # a parameter: DR.Reader(callee=)
     return DR.Reader(src_glob, labels, g.in_data, distinct=bool(getattr(g, "distinct_readers", False)),
-                     ext=getattr(g, "readers_ext", False), callee=getattr(g, "readers_callee", False))
+                     ext=getattr(g, "readers_ext", False), callee=getattr(g, "readers_callee", False),
+                     array_end=getattr(g, "array_end", False), mem_ptrs=getattr(g, "mem_ptrs", False),
+                     loop_index=getattr(g, "loop_index", False), chains=getattr(g, "deep_records", False),
+                     word=getattr(g, "init_word", None))
 
 
 def groups(dr):

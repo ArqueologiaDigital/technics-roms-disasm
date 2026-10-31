@@ -279,6 +279,7 @@
 0x487B8FA1  KernelWaitAbortHook    ; `retf 0, 0`: func_4C03B514 calls it with a0 = the TCB and d0 = -0x55 (uITRON E_TMOUT) for a wait whose time ran out; the KN6000 / KN6500 copies are also called with -0x51 (E_DLT, the object deleted) [INFERENCE: a hook on a wait that ends in an error]
 0x487B8FA4  KernelStart            ; the kernel's start: sp := (KernelRamLayout + 0x14), jmp KernelInit; the reset code's start-up (0x48410151) and func_4C03DD98 jump here; the KN6000's func_4C3F7793
 0x487B8FAF  KernelInitHook         ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
+0x487B8FB2  KernelTickIsrDefault   ; the kernel's default system-tick interrupt handler, after KernelInitHook: clears bits 4..7 of G6ICR 0x34000118 (acknowledges interrupt group 6), calls func_4C03DC87 (the kernel's wake-up of the task (0x50380000) points at) and returns with `rets` (LibIrqScheduler enters handlers with `calls (a2)` through the RAM table 0x50380B64). Nothing enters it: no word of the image holds 0x487B8FB2, and func_48447F33 (via func_4C03DB21, the def_int service) installs KernelTickHandler 0x4C02BB05 for the same interrupt (number 1, G6ICR) [INFERENCE: the kernel configuration's default tick handler, replaced by the application's; lane mn10300-typer]
 ;
 ; ---- Self-loaded library / kernel ROM image (stored in program ROM) ----------
 ; The boot self-loader (0x484D7BBD) copies this region to 0x8C000000; the firmware
