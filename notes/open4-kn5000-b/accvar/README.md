@@ -20,18 +20,18 @@ Their dispatchers were `AccPedal_Bit2_Sustain` and its twins.  None of them touc
 clears one bit of the style record's section byte, `PANEL_STYLE+5` / `+6` (panel record 0x48 fields 5 and 6).
 `DisplayStr_StyleSectionNames`, indexed through `VoiceCtrl_ParamSetupBytecode_Tbl4`, names every bit:
 
-| field / bit | meaning (Tbl4 -> section name) | set by (new name)          | engine request bit         | lanes byte          |
-|-------------|--------------------------------|----------------------------|----------------------------|---------------------|
-| +5 bit 0    | START/STOP press               | `AccStyleCtl_StartStopButton` (acts, not latched) | --                  | --                  |
-| +5 bit 1    | SYNCHRO armed                  | `AccStyleCtl_SynchroButton` (toggle) | --                       | --                  |
-| +5 bit 2    | INTRO1                         | `AccSection_RequestIntro1` | `ACC_REQ_INTRO` bit 0      | `ACC_LANES_INTRO1`  |
-| +5 bit 3    | COUNT IN                       | `AccSection_RequestCountIn` | `ACC_REQ_INTRO` bit 1     | `ACC_LANES_COUNTIN` |
-| +5 bit 4    | ENDING1                        | `AccSection_RequestEnding1` | `ACC_REQ_ENDING` bit 0    | `ACC_LANES_ENDING1` |
-| +5 bit 5    | ENDING2                        | `AccSection_RequestEnding2` | `ACC_REQ_ENDING` bit 1    | `ACC_LANES_ENDING2` |
-| +5 bit 6    | FILL IN1                       | `AccSection_RequestFillIn1` | `ACC_REQ_FILLIN` bit 0    | `ACC_LANES_FILLIN1` |
-| +5 bit 7    | FILL IN2                       | `AccSection_RequestFillIn2` | `ACC_REQ_FILLIN` bit 1    | `ACC_LANES_FILLIN2` |
-| +6 bit 2    | INTRO2                         | `AccSection_RequestIntro2` | `ACC_REQ_INTRO` bit 2      | `ACC_LANES_INTRO2`  |
-| +7 bits 4-5 | VARIATION 1-4                  | `PanelButton_Variation`    | `ACC_VARIATION_REQUEST`    | --                  |
+| field / bit | meaning (Tbl4 -> section name) | set by (new name)                                 | engine request bit      | lanes byte          |
+|-------------|--------------------------------|---------------------------------------------------|-------------------------|---------------------|
+| +5 bit 0    | START/STOP press               | `AccStyleCtl_StartStopButton` (acts, not latched) | --                      | --                  |
+| +5 bit 1    | SYNCHRO armed                  | `AccStyleCtl_SynchroButton` (toggle)              | --                      | --                  |
+| +5 bit 2    | INTRO1                         | `AccSection_RequestIntro1`                        | `ACC_REQ_INTRO` bit 0   | `ACC_LANES_INTRO1`  |
+| +5 bit 3    | COUNT IN                       | `AccSection_RequestCountIn`                       | `ACC_REQ_INTRO` bit 1   | `ACC_LANES_COUNTIN` |
+| +5 bit 4    | ENDING1                        | `AccSection_RequestEnding1`                       | `ACC_REQ_ENDING` bit 0  | `ACC_LANES_ENDING1` |
+| +5 bit 5    | ENDING2                        | `AccSection_RequestEnding2`                       | `ACC_REQ_ENDING` bit 1  | `ACC_LANES_ENDING2` |
+| +5 bit 6    | FILL IN1                       | `AccSection_RequestFillIn1`                       | `ACC_REQ_FILLIN` bit 0  | `ACC_LANES_FILLIN1` |
+| +5 bit 7    | FILL IN2                       | `AccSection_RequestFillIn2`                       | `ACC_REQ_FILLIN` bit 1  | `ACC_LANES_FILLIN2` |
+| +6 bit 2    | INTRO2                         | `AccSection_RequestIntro2`                        | `ACC_REQ_INTRO` bit 2   | `ACC_LANES_INTRO2`  |
+| +7 bits 4-5 | VARIATION 1-4                  | `PanelButton_Variation`                           | `ACC_VARIATION_REQUEST` | --                  |
 
 `SqStep_ProcessRhythmSectionEvent` reads the same bits when it shows a recorded section event.  The bit layout
 agrees with that routine's header (bits 4-7 = ENDING1, ENDING2, FILL IN1, FILL IN2), written independently.
@@ -53,15 +53,15 @@ as pressed when its bit is set in both value and mask, and as released when it i
 - **`AccStyleCtl_SectionButtons`** (fields 5 and 6).  This does nothing in the composer (mode 14).  Otherwise
   it runs `AccStyleCtl_DispatchSectionButtons`, one handler per button:
 
-| handler (new name)               | button bit         | stopped                                 | running                                 |
-|----------------------------------|--------------------|-----------------------------------------|-----------------------------------------|
-| `AccStyleCtl_IntroEnding1Button` | field 5 bit 2      | INTRO1 (`AccSection_RequestIntro1`)     | ENDING1 (`AccSection_RequestEnding1`)   |
-| `AccStyleCtl_IntroEnding2Button` | field 6 bit 2      | INTRO2 (`AccSection_RequestIntro2`)     | ENDING2 (`AccSection_RequestEnding2`)   |
-| `AccStyleCtl_FillIn1Button`      | field 5 bit 6      | nothing                                 | FILL IN1 (`AccSection_RequestFillIn1`)  |
-| `AccStyleCtl_FillIn2Button`      | field 5 bit 7      | COUNT IN (`AccSection_RequestCountIn`)  | FILL IN2 (`AccSection_RequestFillIn2`)  |
-| `AccStyleCtl_Ending1Bit`         | field 5 bit 4      | nothing                                 | ENDING1                                 |
-| `AccStyleCtl_Ending2Bit`         | field 5 bit 5      | nothing                                 | ENDING2                                 |
-| `AccStyleCtl_CountInBit`         | field 5 bit 3      | COUNT IN                                | COUNT IN                                |
+| handler (new name)               | button bit    | stopped                                | running                                |
+|----------------------------------|---------------|----------------------------------------|----------------------------------------|
+| `AccStyleCtl_IntroEnding1Button` | field 5 bit 2 | INTRO1 (`AccSection_RequestIntro1`)    | ENDING1 (`AccSection_RequestEnding1`)  |
+| `AccStyleCtl_IntroEnding2Button` | field 6 bit 2 | INTRO2 (`AccSection_RequestIntro2`)    | ENDING2 (`AccSection_RequestEnding2`)  |
+| `AccStyleCtl_FillIn1Button`      | field 5 bit 6 | nothing                                | FILL IN1 (`AccSection_RequestFillIn1`) |
+| `AccStyleCtl_FillIn2Button`      | field 5 bit 7 | COUNT IN (`AccSection_RequestCountIn`) | FILL IN2 (`AccSection_RequestFillIn2`) |
+| `AccStyleCtl_Ending1Bit`         | field 5 bit 4 | nothing                                | ENDING1                                |
+| `AccStyleCtl_Ending2Bit`         | field 5 bit 5 | nothing                                | ENDING2                                |
+| `AccStyleCtl_CountInBit`         | field 5 bit 3 | COUNT IN                               | COUNT IN                               |
 
 The "running" test is `ACC_TRANSPORT_STATE` bit 2.  For the two INTRO & ENDING buttons it applies only when the
 event comes from the front panel (`PANEL_EVENT_SOURCE` = 127, set by `Audio_InitAllDefaults` and after each
@@ -75,8 +75,8 @@ Each `AccSection_Request*` routine does the following:
   4 ENDING1, 5 ENDING2, 6 FILL IN1 and 7 FILL IN2.  The matching `AccSection_Release*` clears the bit.
 - sets its request bit in `PANEL_STYLE+5` / `+6`, which is also the button's LED.  A second press of a request
   that is already set, from the panel, clears it again.  So pressing INTRO twice cancels the intro.
-- clears the requests it excludes.  An intro clears COUNT IN, the other intro and both fills; the other
-  requests do the same within their own group.
+- clears the requests it excludes.  `AccSection_RequestIntro1` clears COUNT IN, INTRO 2 and both fills.  The other
+  request routines clear their own sets of bits, which were read only for INTRO 1.
 - builds the change pairs `0x3480`..`0x3487` that `AccStyleCtl_SendSectionEvents` sends out as 0x48/5 and 0x48/6
   switch events (`MIDI_TransmitTempoCC`).
 
@@ -84,13 +84,13 @@ Each `AccSection_Request*` routine does the following:
 
 Each sequencer tick, `SeqTick_ReadControlState` copies the panel bytes into the engine's request bytes:
 
-| engine byte                        | from                                    | previous-tick copy (`Rhythm_SaveState`) |
-|------------------------------------|-----------------------------------------|-----------------------------------------|
-| `ACC_REQ_FILLIN` (0x32fb)          | +5 bit 6 -> bit 0, +5 bit 7 -> bit 1    | `ACC_REQ_FILLIN_PREV` (0x32fc)          |
-| `ACC_REQ_ENDING` (0x32fd)          | +5 bit 4 -> bit 0, +5 bit 5 -> bit 1    | `ACC_REQ_ENDING_PREV` (0x32fe)          |
-| `ACC_REQ_INTRO` (0x32ff)           | +5 bit 2 -> 0, +5 bit 3 -> 1, +6 bit 2 -> 2 | `ACC_REQ_INTRO_PREV` (0x3300)       |
-| `ACC_STYLE_ARRANGER_ON` (0x3301)   | `PANEL_REC_98+3` bit 0 (MUSIC STYLE ARRANGER) | 0x3302                            |
-| `ACC_VARIATION_REQUEST` (0x3305)   | `PANEL_STYLE+7` bits 4-5 (VARIATION 1-4) | 0x3306                                 |
+| engine byte                      | from                                          | previous-tick copy (`Rhythm_SaveState`) |
+|----------------------------------|-----------------------------------------------|-----------------------------------------|
+| `ACC_REQ_FILLIN` (0x32fb)        | +5 bit 6 -> bit 0, +5 bit 7 -> bit 1          | `ACC_REQ_FILLIN_PREV` (0x32fc)          |
+| `ACC_REQ_ENDING` (0x32fd)        | +5 bit 4 -> bit 0, +5 bit 5 -> bit 1          | `ACC_REQ_ENDING_PREV` (0x32fe)          |
+| `ACC_REQ_INTRO` (0x32ff)         | +5 bit 2 -> 0, +5 bit 3 -> 1, +6 bit 2 -> 2   | `ACC_REQ_INTRO_PREV` (0x3300)           |
+| `ACC_STYLE_ARRANGER_ON` (0x3301) | `PANEL_REC_98+3` bit 0 (MUSIC STYLE ARRANGER) | 0x3302                                  |
+| `ACC_VARIATION_REQUEST` (0x3305) | `PANEL_STYLE+7` bits 4-5 (VARIATION 1-4)      | 0x3306                                  |
 
 `ACC_SECTION_REQUEST` is renamed `ACC_VARIATION_REQUEST`: it holds the VARIATION field, not a section.
 
@@ -136,16 +136,16 @@ clears both defer masks, builds a 4-bit index and jumps through `AccSection_BarL
 are 1 = intro pending, 2 = fill-in pending (or a FILL IN button held during an arranger step), 4 = ending
 pending, and 8 = a new variation to load (arranger step, variation change or restart):
 
-| index | handler                          | does                                                             |
-|-------|----------------------------------|------------------------------------------------------------------|
-| 0     | `AccSection_ToVariation`         | reload the variation (`AccStyle_Init`); clear the intro / fill lanes |
-| 1     | `AccSection_ToIntro`             | `AccSection_StartIntro`                                          |
-| 2, 3  | `AccSection_ToFillIn`            | `AccSection_StartFillIn` (fill beats intro)                      |
-| 4-7   | `AccSection_ToEnding`            | `AccSection_StartEnding` (ending beats everything)               |
-| 8     | `AccSection_ToVariation`         | new variation                                                    |
-| 9     | `AccSection_ToNewVariationIntro` | new variation, then the intro                                    |
-| 10-11 | `AccSection_ToNewVariationFillIn`| new variation, then the fill-in                                  |
-| 12-15 | `AccSection_ToNewVariationEnding`| new variation, then the ending                                   |
+| index | handler                           | does                                                                 |
+|-------|-----------------------------------|----------------------------------------------------------------------|
+| 0     | `AccSection_ToVariation`          | reload the variation (`AccStyle_Init`); clear the intro / fill lanes |
+| 1     | `AccSection_ToIntro`              | `AccSection_StartIntro`                                              |
+| 2, 3  | `AccSection_ToFillIn`             | `AccSection_StartFillIn` (fill beats intro)                          |
+| 4-7   | `AccSection_ToEnding`             | `AccSection_StartEnding` (ending beats everything)                   |
+| 8     | `AccSection_ToVariation`          | new variation                                                        |
+| 9     | `AccSection_ToNewVariationIntro`  | new variation, then the intro                                        |
+| 10-11 | `AccSection_ToNewVariationFillIn` | new variation, then the fill-in                                      |
+| 12-15 | `AccSection_ToNewVariationEnding` | new variation, then the ending                                       |
 
 All handlers end in `AccSection_Switch_Common` (rhythm note-off, channel pressure, buffer reset).
 
@@ -220,40 +220,40 @@ traced.
 
 `scripts/renaming/rename_open4_accvar.sed` holds 277 rules: these routines and their local labels.
 
-| old                                                    | new                                                   |
-|--------------------------------------------------------|-------------------------------------------------------|
-| `AccPedal_EventDispatch`                               | `AccStyleCtl_OnSwitchEvent`                           |
-| `AccPedal_SustainHandler`                              | `AccStyleCtl_StartStopButton`                         |
-| `AccPedal_StyleCheck`                                  | `AccStyleCtl_IsStartStopBlocked`                      |
-| `AccPedal_ExprToggle`                                  | `AccStyleCtl_SynchroButton`                           |
-| `AccPedal_DistributeParams`                            | `AccStyleCtl_SectionButtons`                          |
-| `AccPedal_ProcessAllBits`                              | `AccStyleCtl_DispatchSectionButtons`                  |
-| `AccPedal_SendEvents` / `AccPedal_StateSync`           | `AccStyleCtl_SendSectionEvents` / `_SyncSectionEvents` |
-| `AccPedal_Bit2_Sustain` / `_Bit2_Expression`           | `AccStyleCtl_IntroEnding1Button` / `2Button`          |
-| `AccPedal_Bit6_Hold` / `_Bit7_Portamento`              | `AccStyleCtl_FillIn1Button` / `FillIn2Button`         |
-| `AccPedal_Bit4_Sostenuto` / `_Bit5_Soft` / `_Bit3_Damper` | `AccStyleCtl_Ending1Bit` / `Ending2Bit` / `CountInBit` |
-| `AccPedal_SustainOn` / `Off`                           | `AccSection_RequestIntro1` / `ReleaseIntro1`          |
-| `AccPedal_ExprOn` / `Off`                              | `AccSection_RequestIntro2` / `ReleaseIntro2`          |
-| `AccPedal_SostenutoOn` / `Off`                         | `AccSection_RequestEnding1` / `ReleaseEnding1`        |
-| `AccPedal_SoftOn` / `Off`                              | `AccSection_RequestEnding2` / `ReleaseEnding2`        |
-| `AccPedal_HoldOn` / `Off`                              | `AccSection_RequestFillIn1` / `ReleaseFillIn1`        |
-| `AccPedal_DamperOn` / `Off`                            | `AccSection_RequestCountIn` / `ReleaseCountIn`        |
-| `AccPedal_PortamentoOn` / `Off`                        | `AccSection_RequestFillIn2` / `ReleaseFillIn2`        |
-| `AccVoice_ProcessPedalChanges`                         | `AccSection_LatchIntroRequests`                       |
-| `AccVoice_ProcessLeftPedalChanges`                     | `AccSection_LatchFillInRequests`                      |
-| `AccChord_ProcessKeyChanges`                           | `AccSection_LatchEndingRequests`                      |
-| `AccVoice_CheckBitsAndSetFlags`                        | `AccSection_DeferToBarIfLastBeat`                     |
-| `AccChannel_SetDirtyIfActive`                          | `AccSection_DeferToBarUnlessFirstBeat`                |
-| `AccVoice_ResetAll` / `AccVoice_Reassign`              | `AccSection_StartIntro` / `StartComposerIntro`        |
-| `AccVoice_SplitPointSetup` / `AccVoice_SplitReassign`  | `AccSection_StartFillIn` / `StartComposerFillIn`      |
-| `AccVoice_ThirdLayer` / `AccVoice_ThirdLayerReassign`  | `AccSection_StartEnding` / `StartComposerEnding`      |
-| `AccFlags_Aggregate` / `AccFlags_JumpTable`            | `AccSection_SwitchAtBarLine` / `BarLineSwitchTable`   |
-| `AccFlags_Handler0/1/2/4/8/9/10`                       | `AccSection_ToVariation/ToIntro/ToFillIn/ToEnding/ToNewVariationEnding/ToNewVariationIntro/ToNewVariationFillIn` |
-| `AccPedal_CheckCombined`                               | `AccSection_SwitchNowUnlessDeferred`                  |
-| `AccInit_FullReInit`                                   | `AccSection_SwitchNow`                                |
-| `Rhythm_VoiceAssign*Detect` (locals of `Rhythm_SaveState`) | `Rhythm_SaveState_Check<Section>Done`              |
-| `SeqCtl_StorePedalFlags`                               | `SeqTick_ReadControlState_StoreIntroBits`             |
-| `ACC_SECTION_REQUEST`                                  | `ACC_VARIATION_REQUEST`                               |
+| old                                                        | new                                                                                                              |
+|------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| `AccPedal_EventDispatch`                                   | `AccStyleCtl_OnSwitchEvent`                                                                                      |
+| `AccPedal_SustainHandler`                                  | `AccStyleCtl_StartStopButton`                                                                                    |
+| `AccPedal_StyleCheck`                                      | `AccStyleCtl_IsStartStopBlocked`                                                                                 |
+| `AccPedal_ExprToggle`                                      | `AccStyleCtl_SynchroButton`                                                                                      |
+| `AccPedal_DistributeParams`                                | `AccStyleCtl_SectionButtons`                                                                                     |
+| `AccPedal_ProcessAllBits`                                  | `AccStyleCtl_DispatchSectionButtons`                                                                             |
+| `AccPedal_SendEvents` / `AccPedal_StateSync`               | `AccStyleCtl_SendSectionEvents` / `_SyncSectionEvents`                                                           |
+| `AccPedal_Bit2_Sustain` / `_Bit2_Expression`               | `AccStyleCtl_IntroEnding1Button` / `2Button`                                                                     |
+| `AccPedal_Bit6_Hold` / `_Bit7_Portamento`                  | `AccStyleCtl_FillIn1Button` / `FillIn2Button`                                                                    |
+| `AccPedal_Bit4_Sostenuto` / `_Bit5_Soft` / `_Bit3_Damper`  | `AccStyleCtl_Ending1Bit` / `Ending2Bit` / `CountInBit`                                                           |
+| `AccPedal_SustainOn` / `Off`                               | `AccSection_RequestIntro1` / `ReleaseIntro1`                                                                     |
+| `AccPedal_ExprOn` / `Off`                                  | `AccSection_RequestIntro2` / `ReleaseIntro2`                                                                     |
+| `AccPedal_SostenutoOn` / `Off`                             | `AccSection_RequestEnding1` / `ReleaseEnding1`                                                                   |
+| `AccPedal_SoftOn` / `Off`                                  | `AccSection_RequestEnding2` / `ReleaseEnding2`                                                                   |
+| `AccPedal_HoldOn` / `Off`                                  | `AccSection_RequestFillIn1` / `ReleaseFillIn1`                                                                   |
+| `AccPedal_DamperOn` / `Off`                                | `AccSection_RequestCountIn` / `ReleaseCountIn`                                                                   |
+| `AccPedal_PortamentoOn` / `Off`                            | `AccSection_RequestFillIn2` / `ReleaseFillIn2`                                                                   |
+| `AccVoice_ProcessPedalChanges`                             | `AccSection_LatchIntroRequests`                                                                                  |
+| `AccVoice_ProcessLeftPedalChanges`                         | `AccSection_LatchFillInRequests`                                                                                 |
+| `AccChord_ProcessKeyChanges`                               | `AccSection_LatchEndingRequests`                                                                                 |
+| `AccVoice_CheckBitsAndSetFlags`                            | `AccSection_DeferToBarIfLastBeat`                                                                                |
+| `AccChannel_SetDirtyIfActive`                              | `AccSection_DeferToBarUnlessFirstBeat`                                                                           |
+| `AccVoice_ResetAll` / `AccVoice_Reassign`                  | `AccSection_StartIntro` / `StartComposerIntro`                                                                   |
+| `AccVoice_SplitPointSetup` / `AccVoice_SplitReassign`      | `AccSection_StartFillIn` / `StartComposerFillIn`                                                                 |
+| `AccVoice_ThirdLayer` / `AccVoice_ThirdLayerReassign`      | `AccSection_StartEnding` / `StartComposerEnding`                                                                 |
+| `AccFlags_Aggregate` / `AccFlags_JumpTable`                | `AccSection_SwitchAtBarLine` / `BarLineSwitchTable`                                                              |
+| `AccFlags_Handler0/1/2/4/8/9/10`                           | `AccSection_ToVariation/ToIntro/ToFillIn/ToEnding/ToNewVariationEnding/ToNewVariationIntro/ToNewVariationFillIn` |
+| `AccPedal_CheckCombined`                                   | `AccSection_SwitchNowUnlessDeferred`                                                                             |
+| `AccInit_FullReInit`                                       | `AccSection_SwitchNow`                                                                                           |
+| `Rhythm_VoiceAssign*Detect` (locals of `Rhythm_SaveState`) | `Rhythm_SaveState_Check<Section>Done`                                                                            |
+| `SeqCtl_StorePedalFlags`                                   | `SeqTick_ReadControlState_StoreIntroBits`                                                                        |
+| `ACC_SECTION_REQUEST`                                      | `ACC_VARIATION_REQUEST`                                                                                          |
 
 Left with their old names, because they were not traced far enough:
 - `AccPedal_ProcessAllChanges`, which clears all requests when `AccStyle_ApplyExt_SkipClamp_Table[beats]` bit 0
@@ -283,16 +283,16 @@ placed after "## Chord Recognition" (the engine sub-lane's draft):
 > The style-control buttons do not switch the pattern themselves.  Each one sets a request bit in the style
 > record (panel record 0x48), which is also the button's LED:
 >
-> | bit of record 0x48 | request                |
-> |--------------------|------------------------|
-> | field 5 bit 2      | INTRO 1                |
-> | field 5 bit 3      | COUNT IN               |
-> | field 5 bit 4      | ENDING 1               |
-> | field 5 bit 5      | ENDING 2               |
-> | field 5 bit 6      | FILL IN 1              |
-> | field 5 bit 7      | FILL IN 2              |
-> | field 6 bit 2      | INTRO 2                |
-> | field 7 bits 4-5   | VARIATION 1-4          |
+> | bit of record 0x48 | request       |
+> |--------------------|---------------|
+> | field 5 bit 2      | INTRO 1       |
+> | field 5 bit 3      | COUNT IN      |
+> | field 5 bit 4      | ENDING 1      |
+> | field 5 bit 5      | ENDING 2      |
+> | field 5 bit 6      | FILL IN 1     |
+> | field 5 bit 7      | FILL IN 2     |
+> | field 6 bit 2      | INTRO 2       |
+> | field 7 bits 4-5   | VARIATION 1-4 |
 >
 > `AccStyleCtl_DispatchSectionButtons` turns a press into a request.  INTRO & ENDING 1/2 give an intro while the
 > accompaniment is stopped and an ending while it runs.  FILL IN 1/2 give a fill-in while it runs; while it is
