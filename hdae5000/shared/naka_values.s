@@ -77,96 +77,96 @@
 ; letter b, IconIDProc (IconIDProc_NameTable)
 	.equ	idICON_None, 0x0
 	.equ	idICON_Default, 0x1
-	.equ	idICON_i0, 0x2
+	.equ	idICON_i0, 0x2	; shows: two blue music-note cards
 	.equ	idICON_i1, 0x3
-	.equ	idICON_i2, 0x4
+	.equ	idICON_i2, 0x4	; shows: piano keyboard
 	.equ	idICON_i3, 0x5
 	.equ	idICON_i4, 0x6
-	.equ	idICON_i5, 0x7
-	.equ	idICON_i6, 0x8
-	.equ	idICON_i7, 0x9
-	.equ	idICON_i8, 0xa
-	.equ	idICON_i9, 0xb
-	.equ	idICON_i10, 0xc
-	.equ	idICON_i11, 0xd
-	.equ	idICON_i12, 0xe
+	.equ	idICON_i5, 0x7	; shows: mixer faders with coloured knobs
+	.equ	idICON_i6, 0x8	; shows: stack of blank white pages
+	.equ	idICON_i7, 0x9	; shows: tuning fork with sound waves
+	.equ	idICON_i8, 0xa	; shows: yellow hand pressing a bar
+	.equ	idICON_i9, 0xb	; shows: curved bar with a magenta fan sweep
+	.equ	idICON_i10, 0xc	; shows: music note dissolving into dots
+	.equ	idICON_i11, 0xd	; shows: graph of two crossing curves
+	.equ	idICON_i12, 0xe	; shows: chip labelled ROM ORIG
 	.equ	idICON_i13, 0xf
 	.equ	idICON_i14, 0x10
-	.equ	idICON_i15, 0x11
-	.equ	idICON_i16, 0x12
+	.equ	idICON_i15, 0x11	; shows: drum kit
+	.equ	idICON_i16, 0x12	; shows: hand writing EDIT
 	.equ	idICON_i17, 0x13
 	.equ	idICON_i18, 0x14
-	.equ	idICON_i19, 0x15
-	.equ	idICON_i20, 0x16
-	.equ	idICON_i21, 0x17
+	.equ	idICON_i19, 0x15	; shows: two music notes, red and blue
+	.equ	idICON_i20, 0x16	; shows: framed piano-key section
+	.equ	idICON_i21, 0x17	; shows: music note between brackets
 	.equ	idICON_i22, 0x18
-	.equ	idICON_i23, 0x19
-	.equ	idICON_i24, 0x1a
-	.equ	idICON_i25, 0x1b
+	.equ	idICON_i23, 0x19	; shows: MIDI DIN connector
+	.equ	idICON_i24, 0x1a	; shows: page with an ON / OFF switch
+	.equ	idICON_i25, 0x1b	; shows: metronome
 	.equ	idICON_i26, 0x1c
-	.equ	idICON_i27, 0x1d
-	.equ	idICON_i28, 0x1e
-	.equ	idICON_i29, 0x1f
-	.equ	idICON_i30, 0x20
-	.equ	idICON_i31, 0x21
+	.equ	idICON_i27, 0x1d	; shows: guitar and piano split by a diagonal
+	.equ	idICON_i28, 0x1e	; shows: grid labelled PRESET
+	.equ	idICON_i29, 0x1f	; shows: music note with an arrow to a computer
+	.equ	idICON_i30, 0x20	; shows: GENERAL MIDI logo
+	.equ	idICON_i31, 0x21	; shows: sine wave on a screen
 	.equ	idICON_i32, 0x22
 	.equ	idICON_i33, 0x23
 	.equ	idICON_i34, 0x24
 	.equ	idICON_i35, 0x25
 	.equ	idICON_i36, 0x26
-	.equ	idICON_i37, 0x27
+	.equ	idICON_i37, 0x27	; shows: document page with a music note
 	.equ	idICON_i38, 0x28
 	.equ	idICON_i39, 0x29
 	.equ	idICON_i40, 0x2a
 	.equ	idICON_i41, 0x2b
-	.equ	idICON_i42, 0x2c
-	.equ	idICON_i43, 0x2d
-	.equ	idICON_i44, 0x2e
+	.equ	idICON_i42, 0x2c	; shows: floppy disk with L and a note (load)
+	.equ	idICON_i43, 0x2d	; shows: floppy disk with S and a note (save)
+	.equ	idICON_i44, 0x2e	; shows: floppy disk labelled MIDI
 	.equ	idICON_i45, 0x2f
 	.equ	idICON_i46, 0x30
-	.equ	idICON_i47, 0x31
-	.equ	idICON_i48, 0x32
-	.equ	idICON_i49, 0x33
-	.equ	idICON_i50, 0x34
-	.equ	idICON_i51, 0x35
-	.equ	idICON_i52, 0x36
-	.equ	idICON_i53, 0x37
+	.equ	idICON_i47, 0x31	; shows: boxes NOM and EXP
+	.equ	idICON_i48, 0x32	; shows: yellow hand on a music note
+	.equ	idICON_i49, 0x33	; shows: SEQ. box with notes and signal waves
+	.equ	idICON_i50, 0x34	; shows: stopwatch
+	.equ	idICON_i51, 0x35	; shows: red boxing glove with notes
+	.equ	idICON_i52, 0x36	; shows: two footprints
+	.equ	idICON_i53, 0x37	; shows: treble clef with a 1
 	.equ	idICON_i54, 0x38
-	.equ	idICON_i55, 0x39
-	.equ	idICON_i56, 0x3a
+	.equ	idICON_i55, 0x39	; shows: score with check marks
+	.equ	idICON_i56, 0x3a	; shows: SONGS with a loop arrow and a note
 	.equ	idICON_i57, 0x3b
-	.equ	idICON_i58, 0x3c
-	.equ	idICON_i59, 0x3d
-	.equ	idICON_i60, 0x3e
-	.equ	idICON_i61, 0x3f
-	.equ	idICON_i62, 0x40
-	.equ	idICON_i63, 0x41
-	.equ	idICON_i64, 0x42
-	.equ	idICON_i65, 0x43
+	.equ	idICON_i58, 0x3c	; shows: spotlight
+	.equ	idICON_i59, 0x3d	; shows: row of blue figures
+	.equ	idICON_i60, 0x3e	; shows: notes with diagonal up / down arrows
+	.equ	idICON_i61, 0x3f	; shows: brush sweeping notes
+	.equ	idICON_i62, 0x40	; shows: notes falling into a bin
+	.equ	idICON_i63, 0x41	; shows: note with up and down arrows
+	.equ	idICON_i64, 0x42	; shows: red and blue notes with arrows
+	.equ	idICON_i65, 0x43	; shows: key box C with notes
 	.equ	idICON_i66, 0x44
-	.equ	idICON_i67, 0x45
-	.equ	idICON_i68, 0x46
-	.equ	idICON_i69, 0x47
-	.equ	idICON_i70, 0x48
-	.equ	idICON_i71, 0x49
-	.equ	idICON_i72, 0x4a
+	.equ	idICON_i67, 0x45	; shows: cocktail glass with two straws
+	.equ	idICON_i68, 0x46	; shows: cyan display with dashes
+	.equ	idICON_i69, 0x47	; shows: three linked boxes, the lower one blue
+	.equ	idICON_i70, 0x48	; shows: blue box between two white boxes
+	.equ	idICON_i71, 0x49	; shows: white box with a red arrow to a blue box
+	.equ	idICON_i72, 0x4a	; shows: box with a red arrow down into a blue box
 	.equ	idICON_i73, 0x4b
 	.equ	idICON_i74, 0x4c
-	.equ	idICON_i75, 0x4d
-	.equ	idICON_i76, 0x4e
-	.equ	idICON_i77, 0x4f
-	.equ	idICON_i78, 0x50
-	.equ	idICON_i79, 0x51
-	.equ	idICON_i80, 0x52
-	.equ	idICON_i81, 0x53
-	.equ	idICON_i82, 0x54
-	.equ	idICON_i83, 0x55
+	.equ	idICON_i75, 0x4d	; shows: score with a green pencil
+	.equ	idICON_i76, 0x4e	; shows: yellow face with headphones, open mouth
+	.equ	idICON_i77, 0x4f	; shows: yellow face with headphones, frowning
+	.equ	idICON_i78, 0x50	; shows: yellow face with headphones, smiling
+	.equ	idICON_i79, 0x51	; shows: yellow hand holding a sheet with a note
+	.equ	idICON_i80, 0x52	; shows: C, curved arrow, C
+	.equ	idICON_i81, 0x53	; shows: note to C to SEQ.
+	.equ	idICON_i82, 0x54	; shows: floppy disk with 1 and an arrow
+	.equ	idICON_i83, 0x55	; shows: boxes N and E linked
 	.equ	idICON_i84, 0x56
 	.equ	idICON_i85, 0x57
-	.equ	idICON_i86, 0x58
+	.equ	idICON_i86, 0x58	; shows: D B A with arrows to notes
 	.equ	idICON_i87, 0x59
 	.equ	idICON_i88, 0x5a
-	.equ	idICON_i89, 0x5b
+	.equ	idICON_i89, 0x5b	; shows: question mark
 	.equ	idICON_i90, 0x5c
 	.equ	idICON_i91, 0x5d
 	.equ	idICON_i92, 0x5e
@@ -178,19 +178,19 @@
 	.equ	idICON_i98, 0x64
 	.equ	idICON_i99, 0x65
 	.equ	idICON_i100, 0x66
-	.equ	idICON_i101, 0x67
-	.equ	idICON_i102, 0x68
-	.equ	idICON_i103, 0x69
+	.equ	idICON_i101, 0x67	; shows: MIDI connector with 1~16
+	.equ	idICON_i102, 0x68	; shows: keyboard with red down and blue up arrows
+	.equ	idICON_i103, 0x69	; shows: numbered boxes 1 2 3 with an arrow
 	.equ	idICON_i104, 0x6a
 	.equ	idICON_i105, 0x6b
 	.equ	idICON_i106, 0x6c
 	.equ	idICON_i107, 0x6d
-	.equ	idICON_i108, 0x6e
-	.equ	idICON_i109, 0x6f
+	.equ	idICON_i108, 0x6e	; shows: hand pressing slanted piano keys
+	.equ	idICON_i109, 0x6f	; shows: slanted keys numbered 1 2 3
 	.equ	idICON_i110, 0x70
-	.equ	idICON_i111, 0x71
+	.equ	idICON_i111, 0x71	; shows: stack of blue music-note cards
 	.equ	idICON_i112, 0x72
-	.equ	idICON_i113, 0x73
+	.equ	idICON_i113, 0x73	; shows: DISK with a floppy disk
 	.equ	idICON_i114, 0x74
 	.equ	idICON_i115, 0x75
 	.equ	idICON_i116, 0x76
@@ -201,56 +201,56 @@
 	.equ	idICON_i121, 0x7b
 	.equ	idICON_i122, 0x7c
 	.equ	idICON_i123, 0x7d
-	.equ	idICON_i124, 0x7e
-	.equ	idICON_i125, 0x7f
+	.equ	idICON_i124, 0x7e	; shows: green play triangle and note, SEQ.
+	.equ	idICON_i125, 0x7f	; shows: red record dot and note, SEQ.
 	.equ	idICON_i126, 0x80
-	.equ	idICON_i127, 0x81
+	.equ	idICON_i127, 0x81	; shows: red sneaker
 	.equ	idICON_i128, 0x82
-	.equ	idICON_i129, 0x83
-	.equ	idICON_i130, 0x84
-	.equ	idICON_i131, 0x85
-	.equ	idICON_i132, 0x86
-	.equ	idICON_i133, 0x87
-	.equ	idICON_i134, 0x88
-	.equ	idICON_i135, 0x89
-	.equ	idICON_i136, 0x8a
-	.equ	idICON_i137, 0x8b
+	.equ	idICON_i129, 0x83	; shows: grey drive with two discs (hard disk)
+	.equ	idICON_i130, 0x84	; shows: piano keys marked with red dots
+	.equ	idICON_i131, 0x85	; shows: circuit board with a green chip
+	.equ	idICON_i132, 0x86	; shows: ON / OFF switch beside a speaker
+	.equ	idICON_i133, 0x87	; shows: computer monitor with in / out arrows
+	.equ	idICON_i134, 0x88	; shows: MIDI connector with in / out arrows
+	.equ	idICON_i135, 0x89	; shows: loop arrows around a note
+	.equ	idICON_i136, 0x8a	; shows: notes on a staff with a vertical bar
+	.equ	idICON_i137, 0x8b	; shows: blue funnel with a marker
 	.equ	idICON_i138, 0x8c
-	.equ	idICON_i139, 0x8d
-	.equ	idICON_i140, 0x8e
-	.equ	idICON_i141, 0x8f
+	.equ	idICON_i139, 0x8d	; shows: accordion
+	.equ	idICON_i140, 0x8e	; shows: seated player at a stand
+	.equ	idICON_i141, 0x8f	; shows: single red fader
 	.equ	idICON_i142, 0x90
-	.equ	idICON_i143, 0x91
-	.equ	idICON_i144, 0x92
-	.equ	idICON_i145, 0x93
-	.equ	idICON_i146, 0x94
-	.equ	idICON_i147, 0x95
-	.equ	idICON_i148, 0x96
-	.equ	idICON_i149, 0x97
-	.equ	idICON_i150, 0x98
-	.equ	idICON_i151, 0x99
-	.equ	idICON_i152, 0x9a
-	.equ	idICON_i153, 0x9b
-	.equ	idICON_i154, 0x9c
-	.equ	idICON_i155, 0x9d
-	.equ	idICON_i156, 0x9e
-	.equ	idICON_i157, 0x9f
-	.equ	idICON_i158, 0xa0
-	.equ	idICON_i159, 0xa1
-	.equ	idICON_i160, 0xa2
-	.equ	idICON_i161, 0xa3
-	.equ	idICON_i162, 0xa4
-	.equ	idICON_i163, 0xa5
-	.equ	idICON_i164, 0xa6
-	.equ	idICON_i165, 0xa7
-	.equ	idICON_i166, 0xa8
-	.equ	idICON_i167, 0xa9
-	.equ	idICON_i168, 0xaa
-	.equ	idICON_i169, 0xab
+	.equ	idICON_i143, 0x91	; shows: yellow hand above a red wave
+	.equ	idICON_i144, 0x92	; shows: two speakers with sound waves
+	.equ	idICON_i145, 0x93	; shows: keyboard instrument with a screen
+	.equ	idICON_i146, 0x94	; shows: clock with arrows
+	.equ	idICON_i147, 0x95	; shows: floppy disk
+	.equ	idICON_i148, 0x96	; shows: floppy disk with arrows
+	.equ	idICON_i149, 0x97	; shows: floppy disk with a list
+	.equ	idICON_i150, 0x98	; shows: floppy disk with a T
+	.equ	idICON_i151, 0x99	; shows: sheet with a green pencil
+	.equ	idICON_i152, 0x9a	; shows: P.M. boxes 5 6 7 8
+	.equ	idICON_i153, 0x9b	; shows: red microphone
+	.equ	idICON_i154, 0x9c	; shows: red and blue lines spreading
+	.equ	idICON_i155, 0x9d	; shows: clef with notes and an 8
+	.equ	idICON_i156, 0x9e	; shows: piano keys with left / right arrows
+	.equ	idICON_i157, 0x9f	; shows: green pencil over keys and a list
+	.equ	idICON_i158, 0xa0	; shows: green pencil and a blue box with I
+	.equ	idICON_i159, 0xa1	; shows: green pencil, boxes and an arrow
+	.equ	idICON_i160, 0xa2	; shows: world map with notes
+	.equ	idICON_i161, 0xa3	; shows: red book LIST RocK
+	.equ	idICON_i162, 0xa4	; shows: red book LIST A~Z
+	.equ	idICON_i163, 0xa5	; shows: oval pad with up / down arrows
+	.equ	idICON_i164, 0xa6	; shows: oval pad with notes
+	.equ	idICON_i165, 0xa7	; shows: numbered list 1 2 3 with arrows
+	.equ	idICON_i166, 0xa8	; shows: oval pad with a red record dot and a note
+	.equ	idICON_i167, 0xa9	; shows: stage with a red curtain and a speaker
+	.equ	idICON_i168, 0xaa	; shows: treble-clef score
+	.equ	idICON_i169, 0xab	; shows: keyboard with a green screen
 	.equ	idICON_i170, 0xac
-	.equ	idICON_i171, 0xad
-	.equ	idICON_i172, 0xae
-	.equ	idICON_i173, 0xaf
+	.equ	idICON_i171, 0xad	; shows: page with arrows out and in
+	.equ	idICON_i172, 0xae	; shows: green arrow over 92:08
+	.equ	idICON_i173, 0xaf	; shows: F.L.S. with a green arrow, 1~120
 
 ; letter c, FontIDProc (FontIDProc_FontNameTable)
 	.equ	idCHARA1, 0x0

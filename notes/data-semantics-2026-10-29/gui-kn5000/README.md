@@ -235,7 +235,9 @@ ids are named in every GUI C file.
 - **81 titles have no path.** No traced code opens 108 of the 130 title names that the asm never spells. That
   includes most sound-edit (`TITLE_SE*`) pages, which the Scoop module's sound-editor screens open through their own
   data, not NAKA records.
-- **Icons**: the firmware names most only `iNN`.
+- **Icons**: the firmware names most only `iNN`.  (Done 2026-10-31, lane kn5000-a: each of the 113 icons the KN5000 and
+  HD-AE5000 records use has a description of what it shows, `scripts/generators/naka_icon_descriptions.json`, written
+  beside its `idICON_iNN` in naka_classes.h / naka_values.s and in the HD-AE5000 menu maps; the names stay the firmware's.)
 
 ## Open questions
 

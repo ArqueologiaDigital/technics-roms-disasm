@@ -148,3 +148,14 @@ For the docs lane (technics-docs is not edited here):
   data-wheel-investigation.md, audio-subsystem.md, rom-reconstruction.md, panel-parameter-keys.md,
   swbwr-tone-init.md, subcpu-command-format.md.
 - `hdae5000-homebrew.md`: the 0x01EA ids are private to the module (no main-CPU code uses one).
+
+## Icons (N-b0077010, N-94c35266)
+
+`idICON_iNN` has the value NN + 2, and DrawIcons_Impl reads entry `0x938000 + 8 * id` of the icon table, whose entry
+k points at `IconPixels_k` (checked for entries 0-4, 100, 130, 131, 175 against the table_data symbols).  The 113
+icons the v10 C records and the HD-AE5000 sources use were rendered to one contact sheet (extract_icons.py's
+renders, 2x, labelled; scratch only) and described by eye: `scripts/generators/naka_icon_descriptions.json`.
+`gen_naka_gui_headers.py` writes the description beside each `#define idICON_iNN` (naka_classes.h, all five
+trees) and `.equ` (hdae5000/shared/naka_values.s); `hdae5000_menu_map.py` adds it to the HD-AE5000 menu maps.
+The KN5000 menu map does not print icons.  Descriptions say what the picture shows, not what the firmware uses
+it for.

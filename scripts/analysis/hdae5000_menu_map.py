@@ -24,6 +24,7 @@ RUN (from the repo root)
 """
 import collections
 import glob
+import json
 import os
 import re
 import sys
@@ -233,7 +234,8 @@ def describe(o, classes, by, with_caption=True):
         elif ch == "a" and k == "exit":
             parts.append("EXIT -> `%s`" % v)
         elif ch == "b" and k == "icon" and v != "0":
-            parts.append("icon %s" % v)
+            shows = ICON_SHOWS.get(v[len("idICON_"):]) if v.startswith("idICON_") else None
+            parts.append("icon %s" % v + (" (%s)" % shows if shows else ""))
         elif ch == "e" and v.startswith("ES_") and v != "ES_None":
             parts.append("switch %s" % v[3:])
         elif k == "index" and o["cls"].startswith("AcLanguageText"):
@@ -243,6 +245,9 @@ def describe(o, classes, by, with_caption=True):
 
 
 LANGMSG = {}
+# what each icon shows (scripts/generators/naka_icon_descriptions.json; the firmware names them only iNN)
+ICON_SHOWS = json.load(open(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                                         "scripts", "generators", "naka_icon_descriptions.json")))
 
 
 def load_langmsg(tree):
