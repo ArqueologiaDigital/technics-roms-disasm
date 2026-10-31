@@ -9438,23 +9438,23 @@ COMM_InitFuncTable:
 	.long COMM_ResetSentValues_Phase1
 	.long CommParam_SetComplete_Return2
 	.long CommParam_SetComplete_Return3
-; Sound-RAM data identifier "KN2000": SendPartDataBlock_InitVal7 (0xFF01AC)
+; Sound-RAM data identifier "KN2000": SoundRam_IdentifyImage_TryKn2000 (0xFF01AC)
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_KN2000:
 	.asciz "KN2000"
-; Sound-RAM data identifier "MKA": SendPartDataBlock_InitVal8 (0xFF01D8)
+; Sound-RAM data identifier "MKA": SoundRam_IdentifyImage_TryMka (0xFF01D8)
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_MKA:
 	.asciz "MKA"
-; Sound-RAM data identifier "MKB": SendPartDataBlock_InitVal9 (0xFF0204)
+; Sound-RAM data identifier "MKB": SoundRam_IdentifyImage_TryMkb (0xFF0204)
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_MKB:
 	.asciz "MKB"
-; Sound-RAM data identifier "KN3000 SOUND RAM": SendPartDataBlock_InitVal6 (0xFF0182)
+; Sound-RAM data identifier "KN3000 SOUND RAM": SoundRam_IdentifyImage_TryKn3000 (0xFF0182)
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_KN3000:
 	.asciz "KN3000 SOUND RAM"
-; Sound-RAM data identifier "KN1500 SOUND RAM": SendPartDataBlock_InitVal5 (0xFF0158)
+; Sound-RAM data identifier "KN1500 SOUND RAM": SoundRam_IdentifyImage_TryKn1500 (0xFF0158)
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_KN1500:
 	.asciz "KN1500 SOUND RAM"
@@ -9472,9 +9472,9 @@ SoundRam_InitFuncTable:
 	.long SendPartDataBlock_Return4
 	.long SendPartDataBlock_DoGetError
 	.long SendPartDataBlock_Return5
-; 16 x u8.  HdaeRom_DataHandler_Helper (0xFEFC28): `lda xhl,(<this>);
+; 16 x u8.  SoundRam_RemapKn2000RecordFields (0xFEFC28): `lda xhl,(<this>);
 ; ld_rrb c,xhl,bc`.
-HdaeRom_DataByteMap:
+SoundRam_Kn2000NibbleMap:
 	.byte 1, 1, 1, 1, 1, 1, 0, 0
 	.byte 1, 2, 3, 1, 1, 1, 1, 1
 ; 426-byte default record (213 words) beginning with the 16-character name
@@ -9514,24 +9514,24 @@ SoundRam_DefaultRecord:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-; 6 x s16 switch offsets.  HdaeRom_DataHandler (0xFF024E): `ld_rrw ..,xix,..; lda xix,(0xFF028F);
+; 6 x s16 switch offsets.  SoundRam_ConvertUserSounds (0xFF024E): `ld_rrw ..,xix,..; lda xix,(0xFF028F);
 ; jp_rr 8,xix,..` -- targets 0xFF028F + offset (no labels yet).
-HdaeRomData_SwitchOffsets:
-	.short	HdaeRom_DataHandler_ConvertKn2000MkaMkb - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_ConvertKn2000MkaMkb - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_ConvertKn2000MkaMkb - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_Skip - HdaeRom_DataDispatch
-	.short	HdaeRom_DataDispatch - HdaeRom_DataDispatch
-	.short	HdaeRom_DataHandler_Skip - HdaeRom_DataDispatch
-; 6 x s16 switch offsets.  HdaeRom_AltHandler (0xFF0445): `ld_rrw ..,xix,..; lda xix,(0xFF0470);
+SoundRam_ConvertUserSounds_Cases:
+	.short	SoundRam_ConvertUserSounds_Kn2000MkaMkb - SoundRam_ConvertUserSounds_Kn1500
+	.short	SoundRam_ConvertUserSounds_Kn2000MkaMkb - SoundRam_ConvertUserSounds_Kn1500
+	.short	SoundRam_ConvertUserSounds_Kn2000MkaMkb - SoundRam_ConvertUserSounds_Kn1500
+	.short	SoundRam_ConvertUserSounds_Done - SoundRam_ConvertUserSounds_Kn1500
+	.short	SoundRam_ConvertUserSounds_Kn1500 - SoundRam_ConvertUserSounds_Kn1500
+	.short	SoundRam_ConvertUserSounds_Done - SoundRam_ConvertUserSounds_Kn1500
+; 6 x s16 switch offsets.  SoundRam_ConvertUserDrumKit (0xFF0445): `ld_rrw ..,xix,..; lda xix,(0xFF0470);
 ; jp_rr 8,xix,..` -- targets 0xFF0470 + offset (no labels yet).
-HdaeRomAlt_SwitchOffsets:
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch - HdaeRom_AltDispatch
-	.short	HdaeRom_AltDispatch_SetWord - HdaeRom_AltDispatch
-	.short	HdaeRom_AltHandler_Kn5000Image - HdaeRom_AltDispatch
+SoundRam_ConvertUserDrumKit_Cases:
+	.short	SoundRam_ConvertUserDrumKit_BadImage - SoundRam_ConvertUserDrumKit_Kn3000
+	.short	SoundRam_ConvertUserDrumKit_BadImage - SoundRam_ConvertUserDrumKit_Kn3000
+	.short	SoundRam_ConvertUserDrumKit_BadImage - SoundRam_ConvertUserDrumKit_Kn3000
+	.short	SoundRam_ConvertUserDrumKit_Kn3000 - SoundRam_ConvertUserDrumKit_Kn3000
+	.short	SoundRam_ConvertUserDrumKit_BadImage - SoundRam_ConvertUserDrumKit_Kn3000
+	.short	SoundRam_ConvertUserDrumKit_Kn5000Image - SoundRam_ConvertUserDrumKit_Kn3000
 ; 6 x s16 switch offsets.  TmFlash_BulkTransferToSubCPU_Skip2 (0xFF07A8): `ld_rrw ..,xix,..; lda xix,(0xFF07FB);
 ; jp_rr 8,xix,..` -- targets 0xFF07FB + offset (no labels yet).
 TmFlashBulkA_SwitchOffsets:

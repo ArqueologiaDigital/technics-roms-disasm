@@ -320,7 +320,7 @@ def describe_tm(ctx):
     if d[:16] in SOUND_RAM_MAGICS and len(d) != 0x72AA:
         o = Out(ctx)
         o.comment('A sound RAM image of another model (the KN5000 imports it: its loader accepts')
-        o.comment('the "KN3000 SOUND RAM" / "KN1500 SOUND RAM" headers, SendPartDataBlock_InitVal4).')
+        o.comment('the "KN3000 SOUND RAM" / "KN1500 SOUND RAM" headers, SoundRam_IdentifyImage).')
         o.comment('Its %d-byte layout is not established.' % len(d))
         o.label('Header')
         o.ascii(d[:16], 'model signature')
