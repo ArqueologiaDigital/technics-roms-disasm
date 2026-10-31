@@ -1,13 +1,19 @@
 # section_5_6: 188416 bytes, 736 blocks of 256
-# Produced by scripts/build/style_events.py (format 2); that script's docstring defines
-# every line kind and gives the evidence for each field.  docs/accompaniment-style-format.md
+# Produced by scripts/build/style_events.py (format 3); scripts/build/style_bank_layout.py defines
+# every field and its evidence.  docs/accompaniment-style-format.md
 # describes the cells and the event grammar.
 
 SIZE 188416
 FILL 000-007 ff
 BANK 008
-  # +0x00 magic "H\0K\0"; +0x04..+0x1d not established
-  hdr_04 000000000000005a5a5a00000100000000010101010202020200
+  # +0x00 magic "H\0K\0"; fields: scripts/build/style_bank_layout.py
+  reserved_04 zero
+  reserved_0b 5a5a5a
+  reserved_11 zero
+  reserved_15 0101010102020202
+  reserved_1d zero
+  password 0x0000
+  composer_mode 1
   capacity16 0x1680
   dir_offset 0x0060
   record_size 0x0060
@@ -15,280 +21,431 @@ BANK 008
   cell_size 0x0100
   cell_count 340
   name_offset 0x0040
-  hdr_2c 0x0000
+  reserved_2c 0x0000
   used_size16 0x0ec0
-  hdr_30 zero
+  reserved_30 zero
   # section 0: a-variation1
-  SECTION 0 parts=6000,6001,6002,6003,6004 w02=0000 name="Guarania 3   \0\0\0"
-    rec_0c 060120000901000000000000
-    part0 0006 0000 0000 0000
-    part1 0228 0140 0650 007f
-    part2 0000 000c 0650 007f
-    part3 0114 0074 0650 007f
-    part4 0114 0040 0650 007f
-    tail zero
+  SECTION 0 cells=6000,6001,6002,6003,6004 reserved_02=0000 name="Guarania 3   \0\0\0"
+    time_sig 6  # 3/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x09 group=1
+    reserved_12 zero
+    part drum sound=6 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=2 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=20 bank=1 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=20 bank=1 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 1: a-variation2
-  SECTION 1 parts=6005,6006,6007,6008,6009 w02=0000 name="Vaneirao 2   \0\0\0"
-    rec_0c 070120005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0050 010c 0650 007f
-    part3 0016 0074 0650 007f
-    part4 0050 0140 0650 007f
-    tail zero
+  SECTION 1 cells=6005,6006,6007,6008,6009 reserved_02=0000 name="Vaneirao 2   \0\0\0"
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=80 bank=0 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=22 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=80 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 2: a-variation3
-  SECTION 2 parts=600a,600b,600c,600d,600e w02=0000 name="Rancheira    \0\0\0"
-    rec_0c 060320000901000000000000
-    part0 0006 0000 0000 0000
-    part1 0228 0140 0650 007f
-    part2 0030 000c 0650 007f
-    part3 0364 0074 0650 007f
-    part4 0016 0040 0650 007f
-    tail zero
+  SECTION 2 cells=600a,600b,600c,600d,600e reserved_02=0000 name="Rancheira    \0\0\0"
+    time_sig 6  # 3/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x09 group=1
+    reserved_12 zero
+    part drum sound=6 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=2 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=48 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=100 bank=3 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=22 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 3: a-variation4
-  SECTION 3 parts=600f,6010,6011,6012,6013 w02=0000 name="Frevo 2      \0\0\0"
-    rec_0c 070020005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0000 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 001a 0140 0650 007f
-    tail zero
+  SECTION 3 cells=600f,6010,6011,6012,6013 reserved_02=0000 name="Frevo 2      \0\0\0"
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=26 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 4: b-variation1
-  SECTION 4 parts=6014,6015,6016,6017,6018 w02=0000 name="Baiao 1      \0\0\0"
-    rec_0c 070320005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0019 000c 0650 007f
-    part3 0051 0074 0650 007f
-    part4 0041 0040 0650 007f
-    tail zero
+  SECTION 4 cells=6014,6015,6016,6017,6018 reserved_02=0000 name="Baiao 1      \0\0\0"
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=25 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=81 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=65 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 5: b-variation2
-  SECTION 5 parts=6019,601a,601b,601c,601d w02=0000 name="Forro 8      \0\0\0"
-    rec_0c 070120005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0000 000c 0650 007f
-    part3 0050 0174 0650 007f
-    part4 0050 0140 0650 007f
-    tail zero
+  SECTION 5 cells=6019,601a,601b,601c,601d reserved_02=0000 name="Forro 8      \0\0\0"
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=80 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=80 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 6: b-variation3
-  SECTION 6 parts=601e,601f,6020,6021,6022 w02=0000 name="XOTE         \0\0\0"
-    rec_0c 070120005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0050 010c 0650 007f
-    part3 0050 0174 0650 007f
-    part4 0050 0140 0650 007f
-    tail zero
+  SECTION 6 cells=601e,601f,6020,6021,6022 reserved_02=0000 name="XOTE         \0\0\0"
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=80 bank=0 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=80 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=80 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 7: b-variation4
-  SECTION 7 parts=6023,6024,6025,6026,6027 w02=0000 name="Marcha Rancho\0\0\0"
-    rec_0c 070120005802000000000000
-    part0 0001 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0256 010c 0650 007f
-    part3 0041 0074 0650 007f
-    part4 0015 0040 0650 007f
-    tail zero
+  SECTION 7 cells=6023,6024,6025,6026,6027 reserved_02=0000 name="Marcha Rancho\0\0\0"
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=86 bank=2 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=65 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=21 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 8: c-variation1
-  SECTION 8 parts=6028,6029,602a,602b,602c w02=0000 name="CaribbeanRockN  "
-    rec_0c 070320007603000000000000
-    part0 000e 0000 0000 0000
-    part1 0328 0040 0645 007f
-    part2 0006 010c 0840 007f
-    part3 000d 0074 0840 007f
-    part4 0338 0040 0840 007f
-    tail zero
+  SECTION 8 cells=6028,6029,602a,602b,602c reserved_02=0000 name="CaribbeanRockN  "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x76 group=3
+    reserved_12 zero
+    part drum sound=14 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=3 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=6 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=13 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=3 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 9: c-variation2
-  SECTION 9 parts=602d,602e,602f,6030,6031 w02=0000 name="CaribbeanRockN  "
-    rec_0c 070320007603000000000000
-    part0 000e 0000 0000 0000
-    part1 0328 0040 0645 007f
-    part2 0272 000c 0840 007f
-    part3 000d 0074 0840 007f
-    part4 0338 0040 0840 007f
-    tail zero
+  SECTION 9 cells=602d,602e,602f,6030,6031 reserved_02=0000 name="CaribbeanRockN  "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x76 group=3
+    reserved_12 zero
+    part drum sound=14 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=3 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=114 bank=2 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=13 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=3 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 10: c-variation3
-  SECTION 10 parts=6032,6033,6034,6035,6036 w02=0000 name="   Oldies    ES "
-    rec_0c 070320005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 10 cells=6032,6033,6034,6035,6036 reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 11: c-variation4
-  SECTION 11 parts=6037,6038,6039,603a,603b w02=0000 name="   Oldies    ES "
-    rec_0c 070320005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 11 cells=6037,6038,6039,603a,603b reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 12: a-intro 1
-  SECTION 12 parts=603c,603d,603e,603f,6040 w02=0000 name="    Clear       "
-    rec_0c 070320005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0050 010c 0650 007f
-    part3 0016 0074 0650 007f
-    part4 0050 0140 0650 007f
-    tail zero
+  SECTION 12 cells=603c,603d,603e,603f,6040 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=80 bank=0 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=22 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=80 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 13: a-intro 2
-  SECTION 13 parts=6041,6042,6043,6044,6045 w02=0000 name="    Clear       "
-    rec_0c 070720005802000000000000
-    part0 000e 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 006d 000c 0650 007f
-    part3 014f 0074 0650 007f
-    part4 0059 0140 0650 007f
-    tail zero
+  SECTION 13 cells=6041,6042,6043,6044,6045 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 7
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=14 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=109 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=79 bank=1 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=89 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 14: a-fill in 1
-  SECTION 14 parts=6046,6047,6048,6049,604a w02=0000 name="    Clear       "
-    rec_0c 070020005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0050 010c 0650 007f
-    part3 0016 0074 0650 007f
-    part4 0041 0040 0650 007f
-    tail zero
+  SECTION 14 cells=6046,6047,6048,6049,604a reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=80 bank=0 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=22 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=65 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 15: a-fill in 2
-  SECTION 15 parts=604b,604c,604d,604e,604f w02=0000 name="    Clear       "
-    rec_0c 060020000901000000000000
-    part0 0006 0000 0000 0000
-    part1 0228 0140 0650 007f
-    part2 0020 000c 0650 007f
-    part3 0114 0074 0650 007f
-    part4 0364 0040 0650 007f
-    tail zero
+  SECTION 15 cells=604b,604c,604d,604e,604f reserved_02=0000 name="    Clear       "
+    time_sig 6  # 3/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x09 group=1
+    reserved_12 zero
+    part drum sound=6 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=2 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=32 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=20 bank=1 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=100 bank=3 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 16: a-ending 1
-  SECTION 16 parts=6050,6051,6052,6053,6054 w02=0000 name="    Clear       "
-    rec_0c 070420005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0050 010c 0650 007f
-    part3 0016 0074 0650 007f
-    part4 0041 0040 0650 007f
-    tail zero
+  SECTION 16 cells=6050,6051,6052,6053,6054 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 4
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=80 bank=0 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=22 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=65 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 17: a-ending 2
-  SECTION 17 parts=6055,6056,6057,6058,6059 w02=0000 name="    Clear       "
-    rec_0c 070320005802000000000000
-    part0 000e 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 014d 000c 0650 007f
-    part3 014f 0074 0650 007f
-    part4 0059 0140 0650 007f
-    tail zero
+  SECTION 17 cells=6055,6056,6057,6058,6059 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=14 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=77 bank=1 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=79 bank=1 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=89 bank=0 pan=64 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 18: b-intro 1
-  SECTION 18 parts=605a,605b,605c,605d,605e w02=0000 name="     Clear      "
-    rec_0c 070120005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0050 010c 0650 007f
-    part3 0051 0074 0650 007f
-    part4 0015 0040 0650 007f
-    tail zero
+  SECTION 18 cells=605a,605b,605c,605d,605e reserved_02=0000 name="     Clear      "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=80 bank=0 pan=12 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=81 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=21 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 19: b-intro 2
-  SECTION 19 parts=605f,6060,6061,6062,6063 w02=0000 name="    clear       "
-    rec_0c 070120805802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0000 000c 0650 007f
-    part3 0038 0074 0650 007f
-    part4 0041 0040 0650 007f
-    tail zero
+  SECTION 19 cells=605f,6060,6061,6062,6063 reserved_02=0000 name="    clear       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=56 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=65 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 20: b-fill in 1
-  SECTION 20 parts=6064,6065,6066,6067,6068 w02=0000 name="     Clear      "
-    rec_0c 070020005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0000 000c 0650 007f
-    part3 0050 0174 0650 007f
-    part4 0015 0040 0650 007f
-    tail zero
+  SECTION 20 cells=6064,6065,6066,6067,6068 reserved_02=0000 name="     Clear      "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=80 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=21 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 21: b-fill in 2
-  SECTION 21 parts=6069,606a,606b,606c,606d w02=0000 name="    clear       "
-    rec_0c 070020805802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0000 000c 0650 007f
-    part3 0038 0074 0650 007f
-    part4 0041 0040 0650 007f
-    tail zero
+  SECTION 21 cells=6069,606a,606b,606c,606d reserved_02=0000 name="    clear       "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=56 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=65 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 22: b-ending 1
-  SECTION 22 parts=606e,606f,6070,6071,6072 w02=0000 name="     Clear      "
-    rec_0c 070220005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0051 000c 0650 007f
-    part3 0050 0174 0650 007f
-    part4 0015 0040 0650 007f
-    tail zero
+  SECTION 22 cells=606e,606f,6070,6071,6072 reserved_02=0000 name="     Clear      "
+    time_sig 7  # 4/4
+    last_measure 2
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=81 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=80 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=21 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 23: b-ending 2
-  SECTION 23 parts=6073,6074,6075,6076,6077 w02=0000 name="    clear       "
-    rec_0c 070120805802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0650 007f
-    part2 0000 000c 0650 007f
-    part3 0038 0074 0650 007f
-    part4 0041 0040 0650 007f
-    tail zero
+  SECTION 23 cells=6073,6074,6075,6076,6077 reserved_02=0000 name="    clear       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=56 bank=0 pan=116 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=65 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 24: c-intro 1
-  SECTION 24 parts=6078,6079,607a,607b,607c w02=0000 name="   Oldies    ES "
-    rec_0c 070320005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 24 cells=6078,6079,607a,607b,607c reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 25: c-intro 2
-  SECTION 25 parts=607d,607e,607f,6080,6081 w02=0000 name="   Oldies    ES "
-    rec_0c 070420005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 25 cells=607d,607e,607f,6080,6081 reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 4
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 26: c-fill in 1
-  SECTION 26 parts=6082,6083,6084,6085,6086 w02=0000 name="   Oldies    ES "
-    rec_0c 070020005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 26 cells=6082,6083,6084,6085,6086 reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 27: c-fill in 2
-  SECTION 27 parts=6087,6088,6089,608a,608b w02=0000 name="   Oldies    ES "
-    rec_0c 070020005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 27 cells=6087,6088,6089,608a,608b reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 28: c-ending 1
-  SECTION 28 parts=608c,608d,608e,608f,6090 w02=0000 name="   Oldies    ES "
-    rec_0c 070320005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
+  SECTION 28 cells=608c,608d,608e,608f,6090 reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 29: c-ending 2
-  SECTION 29 parts=6091,6092,6093,6094,6095 w02=0000 name="   Oldies    ES "
-    rec_0c 070420005007000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 005b 010c 0840 007f
-    part3 001c 0174 0840 007f
-    part4 0000 0040 0840 007f
-    tail zero
-  data_ba0 zero
+  SECTION 29 cells=6091,6092,6093,6094,6095 reserved_02=0000 name="   Oldies    ES "
+    time_sig 7  # 4/4
+    last_measure 4
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x50 group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=91 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=28 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
+  chord_maps zero
+  measure_starts zero
   FILLIN mark=80 prev=ffff next=ffff
     st_beat
     st_beat
@@ -642,8 +799,14 @@ CELL 16D mark=00 prev=ffff next=ffff
 CELL 16E mark=00 prev=ffff next=ffff
 CELL 16F mark=00 prev=ffff next=ffff
 BANK 170
-  # +0x00 magic "H\0K\0"; +0x04..+0x1d not established
-  hdr_04 000000000000005a5a5a00000100000000010101010202020200
+  # +0x00 magic "H\0K\0"; fields: scripts/build/style_bank_layout.py
+  reserved_04 zero
+  reserved_0b 5a5a5a
+  reserved_11 zero
+  reserved_15 0101010102020202
+  reserved_1d zero
+  password 0x0000
+  composer_mode 1
   capacity16 0x1680
   dir_offset 0x0060
   record_size 0x0060
@@ -651,280 +814,431 @@ BANK 170
   cell_size 0x0100
   cell_count 340
   name_offset 0x0040
-  hdr_2c 0x0000
+  reserved_2c 0x0000
   used_size16 0x0f40
-  hdr_30 zero
+  reserved_30 zero
   # section 0: a-variation1
-  SECTION 0 parts=7000,7001,7002,7003,7004 w02=0000 name="GentleSwing 1   "
-    rec_0c 070320005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0069 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 0 cells=7000,7001,7002,7003,7004 reserved_02=0000 name="GentleSwing 1   "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=105 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 1: a-variation2
-  SECTION 1 parts=7005,7006,7007,7008,7009 w02=0000 name="GospelRevival   "
-    rec_0c 070320004d07000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0203 000c 0840 007f
-    part3 0059 0174 0840 007f
-    part4 006d 0040 0840 007f
-    tail zero
+  SECTION 1 cells=7005,7006,7007,7008,7009 reserved_02=0000 name="GospelRevival   "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x4d group=7
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=3 bank=2 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=89 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=109 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 2: a-variation3
-  SECTION 2 parts=700a,700b,700c,700d,700e w02=0000 name="Roaring 20's    "
-    rec_0c 070320001807000000000000
-    part0 0001 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0021 0074 0840 007f
-    part4 0032 0040 0840 007f
-    tail zero
+  SECTION 2 cells=700a,700b,700c,700d,700e reserved_02=0000 name="Roaring 20's    "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x18 group=7
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=33 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=50 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 3: a-variation4
-  SECTION 3 parts=700f,7010,7011,7012,7013 w02=0000 name="AccordionJazz   "
-    rec_0c 070320002202000000000000
-    part0 0001 0000 0000 0000
-    part1 002b 0040 0645 007f
-    part2 0018 000c 0840 007f
-    part3 0650 0074 0840 007f
-    part4 0058 0140 0840 007f
-    tail zero
+  SECTION 3 cells=700f,7010,7011,7012,7013 reserved_02=0000 name="AccordionJazz   "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x22 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=43 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=24 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=80 bank=6 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=88 bank=0 pan=64 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 4: b-variation1
-  SECTION 4 parts=7014,7015,7016,7017,7018 w02=0000 name="Samba cancao \0\0\0"
-    rec_0c 070320003002000000000000
-    part0 0000 0040 0000 00ff
-    part1 002b 0040 0844 00ff
-    part2 0005 010c 0840 00ff
-    part3 006c 0174 063c 00ff
-    part4 004e 0040 0640 00ff
-    tail zero
+  SECTION 4 cells=7014,7015,7016,7017,7018 reserved_02=0000 name="Samba cancao \0\0\0"
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x30 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0xff reserved_7=0
+    part bass sound=43 bank=0 pan=64 reverb=0 pc_byte4=0x44 pitch_point=8 high_key=0xff reserved_7=0
+    part acc1 sound=5 bank=0 pan=12 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0xff reserved_7=0
+    part acc2 sound=108 bank=0 pan=116 reverb=1 pc_byte4=0x3c pitch_point=6 high_key=0xff reserved_7=0
+    part acc3 sound=78 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=6 high_key=0xff reserved_7=0
+    reserved_50 zero
   # section 5: b-variation2
-  SECTION 5 parts=7019,701a,701b,701c,701d w02=0000 name=" Bossanova 2    "
-    rec_0c 070320003007000000000000
-    part0 000f 0000 0000 0000
-    part1 0228 0140 0645 007f
-    part2 0015 000c 0840 007f
-    part3 0006 0174 0840 007f
-    part4 0064 0040 0840 007f
-    tail zero
+  SECTION 5 cells=7019,701a,701b,701c,701d reserved_02=0000 name=" Bossanova 2    "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x30 group=7
+    reserved_12 zero
+    part drum sound=15 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=2 pan=64 reverb=1 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=21 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=6 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=100 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 6: b-variation3
-  SECTION 6 parts=701e,701f,7020,7021,7022 w02=0000 name=" Bossanova 2    "
-    rec_0c 070320003007000000000000
-    part0 000f 0000 0000 0000
-    part1 0228 0140 0645 007f
-    part2 0015 000c 0840 007f
-    part3 0006 0174 0840 007f
-    part4 0064 0040 0840 007f
-    tail zero
+  SECTION 6 cells=701e,701f,7020,7021,7022 reserved_02=0000 name=" Bossanova 2    "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x30 group=7
+    reserved_12 zero
+    part drum sound=15 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=2 pan=64 reverb=1 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=21 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=6 bank=0 pan=116 reverb=1 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=100 bank=0 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 7: b-variation4
-  SECTION 7 parts=7023,7024,7025,7026,7027 w02=0000 name="Samba 2      \0\0\0"
-    rec_0c 050720005802000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0000 0650 007f
-    part2 0014 007f 0650 007f
-    part3 0000 0060 0650 007f
-    part4 0019 0000 0650 007f
-    tail zero
+  SECTION 7 cells=7023,7024,7025,7026,7027 reserved_02=0000 name="Samba 2      \0\0\0"
+    time_sig 5  # 2/4
+    last_measure 7
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=0 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=20 bank=0 pan=127 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=96 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=25 bank=0 pan=0 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 8: c-variation1
-  SECTION 8 parts=7028,7029,702a,702b,702c w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 8 cells=7028,7029,702a,702b,702c reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 9: c-variation2
-  SECTION 9 parts=702d,702e,702f,7030,7031 w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 9 cells=702d,702e,702f,7030,7031 reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 10: c-variation3
-  SECTION 10 parts=7032,7033,7034,7035,7036 w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 10 cells=7032,7033,7034,7035,7036 reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 11: c-variation4
-  SECTION 11 parts=7037,7038,7039,703a,703b w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 11 cells=7037,7038,7039,703a,703b reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 12: a-intro 1
-  SECTION 12 parts=703c,703d,703e,703f,7040 w02=0000 name="    Clear       "
-    rec_0c 070320005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0069 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 12 cells=703c,703d,703e,703f,7040 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=105 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 13: a-intro 2
-  SECTION 13 parts=7041,7042,7043,7044,7045 w02=0000 name="    Clear       "
-    rec_0c 070320005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0041 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 13 cells=7041,7042,7043,7044,7045 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=65 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 14: a-fill in 1
-  SECTION 14 parts=7046,7047,7048,7049,704a w02=0000 name="    Clear       "
-    rec_0c 070020005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0069 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 14 cells=7046,7047,7048,7049,704a reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=105 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 15: a-fill in 2
-  SECTION 15 parts=704b,704c,704d,704e,704f w02=0000 name="    Clear       "
-    rec_0c 070020005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0069 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 15 cells=704b,704c,704d,704e,704f reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=105 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 16: a-ending 1
-  SECTION 16 parts=7050,7051,7052,7053,7054 w02=0000 name="    Clear       "
-    rec_0c 070120005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0069 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 16 cells=7050,7051,7052,7053,7054 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=105 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 17: a-ending 2
-  SECTION 17 parts=7055,7056,7057,7058,7059 w02=0000 name="    Clear       "
-    rec_0c 070320005802000000000000
-    part0 0001 0000 0000 0000
-    part1 002f 0040 0650 007f
-    part2 0041 000c 0650 007f
-    part3 001a 0174 0650 007f
-    part4 0038 0040 0650 007f
-    tail zero
+  SECTION 17 cells=7055,7056,7057,7058,7059 reserved_02=0000 name="    Clear       "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x58 group=2
+    reserved_12 zero
+    part drum sound=1 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=47 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=65 bank=0 pan=12 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=26 bank=0 pan=116 reverb=1 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=0 pan=64 reverb=0 pc_byte4=0x50 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 18: b-intro 1
-  SECTION 18 parts=705a,705b,705c,705d,705e w02=0000 name="Modern Samba    "
-    rec_0c 070320003305000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0015 0074 0840 007f
-    part4 0138 0040 0840 007f
-    tail zero
+  SECTION 18 cells=705a,705b,705c,705d,705e reserved_02=0000 name="Modern Samba    "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x33 group=5
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=21 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=1 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 19: b-intro 2
-  SECTION 19 parts=705f,7060,7061,7062,7063 w02=0000 name="Modern Samba    "
-    rec_0c 070320003305000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0064 0074 0840 007f
-    part4 0138 0040 0840 007f
-    tail zero
+  SECTION 19 cells=705f,7060,7061,7062,7063 reserved_02=0000 name="Modern Samba    "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x33 group=5
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=100 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=1 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 20: b-fill in 1
-  SECTION 20 parts=7064,7065,7066,7067,7068 w02=0000 name="Modern Samba    "
-    rec_0c 070020003305000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0015 0074 0840 007f
-    part4 0138 0040 0840 007f
-    tail zero
+  SECTION 20 cells=7064,7065,7066,7067,7068 reserved_02=0000 name="Modern Samba    "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x33 group=5
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=21 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=1 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 21: b-fill in 2
-  SECTION 21 parts=7069,706a,706b,706c,706d w02=0000 name="Modern Samba    "
-    rec_0c 070020003305000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0015 0074 0840 007f
-    part4 0138 0040 0840 007f
-    tail zero
+  SECTION 21 cells=7069,706a,706b,706c,706d reserved_02=0000 name="Modern Samba    "
+    time_sig 7  # 4/4
+    last_measure 0
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x33 group=5
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=21 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=1 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 22: b-ending 1
-  SECTION 22 parts=706e,706f,7070,7071,7072 w02=0000 name="Modern Samba    "
-    rec_0c 070420003305000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0064 0074 0840 007f
-    part4 0138 0040 0840 007f
-    tail zero
+  SECTION 22 cells=706e,706f,7070,7071,7072 reserved_02=0000 name="Modern Samba    "
+    time_sig 7  # 4/4
+    last_measure 4
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x33 group=5
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=100 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=1 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 23: b-ending 2
-  SECTION 23 parts=7073,7074,7075,7076,7077 w02=0000 name="Modern Samba    "
-    rec_0c 070320003305000000000000
-    part0 0000 0000 0000 0000
-    part1 0028 0040 0645 007f
-    part2 0000 000c 0840 007f
-    part3 0064 0074 0840 007f
-    part4 0138 0040 0840 007f
-    tail zero
+  SECTION 23 cells=7073,7074,7075,7076,7077 reserved_02=0000 name="Modern Samba    "
+    time_sig 7  # 4/4
+    last_measure 3
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x00
+    style number=0x33 group=5
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=40 bank=0 pan=64 reverb=0 pc_byte4=0x45 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc2 sound=100 bank=0 pan=116 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    part acc3 sound=56 bank=1 pan=64 reverb=0 pc_byte4=0x40 pitch_point=8 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 24: c-intro 1
-  SECTION 24 parts=7078,7079,707a,707b,707c w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 24 cells=7078,7079,707a,707b,707c reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 25: c-intro 2
-  SECTION 25 parts=707d,707e,707f,7080,7081 w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 25 cells=707d,707e,707f,7080,7081 reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 26: c-fill in 1
-  SECTION 26 parts=7082,7083,7084,7085,7086 w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 26 cells=7082,7083,7084,7085,7086 reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 27: c-fill in 2
-  SECTION 27 parts=7087,7088,7089,708a,708b w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 27 cells=7087,7088,7089,708a,708b reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 28: c-ending 1
-  SECTION 28 parts=708c,708d,708e,708f,7090 w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
+  SECTION 28 cells=708c,708d,708e,708f,7090 reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
   # section 29: c-ending 2
-  SECTION 29 parts=7091,7092,7093,7094,7095 w02=0000 name="     Init       "
-    rec_0c 070120805800000000000000
-    part0 0000 0000 0000 0000
-    part1 0000 0040 0658 007f
-    part2 0000 0074 0658 007f
-    part3 0000 000c 0658 007f
-    part4 0000 0040 0658 007f
-    tail zero
-  data_ba0 zero
+  SECTION 29 cells=7091,7092,7093,7094,7095 reserved_02=0000 name="     Init       "
+    time_sig 7  # 4/4
+    last_measure 1
+    rec_chord key=0 minor=0 accomp_7th=1 bass_7th=0 bit7=0  # C
+    edit_flags 0x80
+    style number=0x58 group=0
+    reserved_12 zero
+    part drum sound=0 bank=0 pan=0 reverb=0 pc_byte4=0x00 pitch_point=0 high_key=0x00 reserved_7=0
+    part bass sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc1 sound=0 bank=0 pan=116 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc2 sound=0 bank=0 pan=12 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    part acc3 sound=0 bank=0 pan=64 reverb=0 pc_byte4=0x58 pitch_point=6 high_key=0x7f reserved_7=0
+    reserved_50 zero
+  chord_maps zero
+  measure_starts zero
   FILLIN mark=80 prev=ffff next=ffff
     st_beat
     st_beat
