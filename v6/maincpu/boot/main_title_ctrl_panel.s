@@ -168,9 +168,9 @@ SndParam_SendDiskMenuEvents:
 	ld	xbc, CtrlPanel_SwitchRowBit
 	add	xbc, xwa
 	ld	xwa, (xbc)
-	or	(TRANSITION_PROGRESS:24), xwa
+	or	(PANEL_SW_HELD_UP:24), xwa
 	ld	xwa, (xbc)
-	and	xwa, (TRANSITION_TIMER:24)
+	and	xwa, (PANEL_SW_HELD_DOWN:24)
 	jr	z, CtrlPanel_ProcessButtonPress
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SW_BOTH
@@ -189,7 +189,7 @@ CtrlPanel_CheckDiskMenuRelease:
 	ld xwa, (xbc)
 	cpl wa
 	cplw_erp 0xe2
-	and (TRANSITION_PROGRESS:24), xwa
+	and (PANEL_SW_HELD_UP:24), xwa
 
 CtrlPanel_ProcessButtonPress:
 	ld	c, (SWBTWR_PAYLOAD_3:16)
@@ -218,9 +218,9 @@ CtrlPanel_ProcessButtonPress:
 	ld	xbc, CtrlPanel_SwitchRowBit
 	add	xbc, xwa
 	ld	xwa, (xbc)
-	or	(TRANSITION_TIMER:24), xwa
+	or	(PANEL_SW_HELD_DOWN:24), xwa
 	ld	xwa, (xbc)
-	and	xwa, (TRANSITION_PROGRESS:24)
+	and	xwa, (PANEL_SW_HELD_UP:24)
 	jr	z, CtrlPanel_DispatchCombinedState
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SW_BOTH
@@ -239,12 +239,12 @@ CtrlPanel_CheckButtonRelease:
 	ld xwa, (xbc)
 	cpl wa
 	cplw_erp 0xe2
-	and (TRANSITION_TIMER:24), xwa
+	and (PANEL_SW_HELD_DOWN:24), xwa
 
 CtrlPanel_DispatchCombinedState:
-	ld xwa, (TRANSITION_TIMER:24)
-	and xwa, (TRANSITION_PROGRESS:24)
-	ld (TRANSITION_FLAGS:24), xwa
+	ld xwa, (PANEL_SW_HELD_DOWN:24)
+	and xwa, (PANEL_SW_HELD_UP:24)
+	ld (PANEL_SW_HELD_BOTH:24), xwa
 	cp xwa, 0x1100
 	jr z, CtrlPanel_HandleFirmwareCheck
 	cp xwa, 0xa1

@@ -170,8 +170,8 @@ FDC_CommandEntry_CopyParams_CaseTable:
 CtrlPanel_DialStepByDelta:	.incbin "includes/generated/naka_disk_warning.bin", 0xC36, 0x84
 ; CtrlPanel_SwitchRowBit -- 32 x uint32_t: entry i = 1 << i, the bit for panel switch row i
 ; SwbtB3_OnPanelEvent's 0xA9 path (boot/main_title_ctrl_panel.s) indexes it by the row in
-; SWBTWR_PAYLOAD_1 (`sll xwa, 2`): it ORs the bit into TRANSITION_PROGRESS (payload bit 1) or
-; TRANSITION_TIMER (bit 0) on press and ANDs it out on release; the AND of both masks picks combos
+; SWBTWR_PAYLOAD_1 (`sll xwa, 2`): it ORs the bit into PANEL_SW_HELD_UP (payload bit 1) or
+; PANEL_SW_HELD_DOWN (bit 0) on press and ANDs it out on release; the AND of both masks picks combos
 ; (0x1100, 0xA1, 0x91, 0x89 in CtrlPanel_DispatchCombinedState). Rows 0..16 are reachable (cp e, 0x10)
 CtrlPanel_SwitchRowBit:	.incbin "includes/generated/naka_disk_warning.bin", 0xCBA, 0x80
 ; GetSoundName_Str_DashedName: " ------ ": 16-character placeholder sound name (NUL, 0xFF pad) that GetSoundName

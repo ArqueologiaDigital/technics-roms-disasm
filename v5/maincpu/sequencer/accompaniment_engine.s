@@ -16336,10 +16336,10 @@ AccPatch_ReadModeFlags:
 	jr t, AccPatch_SetFlagExit
 AccPatch_ReadModeFlags_Active:
 .Lc_f5fb46:
-	ld xwa, (TRANSITION_PROGRESS:24)
-	or	xwa, (TRANSITION_TIMER:24)
+	ld xwa, (PANEL_SW_HELD_UP:24)
+	or	xwa, (PANEL_SW_HELD_DOWN:24)
 	ld	(0x11d0:16), xwa
-	ld	xwa, (TRANSITION_TIMER:24)
+	ld	xwa, (PANEL_SW_HELD_DOWN:24)
 	ld	(0x3928:16), xwa
 	ld	xwa, (0x11d0:16)
 	and	xwa, 512

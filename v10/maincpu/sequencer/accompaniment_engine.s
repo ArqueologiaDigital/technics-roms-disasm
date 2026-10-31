@@ -17434,8 +17434,8 @@ AccPatch_SeqDispatch_MiscData:
 	ret
 
 ; Clears bits 2 and 3 of 0x34cf; with ACTIVE_TITLE = 181, sets bit 2 when bit 9 (0x200) is set in
-; TRANSITION_PROGRESS | TRANSITION_TIMER but clear in TRANSITION_TIMER, bit 3 likewise for bit 10
-; (0x400).  The OR is kept in 0x11d0 and TRANSITION_TIMER in 0x39e0.
+; PANEL_SW_HELD_UP | PANEL_SW_HELD_DOWN but clear in PANEL_SW_HELD_DOWN, bit 3 likewise for bit 10
+; (0x400).  The OR is kept in 0x11d0 and PANEL_SW_HELD_DOWN in 0x39e0.
 AccPatch_ReadModeFlags:
 	ld a, (0x34cf:16)
 	and a, 0xf3
@@ -17445,10 +17445,10 @@ AccPatch_ReadModeFlags:
 	jr AccPatch_SetFlagExit
 
 AccPatch_ReadModeFlags_Active:
-	ld xwa, (TRANSITION_PROGRESS:24)
-	or xwa, (TRANSITION_TIMER:24)
+	ld xwa, (PANEL_SW_HELD_UP:24)
+	or xwa, (PANEL_SW_HELD_DOWN:24)
 	ld (4560:16), xwa
-	ld xwa, (TRANSITION_TIMER:24)
+	ld xwa, (PANEL_SW_HELD_DOWN:24)
 	ld (0x39e0:16), xwa
 	ld xwa, (4560:16)
 	and xwa, 0x200

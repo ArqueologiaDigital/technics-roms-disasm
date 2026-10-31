@@ -15378,11 +15378,11 @@ IvDrawbarProc:
 	cp xiz, EVT_REFRESH_PARAM
 	jrl z, IvDrawbar_LoadVals
 	cp xiz, EVT_DRAW
-	jrl z, IvDrawbar_Paint
+	jrl z, IvDrawbar_OnDraw
 	cp xiz, EVT_REPAINT
-	jrl z, IvDrawbar_ShowHide
+	jrl z, IvDrawbar_OnPaint
 	cp xiz, EVT_PAINT
-	jrl z, IvDrawbar_ShowHide
+	jrl z, IvDrawbar_OnPaint
 	cp xiz, EVT_HIDE
 	jrl z, IvDrawbar_Close
 	cp xiz, EVT_SHOW
@@ -15494,7 +15494,7 @@ IvDrawbar_Close:
 	ld xde, (xsp + 4)
 	jrl IvDrawbar_CallBase
 
-IvDrawbar_ShowHide:
+IvDrawbar_OnPaint:
 	call GetPartSelect
 	ld (0x02479a:24), hl
 	ld wa, hl
@@ -15520,7 +15520,7 @@ IvDrawbar_ShowHide:
 	ld xde, 3:i3
 	jrl IvDrawbar_DispatchEvent
 
-IvDrawbar_Paint:
+IvDrawbar_OnDraw:
 	ld xwa, (xsp + 8)
 	ld xbc, xiz
 	ld xde, (xsp + 4)

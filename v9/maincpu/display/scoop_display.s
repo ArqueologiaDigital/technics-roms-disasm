@@ -8043,8 +8043,8 @@ SysEx_ControllerBitCheck:
 	jrl z, SysEx_ModeChangeCheck
 	ld c, (3925:16)
 	add c, 0x5
-	ld xwa, (TRANSITION_PROGRESS:24)
-	or xwa, (TRANSITION_TIMER:24)
+	ld xwa, (PANEL_SW_HELD_UP:24)
+	or xwa, (PANEL_SW_HELD_DOWN:24)
 	ld (4560:16), xwa
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e

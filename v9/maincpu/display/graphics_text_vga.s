@@ -2935,12 +2935,16 @@ VGA_WritePalEntry_WriteBlue:
 	pop xiz
 	ret
 
-VGA_CRTCTiming_ByteData:
+; Unreferenced (no call, jump or pointer reaches it in any tree).  Writes palette entries from
+; the 4-byte {r, g, b, -} records at XWA through VGA_WritePaletteEntry, entry index in QIZH
+; (bank register 251) counting from 0; the closing `jr` is unconditional, so after entry 255
+; the index wraps and the loop never ends -- most probably a C `for (u8 i = 0; i < 256; i++)`.
+VGA_WritePalette256_Unterminated:
 	dec	4, xsp
 	push	qiz
 	ld	(xsp+2), xwa
 	ldib_erp 251, 0
-VGA_WritePaletteEntry_Join:
+VGA_WritePalette256_Loop:
 	ldto_berp a, 251
 	extz	wa
 	ld	xbc, (xsp+2)
@@ -2948,380 +2952,92 @@ VGA_WritePaletteEntry_Join:
 	ld	xwa, 4:i3
 	add	(xsp+2), xwa
 	inc1b_erp 251
-	jr VGA_WritePaletteEntry_Join
-	ldw	wa, 964
-	ld	bc, 6:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 1:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 4:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 16
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 23
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 5:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 6:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 37
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 19
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 8
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 0:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 28
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 17
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 3:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 2:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 5:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 17
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 3:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 8
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 170
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 16
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 8
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 1:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 19
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 6:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 13
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 1:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 0:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 37
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 15
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 17
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 14
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 0:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 51
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 8
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 17
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 247
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 16
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 10
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 251
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 34
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 14
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 1:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 100
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 3:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 5:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 43
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 7:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 88
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 7:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 11
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 1:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 13
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 13
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 15
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 58
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 9
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 17
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ldw	bc, 12
-	calr	_Write_VGA_Register
-	ldw	wa, 964
-	ld	bc, 6:i3
-	calr	_Write_VGA_Register
-	ldw	wa, 965
-	ld	bc, 0:i3
-	jrl	_Write_VGA_Register
+	jr VGA_WritePalette256_Loop
 
+; The first of three MN89304 extended-sequencer setups (with VGA_ConfigExtSequencer, which
+; VGA_Initialize calls, and VGA_ConfigExtSequencer_AltB): seq 0x06 = 0x01 opens the extension
+; registers, then for each index written to seq 0x09 the data registers seq 0x0a / 0x0b / 0x0c
+; get one value each (even indices 0x00-0x10 all three, odd indices 0x01-0x11 only 0x0c), and
+; seq 0x06 = 0x00 closes them (tail call).  Unreferenced; it starts right after the endless loop
+; of VGA_WritePalette256_Unterminated.  Values differ from VGA_ConfigExtSequencer's in 19 places;
+; their meaning is unknown (no MN89304 datasheet).  Table: notes/open4-kn5000-b/display/README.md.
+VGA_ConfigExtSequencer_AltA:
+	_VGA_SEQUENCER 0x6, 0x1
+	_VGA_SEQUENCER 0x9, 0x4
+	_VGA_SEQUENCER 0xa, 0x10
+	_VGA_SEQUENCER 0xb, 0x17
+	_VGA_SEQUENCER 0xc, 0x5
+	_VGA_SEQUENCER 0x9, 0x6
+	_VGA_SEQUENCER 0xa, 0x25
+	_VGA_SEQUENCER 0xb, 0x13
+	_VGA_SEQUENCER 0xc, 0x8
+	_VGA_SEQUENCER 0x9, 0x0
+	_VGA_SEQUENCER 0xa, 0x1c
+	_VGA_SEQUENCER 0xb, 0x11
+	_VGA_SEQUENCER 0xc, 0x3
+	_VGA_SEQUENCER 0x9, 0x2
+	_VGA_SEQUENCER 0xa, 0x5
+	_VGA_SEQUENCER 0xb, 0x11
+	_VGA_SEQUENCER 0xc, 0x3
+	_VGA_SEQUENCER 0x9, 0x8
+	_VGA_SEQUENCER 0xa, 0xaa
+	_VGA_SEQUENCER 0xb, 0x10
+	_VGA_SEQUENCER 0xc, 0x8
+	_VGA_SEQUENCER 0x9, 0xa
+	_VGA_SEQUENCER 0xa, 0x1
+	_VGA_SEQUENCER 0xb, 0x13
+	_VGA_SEQUENCER 0xc, 0x6
+	_VGA_SEQUENCER 0x9, 0xd
+	_VGA_SEQUENCER 0xa, 0x1
+	_VGA_SEQUENCER 0x9, 0xc
+	_VGA_SEQUENCER 0xa, 0x0
+	_VGA_SEQUENCER 0xb, 0x25
+	_VGA_SEQUENCER 0xc, 0xc
+	_VGA_SEQUENCER 0x9, 0xf
+	_VGA_SEQUENCER 0xa, 0x11
+	_VGA_SEQUENCER 0x9, 0xe
+	_VGA_SEQUENCER 0xa, 0x0
+	_VGA_SEQUENCER 0xb, 0x33
+	_VGA_SEQUENCER 0xc, 0x8
+	_VGA_SEQUENCER 0x9, 0x11
+	_VGA_SEQUENCER 0xa, 0xf7
+	_VGA_SEQUENCER 0x9, 0x10
+	_VGA_SEQUENCER 0xa, 0xfb
+	_VGA_SEQUENCER 0xb, 0x22
+	_VGA_SEQUENCER 0xc, 0xe
+	_VGA_SEQUENCER 0x9, 0x1
+	_VGA_SEQUENCER 0xc, 0x64
+	_VGA_SEQUENCER 0x9, 0x3
+	_VGA_SEQUENCER 0xc, 0x9
+	_VGA_SEQUENCER 0x9, 0x5
+	_VGA_SEQUENCER 0xc, 0x2b
+	_VGA_SEQUENCER 0x9, 0x7
+	_VGA_SEQUENCER 0xc, 0x58
+	_VGA_SEQUENCER 0x9, 0x9
+	_VGA_SEQUENCER 0xc, 0x7
+	_VGA_SEQUENCER 0x9, 0xb
+	_VGA_SEQUENCER 0xc, 0x1
+	_VGA_SEQUENCER 0x9, 0xd
+	_VGA_SEQUENCER 0xc, 0xd
+	_VGA_SEQUENCER 0x9, 0xf
+	_VGA_SEQUENCER 0xc, 0x3a
+	_VGA_SEQUENCER 0x9, 0x11
+	_VGA_SEQUENCER 0xc, 0xc
+	; For byte-matching purposes:
+	; This is equivalent to:
+	;
+	; _VGA_SEQUENCER 06h, 000h
+	; RET
+	;
+	_VGA_WRITE 0x3c4, 0x6
+	ldw wa, 0x3c5
+	ld bc, 0:i3
+	jrl _Write_VGA_Register
+
+; MN89304 extended-sequencer setup, the one in use: VGA_Initialize calls it after the palette.
+; Same values as the boot ROM code's VGA_Extended_Init (shared/vga_init.s).  Layout as in
+; VGA_ConfigExtSequencer_AltA: seq 0x06 = 1 opens, seq 0x09 selects, seq 0x0a-0x0c take data,
+; seq 0x06 = 0 closes.
 VGA_ConfigExtSequencer:
 	_VGA_SEQUENCER 0x6, 0x1
 
@@ -3418,8 +3134,9 @@ VGA_ConfigExtSequencer:
 	jrl _Write_VGA_Register
 
 
-; who calls here?
-VGA_ConfigExtSequencer_Alt:
+; The third extended-sequencer setup; unreferenced.  Its seq 0x09 = 0x04 entry writes seq 0x0b
+; twice (0x21, then 0x24 straight to the data port); otherwise laid out like the other two.
+VGA_ConfigExtSequencer_AltB:
 	_VGA_SEQUENCER 0x6, 0x1
 	_VGA_SEQUENCER 0x9, 0x4
 	_VGA_SEQUENCER 0xa, 0x10
