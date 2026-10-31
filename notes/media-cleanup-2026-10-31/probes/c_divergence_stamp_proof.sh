@@ -61,9 +61,11 @@ make -s $ROMS > /dev/null 2>&1; same 4
 echo "== 5 negative control: the old patcher"
 B=v6/maincpu/includes/generated/naka_style_bitmaps.bin
 before=$(sha256sum < $B)
-git show 43242446d:scripts/build/apply_c_divergence.py > "$SCRATCH/apply_c_divergence_old.py"
+# (it finds the tree from its own path, so it runs from scripts/build/ and is removed again)
+git show 43242446d:scripts/build/apply_c_divergence.py > scripts/build/apply_c_divergence_old.py
 rm -f -- "$B.patched"
-python3 "$SCRATCH/apply_c_divergence_old.py" v6 | sed 's/^/   old: /'
+python3 scripts/build/apply_c_divergence_old.py v6 | sed 's/^/   old: /'
+rm -f -- scripts/build/apply_c_divergence_old.py
 [ "$(sha256sum < $B)" != "$before" ] && echo "   old patcher changed $B: patched twice" || fail "5: the control saw no double patch"
 steps | grep -a ' v6:' | sed 's/^/   new: /'
 [ "$(sha256sum < $B)" = "$before" ] || fail "5: the current patcher did not restore $B"
