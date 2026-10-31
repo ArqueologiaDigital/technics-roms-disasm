@@ -252,14 +252,10 @@ RN_empty_5286:	.asciz ""
 Str_OTB_HSS:	.asciz "OTB_HSS"
 Str_iaphss:	.asciz "iaphss"
 	.align	4, 0xFF	# pad after Str_iaphss
-data_4850D92C:
-	# a string, 8 bytes with its pad, read by InitializeBlock38 0x486FD1C1 `call RegisterMode_entry, [a2], 4` (+0, arg a0); InitializeBlock38 0x486FD1C1 `mov data_4850D92C, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"MD_HSS"
-	.align	4, 0xFF
-data_4850D934:
-	# a string, 8 bytes with its pad, read by InitializeBlock38 0x486FD1C1 `call RegisterTitle_entry, [d2,a2], 8` (+0, arg a0); InitializeBlock38 0x486FD1C1 `mov data_4850D934, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"TT_HSS"
-	.align	4, 0xFF
+Str_MD_HSS:	.asciz "MD_HSS"
+	.align	4, 0xFF	# pad after Str_MD_HSS
+Str_TT_HSS_2:	.asciz "TT_HSS"
+	.align	4, 0xFF	# pad after Str_TT_HSS_2
 Str_TT_STRDPT:	.asciz "TT_STRDPT"
 	.align	4, 0xFF	# pad after Str_TT_STRDPT
 Str_CcEv_2:	.asciz "CcEv"
@@ -482,17 +478,12 @@ Str_ACTION_8:	.asciz "/ACTION"
 Str_SLIDESHOW_7:	.asciz "SLIDESHOW"
 Str_SLIDESHOW_8:	.asciz "/SLIDESHOW"
 
-func_486FEE03_entry_L22_Table:
-	.long	Str_BR
-	.long	loc_486FF2FB
-	.long	Str_CENTER_7
-	.long	loc_486FF318
-	.long	Str_CENTER_6
-	.long	loc_486FF35D
-	.long	Str_FONT_2
-	.long	func_486FF3BA
-	.long	Str_FONT
-	.long	func_486FF4F7
+func_486FEE03_entry_L22_Table:	# 5 x REC_func_486FEE03_entry_L22_Table (8 bytes each); read by func_486FEE03_entry_L41 0x486FEE46 `mov (d0, a2), a0`; func_486FEE03_entry_L41 0x486FEE46 `mov (d1, a2), a0`; func_486FEE03_entry_L64 0x486FEE69 `mov (4, a2), d0` (+1)
+	REC_func_486FEE03_entry_L22_Table	text=Str_BR, proc=loc_486FF2FB
+	REC_func_486FEE03_entry_L22_Table	text=Str_CENTER_7, proc=loc_486FF318
+	REC_func_486FEE03_entry_L22_Table	text=Str_CENTER_6, proc=loc_486FF35D
+	REC_func_486FEE03_entry_L22_Table	text=Str_FONT_2, proc=func_486FF3BA
+	REC_func_486FEE03_entry_L22_Table	text=Str_FONT, proc=func_486FF4F7
 
 names_4850E0B0:
 	.long	Str_IMG, func_486FF583
@@ -511,35 +502,37 @@ names_4850E0E8:
 
 Str_NO_43:	.asciz "NO"
 Str_PAN_6:	.asciz "PAN"
-data_4850E13F:
-	.align	4, 0x00	# pad after Str_PAN_6
 
-ptrs_4850E140:
+func_486FF0F2_L49_Table_p0_0:	# REC_func_486FF0F2_L49_Table_p0 (1 bytes)
+	REC_func_486FF0F2_L49_Table_p0	
+
+func_486FF0F2_L49_Table:
 	.long	Str_NO_43
 	.long	Str_PAN_6
-	.long	data_4850E13F
+	.long	func_486FF0F2_L49_Table_p0_0
 
 func_486FF09C_entry_L8_Table:	# 4 x u8, 0..255; read by func_486FF09C_entry_L8 0x486FF0A9: `movbu (a2), d0`
 	tab_u8	13, 10, 0, 255
 
 Str_NO_42:	.asciz "NO"
 
-ptrs_4850E154_p4_0:	# REC_ptrs_4850E154_p4 (1 bytes)
-	REC_ptrs_4850E154_p4	
+func_486FF242_L44_Table_p0_0:	# REC_func_486FF242_L44_Table_p0 (1 bytes)
+	REC_func_486FF242_L44_Table_p0	
 
-ptrs_4850E154:
+func_486FF242_L44_Table:
 	.long	Str_NO_42
-	.long	ptrs_4850E154_p4_0
+	.long	func_486FF242_L44_Table_p0_0
 
 Str_SIZE:	.asciz "SIZE"
 Str_COLOR:	.asciz "COLOR"
-data_4850E167:
-	.align	4, 0x00	# pad after Str_COLOR
 
-ptrs_4850E168:
+func_486FF3BA_L63_Table_p0_0:	# REC_func_486FF3BA_L63_Table_p0 (1 bytes)
+	REC_func_486FF3BA_L63_Table_p0	
+
+func_486FF3BA_L63_Table:
 	.long	Str_SIZE
 	.long	Str_COLOR
-	.long	data_4850E167
+	.long	func_486FF3BA_L63_Table_p0_0
 
 func_486FF3BA_Table:	# 13 x u32, 0..11; read by func_486FF3BA_L7e 0x486FF438: `mov	(d0, a0), d1`
 	tab_u32	5, 7, 8, 9, 3, 0, 1, 4	# [0]
@@ -547,24 +540,39 @@ func_486FF3BA_Table:	# 13 x u32, 0..11; read by func_486FF3BA_L7e 0x486FF438: `m
 
 Str_SRC:	.asciz "SRC"
 
-names_4850E1E0_p4_0:	# REC_names_4850E1E0_p4 (4 bytes)
-	REC_names_4850E1E0_p4	f0=65, x1="LT\x00"
+names_4850E1E0_p0_0:	# REC_names_4850E1E0_p0 (1 bytes)
+	REC_names_4850E1E0_p0	f0=65
 
+Str_LT:	.asciz "LT"
 Str_ALIGN:	.asciz "ALIGN"
-Str_VSPACE:	.asciz "VSPACE"
+
+names_4850E1E0_p0_1:	# REC_names_4850E1E0_p0 (1 bytes)
+	REC_names_4850E1E0_p0	f0=86
+
+Str_SPACE:	.asciz "SPACE"
 Str_HSPACE:	.asciz "HSPACE"
-Str_WIDTH:	.asciz "WIDTH"
+
+names_4850E1E0_p0_2:	# REC_names_4850E1E0_p0 (1 bytes)
+	REC_names_4850E1E0_p0	f0=87
+
+Str_IDTH:	.asciz "IDTH"
 Str_HEIGHT:	.asciz "HEIGHT"
-Str_LOWSRC:	.asciz "LOWSRC"
+
+names_4850E1E0_p0_3:	# REC_names_4850E1E0_p0 (1 bytes)
+	REC_names_4850E1E0_p0	f0=76
+
+Str_OWSRC:	.asciz "OWSRC"
 Str_BORDER:	.asciz "BORDER"
-	.align	4, 0x00	# pad after Str_BORDER
+
+names_4850E1E0_p0_4:	# REC_names_4850E1E0_p0 (1 bytes)
+	REC_names_4850E1E0_p0	
 
 names_4850E1E0:
-	.long	Str_SRC, names_4850E1E0_p4_0
-	.long	Str_ALIGN, Str_VSPACE
-	.long	Str_HSPACE, Str_WIDTH
-	.long	Str_HEIGHT, Str_LOWSRC
-	.long	Str_BORDER, 0x4850E1DF
+	.long	Str_SRC, names_4850E1E0_p0_0
+	.long	Str_ALIGN, names_4850E1E0_p0_1
+	.long	Str_HSPACE, names_4850E1E0_p0_2
+	.long	Str_HEIGHT, names_4850E1E0_p0_3
+	.long	Str_BORDER, names_4850E1E0_p0_4
 
 func_486FF583_Table:	# 132 x u8, 0..255; read by func_486FF583 : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -589,12 +597,12 @@ func_486FF583_Table_2:	# 132 x u8, 0..255; read by func_486FF583 : `movbu	(a1), 
 
 Str_OBJ:	.asciz "OBJ"
 
-ptrs_4850E318_p4_0:	# REC_ptrs_4850E318_p4 (4 bytes)
-	REC_ptrs_4850E318_p4	x1="\xFF\xFF\xFF"
+func_486FF68D_L54_Table_p0_0:	# REC_func_486FF68D_L54_Table_p0 (4 bytes)
+	REC_func_486FF68D_L54_Table_p0	x1="\xFF\xFF\xFF"
 
-ptrs_4850E318:
+func_486FF68D_L54_Table:
 	.long	Str_OBJ
-	.long	ptrs_4850E318_p4_0
+	.long	func_486FF68D_L54_Table_p0_0
 
 func_486FF68D_Table:	# 132 x u8, 0..255; read by func_486FF68D : `movbu	(a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -609,13 +617,14 @@ func_486FF68D_Table:	# 132 x u8, 0..255; read by func_486FF68D : `movbu	(a1), d1
 
 Str_NO_41:	.asciz "NO"
 Str_IMG_2:	.asciz "IMG"
-data_4850E3AB:
-	.align	4, 0x00	# pad after Str_IMG_2
 
-ptrs_4850E3AC:
+func_486FF754_L59_Table_p0_0:	# REC_func_486FF754_L59_Table_p0 (1 bytes)
+	REC_func_486FF754_L59_Table_p0	
+
+func_486FF754_L59_Table:
 	.long	Str_NO_41
 	.long	Str_IMG_2
-	.long	data_4850E3AB
+	.long	func_486FF754_L59_Table_p0_0
 
 func_486FF754_Table:	# 132 x u8, 0..255; read by func_486FF754 : `movbu	(a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -630,12 +639,12 @@ func_486FF754_Table:	# 132 x u8, 0..255; read by func_486FF754 : `movbu	(a1), d1
 
 Str_NO_40:	.asciz "NO"
 
-ptrs_4850E440_p4_0:	# REC_ptrs_4850E440_p4 (1 bytes)
-	REC_ptrs_4850E440_p4	
+func_486FF85A_L44_Table_p0_0:	# REC_func_486FF85A_L44_Table_p0 (1 bytes)
+	REC_func_486FF85A_L44_Table_p0	
 
-ptrs_4850E440:
+func_486FF85A_L44_Table:
 	.long	Str_NO_40
-	.long	ptrs_4850E440_p4_0
+	.long	func_486FF85A_L44_Table_p0_0
 
 func_486FF09C_entry_L8_Table_2:	# 4 x u8, 0..255; read by func_486FF09C_entry_L8 0x486FF0A9: `movbu (a2), d0`
 	tab_u8	13, 10, 0, 255
@@ -645,9 +654,10 @@ Str_BEAT:	.asciz "BEAT"
 Str_X_4:	.asciz "X"
 Str_Y:	.asciz "Y"
 Str_DISP:	.asciz "DISP"
-data_4850E45E:
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x10E45E, 0x10E460
+
+func_486FF9AC_L78_Table_p0_0:	# REC_func_486FF9AC_L78_Table_p0 (1 bytes)
+	REC_func_486FF9AC_L78_Table_p0	
+	.align	4, 0xFF	# pad after func_486FF9AC_L78_Table_p0_0
 
 func_486FF9AC_L78_Table:
 	.long	Str_SRC_2
@@ -655,7 +665,7 @@ func_486FF9AC_L78_Table:
 	.long	Str_X_4
 	.long	Str_Y
 	.long	Str_DISP
-	.long	data_4850E45E
+	.long	func_486FF9AC_L78_Table_p0_0
 
 func_486FF9AC_Table:	# 132 x u8, 0..255; read by func_486FF9AC : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -670,22 +680,32 @@ func_486FF9AC_Table:	# 132 x u8, 0..255; read by func_486FF9AC : `movbu	(a1), d0
 
 Str_SQT:	.asciz "SQT"
 
-names_4850E528_p4_0:	# REC_names_4850E528_p4 (4 bytes)
-	REC_names_4850E528_p4	f0=67, x1="LAS"
+names_4850E528_p0_0:	# REC_names_4850E528_p0 (1 bytes)
+	REC_names_4850E528_p0	f0=67
 
-Str_S_6:	.asciz "S"
+Str_LASS:	.asciz "LASS"
 Str_TITLE_2:	.asciz "TITLE"
-Str_POINT_3:	.asciz "POINT"
+
+names_4850E528_p0_1:	# REC_names_4850E528_p0 (1 bytes)
+	REC_names_4850E528_p0	f0=80
+
+Str_OINT:	.asciz "OINT"
 Str_TEMPO0:	.asciz "TEMPO0"
-Str_TEMPO1:	.asciz "TEMPO1"
+
+names_4850E528_p0_2:	# REC_names_4850E528_p0 (1 bytes)
+	REC_names_4850E528_p0	f0=84
+
+Str_EMPO1:	.asciz "EMPO1"
 Str_TEMPO2:	.asciz "TEMPO2"
-	.align	4, 0x00	# pad after Str_TEMPO2
+
+names_4850E528_p0_3:	# REC_names_4850E528_p0 (1 bytes)
+	REC_names_4850E528_p0	
 
 names_4850E528:
-	.long	Str_SQT, names_4850E528_p4_0
-	.long	Str_TITLE_2, Str_POINT_3
-	.long	Str_TEMPO0, Str_TEMPO1
-	.long	Str_TEMPO2, 0x4850E527
+	.long	Str_SQT, names_4850E528_p0_0
+	.long	Str_TITLE_2, names_4850E528_p0_1
+	.long	Str_TEMPO0, names_4850E528_p0_2
+	.long	Str_TEMPO2, names_4850E528_p0_3
 
 func_486FFB68_Table:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -797,9 +817,11 @@ data_4850E7E4:
 	# a string, 4 bytes with its pad, read by func_486D3761 0x486D3761 `calls (a1)` (+0, arg a0); func_4870077F_entry_L16 0x4870079A `call func_486D3761_entry, [d2,a2], 0x24` (+0, arg a0); func_4870077F_entry_L16 0x4870079A `mov data_4850E7E4, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	"\x0D\n"
 	.align	4, 0xFF
-data_4850E7E8:
-	# a string, 12 bytes with its pad, read by func_487007B3_entry_L23 0x487007D8 `call strncmp_entry, [a2], 4` (+0, arg a1); func_487007B3_entry_L23 0x487007D8 `mov data_4850E7E8, a1` (+0, as a base); handed to strncmp
-	.asciz	"<SLIDESHOW>"
+
+func_487007B3_entry_L23_Block:	# 11 bytes, copied whole by func_487007B3_entry_L23 0x487007D8: strncmp(.., 11)
+	tab_u8	60, 83, 76, 73, 68, 69, 83, 72, 79, 87, 62	# [0]
+	.align	4, 0x00	# pad after func_487007B3_entry_L23_Block
+
 Str_SLIDESHOW_3:	.asciz "</SLIDESHOW>"
 	.align	4, 0xFF	# pad after Str_SLIDESHOW_3
 Str_SSW_ACT_V01_SLIDESHOW_2:	.asciz "SSW-ACT-V01\x0D\n\x0D\n<SLIDESHOW>"
@@ -1266,19 +1288,13 @@ RN_Moritani:	.asciz "Moritani"
 Str_OTB_HELP:	.asciz "OTB_HELP"
 Str_iaphelp:	.asciz "iaphelp"
 	.align	4, 0xFF	# pad after Str_iaphelp
-data_4850FAB4:
-	# a string, 8 bytes with its pad, read by InitializeBlock15 0x48702D3F `call RegisterMode_entry, [a2], 4` (+0, arg a0); InitializeBlock15 0x48702D3F `mov data_4850FAB4, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"MD_HELP"
-data_4850FABC:
-	# a string, 8 bytes with its pad, read by InitializeBlock15 0x48702D3F `call RegisterTitle_entry, [d2,a2], 8` (+0, arg a0); InitializeBlock15 0x48702D3F `mov data_4850FABC, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"TT_HELP"
+Str_MD_HELP:	.asciz "MD_HELP"
+Str_TT_HELP:	.asciz "TT_HELP"
 Str_TT_HELPAPCMENU:	.asciz "TT_HELPAPCMENU"
 	.align	4, 0xFF	# pad after Str_TT_HELPAPCMENU
 Str_TT_HELPPRGMENU:	.asciz "TT_HELPPRGMENU"
 	.align	4, 0xFF	# pad after Str_TT_HELPPRGMENU
-data_4850FAE4:
-	# a string, 12 bytes with its pad, read by InitializeBlock15 0x48702D3F `call RegisterTitle_entry, [d2,a2], 8` (+0, arg a0); InitializeBlock15 0x48702D3F `mov data_4850FAE4, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"TT_HELPTEXT"
+Str_TT_HELPTEXT:	.asciz "TT_HELPTEXT"
 Str_Help_No_NG:	.asciz "Help No NG"
 Str_Langage_NG:	.asciz "Langage NG"
 Str_Table_NG:	.asciz "Table NG"
@@ -2293,619 +2309,619 @@ Str_Technics_Sound_Quality_Sets_The_Standard:	.asciz "Technics Sound Quality Set
 Str_TECHNICS_Klangqualit_t_setzt_den_Ma_stab:	.asciz "TECHNICS-Klangqualit\xE4t setzt den Ma\xDFstab, nach dem sich andere richten"
 Str_La_qualit_sonore_TECHNICS_tablit_la_norm:	.asciz "La qualit\xE9 sonore TECHNICS \xE9tablit la norme que les autres suivent"
 Str_La_calidad_de_sonido_TECHNICS_es_la_norm:	.asciz "La calidad de sonido TECHNICS es la norma adoptada por los dem\xE1s"
+Str_empty_543:	.asciz "="
+Str_empty_542:	.asciz "="
 Str_empty_541:	.asciz "="
-Str_empty_540:	.asciz "="
-Str_empty_539:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_539
+	.align	4, 0xFF	# pad after Str_empty_541
 
 ptrs_48513338:
 	.long	Str_Technics_Sound_Quality_Sets_The_Standard
 	.long	Str_TECHNICS_Klangqualit_t_setzt_den_Ma_stab
 	.long	Str_La_qualit_sonore_TECHNICS_tablit_la_norm
 	.long	Str_La_calidad_de_sonido_TECHNICS_es_la_norm
+	.long	Str_empty_543
+	.long	Str_empty_542
 	.long	Str_empty_541
-	.long	Str_empty_540
-	.long	Str_empty_539
 
 Str_Bring_Your_Favourite_Songs_To_Life:	.asciz "Bring Your Favourite Songs To Life!"
 Str_Erwecken_Sie_Ihre_Lieblingssongs_zum_Leb:	.asciz "Erwecken Sie Ihre Lieblingssongs zum Leben!"
 Str_Donnez_vie_vos_morceaux_favoris:	.asciz "Donnez vie \xE0 vos morceaux favoris!"
 Str_D_vida_a_sus_canciones_favoritas:	.asciz "\xA1D\xE9 vida a sus canciones favoritas!"
+Str_empty_540:	.asciz "="
+Str_empty_539:	.asciz "="
 Str_empty_538:	.asciz "="
-Str_empty_537:	.asciz "="
-Str_empty_536:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_536
+	.align	4, 0xFF	# pad after Str_empty_538
 
 ptrs_485133F4:
 	.long	Str_Bring_Your_Favourite_Songs_To_Life
 	.long	Str_Erwecken_Sie_Ihre_Lieblingssongs_zum_Leb
 	.long	Str_Donnez_vie_vos_morceaux_favoris
 	.long	Str_D_vida_a_sus_canciones_favoritas
+	.long	Str_empty_540
+	.long	Str_empty_539
 	.long	Str_empty_538
-	.long	Str_empty_537
-	.long	Str_empty_536
 
 Str_The_KN_s_Digital_Drawbars_Give_You_True:	.asciz "The KN's Digital Drawbars Give You True Tonewheel Sound!"
 Str_Die_digitalen_Registerz_ge_des_KN_geben:	.asciz "Die digitalen Registerz\xFCge des KN geben Ihnen echten Tonradklang!"
 Str_Les_drawbars_num_riques_du_KN_vous_offre:	.asciz "Les drawbars num\xE9riques du KN vous offrent les sonorit\xE9s naturelles authentiques!"
 Str_Las_barras_de_tiro_digital_de_KN_dan_un:	.asciz "\xA1Las barras de tiro digital de KN dan un sonido de verdadera rueda de tonos!"
+Str_empty_537:	.asciz "="
+Str_empty_536:	.asciz "="
 Str_empty_535:	.asciz "="
-Str_empty_534:	.asciz "="
-Str_empty_533:	.asciz "="
 
 ptrs_48513530:
 	.long	Str_The_KN_s_Digital_Drawbars_Give_You_True
 	.long	Str_Die_digitalen_Registerz_ge_des_KN_geben
 	.long	Str_Les_drawbars_num_riques_du_KN_vous_offre
 	.long	Str_Las_barras_de_tiro_digital_de_KN_dan_un
+	.long	Str_empty_537
+	.long	Str_empty_536
 	.long	Str_empty_535
-	.long	Str_empty_534
-	.long	Str_empty_533
 
 Str_Great_For_Gospel:	.asciz "Great For Gospel!"
 Str_Ausgezeichnet_f_r_Gospel:	.asciz "Ausgezeichnet f\xFCr Gospel!"
 Str_Id_al_pour_le_Gospel:	.asciz "Id\xE9al pour le Gospel!"
 Str_Ideal_para_coros_de_iglesial:	.asciz "\xA1Ideal para coros de iglesial!"
+Str_empty_534:	.asciz "="
+Str_empty_533:	.asciz "="
 Str_empty_532:	.asciz "="
-Str_empty_531:	.asciz "="
-Str_empty_530:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_530
+	.align	4, 0xFF	# pad after Str_empty_532
 
 ptrs_485135B4:
 	.long	Str_Great_For_Gospel
 	.long	Str_Ausgezeichnet_f_r_Gospel
 	.long	Str_Id_al_pour_le_Gospel
 	.long	Str_Ideal_para_coros_de_iglesial
+	.long	Str_empty_534
+	.long	Str_empty_533
 	.long	Str_empty_532
-	.long	Str_empty_531
-	.long	Str_empty_530
 
 Str_Re_Live_The_Sixties:	.asciz "Re-Live The Sixties!"
 Str_Erleben_Sie_die_Sechziger_noch_einmal:	.asciz "Erleben Sie die Sechziger noch einmal!"
 Str_Revivez_les_Ann_es_Soixante:	.asciz "Revivez les Ann\xE9es Soixante!"
 Str_Vuelva_a_vivir_los_a_os_sesenta:	.asciz "\xA1Vuelva a vivir los a\xF1os sesenta!"
+Str_empty_531:	.asciz "="
+Str_empty_530:	.asciz "="
 Str_empty_529:	.asciz "="
-Str_empty_528:	.asciz "="
-Str_empty_527:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_527
+	.align	4, 0xFF	# pad after Str_empty_529
 
 ptrs_48513654:
 	.long	Str_Re_Live_The_Sixties
 	.long	Str_Erleben_Sie_die_Sechziger_noch_einmal
 	.long	Str_Revivez_les_Ann_es_Soixante
 	.long	Str_Vuelva_a_vivir_los_a_os_sesenta
+	.long	Str_empty_531
+	.long	Str_empty_530
 	.long	Str_empty_529
-	.long	Str_empty_528
-	.long	Str_empty_527
 
 Str_Or_Try_Heavy_Rock:	.asciz "Or Try Heavy Rock"
 Str_Oder_probieren_Sie_Heavy_Rock:	.asciz "Oder probieren Sie Heavy Rock"
 Str_Ou_essayez_le_Heavy_Rock:	.asciz "Ou essayez le Heavy Rock"
 Str_O_pruebe_el_Rock_pesado:	.asciz "O pruebe el Rock pesado"
+Str_empty_528:	.asciz "="
+Str_empty_527:	.asciz "="
 Str_empty_526:	.asciz "="
-Str_empty_525:	.asciz "="
-Str_empty_524:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_524
+	.align	4, 0xFF	# pad after Str_empty_526
 
 ptrs_485136D8:
 	.long	Str_Or_Try_Heavy_Rock
 	.long	Str_Oder_probieren_Sie_Heavy_Rock
 	.long	Str_Ou_essayez_le_Heavy_Rock
 	.long	Str_O_pruebe_el_Rock_pesado
+	.long	Str_empty_528
+	.long	Str_empty_527
 	.long	Str_empty_526
-	.long	Str_empty_525
-	.long	Str_empty_524
 
 Str_Or_Try_Brass_Rock:	.asciz "Or Try Brass Rock"
 Str_Oder_probieren_Sie_Brass_Rock:	.asciz "Oder probieren Sie Brass Rock"
 Str_Ou_essayez_le_Brass_Rock:	.asciz "Ou essayez le Brass Rock"
 Str_O_Brass_Rock:	.asciz "O Brass Rock"
+Str_empty_525:	.asciz "="
+Str_empty_524:	.asciz "="
 Str_empty_523:	.asciz "="
-Str_empty_522:	.asciz "="
-Str_empty_521:	.asciz "="
 
 ptrs_48513750:
 	.long	Str_Or_Try_Brass_Rock
 	.long	Str_Oder_probieren_Sie_Brass_Rock
 	.long	Str_Ou_essayez_le_Brass_Rock
 	.long	Str_O_Brass_Rock
+	.long	Str_empty_525
+	.long	Str_empty_524
 	.long	Str_empty_523
-	.long	Str_empty_522
-	.long	Str_empty_521
 
 Str_For_True_Drawbar_Performance_It_Doesn_t:	.asciz "For True Drawbar Performance It Doesn't Get Any More Real Than This!"
 Str_Die_Registerzugdarbietung_ist_so_echt_ec:	.asciz "Die Registerzugdarbietung ist so echt, echter geht's nicht!"
 Str_Pour_une_vraie_performance_de_drawbar_im:	.asciz "Pour une vraie performance de drawbar, impossible de faire plus r\xE9el que ceci!"
 Str_Para_una_verdadera_ejecuci_n_de_Barra_de:	.asciz "Para una verdadera ejecuci\xF3n de Barra de Tiro \xA1no puede ser m\xE1s real!"
+Str_empty_522:	.asciz "="
+Str_empty_521:	.asciz "="
 Str_empty_520:	.asciz "="
-Str_empty_519:	.asciz "="
-Str_empty_518:	.asciz "="
 
 ptrs_48513888:
 	.long	Str_For_True_Drawbar_Performance_It_Doesn_t
 	.long	Str_Die_Registerzugdarbietung_ist_so_echt_ec
 	.long	Str_Pour_une_vraie_performance_de_drawbar_im
 	.long	Str_Para_una_verdadera_ejecuci_n_de_Barra_de
+	.long	Str_empty_522
+	.long	Str_empty_521
 	.long	Str_empty_520
-	.long	Str_empty_519
-	.long	Str_empty_518
 
 Str_The_KN_Joins_The_Creative_Network:	.asciz "The KN Joins The Creative Network!"
 Str_Das_KN_schlie_t_sich_dem_kreativen_Netzw:	.asciz "Das KN schlie\xDFt sich dem kreativen Netzwerk an!"
 Str_Le_KN_rejoint_le_r_seau_cr_atif:	.asciz "Le KN rejoint le r\xE9seau cr\xE9atif!"
 Str_El_KN_se_integra_a_la_red_creativa:	.asciz "\xA1El KN se integra a la red creativa!"
+Str_empty_519:	.asciz "="
+Str_empty_518:	.asciz "="
 Str_empty_517:	.asciz "="
-Str_empty_516:	.asciz "="
-Str_empty_515:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_515
+	.align	4, 0xFF	# pad after Str_empty_517
 
 ptrs_48513944:
 	.long	Str_The_KN_Joins_The_Creative_Network
 	.long	Str_Das_KN_schlie_t_sich_dem_kreativen_Netzw
 	.long	Str_Le_KN_rejoint_le_r_seau_cr_atif
 	.long	Str_El_KN_se_integra_a_la_red_creativa
+	.long	Str_empty_519
+	.long	Str_empty_518
 	.long	Str_empty_517
-	.long	Str_empty_516
-	.long	Str_empty_515
 
 Str_No_Complex_Wiring:	.asciz "No Complex Wiring!"
 Str_Keine_komplizierte_Verdrahtung:	.asciz "Keine komplizierte Verdrahtung!"
 Str_Pas_de_c_blage_compliqu:	.asciz "Pas de c\xE2blage compliqu\xE9!"
 Str_Sin_cables_complejos:	.asciz "\xA1Sin cables complejos!"
+Str_empty_516:	.asciz "="
+Str_empty_515:	.asciz "="
 Str_empty_514:	.asciz "="
-Str_empty_513:	.asciz "="
-Str_empty_512:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_512
+	.align	4, 0xFF	# pad after Str_empty_514
 
 ptrs_485139CC:
 	.long	Str_No_Complex_Wiring
 	.long	Str_Keine_komplizierte_Verdrahtung
 	.long	Str_Pas_de_c_blage_compliqu
 	.long	Str_Sin_cables_complejos
+	.long	Str_empty_516
+	.long	Str_empty_515
 	.long	Str_empty_514
-	.long	Str_empty_513
-	.long	Str_empty_512
 
 Str_One_Simple_Connection_Does_It_All:	.asciz "One Simple Connection Does It All!"
 Str_Ein_einfacher_Anschluss_erledigt_alles:	.asciz "Ein einfacher Anschluss erledigt alles!"
 Str_Une_seule_connexion_suffit:	.asciz "Une seule connexion suffit!"
 Str_Una_simple_conexi_n_lo_puede_todo:	.asciz "\xA1Una simple conexi\xF3n lo puede todo!"
+Str_empty_513:	.asciz "="
+Str_empty_512:	.asciz "="
 Str_empty_511:	.asciz "="
-Str_empty_510:	.asciz "="
-Str_empty_509:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_509
+	.align	4, 0xFF	# pad after Str_empty_511
 
 ptrs_48513A7C:
 	.long	Str_One_Simple_Connection_Does_It_All
 	.long	Str_Ein_einfacher_Anschluss_erledigt_alles
 	.long	Str_Une_seule_connexion_suffit
 	.long	Str_Una_simple_conexi_n_lo_puede_todo
+	.long	Str_empty_513
+	.long	Str_empty_512
 	.long	Str_empty_511
-	.long	Str_empty_510
-	.long	Str_empty_509
 
 Str_File_And_Compile_Hundreds_Of_Performance:	.asciz "File And Compile Hundreds Of Performance Files Using the Included Song Manager Software"
 Str_Mit_der_mitgelieferten_Song_Manager_Soft:	.asciz "Mit der mitgelieferten Song Manager-Software k\xF6nnen Sie Hunderte von Darbietungsdateien archivieren und kompilieren"
 Str_Classez_et_compilez_des_centaines_de_fic:	.asciz "Classez et compilez des centaines de fichiers d'interpr\xE9tations en utilisant le logiciel Gestionnaire de morceaux inclus"
 Str_Archive_y_compile_cientos_de_archivos_de:	.asciz "Archive y compile cientos de archivos de ejecuciones con el software de administraci\xF3n de canciones incluido"
+Str_empty_510:	.asciz "="
+Str_empty_509:	.asciz "="
 Str_empty_508:	.asciz "="
-Str_empty_507:	.asciz "="
-Str_empty_506:	.asciz "="
 
 ptrs_48513C50:
 	.long	Str_File_And_Compile_Hundreds_Of_Performance
 	.long	Str_Mit_der_mitgelieferten_Song_Manager_Soft
 	.long	Str_Classez_et_compilez_des_centaines_de_fic
 	.long	Str_Archive_y_compile_cientos_de_archivos_de
+	.long	Str_empty_510
+	.long	Str_empty_509
 	.long	Str_empty_508
-	.long	Str_empty_507
-	.long	Str_empty_506
 
 Str_Connect_Directly_To_A_PC_And_Use_Any_MID:	.asciz "Connect Directly To A PC And Use Any MIDI Sequencing Software"
 Str_Direkter_Anschluss_an_einen_PC_und_Verwe:	.asciz "Direkter Anschluss an einen PC und Verwendung jeder MIDI-Sequencing-Software"
 Str_Connectez_directement_un_PC_et_utilisez:	.asciz "Connectez directement \xE0 un PC et utilisez n'importe quel logiciel de s\xE9quence MIDI"
 Str_Conecte_directamente_a_un_PC_y_utilice_c:	.asciz "Conecte directamente a un PC y utilice cualquier software de secuencia MIDI"
+Str_empty_507:	.asciz "="
+Str_empty_506:	.asciz "="
 Str_empty_505:	.asciz "="
-Str_empty_504:	.asciz "="
-Str_empty_503:	.asciz "="
 
 ptrs_48513D9C:
 	.long	Str_Connect_Directly_To_A_PC_And_Use_Any_MID
 	.long	Str_Direkter_Anschluss_an_einen_PC_und_Verwe
 	.long	Str_Connectez_directement_un_PC_et_utilisez
 	.long	Str_Conecte_directamente_a_un_PC_y_utilice_c
+	.long	Str_empty_507
+	.long	Str_empty_506
 	.long	Str_empty_505
-	.long	Str_empty_504
-	.long	Str_empty_503
 
 Str_Record_Digital_Audio_Into_the_Included_A:	.asciz "Record Digital Audio Into the Included Audio Recorder or Your Favourite Recording Software!"
 Str_Nehmen_Sie_digitale_Audiosignale_mit_dem:	.asciz "Nehmen Sie digitale Audiosignale mit dem mitgelieferten Audio Recorder oder Ihrer bevorzugten Aufnahme-Software auf!"
 Str_Enregistrez_des_donn_es_audio_num_riques:	.asciz "Enregistrez des donn\xE9es audio num\xE9riques dans le magn\xE9tophone audio inclus ou dans votre logiciel d'enregistrement favori!"
 Str_Grabe_el_audio_digital_en_el_grabador_de:	.asciz "\xA1Grabe el audio digital en el grabador de audio incluido o su software de grabaci\xF3n favorito!"
+Str_empty_504:	.asciz "="
+Str_empty_503:	.asciz "="
 Str_empty_502:	.asciz "="
-Str_empty_501:	.asciz "="
-Str_empty_500:	.asciz "="
 
 ptrs_48513F68:
 	.long	Str_Record_Digital_Audio_Into_the_Included_A
 	.long	Str_Nehmen_Sie_digitale_Audiosignale_mit_dem
 	.long	Str_Enregistrez_des_donn_es_audio_num_riques
 	.long	Str_Grabe_el_audio_digital_en_el_grabador_de
+	.long	Str_empty_504
+	.long	Str_empty_503
 	.long	Str_empty_502
-	.long	Str_empty_501
-	.long	Str_empty_500
 
 Str_Mix_the_Line_In_Microphone_Inputs_of_the:	.asciz "Mix the Line In & Microphone Inputs of the KN With Your Recording"
 Str_Mischen_Sie_den_Line_In_und_Mikrofoneing:	.asciz "Mischen Sie den Line In und Mikrofoneingang des KN mit Ihrer Aufnahme"
 Str_Mixez_les_entr_es_Line_In_et_Microphone:	.asciz "Mixez les entr\xE9es Line In et Microphone du KN avec votre enregistrement"
 Str_Mezcle_la_entrada_de_l_nea_y_las_entrada:	.asciz "Mezcle la entrada de l\xEDnea y las entradas de micr\xF3fono del KN con su grabaci\xF3n"
+Str_empty_501:	.asciz "="
+Str_empty_500:	.asciz "="
 Str_empty_499:	.asciz "="
-Str_empty_498:	.asciz "="
-Str_empty_497:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_497
+	.align	4, 0xFF	# pad after Str_empty_499
 
 ptrs_485140AC:
 	.long	Str_Mix_the_Line_In_Microphone_Inputs_of_the
 	.long	Str_Mischen_Sie_den_Line_In_und_Mikrofoneing
 	.long	Str_Mixez_les_entr_es_Line_In_et_Microphone
 	.long	Str_Mezcle_la_entrada_de_l_nea_y_las_entrada
+	.long	Str_empty_501
+	.long	Str_empty_500
 	.long	Str_empty_499
-	.long	Str_empty_498
-	.long	Str_empty_497
 
 Str_Save_as_a_WAVE_file_or_convert_to_MP3_or:	.asciz "Save as a WAVE file or convert to MP3 or WMA, The Most Suitable Formats To Send By Email!"
 Str_Speichern_Sie_die_Daten_als_WAVE_Datei_o:	.asciz "Speichern Sie die Daten als WAVE-Datei oder konvertieren Sie sie zu MP3 oder WMA, den am besten geeigneten Formaten f\xFCr die Versendung per E-Mail!"
 Str_Sauvegardez_comme_fichier_WAVE_ou_conver:	.asciz "Sauvegardez comme fichier WAVE ou convertissez en formats MP3 ou WMA, les mieux adapt\xE9s \xE0 l'envoi par e-mail!"
 Str_Memorice_un_archivo_WAVE_o_convierta_a_M:	.asciz "Memorice un archivo WAVE o convierta a MP3 o WMA, \xA1los formatos m\xE1s adecuados para enviar sus correos electr\xF3nicos!"
+Str_empty_498:	.asciz "="
+Str_empty_497:	.asciz "="
 Str_empty_496:	.asciz "="
-Str_empty_495:	.asciz "="
-Str_empty_494:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_494
+	.align	4, 0xFF	# pad after Str_empty_496
 
 ptrs_485142A0:
 	.long	Str_Save_as_a_WAVE_file_or_convert_to_MP3_or
 	.long	Str_Speichern_Sie_die_Daten_als_WAVE_Datei_o
 	.long	Str_Sauvegardez_comme_fichier_WAVE_ou_conver
 	.long	Str_Memorice_un_archivo_WAVE_o_convierta_a_M
+	.long	Str_empty_498
+	.long	Str_empty_497
 	.long	Str_empty_496
-	.long	Str_empty_495
-	.long	Str_empty_494
 
 Str_Burn_An_Audio_CD_Of_Your_Final_Mix_On_Yo:	.asciz "Burn An Audio CD Of Your Final Mix On Your PC!"
 Str_Brennen_Sie_eine_Audio_CD_von_Ihrer_Endm:	.asciz "Brennen Sie eine Audio-CD von Ihrer Endmischung auf Ihrem PC!"
 Str_Gravez_un_CD_audio_de_votre_mixage_final:	.asciz "Gravez un CD audio de votre mixage final sur votre PC!"
 Str_Grabe_un_CD_de_audio_de_su_mezcla_final:	.asciz "\xA1Grabe un CD de audio de su mezcla final en su PC!"
+Str_empty_495:	.asciz "="
+Str_empty_494:	.asciz "="
 Str_empty_493:	.asciz "="
-Str_empty_492:	.asciz "="
-Str_empty_491:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_491
+	.align	4, 0xFF	# pad after Str_empty_493
 
 ptrs_4851439C:
 	.long	Str_Burn_An_Audio_CD_Of_Your_Final_Mix_On_Yo
 	.long	Str_Brennen_Sie_eine_Audio_CD_von_Ihrer_Endm
 	.long	Str_Gravez_un_CD_audio_de_votre_mixage_final
 	.long	Str_Grabe_un_CD_de_audio_de_su_mezcla_final
+	.long	Str_empty_495
+	.long	Str_empty_494
 	.long	Str_empty_493
-	.long	Str_empty_492
-	.long	Str_empty_491
 
 Str_The_KN_Is_Your_Guide_To_Decades_Of_Pop_M:	.asciz "The KN Is Your Guide To Decades Of Pop Music!"
 Str_Das_KN_erschlie_t_Ihnen_Jahrzehnte_der_P:	.asciz "Das KN erschlie\xDFt Ihnen Jahrzehnte der Popmusik!"
 Str_Le_KN_est_votre_guide_pour_des_d_cades_d:	.asciz "Le KN est votre guide pour des d\xE9cades de musique pop!"
 Str_El_KN_es_su_gu_a_para_las_d_cadas_de_m_s:	.asciz "\xA1El KN es su gu\xEDa para las d\xE9cadas de m\xFAsica Pop!"
+Str_empty_492:	.asciz "="
+Str_empty_491:	.asciz "="
 Str_empty_490:	.asciz "="
-Str_empty_489:	.asciz "="
-Str_empty_488:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_488
+	.align	4, 0xFF	# pad after Str_empty_490
 
 ptrs_48514488:
 	.long	Str_The_KN_Is_Your_Guide_To_Decades_Of_Pop_M
 	.long	Str_Das_KN_erschlie_t_Ihnen_Jahrzehnte_der_P
 	.long	Str_Le_KN_est_votre_guide_pour_des_d_cades_d
 	.long	Str_El_KN_es_su_gu_a_para_las_d_cadas_de_m_s
+	.long	Str_empty_492
+	.long	Str_empty_491
 	.long	Str_empty_490
-	.long	Str_empty_489
-	.long	Str_empty_488
 
 Str_The_KN_s_Music_Stylist_Will_Even_Set_A_S:	.asciz "The KN's Music Stylist Will Even Set A Suitable Tempo, Sounds, TechniChord, Balance, Pad Banks...."
 Str_Der_MUSIC_STYLIST_des_KN_liefert_sogar_e:	.asciz "Der MUSIC STYLIST des KN liefert sogar ein geeignetes Tempo, Kl\xE4nge, TECHNICHORD, Balance, Pad Banks...."
 Str_Le_MUSIC_STYLIST_du_KN_r_glera_m_me_le_t:	.asciz "Le MUSIC STYLIST du KN r\xE8glera m\xEAme le tempo appropri\xE9, les sonorit\xE9s, le TECHNICHORD, la balance, les banques de pads..."
 Str_El_MUSIC_STYLIST_de_KN_ajusta_un_tiempo:	.asciz "El MUSIC STYLIST de KN ajusta un tiempo, sonido adecuados, TECHNICHORD, Balance, Bancos de teclas...."
+Str_empty_489:	.asciz "="
+Str_empty_488:	.asciz "="
 Str_empty_487:	.asciz "="
-Str_empty_486:	.asciz "="
-Str_empty_485:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_485
+	.align	4, 0xFF	# pad after Str_empty_487
 
 ptrs_48514658:
 	.long	Str_The_KN_s_Music_Stylist_Will_Even_Set_A_S
 	.long	Str_Der_MUSIC_STYLIST_des_KN_liefert_sogar_e
 	.long	Str_Le_MUSIC_STYLIST_du_KN_r_glera_m_me_le_t
 	.long	Str_El_MUSIC_STYLIST_de_KN_ajusta_un_tiempo
+	.long	Str_empty_489
+	.long	Str_empty_488
 	.long	Str_empty_487
-	.long	Str_empty_486
-	.long	Str_empty_485
 
 Str_In_Fact_Everything_You_Need_For_A_Profes:	.asciz "In Fact Everything You Need For A Professional Performance!"
 Str_In_der_Tat_alles_was_Sie_f_r_eine_profes:	.asciz "In der Tat, alles, was Sie f\xFCr eine professionelle Darbietung brauchen!"
 Str_En_fait_tout_ce_dont_vous_avez_besoin_po:	.asciz "En fait, tout ce dont vous avez besoin pour une interpr\xE9tation professionnelle!"
 Str_De_hecho_todo_lo_que_necesita_para_una_e:	.asciz "De hecho \xA1todo lo que necesita para una ejecuci\xF3n profesional!"
+Str_empty_486:	.asciz "="
+Str_empty_485:	.asciz "="
 Str_empty_484:	.asciz "="
-Str_empty_483:	.asciz "="
-Str_empty_482:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_482
+	.align	4, 0xFF	# pad after Str_empty_484
 
 ptrs_48514790:
 	.long	Str_In_Fact_Everything_You_Need_For_A_Profes
 	.long	Str_In_der_Tat_alles_was_Sie_f_r_eine_profes
 	.long	Str_En_fait_tout_ce_dont_vous_avez_besoin_po
 	.long	Str_De_hecho_todo_lo_que_necesita_para_una_e
+	.long	Str_empty_486
+	.long	Str_empty_485
 	.long	Str_empty_484
-	.long	Str_empty_483
-	.long	Str_empty_482
 
 Str_Choose_From_a_huge_range_of_Music_Styles:	.asciz "Choose From a huge range of Music Styles, Produced for You by Top Musicians"
 Str_W_hlen_Sie_aus_einer_Vielzahl_von_MUSIC:	.asciz "W\xE4hlen Sie aus einer Vielzahl von MUSIC STYLES, die von Spitzenmusikern f\xFCr Sie produziert wurden"
 Str_Choisissez_parmi_une_vari_t_incroyable_d:	.asciz "Choisissez parmi une vari\xE9t\xE9 incroyable de MUSIC STYLES, cr\xE9\xE9s pour vous par des musiciens du plus haut niveau"
 Str_Elija_entre_la_enorme_gama_de_MUSIC_STYL:	.asciz "Elija entre la enorme gama de MUSIC STYLES, producidos para usted por los mejores m\xFAsicos"
+Str_empty_483:	.asciz "="
+Str_empty_482:	.asciz "="
 Str_empty_481:	.asciz "="
-Str_empty_480:	.asciz "="
-Str_empty_479:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_479
+	.align	4, 0xFF	# pad after Str_empty_481
 
 ptrs_4851492C:
 	.long	Str_Choose_From_a_huge_range_of_Music_Styles
 	.long	Str_W_hlen_Sie_aus_einer_Vielzahl_von_MUSIC
 	.long	Str_Choisissez_parmi_une_vari_t_incroyable_d
 	.long	Str_Elija_entre_la_enorme_gama_de_MUSIC_STYL
+	.long	Str_empty_483
+	.long	Str_empty_482
 	.long	Str_empty_481
-	.long	Str_empty_480
-	.long	Str_empty_479
 
 Str_Ready_to_create_your_own_song:	.asciz "Ready to create your own song?"
 Str_Sind_Sie_bereit_zu_musizieren:	.asciz "Sind Sie bereit zu musizieren?"
 Str_Pr_t_composer:	.asciz "Pr\xEAt \xE0 composer ?"
 Str_Listo_para_crear_la_m_sica:	.asciz "\xBFListo para crear la m\xFAsica?"
+Str_empty_480:	.asciz "="
+Str_empty_479:	.asciz "="
 Str_empty_390:	.asciz "="
-Str_empty_389:	.asciz "="
-Str_empty_366:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_366
+	.align	4, 0xFF	# pad after Str_empty_390
 
 ptrs_485149BC:
 	.long	Str_Ready_to_create_your_own_song
 	.long	Str_Sind_Sie_bereit_zu_musizieren
 	.long	Str_Pr_t_composer
 	.long	Str_Listo_para_crear_la_m_sica
+	.long	Str_empty_480
+	.long	Str_empty_479
 	.long	Str_empty_390
-	.long	Str_empty_389
-	.long	Str_empty_366
 
 Str_Create_8_Part_Accompaniment_Patterns_Wit:	.asciz "Create 8 Part Accompaniment Patterns With The Composer"
 Str_Erzeugen_Sie_8_stimmige_Begleitungsmuste:	.asciz "Erzeugen Sie 8-stimmige Begleitungsmuster mit dem COMPOSER"
 Str_Cr_ez_des_motifs_d_accompagnement_8_part:	.asciz "Cr\xE9ez des motifs d'accompagnement \xE0 8 parties avec le COMPOSER"
 Str_Cree_8_patrones_de_acompa_amiento_de_par:	.asciz "Cree 8 patrones de acompa\xF1amiento de partes con el COMPOSER"
+Str_empty_389:	.asciz "="
+Str_empty_366:	.asciz "="
 Str_empty_364:	.asciz "="
-Str_empty_360:	.asciz "="
-Str_empty_359:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_359
+	.align	4, 0xFF	# pad after Str_empty_364
 
 ptrs_48514ACC:
 	.long	Str_Create_8_Part_Accompaniment_Patterns_Wit
 	.long	Str_Erzeugen_Sie_8_stimmige_Begleitungsmuste
 	.long	Str_Cr_ez_des_motifs_d_accompagnement_8_part
 	.long	Str_Cree_8_patrones_de_acompa_amiento_de_par
+	.long	Str_empty_389
+	.long	Str_empty_366
 	.long	Str_empty_364
-	.long	Str_empty_360
-	.long	Str_empty_359
 
 Str_Create_Your_Own_Full_Orchestra_With_The:	.asciz "Create Your Own Full Orchestra With The Built In 16 Track Sequencer!"
 Str_Erzeugen_Sie_Ihr_eigenes_volles_Orcheste:	.asciz "Erzeugen Sie Ihr eigenes volles Orchester mit dem eingebauten 16-Spur-SEQUENCER"
 Str_Cr_ez_votre_propre_orchestre_complet_ave:	.asciz "Cr\xE9ez votre propre orchestre complet avec le SEQUENCER \xE0 16 pistes incorpor\xE9!"
 Str_Cree_su_propia_orquesta_completa_con_el:	.asciz "\xA1Cree su propia orquesta completa con el SEQUENCER integrado de 16 pistas!"
+Str_empty_360:	.asciz "="
+Str_empty_359:	.asciz "="
 Str_empty_358:	.asciz "="
-Str_empty_357:	.asciz "="
-Str_empty_356:	.asciz "="
 
 ptrs_48514C1C:
 	.long	Str_Create_Your_Own_Full_Orchestra_With_The
 	.long	Str_Erzeugen_Sie_Ihr_eigenes_volles_Orcheste
 	.long	Str_Cr_ez_votre_propre_orchestre_complet_ave
 	.long	Str_Cree_su_propia_orquesta_completa_con_el
+	.long	Str_empty_360
+	.long	Str_empty_359
 	.long	Str_empty_358
-	.long	Str_empty_357
-	.long	Str_empty_356
 
 Str_Use_The_Full_Sound_Edit_Functions_To_Cre:	.asciz "Use The Full Sound Edit Functions To Create Your Own Sounds From The Huge Wave ROM!"
 Str_Verwenden_Sie_die_vollen_SOUND_EDIT_Funk:	.asciz "Verwenden Sie die vollen SOUND EDIT-Funktionen, um Ihre eigenen Sounds vom enormen Wave-ROM zu erzeugen!"
 Str_Utilisez_les_fonctions_SOUND_EDIT_compl:	.asciz "Utilisez les fonctions SOUND EDIT compl\xE8tes pour cr\xE9er vos propres sonorit\xE9s \xE0 partir du ROM de Wave \xE9norme!"
 Str_Utilice_las_funciones_del_SOUND_EDIT_tot:	.asciz "\xA1Utilice las funciones del SOUND EDIT total para crear sus propios sonidos del ROM de gran ola!"
+Str_empty_357:	.asciz "="
+Str_empty_356:	.asciz "="
 Str_empty_355:	.asciz "="
-Str_empty_354:	.asciz "="
-Str_empty_353:	.asciz "="
 
 ptrs_48514DC8:
 	.long	Str_Use_The_Full_Sound_Edit_Functions_To_Cre
 	.long	Str_Verwenden_Sie_die_vollen_SOUND_EDIT_Funk
 	.long	Str_Utilisez_les_fonctions_SOUND_EDIT_compl
 	.long	Str_Utilice_las_funciones_del_SOUND_EDIT_tot
+	.long	Str_empty_357
+	.long	Str_empty_356
 	.long	Str_empty_355
-	.long	Str_empty_354
-	.long	Str_empty_353
 
 Str_Sing_Along_To_Any_Standard_Midi_File_Son:	.asciz "Sing Along To Any Standard Midi File Songs With Lyrics!"
 Str_Singen_Sie_zu_allen_Standard_MIDI_Datei:	.asciz "Singen Sie zu allen Standard-MIDI-Datei-Songs mit Texten mit!"
 Str_Chantez_sur_n_importe_quel_morceau_fichi:	.asciz "Chantez sur n'importe quel morceau \xE0 fichier midi standard avec paroles affich\xE9es!"
 Str_Cante_con_la_letra_de_canciones_de_archi:	.asciz "\xA1Cante con la letra de canciones de archivo Midi normales!"
+Str_empty_354:	.asciz "="
+Str_empty_353:	.asciz "="
 Str_empty_352:	.asciz "="
-Str_empty_351:	.asciz "="
-Str_empty_350:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_350
+	.align	4, 0xFF	# pad after Str_empty_352
 
 ptrs_48514EF0:
 	.long	Str_Sing_Along_To_Any_Standard_Midi_File_Son
 	.long	Str_Singen_Sie_zu_allen_Standard_MIDI_Datei
 	.long	Str_Chantez_sur_n_importe_quel_morceau_fichi
 	.long	Str_Cante_con_la_letra_de_canciones_de_archi
+	.long	Str_empty_354
+	.long	Str_empty_353
 	.long	Str_empty_352
-	.long	Str_empty_351
-	.long	Str_empty_350
 
 Str_Load_Data_from_other_Technics_Instrument:	.asciz "Load Data from other Technics Instruments With Great Compatibility of NX-sound"
 Str_Laden_Sie_Daten_anderer_Technics_Keyboar:	.asciz "Laden Sie Daten anderer Technics Keyboards dank gro\xDFer Kompatibilit\xE4t"
 Str_Vous_pouvez_utiliser_des_disquettes_enre:	.asciz "Vous pouvez utiliser des disquettes enregistr\xE9es sur d'autres instruments Technics"
 Str_Cargue_datos_de_otros_instrumentos_Techn:	.asciz "Cargue datos de otros instrumentos Technics altamente compatibles"
+Str_empty_351:	.asciz "="
+Str_empty_350:	.asciz "="
 Str_empty_349:	.asciz "="
-Str_empty_348:	.asciz "="
-Str_empty_347:	.asciz "="
 
 ptrs_4851503C:
 	.long	Str_Load_Data_from_other_Technics_Instrument
 	.long	Str_Laden_Sie_Daten_anderer_Technics_Keyboar
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_enre
 	.long	Str_Cargue_datos_de_otros_instrumentos_Techn
+	.long	Str_empty_351
+	.long	Str_empty_350
 	.long	Str_empty_349
-	.long	Str_empty_348
-	.long	Str_empty_347
 
 Str_NX_Sound_Is_Also_Compatible_with_GM_Leve:	.asciz "NX Sound Is Also Compatible with GM Level 2 Standard Midi Files And More!"
 Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM:	.asciz "NX Sounds sind ebenso kompatibel mit GM Level 2 Standard-MIDI-Files und mehr!"
 Str_des_instruments_compatibles_GM_niveau_2:	.asciz "des instruments compatibles GM niveau 2, des s\xE9quences SMF et bien d'autres encore!"
 Str_El_sonido_NX_es_tambi_n_compatible_con_l:	.asciz "El sonido NX es tambi\xE9n compatible con los archivos MIDI est\xE1ndar GM nivel 2..~0d \xA1y otros m\xE1s!"
+Str_empty_348:	.asciz "="
+Str_empty_347:	.asciz "="
 Str_empty_346:	.asciz "="
-Str_empty_345:	.asciz "="
-Str_empty_344:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_344
+	.align	4, 0xFF	# pad after Str_empty_346
 
 ptrs_485151AC:
 	.long	Str_NX_Sound_Is_Also_Compatible_with_GM_Leve
 	.long	Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM
 	.long	Str_des_instruments_compatibles_GM_niveau_2
 	.long	Str_El_sonido_NX_es_tambi_n_compatible_con_l
+	.long	Str_empty_348
+	.long	Str_empty_347
 	.long	Str_empty_346
-	.long	Str_empty_345
-	.long	Str_empty_344
 
 Str_SD_is_The_Perfect_Solution_For_The_KN260:	.asciz "SD is The Perfect Solution For The KN2600 !"
 Str_SD_ist_die_perfekte_L_sung_f_r_das_KN260:	.asciz "SD ist die perfekte L\xF6sung f\xFCr das KN2600!"
 Str_Le_SD_est_la_solution_parfaite_pour_le_K:	.asciz "Le SD est la solution parfaite pour le KN2600!"
 Str_El_SD_es_la_soluci_n_perfecta_para_el_KN:	.asciz "\xA1El SD es la soluci\xF3n perfecta para el KN2600!"
+Str_empty_345:	.asciz "="
+Str_empty_344:	.asciz "="
 Str_empty_343:	.asciz "="
-Str_empty_342:	.asciz "="
-Str_empty_341:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_341
+	.align	4, 0xFF	# pad after Str_empty_343
 
 ptrs_48515284:
 	.long	Str_SD_is_The_Perfect_Solution_For_The_KN260
 	.long	Str_SD_ist_die_perfekte_L_sung_f_r_das_KN260
 	.long	Str_Le_SD_est_la_solution_parfaite_pour_le_K
 	.long	Str_El_SD_es_la_soluci_n_perfecta_para_el_KN
+	.long	Str_empty_345
+	.long	Str_empty_344
 	.long	Str_empty_343
-	.long	Str_empty_342
-	.long	Str_empty_341
 
 Str_Store_Sort_Hundreds_Of_Files_On_One_Card:	.asciz "Store&Sort Hundreds Of Files On One Card, No Bigger Than A Postage Stamp!"
 Str_Sie_k_nnen_Hunderte_von_Dateien_auf_eine:	.asciz "Sie k\xF6nnen Hunderte von Dateien auf einer Karte speichern und sortieren, die nicht gr\xF6\xDFer als eine Briefmarke ist!"
 Str_M_morisez_et_triez_des_centaines_de_fich:	.asciz "M\xE9morisez et triez des centaines de fichiers sur une seule carte grande comme un timbre-poste!"
 Str_Guarda_y_clasifica_cientos_de_archivos_e:	.asciz "\xA1Guarda y clasifica cientos de archivos en una tarjeta del tama\xF1o de sello de correo!"
+Str_empty_342:	.asciz "="
+Str_empty_341:	.asciz "="
 Str_empty_340:	.asciz "="
-Str_empty_339:	.asciz "="
-Str_empty_338:	.asciz "="
 
 ptrs_48515418:
 	.long	Str_Store_Sort_Hundreds_Of_Files_On_One_Card
 	.long	Str_Sie_k_nnen_Hunderte_von_Dateien_auf_eine
 	.long	Str_M_morisez_et_triez_des_centaines_de_fich
 	.long	Str_Guarda_y_clasifica_cientos_de_archivos_e
+	.long	Str_empty_342
+	.long	Str_empty_341
 	.long	Str_empty_340
-	.long	Str_empty_339
-	.long	Str_empty_338
 
 Str_Huge_Capacity_Quick_Loading_Shock_Proof:	.asciz "Huge Capacity!  /  Quick Loading!  /  Shock Proof!"
 Str_Riesige_Kapazit_t_Schnelles_Laden_Sto_fe:	.asciz "Riesige Kapazit\xE4t!  /  Schnelles Laden!  /  Sto\xDFfest!"
 Str_Capacit_norme_Chargement_rapide_Antichoc:	.asciz "Capacit\xE9 \xE9norme! / Chargement rapide! / Antichocs!"
 Str_Capacidad_gigante_R_pida_carga_A_prueba:	.asciz "\xA1Capacidad gigante! / \xA1R\xE1pida carga! / \xA1A prueba de choques!"
+Str_empty_339:	.asciz "="
+Str_empty_338:	.asciz "="
 Str_empty_337:	.asciz "="
-Str_empty_336:	.asciz "="
-Str_empty_335:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_335
+	.align	4, 0xFF	# pad after Str_empty_337
 
 ptrs_48515514:
 	.long	Str_Huge_Capacity_Quick_Loading_Shock_Proof
 	.long	Str_Riesige_Kapazit_t_Schnelles_Laden_Sto_fe
 	.long	Str_Capacit_norme_Chargement_rapide_Antichoc
 	.long	Str_Capacidad_gigante_R_pida_carga_A_prueba
+	.long	Str_empty_339
+	.long	Str_empty_338
 	.long	Str_empty_337
-	.long	Str_empty_336
-	.long	Str_empty_335
 
 Str_Never_Lose_A_Song_File_Again:	.asciz "Never Lose A Song File Again!"
 Str_Sie_brauchen_nie_wieder_eine_Songdatei_z:	.asciz "Sie brauchen nie wieder eine Songdatei zu verlieren!"
 Str_Ne_perdez_plus_jamais_un_fichier_de_morc:	.asciz "Ne perdez plus jamais un fichier de morceaux!"
 Str_Ya_no_tendr_que_perder_archivos_de_canci:	.asciz "\xA1Ya no tendr\xE1 que perder archivos de canciones!"
+Str_empty_336:	.asciz "="
+Str_empty_335:	.asciz "="
 Str_empty_334:	.asciz "="
-Str_empty_333:	.asciz "="
-Str_empty_332:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_332
+	.align	4, 0xFF	# pad after Str_empty_334
 
 ptrs_485155E8:
 	.long	Str_Never_Lose_A_Song_File_Again
 	.long	Str_Sie_brauchen_nie_wieder_eine_Songdatei_z
 	.long	Str_Ne_perdez_plus_jamais_un_fichier_de_morc
 	.long	Str_Ya_no_tendr_que_perder_archivos_de_canci
+	.long	Str_empty_336
+	.long	Str_empty_335
 	.long	Str_empty_334
-	.long	Str_empty_333
-	.long	Str_empty_332
 
 Str_The_KN2600_Brings_You_The_New_SD_Sound_S:	.asciz "The KN2600 Brings You The New SD Sound (SMF) Format!"
 Str_Das_KN2600_bringt_Ihnen_das_neue_SD_SOUN:	.asciz "Das KN2600 bringt Ihnen das neue SD SOUND (SMF)-Format!"
 Str_Le_KN2600_vous_offre_le_nouveau_format_S:	.asciz "Le KN2600 vous offre le nouveau format SD SOUND (SMF)!"
 Str_El_KN2600_le_da_el_nuevo_formato_SD_SOUN:	.asciz "\xA1El KN2600 le da el nuevo formato SD SOUND (SMF)!"
+Str_empty_333:	.asciz "="
+Str_empty_332:	.asciz "="
 Str_empty_331:	.asciz "="
-Str_empty_330:	.asciz "="
-Str_empty_329:	.asciz "="
 
 ptrs_485156E0:
 	.long	Str_The_KN2600_Brings_You_The_New_SD_Sound_S
 	.long	Str_Das_KN2600_bringt_Ihnen_das_neue_SD_SOUN
 	.long	Str_Le_KN2600_vous_offre_le_nouveau_format_S
 	.long	Str_El_KN2600_le_da_el_nuevo_formato_SD_SOUN
+	.long	Str_empty_333
+	.long	Str_empty_332
 	.long	Str_empty_331
-	.long	Str_empty_330
-	.long	Str_empty_329
 
 Str_Play_Along_With_SD_Audio_Tracks:	.asciz "Play Along With SD Audio Tracks!"
 Str_Spielen_Sie_zusammen_mit_SD_Audiospuren:	.asciz "Spielen Sie zusammen mit SD-Audiospuren!"
 Str_Jouez_simultan_ment_avec_les_pistes_SD_A:	.asciz "Jouez simultan\xE9ment avec les pistes SD Audio!"
 Str_Ejecute_con_las_pistas_SD_Audio:	.asciz "\xA1Ejecute con las pistas SD Audio!"
+Str_empty_330:	.asciz "="
+Str_empty_329:	.asciz "="
 Str_empty_328:	.asciz "="
-Str_empty_327:	.asciz "="
-Str_empty_326:	.asciz "="
 
 ptrs_4851579C:
 	.long	Str_Play_Along_With_SD_Audio_Tracks
 	.long	Str_Spielen_Sie_zusammen_mit_SD_Audiospuren
 	.long	Str_Jouez_simultan_ment_avec_les_pistes_SD_A
 	.long	Str_Ejecute_con_las_pistas_SD_Audio
+	.long	Str_empty_330
+	.long	Str_empty_329
 	.long	Str_empty_328
-	.long	Str_empty_327
-	.long	Str_empty_326
 
 Str_The_Storage_Medium_Of_The_Future:	.asciz "The Storage Medium Of The Future! "
 Str_Das_Speichermedium_der_Zukunft:	.asciz "Das Speichermedium der Zukunft! "
 Str_Le_support_de_stockage_de_l_avenir:	.asciz "Le support de stockage de l'avenir! "
 Str_El_medio_de_memorizaci_n_del_futuro:	.asciz "\xA1El medio de memorizaci\xF3n del futuro! "
+Str_empty_327:	.asciz "="
+Str_empty_326:	.asciz "="
 Str_empty_325:	.asciz "="
-Str_empty_324:	.asciz "="
-Str_empty_323:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_323
+	.align	4, 0xFF	# pad after Str_empty_325
 
 ptrs_48515850:
 	.long	Str_The_Storage_Medium_Of_The_Future
 	.long	Str_Das_Speichermedium_der_Zukunft
 	.long	Str_Le_support_de_stockage_de_l_avenir
 	.long	Str_El_medio_de_memorizaci_n_del_futuro
+	.long	Str_empty_327
+	.long	Str_empty_326
 	.long	Str_empty_325
-	.long	Str_empty_324
-	.long	Str_empty_323
 
 func_48705A00_Table:	# 100 x u16, 0..224; read by func_48705A00_L8 0x48705A08: `movhu	(d0, a0), d1`
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
@@ -6653,24 +6669,28 @@ Str_rb_11:	.asciz "rb"
 Str_wb_7:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_7
 
-func_4870C801_Table:	# 64 x u8, 0..214; read by func_4870C801_entry : `movbu	(d0, a2), d0`
-	tab_u8	6, 0, 0, 0, 214, 12, 109, 72, 4, 0, 0, 0, 203, 12, 109, 72	# [0]
-	tab_u8	0, 0, 0, 0, 126, 12, 109, 72, 1, 0, 0, 0, 137, 12, 109, 72	# [16]
-	tab_u8	5, 0, 0, 0, 192, 12, 109, 72, 3, 0, 0, 0, 181, 12, 109, 72	# [32]
-	tab_u8	2, 0, 0, 0, 159, 12, 109, 72, 7, 0, 0, 0, 148, 12, 109, 72	# [48]
+func_4870C801_Table:	# 8 x REC_func_4870C801_Table (8 bytes each); read by func_4870C801_entry_L79 0x4870C880 `mov (4, a0), a1`; func_4870C801_entry_L79 0x4870C880 `movbu (d0, a2), d0`; func_4870C801_entry_L79 0x4870C880 `movbu (d1, a2), d1`
+	REC_func_4870C801_Table	f0=6, x1="\x00\x00\x00", proc=loc_486D0CD6
+	REC_func_4870C801_Table	f0=4, x1="\x00\x00\x00", proc=loc_486D0CCB
+	REC_func_4870C801_Table	x1="\x00\x00\x00", proc=loc_486D0C7E
+	REC_func_4870C801_Table	f0=1, x1="\x00\x00\x00", proc=loc_486D0C89
+	REC_func_4870C801_Table	f0=5, x1="\x00\x00\x00", proc=loc_486D0CC0
+	REC_func_4870C801_Table	f0=3, x1="\x00\x00\x00", proc=loc_486D0CB5
+	REC_func_4870C801_Table	f0=2, x1="\x00\x00\x00", proc=loc_486D0C9F
+	REC_func_4870C801_Table	f0=7, x1="\x00\x00\x00", proc=loc_486D0C94
 
 Str_rb_10:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_10
 
-func_4870CAE5_Table_2:	# 8 x {u32 key, code address}: a dispatch table; read by func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0` (+1)
-	.long	6, loc_486D0D39
-	.long	4, loc_486D0D65
-	.long	0, loc_486D0D02
-	.long	1, loc_486D0D0D
-	.long	5, loc_486D0D5A
-	.long	3, loc_486D0D4F
-	.long	2, loc_486D0D44
-	.long	7, loc_486D0D18
+func_4870CAE5_Table_2:	# 8 x REC_func_4870CAE5_Table_2 (8 bytes each); read by func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L1a8 0x4870CC93 `mov (4, a0), a1`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0` (+1)
+	REC_func_4870CAE5_Table_2	f0=6, x1="\x00\x00\x00", proc=loc_486D0D39
+	REC_func_4870CAE5_Table_2	f0=4, x1="\x00\x00\x00", proc=loc_486D0D65
+	REC_func_4870CAE5_Table_2	x1="\x00\x00\x00", proc=loc_486D0D02
+	REC_func_4870CAE5_Table_2	f0=1, x1="\x00\x00\x00", proc=loc_486D0D0D
+	REC_func_4870CAE5_Table_2	f0=5, x1="\x00\x00\x00", proc=loc_486D0D5A
+	REC_func_4870CAE5_Table_2	f0=3, x1="\x00\x00\x00", proc=loc_486D0D4F
+	REC_func_4870CAE5_Table_2	f0=2, x1="\x00\x00\x00", proc=loc_486D0D44
+	REC_func_4870CAE5_Table_2	f0=7, x1="\x00\x00\x00", proc=loc_486D0D18
 
 Str_empty_450:	.asciz "\\"
 	.align	4, 0xFF	# pad after Str_empty_450
@@ -6846,22 +6866,22 @@ Str_C_SD_SOUND_2:	.asciz "C:\\SD_SOUND"
 func_487104E5_Table:	# 4 x u8, 0..255; read by SdcFmmSaveTitleFunc : `movbu	(a1), d0`; func_487104E5_entry : `movbu	(a0), d0` ...
 	tab_u8	0, 0, 255, 255
 
-func_4870FD81_entry_L19_Table:	# 15 x REC_func_4870FD81_entry_L19_Table (4 bytes each); read by func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a0), d0`; func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a1), d1`
-	REC_func_4870FD81_entry_L19_Table	x0="\xFE\xFF", f2=93, x3="\x00"	# [0]
-	REC_func_4870FD81_entry_L19_Table	x0="\xFD\xFF", f2=96, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\xFC\xFF", f2=98, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\xFA\xFF", f2=99, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\xF9\xFF", f2=92, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\xF8\xFF", f2=94, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\xF5\xFF", f2=97, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x9B\xFF", f2=98, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x9A\xFF", f2=92, x3="\x00"	# [8]
-	REC_func_4870FD81_entry_L19_Table	x0="\x98\xFF", f2=95, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x97\xFF", f2=61, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x95\xFF", f2=15, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x93\xFF", f2=71, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x94\xFF", f2=82, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	x0="\x00\x00", f2=255, x3="\x00"
+func_4870FD81_entry_L19_Table:	# 15 x REC_func_4870FD81_entry_L19_Table (4 bytes each); read by func_4870FD81_entry_L19 0x4870FD9C `movhu (d0, a0), d0`; func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a0), d0`; func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a1), d1`
+	REC_func_4870FD81_entry_L19_Table	f0=-2, f2=93, x3="\x00"	# [0]
+	REC_func_4870FD81_entry_L19_Table	f0=-3, f2=96, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-4, f2=98, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-6, f2=99, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-7, f2=92, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-8, f2=94, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-11, f2=97, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-101, f2=98, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-102, f2=92, x3="\x00"	# [8]
+	REC_func_4870FD81_entry_L19_Table	f0=-104, f2=95, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-105, f2=61, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-107, f2=15, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-109, f2=71, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f0=-108, f2=82, x3="\x00"
+	REC_func_4870FD81_entry_L19_Table	f2=255, x3="\x00"
 
 Str_empty_414:	.asciz "__"
 	.align	4, 0xFF	# pad after Str_empty_414
@@ -7019,8 +7039,9 @@ Str_KB_free:	.asciz "KB free ("
 	.align	4, 0xFF	# pad after Str_KB_free
 Str_used:	.asciz "% used)"
 
-func_486D0F3D_entry_L80_Var:	# REC_func_486D0F3D_ArgA1 (4 bytes): the layout func_486D0F3D 0x486D0F3D reads through its argument a1 (passed by func_4871AE81_entry_L96 0x4871AF1C `call func_486D0F3D_entry, [d2,d3,a2,a3], 0x20`)
-	REC_func_486D0F3D_ArgA1	f1=-1, x2="\xFF\xFF"
+func_486D0F3D_entry_L80_Var:	# REC_func_486D0F3D_ArgA1 (2 bytes), then 2 x s8 the code indexes from +0 (read by func_486D0F3D_entry_L80 0x486D0FC2 `movbu (d2, a3), d0`; func_486D0F3D_entry_Laa 0x486D0FEC `movbu (d2, a3), d0` (+1))
+	REC_func_486D0F3D_ArgA1	f1=-1
+	tab_s8	-1, -1	# [0]
 
 func_4871BED4_Table:	# 20 x u8, 0..19; read by MainSingleLoadSW : `movbu	(d0, a0), d1`; func_4871BED4 : `movbu	(d0, a0), d0`
 	tab_u8	0, 3, 6, 9, 12, 13, 16, 17, 14, 15, 18, 19, 1, 2, 4, 5	# [0]
@@ -7029,20 +7050,20 @@ func_4871BA10_Table:	# 5 x u8, 1..6; read by func_4871BA10_entry : `movbu	(d0, a
 	tab_u8	1, 2, 3, 4, 6
 
 Str_BANK_24:	.asciz "BANK"
-Str_empty_322:	.asciz "----"
+Str_empty_324:	.asciz "----"
 Str_BANK_23:	.asciz "BANK"
 Str_BANK_22:	.asciz "BANK"
 Str_BANK_21:	.asciz "BANK"
-Str_empty_321:	.asciz "----"
-	.align	4, 0xFF	# pad after Str_empty_321
+Str_empty_323:	.asciz "----"
+	.align	4, 0xFF	# pad after Str_empty_323
 
 func_4871B800_Table:
 	.long	Str_BANK_24
-	.long	Str_empty_322
+	.long	Str_empty_324
 	.long	Str_BANK_23
 	.long	Str_BANK_22
 	.long	Str_BANK_21
-	.long	Str_empty_321
+	.long	Str_empty_323
 
 Str_MEMORY_17:	.asciz " MEMORY "
 Str_SONG_25:	.asciz "  SONG  "
@@ -7050,8 +7071,8 @@ Str_PATTERN_15:	.asciz "PATTERN"
 	.align	4, 0x00	# pad after Str_PATTERN_15
 Str_MEMORY_16:	.asciz " MEMORY "
 Str_EFFECT_8:	.asciz " EFFECT "
-Str_empty_320:	.asciz "  ----  "
-	.align	4, 0xFF	# pad after Str_empty_320
+Str_empty_322:	.asciz "  ----  "
+	.align	4, 0xFF	# pad after Str_empty_322
 
 func_4871B812_L1c_Table:
 	.long	Str_MEMORY_17
@@ -7059,7 +7080,7 @@ func_4871B812_L1c_Table:
 	.long	Str_PATTERN_15
 	.long	Str_MEMORY_16
 	.long	Str_EFFECT_8
-	.long	Str_empty_320
+	.long	Str_empty_322
 
 func_486D0DF2_Var_17:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
@@ -8355,7 +8376,7 @@ AcNamingWindowProc_Ld66_Var:	# u32, a constant; read / written by AcNamingWindow
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x501220AA `mov (0x10, a1), a0`; localeconv 0x501220AA `mov (0x14, a1), a0`; localeconv 0x501220AA `mov (0x18, a1), a0` (+12)
 	REC_localeconv_Records	text=PfParseSpec_entry_L10_Records+128, p4=PfParseSpec_entry_L10_Records+130, p8=PfParseSpec_entry_L10_Records+131, p12=PfParseSpec_entry_L10_Records+132, p16=PfParseSpec_entry_L10_Records+133, p20=PfParseSpec_entry_L10_Records+134, p24=PfParseSpec_entry_L10_Records+135, p28=data_48400354, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x501220AA `mov (0xc, a1), a0`; localeconv 0x501220AA `mov (4, a1), a0`; localeconv 0x501220AA `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_27, text_=Str_empty_704, p8=data_4840035C, p12=data_4840035D
+	REC_localeconv_Records_2	text=Str_C_26, text_=Str_empty_706, p8=data_4840035C, p12=data_4840035D
 	REC_localeconv_Records_2	
 
 doubles_485288B8:	# IEEE-754 doubles (lo word, hi word)
@@ -8891,11 +8912,12 @@ TgPartGlidePlan_entry_L3b_Records:	# 128 x REC_TgPartGlidePlan_entry_L3b_Records
 func_50142E89_Table:	# 20 x u8, 0..255; read by func_50142E89_entry : `movbu	(d0, a0), d1`
 	tab_u8	16, 16, 8, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	64, 64, 255, 255	# [16]
-
-func_50142E89_entry_L5c_Table:	.asciz "\\\xA2"
-# census: opaque -- unknown-dump: 137 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x12B9AF, 0x12BA38
-
+func_50142E89_entry_L5c_Table:	# 35 x u32, 1342218748..1342219292; read by func_50142E89_entry_L5c 0x50142EEA: `mov	(d0, a0), d0`
+	tab_u32	1342218844, 1342218876, 1342218908, 1342218940, 1342218972, 1342219004, 1342218748, 1342218748	# [0]
+	tab_u32	1342218748, 1342218812, 1342218748, 1342218748, 1342218748, 1342218748, 1342218748, 1342218748	# [8]
+	tab_u32	1342218748, 1342218748, 1342218748, 1342218780, 1342218780, 1342218780, 1342218780, 1342218780	# [16]
+	tab_u32	1342218780, 1342218812, 1342218812, 1342218748, 1342218748, 1342218780, 1342218780, 1342218748	# [24]
+	tab_u32	1342218812, 1342218748, 1342219292	# [32]
 func_5014311E_Table:	# 8 x u8, 0..255; read by func_5014311E : `movbu	(a1), d0`
 	tab_u8	6, 5, 2, 4, 3, 1, 0, 255
 
@@ -8993,14 +9015,16 @@ func_5017761D_Table_2:	# 2 x u16, 0..60; read by func_5017761D 0x5017761D: `movh
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
-data_4852BC7C:
-	# 6 bytes the code takes the address of: func_50175F8B 0x50175F8B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_50175F8B 0x50175F8B `mov data_4852BC7C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 160, 0, 0, 8, 32	# +0
-data_4852BC82:
-	# 26 bytes the code takes the address of: func_50175F8B 0x50175F8B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_50175F8B 0x50175F8B `mov data_4852BC82, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# +0
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
+
+func_50175F8B_Block:	# 3 bytes, copied whole by func_50175F8B 0x50175F8B: memcpy(.., 3)
+	tab_u8	0, 160, 0	# [0]
+# census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x12BC7F, 0x12BC82
+func_50175F8B_Block_2:	# 26 bytes, copied whole by func_50175F8B 0x50175F8B: memcpy(.., 26)
+	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	.space	64, 0x20
+
 Str_compile_bank_0:	.asciz " compile bank 0 "
 # census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x12BCED, 0x12BD0C
@@ -17147,20 +17171,23 @@ Pad_PopSynth_2_Events:		# 4 bars of 4 beats, 354 bytes
 
 Str_TCMP:	.asciz "TCMP"
 	.space	11, 0x00
-data_4853370C:
-	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x50173056 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x50173056 `mov data_4853370C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	2, 88, 0, 0, 54, 112	# +0
-data_48533712:
-	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x50173056 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x50173056 `mov data_48533712, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# +0
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
+
+MemStyleAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemStyleAreaHeaderRestamp 0x50173056: memcpy(.., 3)
+	tab_u8	2, 88, 0	# [0]
+# census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x13370F, 0x133712
+MemStyleAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemStyleAreaHeaderRestamp 0x50173056: memcpy(.., 26)
+	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	.space	64, 0x20
+
 Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x13377A, 0x1337DC
-data_485337DC:
-	# 16 bytes the code takes the address of: func_5017A5D9 0x5017A5D9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017A5D9 0x5017A5D9 `mov data_485337DC, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u32	0x230010, 0x0, 0x0, 0x0	# +0
+
+func_5017A5D9_Block:	# 4 bytes, copied whole by func_5017A5D9 0x5017A5D9: memcpy(.., 4)
+	tab_u8	16, 0, 35, 0	# [0]
+	.space	12, 0x00
 
 MemStyleVarRecInit_Table_2:	# 4 x u8, 0..0; read by MemStyleVarRecInit_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0
@@ -17168,21 +17195,11 @@ data_485337F0:
 	# 20 bytes the code takes the address of: func_5017C6BA_entry_L37 0x5017C6F6 `add data_485337F0, d0` (+0, as a base); func_5017C6BA_entry_L6c 0x5017C72B `call func_48623435_entry, [d2,d3,a2,a3], 0x38` (+0, arg sp36); func_5017C6BA_entry_L103 0x5017C7C2 `call func_5017C8BC_entry, [d2], 4` (+0, arg sp36) (+6 more); byte rows (u8); the callee walk: func_48623428 (sp36) reads nothing through it the walk sees; func_48623435 (sp36) reads nothing through it the walk sees; func_5017A5AD (sp36) reads nothing through it the walk sees (+2 more)
 	tab_u8	0, 16, 17, 17, 17, 17, 17, 0, 0, 0, 0, 0, 0, 3, 0, 0	# +0
 	tab_u8	0, 0, 0, 0	# +16
-data_48533804:
-	# 200 bytes the code takes the address of: func_5017A5D9 0x5017A5D9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017A5D9 0x5017A5D9 `mov data_48533804, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	255, 255, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 38, 64, 40, 0	# +0
-	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
-	tab_u8	6, 127, 33, 0, 32, 64, 0, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +32
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0	# +48
-	tab_u8	12, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +64
-	tab_u8	6, 127, 48, 0, 32, 64, 40, 0, 116, 2, 28, 64, 108, 64, 0, 0	# +80
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 73, 0, 32, 64, 40, 0	# +96
-	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +112
-	tab_u8	6, 127, 88, 0, 32, 64, 40, 0, 38, 2, 28, 64, 108, 64, 0, 0	# +128
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 25, 0, 32, 64, 40, 0	# +144
-	tab_u8	90, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +160
-	tab_u8	6, 127, 0, 0, 38, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +176
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# +192
+
+func_5017A5D9_Block_2:	# 2 bytes, copied whole by func_5017A5D9 0x5017A5D9: memcpy(.., 2)
+	tab_u8	255, 255	# [0]
+# census: opaque -- unknown-dump: 198 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x133806, 0x1338CC
 
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
 	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
@@ -18969,10 +18986,10 @@ func_485E99F2_Table:	# 64 x u8, 0..63; read by func_485E99F2_entry : `movbu	(a2)
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
 	tab_u8	58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63	# [48]
 
-func_485E9AA7_entry_L45_Table:	# 2 x REC_func_485E9AA7_entry_L45_Table (16 bytes each); read by func_485E9AA7_entry_L45 0x485E9AF1 `movbu (a0), d0`; func_485E9AA7_entry_L10a 0x485E9BB6 `movbu (a2), d0`; func_485EA291_entry_Le 0x485EA2A4 `movbu (a2), d0`
+func_485E9AA7_entry_L45_Table:	# 2 x REC_func_485E9AA7_entry_L45_Table (16 bytes each); read by func_485E9AA7_entry_L45 0x485E9AF1 `movbu (a0), d0`; func_485E9AA7_entry_L10a 0x485E9BB6 `movbu (a2), d0`
 	REC_func_485E9AA7_entry_L45_Table	x1="\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
 	REC_func_485E9AA7_entry_L45_Table	x1="\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00"
-func_485E9AA7_entry_L6e_Records:	# 2 x REC_func_485E9AA7_entry_L6e_Records (16 bytes each); read by func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485E9AA7_entry_L163 0x485E9C0F `movbu (a2), d0`; func_485E9AA7_entry_L178 0x485E9C24 `movbu (a3), d0` (+2)
+func_485E9AA7_entry_L6e_Records:	# 2 x REC_func_485E9AA7_entry_L6e_Records (16 bytes each); read by func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485E9AA7_entry_L163 0x485E9C0F `movbu (a2), d0`; func_485E9AA7_entry_L178 0x485E9C24 `movbu (a3), d0` (+1)
 	REC_func_485E9AA7_entry_L6e_Records	x1="\x02\x01\x03\x03\x02\x04\x03\x05\x05\x04\x04\x00\x00\x01}"
 	REC_func_485E9AA7_entry_L6e_Records	x1="\x02\x01\x02\x04\x04\x03\x04\x07\x05\x04\x04\x00\x01\x02w"
 
@@ -23710,15 +23727,17 @@ ptrs_4854B1F4:
 Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x14B210, 0x14B224
-data_4854B224:
-	# 3 bytes the code takes the address of: func_4863182B_entry_L9e 0x486318CE `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4863182B_entry_L9e 0x486318CE `mov data_4854B224, d2` (+0, as a base); func_4863182B_entry_L149 0x48631979 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	249, 255, 255	# +0
+
+func_4863182B_entry_L9e_Block:	# 3 bytes, copied whole by func_4863182B_entry_L9e 0x486318CE: memcpy(.., 3); func_4863182B_entry_L149 0x48631979: memcpy(.., 3)
+	tab_u8	249, 255, 255	# [0]
+
 Str_Technics:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x14B233, 0x14B247
-data_4854B247:
-	# 5 bytes the code takes the address of: func_48631AF5_entry_L9e 0x48631B98 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_48631AF5_entry_L9e 0x48631B98 `mov data_4854B247, d2` (+0, as a base); func_48631AF5_entry_L11b 0x48631C15 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
-	tab_u8	240, 255, 255, 255, 255	# +0
+
+func_48631AF5_entry_L9e_Block:	# 3 bytes, copied whole by func_48631AF5_entry_L9e 0x48631B98: memcpy(.., 3); func_48631AF5_entry_L11b 0x48631C15: memcpy(.., 3)
+	tab_u8	240, 255, 255	# [0]
+	.align	4, 0xFF	# pad after func_48631AF5_entry_L9e_Block
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_50173EF8_L9 0x50173F01 `movbu (1, a0), d0`; func_50173F13_L9 0x50173F1C `movbu (2, a0), d0`; func_50173F2E_L9 0x50173F37 `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
@@ -33202,19 +33221,19 @@ data_4856FBC0:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x16FBC0, 0x16FBCA
 
-Str_empty_319:	.asciz " "
+Str_empty_321:	.asciz " "
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FBCC, 0x16FBD4
-Str_empty_318:	.asciz "("
+Str_empty_320:	.asciz "("
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FBD6, 0x16FBDE
-Str_empty_317:	.asciz ","
+Str_empty_319:	.asciz ","
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FBE0, 0x16FBE8
 Str_0_10:	.asciz "0"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FBEA, 0x16FBF2
-Str_empty_316:	.asciz "<"
+Str_empty_318:	.asciz "<"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FBF4, 0x16FBFC
 Str_D_2:	.asciz "D"
@@ -33235,13 +33254,13 @@ Str_T_2:	.asciz "T"
 Str_X_3:	.asciz "X"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FC30, 0x16FC38
-Str_empty_315:	.asciz "\\"
+Str_empty_317:	.asciz "\\"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FC3A, 0x16FC42
-Str_empty_314:	.asciz "`"
+Str_empty_316:	.asciz "`"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FC44, 0x16FC4C
-Str_d_3:	.asciz "d"
+Str_d_4:	.asciz "d"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FC4E, 0x16FC56
 Str_h_2:	.asciz "h"
@@ -33253,7 +33272,7 @@ Str_l_4:	.asciz "l"
 Str_p_2:	.asciz "p"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FC6C, 0x16FC74
-Str_empty_313:	.asciz "|"
+Str_empty_315:	.asciz "|"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FC76, 0x16FC7E
 data_4856FC7E:
@@ -33370,7 +33389,7 @@ data_4856FDE6:
 Str_4_21:	.asciz "4"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FDF2, 0x16FDFA
-Str_empty_312:	.asciz "@"
+Str_empty_314:	.asciz "@"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16FDFC, 0x16FE04
 Str_t_2:	.asciz "t"
@@ -33607,15 +33626,15 @@ ptrs_4857028C:
 	.long	Text_Pie_For_USA+102
 	.long	data_4856FBC0
 	.long	Text_Pie_For_USA+119
-	.long	Str_empty_319
+	.long	Str_empty_321
 	.long	Text_Pie_For_USA+136
-	.long	Str_empty_318
+	.long	Str_empty_320
 	.long	Text_Pie_For_USA+153
-	.long	Str_empty_317
+	.long	Str_empty_319
 	.long	Text_Pie_For_USA+170
 	.long	Str_0_10
 	.long	Text_Pie_For_USA+187
-	.long	Str_empty_316
+	.long	Str_empty_318
 	.long	Text_Pie_For_USA+204
 	.long	Str_D_2
 	.long	Text_Pie_For_USA+221
@@ -33629,11 +33648,11 @@ ptrs_4857028C:
 	.long	Str_Smoke_On_The_Rock_2
 	.long	Str_X_3
 	.long	Str_TheWay_It_s_Liked_2
-	.long	Str_empty_315
+	.long	Str_empty_317
 	.long	Text_He_s_The_Man
-	.long	Str_empty_314
+	.long	Str_empty_316
 	.long	Text_He_s_The_Man+17
-	.long	Str_d_3
+	.long	Str_d_4
 	.long	Text_He_s_The_Man+34
 	.long	Str_h_2
 	.long	Text_He_s_The_Man+51
@@ -33641,7 +33660,7 @@ ptrs_4857028C:
 	.long	Text_He_s_The_Man+68
 	.long	Str_p_2
 	.long	Text_He_s_The_Man+85
-	.long	Str_empty_313
+	.long	Str_empty_315
 	.long	Text_He_s_The_Man+102
 	.long	data_4856FC7E
 	.long	Text_He_s_The_Man+119
@@ -33722,7 +33741,7 @@ ptrs_4857047C:
 	.long	Text_Mistaken_Pop+17
 	.long	Str_4_21
 	.long	Text_Mistaken_Pop+34
-	.long	Str_empty_312
+	.long	Str_empty_314
 	.long	Text_Mistaken_Pop+51
 	.long	Str_t_2
 	.long	Text_Mistaken_Pop+68
@@ -34041,7 +34060,7 @@ StyleAlphabetTable_p4_7:	# REC_StyleAlphabetTable_p4 (6 bytes)
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x170A82, 0x170A9A
 
-Str_empty_311:	.asciz "("
+Str_empty_313:	.asciz "("
 # census: opaque -- unknown-dump: 60 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x170A9C, 0x170AD8
 
@@ -34097,7 +34116,7 @@ StyleAlphabetTable_p4_18:	# REC_StyleAlphabetTable_p4 (6 bytes)
 # census: opaque -- unknown-dump: 234 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x170D26, 0x170E10
 
-Str_empty_310:	.asciz ":"
+Str_empty_312:	.asciz ":"
 # census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x170E12, 0x170E5A
 
@@ -34130,13 +34149,13 @@ StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4863F880 0x4
 	StyleLetter	letter=Str_7_9, setups=Str_r_4
 	StyleLetter	letter=Str_8_10, setups=StyleAlphabetTable_p4_2
 	StyleLetter	letter=Str_9_8, setups=StyleAlphabetTable_p4_3
-	StyleLetter	letter=Str_A_24, setups=StyleAlphabetTable_p4_4	# [8]
-	StyleLetter	letter=Str_B_14, setups=Str_l_3
-	StyleLetter	letter=Str_C_24, setups=StyleAlphabetTable_p4_5
-	StyleLetter	letter=Str_D_13, setups=StyleAlphabetTable_p4_6
-	StyleLetter	letter=Str_E_12, setups=StyleAlphabetTable_p4_7
-	StyleLetter	letter=Str_F_12, setups=Str_empty_311
-	StyleLetter	letter=Str_G_11, setups=StyleAlphabetTable_p4_8
+	StyleLetter	letter=Str_A_23, setups=StyleAlphabetTable_p4_4	# [8]
+	StyleLetter	letter=Str_B_13, setups=Str_l_3
+	StyleLetter	letter=Str_C_23, setups=StyleAlphabetTable_p4_5
+	StyleLetter	letter=Str_D_12, setups=StyleAlphabetTable_p4_6
+	StyleLetter	letter=Str_E_11, setups=StyleAlphabetTable_p4_7
+	StyleLetter	letter=Str_F_11, setups=Str_empty_313
+	StyleLetter	letter=Str_G_10, setups=StyleAlphabetTable_p4_8
 	StyleLetter	letter=Str_H_7, setups=StyleAlphabetTable_p4_9
 	StyleLetter	letter=Str_I_6, setups=StyleAlphabetTable_p4_10	# [16]
 	StyleLetter	letter=Str_J_5, setups=StyleAlphabetTable_p4_11
@@ -34149,7 +34168,7 @@ StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4863F880 0x4
 	StyleLetter	letter=Str_Q_6, setups=data_48570CD4	# [24]
 	StyleLetter	letter=Str_R_5, setups=StyleAlphabetTable_p4_17
 	StyleLetter	letter=Str_S_5, setups=StyleAlphabetTable_p4_18
-	StyleLetter	letter=Str_T_7, setups=Str_empty_310
+	StyleLetter	letter=Str_T_7, setups=Str_empty_312
 	StyleLetter	letter=Str_U_5, setups=StyleAlphabetTable_p4_19
 	StyleLetter	letter=Str_V_5, setups=StyleAlphabetTable_p4_20
 	StyleLetter	letter=Str_W_5, setups=StyleAlphabetTable_p4_21
@@ -34999,19 +35018,19 @@ data_48575EE8:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x175EE8, 0x175EF2
 
-Str_empty_309:	.asciz " "
+Str_empty_311:	.asciz " "
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175EF4, 0x175EFC
-Str_empty_308:	.asciz "("
+Str_empty_310:	.asciz "("
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175EFE, 0x175F06
-Str_empty_307:	.asciz ","
+Str_empty_309:	.asciz ","
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F08, 0x175F10
 Str_0_9:	.asciz "0"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F12, 0x175F1A
-Str_empty_306:	.asciz "<"
+Str_empty_308:	.asciz "<"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F1C, 0x175F24
 Str_D:	.asciz "D"
@@ -35032,13 +35051,13 @@ Str_T:	.asciz "T"
 Str_X_2:	.asciz "X"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F58, 0x175F60
-Str_empty_305:	.asciz "\\"
+Str_empty_307:	.asciz "\\"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F62, 0x175F6A
-Str_empty_304:	.asciz "`"
+Str_empty_306:	.asciz "`"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F6C, 0x175F74
-Str_d_2:	.asciz "d"
+Str_d_3:	.asciz "d"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F76, 0x175F7E
 Str_h:	.asciz "h"
@@ -35050,7 +35069,7 @@ Str_l_2:	.asciz "l"
 Str_p:	.asciz "p"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F94, 0x175F9C
-Str_empty_303:	.asciz "|"
+Str_empty_305:	.asciz "|"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x175F9E, 0x175FA6
 data_48575FA6:
@@ -35143,7 +35162,7 @@ data_485760BE:
 Str_4_20:	.asciz "4"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x1760CA, 0x1760D2
-Str_empty_302:	.asciz "@"
+Str_empty_304:	.asciz "@"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x1760D4, 0x1760DC
 Str_t:	.asciz "t"
@@ -35176,7 +35195,7 @@ data_4857612C:
 data_48576136:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x176136, 0x176140
-Str_empty_296:	.asciz "$"
+Str_empty_303:	.asciz "$"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x176142, 0x17614A
 data_4857614A:
@@ -35505,15 +35524,15 @@ ptrs_48576550:
 	.long	Text_Pie_For_USA_2+102
 	.long	data_48575EE8
 	.long	Text_Pie_For_USA_2+119
-	.long	Str_empty_309
+	.long	Str_empty_311
 	.long	Text_Pie_For_USA_2+136
-	.long	Str_empty_308
+	.long	Str_empty_310
 	.long	Text_Pie_For_USA_2+153
-	.long	Str_empty_307
+	.long	Str_empty_309
 	.long	Text_Pie_For_USA_2+170
 	.long	Str_0_9
 	.long	Text_Pie_For_USA_2+187
-	.long	Str_empty_306
+	.long	Str_empty_308
 	.long	Text_Pie_For_USA_2+204
 	.long	Str_D
 	.long	Text_Pie_For_USA_2+221
@@ -35527,11 +35546,11 @@ ptrs_48576550:
 	.long	Str_Smoke_On_The_Rock
 	.long	Str_X_2
 	.long	Str_TheWay_It_s_Liked
-	.long	Str_empty_305
+	.long	Str_empty_307
 	.long	Text_He_s_The_Man_2
-	.long	Str_empty_304
+	.long	Str_empty_306
 	.long	Text_He_s_The_Man_2+17
-	.long	Str_d_2
+	.long	Str_d_3
 	.long	Text_He_s_The_Man_2+34
 	.long	Str_h
 	.long	Text_He_s_The_Man_2+51
@@ -35539,7 +35558,7 @@ ptrs_48576550:
 	.long	Text_He_s_The_Man_2+68
 	.long	Str_p
 	.long	Text_He_s_The_Man_2+85
-	.long	Str_empty_303
+	.long	Str_empty_305
 	.long	Text_He_s_The_Man_2+102
 	.long	data_48575FA6
 	.long	Text_He_s_The_Man_2+119
@@ -35604,7 +35623,7 @@ ptrs_48576700:
 	.long	Text_Mistaken_Pop_2+17
 	.long	Str_4_20
 	.long	Text_Mistaken_Pop_2+34
-	.long	Str_empty_302
+	.long	Str_empty_304
 	.long	Text_Mistaken_Pop_2+51
 	.long	Str_t
 	.long	Text_Mistaken_Pop_2+68
@@ -35629,7 +35648,7 @@ ptrs_48576700:
 	.space	4, 0x00
 ptrs_48576770:
 	.long	Text_Ribbon_Of_Yellow_2
-	.long	Str_empty_296
+	.long	Str_empty_303
 	.long	Text_Ribbon_Of_Yellow_2+17
 	.long	data_4857614A
 	.long	Text_Ribbon_Of_Yellow_2+34
@@ -35912,7 +35931,7 @@ data_48576C9C:
 data_48576CE0:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x176CE0, 0x176CF8
-Str_empty_294:	.asciz "("
+Str_empty_302:	.asciz "("
 # census: opaque -- unknown-dump: 58 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x176CFA, 0x176D34
 data_48576D34:
@@ -35954,7 +35973,7 @@ data_48576F0E:
 data_48576F52:
 # census: opaque -- unknown-dump: 226 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x176F52, 0x177034
-Str_empty_293:	.asciz ":"
+Str_empty_296:	.asciz ":"
 # census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x177036, 0x17707E
 data_4857707E:
@@ -35982,13 +36001,13 @@ StyleAlphabetTableKN2400:	# 34 x StyleLetter_2 (8 bytes each); read by func_4863
 	StyleLetter_2	letter=Str_7_8, setups=Str_r_2
 	StyleLetter_2	letter=Str_8_9, setups=data_48576B78
 	StyleLetter_2	letter=Str_9_7, setups=data_48576B8A
-	StyleLetter_2	letter=Str_A_23, setups=data_48576B90	# [8]
-	StyleLetter_2	letter=Str_B_13, setups=Str_l
-	StyleLetter_2	letter=Str_C_23, setups=data_48576C40
-	StyleLetter_2	letter=Str_D_12, setups=data_48576C9C
-	StyleLetter_2	letter=Str_E_11, setups=data_48576CE0
-	StyleLetter_2	letter=Str_F_11, setups=Str_empty_294
-	StyleLetter_2	letter=Str_G_10, setups=data_48576D34
+	StyleLetter_2	letter=Str_A_22, setups=data_48576B90	# [8]
+	StyleLetter_2	letter=Str_B_12, setups=Str_l
+	StyleLetter_2	letter=Str_C_22, setups=data_48576C40
+	StyleLetter_2	letter=Str_D_11, setups=data_48576C9C
+	StyleLetter_2	letter=Str_E_10, setups=data_48576CE0
+	StyleLetter_2	letter=Str_F_10, setups=Str_empty_302
+	StyleLetter_2	letter=Str_G_9, setups=data_48576D34
 	StyleLetter_2	letter=Str_H_6, setups=data_48576D5A
 	StyleLetter_2	letter=Str_I_5, setups=data_48576DB2	# [16]
 	StyleLetter_2	letter=Str_J_4, setups=data_48576DBA
@@ -36001,7 +36020,7 @@ StyleAlphabetTableKN2400:	# 34 x StyleLetter_2 (8 bytes each); read by func_4863
 	StyleLetter_2	letter=Str_Q_5, setups=data_48576F0A	# [24]
 	StyleLetter_2	letter=Str_R_4, setups=data_48576F0E
 	StyleLetter_2	letter=Str_S_4, setups=data_48576F52
-	StyleLetter_2	letter=Str_T_6, setups=Str_empty_293
+	StyleLetter_2	letter=Str_T_6, setups=Str_empty_296
 	StyleLetter_2	letter=Str_U_4, setups=data_4857707E
 	StyleLetter_2	letter=Str_V_4, setups=data_48577092
 	StyleLetter_2	letter=Str_W_4, setups=data_4857709C

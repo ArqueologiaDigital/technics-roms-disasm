@@ -48,17 +48,12 @@ Str_ACTION_3:	.asciz "ACTION"
 Str_ACTION_4:	.asciz "/ACTION"
 	.align	4, 0xFF	# pad after Str_ACTION_4
 
-ptrs_4C200F58:
-	.long	Str_BR
-	.long	loc_4C0AC090
-	.long	Str_CENTER_9
-	.long	loc_4C0AC0AD
-	.long	Str_CENTER_8
-	.long	loc_4C0AC0EC
-	.long	Str_FONT_2
-	.long	func_4C0AC13B
-	.long	Str_FONT
-	.long	loc_4C0AC259
+func_4C0ABAED_entry_L33_Records:	# 5 x REC_func_4C0ABAED_entry_L33_Records (8 bytes each); read by func_4C0ABAED_entry_L33 0x4C0ABB25 `mov (d0, a2), a0`; func_4C0ABAED_entry_L33 0x4C0ABB25 `mov (d1, a2), a0`; func_4C0ABAED_entry_L56 0x4C0ABB48 `mov (4, a2), d0` (+1)
+	REC_func_4C0ABAED_entry_L33_Records	text=Str_BR, proc=loc_4C0AC090
+	REC_func_4C0ABAED_entry_L33_Records	text=Str_CENTER_9, proc=loc_4C0AC0AD
+	REC_func_4C0ABAED_entry_L33_Records	text=Str_CENTER_8, proc=loc_4C0AC0EC
+	REC_func_4C0ABAED_entry_L33_Records	text=Str_FONT_2, proc=func_4C0AC13B
+	REC_func_4C0ABAED_entry_L33_Records	text=Str_FONT, proc=loc_4C0AC259
 
 names_4C200F80:
 	.long	Str_IMG, func_4C0AC2C9
@@ -113,15 +108,16 @@ Str_Error_GetInstanceID:	.asciz "Error! (GetInstanceID)"
 Str_SONG_21:	.asciz "SONG"
 Str_SRC_2:	.asciz "SRC"
 Str_NAME_6:	.asciz "NAME"
-data_4C201042:
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x201042, 0x201044
 
-ptrs_4C201044:
+func_4C0ABD65_L69_Table_p0_0:	# REC_func_4C0ABD65_L69_Table_p0 (1 bytes)
+	REC_func_4C0ABD65_L69_Table_p0	
+	.align	4, 0xFF	# pad after func_4C0ABD65_L69_Table_p0_0
+
+func_4C0ABD65_L69_Table:
 	.long	Str_SONG_21
 	.long	Str_SRC_2
 	.long	Str_NAME_6
-	.long	data_4C201042
+	.long	func_4C0ABD65_L69_Table_p0_0
 
 func_4C0ABD65_Table:	# 68 x u8, 0..255; read by func_4C0ABD65 : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -135,23 +131,25 @@ func_4C0ABD65_Table_2:	# 16 x u8, 0..255; read by func_4C0ABD65 : `movbu	(a1), d
 Str_8s_2:	.asciz "%8s"
 Str_NO_43:	.asciz "NO"
 Str_PAN_7:	.asciz "PAN"
-data_4C2010B3:
-	.align	4, 0x00	# pad after Str_PAN_7
 
-ptrs_4C2010B4:
+func_4C0ABF2E_L44_Table_p0_0:	# REC_func_4C0ABF2E_L44_Table_p0 (1 bytes)
+	REC_func_4C0ABF2E_L44_Table_p0	
+
+func_4C0ABF2E_L44_Table:
 	.long	Str_NO_43
 	.long	Str_PAN_7
-	.long	data_4C2010B3
+	.long	func_4C0ABF2E_L44_Table_p0_0
 
 Str_SIZE:	.asciz "SIZE"
 Str_COLOR:	.asciz "COLOR"
-data_4C2010CB:
-	.align	4, 0x00	# pad after Str_COLOR
 
-ptrs_4C2010CC:
+func_4C0AC13B_L5e_Table_p0_0:	# REC_func_4C0AC13B_L5e_Table_p0 (1 bytes)
+	REC_func_4C0AC13B_L5e_Table_p0	
+
+func_4C0AC13B_L5e_Table:
 	.long	Str_SIZE
 	.long	Str_COLOR
-	.long	data_4C2010CB
+	.long	func_4C0AC13B_L5e_Table_p0_0
 
 func_4C0AC13B_L79_Table:	# 13 x u32, 0..11; read by func_4C0AC13B_L79 0x4C0AC1B4: `mov	(d0, a0), d1`
 	tab_u32	5, 7, 8, 9, 3, 0, 1, 4	# [0]
@@ -159,24 +157,39 @@ func_4C0AC13B_L79_Table:	# 13 x u32, 0..11; read by func_4C0AC13B_L79 0x4C0AC1B4
 
 Str_SRC:	.asciz "SRC"
 
-names_4C201144_p4_0:	# REC_names_4C201144_p4 (4 bytes)
-	REC_names_4C201144_p4	f0=65, x1="LT\x00"
+names_4C201144_p0_0:	# REC_names_4C201144_p0 (1 bytes)
+	REC_names_4C201144_p0	f0=65
 
+Str_LT:	.asciz "LT"
 Str_ALIGN:	.asciz "ALIGN"
-Str_VSPACE:	.asciz "VSPACE"
+
+names_4C201144_p0_1:	# REC_names_4C201144_p0 (1 bytes)
+	REC_names_4C201144_p0	f0=86
+
+Str_SPACE:	.asciz "SPACE"
 Str_HSPACE:	.asciz "HSPACE"
-Str_WIDTH:	.asciz "WIDTH"
+
+names_4C201144_p0_2:	# REC_names_4C201144_p0 (1 bytes)
+	REC_names_4C201144_p0	f0=87
+
+Str_IDTH:	.asciz "IDTH"
 Str_HEIGHT:	.asciz "HEIGHT"
-Str_LOWSRC:	.asciz "LOWSRC"
+
+names_4C201144_p0_3:	# REC_names_4C201144_p0 (1 bytes)
+	REC_names_4C201144_p0	f0=76
+
+Str_OWSRC:	.asciz "OWSRC"
 Str_BORDER:	.asciz "BORDER"
-	.align	4, 0x00	# pad after Str_BORDER
+
+names_4C201144_p0_4:	# REC_names_4C201144_p0 (1 bytes)
+	REC_names_4C201144_p0	
 
 names_4C201144:
-	.long	Str_SRC, names_4C201144_p4_0
-	.long	Str_ALIGN, Str_VSPACE
-	.long	Str_HSPACE, Str_WIDTH
-	.long	Str_HEIGHT, Str_LOWSRC
-	.long	Str_BORDER, 0x4C201143
+	.long	Str_SRC, names_4C201144_p0_0
+	.long	Str_ALIGN, names_4C201144_p0_1
+	.long	Str_HSPACE, names_4C201144_p0_2
+	.long	Str_HEIGHT, names_4C201144_p0_3
+	.long	Str_BORDER, names_4C201144_p0_4
 
 func_4C0AC2C9_Table:	# 68 x u8, 0..255; read by func_4C0AC2C9 : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -193,12 +206,12 @@ func_4C0AC2C9_Table_2:	# 68 x u8, 0..255; read by func_4C0AC2C9 : `movbu	(a1), d
 
 Str_OBJ:	.asciz "OBJ"
 
-ptrs_4C2011FC_p4_0:	# REC_ptrs_4C2011FC_p4 (4 bytes)
-	REC_ptrs_4C2011FC_p4	x1="\xFF\xFF\xFF"
+func_4C0AC3BC_L51_Table_p0_0:	# REC_func_4C0AC3BC_L51_Table_p0 (4 bytes)
+	REC_func_4C0AC3BC_L51_Table_p0	x1="\xFF\xFF\xFF"
 
-ptrs_4C2011FC:
+func_4C0AC3BC_L51_Table:
 	.long	Str_OBJ
-	.long	ptrs_4C2011FC_p4_0
+	.long	func_4C0AC3BC_L51_Table_p0_0
 
 func_4C0AC3BC_Table:	# 68 x u8, 0..255; read by func_4C0AC3BC : `movbu	(a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -848,36 +861,36 @@ Str_PAD_solo:	.asciz "PAD solo    "
 Str_Melody:	.asciz "Melody "
 Str_Chord:	.asciz "Chord  "
 Str_Special_6:	.asciz "Special"
-Str_C_10:	.asciz "C "
+Str_C_9:	.asciz "C "
 Str_Db:	.asciz "Db"
-Str_D_9:	.asciz "D "
+Str_D_8:	.asciz "D "
 Str_Eb:	.asciz "Eb"
-Str_E_7:	.asciz "E "
-Str_F_9:	.asciz "F "
-Str_F_8:	.asciz "F#"
-Str_G_8:	.asciz "G "
+Str_E_6:	.asciz "E "
+Str_F_8:	.asciz "F "
+Str_F_7:	.asciz "F#"
+Str_G_7:	.asciz "G "
 Str_Ab:	.asciz "Ab"
-Str_A_23:	.asciz "A "
+Str_A_22:	.asciz "A "
 Str_Bb:	.asciz "Bb"
-Str_B_9:	.asciz "B "
+Str_B_8:	.asciz "B "
 Str_empty_886:	.asciz "  "
 Str_empty_885:	.asciz "  "
 Str_empty_884:	.asciz "  "
 Str_empty_883:	.asciz "  "
 
 FE_CmpRecSetKey_L50_Table:
-	.long	Str_C_10
+	.long	Str_C_9
 	.long	Str_Db
-	.long	Str_D_9
+	.long	Str_D_8
 	.long	Str_Eb
-	.long	Str_E_7
-	.long	Str_F_9
+	.long	Str_E_6
 	.long	Str_F_8
-	.long	Str_G_8
+	.long	Str_F_7
+	.long	Str_G_7
 	.long	Str_Ab
-	.long	Str_A_23
+	.long	Str_A_22
 	.long	Str_Bb
-	.long	Str_B_9
+	.long	Str_B_8
 	.long	Str_empty_886
 	.long	Str_empty_885
 	.long	Str_empty_884
@@ -6495,9 +6508,9 @@ func_4C0D581D_entry_L3d_Records:	# 2 x REC_func_4C0D581D_entry_L3d_Records (48 b
 	REC_func_4C0D581D_entry_L3d_Records	proc=loc_4C05DEED, proc_=loc_4C05E1C2, proc__=func_4C058C8B, proc___=func_4C058DDA, proc____=func_4C058EE1, proc_____=loc_4C058FE2, proc______=func_4C058F6C, proc_______=func_4C059030, proc________=loc_4C058994, proc_________=func_4C058D70, proc__________=loc_4C058A04, proc___________=loc_4C0589EF
 	REC_func_4C0D581D_entry_L3d_Records	proc=loc_4C054588, proc_=loc_4C0546B3, proc__=func_4C05B168, proc___=func_4C05B2B3, proc____=func_4C05B3BA, proc_____=loc_4C05B4BB, proc______=func_4C05B445, proc_______=func_4C05B509, proc________=func_4C05AE48, proc_________=func_4C05B24D, proc__________=loc_4C05AEC9, proc___________=loc_4C05AEB4
 
-func_4C0D5D27_entry_L18d_Table:	# 6 x u32, 1111..1147; read by func_4C0D5D27_entry_L18d 0x4C0D5EB9: `mov	(d1, a0), d2`
+func_4C0D5D27_entry_L18d_Table:	# 6 x u32, 1111..1147; read by func_4C0D57B2_entry_Le 0x4C0D57C5: `mov	(d0, a3), d0`; func_4C0D57B2_entry_L35 0x4C0D57EC: `mov	(d2, a3), d0` ...
 	tab_u32	1111, 1115, 1119, 1123, 1127, 1147
-func_4C0D57B2_entry_L35_Table:	# 6 x u32, 1114..1148; read by func_4C0D57B2_entry : `mov	(d0, a0), d0`
+func_4C0D57B2_entry_L35_Table:	# 6 x u32, 1114..1148; read by func_4C0D57B2_entry_L35 0x4C0D57EC: `mov	(d0, a0), d0`
 	tab_u32	1114, 1118, 1122, 1126, 1130, 1148
 func_4C0D61A2_entry_L16_Table:	# 70 x u16, 25..46972; read by func_4C0D61A2_entry_L16 0x4C0D61BD: `movhu	(d0, a1), d0`; func_4C0D61A2_entry_L1026 0x4C0D71CD: `movhu	(d0, a1), d0` ...
 	tab_u16	25, 50, 80, 95, 46972, 46880, 46880, 46880, 46880, 46880, 46880, 46880	# [0]
@@ -6511,9 +6524,9 @@ func_4C0D55CA_entry_L33_Records:	# 2 x REC_func_4C0D55CA_entry_L33_Records (4 by
 	REC_func_4C0D55CA_entry_L33_Records	s0="4\x02!L"
 	REC_func_4C0D55CA_entry_L33_Records	s0="v\x02!L"
 
-func_4C0D55CA_entry_L33_Table:	# 4 x u32, 1133..1136; read by func_4C0D55CA_entry : `mov	(d0, a0), d0`
+func_4C0D55CA_entry_L33_Table:	# 4 x u32, 1133..1136; read by func_4C0D55CA_entry_L33 0x4C0D5603: `mov	(d0, a0), d0`; func_4C0D55CA_entry_L71 0x4C0D5641: `mov	(d0, a0), d0` ...
 	tab_u32	1133, 1134, 1135, 1136
-func_4C0D55CA_entry_L105_Table:	# 4 x u32, 1108..1139; read by func_4C0D55CA_entry : `mov	(d0, a0), d0`
+func_4C0D55CA_entry_L105_Table:	# 4 x u32, 1108..1139; read by func_4C0D55CA_entry_L105 0x4C0D56D5: `mov	(d0, a0), d0`; func_4C0D55CA_entry_L11b 0x4C0D56EB: `mov	(d0, a0), d0`
 	tab_u32	1108, 1109, 1138, 1139
 func_4C0D55CA_entry_L71_Table:	# 1 x u32, 4294967040..4294967040; read by func_4C0D55CA_entry : `mov	(a0), a1`
 	tab_u32	4294967040
@@ -6529,7 +6542,7 @@ data_4C2102E8:
 Str_empty_528:	.asciz "                                                                 "
 	.align	4, 0xFF	# pad after Str_empty_528
 
-func_4C0D572B_entry_L1b_Table:	# 4 x u32, 1107..1140; read by func_4C0D572B_entry_L1b 0x4C0D574C: `mov (d0, a3), d0`; func_4C0D572B_entry_L6c 0x4C0D579D: `mov (d2, a3), d0`
+func_4C0D572B_entry_L1b_Table:	# 4 x u32, 1107..1140; read by func_4C0D572B_entry_L1b 0x4C0D574C: `mov	(d0, a3), d0`; func_4C0D572B_entry_L6c 0x4C0D579D: `mov	(d2, a3), d0`
 	tab_u32	1107, 1110, 1137, 1140
 data_4C210340:
 	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_4C0D57B2_entry_L35 0x4C0D57EC `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
@@ -12612,32 +12625,32 @@ Str_OFF_42:	.asciz "OFF"
 Str_ON_32:	.asciz "ON "
 Str_OFF_41:	.asciz "OFF"
 Str_ON_31:	.asciz "ON "
-Str_C_9:	.asciz " C"
-Str_C_8:	.asciz "C#"
-Str_D_8:	.asciz " D"
-Str_D_7:	.asciz "D#"
-Str_E_6:	.asciz " E"
-Str_F_7:	.asciz " F"
-Str_F_6:	.asciz "F#"
-Str_G_7:	.asciz " G"
-Str_G_6:	.asciz "G#"
-Str_A_22:	.asciz " A"
-Str_A_21:	.asciz "A#"
-Str_B_8:	.asciz " B"
+Str_C_8:	.asciz " C"
+Str_C_7:	.asciz "C#"
+Str_D_7:	.asciz " D"
+Str_D_6:	.asciz "D#"
+Str_E_5:	.asciz " E"
+Str_F_6:	.asciz " F"
+Str_F_5:	.asciz "F#"
+Str_G_6:	.asciz " G"
+Str_G_5:	.asciz "G#"
+Str_A_21:	.asciz " A"
+Str_A_20:	.asciz "A#"
+Str_B_7:	.asciz " B"
 
 func_4C0FB9A9_Table:
-	.long	Str_C_9
 	.long	Str_C_8
-	.long	Str_D_8
+	.long	Str_C_7
 	.long	Str_D_7
-	.long	Str_E_6
-	.long	Str_F_7
+	.long	Str_D_6
+	.long	Str_E_5
 	.long	Str_F_6
-	.long	Str_G_7
+	.long	Str_F_5
 	.long	Str_G_6
-	.long	Str_A_22
+	.long	Str_G_5
 	.long	Str_A_21
-	.long	Str_B_8
+	.long	Str_A_20
+	.long	Str_B_7
 
 Str_s_2d_3:	.asciz "%s%2d"
 	.align	4, 0xFF	# pad after Str_s_2d_3
@@ -16434,33 +16447,33 @@ ptrs_4C2353AC:
 	.long	Str_Press_a_key_to_select_the_split_point_2
 	.long	Str_Press_a_key_to_select_the_split_point
 
-Str_C_7:	.asciz "C "
-Str_D_a0_4:	.asciz "D~a0"
-Str_D_6:	.asciz "D "
-Str_E_a0_4:	.asciz "E~a0"
-Str_E_5:	.asciz "E "
-Str_F_5:	.asciz "F "
-Str_F_9e_4:	.asciz "F~9e"
-Str_G_5:	.asciz "G "
-Str_A_a0_4:	.asciz "A~a0"
-Str_A_20:	.asciz "A "
-Str_B_a0_4:	.asciz "B~a0"
-Str_B_7:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_7
+Str_C_6:	.asciz "C "
+Str_D_a0_3:	.asciz "D~a0"
+Str_D_5:	.asciz "D "
+Str_E_a0_3:	.asciz "E~a0"
+Str_E_4:	.asciz "E "
+Str_F_4:	.asciz "F "
+Str_F_9e_3:	.asciz "F~9e"
+Str_G_4:	.asciz "G "
+Str_A_a0_3:	.asciz "A~a0"
+Str_A_19:	.asciz "A "
+Str_B_a0_3:	.asciz "B~a0"
+Str_B_6:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_6
 
 SplitPoint_L148_Table:
-	.long	Str_C_7
-	.long	Str_D_a0_4
-	.long	Str_D_6
-	.long	Str_E_a0_4
-	.long	Str_E_5
-	.long	Str_F_5
-	.long	Str_F_9e_4
-	.long	Str_G_5
-	.long	Str_A_a0_4
-	.long	Str_A_20
-	.long	Str_B_a0_4
-	.long	Str_B_7
+	.long	Str_C_6
+	.long	Str_D_a0_3
+	.long	Str_D_5
+	.long	Str_E_a0_3
+	.long	Str_E_4
+	.long	Str_F_4
+	.long	Str_F_9e_3
+	.long	Str_G_4
+	.long	Str_A_a0_3
+	.long	Str_A_19
+	.long	Str_B_a0_3
+	.long	Str_B_6
 SplitPoint_Lc4_Table:
 	.long	Bitmap_SplitPoint_Lc4
 	.long	Bitmap_SplitPoint_Lc4_2
@@ -17145,33 +17158,33 @@ ChordFinderTYPE_L48_Table:
 TtChordFinder_Table:	# 16 x u8, 0..0; read by TtChordFinder : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-Str_C_6:	.asciz "C "
-Str_D_a0_3:	.asciz "D~a0"
-Str_D_5:	.asciz "D "
-Str_E_a0_3:	.asciz "E~a0"
-Str_E_4:	.asciz "E "
-Str_F_4:	.asciz "F "
-Str_F_9e_3:	.asciz "F~9e"
-Str_G_4:	.asciz "G "
-Str_A_a0_3:	.asciz "A~a0"
-Str_A_19:	.asciz "A "
-Str_B_a0_3:	.asciz "B~a0"
-Str_B_6:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_6
+Str_C_5:	.asciz "C "
+Str_D_a0_2:	.asciz "D~a0"
+Str_D_4:	.asciz "D "
+Str_E_a0_2:	.asciz "E~a0"
+Str_E_3:	.asciz "E "
+Str_F_3:	.asciz "F "
+Str_F_9e_2:	.asciz "F~9e"
+Str_G_3:	.asciz "G "
+Str_A_a0_2:	.asciz "A~a0"
+Str_A_18:	.asciz "A "
+Str_B_a0_2:	.asciz "B~a0"
+Str_B_5:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_5
 
 ChordFinderROOT_L4a_Table:
-	.long	Str_C_6
-	.long	Str_D_a0_3
-	.long	Str_D_5
-	.long	Str_E_a0_3
-	.long	Str_E_4
-	.long	Str_F_4
-	.long	Str_F_9e_3
-	.long	Str_G_4
-	.long	Str_A_a0_3
-	.long	Str_A_19
-	.long	Str_B_a0_3
-	.long	Str_B_6
+	.long	Str_C_5
+	.long	Str_D_a0_2
+	.long	Str_D_4
+	.long	Str_E_a0_2
+	.long	Str_E_3
+	.long	Str_F_3
+	.long	Str_F_9e_2
+	.long	Str_G_3
+	.long	Str_A_a0_2
+	.long	Str_A_18
+	.long	Str_B_a0_2
+	.long	Str_B_5
 
 Str_FINGERED_2:	.asciz " FINGERED  "
 Str_PIANIST_2:	.asciz "  PIANIST  "
@@ -20707,17 +20720,23 @@ data_4C2411C8:
 	# 12 bytes the code takes the address of: TestDiskFunc_L20 0x4C10E55F `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); TestDiskFunc_L20 0x4C10E55F `mov data_4C2411C8, d0` (+0, as a base); TestDiskFunc_L3d 0x4C10E57C `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+1 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	18, 0, 76, 1, 0, 0, 140, 1, 0, 0, 0, 0	# +0
 
-InOutTestWindowProc_L9f4_Records:	# u16, a constant; read / written by InOutTestWindowProc_L9f4 0x4C10F393: `movhu (a1), d0`
-	.word	15
-InOutTestWindowProc_L9f4_Var:	# u16, a constant; read / written by InOutTestWindowProc_L9f4 0x4C10F393: `movhu (2, a1), d0`
-	.word	40
-InOutTestWindowProc_L9f4_Var_2:	# u16, a constant; read / written by InOutTestWindowProc_L9f4 0x4C10F393: `movhu (a0), d0`
-	.word	15
+InOutTestWindowProc_L9f4_Records:	# 15 x REC_InOutTestWindowProc_L9f4_Records (4 bytes each); read by InOutTestWindowProc_L9f4 0x4C10F393 `movhu (2, a0), d0`; InOutTestWindowProc_L9f4 0x4C10F393 `movhu (2, a1), d0`; InOutTestWindowProc_L9f4 0x4C10F393 `movhu (a0), d0` (+1)
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=40	# [0]
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=64
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=88
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=112
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=136
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=160
+	REC_InOutTestWindowProc_L9f4_Records	f0=15, f2=184
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=40
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=64	# [8]
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=88
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=112
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=136
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=160
+	REC_InOutTestWindowProc_L9f4_Records	f0=340, f2=184
+	REC_InOutTestWindowProc_L9f4_Records	f0=134, f2=220
 
-InOutTestWindowProc_L9f4_Table_2:	# 27 x u16, 15..340; read by InOutTestWindowProc_L9f4 0x4C10F393: `movhu (2, a0), d0`
-	tab_u16	64, 15, 88, 15, 112, 15, 136, 15, 160, 15, 184, 340	# [0]
-	tab_u16	40, 340, 64, 340, 88, 340, 112, 340, 136, 340, 160, 340	# [12]
-	tab_u16	184, 134, 220	# [24]
 InOutTestWindowProc_L11c_Table:	# 2 x u16, 40..250; read by InOutTestWindowProc : `movhu	(a1), d0`
 	tab_u16	250, 40
 InOutTestWindowProc_L2ed_Table:	# 2 x u16, 64..250; read by InOutTestWindowProc : `movhu	(a1), d0`
@@ -20735,7 +20754,7 @@ InOutTestWindowProc_L76d_Table_2:	# 2 x u16, 184..250; read by InOutTestWindowPr
 InOutTestWindowProc_L2ed_Table_2:	# 2 x u16, 220..555; read by InOutTestWindowProc : `movhu	(a1), d0`
 	tab_u16	555, 220
 
-InOutTestWindowProc_L8e3_Records:	# 6 x REC_InOutTestWindowProc_L8e3_Records (4 bytes each); read by InOutTestWindowProc_L8e3 0x4C10F282 `movhu (2, a0), d0`; InOutTestWindowProc_L8e3 0x4C10F282 `movhu (a0), d0`; InOutTestWindowProc_L964 0x4C10F303 `movhu (2, a1), d1` (+1)
+InOutTestWindowProc_L8e3_Records:	# 6 x REC_InOutTestWindowProc_L8e3_Records (4 bytes each); read by InOutTestWindowProc_L8e3 0x4C10F282 `movhu (2, a0), d0`; InOutTestWindowProc_L8e3 0x4C10F282 `movhu (a0), d0`; InOutTestWindowProc_L964 0x4C10F303 `movhu (2, a1), d1` (+3)
 	REC_InOutTestWindowProc_L8e3_Records	f0=575, f2=40
 	REC_InOutTestWindowProc_L8e3_Records	f0=575, f2=64
 	REC_InOutTestWindowProc_L8e3_Records	f0=575, f2=88
@@ -20763,7 +20782,7 @@ TestMode8Func_L99_Records:	# 4 x REC_TestMode8Func_L99_Records (4 bytes each); r
 	REC_TestMode8Func_L99_Records	f0=20, f2=50
 	REC_TestMode8Func_L99_Records	f0=20, f2=74
 	REC_TestMode8Func_L99_Records	f0=20, f2=98
-BoardTestWindowProc_Lb0_Records:	# 57 x REC_BoardTestWindowProc_Lb0_Records (4 bytes each); read by func_4C10FEDC 0x4C10FEDC `movhu (2, a0), d0`; func_4C10FEDC 0x4C10FEDC `movhu (a0), d0`
+BoardTestWindowProc_Lb0_Records:	# 57 x REC_BoardTestWindowProc_Lb0_Records (4 bytes each); read by BoardTestWindowProc_Lb0 0x4C10FD85 `movhu (2, a1), d0`; BoardTestWindowProc_Lb0 0x4C10FD85 `movhu (a1), d0`; func_4C10FEDC 0x4C10FEDC `movhu (2, a0), d0` (+1)
 	REC_BoardTestWindowProc_Lb0_Records	f0=24, f2=42	# [0]
 	REC_BoardTestWindowProc_Lb0_Records	f0=24, f2=124
 	REC_BoardTestWindowProc_Lb0_Records	f0=142, f2=42
@@ -20963,10 +20982,10 @@ Str_OFF_26:	.asciz "OFF"
 Str_ON_17:	.asciz "ON "
 Str_3d_15:	.asciz "%3d"
 Str_3d_14:	.asciz "%3d"
-TouchFilter_L21_Table:	.asciz " "
-# census: opaque -- unknown-dump: 34 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2419A6, 0x2419C8
 
+TouchFilter_L21_Table:	# 9 x u32, 0..44; read by TouchFilter_L21 0x4C1084B4: `mov	(d0, a0), d0`
+	tab_u32	32, 32, 33, 44, 36, 40, 34, 0	# [0]
+	tab_u32	9	# [8]
 FSWAssGridCheck_Table:	# 256 x u8, 0..0; read by FSWAssGridCheck : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
@@ -21103,7 +21122,7 @@ Str_s_32:	.asciz "%s"
 Str_s_31:	.asciz "%s"
 	.align	4, 0xFF	# pad after Str_s_31
 
-FSWAssGridFilter_L21_Table:	# 7 x u32, 16384..16391; read by FSWAssGridFilter : `mov	(d0, a0), d0`
+FSWAssGridFilter_L21_Table:	# 7 x u32, 16384..16391; read by FSWAssGridFilter_L21 0x4C1091E1: `mov	(d0, a0), d0`
 	tab_u32	16386, 16387, 16388, 16389, 16390, 16391, 16384
 MSAModeBoxProc_Table:	# 4 x u16, 0..0; read by MSAModeBoxProc 0x4C10925A: `movhu	(a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -21126,36 +21145,23 @@ MSAModeBoxProc_Table_3:	# 256 x u8, 0..0; read by MSAModeBoxProc : `movbu	(a1), 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
-MSAFilter_L21_Table:	# 4 x u32, 1..161; read by MSAFilter : `mov	(d0, a0), d0`
-	tab_u32	161, 1, 2, 3
-
-Str_C_5:	.asciz "C "
-Str_D_a0_2:	.asciz "D~a0"
-Str_D_4:	.asciz "D "
-Str_E_a0_2:	.asciz "E~a0"
-Str_E_3:	.asciz "E "
-Str_F_3:	.asciz "F "
-Str_F_9e_2:	.asciz "F~9e"
-Str_G_3:	.asciz "G "
-Str_A_a0_2:	.asciz "A~a0"
-Str_A_18:	.asciz "A "
-Str_B_a0_2:	.asciz "B~a0"
-Str_B_5:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_5
+MSAFilter_L21_Table:	# 16 x u32, 1..4294901792; read by MSAFilter_L21 0x4C109518: `mov	(d0, a0), d0`
+	tab_u32	161, 1, 2, 3, 1140858947, 3170686, 1157636164, 3170686	# [0]
+	tab_u32	1174413381, 2118516768, 1191208249, 2118189088, 1090531425, 2118254624, 1107308641, 4294901792	# [8]
 
 SineWaveWindowProc_L168_Table:
-	.long	Str_C_5
-	.long	Str_D_a0_2
-	.long	Str_D_4
-	.long	Str_E_a0_2
-	.long	Str_E_3
-	.long	Str_F_3
-	.long	Str_F_9e_2
-	.long	Str_G_3
-	.long	Str_A_a0_2
-	.long	Str_A_18
-	.long	Str_B_a0_2
-	.long	Str_B_5
+	.long	MSAFilter_L21_Table+16
+	.long	MSAFilter_L21_Table+19
+	.long	MSAFilter_L21_Table+24
+	.long	MSAFilter_L21_Table+27
+	.long	MSAFilter_L21_Table+32
+	.long	MSAFilter_L21_Table+35
+	.long	MSAFilter_L21_Table+38
+	.long	MSAFilter_L21_Table+43
+	.long	MSAFilter_L21_Table+46
+	.long	MSAFilter_L21_Table+51
+	.long	MSAFilter_L21_Table+54
+	.long	MSAFilter_L21_Table+59
 
 SineWaveWindowProc_Table:	# 4 x u16, 0..0; read by SineWaveWindowProc 0x4C10953C: `movhu	(a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -21205,7 +21211,7 @@ Str_5_NORMAL_SOUND_check_with_TOUCH:	.asciz "(5)NORMAL SOUND check with TOUCH"
 	.align	4, 0xFF	# pad after Str_5_NORMAL_SOUND_check_with_TOUCH
 Str_6_SINE_WAVE_at_16dB_DOWN_level_w_o_Touch:	.asciz "(6)SINE WAVE at 16dB DOWN level(w/o Touch and Key note)"
 
-SineWaveFilter_L21_Table:	# 3 x u32, 7340032..12582912; read by SineWaveFilter : `mov	(d0, a0), d0`
+SineWaveFilter_L21_Table:	# 3 x u32, 7340032..12582912; read by SineWaveFilter_L21 0x4C109D56: `mov	(d0, a0), d0`
 	tab_u32	7344145, 12582912, 7340032
 AcItimatuWindowProc_Table:	# 4 x u16, 0..0; read by AcItimatuWindowProc 0x4C109D7A: `movhu	(a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -21342,9 +21348,9 @@ Str_OFF_22:	.asciz "OFF"
 Str_OFF_21:	.asciz "OFF"
 Str_ON_13:	.asciz "ON "
 
-PmemModeFilter_L21_Table:	# 3 x u32, 0..130; read by PmemModeFilter : `mov	(d0, a0), d0`
+PmemModeFilter_L21_Table:	# 3 x u32, 0..130; read by PmemModeFilter_L21 0x4C10A943: `mov	(d0, a0), d0`
 	tab_u32	130, 0, 1
-PmExpFilter_L21_Table:	# 18 x u32, 20480..20500; read by PmExpFilter : `mov	(d0, a0), d0`
+PmExpFilter_L21_Table:	# 18 x u32, 20480..20500; read by PmExpFilter_L21 0x4C10A988: `mov	(d0, a0), d0`
 	tab_u32	20480, 20481, 20484, 20482, 20483, 20490, 20499, 20492	# [0]
 	tab_u32	20493, 20494, 20485, 20487, 20500, 20491, 20496, 20489	# [8]
 	tab_u32	20486, 20497	# [16]
@@ -21432,7 +21438,7 @@ Str_ON_11:	.asciz " ON  "
 Str_OFF_18:	.asciz " OFF "
 	.align	4, 0xFF	# pad after Str_OFF_18
 
-FadeIOFilter_L21_Table:	# 5 x u32, 24576..24582; read by FadeIOFilter : `mov	(d0, a0), d0`
+FadeIOFilter_L21_Table:	# 5 x u32, 24576..24582; read by FadeIOFilter_L21 0x4C10BAA5: `mov	(d0, a0), d0`
 	tab_u32	24576, 24577, 24582, 24580, 24581
 
 Text_DEFAULT:	# 9 strings of 7 characters, NUL-terminated
@@ -21678,9 +21684,7 @@ InOutTestWindowProc_L9f4_Table:
 	.long	Text_Pitchbend_Wheel_value+280
 	.long	Text_Pitchbend_Wheel_value+308
 	.long	Text_Pitchbend_Wheel_value+336
-
-InOutTestWindowProc_L9f4_Var_3:	# u32, a constant; read / written by InOutTestWindowProc_L9f4 0x4C10F393: `mov (InOutTestWindowProc_L9f4_Var_3), a0`
-	.long	0x4c2437d8
+	.long	Str_Keyboad_note_velocity_after_touch
 
 Str_s_2d:	.asciz "%s%2d"
 	.align	4, 0xFF	# pad after Str_s_2d
@@ -21722,7 +21726,7 @@ func_4C10F650_Table_3:	# 2 x u16, 0..0; read by func_4C10F650_entry : `movhu	(a0
 Str_OK_47:	.asciz "OK"
 	.align	4, 0xFF	# pad after Str_OK_47
 
-InOutTestFilter_L21_Table:	# 2 x u32, 7340032..7344145; read by InOutTestFilter : `mov	(d0, a0), d0`
+InOutTestFilter_L21_Table:	# 2 x u32, 7340032..7344145; read by InOutTestFilter_L21 0x4C10F6E3: `mov	(d0, a0), d0`
 	tab_u32	7344145, 7340032
 TestMICFunc_Table:	# 4 x u16, 0..0; read by TestMICFunc 0x4C10F707: `movhu	(a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -22167,21 +22171,21 @@ func_4C11B33A_Table:	# 256 x s8, a sparse map by index: 33 entries set, the rest
 	map_none8	11	# [245..255]
 
 func_4C11B347_entry_L4a_Selected_0:	# REC_func_4C11B347_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B347_entry_L4a_Selected	key=0x900000, count=0xC00000, x8="\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
+	REC_func_4C11B347_entry_L4a_Selected	key=0x900000, x4="\x00\x00\xC0\x00\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
 # census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x24459C, 0x244664
 func_4C11B347_entry_L4a_Selected_1:	# REC_func_4C11B347_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B347_entry_L4a_Selected	key=0x900000, count=0xC00000, x8="\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
+	REC_func_4C11B347_entry_L4a_Selected	key=0x900000, x4="\x00\x00\xC0\x00\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
 # census: opaque -- unknown-dump: 120 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x244698, 0x244710
 func_4C11B347_entry_L4a_Selected_2:	# REC_func_4C11B347_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B347_entry_L4a_Selected	key=0x900000, count=49280, x8="\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\xFF\xFF\xFF\xFF"
+	REC_func_4C11B347_entry_L4a_Selected	key=0x900000, x4="\x80\xC0\x00\x00\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\xFF\xFF\xFF\xFF"
 func_4C11B347_entry_L4a_Selected_3:	# REC_func_4C11B347_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B347_entry_L4a_Selected	key=49280, count=49281, x8="\x82\xC0\x00\x00\x83\xC0\x00\x002\x80\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00"
+	REC_func_4C11B347_entry_L4a_Selected	key=49280, x4="\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x002\x80\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00"
 # census: opaque -- unknown-dump: 76 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x244778, 0x2447C4
 func_4C11B347_entry_L4a_Selected_4:	# REC_func_4C11B347_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B347_entry_L4a_Selected	key=53250, count=0x702023, x8="\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00\x04\xC0\x00\x00\x04\x00\x00\x00\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00"
+	REC_func_4C11B347_entry_L4a_Selected	key=53250, x4="# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00\x04\xC0\x00\x00\x04\x00\x00\x00\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x2447F8, 0x2447FC
 
@@ -28414,49 +28418,276 @@ NoteConvRules_p4_20:	# NoteConvTable (4 bytes), then 5904 x s8 the code indexes 
 	tab_s8	0, -1, -2, 1, 0, -1, -2, 2, 1, 0, -1, 0	# [5868]
 	tab_s8	0, 0, -1, -2, 1, 0, -1, -2, 2, 1, 0, -1	# [5880]
 	tab_s8	-1, 0, 0, -1, -2, 1, 0, -1, -2, 2, 1, 0	# [5892]
-data_4C3855C0_p0_p36_0:	# REC_data_4C3855C0_p0_p36 (4 bytes)
-	REC_data_4C3855C0_p0_p36	x0="\x02\x01\x00\x00"
-# census: opaque -- unknown-dump: 65 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2571C8, 0x257209
-data_4C257209:
-# census: opaque -- unknown-dump: 63 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x257209, 0x257248
-data_4C257248:
-# census: opaque -- unknown-dump: 33 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x257248, 0x257269
-data_4C257269:
-# census: opaque -- unknown-dump: 81 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x257269, 0x2572BA
-data_4C2572BA:
-# census: opaque -- unknown-dump: 84 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x2572BA, 0x25730E
-data_4C25730E:
-# census: opaque -- unknown-dump: 111 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x25730E, 0x25737D
-data_4C25737D:
-# census: opaque -- unknown-dump: 51 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x25737D, 0x2573B0
-data_4C2573B0:
-# census: opaque -- unknown-dump: 45 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x2573B0, 0x2573DD
-data_4C2573DD:
-# census: opaque -- unknown-dump: 3355 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x2573DD, 0x2580F8
-data_4C3855C0_p0_0:	# REC_data_4C3855C0_p0 (36 bytes)
+data_4C3855C0_p0_p36_0:	# REC_data_4C3855C0_p0_p36 (2 bytes), then 3890 x u8 the code indexes from +0 (read by func_4C05D626_entry_L71 0x4C05D69C `movbu (a2), d1`; func_4C05D626_entry_L71 0x4C05D69C `movbu (a3), d0` (+2))
+	REC_data_4C3855C0_p0_p36	x0="\x02\x01"
+	tab_u8	0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 2, 2, 0, 2, 3	# [0]
+	tab_u8	0, 3, 3, 1, 3, 1, 1, 4, 3, 1, 5, 0, 1, 9, 1, 1	# [16]
+	tab_u8	9, 3, 1, 10, 3, 1, 11, 1, 2, 6, 0, 2, 10, 1, 3, 5	# [32]
+	tab_u8	1, 3, 5, 3, 3, 9, 1, 3, 10, 2, 3, 17, 0, 3, 0, 0	# [48]
+	tab_u8	3, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, 2, 0, 1, 3, 0	# [64]
+	tab_u8	2, 0, 0, 2, 1, 1, 3, 2, 1, 3, 3, 1, 4, 1, 1, 4	# [80]
+	tab_u8	3, 1, 5, 0, 1, 5, 2, 1, 10, 3, 2, 0, 1, 2, 7, 0	# [96]
+	tab_u8	3, 5, 1, 3, 5, 3, 3, 9, 1, 3, 9, 2, 3, 0, 3, 3	# [112]
+	tab_u8	3, 3, 0, 1, 3, 0, 2, 1, 2, 6, 2, 2, 7, 0, 2, 10	# [128]
+	tab_u8	2, 3, 1, 1, 3, 4, 2, 3, 13, 0, 3, 13, 2, 3, 18, 3	# [144]
+	tab_u8	6, 1, 3, 2, 7, 0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 0	# [160]
+	tab_u8	1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 2, 0, 0, 2	# [176]
+	tab_u8	2, 1, 3, 0, 1, 3, 3, 1, 5, 0, 1, 5, 1, 1, 8, 0	# [192]
+	tab_u8	1, 9, 2, 1, 9, 3, 1, 11, 3, 2, 4, 0, 2, 9, 2, 3	# [208]
+	tab_u8	0, 0, 3, 0, 2, 3, 1, 1, 3, 1, 0, 1, 8, 2, 1, 8	# [224]
+	tab_u8	3, 3, 4, 3, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 1, 0	# [240]
+	tab_u8	0, 2, 0, 0, 3, 0, 0, 3, 2, 1, 2, 0, 1, 4, 0, 1	# [256]
+	tab_u8	5, 0, 1, 6, 0, 1, 6, 2, 1, 8, 0, 1, 9, 2, 1, 9	# [272]
+	tab_u8	3, 1, 10, 0, 1, 10, 3, 1, 11, 2, 2, 4, 0, 2, 7, 0	# [288]
+	tab_u8	2, 7, 3, 3, 1, 1, 3, 1, 3, 3, 0, 0, 3, 0, 1, 3	# [304]
+	tab_u8	0, 2, 3, 2, 0, 3, 4, 3, 0, 0, 0, 0, 0, 1, 0, 0	# [320]
+	tab_u8	3, 0, 1, 0, 0, 2, 0, 0, 2, 1, 0, 2, 3, 0, 3, 0	# [336]
+	tab_u8	0, 3, 2, 0, 3, 3, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1	# [352]
+	tab_u8	2, 3, 1, 3, 0, 1, 5, 0, 1, 8, 2, 1, 8, 3, 1, 9	# [368]
+	tab_u8	2, 1, 10, 1, 1, 11, 0, 1, 11, 2, 2, 0, 1, 2, 0, 2	# [384]
+	tab_u8	2, 0, 3, 2, 1, 0, 2, 1, 3, 2, 6, 1, 2, 6, 2, 2	# [400]
+	tab_u8	9, 1, 3, 1, 1, 3, 1, 2, 3, 0, 2, 3, 0, 3, 3, 2	# [416]
+	tab_u8	1, 3, 2, 2, 3, 3, 2, 0, 0, 2, 0, 1, 0, 1, 1, 3	# [432]
+	tab_u8	1, 2, 1, 1, 2, 3, 1, 3, 0, 1, 3, 2, 1, 4, 0, 1	# [448]
+	tab_u8	4, 2, 1, 5, 3, 1, 8, 3, 1, 9, 2, 2, 6, 2, 2, 7	# [464]
+	tab_u8	1, 3, 1, 1, 3, 2, 1, 3, 3, 1, 0, 1, 0, 1, 3, 0	# [480]
+	tab_u8	1, 3, 1, 1, 3, 2, 1, 9, 3, 2, 0, 1, 2, 0, 3, 2	# [496]
+	tab_u8	1, 3, 2, 9, 2, 3, 4, 2, 3, 4, 3, 3, 15, 1, 3, 2	# [512]
+	tab_u8	3, 3, 3, 2, 3, 6, 1, 0, 0, 2, 0, 1, 1, 1, 3, 0	# [528]
+	tab_u8	1, 3, 1, 1, 3, 3, 1, 7, 3, 2, 1, 3, 2, 9, 3, 3	# [544]
+	tab_u8	6, 3, 6, 1, 1, 6, 1, 2, 6, 1, 3, 0, 8, 0, 0, 5	# [560]
+	tab_u8	0, 0, 5, 1, 0, 5, 2, 0, 6, 0, 0, 6, 2, 0, 6, 3	# [576]
+	tab_u8	0, 7, 0, 0, 7, 1, 1, 0, 0, 1, 0, 1, 1, 0, 2, 1	# [592]
+	tab_u8	1, 0, 1, 1, 3, 1, 2, 0, 1, 7, 0, 1, 7, 2, 2, 0	# [608]
+	tab_u8	2, 2, 6, 3, 2, 9, 3, 9, 12, 3, 0, 4, 0, 0, 9, 0	# [624]
+	tab_u8	0, 9, 2, 0, 9, 3, 1, 6, 3, 0, 8, 0, 0, 5, 1, 0	# [640]
+	tab_u8	5, 2, 0, 6, 2, 0, 6, 3, 0, 7, 1, 0, 7, 3, 0, 8	# [656]
+	tab_u8	2, 0, 8, 3, 0, 4, 0, 0, 4, 2, 0, 4, 3, 0, 9, 0	# [672]
+	tab_u8	0, 9, 3, 1, 0, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1, 1	# [688]
+	tab_u8	7, 0, 2, 0, 2, 2, 2, 2, 2, 9, 3, 2, 11, 2, 9, 12	# [704]
+	tab_u8	3, 1, 6, 1, 0, 5, 3, 1, 1, 2, 1, 2, 3, 1, 7, 2	# [720]
+	tab_u8	2, 6, 3, 2, 12, 1, 2, 3, 2, 0, 5, 0, 0, 5, 3, 0	# [736]
+	tab_u8	6, 0, 0, 6, 2, 0, 7, 0, 0, 7, 1, 0, 7, 2, 0, 8	# [752]
+	tab_u8	2, 0, 8, 3, 0, 9, 0, 0, 9, 3, 1, 0, 0, 1, 0, 3	# [768]
+	tab_u8	1, 1, 0, 1, 2, 1, 1, 5, 3, 1, 7, 2, 2, 0, 2, 2	# [784]
+	tab_u8	2, 1, 2, 2, 2, 2, 6, 3, 2, 11, 1, 1, 6, 1, 0, 5	# [800]
+	tab_u8	2, 0, 5, 3, 0, 6, 0, 0, 6, 2, 0, 6, 3, 0, 7, 0	# [816]
+	tab_u8	0, 8, 3, 0, 4, 0, 0, 4, 1, 0, 4, 3, 0, 9, 0, 0	# [832]
+	tab_u8	9, 2, 0, 9, 3, 1, 1, 1, 1, 1, 3, 1, 4, 3, 1, 7	# [848]
+	tab_u8	3, 1, 8, 3, 2, 2, 0, 2, 2, 1, 2, 3, 2, 2, 4, 2	# [864]
+	tab_u8	2, 4, 3, 2, 9, 0, 2, 10, 0, 2, 10, 1, 2, 11, 1, 2	# [880]
+	tab_u8	11, 3, 2, 12, 3, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 6	# [896]
+	tab_u8	2, 0, 7, 1, 0, 8, 1, 0, 4, 0, 0, 4, 3, 0, 9, 2	# [912]
+	tab_u8	0, 9, 3, 1, 0, 1, 1, 1, 3, 1, 4, 0, 1, 4, 3, 1	# [928]
+	tab_u8	7, 0, 1, 7, 1, 2, 2, 2, 2, 4, 0, 2, 4, 1, 2, 6	# [944]
+	tab_u8	3, 2, 10, 0, 2, 11, 3, 2, 12, 3, 0, 5, 2, 0, 5, 3	# [960]
+	tab_u8	0, 6, 1, 0, 6, 2, 0, 7, 3, 0, 8, 2, 0, 4, 0, 0	# [976]
+	tab_u8	4, 1, 0, 4, 2, 1, 0, 0, 1, 0, 3, 1, 8, 2, 2, 0	# [992]
+	tab_u8	3, 2, 2, 3, 2, 7, 3, 2, 10, 0, 2, 10, 3, 2, 11, 0	# [1008]
+	tab_u8	2, 11, 2, 1, 6, 1, 1, 6, 2, 0, 5, 3, 0, 6, 1, 0	# [1024]
+	tab_u8	6, 2, 0, 8, 1, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 9	# [1040]
+	tab_u8	1, 1, 0, 2, 1, 4, 0, 1, 4, 2, 2, 2, 3, 2, 7, 1	# [1056]
+	tab_u8	2, 7, 3, 0, 5, 3, 0, 6, 3, 1, 0, 3, 1, 4, 2, 1	# [1072]
+	tab_u8	4, 3, 2, 7, 2, 2, 11, 0, 2, 11, 1, 5, 0, 0, 5, 2	# [1088]
+	tab_u8	0, 5, 3, 0, 5, 3, 3, 5, 4, 0, 5, 5, 0, 5, 5, 2	# [1104]
+	tab_u8	5, 6, 0, 5, 6, 3, 5, 7, 1, 5, 8, 0, 5, 8, 1, 5	# [1120]
+	tab_u8	10, 2, 5, 10, 3, 5, 11, 0, 5, 14, 3, 6, 0, 0, 5, 7	# [1136]
+	tab_u8	1, 5, 0, 0, 5, 0, 2, 5, 1, 0, 5, 2, 0, 5, 2, 1	# [1152]
+	tab_u8	5, 3, 2, 5, 4, 0, 5, 4, 3, 5, 5, 0, 5, 5, 1, 5	# [1168]
+	tab_u8	5, 2, 5, 8, 0, 5, 8, 1, 5, 8, 2, 5, 10, 1, 5, 11	# [1184]
+	tab_u8	3, 5, 12, 1, 5, 12, 2, 5, 14, 3, 5, 15, 3, 6, 0, 2	# [1200]
+	tab_u8	5, 0, 3, 5, 1, 3, 5, 3, 1, 5, 5, 0, 5, 7, 3, 5	# [1216]
+	tab_u8	8, 3, 5, 9, 0, 5, 9, 2, 5, 10, 0, 5, 11, 1, 5, 11	# [1232]
+	tab_u8	2, 5, 13, 0, 5, 14, 1, 5, 15, 3, 5, 0, 0, 5, 0, 2	# [1248]
+	tab_u8	5, 1, 6, 5, 2, 0, 5, 3, 0, 5, 3, 1, 5, 3, 2, 5	# [1264]
+	tab_u8	4, 0, 5, 5, 1, 5, 5, 2, 5, 6, 0, 5, 6, 1, 5, 6	# [1280]
+	tab_u8	3, 5, 8, 0, 5, 8, 1, 5, 9, 0, 5, 10, 0, 5, 10, 1	# [1296]
+	tab_u8	5, 10, 2, 5, 10, 3, 0, 4, 0, 0, 4, 2, 5, 0, 0, 5	# [1312]
+	tab_u8	1, 0, 5, 1, 2, 5, 2, 3, 5, 3, 1, 5, 3, 2, 5, 4	# [1328]
+	tab_u8	0, 5, 5, 2, 5, 8, 0, 5, 10, 0, 5, 10, 2, 5, 14, 0	# [1344]
+	tab_u8	5, 16, 1, 5, 16, 3, 1, 6, 3, 0, 7, 3, 1, 4, 2, 5	# [1360]
+	tab_u8	0, 1, 5, 0, 2, 5, 1, 1, 5, 2, 0, 5, 2, 2, 5, 3	# [1376]
+	tab_u8	3, 5, 7, 0, 5, 7, 3, 5, 8, 1, 5, 8, 2, 5, 10, 0	# [1392]
+	tab_u8	5, 13, 2, 5, 13, 3, 2, 11, 3, 5, 0, 1, 5, 0, 2, 5	# [1408]
+	tab_u8	3, 1, 5, 4, 1, 5, 6, 3, 5, 7, 3, 5, 8, 1, 5, 8	# [1424]
+	tab_u8	3, 5, 10, 2, 5, 10, 3, 5, 12, 3, 5, 13, 3, 5, 15, 1	# [1440]
+	tab_u8	5, 0, 1, 5, 0, 3, 5, 1, 2, 5, 2, 1, 5, 2, 3, 5	# [1456]
+	tab_u8	3, 1, 5, 4, 1, 5, 6, 3, 5, 8, 3, 5, 9, 3, 5, 13	# [1472]
+	tab_u8	3, 6, 0, 3, 5, 2, 0, 5, 7, 1, 5, 9, 3, 4, 0, 0	# [1488]
+	tab_u8	4, 0, 2, 4, 0, 3, 4, 2, 1, 4, 2, 3, 4, 5, 0, 4	# [1504]
+	tab_u8	5, 3, 4, 6, 0, 4, 7, 2, 4, 7, 3, 4, 9, 3, 4, 15	# [1520]
+	tab_u8	2, 4, 1, 0, 4, 3, 1, 9, 7, 1, 9, 7, 3, 4, 0, 0	# [1536]
+	tab_u8	4, 0, 2, 4, 0, 3, 4, 2, 2, 4, 2, 3, 4, 5, 0, 4	# [1552]
+	tab_u8	5, 3, 4, 6, 0, 4, 7, 2, 4, 11, 3, 4, 1, 1, 4, 3	# [1568]
+	tab_u8	1, 9, 7, 3, 4, 0, 1, 4, 3, 2, 4, 5, 2, 4, 7, 1	# [1584]
+	tab_u8	4, 7, 3, 4, 9, 0, 4, 11, 2, 4, 13, 0, 4, 13, 1, 4	# [1600]
+	tab_u8	13, 2, 4, 13, 3, 4, 0, 0, 4, 0, 2, 4, 0, 3, 4, 1	# [1616]
+	tab_u8	0, 4, 1, 2, 4, 2, 0, 4, 2, 3, 4, 6, 2, 4, 6, 3	# [1632]
+	tab_u8	4, 8, 2, 4, 8, 3, 4, 10, 0, 4, 10, 3, 4, 0, 0, 4	# [1648]
+	tab_u8	0, 2, 4, 1, 0, 4, 1, 3, 4, 2, 0, 4, 2, 1, 4, 2	# [1664]
+	tab_u8	3, 4, 3, 0, 4, 3, 3, 4, 8, 0, 4, 8, 3, 4, 0, 0	# [1680]
+	tab_u8	4, 0, 1, 4, 0, 3, 4, 1, 0, 4, 1, 2, 4, 1, 3, 4	# [1696]
+	tab_u8	2, 1, 4, 2, 2, 4, 3, 0, 4, 3, 2, 4, 8, 1, 4, 8	# [1712]
+	tab_u8	2, 4, 0, 3, 4, 3, 0, 4, 5, 1, 4, 5, 3, 4, 6, 3	# [1728]
+	tab_u8	4, 9, 1, 4, 9, 2, 4, 9, 3, 4, 10, 0, 4, 10, 2, 4	# [1744]
+	tab_u8	10, 3, 4, 3, 2, 4, 3, 3, 4, 5, 3, 4, 6, 3, 4, 10	# [1760]
+	tab_u8	0, 4, 11, 1, 4, 13, 0, 9, 7, 1, 4, 6, 3, 4, 11, 1	# [1776]
+	tab_u8	4, 11, 3, 4, 14, 3, 4, 3, 3, 4, 6, 2, 4, 7, 2, 10	# [1792]
+	tab_u8	0, 0, 10, 2, 0, 10, 2, 2, 10, 3, 0, 10, 3, 3, 10, 4	# [1808]
+	tab_u8	0, 10, 1, 0, 13, 3, 1, 13, 3, 2, 13, 3, 3, 10, 0, 0	# [1824]
+	tab_u8	10, 0, 3, 10, 2, 0, 10, 2, 1, 10, 2, 3, 10, 3, 0, 10	# [1840]
+	tab_u8	3, 3, 10, 4, 0, 13, 3, 2, 13, 3, 3, 10, 4, 3, 11, 1	# [1856]
+	tab_u8	3, 10, 0, 0, 10, 0, 2, 10, 0, 3, 10, 2, 0, 10, 1, 0	# [1872]
+	tab_u8	10, 1, 3, 10, 3, 0, 11, 6, 1, 11, 6, 2, 11, 6, 3, 13	# [1888]
+	tab_u8	3, 1, 10, 0, 0, 10, 0, 2, 10, 0, 3, 10, 2, 0, 10, 2	# [1904]
+	tab_u8	2, 10, 2, 3, 10, 1, 0, 10, 1, 2, 10, 1, 3, 10, 3, 0	# [1920]
+	tab_u8	10, 3, 1, 10, 3, 2, 10, 3, 3, 10, 4, 0, 10, 4, 3, 12	# [1936]
+	tab_u8	4, 0, 10, 0, 0, 10, 0, 1, 10, 0, 2, 10, 2, 0, 10, 2	# [1952]
+	tab_u8	1, 10, 2, 2, 10, 1, 0, 10, 1, 1, 10, 1, 3, 10, 3, 0	# [1968]
+	tab_u8	10, 4, 0, 10, 4, 3, 10, 0, 0, 10, 0, 2, 10, 0, 3, 10	# [1984]
+	tab_u8	2, 0, 10, 2, 1, 10, 2, 2, 10, 2, 3, 10, 1, 0, 10, 1	# [2000]
+	tab_u8	1, 10, 1, 2, 10, 3, 0, 10, 3, 2, 10, 0, 0, 10, 0, 1	# [2016]
+	tab_u8	10, 0, 3, 10, 1, 0, 10, 1, 1, 10, 1, 2, 10, 1, 3, 11	# [2032]
+	tab_u8	6, 2, 11, 1, 3, 13, 3, 2, 13, 3, 3, 10, 0, 0, 10, 0	# [2048]
+	tab_u8	1, 10, 0, 3, 10, 1, 0, 10, 1, 1, 10, 1, 2, 10, 1, 3	# [2064]
+	tab_u8	13, 3, 3, 8, 0, 2, 8, 1, 2, 8, 3, 0, 8, 4, 2, 8	# [2080]
+	tab_u8	5, 1, 8, 7, 1, 8, 7, 3, 8, 10, 3, 8, 11, 2, 8, 0	# [2096]
+	tab_u8	0, 8, 0, 2, 8, 1, 1, 8, 1, 3, 8, 3, 3, 8, 4, 2	# [2112]
+	tab_u8	8, 6, 0, 8, 6, 1, 8, 10, 3, 9, 3, 3, 9, 5, 0, 9	# [2128]
+	tab_u8	5, 3, 8, 0, 2, 8, 5, 3, 9, 8, 3, 9, 12, 1, 9, 15	# [2144]
+	tab_u8	2, 8, 0, 0, 8, 0, 1, 8, 0, 2, 8, 0, 3, 8, 1, 0	# [2160]
+	tab_u8	8, 1, 3, 8, 2, 2, 8, 7, 2, 9, 0, 1, 9, 0, 3, 9	# [2176]
+	tab_u8	5, 0, 9, 5, 1, 8, 0, 0, 8, 0, 1, 8, 0, 3, 8, 1	# [2192]
+	tab_u8	0, 8, 2, 1, 8, 4, 0, 8, 5, 0, 8, 5, 3, 8, 11, 0	# [2208]
+	tab_u8	8, 11, 2, 9, 0, 1, 9, 0, 2, 9, 5, 0, 9, 5, 2, 9	# [2224]
+	tab_u8	5, 3, 8, 0, 0, 8, 0, 3, 8, 2, 1, 8, 3, 3, 8, 4	# [2240]
+	tab_u8	0, 8, 4, 1, 8, 6, 1, 8, 6, 2, 8, 10, 0, 8, 10, 2	# [2256]
+	tab_u8	8, 10, 3, 9, 5, 2, 9, 5, 3, 8, 0, 2, 8, 0, 3, 8	# [2272]
+	tab_u8	1, 2, 8, 2, 1, 8, 4, 0, 8, 4, 3, 8, 6, 2, 8, 7	# [2288]
+	tab_u8	2, 8, 10, 2, 8, 11, 0, 8, 11, 3, 9, 15, 2, 8, 0, 1	# [2304]
+	tab_u8	8, 0, 2, 8, 0, 3, 8, 0, 4, 8, 2, 2, 8, 3, 1, 8	# [2320]
+	tab_u8	5, 2, 8, 7, 3, 9, 5, 1, 3, 4, 3, 8, 0, 2, 8, 1	# [2336]
+	tab_u8	0, 8, 1, 1, 8, 1, 2, 8, 1, 3, 8, 5, 2, 12, 0, 0	# [2352]
+	tab_u8	12, 0, 2, 12, 1, 0, 12, 1, 2, 12, 4, 0, 12, 4, 1, 12	# [2368]
+	tab_u8	4, 2, 12, 5, 0, 12, 5, 3, 12, 6, 1, 12, 7, 1, 12, 7	# [2384]
+	tab_u8	2, 12, 7, 3, 12, 9, 0, 12, 9, 3, 12, 10, 0, 12, 10, 1	# [2400]
+	tab_u8	12, 10, 3, 12, 11, 0, 12, 11, 3, 12, 14, 0, 12, 15, 0, 12	# [2416]
+	tab_u8	16, 1, 12, 0, 2, 12, 0, 3, 12, 1, 0, 12, 1, 2, 12, 4	# [2432]
+	tab_u8	1, 12, 4, 2, 12, 4, 3, 12, 5, 1, 12, 5, 2, 12, 6, 0	# [2448]
+	tab_u8	12, 6, 3, 12, 7, 3, 12, 8, 3, 12, 10, 2, 12, 11, 0, 12	# [2464]
+	tab_u8	11, 1, 12, 11, 3, 12, 12, 1, 12, 13, 3, 12, 14, 0, 12, 16	# [2480]
+	tab_u8	0, 12, 0, 1, 12, 1, 3, 12, 2, 0, 12, 2, 2, 12, 3, 0	# [2496]
+	tab_u8	12, 3, 2, 12, 6, 0, 12, 7, 0, 12, 7, 1, 12, 7, 2, 12	# [2512]
+	tab_u8	8, 0, 12, 8, 1, 12, 9, 0, 12, 10, 2, 12, 12, 0, 12, 12	# [2528]
+	tab_u8	3, 12, 13, 0, 12, 13, 3, 12, 14, 2, 12, 14, 3, 12, 15, 0	# [2544]
+	tab_u8	12, 15, 1, 12, 15, 2, 12, 16, 0, 12, 0, 0, 12, 1, 0, 12	# [2560]
+	tab_u8	2, 0, 12, 2, 3, 12, 3, 0, 12, 3, 2, 12, 3, 3, 12, 4	# [2576]
+	tab_u8	0, 12, 4, 1, 12, 4, 3, 12, 5, 0, 12, 6, 0, 12, 7, 0	# [2592]
+	tab_u8	12, 7, 3, 12, 8, 1, 12, 8, 2, 12, 9, 0, 12, 11, 0, 12	# [2608]
+	tab_u8	14, 2, 12, 15, 3, 12, 0, 0, 12, 1, 0, 12, 2, 0, 12, 2	# [2624]
+	tab_u8	3, 12, 3, 0, 12, 3, 3, 12, 5, 0, 12, 5, 2, 12, 6, 0	# [2640]
+	tab_u8	12, 7, 0, 12, 7, 2, 12, 7, 3, 12, 8, 1, 12, 8, 2, 12	# [2656]
+	tab_u8	9, 1, 12, 10, 0, 12, 10, 2, 12, 10, 3, 12, 11, 2, 12, 11	# [2672]
+	tab_u8	4, 12, 12, 0, 12, 12, 1, 12, 12, 2, 12, 13, 0, 12, 13, 1	# [2688]
+	tab_u8	12, 14, 0, 12, 14, 1, 12, 14, 2, 12, 14, 3, 12, 15, 0, 12	# [2704]
+	tab_u8	15, 2, 12, 16, 1, 12, 16, 3, 12, 0, 2, 12, 1, 1, 12, 1	# [2720]
+	tab_u8	2, 12, 1, 3, 12, 2, 1, 12, 2, 3, 12, 3, 0, 12, 4, 0	# [2736]
+	tab_u8	12, 4, 1, 12, 5, 0, 12, 5, 2, 12, 6, 1, 12, 7, 0, 12	# [2752]
+	tab_u8	7, 1, 12, 7, 3, 12, 9, 1, 12, 10, 2, 12, 11, 0, 12, 11	# [2768]
+	tab_u8	1, 12, 11, 2, 12, 11, 3, 12, 12, 2, 12, 12, 3, 12, 13, 0	# [2784]
+	tab_u8	12, 13, 1, 12, 14, 2, 12, 15, 1, 12, 15, 2, 12, 16, 1, 12	# [2800]
+	tab_u8	16, 3, 12, 0, 2, 12, 0, 3, 12, 1, 2, 12, 2, 0, 12, 2	# [2816]
+	tab_u8	2, 12, 2, 3, 12, 2, 1, 12, 6, 2, 12, 6, 3, 12, 8, 2	# [2832]
+	tab_u8	12, 8, 3, 12, 9, 2, 12, 10, 0, 12, 12, 1, 12, 13, 0, 12	# [2848]
+	tab_u8	13, 3, 12, 14, 2, 12, 15, 2, 12, 15, 3, 12, 16, 1, 12, 16	# [2864]
+	tab_u8	3, 12, 0, 3, 12, 2, 2, 12, 2, 3, 12, 3, 0, 12, 3, 3	# [2880]
+	tab_u8	12, 4, 1, 12, 6, 2, 12, 8, 2, 12, 9, 2, 12, 13, 2, 12	# [2896]
+	tab_u8	3, 0, 12, 3, 3, 12, 4, 2, 12, 4, 3, 12, 9, 3, 7, 0	# [2912]
+	tab_u8	0, 7, 0, 1, 7, 1, 0, 7, 1, 1, 7, 2, 3, 7, 3, 0	# [2928]
+	tab_u8	7, 5, 0, 7, 5, 3, 7, 6, 0, 7, 6, 1, 7, 7, 2, 7	# [2944]
+	tab_u8	8, 3, 7, 0, 0, 7, 0, 2, 7, 2, 0, 7, 3, 3, 7, 5	# [2960]
+	tab_u8	0, 7, 6, 1, 7, 7, 0, 7, 3, 2, 7, 9, 1, 7, 9, 2	# [2976]
+	tab_u8	7, 0, 2, 7, 1, 3, 7, 0, 0, 7, 0, 3, 7, 1, 0, 7	# [2992]
+	tab_u8	1, 2, 7, 1, 3, 7, 2, 0, 7, 5, 0, 7, 5, 1, 7, 6	# [3008]
+	tab_u8	0, 7, 7, 2, 7, 9, 1, 7, 9, 3, 7, 3, 2, 7, 0, 0	# [3024]
+	tab_u8	7, 0, 1, 7, 0, 3, 7, 1, 0, 7, 1, 3, 7, 2, 0, 7	# [3040]
+	tab_u8	2, 1, 7, 2, 3, 7, 5, 0, 7, 5, 2, 7, 6, 0, 7, 7	# [3056]
+	tab_u8	1, 7, 9, 1, 7, 9, 2, 7, 3, 0, 7, 3, 1, 7, 0, 0	# [3072]
+	tab_u8	7, 0, 1, 7, 1, 1, 7, 1, 2, 7, 1, 3, 7, 2, 0, 7	# [3088]
+	tab_u8	2, 3, 7, 5, 2, 7, 6, 1, 7, 6, 3, 7, 7, 0, 7, 7	# [3104]
+	tab_u8	1, 7, 3, 0, 7, 0, 0, 7, 0, 1, 7, 0, 2, 7, 0, 3	# [3120]
+	tab_u8	7, 1, 1, 7, 2, 0, 7, 2, 2, 7, 5, 1, 7, 6, 3, 7	# [3136]
+	tab_u8	9, 3, 7, 3, 0, 7, 3, 2, 7, 7, 0, 7, 8, 1, 7, 8	# [3152]
+	tab_u8	2, 7, 8, 0, 7, 7, 2, 7, 7, 3, 7, 8, 1, 7, 8, 3	# [3168]
+	tab_u8	2, 5, 0, 2, 5, 1, 2, 5, 2, 2, 8, 0, 2, 14, 0, 2	# [3184]
+	tab_u8	15, 3, 4, 4, 0, 4, 4, 2, 4, 4, 3, 7, 10, 0, 7, 10	# [3200]
+	tab_u8	1, 9, 6, 0, 9, 6, 1, 2, 5, 1, 2, 5, 3, 2, 8, 0	# [3216]
+	tab_u8	2, 8, 1, 2, 8, 2, 2, 8, 3, 2, 13, 1, 2, 14, 0, 2	# [3232]
+	tab_u8	14, 2, 2, 15, 0, 2, 15, 2, 4, 4, 0, 4, 4, 3, 6, 4	# [3248]
+	tab_u8	1, 9, 6, 0, 9, 6, 1, 4, 4, 1, 4, 4, 2, 11, 2, 2	# [3264]
+	tab_u8	2, 14, 0, 2, 5, 0, 2, 5, 3, 2, 8, 0, 2, 13, 1, 2	# [3280]
+	tab_u8	14, 1, 2, 14, 2, 2, 15, 2, 6, 4, 2, 9, 6, 3, 2, 5	# [3296]
+	tab_u8	0, 2, 8, 0, 2, 8, 2, 2, 13, 2, 2, 13, 3, 2, 14, 0	# [3312]
+	tab_u8	2, 14, 2, 2, 14, 3, 2, 15, 2, 2, 15, 3, 6, 4, 1, 6	# [3328]
+	tab_u8	4, 3, 9, 6, 1, 9, 6, 3, 2, 5, 0, 2, 8, 0, 2, 8	# [3344]
+	tab_u8	1, 2, 8, 3, 2, 11, 2, 2, 11, 3, 2, 14, 2, 2, 15, 0	# [3360]
+	tab_u8	2, 15, 1, 2, 15, 3, 7, 10, 0, 7, 10, 3, 9, 6, 2, 2	# [3376]
+	tab_u8	5, 0, 2, 5, 2, 2, 5, 3, 2, 8, 0, 2, 8, 2, 2, 8	# [3392]
+	tab_u8	3, 2, 9, 0, 2, 14, 0, 2, 14, 1, 2, 15, 2, 2, 15, 3	# [3408]
+	tab_u8	4, 4, 3, 9, 6, 3, 2, 5, 1, 2, 8, 3, 9, 6, 3, 11	# [3424]
+	tab_u8	2, 3, 2, 5, 3, 7, 11, 1, 11, 2, 3, 10, 5, 0, 10, 6	# [3440]
+	tab_u8	0, 10, 7, 0, 10, 7, 1, 10, 7, 2, 10, 8, 0, 10, 9, 0	# [3456]
+	tab_u8	10, 9, 1, 10, 9, 3, 6, 5, 0, 6, 5, 1, 6, 5, 2, 6	# [3472]
+	tab_u8	5, 3, 7, 4, 0, 7, 4, 3, 8, 8, 0, 8, 8, 1, 8, 8	# [3488]
+	tab_u8	2, 8, 8, 3, 8, 9, 0, 8, 9, 2, 10, 5, 0, 10, 5, 1	# [3504]
+	tab_u8	10, 5, 3, 10, 6, 0, 10, 6, 1, 10, 7, 0, 10, 7, 1, 10	# [3520]
+	tab_u8	7, 3, 10, 8, 0, 10, 8, 1, 10, 9, 0, 10, 9, 1, 10, 9	# [3536]
+	tab_u8	2, 6, 5, 0, 6, 5, 2, 6, 5, 3, 7, 4, 0, 7, 4, 1	# [3552]
+	tab_u8	7, 4, 3, 8, 8, 2, 8, 9, 1, 10, 8, 3, 8, 9, 3, 10	# [3568]
+	tab_u8	5, 0, 10, 5, 3, 10, 6, 0, 10, 6, 1, 10, 6, 2, 10, 7	# [3584]
+	tab_u8	0, 10, 7, 1, 10, 7, 3, 10, 8, 0, 10, 8, 3, 10, 9, 0	# [3600]
+	tab_u8	10, 9, 1, 10, 9, 3, 6, 5, 0, 6, 5, 2, 6, 5, 3, 7	# [3616]
+	tab_u8	4, 0, 7, 4, 1, 7, 4, 2, 8, 8, 0, 8, 8, 1, 8, 8	# [3632]
+	tab_u8	2, 8, 9, 0, 8, 9, 3, 10, 5, 0, 10, 6, 1, 10, 6, 2	# [3648]
+	tab_u8	10, 6, 3, 10, 7, 0, 10, 7, 2, 10, 8, 0, 10, 8, 2, 10	# [3664]
+	tab_u8	8, 3, 10, 9, 0, 10, 9, 1, 10, 9, 2, 10, 9, 3, 6, 5	# [3680]
+	tab_u8	0, 6, 5, 1, 7, 4, 0, 7, 4, 1, 7, 4, 2, 7, 4, 3	# [3696]
+	tab_u8	8, 8, 0, 8, 8, 1, 8, 8, 3, 8, 9, 0, 8, 9, 2, 10	# [3712]
+	tab_u8	5, 0, 10, 5, 1, 10, 6, 0, 10, 6, 1, 10, 6, 2, 10, 6	# [3728]
+	tab_u8	3, 10, 7, 0, 10, 7, 1, 10, 7, 2, 10, 7, 3, 10, 8, 0	# [3744]
+	tab_u8	10, 8, 2, 10, 9, 0, 10, 9, 1, 10, 9, 2, 10, 9, 3, 6	# [3760]
+	tab_u8	5, 1, 6, 5, 2, 7, 4, 0, 7, 4, 3, 8, 8, 2, 8, 8	# [3776]
+	tab_u8	3, 8, 9, 0, 8, 9, 3, 10, 5, 0, 10, 5, 1, 10, 5, 3	# [3792]
+	tab_u8	10, 6, 1, 10, 6, 3, 10, 7, 1, 10, 7, 2, 10, 7, 3, 10	# [3808]
+	tab_u8	8, 2, 10, 8, 3, 10, 9, 1, 10, 9, 2, 10, 9, 3, 10, 5	# [3824]
+	tab_u8	2, 10, 4, 0, 10, 4, 1, 10, 4, 2, 10, 4, 3, 10, 8, 1	# [3840]
+	tab_u8	10, 8, 2, 10, 8, 3, 10, 9, 3, 10, 5, 0, 10, 0, 1, 10	# [3856]
+	tab_u8	6, 2, 10, 7, 3, 7, 4, 3, 10, 5, 3, 10, 6, 2, 10, 6	# [3872]
+	tab_u8	3, 255	# [3888]
+data_4C3855C0_p0_0:	# REC_data_4C3855C0_p0 (36 bytes), then 342 x u16 the code indexes from +18 (read by func_4C05D626_entry_L2c 0x4C05D657 `movhu (0x12, a0), d0`; func_4C05D626_entry_L144 0x4C05D76F `movhu (d0, a0), d0` (+3))
 	REC_data_4C3855C0_p0	x0="     8 Beat     \x00\x00\x17\x00\x15\x00\x0B\x00\x1B\x00\x1C\x00%\x00\x11\x00\x0F\x00\x0C\x00"
-
-data_4C3855C0_p0_0_Tail:	# 9 pointers after data_4C3855C0_p0_0: the array its kind's computed-offset read indexes (func_4C05D626_entry_L2c 0x4C05D657 `movhu (0x12, a0), d0`; func_4C05D626_entry_L144 0x4C05D76F `movhu (d0, a0), d0` (+3)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
-	.long	data_4C3855C0_p0_p36_0
-	.long	data_4C257209
-	.long	data_4C257248
-	.long	data_4C257269
-	.long	data_4C2572BA
-	.long	data_4C25730E
-	.long	data_4C25737D
-	.long	data_4C2573B0
-	.long	data_4C2573DD
-# census: opaque -- unknown-dump: 648 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x258140, 0x2583C8
+	tab_u16	29124, 19493, 29193, 19493, 29256, 19493, 29289, 19493, 29370, 19493, 29454, 19493, 29565, 19493, 29616, 19493	# [0]
+	tab_u16	29661, 19493, 8224, 8224, 13873, 16928, 24933, 8308, 8224, 8224, 0, 26, 25, 6, 24, 29	# [16]
+	tab_u16	23, 21, 14, 8, 29697, 19493, 29775, 19493, 29850, 19493, 29868, 19493, 29940, 19493, 30027, 19493	# [32]
+	tab_u16	30096, 19493, 30159, 19493, 30201, 19493, 8224, 17440, 28257, 25955, 20512, 28783, 8224, 8224, 0, 17	# [48]
+	tab_u16	22, 14, 22, 17, 13, 14, 12, 3, 30225, 19493, 30276, 19493, 30342, 19493, 30384, 19493	# [64]
+	tab_u16	30450, 19493, 30501, 19493, 30540, 19493, 30582, 19493, 30618, 19493, 8224, 24906, 31354, 17952, 29557, 28521	# [80]
+	tab_u16	8302, 8224, 0, 16, 13, 11, 13, 11, 12, 11, 8, 7, 30627, 19493, 30675, 19493	# [96]
+	tab_u16	30714, 19493, 30747, 19493, 30786, 19493, 30819, 19493, 30855, 19493, 30888, 19493, 30912, 19493, 8224, 24909	# [112]
+	tab_u16	25458, 12136, 28496, 27500, 8289, 8224, 0, 10, 10, 2, 11, 16, 12, 12, 11, 8	# [128]
+	tab_u16	30933, 19493, 30963, 19493, 30993, 19493, 30999, 19493, 31032, 19493, 31080, 19493, 31116, 19493, 31152, 19493	# [144]
+	tab_u16	31185, 19493, 8224, 8224, 21280, 26999, 26478, 8224, 8224, 8224, 0, 9, 12, 5, 12, 15	# [160]
+	tab_u16	13, 12, 9, 7, 31209, 19493, 31236, 19493, 31272, 19493, 31287, 19493, 31323, 19493, 31368, 19493	# [176]
+	tab_u16	31407, 19493, 31443, 19493, 31470, 19493, 8224, 8224, 19488, 29793, 28265, 8224, 8224, 8224, 0, 23	# [192]
+	tab_u16	21, 24, 20, 33, 30, 21, 10, 5, 31491, 19493, 31560, 19493, 31623, 19493, 31695, 19493	# [208]
+	tab_u16	31755, 19493, 31854, 19493, 31944, 19493, 32007, 19493, 32037, 19493, 8224, 8224, 28483, 28277, 29300, 8313	# [224]
+	tab_u16	8224, 8224, 0, 12, 10, 2, 13, 16, 13, 12, 4, 4, 32052, 19493, 32088, 19493	# [240]
+	tab_u16	32118, 19493, 32124, 19493, 32163, 19493, 32211, 19493, 32250, 19493, 32286, 19493, 32298, 19493, 8224, 28498	# [256]
+	tab_u16	27491, 16928, 27745, 24940, 8292, 8224, 0, 13, 16, 3, 10, 14, 13, 13, 4, 3	# [272]
+	tab_u16	32310, 19493, 32349, 19493, 32397, 19493, 32406, 19493, 32436, 19493, 32478, 19493, 32517, 19493, 32556, 19493	# [288]
+	tab_u16	32568, 19493, 8224, 8224, 22304, 27745, 31348, 8224, 8224, 8224, 0, 21, 21, 2, 24, 24	# [304]
+	tab_u16	24, 22, 5, 3, 32577, 19493, 32640, 19493, 32703, 19493, 32709, 19493, 32781, 19493, 32853, 19493	# [320]
+	tab_u16	32925, 19493, 32991, 19493, 33006, 19493	# [336]
 
 Str_1_0_4_9:	.asciz "1.0.4"
 	.align	4, 0xFF	# pad after Str_1_0_4_9
@@ -28636,21 +28867,21 @@ CusLoadSaveSrcDstFunc_Le6_Var_2:	# u32, a constant; read / written by CusLoadSav
 func_4C13A18F_Table:	# 4 x u8, 0..255; read by FmmSaveTitleFunc : `movbu	(a0), d0`; func_4C13A18F_entry : `movbu	(a0), d0`
 	tab_u8	0, 0, 255, 255
 
-func_4C13A5F0_entry_L19_Table:	# 14 x REC_func_4C13A5F0_entry_L19_Table (4 bytes each); read by func_4C13A5F0_entry_L47 0x4C13A639 `movbu (2, a0), d0`; func_4C13A5F0_entry_L47 0x4C13A639 `movbu (2, a1), d1`
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xFE\xFF", f2=1, x3="\x00"	# [0]
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xFD\xFF", f2=5, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xFC\xFF", f2=7, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xFA\xFF", f2=8, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xF9\xFF", x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xF8\xFF", f2=2, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\xF5\xFF", f2=6, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x9B\xFF", f2=7, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x9A\xFF", x3="\x00"	# [8]
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x98\xFF", f2=3, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x97\xFF", f2=61, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x95\xFF", f2=15, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x94\xFF", f2=82, x3="\x00"
-	REC_func_4C13A5F0_entry_L19_Table	x0="\x00\x00", f2=255, x3="\x00"
+func_4C13A5F0_entry_L19_Table:	# 14 x REC_func_4C13A5F0_entry_L19_Table (4 bytes each); read by func_4C13A5F0_entry_L19 0x4C13A60B `movhu (d0, a0), d0`; func_4C13A5F0_entry_L47 0x4C13A639 `movbu (2, a0), d0`; func_4C13A5F0_entry_L47 0x4C13A639 `movbu (2, a1), d1`
+	REC_func_4C13A5F0_entry_L19_Table	f0=-2, f2=1, x3="\x00"	# [0]
+	REC_func_4C13A5F0_entry_L19_Table	f0=-3, f2=5, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-4, f2=7, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-6, f2=8, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-7, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-8, f2=2, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-11, f2=6, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-101, f2=7, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-102, x3="\x00"	# [8]
+	REC_func_4C13A5F0_entry_L19_Table	f0=-104, f2=3, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-105, f2=61, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-107, f2=15, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f0=-108, f2=82, x3="\x00"
+	REC_func_4C13A5F0_entry_L19_Table	f2=255, x3="\x00"
 
 Str_empty_331:	.asciz "______"
 	.align	4, 0xFF	# pad after Str_empty_331
@@ -29162,18 +29393,18 @@ Str_rb_22:	.asciz "rb"
 Str_rb_21:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_21
 
-DiskLoadDispatch_entry_L11_Table:	# 11 x {u32 key, code address}: a dispatch table; read by DiskLoadDispatch_entry_L38 0x4C14A959 `movbu (d0, a2), d0`; DiskLoadDispatch_entry_L38 0x4C14A959 `movbu (d1, a2), d1` (+1)
-	.long	6, func_4C14A4CA
-	.long	4, func_4C14A38A
-	.long	0, func_4C1499D0
-	.long	1, func_4C149B00
-	.long	5, func_4C14A2BE
-	.long	3, func_4C14A1F2
-	.long	2, func_4C149CE0
-	.long	7, func_4C149C7C
-	.long	8, func_4C14A58E
-	.long	9, func_4C14A5F2
-	.long	10, func_4C14A656
+DiskLoadDispatch_entry_L11_Table:	# 11 x REC_DiskLoadDispatch_entry_L11_Table (8 bytes each); read by DiskLoadDispatch_entry_L38 0x4C14A959 `mov (4, a0), a1`; DiskLoadDispatch_entry_L38 0x4C14A959 `movbu (d0, a2), d0`; DiskLoadDispatch_entry_L38 0x4C14A959 `movbu (d1, a2), d1` (+1)
+	REC_DiskLoadDispatch_entry_L11_Table	f0=6, x1="\x00\x00\x00", proc=func_4C14A4CA	# [0]
+	REC_DiskLoadDispatch_entry_L11_Table	f0=4, x1="\x00\x00\x00", proc=func_4C14A38A
+	REC_DiskLoadDispatch_entry_L11_Table	x1="\x00\x00\x00", proc=func_4C1499D0
+	REC_DiskLoadDispatch_entry_L11_Table	f0=1, x1="\x00\x00\x00", proc=func_4C149B00
+	REC_DiskLoadDispatch_entry_L11_Table	f0=5, x1="\x00\x00\x00", proc=func_4C14A2BE
+	REC_DiskLoadDispatch_entry_L11_Table	f0=3, x1="\x00\x00\x00", proc=func_4C14A1F2
+	REC_DiskLoadDispatch_entry_L11_Table	f0=2, x1="\x00\x00\x00", proc=func_4C149CE0
+	REC_DiskLoadDispatch_entry_L11_Table	f0=7, x1="\x00\x00\x00", proc=func_4C149C7C
+	REC_DiskLoadDispatch_entry_L11_Table	f0=8, x1="\x00\x00\x00", proc=func_4C14A58E	# [8]
+	REC_DiskLoadDispatch_entry_L11_Table	f0=9, x1="\x00\x00\x00", proc=func_4C14A5F2
+	REC_DiskLoadDispatch_entry_L11_Table	f0=10, x1="\x00\x00\x00", proc=func_4C14A656
 
 Str_I_K_3:	.asciz "I K"
 Str_I_K_2:	.asciz "I K"
@@ -29202,18 +29433,18 @@ Str_wb_5:	.asciz "wb"
 Str_wb_4:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_4
 
-func_4C14B6F4_entry_L11_Table:	# 11 x {u32 key, code address}: a dispatch table; read by func_4C14B6F4_entry_L36 0x4C14B72F `movbu (d0, a2), d0`; func_4C14B6F4_entry_L9e 0x4C14B797 `movbu (d0, a2), d0` (+1)
-	.long	0, func_4C14AB84
-	.long	1, func_4C14ACE7
-	.long	5, func_4C14B24A
-	.long	3, func_4C14B189
-	.long	4, func_4C14B30B
-	.long	2, func_4C14B044
-	.long	6, func_4C14AF83
-	.long	7, func_4C14AE15
-	.long	8, func_4C14AE8F
-	.long	9, func_4C14AF09
-	.long	10, func_4C14B591
+func_4C14B6F4_entry_L11_Table:	# 11 x REC_func_4C14B6F4_entry_L11_Table (8 bytes each); read by func_4C14B6F4_entry_L36 0x4C14B72F `movbu (d0, a2), d0`; func_4C14B6F4_entry_L9e 0x4C14B797 `mov (4, a0), a1`; func_4C14B6F4_entry_L9e 0x4C14B797 `movbu (d0, a2), d0` (+1)
+	REC_func_4C14B6F4_entry_L11_Table	x1="\x00\x00\x00", proc=func_4C14AB84	# [0]
+	REC_func_4C14B6F4_entry_L11_Table	f0=1, x1="\x00\x00\x00", proc=func_4C14ACE7
+	REC_func_4C14B6F4_entry_L11_Table	f0=5, x1="\x00\x00\x00", proc=func_4C14B24A
+	REC_func_4C14B6F4_entry_L11_Table	f0=3, x1="\x00\x00\x00", proc=func_4C14B189
+	REC_func_4C14B6F4_entry_L11_Table	f0=4, x1="\x00\x00\x00", proc=func_4C14B30B
+	REC_func_4C14B6F4_entry_L11_Table	f0=2, x1="\x00\x00\x00", proc=func_4C14B044
+	REC_func_4C14B6F4_entry_L11_Table	f0=6, x1="\x00\x00\x00", proc=func_4C14AF83
+	REC_func_4C14B6F4_entry_L11_Table	f0=7, x1="\x00\x00\x00", proc=func_4C14AE15
+	REC_func_4C14B6F4_entry_L11_Table	f0=8, x1="\x00\x00\x00", proc=func_4C14AE8F	# [8]
+	REC_func_4C14B6F4_entry_L11_Table	f0=9, x1="\x00\x00\x00", proc=func_4C14AF09
+	REC_func_4C14B6F4_entry_L11_Table	f0=10, x1="\x00\x00\x00", proc=func_4C14B591
 
 Str_rb_20:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_20
@@ -39748,9 +39979,9 @@ func_4C1674C2_Table_p8_1:	# REC_func_4C1674C2_Table_p8 (280 bytes)
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x276B88, 0x276BB0
 
-func_4C1674C2_Table:	# 2 x REC_func_4C1674C2_Table (32 bytes each); read by func_4C16722B 0x4C16722B `mov (8, a0), a0`; FlashSectorErase 0x4C1672A1 `mov (8, a0), a0`; func_4C1672FF 0x4C1672FF `mov (8, a0), a0` (+11)
-	REC_func_4C1674C2_Table	x0="\x04\x00I\"", f4=35, x6="\x00\x00", p8=func_4C1674C2_Table_p8_0, x12=" MBM29LV160B    \x00\x00\x00\x00"
-	REC_func_4C1674C2_Table	x0="\x1F\x00\xC0\x00", f4=40, x6="\x00\x00", p8=func_4C1674C2_Table_p8_1, x12=" AT49BV16X4     \x00\x00\x00\x00"
+func_4C1674C2_Table:	# 2 x REC_func_4C1674C2_Table (32 bytes each); read by func_4C16722B 0x4C16722B `mov (8, a0), a0`; FlashSectorErase 0x4C1672A1 `mov (8, a0), a0`; func_4C1672FF 0x4C1672FF `mov (8, a0), a0` (+13)
+	REC_func_4C1674C2_Table	key=4, key_=8777, f4=35, x6="\x00\x00", p8=func_4C1674C2_Table_p8_0, x12=" MBM29LV160B    \x00\x00\x00\x00"
+	REC_func_4C1674C2_Table	key=31, key_=192, f4=40, x6="\x00\x00", p8=func_4C1674C2_Table_p8_1, x12=" AT49BV16X4     \x00\x00\x00\x00"
 
 func_4C1678C1_Table:	# 8 x u8, 1..255; read by func_4C1678C1_entry : `movbu	(a1), d0`
 	tab_u8	240, 126, 127, 9, 1, 247, 255, 255
@@ -39795,210 +40026,3 @@ func_4C1694E0_Table_5:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14
 func_4C1694E0_Table_6:	# 16 x u8, 0..15; read by func_4C1694E0_entry : `movbu	(a1), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
-
-Str_A_5:	.asciz "A:\\"
-	.space	28, 0x00
-Str_rb_2:	.asciz "rb"
-	.align	4, 0xFF	# pad after Str_rb_2
-
-func_4C169899_Table:	# 8 x u8, 0..255; read by func_4C169899_entry : `movbu	(a1), d0`
-	tab_u8	4, 176, 0, 141, 0, 255, 255, 255
-func_4C169D32_Table:	# 12 x u8, 0..255; read by func_4C169D32_entry : `movbu	(a1), d1`
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C169ECC_Table:	# 12 x u8, 0..255; read by func_4C169ECC : `movbu	(a1), d0`
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C169ECC_Table_2:	# 32 x u8, 0..128; read by func_4C169ECC : `movbu	(a1), d0`
-	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
-	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
-func_4C169ECC_Ldc_Table:	# 32 x u8, 0..128; read by func_4C169ECC : `movbu	(a1), d0`
-	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
-	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
-
-func_4C16838A_entry_L32_Table:
-	.long	func_4C16838A_entry_L3f
-	.long	loc_4C1683EA
-	.long	loc_4C168402
-	.long	loc_4C168407
-	.long	loc_4C168442
-	.long	loc_4C1684EE
-	.long	loc_4C16847A
-	.long	loc_4C16847A
-	.long	loc_4C1684EE
-	.long	loc_4C16847D
-	.long	loc_4C1684EE
-	.long	loc_4C168495
-	.long	loc_4C1684EE
-	.long	loc_4C1684EE
-	.long	loc_4C1684BF
-	.long	func_4C16838A_entry_L147
-
-func_4C3F674B_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C3F66BF reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3F674B 0x4C3F674B reads through its argument a0 (passed by cre_tsk_L3d 0x4C3F66FC `call func_4C3F674B_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C16A13A, itskpri=3, x14="\x00\x00", stksz=3072
-
-func_4C3F5298_Table_2:	# 2 x u32, 0..0; read by func_4C3F5298 0x4C3F5298: `mov (a3), d2`
-	tab_u32	0, 0
-func_4C3F5298_Table_3:	# 2 x u32, 0..0; read by func_4C3F5298 0x4C3F5298: `mov (a3), d2`
-	tab_u32	0, 0
-
-Str_empty_291:	.asciz "\xFF/"
-	.align	4, 0xFF	# pad after Str_empty_291
-
-func_4C16AB6D_Table:	# 8 x u8, 0..255; read by func_4C16AB6D_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 0, 0, 0, 255, 255, 255
-
-Str_rb:	.asciz "rb"
-	.align	4, 0xFF	# pad after Str_rb
-
-func_4C16B743_La1_Table:	# 6 x s8, -24..24; read by func_4C16B743 : `movbu	(d0, a0), d0`
-	tab_s8	0, 0, 24, -24, 0, 0
-func_4C16B743_L29_Table:	# 6 x u8, 0..127; read by func_4C16B743 : `movbu	(d0, a0), d0`; func_4C16B743 : `movbu	(d0, a0), d1` ...
-	tab_u8	127, 127, 127, 127, 0, 116
-func_4C16B743_La1_Table_2:	# 12 x u16, 0..8; read by func_4C16B743_La1 0x4C16B7E4: `movhu	(d0, a0), d0`; func_4C16B8A3_Lbd 0x4C16B960: `movhu	(d0, a0), d0`
-	tab_u16	0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
-func_4C16B743_La1_Table_3:	# 12 x u16, 0..0; read by func_4C16B743_La1 0x4C16B7E4: `movhu	(d0, a0), d0`; func_4C16B8A3_Lbd 0x4C16B960: `movhu	(d0, a0), d2`
-	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-func_4C16B8A3_Lbd_Table:	# 12 x u16, 0..127; read by func_4C16B8A3_Lbd 0x4C16B960: `movhu	(d1, a0), d1`
-	tab_u16	0, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127
-func_4C16BBD1_Table:	# 12 x u8, 0..1; read by func_4C16BBD1_entry : `movbu	(d0, a0), d0`; func_4C16BC14_entry : `movbu	(d0, a0), d0`
-	tab_u8	0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-func_4C16BC14_entry_L12e_Table:	# 4 x u32, 1088358566..1092983395; read by func_4C16BC14_entry_L12e 0x4C16BD45: `mov	(d0, a0), d0`; func_4C16BC14_entry_L27b 0x4C16BE92: `mov	(d0, a0), d0`
-	tab_u32	1088549686, 1088358566, 1092983395, 1092445574
-
-FnName_FtLangText01:	.asciz "FtLangText01"
-FnName_FtLangText01s:	.asciz "FtLangText01s"
-FnName_FtLangText02:	.asciz "FtLangText02"
-FnName_FtLangText03:	.asciz "FtLangText03"
-FnName_FtLangText04:	.asciz "FtLangText04"
-FnName_FtLangText05:	.asciz "FtLangText05"
-FnName_FtLangText06:	.asciz "FtLangText06"
-FnName_FtLangText07:	.asciz "FtLangText07"
-FnName_FtLangText08:	.asciz "FtLangText08"
-FnName_FtLangText09:	.asciz "FtLangText09"
-FnName_FtLangText10:	.asciz "FtLangText10"
-FnName_FtLangText11:	.asciz "FtLangText11"
-FnName_FtLangText12:	.asciz "FtLangText12"
-FnName_FtLangText13:	.asciz "FtLangText13"
-FnName_FtLangText14:	.asciz "FtLangText14"
-FnName_FtLangText15:	.asciz "FtLangText15"
-FnName_FtLangText16:	.asciz "FtLangText16"
-FnName_FtLangText17:	.asciz "FtLangText17"
-FnName_FtLangText18:	.asciz "FtLangText18"
-FnName_FtLangText19:	.asciz "FtLangText19"
-FnName_FtLangText20:	.asciz "FtLangText20"
-FnName_FtLangText21:	.asciz "FtLangText21"
-FnName_FtLangText21s:	.asciz "FtLangText21s"
-FnName_FtLangText21g:	.asciz "FtLangText21g"
-FnName_FtLangText21sg:	.asciz "FtLangText21sg"
-FnName_FtLangText22:	.asciz "FtLangText22"
-FnName_FtLangText23:	.asciz "FtLangText23"
-FnName_FtLangText24:	.asciz "FtLangText24"
-FnName_FtLangText25:	.asciz "FtLangText25"
-FnName_FtLangText26:	.asciz "FtLangText26"
-FnName_FtLangText27:	.asciz "FtLangText27"
-FnName_FtLangText28:	.asciz "FtLangText28"
-FnName_FtLangText29:	.asciz "FtLangText29"
-FnName_FtLangText30:	.asciz "FtLangText30"
-FnName_FtLangText31:	.asciz "FtLangText31"
-FnName_FtLangText32:	.asciz "FtLangText32"
-FnName_FtLangText33:	.asciz "FtLangText33"
-FnName_FtLangText34:	.asciz "FtLangText34"
-FnName_FtLangText35:	.asciz "FtLangText35"
-FnName_FtLangText36:	.asciz "FtLangText36"
-FnName_FtLangText37:	.asciz "FtLangText37"
-FnName_FtLangText38:	.asciz "FtLangText38"
-FnName_FtLangText39:	.asciz "FtLangText39"
-FnName_FtLangText40:	.asciz "FtLangText40"
-FnName_FtLangText41:	.asciz "FtLangText41"
-FnName_FtLangText42:	.asciz "FtLangText42"
-FnName_FtLangText43:	.asciz "FtLangText43"
-FnName_FtLangText44:	.asciz "FtLangText44"
-FnName_FtLangText45:	.asciz "FtLangText45"
-FnName_FtLangText46:	.asciz "FtLangText46"
-FnName_FtLangText47:	.asciz "FtLangText47"
-FnName_FtLangText48:	.asciz "FtLangText48"
-FnName_FtLangText49:	.asciz "FtLangText49"
-FnName_FtLangText50:	.asciz "FtLangText50"
-FnName_FtLangText51:	.asciz "FtLangText51"
-FnName_FtLangText52:	.asciz "FtLangText52"
-FnName_FtLangText53:	.asciz "FtLangText53"
-FnName_FtLangText54:	.asciz "FtLangText54"
-FnName_FtLangText55:	.asciz "FtLangText55"
-FnName_FtLangText56:	.asciz "FtLangText56"
-FnName_FtLangText56s:	.asciz "FtLangText56s"
-FnName_FtLangText57:	.asciz "FtLangText57"
-FnName_FtLangText57s:	.asciz "FtLangText57s"
-FnName_FtLangText58:	.asciz "FtLangText58"
-FnName_FtLangText59:	.asciz "FtLangText59"
-FnName_FtLangText60:	.asciz "FtLangText60"
-FnName_FtLangText61:	.asciz "FtLangText61"
-FnName_FtLangText62:	.asciz "FtLangText62"
-FnName_FtLangText63:	.asciz "FtLangText63"
-FnName_FtLangText64:	.asciz "FtLangText64"
-FnName_FtLangText65:	.asciz "FtLangText65"
-FnName_DemoJpgDataA1:	.asciz "DemoJpgDataA1"
-FnName_DemoJpgDataA2:	.asciz "DemoJpgDataA2"
-FnName_DemoJpgDataA3:	.asciz "DemoJpgDataA3"
-FnName_DemoJpgDataA4:	.asciz "DemoJpgDataA4"
-FnName_DemoJpgDataA5:	.asciz "DemoJpgDataA5"
-FnName_DemoJpgDataA6:	.asciz "DemoJpgDataA6"
-FnName_DemoJpgDataB1:	.asciz "DemoJpgDataB1"
-FnName_DemoJpgDataB2:	.asciz "DemoJpgDataB2"
-FnName_DemoJpgDataB3:	.asciz "DemoJpgDataB3"
-FnName_DemoJpgDataB4:	.asciz "DemoJpgDataB4"
-FnName_DemoJpgDataC1:	.asciz "DemoJpgDataC1"
-FnName_DemoJpgDataD1:	.asciz "DemoJpgDataD1"
-FnName_DemoJpgDataD2:	.asciz "DemoJpgDataD2"
-FnName_DemoJpgDataD3:	.asciz "DemoJpgDataD3"
-FnName_DemoJpgDataD4:	.asciz "DemoJpgDataD4"
-FnName_DemoJpgDataE1:	.asciz "DemoJpgDataE1"
-FnName_DemoJpgDataE2:	.asciz "DemoJpgDataE2"
-FnName_DemoJpgDataE3:	.asciz "DemoJpgDataE3"
-FnName_DemoJpgDataF1:	.asciz "DemoJpgDataF1"
-FnName_DemoJpgDataF2:	.asciz "DemoJpgDataF2"
-FnName_DemoJpgDataF3:	.asciz "DemoJpgDataF3"
-FnName_DemoJpgDataF4:	.asciz "DemoJpgDataF4"
-FnName_DemoJpgDataG1:	.asciz "DemoJpgDataG1"
-FnName_DemoJpgDataG2:	.asciz "DemoJpgDataG2"
-FnName_DemoJpgDataG3:	.asciz "DemoJpgDataG3"
-FnName_DemoJpgDataG4:	.asciz "DemoJpgDataG4"
-FnName_DemoJpgDataH1:	.asciz "DemoJpgDataH1"
-FnName_DemoJpgDataH2:	.asciz "DemoJpgDataH2"
-FnName_DemoJpgDataI1:	.asciz "DemoJpgDataI1"
-FnName_DemoJpgDataI2:	.asciz "DemoJpgDataI2"
-FnName_DemoJpgDataI3:	.asciz "DemoJpgDataI3"
-FnName_DemoJpgDataJ2:	.asciz "DemoJpgDataJ2"
-FnName_DemoJpgDataJ3:	.asciz "DemoJpgDataJ3"
-FnName_DemoJpgDataJ4:	.asciz "DemoJpgDataJ4"
-FnName_DemoJpgDataJ5:	.asciz "DemoJpgDataJ5"
-FnName_DemoJpgDataC2:	.asciz "DemoJpgDataC2"
-FnName_DemoJpgDataC3:	.asciz "DemoJpgDataC3"
-FnName_DemoJpgDataC4:	.asciz "DemoJpgDataC4"
-FnName_DemoJpgDataK1:	.asciz "DemoJpgDataK1"
-FnName_DemoJpgDataK2:	.asciz "DemoJpgDataK2"
-FnName_DemoJpgDataK3:	.asciz "DemoJpgDataK3"
-FnName_DemoJpgDataK4:	.asciz "DemoJpgDataK4"
-FnName_DemoJpgDataL1:	.asciz "DemoJpgDataL1"
-FnName_DemoJpgDataL2:	.asciz "DemoJpgDataL2"
-FnName_DemoJpgDataL3:	.asciz "DemoJpgDataL3"
-FnName_DemoJpgDataL4:	.asciz "DemoJpgDataL4"
-FnName_DemoJpgDataD5:	.asciz "DemoJpgDataD5"
-FnName_DemoJpgDataH3:	.asciz "DemoJpgDataH3"
-FnName_DemoJpgDataH4:	.asciz "DemoJpgDataH4"
-FnName_DemoJpgDataL5:	.asciz "DemoJpgDataL5"
-FnName_DemoJpgDataL6:	.asciz "DemoJpgDataL6"
-FnName_DemoJpgDataL7:	.asciz "DemoJpgDataL7"
-FnName_DemoJpgDataL8:	.asciz "DemoJpgDataL8"
-data_4C2774F0:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x2774F0, 0x2774F4
-data_4C2774F4:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x2774F4, 0x2774F8
-data_4C2774F8:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x2774F8, 0x2774FC
-
-	Screen	demo1_1, sub=demo1_1_Label_Dummy, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=demo1_1_window
-
-Str_Dummy:	.asciz "Dummy"
-	.align	4, 0xFF	# pad after Str_Dummy
