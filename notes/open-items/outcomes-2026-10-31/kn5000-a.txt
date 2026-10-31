@@ -1,0 +1,37 @@
+N-045aedde  CLOSED   c9134b790
+N-b6c6521a  CLOSED   c9134b790
+N-fdf5a34c  CLOSED   c9134b790 + 03a2f1719
+N-b4e8e54c  CLOSED   1831067af (8 rows need a person: v7's name is on another v10 label)
+N-bc8cf677  CLOSED   347455a0f
+N-830904fd  CLOSED   4de15f9e4
+N-ec33691a  CLOSED   4de15f9e4
+T-kn5000-v10-todo-the-name  CLOSED   4de15f9e4
+N-99d09c1a  CLOSED   ff4fed6da
+N-edecc6e4  CLOSED   ff4fed6da
+N-b6dceb67  CLOSED   ff4fed6da + 4de15f9e4
+N-42c40102  CLOSED   ff4fed6da
+N-d4782271  CLOSED   347455a0f
+N-ef0b5633  CLOSED   347455a0f + 515f89b21
+N-94f26143  CLOSED   347455a0f
+N-4aa9f799  CLOSED   ccc46cf31 (33 of 35; PANEL_REC_68/_9A have no reader)
+N-b5219071  CLOSED   ccc46cf31
+T-kn5000-tabledata-todo-identify-what  CLOSED   81875bdd9
+N-b0077010  CLOSED   588a2d1a2
+N-94c35266  CLOSED   588a2d1a2
+N-628bbeaf  CLOSED   53d18ccc6
+N-a7314f90  CLOSED   53d18ccc6
+N-ae3d1690  CLOSED   53d18ccc6
+N-8f4e2d69  CLOSED   53d18ccc6
+N-11e956be  CLOSED   f3e427a64
+N-1fe9a5df  OPEN     8cc7ac2aa closes 5 of 6; left: the glyph the status font draws for the 0x09 bytes of Tbl_AccompPartNames
+T-kn5000-v6-todo-port  OPEN  not started: 13,756 B debt, needs per-version C
+T-kn5000-v5-todo-port  OPEN  not started: 15,910 B
+N-d8cf1242  OPEN  not started
+N-2f640c1d  OPEN  not started
+N-45db7885  OPEN  not started
+N-c49a6232  OPEN  not started
+N-7c99f0f2  OPEN  not started
+N-51b2e19c  OPEN  not started
+N-e40b7174  OPEN  not started; first step in notes/kn5000-a-2026-10-31 (SQEDT_* names need a C header)
+N-52dcf02a  OPEN  not started; overlaps kn5000-d38
+N-d352b868  OPEN  not started; overlaps kn5000-d38

@@ -1,0 +1,38 @@
+kn5000-0bq  CLOSED   4042c2f89 (tools README s1)
+kn5000-waa  CLOSED   4042c2f89 (render_ftdemo_slides.py)
+kn5000-87m  CLOSED   4042c2f89 (parse_update_disc.py)
+kn5000-dkx  CLOSED   4042c2f89
+kn5000-3ei  CLOSED   4042c2f89 (v7 and table data 0 B verbatim)
+kn5000-ezo  CLOSED   87df5fcda (extended register meanings unknown: no MN89304 datasheet)
+kn5000-rq0  CLOSED   87df5fcda
+kn5000-5dc  CLOSED   87df5fcda
+kn5000-nmg  CLOSED   87df5fcda
+kn5000-8z5  CLOSED   epic: children closed
+kn5000-xel  CLOSED   60efbb299 (DAC IC313 PCM69AU; IC310 MN19413 DSP2)
+kn5000-jy9  CLOSED   60efbb299
+kn5000-mhj  CLOSED   60efbb299 (boot_timeline_tap.lua, emulated time)
+kn5000-1oy  BLOCKED  which chip decodes 0x130000: IC30 redump or board continuity check (kn5000-a9y); R1 cascade / reverb topology split to kn5000-ax7, kn5000-i2m
+kn5000-bq4  CLOSED   00c48f4fc
+kn5000-9ye  CLOSED   00c48f4fc (child qhm BLOCKED on MAME)
+kn5000-3c7  CLOSED   00c48f4fc (CPL controller ids inferred: panel MCU ROM undumped)
+kn5000-xhi  CLOSED   00c48f4fc
+kn5000-z9k  CLOSED   epic-like: xhi closed
+kn5000-rlb  CLOSED   25e39bb77 (split kn5000-1gu)
+kn5000-wgc  CLOSED   25e39bb77 (split kn5000-a1f)
+kn5000-98j  CLOSED   25e39bb77 + 109278dbb (split kn5000-3qp, kn5000-rzg)
+kn5000-nl6  CLOSED   54bbe616a (split kn5000-wxn, rld, j8z, zc1)
+kn5000-81p  CLOSED   323be0265
+kn5000-5ck  CLOSED   323be0265
+kn5000-ake  CLOSED   323be0265
+kn5000-8dy  CLOSED   323be0265
+kn5000-cox  CLOSED   323be0265 (gen_sound_patch_catalogue.py)
+kn5000-44c  CLOSED   aac3a298b
+kn5000-t8n  CLOSED   aac3a298b
+kn5000-e7f  CLOSED   aac3a298b
+kn5000-mzz  BLOCKED  HD-AE5000 board side of CN6: needs the board or its service manual
+kn5000-qnf  CLOSED   aac3a298b
+kn5000-9m6  CLOSED   epic
+kn5000-dnl  CLOSED   epic (1vz, a0k, qhm BLOCKED on MAME upstream)
+kn5000-nca  CLOSED   epic (a8s BLOCKED on hardware baselines)
+kn5000-3go  CLOSED   epic (dbi BLOCKED: undumped wave ROMs, MAME audio)
+NOTE: tracker issues stay open until the docs lane publishes each draft (notes/open4-kn5000-b/<sub-lane>/README.md); new issues ax7 i2m a9y wxn rld j8z zc1 a1f 1gu 3qp rzg (a9y BLOCKED on IC30 redump)

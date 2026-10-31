@@ -1,0 +1,9 @@
+N-64f1f64d  CLOSED   994c85470 (notes/misc-2026-10-31/probes/slide8k_vs_lzss_j.py)
+N-77efbd0e  CLOSED   1ca8260c1
+N-6a782984  CLOSED   929ffe3ed (probes/ram_block_delta_review.out.txt)
+N-abb7ecb5  CLOSED   df17235a4 (probes/v7_converter_rerun_check.out.txt)
+N-a23b8d58  CLOSED   1e54aaa7f + db4ea1c3a (shared callers to name-carrying macros: unblocked follow-up in notes/misc-2026-10-31/README.md)
+N-94797258  BLOCKED  undumped chip: IC306 (the 8-bit flag is in the P word on IC306; 759b90787)
+N-ff7d2e8d  CLOSED   130735749 (owner confirmed the Preset Data Destination dispute resolved)
+N-33949aba  BLOCKED  LLVM TLCS-900 backend (../llvm-project): pinned llvm-mc a3a81863f87d rejects ldcf/stcf a, rN; only the memory forms exist
+kn5000-3ei  CLOSED   56e3b89b6 + technics-docs 6a38c50

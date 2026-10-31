@@ -1,0 +1,35 @@
+N-2d252457                               CLOSED   59f6bb256 (scripts/build/style_bank_layout.py, both describers)
+T-floppy-kn5000-todo-fields-not          CLOSED   59f6bb256 (chord_map[5] at +0xba0, measure_start table at +0xc40)
+N-22c9e81c                               CLOSED   59f6bb256 (hdr_04 -> reserved_04/0b/11/15/1d, password, composer_mode)
+N-29c40f9e                               CLOSED   59f6bb256 (data_ba0 -> style_chord_map / style_measure_starts)
+N-7be2a335                               CLOSED   59f6bb256 + 444a6896e (every field named; pc_byte4 and high_key bit 7 marked inference)
+N-bb855f1d                               CLOSED   59f6bb256 (+0x0c..+0x17 named; 5 part groups DRUM..ACCOMP3 from +0x18)
+N-27473e9b                               CLOSED   59f6bb256 (+0x50 reserved_50: no reader, 0 in all records)
+N-292c7270                               CLOSED   59f6bb256 (no reader; firmware hard-codes 0x16800)
+N-c0109aaa                               CLOSED   59f6bb256 (no reader of +0x20..+0x2b; values hard-coded, cited)
+T-floppy-kn5000-todo-not-established     CLOSED   59f6bb256 (hdr_04 and hdr_30 named)
+T-floppy-kn5000-todo-count-by            CLOSED   444a6896e
+T-floppy-kn5000-todo-declared            CLOSED   444a6896e
+T-floppy-kn5000-todo-no-code             CLOSED   444a6896e
+T-floppy-kn5000-todo-no-read             CLOSED   444a6896e
+T-floppy-kn5000-todo-no-reader           CLOSED   444a6896e
+T-floppy-kn5000-todo-no-rule             CLOSED   444a6896e
+T-floppy-kn5000-todo-no-subcpu           CLOSED   444a6896e
+T-floppy-kn5000-todo-no-writer           CLOSED   444a6896e
+T-floppy-kn5000-todo-not-written         CLOSED   444a6896e
+T-floppy-kn5000-todo-read-as             CLOSED   444a6896e
+T-floppy-kn5000-todo-reader-known        CLOSED   444a6896e
+T-floppy-kn5000-todo-searched            CLOSED   444a6896e
+T-floppy-kn5000-todo-the-kn              CLOSED   444a6896e
+T-floppy-kn5000-todo-purpose-unknown     CLOSED   444a6896e
+T-floppy-kn5000-todo                     CLOSED   444a6896e
+T-floppy-kn5000-todo-algorithm-parameter CLOSED   444a6896e (per-effect names; byte packing open for 16 effects, notes/kn5000-style-2026-10-31/README.md)
+T-floppy-kn5000-todo-not-named           CLOSED   444a6896e (part: 497 of 622 named; 125 remain, next step in notes/kn5000-style-2026-10-31/README.md)
+O-kn5000-floppy-unknown-dump-94c0de      CLOSED   444a6896e (Sound Arranger memory, sndarg macro)
+N-4eba016f                               CLOSED   444a6896e (style_links.py)
+N-f17f0970                               CLOSED   444a6896e (both chains stale, unreachable)
+N-8f18a2ad                               CLOSED   444a6896e
+N-b64487fc                               OPEN     not blocked: map SOUND EDIT captions to offsets via SeMenu_StepParamFieldAndSend object entries
+N-424fcc19                               BLOCKED  KN5000 v1-v4 program dumps (not dumped)
+T-floppy-kn5000-todo-the-older           BLOCKED  KN5000 v1-v4 program dumps
+O-kn5000-floppy-unknown-dump-bb12e1      BLOCKED  the SX-KN3000 program ROM (not in the romset)

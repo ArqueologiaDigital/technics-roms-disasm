@@ -1,0 +1,33 @@
+L-mn10300-rest-fxdesc-pnum           CLOSED   112141bd7 (speed_param / tempo_param / drive_param; kn7000/notes/mn10300-rest/README.md)
+L-mn10300-rest-kn6000-switch-states  CLOSED   112141bd7 (states 2/3 = SOUND EXPLORER category; PartHasDspUnit)
+L-mn10300-rest-kn7000-tone-hash      CLOSED   112141bd7 (ToneKeyFind family, jk_tone_key)
+N-07a40aee                           CLOSED   112141bd7 (field-use walk: 941 offset-named fields with readers 630 -> 256; remainder tracked as N-3912088e)
+N-26ca40c2                           CLOSED   112141bd7 (callee-walk record fields; remainder tracked as N-3912088e)
+N-3912088e                           OPEN     about a third remain offset-named after 112141bd7 (941 256, KN6000 264, KN2400 208): readers not yet tied to a use (kn7000/notes/mn10300-rest/README.md)
+N-4813014a                           CLOSED   112141bd7 (top_tested rule: the compiler emits only bottom-tested pointer loops)
+N-82aafd7d                           CLOSED   112141bd7 (fx_streams: effect-DSP programs, scripts and maps, 300 blocks / 55,111 B)
+N-006a2ebe                           BLOCKED  no CUSTOM bank we hold has a 0x42-byte or SOUND EDIT record (kn7000/notes/ic21-own/README.md)
+N-119271c5                           CLOSED   dde958068 (FAVK_* kinds; +0x10 u32 is the bank name's NUL)
+N-141a8cab                           OPEN     TCMP / TPAD bytes no routine has been traced to (ic21-rest did not reach them)
+N-18f96950                           CLOSED   dde958068 (panel state no panel memory holds, CUSTOM PANEL MODE ALL PANEL)
+N-1b014e61                           CLOSED   dde958068 (893 and 941 have the same writer; the 80 settings come from the KN6000-file converter func_48485B52)
+N-29720808                           CLOSED   dde958068 (HPK_* 49 kinds, HPT_*; y = -1 is the title-bar row)
+N-398ba2d0                           OPEN     voice-record single fields and the custom-sound header: firmware tracing not reached (ic21-rest)
+N-6eb76c9f                           CLOSED   dde958068 (contrast, acc_reverb_mask; r_a94 / r_a96 read by no routine of 893/935/941)
+N-beb667de                           BLOCKED  origin closed (dde958068: the KN5000 database title retyped); who typed the five respellings: no image says
+N-e3880498                           OPEN     m<id> panel fields and uncovered bytes: firmware tracing not reached (ic21-rest)
+N-eadb1f7f                           OPEN     a reader of the part set-up to confirm the 24-field order (ic21-rest)
+N-f582c74f                           CLOSED   dde958068 (TEST MENU page 1, ROM DEVICE TEST)
+N-8e93e780                           CLOSED   5034e5f2d (blobs deleted as reference slices, icons painted from icons_png/)
+N-c7e9fbae                           CLOSED   5034e5f2d (gen_fc4000_pages.py --apply retired)
+N-eb1f0d7a                           CLOSED   5034e5f2d (stamps untracked with idempotent patching; constants.inc maintenance-only)
+N-08cc5f8e                           CLOSED   2bfc11af5 (notes/kn5000-ports-2026-10-31/README.md)
+N-b4956e97                           CLOSED   2bfc11af5 (v1.10i is its replay's output)
+N-10c84ff2                           BLOCKED  hardware: a line-out recording of an 8-bit sound on a KN5000/KN7000, or the tone-generator chip's datasheet (notes/sound-2026-10-31/README.md)
+N-e044e887                           BLOCKED  same as N-10c84ff2: line-out recording or TG datasheet
+N-2d2a6baa                           BLOCKED  rate done for 1,339 of 1,413 IC307 items (bb414348d); the other 74 need the pitch exponent on undumped IC306; classes 0-3 are IC304 + IC305 (undumped)
+N-7fefc5c1                           CLOSED   bb414348d (service manual I-20, II-15/16: IC307's partner is IC306; classes 0-3 = IC304 + IC305)
+N-b77afdc6                           BLOCKED  undumped chip IC306 (QSIGT3C32A01) holds IC307's loop marks
+N-e60ef457                           CLOSED   bb414348d (read rates at the root key in 3,681 KN7000 and 1,339 IC307 WAV headers; 74 IC307 items blocked as N-2d2a6baa)
+kn5000-d38                           BLOCKED  dumps of IC306 (QSIGT3C32A01), IC304 and IC305; issue left open with a detailed comment
+kn5000-mrx                           BLOCKED  KN7000 rates/loops/roots done (bb414348d); IC307 loops and 74 rates need undumped IC306

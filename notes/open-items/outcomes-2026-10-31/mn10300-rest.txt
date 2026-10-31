@@ -1,0 +1,9 @@
+mn10300-rest/1 KN2400 7c aa aa 7d streams   CLOSED  fx_streams pass (effect DSP programs/scripts/maps, 300 blocks / 55,111 B)
+mn10300-rest/2 FX_DESC pnum9-11             CLOSED  speed_param / tempo_param / drive_param
+mn10300-rest/3 KN6000 switch states 2/3     CLOSED  SOUND EXPLORER category (PartHasDspUnit)
+mn10300-rest/4 KN7000 Tone hash readers     CLOSED  ToneKeyFind family, jk_tone_key
+mn10300-rest/5 pre-test loops / mem slots   CLOSED  top_tested + fld_slots rules (compiler emits only bottom-tested pointer loops)
+mn10300-rest/6 offset-named fields          CLOSED  941 630->256, KN6000 683->264, KN2400 637->208
+mn10300-rest/7 HD-SX3 vectors + calls       CLOSED  20 vectors named, 2,627 host calls named
+mn10300-rest/8 TG side bits                 CLOSED  0x400 MAIN / 0x800 SUB, 5,215/5,215 zones
+mn10300-rest/9 opaque blocks                OPEN    173,555 B typed; groups with traced readers but no typing pass yet: widget RAM vars, 128x64 code/chord maps, chord voicings, terminator lists, style lists, KN2400 FX presets, fixed-count tables (kn7000/notes/mn10300-rest/README.md section 7)

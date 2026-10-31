@@ -1,0 +1,46 @@
+N-9918e40f                  CLOSED   f54c36b59
+N-10ecf076                  CLOSED   f54c36b59
+N-25f9f42b                  BLOCKED  needs a domestic SX-WSA1 dump (program ROMs or a domestic disk)
+N-b6d3c4c7                  CLOSED   e87c170fd
+N-b8a6a194                  CLOSED   e87c170fd
+N-735e380b                  CLOSED   e87c170fd
+N-c4ef2711                  CLOSED   978ae319d
+N-0bbd0164                  CLOSED   978ae319d
+N-1837e44c                  CLOSED   a98246f17
+N-8884e5fe                  CLOSED   fdb7482ed
+N-37157ced                  CLOSED   84f5b6482
+N-89745684                  CLOSED   84f5b6482
+T-wsa1-todo-which-physical  CLOSED   a0d5d29be
+T-wsa1-todo-as-key          CLOSED   a0d5d29be
+N-2e8a536d                  CLOSED   2931341ce
+N-2814717a                  CLOSED   2931341ce
+N-7049e90b                  CLOSED   a0d5d29be + 2931341ce
+T-wsa1-todo-drawn-by        CLOSED   a0d5d29be
+T-wsa1-todo-source-or       CLOSED   a0d5d29be
+T-wsa1-todo-bit             CLOSED   a0d5d29be
+N-e518d800                  CLOSED   a0d5d29be
+N-f71bcf9e                  CLOSED   a0d5d29be
+N-fa489241                  CLOSED   0b6dcdb09
+N-75855f8f                  CLOSED   0b6dcdb09
+N-33cdb04f                  CLOSED   0b6dcdb09
+N-b85f7365                  CLOSED   5df2b8ab0
+N-de8d3a35                  CLOSED   0b6dcdb09
+N-ecb9e1d8                  CLOSED   0b6dcdb09
+N-88076f49                  CLOSED   0b6dcdb09
+N-bfa65687                  CLOSED   0b6dcdb09
+N-aa8525ae                  CLOSED   0b6dcdb09
+N-4d6ac76a                  CLOSED   0b6dcdb09
+N-03a03c49                  CLOSED   0b6dcdb09
+N-216e88ae                  CLOSED   0b6dcdb09
+N-0e41714b                  BLOCKED  meaning of status value 2 needs IC4 TC183C230002's datasheet or a bus capture on an SX-WSA1R (reader half closed 1333bdc83)
+N-feda79f7                  CLOSED   1333bdc83 + 50e5e2e58
+N-1bdb3933                  CLOSED   1333bdc83 + 50e5e2e58
+N-93942775                  BLOCKED  the panel's reply needs the M37471M2196S mask ROM (not dumped)
+N-298a30cb                  CLOSED   1333bdc83
+N-4ae2b784                  CLOSED   1333bdc83
+N-029dc395                  CLOSED   1333bdc83
+N-8ae450d3                  CLOSED   50e5e2e58
+N-8e553797                  BLOCKED  the SX-WSA1 keyboard's channels need that model's service manual or the instrument
+N-d2b7ef41                  CLOSED   50e5e2e58
+N-f10941e4                  CLOSED   1333bdc83
+N-8c52a3ed                  BLOCKED  A3: owner decision (shared kernel with per-CPU .if/.else?); B3 82cfe8a4e+6a7715505 and A4 e89259d38 done

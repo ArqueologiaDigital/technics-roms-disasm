@@ -1,0 +1,11 @@
+O-wsa1-floppy-code-ceddbc            CLOSED   54a9918f8 (floppy/tools/pc_boot_stub.s), 84bf0182e
+O-wsa1-floppy-unknown-dump-2f0612    CLOSED   54a9918f8, 84bf0182e; probes/wsa1_leftovers.py (13/13)
+O-wsa1-floppy-unknown-dump-c04b06    CLOSED   54a9918f8, 84bf0182e; probes/wsa1_leftovers.py (13/13)
+O-wsa1-floppy-unknown-dump-a4ac7f    CLOSED   54a9918f8, 84bf0182e; probes/seq_layout.py, seq_orphans.py (residue: 1 decl / 250 B, no grammar explains it)
+O-kn6000-floppy-unknown-dump-385020  CLOSED   6b98dda19, cec614baf; probes/sqt_tails2.py, sqt_stale_cover.py (residue 1,768 B declared opaque)
+O-kn6000-floppy-unknown-dump-b7f3db  CLOSED   6b98dda19, cec614baf (free cell typed by stale_tokens)
+O-kn7000-floppy-unknown-dump-385020  CLOSED   6b98dda19, cec614baf; residue 5,270 B declared opaque (RAM noise; probes/sqt_residue.py)
+N-336ff4a8                           CLOSED   f84059612, 8de19efc5 (USER sound-group names)
+N-79dbbec8                           CLOSED   6b98dda19 (dur_beats, func_48459B49 / func_4C11938E; bend msb = value bits 8-15)
+N-db6d83e9                           CLOSED   f84059612, notes/floppy-leftovers-2026-10-31/README.md (func_4C07D7C1, PostTmTransLoad; 12/50)
+N-8f18a2ad                           CLOSED   c4a339f4c (on main); notes/floppy-others-2026-10-29/README.md updated in 1d1394ce1
