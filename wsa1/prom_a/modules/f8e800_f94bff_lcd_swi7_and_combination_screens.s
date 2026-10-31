@@ -1664,8 +1664,15 @@ LCD_Svc_05__ret:
 ;          clobbered.
 ; Evidence: font 0xF1B400, 14 bytes per glyph, 8 wide -- and that table passes
 ;          notes/render_font.py's ASCII test (blank only at 0x20).
-; Unknown:  what HL is a stride THROUGH; it is multiplied by BC once, before the
-;          loop, and never used again.
+; HL:      a ROW NUMBER in a table of BC-character strings at XIY.  IZ := HL * BC
+;          once, before the loop, and every character is read as `ld A,(XIY+IZ)`
+;          (0xF8F04A), so the string drawn is the one at XIY + HL*BC.  Call sites
+;          that pass HL /= 0 use exactly that: StepRecord_DrawNibbleAsStars
+;          (BC = 4, HL = a nibble, XIY = sixteen 4-character rows),
+;          SysexProgressBar_FillCells (svc 0x07, BC = 1, HL = 1: the second byte of
+;          Chars_F0D99A), LCD_DrawVar272ENumberTag_SaveRegs (BC = 4, HL = its
+;          argument).  The other text services share this prologue.  Census:
+;          notes/open4-f-probes/swi7_text_hl.py.
 ; ---------------------------------------------------------------------
 LCD_Svc_06_DrawText8x14:
 	and BC,BC                                     ; F8F039  d9 c1
