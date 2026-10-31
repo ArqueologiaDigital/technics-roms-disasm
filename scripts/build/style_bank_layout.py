@@ -76,7 +76,8 @@ SECTION RECORD (bank + 0x60 + 0x60 * k, k = STYLE_SECTION 0..29)
      +2  pan                    PANPOT column: MainCmpSetFunc on EVT_PAN_UP / _DN steps it 0..127;
                                 AccPatch_ResetSectionPartByte2Defaults writes 64, 12, 116, 64 to the BASS..ACCOMP3
                                 bytes on a legacy load
-     +3  reverb                 AccPatch_SyncVoice_* set it from bit 6 of the panel part's +4 (reverb on);
+     +3  digital_effect         AccPatch_SyncVoice_* set it from bit 6 of the panel part's +4, the SndParam
+                                parameter DIGITAL EFFECT (SndParam_PartTT_DigitalEffect, Lsw number 0x5e);
                                 AccVoiceReg_WritePart2..5 put it back there
      +4  pc_byte4               the fifth byte of the part's program-change record (AccPatch_LoadVoiceParams ->
                                 ACC_EVENT+4, sent by AccVoice_LoadAllChannelParams); 80 in the default image
@@ -125,7 +126,7 @@ RESERVED_30 = (0x30, 0x30)
 # Section record: the part cells in record order (+0, +2 unused, +4, +6, +8, +0xa).
 CELL_WORDS = ['drum_cell', 'reserved_02', 'bass_cell', 'acc1_cell', 'acc2_cell', 'acc3_cell']
 PARTS = ['drum', 'bass', 'acc1', 'acc2', 'acc3']                              # +0x18 + 8 * i
-PART_FIELDS = ['sound', 'bank', 'pan', 'reverb', 'pc_byte4', 'pitch_point', 'high_key', 'reserved_7']
+PART_FIELDS = ['sound', 'bank', 'pan', 'digital_effect', 'pc_byte4', 'pitch_point', 'high_key', 'reserved_7']
 PART_BASE, PART_SIZE = 0x18, 8
 NAME_OFF, TAIL_OFF = 0x40, 0x50
 

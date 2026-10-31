@@ -39,7 +39,7 @@ which both describers of the format import (`scripts/build/style_events.py` for 
     +0x0f  1 B       bit 7: MEASURE / TIME SIGNATURE still changeable
     +0x10  2 B       the section's style, {number, group} as in PANEL_STYLE
     +0x12  6 B       0
-    +0x18  5 x 8 B   part settings DRUM, BASS, ACCOMP1-3: sound, bank, pan, reverb, pc_byte4,
+    +0x18  5 x 8 B   part settings DRUM, BASS, ACCOMP1-3: sound, bank, pan, digital_effect, pc_byte4,
                      pitch point, high key, 0
     +0x40  16 B      name, ASCII, space- or NUL-padded (the pattern source the section came from)
     +0x50  16 B      0

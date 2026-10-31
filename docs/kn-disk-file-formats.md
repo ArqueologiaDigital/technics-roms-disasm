@@ -261,7 +261,8 @@ string at `0xEA01F0`, which is **`"wb"`**.
     f87759  call 0xF887B5      ; close
 
 So the payload is **0xE40 = 3,648 bytes** from two regions: `0xF980..0xFFC0` (the DRAM work area
-preserved across power-down -- the live panel) and `0x1E7800..0x1E8000` (unidentified).
+preserved across power-down -- the live panel) and `0x1E7800..0x1E8000` (the Sound Arranger memory, identified
+2026-10-31: notes/kn5000-style-2026-10-31/README.md).
 
 **And 0xE40 matches neither corpus.** There are two distinct populations of `.LSW` in the tree:
 
@@ -319,7 +320,9 @@ unidasm and only trusts a window when a decoded instruction starts exactly on th
 type-0 handler and sum its regions -- if they come to **0x5800**, that identifies the machine that
 wrote the seven floppies outright, and the 24 slots become a KN7000 structure with a known layout.
 The `kn6scan` population is variable-length, so it is a different kind of file again and nobody has
-parsed it. Also still unmapped: what lives at `0x1E7800..0x1E8000`.
+parsed it. `0x1E7800..0x1E8000` is the Sound Arranger memory (2026-10-31): a 16-byte header and 200 ten-byte records,
+one per style, of the DRUM, BASS and ACCOMP1-3 sounds (`AccVoiceState_Snapshot`, `AccTuning_LoadFromROM`,
+initial image `AccStyle_RamImage_1E7800`).
 
 ⚠ **The lesson, since it will recur.** "Searched the whole ROM for the name, found nothing, therefore
 the firmware does not do it" is only valid when the code would have to say the name. Table-driven

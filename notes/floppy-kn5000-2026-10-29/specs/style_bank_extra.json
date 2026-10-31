@@ -86,7 +86,7 @@
     },
     "evidence": "MainCmpSetFunc (accompaniment_engine.s:35011..): part record = rec + 16 + 8*part (part 1..5 -> +0x18..+0x38). Inside a group: +0 u16 sound number (wide variety, high byte 0..7) [INFERENCE]; +2 pan: EVT_PAN_UP / EVT_PAN_DN (MT_PanUp/Dn) step it 0..127, AccPatch_ResetSectionPartByte2Defaults rewrites it 64,12,116,64 at +0x22/+0x2a/+0x32/+0x3a on every legacy-format load (which is why those bytes are constant in the files); +3 flag 0/1; +4 0x50 mostly (0x40/0x44/0x45) unknown; +5 range limit: EVT_RLMT_UP / _DN (MT_RLmtUp/Dn) step it 0..11, default 6; +6 0x7f or 0xff (bit 7 + 0x7f) unknown; +7 0. Group 0 (+0x18) is zero in the template and holds small values 0..0x0e at +0x18",
     "inference": true,
-    "verified": "CORRECTED numbering: the five groups are DRUM, BASS, ACCOMP1-3 at +0x18 + 8*i (MainCmpSetFunc's row r = i + 1 addresses rec + 16 + 8*r; AccPedal_DirectionA_Wrap_Helper2 uses rec + 24 + 8*i). Bytes: +0 sound, +1 bank (AccPatch_SyncVoice_*, established), +2 pan, +3 reverb (bit 6 of the panel part's +4), +4 pc_byte4 [INFERENCE], +5 pitch_point (PITCH POINT, Rhythm_TransposeNote), +6 high_key (Rhythm_Transp_WrapCheck), +7 reserved_7."
+    "verified": "CORRECTED numbering: the five groups are DRUM, BASS, ACCOMP1-3 at +0x18 + 8*i (MainCmpSetFunc's row r = i + 1 addresses rec + 16 + 8*r; AccPedal_DirectionA_Wrap_Helper2 uses rec + 24 + 8*i). Bytes: +0 sound, +1 bank (AccPatch_SyncVoice_*, established), +2 pan, +3 digital_effect (bit 6 of the panel part's +4: SndParam DigitalEffect), +4 pc_byte4 [INFERENCE], +5 pitch_point (PITCH POINT, Rhythm_TransposeNote), +6 high_key (Rhythm_Transp_WrapCheck), +7 reserved_7."
    }
   ],
   "after_directory": [

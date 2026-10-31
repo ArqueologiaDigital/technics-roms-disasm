@@ -253,6 +253,23 @@ def emit_block(o, d, start, end, blkname, title):
     return True
 
 
+def emit_block_head(o, d, start, end, blkname, title):
+    """The first records of a panel block's list that exactly fill [start, end): typed with the record
+    macros when they match the firmware's tags and lengths, else bytes."""
+    want = layout()[blkname]
+    k, p = match_layout(d, start, end, want)
+    if p != end:
+        o.fill_or_bytes(d[start:end], title + ': not the records of %s here' % blkname)
+        return
+    o.comment('%s: the first %d records of %s.' % (title, k, blkname))
+    q = start
+    for t, n in want[:k]:
+        pay = d[q + 2:q + 2 + n]
+        line = panel_fields.record_line(t, n, pay, sound_name(pay) if t in panel_fields.PART_TAGS and n == 24 else None)
+        o.put(line or panel_fields.raw_line(t, n, pay), 2 + n)
+        q += 2 + n
+
+
 def describe_lsw(ctx):
     d = ctx.data
     if len(d) != 0xE40 or d[4:6] != b'HK':
@@ -269,11 +286,38 @@ def describe_lsw(ctx):
     emit_block(o, d, 0x20, 0x3E0, 'PanelTlv_Block0_Layout', 'Block 0 (RAM 0xf9a0)')
     o.label('Block1')
     emit_block(o, d, 0x3E0, 0x640, 'PanelTlv_Block1_Layout', 'Block 1 (RAM 0xfd60)')
-    o.label('Ram1E7800')
-    o.inc(0x800, 'RAM 0x1e7800..0x1e8000',
-          opaque='what the firmware keeps at RAM 0x1e7800..0x1e8000 is not identified '
-                 '(docs/kn-disk-file-formats.md, "still unmapped")')
+    o.label('SoundArranger')
+    emit_sound_arranger(o, d, 0x640)
     return o.done()
+
+
+def emit_sound_arranger(o, d, a):
+    """RAM 0x1e7800..0x1e7fff: the Sound Arranger memory.  AccStyle_InitVRAM fills its first 0x7e0 bytes from
+    AccStyle_RamImage_1E7800: a 16-byte header, then 200 ten-byte records at 0x1e7810 + 10 * n, n from
+    AccHelper_ComputeVoiceOffset (the panel style's index).  A record holds the sounds of DRUM, BASS and
+    ACCOMP1-3 for that style: AccVoiceState_Snapshot writes them from PANEL_PART_DRUM .. _ACP3 (+0 sound, +1 bank,
+    bit 7 of +1 = the part's DIGITAL EFFECT, PANEL_PART_x+4 bit 6; DRUM: the kit, low nibble), AccTuning_LoadFromROM
+    reads them back into the lane records 0x3246.. when bit 7 of the DRUM bank byte is set, which
+    AccStyle_InlinedBlock_Skip2 sets (the style's sounds were arranged)."""
+    o.comment('Sound Arranger memory (RAM 0x1e7800..0x1e7fff; emit_sound_arranger\'s docstring has the readers).')
+    h = d[a:a + 16]
+    if h[:6] == b'ZZZH\0K':
+        o.ascii(h[:6], 'image signature, as AccStyle_RamImage_1E7800 has it (no reader)')
+        o.raw('.byte', ['%d' % h[6]], 1, 'record count, 200 in the initial image [INFERENCE: no reader]')
+        o.fill_or_bytes(h[7:16], 'header +7..+0xf, zero in the initial image (no reader)')
+    else:
+        o.fill_or_bytes(h, 'header, not the initial image\'s shape here')
+    for n in range(200):
+        if n % 20 == 0:
+            o.comment('style index %d..%d' % (n, n + 19))
+        r = d[a + 16 + 10 * n:a + 26 + 10 * n]
+        vals = [str(r[0]), str(r[1] & 0x7F)]
+        for i in (2, 4, 6, 8):
+            vals += [str(r[i]), str(r[i + 1] & 0x7F)]
+        fl = sum((r[1 + 2 * k] >> 7) << k for k in range(5))
+        vals.append('0x%02x' % fl if fl else '0')
+        o.put('\tsndarg\t%s' % ', '.join(vals), 10)
+    o.fill_or_bytes(d[a + 0x7E0:a + 0x800], 'RAM 0x1e7fe0..0x1e7fff, past the initial image (no reader)')
 
 
 def describe_pmt(ctx):
@@ -628,7 +672,11 @@ def describe_sqt(ctx):
         pb, pn = tl.panel
         emit_block(o, d, b + pb, b + pb + pn, 'PanelTlv_Block0_Layout',
                    'The song\'s copy of panel block 0 (taken when the song is recorded)')
-        o.struct(tl, d[b + pb + pn:b + 0x800])
+        p1, n1 = tl.panel1
+        emit_block_head(o, d, b + p1, b + p1 + n1, 'PanelTlv_Block1_Layout',
+                        'The song\'s copy of panel block 1\'s first records (BitMapOut_ComputeRegionDelta copies '
+                        '0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM)')
+        o.struct(tl, d[b + p1 + n1:b + 0x800])
     p = nslots * 0x800
     o.label('Events')
     o.comment('Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the')

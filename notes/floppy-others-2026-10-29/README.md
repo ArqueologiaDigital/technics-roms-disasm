@@ -209,7 +209,13 @@ No byte is generic any more, but many fields have only a neutral name: an offset
 
 ## Open questions
 
-- The meanings above, starting with the panel-memory record's fields.
+- The meanings above, starting with the panel-memory record's fields. (Panel-memory record and one-touch fields:
+  resolved by lane kn67-field-names, 2026-10-29, from the parameter-id trie (`ResourceIdTrie`: block = tag,
+  offset, mask), `notes/data-semantics-2026-10-29/kn67-field-names.md`; the fields named only by parameter id
+  (`m<id>`) and the bytes no traced routine reads are register item N-e3880498. The SOUND EDIT / voice records
+  are named there too (`SOUND_HEAD`, `SOUND_MOD`, `VOICE_*`). Still open from the list above: the KN6000/KN7000
+  .SQT record head (+0x07..+0xCF, +0x100..+0x13F; kn67-field-names open questions), the WSA1R .SQF song record
+  and the TCMP variation bytes. Lane kn5000-style, open-items register 2026-10-31.)
 - What the high bit in those 5 song events means.
 - The KN6000 .TM tail word: it is the KN5000's checksum, ~(LE16 sum of the 40 sound records), in only 13 of
   the 50 files.

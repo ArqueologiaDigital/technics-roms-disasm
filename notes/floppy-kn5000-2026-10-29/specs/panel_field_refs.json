@@ -1,0 +1,8117 @@
+{
+"78:0": {
+"ram": "0x0f9a2",
+"refs": 45,
+"rows": [
+"v10 v10/maincpu/audio/sound_navigation.s:428 pushw 0xf9a2",
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:96 pushw 0xf9a2",
+"v10 v10/maincpu/extensions/extension_data.s:3209 .long 0x0000f9a2, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:628 sub xhl, 0xf9a2"
+]
+},
+"78:1": {
+"ram": "0x0f9a3",
+"refs": 0,
+"rows": []
+},
+"78:2": {
+"ram": "0x0f9a4",
+"refs": 0,
+"rows": []
+},
+"78:3": {
+"ram": "0x0f9a5",
+"refs": 0,
+"rows": []
+},
+"78:4": {
+"ram": "0x0f9a6",
+"refs": 0,
+"rows": []
+},
+"78:5": {
+"ram": "0x0f9a7",
+"refs": 0,
+"rows": []
+},
+"78:6": {
+"ram": "0x0f9a8",
+"refs": 0,
+"rows": []
+},
+"78:7": {
+"ram": "0x0f9a9",
+"refs": 0,
+"rows": []
+},
+"78:8": {
+"ram": "0x0f9aa",
+"refs": 0,
+"rows": []
+},
+"78:9": {
+"ram": "0x0f9ab",
+"refs": 0,
+"rows": []
+},
+"78:10": {
+"ram": "0x0f9ac",
+"refs": 0,
+"rows": []
+},
+"78:11": {
+"ram": "0x0f9ad",
+"refs": 0,
+"rows": []
+},
+"78:12": {
+"ram": "0x0f9ae",
+"refs": 0,
+"rows": []
+},
+"78:13": {
+"ram": "0x0f9af",
+"refs": 0,
+"rows": []
+},
+"78:14": {
+"ram": "0x0f9b0",
+"refs": 0,
+"rows": []
+},
+"78:15": {
+"ram": "0x0f9b1",
+"refs": 0,
+"rows": []
+},
+"78:16": {
+"ram": "0x0f9b2",
+"refs": 0,
+"rows": []
+},
+"78:17": {
+"ram": "0x0f9b3",
+"refs": 0,
+"rows": []
+},
+"00:0": {
+"ram": "0x0f9b6",
+"refs": 135,
+"rows": [
+"v10 v10/maincpu/audio/semenu_routines.s:792 lda\txwa, (PANEL_PART_RT1:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:834 lda xwa, (PANEL_PART_RT1:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:2379 lda\txwa, (PANEL_PART_RT1:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:6262 lda\txix, (PANEL_PART_RT1:16)"
+]
+},
+"00:1": {
+"ram": "0x0f9b7",
+"refs": 0,
+"rows": []
+},
+"00:2": {
+"ram": "0x0f9b8",
+"refs": 0,
+"rows": []
+},
+"00:3": {
+"ram": "0x0f9b9",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1845 .long 0x0000f9b9",
+"v10 v10/maincpu/display/scoop_display.s:1860 .long 0x0000f9b9",
+"v10 v10/maincpu/display/scoop_display.s:1861 .long 0x0000f9b9",
+"v9 v9/maincpu/display/scoop_display.s:1828 .long\t0x0000f9b9"
+]
+},
+"00:4": {
+"ram": "0x0f9ba",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/ui_mode_handlers.s:603 lda xwa, (PANEL_PART_RT1+4:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:603 lda xwa, (PANEL_PART_RT1+4:16)",
+"v7 v7/maincpu/ui/ui_mode_handlers.s:585 lda\txwa, (PANEL_PART_RT1+4:16)",
+"v6 v6/maincpu/ui/ui_mode_handlers.s:585 lda\txwa, (63930:16)"
+]
+},
+"00:5": {
+"ram": "0x0f9bb",
+"refs": 0,
+"rows": []
+},
+"00:6": {
+"ram": "0x0f9bc",
+"refs": 0,
+"rows": []
+},
+"00:7": {
+"ram": "0x0f9bd",
+"refs": 0,
+"rows": []
+},
+"00:8": {
+"ram": "0x0f9be",
+"refs": 0,
+"rows": []
+},
+"00:9": {
+"ram": "0x0f9bf",
+"refs": 0,
+"rows": []
+},
+"00:10": {
+"ram": "0x0f9c0",
+"refs": 0,
+"rows": []
+},
+"00:11": {
+"ram": "0x0f9c1",
+"refs": 0,
+"rows": []
+},
+"00:12": {
+"ram": "0x0f9c2",
+"refs": 0,
+"rows": []
+},
+"00:13": {
+"ram": "0x0f9c3",
+"refs": 150,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1158 bit 6, (PANEL_PART_RT1+13:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2819 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2833 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2847 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11"
+]
+},
+"00:14": {
+"ram": "0x0f9c4",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2635 bit 7, (PANEL_PART_RT1+14:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2670 ld a, (PANEL_PART_RT1+14:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1406 lda\txwa, (PANEL_PART_RT1+14:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1582 lda\txwa, (PANEL_PART_RT1+14:16)"
+]
+},
+"00:15": {
+"ram": "0x0f9c5",
+"refs": 35,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2659 ld a, (PANEL_PART_RT1+15:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1448 lda\txwa, (PANEL_PART_RT1+15:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1623 lda\txwa, (PANEL_PART_RT1+15:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:2017 lda\txwa, (PANEL_PART_RT1+15:16)"
+]
+},
+"00:16": {
+"ram": "0x0f9c6",
+"refs": 0,
+"rows": []
+},
+"00:17": {
+"ram": "0x0f9c7",
+"refs": 40,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2637 bit 7, (PANEL_PART_RT1+17:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2758 ld a, (PANEL_PART_RT1+17:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1479 lda\txwa, (PANEL_PART_RT1+17:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1654 lda\txwa, (PANEL_PART_RT1+17:16)"
+]
+},
+"00:18": {
+"ram": "0x0f9c8",
+"refs": 0,
+"rows": []
+},
+"00:19": {
+"ram": "0x0f9c9",
+"refs": 0,
+"rows": []
+},
+"00:20": {
+"ram": "0x0f9ca",
+"refs": 0,
+"rows": []
+},
+"00:21": {
+"ram": "0x0f9cb",
+"refs": 0,
+"rows": []
+},
+"00:22": {
+"ram": "0x0f9cc",
+"refs": 0,
+"rows": []
+},
+"00:23": {
+"ram": "0x0f9cd",
+"refs": 0,
+"rows": []
+},
+"01:0": {
+"ram": "0x0f9d0",
+"refs": 65,
+"rows": [
+"v10 v10/maincpu/audio/semenu_routines.s:782 lda\txwa, (PANEL_PART_RT2:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:822 lda xwa, (PANEL_PART_RT2:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:2369 lda\txwa, (PANEL_PART_RT2:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:6263 lda\txhl, (PANEL_PART_RT2:16)"
+]
+},
+"01:1": {
+"ram": "0x0f9d1",
+"refs": 0,
+"rows": []
+},
+"01:2": {
+"ram": "0x0f9d2",
+"refs": 0,
+"rows": []
+},
+"01:3": {
+"ram": "0x0f9d3",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1847 .long 0x0000f9d3",
+"v9 v9/maincpu/display/scoop_display.s:1830 .long\t0x0000f9d3",
+"v7 v7/maincpu/display/scoop_display.s:1848 .long\t0x0000f9d3",
+"v6 v6/maincpu/display/scoop_display.s:1850 .long\t0x0000f9d3"
+]
+},
+"01:4": {
+"ram": "0x0f9d4",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/ui_mode_handlers.s:616 lda xwa, (PANEL_PART_RT2+4:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:616 lda xwa, (PANEL_PART_RT2+4:16)",
+"v7 v7/maincpu/ui/ui_mode_handlers.s:598 lda\txwa, (PANEL_PART_RT2+4:16)",
+"v6 v6/maincpu/ui/ui_mode_handlers.s:598 lda\txwa, (63956:16)"
+]
+},
+"01:5": {
+"ram": "0x0f9d5",
+"refs": 0,
+"rows": []
+},
+"01:6": {
+"ram": "0x0f9d6",
+"refs": 0,
+"rows": []
+},
+"01:7": {
+"ram": "0x0f9d7",
+"refs": 0,
+"rows": []
+},
+"01:8": {
+"ram": "0x0f9d8",
+"refs": 0,
+"rows": []
+},
+"01:9": {
+"ram": "0x0f9d9",
+"refs": 0,
+"rows": []
+},
+"01:10": {
+"ram": "0x0f9da",
+"refs": 0,
+"rows": []
+},
+"01:11": {
+"ram": "0x0f9db",
+"refs": 0,
+"rows": []
+},
+"01:12": {
+"ram": "0x0f9dc",
+"refs": 0,
+"rows": []
+},
+"01:13": {
+"ram": "0x0f9dd",
+"refs": 145,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1172 bit 6, (PANEL_PART_RT2+13:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2819 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2833 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2847 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11"
+]
+},
+"01:14": {
+"ram": "0x0f9de",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2639 bit 7, (PANEL_PART_RT2+14:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2703 ld a, (PANEL_PART_RT2+14:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2635 bit 7, (PANEL_PART_RT2+14:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2699 ld a, (PANEL_PART_RT2+14:16)"
+]
+},
+"01:15": {
+"ram": "0x0f9df",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2692 ld a, (PANEL_PART_RT2+15:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2688 ld a, (PANEL_PART_RT2+15:16)",
+"v7 v7/maincpu/ui/bitmap_out_routines.s:2323 ld\ta, (PANEL_PART_RT2+15:16)",
+"v6 v6/maincpu/ui/bitmap_out_routines.s:2323 ld\ta, (63967:16)"
+]
+},
+"01:16": {
+"ram": "0x0f9e0",
+"refs": 0,
+"rows": []
+},
+"01:17": {
+"ram": "0x0f9e1",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2641 bit 7, (PANEL_PART_RT2+17:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2780 ld a, (PANEL_PART_RT2+17:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2637 bit 7, (PANEL_PART_RT2+17:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2776 ld a, (PANEL_PART_RT2+17:16)"
+]
+},
+"01:18": {
+"ram": "0x0f9e2",
+"refs": 0,
+"rows": []
+},
+"01:19": {
+"ram": "0x0f9e3",
+"refs": 0,
+"rows": []
+},
+"01:20": {
+"ram": "0x0f9e4",
+"refs": 0,
+"rows": []
+},
+"01:21": {
+"ram": "0x0f9e5",
+"refs": 0,
+"rows": []
+},
+"01:22": {
+"ram": "0x0f9e6",
+"refs": 0,
+"rows": []
+},
+"01:23": {
+"ram": "0x0f9e7",
+"refs": 0,
+"rows": []
+},
+"02:0": {
+"ram": "0x0f9ea",
+"refs": 65,
+"rows": [
+"v10 v10/maincpu/audio/semenu_routines.s:788 lda\txwa, (PANEL_PART_LEFT:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:829 lda xwa, (PANEL_PART_LEFT:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:2375 lda\txwa, (PANEL_PART_LEFT:16)",
+"v10 v10/maincpu/audio/semenu_routines.s:6264 lda\txde, (PANEL_PART_LEFT:16)"
+]
+},
+"02:1": {
+"ram": "0x0f9eb",
+"refs": 0,
+"rows": []
+},
+"02:2": {
+"ram": "0x0f9ec",
+"refs": 0,
+"rows": []
+},
+"02:3": {
+"ram": "0x0f9ed",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1846 .long 0x0000f9ed",
+"v9 v9/maincpu/display/scoop_display.s:1829 .long\t0x0000f9ed",
+"v7 v7/maincpu/display/scoop_display.s:1847 .long\t0x0000f9ed",
+"v6 v6/maincpu/display/scoop_display.s:1849 .long\t0x0000f9ed"
+]
+},
+"02:4": {
+"ram": "0x0f9ee",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/ui_mode_handlers.s:627 lda xwa, (PANEL_PART_LEFT+4:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:627 lda xwa, (PANEL_PART_LEFT+4:16)",
+"v7 v7/maincpu/ui/ui_mode_handlers.s:609 lda\txwa, (PANEL_PART_LEFT+4:16)",
+"v6 v6/maincpu/ui/ui_mode_handlers.s:609 lda\txwa, (63982:16)"
+]
+},
+"02:5": {
+"ram": "0x0f9ef",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/ui_mode_handlers.s:394 lda xwa, (PANEL_PART_LEFT+5:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:394 lda xwa, (PANEL_PART_LEFT+5:16)",
+"v7 v7/maincpu/ui/ui_mode_handlers.s:377 lda\txwa, (PANEL_PART_LEFT+5:16)",
+"v6 v6/maincpu/ui/ui_mode_handlers.s:377 lda\txwa, (0xf9ef:16)"
+]
+},
+"02:6": {
+"ram": "0x0f9f0",
+"refs": 0,
+"rows": []
+},
+"02:7": {
+"ram": "0x0f9f1",
+"refs": 0,
+"rows": []
+},
+"02:8": {
+"ram": "0x0f9f2",
+"refs": 0,
+"rows": []
+},
+"02:9": {
+"ram": "0x0f9f3",
+"refs": 0,
+"rows": []
+},
+"02:10": {
+"ram": "0x0f9f4",
+"refs": 0,
+"rows": []
+},
+"02:11": {
+"ram": "0x0f9f5",
+"refs": 0,
+"rows": []
+},
+"02:12": {
+"ram": "0x0f9f6",
+"refs": 0,
+"rows": []
+},
+"02:13": {
+"ram": "0x0f9f7",
+"refs": 190,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:54 bit 5, (PANEL_PART_LEFT+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:238 bit 5, (PANEL_PART_LEFT+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:291 bit 5, (PANEL_PART_LEFT+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1369 bit 5, (PANEL_PART_LEFT+13:16)"
+]
+},
+"02:14": {
+"ram": "0x0f9f8",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2643 bit 7, (PANEL_PART_LEFT+14:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2736 ld a, (PANEL_PART_LEFT+14:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2639 bit 7, (PANEL_PART_LEFT+14:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2732 ld a, (PANEL_PART_LEFT+14:16)"
+]
+},
+"02:15": {
+"ram": "0x0f9f9",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2725 ld a, (PANEL_PART_LEFT+15:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2721 ld a, (PANEL_PART_LEFT+15:16)",
+"v7 v7/maincpu/ui/bitmap_out_routines.s:2355 ld\ta, (PANEL_PART_LEFT+15:16)",
+"v6 v6/maincpu/ui/bitmap_out_routines.s:2355 ld\ta, (63993:16)"
+]
+},
+"02:16": {
+"ram": "0x0f9fa",
+"refs": 0,
+"rows": []
+},
+"02:17": {
+"ram": "0x0f9fb",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2645 bit 7, (PANEL_PART_LEFT+17:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2802 ld a, (PANEL_PART_LEFT+17:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2641 bit 7, (PANEL_PART_LEFT+17:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:2798 ld a, (PANEL_PART_LEFT+17:16)"
+]
+},
+"02:18": {
+"ram": "0x0f9fc",
+"refs": 0,
+"rows": []
+},
+"02:19": {
+"ram": "0x0f9fd",
+"refs": 0,
+"rows": []
+},
+"02:20": {
+"ram": "0x0f9fe",
+"refs": 0,
+"rows": []
+},
+"02:21": {
+"ram": "0x0f9ff",
+"refs": 0,
+"rows": []
+},
+"02:22": {
+"ram": "0x0fa00",
+"refs": 0,
+"rows": []
+},
+"02:23": {
+"ram": "0x0fa01",
+"refs": 0,
+"rows": []
+},
+"03:0": {
+"ram": "0x0fa04",
+"refs": 35,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12924 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa04",
+"v10 v10/maincpu/extensions/extension_data.s:3194 .long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04, 0x0000fa1e, 0x0000fa38, 0x0000fa52, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1732 lda xiy, (PANEL_PART_PT4:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2129 lda xix, (PANEL_PART_PT4:16)"
+]
+},
+"03:1": {
+"ram": "0x0fa05",
+"refs": 0,
+"rows": []
+},
+"03:2": {
+"ram": "0x0fa06",
+"refs": 0,
+"rows": []
+},
+"03:3": {
+"ram": "0x0fa07",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1856 .long 0x0000fa07",
+"v10 v10/maincpu/ui/ui_mode_handlers.s:411 lda\txwa, (PANEL_PART_PT4+3:16)",
+"v9 v9/maincpu/display/scoop_display.s:1839 .long\t0x0000fa07",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:411 lda\txwa, (PANEL_PART_PT4+3:16)"
+]
+},
+"03:4": {
+"ram": "0x0fa08",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/ui_mode_handlers.s:638 lda xwa, (PANEL_PART_PT4+4:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:638 lda xwa, (PANEL_PART_PT4+4:16)",
+"v7 v7/maincpu/ui/ui_mode_handlers.s:620 lda\txwa, (PANEL_PART_PT4+4:16)",
+"v6 v6/maincpu/ui/ui_mode_handlers.s:620 lda\txwa, (64008:16)"
+]
+},
+"03:5": {
+"ram": "0x0fa09",
+"refs": 0,
+"rows": []
+},
+"03:6": {
+"ram": "0x0fa0a",
+"refs": 0,
+"rows": []
+},
+"03:7": {
+"ram": "0x0fa0b",
+"refs": 0,
+"rows": []
+},
+"03:8": {
+"ram": "0x0fa0c",
+"refs": 0,
+"rows": []
+},
+"03:9": {
+"ram": "0x0fa0d",
+"refs": 0,
+"rows": []
+},
+"03:10": {
+"ram": "0x0fa0e",
+"refs": 0,
+"rows": []
+},
+"03:11": {
+"ram": "0x0fa0f",
+"refs": 0,
+"rows": []
+},
+"03:12": {
+"ram": "0x0fa10",
+"refs": 0,
+"rows": []
+},
+"03:13": {
+"ram": "0x0fa11",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2819 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2833 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2847 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2857 .long 0x0000f9c3, 0x0000f9dd, 0x0000f9f7, 0x0000fa11"
+]
+},
+"03:14": {
+"ram": "0x0fa12",
+"refs": 0,
+"rows": []
+},
+"03:15": {
+"ram": "0x0fa13",
+"refs": 0,
+"rows": []
+},
+"03:16": {
+"ram": "0x0fa14",
+"refs": 0,
+"rows": []
+},
+"03:17": {
+"ram": "0x0fa15",
+"refs": 0,
+"rows": []
+},
+"03:18": {
+"ram": "0x0fa16",
+"refs": 0,
+"rows": []
+},
+"03:19": {
+"ram": "0x0fa17",
+"refs": 0,
+"rows": []
+},
+"03:20": {
+"ram": "0x0fa18",
+"refs": 0,
+"rows": []
+},
+"03:21": {
+"ram": "0x0fa19",
+"refs": 0,
+"rows": []
+},
+"03:22": {
+"ram": "0x0fa1a",
+"refs": 0,
+"rows": []
+},
+"03:23": {
+"ram": "0x0fa1b",
+"refs": 0,
+"rows": []
+},
+"04:0": {
+"ram": "0x0fa1e",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12924 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa04",
+"v10 v10/maincpu/extensions/extension_data.s:3194 .long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04, 0x0000fa1e, 0x0000fa38, 0x0000fa52, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1750 lda xiy, (PANEL_PART_PT5:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1154 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa6c\t; 0x04"
+]
+},
+"04:1": {
+"ram": "0x0fa1f",
+"refs": 0,
+"rows": []
+},
+"04:2": {
+"ram": "0x0fa20",
+"refs": 0,
+"rows": []
+},
+"04:3": {
+"ram": "0x0fa21",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1853 .long 0x0000fa21",
+"v9 v9/maincpu/display/scoop_display.s:1836 .long\t0x0000fa21",
+"v7 v7/maincpu/display/scoop_display.s:1854 .long\t0x0000fa21",
+"v6 v6/maincpu/display/scoop_display.s:1856 .long\t0x0000fa21"
+]
+},
+"04:4": {
+"ram": "0x0fa22",
+"refs": 0,
+"rows": []
+},
+"04:5": {
+"ram": "0x0fa23",
+"refs": 0,
+"rows": []
+},
+"04:6": {
+"ram": "0x0fa24",
+"refs": 0,
+"rows": []
+},
+"04:7": {
+"ram": "0x0fa25",
+"refs": 0,
+"rows": []
+},
+"04:8": {
+"ram": "0x0fa26",
+"refs": 0,
+"rows": []
+},
+"04:9": {
+"ram": "0x0fa27",
+"refs": 0,
+"rows": []
+},
+"04:10": {
+"ram": "0x0fa28",
+"refs": 0,
+"rows": []
+},
+"04:11": {
+"ram": "0x0fa29",
+"refs": 0,
+"rows": []
+},
+"04:12": {
+"ram": "0x0fa2a",
+"refs": 0,
+"rows": []
+},
+"04:13": {
+"ram": "0x0fa2b",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2820 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2834 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2848 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2858 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79"
+]
+},
+"04:14": {
+"ram": "0x0fa2c",
+"refs": 0,
+"rows": []
+},
+"04:15": {
+"ram": "0x0fa2d",
+"refs": 0,
+"rows": []
+},
+"04:16": {
+"ram": "0x0fa2e",
+"refs": 0,
+"rows": []
+},
+"04:17": {
+"ram": "0x0fa2f",
+"refs": 0,
+"rows": []
+},
+"04:18": {
+"ram": "0x0fa30",
+"refs": 0,
+"rows": []
+},
+"04:19": {
+"ram": "0x0fa31",
+"refs": 0,
+"rows": []
+},
+"04:20": {
+"ram": "0x0fa32",
+"refs": 0,
+"rows": []
+},
+"04:21": {
+"ram": "0x0fa33",
+"refs": 0,
+"rows": []
+},
+"04:22": {
+"ram": "0x0fa34",
+"refs": 0,
+"rows": []
+},
+"04:23": {
+"ram": "0x0fa35",
+"refs": 0,
+"rows": []
+},
+"05:0": {
+"ram": "0x0fa38",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12924 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa04",
+"v10 v10/maincpu/extensions/extension_data.s:3194 .long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04, 0x0000fa1e, 0x0000fa38, 0x0000fa52, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1768 lda xiy, (PANEL_PART_PT6:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1154 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa6c\t; 0x04"
+]
+},
+"05:1": {
+"ram": "0x0fa39",
+"refs": 0,
+"rows": []
+},
+"05:2": {
+"ram": "0x0fa3a",
+"refs": 0,
+"rows": []
+},
+"05:3": {
+"ram": "0x0fa3b",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1854 .long 0x0000fa3b",
+"v9 v9/maincpu/display/scoop_display.s:1837 .long\t0x0000fa3b",
+"v7 v7/maincpu/display/scoop_display.s:1855 .long\t0x0000fa3b",
+"v6 v6/maincpu/display/scoop_display.s:1857 .long\t0x0000fa3b"
+]
+},
+"05:4": {
+"ram": "0x0fa3c",
+"refs": 0,
+"rows": []
+},
+"05:5": {
+"ram": "0x0fa3d",
+"refs": 0,
+"rows": []
+},
+"05:6": {
+"ram": "0x0fa3e",
+"refs": 0,
+"rows": []
+},
+"05:7": {
+"ram": "0x0fa3f",
+"refs": 0,
+"rows": []
+},
+"05:8": {
+"ram": "0x0fa40",
+"refs": 0,
+"rows": []
+},
+"05:9": {
+"ram": "0x0fa41",
+"refs": 0,
+"rows": []
+},
+"05:10": {
+"ram": "0x0fa42",
+"refs": 0,
+"rows": []
+},
+"05:11": {
+"ram": "0x0fa43",
+"refs": 0,
+"rows": []
+},
+"05:12": {
+"ram": "0x0fa44",
+"refs": 0,
+"rows": []
+},
+"05:13": {
+"ram": "0x0fa45",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2820 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2834 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2848 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2858 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79"
+]
+},
+"05:14": {
+"ram": "0x0fa46",
+"refs": 0,
+"rows": []
+},
+"05:15": {
+"ram": "0x0fa47",
+"refs": 0,
+"rows": []
+},
+"05:16": {
+"ram": "0x0fa48",
+"refs": 0,
+"rows": []
+},
+"05:17": {
+"ram": "0x0fa49",
+"refs": 0,
+"rows": []
+},
+"05:18": {
+"ram": "0x0fa4a",
+"refs": 0,
+"rows": []
+},
+"05:19": {
+"ram": "0x0fa4b",
+"refs": 0,
+"rows": []
+},
+"05:20": {
+"ram": "0x0fa4c",
+"refs": 0,
+"rows": []
+},
+"05:21": {
+"ram": "0x0fa4d",
+"refs": 0,
+"rows": []
+},
+"05:22": {
+"ram": "0x0fa4e",
+"refs": 0,
+"rows": []
+},
+"05:23": {
+"ram": "0x0fa4f",
+"refs": 0,
+"rows": []
+},
+"06:0": {
+"ram": "0x0fa52",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12924 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa04",
+"v10 v10/maincpu/extensions/extension_data.s:3194 .long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04, 0x0000fa1e, 0x0000fa38, 0x0000fa52, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1786 lda xiy, (PANEL_PART_PT7:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1154 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa6c\t; 0x04"
+]
+},
+"06:1": {
+"ram": "0x0fa53",
+"refs": 0,
+"rows": []
+},
+"06:2": {
+"ram": "0x0fa54",
+"refs": 0,
+"rows": []
+},
+"06:3": {
+"ram": "0x0fa55",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1855 .long 0x0000fa55",
+"v9 v9/maincpu/display/scoop_display.s:1838 .long\t0x0000fa55",
+"v7 v7/maincpu/display/scoop_display.s:1856 .long\t0x0000fa55",
+"v6 v6/maincpu/display/scoop_display.s:1858 .long\t0x0000fa55"
+]
+},
+"06:4": {
+"ram": "0x0fa56",
+"refs": 0,
+"rows": []
+},
+"06:5": {
+"ram": "0x0fa57",
+"refs": 0,
+"rows": []
+},
+"06:6": {
+"ram": "0x0fa58",
+"refs": 0,
+"rows": []
+},
+"06:7": {
+"ram": "0x0fa59",
+"refs": 0,
+"rows": []
+},
+"06:8": {
+"ram": "0x0fa5a",
+"refs": 0,
+"rows": []
+},
+"06:9": {
+"ram": "0x0fa5b",
+"refs": 0,
+"rows": []
+},
+"06:10": {
+"ram": "0x0fa5c",
+"refs": 0,
+"rows": []
+},
+"06:11": {
+"ram": "0x0fa5d",
+"refs": 0,
+"rows": []
+},
+"06:12": {
+"ram": "0x0fa5e",
+"refs": 0,
+"rows": []
+},
+"06:13": {
+"ram": "0x0fa5f",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2820 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2834 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2848 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2858 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79"
+]
+},
+"06:14": {
+"ram": "0x0fa60",
+"refs": 0,
+"rows": []
+},
+"06:15": {
+"ram": "0x0fa61",
+"refs": 0,
+"rows": []
+},
+"06:16": {
+"ram": "0x0fa62",
+"refs": 0,
+"rows": []
+},
+"06:17": {
+"ram": "0x0fa63",
+"refs": 0,
+"rows": []
+},
+"06:18": {
+"ram": "0x0fa64",
+"refs": 0,
+"rows": []
+},
+"06:19": {
+"ram": "0x0fa65",
+"refs": 0,
+"rows": []
+},
+"06:20": {
+"ram": "0x0fa66",
+"refs": 0,
+"rows": []
+},
+"06:21": {
+"ram": "0x0fa67",
+"refs": 0,
+"rows": []
+},
+"06:22": {
+"ram": "0x0fa68",
+"refs": 0,
+"rows": []
+},
+"06:23": {
+"ram": "0x0fa69",
+"refs": 0,
+"rows": []
+},
+"07:0": {
+"ram": "0x0fa6c",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12922 .long 0x0000f9b6, 0x0000f9ea, 0x0000f9d0, 0x0000fa6c",
+"v10 v10/maincpu/extensions/extension_data.s:3194 .long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04, 0x0000fa1e, 0x0000fa38, 0x0000fa52, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1804 lda xiy, (PANEL_PART_PT8:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1154 .long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa6c\t; 0x04"
+]
+},
+"07:1": {
+"ram": "0x0fa6d",
+"refs": 0,
+"rows": []
+},
+"07:2": {
+"ram": "0x0fa6e",
+"refs": 0,
+"rows": []
+},
+"07:3": {
+"ram": "0x0fa6f",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1848 .long 0x0000fa6f",
+"v9 v9/maincpu/display/scoop_display.s:1831 .long\t0x0000fa6f",
+"v7 v7/maincpu/display/scoop_display.s:1849 .long\t0x0000fa6f",
+"v6 v6/maincpu/display/scoop_display.s:1851 .long\t0x0000fa6f"
+]
+},
+"07:4": {
+"ram": "0x0fa70",
+"refs": 0,
+"rows": []
+},
+"07:5": {
+"ram": "0x0fa71",
+"refs": 0,
+"rows": []
+},
+"07:6": {
+"ram": "0x0fa72",
+"refs": 0,
+"rows": []
+},
+"07:7": {
+"ram": "0x0fa73",
+"refs": 0,
+"rows": []
+},
+"07:8": {
+"ram": "0x0fa74",
+"refs": 0,
+"rows": []
+},
+"07:9": {
+"ram": "0x0fa75",
+"refs": 0,
+"rows": []
+},
+"07:10": {
+"ram": "0x0fa76",
+"refs": 0,
+"rows": []
+},
+"07:11": {
+"ram": "0x0fa77",
+"refs": 0,
+"rows": []
+},
+"07:12": {
+"ram": "0x0fa78",
+"refs": 0,
+"rows": []
+},
+"07:13": {
+"ram": "0x0fa79",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2820 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2834 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2848 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2858 .long 0x0000fa2b, 0x0000fa45, 0x0000fa5f, 0x0000fa79"
+]
+},
+"07:14": {
+"ram": "0x0fa7a",
+"refs": 0,
+"rows": []
+},
+"07:15": {
+"ram": "0x0fa7b",
+"refs": 0,
+"rows": []
+},
+"07:16": {
+"ram": "0x0fa7c",
+"refs": 0,
+"rows": []
+},
+"07:17": {
+"ram": "0x0fa7d",
+"refs": 0,
+"rows": []
+},
+"07:18": {
+"ram": "0x0fa7e",
+"refs": 0,
+"rows": []
+},
+"07:19": {
+"ram": "0x0fa7f",
+"refs": 0,
+"rows": []
+},
+"07:20": {
+"ram": "0x0fa80",
+"refs": 0,
+"rows": []
+},
+"07:21": {
+"ram": "0x0fa81",
+"refs": 0,
+"rows": []
+},
+"07:22": {
+"ram": "0x0fa82",
+"refs": 0,
+"rows": []
+},
+"07:23": {
+"ram": "0x0fa83",
+"refs": 0,
+"rows": []
+},
+"08:0": {
+"ram": "0x0fa86",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12923 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1822 lda xiy, (PANEL_PART_PT9:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1155 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4\t; 0x08"
+]
+},
+"08:1": {
+"ram": "0x0fa87",
+"refs": 0,
+"rows": []
+},
+"08:2": {
+"ram": "0x0fa88",
+"refs": 0,
+"rows": []
+},
+"08:3": {
+"ram": "0x0fa89",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1849 .long 0x0000fa89",
+"v9 v9/maincpu/display/scoop_display.s:1832 .long\t0x0000fa89",
+"v7 v7/maincpu/display/scoop_display.s:1850 .long\t0x0000fa89",
+"v6 v6/maincpu/display/scoop_display.s:1852 .long\t0x0000fa89"
+]
+},
+"08:4": {
+"ram": "0x0fa8a",
+"refs": 0,
+"rows": []
+},
+"08:5": {
+"ram": "0x0fa8b",
+"refs": 0,
+"rows": []
+},
+"08:6": {
+"ram": "0x0fa8c",
+"refs": 0,
+"rows": []
+},
+"08:7": {
+"ram": "0x0fa8d",
+"refs": 0,
+"rows": []
+},
+"08:8": {
+"ram": "0x0fa8e",
+"refs": 0,
+"rows": []
+},
+"08:9": {
+"ram": "0x0fa8f",
+"refs": 0,
+"rows": []
+},
+"08:10": {
+"ram": "0x0fa90",
+"refs": 0,
+"rows": []
+},
+"08:11": {
+"ram": "0x0fa91",
+"refs": 0,
+"rows": []
+},
+"08:12": {
+"ram": "0x0fa92",
+"refs": 0,
+"rows": []
+},
+"08:13": {
+"ram": "0x0fa93",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2821 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2835 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2849 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2859 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1"
+]
+},
+"08:14": {
+"ram": "0x0fa94",
+"refs": 0,
+"rows": []
+},
+"08:15": {
+"ram": "0x0fa95",
+"refs": 0,
+"rows": []
+},
+"08:16": {
+"ram": "0x0fa96",
+"refs": 0,
+"rows": []
+},
+"08:17": {
+"ram": "0x0fa97",
+"refs": 0,
+"rows": []
+},
+"08:18": {
+"ram": "0x0fa98",
+"refs": 0,
+"rows": []
+},
+"08:19": {
+"ram": "0x0fa99",
+"refs": 0,
+"rows": []
+},
+"08:20": {
+"ram": "0x0fa9a",
+"refs": 0,
+"rows": []
+},
+"08:21": {
+"ram": "0x0fa9b",
+"refs": 0,
+"rows": []
+},
+"08:22": {
+"ram": "0x0fa9c",
+"refs": 0,
+"rows": []
+},
+"08:23": {
+"ram": "0x0fa9d",
+"refs": 0,
+"rows": []
+},
+"09:0": {
+"ram": "0x0faa0",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12923 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1840 lda xiy, (PANEL_PART_PT10:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1155 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4\t; 0x08"
+]
+},
+"09:1": {
+"ram": "0x0faa1",
+"refs": 0,
+"rows": []
+},
+"09:2": {
+"ram": "0x0faa2",
+"refs": 0,
+"rows": []
+},
+"09:3": {
+"ram": "0x0faa3",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1850 .long 0x0000faa3",
+"v9 v9/maincpu/display/scoop_display.s:1833 .long\t0x0000faa3",
+"v7 v7/maincpu/display/scoop_display.s:1851 .long\t0x0000faa3",
+"v6 v6/maincpu/display/scoop_display.s:1853 .long\t0x0000faa3"
+]
+},
+"09:4": {
+"ram": "0x0faa4",
+"refs": 0,
+"rows": []
+},
+"09:5": {
+"ram": "0x0faa5",
+"refs": 0,
+"rows": []
+},
+"09:6": {
+"ram": "0x0faa6",
+"refs": 0,
+"rows": []
+},
+"09:7": {
+"ram": "0x0faa7",
+"refs": 0,
+"rows": []
+},
+"09:8": {
+"ram": "0x0faa8",
+"refs": 0,
+"rows": []
+},
+"09:9": {
+"ram": "0x0faa9",
+"refs": 0,
+"rows": []
+},
+"09:10": {
+"ram": "0x0faaa",
+"refs": 0,
+"rows": []
+},
+"09:11": {
+"ram": "0x0faab",
+"refs": 0,
+"rows": []
+},
+"09:12": {
+"ram": "0x0faac",
+"refs": 0,
+"rows": []
+},
+"09:13": {
+"ram": "0x0faad",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2821 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2835 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2849 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2859 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1"
+]
+},
+"09:14": {
+"ram": "0x0faae",
+"refs": 0,
+"rows": []
+},
+"09:15": {
+"ram": "0x0faaf",
+"refs": 0,
+"rows": []
+},
+"09:16": {
+"ram": "0x0fab0",
+"refs": 0,
+"rows": []
+},
+"09:17": {
+"ram": "0x0fab1",
+"refs": 0,
+"rows": []
+},
+"09:18": {
+"ram": "0x0fab2",
+"refs": 0,
+"rows": []
+},
+"09:19": {
+"ram": "0x0fab3",
+"refs": 0,
+"rows": []
+},
+"09:20": {
+"ram": "0x0fab4",
+"refs": 0,
+"rows": []
+},
+"09:21": {
+"ram": "0x0fab5",
+"refs": 0,
+"rows": []
+},
+"09:22": {
+"ram": "0x0fab6",
+"refs": 0,
+"rows": []
+},
+"09:23": {
+"ram": "0x0fab7",
+"refs": 0,
+"rows": []
+},
+"0a:0": {
+"ram": "0x0faba",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12923 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1858 lda xiy, (PANEL_PART_PT11:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1155 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4\t; 0x08"
+]
+},
+"0a:1": {
+"ram": "0x0fabb",
+"refs": 0,
+"rows": []
+},
+"0a:2": {
+"ram": "0x0fabc",
+"refs": 0,
+"rows": []
+},
+"0a:3": {
+"ram": "0x0fabd",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1851 .long 0x0000fabd",
+"v9 v9/maincpu/display/scoop_display.s:1834 .long\t0x0000fabd",
+"v7 v7/maincpu/display/scoop_display.s:1852 .long\t0x0000fabd",
+"v6 v6/maincpu/display/scoop_display.s:1854 .long\t0x0000fabd"
+]
+},
+"0a:4": {
+"ram": "0x0fabe",
+"refs": 0,
+"rows": []
+},
+"0a:5": {
+"ram": "0x0fabf",
+"refs": 0,
+"rows": []
+},
+"0a:6": {
+"ram": "0x0fac0",
+"refs": 0,
+"rows": []
+},
+"0a:7": {
+"ram": "0x0fac1",
+"refs": 0,
+"rows": []
+},
+"0a:8": {
+"ram": "0x0fac2",
+"refs": 0,
+"rows": []
+},
+"0a:9": {
+"ram": "0x0fac3",
+"refs": 0,
+"rows": []
+},
+"0a:10": {
+"ram": "0x0fac4",
+"refs": 0,
+"rows": []
+},
+"0a:11": {
+"ram": "0x0fac5",
+"refs": 0,
+"rows": []
+},
+"0a:12": {
+"ram": "0x0fac6",
+"refs": 0,
+"rows": []
+},
+"0a:13": {
+"ram": "0x0fac7",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2821 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2835 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2849 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2859 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1"
+]
+},
+"0a:14": {
+"ram": "0x0fac8",
+"refs": 0,
+"rows": []
+},
+"0a:15": {
+"ram": "0x0fac9",
+"refs": 0,
+"rows": []
+},
+"0a:16": {
+"ram": "0x0faca",
+"refs": 0,
+"rows": []
+},
+"0a:17": {
+"ram": "0x0facb",
+"refs": 0,
+"rows": []
+},
+"0a:18": {
+"ram": "0x0facc",
+"refs": 0,
+"rows": []
+},
+"0a:19": {
+"ram": "0x0facd",
+"refs": 0,
+"rows": []
+},
+"0a:20": {
+"ram": "0x0face",
+"refs": 0,
+"rows": []
+},
+"0a:21": {
+"ram": "0x0facf",
+"refs": 0,
+"rows": []
+},
+"0a:22": {
+"ram": "0x0fad0",
+"refs": 0,
+"rows": []
+},
+"0a:23": {
+"ram": "0x0fad1",
+"refs": 0,
+"rows": []
+},
+"0b:0": {
+"ram": "0x0fad4",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12923 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1876 lda xiy, (PANEL_PART_PT12:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1155 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4\t; 0x08"
+]
+},
+"0b:1": {
+"ram": "0x0fad5",
+"refs": 0,
+"rows": []
+},
+"0b:2": {
+"ram": "0x0fad6",
+"refs": 0,
+"rows": []
+},
+"0b:3": {
+"ram": "0x0fad7",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1852 .long 0x0000fad7",
+"v9 v9/maincpu/display/scoop_display.s:1835 .long\t0x0000fad7",
+"v7 v7/maincpu/display/scoop_display.s:1853 .long\t0x0000fad7",
+"v6 v6/maincpu/display/scoop_display.s:1855 .long\t0x0000fad7"
+]
+},
+"0b:4": {
+"ram": "0x0fad8",
+"refs": 0,
+"rows": []
+},
+"0b:5": {
+"ram": "0x0fad9",
+"refs": 0,
+"rows": []
+},
+"0b:6": {
+"ram": "0x0fada",
+"refs": 0,
+"rows": []
+},
+"0b:7": {
+"ram": "0x0fadb",
+"refs": 0,
+"rows": []
+},
+"0b:8": {
+"ram": "0x0fadc",
+"refs": 0,
+"rows": []
+},
+"0b:9": {
+"ram": "0x0fadd",
+"refs": 0,
+"rows": []
+},
+"0b:10": {
+"ram": "0x0fade",
+"refs": 0,
+"rows": []
+},
+"0b:11": {
+"ram": "0x0fadf",
+"refs": 0,
+"rows": []
+},
+"0b:12": {
+"ram": "0x0fae0",
+"refs": 0,
+"rows": []
+},
+"0b:13": {
+"ram": "0x0fae1",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2821 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2835 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2849 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2859 .long 0x0000fa93, 0x0000faad, 0x0000fac7, 0x0000fae1"
+]
+},
+"0b:14": {
+"ram": "0x0fae2",
+"refs": 0,
+"rows": []
+},
+"0b:15": {
+"ram": "0x0fae3",
+"refs": 0,
+"rows": []
+},
+"0b:16": {
+"ram": "0x0fae4",
+"refs": 0,
+"rows": []
+},
+"0b:17": {
+"ram": "0x0fae5",
+"refs": 0,
+"rows": []
+},
+"0b:18": {
+"ram": "0x0fae6",
+"refs": 0,
+"rows": []
+},
+"0b:19": {
+"ram": "0x0fae7",
+"refs": 0,
+"rows": []
+},
+"0b:20": {
+"ram": "0x0fae8",
+"refs": 0,
+"rows": []
+},
+"0b:21": {
+"ram": "0x0fae9",
+"refs": 0,
+"rows": []
+},
+"0b:22": {
+"ram": "0x0faea",
+"refs": 0,
+"rows": []
+},
+"0b:23": {
+"ram": "0x0faeb",
+"refs": 0,
+"rows": []
+},
+"0c:0": {
+"ram": "0x0faee",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12926 .long 0xffffffff, 0x0000faee, 0x0000fb08, 0x0000fb22",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1894 lda xiy, (PANEL_PART_PT13:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1156 .long 0x0000faee, 0x0000fb08, 0x0000fb22, 0x0000fb3c\t; 0x0C"
+]
+},
+"0c:1": {
+"ram": "0x0faef",
+"refs": 0,
+"rows": []
+},
+"0c:2": {
+"ram": "0x0faf0",
+"refs": 0,
+"rows": []
+},
+"0c:3": {
+"ram": "0x0faf1",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1862 .long 0x0000faf1",
+"v9 v9/maincpu/display/scoop_display.s:1845 .long\t0x0000faf1",
+"v7 v7/maincpu/display/scoop_display.s:1863 .long\t0x0000faf1",
+"v6 v6/maincpu/display/scoop_display.s:1865 .long\t0x0000faf1"
+]
+},
+"0c:4": {
+"ram": "0x0faf2",
+"refs": 0,
+"rows": []
+},
+"0c:5": {
+"ram": "0x0faf3",
+"refs": 0,
+"rows": []
+},
+"0c:6": {
+"ram": "0x0faf4",
+"refs": 0,
+"rows": []
+},
+"0c:7": {
+"ram": "0x0faf5",
+"refs": 0,
+"rows": []
+},
+"0c:8": {
+"ram": "0x0faf6",
+"refs": 0,
+"rows": []
+},
+"0c:9": {
+"ram": "0x0faf7",
+"refs": 0,
+"rows": []
+},
+"0c:10": {
+"ram": "0x0faf8",
+"refs": 0,
+"rows": []
+},
+"0c:11": {
+"ram": "0x0faf9",
+"refs": 0,
+"rows": []
+},
+"0c:12": {
+"ram": "0x0fafa",
+"refs": 0,
+"rows": []
+},
+"0c:13": {
+"ram": "0x0fafb",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2822 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2836 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2850 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2860 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0xffffffff"
+]
+},
+"0c:14": {
+"ram": "0x0fafc",
+"refs": 0,
+"rows": []
+},
+"0c:15": {
+"ram": "0x0fafd",
+"refs": 0,
+"rows": []
+},
+"0c:16": {
+"ram": "0x0fafe",
+"refs": 0,
+"rows": []
+},
+"0c:17": {
+"ram": "0x0faff",
+"refs": 0,
+"rows": []
+},
+"0c:18": {
+"ram": "0x0fb00",
+"refs": 0,
+"rows": []
+},
+"0c:19": {
+"ram": "0x0fb01",
+"refs": 0,
+"rows": []
+},
+"0c:20": {
+"ram": "0x0fb02",
+"refs": 0,
+"rows": []
+},
+"0c:21": {
+"ram": "0x0fb03",
+"refs": 0,
+"rows": []
+},
+"0c:22": {
+"ram": "0x0fb04",
+"refs": 0,
+"rows": []
+},
+"0c:23": {
+"ram": "0x0fb05",
+"refs": 0,
+"rows": []
+},
+"0d:0": {
+"ram": "0x0fb08",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12926 .long 0xffffffff, 0x0000faee, 0x0000fb08, 0x0000fb22",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1912 lda xiy, (PANEL_PART_PT14:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1156 .long 0x0000faee, 0x0000fb08, 0x0000fb22, 0x0000fb3c\t; 0x0C"
+]
+},
+"0d:1": {
+"ram": "0x0fb09",
+"refs": 0,
+"rows": []
+},
+"0d:2": {
+"ram": "0x0fb0a",
+"refs": 0,
+"rows": []
+},
+"0d:3": {
+"ram": "0x0fb0b",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1863 .long 0x0000fb0b",
+"v9 v9/maincpu/display/scoop_display.s:1846 .long\t0x0000fb0b",
+"v7 v7/maincpu/display/scoop_display.s:1864 .long\t0x0000fb0b",
+"v6 v6/maincpu/display/scoop_display.s:1866 .long\t0x0000fb0b"
+]
+},
+"0d:4": {
+"ram": "0x0fb0c",
+"refs": 0,
+"rows": []
+},
+"0d:5": {
+"ram": "0x0fb0d",
+"refs": 0,
+"rows": []
+},
+"0d:6": {
+"ram": "0x0fb0e",
+"refs": 0,
+"rows": []
+},
+"0d:7": {
+"ram": "0x0fb0f",
+"refs": 0,
+"rows": []
+},
+"0d:8": {
+"ram": "0x0fb10",
+"refs": 0,
+"rows": []
+},
+"0d:9": {
+"ram": "0x0fb11",
+"refs": 0,
+"rows": []
+},
+"0d:10": {
+"ram": "0x0fb12",
+"refs": 0,
+"rows": []
+},
+"0d:11": {
+"ram": "0x0fb13",
+"refs": 0,
+"rows": []
+},
+"0d:12": {
+"ram": "0x0fb14",
+"refs": 0,
+"rows": []
+},
+"0d:13": {
+"ram": "0x0fb15",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2822 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2836 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2850 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2860 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0xffffffff"
+]
+},
+"0d:14": {
+"ram": "0x0fb16",
+"refs": 0,
+"rows": []
+},
+"0d:15": {
+"ram": "0x0fb17",
+"refs": 0,
+"rows": []
+},
+"0d:16": {
+"ram": "0x0fb18",
+"refs": 0,
+"rows": []
+},
+"0d:17": {
+"ram": "0x0fb19",
+"refs": 0,
+"rows": []
+},
+"0d:18": {
+"ram": "0x0fb1a",
+"refs": 0,
+"rows": []
+},
+"0d:19": {
+"ram": "0x0fb1b",
+"refs": 0,
+"rows": []
+},
+"0d:20": {
+"ram": "0x0fb1c",
+"refs": 0,
+"rows": []
+},
+"0d:21": {
+"ram": "0x0fb1d",
+"refs": 0,
+"rows": []
+},
+"0d:22": {
+"ram": "0x0fb1e",
+"refs": 0,
+"rows": []
+},
+"0d:23": {
+"ram": "0x0fb1f",
+"refs": 0,
+"rows": []
+},
+"0e:0": {
+"ram": "0x0fb22",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:12926 .long 0xffffffff, 0x0000faee, 0x0000fb08, 0x0000fb22",
+"v10 v10/maincpu/extensions/extension_data.s:3195 .long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4, 0x0000faee, 0x0000fb08, 0x0000fb22, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1930 lda xiy, (PANEL_PART_PT15:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1156 .long 0x0000faee, 0x0000fb08, 0x0000fb22, 0x0000fb3c\t; 0x0C"
+]
+},
+"0e:1": {
+"ram": "0x0fb23",
+"refs": 0,
+"rows": []
+},
+"0e:2": {
+"ram": "0x0fb24",
+"refs": 0,
+"rows": []
+},
+"0e:3": {
+"ram": "0x0fb25",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1864 .long 0x0000fb25",
+"v9 v9/maincpu/display/scoop_display.s:1847 .long\t0x0000fb25",
+"v7 v7/maincpu/display/scoop_display.s:1865 .long\t0x0000fb25",
+"v6 v6/maincpu/display/scoop_display.s:1867 .long\t0x0000fb25"
+]
+},
+"0e:4": {
+"ram": "0x0fb26",
+"refs": 0,
+"rows": []
+},
+"0e:5": {
+"ram": "0x0fb27",
+"refs": 0,
+"rows": []
+},
+"0e:6": {
+"ram": "0x0fb28",
+"refs": 0,
+"rows": []
+},
+"0e:7": {
+"ram": "0x0fb29",
+"refs": 0,
+"rows": []
+},
+"0e:8": {
+"ram": "0x0fb2a",
+"refs": 0,
+"rows": []
+},
+"0e:9": {
+"ram": "0x0fb2b",
+"refs": 0,
+"rows": []
+},
+"0e:10": {
+"ram": "0x0fb2c",
+"refs": 0,
+"rows": []
+},
+"0e:11": {
+"ram": "0x0fb2d",
+"refs": 0,
+"rows": []
+},
+"0e:12": {
+"ram": "0x0fb2e",
+"refs": 0,
+"rows": []
+},
+"0e:13": {
+"ram": "0x0fb2f",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2822 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2836 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2850 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2860 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0xffffffff"
+]
+},
+"0e:14": {
+"ram": "0x0fb30",
+"refs": 0,
+"rows": []
+},
+"0e:15": {
+"ram": "0x0fb31",
+"refs": 0,
+"rows": []
+},
+"0e:16": {
+"ram": "0x0fb32",
+"refs": 0,
+"rows": []
+},
+"0e:17": {
+"ram": "0x0fb33",
+"refs": 0,
+"rows": []
+},
+"0e:18": {
+"ram": "0x0fb34",
+"refs": 0,
+"rows": []
+},
+"0e:19": {
+"ram": "0x0fb35",
+"refs": 0,
+"rows": []
+},
+"0e:20": {
+"ram": "0x0fb36",
+"refs": 0,
+"rows": []
+},
+"0e:21": {
+"ram": "0x0fb37",
+"refs": 0,
+"rows": []
+},
+"0e:22": {
+"ram": "0x0fb38",
+"refs": 0,
+"rows": []
+},
+"0e:23": {
+"ram": "0x0fb39",
+"refs": 0,
+"rows": []
+},
+"0f:0": {
+"ram": "0x0fb3c",
+"refs": 45,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:4711 ld\tw, (PANEL_PART_PT16:16)",
+"v10 v10/maincpu/display/scoop_display.s:4989 ld\tw, (PANEL_PART_PT16:16)",
+"v10 v10/maincpu/display/scoop_display.s:5012 ld\tw, (PANEL_PART_PT16:16)",
+"v10 v10/maincpu/display/scoop_display.s:11083 ld\tw, (PANEL_PART_PT16:16)"
+]
+},
+"0f:1": {
+"ram": "0x0fb3d",
+"refs": 0,
+"rows": []
+},
+"0f:2": {
+"ram": "0x0fb3e",
+"refs": 0,
+"rows": []
+},
+"0f:3": {
+"ram": "0x0fb3f",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1857 .long 0x0000fb3f",
+"v9 v9/maincpu/display/scoop_display.s:1840 .long\t0x0000fb3f",
+"v7 v7/maincpu/display/scoop_display.s:1858 .long\t0x0000fb3f",
+"v6 v6/maincpu/display/scoop_display.s:1860 .long\t0x0000fb3f"
+]
+},
+"0f:4": {
+"ram": "0x0fb40",
+"refs": 0,
+"rows": []
+},
+"0f:5": {
+"ram": "0x0fb41",
+"refs": 0,
+"rows": []
+},
+"0f:6": {
+"ram": "0x0fb42",
+"refs": 0,
+"rows": []
+},
+"0f:7": {
+"ram": "0x0fb43",
+"refs": 0,
+"rows": []
+},
+"0f:8": {
+"ram": "0x0fb44",
+"refs": 0,
+"rows": []
+},
+"0f:9": {
+"ram": "0x0fb45",
+"refs": 0,
+"rows": []
+},
+"0f:10": {
+"ram": "0x0fb46",
+"refs": 0,
+"rows": []
+},
+"0f:11": {
+"ram": "0x0fb47",
+"refs": 0,
+"rows": []
+},
+"0f:12": {
+"ram": "0x0fb48",
+"refs": 0,
+"rows": []
+},
+"0f:13": {
+"ram": "0x0fb49",
+"refs": 55,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2822 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2836 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2850 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2874 .long 0x0000fafb, 0x0000fb15, 0x0000fb2f, 0x0000fb49"
+]
+},
+"0f:14": {
+"ram": "0x0fb4a",
+"refs": 0,
+"rows": []
+},
+"0f:15": {
+"ram": "0x0fb4b",
+"refs": 0,
+"rows": []
+},
+"0f:16": {
+"ram": "0x0fb4c",
+"refs": 0,
+"rows": []
+},
+"0f:17": {
+"ram": "0x0fb4d",
+"refs": 0,
+"rows": []
+},
+"0f:18": {
+"ram": "0x0fb4e",
+"refs": 0,
+"rows": []
+},
+"0f:19": {
+"ram": "0x0fb4f",
+"refs": 0,
+"rows": []
+},
+"0f:20": {
+"ram": "0x0fb50",
+"refs": 0,
+"rows": []
+},
+"0f:21": {
+"ram": "0x0fb51",
+"refs": 0,
+"rows": []
+},
+"0f:22": {
+"ram": "0x0fb52",
+"refs": 0,
+"rows": []
+},
+"0f:23": {
+"ram": "0x0fb53",
+"refs": 0,
+"rows": []
+},
+"10:0": {
+"ram": "0x0fb56",
+"refs": 54,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11923 ld (PANEL_PART_ACP1:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12075 ld a, (PANEL_PART_ACP1:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12230 ld a, (PANEL_PART_ACP1:16)"
+]
+},
+"10:1": {
+"ram": "0x0fb57",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11925 and (PANEL_PART_ACP1+1:16), 128",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11926 or (PANEL_PART_ACP1+1:16), w",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12076 ld w, (PANEL_PART_ACP1+1:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12231 ld w, (PANEL_PART_ACP1+1:16)"
+]
+},
+"10:2": {
+"ram": "0x0fb58",
+"refs": 0,
+"rows": []
+},
+"10:3": {
+"ram": "0x0fb59",
+"refs": 0,
+"rows": []
+},
+"10:4": {
+"ram": "0x0fb5a",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11930 and (PANEL_PART_ACP1+4:16), 191",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11931 or (PANEL_PART_ACP1+4:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12078 ld l, (PANEL_PART_ACP1+4:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12233 ld l, (PANEL_PART_ACP1+4:16)"
+]
+},
+"10:5": {
+"ram": "0x0fb5b",
+"refs": 0,
+"rows": []
+},
+"10:6": {
+"ram": "0x0fb5c",
+"refs": 0,
+"rows": []
+},
+"10:7": {
+"ram": "0x0fb5d",
+"refs": 0,
+"rows": []
+},
+"10:8": {
+"ram": "0x0fb5e",
+"refs": 0,
+"rows": []
+},
+"10:9": {
+"ram": "0x0fb5f",
+"refs": 0,
+"rows": []
+},
+"10:10": {
+"ram": "0x0fb60",
+"refs": 0,
+"rows": []
+},
+"10:11": {
+"ram": "0x0fb61",
+"refs": 0,
+"rows": []
+},
+"10:12": {
+"ram": "0x0fb62",
+"refs": 0,
+"rows": []
+},
+"10:13": {
+"ram": "0x0fb63",
+"refs": 110,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1478 ld\txix, 0xfb63",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2823 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2837 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2861 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1"
+]
+},
+"10:14": {
+"ram": "0x0fb64",
+"refs": 0,
+"rows": []
+},
+"10:15": {
+"ram": "0x0fb65",
+"refs": 0,
+"rows": []
+},
+"10:16": {
+"ram": "0x0fb66",
+"refs": 0,
+"rows": []
+},
+"10:17": {
+"ram": "0x0fb67",
+"refs": 0,
+"rows": []
+},
+"10:18": {
+"ram": "0x0fb68",
+"refs": 0,
+"rows": []
+},
+"10:19": {
+"ram": "0x0fb69",
+"refs": 0,
+"rows": []
+},
+"10:20": {
+"ram": "0x0fb6a",
+"refs": 0,
+"rows": []
+},
+"10:21": {
+"ram": "0x0fb6b",
+"refs": 0,
+"rows": []
+},
+"10:22": {
+"ram": "0x0fb6c",
+"refs": 0,
+"rows": []
+},
+"10:23": {
+"ram": "0x0fb6d",
+"refs": 0,
+"rows": []
+},
+"11:0": {
+"ram": "0x0fb70",
+"refs": 54,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11954 ld (PANEL_PART_ACP2:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12086 ld a, (PANEL_PART_ACP2:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12254 ld a, (PANEL_PART_ACP2:16)"
+]
+},
+"11:1": {
+"ram": "0x0fb71",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11956 and (PANEL_PART_ACP2+1:16), 128",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11957 or (PANEL_PART_ACP2+1:16), w",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12087 ld w, (PANEL_PART_ACP2+1:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12255 ld w, (PANEL_PART_ACP2+1:16)"
+]
+},
+"11:2": {
+"ram": "0x0fb72",
+"refs": 0,
+"rows": []
+},
+"11:3": {
+"ram": "0x0fb73",
+"refs": 0,
+"rows": []
+},
+"11:4": {
+"ram": "0x0fb74",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11961 and (PANEL_PART_ACP2+4:16), 191",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11962 or (PANEL_PART_ACP2+4:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12089 ld l, (PANEL_PART_ACP2+4:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12257 ld l, (PANEL_PART_ACP2+4:16)"
+]
+},
+"11:5": {
+"ram": "0x0fb75",
+"refs": 0,
+"rows": []
+},
+"11:6": {
+"ram": "0x0fb76",
+"refs": 0,
+"rows": []
+},
+"11:7": {
+"ram": "0x0fb77",
+"refs": 0,
+"rows": []
+},
+"11:8": {
+"ram": "0x0fb78",
+"refs": 0,
+"rows": []
+},
+"11:9": {
+"ram": "0x0fb79",
+"refs": 0,
+"rows": []
+},
+"11:10": {
+"ram": "0x0fb7a",
+"refs": 0,
+"rows": []
+},
+"11:11": {
+"ram": "0x0fb7b",
+"refs": 0,
+"rows": []
+},
+"11:12": {
+"ram": "0x0fb7c",
+"refs": 0,
+"rows": []
+},
+"11:13": {
+"ram": "0x0fb7d",
+"refs": 105,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2823 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2837 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2861 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2875 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1"
+]
+},
+"11:14": {
+"ram": "0x0fb7e",
+"refs": 0,
+"rows": []
+},
+"11:15": {
+"ram": "0x0fb7f",
+"refs": 0,
+"rows": []
+},
+"11:16": {
+"ram": "0x0fb80",
+"refs": 0,
+"rows": []
+},
+"11:17": {
+"ram": "0x0fb81",
+"refs": 0,
+"rows": []
+},
+"11:18": {
+"ram": "0x0fb82",
+"refs": 0,
+"rows": []
+},
+"11:19": {
+"ram": "0x0fb83",
+"refs": 0,
+"rows": []
+},
+"11:20": {
+"ram": "0x0fb84",
+"refs": 0,
+"rows": []
+},
+"11:21": {
+"ram": "0x0fb85",
+"refs": 0,
+"rows": []
+},
+"11:22": {
+"ram": "0x0fb86",
+"refs": 0,
+"rows": []
+},
+"11:23": {
+"ram": "0x0fb87",
+"refs": 0,
+"rows": []
+},
+"12:0": {
+"ram": "0x0fb8a",
+"refs": 54,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11985 ld (PANEL_PART_ACP3:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12097 ld a, (PANEL_PART_ACP3:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12278 ld a, (PANEL_PART_ACP3:16)"
+]
+},
+"12:1": {
+"ram": "0x0fb8b",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11987 and (PANEL_PART_ACP3+1:16), 128",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11988 or (PANEL_PART_ACP3+1:16), w",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12098 ld w, (PANEL_PART_ACP3+1:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12279 ld w, (PANEL_PART_ACP3+1:16)"
+]
+},
+"12:2": {
+"ram": "0x0fb8c",
+"refs": 0,
+"rows": []
+},
+"12:3": {
+"ram": "0x0fb8d",
+"refs": 0,
+"rows": []
+},
+"12:4": {
+"ram": "0x0fb8e",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11992 and (PANEL_PART_ACP3+4:16), 191",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:11993 or (PANEL_PART_ACP3+4:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12100 ld l, (PANEL_PART_ACP3+4:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12281 ld l, (PANEL_PART_ACP3+4:16)"
+]
+},
+"12:5": {
+"ram": "0x0fb8f",
+"refs": 0,
+"rows": []
+},
+"12:6": {
+"ram": "0x0fb90",
+"refs": 0,
+"rows": []
+},
+"12:7": {
+"ram": "0x0fb91",
+"refs": 0,
+"rows": []
+},
+"12:8": {
+"ram": "0x0fb92",
+"refs": 0,
+"rows": []
+},
+"12:9": {
+"ram": "0x0fb93",
+"refs": 0,
+"rows": []
+},
+"12:10": {
+"ram": "0x0fb94",
+"refs": 0,
+"rows": []
+},
+"12:11": {
+"ram": "0x0fb95",
+"refs": 0,
+"rows": []
+},
+"12:12": {
+"ram": "0x0fb96",
+"refs": 0,
+"rows": []
+},
+"12:13": {
+"ram": "0x0fb97",
+"refs": 105,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2823 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2837 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2861 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2875 .long 0x0000fb63, 0x0000fb7d, 0x0000fb97, 0x0000fbb1"
+]
+},
+"12:14": {
+"ram": "0x0fb98",
+"refs": 0,
+"rows": []
+},
+"12:15": {
+"ram": "0x0fb99",
+"refs": 0,
+"rows": []
+},
+"12:16": {
+"ram": "0x0fb9a",
+"refs": 0,
+"rows": []
+},
+"12:17": {
+"ram": "0x0fb9b",
+"refs": 0,
+"rows": []
+},
+"12:18": {
+"ram": "0x0fb9c",
+"refs": 0,
+"rows": []
+},
+"12:19": {
+"ram": "0x0fb9d",
+"refs": 0,
+"rows": []
+},
+"12:20": {
+"ram": "0x0fb9e",
+"refs": 0,
+"rows": []
+},
+"12:21": {
+"ram": "0x0fb9f",
+"refs": 0,
+"rows": []
+},
+"12:22": {
+"ram": "0x0fba0",
+"refs": 0,
+"rows": []
+},
+"12:23": {
+"ram": "0x0fba1",
+"refs": 0,
+"rows": []
+},
+"13:0": {
+"ram": "0x0fba4",
+"refs": 54,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12016 ld (PANEL_PART_BASS:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12064 ld a, (PANEL_PART_BASS:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12206 ld a, (PANEL_PART_BASS:16)"
+]
+},
+"13:1": {
+"ram": "0x0fba5",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12018 and (PANEL_PART_BASS+1:16), 128",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12019 or (PANEL_PART_BASS+1:16), w",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12065 ld w, (PANEL_PART_BASS+1:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12207 ld w, (PANEL_PART_BASS+1:16)"
+]
+},
+"13:2": {
+"ram": "0x0fba6",
+"refs": 0,
+"rows": []
+},
+"13:3": {
+"ram": "0x0fba7",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/ui_mode_handlers.s:417 lda\txwa, (PANEL_PART_BASS+3:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:417 lda\txwa, (PANEL_PART_BASS+3:16)",
+"v7 v7/maincpu/ui/ui_mode_handlers.s:404 lda\txwa, (PANEL_PART_BASS+3:16)",
+"v6 v6/maincpu/ui/ui_mode_handlers.s:404 lda\txwa, (0xfba7:16)"
+]
+},
+"13:4": {
+"ram": "0x0fba8",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12023 and (PANEL_PART_BASS+4:16), 191",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12024 or (PANEL_PART_BASS+4:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12067 ld l, (PANEL_PART_BASS+4:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12209 ld l, (PANEL_PART_BASS+4:16)"
+]
+},
+"13:5": {
+"ram": "0x0fba9",
+"refs": 0,
+"rows": []
+},
+"13:6": {
+"ram": "0x0fbaa",
+"refs": 0,
+"rows": []
+},
+"13:7": {
+"ram": "0x0fbab",
+"refs": 0,
+"rows": []
+},
+"13:8": {
+"ram": "0x0fbac",
+"refs": 0,
+"rows": []
+},
+"13:9": {
+"ram": "0x0fbad",
+"refs": 0,
+"rows": []
+},
+"13:10": {
+"ram": "0x0fbae",
+"refs": 0,
+"rows": []
+},
+"13:11": {
+"ram": "0x0fbaf",
+"refs": 0,
+"rows": []
+},
+"13:12": {
+"ram": "0x0fbb0",
+"refs": 0,
+"rows": []
+},
+"13:13": {
+"ram": "0x0fbb1",
+"refs": 145,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:59 bit 5, (PANEL_PART_BASS+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:243 bit 5, (PANEL_PART_BASS+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:296 bit 5, (PANEL_PART_BASS+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1392 bit 5, (PANEL_PART_BASS+13:16)"
+]
+},
+"13:14": {
+"ram": "0x0fbb2",
+"refs": 0,
+"rows": []
+},
+"13:15": {
+"ram": "0x0fbb3",
+"refs": 0,
+"rows": []
+},
+"13:16": {
+"ram": "0x0fbb4",
+"refs": 0,
+"rows": []
+},
+"13:17": {
+"ram": "0x0fbb5",
+"refs": 0,
+"rows": []
+},
+"13:18": {
+"ram": "0x0fbb6",
+"refs": 0,
+"rows": []
+},
+"13:19": {
+"ram": "0x0fbb7",
+"refs": 0,
+"rows": []
+},
+"13:20": {
+"ram": "0x0fbb8",
+"refs": 0,
+"rows": []
+},
+"13:21": {
+"ram": "0x0fbb9",
+"refs": 0,
+"rows": []
+},
+"13:22": {
+"ram": "0x0fbba",
+"refs": 0,
+"rows": []
+},
+"13:23": {
+"ram": "0x0fbbb",
+"refs": 0,
+"rows": []
+},
+"14:0": {
+"ram": "0x0fbbe",
+"refs": 69,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12043 ld (PANEL_PART_DRUM:16), a",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12056 ld a, (PANEL_PART_DRUM:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12184 ld a, (PANEL_PART_DRUM:16)"
+]
+},
+"14:1": {
+"ram": "0x0fbbf",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12044 and (PANEL_PART_DRUM+1:16), 128",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12045 or (PANEL_PART_DRUM+1:16), w",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12057 ld w, (PANEL_PART_DRUM+1:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:12185 ld w, (PANEL_PART_DRUM+1:16)"
+]
+},
+"14:2": {
+"ram": "0x0fbc0",
+"refs": 0,
+"rows": []
+},
+"14:3": {
+"ram": "0x0fbc1",
+"refs": 0,
+"rows": []
+},
+"14:4": {
+"ram": "0x0fbc2",
+"refs": 0,
+"rows": []
+},
+"14:5": {
+"ram": "0x0fbc3",
+"refs": 0,
+"rows": []
+},
+"14:6": {
+"ram": "0x0fbc4",
+"refs": 0,
+"rows": []
+},
+"14:7": {
+"ram": "0x0fbc5",
+"refs": 0,
+"rows": []
+},
+"14:8": {
+"ram": "0x0fbc6",
+"refs": 0,
+"rows": []
+},
+"14:9": {
+"ram": "0x0fbc7",
+"refs": 0,
+"rows": []
+},
+"14:10": {
+"ram": "0x0fbc8",
+"refs": 0,
+"rows": []
+},
+"14:11": {
+"ram": "0x0fbc9",
+"refs": 0,
+"rows": []
+},
+"14:12": {
+"ram": "0x0fbca",
+"refs": 0,
+"rows": []
+},
+"14:13": {
+"ram": "0x0fbcb",
+"refs": 45,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1514 ld\txix, 0xfbcb",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1525 ld\txix, 0xfbcb",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2824 .long 0x0000fbcb, 0x0000fbe5, 0xffffffff, 0xffffffff",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2838 .long 0x0000fbcb, 0x0000fbe5, 0xffffffff, 0xffffffff"
+]
+},
+"14:14": {
+"ram": "0x0fbcc",
+"refs": 0,
+"rows": []
+},
+"14:15": {
+"ram": "0x0fbcd",
+"refs": 0,
+"rows": []
+},
+"14:16": {
+"ram": "0x0fbce",
+"refs": 0,
+"rows": []
+},
+"14:17": {
+"ram": "0x0fbcf",
+"refs": 0,
+"rows": []
+},
+"14:18": {
+"ram": "0x0fbd0",
+"refs": 0,
+"rows": []
+},
+"14:19": {
+"ram": "0x0fbd1",
+"refs": 0,
+"rows": []
+},
+"14:20": {
+"ram": "0x0fbd2",
+"refs": 0,
+"rows": []
+},
+"14:21": {
+"ram": "0x0fbd3",
+"refs": 0,
+"rows": []
+},
+"14:22": {
+"ram": "0x0fbd4",
+"refs": 0,
+"rows": []
+},
+"14:23": {
+"ram": "0x0fbd5",
+"refs": 0,
+"rows": []
+},
+"15:0": {
+"ram": "0x0fbd8",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2056 lda xiy, (PANEL_PART_CHRD:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1158 .long 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, 0x0000fd62\t; 0x14",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:7242 .long 0x0000fbd8"
+]
+},
+"15:1": {
+"ram": "0x0fbd9",
+"refs": 0,
+"rows": []
+},
+"15:2": {
+"ram": "0x0fbda",
+"refs": 0,
+"rows": []
+},
+"15:3": {
+"ram": "0x0fbdb",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:1858 .long 0x0000fbdb",
+"v10 v10/maincpu/display/scoop_display.s:1859 .long 0x0000fbdb",
+"v9 v9/maincpu/display/scoop_display.s:1841 .long\t0x0000fbdb",
+"v9 v9/maincpu/display/scoop_display.s:1842 .long\t0x0000fbdb"
+]
+},
+"15:4": {
+"ram": "0x0fbdc",
+"refs": 0,
+"rows": []
+},
+"15:5": {
+"ram": "0x0fbdd",
+"refs": 0,
+"rows": []
+},
+"15:6": {
+"ram": "0x0fbde",
+"refs": 0,
+"rows": []
+},
+"15:7": {
+"ram": "0x0fbdf",
+"refs": 0,
+"rows": []
+},
+"15:8": {
+"ram": "0x0fbe0",
+"refs": 0,
+"rows": []
+},
+"15:9": {
+"ram": "0x0fbe1",
+"refs": 0,
+"rows": []
+},
+"15:10": {
+"ram": "0x0fbe2",
+"refs": 0,
+"rows": []
+},
+"15:11": {
+"ram": "0x0fbe3",
+"refs": 0,
+"rows": []
+},
+"15:12": {
+"ram": "0x0fbe4",
+"refs": 0,
+"rows": []
+},
+"15:13": {
+"ram": "0x0fbe5",
+"refs": 114,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:1470 bit 5, (PANEL_PART_CHRD+13:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1484 bit 5, (PANEL_PART_CHRD+13:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2824 .long 0x0000fbcb, 0x0000fbe5, 0xffffffff, 0xffffffff",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2838 .long 0x0000fbcb, 0x0000fbe5, 0xffffffff, 0xffffffff"
+]
+},
+"15:14": {
+"ram": "0x0fbe6",
+"refs": 0,
+"rows": []
+},
+"15:15": {
+"ram": "0x0fbe7",
+"refs": 0,
+"rows": []
+},
+"15:16": {
+"ram": "0x0fbe8",
+"refs": 0,
+"rows": []
+},
+"15:17": {
+"ram": "0x0fbe9",
+"refs": 0,
+"rows": []
+},
+"15:18": {
+"ram": "0x0fbea",
+"refs": 0,
+"rows": []
+},
+"15:19": {
+"ram": "0x0fbeb",
+"refs": 0,
+"rows": []
+},
+"15:20": {
+"ram": "0x0fbec",
+"refs": 0,
+"rows": []
+},
+"15:21": {
+"ram": "0x0fbed",
+"refs": 0,
+"rows": []
+},
+"15:22": {
+"ram": "0x0fbee",
+"refs": 0,
+"rows": []
+},
+"15:23": {
+"ram": "0x0fbef",
+"refs": 0,
+"rows": []
+},
+"16:0": {
+"ram": "0x0fbf2",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1158 .long 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, 0x0000fd62\t; 0x14",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:7243 .long 0x0000fbf2",
+"v9 v9/maincpu/extensions/extension_data.s:3203 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, "
+]
+},
+"16:1": {
+"ram": "0x0fbf3",
+"refs": 0,
+"rows": []
+},
+"16:2": {
+"ram": "0x0fbf4",
+"refs": 0,
+"rows": []
+},
+"16:3": {
+"ram": "0x0fbf5",
+"refs": 0,
+"rows": []
+},
+"16:4": {
+"ram": "0x0fbf6",
+"refs": 0,
+"rows": []
+},
+"16:5": {
+"ram": "0x0fbf7",
+"refs": 0,
+"rows": []
+},
+"16:6": {
+"ram": "0x0fbf8",
+"refs": 0,
+"rows": []
+},
+"16:7": {
+"ram": "0x0fbf9",
+"refs": 0,
+"rows": []
+},
+"16:8": {
+"ram": "0x0fbfa",
+"refs": 0,
+"rows": []
+},
+"16:9": {
+"ram": "0x0fbfb",
+"refs": 0,
+"rows": []
+},
+"16:10": {
+"ram": "0x0fbfc",
+"refs": 0,
+"rows": []
+},
+"16:11": {
+"ram": "0x0fbfd",
+"refs": 0,
+"rows": []
+},
+"16:12": {
+"ram": "0x0fbfe",
+"refs": 0,
+"rows": []
+},
+"16:13": {
+"ram": "0x0fbff",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:6026 andw\t(0xc596:16), 0xfbff",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:2273 ld a, (PANEL_PART_RTBS+13:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:2299 or (PANEL_PART_RTBS+13:16), a",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:2380 ld a, (PANEL_PART_RTBS+13:16)"
+]
+},
+"16:14": {
+"ram": "0x0fc00",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:411 ldw\tde, 0xfc00",
+"v9 v9/maincpu/midi/midi_dispatch_handlers.s:411 ldw\tde, 0xfc00",
+"v7 v7/maincpu/midi/midi_serial_routines.s:1340 ldw\tde, 0xfc00",
+"v6 v6/maincpu/midi/midi_serial_routines.s:1342 ldw\tde, 0xfc00"
+]
+},
+"16:15": {
+"ram": "0x0fc01",
+"refs": 0,
+"rows": []
+},
+"16:16": {
+"ram": "0x0fc02",
+"refs": 0,
+"rows": []
+},
+"16:17": {
+"ram": "0x0fc03",
+"refs": 0,
+"rows": []
+},
+"16:18": {
+"ram": "0x0fc04",
+"refs": 0,
+"rows": []
+},
+"16:19": {
+"ram": "0x0fc05",
+"refs": 0,
+"rows": []
+},
+"16:20": {
+"ram": "0x0fc06",
+"refs": 0,
+"rows": []
+},
+"16:21": {
+"ram": "0x0fc07",
+"refs": 0,
+"rows": []
+},
+"16:22": {
+"ram": "0x0fc08",
+"refs": 0,
+"rows": []
+},
+"16:23": {
+"ram": "0x0fc09",
+"refs": 0,
+"rows": []
+},
+"19:0": {
+"ram": "0x0fc0c",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3197 .long 0x0000fd7c, 0x0000fc0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2074 lda xiy, (PANEL_PART_CTRL:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1159 .long 0x0000fd7c, 0x0000fc0c, 0x00000000, 0x00000000\t; 0x18",
+"v9 v9/maincpu/extensions/extension_data.s:3204 .long 0x0000fd7c, 0x0000fc0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"19:1": {
+"ram": "0x0fc0d",
+"refs": 0,
+"rows": []
+},
+"19:2": {
+"ram": "0x0fc0e",
+"refs": 0,
+"rows": []
+},
+"19:3": {
+"ram": "0x0fc0f",
+"refs": 0,
+"rows": []
+},
+"19:4": {
+"ram": "0x0fc10",
+"refs": 0,
+"rows": []
+},
+"19:5": {
+"ram": "0x0fc11",
+"refs": 0,
+"rows": []
+},
+"19:6": {
+"ram": "0x0fc12",
+"refs": 0,
+"rows": []
+},
+"19:7": {
+"ram": "0x0fc13",
+"refs": 0,
+"rows": []
+},
+"19:8": {
+"ram": "0x0fc14",
+"refs": 0,
+"rows": []
+},
+"19:9": {
+"ram": "0x0fc15",
+"refs": 0,
+"rows": []
+},
+"19:10": {
+"ram": "0x0fc16",
+"refs": 0,
+"rows": []
+},
+"19:11": {
+"ram": "0x0fc17",
+"refs": 0,
+"rows": []
+},
+"19:12": {
+"ram": "0x0fc18",
+"refs": 0,
+"rows": []
+},
+"19:13": {
+"ram": "0x0fc19",
+"refs": 40,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1642 ld\txix, 0xfc19",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1726 ld xix, 0xfc19",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:2877 .long 0xffffffff, 0x0000fc19, 0xffffffff, 0xffffffff",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3004 .long 0xffffffff, 0x0000fc19, 0xffffffff, 0xffffffff"
+]
+},
+"19:14": {
+"ram": "0x0fc1a",
+"refs": 0,
+"rows": []
+},
+"19:15": {
+"ram": "0x0fc1b",
+"refs": 0,
+"rows": []
+},
+"19:16": {
+"ram": "0x0fc1c",
+"refs": 0,
+"rows": []
+},
+"19:17": {
+"ram": "0x0fc1d",
+"refs": 0,
+"rows": []
+},
+"19:18": {
+"ram": "0x0fc1e",
+"refs": 0,
+"rows": []
+},
+"19:19": {
+"ram": "0x0fc1f",
+"refs": 0,
+"rows": []
+},
+"19:20": {
+"ram": "0x0fc20",
+"refs": 0,
+"rows": []
+},
+"19:21": {
+"ram": "0x0fc21",
+"refs": 0,
+"rows": []
+},
+"19:22": {
+"ram": "0x0fc22",
+"refs": 0,
+"rows": []
+},
+"19:23": {
+"ram": "0x0fc23",
+"refs": 0,
+"rows": []
+},
+"44:0": {
+"ram": "0x0fc26",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/demo/fdemotext_routines.s:350 ld c, (PANEL_REC_44:16)",
+"v10 v10/maincpu/demo/fdemotext_routines.s:400 ld (PANEL_REC_44:16), a",
+"v10 v10/maincpu/extensions/extension_data.s:3202 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:4252 lda xhl, (PANEL_REC_44:16)"
+]
+},
+"44:1": {
+"ram": "0x0fc27",
+"refs": 0,
+"rows": []
+},
+"44:2": {
+"ram": "0x0fc28",
+"refs": 0,
+"rows": []
+},
+"44:3": {
+"ram": "0x0fc29",
+"refs": 0,
+"rows": []
+},
+"44:4": {
+"ram": "0x0fc2a",
+"refs": 0,
+"rows": []
+},
+"44:5": {
+"ram": "0x0fc2b",
+"refs": 0,
+"rows": []
+},
+"44:6": {
+"ram": "0x0fc2c",
+"refs": 0,
+"rows": []
+},
+"44:7": {
+"ram": "0x0fc2d",
+"refs": 0,
+"rows": []
+},
+"44:8": {
+"ram": "0x0fc2e",
+"refs": 0,
+"rows": []
+},
+"44:9": {
+"ram": "0x0fc2f",
+"refs": 0,
+"rows": []
+},
+"45:0": {
+"ram": "0x0fc32",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3202 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:4300 lda xhl, (PANEL_REC_45:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1170 .long 0x0000fc26, 0x0000fc32, 0x0000fc3e, 0x0000fc4a\t; 0x44",
+"v9 v9/maincpu/extensions/extension_data.s:3209 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, "
+]
+},
+"45:1": {
+"ram": "0x0fc33",
+"refs": 0,
+"rows": []
+},
+"45:2": {
+"ram": "0x0fc34",
+"refs": 0,
+"rows": []
+},
+"45:3": {
+"ram": "0x0fc35",
+"refs": 0,
+"rows": []
+},
+"45:4": {
+"ram": "0x0fc36",
+"refs": 0,
+"rows": []
+},
+"45:5": {
+"ram": "0x0fc37",
+"refs": 0,
+"rows": []
+},
+"45:6": {
+"ram": "0x0fc38",
+"refs": 0,
+"rows": []
+},
+"45:7": {
+"ram": "0x0fc39",
+"refs": 0,
+"rows": []
+},
+"45:8": {
+"ram": "0x0fc3a",
+"refs": 0,
+"rows": []
+},
+"45:9": {
+"ram": "0x0fc3b",
+"refs": 0,
+"rows": []
+},
+"46:0": {
+"ram": "0x0fc3e",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3202 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:4348 lda xhl, (PANEL_REC_46:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1170 .long 0x0000fc26, 0x0000fc32, 0x0000fc3e, 0x0000fc4a\t; 0x44",
+"v9 v9/maincpu/extensions/extension_data.s:3209 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, "
+]
+},
+"46:1": {
+"ram": "0x0fc3f",
+"refs": 0,
+"rows": []
+},
+"46:2": {
+"ram": "0x0fc40",
+"refs": 0,
+"rows": []
+},
+"46:3": {
+"ram": "0x0fc41",
+"refs": 0,
+"rows": []
+},
+"46:4": {
+"ram": "0x0fc42",
+"refs": 0,
+"rows": []
+},
+"46:5": {
+"ram": "0x0fc43",
+"refs": 0,
+"rows": []
+},
+"46:6": {
+"ram": "0x0fc44",
+"refs": 0,
+"rows": []
+},
+"46:7": {
+"ram": "0x0fc45",
+"refs": 0,
+"rows": []
+},
+"46:8": {
+"ram": "0x0fc46",
+"refs": 0,
+"rows": []
+},
+"46:9": {
+"ram": "0x0fc47",
+"refs": 0,
+"rows": []
+},
+"47:0": {
+"ram": "0x0fc4a",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3202 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, ",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:8280 pushw\t0xfc4a",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2313 lda xwa, (PANEL_VOCALIST:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1170 .long 0x0000fc26, 0x0000fc32, 0x0000fc3e, 0x0000fc4a\t; 0x44"
+]
+},
+"47:1": {
+"ram": "0x0fc4b",
+"refs": 0,
+"rows": []
+},
+"47:2": {
+"ram": "0x0fc4c",
+"refs": 0,
+"rows": []
+},
+"47:3": {
+"ram": "0x0fc4d",
+"refs": 0,
+"rows": []
+},
+"47:4": {
+"ram": "0x0fc4e",
+"refs": 0,
+"rows": []
+},
+"47:5": {
+"ram": "0x0fc4f",
+"refs": 0,
+"rows": []
+},
+"47:6": {
+"ram": "0x0fc50",
+"refs": 0,
+"rows": []
+},
+"47:7": {
+"ram": "0x0fc51",
+"refs": 0,
+"rows": []
+},
+"43:0": {
+"ram": "0x0fc54",
+"refs": 31,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1286 pushw 0xfc54",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1322 pushw 0xfc54",
+"v10 v10/maincpu/extensions/extension_data.s:3202 .long 0xffffffff, 0xffffffff, 0xffffffff, 0x0000fc54, 0x0000fc26, 0x0000fc32, 0x0000fc3e, ",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:7236 pushw\t0xfc54"
+]
+},
+"43:1": {
+"ram": "0x0fc55",
+"refs": 0,
+"rows": []
+},
+"43:2": {
+"ram": "0x0fc56",
+"refs": 0,
+"rows": []
+},
+"43:3": {
+"ram": "0x0fc57",
+"refs": 0,
+"rows": []
+},
+"48:0": {
+"ram": "0x0fc5a",
+"refs": 335,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5400 lda\txiz, (PANEL_STYLE:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:8386 ld xde, 0xfc5a",
+"v10 v10/maincpu/audio/audio_control_engine.s:10511 ld xix, PANEL_STYLE",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1273 lda xbc, (PANEL_STYLE:16)"
+]
+},
+"48:1": {
+"ram": "0x0fc5b",
+"refs": 147,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:7853 ld\ta, (PANEL_STYLE+1:16)",
+"v10 v10/maincpu/display/scoop_display.s:14788 cp\t(PANEL_STYLE+1:16), 2",
+"v10 v10/maincpu/display/scoop_display.s:14817 cp\t(PANEL_STYLE+1:16), 2",
+"v10 v10/maincpu/display/scoop_display.s:15227 cp\t(PANEL_STYLE+1:16), 2"
+]
+},
+"48:2": {
+"ram": "0x0fc5c",
+"refs": 0,
+"rows": []
+},
+"48:3": {
+"ram": "0x0fc5d",
+"refs": 140,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5502 ld\ta, (PANEL_STYLE+3:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:5665 ld\ta, (PANEL_STYLE+3:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:8456 ld l, (PANEL_STYLE+3:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:11707 ldb_d8\te, (PANEL_STYLE+3)"
+]
+},
+"48:4": {
+"ram": "0x0fc5e",
+"refs": 40,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:1110 ld a, (PANEL_STYLE+4:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5949 ldb_d8\ta, (PANEL_STYLE+4)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:6049 ldb_d8\ta, (PANEL_STYLE+4)",
+"v10 v10/maincpu/sequencer/smf_event_processor.s:11031 ld a, (PANEL_STYLE+4:16)"
+]
+},
+"48:5": {
+"ram": "0x0fc5f",
+"refs": 690,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:1363 ld a, (PANEL_STYLE+5:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1379 bit 1, (PANEL_STYLE+5:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1381 ld a, (PANEL_STYLE+5:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1402 ld a, (PANEL_STYLE+5:16)"
+]
+},
+"48:6": {
+"ram": "0x0fc60",
+"refs": 170,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:1366 ld a, (PANEL_STYLE+6:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1384 ld a, (PANEL_STYLE+6:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1405 ld a, (PANEL_STYLE+6:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:1467 ld a, (PANEL_STYLE+6:16)"
+]
+},
+"48:7": {
+"ram": "0x0fc61",
+"refs": 69,
+"rows": [
+"v10 v10/maincpu/display/scoop_display.s:7868 ld\ta, (PANEL_STYLE+7:16)",
+"v10 v10/maincpu/display/scoop_display.s:7871 ld\t(PANEL_STYLE+7:16), a",
+"v10 v10/maincpu/display/scoop_display.s:7883 ld\ta, (PANEL_STYLE+7:16)",
+"v10 v10/maincpu/midi/midipkt_routines.s:966 ld c, (PANEL_STYLE+7:16)"
+]
+},
+"48:8": {
+"ram": "0x0fc62",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:9246 ldw_d16\twa, (PANEL_STYLE+8)",
+"v10 v10/maincpu/audio/audio_control_engine.s:10198 ld xix, (PANEL_STYLE+8:16)",
+"v10 v10/maincpu/sequencer/smf_event_processor.s:1022 ld l, (PANEL_STYLE+8:16)",
+"v10 v10/maincpu/ui/ui_playback_modes.s:155 ld (PANEL_STYLE+8:16), wa"
+]
+},
+"48:9": {
+"ram": "0x0fc63",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:22786 res\t0, (PANEL_STYLE+9:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:22789 set\t0, (PANEL_STYLE+9:16)",
+"v10 v10/maincpu/sequencer/smf_event_processor.s:1025 ld b, (PANEL_STYLE+9:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:22764 res\t0, (PANEL_STYLE+9:16)"
+]
+},
+"90:0": {
+"ram": "0x0fc66",
+"refs": 78,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5494 lda\txbc, (PANEL_REC_90:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:5572 lda\txde, (PANEL_REC_90:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:5612 lda xde, (PANEL_REC_90:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:5662 lda\txbc, (PANEL_REC_90:16)"
+]
+},
+"90:1": {
+"ram": "0x0fc67",
+"refs": 27,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5463 bit 1, (PANEL_REC_90+1:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5513 bit 1, (PANEL_REC_90+1:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5593 bit 1, (PANEL_REC_90+1:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5636 bit 1, (PANEL_REC_90+1:16)"
+]
+},
+"90:2": {
+"ram": "0x0fc68",
+"refs": 0,
+"rows": []
+},
+"90:3": {
+"ram": "0x0fc69",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:8477 bit\t0, (PANEL_REC_90+3:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5628 bit 0, (PANEL_REC_90+3:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1620 lda xde, (PANEL_REC_90+3:16)",
+"v9 v9/maincpu/audio/audio_control_engine.s:8395 bit\t0, (PANEL_REC_90+3:16)"
+]
+},
+"90:4": {
+"ram": "0x0fc6a",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5454 lda\txwa, (PANEL_REC_90+4:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5905 ldb_d8\ta, (PANEL_REC_90+4)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2300 lda xbc, (PANEL_REC_90+4:16)",
+"v9 v9/maincpu/audio/audio_control_engine.s:5433 lda\txwa, (PANEL_REC_90+4:16)"
+]
+},
+"90:5": {
+"ram": "0x0fc6b",
+"refs": 0,
+"rows": []
+},
+"60:0": {
+"ram": "0x0fc6e",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3206 .long 0x0000fc6e, 0x0000fc74, 0xffffffff, 0x0000fc8e, 0x0000fca8, 0x0000fcc2, 0x0000fcdc, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1076 lda xbc, (PANEL_REC_60:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1182 .long 0x0000fc6e, 0x0000fc74, 0x00000000, 0x0000fc8e\t; 0x60",
+"v9 v9/maincpu/extensions/extension_data.s:3213 .long 0x0000fc6e, 0x0000fc74, 0xffffffff, 0x0000fc8e, 0x0000fca8, 0x0000fcc2, 0x0000fcdc, "
+]
+},
+"60:1": {
+"ram": "0x0fc6f",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:11740 ldb_d8\te, (PANEL_REC_60+1)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:13905 lda xwa, (PANEL_REC_60+1:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2331 lda xde, (PANEL_REC_60+1:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2361 lda xde, (PANEL_REC_60+1:16)"
+]
+},
+"60:2": {
+"ram": "0x0fc70",
+"refs": 0,
+"rows": []
+},
+"60:3": {
+"ram": "0x0fc71",
+"refs": 0,
+"rows": []
+},
+"61:0": {
+"ram": "0x0fc74",
+"refs": 125,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:585 lda xwa, (PANEL_DSP_EFFECT:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:598 lda xwa, (PANEL_DSP_EFFECT:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:606 ld (PANEL_DSP_EFFECT:16), l",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:614 lda xbc, (PANEL_DSP_EFFECT:16)"
+]
+},
+"61:1": {
+"ram": "0x0fc75",
+"refs": 0,
+"rows": []
+},
+"61:2": {
+"ram": "0x0fc76",
+"refs": 0,
+"rows": []
+},
+"61:3": {
+"ram": "0x0fc77",
+"refs": 0,
+"rows": []
+},
+"61:4": {
+"ram": "0x0fc78",
+"refs": 0,
+"rows": []
+},
+"61:5": {
+"ram": "0x0fc79",
+"refs": 0,
+"rows": []
+},
+"61:6": {
+"ram": "0x0fc7a",
+"refs": 0,
+"rows": []
+},
+"61:7": {
+"ram": "0x0fc7b",
+"refs": 0,
+"rows": []
+},
+"61:8": {
+"ram": "0x0fc7c",
+"refs": 0,
+"rows": []
+},
+"61:9": {
+"ram": "0x0fc7d",
+"refs": 0,
+"rows": []
+},
+"61:10": {
+"ram": "0x0fc7e",
+"refs": 0,
+"rows": []
+},
+"61:11": {
+"ram": "0x0fc7f",
+"refs": 0,
+"rows": []
+},
+"61:12": {
+"ram": "0x0fc80",
+"refs": 0,
+"rows": []
+},
+"61:13": {
+"ram": "0x0fc81",
+"refs": 0,
+"rows": []
+},
+"61:14": {
+"ram": "0x0fc82",
+"refs": 0,
+"rows": []
+},
+"61:15": {
+"ram": "0x0fc83",
+"refs": 0,
+"rows": []
+},
+"61:16": {
+"ram": "0x0fc84",
+"refs": 0,
+"rows": []
+},
+"61:17": {
+"ram": "0x0fc85",
+"refs": 0,
+"rows": []
+},
+"61:18": {
+"ram": "0x0fc86",
+"refs": 0,
+"rows": []
+},
+"61:19": {
+"ram": "0x0fc87",
+"refs": 0,
+"rows": []
+},
+"61:20": {
+"ram": "0x0fc88",
+"refs": 0,
+"rows": []
+},
+"61:21": {
+"ram": "0x0fc89",
+"refs": 0,
+"rows": []
+},
+"61:22": {
+"ram": "0x0fc8a",
+"refs": 0,
+"rows": []
+},
+"61:23": {
+"ram": "0x0fc8b",
+"refs": 0,
+"rows": []
+},
+"63:0": {
+"ram": "0x0fc8e",
+"refs": 145,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:7737 pushw 0xfc8e",
+"v10 v10/maincpu/audio/audio_control_engine.s:7801 pushw 0xfc8e",
+"v10 v10/maincpu/audio/audio_control_engine.s:7887 pushw 0xfc8e",
+"v10 v10/maincpu/audio/audio_control_engine.s:7895 lda xwa, (PANEL_DIGITAL_REVERB:16)"
+]
+},
+"63:1": {
+"ram": "0x0fc8f",
+"refs": 0,
+"rows": []
+},
+"63:2": {
+"ram": "0x0fc90",
+"refs": 0,
+"rows": []
+},
+"63:3": {
+"ram": "0x0fc91",
+"refs": 0,
+"rows": []
+},
+"63:4": {
+"ram": "0x0fc92",
+"refs": 0,
+"rows": []
+},
+"63:5": {
+"ram": "0x0fc93",
+"refs": 0,
+"rows": []
+},
+"63:6": {
+"ram": "0x0fc94",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:22229 ld (PANEL_DIGITAL_REVERB+6:16), 80",
+"v10 v10/maincpu/audio/note_voice_mapping.s:22444 ld (PANEL_DIGITAL_REVERB+6:16), 80",
+"v9 v9/maincpu/audio/note_voice_mapping.s:22207 ld (PANEL_DIGITAL_REVERB+6:16), 80",
+"v9 v9/maincpu/audio/note_voice_mapping.s:22422 ld (PANEL_DIGITAL_REVERB+6:16), 80"
+]
+},
+"63:7": {
+"ram": "0x0fc95",
+"refs": 0,
+"rows": []
+},
+"63:8": {
+"ram": "0x0fc96",
+"refs": 0,
+"rows": []
+},
+"63:9": {
+"ram": "0x0fc97",
+"refs": 0,
+"rows": []
+},
+"63:10": {
+"ram": "0x0fc98",
+"refs": 0,
+"rows": []
+},
+"63:11": {
+"ram": "0x0fc99",
+"refs": 0,
+"rows": []
+},
+"63:12": {
+"ram": "0x0fc9a",
+"refs": 0,
+"rows": []
+},
+"63:13": {
+"ram": "0x0fc9b",
+"refs": 0,
+"rows": []
+},
+"63:14": {
+"ram": "0x0fc9c",
+"refs": 0,
+"rows": []
+},
+"63:15": {
+"ram": "0x0fc9d",
+"refs": 0,
+"rows": []
+},
+"63:16": {
+"ram": "0x0fc9e",
+"refs": 0,
+"rows": []
+},
+"63:17": {
+"ram": "0x0fc9f",
+"refs": 0,
+"rows": []
+},
+"63:18": {
+"ram": "0x0fca0",
+"refs": 0,
+"rows": []
+},
+"63:19": {
+"ram": "0x0fca1",
+"refs": 0,
+"rows": []
+},
+"63:20": {
+"ram": "0x0fca2",
+"refs": 0,
+"rows": []
+},
+"63:21": {
+"ram": "0x0fca3",
+"refs": 0,
+"rows": []
+},
+"63:22": {
+"ram": "0x0fca4",
+"refs": 0,
+"rows": []
+},
+"63:23": {
+"ram": "0x0fca5",
+"refs": 0,
+"rows": []
+},
+"64:0": {
+"ram": "0x0fca8",
+"refs": 50,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:7769 pushw 0xfca8",
+"v10 v10/maincpu/audio/audio_control_engine.s:7815 pushw 0xfca8",
+"v10 v10/maincpu/audio/audio_control_engine.s:7929 pushw 0xfca8",
+"v10 v10/maincpu/audio/audio_control_engine.s:7937 lda xwa, (PANEL_EQUALIZER:16)"
+]
+},
+"64:1": {
+"ram": "0x0fca9",
+"refs": 0,
+"rows": []
+},
+"64:2": {
+"ram": "0x0fcaa",
+"refs": 0,
+"rows": []
+},
+"64:3": {
+"ram": "0x0fcab",
+"refs": 0,
+"rows": []
+},
+"64:4": {
+"ram": "0x0fcac",
+"refs": 0,
+"rows": []
+},
+"64:5": {
+"ram": "0x0fcad",
+"refs": 0,
+"rows": []
+},
+"64:6": {
+"ram": "0x0fcae",
+"refs": 0,
+"rows": []
+},
+"64:7": {
+"ram": "0x0fcaf",
+"refs": 0,
+"rows": []
+},
+"64:8": {
+"ram": "0x0fcb0",
+"refs": 0,
+"rows": []
+},
+"64:9": {
+"ram": "0x0fcb1",
+"refs": 0,
+"rows": []
+},
+"64:10": {
+"ram": "0x0fcb2",
+"refs": 0,
+"rows": []
+},
+"64:11": {
+"ram": "0x0fcb3",
+"refs": 0,
+"rows": []
+},
+"64:12": {
+"ram": "0x0fcb4",
+"refs": 0,
+"rows": []
+},
+"64:13": {
+"ram": "0x0fcb5",
+"refs": 0,
+"rows": []
+},
+"64:14": {
+"ram": "0x0fcb6",
+"refs": 0,
+"rows": []
+},
+"64:15": {
+"ram": "0x0fcb7",
+"refs": 0,
+"rows": []
+},
+"64:16": {
+"ram": "0x0fcb8",
+"refs": 0,
+"rows": []
+},
+"64:17": {
+"ram": "0x0fcb9",
+"refs": 0,
+"rows": []
+},
+"64:18": {
+"ram": "0x0fcba",
+"refs": 0,
+"rows": []
+},
+"64:19": {
+"ram": "0x0fcbb",
+"refs": 0,
+"rows": []
+},
+"64:20": {
+"ram": "0x0fcbc",
+"refs": 0,
+"rows": []
+},
+"64:21": {
+"ram": "0x0fcbd",
+"refs": 0,
+"rows": []
+},
+"64:22": {
+"ram": "0x0fcbe",
+"refs": 0,
+"rows": []
+},
+"64:23": {
+"ram": "0x0fcbf",
+"refs": 0,
+"rows": []
+},
+"65:0": {
+"ram": "0x0fcc2",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:264 lda xbc, (PANEL_ACOUSTIC_ILLUSION:16)",
+"v10 v10/maincpu/extensions/extension_data.s:3206 .long 0x0000fc6e, 0x0000fc74, 0xffffffff, 0x0000fc8e, 0x0000fca8, 0x0000fcc2, 0x0000fcdc, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1123 lda xwa, (PANEL_ACOUSTIC_ILLUSION:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2344 lda xwa, (PANEL_ACOUSTIC_ILLUSION:16)"
+]
+},
+"65:1": {
+"ram": "0x0fcc3",
+"refs": 0,
+"rows": []
+},
+"65:2": {
+"ram": "0x0fcc4",
+"refs": 0,
+"rows": []
+},
+"65:3": {
+"ram": "0x0fcc5",
+"refs": 0,
+"rows": []
+},
+"65:4": {
+"ram": "0x0fcc6",
+"refs": 0,
+"rows": []
+},
+"65:5": {
+"ram": "0x0fcc7",
+"refs": 0,
+"rows": []
+},
+"65:6": {
+"ram": "0x0fcc8",
+"refs": 0,
+"rows": []
+},
+"65:7": {
+"ram": "0x0fcc9",
+"refs": 0,
+"rows": []
+},
+"65:8": {
+"ram": "0x0fcca",
+"refs": 0,
+"rows": []
+},
+"65:9": {
+"ram": "0x0fccb",
+"refs": 0,
+"rows": []
+},
+"65:10": {
+"ram": "0x0fccc",
+"refs": 0,
+"rows": []
+},
+"65:11": {
+"ram": "0x0fccd",
+"refs": 0,
+"rows": []
+},
+"65:12": {
+"ram": "0x0fcce",
+"refs": 0,
+"rows": []
+},
+"65:13": {
+"ram": "0x0fccf",
+"refs": 0,
+"rows": []
+},
+"65:14": {
+"ram": "0x0fcd0",
+"refs": 0,
+"rows": []
+},
+"65:15": {
+"ram": "0x0fcd1",
+"refs": 0,
+"rows": []
+},
+"65:16": {
+"ram": "0x0fcd2",
+"refs": 0,
+"rows": []
+},
+"65:17": {
+"ram": "0x0fcd3",
+"refs": 0,
+"rows": []
+},
+"65:18": {
+"ram": "0x0fcd4",
+"refs": 0,
+"rows": []
+},
+"65:19": {
+"ram": "0x0fcd5",
+"refs": 0,
+"rows": []
+},
+"65:20": {
+"ram": "0x0fcd6",
+"refs": 0,
+"rows": []
+},
+"65:21": {
+"ram": "0x0fcd7",
+"refs": 0,
+"rows": []
+},
+"65:22": {
+"ram": "0x0fcd8",
+"refs": 0,
+"rows": []
+},
+"65:23": {
+"ram": "0x0fcd9",
+"refs": 0,
+"rows": []
+},
+"66:0": {
+"ram": "0x0fcdc",
+"refs": 36,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1292 pushw 0xfcdc",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1328 pushw 0xfcdc",
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:269 lda xbc, (PANEL_MIC_REVERB:16)",
+"v10 v10/maincpu/extensions/extension_data.s:3206 .long 0x0000fc6e, 0x0000fc74, 0xffffffff, 0x0000fc8e, 0x0000fca8, 0x0000fcc2, 0x0000fcdc, "
+]
+},
+"66:1": {
+"ram": "0x0fcdd",
+"refs": 0,
+"rows": []
+},
+"66:2": {
+"ram": "0x0fcde",
+"refs": 0,
+"rows": []
+},
+"66:3": {
+"ram": "0x0fcdf",
+"refs": 0,
+"rows": []
+},
+"66:4": {
+"ram": "0x0fce0",
+"refs": 0,
+"rows": []
+},
+"66:5": {
+"ram": "0x0fce1",
+"refs": 0,
+"rows": []
+},
+"66:6": {
+"ram": "0x0fce2",
+"refs": 0,
+"rows": []
+},
+"66:7": {
+"ram": "0x0fce3",
+"refs": 0,
+"rows": []
+},
+"66:8": {
+"ram": "0x0fce4",
+"refs": 0,
+"rows": []
+},
+"66:9": {
+"ram": "0x0fce5",
+"refs": 0,
+"rows": []
+},
+"66:10": {
+"ram": "0x0fce6",
+"refs": 0,
+"rows": []
+},
+"66:11": {
+"ram": "0x0fce7",
+"refs": 0,
+"rows": []
+},
+"66:12": {
+"ram": "0x0fce8",
+"refs": 0,
+"rows": []
+},
+"66:13": {
+"ram": "0x0fce9",
+"refs": 0,
+"rows": []
+},
+"66:14": {
+"ram": "0x0fcea",
+"refs": 0,
+"rows": []
+},
+"66:15": {
+"ram": "0x0fceb",
+"refs": 0,
+"rows": []
+},
+"66:16": {
+"ram": "0x0fcec",
+"refs": 0,
+"rows": []
+},
+"66:17": {
+"ram": "0x0fced",
+"refs": 0,
+"rows": []
+},
+"66:18": {
+"ram": "0x0fcee",
+"refs": 0,
+"rows": []
+},
+"66:19": {
+"ram": "0x0fcef",
+"refs": 0,
+"rows": []
+},
+"66:20": {
+"ram": "0x0fcf0",
+"refs": 0,
+"rows": []
+},
+"66:21": {
+"ram": "0x0fcf1",
+"refs": 0,
+"rows": []
+},
+"66:22": {
+"ram": "0x0fcf2",
+"refs": 0,
+"rows": []
+},
+"66:23": {
+"ram": "0x0fcf3",
+"refs": 0,
+"rows": []
+},
+"68:0": {
+"ram": "0x0fcf6",
+"refs": 14,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3207 .long 0x0000fcf6, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1145 lda xwa, (PANEL_REC_68:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1184 .long 0x0000fcf6, 0x00000000, 0x00000000, 0x00000000\t; 0x68",
+"v9 v9/maincpu/extensions/extension_data.s:3214 .long 0x0000fcf6, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"68:1": {
+"ram": "0x0fcf7",
+"refs": 0,
+"rows": []
+},
+"68:2": {
+"ram": "0x0fcf8",
+"refs": 0,
+"rows": []
+},
+"68:3": {
+"ram": "0x0fcf9",
+"refs": 0,
+"rows": []
+},
+"68:4": {
+"ram": "0x0fcfa",
+"refs": 0,
+"rows": []
+},
+"68:5": {
+"ram": "0x0fcfb",
+"refs": 0,
+"rows": []
+},
+"68:6": {
+"ram": "0x0fcfc",
+"refs": 0,
+"rows": []
+},
+"68:7": {
+"ram": "0x0fcfd",
+"refs": 0,
+"rows": []
+},
+"68:8": {
+"ram": "0x0fcfe",
+"refs": 0,
+"rows": []
+},
+"68:9": {
+"ram": "0x0fcff",
+"refs": 0,
+"rows": []
+},
+"70:0": {
+"ram": "0x0fd02",
+"refs": 60,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5734 ld\ta, (PANEL_REC_70:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:606 ld a, (PANEL_REC_70:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:6318 ldb_d8\ta, (PANEL_REC_70)",
+"v10 v10/maincpu/extensions/extension_data.s:3208 .long 0x0000fd02, 0x0000fd2c, 0x0000fd0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"70:1": {
+"ram": "0x0fd03",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:6294 ldb_d8\ta, (PANEL_REC_70+1)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:8542 ld l, (PANEL_REC_70+1:16)",
+"v9 v9/maincpu/audio/dsp_config_sysex.s:6197 ldb_d8\ta, (PANEL_REC_70+1)",
+"v9 v9/maincpu/sequencer/accompaniment_engine.s:7998 ld l, (PANEL_REC_70+1:16)"
+]
+},
+"70:2": {
+"ram": "0x0fd04",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5789 lda\txbc, (PANEL_REC_70+2:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:6436 ldb_d8\ta, (PANEL_REC_70+2)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1595 lda xbc, (PANEL_REC_70+2:16)",
+"v9 v9/maincpu/audio/audio_control_engine.s:5768 lda\txbc, (PANEL_REC_70+2:16)"
+]
+},
+"70:3": {
+"ram": "0x0fd05",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:3488 lda xhl, (PANEL_REC_70+3:16)",
+"v10 v10/maincpu/ui/ui_mode_handlers.s:12 lda xbc, (PANEL_REC_70+3:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:3484 lda xhl, (PANEL_REC_70+3:16)",
+"v9 v9/maincpu/ui/ui_mode_handlers.s:12 lda xbc, (PANEL_REC_70+3:16)"
+]
+},
+"70:4": {
+"ram": "0x0fd06",
+"refs": 0,
+"rows": []
+},
+"70:5": {
+"ram": "0x0fd07",
+"refs": 0,
+"rows": []
+},
+"70:6": {
+"ram": "0x0fd08",
+"refs": 0,
+"rows": []
+},
+"70:7": {
+"ram": "0x0fd09",
+"refs": 0,
+"rows": []
+},
+"72:0": {
+"ram": "0x0fd0c",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3208 .long 0x0000fd02, 0x0000fd2c, 0x0000fd0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:912 lda xwa, (PANEL_MSP:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1186 lda xbc, (PANEL_MSP:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1447 lda xix, (PANEL_MSP:16)"
+]
+},
+"72:1": {
+"ram": "0x0fd0d",
+"refs": 0,
+"rows": []
+},
+"72:2": {
+"ram": "0x0fd0e",
+"refs": 0,
+"rows": []
+},
+"72:3": {
+"ram": "0x0fd0f",
+"refs": 0,
+"rows": []
+},
+"72:4": {
+"ram": "0x0fd10",
+"refs": 0,
+"rows": []
+},
+"72:5": {
+"ram": "0x0fd11",
+"refs": 0,
+"rows": []
+},
+"72:6": {
+"ram": "0x0fd12",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/sequencer/accompseq_routines.s:1178 ld l, (PANEL_MSP+6:16)",
+"v10 v10/maincpu/sequencer/accompseq_routines.s:1523 ld\ta, (PANEL_MSP+6:16)",
+"v10 v10/maincpu/sequencer/accompseq_routines.s:1793 ld\ta, (PANEL_MSP+6:16)",
+"v10 v10/maincpu/sequencer/accompseq_routines.s:1808 ld\t(PANEL_MSP+6:16), a"
+]
+},
+"72:7": {
+"ram": "0x0fd13",
+"refs": 0,
+"rows": []
+},
+"72:8": {
+"ram": "0x0fd14",
+"refs": 0,
+"rows": []
+},
+"72:9": {
+"ram": "0x0fd15",
+"refs": 0,
+"rows": []
+},
+"72:10": {
+"ram": "0x0fd16",
+"refs": 0,
+"rows": []
+},
+"72:11": {
+"ram": "0x0fd17",
+"refs": 0,
+"rows": []
+},
+"72:12": {
+"ram": "0x0fd18",
+"refs": 0,
+"rows": []
+},
+"72:13": {
+"ram": "0x0fd19",
+"refs": 0,
+"rows": []
+},
+"92:0": {
+"ram": "0x0fd1c",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3212 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2192 lda xwa, (PANEL_SCALE_TUNE:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1194 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6\t; 0x90",
+"v9 v9/maincpu/extensions/extension_data.s:3219 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"92:1": {
+"ram": "0x0fd1d",
+"refs": 70,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18659 ld\ta, (PANEL_SCALE_TUNE+1:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:18704 ld\ta, (PANEL_SCALE_TUNE+1:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:18734 ld\ta, (PANEL_SCALE_TUNE+1:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:18759 ld\ta, (PANEL_SCALE_TUNE+1:16)"
+]
+},
+"92:2": {
+"ram": "0x0fd1e",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18746 ld\ta, (PANEL_SCALE_TUNE+2:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:19468 lda\txhl, (PANEL_SCALE_TUNE+2:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18737 ld\ta, (PANEL_SCALE_TUNE+2:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:19457 lda\txhl, (PANEL_SCALE_TUNE+2:16)"
+]
+},
+"92:3": {
+"ram": "0x0fd1f",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18772 ld\ta, (PANEL_SCALE_TUNE+3:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18763 ld\ta, (PANEL_SCALE_TUNE+3:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17533 ld\ta, (PANEL_SCALE_TUNE+3:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17532 ld\ta, (0xfd1f:16)"
+]
+},
+"92:4": {
+"ram": "0x0fd20",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18798 ld\ta, (PANEL_SCALE_TUNE+4:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18789 ld\ta, (PANEL_SCALE_TUNE+4:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17559 ld\ta, (PANEL_SCALE_TUNE+4:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17558 ld\ta, (0xfd20:16)"
+]
+},
+"92:5": {
+"ram": "0x0fd21",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18824 ld\ta, (PANEL_SCALE_TUNE+5:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18815 ld\ta, (PANEL_SCALE_TUNE+5:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17585 ld\ta, (PANEL_SCALE_TUNE+5:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17584 ld\ta, (0xfd21:16)"
+]
+},
+"92:6": {
+"ram": "0x0fd22",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18850 ld\ta, (PANEL_SCALE_TUNE+6:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18841 ld\ta, (PANEL_SCALE_TUNE+6:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17611 ld\ta, (PANEL_SCALE_TUNE+6:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17610 ld\ta, (0xfd22:16)"
+]
+},
+"92:7": {
+"ram": "0x0fd23",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18876 ld\ta, (PANEL_SCALE_TUNE+7:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18867 ld\ta, (PANEL_SCALE_TUNE+7:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17637 ld\ta, (PANEL_SCALE_TUNE+7:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17636 ld\ta, (0xfd23:16)"
+]
+},
+"92:8": {
+"ram": "0x0fd24",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18902 ld\ta, (PANEL_SCALE_TUNE+8:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18893 ld\ta, (PANEL_SCALE_TUNE+8:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17663 ld\ta, (PANEL_SCALE_TUNE+8:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17662 ld\ta, (0xfd24:16)"
+]
+},
+"92:9": {
+"ram": "0x0fd25",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18928 ld\ta, (PANEL_SCALE_TUNE+9:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18919 ld\ta, (PANEL_SCALE_TUNE+9:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17689 ld\ta, (PANEL_SCALE_TUNE+9:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17688 ld\ta, (0xfd25:16)"
+]
+},
+"92:10": {
+"ram": "0x0fd26",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18954 ld\ta, (PANEL_SCALE_TUNE+10:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18945 ld\ta, (PANEL_SCALE_TUNE+10:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17715 ld\ta, (PANEL_SCALE_TUNE+10:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17714 ld\ta, (0xfd26:16)"
+]
+},
+"92:11": {
+"ram": "0x0fd27",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:18980 ld\ta, (PANEL_SCALE_TUNE+11:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18971 ld\ta, (PANEL_SCALE_TUNE+11:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17741 ld\ta, (PANEL_SCALE_TUNE+11:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17740 ld\ta, (0xfd27:16)"
+]
+},
+"92:12": {
+"ram": "0x0fd28",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:19006 ld\ta, (PANEL_SCALE_TUNE+12:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:18997 ld\ta, (PANEL_SCALE_TUNE+12:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17767 ld\ta, (PANEL_SCALE_TUNE+12:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17766 ld\ta, (0xfd28:16)"
+]
+},
+"92:13": {
+"ram": "0x0fd29",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:19032 ld\ta, (PANEL_SCALE_TUNE+13:16)",
+"v9 v9/maincpu/audio/note_voice_mapping.s:19023 ld\ta, (PANEL_SCALE_TUNE+13:16)",
+"v7 v7/maincpu/audio/note_voice_mapping.s:17793 ld\ta, (PANEL_SCALE_TUNE+13:16)",
+"v6 v6/maincpu/audio/note_voice_mapping.s:17792 ld\ta, (0xfd29:16)"
+]
+},
+"71:0": {
+"ram": "0x0fd2c",
+"refs": 40,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3208 .long 0x0000fd02, 0x0000fd2c, 0x0000fd0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:667 bit 1, (PANEL_REC_71:16)",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1208 lda xbc, (PANEL_REC_71:16)",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:1154 lda xwa, (PANEL_REC_71:16)"
+]
+},
+"71:1": {
+"ram": "0x0fd2d",
+"refs": 0,
+"rows": []
+},
+"99:0": {
+"ram": "0x0fd30",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3213 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:2211 lda xwa, (PANEL_FOOT_CONTROLLERS:16)",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1196 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0x00000000\t; 0x98",
+"v9 v9/maincpu/extensions/extension_data.s:3220 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"99:1": {
+"ram": "0x0fd31",
+"refs": 0,
+"rows": []
+},
+"99:2": {
+"ram": "0x0fd32",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:4163 cp (PANEL_FOOT_CONTROLLERS+2:16), 182",
+"v10 v10/maincpu/audio/audio_control_engine.s:6605 cp (PANEL_FOOT_CONTROLLERS+2:16), 183",
+"v9 v9/maincpu/audio/audio_control_engine.s:4146 cp (PANEL_FOOT_CONTROLLERS+2:16), 182",
+"v9 v9/maincpu/audio/audio_control_engine.s:6577 cp (PANEL_FOOT_CONTROLLERS+2:16), 183"
+]
+},
+"99:3": {
+"ram": "0x0fd33",
+"refs": 0,
+"rows": []
+},
+"99:4": {
+"ram": "0x0fd34",
+"refs": 0,
+"rows": []
+},
+"99:5": {
+"ram": "0x0fd35",
+"refs": 0,
+"rows": []
+},
+"99:6": {
+"ram": "0x0fd36",
+"refs": 0,
+"rows": []
+},
+"99:7": {
+"ram": "0x0fd37",
+"refs": 0,
+"rows": []
+},
+"99:8": {
+"ram": "0x0fd38",
+"refs": 0,
+"rows": []
+},
+"99:9": {
+"ram": "0x0fd39",
+"refs": 0,
+"rows": []
+},
+"99:10": {
+"ram": "0x0fd3a",
+"refs": 0,
+"rows": []
+},
+"99:11": {
+"ram": "0x0fd3b",
+"refs": 0,
+"rows": []
+},
+"99:12": {
+"ram": "0x0fd3c",
+"refs": 0,
+"rows": []
+},
+"99:13": {
+"ram": "0x0fd3d",
+"refs": 0,
+"rows": []
+},
+"99:14": {
+"ram": "0x0fd3e",
+"refs": 0,
+"rows": []
+},
+"99:15": {
+"ram": "0x0fd3f",
+"refs": 0,
+"rows": []
+},
+"99:16": {
+"ram": "0x0fd40",
+"refs": 0,
+"rows": []
+},
+"99:17": {
+"ram": "0x0fd41",
+"refs": 0,
+"rows": []
+},
+"99:18": {
+"ram": "0x0fd42",
+"refs": 0,
+"rows": []
+},
+"99:19": {
+"ram": "0x0fd43",
+"refs": 0,
+"rows": []
+},
+"99:20": {
+"ram": "0x0fd44",
+"refs": 0,
+"rows": []
+},
+"99:21": {
+"ram": "0x0fd45",
+"refs": 0,
+"rows": []
+},
+"99:22": {
+"ram": "0x0fd46",
+"refs": 0,
+"rows": []
+},
+"99:23": {
+"ram": "0x0fd47",
+"refs": 0,
+"rows": []
+},
+"99:24": {
+"ram": "0x0fd48",
+"refs": 0,
+"rows": []
+},
+"99:25": {
+"ram": "0x0fd49",
+"refs": 0,
+"rows": []
+},
+"99:26": {
+"ram": "0x0fd4a",
+"refs": 0,
+"rows": []
+},
+"99:27": {
+"ram": "0x0fd4b",
+"refs": 0,
+"rows": []
+},
+"99:28": {
+"ram": "0x0fd4c",
+"refs": 0,
+"rows": []
+},
+"99:29": {
+"ram": "0x0fd4d",
+"refs": 0,
+"rows": []
+},
+"80:0": {
+"ram": "0x0fd50",
+"refs": 300,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:8225 bit 4, (PANEL_MIDI:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:8379 bit 2, (PANEL_MIDI:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:8420 bit 4, (PANEL_MIDI:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:9671 bit 3, (PANEL_MIDI:16)"
+]
+},
+"80:1": {
+"ram": "0x0fd51",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:133 bit\t3, (PANEL_MIDI+1:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:298 bit\t2, (PANEL_MIDI+1:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1643 bit\t2, (PANEL_MIDI+1:16)",
+"v9 v9/maincpu/midi/midi_dispatch_handlers.s:133 bit\t3, (PANEL_MIDI+1:16)"
+]
+},
+"80:2": {
+"ram": "0x0fd52",
+"refs": 60,
+"rows": [
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:887 ldmi16 (xwa + 1), 0xfd52",
+"v10 v10/maincpu/boot/system_handlers.s:452 bit 2, (PANEL_MIDI+2:16)",
+"v10 v10/maincpu/boot/system_handlers.s:765 bit 2, (PANEL_MIDI+2:16)",
+"v10 v10/maincpu/boot/system_handlers.s:799 bit 2, (PANEL_MIDI+2:16)"
+]
+},
+"80:3": {
+"ram": "0x0fd53",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:371 bit 0, (PANEL_MIDI+3:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:673 bit 6, (PANEL_MIDI+3:16)",
+"v10 v10/maincpu/audio/audioinit_routines.s:701 bit 7, (PANEL_MIDI+3:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1204 bit 6, (PANEL_MIDI+3:16)"
+]
+},
+"80:4": {
+"ram": "0x0fd54",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:888 ldmi16 (xwa + 2), 0xfd54",
+"v9 v9/maincpu/audio/tonegen_fileio_handlers.s:888 ldmi16 (xwa + 2), 0xfd54",
+"v7 v7/maincpu/audio/tonegen_fileio_handlers.s:850 ldmi16\t(xwa + 2), 0xfd54",
+"v6 v6/maincpu/audio/tonegen_fileio_handlers.s:846 ldmi16\t(xwa + 2), 0xfd54"
+]
+},
+"80:5": {
+"ram": "0x0fd55",
+"refs": 0,
+"rows": []
+},
+"80:6": {
+"ram": "0x0fd56",
+"refs": 50,
+"rows": [
+"v10 v10/maincpu/midi/midipkt_routines.s:333 bit 3, (PANEL_MIDI+6:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:7016 bit 3, (PANEL_MIDI+6:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:7412 bit 3, (PANEL_MIDI+6:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:7456 bit 3, (PANEL_MIDI+6:16)"
+]
+},
+"80:7": {
+"ram": "0x0fd57",
+"refs": 85,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:224 ld\txix, 0xfd57",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:336 bit\t4, (PANEL_MIDI+7:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:357 bit\t4, (PANEL_MIDI+7:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:800 bit\t0, (PANEL_MIDI+7:16)"
+]
+},
+"80:8": {
+"ram": "0x0fd58",
+"refs": 60,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1292 bit\t2, (PANEL_MIDI+8:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1312 bit\t5, (PANEL_MIDI+8:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1334 bit\t5, (PANEL_MIDI+8:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1354 bit\t4, (PANEL_MIDI+8:16)"
+]
+},
+"80:9": {
+"ram": "0x0fd59",
+"refs": 55,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1479 bit\t5, (PANEL_MIDI+9:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1501 bit\t6, (PANEL_MIDI+9:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1696 bit 0, (PANEL_MIDI+9:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:1881 bit\t1, (PANEL_MIDI+9:16)"
+]
+},
+"80:10": {
+"ram": "0x0fd5a",
+"refs": 0,
+"rows": []
+},
+"80:11": {
+"ram": "0x0fd5b",
+"refs": 0,
+"rows": []
+},
+"80:12": {
+"ram": "0x0fd5c",
+"refs": 0,
+"rows": []
+},
+"80:13": {
+"ram": "0x0fd5d",
+"refs": 0,
+"rows": []
+},
+"17:0": {
+"ram": "0x0fd62",
+"refs": 55,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3196 .long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4, 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, ",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1492 ld a, (PANEL_PART_MSP:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1497 ld (PANEL_PART_MSP:16), a",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1520 ld\txix, PANEL_PART_MSP"
+]
+},
+"17:1": {
+"ram": "0x0fd63",
+"refs": 35,
+"rows": [
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1493 ld w, (PANEL_PART_MSP+1:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1498 ld (PANEL_PART_MSP+1:16), w",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1565 ld w, (PANEL_PART_MSP+1:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1594 ld w, (PANEL_PART_MSP+1:16)"
+]
+},
+"17:2": {
+"ram": "0x0fd64",
+"refs": 0,
+"rows": []
+},
+"17:3": {
+"ram": "0x0fd65",
+"refs": 0,
+"rows": []
+},
+"17:4": {
+"ram": "0x0fd66",
+"refs": 60,
+"rows": [
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1568 ld w, (PANEL_PART_MSP+4:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1576 ld w, (PANEL_PART_MSP+4:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1597 ld w, (PANEL_PART_MSP+4:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1605 ld w, (PANEL_PART_MSP+4:16)"
+]
+},
+"17:5": {
+"ram": "0x0fd67",
+"refs": 0,
+"rows": []
+},
+"17:6": {
+"ram": "0x0fd68",
+"refs": 0,
+"rows": []
+},
+"17:7": {
+"ram": "0x0fd69",
+"refs": 0,
+"rows": []
+},
+"17:8": {
+"ram": "0x0fd6a",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1583 ld a, (PANEL_PART_MSP+8:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:1612 ld a, (PANEL_PART_MSP+8:16)",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:2170 ld (PANEL_PART_MSP+8:16), a",
+"v9 v9/maincpu/sequencer/seq_event_playback.s:1579 ld a, (PANEL_PART_MSP+8:16)"
+]
+},
+"17:9": {
+"ram": "0x0fd6b",
+"refs": 0,
+"rows": []
+},
+"17:10": {
+"ram": "0x0fd6c",
+"refs": 0,
+"rows": []
+},
+"17:11": {
+"ram": "0x0fd6d",
+"refs": 0,
+"rows": []
+},
+"17:12": {
+"ram": "0x0fd6e",
+"refs": 0,
+"rows": []
+},
+"17:13": {
+"ram": "0x0fd6f",
+"refs": 50,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3076 .long 0xffffffff, 0x0000fbe5, 0xffffffff, 0x0000fd6f",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3091 .long 0xffffffff, 0x0000fbe5, 0xffffffff, 0x0000fd6f",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3106 .long 0xffffffff, 0x0000fbe5, 0xffffffff, 0x0000fd6f",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3121 .long 0xffffffff, 0x0000fbe5, 0xffffffff, 0x0000fd6f"
+]
+},
+"17:14": {
+"ram": "0x0fd70",
+"refs": 0,
+"rows": []
+},
+"17:15": {
+"ram": "0x0fd71",
+"refs": 0,
+"rows": []
+},
+"17:16": {
+"ram": "0x0fd72",
+"refs": 0,
+"rows": []
+},
+"17:17": {
+"ram": "0x0fd73",
+"refs": 0,
+"rows": []
+},
+"17:18": {
+"ram": "0x0fd74",
+"refs": 0,
+"rows": []
+},
+"17:19": {
+"ram": "0x0fd75",
+"refs": 0,
+"rows": []
+},
+"17:20": {
+"ram": "0x0fd76",
+"refs": 0,
+"rows": []
+},
+"17:21": {
+"ram": "0x0fd77",
+"refs": 0,
+"rows": []
+},
+"17:22": {
+"ram": "0x0fd78",
+"refs": 0,
+"rows": []
+},
+"17:23": {
+"ram": "0x0fd79",
+"refs": 0,
+"rows": []
+},
+"18:0": {
+"ram": "0x0fd7c",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3197 .long 0x0000fd7c, 0x0000fc0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1159 .long 0x0000fd7c, 0x0000fc0c, 0x00000000, 0x00000000\t; 0x18",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:7245 .long 0x0000fd7c",
+"v9 v9/maincpu/extensions/extension_data.s:3204 .long 0x0000fd7c, 0x0000fc0c, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"18:1": {
+"ram": "0x0fd7d",
+"refs": 0,
+"rows": []
+},
+"18:2": {
+"ram": "0x0fd7e",
+"refs": 0,
+"rows": []
+},
+"18:3": {
+"ram": "0x0fd7f",
+"refs": 0,
+"rows": []
+},
+"18:4": {
+"ram": "0x0fd80",
+"refs": 0,
+"rows": []
+},
+"18:5": {
+"ram": "0x0fd81",
+"refs": 0,
+"rows": []
+},
+"18:6": {
+"ram": "0x0fd82",
+"refs": 0,
+"rows": []
+},
+"18:7": {
+"ram": "0x0fd83",
+"refs": 0,
+"rows": []
+},
+"18:8": {
+"ram": "0x0fd84",
+"refs": 0,
+"rows": []
+},
+"18:9": {
+"ram": "0x0fd85",
+"refs": 0,
+"rows": []
+},
+"18:10": {
+"ram": "0x0fd86",
+"refs": 0,
+"rows": []
+},
+"18:11": {
+"ram": "0x0fd87",
+"refs": 0,
+"rows": []
+},
+"18:12": {
+"ram": "0x0fd88",
+"refs": 0,
+"rows": []
+},
+"18:13": {
+"ram": "0x0fd89",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3077 .long 0x0000fd89, 0xffffffff, 0xffffffff, 0xffffffff",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3092 .long 0x0000fd89, 0xffffffff, 0xffffffff, 0xffffffff",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3107 .long 0x0000fd89, 0xffffffff, 0xffffffff, 0xffffffff",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3122 .long 0x0000fd89, 0xffffffff, 0xffffffff, 0xffffffff"
+]
+},
+"18:14": {
+"ram": "0x0fd8a",
+"refs": 0,
+"rows": []
+},
+"18:15": {
+"ram": "0x0fd8b",
+"refs": 0,
+"rows": []
+},
+"18:16": {
+"ram": "0x0fd8c",
+"refs": 0,
+"rows": []
+},
+"18:17": {
+"ram": "0x0fd8d",
+"refs": 0,
+"rows": []
+},
+"18:18": {
+"ram": "0x0fd8e",
+"refs": 0,
+"rows": []
+},
+"18:19": {
+"ram": "0x0fd8f",
+"refs": 0,
+"rows": []
+},
+"18:20": {
+"ram": "0x0fd90",
+"refs": 0,
+"rows": []
+},
+"18:21": {
+"ram": "0x0fd91",
+"refs": 0,
+"rows": []
+},
+"18:22": {
+"ram": "0x0fd92",
+"refs": 0,
+"rows": []
+},
+"18:23": {
+"ram": "0x0fd93",
+"refs": 0,
+"rows": []
+},
+"98:0": {
+"ram": "0x0fd96",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1279 lda xbc, (PANEL_REC_98:16)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1340 lda xix, (PANEL_REC_98:16)",
+"v10 v10/maincpu/extensions/extension_data.s:3213 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/bitmap_out_routines.s:1485 lda xwa, (PANEL_REC_98:16)"
+]
+},
+"98:1": {
+"ram": "0x0fd97",
+"refs": 35,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:11799 ldb_d8\te, (PANEL_REC_98+1)",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1398 lda xbc, (PANEL_REC_98+1:16)",
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:733 lda xwa, (PANEL_REC_98+1:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:13897 lda xbc, (PANEL_REC_98+1:16)"
+]
+},
+"98:2": {
+"ram": "0x0fd98",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/demo/file_demo_proc.s:935 lda xbc, (PANEL_REC_98+2:16)",
+"v9 v9/maincpu/demo/file_demo_proc.s:934 lda xbc, (PANEL_REC_98+2:16)",
+"v7 v7/maincpu/demo/file_demo_proc.s:945 lda\txbc, (PANEL_REC_98+2:16)",
+"v6 v6/maincpu/demo/file_demo_proc.s:945 lda\txbc, (64920:16)"
+]
+},
+"98:3": {
+"ram": "0x0fd99",
+"refs": 35,
+"rows": [
+"v10 v10/maincpu/midi/midipkt_routines.s:1017 ld a, (PANEL_REC_98+3:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:10924 ld a, (PANEL_REC_98+3:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:10967 ld w, (PANEL_REC_98+3:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:10991 ld w, (PANEL_REC_98+3:16)"
+]
+},
+"98:4": {
+"ram": "0x0fd9a",
+"refs": 0,
+"rows": []
+},
+"98:5": {
+"ram": "0x0fd9b",
+"refs": 0,
+"rows": []
+},
+"98:6": {
+"ram": "0x0fd9c",
+"refs": 0,
+"rows": []
+},
+"98:7": {
+"ram": "0x0fd9d",
+"refs": 0,
+"rows": []
+},
+"98:8": {
+"ram": "0x0fd9e",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/ui/bitmap_out_routines.s:675 bit 6, (PANEL_REC_98+8:16)",
+"v9 v9/maincpu/ui/bitmap_out_routines.s:671 bit 6, (PANEL_REC_98+8:16)",
+"v7 v7/maincpu/ui/bitmap_out_routines.s:666 bit\t6, (PANEL_REC_98+8:16)",
+"v6 v6/maincpu/ui/bitmap_out_routines.s:666 bit\t6, (0xfd9e:16)"
+]
+},
+"98:9": {
+"ram": "0x0fd9f",
+"refs": 0,
+"rows": []
+},
+"98:10": {
+"ram": "0x0fda0",
+"refs": 0,
+"rows": []
+},
+"98:11": {
+"ram": "0x0fda1",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:5854 ld\ta, (PANEL_REC_98+11:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:5861 lda\txde, (PANEL_REC_98+11:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:11183 ld\ta, (PANEL_REC_98+11:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:11188 ld\t(PANEL_REC_98+11:16), a"
+]
+},
+"98:12": {
+"ram": "0x0fda2",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/audio/dsp_config_sysex.s:1246 lda xwa, (PANEL_REC_98+12:16)",
+"v10 v10/maincpu/audio/tonegen_fileio_handlers.s:889 lda xwa, (PANEL_REC_98+12:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:7317 lda xwa, (PANEL_REC_98+12:16)",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:7346 lda xwa, (PANEL_REC_98+12:16)"
+]
+},
+"98:13": {
+"ram": "0x0fda3",
+"refs": 0,
+"rows": []
+},
+"98:14": {
+"ram": "0x0fda4",
+"refs": 0,
+"rows": []
+},
+"98:15": {
+"ram": "0x0fda5",
+"refs": 0,
+"rows": []
+},
+"98:16": {
+"ram": "0x0fda6",
+"refs": 0,
+"rows": []
+},
+"98:17": {
+"ram": "0x0fda7",
+"refs": 0,
+"rows": []
+},
+"91:0": {
+"ram": "0x0fdaa",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3212 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1194 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6\t; 0x90",
+"v9 v9/maincpu/extensions/extension_data.s:3219 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v9 v9/maincpu/ui_widgets/widget_dispatch.s:1249 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6\t; 0x90"
+]
+},
+"91:1": {
+"ram": "0x0fdab",
+"refs": 0,
+"rows": []
+},
+"91:2": {
+"ram": "0x0fdac",
+"refs": 0,
+"rows": []
+},
+"91:3": {
+"ram": "0x0fdad",
+"refs": 183,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:8585 bit 2, (PANEL_REC_91+3:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:23455 set 2, (PANEL_REC_91+3:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:23496 res 2, (PANEL_REC_91+3:16)",
+"v10 v10/maincpu/audio/note_voice_mapping.s:23537 res 0, (PANEL_REC_91+3:16)"
+]
+},
+"91:4": {
+"ram": "0x0fdae",
+"refs": 0,
+"rows": []
+},
+"91:5": {
+"ram": "0x0fdaf",
+"refs": 0,
+"rows": []
+},
+"91:6": {
+"ram": "0x0fdb0",
+"refs": 0,
+"rows": []
+},
+"91:7": {
+"ram": "0x0fdb1",
+"refs": 0,
+"rows": []
+},
+"91:8": {
+"ram": "0x0fdb2",
+"refs": 0,
+"rows": []
+},
+"91:9": {
+"ram": "0x0fdb3",
+"refs": 0,
+"rows": []
+},
+"93:0": {
+"ram": "0x0fdb6",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3212 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui/ui_mode_handlers.s:1795 lda xbc, (PANEL_TOUCH:16)",
+"v10 v10/maincpu/ui/ui_mode_handlers.s:1820 and (PANEL_TOUCH:16), 240",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1194 .long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6\t; 0x90"
+]
+},
+"93:1": {
+"ram": "0x0fdb7",
+"refs": 0,
+"rows": []
+},
+"93:2": {
+"ram": "0x0fdb8",
+"refs": 0,
+"rows": []
+},
+"93:3": {
+"ram": "0x0fdb9",
+"refs": 0,
+"rows": []
+},
+"93:4": {
+"ram": "0x0fdba",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:27519 ld\ta, (PANEL_TOUCH+4:16)",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:27535 ld\t(PANEL_TOUCH+4:16), a",
+"v9 v9/maincpu/sequencer/accompaniment_engine.s:26056 ld\ta, (PANEL_TOUCH+4:16)",
+"v9 v9/maincpu/sequencer/accompaniment_engine.s:26072 ld\t(PANEL_TOUCH+4:16), a"
+]
+},
+"93:5": {
+"ram": "0x0fdbb",
+"refs": 0,
+"rows": []
+},
+"93:6": {
+"ram": "0x0fdbc",
+"refs": 0,
+"rows": []
+},
+"93:7": {
+"ram": "0x0fdbd",
+"refs": 0,
+"rows": []
+},
+"93:8": {
+"ram": "0x0fdbe",
+"refs": 0,
+"rows": []
+},
+"93:9": {
+"ram": "0x0fdbf",
+"refs": 0,
+"rows": []
+},
+"93:10": {
+"ram": "0x0fdc0",
+"refs": 0,
+"rows": []
+},
+"93:11": {
+"ram": "0x0fdc1",
+"refs": 0,
+"rows": []
+},
+"93:12": {
+"ram": "0x0fdc2",
+"refs": 0,
+"rows": []
+},
+"93:13": {
+"ram": "0x0fdc3",
+"refs": 0,
+"rows": []
+},
+"93:14": {
+"ram": "0x0fdc4",
+"refs": 0,
+"rows": []
+},
+"93:15": {
+"ram": "0x0fdc5",
+"refs": 0,
+"rows": []
+},
+"93:16": {
+"ram": "0x0fdc6",
+"refs": 0,
+"rows": []
+},
+"93:17": {
+"ram": "0x0fdc7",
+"refs": 0,
+"rows": []
+},
+"93:18": {
+"ram": "0x0fdc8",
+"refs": 0,
+"rows": []
+},
+"93:19": {
+"ram": "0x0fdc9",
+"refs": 0,
+"rows": []
+},
+"93:20": {
+"ram": "0x0fdca",
+"refs": 0,
+"rows": []
+},
+"93:21": {
+"ram": "0x0fdcb",
+"refs": 0,
+"rows": []
+},
+"93:22": {
+"ram": "0x0fdcc",
+"refs": 0,
+"rows": []
+},
+"93:23": {
+"ram": "0x0fdcd",
+"refs": 0,
+"rows": []
+},
+"93:24": {
+"ram": "0x0fdce",
+"refs": 0,
+"rows": []
+},
+"93:25": {
+"ram": "0x0fdcf",
+"refs": 0,
+"rows": []
+},
+"93:26": {
+"ram": "0x0fdd0",
+"refs": 0,
+"rows": []
+},
+"93:27": {
+"ram": "0x0fdd1",
+"refs": 0,
+"rows": []
+},
+"93:28": {
+"ram": "0x0fdd2",
+"refs": 0,
+"rows": []
+},
+"93:29": {
+"ram": "0x0fdd3",
+"refs": 0,
+"rows": []
+},
+"93:30": {
+"ram": "0x0fdd4",
+"refs": 0,
+"rows": []
+},
+"93:31": {
+"ram": "0x0fdd5",
+"refs": 0,
+"rows": []
+},
+"93:32": {
+"ram": "0x0fdd6",
+"refs": 0,
+"rows": []
+},
+"93:33": {
+"ram": "0x0fdd7",
+"refs": 0,
+"rows": []
+},
+"c0:0": {
+"ram": "0x0fdda",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1206 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16\t; 0xC0",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1471 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16"
+]
+},
+"c0:1": {
+"ram": "0x0fddb",
+"refs": 0,
+"rows": []
+},
+"c0:2": {
+"ram": "0x0fddc",
+"refs": 0,
+"rows": []
+},
+"c0:3": {
+"ram": "0x0fddd",
+"refs": 0,
+"rows": []
+},
+"c0:4": {
+"ram": "0x0fdde",
+"refs": 0,
+"rows": []
+},
+"c0:5": {
+"ram": "0x0fddf",
+"refs": 0,
+"rows": []
+},
+"c0:6": {
+"ram": "0x0fde0",
+"refs": 0,
+"rows": []
+},
+"c0:7": {
+"ram": "0x0fde1",
+"refs": 0,
+"rows": []
+},
+"c0:8": {
+"ram": "0x0fde2",
+"refs": 0,
+"rows": []
+},
+"c0:9": {
+"ram": "0x0fde3",
+"refs": 0,
+"rows": []
+},
+"c0:10": {
+"ram": "0x0fde4",
+"refs": 0,
+"rows": []
+},
+"c0:11": {
+"ram": "0x0fde5",
+"refs": 0,
+"rows": []
+},
+"c0:12": {
+"ram": "0x0fde6",
+"refs": 0,
+"rows": []
+},
+"c0:13": {
+"ram": "0x0fde7",
+"refs": 0,
+"rows": []
+},
+"c0:14": {
+"ram": "0x0fde8",
+"refs": 0,
+"rows": []
+},
+"c0:15": {
+"ram": "0x0fde9",
+"refs": 0,
+"rows": []
+},
+"c0:16": {
+"ram": "0x0fdea",
+"refs": 0,
+"rows": []
+},
+"c0:17": {
+"ram": "0x0fdeb",
+"refs": 0,
+"rows": []
+},
+"c1:0": {
+"ram": "0x0fdee",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1206 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16\t; 0xC0",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1471 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16"
+]
+},
+"c1:1": {
+"ram": "0x0fdef",
+"refs": 0,
+"rows": []
+},
+"c1:2": {
+"ram": "0x0fdf0",
+"refs": 0,
+"rows": []
+},
+"c1:3": {
+"ram": "0x0fdf1",
+"refs": 0,
+"rows": []
+},
+"c1:4": {
+"ram": "0x0fdf2",
+"refs": 0,
+"rows": []
+},
+"c1:5": {
+"ram": "0x0fdf3",
+"refs": 0,
+"rows": []
+},
+"c1:6": {
+"ram": "0x0fdf4",
+"refs": 0,
+"rows": []
+},
+"c1:7": {
+"ram": "0x0fdf5",
+"refs": 0,
+"rows": []
+},
+"c1:8": {
+"ram": "0x0fdf6",
+"refs": 0,
+"rows": []
+},
+"c1:9": {
+"ram": "0x0fdf7",
+"refs": 0,
+"rows": []
+},
+"c1:10": {
+"ram": "0x0fdf8",
+"refs": 0,
+"rows": []
+},
+"c1:11": {
+"ram": "0x0fdf9",
+"refs": 0,
+"rows": []
+},
+"c1:12": {
+"ram": "0x0fdfa",
+"refs": 0,
+"rows": []
+},
+"c1:13": {
+"ram": "0x0fdfb",
+"refs": 0,
+"rows": []
+},
+"c1:14": {
+"ram": "0x0fdfc",
+"refs": 0,
+"rows": []
+},
+"c1:15": {
+"ram": "0x0fdfd",
+"refs": 0,
+"rows": []
+},
+"c1:16": {
+"ram": "0x0fdfe",
+"refs": 0,
+"rows": []
+},
+"c1:17": {
+"ram": "0x0fdff",
+"refs": 15,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:737 andw (0xc598:16), 0xfdff",
+"v10 v10/maincpu/audio/audioinit_routines.s:1104 andw (0xc598:16), 0xfdff",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:5574 andw (0xc596:16), 0xfdff",
+"v9 v9/maincpu/audio/audioinit_routines.s:737 andw (0xc598:16), 0xfdff"
+]
+},
+"c2:0": {
+"ram": "0x0fe02",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1206 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16\t; 0xC0",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1471 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16"
+]
+},
+"c2:1": {
+"ram": "0x0fe03",
+"refs": 0,
+"rows": []
+},
+"c2:2": {
+"ram": "0x0fe04",
+"refs": 0,
+"rows": []
+},
+"c2:3": {
+"ram": "0x0fe05",
+"refs": 0,
+"rows": []
+},
+"c2:4": {
+"ram": "0x0fe06",
+"refs": 0,
+"rows": []
+},
+"c2:5": {
+"ram": "0x0fe07",
+"refs": 0,
+"rows": []
+},
+"c2:6": {
+"ram": "0x0fe08",
+"refs": 0,
+"rows": []
+},
+"c2:7": {
+"ram": "0x0fe09",
+"refs": 0,
+"rows": []
+},
+"c2:8": {
+"ram": "0x0fe0a",
+"refs": 0,
+"rows": []
+},
+"c2:9": {
+"ram": "0x0fe0b",
+"refs": 0,
+"rows": []
+},
+"c2:10": {
+"ram": "0x0fe0c",
+"refs": 0,
+"rows": []
+},
+"c2:11": {
+"ram": "0x0fe0d",
+"refs": 0,
+"rows": []
+},
+"c2:12": {
+"ram": "0x0fe0e",
+"refs": 0,
+"rows": []
+},
+"c2:13": {
+"ram": "0x0fe0f",
+"refs": 0,
+"rows": []
+},
+"c2:14": {
+"ram": "0x0fe10",
+"refs": 0,
+"rows": []
+},
+"c2:15": {
+"ram": "0x0fe11",
+"refs": 0,
+"rows": []
+},
+"c2:16": {
+"ram": "0x0fe12",
+"refs": 0,
+"rows": []
+},
+"c2:17": {
+"ram": "0x0fe13",
+"refs": 0,
+"rows": []
+},
+"c3:0": {
+"ram": "0x0fe16",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1206 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16\t; 0xC0",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1471 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16"
+]
+},
+"c3:1": {
+"ram": "0x0fe17",
+"refs": 0,
+"rows": []
+},
+"c3:2": {
+"ram": "0x0fe18",
+"refs": 0,
+"rows": []
+},
+"c3:3": {
+"ram": "0x0fe19",
+"refs": 0,
+"rows": []
+},
+"c3:4": {
+"ram": "0x0fe1a",
+"refs": 0,
+"rows": []
+},
+"c3:5": {
+"ram": "0x0fe1b",
+"refs": 0,
+"rows": []
+},
+"c3:6": {
+"ram": "0x0fe1c",
+"refs": 0,
+"rows": []
+},
+"c3:7": {
+"ram": "0x0fe1d",
+"refs": 0,
+"rows": []
+},
+"c3:8": {
+"ram": "0x0fe1e",
+"refs": 0,
+"rows": []
+},
+"c3:9": {
+"ram": "0x0fe1f",
+"refs": 0,
+"rows": []
+},
+"c3:10": {
+"ram": "0x0fe20",
+"refs": 0,
+"rows": []
+},
+"c3:11": {
+"ram": "0x0fe21",
+"refs": 0,
+"rows": []
+},
+"c3:12": {
+"ram": "0x0fe22",
+"refs": 0,
+"rows": []
+},
+"c3:13": {
+"ram": "0x0fe23",
+"refs": 0,
+"rows": []
+},
+"c3:14": {
+"ram": "0x0fe24",
+"refs": 0,
+"rows": []
+},
+"c3:15": {
+"ram": "0x0fe25",
+"refs": 0,
+"rows": []
+},
+"c3:16": {
+"ram": "0x0fe26",
+"refs": 0,
+"rows": []
+},
+"c3:17": {
+"ram": "0x0fe27",
+"refs": 0,
+"rows": []
+},
+"c4:0": {
+"ram": "0x0fe2a",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1207 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66\t; 0xC4",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1472 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66"
+]
+},
+"c4:1": {
+"ram": "0x0fe2b",
+"refs": 0,
+"rows": []
+},
+"c4:2": {
+"ram": "0x0fe2c",
+"refs": 0,
+"rows": []
+},
+"c4:3": {
+"ram": "0x0fe2d",
+"refs": 0,
+"rows": []
+},
+"c4:4": {
+"ram": "0x0fe2e",
+"refs": 0,
+"rows": []
+},
+"c4:5": {
+"ram": "0x0fe2f",
+"refs": 0,
+"rows": []
+},
+"c4:6": {
+"ram": "0x0fe30",
+"refs": 0,
+"rows": []
+},
+"c4:7": {
+"ram": "0x0fe31",
+"refs": 0,
+"rows": []
+},
+"c4:8": {
+"ram": "0x0fe32",
+"refs": 0,
+"rows": []
+},
+"c4:9": {
+"ram": "0x0fe33",
+"refs": 0,
+"rows": []
+},
+"c4:10": {
+"ram": "0x0fe34",
+"refs": 0,
+"rows": []
+},
+"c4:11": {
+"ram": "0x0fe35",
+"refs": 0,
+"rows": []
+},
+"c4:12": {
+"ram": "0x0fe36",
+"refs": 0,
+"rows": []
+},
+"c4:13": {
+"ram": "0x0fe37",
+"refs": 0,
+"rows": []
+},
+"c4:14": {
+"ram": "0x0fe38",
+"refs": 0,
+"rows": []
+},
+"c4:15": {
+"ram": "0x0fe39",
+"refs": 0,
+"rows": []
+},
+"c4:16": {
+"ram": "0x0fe3a",
+"refs": 0,
+"rows": []
+},
+"c4:17": {
+"ram": "0x0fe3b",
+"refs": 0,
+"rows": []
+},
+"c5:0": {
+"ram": "0x0fe3e",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1207 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66\t; 0xC4",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1472 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66"
+]
+},
+"c5:1": {
+"ram": "0x0fe3f",
+"refs": 0,
+"rows": []
+},
+"c5:2": {
+"ram": "0x0fe40",
+"refs": 0,
+"rows": []
+},
+"c5:3": {
+"ram": "0x0fe41",
+"refs": 0,
+"rows": []
+},
+"c5:4": {
+"ram": "0x0fe42",
+"refs": 0,
+"rows": []
+},
+"c5:5": {
+"ram": "0x0fe43",
+"refs": 0,
+"rows": []
+},
+"c5:6": {
+"ram": "0x0fe44",
+"refs": 0,
+"rows": []
+},
+"c5:7": {
+"ram": "0x0fe45",
+"refs": 0,
+"rows": []
+},
+"c5:8": {
+"ram": "0x0fe46",
+"refs": 0,
+"rows": []
+},
+"c5:9": {
+"ram": "0x0fe47",
+"refs": 0,
+"rows": []
+},
+"c5:10": {
+"ram": "0x0fe48",
+"refs": 0,
+"rows": []
+},
+"c5:11": {
+"ram": "0x0fe49",
+"refs": 0,
+"rows": []
+},
+"c5:12": {
+"ram": "0x0fe4a",
+"refs": 0,
+"rows": []
+},
+"c5:13": {
+"ram": "0x0fe4b",
+"refs": 0,
+"rows": []
+},
+"c5:14": {
+"ram": "0x0fe4c",
+"refs": 0,
+"rows": []
+},
+"c5:15": {
+"ram": "0x0fe4d",
+"refs": 0,
+"rows": []
+},
+"c5:16": {
+"ram": "0x0fe4e",
+"refs": 0,
+"rows": []
+},
+"c5:17": {
+"ram": "0x0fe4f",
+"refs": 0,
+"rows": []
+},
+"c6:0": {
+"ram": "0x0fe52",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1207 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66\t; 0xC4",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1472 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66"
+]
+},
+"c6:1": {
+"ram": "0x0fe53",
+"refs": 0,
+"rows": []
+},
+"c6:2": {
+"ram": "0x0fe54",
+"refs": 0,
+"rows": []
+},
+"c6:3": {
+"ram": "0x0fe55",
+"refs": 0,
+"rows": []
+},
+"c6:4": {
+"ram": "0x0fe56",
+"refs": 0,
+"rows": []
+},
+"c6:5": {
+"ram": "0x0fe57",
+"refs": 0,
+"rows": []
+},
+"c6:6": {
+"ram": "0x0fe58",
+"refs": 0,
+"rows": []
+},
+"c6:7": {
+"ram": "0x0fe59",
+"refs": 0,
+"rows": []
+},
+"c6:8": {
+"ram": "0x0fe5a",
+"refs": 0,
+"rows": []
+},
+"c6:9": {
+"ram": "0x0fe5b",
+"refs": 0,
+"rows": []
+},
+"c6:10": {
+"ram": "0x0fe5c",
+"refs": 0,
+"rows": []
+},
+"c6:11": {
+"ram": "0x0fe5d",
+"refs": 0,
+"rows": []
+},
+"c6:12": {
+"ram": "0x0fe5e",
+"refs": 0,
+"rows": []
+},
+"c6:13": {
+"ram": "0x0fe5f",
+"refs": 0,
+"rows": []
+},
+"c6:14": {
+"ram": "0x0fe60",
+"refs": 0,
+"rows": []
+},
+"c6:15": {
+"ram": "0x0fe61",
+"refs": 0,
+"rows": []
+},
+"c6:16": {
+"ram": "0x0fe62",
+"refs": 0,
+"rows": []
+},
+"c6:17": {
+"ram": "0x0fe63",
+"refs": 0,
+"rows": []
+},
+"c7:0": {
+"ram": "0x0fe66",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3218 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/extensions/extension_data.s:3234 .long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16, 0x0000fe2a, 0x0000fe3e, 0x0000fe52, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1207 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66\t; 0xC4",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1472 .long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66"
+]
+},
+"c7:1": {
+"ram": "0x0fe67",
+"refs": 0,
+"rows": []
+},
+"c7:2": {
+"ram": "0x0fe68",
+"refs": 0,
+"rows": []
+},
+"c7:3": {
+"ram": "0x0fe69",
+"refs": 0,
+"rows": []
+},
+"c7:4": {
+"ram": "0x0fe6a",
+"refs": 0,
+"rows": []
+},
+"c7:5": {
+"ram": "0x0fe6b",
+"refs": 0,
+"rows": []
+},
+"c7:6": {
+"ram": "0x0fe6c",
+"refs": 0,
+"rows": []
+},
+"c7:7": {
+"ram": "0x0fe6d",
+"refs": 0,
+"rows": []
+},
+"c7:8": {
+"ram": "0x0fe6e",
+"refs": 0,
+"rows": []
+},
+"c7:9": {
+"ram": "0x0fe6f",
+"refs": 0,
+"rows": []
+},
+"c7:10": {
+"ram": "0x0fe70",
+"refs": 0,
+"rows": []
+},
+"c7:11": {
+"ram": "0x0fe71",
+"refs": 0,
+"rows": []
+},
+"c7:12": {
+"ram": "0x0fe72",
+"refs": 0,
+"rows": []
+},
+"c7:13": {
+"ram": "0x0fe73",
+"refs": 0,
+"rows": []
+},
+"c7:14": {
+"ram": "0x0fe74",
+"refs": 0,
+"rows": []
+},
+"c7:15": {
+"ram": "0x0fe75",
+"refs": 0,
+"rows": []
+},
+"c7:16": {
+"ram": "0x0fe76",
+"refs": 0,
+"rows": []
+},
+"c7:17": {
+"ram": "0x0fe77",
+"refs": 0,
+"rows": []
+},
+"c8:0": {
+"ram": "0x0fe7a",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1208 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6\t; 0xC8",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1473 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6"
+]
+},
+"c8:1": {
+"ram": "0x0fe7b",
+"refs": 0,
+"rows": []
+},
+"c8:2": {
+"ram": "0x0fe7c",
+"refs": 0,
+"rows": []
+},
+"c8:3": {
+"ram": "0x0fe7d",
+"refs": 0,
+"rows": []
+},
+"c8:4": {
+"ram": "0x0fe7e",
+"refs": 0,
+"rows": []
+},
+"c8:5": {
+"ram": "0x0fe7f",
+"refs": 0,
+"rows": []
+},
+"c8:6": {
+"ram": "0x0fe80",
+"refs": 0,
+"rows": []
+},
+"c8:7": {
+"ram": "0x0fe81",
+"refs": 0,
+"rows": []
+},
+"c8:8": {
+"ram": "0x0fe82",
+"refs": 0,
+"rows": []
+},
+"c8:9": {
+"ram": "0x0fe83",
+"refs": 0,
+"rows": []
+},
+"c8:10": {
+"ram": "0x0fe84",
+"refs": 0,
+"rows": []
+},
+"c8:11": {
+"ram": "0x0fe85",
+"refs": 0,
+"rows": []
+},
+"c8:12": {
+"ram": "0x0fe86",
+"refs": 0,
+"rows": []
+},
+"c8:13": {
+"ram": "0x0fe87",
+"refs": 0,
+"rows": []
+},
+"c8:14": {
+"ram": "0x0fe88",
+"refs": 0,
+"rows": []
+},
+"c8:15": {
+"ram": "0x0fe89",
+"refs": 0,
+"rows": []
+},
+"c8:16": {
+"ram": "0x0fe8a",
+"refs": 0,
+"rows": []
+},
+"c8:17": {
+"ram": "0x0fe8b",
+"refs": 0,
+"rows": []
+},
+"c9:0": {
+"ram": "0x0fe8e",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1208 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6\t; 0xC8",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1473 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6"
+]
+},
+"c9:1": {
+"ram": "0x0fe8f",
+"refs": 0,
+"rows": []
+},
+"c9:2": {
+"ram": "0x0fe90",
+"refs": 0,
+"rows": []
+},
+"c9:3": {
+"ram": "0x0fe91",
+"refs": 0,
+"rows": []
+},
+"c9:4": {
+"ram": "0x0fe92",
+"refs": 0,
+"rows": []
+},
+"c9:5": {
+"ram": "0x0fe93",
+"refs": 0,
+"rows": []
+},
+"c9:6": {
+"ram": "0x0fe94",
+"refs": 0,
+"rows": []
+},
+"c9:7": {
+"ram": "0x0fe95",
+"refs": 0,
+"rows": []
+},
+"c9:8": {
+"ram": "0x0fe96",
+"refs": 0,
+"rows": []
+},
+"c9:9": {
+"ram": "0x0fe97",
+"refs": 0,
+"rows": []
+},
+"c9:10": {
+"ram": "0x0fe98",
+"refs": 0,
+"rows": []
+},
+"c9:11": {
+"ram": "0x0fe99",
+"refs": 0,
+"rows": []
+},
+"c9:12": {
+"ram": "0x0fe9a",
+"refs": 0,
+"rows": []
+},
+"c9:13": {
+"ram": "0x0fe9b",
+"refs": 0,
+"rows": []
+},
+"c9:14": {
+"ram": "0x0fe9c",
+"refs": 0,
+"rows": []
+},
+"c9:15": {
+"ram": "0x0fe9d",
+"refs": 0,
+"rows": []
+},
+"c9:16": {
+"ram": "0x0fe9e",
+"refs": 0,
+"rows": []
+},
+"c9:17": {
+"ram": "0x0fe9f",
+"refs": 0,
+"rows": []
+},
+"ca:0": {
+"ram": "0x0fea2",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1208 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6\t; 0xC8",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1473 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6"
+]
+},
+"ca:1": {
+"ram": "0x0fea3",
+"refs": 0,
+"rows": []
+},
+"ca:2": {
+"ram": "0x0fea4",
+"refs": 0,
+"rows": []
+},
+"ca:3": {
+"ram": "0x0fea5",
+"refs": 0,
+"rows": []
+},
+"ca:4": {
+"ram": "0x0fea6",
+"refs": 0,
+"rows": []
+},
+"ca:5": {
+"ram": "0x0fea7",
+"refs": 0,
+"rows": []
+},
+"ca:6": {
+"ram": "0x0fea8",
+"refs": 0,
+"rows": []
+},
+"ca:7": {
+"ram": "0x0fea9",
+"refs": 0,
+"rows": []
+},
+"ca:8": {
+"ram": "0x0feaa",
+"refs": 0,
+"rows": []
+},
+"ca:9": {
+"ram": "0x0feab",
+"refs": 0,
+"rows": []
+},
+"ca:10": {
+"ram": "0x0feac",
+"refs": 0,
+"rows": []
+},
+"ca:11": {
+"ram": "0x0fead",
+"refs": 0,
+"rows": []
+},
+"ca:12": {
+"ram": "0x0feae",
+"refs": 0,
+"rows": []
+},
+"ca:13": {
+"ram": "0x0feaf",
+"refs": 0,
+"rows": []
+},
+"ca:14": {
+"ram": "0x0feb0",
+"refs": 0,
+"rows": []
+},
+"ca:15": {
+"ram": "0x0feb1",
+"refs": 0,
+"rows": []
+},
+"ca:16": {
+"ram": "0x0feb2",
+"refs": 0,
+"rows": []
+},
+"ca:17": {
+"ram": "0x0feb3",
+"refs": 0,
+"rows": []
+},
+"cb:0": {
+"ram": "0x0feb6",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1208 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6\t; 0xC8",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1473 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6"
+]
+},
+"cb:1": {
+"ram": "0x0feb7",
+"refs": 0,
+"rows": []
+},
+"cb:2": {
+"ram": "0x0feb8",
+"refs": 0,
+"rows": []
+},
+"cb:3": {
+"ram": "0x0feb9",
+"refs": 0,
+"rows": []
+},
+"cb:4": {
+"ram": "0x0feba",
+"refs": 0,
+"rows": []
+},
+"cb:5": {
+"ram": "0x0febb",
+"refs": 0,
+"rows": []
+},
+"cb:6": {
+"ram": "0x0febc",
+"refs": 0,
+"rows": []
+},
+"cb:7": {
+"ram": "0x0febd",
+"refs": 0,
+"rows": []
+},
+"cb:8": {
+"ram": "0x0febe",
+"refs": 0,
+"rows": []
+},
+"cb:9": {
+"ram": "0x0febf",
+"refs": 0,
+"rows": []
+},
+"cb:10": {
+"ram": "0x0fec0",
+"refs": 0,
+"rows": []
+},
+"cb:11": {
+"ram": "0x0fec1",
+"refs": 0,
+"rows": []
+},
+"cb:12": {
+"ram": "0x0fec2",
+"refs": 0,
+"rows": []
+},
+"cb:13": {
+"ram": "0x0fec3",
+"refs": 0,
+"rows": []
+},
+"cb:14": {
+"ram": "0x0fec4",
+"refs": 0,
+"rows": []
+},
+"cb:15": {
+"ram": "0x0fec5",
+"refs": 0,
+"rows": []
+},
+"cb:16": {
+"ram": "0x0fec6",
+"refs": 0,
+"rows": []
+},
+"cb:17": {
+"ram": "0x0fec7",
+"refs": 0,
+"rows": []
+},
+"cc:0": {
+"ram": "0x0feca",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1209 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06\t; 0xCC",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1474 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06"
+]
+},
+"cc:1": {
+"ram": "0x0fecb",
+"refs": 0,
+"rows": []
+},
+"cc:2": {
+"ram": "0x0fecc",
+"refs": 0,
+"rows": []
+},
+"cc:3": {
+"ram": "0x0fecd",
+"refs": 0,
+"rows": []
+},
+"cc:4": {
+"ram": "0x0fece",
+"refs": 0,
+"rows": []
+},
+"cc:5": {
+"ram": "0x0fecf",
+"refs": 0,
+"rows": []
+},
+"cc:6": {
+"ram": "0x0fed0",
+"refs": 0,
+"rows": []
+},
+"cc:7": {
+"ram": "0x0fed1",
+"refs": 0,
+"rows": []
+},
+"cc:8": {
+"ram": "0x0fed2",
+"refs": 0,
+"rows": []
+},
+"cc:9": {
+"ram": "0x0fed3",
+"refs": 0,
+"rows": []
+},
+"cc:10": {
+"ram": "0x0fed4",
+"refs": 0,
+"rows": []
+},
+"cc:11": {
+"ram": "0x0fed5",
+"refs": 0,
+"rows": []
+},
+"cc:12": {
+"ram": "0x0fed6",
+"refs": 0,
+"rows": []
+},
+"cc:13": {
+"ram": "0x0fed7",
+"refs": 0,
+"rows": []
+},
+"cc:14": {
+"ram": "0x0fed8",
+"refs": 0,
+"rows": []
+},
+"cc:15": {
+"ram": "0x0fed9",
+"refs": 0,
+"rows": []
+},
+"cc:16": {
+"ram": "0x0feda",
+"refs": 0,
+"rows": []
+},
+"cc:17": {
+"ram": "0x0fedb",
+"refs": 0,
+"rows": []
+},
+"cd:0": {
+"ram": "0x0fede",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1209 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06\t; 0xCC",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1474 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06"
+]
+},
+"cd:1": {
+"ram": "0x0fedf",
+"refs": 0,
+"rows": []
+},
+"cd:2": {
+"ram": "0x0fee0",
+"refs": 0,
+"rows": []
+},
+"cd:3": {
+"ram": "0x0fee1",
+"refs": 0,
+"rows": []
+},
+"cd:4": {
+"ram": "0x0fee2",
+"refs": 0,
+"rows": []
+},
+"cd:5": {
+"ram": "0x0fee3",
+"refs": 0,
+"rows": []
+},
+"cd:6": {
+"ram": "0x0fee4",
+"refs": 0,
+"rows": []
+},
+"cd:7": {
+"ram": "0x0fee5",
+"refs": 0,
+"rows": []
+},
+"cd:8": {
+"ram": "0x0fee6",
+"refs": 0,
+"rows": []
+},
+"cd:9": {
+"ram": "0x0fee7",
+"refs": 0,
+"rows": []
+},
+"cd:10": {
+"ram": "0x0fee8",
+"refs": 0,
+"rows": []
+},
+"cd:11": {
+"ram": "0x0fee9",
+"refs": 0,
+"rows": []
+},
+"cd:12": {
+"ram": "0x0feea",
+"refs": 0,
+"rows": []
+},
+"cd:13": {
+"ram": "0x0feeb",
+"refs": 0,
+"rows": []
+},
+"cd:14": {
+"ram": "0x0feec",
+"refs": 0,
+"rows": []
+},
+"cd:15": {
+"ram": "0x0feed",
+"refs": 0,
+"rows": []
+},
+"cd:16": {
+"ram": "0x0feee",
+"refs": 0,
+"rows": []
+},
+"cd:17": {
+"ram": "0x0feef",
+"refs": 0,
+"rows": []
+},
+"ce:0": {
+"ram": "0x0fef2",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1209 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06\t; 0xCC",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1474 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06"
+]
+},
+"ce:1": {
+"ram": "0x0fef3",
+"refs": 0,
+"rows": []
+},
+"ce:2": {
+"ram": "0x0fef4",
+"refs": 0,
+"rows": []
+},
+"ce:3": {
+"ram": "0x0fef5",
+"refs": 0,
+"rows": []
+},
+"ce:4": {
+"ram": "0x0fef6",
+"refs": 0,
+"rows": []
+},
+"ce:5": {
+"ram": "0x0fef7",
+"refs": 0,
+"rows": []
+},
+"ce:6": {
+"ram": "0x0fef8",
+"refs": 0,
+"rows": []
+},
+"ce:7": {
+"ram": "0x0fef9",
+"refs": 0,
+"rows": []
+},
+"ce:8": {
+"ram": "0x0fefa",
+"refs": 0,
+"rows": []
+},
+"ce:9": {
+"ram": "0x0fefb",
+"refs": 0,
+"rows": []
+},
+"ce:10": {
+"ram": "0x0fefc",
+"refs": 0,
+"rows": []
+},
+"ce:11": {
+"ram": "0x0fefd",
+"refs": 0,
+"rows": []
+},
+"ce:12": {
+"ram": "0x0fefe",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/sequencer/smf_event_processor.s:10225 cpw\t(xbc+wa), 0xfefe",
+"v10 v10/maincpu/sequencer/smf_event_processor.s:10789 cpw\t(xbc+wa), 0xfefe",
+"v9 v9/maincpu/sequencer/smf_event_processor.s:10101 cpw\t(xbc+wa), 0xfefe",
+"v9 v9/maincpu/sequencer/smf_event_processor.s:10656 cpw\t(xbc+wa), 0xfefe"
+]
+},
+"ce:13": {
+"ram": "0x0feff",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/audio/audioinit_routines.s:725 andw (0xc598:16), 0xfeff",
+"v10 v10/maincpu/audio/audioinit_routines.s:1346 andw (0xc596:16), 0xfeff",
+"v9 v9/maincpu/audio/audioinit_routines.s:725 andw (0xc598:16), 0xfeff",
+"v9 v9/maincpu/audio/audioinit_routines.s:1280 andw (0xc596:16), 0xfeff"
+]
+},
+"ce:14": {
+"ram": "0x0ff00",
+"refs": 85,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:16475 orw (CHORD_CHANGED:24), 0xff00",
+"v10 v10/maincpu/audio/note_voice_mapping.s:18649 and wa, 65280",
+"v10 v10/maincpu/audio/note_voice_mapping.s:18692 and wa, 65280",
+"v10 v10/maincpu/audio/note_voice_mapping.s:23179 and xwa, 0xff00"
+]
+},
+"ce:15": {
+"ram": "0x0ff01",
+"refs": 0,
+"rows": []
+},
+"ce:16": {
+"ram": "0x0ff02",
+"refs": 0,
+"rows": []
+},
+"ce:17": {
+"ram": "0x0ff03",
+"refs": 0,
+"rows": []
+},
+"cf:0": {
+"ram": "0x0ff06",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3219 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/extensions/extension_data.s:3235 .long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6, 0x0000feca, 0x0000fede, 0x0000fef2, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1209 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06\t; 0xCC",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1474 .long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06"
+]
+},
+"cf:1": {
+"ram": "0x0ff07",
+"refs": 0,
+"rows": []
+},
+"cf:2": {
+"ram": "0x0ff08",
+"refs": 0,
+"rows": []
+},
+"cf:3": {
+"ram": "0x0ff09",
+"refs": 0,
+"rows": []
+},
+"cf:4": {
+"ram": "0x0ff0a",
+"refs": 0,
+"rows": []
+},
+"cf:5": {
+"ram": "0x0ff0b",
+"refs": 0,
+"rows": []
+},
+"cf:6": {
+"ram": "0x0ff0c",
+"refs": 0,
+"rows": []
+},
+"cf:7": {
+"ram": "0x0ff0d",
+"refs": 0,
+"rows": []
+},
+"cf:8": {
+"ram": "0x0ff0e",
+"refs": 0,
+"rows": []
+},
+"cf:9": {
+"ram": "0x0ff0f",
+"refs": 0,
+"rows": []
+},
+"cf:10": {
+"ram": "0x0ff10",
+"refs": 0,
+"rows": []
+},
+"cf:11": {
+"ram": "0x0ff11",
+"refs": 0,
+"rows": []
+},
+"cf:12": {
+"ram": "0x0ff12",
+"refs": 0,
+"rows": []
+},
+"cf:13": {
+"ram": "0x0ff13",
+"refs": 0,
+"rows": []
+},
+"cf:14": {
+"ram": "0x0ff14",
+"refs": 0,
+"rows": []
+},
+"cf:15": {
+"ram": "0x0ff15",
+"refs": 0,
+"rows": []
+},
+"cf:16": {
+"ram": "0x0ff16",
+"refs": 0,
+"rows": []
+},
+"cf:17": {
+"ram": "0x0ff17",
+"refs": 0,
+"rows": []
+},
+"d0:0": {
+"ram": "0x0ff1a",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3220 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3236 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:16511 ld xbc, 0xff1a",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1210 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56\t; 0xD0"
+]
+},
+"d0:1": {
+"ram": "0x0ff1b",
+"refs": 0,
+"rows": []
+},
+"d0:2": {
+"ram": "0x0ff1c",
+"refs": 0,
+"rows": []
+},
+"d0:3": {
+"ram": "0x0ff1d",
+"refs": 0,
+"rows": []
+},
+"d0:4": {
+"ram": "0x0ff1e",
+"refs": 0,
+"rows": []
+},
+"d0:5": {
+"ram": "0x0ff1f",
+"refs": 0,
+"rows": []
+},
+"d0:6": {
+"ram": "0x0ff20",
+"refs": 0,
+"rows": []
+},
+"d0:7": {
+"ram": "0x0ff21",
+"refs": 0,
+"rows": []
+},
+"d0:8": {
+"ram": "0x0ff22",
+"refs": 0,
+"rows": []
+},
+"d0:9": {
+"ram": "0x0ff23",
+"refs": 0,
+"rows": []
+},
+"d0:10": {
+"ram": "0x0ff24",
+"refs": 0,
+"rows": []
+},
+"d0:11": {
+"ram": "0x0ff25",
+"refs": 0,
+"rows": []
+},
+"d0:12": {
+"ram": "0x0ff26",
+"refs": 0,
+"rows": []
+},
+"d0:13": {
+"ram": "0x0ff27",
+"refs": 0,
+"rows": []
+},
+"d0:14": {
+"ram": "0x0ff28",
+"refs": 0,
+"rows": []
+},
+"d0:15": {
+"ram": "0x0ff29",
+"refs": 0,
+"rows": []
+},
+"d0:16": {
+"ram": "0x0ff2a",
+"refs": 0,
+"rows": []
+},
+"d0:17": {
+"ram": "0x0ff2b",
+"refs": 0,
+"rows": []
+},
+"d1:0": {
+"ram": "0x0ff2e",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3220 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3236 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:16566 ld xbc, 0xff2e",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1210 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56\t; 0xD0"
+]
+},
+"d1:1": {
+"ram": "0x0ff2f",
+"refs": 0,
+"rows": []
+},
+"d1:2": {
+"ram": "0x0ff30",
+"refs": 0,
+"rows": []
+},
+"d1:3": {
+"ram": "0x0ff31",
+"refs": 0,
+"rows": []
+},
+"d1:4": {
+"ram": "0x0ff32",
+"refs": 0,
+"rows": []
+},
+"d1:5": {
+"ram": "0x0ff33",
+"refs": 0,
+"rows": []
+},
+"d1:6": {
+"ram": "0x0ff34",
+"refs": 0,
+"rows": []
+},
+"d1:7": {
+"ram": "0x0ff35",
+"refs": 0,
+"rows": []
+},
+"d1:8": {
+"ram": "0x0ff36",
+"refs": 0,
+"rows": []
+},
+"d1:9": {
+"ram": "0x0ff37",
+"refs": 0,
+"rows": []
+},
+"d1:10": {
+"ram": "0x0ff38",
+"refs": 45,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:28198 ldw\thl, 0xff38",
+"v10 v10/maincpu/demo/file_demo_proc.s:1926 ldw iz, 0xff38\t\t\t\t; alloc failure error code",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3187 ldw\thl, 0xff38",
+"v10 v10/maincpu/midi/midi_dispatch_handlers.s:3282 ldw\thl, 0xff38"
+]
+},
+"d1:11": {
+"ram": "0x0ff39",
+"refs": 0,
+"rows": []
+},
+"d1:12": {
+"ram": "0x0ff3a",
+"refs": 0,
+"rows": []
+},
+"d1:13": {
+"ram": "0x0ff3b",
+"refs": 0,
+"rows": []
+},
+"d1:14": {
+"ram": "0x0ff3c",
+"refs": 0,
+"rows": []
+},
+"d1:15": {
+"ram": "0x0ff3d",
+"refs": 0,
+"rows": []
+},
+"d1:16": {
+"ram": "0x0ff3e",
+"refs": 0,
+"rows": []
+},
+"d1:17": {
+"ram": "0x0ff3f",
+"refs": 0,
+"rows": []
+},
+"d2:0": {
+"ram": "0x0ff42",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:19514 ldw\thl, 65346",
+"v10 v10/maincpu/extensions/extension_data.s:3220 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3236 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:16627 ld xbc, 0xff42"
+]
+},
+"d2:1": {
+"ram": "0x0ff43",
+"refs": 0,
+"rows": []
+},
+"d2:2": {
+"ram": "0x0ff44",
+"refs": 0,
+"rows": []
+},
+"d2:3": {
+"ram": "0x0ff45",
+"refs": 0,
+"rows": []
+},
+"d2:4": {
+"ram": "0x0ff46",
+"refs": 0,
+"rows": []
+},
+"d2:5": {
+"ram": "0x0ff47",
+"refs": 0,
+"rows": []
+},
+"d2:6": {
+"ram": "0x0ff48",
+"refs": 0,
+"rows": []
+},
+"d2:7": {
+"ram": "0x0ff49",
+"refs": 0,
+"rows": []
+},
+"d2:8": {
+"ram": "0x0ff4a",
+"refs": 0,
+"rows": []
+},
+"d2:9": {
+"ram": "0x0ff4b",
+"refs": 0,
+"rows": []
+},
+"d2:10": {
+"ram": "0x0ff4c",
+"refs": 0,
+"rows": []
+},
+"d2:11": {
+"ram": "0x0ff4d",
+"refs": 0,
+"rows": []
+},
+"d2:12": {
+"ram": "0x0ff4e",
+"refs": 0,
+"rows": []
+},
+"d2:13": {
+"ram": "0x0ff4f",
+"refs": 0,
+"rows": []
+},
+"d2:14": {
+"ram": "0x0ff50",
+"refs": 0,
+"rows": []
+},
+"d2:15": {
+"ram": "0x0ff51",
+"refs": 0,
+"rows": []
+},
+"d2:16": {
+"ram": "0x0ff52",
+"refs": 0,
+"rows": []
+},
+"d2:17": {
+"ram": "0x0ff53",
+"refs": 0,
+"rows": []
+},
+"d3:0": {
+"ram": "0x0ff56",
+"refs": 25,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3220 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3236 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:16400 ld xbc, 0xff56",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1210 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56\t; 0xD0"
+]
+},
+"d3:1": {
+"ram": "0x0ff57",
+"refs": 0,
+"rows": []
+},
+"d3:2": {
+"ram": "0x0ff58",
+"refs": 0,
+"rows": []
+},
+"d3:3": {
+"ram": "0x0ff59",
+"refs": 0,
+"rows": []
+},
+"d3:4": {
+"ram": "0x0ff5a",
+"refs": 0,
+"rows": []
+},
+"d3:5": {
+"ram": "0x0ff5b",
+"refs": 0,
+"rows": []
+},
+"d3:6": {
+"ram": "0x0ff5c",
+"refs": 0,
+"rows": []
+},
+"d3:7": {
+"ram": "0x0ff5d",
+"refs": 0,
+"rows": []
+},
+"d3:8": {
+"ram": "0x0ff5e",
+"refs": 0,
+"rows": []
+},
+"d3:9": {
+"ram": "0x0ff5f",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:9920 ldw (0x3374:16), 0xff5f",
+"v10 v10/maincpu/sequencer/seq_event_playback.s:457 ldw (0x7e00:16), 0xff5f",
+"v9 v9/maincpu/sequencer/accompaniment_engine.s:9265 ldw (0x3374:16), 0xff5f",
+"v9 v9/maincpu/sequencer/seq_event_playback.s:450 ldw (0x7e00:16), 0xff5f"
+]
+},
+"d3:10": {
+"ram": "0x0ff60",
+"refs": 0,
+"rows": []
+},
+"d3:11": {
+"ram": "0x0ff61",
+"refs": 0,
+"rows": []
+},
+"d3:12": {
+"ram": "0x0ff62",
+"refs": 0,
+"rows": []
+},
+"d3:13": {
+"ram": "0x0ff63",
+"refs": 0,
+"rows": []
+},
+"d3:14": {
+"ram": "0x0ff64",
+"refs": 0,
+"rows": []
+},
+"d3:15": {
+"ram": "0x0ff65",
+"refs": 0,
+"rows": []
+},
+"d3:16": {
+"ram": "0x0ff66",
+"refs": 0,
+"rows": []
+},
+"d3:17": {
+"ram": "0x0ff67",
+"refs": 0,
+"rows": []
+},
+"d4:0": {
+"ram": "0x0ff6a",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3220 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3236 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:16456 ld xbc, 0xff6a",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1211 .long 0x0000ff6a, 0x0000ff1a, 0x0000ff56, 0x0000ff7e\t; 0xD4"
+]
+},
+"d4:1": {
+"ram": "0x0ff6b",
+"refs": 0,
+"rows": []
+},
+"d4:2": {
+"ram": "0x0ff6c",
+"refs": 0,
+"rows": []
+},
+"d4:3": {
+"ram": "0x0ff6d",
+"refs": 0,
+"rows": []
+},
+"d4:4": {
+"ram": "0x0ff6e",
+"refs": 0,
+"rows": []
+},
+"d4:5": {
+"ram": "0x0ff6f",
+"refs": 0,
+"rows": []
+},
+"d4:6": {
+"ram": "0x0ff70",
+"refs": 0,
+"rows": []
+},
+"d4:7": {
+"ram": "0x0ff71",
+"refs": 0,
+"rows": []
+},
+"d4:8": {
+"ram": "0x0ff72",
+"refs": 0,
+"rows": []
+},
+"d4:9": {
+"ram": "0x0ff73",
+"refs": 0,
+"rows": []
+},
+"d4:10": {
+"ram": "0x0ff74",
+"refs": 0,
+"rows": []
+},
+"d4:11": {
+"ram": "0x0ff75",
+"refs": 0,
+"rows": []
+},
+"d4:12": {
+"ram": "0x0ff76",
+"refs": 0,
+"rows": []
+},
+"d4:13": {
+"ram": "0x0ff77",
+"refs": 0,
+"rows": []
+},
+"d4:14": {
+"ram": "0x0ff78",
+"refs": 0,
+"rows": []
+},
+"d4:15": {
+"ram": "0x0ff79",
+"refs": 0,
+"rows": []
+},
+"d4:16": {
+"ram": "0x0ff7a",
+"refs": 0,
+"rows": []
+},
+"d4:17": {
+"ram": "0x0ff7b",
+"refs": 0,
+"rows": []
+},
+"d7:0": {
+"ram": "0x0ff7e",
+"refs": 35,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3220 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3221 .long 0x0000ff7e, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/extensions/extension_data.s:3236 .long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56, 0x0000ff6a, 0x0000ff1a, 0x0000ff56, ",
+"v10 v10/maincpu/extensions/extension_data.s:3237 .long 0x0000ff7e, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, "
+]
+},
+"d7:1": {
+"ram": "0x0ff7f",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:9291 ldw wa, 0xff7f",
+"v10 v10/maincpu/audio/dsp_config_sysex.s:6202 andw\t(0xc596:16), 0xff7f",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:6153 andmi16 (xwa), 0xff7f",
+"v10 v10/maincpu/ui/drawbar_panel_ui.s:6211 andmi16 (xwa), 0xff7f"
+]
+},
+"d7:2": {
+"ram": "0x0ff80",
+"refs": 0,
+"rows": []
+},
+"d7:3": {
+"ram": "0x0ff81",
+"refs": 0,
+"rows": []
+},
+"d7:4": {
+"ram": "0x0ff82",
+"refs": 0,
+"rows": []
+},
+"d7:5": {
+"ram": "0x0ff83",
+"refs": 0,
+"rows": []
+},
+"d7:6": {
+"ram": "0x0ff84",
+"refs": 0,
+"rows": []
+},
+"d7:7": {
+"ram": "0x0ff85",
+"refs": 0,
+"rows": []
+},
+"d7:8": {
+"ram": "0x0ff86",
+"refs": 0,
+"rows": []
+},
+"d7:9": {
+"ram": "0x0ff87",
+"refs": 0,
+"rows": []
+},
+"d7:10": {
+"ram": "0x0ff88",
+"refs": 0,
+"rows": []
+},
+"d7:11": {
+"ram": "0x0ff89",
+"refs": 0,
+"rows": []
+},
+"d7:12": {
+"ram": "0x0ff8a",
+"refs": 0,
+"rows": []
+},
+"d7:13": {
+"ram": "0x0ff8b",
+"refs": 0,
+"rows": []
+},
+"d7:14": {
+"ram": "0x0ff8c",
+"refs": 0,
+"rows": []
+},
+"d7:15": {
+"ram": "0x0ff8d",
+"refs": 0,
+"rows": []
+},
+"d7:16": {
+"ram": "0x0ff8e",
+"refs": 0,
+"rows": []
+},
+"d7:17": {
+"ram": "0x0ff8f",
+"refs": 0,
+"rows": []
+},
+"49:0": {
+"ram": "0x0ff92",
+"refs": 50,
+"rows": [
+"v10 v10/maincpu/audio/audio_control_engine.s:1109 lda\txbc, (PANEL_REC_49:16)",
+"v10 v10/maincpu/audio/audio_control_engine.s:7664 lda xhl, (PANEL_REC_49:16)",
+"v10 v10/maincpu/extensions/extension_data.s:3203 .long 0x0000fc5a, 0x0000ff92, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:26067 ld xix, PANEL_REC_49"
+]
+},
+"49:1": {
+"ram": "0x0ff93",
+"refs": 0,
+"rows": []
+},
+"49:2": {
+"ram": "0x0ff94",
+"refs": 0,
+"rows": []
+},
+"49:3": {
+"ram": "0x0ff95",
+"refs": 20,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:41281 ldw\thl, 0xff95",
+"v10 v10/maincpu/storage/flash_floppy_handlers.s:4973 cp\tiz, 0xff95",
+"v10 v10/maincpu/storage/flash_floppy_handlers.s:5265 ldw\tiz, 0xff95",
+"v10 v10/maincpu/storage/flash_floppy_handlers.s:5425 ldw\tiz, 0xff95"
+]
+},
+"49:4": {
+"ram": "0x0ff96",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/demo/file_demo_proc.s:3362 ldw\tiz, 0xff96",
+"v9 v9/maincpu/demo/file_demo_proc.s:3345 ldw\tiz, 0xff96",
+"v7 v7/maincpu/demo/file_demo_proc.s:3347 ldw\tiz, 65430",
+"v6 v6/maincpu/demo/file_demo_proc.s:3340 ldw\tiz, 65430"
+]
+},
+"49:5": {
+"ram": "0x0ff97",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/demo/file_demo_proc.s:3403 ldw\tiz, 0xff97",
+"v9 v9/maincpu/demo/file_demo_proc.s:3386 ldw\tiz, 0xff97",
+"v7 v7/maincpu/demo/file_demo_proc.s:3388 ldw\tiz, 65431",
+"v6 v6/maincpu/demo/file_demo_proc.s:3381 ldw\tiz, 65431"
+]
+},
+"49:6": {
+"ram": "0x0ff98",
+"refs": 110,
+"rows": [
+"v10 v10/maincpu/demo/file_demo_proc.s:2348 ldw hl, 0xff98",
+"v10 v10/maincpu/demo/file_demo_proc.s:2844 ldw hl, 0xff98",
+"v10 v10/maincpu/demo/file_demo_proc.s:2972 ldw hl, 0xff98",
+"v10 v10/maincpu/demo/file_demo_proc.s:3051 ldw hl, 0xff98"
+]
+},
+"49:7": {
+"ram": "0x0ff99",
+"refs": 0,
+"rows": []
+},
+"49:8": {
+"ram": "0x0ff9a",
+"refs": 110,
+"rows": [
+"v10 v10/maincpu/audio/note_voice_mapping.s:27696 ldw\thl, 0xff9a",
+"v10 v10/maincpu/audio/note_voice_mapping.s:27787 ldw iz, 0xff9a",
+"v10 v10/maincpu/audio/note_voice_mapping.s:27854 ldw\thl, 0xff9a",
+"v10 v10/maincpu/audio/note_voice_mapping.s:28110 ldw\twa, 0xff9a"
+]
+},
+"49:9": {
+"ram": "0x0ff9b",
+"refs": 55,
+"rows": [
+"v10 v10/maincpu/demo/file_demo_proc.s:2472 ldw hl, 0xff9b\t\t\t\t; error: insufficient space",
+"v10 v10/maincpu/demo/file_demo_proc.s:2531 ldw hl, 0xff9b",
+"v10 v10/maincpu/demo/file_demo_proc.s:2590 ldw hl, 0xff9b",
+"v10 v10/maincpu/demo/file_demo_proc.s:2637 ldw hl, 0xff9b"
+]
+},
+"49:10": {
+"ram": "0x0ff9c",
+"refs": 30,
+"rows": [
+"v10 v10/maincpu/demo/file_demo_proc.s:4343 ldw hl, 0xff9c",
+"v10 v10/maincpu/demo/file_demo_proc.s:4386 ldw iz, 0xff9c",
+"v10 v10/maincpu/demo/file_demo_proc.s:4462 ldw (xsp + 4), 0xff9c",
+"v10 v10/maincpu/demo/file_demo_proc.s:4549 ldw (xsp + 4), 0xff9c"
+]
+},
+"49:11": {
+"ram": "0x0ff9d",
+"refs": 0,
+"rows": []
+},
+"49:12": {
+"ram": "0x0ff9e",
+"refs": 0,
+"rows": []
+},
+"49:13": {
+"ram": "0x0ff9f",
+"refs": 0,
+"rows": []
+},
+"49:14": {
+"ram": "0x0ffa0",
+"refs": 0,
+"rows": []
+},
+"49:15": {
+"ram": "0x0ffa1",
+"refs": 5,
+"rows": [
+"v10 v10/maincpu/sequencer/accompaniment_engine.s:27277 ld\t(PANEL_REC_49+15:16), a",
+"v9 v9/maincpu/sequencer/accompaniment_engine.s:25820 ld\t(PANEL_REC_49+15:16), a",
+"v7 v7/maincpu/sequencer/accompaniment_engine.s:25276 ld\t(PANEL_REC_49+15:16), a",
+"v6 v6/maincpu/sequencer/accompaniment_engine.s:25346 ld\t(0xffa1:16), a"
+]
+},
+"9a:0": {
+"ram": "0x0ffa4",
+"refs": 10,
+"rows": [
+"v10 v10/maincpu/extensions/extension_data.s:3213 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v10 v10/maincpu/ui_widgets/widget_dispatch.s:1196 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0x00000000\t; 0x98",
+"v9 v9/maincpu/extensions/extension_data.s:3220 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, ",
+"v9 v9/maincpu/ui_widgets/widget_dispatch.s:1251 .long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0x00000000\t; 0x98"
+]
+},
+"9a:1": {
+"ram": "0x0ffa5",
+"refs": 0,
+"rows": []
+},
+"9a:2": {
+"ram": "0x0ffa6",
+"refs": 0,
+"rows": []
+},
+"9a:3": {
+"ram": "0x0ffa7",
+"refs": 0,
+"rows": []
+},
+"9a:4": {
+"ram": "0x0ffa8",
+"refs": 0,
+"rows": []
+},
+"9a:5": {
+"ram": "0x0ffa9",
+"refs": 0,
+"rows": []
+},
+"9a:6": {
+"ram": "0x0ffaa",
+"refs": 0,
+"rows": []
+},
+"9a:7": {
+"ram": "0x0ffab",
+"refs": 0,
+"rows": []
+},
+"9a:8": {
+"ram": "0x0ffac",
+"refs": 0,
+"rows": []
+},
+"9a:9": {
+"ram": "0x0ffad",
+"refs": 0,
+"rows": []
+},
+"9a:10": {
+"ram": "0x0ffae",
+"refs": 0,
+"rows": []
+},
+"9a:11": {
+"ram": "0x0ffaf",
+"refs": 0,
+"rows": []
+},
+"9a:12": {
+"ram": "0x0ffb0",
+"refs": 0,
+"rows": []
+},
+"9a:13": {
+"ram": "0x0ffb1",
+"refs": 0,
+"rows": []
+},
+"9a:14": {
+"ram": "0x0ffb2",
+"refs": 0,
+"rows": []
+},
+"9a:15": {
+"ram": "0x0ffb3",
+"refs": 0,
+"rows": []
+},
+"9a:16": {
+"ram": "0x0ffb4",
+"refs": 0,
+"rows": []
+},
+"9a:17": {
+"ram": "0x0ffb5",
+"refs": 0,
+"rows": []
+},
+"9a:18": {
+"ram": "0x0ffb6",
+"refs": 0,
+"rows": []
+},
+"9a:19": {
+"ram": "0x0ffb7",
+"refs": 0,
+"rows": []
+},
+"9a:20": {
+"ram": "0x0ffb8",
+"refs": 0,
+"rows": []
+},
+"9a:21": {
+"ram": "0x0ffb9",
+"refs": 0,
+"rows": []
+},
+"9a:22": {
+"ram": "0x0ffba",
+"refs": 0,
+"rows": []
+},
+"9a:23": {
+"ram": "0x0ffbb",
+"refs": 0,
+"rows": []
+},
+"9a:24": {
+"ram": "0x0ffbc",
+"refs": 0,
+"rows": []
+},
+"9a:25": {
+"ram": "0x0ffbd",
+"refs": 0,
+"rows": []
+}
+}

@@ -146,14 +146,14 @@
 ; One part's settings, record +0x18 + 8 * part (DRUM, BASS, ACCOMP1, ACCOMP2, ACCOMP3):
 ;   sound, bank   the part's sound (AccPatch_SyncVoice_* from PANEL_PART_*; DRUM: the kit, 0..15)
 ;   pan           PANPOT 0..127 (MainCmpSetFunc, EVT_PAN_UP / _DN)
-;   reverb        0/1, bit 6 of the panel part's +4 (AccPatch_SyncVoice_*, AccVoiceReg_WritePart*)
+;   digital_effect 0/1, bit 6 of the panel part's +4, SndParam DIGITAL EFFECT (AccPatch_SyncVoice_*)
 ;   pc_byte4      the fifth byte of the part's program-change record (AccVoice_LoadAllChannelParams)
 ;                 [INFERENCE: its use in the tone generator was not traced]
 ;   pitch_point   PITCH POINT 0..11 (MainCmpSetFunc, EVT_RLMT_UP / _DN; Rhythm_TransposeNote)
 ;   high_key      the note limit Rhythm_Transp_WrapCheck folds transposed notes below (0x7f / 0xff none)
 ;   reserved_7    0; not in the lane copy
-	.macro	style_part sound, bank, pan, reverb, pc_byte4, pitch_point, high_key, reserved_7
-	.byte	\sound, \bank, \pan, \reverb, \pc_byte4, \pitch_point, \high_key, \reserved_7
+	.macro	style_part sound, bank, pan, digital_effect, pc_byte4, pitch_point, high_key, reserved_7
+	.byte	\sound, \bank, \pan, \digital_effect, \pc_byte4, \pitch_point, \high_key, \reserved_7
 	.endm
 ; The section's 16-byte name (+0x40; the pattern source the section came from).
 	.macro	style_section_name name
@@ -181,4 +181,20 @@
 ; AccPatch_StoreMeasureCursor).
 	.macro	style_measure_starts c1, o1, c2, o2, c3, o3, c4, o4, c5, o5, c6, o6, c7, o7, c8, o8
 	.short	\c1, \o1, \c2, \o2, \c3, \o3, \c4, \o4, \c5, \o5, \c6, \o6, \c7, \o7, \c8, \o8
+	.endm
+
+; ---- The Sound Arranger memory (RAM 0x1e7800, the last 0x800 bytes of a .LSW): one record per style index
+; (AccHelper_ComputeVoiceOffset), the sounds of DRUM, BASS, ACCOMP1, ACCOMP2, ACCOMP3.  Readers and writers:
+; AccVoiceState_Snapshot (from PANEL_PART_DRUM .. _ACP3), AccTuning_LoadFromROM (into the lane records 0x3246..),
+; AccStyle_InlinedBlock_Skip2 (sets arranged); initial image AccStyle_RamImage_1E7800 (AccStyle_InitVRAM).
+;   drum_kit, drum_bank   the DRUM kit (low nibble) and bank (bits 6:0)
+;   *_sound, *_bank       the part's sound and bank (bits 6:0)
+;   flags                 the five bit-7s: bit 0 = arranged (DRUM bank byte: use these sounds), bits 1..4 = the
+;                         DIGITAL EFFECT of BASS, ACCOMP1, ACCOMP2, ACCOMP3 (PANEL_PART_x+4 bit 6)
+	.macro	sndarg drum_kit, drum_bank, bass_sound, bass_bank, acc1_sound, acc1_bank, acc2_sound, acc2_bank, acc3_sound, acc3_bank, flags
+	.byte	\drum_kit, \drum_bank | ((\flags & 1) << 7)
+	.byte	\bass_sound, \bass_bank | (((\flags >> 1) & 1) << 7)
+	.byte	\acc1_sound, \acc1_bank | (((\flags >> 2) & 1) << 7)
+	.byte	\acc2_sound, \acc2_bank | (((\flags >> 3) & 1) << 7)
+	.byte	\acc3_sound, \acc3_bank | (((\flags >> 4) & 1) << 7)
 	.endm
