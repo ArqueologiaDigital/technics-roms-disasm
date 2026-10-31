@@ -75,12 +75,12 @@ Follow-up RE + execution/write taps resolved most of the crux:
 
 - **The I-RAM program body is PoolDir_Records field +12**, not +0/+4 (verified:
   `dsp/analysis/dsp_record_field_opcodes.py` — field +12 is opcode-3 for 48/56 effects;
-  +0/+4/+8 are all opcode-0 coefficient streams). `sub_FA3A3C` emits it via
+  +0/+4/+8 are all opcode-0 coefficient streams). `P7Unit_ReloadOnProgramChange` emits it via
   `P7Stream_Run(field+12)` at `p7_module.s` 0xFA3B9C. So each effect *does* have a
   distinct body in ROM (48 of them).
 - **The reload routines RUN on an effect change** (exec-taps,
   `notes/wsa1-probes/wsa1_effect_exec_taps.lua`): `P7Units_ServiceTask` wakes,
-  `ResolveProgramsAndReload` runs, and `sub_FA3A3C` fires (+2 on a program change), with
+  `ResolveProgramsAndReload` runs, and `P7Unit_ReloadOnProgramChange` fires (+2 on a program change), with
   `P7Byte_SendCmd` emitting bytes. So it is NOT skipped.
 - **Yet host_w writes ZERO DSP I-RAM** on the change (write-tap,
   `wsa1_effect_iram_writetap.lua`: 0 I-RAM writes on all three DSPs; C-RAM writes DO
@@ -101,7 +101,7 @@ map temporarily widened to silence the per-sample unmapped-read flood; recipe in
   program records.
 
 ⇒ **The firmware does NOT emit the per-effect I-RAM body to the DSP bus at runtime.**
-`sub_FA3A3C`'s field+12 op3 `P7Stream_Run` is gated (the boot-loaded program is treated
+`P7Unit_ReloadOnProgramChange`'s field+12 op3 `P7Stream_Run` is gated (the boot-loaded program is treated
 as resident); effect changes stream only coefficients. This DIRECTLY confirms the
 write-tap (0 I-RAM writes) at the bus level and **refutes the host_w-framing hypothesis**
 (the body isn't on the bus in any framing — so no driver fix could load it). **The goal
@@ -136,11 +136,69 @@ are never uploaded during SOUND-mode play.)
   a look, tangential to this finding.)
 - **The only remaining runtime avenue** (unlikely to change the answer): whether some mode
   outside SOUND/COMBI play (a specific bank, a service/test mode) ever uploads the 0x6E
-  bodies. Not observed in normal operation; low priority.
+  bodies. Not observed in normal operation; low priority. (Resolved, from the ROM side: the ORDINARY program-change path uploads them --
+  P7Unit_ReloadOnProgramChange, the only reader of record field +12, has no gate; see
+  "Correction from the ROM, 2026-10-31" below; open-items wave 4.)
 - Static executable-vs-data classification is DONE
   (`dsp/analysis/dsp_program_record_classify.py`): all 70 records are real programs, and
   the body is field +12 (`dsp_record_field_opcodes.py`); the task is "find why the field+12
   send produces no I-RAM write", not "drop the data".
 - IC30 unit2 effect changes resolve a record but touch neither its I-RAM nor C-RAM —
   what unit2's effect program actually controls (routing? a main/reverb path?) is
-  uncharacterised.
+  uncharacterised. (Resolved: unit 2 is not IC30.  P7Stream_Data_FD4B85 sends unit 2 to destination 1,
+  IC5, and no unit program reaches destination 2 = IC30 at all, so a unit-2 change cannot
+  write IC30; see the correction below; open-items wave 4.)
+
+---
+
+## Correction from the ROM, 2026-10-31 (lane open4/wsa1)
+
+Nothing above is edited except the two "(Resolved: ...)" tails.  This section is static
+reading of prom_c, every claim an instruction operand or a ROM byte, re-checked by
+`notes/open4-f-probes/p7_unit_program_paths.py` (18 checks, exits 1 on drift).
+
+**1. The units are not the three DSPs one-to-one.**  `P7Stream_Run(stream, index, table)`
+takes its destination from byte 5 of the six-byte record `table + 6*index - 6`, and every
+per-unit stream is run with `index = unit + 1` against `P7Stream_Data_FD4B85`:
+
+| unit | relocation record (b0..b5) | destination | DSP (kn7000_mame wsa1.cpp nets) | op-3 body address (0x006E + b3) |
+|------|----------------------------|-------------|---------------------------------|---------------------------------|
+| 0    | `00 00 00 00 00 00`        | 0           | IC6 (DSP0CS = P5.4)             | 0x006E                          |
+| 1    | `60 80 e0 79 80 00`        | 0           | IC6                             | 0x00E7                          |
+| 2    | `00 00 e0 3a 00 01`        | 1           | IC5 (DSP1CS = P5.5)             | 0x00A8                          |
+
+So units 0 and 1 share IC6 in disjoint regions (op-0 base 0x00 / 0x80, op-1 base 0x00 /
+0x60, op-2 base 0x0000 / 0x8000, op-3 base 0x00 / 0x79), unit 2 is IC5, and **destination 2,
+IC30, is no unit's destination**: only `P7Stream_Data_FD4B97` index 4 reaches it, from the
+boot loader and the group reload's fixed streams.  The table at the top of this note pairs
+IC30 with unit 2; per the ROM that pairing is wrong, and it is why "a unit-2 effect change
+touches neither IC30's I-RAM nor its C-RAM" -- the firmware sends unit 2's bytes to IC5.
+
+**2. The +12 bodies have exactly one reader, and it is not gated.**  `PoolDir_Records`
+(`0xFDBFD9`) is an operand 15 times in the image; one of them adds +12, at `0xFA3AEA` in
+`P7Unit_ReloadOnProgramChange` (was `sub_FA3A3C`).  That routine runs the +12 stream at
+`0xFA3B9C` with no branch between its entry and the call; the stream is one op-3 record for
+all 56 records, payload `01 00 6e ...`; the op-3 arm (`0xF9AAFB`) sends `0x01` through
+`P7Byte_SendCmd`, which has no early return, then the relocated address through
+`P7Byte_SendArg` and the words through `P7Byte_SendData`.
+`P7Units_ResolveProgramsAndReload` calls it at `0xFA5773` (unit 1), `0xFA581C` (unit 0) and
+`0xFA58CE` (unit 2) whenever the unit block's resolved record byte (+0x18 of
+`0x856E + 26*unit`) differs from its shadow (+0x18 of `0x85BC + 26*unit`) -- i.e. on every
+effect change.  **No firmware gate exists between an effect change and a command-0x01 body
+upload to IC6 or IC5.**  The "firmware-gated" reading of the raw-bus section above is
+contradicted by the ROM.
+
+**3. The boot loader programs all three DSPs, not only IC30.**  `P7Units_BootLoadAndStartTask`
+drops DSPRST and the three DSPnRST2 lines (`res 2/3/4/1,(PB)` at `0xFA3127`-`0xFA3130`),
+raises DSPRST, runs three op-3 command-0x01 streams at address 0x0030 --
+`P7Stream_FCD2C6` to destination 0, `P7Stream_FCD5E2` to destination 1, `P7Stream_FCDA77` to
+destination 2 -- and raises DSP0RST2, DSP1RST2 and DSP2RST2 afterwards (`0xFA3196`,
+`0xFA31B0`, `0xFA31CA`).  The emulator capture above saw only the third.
+
+**What follows.**  The measurement in this note (no I-RAM on IC6/IC5 at boot, none after an
+effect change) disagrees with what the ROM sends, so the place to look is the emulation:
+how kn7000_mame's `wsa1.cpp` routes destinations 0 and 1 (`m_dsp[dest].found()` /
+`dsp_deframe`) and how its `upd6383` device treats a command-0x01 body that arrives while
+the part's /RST2 is HIGH (the per-unit reloads never lower it; the boot uploads run with it
+low).  The second question is device semantics with no datasheet in this tree; the first is
+work in the kn7000_mame repository, not here.
