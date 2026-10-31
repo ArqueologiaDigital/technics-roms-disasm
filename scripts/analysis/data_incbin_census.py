@@ -14,8 +14,8 @@ WHAT IT READS
 SIZE
   `.incbin "f", skip, count`  -> count;   `.incbin "f", skip` -> size(f) - skip;   `.incbin "f"` -> size(f);
   `.incbin_range "f", a, b`   -> b - a.
-  A file is looked up next to the including file, then in each ancestor directory up to the repo root; in an
-  ancestor's `build/`, also under the including file's path relative to that ancestor (floppy/build/kn6000/
+  A file is looked up next to the including file, then in each ancestor directory up to the repo root (and its
+  `media/`, where a floppy disk's committed BMP / JPEG / MIDI files are); in an ancestor's `build/`, also under the including file's path relative to that ancestor (floppy/build/kn6000/
   ca6000s/ for floppy/kn6000/ca6000s/files/X.s); and in `<tree>/build/`.  A file that does not exist (not built yet, or a git-ignored reference not copied) and has no
   count is reported as `unsized`; run the tree's build first for exact byte figures.
 
@@ -144,6 +144,8 @@ def locate(path, src, tree_dirs, extra=()):
         d = d.parent
     for i, d in enumerate(chain):
         cands.append(d / path)
+        # a disk's committed media files: floppy/kn5000/ca5001/media/ for floppy/kn5000/ca5001/files/X.s
+        cands.append(d / "media" / path)
         if (d / "build").is_dir():
             # a build tree mirroring the sources below it: floppy/build/kn6000/ca6000s/ for
             # floppy/kn6000/ca6000s/files/X.s
