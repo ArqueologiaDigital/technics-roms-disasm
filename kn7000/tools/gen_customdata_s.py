@@ -31,6 +31,11 @@ the image, so a source it writes either rebuilds the image or the generator stop
 Usage:
   gen_customdata_s.py --rom IMAGE --ref REF_PATH_IN_SOURCE --out FILE.s --model kn7000|kn6000
                       --include PATH_OF_customdata.inc --title TEXT [--title TEXT ...]
+
+A bank inside a larger image (a whole-chip read, kn7000/src/ic21own/): --base OFFSET takes the bank
+from IMAGE at OFFSET, and every `.org` and `.incbin_range` the source holds is that image's offset
+(the reference is the whole image); --part writes the bank as a part of a larger source, which
+includes the macro files itself, so the part has no `.include` of them.
 """
 import argparse
 import os
@@ -173,10 +178,11 @@ def printable(b):
 
 
 class Out:
-    def __init__(self, ref, data):
+    def __init__(self, ref, data, base=0):
         self.lines = []
         self.ref = ref
         self.data = data
+        self.base = base      # offset of the bank in the reference (--base): added to .org / .incbin_range
         self.pos = 0          # image offset the next emitted byte has
         self.trace = []       # (pos, length, text, comment) of every emitted item
         self.labels = {}      # label -> image offset
@@ -210,12 +216,12 @@ class Out:
             self.pos += k
 
     def incbin(self, label, n, comment, census=None):
-        a, b = self.pos, self.pos + n
+        a, b = self.base + self.pos, self.base + self.pos + n
         if census:
             self.w(f"\t# census: {census}")
         lab = f"{label}:" if label else ""
         self.w(f'{lab}\t.incbin_range "{self.ref}", {a:#x}, {b:#x}\t# {comment}')
-        self.pos = b
+        self.pos += n
 
     def fill_ff(self, n, comment="erased flash"):
         if n:
@@ -350,7 +356,7 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     rec = d[base:base + size]
     o.w()
     o.w(f"# ---- {title}")
-    o.w(f".org {base:#x}")
+    o.w(f".org {o.base + base:#x}")
     o.emit(lab, f"CSTREC_SIZE {lab}_End - {lab}", rec[0:4])
     names = [rec[4 + 16 * i:20 + 16 * i] for i in range(5)]
     o.emit(None, f"CSTREC_NAME {qstr(names[0])}", names[0], "style name")
@@ -464,8 +470,9 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
     return size
 
 
-OPAQUE_WHY = ("unknown-dump: residue of an earlier write that no typed record of the nine sets holds "
-              "(no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)")
+OPAQUE_WHY = ["unknown-dump: residue of an earlier write that no typed record of the nine sets holds "
+              "(no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)"]
+# (a list so that --opaque-why can replace the text)
 COVER_STATS = {"donor": 0, "stream": 0, "events": 0, "opaque": 0}
 
 
@@ -692,7 +699,7 @@ class Cover:
             q, nst = self.run_end(d, p, e)
             if q - p >= 16 and nst >= 2:
                 if opq < p:
-                    o.incbin(None, p - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY}")
+                    o.incbin(None, p - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY[0]}")
                     COVER_STATS["opaque"] += p - opq
                 o.w("\t# stale events of an earlier write: no record holds them; they parse as events")
                 o.raw(parse_events(d, p, q), q - p)
@@ -701,7 +708,7 @@ class Cover:
             else:
                 p += 1
         if opq < e:
-            o.incbin(None, e - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY}")
+            o.incbin(None, e - opq, "stale bytes of an earlier write", census=f"opaque -- {OPAQUE_WHY[0]}")
             COVER_STATS["opaque"] += e - opq
 
 
@@ -719,19 +726,30 @@ def main():
                                       " and relative to the current directory (default: --out without .s)")
     ap.add_argument("--corpus", nargs="*", default=[],
                     help="images (NAME=PATH) whose records type the residue; the image itself is added")
+    ap.add_argument("--base", type=lambda v: int(v, 0), default=0,
+                    help="offset of the bank in --rom (a whole-chip image); .org / .incbin_range are --rom offsets")
+    ap.add_argument("--part", action="store_true",
+                    help="a part of a larger source that includes the macro files itself")
+    ap.add_argument("--opaque-why", help="the reason of the residue's census: opaque markers")
     a = ap.parse_args()
+    if a.opaque_why:
+        OPAQUE_WHY[0] = a.opaque_why
+
+    def load(path):
+        data = open(path, "rb").read()
+        return data[a.base:a.base + NBLOCKS * BLOCK] if path == a.rom else data
     corpus = []
     me = os.path.basename(a.out)[:-2]
     for spec in [c for c in a.corpus if c.split("=", 1)[0] != me] + [f"{me}={a.rom}"]:
         name, path = spec.split("=", 1)
-        data = open(path, "rb").read()
+        data = load(path)
         oc, _, _ = generate(a, data, None, dry=True)
         for lab, base, size, items in oc.records:
             corpus.append((f"{name} {lab}", data, base, size, items, oc.labels))
     cover = Cover(corpus)
     MASK_MISS.clear()
     TAIL_OLD.clear()
-    o, written, inc_dir = generate(a, open(a.rom, "rb").read(), cover)
+    o, written, inc_dir = generate(a, load(a.rom), cover)
     open(a.out, "w").write("\n".join(o.lines) + "\n")
     for f in sorted(os.listdir(inc_dir)):
         if f.endswith(".inc") and f not in written:
@@ -745,7 +763,7 @@ def generate(a, d, cover, dry=False):
     include files and skips the residue."""
     if len(d) != NBLOCKS * BLOCK:
         sys.exit(f"image: {len(d):#x} bytes, expected {NBLOCKS * BLOCK:#x}")
-    o = Out(a.ref, d)
+    o = Out(a.ref, d, a.base)
     o.records = []
     inc_dir = a.inc_dir or a.out[:-2]
     if not dry:
@@ -780,13 +798,19 @@ def generate(a, d, cover, dry=False):
     o.w("# GENERATED by kn7000/tools/gen_customdata_s.py from the reference image; the format is in")
     o.w("# kn7000/notes/custom-data-ic21.md, the macros in kn7000/src/customdata/customdata.inc.")
     o.w("# Everything is typed. Only residue that matches no typed record and does not parse (census:")
-    o.w("# opaque) is an .incbin_range of the reference, which the Makefile makes (git-ignored,")
-    o.w("# SHA-1 checked) from the softlist floppy's .AST file.")
-    o.w()
-    o.w(f'.include "{a.include}"')
-    o.w(f'.include "{a.shared}/panel_memory.inc"')
-    o.w(f'.include "{a.shared}/voice_record.inc"')
-    o.w()
+    if a.part:
+        o.w("# opaque) is an .incbin_range of the reference, which the Makefile copies (git-ignored,")
+        o.w(f"# SHA-1 checked). The including source holds the macro files; offsets are those of the")
+        o.w(f"# whole reference image, in which this bank starts at {a.base:#x}.")
+        o.w()
+    else:
+        o.w("# opaque) is an .incbin_range of the reference, which the Makefile makes (git-ignored,")
+        o.w("# SHA-1 checked) from the softlist floppy's .AST file.")
+        o.w()
+        o.w(f'.include "{a.include}"')
+        o.w(f'.include "{a.shared}/panel_memory.inc"')
+        o.w(f'.include "{a.shared}/voice_record.inc"')
+        o.w()
     # which block starts which slot
     slots = {}
     for s in range(NSLOTS):
@@ -794,6 +818,8 @@ def generate(a, d, cover, dry=False):
         if st:
             slots[st] = (s, n)
     o.w("# ---- block 0: the directory")
+    if a.part:
+        o.w(f".org {a.base:#x}")
     o.emit("CustDir", "CUSTDIR_SIGNATURE", b"IK")
     for s in range(NSLOTS):
         st, n = d[2 + 2 * s], d[3 + 2 * s]
