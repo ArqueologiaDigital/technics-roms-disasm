@@ -166,7 +166,8 @@ from lane customdata's typed sources. The header words +8 / +0xC are never writt
 
 - **.MID.** The SMF writer flushes whole 1024-byte windows (`SmfOut_WindowsFlushed` 0x126C, the length
   arithmetic at 0xF7789A; `wsa1/notes/FINDINGS-prom_b-smf-writer.md`). So 13 of the 16 files end with stale
-  window bytes after the last track, and these are declared opaque. The three demo1 files are not padded.
+  window bytes after the last track. The three demo1 files are not padded. Since 2026-10-31 the stale bytes
+  are spelled as the copy they are, of the SMF's bytes 1024 earlier (`notes/floppy-leftovers-2026-10-31/`).
 - **.SEQ.** The prom_b block store's blocks (`FINDINGS-prom_b-block-store.md`). Events use the KN5000 demo-song
   grammar (`floppy/kn5000/events.py`): bit 7 = status. It parses 443 of 444 chains ([INFERENCE]).
 
@@ -199,21 +200,32 @@ No byte is generic any more, but many fields have only a neutral name: an offset
 - **Not named this round, and why:**
   - the KN6000/KN7000 panel-memory record's fields: the recall routine is not located. The library routines
     that index the record (0x3A90 / 0x750 strides, `func_4C01ED89`, `func_4C01F5FC`, the 0x4A part stride
-    around `func_4C01F657`) are template copies and per-part sound fix-ups, not the field-by-field recall;
+    around `func_4C01F657`) are template copies and per-part sound fix-ups, not the field-by-field recall.
+    **Since done** by lane kn67-field-names (c4a339f4c, `notes/data-semantics-2026-10-29/kn67-field-names.md`):
+    the record is the live panel state (recall `func_4C021F33`), and the parameter-id trie names its fields
+    in `PMR_*`; what keeps an `m<id>` / `p<hex>` name, and why, is listed in that note's "Open questions";
   - the KN6000 SOUND_MOD / VOICE_ELEM fields: the `TgPartAux*` accessors name offsets, not parameters, and the
     sound-edit screens' parameter tables were not traced;
   - the .SQT event reader and record head: no sequencer-player routine is named in `kn7000_manual.sym`, so the
-    event lengths stay measured;
+    event lengths stay measured (since done: the lengths are the firmware's table 0x485B9328, lane
+    kn67-field-names; the high bit below, 2026-10-31);
   - kn7asm quote stripping: changing it alters every kn7000 source that passes `.ascii \name` (CUSTOM records,
     styles), which belongs to those trees' lanes.
 
 ## Open questions
 
-- The meanings above, starting with the panel-memory record's fields.
-- What the high bit in those 5 song events means.
-- The KN6000 .TM tail word: it is the KN5000's checksum, ~(LE16 sum of the 40 sound records), in only 13 of
-  the 50 files.
-- What the 8 lines at the start of each WSA1R sound bank are. SoundRam_ClearFourBanks does not write them.
+- The meanings above (the panel-memory record's are named since c4a339f4c; see above).
+- ~~What the high bit in those 5 song events means.~~ Answered 2026-10-31
+  (`notes/floppy-leftovers-2026-10-31/README.md`): a note's last byte is its duration in **beats**, read
+  unsigned by the note handler (KN7000 `func_48459B49`, KN6000 `func_4C11938E`), so 141 / 216 are held
+  notes; a bend's second byte is bits 8-15 of its 16-bit value, never masked.
+- ~~The KN6000 .TM tail word.~~ Answered 2026-10-31: it is the firmware's checksum of the 40 sound records
+  (KN6000 `func_4C07D7C1`, the same rule as the KN5000's), validated against RAM at power-on and recomputed
+  after every load (`PostTmTransLoad`), so no load reads a file's word. It matches in 12 of the 50 files
+  (13 was a miscount); the others carry a stale value.
+- ~~What the 8 lines at the start of each WSA1R sound bank are.~~ Answered 2026-10-31: the USER 1 / USER 2
+  sound-group names (16 per USER bank, 8 per 64 KB bank), read by `UserSoundBank_RemoteGroupNameAddr` and
+  `SoundGroupName_Lookup`.
 - Whether 'J KD' is the KN5000's SLIDE8K. If so, `scripts/build/compress_slide8k.py` could use `lzss_j.encode`
   instead of replaying reference decisions.
 - **Macro strings across the two assemblers.** llvm-mc strips the quotes from a quoted macro argument, and
