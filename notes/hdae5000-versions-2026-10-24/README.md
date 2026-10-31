@@ -432,19 +432,18 @@ Reproduce (scratch only; the maps are about 0.5 GB):
 - **v1.x review.** Done (2026-10-31): 0 rename suggestions in either v1 tree; see "v1.x label review".
 - **v2.x header and terminator.** Done (b3b788b14): both v2.x trees spell the header's image-end
   pointer and the naming tables' empty-string pointers by symbol, as the v1 trees do.
-- **Open.** v5 has a second unlabelled `cp xbc, 0x1e0009f` procedure, after AttAreYouSureCheck_Skip,
-  that may carry the same one-off label shift as the Yoko checks had; the census does not flag it.
-  `style_ui/ctlonly_link.ld` names four Scoop_* addresses that no tree (v7, v6, v5) has at those
-  names; the C data holds the values, so they may not be pointers at all. The HD-AE5000 v1 prose
-  blocks still quote v2.x facts in places (for example the header of
-  HDAE5000_PPORT_Svc13_SendInfosAboutSong describes the lyrics part, HDAE5000_TlxPart_Describe,
-  which v1.x lacks), as the banner of each v1 tree warns.
-- **Replays (2026-10-31).** At 203396a2c, `port-edits-v1_15i/replay.sh` (after `make all`) rebuilds
-  `hdae5000_v1_15i/` equal to the committed tree, byte for byte and line for line.
-  `port-edits-v1_10i/replay.sh` then rebuilds a byte-identical v1.10i that differs from the
-  committed `hdae5000_v1_10i/` in 5 files (108 lines added, 122 removed): quoted addresses and
-  counts in comments, where the replay's are v1.10i's and the committed tree's are v2.01i's or
-  v1.15i's (`entry count = 67` for 0x3f), and the replay drops the committed tree's labels
-  HDAE5000_Palette_FilePanel / HDAE5000_Bitmap_FilePanel (v1.x has no FilePanel picture). So the
-  committed v1.10i is older than its recipe; regenerating it is left to a lane of its own (it moves
-  symbols and the label check's baseline).
+- **Closed (2026-10-31, lane `open3/kn5000-ports`).** v5's second language-check shift (Kubo
+  ApFunction slot 0x128, AttAttentionCheck .. StsAtPunchCheck one procedure late) and every other
+  shift the firmware's tables and the label bodies show in v6 and v5 are fixed
+  (`scripts/tools/port_fix_label_shifts.py`; `notes/kn5000-ports-probes/ported_label_probe.py`
+  shows 0 MISMATCH rows).  `style_ui/ctlonly_link.ld`'s four Scoop_* lines held v10's addresses;
+  the handler words they compile are in no image, so `port_symbolize_pointers.py relink` now
+  ignores bytes no `.incbin` takes and relinked them in v7, v6 and v5.  The v2.x prose of the v1
+  trees is corrected by `port-edits-v1_15i/94b_v1_prose.py`.  Notes:
+  `notes/kn5000-ports-2026-10-31/README.md`.
+- **Replays (2026-10-31).** Both replays need `make all` first.  At 43242446d,
+  `port-edits-v1_15i/replay.sh` rebuilt `hdae5000_v1_15i/` equal to the committed tree, and
+  `port-edits-v1_10i/replay.sh` a byte-identical v1.10i 5 files off the committed one (v1.10i's own
+  quoted addresses and counts; no FilePanel labels).  The committed `hdae5000_v1_10i/` is now that
+  output (lane `open3/kn5000-ports`, cce6ddbec; symbols 6,692 -> 6,690), so both replays reproduce
+  their trees; checked again after 94b_v1_prose.py (`notes/kn5000-ports-2026-10-31/README.md`).

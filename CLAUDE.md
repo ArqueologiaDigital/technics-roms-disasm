@@ -204,8 +204,8 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 53,583  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 53,544  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 53,863  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 53,826  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,063   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
@@ -214,7 +214,7 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,197   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 | `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 7,099   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 | `symbols/hdae5000_v1_15i_symbols_reference.txt` | HDAE5000 expansion v1.15i                         | 6,709   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
-| `symbols/hdae5000_v1_10i_symbols_reference.txt` | HDAE5000 expansion v1.10i                         | 6,698   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v1_10i_symbols_reference.txt` | HDAE5000 expansion v1.10i                         | 6,690   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 The two HD-AE5000 v1 rows were added 2026-10-30 (lane open/hdae-v1), from
 `l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.
@@ -1348,8 +1348,8 @@ When encountering disputed interpretations:
 | maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08`                       | 100.00%    | as v9                 | as v9         |
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
-| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 99.2%                 | 17,159 B      |
-| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 99.0%                 | 19,978 B      |
+| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 99.3%                 | 13,756 B      |
+| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 99.2%                 | 15,910 B      |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu payload v140 | `v140/subcpu/kn5000_subprogram_v140.s` (generated: v141 + EDITS) | 100.00%    | not measured          | 0 B           |
@@ -1400,8 +1400,9 @@ in `make gate`. **maincpu v5** was made the same way from `v6/maincpu`
 `verify-v5-reference`).
 
 **Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
-measured 2026-10-24 (the v7, v6 and v5 rows re-measured 2026-10-29, after the data-semantics lane
-kn5000-existing): the script splits every ROM byte into assembly, typed data (including
+measured 2026-10-24 (the v7 row re-measured 2026-10-29, after the data-semantics lane
+kn5000-existing; the v6 and v5 rows 2026-10-31, lane open3/kn5000-ports, after
+`scripts/converters/port_todo_typed.py`): the script splits every ROM byte into assembly, typed data (including
 `.incbin`s that a committed generator rebuilds from checked-in source), clang-compiled C and
 verbatim blob (an `.incbin` nothing regenerates); "source" is everything but the blob.
 (Until 2026-10 this column was "Not `.incbin`", measured 2026-08-21, when maincpu v10 still
