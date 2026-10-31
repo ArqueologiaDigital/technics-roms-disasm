@@ -4,13 +4,13 @@ Five tracker issues: kn5000-0bq (Feature Demo sequence and timing), kn5000-waa (
 (update-disc parser), kn5000-dkx (flash sector erase), kn5000-3ei (source-coverage figure on the website).
 Base: main at 130735749.  Addresses are v10 program ROM, from `symbols/maincpu_v10_symbols_reference.txt`.
 
-| issue      | outcome  | evidence                                                                           | website draft                              |
-|------------|----------|------------------------------------------------------------------------------------|--------------------------------------------|
-| kn5000-0bq | CLOSED   | this README section 1 (cue table from the 2026-10-18 note; end/loop read from code) | feature-demo.md, section 1 below           |
-| kn5000-waa | CLOSED   | `scripts/generators/render_ftdemo_slides.py` (293f4cae0)                            | feature-demo.md + image gallery, section 2 |
-| kn5000-87m | CLOSED   | `scripts/analysis/parse_update_disc.py` (03e5bbcd5), probe `make_synthetic_type6.py` | system-update-discs.md, section 3          |
-| kn5000-dkx | CLOSED   | this README section 4 (traced from `boot/system_handlers.s`)                        | flash-programming.md, section 4            |
-| kn5000-3ei | CLOSED   | this README section 5 (`kn5000_source_coverage.py` at 130735749)                    | rom-reconstruction.md, section 5           |
+| issue      | outcome | evidence                                                                             | website draft                              |
+|------------|---------|--------------------------------------------------------------------------------------|--------------------------------------------|
+| kn5000-0bq | CLOSED  | this README section 1 (cue table from the 2026-10-18 note; end/loop read from code)  | feature-demo.md, section 1 below           |
+| kn5000-waa | CLOSED  | `scripts/generators/render_ftdemo_slides.py` (293f4cae0)                             | feature-demo.md + image gallery, section 2 |
+| kn5000-87m | CLOSED  | `scripts/analysis/parse_update_disc.py` (03e5bbcd5), probe `make_synthetic_type6.py` | system-update-discs.md, section 3          |
+| kn5000-dkx | CLOSED  | this README section 4 (traced from `boot/system_handlers.s`)                         | flash-programming.md, section 4            |
+| kn5000-3ei | CLOSED  | this README section 5 (`kn5000_source_coverage.py` at 130735749)                     | rom-reconstruction.md, section 5           |
 
 "CLOSED" means the repository side is done; each tracker issue stays open until the docs lane publishes its draft.
 
@@ -47,20 +47,20 @@ MAME") stopped after one pass (about 139 s) without re-arming the countdown, so 
 > **The cue sheet.** The 23 cues of the factory song, with the beat (the count of `0x81` beat markers on
 > track 14) and the ACT each one runs:
 >
-> | beat | tick | ACT | shows      | beat | tick | ACT | shows      |
-> |------|------|-----|------------|------|------|-----|------------|
-> | 0    | 0x05 | 1   | ftdemo01   | 78   | 0x00 | 16  | Accordion  |
-> | 22   | 0x40 | 2   | ftdemo04   | 82   | 0x00 | 17  | Accordion  |
-> | 41   | 0x30 | 3   | ftdemo05   | 88   | 0x00 | 18  | ftdemo10   |
-> | 48   | 0x00 | 4   | ftdemo41   | 94   | 0x00 | 19  | Drawbar    |
-> | 49   | 0x00 | 5   | ftdemo42   | 123  | 0x00 | 21  | ftdemo20   |
-> | 50   | 0x00 | 6   | ftdemo43   | 133  | 0x00 | 22  | ftdemo21   |
-> | 52   | 0x00 | 7   | ftdemo44   | 138  | 0x00 | 23  | ftdemo22   |
-> | 53   | 0x00 | 8   | ftdemo45   | 142  | 0x00 | 24  | ftdemo23   |
-> | 55   | 0x00 | 12  | ftdemo06   | 143  | 0x00 | 25  | Sdmixer    |
-> | 61   | 0x00 | 13  | ftdemo07   | 150  | 0x00 | 26  | ftdemo24   |
-> | 67   | 0x00 | 14  | ftdemo08   | 156  | 0x00 | 27  | ftdemo25   |
-> | 73   | 0x00 | 15  | ftdemo09   |      |      |     |            |
+> | beat | tick | ACT | shows    | beat | tick | ACT | shows     |
+> |------|------|-----|----------|------|------|-----|-----------|
+> | 0    | 0x05 | 1   | ftdemo01 | 78   | 0x00 | 16  | Accordion |
+> | 22   | 0x40 | 2   | ftdemo04 | 82   | 0x00 | 17  | Accordion |
+> | 41   | 0x30 | 3   | ftdemo05 | 88   | 0x00 | 18  | ftdemo10  |
+> | 48   | 0x00 | 4   | ftdemo41 | 94   | 0x00 | 19  | Drawbar   |
+> | 49   | 0x00 | 5   | ftdemo42 | 123  | 0x00 | 21  | ftdemo20  |
+> | 50   | 0x00 | 6   | ftdemo43 | 133  | 0x00 | 22  | ftdemo21  |
+> | 52   | 0x00 | 7   | ftdemo44 | 138  | 0x00 | 23  | ftdemo22  |
+> | 53   | 0x00 | 8   | ftdemo45 | 142  | 0x00 | 24  | ftdemo23  |
+> | 55   | 0x00 | 12  | ftdemo06 | 143  | 0x00 | 25  | Sdmixer   |
+> | 61   | 0x00 | 13  | ftdemo07 | 150  | 0x00 | 26  | ftdemo24  |
+> | 67   | 0x00 | 14  | ftdemo08 | 156  | 0x00 | 27  | ftdemo25  |
+> | 73   | 0x00 | 15  | ftdemo09 |      |      |     |           |
 >
 > There is no slide timer: each slide stays until the song reaches the next cue, and nothing waits for the
 > player.  The drawbars of ACT 19 move at beat 104, when track 0 writes RIGHT1's drawbar record.
@@ -86,16 +86,16 @@ pictures, and the captions from the tracked v10 ROM image.  Run on 2026-10-31: 3
 
 **What the firmware does, and the tool repeats** (each traced in v10):
 
-| step                     | firmware                                                                                                                        | in the tool                         |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
-| screen background        | `TtlScreenProc` (0xF9AA6D) -> `ScreenProc` -> `Screen_Paint` (0xF9A864) = `DrawWall`: the wallpaper, not the record's `color`    | Wallpaper_1 (the factory one)       |
-| title                    | `DrawTitleBar` (0xF9AACB): white, font 4 (font 1 if it does not fit), centred in a 28-px band                                   | same; vertical placement approx.    |
-| Label                    | `LabelProc` (0xF9C4B6): `DrawString` at (x1 + 2, y1 + 1), font = record's font id = `FontDescriptor_Table` index, bg 0xF7        | exact                               |
-| strings                  | `ConvertStrings` (0xFB2640): `~XX` = character 0xXX (the arrows `~85`, `~7f`), control characters -> space                       | exact                               |
-| captions                 | `AcLanguageText` asks its ApFunction FtLangTextNN for a 6-entry language table; entry 0 is English                               | read from the ROM image             |
-| FTBMP pictures           | `DrawBitmapFile_Impl` (0xFAC6F3) + `Gfx_DecodeImageToBuffer` (0xFAED27) + `ChangePalette_Impl(3)` (0xFAF2F3), see below          | exact                               |
-| Box / Line / Frame       | fill + border; line by mode; outline                                                                                            | borders approx.                     |
-| other classes            | (faders, mixer, drawbar organ, part mixer ...)                                                                                  | dotted outline + class name         |
+| step               | firmware                                                                                                                      | in the tool                      |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| screen background  | `TtlScreenProc` (0xF9AA6D) -> `ScreenProc` -> `Screen_Paint` (0xF9A864) = `DrawWall`: the wallpaper, not the record's `color` | Wallpaper_1 (the factory one)    |
+| title              | `DrawTitleBar` (0xF9AACB): white, font 4 (font 1 if it does not fit), centred in a 28-px band                                 | same; vertical placement approx. |
+| Label              | `LabelProc` (0xF9C4B6): `DrawString` at (x1 + 2, y1 + 1), font = record's font id = `FontDescriptor_Table` index, bg 0xF7     | exact                            |
+| strings            | `ConvertStrings` (0xFB2640): `~XX` = character 0xXX (the arrows `~85`, `~7f`), control characters -> space                    | exact                            |
+| captions           | `AcLanguageText` asks its ApFunction FtLangTextNN for a 6-entry language table; entry 0 is English                            | read from the ROM image          |
+| FTBMP pictures     | `DrawBitmapFile_Impl` (0xFAC6F3) + `Gfx_DecodeImageToBuffer` (0xFAED27) + `ChangePalette_Impl(3)` (0xFAF2F3), see below       | exact                            |
+| Box / Line / Frame | fill + border; line by mode; outline                                                                                          | borders approx.                  |
+| other classes      | (faders, mixer, drawbar organ, part mixer ...)                                                                                | dotted outline + class name      |
 
 **How a slide picture reaches the screen** (a correction to feature-demo.md's "the 8-bit BMP palette is loaded to the
 hardware palette register"): the BMP is tiled into a 320 x 240 buffer; a histogram of pixel values is taken in 16-bit
@@ -109,28 +109,28 @@ wallpaper ramp and CL_Gray .. CL_White) keep their system values, so the UI colo
 images in feature-demo.md they agree in layout (screenshots from hardware were not available to compare
 pixel by pixel).  `index.txt` of the run:
 
-| ACT   | object    | widgets | picture | drawn only as an outline                          |
-|-------|-----------|---------|---------|---------------------------------------------------|
-| 1     | ftdemo01  | 2       | FTBMP01 | -                                                 |
-| 2     | ftdemo04  | 6       | FTBMP02 | -                                                 |
-| 3     | ftdemo05  | 3       | -       | -                                                 |
-| 4-6   | ftdemo41-43 | 38    | -       | -                                                 |
-| 7-9   | ftdemo44-46 | 23    | -       | -                                                 |
-| 10-11 | ftdemo47-48 | 21    | -       | -                                                 |
-| 12    | ftdemo06  | 3       | FTBMP03 | -                                                 |
-| 13    | ftdemo07  | 3       | FTBMP04 | -                                                 |
-| 14    | ftdemo08  | 2       | -       | -                                                 |
-| 15    | ftdemo09  | 3       | -       | -                                                 |
-| 16-17 | Accordion | 9       | -       | AcIndexEditSw, Icon, IvAccordion, IvIntVari, PsParaBox |
-| 18    | ftdemo10  | 3       | -       | -                                                 |
-| 19-20 | Drawbar   | 7       | -       | AcIndexToggle, IvIntVari                          |
-| 21    | ftdemo20  | 4       | FTBMP05 | -                                                 |
-| 22    | ftdemo21  | 2       | -       | -                                                 |
-| 23    | ftdemo22  | 6       | -       | -                                                 |
-| 24    | ftdemo23  | 23      | -       | Bitmap (the five transport icons)                 |
-| 25    | Sdmixer   | 3       | -       | AcPartMixer, AcResetPage                          |
-| 26    | ftdemo24  | 39      | -       | -                                                 |
-| 27    | ftdemo25  | 2       | FTBMP06 | -                                                 |
+| ACT   | object      | widgets | picture | drawn only as an outline                               |
+|-------|-------------|---------|---------|--------------------------------------------------------|
+| 1     | ftdemo01    | 2       | FTBMP01 | -                                                      |
+| 2     | ftdemo04    | 6       | FTBMP02 | -                                                      |
+| 3     | ftdemo05    | 3       | -       | -                                                      |
+| 4-6   | ftdemo41-43 | 38      | -       | -                                                      |
+| 7-9   | ftdemo44-46 | 23      | -       | -                                                      |
+| 10-11 | ftdemo47-48 | 21      | -       | -                                                      |
+| 12    | ftdemo06    | 3       | FTBMP03 | -                                                      |
+| 13    | ftdemo07    | 3       | FTBMP04 | -                                                      |
+| 14    | ftdemo08    | 2       | -       | -                                                      |
+| 15    | ftdemo09    | 3       | -       | -                                                      |
+| 16-17 | Accordion   | 9       | -       | AcIndexEditSw, Icon, IvAccordion, IvIntVari, PsParaBox |
+| 18    | ftdemo10    | 3       | -       | -                                                      |
+| 19-20 | Drawbar     | 7       | -       | AcIndexToggle, IvIntVari                               |
+| 21    | ftdemo20    | 4       | FTBMP05 | -                                                      |
+| 22    | ftdemo21    | 2       | -       | -                                                      |
+| 23    | ftdemo22    | 6       | -       | -                                                      |
+| 24    | ftdemo23    | 23      | -       | Bitmap (the five transport icons)                      |
+| 25    | Sdmixer     | 3       | -       | AcPartMixer, AcResetPage                               |
+| 26    | ftdemo24    | 39      | -       | -                                                      |
+| 27    | ftdemo25    | 2       | FTBMP06 | -                                                      |
 
 **Limits.** The three live screens (Accordion, Drawbar, Sdmixer) are custom widget classes whose painting is not
 modelled; the Bitmap icons are not looked up; borders other than plain lines are approximations (BoxProc's exact
@@ -177,12 +177,12 @@ disc and the firmware checks none; the SHA-1 table is the tool's own identificat
 
 **Tested on** (2026-10-31; outputs abbreviated):
 
-| image (read-only)                                                    | result                                                                                                                                                                                                                      |
-|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `~/compartilhado/kn5000_project/kn5000_v10_disk.img` (SHA-1 a892bedc...) | type 7; TECHNICS.PRP / DUMMY.1 / DUMMY.2 / HKMSPRG.SLD at sectors 33-36; stream 1 2,097,152 B from 965,534 compressed = program v10, version byte 0x0A; stream 2 at 0xF03A9, 93,203 B = sub-CPU v1.42 compressed byte for byte, decompresses to sub-CPU v1.42; HKMSPRG.SLD (1,058,748 B) is exactly the two streams |
-| synthetic type-6 disc (`probes/make_synthetic_type6.py`)             | type 6; 1024 sectors from 0x24 = HD-AE5000 v2.06i, XAPR at +0                                                                                                                                                              |
-| `~/compartilhado/kn5000_project/test_floppy.img`, `technics-anotherworld/kn5000cnv/build/aw5000.img` | FAT listing; type 0xFF (not an update disc)                                                                                                                                       |
-| the 14 softlist floppies `floppy/build/kn5000/*.img` (built in main) | all type 0xFF                                                                                                                                                                                                              |
+| image (read-only)                                                                                    | result                                                                                                                                                                                                                                                                                                              |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `~/compartilhado/kn5000_project/kn5000_v10_disk.img` (SHA-1 a892bedc...)                             | type 7; TECHNICS.PRP / DUMMY.1 / DUMMY.2 / HKMSPRG.SLD at sectors 33-36; stream 1 2,097,152 B from 965,534 compressed = program v10, version byte 0x0A; stream 2 at 0xF03A9, 93,203 B = sub-CPU v1.42 compressed byte for byte, decompresses to sub-CPU v1.42; HKMSPRG.SLD (1,058,748 B) is exactly the two streams |
+| synthetic type-6 disc (`probes/make_synthetic_type6.py`)                                             | type 6; 1024 sectors from 0x24 = HD-AE5000 v2.06i, XAPR at +0                                                                                                                                                                                                                                                       |
+| `~/compartilhado/kn5000_project/test_floppy.img`, `technics-anotherworld/kn5000cnv/build/aw5000.img` | FAT listing; type 0xFF (not an update disc)                                                                                                                                                                                                                                                                         |
+| the 14 softlist floppies `floppy/build/kn5000/*.img` (built in main)                                 | all type 0xFF                                                                                                                                                                                                                                                                                                       |
 
 Only the v10 update disc is on this machine; the v5-v9 discs (archive.org "technics-kn5000-system-update-disks")
 were not available to run.  Creating discs stays with `make_update_disc.py` (technics-anotherworld), which the
@@ -230,13 +230,13 @@ base + 0x80000.
 appending further 0x30 writes, with no new unlock, right after the first (inside the chips' sector-erase
 window), chosen by the device id `Flash_InitAllBanks` (0xEF3B05) stored at RAM 0x205E0 (IC19) / 0x205E2 (HD-AE5000):
 
-| case                                | sector erased             | extra 0x30 writes                                  | id test                                    |
-|-------------------------------------|---------------------------|----------------------------------------------------|--------------------------------------------|
-| IC19, id 0x2258 (bottom boot)       | 0x300000                  | +0x4000, +0x6000, +0x8000                          | `cpw (0x205e0), 8792`                      |
-| IC19, other id (top boot)           | 0x3F0000                  | +0xF8000, +0xFA000, +0xFC000; if XBC = 0x3FFFFF also +0xE0000 | (`Flash_EraseSector_TopSector` 0xEF3A3E) |
-| IC19 region 4                       | 0x370000 or 0x3F0000      | chip base +0x78000, +0x7A000, +0x7C000; if XBC = 0x3FFFFF also +0x60000 | (`Flash_EraseSector_BootBlock_HighBank` 0xEF39D6) |
-| HD-AE5000, id 0x22AB (bottom boot)  | 0x280000                  | +0x4000, +0x6000, +0x8000                          | `cpw (0x205e2), 8875`                      |
-| HD-AE5000, other id (top boot)      | 0x2F0000                  | +0x78000, +0x7A000, +0x7C000                       | (`Flash_EraseSector_Bank2Check` 0xEF3A82)  |
+| case                               | sector erased        | extra 0x30 writes                                                       | id test                                           |
+|------------------------------------|----------------------|-------------------------------------------------------------------------|---------------------------------------------------|
+| IC19, id 0x2258 (bottom boot)      | 0x300000             | +0x4000, +0x6000, +0x8000                                               | `cpw (0x205e0), 8792`                             |
+| IC19, other id (top boot)          | 0x3F0000             | +0xF8000, +0xFA000, +0xFC000; if XBC = 0x3FFFFF also +0xE0000           | (`Flash_EraseSector_TopSector` 0xEF3A3E)          |
+| IC19 region 4                      | 0x370000 or 0x3F0000 | chip base +0x78000, +0x7A000, +0x7C000; if XBC = 0x3FFFFF also +0x60000 | (`Flash_EraseSector_BootBlock_HighBank` 0xEF39D6) |
+| HD-AE5000, id 0x22AB (bottom boot) | 0x280000             | +0x4000, +0x6000, +0x8000                                               | `cpw (0x205e2), 8875`                             |
+| HD-AE5000, other id (top boot)     | 0x2F0000             | +0x78000, +0x7A000, +0x7C000                                            | (`Flash_EraseSector_Bank2Check` 0xEF3A82)         |
 
 0x2258 / 0x22AB are the AMD device ids of the Am29F800B / Am29F400B bottom-boot parts (datasheet; the chip part
 numbers on the boards were not checked here).  The "if XBC = 0x3FFFFF" extra erase of the sector 0x20000 below is
@@ -286,14 +286,14 @@ The issue's last comment (2026-10-24) said: close when the table-data and v7 ver
 rom-reconstruction.md.  Re-run at 130735749 (2026-10-31), `python3 scripts/analysis/kn5000_source_coverage.py`
 (in the built main tree, read-only):
 
-| image                     | ROM bytes  | verbatim debt | % source |
-|---------------------------|------------|---------------|----------|
-| maincpu v10, v9, v7       | 2,097,152  | 0             | 100.0%   |
-| maincpu v6                | 2,097,152  | 13,756        | 99.3%    |
-| maincpu v5                | 2,097,152  | 15,910        | 99.2%    |
-| subcpu v142, boot, table data, custom data, HD-AE5000 x 4 | (each) | 0 | 100.0% |
-| KN5000, 13 images         | 16,056,320 | 29,666        | 99.8%    |
-| all 17 (with WSA1R)       | 18,153,472 | 29,666        | 99.8%    |
+| image                                                     | ROM bytes  | verbatim debt | % source |
+|-----------------------------------------------------------|------------|---------------|----------|
+| maincpu v10, v9, v7                                       | 2,097,152  | 0             | 100.0%   |
+| maincpu v6                                                | 2,097,152  | 13,756        | 99.3%    |
+| maincpu v5                                                | 2,097,152  | 15,910        | 99.2%    |
+| subcpu v142, boot, table data, custom data, HD-AE5000 x 4 | (each)     | 0             | 100.0%   |
+| KN5000, 13 images                                         | 16,056,320 | 29,666        | 99.8%    |
+| all 17 (with WSA1R)                                       | 18,153,472 | 29,666        | 99.8%    |
 
 v7 and table data are at 0 B, which meets the close condition.  The v6/v5 debt is their `TODO(port)` rows, tracked
 by the kn5000-ports lane, not by this issue.  rom-reconstruction.md's "Verbatim debt" section already carries these
