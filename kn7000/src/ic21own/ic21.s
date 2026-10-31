@@ -14,15 +14,18 @@
 # ic21-own-probes`; routine addresses are program 941's, kn7000/src/program/):
 #
 #   0x00000-0x03FFF  erased.
-#   0x04000-0x04AA3  the USER MIDI SETTING image (0xAA4 bytes; RAM copy 0x500D2B14, func_4C024247):
-#     0x04000-0x0427F  the .MD part: all 640 bytes equal 02UMDINI.MD on the Initial Data Disk, and the
-#                      default the firmware writes itself (program 893 0x486162A0).  Three USER MIDI
-#                      SETTINGs over 44 parameters: LOCAL, MIDI CHANNEL and MIDI OCTAVE per part, the
-#                      CONTROL channel, the MIDI message filters, split mode and point.
-#     0x04280-0x04A6F  a 2,032-byte image of the live panel state (0x84000020), stored and recalled by
-#                      func_4C021903: a PANEL MEMORY record of 43 tag/length records and a second list
-#                      of 7.  1,935 of its bytes equal the firmware's default (Str_empty_1431): this
-#                      unit's settings.
+#   0x04000-0x04AA3  the settings Initial Setting keeps ("User MIDI Settings, Help language, and Rhythm
+#                    Custom etc. are not affected by Initial Setting", help text HelpTextEn41_0), 0xAA4
+#                    bytes, RAM copy 0x500D2B14 (func_4C024247):
+#     0x04000-0x0427F  the three USER MIDI SETTINGs, the layout of a .MD file: all 640 bytes equal
+#                      02UMDINI.MD on the Initial Data Disk, and the default the firmware writes itself
+#                      (program 893 0x486162A0).  44 parameters: LOCAL, MIDI CHANNEL and MIDI OCTAVE per
+#                      part, the CONTROL channel, the MIDI message filters, split mode and point.
+#     0x04280-0x04A6F  the CUSTOM PANEL ("a special Panel Memory in which you can store your favorite
+#                      Panel Memory settings", HelpTextEn35_0): 2,032 bytes, the live panel state
+#                      (0x84000020) as func_4C021903 stores it, a PANEL MEMORY record of 43 tag/length
+#                      records and a second list of 7.  1,935 of its bytes equal the firmware's default
+#                      (Str_empty_1431): this unit's custom panel.
 #     0x04A70-0x04AA3  26 halfwords of system settings (language, display times, data protect, ...);
 #                      42 of the 52 bytes equal the default the boot check writes.
 #   0x04AA4-0x05FFF  erased.
@@ -33,8 +36,8 @@
 #   0x10000-0x10197  FAVORITES: all 408 bytes equal 03FAVINI.FAV, and the firmware's default (program
 #                    893 0x48604390).
 #   0x10198-0x10FFF  erased.
-#   0x11000-0x15441  HOME PAGE: the 396-byte record equals the one of 04HPGINI.HMP except 53 bytes, in
-#                    one run at +0x08..+0x53 (the home-page type and its parts: this unit's home page);
+#   0x11000-0x15441  HOME PAGE: the 396-byte record equals the one of 04HPGINI.HMP except 53 bytes, all
+#                    within +0x08..+0x53 (the home-page type and its parts: this unit's home page);
 #                    the 17,078-byte BMP after it equals 04HPGINI.HMP's and program 893's default picture.
 #   0x15442-0x1FFFF  erased.
 #   0x20000-0x1FFFFF the CUSTOM STYLE bank (the factory banks' format, kn7000/notes/custom-data-ic21.md):
