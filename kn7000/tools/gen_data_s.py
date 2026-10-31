@@ -1561,7 +1561,7 @@ class Gen:
                        " (SoundAlphaIndexBuild, SoundAlphaInitialGet)"]
                 for k in range(n + 1):
                     c, msb, lsb, pg = g.rom[o + 4 * k:o + 4 * k + 4]
-                    ini = '"' + g.c_escape(bytes([c])) + '"' if c else "0"
+                    ini = '"' + g.c_escape(bytes([c])) + '"'          # (the end entry's 0 as "\x00")
                     out.append(f"\tSOUND_ALPHA\t{ini}, {msb}, {lsb}, {pg}" + ("\t# end" if k == n else ""))
                 return out
             self.add(p, 4 * n + 4, lab, "sound list", render)
