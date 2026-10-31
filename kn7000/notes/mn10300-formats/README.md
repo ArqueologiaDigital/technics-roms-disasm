@@ -148,7 +148,35 @@ parameter name of a known routine (`view`, `title`, `event`, `object`, `icon`, `
 The curated names of `data_struct_names.py` still come first; a field whose places of reading disagree,
 or whose use the linear walk does not see, keeps its offset name.
 
-FIGURES-PLACEHOLDER
+Measured with `../mn10300-formats-probes/field_names_census.py` on the lane's base (f4045a81c) and after
+the regeneration (count of record-macro fields in each tree's `data_structs.inc`; "with a reader" leaves
+out the bytes no reader touches, which have nothing to be named from; the "no reader" column fell because
+the passes above typed the effect records, sound lists and zlib tables those kinds held):
+
+| tree       | kinds before | kinds after | fields after | named before | named after | offset-named with a reader, before | after |
+|------------|--------------|-------------|--------------|--------------|-------------|------------------------------------|-------|
+| kn7000-941 | 571          | 569         | 1,436        | 31           | 601         | 893                                | 628   |
+| kn7000-942 | 573          | 571         | 1,446        | 30           | 605         | 898                                | 630   |
+| kn7000-935 | 573          | 571         | 1,440        | 26           | 599         | 901                                | 634   |
+| kn7000-893 | 573          | 571         | 1,440        | 26           | 600         | 901                                | 633   |
+| kn6000     | 513          | 512         | 1,330        | 30           | 525         | 1,156                              | 668   |
+| kn6500     | 513          | 512         | 1,331        | 30           | 523         | 1,156                              | 670   |
+| kn2400     | 515          | 514         | 1,281        | 36           | 524         | 1,111                              | 622   |
+| hdsx3      | 19           | 19          | 58           | 0            | 8           | 46                                 | 43    |
+
+The names given most (941): `proc` 337, `key` 116, `index` 44, `text` 20, `TgVoiceRegWrite_d0` 13,
+`TgVoiceRegWriteB_d0` 9, `flags` 7. What is left offset-named: fields whose reading instruction occurs more
+than once in its function with different uses (the walk cannot tell which place the access was), values
+stored to the frame and used later, and values whose only use is arithmetic. The KN7000 IC21 structures of
+lane ic21-own (`../ic21-own/README.md`) were not taken up here.
+
+## Census
+
+`scripts/analysis/data_incbin_census.py` (read-only; opaque n / bytes, base -> this branch; generic is 0 in
+every tree before and after): kn7000-program 3,449 / 63,392 -> 3,448 / 63,227, kn7000-sp7001 3,472 / 61,662
+-> 3,471 / 61,497, kn7000-b893 3,454 / 63,075 -> 3,453 / 62,910, kn7000-b935 3,460 / 64,185 -> 3,459 / 64,020
+(the drum-kit list's 165 bytes), kn2400 5,131 / 196,924 -> 4,448 / 172,071 (the effect records), kn6000,
+kn6500 and hdsx3 unchanged.
 
 ## Regenerating
 
@@ -160,11 +188,17 @@ FIGURES-PLACEHOLDER
    `kn7000_*_manual.sym` it writes;
 3. `python3 tools/gen_program_s.py --profile <b>` for 941, sp7001, b935 and b893, then `make -C kn7000
    data-and-code-src` to the fixpoint, then `make -C kn7000 plugin-src`.
+   The fixpoint reads the previous build's `build/*.labels`; after it, build the four programs
+   (`make -C kn7000 verify verify-sp7001 verify-935 verify-893`) and run `make -C kn7000 data-and-code-src`
+   once more: it must stop after its first round with nothing changed.
 
 ## Shared files touched
 
-`kn7000/tools/gen_data_s.py` (passes `sound_alpha_lists`, `fx_descriptors`, the `hash_tables` payloads,
-profile keys `fx_descriptors` / `field_notes`, a comment), `kn7000/tools/data_structs.py` (layout keeps
+`kn7000/tools/gen_data_s.py` (passes `sound_alpha_lists`, `fx_descriptors`, `zlib_tables`, the
+`hash_tables` payloads and a late-binding fix there, profile keys `fx_descriptors` / `field_notes`, a comment;
+and one line of the core `ref()`: a code address the data names by its `func_<ADDR>` label is kept in
+`code_refs.txt`, as a `loc_<ADDR>` one already was -- without it 935 / 893 lost `func_484082C2`, the task
+entry a `T_CTSK` record names, once the previous build's labels gave that name), `kn7000/tools/data_structs.py` (layout keeps
 the records' offsets; `name_fields` asks `auto_name`), `kn7000/tools/data_struct_names.py`,
 `kn7000/tools/data_field_uses.py` (new), `kn7000/src/include/data_tables.inc` (macros `SOUND_ALPHA`,
 `TONE_KEY_PAYLOAD`, `SHORT_KEY_PAYLOAD`, `BANK_KEY_PAYLOAD`, `FX_DESC`, `FX_PARAM`), the manual symbol
