@@ -68,11 +68,36 @@
 ; ---- the built-in sound tables' hash lookups (lane mn10300-formats, 2026-10-31;
 ;      kn7000/notes/mn10300-formats/README.md, src/include/data_tables.inc TONE_KEY_PAYLOAD ...) ----
 0x4C09ACF3  ToneKeyFind             ; (d0 = bank MSB, d1 = LSB, (0x10, sp) = program, a0 = &source byte) -> a0 = the ToneKeyHash payload of the sound, trying the voice archive first (func_4C09B170: source 2) and then, through ToneKeyLookup, the exact key and a chain of fallbacks (MSB 0x28..0x2F as 0x20..0x27, LSB rounded to 8, program 0x7F7F ...)
-0x4C09AFB0  SoundSwNoGet            ; (d0 = MSB, d1 = LSB, program, a0 = &state, a1 = &group, (0x44, sp) = &number) -> the sound's panel switch {group, number} for state 0..3 from its ToneKeyHash payload: {swgroup01, swno0}, {swgroup01, swno1}, {swgroup23, swno2}, {swgroup23, swno3}
+0x4C09AFB0  SoundSwNoGet            ; (d0 = MSB, d1 = LSB, program, a0 = &state, a1 = &group, (0x44, sp) = &number) -> the sound's switch {group, number} for the switch state (movbu (a3), d0 at 0x4C09AFD0): 0 {panel_group, panel_no_dsp} (+3, +5), 1 {panel_group, panel_no} (+3, +6), 2 {explorer_group, explorer_no_dsp} (+4, +7), 3 {explorer_group, explorer_no} (+4, +8); states 2 / 3 come back + 2 x ToneKeyFind's source (0x4C09B010..18). Even states are for a part with a DSP unit (PartHasDspUnit), the panel states for MT_GetSoundSwNo, the SOUND EXPLORER ones for GetSoundDev (lane mn10300-rest)
 0x4C09B03B  SoundIconGet            ; (d0 = MSB, d1 = LSB, program, a0 = &icon) -> the payload's +2, the sound's icon (MainGetSoundName answers it for MT_GetSoundIcon)
 0x4C09B065  SoundToneIndexGet       ; (d0 = MSB, d1 = LSB, program, a0 = &u16) -> the payload's +0, the tone record's index (func_4C07BA76 names the sound from it)
 0x4C09B08C  ToneKeyLookup           ; (d0 = key MSB << 16 | LSB << 8 | program) -> a0 = entry + 8 of the key's ToneKeyHash entry, or 0; the voice archive's table when func_4C07B982 answers 1 or 2
-0x4C09B200  SoundSwNoBankGet        ; (d0 = switch kind 0..7, d1 = number, a0 = &MSB, a1 = &LSB, (0x34, sp) = &program) -> the bank MSB, LSB and program a panel switch selects: the ShortKeyHash payload's +0 / +1 / +2 (or the archive's two tables)
+0x4C09B200  SoundSwNoBankGet        ; (d0 = switch state 0..7, d1 = number, a0 = &MSB, a1 = &LSB, (0x34, sp) = &program) -> the bank MSB, LSB and program a switch selects, the ShortKeyHash payload's +0 / +1 / +2: the key group is the group + 0 (state 0), + 0x10 (1, L26 `add 0x10, d2`), + 0x40 (2 / 4 / 6, the SOUND EXPLORER categories with a DSP unit) or + 0x60 (3 / 5 / 7); states 4 / 5 look in archive source 1, 6 / 7 in source 2 (lane mn10300-rest)
 0x4C09B2AE  ShortKeyLookup          ; (d0 = key group << 8 | number) -> a0 = entry + 6 of the key's ShortKeyHash entry, or 0
 0x4C09BCFA  SoundBankIndexGet       ; (d0 = MSB, d1 = LSB, (0x10, sp) = program, a0 = &u16, a1 = &source) -> the BankKeyHash payload's u16, with fallbacks
 0x4C09BDB2  BankKeyLookup           ; (d0 = key MSB << 16 | LSB << 8 | program) -> a0 = entry + 8 of the key's BankKeyHash entry, or 0
+;
+; ---- the sound switch states and groups (lane mn10300-rest, 2026-10-31; kn7000/notes/mn10300-rest/README.md,
+;      probe kn7000/notes/mn10300-rest-probes/kn6000_swno_states.py) ----------------------------------------
+0x4C07C027  SoundSwFromBank         ; (a0 = SOUND_SW {group, number, msb, lsb, program, state}, 6 bytes) fills group / number from msb / lsb / program through SoundSwNoGet for the record's state (0 / 0 when not found); a state 2 / 3 comes back + 2 x the source
+0x4C07BFD0  SoundSwFromBankState0   ; the same with the state forced to 0 (`clr d0 / movbu d0, (a0)` on the local copy); no direct call found
+0x4C07C0DB  SoundSwToBank           ; (a0 = SOUND_SW) msb / lsb / program := SoundSwNoBankGet(state = +5, group, number); 0x14 / 0 / 0 when not found
+0x4C07C07B  SoundSwToBankState0     ; the same with state 0 (`clr d0` before the call)
+0x4C031EAD  PartDspUnitFind         ; (d0 = part) -> 0..4, the DSP unit whose part byte 0x84000722 + 16..20 (panel memory tag 0x52 dsp1_unit .. dsp5_unit) is the part, else -1 (0x4C031EBC `mov 0x84000722, a0`, 0x4C031EC4 `cmp d3, d1`)
+0x4C007A5B  PartHasDspUnit          ; (d0 = part) -> 1 when GetM3EmVal(0xB050 / 0xB040 / 0xB030 / 0xB020 / 0xB010) is the part, else 0: the even (DSP) or odd switch state; MainGetSoundName_Lf9 (0x4C0079B7) for MT_GetSoundSwNo, GetSoundDev (0x4C007A20)
+0x4C06A334  PartHasDspUnitExceptAcc ; PartHasDspUnit, but 0 for the accompaniment parts above 0x12 (`cmp 0x12, a3`): MainSoundAdd's state
+0x4C09B42E  SoundGroupNameGet       ; (d0 = switch state 0..7, d1 = group, a0 = &name) -> the 16-character name of the key group (group + 0 / 0x10 / 0x40 / 0x60): SoundGroupNames + 16 x key group (`asl 4, d3 / add SoundGroupNames, d3`), or the archive directory's +0x10
+0x4C09B520  SoundGroupSizeGet       ; (d0 = switch state, d1 = group, a0 = &u8) -> the number of switches of the key group: SoundGroupSizes[key group] (`movbu (d3, a0), d0`), or the archive directory's +0x14
+0x4C07B9C7  SoundGroupSizeFetch     ; (d0 = group, d1 = state) -> SoundGroupSizeGet's answer, or 0
+0x4C07B9EA  SoundGroupNameCopy      ; (d0 = group, a0 = 16-byte buffer) copies the state-0 group name, or "WRONG SW NUMBER"
+0x4C09B0FF  ToneKeyLookupSrc1       ; ToneKeyLookup in the voice archive loaded at 0x57000000 (source 1: `mov (0x5700000c), d1`)
+0x4C09B170  ToneKeyLookupSrc2       ; ToneKeyLookup in the archive at 0x56000000 (source 2)
+0x4C09B1E1  ToneKeyEqual            ; (d0, d1) -> 1 when the keys match (the hash chain's compare)
+0x4C09B1EC  ToneKeyHashIndex        ; key x mult % nbuckets (`mulu`, `divu`, mdr): the bucket of a hash key
+0x4C09B324  ShortKeyLookupSrc1      ; ShortKeyLookup in the archive at 0x57000000 (source 1)
+0x4C09B39A  ShortKeyLookupSrc2      ; ShortKeyLookup in the archive at 0x56000000 (source 2)
+0x4C07B96D  VoiceBankSourcePresent  ; (d0 = source 1 / 2) -> 0 when that source's presence byte 0x50276E84[n - 1] is 1, else -1 (ToneKeyFind's gate)
+0x4C07BA76  SoundNameGet            ; the sound's name from SoundToneIndexGet's tone index: MT_GetSoundName's answer
+0x4C07BBDD  SoundIconFetch          ; SoundIconGet's icon, 0 when the sound is not found: MT_GetSoundIcon's answer
+0x4C3EB620  SoundGroupNames         ; 128 x 16 characters, the key groups' names: 0x00..0x0F the panel SOUND GROUP buttons (PIANO, GUITAR .. SOUND EXPLORER, MEMORY; 0x10..0x1F the same), 0x40..0x5F / 0x60..0x7F the 32 SOUND EXPLORER categories (PIANO .. GM2 DRUM KITS); read by SoundGroupNameGet
+0x4C3EBE20  SoundGroupSizes         ; 128 x u8, the number of switches of each key group: SoundGroupSizeGet (`movbu (d3, a0), d0`)

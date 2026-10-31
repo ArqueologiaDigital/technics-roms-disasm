@@ -141,10 +141,30 @@
 	.byte	\b14, \b15
 .endm
 # A zone: the halfword +0 is the wave page (low byte; TgVoiceRouteFieldSet 0x4C037C16 puts
-# it in bits 19:12 of the voice's select) with the TG side in bits 10/11 (0x400 / 0x800;
-# TgVoiceSideSelect 0x4C02BECB) and bits 12-15 not traced; +2 the wave directory entry
+# it in bits 19:12 of the voice's select) with the TG side in bits 10/11 (TgVoiceSideSelect
+# 0x4C02BECB; 0x400 = the MAIN TG 0x98050000, IC203 / IC204, 0x800 = the SUB TG 0x98040000,
+# IC207 / IC208: TgVoiceRegWrite 0x4C036F98 sends slots below 0x40 to 0x98050000; lane
+# mn10300-rest) and bits 12-15 not traced (bits 8-9 are 0 in every zone); +2 the wave directory entry
 # (TgElemNoteOnStd 0x4C030A98: & 0xFFF into bits 11:0); +4, +5 not traced (+5 is 0 in
 # every zone); the 8-byte kind adds a signed fine tune (+6; TgPitchNoteResolve).
+# A 'Tone' hash entry's payload (ToneKeyFind 0x4856FC51; lane mn10300-rest): the tone record's index
+# (SoundToneIndexGet 0x48570051, `movhu (a0), d0`), the icon (SoundIconGet 0x48570027, +2), and the
+# sound's switch {group, number} for each switch state (SoundSwNoGet 0x4856FF75): 0 {panel_group,
+# panel_no_dsp}, 1 {panel_group, panel_no}, 2 {explorer_group, explorer_no_dsp}, 3 {explorer_group,
+# explorer_no}; the even state is for a part with a DSP unit (PartHasDspUnit 0x484161BE), the panel
+# states are MT_GetSoundSwNo's, the SOUND EXPLORER ones GetSoundDev's.  3 bytes no routine reads.
+.macro jk_tone_key tone, icon, panel_group, explorer_group, panel_no_dsp, panel_no, explorer_no_dsp, explorer_no
+	.word	\tone
+	.byte	\icon, \panel_group, \explorer_group, \panel_no_dsp, \panel_no, \explorer_no_dsp, \explorer_no
+	.space	3, 0x00
+.endm
+# A switch-key hash entry's payload (ShortKeyLookup 0x485703A5, key at +4 a u16 key group << 8 |
+# number): the bank MSB, LSB and program the switch selects (SoundSwNoBankGet 0x485702CC copies
+# +0 / +1 / +2), 3 bytes no routine reads.
+.macro jk_sw_key msb, lsb, program
+	.byte	\msb, \lsb, \program
+	.space	3, 0x00
+.endm
 .macro jk_zone6 page, flags, entry, b4, b5
 	.byte	\page, \flags
 	.word	\entry

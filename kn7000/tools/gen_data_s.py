@@ -1798,8 +1798,9 @@ class Gen:
     # (src/include/data_tables.inc has the macros and each field's reader): table name -> (macro,
     # [(payload offset, width, field)], bytes at the end no routine reads)
     HASH_PAYLOADS = {
-        "ToneKeyHash": ("TONE_KEY_PAYLOAD", [(0, 2, "tone"), (2, 1, "icon"), (3, 1, "swgroup01"), (4, 1, "swgroup23"),
-                                             (5, 1, "swno0"), (6, 1, "swno1"), (7, 1, "swno2"), (8, 1, "swno3")], 3),
+        "ToneKeyHash": ("TONE_KEY_PAYLOAD", [(0, 2, "tone"), (2, 1, "icon"), (3, 1, "panel_group"),
+                                             (4, 1, "explorer_group"), (5, 1, "panel_no_dsp"), (6, 1, "panel_no"),
+                                             (7, 1, "explorer_no_dsp"), (8, 1, "explorer_no")], 3),
         "ShortKeyHash": ("SHORT_KEY_PAYLOAD", [(0, 1, "msb"), (1, 1, "lsb"), (2, 1, "program")], 3),
         "BankKeyHash": ("BANK_KEY_PAYLOAD", [(0, 2, "index")], 2),
     }

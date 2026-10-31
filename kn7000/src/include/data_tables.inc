@@ -84,17 +84,20 @@
 # mn10300-formats; kn7000/notes/mn10300-formats/README.md).  The bytes no routine reads are 0 in every
 # entry (notes/mn10300-formats-probes/hash_payloads.py), written as the trailing .space.
 # ToneKeyHash (key bank MSB << 16 | LSB << 8 | program): SoundToneIndexGet (0x4C09B065) answers `tone` (the tone
-# record's index; func_4C07BA76 names the sound from it), SoundIconGet (0x4C09B03B) answers `icon` (MainGetSoundName,
-# MT_GetSoundIcon), SoundSwNoGet (0x4C09AFB0) answers the sound's panel switch {group, number} for the reference's
-# state 0..3: {swgroup01, swno0}, {swgroup01, swno1}, {swgroup23, swno2}, {swgroup23, swno3}
-# (MainGetSoundName, MT_GetSoundSwNo).
-.macro TONE_KEY_PAYLOAD tone=0, icon=0, swgroup01=0, swgroup23=0, swno0=0, swno1=0, swno2=0, swno3=0
+# record's index; SoundNameGet 0x4C07BA76 names the sound from it), SoundIconGet (0x4C09B03B) answers `icon`
+# (MainGetSoundName, MT_GetSoundIcon), SoundSwNoGet (0x4C09AFB0) the sound's switch {group, number} for the switch
+# state (lane mn10300-rest, kn7000/notes/mn10300-rest/README.md): 0 {panel_group, panel_no_dsp}, 1 {panel_group,
+# panel_no}, 2 {explorer_group, explorer_no_dsp}, 3 {explorer_group, explorer_no}.  The panel states are the SOUND
+# GROUP buttons (group 0..15, MT_GetSoundSwNo), the explorer ones the 32 SOUND EXPLORER categories (GetSoundDev);
+# the even state is for a part that has a DSP unit (PartHasDspUnit 0x4C007A5B), the odd one for a part that has none.
+.macro TONE_KEY_PAYLOAD tone=0, icon=0, panel_group=0, explorer_group=0, panel_no_dsp=0, panel_no=0, explorer_no_dsp=0, explorer_no=0
 	.word	\tone
-	.byte	\icon, \swgroup01, \swgroup23, \swno0, \swno1, \swno2, \swno3
+	.byte	\icon, \panel_group, \explorer_group, \panel_no_dsp, \panel_no, \explorer_no_dsp, \explorer_no
 	.space	3, 0x00
 .endm
-# ShortKeyHash (key: a panel switch, group << 8 | number, SoundSwNoBankGet 0x4C09B200): the bank MSB, LSB and program
-# change that switch selects (SoundSwNoBankGet copies +0, +1, +2 to its three outputs).
+# ShortKeyHash (key: a switch, key group << 8 | number, SoundSwNoBankGet 0x4C09B200; the key group is the group + 0,
+# 0x10, 0x40 or 0x60 by the switch state): the bank MSB, LSB and program change that switch selects
+# (SoundSwNoBankGet copies +0, +1, +2 to its three outputs).
 .macro SHORT_KEY_PAYLOAD msb=0, lsb=0, program=0
 	.byte	\msb, \lsb, \program
 	.space	3, 0x00
