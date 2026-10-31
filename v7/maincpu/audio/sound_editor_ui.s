@@ -7540,7 +7540,7 @@ SeMenu_PopupDialog_Close_Data:
 	ld	xhl, (xbc+wa)
 	call	(xhl)
 SeMenu_ValueEditor_Init:
-	cp	(0x8c9c:16), 32
+	cp	(ACTIVE_TITLE:16), 32
 
 	jrl	nz, SeMenu_ValueEditor_Data3
 
@@ -9621,7 +9621,7 @@ SeFilBpf1_DrawStaticScreen:
 	ld	xiy, SeFilBpf1_Records
 	ld	xix, SeFilBcf1_Records
 	call	SeGfx_DrawStaticList
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilBpf1_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilBpf1_DrawStaticScreen_Skip:
@@ -9643,7 +9643,7 @@ SeFilBcf1_DrawStaticScreen:
 	ld	xiy, SeFilBcf1_Records
 	ld	xix, SeEnv1_DrawEnvelopeLayout_Records3
 	call	SeGfx_DrawStaticList
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilBcf1_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilBcf1_DrawStaticScreen_Skip:
@@ -10689,7 +10689,7 @@ SePitFilEnv2_DrawField:
 SeCtr2_DrawStaticScreen:
 	; data, not code: SeCtr2_DrawStaticScreen is reached only as data (1 data), and its instruction decode held normal (scripts/converters/data_as_code_to_bytes.py).
 	call	SeMenu_EqEdit_SetupHelper1
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeCtr2_DrawStaticScreen_Skip
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeCtr2_PageFrame

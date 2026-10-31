@@ -581,7 +581,7 @@ def report_bits(env, rows, calibrate=False):
 
 # ---------------------------------------------------------------- bit polarity
 # ⚠ Set/Off/On/Enable/Disable/Toggle are KN5000 FEATURE words as well as bit
-# operations -- `AccPedal_Bit2_Off` is the pedal-off path and only TESTS bit 2;
+# operations -- `AccStyleCtl_IntroEnding1_Release` is the pedal-off path and only TESTS bit 2;
 # `SndParam_SetResBit0_Via028100` is a set-OR-reset routine.  Reading a verb
 # off those names measures nothing.  The class is therefore restricted to a
 # verb IMMEDIATELY prefixed to the Bit token, and names carrying verbs from

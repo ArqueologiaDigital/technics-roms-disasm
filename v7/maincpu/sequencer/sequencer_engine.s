@@ -2633,8 +2633,8 @@ SeqPlay_HandleEvent_SyncTiming:
 	ldb_d8	a, (13278)
 	bit	2, a
 	jr	z, SeqPlay_CheckSilentAndStop
-	ldb_d8	e, (12920)
-	ldb_d8	c, (12921)
+	ldb_d8	e, (ACC_LANES_ENDING1)
+	ldb_d8	c, (ACC_LANES_ENDING2)
 	ldb_d8	a, (12940)
 	cp	e, 0:i3
 	jr	nz, SeqPlay_HandleEvent_ClearAccFlag

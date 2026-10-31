@@ -10854,10 +10854,10 @@ SeqCtl_CheckBit2:
 SeqCtl_CheckBit3:
 	ld w, (0xfc60:16)
 	bit 2, w
-	jr z, SeqCtl_StorePedalFlags
+	jr z, SeqTick_ReadControlState_StoreIntroBits
 	or a, 0x4
 
-SeqCtl_StorePedalFlags:
+SeqTick_ReadControlState_StoreIntroBits:
 	stb_d8	(12871), a
 	ldb_d8	a, (64921)
 	and	a, 1
@@ -10973,10 +10973,10 @@ Seq_InputState_StoreFlag:
 AccInput_ProcessWithPedal:
 .Lc_f53166:
 	calr AccChannel_CompareAndMarkDirty
-	calr AccVoice_ProcessPedalChanges
-	calr AccVoice_ProcessLeftPedalChanges
+	calr AccSection_LatchIntroRequests
+	calr AccSection_LatchFillInRequests
 	calr AccPitch_CheckTransposeFlags
-	calr AccChord_ProcessKeyChanges
+	calr AccSection_LatchEndingRequests
 	bit	0, (0x32ab:16)
 	jr z, AccInput_CompareAndCheck
 	calr AccChord_ResolveVoiceAndDispatch

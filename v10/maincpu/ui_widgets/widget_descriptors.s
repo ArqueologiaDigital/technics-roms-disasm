@@ -5284,7 +5284,7 @@ AccVoice_LookupTableAddress_Table:	.incbin "includes/generated/naka_widget_descr
 ; [naka_s_headers] AccStyle_ApplyExt_SkipClamp_Table
 ; AccStyle_ApplyExt_SkipClamp_Table -- read by
 ; AccStyle_ApplyExt_SkipClamp (v10/v9 0xf560c5, v7 0xf55cc1) (`ld xhl,
-; AccStyle_ApplyExt_SkipClamp_Table`), AccVoice_Reassign_Mode2 (v10/v9
+; AccStyle_ApplyExt_SkipClamp_Table`), AccSection_StartComposerIntro_Mode2 (v10/v9
 ; 0xf58afd, v7 0xf586f9) (`ld xhl, AccStyle_ApplyExt_SkipClamp_Table`),
 ; AccTone_FoundMatch_IncRet (v10/v9 0xf5d7f4, v7 0xf5d3f0) (`lda xbc,
 ; (AccStyle_ApplyExt_SkipClamp_Table:24)`), AccPedal_ProcessAllChanges

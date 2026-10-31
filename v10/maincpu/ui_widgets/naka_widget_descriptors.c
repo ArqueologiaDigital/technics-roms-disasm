@@ -2754,7 +2754,7 @@ typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------
      * AccStyle_ApplyExt_SkipClamp_Table -- read by
      * AccStyle_ApplyExt_SkipClamp (v10/v9 0xF560C5, v7 0xF55CC1) (`ld xhl,
-     * AccStyle_ApplyExt_SkipClamp_Table`), AccVoice_Reassign_Mode2 (v10/v9
+     * AccStyle_ApplyExt_SkipClamp_Table`), AccSection_StartComposerIntro_Mode2 (v10/v9
      * 0xF58AFD, v7 0xF586F9) (`ld xhl, AccStyle_ApplyExt_SkipClamp_Table`),
      * AccTone_FoundMatch_IncRet (v10/v9 0xF5D7F4, v7 0xF5D3F0) (`lda xbc,
      * (AccStyle_ApplyExt_SkipClamp_Table:24)`), AccPedal_ProcessAllChanges

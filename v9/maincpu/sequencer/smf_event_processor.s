@@ -10848,7 +10848,7 @@ SeqCtl_CheckBit6:
 	or a, 0x2
 
 SeqCtl_CheckBit7:
-	ld (0x32fb:16), a
+	ld (ACC_REQ_FILLIN:16), a
 	xor a, a
 	bit 4, w
 	jr z, SeqCtl_CheckBit4
@@ -10860,7 +10860,7 @@ SeqCtl_CheckBit4:
 	or a, 0x2
 
 SeqCtl_CheckBit5:
-	ld (0x32fd:16), a
+	ld (ACC_REQ_ENDING:16), a
 	xor a, a
 	bit 2, w
 	jr z, SeqCtl_CheckBit2
@@ -10874,14 +10874,14 @@ SeqCtl_CheckBit2:
 SeqCtl_CheckBit3:
 	ld w, (PANEL_STYLE+6:16)
 	bit 2, w
-	jr z, SeqCtl_StorePedalFlags
+	jr z, SeqTick_ReadControlState_StoreIntroBits
 	or a, 0x4
 
-SeqCtl_StorePedalFlags:
-	ld (0x32ff:16), a
+SeqTick_ReadControlState_StoreIntroBits:
+	ld (ACC_REQ_INTRO:16), a
 	ld a, (PANEL_REC_98+3:16)
 	and a, 0x1
-	ld (0x3301:16), a
+	ld (ACC_STYLE_ARRANGER_ON:16), a
 	ld a, (PANEL_STYLE+4:16)
 	and a, 0x10
 	srl a, 4
@@ -10890,7 +10890,7 @@ SeqCtl_StorePedalFlags:
 	ld a, (PANEL_STYLE+7:16)
 	and a, 0x30
 	srl a, 4
-	ld (ACC_SECTION_REQUEST:16), a
+	ld (ACC_VARIATION_REQUEST:16), a
 	xor a, a
 	bit 2, (PANEL_REC_91+3:16)
 	jr nz, SeqCtl_StoreKeyMask
@@ -10998,10 +10998,10 @@ Seq_InputState_StoreFlag:
 
 AccInput_ProcessWithPedal:
 	calr AccChannel_CompareAndMarkDirty
-	calr AccVoice_ProcessPedalChanges
-	calr AccVoice_ProcessLeftPedalChanges
+	calr AccSection_LatchIntroRequests
+	calr AccSection_LatchFillInRequests
 	calr AccPitch_CheckTransposeFlags
-	calr AccChord_ProcessKeyChanges
+	calr AccSection_LatchEndingRequests
 	bit 0, (0x3363:16)
 	jr z, AccInput_CompareAndCheck
 	calr AccChord_ResolveVoiceAndDispatch
@@ -11113,8 +11113,8 @@ AccChord_CheckUIStateExit:
 	calr AccDisplay_RefreshIfDiskActive
 
 AccChord_CheckModeAndUpdate:
-	ld a, (0x3314:16)
-	or a, (0x3315:16)
+	ld a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, 0x3f
 	jrl z, AccChord_ReadKeysRet
 	ld a, (0x32d8:16)

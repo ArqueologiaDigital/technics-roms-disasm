@@ -951,7 +951,7 @@ BitMapOut_CopyExtTable_Check:
 	ld	bc, 0:i3
 	jr	PanelMemory_RecallRecords_Join
 PanelMemory_RecallRecords_Loop:
-	lda	xwa, (0xfcf6:16)
+	lda	xwa, (PANEL_REC_68:16)
 	ld	de, bc
 	extz	xde
 	add	xde, xwa
@@ -991,7 +991,7 @@ PanelMemory_RecallRecords_Join:
 	add	xde, xwa
 	ld	a, (xde)
 	ld	(xbc), a
-	lda	xbc, (0xfd0c:16)
+	lda	xbc, (PANEL_MSP:16)
 	lda	xde, (xbc+3)
 	ld	xhl, xde
 	sub	xhl, (xsp+4)
@@ -1013,7 +1013,7 @@ PanelMemory_RecallRecords_Join:
 	add	xde, xwa
 	ld	a, (xde)
 	ld	(xbc), a
-	lda	xbc, (0xfd2c:16)
+	lda	xbc, (PANEL_REC_71:16)
 	ld	xde, xbc
 	sub	xde, (xsp+4)
 	ld	xhl, xix
@@ -1036,11 +1036,11 @@ PanelMemory_RecallKeepStyle:
 	pop	xix
 	pop	xhl
 	pop	xde
-	lda	xbc, (0xf9a0:16)
-	lda	xix, (0xfc5a:16)
+	lda	xbc, (PANEL_RECORDS:16)
+	lda	xix, (PANEL_STYLE:16)
 	ld	xwa, xix
 	sub	xwa, xbc
-	lda	xde, (0x03c8e4:24)
+	lda	xde, (PANEL_RECALL_BACKUP:24)
 	add	xwa, xde
 	ld	a, (xwa)
 	ld	(xix), a
@@ -1067,7 +1067,7 @@ PanelMemory_RecallKeepStyle:
 	and	a, 0x7
 	or	l, a
 	ld	(xix), l
-	lda	xix, (0xfd0c:16)
+	lda	xix, (PANEL_MSP:16)
 	lda	xhl, (xix+8)
 	ld	xwa, xhl
 	sub	xwa, xbc
