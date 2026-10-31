@@ -22,8 +22,14 @@ THE FORMAT OF AN ITEM (notes/media-files-2026-10-30/README.md; probes notes/medi
   for items of 64 B or more (evidence `byte correlation`); otherwise 16-bit (evidence `default`).
   Either reading maps the bytes losslessly; the format only decides how a player sounds them.
 
-  rate  22050 Hz, nominal: the chip holds every other word of a recording, so half of the 44.1 kHz the
-        KN7000 manifest uses.  No rate is stored in the ROM (technics-docs waveform-rom-format.md).
+  rate  No rate is stored in the ROM.  An item that holds the even words of a KN7000 recording from its
+        first sample (evidence `kn7000 <label>`, no offset, Y chip) gets half that recording's rate and
+        the same root key, from kn7000/src/wave/root_rates.tsv (kn7000/tools/wave_root_rates.py): the
+        recording is the same, and the KN5000 table data gives 355 of the 390 IC307 selectors it can
+        compare exactly the KN7000's pitch correction for that recording (notes/sound-probes/
+        kn5000_kn7000_correction.py), so the two instruments tune it alike.  Half, because the item
+        holds every other word.  The other items keep 22050 Hz, nominal: their pitch exponent is in the
+        directory's P word, on the undumped partner chip IC306 (notes/sound-2026-10-31/README.md).
 
 OUTPUT
   waveform/wav_manifest.tsv            the manifest (no sample data)
@@ -34,6 +40,7 @@ OUTPUT
 """
 import argparse
 import bisect
+import math
 import re
 from pathlib import Path
 
@@ -91,6 +98,19 @@ def kn7000_items(tg):
     return out
 
 
+def kn7000_rates():
+    """{KN7000 label: (rate_hz, root)} from kn7000/src/wave/root_rates.tsv, or {} without it"""
+    out = {}
+    p = ROOT / "kn7000/src/wave/root_rates.tsv"
+    if p.exists():
+        for line in p.read_text(encoding="utf-8").splitlines():
+            r = line.split("\t")
+            if line.startswith("#") or r[0] == "label" or r[4] == "-":
+                continue
+            out[r[0]] = (float(r[4]), int(r[3]))
+    return out
+
+
 def corr(b):
     a = np.frombuffer(b, dtype=np.int8).astype(np.float64)
     lo, hi = a[0::2], a[1::2]
@@ -110,6 +130,7 @@ def main():
     k7s = {tg: [r[0] for r in k7[tg]] for tg in k7}
     man = ROOT / "waveform/wav_manifest.tsv"
     rows, names, stats = [], {}, {}
+    k7rate = kn7000_rates()
     for lab, a, n, p, cmt in ic307_items(man):
         body = rom[a:a + n]
         rec = None
@@ -147,8 +168,18 @@ def main():
         if srcs:
             text += f"; {srcs[0]}"
         text += (f"; {bits}-bit ({ev}); every other word of the recording: IC307 is the Y chip of a "
-                 f"word-interleaved pair whose X chip is undumped")
-        rows.append([lab, f"{a:#x}", f"{a + n:#x}", str(bits), str(RATE), f"{lab}.wav", "-", "-", text])
+                 f"word-interleaved pair whose X chip (IC306) is undumped")
+        rate, unity = str(RATE), "-"
+        if rec and rec[1] == rec[0][0] and rec[2] == "Y" and rec[0][2] in k7rate:
+            hz, root = k7rate[rec[0][2]]
+            hz /= 2
+            rate = str(int(round(hz)))
+            unity = f"{root + 12 * math.log2(int(rate) / hz):.4f}"
+            text += (f"; {hz:.3f} Hz at root key {root}: half the KN7000 recording's read rate"
+                     + (" (8-bit: the item holds sample pairs 4i, 4i+1, so the rate is an average)" if bits == 8 else ""))
+        else:
+            text += "; 22050 Hz nominal (the pitch exponent is on IC306)"
+        rows.append([lab, f"{a:#x}", f"{a + n:#x}", str(bits), rate, f"{lab}.wav", unity, "-", text])
     with open(man, "w", encoding="utf-8") as f:
         f.write("label\tstart\tend\tbits\trate\twav\tunity\tloops\tcomment\n")
         for r in rows:
