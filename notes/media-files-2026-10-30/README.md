@@ -283,6 +283,9 @@ hand).
   share output-enable index 1 on IC303's two address buses). The other half of each recording is **BLOCKED** on
   a dump of IC306; classes 0-3 on dumps of IC304 and IC305.
 - **The 71 IC307 waves with no KN7000 counterpart**: their format is the byte-correlation inference.
+  **BLOCKED** (2026-10-31, lane open4/misc) on a dump of **IC306**: the 8-bit flag is in each recording's P
+  word, which is on IC306 (`../sound-2026-10-31/README.md`, section 3), and no KN7000 recording carries the
+  same audio, so nothing in the dumped chips can replace the inference.
 - **WSA1R ranges that wsa1_bitmaps.py refuses** (section "Inventory"): pictures whose geometry is not
   established, so they stay rows.
 
