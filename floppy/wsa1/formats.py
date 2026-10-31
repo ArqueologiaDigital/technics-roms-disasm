@@ -268,9 +268,14 @@ def describe_tm(ctx):
         o = b * 0x10000
         L += ['', '%s_Bank%d:' % (ctx.label, b),
               '\t.ascii\t"WSA SOUND RAM S%d"\t; SoundRam_BankName_S%d, copied here by SoundRam_ClearFourBanks' % (b, b),
-              '; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)']
+              '; the names of USER %d sound groups %d-%d, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a'
+              % (b // 2 + 1, 8 * (b % 2), 8 * (b % 2) + 7),
+              '; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at',
+              '; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of',
+              '; the bank\'s 64 tones; SoundRam_ClearFourBanks does not write the names)',
+              '%s_Bank%d_GroupNames:' % (ctx.label, b)]
         for k in range(8):
-            L.append('\t.ascii\t%s' % s_esc(d[o + 16 + 16 * k:o + 32 + 16 * k]))
+            L.append('\t.ascii\t%s\t; USER %d group %d' % (s_esc(d[o + 16 + 16 * k:o + 32 + 16 * k]), b // 2 + 1, 8 * (b % 2) + k))
         for k in range(64):
             r = d[o + 0x90 + 0x2C9 * k:o + 0x90 + 0x2C9 * (k + 1)]
             L.append('\t.include\t"%s"\t; tone %d: %s' % (tone_item(r), k + 1, r[:16].decode('latin-1').strip()))
