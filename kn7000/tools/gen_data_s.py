@@ -560,8 +560,10 @@ class Gen:
         if v in self.label_at:
             return self.label_at[v]
         if v in self.extern:
-            if self.in_code(v) and self.extern[v] == f"loc_{v:08X}":
-                self.code_targets.add(v)      # a label only because the data names it: keep it so
+            if self.in_code(v) and self.extern[v] in (f"loc_{v:08X}", f"func_{v:08X}"):
+                # a label only because the data names it (gen_program_s.py names a prologue the data points
+                # at func_<ADDR>, any other target loc_<ADDR>): keep it so
+                self.code_targets.add(v)
             return self.extern[v]
         if self.in_code(v):
             # gen_program_s.py labels it loc_<ADDR> (code_refs.txt)
