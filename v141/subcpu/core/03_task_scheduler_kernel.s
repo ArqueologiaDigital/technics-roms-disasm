@@ -961,6 +961,12 @@ TaskSem_Release_NoResched_WakeWaiter:
 	pop xwa
 	ret
 
+; Blocking semaphore wait -- P() -- for semaphore A (1..4), task context.  Saves the full context
+; frame TaskSched_ContextRestore pops and masks to level 6.  Count byte at 0x1091 + A non-zero:
+; it is decremented and the context restored (the caller continues).  Zero: the current task
+; (pointer at 0x1046) is unlinked from its ready queue, its state (+0x09) set to 3 (BLOCKED),
+; linked at the tail of the semaphore's wait queue 0x107E + 4*A, and TaskSched_Dispatch runs.
+; Siblings: TaskSem_TryDec (non-blocking), TaskSem_GetCount.
 TaskSched_Wait:
 	push	sr
 	ei 6
@@ -1582,6 +1588,7 @@ FIFO1K_Free_Space:
 	ld	hl, (Payload_Bss_Start+0x1db6:24)
 	ret
 
+; Resets the 1 KB FIFO, control block at Payload_Bss_Start+0x1db8 (RingBuf_Reset_1K); keeps IX, XDE.
 RingBuf_Init_1K:
 	pushw ix
 	push xde
@@ -1696,6 +1703,7 @@ FIFO256_Free_Space:
 	ld	hl, (Payload_Bss_Start+0x21c0:24)
 	ret
 
+; Resets the 256-byte FIFO, control block at Payload_Bss_Start+0x21c2 (RingBuf_Reset_256); keeps IX, XDE.
 RingBuf_Init_256:
 	pushw ix
 	push xde
@@ -1807,6 +1815,8 @@ FIFO512_Free_Space:
 	ld	hl, (Payload_Bss_Start+0x22ca:24)
 	ret
 
+; Resets the 512-byte FIFO, control block at Payload_Bss_Start+0x22cc (RingBuf_Reset_512); keeps IX, XDE.
+; Audio_InitRingBuffers tail-jumps here after the 1 KB and 256-byte ones.
 RingBuf_Init_512:
 	pushw ix
 	push xde
