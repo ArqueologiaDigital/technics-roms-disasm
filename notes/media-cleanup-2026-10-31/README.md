@@ -118,7 +118,11 @@ write no pixels, and their anchors are no longer in `wsa1_prom_a.s`.
 ## 5. Clean-checkout proof
 
 `notes/media-build-2026-10-31/clean_checkout_proof.sh` no longer leaves anything writable in phase D:
-`git ls-files -z | xargs -0 chmod a-w`.  Result: see "Clean-checkout proof result" below.
+`git ls-files -z | xargs -0 chmod a-w`.  Run on a fresh clone of 898af4ead (output:
+`clean_checkout_proof-2026-10-31.txt`), it printed `PASS: clean checkout of open3/media-cleanup`: phase A built
+7,033 converter outputs with no reference reachable; phase B all nine gates exit 0; phase C `git status
+--porcelain` empty; phase D, every tracked file read-only, all nine gates exit 0 again and the 7,033 outputs
+SHA-256-identical to phase A; phase E 93 extracted floppy media deleted, 4 models reproduced byte-for-byte.
 
 ## Gates and censuses in the lane worktree
 
