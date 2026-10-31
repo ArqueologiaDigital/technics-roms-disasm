@@ -84,7 +84,7 @@
 	.equ BStore_CursorBlock,			0x345c	; the cursor's 1-based block number -- the block-store cursor section
 	.equ BStore_CursorOffset,			0x345e	; the cursor's byte offset in its block, 5..0xFF -- prom_b cursor headers: ((0x345C) block number, (0x345E) offset)
 	.equ BStore_HeapBase,				0x3604	; the heap base, 0x00617800 -- BStore_SeekBlock and its two inverses
-	.equ BStore_BlockCount,				0x3608	; how many blocks BStore_FreeList_Init threads onto the free list -- BStore_FreeList_Init
+	.equ BStore_BlockCount,				0x3608	; how many blocks BStore_FreeList_Init threads onto the free list: 1292 (0x050C), copied once by BStore_BootPhase0 from WorkspaceDefaults_HeapDescriptor and written nowhere else, so the heap is 0x617800-0x6683FF -- BStore_FreeList_Init
 	.equ BStore_CurrentBank,			0x360a	; the current bank, 0..9 (prom_a refuses to step outside); bank n lives at 0x610000 + n*0xC00 -- 0xF8143F cp A,0 / 0xF814D2 cp A,0x09
 	.equ BStore_FreeHead,				0x6034b8	; head of the free list; 0xFFFF = empty -- BStore_AllocBlock
 	.equ BStore_FreeCount,				0x6034ba	; number of blocks on the free list -- BStore_FreeChain
