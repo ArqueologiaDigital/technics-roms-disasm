@@ -458,8 +458,7 @@ HDAE5000_Palette_TitleLogo:	; 0x2A858E
 HDAE5000_Bitmap_TitleLogo:	; 0x2A898E
 	; 320 x 240 @ 8bpp = 0x12C00 B.  The "HD-AE5000" wordmark embossed over
 	; a photograph of a bare hard-disk mechanism.  Moved as two halves,
-	; 0x2A898E -> 0x056800 and 0x2B1F8E -> 0x05FE00.  Already extracted as
-	; hdae5000/images/HDAE5000_Logo.bin (byte-identical to this slice).
+	; 0x2A898E -> 0x056800 and 0x2B1F8E -> 0x05FE00.
 	; Built from images/HDAE5000_Logo.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 55905, 76800
 	.incbin "includes/generated/HDAE5000_Logo.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Logo.png
@@ -474,7 +473,7 @@ HDAE5000_Palette_DriveMech:	; 0x2BB58E
 HDAE5000_Bitmap_DriveMech:	; 0x2BB98E
 	; 320 x 240 @ 8bpp.  The same drive-mechanism photograph WITHOUT the
 	; wordmark -- the second frame of the title sequence.  Halves at
-	; 0x2BB98E and 0x2C4F8E.  Extracted as images/HDAE5000_Hands.bin, whose
+	; 0x2BB98E and 0x2C4F8E.  Its PNG is images/HDAE5000_Hands.png, whose
 	; "Hands operating HD-AE5000 unit" caption is wrong: no hands appear in
 	; the picture (see the hdae-docs / gallery follow-up).
 	; Built from images/HDAE5000_Hands.png by scripts/build/hdae5000_images.py.
@@ -492,8 +491,7 @@ HDAE5000_Palette_FilePanel:	; 0x2CE58E
 HDAE5000_Bitmap_FilePanel:	; 0x2CE98E
 	; 320 x 240 @ 8bpp.  The file-selection panel background: three sunken
 	; list wells over a blue stone fill, with the grey scroll strip along
-	; the bottom.  Halves at 0x2CE98E and 0x2D7F8E.  Already extracted as
-	; images/HDAE5000_FilePanel.bin.
+	; the bottom.  Halves at 0x2CE98E and 0x2D7F8E.
 	; Built from images/HDAE5000_FilePanel.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 211553, 76800
 	.incbin "includes/generated/HDAE5000_FilePanel.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_FilePanel.png
@@ -515,8 +513,8 @@ HDAE5000_Bitmap_HddIcon:	; 0x2E198E
 	; of every row) = 756 B: the hard-disk-platter-and-head icon.  The
 	; 27 x 27 geometry is HDAE5000_BitmapHdd_icon (0x2803B1) returning 0x1B
 	; for BOTH the A2 (width) and A3 (height) requests.
-	; NOTE hdae5000/images/HDAE5000_Icon.bin is 784 B: its extraction
-	; assumed 28 x 28 and over-reads 28 bytes into HDAE5000_Config_Strings.
+	; (An old one-way extraction, hdae5000/images/HDAE5000_Icon.bin, deleted 2026-10-31, was
+	; 784 B: it assumed 28 x 28 and over-read 28 bytes into HDAE5000_Config_Strings.)
 	; Built from images/HDAE5000_Icon.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 289377, 756
 	.incbin "includes/generated/HDAE5000_Icon.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Icon.png

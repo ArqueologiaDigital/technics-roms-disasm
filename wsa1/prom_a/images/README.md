@@ -1,8 +1,10 @@
 # prom_a bitmaps as PNG
 
 Every file here is a **lossless, exact** rendering of a range of
-`original_ROMs/wsa1_prom_a.ic12`, and the assembly's `.byte` rows for that range
-are regenerated from it by `scripts/build/wsa1_bitmaps.py rewrite`.  The
+`original_ROMs/wsa1_prom_a.ic12`, and it is the build's input for that range:
+`scripts/build/wsa1_bitmaps.py build` writes `<name>.bin` (git-ignored) beside it and the
+assembly `.incbin`s that (lane media-build, 2026-10-31; until then the assembly held `.byte`
+rows rewritten from the PNG).  The
 dimensions are the firmware's, not a guess -- run `wsa1_bitmaps.py list` for each
 file's evidence.  Ink is black.
 
@@ -19,10 +21,11 @@ file's evidence.  Ink is black.
   tapered wedges, a parallelogram, a spool, an arrow, a bolt).
 * `Bitmap_F82BB0.png`, `Bitmap_F82C00.png` -- two op-03 targets inside prom_a.
 
-## `CONTACT_*.png` are DERIVED
+## `CONTACT_*.png` are DERIVED, and not committed
 
-Rebuilt from the per-range PNGs by `wsa1_bitmaps.py sheet`, never read back, and
-nothing in the build depends on them.  They exist so a person can actually look
+Rebuilt from the per-range PNGs by `wsa1_bitmaps.py sheet` (`make images-sheet`), never read
+back, and nothing in the build depends on them; since 2026-10-31 they are git-ignored like
+every other converter output.  They exist so a person can actually look
 through the set.  `CONTACT_SplashImage_Composite.png` is the one that earns its
 place on content rather than convenience: DitherA and DitherB are disjoint
 half-tones the SED1330 OR-composites across two layers, so **neither file alone

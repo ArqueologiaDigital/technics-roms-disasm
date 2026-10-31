@@ -137,7 +137,8 @@ make website            # gallery + rom-status; pass DOCS_DIR=/abs/path/technics
 - **ASL sources** (archived in `archive/asl/`): Original ASL syntax, read only by the guarded
   `llvm-convert*` targets (`scripts/converters/asl_to_llvm.py`), never by the build
 - **Build pipeline**: `llvm-mc -triple=tlcs900` → `ld.lld` → `llvm-objcopy` → raw binary
-- **Binary data files**: `*/includes/*.bin`, `*/images/*.bin` — referenced via `.incbin`
+- **Binary data files**: `*/includes/*.bin` — referenced via `.incbin`; the `*/images/*.bin` they also
+  `.incbin` are written from the committed PNGs at build time (git-ignored; see "Media Files Are Committed")
 
 ## Project Policies
 
@@ -311,11 +312,43 @@ commit.
 
 **This policy exists because** external tools (debuggers, analysis scripts, MAME integration) depend on accurate symbol mappings. Stale symbol files cause confusion and break tooling.
 
-### Image Extraction and Gallery Updates
+### Media Files Are Committed; Conversion Is a Build Step (STRICT POLICY)
 
-When new images are discovered and extracted as `.bin` files in `v10/maincpu/images/` (and its `v9/`, `v7/` twins) or `table_data/images/`:
+The owner, 2026-10-31: *"Images and wav files must be commited and the conversion must happen as a build
+step."*  Every picture and recording is a committed standalone file (PNG, JPEG, BMP, WAV, MID) that an
+ordinary viewer or sound program opens, and **nothing a converter derives from one is tracked**:
 
-1. **Add metadata** to `scripts/build/convert_images.py` in the `IMAGE_METADATA` dictionary:
+- **Pictures** are committed PNGs (indexed PNGs store the ROM's pixel values), JPEGs and BMPs: KN5000
+  `v*/maincpu/images/`, `table_data/images/`, `hdae5000*/images/`; SX-KN7000 and siblings
+  `kn7000/src/table/`, `kn7000/src/picture/`, `*/src/**/program/data/media/`; SX-WSA1R
+  `wsa1/prom_*/images/`; floppies `floppy/<model>/<disk>/media/`.
+- **Recordings** are committed WAVs: `waveform/wav/` (KN5000 IC307), `kn7000/wav/{main,sub}/`.
+- **The bytes the assembler reads** are written from them at build time into git-ignored files: the
+  `images/*.bin` beside a PNG (`scripts/build/indexed_images.py`, `mono_images.py`, `se_bitmaps.py`;
+  `scripts/build/kn5000_image_outputs.py` lists them), `includes/generated/` (compiled C, table_data and
+  HD-AE5000 pictures), `*/maincpu/includes/generated/pictures/*.inc` (the pixels the NAKA GUI C
+  `#include`s, `scripts/build/c_bitmaps.py`), `table_data/images/FTBMP0?.BMP` (`ftbmp_images.py`),
+  `waveform/build/pcm/` and `kn7000/build/wav_pcm/` (`scripts/build/pcm_wav.py`), `kn7000/build/table_png/`
+  and `*/build/bitmaps/` (`kn7000/tools/table_png.py`), `wsa1/prom_*/images/*.bin`
+  (`wsa1_bitmaps.py` / `wsa1_fonts.py build`).  Each is a real make target that depends on its media
+  file, so an edited PNG or WAV rebuilds it.
+- **No converter reads a reference image to make bytes.**  A reference is needed only for the byte
+  compare and for the maintenance targets that re-extract media from a dump: `make waveform-wav`,
+  `make -C kn7000 wave-wav`, `make -C floppy media-<model>`, `make -C wsa1 images-export`, and the
+  `*-src` generators.
+- **To add a picture**: put the PNG (or JPEG/BMP) beside the source, teach the converter its geometry,
+  make the source `.incbin` the converter's output with `census: generated -- <tool>, from <file>`, and
+  never `git add` the output.  `python3 notes/media-files-probes/media_inventory.py` must still report 0
+  untracked media files and 0 tracked derived outputs.  Notes: `notes/media-build-2026-10-31/README.md`.
+
+### Image Gallery Updates
+
+When a new picture is added under `v10/maincpu/images/` (and its `v9/`, `v7/`, `v6/`, `v5/` twins),
+`table_data/images/` or `hdae5000/images/`:
+
+1. **Add metadata** to `scripts/build/convert_images.py` in the `IMAGE_METADATA` dictionary (named after the
+   build's `.bin`; the gallery renders it from the PNG through the build's converter when the `.bin` is not
+   built), or list it in `STANDALONE_PNGS` when the PNG is shown as it is:
    - Filename
    - Dimensions (width, height)
    - Bit depth (1, 4, or 8)
@@ -1399,8 +1432,12 @@ See `../technics-docs/rom-reconstruction.md` for the narrative breakdown.
 
 - `original_ROMs/`: Original firmware dumps and reference disassembly (`.unidasm` files)
 - `rebuilt_ROMs/`: Build output (created by make)
-- `v10/maincpu/images/`, `v10/maincpu/includes/` (and the `v9/`, `v7/` twins): Binary image data included in main CPU ROM
-- `table_data/images/`: BMP assets for feature demo
+- `v10/maincpu/images/` (and the `v9/`, `v7/`, `v6/`, `v5/` twins): the main CPU's pictures as committed PNGs (and
+  the palette `.bin`s); the `.bin` beside a PNG is a git-ignored build product
+- `v10/maincpu/includes/`: binary includes; `includes/generated/` is build output (compiled C, picture `.inc`s)
+- `table_data/images/`: the table data's pictures as committed PNGs (wallpapers, UI bitmaps, icons, fonts, the
+  Feature Demo pictures, whose `.BMP` files the build writes from PNG + `ftbmp_headers.json`)
+- `waveform/wav/`, `kn7000/wav/`: the wave ROMs' recordings as committed WAV files
 - `hdae5000/`: HDAE5000 hard disk expansion ROM disassembly (v2.06i)
 - `hdae5000_v2_01i/`: HDAE5000 v2.01i, ported from `hdae5000/`; it takes `shared/` and the unchanged
   pictures from `hdae5000/` through a second `-I` (notes/hdae5000-versions-2026-10-24/)

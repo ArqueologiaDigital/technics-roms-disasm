@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 """
-Convert extracted KN5000 bitmap images from raw .bin format to PNG.
+Render the KN5000 bitmap images for the website gallery (PNG).
 
-This script knows the dimensions and format of each extracted image.
-When new images are extracted, add their metadata to IMAGE_METADATA.
+This script knows the dimensions and format of each image.  When new images are
+extracted, add their metadata to IMAGE_METADATA.
+
+The committed form of every picture is its PNG; the raw .bin (and the Feature Demo
+.BMP) the ROM build reads is a git-ignored build product written from that PNG
+(lane media-build, 2026-10-31).  So when a .bin named in IMAGE_METADATA is not on
+disk (a clean checkout, or one that was never built), the raw bytes are made from
+the PNG with the build's own converter (raw_from_png below) and rendered the same
+way, so the gallery is the same whether or not the tree has been built.
 
 Uses the extracted 8-bit RGBA palette (Palette_8bit_RGBA.bin) for proper
 color rendering of indexed images.
@@ -302,8 +309,29 @@ def convert_4bit_image(data: bytes, width: int, height: int) -> Image.Image:
     return img
 
 
+def raw_from_png(bin_path: Path):
+    """The bytes the build writes to bin_path, made from the committed PNG beside it by the build's
+    own converter (indexed_images / mono_images / hdae5000_images / ftbmp_images), or None."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import indexed_images, mono_images, hdae5000_images, ftbmp_images  # noqa: E401
+    repo = Path(__file__).resolve().parent.parent.parent
+    rel = bin_path.resolve().relative_to(repo).as_posix()
+    for raw, png, w, h, stride in indexed_images.MANIFEST:
+        if raw == rel:
+            return indexed_images.rebuild(raw, png, w, h, stride)
+    if bin_path.parent.resolve() in [d.resolve() for d in mono_images.DIRS] and bin_path.stem in mono_images.NAMES:
+        return mono_images.rebuild(bin_path.parent, bin_path.stem)
+    if bin_path.parent.resolve() == hdae5000_images.ART.resolve():
+        for name, _off, _ln, geom in hdae5000_images.ASSETS:
+            if name == bin_path.stem and geom is not None:
+                return hdae5000_images.rebuild_one(name, geom)
+    if bin_path.suffix == '.BMP' and bin_path.stem in ftbmp_images.NAMES:
+        return ftbmp_images.rebuilt()[bin_path.stem]
+    return None
+
+
 def convert_image(bin_path: Path, output_dir: Path, palette: list = None) -> bool:
-    """Convert a single .bin image to PNG."""
+    """Convert a single .bin image (or, when it is not built, its PNG's bytes) to PNG."""
     filename = bin_path.name
 
     if filename not in IMAGE_METADATA:
@@ -316,17 +344,23 @@ def convert_image(bin_path: Path, output_dir: Path, palette: list = None) -> boo
     width, height, bit_depth, description = meta[:4]
     row_stride = meta[4] if len(meta) > 4 else None
 
+    if not bin_path.exists():
+        data = raw_from_png(bin_path)
+        if data is None:
+            print(f"  Warning: {filename} is not built and no converter makes it from a PNG - skipping")
+            return False
+    else:
+        data = bin_path.read_bytes()
+
     if filename in BMP_FILE_IMAGES:
-        img = Image.open(bin_path)
+        import io
+        img = Image.open(io.BytesIO(data))
         if img.size != (width, height):
             print(f"  Warning: {filename} is {img.size[0]}x{img.size[1]}, metadata says {width}x{height}")
         output_name = bin_path.stem + ".png"
         img.convert('RGB').save(output_dir / output_name)
         print(f"  Converted: {filename} -> {output_name} ({width}x{height}, own BMP palette)")
         return True
-
-    with open(bin_path, 'rb') as f:
-        data = f.read()
 
     # Verify size matches expected
     if bit_depth == 1:
@@ -415,6 +449,12 @@ def main():
         print(f"Source: {images_dir}")
 
         bin_files = sorted(images_dir.glob("*.bin")) + sorted(images_dir.glob("*.BMP"))
+        # the pictures whose .bin / .BMP is a build product: rendered from the PNG when not built
+        for name in IMAGE_METADATA:
+            b = images_dir / name
+            if b not in bin_files and (images_dir / (Path(name).stem + ".png")).exists():
+                bin_files.append(b)
+        bin_files.sort()
         converted = 0
         skipped = 0
 

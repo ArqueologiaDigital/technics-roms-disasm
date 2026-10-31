@@ -22,6 +22,3 @@ __pycache__/
 /tools/dsptone/build/
 # The custom-style bank images, inflated from the softlist floppies' .AST files (make verify-customdata)
 /baserom/customdata/
-
-# The wave ROMs' recordings as WAV files (make wave-wav, ../notes/media-files-2026-10-30): dump bytes
-/wav/

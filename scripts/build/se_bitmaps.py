@@ -7,7 +7,8 @@ SOUND EDIT screens be PNG files a viewer opens, and still rebuild the ROM byte f
 Until 2026-10-30 (lane media-files) they were `.byte 0b........` rows in
 <tree>/maincpu/audio/sound_editor_ui.s.  Now each is <tree>/maincpu/images/<label>.png and the source
 `.incbin`s <tree>/maincpu/images/<label>.bin, which `build` writes from the PNG (the same flow as
-mono_images.py; the .bin stays committed like its siblings in images/).
+mono_images.py).  Since 2026-10-31 (lane media-build) the .bin is a git-ignored build product, like its
+siblings in images/; the PNG is the only committed copy.
 
 FORMAT (the header comment above each label in sound_editor_ui.s): 1 bit per pixel, stored column by
 column: W/8 byte-columns of H rows, each byte 8 horizontal pixels with bit 7 leftmost ("bit 7 is

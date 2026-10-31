@@ -36,6 +36,9 @@ pairs), no PNG and no build step, so data_incbin_census.py counted them as gener
 exported from their own .bin files, and the Makefile's PORTED_MAINCPU objects now depend on
 `indexed-images` and on those PNGs.
 
+Since 2026-10-31 (lane media-build) the .bin files are git-ignored build products: the PNG is the only
+committed copy of each banner, and `build` writes the .bin beside it.
+
     python3 scripts/build/mono_images.py export   # bin -> png (run once, every revision)
     python3 scripts/build/mono_images.py build    # png -> bin (build step, every revision)
     python3 scripts/build/mono_images.py verify   # assert the round trip is exact, both
