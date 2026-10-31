@@ -20,7 +20,10 @@ CLAUDE.md "Code-Coverage Evidence Ledger".
 
 Scratch (maps, mirrors, ELFs, about 0.5 GB) goes to `$DISPATCH_CENSUS_DIR`, or else
 `$TMPDIR/dispatch-table-census`. Nothing is written inside the repository except by `--snapshot`. The
-scratch can be regenerated, so delete it when you are done.
+scratch can be regenerated, so delete it when you are done. A mirror left there by an earlier run is reused
+only while its `.fingerprint` (the trees' paths, file names and `.s` bytes) still matches the sources; before
+2026-10-31 (lane ledger-fix, `notes/open-items/ledger-fix-2026-10-31.md`) a stale mirror was reused and
+mis-read the HD-AE5000 version trees. Give each worktree and each concurrent run its own `DISPATCH_CENSUS_DIR`.
 
 Known limits. These are stated so that a zero is never over-read:
 - the counts are a lower bound;
