@@ -38,7 +38,8 @@ RUN (repository root, a built tree: rebuilt_ROMs/kn5000_TREE_program.llvm.elf mu
     python3 scripts/tools/port_symbolize_pointers.py rows --tree v6 InitializeMurai_PtrTable_5 \
         PerfMode_ParamHandler_4_Data SndDispatch_Handler_1_Data
     python3 scripts/tools/port_symbolize_pointers.py relink --tree v6
-    (and the same with --tree v5).  Each is skipped where the tree has the edit already, so both can
+    (and the same with --tree v5; relink also takes --tree v7, whose C link scripts were v10's copies
+    in places: v7-c-bins-raw / v7-c-bins in the Makefile).  Each is skipped where the tree has the edit already, so both can
     run again on a regenerated tree; the tree READMEs list them after port_hand_edits.py.
 """
 import argparse
@@ -282,8 +283,8 @@ def main():
     ap.add_argument("--tree", required=True, help="v6 or v5")
     ap.add_argument("labels", nargs="*")
     a = ap.parse_args()
-    if a.tree not in ("v6", "v5"):
-        sys.exit("--tree v6 or v5")
+    if a.tree not in ("v6", "v5") and not (a.tree == "v7" and a.what == "relink"):
+        sys.exit("--tree v6 or v5 (relink also v7, whose json apply_v7_c_divergence.py applies)")
     rows(a.tree, a.labels) if a.what == "rows" else relink(a.tree)
 
 
