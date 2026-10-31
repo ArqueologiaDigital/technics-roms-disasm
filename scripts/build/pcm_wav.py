@@ -6,13 +6,15 @@ opens and plays, and still be the input the ROM is rebuilt from, byte for byte?
 
 The owner's request (2026-10-30): "I want these to be represented as standalone files that could be
 opened by the user on normal media viewers / sound apps.  Then included in the source listing (maybe
-with a lossless conversion step if necessary)."  The repository is public and the recordings are dump
-bytes, so the WAVs are NOT committed: `extract` writes them from the git-ignored reference image into
-a git-ignored folder, and the build consumes them through `build`, never the reference directly.
+with a lossless conversion step if necessary)."  And on 2026-10-31: "Images and wav files must be
+commited and the conversion must happen as a build step."  So the WAVs ARE committed (waveform/wav/,
+kn7000/wav/{main,sub}/) and they are the build's input: `build` turns them into the raw items, a
+git-ignored build product, and never reads the reference image.  `extract` is the maintenance step that
+writes the WAVs from a reference image (the trees' `waveform-wav` / `wave-wav` targets); a build does not
+run it.
 
     pcm_wav.py extract MANIFEST REF WAVDIR [--missing]   reference -> WAVs (--missing: only absent ones)
-    pcm_wav.py build   MANIFEST WAVDIR PCMDIR [--ref REF] WAVs -> the raw items the source .incbin's
-                                                         (--ref: first re-extract any missing WAV)
+    pcm_wav.py build   MANIFEST WAVDIR PCMDIR            WAVs -> the raw items the source .incbin's
     pcm_wav.py verify  MANIFEST REF                      assert REF -> WAV -> raw == REF, in memory
 
 THE MANIFEST is a committed TSV, one row per recording, written by the tree's generator
@@ -157,15 +159,15 @@ def extract(manifest, ref, wavdir, missing=False):
     print(f"pcm_wav.py: wrote {n} WAV file(s) into {wavdir} ({len(rows)} in {manifest})")
 
 
-def build(manifest, wavdir, pcmdir, ref=None):
+def build(manifest, wavdir, pcmdir):
+    """WAVs -> raw items; reads only the manifest and the (committed) WAVs, never a reference image"""
     rows = read_manifest(manifest)
     wavdir, pcmdir = Path(wavdir), Path(pcmdir)
     absent = [r for r in rows if not (wavdir / r["wav"]).exists()]
     if absent:
-        if ref is None:
-            raise WavError(f"{len(absent)} WAV file(s) missing from {wavdir}, e.g. {absent[0]['wav']}; "
-                           f"regenerate them from the reference image (the tree's `*-wav` make target)")
-        extract(manifest, ref, wavdir, missing=True)
+        raise WavError(f"{len(absent)} WAV file(s) missing from {wavdir}, e.g. {absent[0]['wav']}; they are "
+                       f"committed: `git checkout -- {wavdir}` restores them (the tree's `*-wav` make target "
+                       f"re-extracts them from a reference image)")
     pcmdir.mkdir(parents=True, exist_ok=True)
     total = 0
     for r in rows:
@@ -195,14 +197,13 @@ def main():
     a = sub.add_parser("extract"); a.add_argument("manifest"); a.add_argument("ref"); a.add_argument("wavdir")
     a.add_argument("--missing", action="store_true")
     b = sub.add_parser("build"); b.add_argument("manifest"); b.add_argument("wavdir"); b.add_argument("pcmdir")
-    b.add_argument("--ref")
     v = sub.add_parser("verify"); v.add_argument("manifest"); v.add_argument("ref")
     o = ap.parse_args()
     try:
         if o.cmd == "extract":
             extract(o.manifest, o.ref, o.wavdir, o.missing)
         elif o.cmd == "build":
-            build(o.manifest, o.wavdir, o.pcmdir, o.ref)
+            build(o.manifest, o.wavdir, o.pcmdir)
         else:
             return verify(o.manifest, o.ref)
     except WavError as e:

@@ -112,7 +112,6 @@ original_ROMs/kn5000_waveform_rom.ic307
 original_ROMs/kn5000_rhythm_data_rom.ic14
 original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped
 
-# KN5000 IC307's recordings as WAV files and their raw items (lane media-files, 2026-10-30): dump bytes,
-# extracted from the git-ignored reference image by `make waveform-wav`; never commit them.
-waveform/wav/
+# KN5000 IC307's recordings: the WAVs in waveform/wav/ are committed (the owner, 2026-10-31); the raw
+# items scripts/build/pcm_wav.py builds from them are build products.
 waveform/build/

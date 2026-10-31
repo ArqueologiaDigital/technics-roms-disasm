@@ -1497,30 +1497,29 @@ rebuilt_ROMs/kn5000_custom_data.llvm.rom: rebuilt_ROMs/kn5000_custom_data.llvm.e
 # and refuses a copy whose SHA-1 differs; override the source with
 #   make KN5000_IC307_REF=/path/to/kn5000_waveform_rom.ic307 ...
 # The directory, the parameter records, the alignment and the 0xFF tails are
-# typed source.  Each PCM item is a WAV file in waveform/wav/ (git-ignored, like
-# the reference: dump bytes stay out of the public repository); `make
-# waveform-wav` extracts any missing WAV from the reference copy, and
-# scripts/build/pcm_wav.py turns the WAVs into the raw items waveform/build/pcm/
-# that the source `.incbin`s.  The manifest waveform/wav_manifest.tsv says where
-# each item is and how it is encoded.  Notes: notes/waveform-ic307-2026-10-29/
-# README.md and notes/media-files-2026-10-30/README.md.
+# typed source.  Each PCM item is a WAV file in waveform/wav/, committed (the owner,
+# 2026-10-31: "Images and wav files must be commited and the conversion must happen as
+# a build step"); scripts/build/pcm_wav.py turns the WAVs into the raw items
+# waveform/build/pcm/ (git-ignored) that the source `.incbin`s, and reads no reference
+# image to do it.  The manifest waveform/wav_manifest.tsv says where each item is and
+# how it is encoded.  The reference image is needed only for the byte compare and for
+# the maintenance target `waveform-wav`.  Notes: notes/waveform-ic307-2026-10-29/
+# README.md, notes/media-files-2026-10-30/README.md, notes/media-build-2026-10-31/README.md.
 KN5000_IC307_REF  ?= $(PROJECTS_ROOT)/technics_romsets/kn5000/kn5000_waveform_rom.ic307
 KN5000_IC307_SHA1 := 4b511bff6625f4655cabd96a263bf548d2ef4bf7
 WAVEFORM_SRC = $(wildcard waveform/*.s waveform/*.inc)
 IC307_WAV_MANIFEST := waveform/wav_manifest.tsv
+# every WAV the manifest names (column 6), so a missing one stops make instead of being skipped
+IC307_WAVS := $(addprefix waveform/wav/,$(shell tail -n +2 $(IC307_WAV_MANIFEST) | cut -f6))
 
-waveform/wav/.extracted: original_ROMs/kn5000_waveform_rom.ic307 $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
-	python3 scripts/build/pcm_wav.py extract --missing $(IC307_WAV_MANIFEST) $< waveform/wav
+waveform/build/pcm/.built: $(IC307_WAVS) $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
+	python3 scripts/build/pcm_wav.py build $(IC307_WAV_MANIFEST) waveform/wav waveform/build/pcm
 	@touch $@
 
-waveform/build/pcm/.built: waveform/wav/.extracted $(wildcard waveform/wav/*.wav) $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
-	python3 scripts/build/pcm_wav.py build --ref original_ROMs/kn5000_waveform_rom.ic307 $(IC307_WAV_MANIFEST) waveform/wav waveform/build/pcm
-	@touch $@
-
-# re-extract the WAVs that are missing (an edited WAV is never overwritten)
+# MAINTENANCE, not a build step: write the WAVs that are missing from the reference image
+# (an edited WAV is never overwritten).  The WAVs are committed; run this only to recover one.
 waveform-wav: original_ROMs/kn5000_waveform_rom.ic307
 	python3 scripts/build/pcm_wav.py extract --missing $(IC307_WAV_MANIFEST) $< waveform/wav
-	@touch waveform/wav/.extracted
 
 original_ROMs/kn5000_waveform_rom.ic307:
 	@if [ ! -f "$(KN5000_IC307_REF)" ]; then \

@@ -10,9 +10,9 @@
 #   - every directory entry as `.word` fields with symbolic pointers to its record and its recording;
 #   - every record as `.word` parameter words spelled with the constants of src/wave/wave_format.inc;
 #   - every recording as one labelled `.incbin` of its raw item build/wav_pcm/<tg>/<label>.pcm, which
-#     ../scripts/build/pcm_wav.py makes from the recording's WAV file wav/<tg>/<name>.wav (git-ignored,
-#     extracted from the reference stream by `make wave-wav`), with its format, size and the entries
-#     that play it;
+#     ../scripts/build/pcm_wav.py makes from the recording's WAV file wav/<tg>/<name>.wav (committed
+#     since 2026-10-31; `make wave-wav` re-extracts a missing one from the reference stream), with its
+#     format, size and the entries that play it;
 #   - the erased fill that ends a page as `.space N, 0xff`;
 #   - beside the source, src/wave/<tg>_wav.tsv: the WAV manifest pcm_wav.py reads (where each recording
 #     is in the stream, its bit depth, the WAV's name, sample rate, loops and unity note; no sample data).
