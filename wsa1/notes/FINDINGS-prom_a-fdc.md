@@ -113,7 +113,7 @@ consistent with N above.
 | address | direction | what |
 |---|---|---|
 | `0x7B0004` | read | **Main Status Register**: bit 7 RQM, bit 6 DIO, bit 5 EXM, bit 4 CB, bits 3-0 drive busy |
-| `0x7B0004` | write | a **control register**. Written with `0x80`, `0x02` and `0x00`; it does not read back, which is why `Dev7B_WriteControl_Shadowed` keeps a copy at `(0x605B09)`. ⚠ **Which bit does what is NOT established.** What is established is that the `0x80` write is followed by the standard post-reset sequence |
+| `0x7B0004` | write | a **control register**. Written with `0x80`, `0x02` and `0x00`; it does not read back, which is why `Dev7B_WriteDsr_Shadowed` keeps a copy at `(0x605B09)`. ⚠ **Which bit does what is NOT established.** What is established is that the `0x80` write is followed by the standard post-reset sequence |
 | `0x7B0005` | read/write | **Data Register** — command, parameter and result bytes |
 | `0x7A0000` | read/write | the **same data register on the DMA-acknowledged decode**. Two paths reach it and both move one byte per INT7: micro-DMA channel 0 (`Dev7A_Dma_DeviceToRam` / `_RamToDevice`) and the programmed-I/O handler `Fdc_ServiceDataByte` (`0xFE67F9`), which ends its transfer with the same `PortB3_Pulse` + `uDMA0_ArmOnINT7` pair `INTTC0_uDMA0Done` uses |
 | PA bit 3 (SFR `0x1E`) | write | set by operation 7, cleared by operation 6. ⚠ **not established** — the obvious reading is drive motor or drive select, and it is not claimed |
@@ -244,8 +244,8 @@ writer (`notes/FINDINGS-dev7b-and-int5.md`); at the 488.28 Hz of
   prom_a or prom_b (`notes/prom_a_addr_census.py 0x605A59` → 3 writes, 0 reads;
   `0x605AEC` → 2 writes, 0 reads).
 * **Why the request block is copied twice**, to `0x605A30` and `0x605A40`.
-* **`Fdc_WriteControlRegister_IfNoError` (`0xFE5B25`),
-  `Fdc_WriteControlRegister_AndReadResult` (`0xFE5B3C`) and
+* **`Fdc_WriteDsr_IfNoError` (`0xFE5B25`),
+  `Fdc_WriteDsr_AndReadResult` (`0xFE5B3C`) and
   `Fdc_Delay20Ticks` (`0xFE5F14`) have no caller** in the module or in any
   converted prom_a code, and `notes/prom_a_xref.py` finds no absolute reference
   either. That is a searched negative with both searches named — not "unused".

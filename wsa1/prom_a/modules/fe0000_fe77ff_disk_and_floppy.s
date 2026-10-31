@@ -10250,12 +10250,12 @@ Unit1_Op6_IssueCommandAndWaitReady_Join:
 ; the DATA register.  The driver is the module immediately below this one and
 ; its opcode validator's 32-value truth table is exactly MAME's uPD765 decoder's
 ; -- see the module banner at 0xFE54EC, notes/FINDINGS-prom_a-fdc.md, and
-; notes/prom_a_fdc_checks.py.  ⚠ Which bit of the WRITE side of 0x7B0004 does
-; what is still not established.
+; notes/prom_a_fdc_checks.py.  ★ The WRITE side of 0x7B0004 is the DATA RATE
+; SELECT register (gap W, closed 2026-10-31): see Dev7B_WriteDsr below.
 ;
 ; ---------------------------------------------------------------------
-; Dev7B_ReadStatus / Dev7B_ReadData / Dev7B_WriteControl /
-; Dev7B_WriteControl_Shadowed / Dev7B_WriteData
+; Dev7B_ReadStatus / Dev7B_ReadData / Dev7B_WriteDsr /
+; Dev7B_WriteDsr_Shadowed / Dev7B_WriteData
 ;
 ; Called from: INT5_Dev7B_Receive (0xFE6866) calls ReadStatus at 0xFE6879,
 ;          0xFE6881, 0xFE6889, 0xFE6891, 0xFE68B4 and 0xFE68BC, ReadData at
@@ -10270,7 +10270,21 @@ Unit1_Op6_IssueCommandAndWaitReady_Join:
 ;          RET, so the names are mechanical.  The "Shadowed" one additionally
 ;          keeps the previous control byte at (0x605B08) and the new one at
 ;          (0x605B09) -- a write-only register that software has to remember.
-; Unknown:  the device, and the meaning of any control bit.
+; ★ 0x7B0004 WRITTEN IS THE DATA RATE SELECT REGISTER (gap W of
+;          notes/WSA1-EMULATION-DISASM-GAPS.md, closed 2026-10-31).  Its only
+;          writers are the two stores here, and the only values that ever reach
+;          them are 0x80 (bit 7, software reset: Fdc_PulseControlReset,
+;          Fdc_ResetAndIdentifyMedia, Fdc_Op10_TestControllerPresent), 0x00 on
+;          the 1.2 MB / 1.44 MB geometry path (0xFE5690) and 0x02 on the 720 KB
+;          path (0xFE56B2) -- the uPD765-family rate codes for 500 and
+;          250 kbit/s.  Dev7B_WriteDsr itself is reached only through
+;          Fdc_WriteDsr from two routines nothing calls.  The board agrees: IC8,
+;          D72070GF3BE, has three register-select pins A0-A2 (pins 4-6), so
+;          0x7B0004/0x7B0005 are its registers 4 and 5, MSR/DSR and FIFO in the
+;          AT register layout.  notes/prom_a_fdc_checks.py section 8 (the
+;          refutation test) and notes/open4-b-probes/wsa1_sch_open4_crops.py.
+;          ⚠ No uPD72070 datasheet is in these trees; the register layout is
+;          the family's, matched by the values, not read from NEC's document.
 ; ---------------------------------------------------------------------
 Dev7B_ReadStatus:
 	ld l, (0x7b0004:24)                          ; FE54B6  c2 04 00 7b 27
@@ -10278,11 +10292,11 @@ Dev7B_ReadStatus:
 Dev7B_ReadData:
 	ld l, (0x7b0005:24)                          ; FE54BC  c2 05 00 7b 27
 	ret                                           ; FE54C1  0e
-Dev7B_WriteControl:
+Dev7B_WriteDsr:
 	ld A,(XSP+0x04)                               ; FE54C2  8f 04 21
 	ld (0x7b0004:24), a                          ; FE54C5  f2 04 00 7b 41
 	ret                                           ; FE54CA  0e
-Dev7B_WriteControl_Shadowed:
+Dev7B_WriteDsr_Shadowed:
 	ld a, (0x605b09:24)                          ; FE54CB  c2 09 5b 60 21   the current shadow ...
 	ld (0x605b08:24), a                          ; FE54D0  f2 08 5b 60 41   ... becomes the previous one
 	ld A,(XSP+0x04)                               ; FE54D5  8f 04 21
@@ -10426,7 +10440,7 @@ Dev7B_WriteData:
 ; ⚠ NOT ESTABLISHED, listed so nothing below quietly assumes it:
 ;   * which bit of the byte written to 0x7B0004 does what.  The driver writes
 ;     0x80, 0x02 and 0x00 there and shadows the value because the register does
-;     not read back (Dev7B_WriteControl_Shadowed);
+;     not read back (Dev7B_WriteDsr_Shadowed);
 ;   * what PA bit 3 -- set by operation 7, cleared by operation 6 -- drives;
 ;   * what (0x605A59) and (0x605AEC) are for: both are written and NEVER read,
 ;     anywhere in prom_a or prom_b (notes/prom_a_addr_census.py 0x605A59 finds
@@ -10530,7 +10544,7 @@ Fdc_WaitRqmAndCommandBusy:
 ;
 ; Called from: 3 site(s) in the module: Fdc_Op0_ResetAndIdentifyMedia, Fdc_Op3_ReadSectors__attempt, Fdc_Op4_WriteSectors__attempt
 ; Inputs:  none.
-; Outputs: control register := 0x80 (through Dev7B_WriteControl_Shadowed, so
+; Outputs: control register := 0x80 (through Dev7B_WriteDsr_Shadowed, so
 ;          (0x605B08)/(0x605B09) follow it); (0x605AEE) := 0xFF.
 ; Evidence: (0x605AEE) is the cylinder the head is known to be on --
 ;          Fdc_Op2_SeekToCylinder skips the SEEK when the wanted cylinder
@@ -10544,7 +10558,7 @@ Fdc_WaitRqmAndCommandBusy:
 ; ---------------------------------------------------------------------
 Fdc_PulseControlReset:
 	pushw 0x80                                    ; FE5576  0b 80 00
-	calr Dev7B_WriteControl_Shadowed                                   ; FE5579  1e 4f ff
+	calr Dev7B_WriteDsr_Shadowed                                   ; FE5579  1e 4f ff
 	pushw 0x02                                    ; FE557C  0b 02 00
 	calr Fdc_DelayTicks                                   ; FE557F  1e 71 09
 	inc 4,XSP                                     ; FE5582  ef 64
@@ -10596,7 +10610,7 @@ Fdc_ResetAndIdentifyMedia:
 	jrl z, .LFE56D5                               ; FE55BC  76 16 01
 	ld (0x605a12:24), 0xff                      ; FE55BF  f2 12 5a 60 00 ff
 	pushw 0x80                                    ; FE55C5  0b 80 00
-	calr Dev7B_WriteControl_Shadowed                                   ; FE55C8  1e 00 ff
+	calr Dev7B_WriteDsr_Shadowed                                   ; FE55C8  1e 00 ff
 	pushw 0x02                                    ; FE55CB  0b 02 00
 	calr Fdc_DelayTicks                                   ; FE55CE  1e 22 09
 	inc 4,XSP                                     ; FE55D1  ef 64
@@ -10684,7 +10698,7 @@ Fdc_ResetAndIdentifyMedia__geometry0:
 	ldw (0x605a13:24), 0x00                      ; FE56B2  f2 13 5a 60 02 00 00
 	pushw 0x02                                    ; FE56B9  0b 02 00
 .LFE56BC:
-	calr Dev7B_WriteControl_Shadowed                                   ; FE56BC  1e 0c fe
+	calr Dev7B_WriteDsr_Shadowed                                   ; FE56BC  1e 0c fe
 	inc 2,XSP                                     ; FE56BF  ef 62
 	calr Fdc_Op6_PortA3_Off                                   ; FE56C1  1e 2b 0f
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE56C4  c2 15 5a 60 3f 00
@@ -10723,7 +10737,7 @@ Fdc_Op10_TestControllerPresent:
 	ret                                           ; FE56F4  0e
 .LFE56F5:
 	pushw 0x80                                    ; FE56F5  0b 80 00
-	calr Dev7B_WriteControl_Shadowed                                   ; FE56F8  1e d0 fd
+	calr Dev7B_WriteDsr_Shadowed                                   ; FE56F8  1e d0 fd
 	pushw 0x02                                    ; FE56FB  0b 02 00
 	calr Fdc_DelayTicks                                   ; FE56FE  1e f2 07
 	inc 4,XSP                                     ; FE5701  ef 64
@@ -11378,7 +11392,7 @@ Fdc_WaitRqm:
 ; Fdc_WaitReadyForCommandByte -- wait until a byte may be WRITTEN, first
 ; draining any result bytes the chip still holds
 ;
-; Called from: 4 site(s) in the module: Fdc_SendCommandByte, Fdc_WriteControlRegister, Fdc_WriteControlRegister_AndReadResult, Fdc_WriteControlRegister_IfNoError
+; Called from: 4 site(s) in the module: Fdc_SendCommandByte, Fdc_WriteDsr, Fdc_WriteDsr_AndReadResult, Fdc_WriteDsr_IfNoError
 ; Inputs:  none.
 ; Outputs: Fdc_SetError(0x03) on a 500-tick timeout; any drained bytes land in
 ;          the result buffer from 0x605A51 upward.
@@ -11479,27 +11493,27 @@ Fdc_SendParamByte:
 	ret                                           ; FE5B15  0e
 
 ; ---------------------------------------------------------------------
-; Fdc_WriteControlRegister -- wait, then write the CONTROL register 0x7B0004
-; Called from: 2 site(s) in the module: Fdc_WriteControlRegister_AndReadResult, Fdc_WriteControlRegister_IfNoError
+; Fdc_WriteDsr -- wait, then write the data rate select register 0x7B0004
+; Called from: 2 site(s) in the module: Fdc_WriteDsr_AndReadResult, Fdc_WriteDsr_IfNoError
 ; Inputs:  the byte at (XSP+0x04).
 ; Evidence: same wait as Fdc_SendCommandByte but the store goes through
-;          Dev7B_WriteControl, i.e. to 0x7B0004 rather than 0x7B0005.
-; Outputs: the CONTROL register 0x7B0004 is written through Dev7B_WriteControl
+;          Dev7B_WriteDsr, i.e. to 0x7B0004 rather than 0x7B0005.
+; Outputs: the data rate select register 0x7B0004 is written through Dev7B_WriteDsr
 ;          (0xFE54C2).  WA and A clobbered.
 ; Unknown:  nothing here.
 ; ---------------------------------------------------------------------
-Fdc_WriteControlRegister:
+Fdc_WriteDsr:
 .LFE5B16:
 	calr .LFE5A8F                                 ; FE5B16  1e 76 ff
 	ld A,(XSP+0x04)                               ; FE5B19  8f 04 21
 	extz WA                                       ; FE5B1C  d8 12
 	pushw wa                                      ; FE5B1E  28
-	calr Dev7B_WriteControl                                   ; FE5B1F  1e a0 f9
+	calr Dev7B_WriteDsr                                   ; FE5B1F  1e a0 f9
 	inc 2,XSP                                     ; FE5B22  ef 62
 	ret                                           ; FE5B24  0e
 
 ; ---------------------------------------------------------------------
-; Fdc_WriteControlRegister_IfNoError -- as above, skipped when (0x605A15) is set
+; Fdc_WriteDsr_IfNoError -- as above, skipped when (0x605A15) is set
 ; Called from: 0 site(s) in the module.  ⚠ NO CALLER HAS BEEN FOUND: neither inside the module
 ;          nor in any converted prom_a code, and `python3 notes/prom_a_xref.py
 ;          0xFE5B25` finds no absolute reference either.  It is reached, if at
@@ -11509,11 +11523,11 @@ Fdc_WriteControlRegister:
 ; Outputs: 0x7B0004 is written ONLY when the latch is clear; otherwise the
 ;          routine returns having done nothing but the wait.
 ; Evidence: the body is Fdc_WaitReadyForCommandByte, then
-;          `cp (0x605A15),0x00 / jr nz` over a call to Fdc_WriteControlRegister
+;          `cp (0x605A15),0x00 / jr nz` over a call to Fdc_WriteDsr
 ;          with the same stack argument -- the guard is the only difference.
 ; Unknown:  which caller wants the guarded form; see Called from above.
 ; ---------------------------------------------------------------------
-Fdc_WriteControlRegister_IfNoError:
+Fdc_WriteDsr_IfNoError:
 	calr .LFE5A8F                                 ; FE5B25  1e 67 ff
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE5B28  c2 15 5a 60 3f 00
 	jr nz, .LFE5B3B                               ; FE5B2E  6e 0b
@@ -11526,19 +11540,23 @@ Fdc_WriteControlRegister_IfNoError:
 	ret                                           ; FE5B3B  0e
 
 ; ---------------------------------------------------------------------
-; Fdc_WriteControlRegister_AndReadResult -- control write, then take one byte
+; Fdc_WriteDsr_AndReadResult -- control write, then take one byte
 ; Called from: 0 site(s) in the module.  ⚠ Same searched negative as
-;          Fdc_WriteControlRegister_IfNoError above.
+;          Fdc_WriteDsr_IfNoError above.
 ; Outputs: (0x605A51) := one byte read from the DATA register after
 ;          Dev7B_WaitStatus_8x_Cx reports the chip has one.
 ; Inputs:  the byte at (XSP+0x04); (0x605A15), the module's error latch.
-; Evidence: the same guard as Fdc_WriteControlRegister_IfNoError, then
+; Evidence: the same guard as Fdc_WriteDsr_IfNoError, then
 ;          Dev7B_WaitStatus_8x_Cx (0xFE59F3) and Dev7B_ReadData (0xFE54BC),
 ;          whose byte is stored at 0x605A51 -- the first byte of the same
 ;          result buffer INT5_Dev7B_Receive fills.
 ; Unknown:  which caller wants it; the searched negative above covers this one.
+;          ⚠ Reading a result byte after a write to register 4 is the shape of a
+;          uPD7206x AUXILIARY command, not of a data-rate write.  Both routines
+;          that do it are unreachable (notes/prom_a_fdc_checks.py section 8), so
+;          this does not bear on the live path that gap W is about.
 ; ---------------------------------------------------------------------
-Fdc_WriteControlRegister_AndReadResult:
+Fdc_WriteDsr_AndReadResult:
 	calr .LFE5A8F                                 ; FE5B3C  1e 50 ff
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE5B3F  c2 15 5a 60 3f 00
 	jr nz, .LFE5B5D                               ; FE5B45  6e 16
@@ -11710,7 +11728,14 @@ Fdc_EnableInterrupts:
 ;                                                       DRIVE STATUS / READ ID
 ;            otherwise     drive byte + C,H,R,N,EOT,GPL and then DTL, except
 ;                          for opcodes 0xDD/0xD9/0xD1 -- the three SCAN
-;                          commands -- where STP is sent instead
+;                          commands -- where STP is sent instead.  ⚠ No SCAN
+;                          is ever issued: the eight opcodes this routine is
+;                          handed and the four immediates stored at
+;                          Fdc_CommandByte are all non-SCAN
+;                          (notes/prom_a_fdc_checks.py section 9, gap X), so
+;                          that arm, like Dev7A_StartDma's SCAN entries, is a
+;                          generic driver's table for commands this firmware
+;                          never sends
 ;
 ;          The drive byte itself is built at 0xFE5C73 as
 ;          ((command+1) & 1) << 2 | ((command+2) & 3), i.e. (HD<<2)|US1|US0.
@@ -12293,7 +12318,7 @@ Fdc_DelayTicks:
 ; ---------------------------------------------------------------------
 ; Fdc_Delay20Ticks -- Fdc_DelayTicks(0x28), i.e. 20 ticks
 ; Called from: 0 site(s) in the module.  ⚠ NO CALLER FOUND, by the same two searches named in
-;          Fdc_WriteControlRegister_IfNoError's header
+;          Fdc_WriteDsr_IfNoError's header
 ;          (notes/prom_a_fdc_callgraph.py and notes/prom_a_xref.py 0xFE5F14).
 ; Inputs:  none -- the count is the literal 0x28 it pushes.
 ; Outputs: none; Fdc_DelayTicks's clobbers.

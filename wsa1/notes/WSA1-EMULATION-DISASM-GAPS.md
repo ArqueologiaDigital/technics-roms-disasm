@@ -685,8 +685,8 @@ tx ring, and both do `or (0x2A87),0x28` -- assign TXD1 and SCLK1 -- immediately 
 `tmp95c061.cpp` now gates its SC1 transmit callback on exactly that. What is still unexplained is
 why the sequence needs three differently-shaped pin dances rather than one.
 
-**Where to look.** `SC1_State04_TxByte1` `0xF5ACE3`, `SC1_State0C` `0xF5AD2E`, `SC1_State14`
-`0xF5AD5D`, and the state table at `0xF5AC67`. Note `SC1_State04_TxByte1` also samples P8 bit 5 at
+**Where to look.** `SC1_State04_StartTx` `0xF5ACE3`, `SC1_State0C_TxGap1` `0xF5AD2E`, `SC1_State14_TxGap2`
+`0xF5AD5D`, and the state table at `0xF5AC67`. Note `SC1_State04_StartTx` also samples P8 bit 5 at
 `0xF5AD09` and ABORTS the whole transfer if it reads low -- so at least one of the three is a
 bus-collision check.
 

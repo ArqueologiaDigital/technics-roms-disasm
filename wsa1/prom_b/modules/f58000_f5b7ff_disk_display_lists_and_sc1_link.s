@@ -1734,10 +1734,17 @@ DL_F59C53:
 ;      prefix-group address spellings is inside this block -- 13 and 17 of them.
 ;      Reproduce: `python3 notes/prom_b_sc1_census.py --selftest`.
 ;
-; ⚠ WHAT IS AT THE OTHER END OF THE LINK IS NOT ESTABLISHED.  No string, no
-; databook and no schematic in these trees names it.  Everything below is named
-; after the on-chip peripheral it drives (SC1) or positionally.  The findings
-; note lists the one hypothesis the data suggests, as a hypothesis.
+; ⚠ WHAT IS AT THE OTHER END OF THE LINK IS NOT ESTABLISHED BY ANY STRING.
+; Everything below is named after the on-chip peripheral it drives (SC1) or
+; after its KN5000 twin.  ★ The board says (2026-10-31, open4/wsa1-b): SCK and
+; DATA leave on CN3 (CP1 CN1, the control panel connector) pins 3 and 4; SCK is
+; IC1 pin 16 SCLK1 (= P8 bit 5) through R31 with R40 4.7K to +5D, and DATA is
+; TXD1 (pin 14, R29) and RXD1 (pin 15, R30) on ONE wire.  The same SCK wire,
+; through R22/C70 and the Schmitt inverter IC9 (TC7S14F), drives IC1 pin 40,
+; INT6 = PB bit 4.  So "PB bit 4 low" below means "SCK high", and the peer
+; requests the link by holding SCK low.  Recipe and pixel test:
+; notes/open4-b-probes/wsa1_sch_open4_crops.py.  And the whole driver is the
+; KN5000 control-panel driver's twin, state for state (SC1_StateTable header).
 ;
 ; THE SFRs THIS MODULE TOUCHES (register names: MAME's tmp95c061_syms[],
 ; ../mame/src/devices/cpu/tlcs900/tmp95c061.cpp:1359-1391)
@@ -1831,10 +1838,14 @@ DL_F59C53:
 ; iteration counts (2, 6, 10, 100, 500) and are NOT converted to time here --
 ; nothing in this tree measures this loop's cycle count.
 ;
-; ⚠ NOT ESTABLISHED: what the command bytes mean (0xDD, 0xDE, 0xDF, 0xE0, 0xE2,
-; 0xE3, 0xEF are the seven literals the module ever sends as a first byte), what
-; (0x2A83) selects, and what prom_a 0xF89800 -- the module's only external call,
-; through thunk 0xF405F0 -- does with the byte it is passed.
+; The command bytes (0xDD, 0xDE, 0xDF, 0xE0, 0xE2, 0xE3, 0xEF are the seven
+; literals the module ever sends as a first byte) are the KN5000 panel protocol's
+; [panel 7:5 | type 4:0] commands; SC1_ConfigurePort and the three SC1_Cmd_*
+; headers give each one's KN5000 counterpart.  What the panel MCU (M37471M2196S,
+; mask ROM not dumped) answers is not in this ROM.
+; ⚠ NOT ESTABLISHED: what (0x2A83) selects, and what prom_a 0xF89800 -- the
+; module's only external call, through thunk 0xF405F0 -- does with the byte it
+; is passed.
 ; ------------------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 ; SC1_Vtable -- the module's six-entry object table
@@ -1972,9 +1983,17 @@ SC1_Vtable_Unused_Ret:
 ;          masked: (0xDF,0xD2), (0xDF,0x1A), (0xDD,0x03), (0xDE,0x80).
 ; Evidence: the register numbers are MAME's names for this part; the queue
 ;          descriptor layout is argued in the module banner above.
-; Unknown: every one of the four command words.  They are recorded as the
-;          literals the ROM sends, in ROM order, and nothing here claims they
-;          belong to a documented command set.
+; KN5000 twin: CPanel_SendInitSequence (v10/maincpu/ui/cpanel_routines.s)
+;          sends (0x1F,0xDA) (0x1F,0x1A) (0x1D,0x00) (0xDD,0x03) (0x1E,0x80).
+;          Read as [panel 7:5 | type 4:0], this module sends the same types
+;          0x1F, 0x1F, 0x1D, 0x1E with the same parameters 0x1A, 0x03, 0x80,
+;          and (0xDD,0x03) is byte-identical; it addresses panel field 110
+;          (0xC0-0xDF), the field the KN5000 uses only for its (0xDD,0x03),
+;          where the KN5000 addresses 001 (its left panel).  Differences: the
+;          first parameter is 0xD2 against 0xDA (bit 3), and there is no
+;          (0x1D,0x00).  ⚠ That 110 is a broadcast/all-panels field is an
+;          INFERENCE from the KN5000 using it once, for both panels.
+; Unknown: what the panel MCU does with them; its mask ROM is not dumped.
 ; ---------------------------------------------------------------------
 SC1_ConfigurePort:
 	ld	xhl, SC1_OutQueue	; F5A850  ld XHL,0x00002ba0
@@ -2243,9 +2262,13 @@ SC1_WaitTicks6_Skip2:
 ; Evidence: clears (0x2A85), drains the transmitter, zeroes both rx indices,
 ;          sends (0xE0,0x00) through SC1_StartWordTx, waits 6 ticks, and sets
 ;          bit 3 of (0x2A85) if (0x2A92) is no longer zero.
-; Unknown: what 0xE0 asks for.  "ReadStatus" describes the SHAPE -- a command
-;          whose only result is whether a reply arrived -- not a decoded
-;          command set.
+; KN5000 twin: CPanel_PanelDetection's second probe, PanelDet_ProbeRight --
+;          zero both rx indices, send (0xE0,0x00), wait 6 ticks, and set bit 3
+;          (0x08) of the detect flags if the write index moved: the same
+;          command, the same wait and the same BIT.  So 0xE0 is the panel ping
+;          (type 0 on panel field 111, the KN5000's right-panel field) and bit
+;          3 of (0x2A85) is "the panel answered".
+; Unknown: what a real M37471M2196S sends back; its mask ROM is not dumped.
 ; ---------------------------------------------------------------------
 SC1_Cmd_E0_ReadStatus:
 	ld	(SC1_StatusResult:16), 0	; F5AAA9  ld (0x2a85),0x00
@@ -2272,8 +2295,15 @@ SC1_Cmd_E0_ReadStatus_Skip:
 ;          (0xE3,0x00), (0xE2,0x08) and (0xE3,0x10) sent, each preceded by
 ;          SC1_WaitTxDrain and followed by two 6-tick waits
 ; Evidence: the literals are read straight off the four `ld A,#`/`ld W,#` pairs.
-; Unknown: all three commands.  SC1_Cmd_EF below has the same shape with
-;          (0xEF,0x00) and ends by calling SC1_Service_SetBit2.
+; KN5000 counterparts (v10/maincpu/ui/cpanel_routines.s): (0xE3,0x10) is
+;          byte-identical to the last command of CPanel_ReadAllButtons, the
+;          "extended read" of the right panel; 0xE2 is the type-2 analog
+;          register query the KN5000 sends as (0xE2,0x04) and (0xE2,0x11); the
+;          KN5000 never sends (0xE3,0x00).  SC1_Cmd_EF below has the same shape
+;          with (0xEF,0x00), a type 0x0F the KN5000 never sends, and ends by
+;          calling SC1_Service_SetBit2.
+; Unknown: the parameters 0x00 / 0x08 and type 0x0F; the panel MCU's mask ROM
+;          (M37471M2196S) is not dumped.
 ; ---------------------------------------------------------------------
 SC1_Cmd_E3_E2_E3:
 	ld	xhl, SC1_InQueue	; F5AAD9  ld XHL,0x00002b40
@@ -2341,9 +2371,13 @@ SC1_Cmd_EF:
 ; Notes:   the same four-way test opens SC1_TxFlush_Body, which is what makes
 ;          "P8 bit 5 high AND PB bit 4 low AND neither busy flag set" this
 ;          module's definition of "the line is free".
-; Unknown: which physical signal P8.5 and PB.4 are.  SC1's pins are on port 8
-;          on this part, but no databook in these trees names them, so the
-;          reading "P8.5 is the serial clock" is NOT asserted.
+; KN5000 twin: CPanel_WaitTXReady -- 200 tries, SCLK1 (PF.6) high, INTA
+;          (PE.5) low, both busy flags clear, then the LED buffer empty.
+; Pins (2026-10-31, the SX-WSA1R schematic): P8 bit 5 is IC1 pin 16, SCLK1,
+;          the panel's SCK wire; PB bit 4 is IC1 pin 40, INT6, which IC9
+;          (TC7S14F) drives with the INVERSE of that same wire.  So the two
+;          tests read one wire from both sides: SCK high, and the request line
+;          not asserted.
 ; ---------------------------------------------------------------------
 SC1_WaitTxDrain:
 	ld	(SC1_TxDrainRetries:16), 200	; F5AB74  ld (0x2a8b),0xc8
@@ -2427,7 +2461,13 @@ SC1_StartWordTx:
 ; Notes:   INTE67 is written 0x85 here and 0x8F in SC1_StartWordTx: the module
 ;          arms INT6 exactly while it is willing to be interrupted, which is
 ;          what makes INT6 the peer's REQUEST line rather than a data signal.
-; Unknown: which pin drives INT6.
+; KN5000 twin: INTA_HANDLER (v10/maincpu/ui/cpanel_routines.s), which sets
+;          the same receive state, 32 = 0x20, from the panel's INTA request.
+; Pin (2026-10-31, the SX-WSA1R schematic, page 19 / sheet II-7): INT6 is IC1
+;          pin 40, driven by IC9 (TC7S14F Schmitt inverter) from the panel's SCK
+;          wire (CN3 pin 3) through R22 10K / C70 0.01 uF / R23 100.  The peer
+;          raises INT6 by holding SCK low while CPU 1 has SCLK1's pin function
+;          off.  notes/open4-b-probes/wsa1_sch_open4_crops.py.
 ; ---------------------------------------------------------------------
 INT6_SC1_PeerRequest:
 	push	xwa	; F5AC0A  push XWA
@@ -2516,11 +2556,11 @@ SC1_Irq_Exit_1_Delayed:
 ; ---------------------------------------------------------------------
 SC1_StateTable:
 	.long	SC1_State_Unexpected	; F5AC67  [ 0] state/op 0x00 -> 0xF5AFD3
-	.long	SC1_State04_TxByte1	; F5AC6B  [ 1] state/op 0x04 -> 0xF5ACE3
+	.long	SC1_State04_StartTx	; F5AC6B  [ 1] state/op 0x04 -> 0xF5ACE3
 	.long	SC1_State08_TxFromRing	; F5AC6F  [ 2] state/op 0x08 -> 0xF5AD92
-	.long	SC1_State0C	; F5AC73  [ 3] state/op 0x0C -> 0xF5AD2E
+	.long	SC1_State0C_TxGap1	; F5AC73  [ 3] state/op 0x0C -> 0xF5AD2E
 	.long	SC1_State10_TxFromRing	; F5AC77  [ 4] state/op 0x10 -> 0xF5ADF7
-	.long	SC1_State14	; F5AC7B  [ 5] state/op 0x14 -> 0xF5AD5D
+	.long	SC1_State14_TxGap2	; F5AC7B  [ 5] state/op 0x14 -> 0xF5AD5D
 	.long	SC1_State18_TxDone	; F5AC7F  [ 6] state/op 0x18 -> 0xF5AE5C
 	.long	SC1_State_Unexpected	; F5AC83  [ 7] state/op 0x1C -> 0xF5AFD3
 	.long	SC1_State20_RxFirstByte	; F5AC87  [ 8] state/op 0x20 -> 0xF5AED4
@@ -2689,23 +2729,25 @@ SC1_Irq_Exit_3b_Delayed:
 ;          puts at that address, so the mapping below is read, not typed:
 ;            [0]  0x00  0xF5AFD3  SC1_State_Unexpected
 ;                       idle: an interrupt here is an error
-;            [1]  0x04  0xF5ACE3  SC1_State04_TxByte1
-;                       first transmit byte gone; sets P8CR/P8FC bits, sends
-;                       nothing new unless P8 bit 5 says the peer took it
+;            [1]  0x04  0xF5ACE3  SC1_State04_StartTx
+;                       KN5000 CPanel_SM_StartTX: one dummy byte as a timer,
+;                       then sample SCK (P8 bit 5); low = the panel is
+;                       requesting, abort to idle with (0x2A84) bit 1 set
 ;            [2]  0x08  0xF5AD92  SC1_State08_TxFromRing
 ;                       transmit from the ring, wrapping at 0x3C, and set
 ;                       (0x2A81) from the byte just sent: 2 normally, or
 ;                       (b & 0x0F) + 3 when (b & 0x3F) >= 0x30
-;            [3]  0x0C  0xF5AD2E  SC1_State0C
-;                       hand the pins back and send one byte.  Named
-;                       POSITIONALLY: what distinguishes it from [1] and [5] is
-;                       one SC1BUF write and which P8CR/P8FC bits are cleared,
-;                       and that is not enough to name a role.
+;            [3]  0x0C  0xF5AD2E  SC1_State0C_TxGap1
+;                       KN5000 CPanel_SM_TXDelay1: TXD1 and SCLK1 functions
+;                       off, one dummy byte as an 8-bit-time gap after the
+;                       first byte
 ;            [4]  0x10  0xF5ADF7  SC1_State10_TxFromRing
 ;                       same as [2] but decrements (0x2A81) and RETREATS the
 ;                       state by 4 until only one byte is left
-;            [5]  0x14  0xF5AD5D  SC1_State14
-;                       as [3] with an extra SC1BUF write.  Also POSITIONAL.
+;            [5]  0x14  0xF5AD5D  SC1_State14_TxGap2
+;                       KN5000 CPanel_SM_TXDelay2: as [3], with a second
+;                       SC1BUF write and INT6 re-armed (INTE67 = 0x85, where
+;                       the KN5000 re-arms INTA with INTEAB = 0x05)
 ;            [6]  0x18  0xF5AE5C  SC1_State18_TxDone
 ;                       transmit finished: if two or more bytes are still queued
 ;                       start another word, otherwise idle and re-arm INT6
@@ -2719,11 +2761,18 @@ SC1_Irq_Exit_3b_Delayed:
 ;                       SUBSEQUENT BYTES: same store, decrement (0x2A81), and
 ;                       when it reaches 1 idle the link and re-arm INT6
 ;            [10] 0x28  0xF5AFD3  SC1_State_Unexpected  (same target as [0])
-; Unknown: the difference between the [1]/[3]/[5] group is one SC1BUF write and
-;          which of P8CR/P8FC bits 3 and 5 are cleared; what that means at the
-;          pins is not established.
+; ★ KN5000 TWIN (2026-10-31, gap R): CPANEL_STATE_MACHINE_TABLE
+;          (v10/maincpu/ui/cpanel_routines.s) has the same eleven slots in the
+;          same order -- Idle, StartTX, SendByte1, TXDelay1, SendByteN, TXDelay2,
+;          TXComplete, Idle, RXByte1, RXByteN, Idle -- and [1], [3] and [5] are
+;          its StartTX, TXDelay1 and TXDelay2 instruction for instruction, with
+;          P8 bits 3/5 (TXD1, SCLK1) where the TMP94C241 has PF bits 4/6 and
+;          INT6 where it has INTA.  Every SC1BUF write in them is a DUMMY used
+;          as a timer, with the pins deselected: [1] arms the word and checks
+;          for a collision, [3] is the gap after byte 1, [5] the gap after the
+;          last byte that also re-arms the request interrupt.
 ; ---------------------------------------------------------------------
-SC1_State04_TxByte1:
+SC1_State04_StartTx:
 	and	(SC1_P8CR_Shadow:16), 0xdf	; F5ACE3  and (0x2a86),0xdf
 	ld	a, (SC1_P8CR_Shadow:16)	; F5ACE8  ld A,(0x2a86)
 	ld	(P8CR:8), a	; F5ACEC  ld (0x1a),A
@@ -2745,7 +2794,7 @@ SC1_State04_TxByte1:
 	ld	(BR1CR:8), 36:io	; F5AD23  ld (0x57),0x24
 	and	(SC1_BusyFlags:16), 0xfd	; F5AD26  and (0x2a82),0xfd
 	jrl	SC1_Irq_Exit_3	; F5AD2B  jrl T,0xf5aca8
-SC1_State0C:
+SC1_State0C_TxGap1:
 	calr	SC1_Spin10	; F5AD2E  calr 0xf5aa3e
 	and	(SC1_P8CR_Shadow:16), 0xd7	; F5AD31  and (0x2a86),0xd7
 	ld	a, (SC1_P8CR_Shadow:16)	; F5AD36  ld A,(0x2a86)
@@ -2759,7 +2808,7 @@ SC1_State0C:
 	ld	(SC1BUF:8), a	; F5AD53  ld (0x54),A
 	inc	4, (SC1_State:16)	; F5AD56  inc 4,(0x2a80)
 	jrl	SC1_Irq_Exit_3	; F5AD5A  jrl T,0xf5aca8
-SC1_State14:
+SC1_State14_TxGap2:
 	calr	SC1_Spin10	; F5AD5D  calr 0xf5aa3e
 	and	(SC1_P8CR_Shadow:16), 0xd7	; F5AD60  and (0x2a86),0xd7
 	ld	a, (SC1_P8CR_Shadow:16)	; F5AD65  ld A,(0x2a86)

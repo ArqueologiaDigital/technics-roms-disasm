@@ -366,6 +366,116 @@ check("...every fixed-opcode command it issues is sent UNMASKED (no top bits), "
       all(v == (v & 0x1F) for v in issued if (v & 0x1F) in FIXED),
       " ".join("0x%02X" % v for v in sorted(issued)))
 
+# =========================================================================
+# 8.  GAP W (WSA1-EMULATION-DISASM-GAPS.md): IS THE WRITE SIDE OF 0x7B0004
+#     THE uPD765-FAMILY DATA RATE SELECT REGISTER?  The refutation test the gap
+#     names: any fourth value written there, or a write of 0x00 / 0x02 on a path
+#     that does not choose a geometry, refutes it.  Added 2026-10-31 (open4/wsa1-b).
+# =========================================================================
+B = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13"), "rb").read()
+
+
+def sites(img, base, pat):
+    out, i = [], img.find(pat)
+    while i >= 0:
+        out.append(base + i)
+        i = img.find(pat, i + 1)
+    return out
+
+
+def calr_callers(target):
+    out = []
+    for off in range(len(A) - 3):
+        if A[off] == 0x1E:
+            d = A[off + 1] | (A[off + 2] << 8)
+            d -= 0x10000 if d >= 0x8000 else 0
+            if 0xF80000 + off + 3 + d == target:
+                out.append(0xF80000 + off)
+    return out
+
+
+# every 24-bit spelling of 0x7B0004 in either CPU-1 image (prom_b has none)
+s7b = sites(A, 0xF80000, b"\x04\x00\x7b")
+check("0x7B0004 is spelled at exactly three places in prom_a (operand bytes "
+      "0xFE54B7, 0xFE54C6, 0xFE54DE)", s7b == [0xFE54B7, 0xFE54C6, 0xFE54DE],
+      " ".join("0x%06X" % s for s in s7b))
+check("...0xFE54B6 is the READ `ld L,(0x7B0004)` (Dev7B_ReadStatus)",
+      a(0xFE54B6, 5) == b"\xc2\x04\x00\x7b\x27", hexs(0xFE54B6, 5))
+check("...0xFE54C5 and 0xFE54DD are the only WRITES, both `ld (0x7B0004),A`",
+      a(0xFE54C5, 5) == b"\xf2\x04\x00\x7b\x41" and
+      a(0xFE54DD, 5) == b"\xf2\x04\x00\x7b\x41")
+check("prom_b never spells 0x7B0004, 0x7B0005 or a 0x7B0000 base",
+      not sites(B, 0xF00000, b"\x04\x00\x7b") and
+      not sites(B, 0xF00000, b"\x05\x00\x7b") and
+      not [s for s in sites(B, 0xF00000, b"\x00\x00\x7b")
+           if B[s - 0xF00000 + 3] == 0x00])
+# the value each writer receives: every caller pushes `pushw imm16` (0B lo hi)
+shadow_callers = calr_callers(0xFE54CB)
+check("Dev7B_WriteDsr_Shadowed (0xFE54CB) has exactly four calr callers",
+      shadow_callers == [0xFE5579, 0xFE55C8, 0xFE56BC, 0xFE56F8],
+      " ".join("0x%06X" % s for s in shadow_callers))
+check("...three of them push 0x0080 right before the call "
+      "(0xFE5576, 0xFE55C5, 0xFE56F5): DSR bit 7, software reset",
+      all(a(c - 3, 3) == b"\x0b\x80\x00" for c in (0xFE5579, 0xFE55C8, 0xFE56F8)))
+check("...the fourth, 0xFE56BC, is reached by `push 0x0002` (0xFE56B9, the "
+      "720 KB geometry path from 0xFE56B2) and by `push 0x0000 / jr 0xFE56BC` "
+      "(0xFE5697, the high-density path from 0xFE5690)",
+      a(0xFE56B9, 3) == b"\x0b\x02\x00" and a(0xFE5697, 5) == b"\x0b\x00\x00\x68\x20"
+      and 0xFE5697 + 5 + 0x20 == 0xFE56BC and
+      a(0xFE5690, 7) == b"\xf2\x13\x5a\x60\x02\x00\x00" and
+      a(0xFE56B2, 7) == b"\xf2\x13\x5a\x60\x02\x00\x00")
+plain_callers = calr_callers(0xFE54C2)
+check("Dev7B_WriteDsr (0xFE54C2) is called once, from Fdc_WriteDsr (0xFE5B1F)",
+      plain_callers == [0xFE5B1F], " ".join("0x%06X" % s for s in plain_callers))
+check("...Fdc_WriteDsr is called only from 0xFE5B36 and 0xFE5B4D, inside "
+      "Fdc_WriteDsr_IfNoError / _AndReadResult",
+      calr_callers(0xFE5B16) == [0xFE5B36, 0xFE5B4D])
+check("...and neither of those two has any caller: no calr, no 24-bit "
+      "literal in prom_a or prom_b",
+      not calr_callers(0xFE5B25) and not calr_callers(0xFE5B3C) and
+      not sites(A, 0xF80000, b"\x25\x5b\xfe") and not sites(B, 0xF00000, b"\x25\x5b\xfe")
+      and not sites(A, 0xF80000, b"\x3c\x5b\xfe")
+      and not sites(B, 0xF00000, b"\x3c\x5b\xfe"))
+check("★ GAP W PASSES: the only values that reach 0x7B0004 are 0x80 (reset), "
+      "0x00 on the 1.2/1.44 MB path and 0x02 on the 720 KB path",
+      True)
+
+# =========================================================================
+# 9.  GAP X: IS A SCAN OPCODE (0xD1 / 0xD9 / 0xDD) EVER STORED AT Fdc_CommandByte
+#     (0x605A18)?  Every 24-bit spelling of 0x605A18 in prom_a, classified by its
+#     instruction; prom_b has none.  Added 2026-10-31 (open4/wsa1-b).
+# =========================================================================
+s5a = sites(A, 0xF80000, b"\x18\x5a\x60")
+check("0x605A18 is spelled 21 times in prom_a and never in prom_b",
+      len(s5a) == 21 and not sites(B, 0xF00000, b"\x18\x5a\x60"), str(len(s5a)))
+stores = {}
+for s in s5a:
+    op = a(s - 1, 1)[0]
+    sub = a(s + 3, 1)[0]
+    if op == 0xF2 and sub == 0x41:
+        stores[s - 1] = "A"
+    elif op == 0xF2 and sub == 0x00:
+        stores[s - 1] = a(s + 4, 1)[0]
+check("exactly five instructions STORE to 0x605A18 itself",
+      sorted(stores) == [0xFE5C1B, 0xFE5FDF, 0xFE62FA, 0xFE6417, 0xFE65D0],
+      " ".join("0x%06X" % s for s in sorted(stores)))
+check("...four store an immediate, 0xC6 / 0xC5 / 0x4D / 0x4D (READ DATA, "
+      "WRITE DATA, FORMAT TRACK twice)",
+      [stores[k] for k in (0xFE5FDF, 0xFE62FA, 0xFE6417, 0xFE65D0)]
+      == [0xC6, 0xC5, 0x4D, 0x4D])
+check("...the fifth, 0xFE5C1B in Fdc_IssueCommand, stores its argument, and the "
+      "eight arguments it is ever handed (section 7 above) contain no SCAN",
+      stores[0xFE5C1B] == "A" and not ({0xD1, 0xD9, 0xDD} & issued))
+others = [s - 1 for s in s5a if s - 1 not in stores]
+check("...the other 16 spellings are `lda Xrr,0x605A18` (a pointer to the block, "
+      "used with displacements >= 1 for stores) or byte reads",
+      all(a(o, 1)[0] in (0xF2, 0xC2) for o in others) and
+      all(a(o + 4, 1)[0] in (0x30, 0x31, 0x32, 0x33, 0x21) for o in others),
+      " ".join("0x%06X" % o for o in others))
+check("★ GAP X: no reachable path stores 0xD1, 0xD9 or 0xDD; the SCAN arms of "
+      "Dev7A_StartDma and Fdc_SendSectorIdParams are a generic driver's "
+      "table entries for commands this firmware never issues", True)
+
 pending = []
 for line in lines:
     m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):\s*$', line)
