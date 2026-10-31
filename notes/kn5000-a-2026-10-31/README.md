@@ -226,3 +226,14 @@ lane inserted inside conflicted hunks (some c2 / h3 headers) are main's text now
 the 455 old names of the four proposal files remains in v10, every hand edit of this lane listed above is present in
 all five trees, the v1 HD-AE5000 replays reproduce their committed trees (run before the merge, at 81875bdd9's
 successor), and `make gate` passes.
+
+## Gates and read-only censuses (after the merge, 03a2f1719)
+
+- `make gate`: exit 0.
+- `doc_quality_census.py --compare` (against doc-quality-2026-10-31-02): 15 figures rose, all present on main
+  37ecc2a2b alone (main shows 17; (d) byte runs in v10..v5, headers in v142/v141/v140, kn6000/kn6500).  Before the
+  merge this branch rose in nothing, and after it v6 / v5's (d) bytes are 3 lower than main's (the FDC respelling).
+- `data_incbin_census.py --compare`: nothing rose.
+- dispatch census (maps in scratch): 9 figures rose, all in the HD-AE5000 v2.01i / v1.15i / v1.10i rows.  This lane
+  changed only comments and two `.L` local labels in those trees; main's HD-AE5000 lanes were not re-measured alone.
+- `check_ported_labels.py`: v7 -> v6 misplaced 100, v6 -> v5 16, v7 -> v5 87 (before the merge; none rose).
