@@ -269,9 +269,17 @@ def parse_calls(src_glob, by_name, mem=None):
                 regval[m.group(2)] = stack.get(int(m.group(1), 0))
                 continue
             # (a plug-in) a host routine loaded from the host's Function table
-            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), a\d\), (a\d)$", l) if HOST_CALLS else None
+            # (lane mn10300-rest) only through registry slot 0x100's table (`mov (0x100c, aX), aY` first):
+            # the plug-in calls slot 0x107's (block 7) entries the same way, and their offsets name other routines
+            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), (a\d)\), (a\d)$", l) if HOST_CALLS else None
             if m:
-                regval[m.group(2)] = ("host", HOST_CALLS.get(int(m.group(1), 0)))
+                off = int(m.group(1), 0)
+                if off >= 0x1000 and off & 0xF == 0xC:
+                    regval[m.group(3)] = ("hosttab", (off - 0xC) // 16)
+                elif regval.get(m.group(2)) == ("hosttab", 0x100):
+                    regval[m.group(3)] = ("host", HOST_CALLS.get(off))
+                else:
+                    regval[m.group(3)] = None
                 continue
             m = re.match(r"\s+calls\s+\((a\d)\)$", l) if HOST_CALLS else None
             if m and isinstance(regval.get(m.group(1)), tuple) and regval[m.group(1)][0] == "host" \

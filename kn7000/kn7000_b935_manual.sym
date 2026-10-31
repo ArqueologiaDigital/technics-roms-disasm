@@ -333,6 +333,7 @@
 0x48000000  TableRomDirectory      ; directory of LE u32 chunk offsets (rel to 0x48000000); first chunk @0x48000200
 0x48040674  FactoryMemPadContainer ; table ROM segment 3 (0x1d18): the factory 'TPAD' PERFORMANCE PAD user memory; copied to 0x501F91A0 (0xA000 area) by MemPadAreaLoadFactory when it starts with 'TPAD' (src/table.s)
 0x4804238C  TechnicsPadsResource   ; "Technics Pads" resource (0x142f0): accompaniment pad patterns
+0x4872FDE8  TechnicsPadsResourceBuiltin ; the program's own copy of the "Technics Pads" bank (6 pads, to 0x487312E8): TechnicsPadsResourceInit stores it (`mov a0, (TechnicsPadsResourceInit_Var)`) and calls TechnicsPadsResourceParse when the table flash's copy does not check (lane mn10300-rest; probe notes/mn10300-rest-probes/opaque_readers_941.py, "pads")
 0x483E828C  TechnicsRhythmsTable   ; "Technics Rhythms" resource in the table ROM (style/rhythm index)
 ; Loaders of table-ROM segments 1, 3 and 4 (src/table.s segment headers).
 0x4843FB23  SramRecordsLoadFactory ; (d0 = first, d1 = last record) both < 0xDC and first <= last, else -1: if table-ROM segment 1 (TableRomSeg01PtrSize) starts with the 8-byte 'ZZZJ',0,'K',0,0xDC signature of 0x485B7370, copy records first..last (0x18 bytes each, from segment+0x10) over the battery-SRAM table at 0x84030FF8; otherwise fall back to a program-ROM default record

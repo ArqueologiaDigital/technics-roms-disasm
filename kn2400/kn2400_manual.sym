@@ -82,19 +82,110 @@
 0x4856C74C  FxDescTable                ; 260 pointers to effect descriptors (107 distinct): FxDescGet answers [FxDescIndexGet(d0)]
 0x4863CDEF  FxDescGet                  ; (d0 = effect code) -> a0 = FxDescTable[FxDescIndexGet(d0)], a 16-byte descriptor {u8 count, u8 nparams, u16 0, params, s8 mode, pnum9, pnum10, pnum11, send_param, 3 x 0}
 0x4863D2E0  FxDescNParamsGet           ; (d0 = effect code) -> descriptor +1, the number of parameter numbers (-1 for a category its jump table rejects)
-0x4863D30F  FxDescPnum10Get            ; (d0) -> descriptor +10 (s8): a parameter number or -1; func_4863DF3E reads it
-0x4863D33F  FxDescPnum9Get             ; (d0) -> descriptor +9 (s8): a parameter number or -1 (no call site reaches this routine)
-0x4863D36F  FxDescModeGet              ; (d0) -> descriptor +8 (s8): SndUnitDbGroupQuery searches the parameters when it is 1 or 2
+0x4863D30F  FxDescTempoParamGet        ; (d0) -> descriptor +10 (s8), the tempo_param: a parameter number or -1; FxParamValueGet 0x4863DF3E (calls at 0x4863DFD6 / 0x4863E068) answers GetM3Em id 4 (TEMPO) for that parameter instead of its stored value (was FxDescPnum10Get; lane mn10300-rest)
+0x4863D33F  FxDescSpeedParamGet        ; (d0) -> descriptor +9 (s8), the speed_param: a parameter number or -1; called (at its entry +5) only by FxSpeedNudge 0x4863B51E, which moves that parameter by (its stack argument - 0x40) within min / max: LFO SPEED, SLOW LFO SPEED or PEDAL (was FxDescPnum9Get; lane mn10300-rest)
+0x4863D36F  FxDescConnectionGet        ; (d0) -> descriptor +8 (s8), the connection: FxConnectionGet 0x4863BA0B maps it to the connection message (kind 9), SndUnitDbGroupQuery and FxDepthApply act for 1 and 2 (was FxDescModeGet; lane mn10300-rest)
 0x4863D39F  FxDescSendParamGet         ; (d0) -> descriptor +12 (s8): the number of the effect's REVERB SEND parameter, -1 for the reverbs (kn2400_fx_desc.py: 106 of 106)
-0x4863D3CF  FxDescPnum11Get            ; (d0) -> descriptor +11 (s8): a parameter number or -1; func_4863B2B6 compares it with -1
+0x4863D3CF  FxDescDriveParamGet        ; (d0) -> descriptor +11 (s8), the drive_param: a parameter number or -1; func_4863B2B6 (0x4863B2EA) / func_4863B3CF (0x4863B41B) reload an effect of the same type with the parameters kept (kind 5) only when it is -1: the DRIVE of the 9 rotary / amp twins (was FxDescPnum11Get; lane mn10300-rest)
 0x4863D3FF  FxDescIndexGet             ; (d0 = effect code) -> the FxDescTable index: FxCategoryGet picks the case, which reads +0x12 of the record func_4863CDB5 / func_4863CDD8 / func_4863DCF4 answers, or asks func_4863AB58
 0x4863D4F1  FxParamGet                 ; (d0 = effect code, d1 = i) -> a0 = &params[i] (36-byte records: mulu 0x24)
 0x4863D52C  FxParamMinGet              ; (d0, d1 = i) -> params[i] +0x16, s16 minimum
 0x4863D568  FxParamMaxGet              ; (d0, d1 = i) -> params[i] +0x18, s16 maximum
 0x4863D5A4  FxParamNumberGet           ; (d0, d1 = i) -> params[i] +0x14, u16 parameter number (records of one number are alternatives, chosen by +0x1C)
-0x4863D5E0  FxParamX29Get              ; (d0, d1 = i) -> params[i] +0x1D (0 or 0xFF)
+0x4863D5E0  FxParamNextDepthLinked     ; (d0 = effect code, d1 = i) -> the index of the next parameter record at or after i whose +0x1D (depth_link) is 0 and whose variant matches, or -1: a search, not a getter (was FxParamX29Get; lane mn10300-rest)
 0x4863D692  FxParamBandGet             ; (d0, d1 = i) -> params[i] +0x1A (0..4 in the EQ effects' band parameters, else 0xFF)
 0x4863D6CF  FxParamSubGet              ; (d0, d1 = i) -> params[i] +0x1B (0..2: within an EQ band, frequency / Q / gain)
 0x4863D70C  FxParamVariantGet          ; (d0, d1 = i) -> params[i] +0x1C: 0 or 1 for the two alternative records of one parameter number ("DEPTH" / "DEPTH (V)", "SPEED FAST" / "SLOW"), 0xFF for a record that is always shown
 0x4863D749  FxParamValuesGet           ; (d0, d1 = i) -> params[i] +0x20, the parameter's value texts ("    0 ms", ...) or 0
 0x4863DC81  FxCategoryGet              ; (d0 = effect code) -> its category 0..14: codes 0x00..0x6F are category 0, 0x70..0xC0 are looked up in func_4863DC81_Ld_Records (8-byte records)
+;
+; ---- the effect DSP: its programs, parameter scripts and address maps, and the routines that download
+;      them (lane mn10300-rest, 2026-10-31; kn7000/notes/mn10300-rest/README.md, gen_data_s.py fx_streams,
+;      probes kn7000/notes/mn10300-rest-probes/kn2400_fx_streams.py, kn2400_fx_pnums.py) ----------------
+0x4854B764  FxPresetTable              ; 8192 pointers to the effect presets {char name[16], NUL, pad, u16 DSP type (+0x12, FxDescIndexGet: the FxDescTable index), u16 n (+0x14), u16 0, the u16 parameter values (+0x18, a pointer), u32 code (+0x1C)}, indexed (code & 0xFF) << 6 | (code >> 8) & 0x3F (FxPresetGet)
+0x48553764  FxPresetVarTable           ; 64 pointers to effect presets, indexed (code >> 8) & 0x3F (FxPresetVarGet)
+0x4863CDB5  FxPresetGet                ; (d0 = effect code) -> a0 = FxPresetTable[(code & 0xFF) << 6 | (code >> 8) & 0x3F]
+0x4863CDD8  FxPresetVarGet             ; (d0 = effect code) -> a0 = FxPresetVarTable[(code >> 8) & 0x3F]
+0x48541630  FxTypeProgramTable         ; 208 pointers: the effect-DSP program stream of each DSP type (0: none), read by FxDspProgramLoad (`mov 0x48541630, a0 / mov (d0, a0), d1` 0x50189F74 / 0x50189F7A)
+0x48541970  FxTypeScriptTable          ; 208 pointers: each DSP type's parameter script (FxDspParamApply 0x5018A298)
+0x48541CB0  FxTypeMapTable             ; 208 pointers: each DSP type's address map (FxDspParamApply 0x5018A28C)
+0x48541FF8  FxUnitIdleProgramTable     ; 6 pointers: the program each DSP unit loads for type 0 (FxDspProgramLoad 0x50189F64)
+0x48541618  FxUnitProgramBase          ; 6 u16: each unit's first program step (60 reverb, 179 chorus, 287 mic reverb, 329 EQ, 351 insertion, 450 mic effects; FxDspStreamExec's FC records add it)
+0x48541488  FxUnitStepRows             ; the units' step rows {u16 entry step, u16 bypass target, u16 base} (FxUnitBypass)
+0x48533A0C  FxUnitCoefBase             ; 12 rows of zeros: the per-unit coefficient offset FxDspParamApply adds (0x5018A2AD)
+0x48533A9C  FxUnitTypesAllowed0        ; 208 bytes: the DSP types unit 0 (insertion effects) may load (FxUnitTypeAllowed `movbu (d0, a0), d0`)
+0x48533B6C  FxUnitTypesAllowed1        ; the same for unit 1 (reverb)
+0x48533C3C  FxUnitTypesAllowed2        ; unit 2 (chorus)
+0x48533D0C  FxUnitTypesAllowed3        ; unit 3 (mic reverb)
+0x48533DDC  FxUnitTypesAllowed5        ; unit 5 (mic effects); unit 4, the 2-band EQ, takes type 0x4F only (`cmp 0x4f, d0`)
+0x48533EAC  FxDspBootStream            ; the program stream FxDspBoot downloads first (FxDspBootStreamRun 0x50189EF7)
+0x485340C5  FxDspBootStream2           ; the boot stream's second part (FxDspBootStreamRun2 0x50189F14)
+0x4853F0CF  FxDspClearStream           ; the stream a script's kind-0x79 entry runs to clear a unit (FxDspClearRun 0x50189F31)
+0x485414AD  FxLfoWave0                 ; coefficient 0x68 = 0: 37 u24 values to coefficient 0x68 (FxDspQueueFlush) [INFERENCE: an LFO wave, sine by its values]
+0x48541522  FxLfoWave1                 ; coefficient 0x68 = 1 [INFERENCE: triangle]
+0x48541597  FxLfoWave2                 ; coefficient 0x68 = 2 [INFERENCE: a clipped wave]
+0x4854160C  FxCurveKeep                ; coefficient 0x8D = 3: an empty coefficient record (`fd 00 03 ff`); its twins at +4 and +8 for 4 and 5
+0x501854DA  FxDspBoot                  ; boots the effect DSP: FxDspBootStreamRun2, FxDspBootStreamRun
+0x50185356  FxDspService               ; the effect DSP's service routine: takes the queued type and parameter requests
+0x50184EBB  FxDspTypeRequest           ; queues a DSP type change for a unit
+0x50185032  FxDspParamRequest          ; queues a parameter change for a unit
+0x50185A10  FxUnitTypeAllowed          ; (d0 = unit, d1 = type) -> FxUnitTypesAllowed<unit>[type] (unit 4: type 0x4F only)
+0x50185C7D  FxDspProgramsLoad          ; loads each unit's program
+0x50189F4E  FxDspProgramLoad           ; (d0 = type, d1 = unit) the type's program (FxTypeProgramTable) or the unit's idle one (FxUnitIdleProgramTable) through FxDspStreamRun
+0x5018A213  FxDspStreamRun             ; runs a program stream (FxDspStreamExec)
+0x5018A345  FxDspStreamExec            ; the program-stream interpreter: `movbu (a0), d0` 0x5018A358, records 0xFB raw / 0xFC program steps / 0xFD coefficients / 0xF7 coefficients one by one / 0xFE register pairs, 0xFF the end
+0x5018A23D  FxDspCoefStreamRun         ; runs a coefficient-only stream (FxDspCoefStreamExec)
+0x5018A64E  FxDspCoefStreamExec        ; the 0xFD-only interpreter (FxDspQueueFlush's waves and curves)
+0x5018A267  FxDspParamApply            ; (d0 = unit, d1 = type, the parameter number and 3 values on the stack) runs the type's script group for the parameter against its address map (FxParamScriptRun)
+0x5018A724  FxParamScriptRun           ; finds the parameter's script group (FxScriptGroupFind) and runs its entries (FxParamEntryExec)
+0x5018A7B8  FxParamEntryExec           ; one script entry: the kind byte (`cmp 0x61` 0x5018A82A .. `cmp 0x7a` 0x5018ADC5) selects the converter, the index the address in the map group (FxMapAddrFind)
+0x5018AEA6  FxScriptGroupFind          ; skips to group n of a script or map (`movbu (a0), d1` 0x5018AEEA, the end at 0xFF 0x5018AEFB)
+0x5018AE27  FxMapAddrFind              ; the map group of an entry's kind and its index-th address (`movbu (a0), d2` 0x5018AE3A)
+0x5018ADD8  FxReadS24BE                ; reads a big-endian 24-bit operand
+0x50185F06  FxDspQueueFlush            ; sends the queued coefficient / register writes; coefficient 0x68 = 0..2 runs FxLfoWave0..2, 0x8D = 3..5 FxCurveKeep and its twins
+0x501863EF  FxDspQueueCoef             ; queues a coefficient write (kind 0xFD)
+0x5018655F  FxDspQueueReg              ; queues a register write (kind 0xFE)
+0x50189F8E  FxUnitBypassSet            ; bypasses a unit (a script's kind 0x79 before the clear stream)
+0x50189FF6  FxUnitBypass               ; writes a unit's bypass step from FxUnitStepRows
+0x5018A07D  FxUnitEnable               ; writes a unit's entry step word (F8 xx xx 00) [INFERENCE: a jump into the unit's program]
+0x50189EF7  FxDspBootStreamRun         ; FxDspStreamRun(FxDspBootStream)
+0x50189F14  FxDspBootStreamRun2        ; FxDspStreamRun(FxDspBootStream2)
+0x50189F31  FxDspClearRun              ; FxDspStreamRun(FxDspClearStream)
+0x5018AFD0  FxDspStepWrite             ; writes one 4-byte program word to step base[unit] + i
+0x5018B137  FxDspFrameSend             ; sends one write as a 5-byte frame: a 9-bit register, then a 24-bit value
+0x5018B18A  FxDspIndirectWrite         ; register 0xFF = the address, 0x1FF = the value, 9 strobes
+0x5018B06D  FxDspBurstBegin            ; starts a burst write at an address (FD records)
+0x5018B0B5  FxDspBurstEnd              ; ends a burst write
+0x5018B0F2  FxDspBurstWrite            ; one u24 value of a burst, the address auto-incremented
+0x5018B27D  FxDspByteSend              ; one byte to the DSP
+0x5018B241  FxSerialByteSend           ; one byte out: register 7 = 0x82, then register 6 = the byte
+0x5018B22B  FxSerialRegWrite           ; writes halfword register reg at 0x98050000 + 2 x reg (`mov 0x98050000, a0` 0x5018B235, `movhu d1, (d0, a0)` 0x5018B23C)
+0x5018B20E  FxSerialRegRead            ; reads halfword register reg at 0x98050000 + 2 x reg
+0x5018B290  FxSerialInit               ; sets the serial interface up
+0x5018B48C  FxDspBusyGet               ; bit 2 of 0x98070000 (`movhu (0x98070000), d0` 0x5018B48F): the DSP's ready / busy line
+0x5018AF38  FxDspWaitIdle              ; waits until the DSP is not busy
+0x5018AF84  FxDspWaitBusy              ; waits until the DSP is busy
+0x5018B4A6  FxDspSelect                ; sets the DSP's chip select (bit 4 of the latch 0x98000000, Latch98000000Set)
+0x5018B4B1  FxDspDeselect              ; clears it (Latch98000000Clear)
+0x48705A38  Latch98000000Set           ; sets bits of the write-only latch 0x98000000 in its shadow and writes it (bits 4 / 2 / 1: the effect DSP's chip select, reset and strobe)
+0x48705A6A  Latch98000000Clear         ; clears bits of the latch 0x98000000
+0x48639E41  FxUnitMsgPost              ; posts a unit message: kind 1 type, 2 parameter, 5 reload with the parameters kept, 7 levels, 9 connection
+0x4863DF3E  FxParamValueGet            ; a parameter's value: the stored one, or GetM3Em id 4 (TEMPO) for the descriptor's tempo_param / that EQ band
+0x4863CEF5  FxCodeResolve              ; resolves an effect code to its effect
+0x4863BA75  FxDepthApply               ; scales every depth-linked parameter (FxParamNextDepthLinked) by the control / 0x50, clamps it and posts it (kind 2)
+0x4863BA0B  FxConnectionGet            ; (d0 = slot, d1 = effect code) -> the connection value posted as kind 9: slot 1 {0, 1, 2, 0}, slots 2..4 {0, 1, 1, 3} by FxDescConnectionGet
+0x48639D4A  FxUnitTypeSet              ; stores the effect's DSP type (FxDescIndexGet) at the unit record +0xC
+0x4863B51E  FxSpeedNudge               ; (d0 = slot, d1 = effect code, a value on the stack) the speed_param's value (FxParamValueGet) + (the value - 0x40), clamped to min / max, posted as a parameter change (kind 2) [INFERENCE: a relative speed control centred on 64]; nothing calls it
+;
+; ---- the alphabetical sound lists (lane mn10300-rest, 2026-10-31; the KN7000's names, probe
+;      kn7000/notes/mn10300-rest-probes/kn2400_opaque.py, group 7) ------------------------------------------
+0x487019FB  SoundAlphaListGet          ; (d0 = kind 0..2, d1 = variant 0..1) -> a0 = slot 2 x kind + variant of SoundAlphaListTableKN2400 (`mov (d0, a0), a0` 0x48701A25) when KnprModelGet answers 1, else of SoundAlphaListTable (0x48701A35)
+0x48701A3A  SoundAlphaIndexBuild       ; stores the list to 0x50068688 (0x48701A5C) and groups its 4-byte entries by their initial (`movbu (d1, a0), d2` 0x48701A82)
+0x48701D1E  SoundAlphaInitialGet       ; matches +1 / +2 / +3 (`movbu (1, a0)` / (2, a0) / (3, a0) 0x48701D54 .. 0x48701D7A) with a sound's bank MSB, LSB and program and answers +0
+0x485ABF00  SoundAlphaListTable        ; 6 pointers to the KN2600 / PR54's alphabetical sound lists, SoundAlphaListGet's [2 x kind + variant]
+0x485AF118  SoundAlphaListTableKN2400  ; the same for the KN2400 (KnprModelGet = 1)
+;
+; ---- the parameter-id trie (lane mn10300-rest, 2026-10-31; the KN7000's ResourceIdTrie, the same design;
+;      probes kn7000/notes/mn10300-rest-probes/kn6000_opaque.py / kn2400_opaque.py, group "trie") ----------
+0x48404E70  ResourceIdTrie             ; the root of the parameter-id trie, 16 entries of {u32 target, u8 inner, u8 count, u16 0}: ResourceIdFind takes the 24-bit id's nibbles from bit 20 down; a leaf's +0 u32 is the id, +4 u16 its type (GetM3Em's records)
+0x5014A95C  ResourceIdFind             ; (d0 = 24-bit id) walks ResourceIdTrie by the id's nibbles (lsr / and 0x0f / asl 3; `mov (a1), d1`, `movbu (4, a1)`, `movbu (5, a1)`) and answers the leaf whose +0 is the id, else 0

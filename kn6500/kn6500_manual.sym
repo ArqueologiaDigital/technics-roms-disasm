@@ -63,3 +63,26 @@
 0x50005C9C  inflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
 0x50005CCC  inflate_mask            ; zlib 1.0.4 infutil.c: masks of the low n bits, n = 0..16 (17 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
 0x50005D10  z_errmsg                ; zlib 1.0.4 zutil.c: the error texts, indexed 2 - err (10 pointers) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+;
+; ---- the expansion board's XAPR plug-in, as the host sees it (lane mn10300-rest, 2026-10-31; the KN6000's
+;      routines of the same names, kn6000/kn6000_manual.sym; probe kn7000/notes/mn10300-rest-probes/hdsx3_entry_vectors.py) ----
+0x4C17321A  XaprBoardDetect        ; strncmp(0x97800000, "XAPR", 4) and strncmp(*(0x97800004), "XAPR", 4): stores 1 / 0 to XaprBoardPresent
+0x50005690  XaprBoardPresent       ; 1 when XaprBoardDetect found the board
+0x4C173264  XaprCallIdle           ; calls header +0x0C (XaprEntryIdle)
+0x4C17327C  XaprInit               ; XaprBoardDetect, then header +0x08 (XaprEntryInit), then XaprInstallIsrs
+0x4C1732A4  XaprIsrGroup24         ; interrupt handler (group 0x18): header +0x10
+0x4C1732DF  XaprIsrGroup27         ; interrupt handler (group 0x1B): header +0x14
+0x4C1728C5  XaprInstallIsrs        ; def_int's the two handlers
+0x4C380D01  KernelDefInt           ; the kernel's def_int service
+0x4C03CDDE  M3HookDispatch         ; runs the PutM3Em hook rows {mask, value, proc}
+0x4C174427  XaprCallM3Hook         ; the group-0x70 hook row's proc: header +0x18 (XaprEntryM3Hook)
+0x4C174230  XaprCallDiskFreeSpace  ; header +0x1C
+0x4C14D282  FileDiskFreeSpace      ; the file layer: XaprCallDiskFreeSpace when CheckExtMode, else GetDiskFreeSpace
+0x4C14F3AA  FileOpen               ; what fopen_ext wraps: header +0x30 in ExtMode
+0x50062EFE  FileExtMode            ; the ExtMode flag
+0x50062EFC  FileLastError          ; the file layer's last error
+;
+; ---- the parameter-id trie (lane mn10300-rest, 2026-10-31; the KN7000's ResourceIdTrie, the same design;
+;      probes kn7000/notes/mn10300-rest-probes/kn6000_opaque.py / kn2400_opaque.py, group "trie") ----------
+0x4C193FF8  ResourceIdTrie             ; the root of the parameter-id trie, 16 entries of {u32 target, u8 inner, u8 count, u16 0}: ResourceIdFind takes the 24-bit id's nibbles from bit 20 down; a leaf's +0 u32 is the id, +4 u16 its type (GetM3Em's records)
+0x4C02CBDA  ResourceIdFind             ; (d0 = 24-bit id) walks ResourceIdTrie by the id's nibbles (lsr / and 0x0f / asl 3; `mov (a1), d1`, `movbu (4, a1)`, `movbu (5, a1)`) and answers the leaf whose +0 is the id, else 0
