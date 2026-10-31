@@ -1,16 +1,16 @@
 {
  "date": "2026-10-31",
- "head": "d9d06262",
+ "head": "6ca33e65",
  "dirty": false,
  "rules": 5,
- "entry_snapshot": "docs/coverage/dispatch-census-2026-10-30-03.json",
- "entry_snapshot_head": "a9b5cf76",
+ "entry_snapshot": "docs/coverage/dispatch-census-2026-10-31-01.json",
+ "entry_snapshot_head": "d9d06262",
  "score": {
   "kn5000": 96.82,
   "wsa1": 92.65,
-  "kn7000": 80.66,
-  "mn10300-siblings": 78.98,
-  "all": 95.12
+  "kn7000": 81.98,
+  "mn10300-siblings": 79.8,
+  "all": 95.17
  },
  "components": {
   "kn5000": {
@@ -25,8 +25,8 @@
     "pct": 96.37
    },
    "entry": {
-    "num": 2303,
-    "den": 2303,
+    "num": 4664,
+    "den": 4664,
     "pct": 100.0
    },
    "fields": {
@@ -59,14 +59,14 @@
   },
   "kn7000": {
    "bytes": {
-    "num": 13037147,
+    "num": 13073153,
     "den": 13162201,
-    "pct": 99.05
+    "pct": 99.32
    },
    "names": {
-    "num": 22985,
-    "den": 36910,
-    "pct": 62.27
+    "num": 25652,
+    "den": 39687,
+    "pct": 64.64
    },
    "entry": {
     "num": 0,
@@ -81,14 +81,14 @@
   },
   "mn10300-siblings": {
    "bytes": {
-    "num": 12048166,
+    "num": 12111806,
     "den": 12383893,
-    "pct": 97.29
+    "pct": 97.8
    },
    "names": {
-    "num": 30550,
-    "den": 50349,
-    "pct": 60.68
+    "num": 32904,
+    "den": 53237,
+    "pct": 61.81
    },
    "entry": {
     "num": 0,
@@ -103,18 +103,18 @@
   },
   "all": {
    "bytes": {
-    "num": 44890561,
+    "num": 44990207,
     "den": 46189934,
-    "pct": 97.19
+    "pct": 97.4
    },
    "names": {
-    "num": 368128,
-    "den": 416313,
+    "num": 373149,
+    "den": 421978,
     "pct": 88.43
    },
    "entry": {
-    "num": 3075,
-    "den": 3075,
+    "num": 5436,
+    "den": 5436,
     "pct": 100.0
    },
    "fields": {
@@ -169,8 +169,8 @@
     2097152
    ],
    "entry": [
-    0,
-    0
+    711,
+    711
    ]
   },
   "v7": {
@@ -201,8 +201,8 @@
     2097152
    ],
    "entry": [
-    0,
-    0
+    713,
+    713
    ]
   },
   "v5": {
@@ -217,8 +217,8 @@
     2097152
    ],
    "entry": [
-    0,
-    0
+    713,
+    713
    ]
   },
   "v142": {
@@ -265,8 +265,8 @@
     196608
    ],
    "entry": [
-    0,
-    0
+    44,
+    44
    ]
   },
   "subboot": {
@@ -336,8 +336,8 @@
     524288
    ],
    "entry": [
-    0,
-    0
+    66,
+    66
    ]
   },
   "hdae_v115": {
@@ -350,8 +350,8 @@
     524288
    ],
    "entry": [
-    0,
-    0
+    57,
+    57
    ]
   },
   "hdae_v110": {
@@ -364,8 +364,8 @@
     524288
    ],
    "entry": [
-    0,
-    0
+    57,
+    57
    ]
   },
   "prom_a": {
@@ -431,14 +431,14 @@
   },
   "program": {
    "names": {
-    "semantic": 11289,
-    "generic": 33,
-    "positional": 6621,
-    "local": 308,
+    "semantic": 12621,
+    "generic": 96,
+    "positional": 6613,
+    "local": 320,
     "banner_only": 0
    },
    "bytes": [
-    4093793,
+    4111791,
     4157185
    ],
    "entry": [
@@ -473,14 +473,14 @@
   },
   "program942": {
    "names": {
-    "semantic": 11350,
-    "generic": 33,
-    "positional": 6626,
-    "local": 309,
+    "semantic": 12685,
+    "generic": 96,
+    "positional": 6618,
+    "local": 321,
     "banner_only": 1
    },
    "bytes": [
-    4132642,
+    4150650,
     4194304
    ],
    "entry": [
@@ -490,14 +490,14 @@
   },
   "kn2400": {
    "names": {
-    "semantic": 7825,
-    "positional": 7089,
-    "generic": 1,
-    "local": 325,
+    "semantic": 9280,
+    "generic": 237,
+    "positional": 7034,
+    "local": 425,
     "banner_only": 0
    },
    "bytes": [
-    3564695,
+    3606322,
     3761619
    ],
    "entry": [
@@ -507,14 +507,14 @@
   },
   "kn6000": {
    "names": {
-    "semantic": 14204,
-    "positional": 6090,
-    "generic": 4,
-    "local": 23,
+    "semantic": 14659,
+    "positional": 6035,
+    "generic": 231,
+    "local": 29,
     "banner_only": 0
    },
    "bytes": [
-    4094316,
+    4105267,
     4160049
    ],
    "entry": [
@@ -524,14 +524,14 @@
   },
   "kn6500": {
    "names": {
-    "semantic": 8131,
-    "positional": 6103,
-    "generic": 4,
-    "local": 24,
+    "semantic": 8575,
+    "positional": 6057,
+    "generic": 231,
+    "local": 30,
     "banner_only": 0
    },
    "bytes": [
-    3605826,
+    3616766,
     3675793
    ],
    "entry": [
@@ -546,7 +546,7 @@
     "banner_only": 0
    },
    "bytes": [
-    783329,
+    783451,
     786432
    ],
    "entry": [
