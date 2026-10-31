@@ -124,3 +124,12 @@ exit 0.
         ROSE  kn6500     (a) routines without a header            19070 -> 19071
         compared with docs/coverage/doc-quality-2026-10-31-02.json: 15 figure(s) ROSE
           (a rise is a regression unless the commit message says why, e.g. converted passthrough adds routines)
+
+## Correction to the message of 79e9457f4 (the -03 ledgers)
+
+Two figures in that commit message are wrong (the committed snapshots and badges are right):
+
+- builds 935 and 893 add **38,629** KN7000 names to the score's pool (39,687 at 6ca33e65 -> 78,316 at 973d2f80,
+  `docs/badges/semantic-score.json`), not "41,000";
+- the SX-WSA1R score is **unchanged at 92.65 %** (`docs/badges/semantic-score-history.csv`, both rows), not
+  "92.65 -> 92.7 %".
