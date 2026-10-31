@@ -106,11 +106,10 @@
   {
    "off": 18,
    "size": 1,
-   "name": "b_0x12",
-   "kind": "hex",
-   "evidence": "subcpu v1.42 Partial_Build_Present_Word 0x032B1E tests bits 1:0",
-   "inference": false,
-   "todo": "reader known, meaning not; 0 in all 723 distinct corpus records",
+   "name": "partial_flag_codes",
+   "kind": "bits",
+   "evidence": "subcpu v1.42 Partial_Build_Present_Word 0x032B1E: four 2-bit codes, one per partial in the order of the +0x11 partial mask (bits 1:0 partial 0 .. 7:6 partial 3); code 1 sets bit 15 of that partial's slot flag word (Part_Slot_Flags, part record +0x80 + 0x25*p: VoiceFlags_Bit0Set .. _Bit6Set), any other code clears it. 0 in all 723 distinct corpus records; ROM tone records 0x40 x13 (partial 3 code 1), 0x10 x1. [INFERENCE: what bit 15 of the slot flags does was not traced]",
+   "inference": true,
    "clamp": "none",
    "observed": {
     "samples": 723,
@@ -519,11 +518,10 @@
   {
    "off": 91,
    "size": 1,
-   "name": "b_0x5b",
+   "name": "unread_5b",
    "kind": "dec",
-   "evidence": "clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)",
+   "evidence": "clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). No sub-CPU reader: none in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS), and the record-pointer search notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py (REC +0x5b) finds none (the one (xwa + 91) in v1.42, Voice_Chan_Fallback_WritePrecomputed, is a word of a voice structure)",
    "inference": false,
-   "todo": "no subcpu reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)",
    "clamp": {
     "min": 0,
     "max": 127,
@@ -654,11 +652,10 @@
   {
    "off": 98,
    "size": 2,
-   "name": "b_0x62",
+   "name": "algo45_params",
    "kind": "hex",
-   "evidence": "no reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); unclamped",
-   "inference": false,
-   "todo": "no reader found",
+   "evidence": "subcpu v1.42 the parameters of algorithm types 4 and 5 (+0x5D low nibble): Algo_SubTable_DispatchB_Arm_Type45 reads +0x62 (L = 2 * value) and Algo_SubTable_JumpTable2 +0x62, Algo_SubTable_Bit15_Arm_Type45 +0x63, through Part_PatchRecord_Ptr (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py; table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) had no reader); unclamped [INFERENCE: what the two values set in the algorithm was not traced]",
+   "inference": true,
    "clamp": "none",
    "observed": {
     "samples": 723,
@@ -795,11 +792,10 @@
   {
    "off": 103,
    "size": 1,
-   "name": "partial_b_0x01",
+   "name": "partial_unread_01",
    "kind": "dec",
-   "evidence": "clamp 0..128; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "clamp 0..128; no sub-CPU reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x01 lists only stores into a voice structure) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -919,7 +915,7 @@
    "size": 1,
    "name": "partial_coarse_tune",
    "kind": "signed",
-   "evidence": "clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) nor by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py (BLK +0x04) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": true,
    "bias": 0,
    "todo": "semitone reading from range and corpus only; no reader found",
@@ -998,11 +994,10 @@
   {
    "off": 108,
    "size": 1,
-   "name": "partial_b_0x06",
+   "name": "partial_porta_sel",
    "kind": "hex",
-   "evidence": "unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
-   "inference": false,
-   "todo": "no reader found",
+   "evidence": "unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x06) [INFERENCE: the role of the 3-bit value was not traced] [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": true,
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1494,12 +1489,11 @@
   {
    "off": 120,
    "size": 1,
-   "name": "partial_env2_b_0x12",
+   "name": "partial_filter_b12",
    "kind": "signed",
-   "evidence": "clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
-   "inference": false,
+   "evidence": "clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13 of the filter word beside the cutoff from +0x11 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x12) [INFERENCE: what the field selects in the filter was not traced] [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": true,
    "bias": 0,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1816,12 +1810,11 @@
   {
    "off": 131,
    "size": 1,
-   "name": "partial_b_0x1d",
+   "name": "partial_unread_1d",
    "kind": "signed",
-   "evidence": "clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x1d: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1860,11 +1853,10 @@
   {
    "off": 132,
    "size": 8,
-   "name": "partial_b_0x1e",
+   "name": "partial_unread_1e",
    "kind": "dec",
-   "evidence": "clamp 0..127 each; no subcpu reader for +0x1D..+0x26 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x1e..+0x25: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1901,11 +1893,10 @@
   {
    "off": 140,
    "size": 1,
-   "name": "partial_b_0x26",
+   "name": "partial_unread_26",
    "kind": "hex",
-   "evidence": "unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x26: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2476,11 +2467,10 @@
   {
    "off": 158,
    "size": 1,
-   "name": "partial_b_0x38",
+   "name": "partial_unread_38",
    "kind": "hex",
-   "evidence": "unclamped; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x38: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -3153,12 +3143,11 @@
   {
    "off": 174,
    "size": 1,
-   "name": "partial_env3_b_0x48",
+   "name": "partial_unread_48",
    "kind": "signed",
-   "evidence": "clamp -50..50; no subcpu reader [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x48: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "no reader found",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -4117,11 +4106,10 @@
    {
     "off": 309,
     "size": 1,
-    "name": "entry_b_0x0e",
+    "name": "entry_unread_0e",
     "kind": "dec",
-    "evidence": "clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "evidence": "clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers; the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer's key scale and a wave-catalogue entry)) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
     "inference": false,
-    "todo": "no reader found",
     "repeat": {
      "count": 128,
      "stride": 80
@@ -4152,11 +4140,10 @@
    {
     "off": 310,
     "size": 1,
-    "name": "entry_b_0x0f",
+    "name": "entry_unread_0f",
     "kind": "dec",
-    "evidence": "clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "evidence": "clamp 0..127; no reader (table_data/tone_database_aux.s PercInst/DrumKit headers; the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer's key scale and a wave-catalogue entry)) [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
     "inference": false,
-    "todo": "no reader found",
     "repeat": {
      "count": 128,
      "stride": 80
@@ -4195,11 +4182,10 @@
    {
     "off": 311,
     "size": 1,
-    "name": "entry_layer0_b_0x00",
+    "name": "entry_layer0_unread_00",
     "kind": "dec",
-    "evidence": "clamp 0..128; no reader [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "evidence": "clamp 0..128; no reader (the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer's key scale and a wave-catalogue entry)) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
     "inference": false,
-    "todo": "no reader found",
     "repeat": {
      "count": 128,
      "stride": 80
@@ -4988,11 +4974,10 @@
    {
     "off": 332,
     "size": 1,
-    "name": "entry_layer1_b_0x00",
+    "name": "entry_layer1_unread_00",
     "kind": "dec",
-    "evidence": "clamp 0..128; no reader [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
+    "evidence": "clamp 0..128; no reader (the PercInst readers CustomTone_CopyToneRecord, Voice_Allocate_Type2, Voice_Calc_LevelPair_FixedAtk and VoiceParam_CustomTone_* read no such byte of a kit entry (their +14 / +15 reads are a layer's key scale and a wave-catalogue entry)) [layer L at entry +0x10 + 0x15*L: Voice_Allocate_Type2 0x02C12B; subcpu v1.42 DSP_SlotParam_Write_From_Cache_B 0x03025F writes 0x4AB7 + 80*edit + 21*L] [128 x 80-byte user drum instruments at kit +0x127 (file 0x4AA7) + 80*n, entry n = MIDI note n: maincpu v10 SingleLoad_LoadSoundMemEntry 0xF884D4 (80 B at 0x4AA7 + 80*i), SingleLoadSrc_ReadTmUserKitEntryName 0xF8A404; subcpu v1.42 CustomTone_CopyToneRecord 0x02E30E copies a resolved PercInst into 0x4AA7 + 80*n; the first 58 B are the 58-byte PercInst layout (table_data/tone_database_aux.s PercInst/DrumKit headers)]",
     "inference": false,
-    "todo": "no reader found",
     "repeat": {
      "count": 128,
      "stride": 80

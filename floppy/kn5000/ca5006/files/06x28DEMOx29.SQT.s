@@ -17,76 +17,75 @@ F_06x28DEMOx29_SQT_Song_1:
 	sqt_slot_a_2	0, 0, 0, 0, 0, 0, 0, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0, 32975, 0, 0, 0, 0, 0, 0, 0x80, 64, 0x80, 76, 0x80, 87, 0x80, 55, 0, 65535, 0, 65535, 0x80, 94, 0x80, 75, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0x80, 101
 	.ascii	" Schlager Demo  "	; song name
 	sqt_slot_b_head_0	0, 0
-	.fill	461, 1, 0x00	; init_zero_113 (TODO: purpose unknown)
+	.fill	461, 1, 0x00	; reserved_113
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 131, 0, 0, 110, 0x75, 0x50, 0, 64, 32, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; MEMORY A 4  <user RAM>
-	ptlv_part	0x01, 134, 0, 0, 105, 0x75, 0, 0, 64, -32, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; MEMORY A 7  <user RAM>
-	ptlv_part	0x02, 130, 0, 0, 100, 0x05, 0, 0, 64, -32, 64, 0x80, 0x02, 0x20, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; MEMORY A 3  <user RAM>
-	ptlv_part	0x03, 41, 0, 0, 118, 0x25, 0, 0, 64, 0, 76, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Slap Bass 1
-	ptlv_part	0x04, 3, 0, 0, 107, 0x65, 0, 0, 64, -64, 64, 0x80, 0x02, 0x20, 0x04, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Electric Grand
-	ptlv_part	0x05, 100, 0, 0, 107, 0x65, 0, 0, 64, 63, 64, 0x80, 0x02, 0x20, 0x05, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; ClassicalStrings
-	ptlv_part	0x06, 63, 0, 0, 107, 0x65, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Synth Brass 2
-	ptlv_part	0x07, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 1, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x0e, 253, 0, 0, 110, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0f, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x0f, 253, 0, 0, 110, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 142, 0, 0, 94, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0x0d, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; MEMORY A 15  <user RAM>
-	ptlv_part	0x11, 51, 0, 0, 104, 0x15, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0x0c, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Flugel Horn
-	ptlv_part	0x12, 108, 0x02, 0, 110, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0, 0, 112, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0a, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x14, 243, 0, 0, 112, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x09, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 3, 0, 0, 107, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Grand
-	ptlv_part	0x16, 41, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Slap Bass 1
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 128, 0, 234, 2, 0x06, 0, 0, 114
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 35, 30, 86, 5, 0, 70, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 19, 41, 0, 45, 16, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 131, 0, 0, 0x6e, 0, 5, 0, 1, 1, 1, 0, 80, 0, 64, 32, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; MEMORY A 4  <user RAM>
+	ptlv_part	0x01, 134, 0, 0, 0x69, 0, 5, 0, 1, 1, 1, 0, 0, 0, 64, -32, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; MEMORY A 7  <user RAM>
+	ptlv_part	0x02, 130, 0, 0, 0x64, 0, 5, 0, 0, 0, 0, 0, 0, 0, 64, -32, 64, 128, 2, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; MEMORY A 3  <user RAM>
+	ptlv_part	0x03, 41, 0, 0, 0x76, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 76, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Slap Bass 1
+	ptlv_part	0x04, 3, 0, 0, 0x6b, 0, 5, 0, 0, 1, 1, 0, 0, 0, 64, -64, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Electric Grand
+	ptlv_part	0x05, 100, 0, 0, 0x6b, 0, 5, 0, 0, 1, 1, 0, 0, 0, 64, 63, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; ClassicalStrings
+	ptlv_part	0x06, 63, 0, 0, 0x6b, 0, 5, 0, 0, 1, 1, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Synth Brass 2
+	ptlv_part	0x07, 1, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 1, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 1, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x0e, 253, 0, 0, 0x6e, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xf, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x0f, 253, 0, 0, 0x6e, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 142, 0, 0, 0x5e, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 0xd, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; MEMORY A 15  <user RAM>
+	ptlv_part	0x11, 51, 0, 0, 0x68, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 0xc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Flugel Horn
+	ptlv_part	0x12, 108, 2, 0, 0x6e, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xb, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 0, 0, 0x70, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xa, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x14, 243, 0, 0, 0x70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 3, 0, 0, 0x6b, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Grand
+	ptlv_part	0x16, 41, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Slap Bass 1
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 128, 0, 0, 2, 1, 0xe, 0, 2, 0, 0, 0, 3, 0, 0, 0, 114
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 35, 30, 86, 5, 0, 70, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; EXCITER: p1 DRIVE, p2 ADJUST, p3 HIGH EMPHASIS FC, p4 EMPHASIS GAIN, p5 VOLUME, p6 REV SEND, p7 (no name) [byte packing not established for this effect: 262 of 289 saved records decode in range]
+	ptlv_dsp_slot	0x63, 19, 41, 0, 45, 16, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; PLATE REVERB 2: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 233 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x05, 0x3c, 3, 0xff, 0, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x71, 0, 0, 0, 0x40, 0x64, 0x63, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 1, 1, 0, 60, 3, 255, 0, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x71, 0, 0, 0, 0x40, 0, 0x64, 0x63, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0x40, 0x0c, 0x1c, 0x45, 0, 0, 0, 0x0a, 0xb8, 0x41, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 3, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0x20, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0x01, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0x01, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_2:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -95,7 +94,7 @@ F_06x28DEMOx29_SQT_Song_2:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -127,72 +126,71 @@ F_06x28DEMOx29_SQT_Song_2:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_3:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -201,7 +199,7 @@ F_06x28DEMOx29_SQT_Song_3:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -233,72 +231,71 @@ F_06x28DEMOx29_SQT_Song_3:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_4:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -307,7 +304,7 @@ F_06x28DEMOx29_SQT_Song_4:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -339,72 +336,71 @@ F_06x28DEMOx29_SQT_Song_4:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_5:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -413,7 +409,7 @@ F_06x28DEMOx29_SQT_Song_5:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -445,72 +441,71 @@ F_06x28DEMOx29_SQT_Song_5:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_6:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -519,7 +514,7 @@ F_06x28DEMOx29_SQT_Song_6:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -551,72 +546,71 @@ F_06x28DEMOx29_SQT_Song_6:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_7:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -625,7 +619,7 @@ F_06x28DEMOx29_SQT_Song_7:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -657,72 +651,71 @@ F_06x28DEMOx29_SQT_Song_7:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_8:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -731,7 +724,7 @@ F_06x28DEMOx29_SQT_Song_8:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -763,72 +756,71 @@ F_06x28DEMOx29_SQT_Song_8:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_9:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -837,7 +829,7 @@ F_06x28DEMOx29_SQT_Song_9:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -869,72 +861,71 @@ F_06x28DEMOx29_SQT_Song_9:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Song_10:
 	.ascii	"ZZZZ"	; slot signature
 	.byte	0, 0x01, 0x08	; all-songs flag, signature
@@ -943,7 +934,7 @@ F_06x28DEMOx29_SQT_Song_10:
 	sqt_slot_a_2	0xff, 1, 2, 0, 0, 0xff, 2, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 255, 0, 0, 0, 0, 0, 0xff, 0xff, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535, 0, 65535
 	.ascii	"______          "	; song name
 	sqt_slot_b_head_0	0, 255
-	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; init_zero_113 (TODO: purpose unknown)
+	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff	; reserved_113
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
 	.byte	0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff
@@ -975,72 +966,71 @@ F_06x28DEMOx29_SQT_Song_10:
 	sqt_slot_b_head_1	0x5a, 0x5a, 0, 0, 0x48, 0x4b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ; The song's copy of panel block 0 (taken when the song is recorded): 46 records, the tag and length list of PanelTlv_Block0_Layout exactly.
 	ptlv_style_name	0x78, "                ", 0, 0
-	ptlv_part	0x00, 0, 0, 0, 127, 0x35, 0, 0, 64, 0, 64, 0x80, 0x02, 0x38, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Piano
-	ptlv_part	0x01, 56, 0, 0, 127, 0x35, 0, 0, 64, 16, 64, 0x80, 0x02, 0x38, 0x01, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0x01, 0	; Bigband Brass
-	ptlv_part	0x02, 6, 0, 0, 113, 0x45, 0, 0, 64, -16, 64, 0x80, 0x02, 0, 0x02, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x03, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x03, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x04, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x04, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x05, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x05, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x06, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x06, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x07, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x07, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x08, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x08, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x09, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x09, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0a, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0a, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0b, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0b, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0c, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0c, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0d, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0d, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0e, 0, 0, 0, 100, 0x25, 0, 0, 64, 0, 64, 0x80, 0x02, 0x20, 0x0e, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_part	0x0f, 240, 0, 0, 100, 0x20, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0x0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x10, 1, 0, 0, 113, 0x55, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
-	ptlv_part	0x11, 26, 0, 0, 113, 0x55, 0, 0, 64, 52, 64, 0x80, 0x02, 0, 0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
-	ptlv_part	0x12, 108, 0x02, 0, 113, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
-	ptlv_part	0x13, 40, 0x03, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
-	ptlv_part	0x14, 240, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xce, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_part	0x15, 6, 0, 0, 113, 0x45, 0, 0, 64, -52, 64, 0x80, 0x02, 0, 0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
-	ptlv_part	0x16, 40, 0, 0, 118, 0x15, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xc0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
-	ptlv_part	0x19, 0, 0, 0, 118, 0, 0, 0, 64, 0, 64, 0x80, 0x02, 0, 0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
-	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0
-	ptlv_tag47	0x47, 0xff, 0, 0, 0, 0xc0, 0, 0xff, 0xff
-	ptlv_tag43	0x43, 0x80, 0x3c, 0, 0
-	ptlv_style_select	0x48, 608, 0, 224, 0, 0, 0, 0, 120
-	ptlv_tag90	0x90, 0x01, 0, 0x67, 0, 0x40, 0
-	ptlv_tag60	0x60, 0, 0x80, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
-	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_part	0x00, 0, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Piano
+	ptlv_part	0x01, 56, 0, 0, 0x7f, 0, 5, 0, 1, 1, 0, 0, 0, 0, 64, 16, 64, 128, 2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 1, 0, 0	; Bigband Brass
+	ptlv_part	0x02, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -16, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x03, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x04, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x05, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x06, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x07, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x08, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 8, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x09, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 9, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0a, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xa, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0b, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xb, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0c, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xc, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0d, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xd, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0e, 0, 0, 0, 0x64, 0, 5, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 0xe, 0, 0, 0, 0, 0x80, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_part	0x0f, 240, 0, 0, 0x64, 0, 0, 0, 0, 1, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x10, 1, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Piano
+	ptlv_part	0x11, 26, 0, 0, 0x71, 0, 5, 0, 1, 0, 1, 0, 0, 0, 64, 52, 64, 128, 2, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Bright Solid Gtr
+	ptlv_part	0x12, 108, 2, 0, 0x71, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Dream
+	ptlv_part	0x13, 40, 3, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Funky E.Bass
+	ptlv_part	0x14, 240, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xe, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part	0x15, 6, 0, 0, 0x71, 0, 5, 0, 0, 0, 1, 0, 0, 0, 64, -52, 64, 128, 2, 0, 0, 0, 0, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Modern E.P.1
+	ptlv_part	0x16, 40, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Electric Bass
+	ptlv_part	0x19, 0, 0, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0xf, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
+	ptlv_drawbar	0x44, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x45, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
+	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
+	ptlv_style_select	0x48, 96, 2, 0, 0, 0, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120
+	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
+	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
+	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
+	ptlv_dsp_slot	0x63, 20, 35, 0, 11, 20, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; CONCERT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 1613 of 1719 saved records decode in range]
+	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
+	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag70	0x70, 0x06, 0x3c, 5, 0xff, 7, 2, 4, 0x07
-	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0x45, 0x1d, 0x33, 0, 0, 0
-	ptlv_tag92	0x92, 0, 0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80
+	ptlv_tag70	0x70, 2, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
-	ptlv_tag99	0x99, 0, 0, 0xb6, 0, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0x0c, 0x04, 0x45, 0, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0, 0, 80, 0
+	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
-	.byte	0x17, 0x18, 0, 0, 0, 0x76, 0x15, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc0	; song_panel_block1_head
-	.byte	0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0x18, 0x18, 0, 0, 0, 0x76
-	.byte	0x05, 0, 0, 0x5a, 0x40, 0x40, 0x80, 0x02, 0, 0xc1, 0x80, 0, 0, 0x80, 0x80, 0x80
-	.byte	0x80, 0, 0, 0, 0x98, 0x12, 0x40, 0, 0, 0x20, 0x76, 0, 0, 0x20, 0x5c, 0x01
-	.byte	0x5a, 0
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e	; panel_tail_702 (TODO: not written by any song-panel copy found; the last 6 bytes of record 0x98 may still be typed as pa
-	.byte	0, 0, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0
-	.byte	0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+; The song's copy of panel block 1's first records (BitMapOut_ComputeRegionDelta copies 0x422 B from 0xf980, six bytes into record 0x98; its last 6 bytes are older slot RAM): the first 3 records of PanelTlv_Block1_Layout.
+	ptlv_part	0x17, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 0, 0, 0, 0, 0, 0, 90, 0, 64, 128, 2, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0x80, 0, 0, 0x80, 0x80, 0x80, 0x80, 0, 0, 0, 0	; Piano
+	ptlv_tag98	0x98, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0x76, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0x98, 0x0e, 0, 0, 0, 0, 0xff, 0xff	; stale_708
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
+	.byte	0, 0, 0xff, 0xff, 0, 0, 0xff, 0xff
 F_06x28DEMOx29_SQT_Events:
 ; Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the
 ; demo-song grammar; analysis/disk-format-probes/disk_seq_chains.py).  A chain starts at

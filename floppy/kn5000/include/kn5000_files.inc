@@ -109,33 +109,92 @@
 	.endm
 
 ; ---- Style bank header and section records (CMP, RCM sections 0..6, and the IC19 custom-data
-; banks: the layout and field names of scripts/build/style_events.py's BANK LAYOUT docstring).
+; banks).  The layout, the field names and the evidence for each field are in
+; scripts/build/style_bank_layout.py, which formats.py and scripts/build/style_events.py both import.
+;   password       +0x0e: written by FmmPasswordFunc (EVT_SET_PASSWORD) with the song slots' +0x1c; 0 = none
+;   composer_mode  +0x10: 0 NORMAL MODE, 1 EXPAND MODE (AcCmpMdBoxProc, the COMPOSER MODE screen)
+	.macro	style_bank_mode password, composer_mode
+	.short	\password
+	.byte	\composer_mode
+	.endm
 ; The size words at +0x1e..+0x2f; capacity16 and used_size16 count 16-byte units.  used_size16 is
 ; written by AccPatch_InitSlotChain; cmp_sv_mae returns it * 16 as the .CMP size and
-; FileIO_SaveRcmFromFlash reads it for the .RCM chunk lengths.  The other words are constant in
-; every bank ([INFERENCE] from their values and the code's matching constants).
-	.macro	style_bank_sizes capacity16, dir_offset, record_size, record_count, cell_size, cell_count, name_offset, hdr_2c, used_size16
-	.short	\capacity16, \dir_offset, \record_size, \record_count, \cell_size, \cell_count, \name_offset, \hdr_2c, \used_size16
+; FileIO_SaveRcmFromFlash reads it for the .RCM chunk lengths.  No reader of the other words was
+; found: the firmware hard-codes the same values (0x16800, 0x60, 30, 0x100, 340, 0x40).
+	.macro	style_bank_sizes capacity16, dir_offset, record_size, record_count, cell_size, cell_count, name_offset, reserved_2c, used_size16
+	.short	\capacity16, \dir_offset, \record_size, \record_count, \cell_size, \cell_count, \name_offset, \reserved_2c, \used_size16
 	.endm
 
-; One of the 30 STYLE_SECTION records (a/b/c variation 1-4, then intro, fill-in and ending 1-2).
-;   part0, w02, part1..part4  the five parts' first cells: (section nibble << 12) | cell entry; w02 = 0
-;                             (AccDemo_LoadVariation: "five consecutive block numbers, the second word 0")
-;   r0c_0..r0c_11             +0x0c, 12 bytes copied from AccDemo_LoadVariation_EntryLoop_Data_2
-;                             (TODO: not named)
-;   gN_0..gN_3                +0x18 + 8N: four u16 per part N [INFERENCE: grouping by shape; TODO: not named]
-;   name                      +0x40, 16 bytes: the pattern source the section came from
-;   t0..t15                   +0x50, AccDemo_SectionRecordTail's 16 bytes (TODO: not named)
-	.macro	style_section part0, w02, part1, part2, part3, part4, r0c_0, r0c_1, r0c_2, r0c_3, r0c_4, r0c_5, r0c_6, r0c_7, r0c_8, r0c_9, r0c_10, r0c_11, g0_0, g0_1, g0_2, g0_3, g1_0, g1_1, g1_2, g1_3, g2_0, g2_1, g2_2, g2_3, g3_0, g3_1, g3_2, g3_3, g4_0, g4_1, g4_2, g4_3, name, t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15
-	.short	\part0, \w02, \part1, \part2, \part3, \part4
-	.byte	\r0c_0, \r0c_1, \r0c_2, \r0c_3, \r0c_4, \r0c_5, \r0c_6, \r0c_7, \r0c_8, \r0c_9, \r0c_10, \r0c_11
-	.short	\g0_0, \g0_1, \g0_2, \g0_3, \g1_0, \g1_1, \g1_2, \g1_3, \g2_0, \g2_1, \g2_2, \g2_3
-	.short	\g3_0, \g3_1, \g3_2, \g3_3, \g4_0, \g4_1, \g4_2, \g4_3
+; Head of one of the 30 STYLE_SECTION records (a/b/c variation 1-4, then intro, fill-in, ending 1-2):
+;   drum_cell .. acc3_cell  the five parts' first cells, (section nibble << 12) | cell entry
+;                           (MapBitFlagsToChannelOffset: DRUM +0, BASS +4, ACCOMP1-3 +6/+8/+0xa)
+;   reserved_02             the sixth lane's word, never used (0)
+;   time_sig                +0x0c, TIME SIGNATURE index (0 = 1/2 .. 7 = 4/4 .. 15 = 4/8)
+;   last_measure            +0x0d, MEASURE - 1 (0..7)
+;   key, minor, accomp_7th, bass_7th, bit7
+;                           +0x0e, the RECORD SETTING rows: KEY (C .. B), CHORD MINOR, ACCOMP TYPE 7th,
+;                           BASS TYPE 7th (RhythmPatInit_LoadParams / RhythmProc_CheckConfigBits)
+;   edit_flags              +0x0f, bit 7 = MEASURE / TIME SIGNATURE still changeable ("(ENABLE)")
+;   style_number, style_group
+;                           +0x10, the section's style in PANEL_STYLE's {number, group} format
+	.macro	style_section_head drum_cell, reserved_02, bass_cell, acc1_cell, acc2_cell, acc3_cell, time_sig, last_measure, key, minor, accomp_7th, bass_7th, bit7, edit_flags, style_number, style_group
+	.short	\drum_cell, \reserved_02, \bass_cell, \acc1_cell, \acc2_cell, \acc3_cell
+	.byte	\time_sig, \last_measure
+	.byte	\key | (\minor << 4) | (\accomp_7th << 5) | (\bass_7th << 6) | (\bit7 << 7)
+	.byte	\edit_flags, \style_number, \style_group
+	.endm
+; One part's settings, record +0x18 + 8 * part (DRUM, BASS, ACCOMP1, ACCOMP2, ACCOMP3):
+;   sound, bank   the part's sound (AccPatch_SyncVoice_* from PANEL_PART_*; DRUM: the kit, 0..15)
+;   pan           PANPOT 0..127 (MainCmpSetFunc, EVT_PAN_UP / _DN)
+;   digital_effect 0/1, bit 6 of the panel part's +4, SndParam DIGITAL EFFECT (AccPatch_SyncVoice_*)
+;   pc_byte4      the fifth byte of the part's program-change record (AccVoice_LoadAllChannelParams)
+;                 [INFERENCE: its use in the tone generator was not traced]
+;   pitch_point   PITCH POINT 0..11 (MainCmpSetFunc, EVT_RLMT_UP / _DN; Rhythm_TransposeNote)
+;   high_key      the note limit Rhythm_Transp_WrapCheck folds transposed notes below (0x7f / 0xff none)
+;   reserved_7    0; not in the lane copy
+	.macro	style_part sound, bank, pan, digital_effect, pc_byte4, pitch_point, high_key, reserved_7
+	.byte	\sound, \bank, \pan, \digital_effect, \pc_byte4, \pitch_point, \high_key, \reserved_7
+	.endm
+; The section's 16-byte name (+0x40; the pattern source the section came from).
+	.macro	style_section_name name
 .Lssn\@:
 	.ascii	"\name"
 .Lsse\@:
 	.if	(.Lsse\@ - .Lssn\@) - 16
-	.error	"style_section: name is not 16 bytes"
+	.error	"style_section_name: name is not 16 bytes"
 	.endif
-	.byte	\t0, \t1, \t2, \t3, \t4, \t5, \t6, \t7, \t8, \t9, \t10, \t11, \t12, \t13, \t14, \t15
+	.endm
+; One of the five COMPOSER CHORD MAPs at +0xba0: the four variations it plays (0..11, 0xff none;
+; CmpNcp_StepSlotInGroup2), twelve zero bytes and the 16-byte name.
+	.macro	style_chord_map v0, v1, v2, v3, name
+	.byte	\v0, \v1, \v2, \v3
+	.fill	12, 1, 0
+.Lscn\@:
+	.ascii	"\name"
+.Lsce\@:
+	.if	(.Lsce\@ - .Lscn\@) - 16
+	.error	"style_chord_map: name is not 16 bytes"
+	.endif
+	.endm
+; One row of the measure-start table at +0xc40 (variation 0..11, part DRUM BASS ACCOMP1-3): for
+; measures 1..8 the {cell, offset} where the part's measure starts (AccVoice_GetMeasureStartBlock,
+; AccPatch_StoreMeasureCursor).
+	.macro	style_measure_starts c1, o1, c2, o2, c3, o3, c4, o4, c5, o5, c6, o6, c7, o7, c8, o8
+	.short	\c1, \o1, \c2, \o2, \c3, \o3, \c4, \o4, \c5, \o5, \c6, \o6, \c7, \o7, \c8, \o8
+	.endm
+
+; ---- The Sound Arranger memory (RAM 0x1e7800, the last 0x800 bytes of a .LSW): one record per style index
+; (AccHelper_ComputeVoiceOffset), the sounds of DRUM, BASS, ACCOMP1, ACCOMP2, ACCOMP3.  Readers and writers:
+; AccVoiceState_Snapshot (from PANEL_PART_DRUM .. _ACP3), AccTuning_LoadFromROM (into the lane records 0x3246..),
+; AccStyle_InlinedBlock_Skip2 (sets arranged); initial image AccStyle_RamImage_1E7800 (AccStyle_InitVRAM).
+;   drum_kit, drum_bank   the DRUM kit (low nibble) and bank (bits 6:0)
+;   *_sound, *_bank       the part's sound and bank (bits 6:0)
+;   flags                 the five bit-7s: bit 0 = arranged (DRUM bank byte: use these sounds), bits 1..4 = the
+;                         DIGITAL EFFECT of BASS, ACCOMP1, ACCOMP2, ACCOMP3 (PANEL_PART_x+4 bit 6)
+	.macro	sndarg drum_kit, drum_bank, bass_sound, bass_bank, acc1_sound, acc1_bank, acc2_sound, acc2_bank, acc3_sound, acc3_bank, flags
+	.byte	\drum_kit, \drum_bank | ((\flags & 1) << 7)
+	.byte	\bass_sound, \bass_bank | (((\flags >> 1) & 1) << 7)
+	.byte	\acc1_sound, \acc1_bank | (((\flags >> 2) & 1) << 7)
+	.byte	\acc2_sound, \acc2_bank | (((\flags >> 3) & 1) << 7)
+	.byte	\acc3_sound, \acc3_bank | (((\flags >> 4) & 1) << 7)
 	.endm

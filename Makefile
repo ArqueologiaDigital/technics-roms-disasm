@@ -1230,7 +1230,7 @@ STYLE_EVENT_SRC = $(wildcard custom_data/styles/*.styles)
 
 # `&:` is a GROUPED target (GNU make >= 4.3): one recipe produces all five, so the
 # script runs once rather than once per output.
-$(STYLE_EVENT_BINS) &: $(STYLE_EVENT_SRC) scripts/build/style_events.py
+$(STYLE_EVENT_BINS) &: $(STYLE_EVENT_SRC) scripts/build/style_events.py scripts/build/style_bank_layout.py
 	python3 scripts/build/style_events.py build
 
 style-events: $(STYLE_EVENT_BINS)
