@@ -480,7 +480,7 @@
 	ev_beat
 	ev_beat
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x461e1, 0x461e2	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_at	0
@@ -493,7 +493,7 @@
 	ev_note	0, 57, 76, 12, 0, 0
 	ev_note	0, 36, 113, 12, 0, 0
 	ev_note	0, 18, 90, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x4620a, 0x4620b	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 45, 101, 88, 0, 1
@@ -506,7 +506,7 @@
 	ev_note	4, 64, 98, 92, 0, 1
 	ev_at	48
 	ev_note	0, 19, 46, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x4622e, 0x4622f	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 43, 90, 39, 0, 1
@@ -522,7 +522,7 @@
 	ev_at	48
 	ev_note	0, 55, 93, 12, 0, 0
 	ev_note	0, 18, 75, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x46269, 0x4626a	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 43, 100, 39, 0, 1
@@ -592,7 +592,7 @@
 	ev_note	4, 67, 99, 2, 1, 1
 	ev_at	48
 	ev_note	1, 43, 87, 39, 0, 1
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x4635b, 0x4635c	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	2, 55, 79, 39, 0, 1
@@ -848,7 +848,7 @@
 	ev_at	48
 	ev_cc	3, 64, 0
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x466c0, 0x466c4	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_beat
@@ -886,7 +886,7 @@
 	ev_note	2, 43, 86, 49, 1, 1
 	ev_note	2, 55, 90, 91, 0, 1
 	ev_note	2, 58, 89, 97, 0, 1
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x4674f, 0x46750	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	3, 55, 82, 95, 0, 1
@@ -898,7 +898,7 @@
 	ev_beat
 	ev_at	48
 	ev_note	0, 19, 45, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x4676f, 0x46770	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	2, 56, 78, 50, 0, 1
@@ -917,7 +917,7 @@
 	ev_at	48
 	ev_note	0, 57, 69, 12, 0, 0
 	ev_note	0, 36, 105, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x467b6, 0x467be	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	3, 56, 78, 88, 0, 1
@@ -959,7 +959,7 @@
 	ev_note	0, 52, 75, 12, 0, 0
 	ev_note	0, 36, 101, 12, 0, 0
 	ev_note	0, 18, 53, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x46846, 0x4684e	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	2, 39, 85, 46, 1, 1
@@ -1001,7 +1001,7 @@
 	ev_note	2, 38, 99, 127, 2, 1
 	ev_note	2, 56, 84, 127, 2, 1
 	ev_note	2, 62, 84, 105, 0, 1
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x468da, 0x468e2	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 38, 111, 56, 1, 1
@@ -1041,7 +1041,7 @@
 	ev_note	0, 57, 76, 12, 0, 0
 	ev_note	0, 36, 113, 12, 0, 0
 	ev_note	0, 18, 90, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x46969, 0x4696a	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 44, 101, 88, 0, 1
@@ -1054,7 +1054,7 @@
 	ev_note	4, 63, 98, 92, 0, 1
 	ev_at	48
 	ev_note	0, 19, 46, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x4698d, 0x4698e	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 43, 90, 39, 0, 1
@@ -1070,7 +1070,7 @@
 	ev_at	48
 	ev_note	0, 55, 93, 12, 0, 0
 	ev_note	0, 18, 75, 12, 0, 0
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x469c8, 0x469c9	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	1, 43, 100, 39, 0, 1
@@ -1140,7 +1140,7 @@
 	ev_note	4, 67, 99, 2, 1, 1
 	ev_at	48
 	ev_note	1, 43, 87, 39, 0, 1
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x46aba, 0x46abb	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_note	2, 55, 79, 39, 0, 1
@@ -1393,7 +1393,7 @@
 	ev_beat
 	ev_beat
 	ev_beat
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0x46e1a, 0x46e1c	# stale bytes of an earlier write
 	.byte 0x40, 0x00	# stale tail of an earlier write; same bytes as 01ctmini Slot16 +0x7f79..+0x8392; bytes 1..2 of `ev_cc`
 	ev_end

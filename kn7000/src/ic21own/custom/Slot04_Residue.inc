@@ -944,7 +944,7 @@
 	ev_cc	3, 11, 127
 	ev_cc	4, 11, 127
 	ev_end
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0xc9c19, 0xc9c1d	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_beat
@@ -2616,7 +2616,7 @@
 	.byte 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x02, 0x00, 0x00, 0x00, 0x02, 0xe0
 	.space 8
 	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb3bf, 0xcb3c0	# stale bytes of an earlier write
 	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x3eef..+0x3f4c; bytes 5..23 of `PART_SETUP`
 	.space 10
@@ -2624,7 +2624,7 @@
 	.space 8
 	TPAD_PAD "BaroqueInterlude", 0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x00, 0x00, 0x03, 0x03, 0x03, 0x00, 0x00, 0x5b5
 	.byte 0x06, 0x7f	# bytes 0..1 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb41d, 0xcb420	# stale bytes of an earlier write
 	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot04 +0x3cde..+0x3d14; bytes 5..23 of `PART_SETUP`
 	.space 10
@@ -2636,13 +2636,13 @@
 	.byte 0x11, 0x11, 0x00, 0x00, 0x01, 0x03, 0x03, 0x00, 0x00, 0x00, 0x07, 0xdf
 	.space 8
 	.byte 0x06, 0x7f, 0x00, 0x00	# bytes 0..3 of `PART_SETUP`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb47f, 0xcb480	# stale bytes of an earlier write
 	.byte 0x00, 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x3eef..+0x3f22; bytes 5..23 of `PART_SETUP`
 	.space 10
 	PART_SETUP 0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.space 8
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb4b3, 0xcb4e1	# stale bytes of an earlier write
 	.byte 0x28, 0x00, 0x40, 0x0c, 0x1c, 0x40, 0x6c, 0x40	# stale tail of an earlier write; same bytes as 01ctmini Slot07 +0x3ef0..+0x3f22; bytes 6..23 of `PART_SETUP`
 	.space 10
@@ -2661,7 +2661,7 @@
 	PART_SETUP 0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.space 8
 	.byte 0x00, 0x00	# bytes 0..1 of `STREAM_HEADER`
-	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine sets holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
+	# census: opaque -- unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)
 	.incbin_range "baserom/kn7000_ic21_own.bin", 0xcb5d5, 0xcb5d7	# stale bytes of an earlier write
 	# stale events of an earlier write: no record holds them; they parse as events
 	ev_beat
