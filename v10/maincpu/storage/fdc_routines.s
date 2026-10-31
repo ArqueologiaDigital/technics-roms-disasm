@@ -24,7 +24,7 @@ FDC_Read_Status:
 
 ; FDC_ReadDataRegister: Reads the uPD72068 data register (0x11000A) into L: result-phase bytes and status bytes.
 ;   Basis: callers + body -- the result-phase readers (FDC_ResultPhase_Read, FDC_SendAuxCmdReadResult,
-;   FDC_INTERRUPT_HANDLER, INT4_ReadResultLoop, FDC_CONFIG_VERIFY) call it after waiting for RQM.
+;   FDC_CmdSenseDriveStatus, INT4_ReadResultLoop, FDC_CONFIG_VERIFY) call it after waiting for RQM.
 FDC_ReadDataRegister:
 	ld l, (0x11000a:24)
 	ret
@@ -1736,7 +1736,7 @@ FDC_MODE_CONFIG:
 	calr	FDC_PRE_OP_CHECK
 	cp	(FDC_ERROR_CODE:16), 0
 	jrl	nz, FDC_MC_EXIT
-	calr	FDC_INTERRUPT_HANDLER
+	calr	FDC_CmdSenseDriveStatus
 	cp	(FDC_ERROR_CODE:16), 0
 	jrl	nz, FDC_MC_EXIT
 	calr	FDC_CmdRecalibrate
@@ -2035,41 +2035,44 @@ FDC_OUTPUT_CTRL_Skip2:
 FDC_OUTPUT_CTRL_Join:
 	ld	(FDC_DISK_CHANGED:16), 0
 	ret
-; --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
-; Enables interrupts via prevbank (D7 FA 04 = ei 4).
-; Checks FDC status register, reads result data.
-; Tests status bits to determine result type:
-;   bit 7 -> status 0x32 (overrun), bit 5 -> status 0x31 (no data),
-;   bit 6 -> status 0x2f (bad cylinder).
-; Disables interrupts (D7 FA 05 = di 4) before return.
-FDC_INTERRUPT_HANDLER:
+; --- FDC_CmdSenseDriveStatus: FDC command 11, SENSE DRIVE STATUS ---
+; Sends the uPD72068 command byte 0x04 (FDC_CMD_SEND), waits for the result phase
+; (FDC_Wait_Ready_Timeout) and reads ST3 (FDC_ReadDataRegister) into QIZH (previous
+; bank register 0xfb), then raises FDC_Set_Status for each condition, the first one sticking:
+;   ST3 bit 7 (fault)            -> 0x32 equipment check / fault,
+;   ST3 bit 5 (ready) clear      -> 0x31 drive not ready,
+;   ST3 bit 6 (write-protected)  -> 0x2f write-protected.
+; Returns at once if FDC_ERROR_CODE is already set.  No ei / di: QIZ is saved with push qiz.
+; Callers: FDC_MODE_CONFIG (before recalibrating) and FDC_HANDLER_11 (command 11).
+; Twin: table_data FDC_CmdSenseDriveStatus (boot_fdc_driver.s).
+FDC_CmdSenseDriveStatus:
 	push	qiz
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr	nz, FDC_CmdSenseDriveStatus_Done
 	ld	wa, 4:i3
 	calr	FDC_CMD_SEND
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr	nz, FDC_CmdSenseDriveStatus_Done
 	calr	FDC_Wait_Ready_Timeout
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr	nz, FDC_CmdSenseDriveStatus_Done
 	calr	FDC_ReadDataRegister
 	ldfr_berp l, 251
 	bit_erpb 251, 7
-	jr z, FDC_INTERRUPT_HANDLER_Code_Skip
+	jr z, FDC_CmdSenseDriveStatus_CheckReady
 	ldw	wa, 50
 	calr	FDC_Set_Status
-FDC_INTERRUPT_HANDLER_Code_Skip:
+FDC_CmdSenseDriveStatus_CheckReady:
 	bit_erpb 251, 5
-	jr nz, FDC_INTERRUPT_HANDLER_Code_Skip2
+	jr nz, FDC_CmdSenseDriveStatus_CheckWP
 	ldw	wa, 49
 	calr	FDC_Set_Status
-FDC_INTERRUPT_HANDLER_Code_Skip2:
+FDC_CmdSenseDriveStatus_CheckWP:
 	bit_erpb 251, 6
-	jr z, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr z, FDC_CmdSenseDriveStatus_Done
 	ldw	wa, 47
 	calr	FDC_Set_Status
-FDC_INTERRUPT_HANDLER_Code_Epilogue:
+FDC_CmdSenseDriveStatus_Done:
 	pop qiz
 	ret
 
@@ -2163,7 +2166,7 @@ FDC_CommandEntry_CopyParams:
 	; (EQU->inline label) FDC_CMD_DISABLE = 0xf97c4b
 	; (EQU->inline label) FDC_STATUS_COPY = 0xf97c54
 	; (EQU->inline label) FDC_OUTPUT_CTRL = 0xf97c5b
-	; (EQU->inline label) FDC_INTERRUPT_HANDLER = 0xf97c7c
+	; (EQU->inline label) FDC_CmdSenseDriveStatus = 0xf97c7c
 
 ; Forward references to helper routines in raw byte sections
 	; (EQU->inline label) FDC_DRIVE_DETECT = 0xf97544
@@ -2234,7 +2237,7 @@ FDC_HANDLER_10:
 
 FDC_HANDLER_11:
 	calr FDC_CMD_ENABLE
-	calr FDC_INTERRUPT_HANDLER
+	calr FDC_CmdSenseDriveStatus
 	jr FDC_Handler_ExitStatus
 
 FDC_Handler_InvalidCommand:

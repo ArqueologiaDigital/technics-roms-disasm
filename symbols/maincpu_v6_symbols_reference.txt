@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,863
-#   semantic names ........... 53,382 (99.1%)
+#   symbols .................. 53,862
+#   semantic names ........... 53,381 (99.1%)
 #   positional names ......... 481
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -41671,11 +41671,10 @@ FDC_OUTPUT_CTRL 00F97759
 FDC_STATUS_COPY_Code_Skip 00F97767
 FDC_STATUS_COPY_Code_Skip2 00F9776E
 FDC_STATUS_COPY_Code_Join 00F97774
-FDC_INTERRUPT_HANDLER 00F9777A
-FDC_INTERRUPT_HANDLER_Code 00F97796
-FDC_INTERRUPT_HANDLER_Code_Skip 00F977AC
-FDC_INTERRUPT_HANDLER_Code_Skip2 00F977B8
-FDC_INTERRUPT_HANDLER_Code_Epilogue 00F977C4
+FDC_CmdSenseDriveStatus 00F9777A
+FDC_CmdSenseDriveStatus_CheckReady 00F977AC
+FDC_CmdSenseDriveStatus_CheckWP 00F977B8
+FDC_CmdSenseDriveStatus_Done 00F977C4
 FDC_CommandEntry 00F977C8
 FDC_CommandEntry_EnableIRQ 00F977D7
 FDC_CommandEntry_CopyParams 00F977ED

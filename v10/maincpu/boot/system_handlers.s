@@ -45,8 +45,9 @@ NMI_HaltLoop:
 ;        SRAM[0x1E8000..] = copy of DRAM[0xF980..]
 ;        CPU halts (machine powers off)
 ; Notes: Guards against running without being armed:
-;          - Checks internal RAM[0x0400] == 0x80 (NMI guard set by Boot_DisplayScreen)
-;          - If guard not set, returns immediately (no-op)
+;          - BOOT_STAGE must be 0x80, boot complete: Boot_PostSelfTest stores 2 and 3,
+;            Boot_DisplayScreen 6 and then 0x80, NMI_ClearGuardAndHalt 0
+;          - any other stage returns at once (no-op)
 ;        On success the checksums are stored so SubCPU_Payload_Verify can verify
 ;        the payload on the next boot and show the splash screen (not "ALL INITIAL SETTING!").
 ; ===========================================================================

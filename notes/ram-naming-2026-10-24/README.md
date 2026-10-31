@@ -129,6 +129,7 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
    `SqedtFunc_StateChainB_On*`) form one table per title, and could be named record by record from those
    switch tables.
 6. `NMI_StorePayloadChecksums`'s routine header (`boot/system_handlers.s`) still describes RAM 0x0400 as
-   "the NMI guard" by number. A header lane could name `BOOT_STAGE` there.
+   "the NMI guard" by number. A header lane could name `BOOT_STAGE` there.  (Done 2026-10-31, lane kn5000-a:
+   the header now says BOOT_STAGE must be 0x80 and names its writers, in v10/v9/v7/v6/v5.)
 7. The panel records named after their tag (`PANEL_REC_90`, `PANEL_REC_60` and the like) are placeholders.
    Their comments already identify fields, so they could get semantic names in a later batch.

@@ -297,7 +297,9 @@ Run on the merged branch, nothing written:
 - **Comments in the HD-AE5000 sources** (`hdae5000*/hdae5000_data_tables.s`) named the five extraction copies
   this lane deleted; corrected after lane hdae-ledgers was merged (comment-only; the Palette `.bin` mentions stay,
   those files are kept).  `notes/hdae5000-versions-2026-10-24/port-edits/00_filepanel_picture.py`, a dated port
-  edit, still quotes the old comment.
+  edit, still quotes the old comment: on purpose, it records the text it replaced, and nothing replays that
+  directory (its docstring says so since 2026-10-31, lane kn5000-a).  The v1 replays that do run were updated
+  for this lane's 0x01EA comment changes (`port-edits-v1_15i/04g_no_select_all.py`, `94b_v1_prose.py`).
 - The palettes in `v*/maincpu/images/` (`Palette_8bit_RGBA*.bin`) and `hdae5000/images/HDAE5000_Palette*.bin`
   are data, not converter output, and stay tracked.
 

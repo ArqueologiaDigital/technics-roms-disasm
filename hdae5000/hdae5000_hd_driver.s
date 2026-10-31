@@ -547,7 +547,7 @@ HDAE5000_TitleInfo_Build:
 	lda xsp, (xsp + 0x1a)			; bf 1a 37
 
 	; --- Register event handlers ---
-	; Register event 0x01EA000A with display buffer
+	; EVT_HDAE_SET_STR_ADR (MT_SetStrAdr, 0x01EA000A): give the list its row-string table
 	lda xwa, (HDAE5000_RAM_TitleInfoText:24); f2 a6 ad 22 30
 	ld xde, xwa				; e8 8a
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
@@ -912,13 +912,14 @@ HDAE5000_DirList_BuildPage:
 ; 0x01EA0003 back to the UI.  [INFERENCE] which of the two moves the list
 ; "down" on screen is not proven by this ROM.
 ;
-; INFERENCE (not proven by this ROM): the 0x01EA000n codes index
-; HDAE5000_MessageName_Table, giving n=0 MT_OverFlow, n=1 MT_UnderFlow,
-; n=3 MT_SetSelNum, n=6/7 MT_SelectOK/MT_SelectOK2, n=8 MT_SelectSAVE.  The
-; clamp arithmetic matches OverFlow/UnderFlow, but the main CPU assigns the
-; codes and this ROM never spells the mapping out.  The per-arm comments
-; below ("page down", "page up", "seek", "set format params") predate this
-; note and have NOT been re-verified.
+; The 0x01EA000n codes are this module's own ResMethod ids: HDAE5000_Handler_Registration
+; registers HDAE5000_MessageName_Table (copied to HDAE5000_RAM_MessageName_Table) at
+; object slot 0x1EA with ResMethodProc, and the main CPU's ResMethodProc names id
+; 0x01EAKKKK as entry KKKK of that table: n=0 MT_OverFlow, n=1 MT_UnderFlow,
+; n=3 MT_SetSelNum, n=6/7 MT_SelectOK/MT_SelectOK2, n=8 MT_SelectSAVE
+; (notes/event-codes-2026-10-02, group evt-01E8-01EF).  OverFlow / UnderFlow are what
+; HDAE5000_SelectListProc sends when ChangeSelNum leaves the list; SelectOK / OK2 /
+; SAVE are the list's soft buttons, forwarded with the current selection in IZ.
 ; Dispatches 0x01EA0000, 0x01EA0001, 0x01EA0006, 0x01EA0007, 0x01EA0008 and
 ; 0x01C00007; every other code falls straight through to .Lfd_done.
 HDAE5000_SEL_DIR_Screen:	; 0x2837F2
@@ -931,11 +932,11 @@ HDAE5000_SEL_DIR_Screen:	; 0x2837F2
 	cp xbc, EVT_HDAE_UNDER_FLOW
 	jrl z, .Lfd_page_up		; 0x01EA0001 = page up
 	cp xbc, EVT_HDAE_SELECT_SAVE
-	jrl z, .Lfd_seek		; 0x01EA0008 = seek
+	jrl z, .Lfd_select_save	; MT_SelectSAVE: the SAVE soft button
 	cp xbc, EVT_HDAE_SELECT_OK2
-	jrl z, .Lfd_set_format		; 0x01EA0007 = set format params
+	jrl z, .Lfd_select_ok		; MT_SelectOK2: the second OK soft button
 	cp xbc, EVT_HDAE_SELECT_OK
-	jrl z, .Lfd_set_format		; 0x01EA0006 = same handler
+	jrl z, .Lfd_select_ok		; MT_SelectOK: the same arm
 	cp xbc, EVT_SW_IN
 	jrl nz, .Lfd_done		; not 0x01C00007 → exit
 
@@ -994,8 +995,8 @@ HDAE5000_SEL_DIR_Screen:	; 0x2837F2
 	calr HDAE5000_DirList_BuildPage
 	jrl t, .Lfd_done
 
-.Lfd_set_format:
-	; Handle 0x01EA0006/0007: set format parameters
+.Lfd_select_ok:
+	; MT_SelectOK / MT_SelectOK2: open the selected directory (CurDir = page base + IZ)
 	ld bc, (HDAE5000_RAM_DirPageBase:24); BC = base offset
 	ld wa, iz
 	add wa, bc
@@ -1014,8 +1015,8 @@ HDAE5000_SEL_DIR_Screen:	; 0x2837F2
 	call (xhl)
 	jrl t, .Lfd_done
 
-.Lfd_seek:
-	; Handle 0x01EA0008: seek operation
+.Lfd_select_save:
+	; MT_SelectSAVE: CurDir = page base + IZ, then check its name (NAKA_APFUNC_HDD_DIRNAMECheck)
 	ld wa, (HDAE5000_RAM_DirPageBase:24); WA = base offset
 	ld bc, iz
 	add bc, wa

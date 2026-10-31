@@ -1452,7 +1452,7 @@ FDC_CommandDispatch_Offsets:
 	.short FDC_Dispatch_GetLastError - FDC_Dispatch_Initialize	; cmd  8 -> FDC_CmdGetLastError    (FDC_STATUS_COPY)
 	.short FDC_Dispatch_SetDiskChanged - FDC_Dispatch_Initialize	; cmd  9 -> FDC_CmdSetDiskChanged  (FDC_OUTPUT_CTRL)
 	.short FDC_Dispatch_ControllerReset - FDC_Dispatch_Initialize	; cmd 10 -> FDC_CmdControllerReset (FDC_CMD_DISPATCH_SUB)
-	.short FDC_Dispatch_SenseDriveStatus - FDC_Dispatch_Initialize	; cmd 11 -> FDC_CmdSenseDriveStatus (FDC_INTERRUPT_HANDLER)
+	.short FDC_Dispatch_SenseDriveStatus - FDC_Dispatch_Initialize	; cmd 11 -> FDC_CmdSenseDriveStatus (maincpu: the same name)
 
 
 ; =============================================================================
