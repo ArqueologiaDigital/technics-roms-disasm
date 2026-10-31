@@ -165,6 +165,72 @@ def space_count(rev):
     return n
 
 
+def load_v10_blocks():
+    """-> {label: (lines, (start, end))} of every column-0 label block in v10/maincpu (first file wins)."""
+    v10 = {}
+    for f in sorted(glob.glob(os.path.join(REPO, "v10", "maincpu", "**", "*.s"), recursive=True)):
+        L = open(f, "rb").read().decode("latin-1").split("\n")
+        for name, span in blocks(L).items():
+            v10.setdefault(name, (L, span))
+    return v10
+
+
+def respell_lines(L, mine, v10, st=None):
+    """Respell, in place, the instruction lines of L (a v7 / v9 source as a list of lines) whose indices are
+    in `mine`, by RULES 1-4 against v10's blocks (load_v10_blocks(); {} = fallback only).  Returns
+    [(index, old line, new line)] for every line it changed.  The converters (v7_byte_region_to_insns.py,
+    reframe_byte_runs_by_decode.py) call this on the lines they write, so their output is already in the
+    tree's form; main() calls it on the lines `git blame` gives to --commit."""
+    st = st if st is not None else collections.Counter()
+    bl = blocks(L)
+    owner = {}
+    for name, (s, e) in bl.items():
+        for i in range(s, e):
+            owner[i] = name
+    new = {}
+    for i in sorted(mine):
+        if not INSN.match(L[i]) or L[i].lstrip().startswith(";"):
+            continue
+        code, comment = split_code(L[i])
+        c = norm_tab(code)
+        m = CALL24.match(c.lstrip("\t"))
+        if m:
+            c = "\tcall\t%s(%s:24)" % (m.group(1), m.group(2))
+            st["call_24"] += 1
+        new[i] = [c, comment, None]
+    # v10 match per enclosing block
+    for name in sorted({owner[i] for i in new if i in owner}):
+        if name not in v10:
+            continue
+        L10, (s10, e10) = v10[name]
+        s7, e7 = bl[name]
+        c7 = [(i, new[i][0] if i in new else norm_tab(code)) for i, code in code_lines(L, s7, e7)]
+        c10 = [(i, norm_tab(code)) for i, code in code_lines(L10, s10, e10)]
+        sm = difflib.SequenceMatcher(None, [skeleton(c) for _, c in c7], [skeleton(c) for _, c in c10],
+                                     autojunk=False)
+        for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag != "equal":
+                continue
+            for k in range(i2 - i1):
+                i7 = c7[i1 + k][0]
+                if i7 in new:
+                    new[i7][2] = c10[j1 + k][1]
+    changed = []
+    for i, (c, comment, ref) in sorted(new.items()):
+        if ref is not None:
+            c2 = copy_notation(c, ref)
+            st["v10-match"] += 1
+        else:
+            c2 = fallback(c)
+            st["fallback"] += 1
+        line = c2 + comment
+        if line != L[i]:
+            st["changed"] += 1
+            changed.append((i, L[i], line))
+            L[i] = line
+    return changed
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--commit", default="d89e64558")
@@ -178,62 +244,14 @@ def main():
     files = subprocess.run(["git", "-C", REPO, "show", "--name-only", "--format=", a.commit, "--", "v7/*.s"],
                            capture_output=True, text=True, check=True).stdout.split()
     files = [f for f in files if os.path.exists(os.path.join(REPO, f))]
-    v10 = {}
-    for f in sorted(glob.glob(os.path.join(REPO, "v10", "maincpu", "**", "*.s"), recursive=True)):
-        L = open(f, "rb").read().decode("latin-1").split("\n")
-        for name, span in blocks(L).items():
-            v10.setdefault(name, (L, span))
+    v10 = load_v10_blocks()
     st = collections.Counter()
     for rel in files:
         p = os.path.join(REPO, rel)
         L = open(p, "rb").read().decode("latin-1").split("\n")
-        mine = blamed_lines(a.commit, rel)
-        bl = blocks(L)
-        owner = {}
-        for name, (s, e) in bl.items():
-            for i in range(s, e):
-                owner[i] = name
-        new = {}
-        for i in sorted(mine):
-            if not INSN.match(L[i]) or L[i].lstrip().startswith(";"):
-                continue
-            code, comment = split_code(L[i])
-            c = norm_tab(code)
-            m = CALL24.match(c.lstrip("\t"))
-            if m:
-                c = "\tcall\t%s(%s:24)" % (m.group(1), m.group(2))
-                st["call_24"] += 1
-            new[i] = [c, comment, None]
-        # v10 match per enclosing block
-        for name in sorted({owner[i] for i in new if i in owner}):
-            if name not in v10:
-                continue
-            L10, (s10, e10) = v10[name]
-            s7, e7 = bl[name]
-            c7 = [(i, new[i][0] if i in new else norm_tab(code)) for i, code in code_lines(L, s7, e7)]
-            c10 = [(i, norm_tab(code)) for i, code in code_lines(L10, s10, e10)]
-            sm = difflib.SequenceMatcher(None, [skeleton(c) for _, c in c7], [skeleton(c) for _, c in c10],
-                                         autojunk=False)
-            for tag, i1, i2, j1, j2 in sm.get_opcodes():
-                if tag != "equal":
-                    continue
-                for k in range(i2 - i1):
-                    i7 = c7[i1 + k][0]
-                    if i7 in new:
-                        new[i7][2] = c10[j1 + k][1]
-        for i, (c, comment, ref) in new.items():
-            if ref is not None:
-                c2 = copy_notation(c, ref)
-                st["v10-match"] += 1
-            else:
-                c2 = fallback(c)
-                st["fallback"] += 1
-            line = c2 + comment
-            if line != L[i]:
-                st["changed"] += 1
-                if a.show:
-                    print("%s:%d\n  - %s\n  + %s" % (rel, i + 1, L[i].strip(), line.strip()))
-                L[i] = line
+        for i, old, line in respell_lines(L, blamed_lines(a.commit, rel), v10, st):
+            if a.show:
+                print("%s:%d\n  - %s\n  + %s" % (rel, i + 1, old.strip(), line.strip()))
         if a.apply:
             data = "\n".join(L).encode("latin-1")
             if data != open(p, "rb").read():

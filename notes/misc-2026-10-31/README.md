@@ -71,3 +71,88 @@ the only non-zero guesses are v7's RHYTHM_PATTERN_SEL_A / _TYPE (-0x9C).  So the
 source line, and a guess from layout is not evidence: the script now applies it only with
 `--infer-block-delta` (which keeps the old cascading behaviour) and otherwise prints the guesses with their
 addresses.  `notes/ram-naming-2026-10-24/README.md` follow-up 4 is closed.
+
+## N-94797258: the format of IC307's 71 unmatched waves
+
+**BLOCKED on a dump of IC306.**  The 8-bit / 16-bit flag of a recording is in its directory P word, which is on
+IC307's partner IC306 (`../sound-2026-10-31/README.md`, section 3), and none of the 71 has a KN7000 recording
+with the same audio, so the byte-correlation reading (`../media-files-2026-10-30/README.md`, 31 8-bit, 40
+16-bit) is all the dumped chips give.  `../media-files-2026-10-30/README.md` now says so.
+
+## Stale website text (technics-docs 6a38c50)
+
+| page                        | was                                                                 | now, and the evidence                                                                                                                                                                                                |
+|-----------------------------|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `rom-reconstruction.md`     | v7 6,591 B verbatim (at 3417969c0); "v1.40 has no source tree"      | v7 0 B since d89e64558; v6 13,756 B and v5 15,910 B, all seventeen measured images 29,666 B (`kn5000_source_coverage.py` at 130735749); v1.41 and v1.40 trees since 2026-10-24                                       |
+| `display-subsystem.md`      | 42 main-CPU and 5 HD-AE5000 images; "SlideMove" = slide animation   | 61 and 6 committed PNGs; SlideBase / SlideMove are `BitmapIDProc` bitmap IDs 2 and 3 (`BitmapID_Names` at 0xEAB8D8; files slide.bmp / slmove.bmp in `BitmapID_FileNamePtrTable`), beside MixerControl / MixerPoint |
+| `midi-subsystem.md`         | CC 0x95 / 0x97 / 0x9C = chorus on/off, chorus depth, delay on/off   | glide pedal, sustain length, key scaling (`Voice_CC_GlidePedal` -> `Voice_CC_SetGlidePedal` etc., v142)                                                                                                             |
+| `control-panel-protocol.md` | IDs 25 / 26 / 27 breath / foot / expression; A/D 0 / 1 mod / volume | from the events posted: ID 25 pitch bend (0xB1 -> `MidiCC_ChannelDispatch_CtrlFlags`, 0xE0), ID 26 CC 1 (0xB2), A/D 0 CC 1 or CC 11 (0x2880 = 182 / 183), A/D 1 channel pressure (0xB4 -> 0xD0); ID 27 not established |
+| `audio-subsystem.md`        | (48 kHz assumed)                                                    | X301 = 33.8688 MHz = 768 x 44.1 kHz, so very probably 44.1 kHz; section "Clock and Output Rate"                                                                                                                    |
+
+The control-panel reading, in the source: record 22's action `PanelAction_Event22` (v10
+`audio/audio_control_engine.s`) splits the byte into two 7-bit values and posts tag 0xB1;
+`Audio_MainPeriodicUpdate` hands a queued panel event to `SoundProgram_DispatchTable[tag]`, whose 0xB1..0xB4
+handlers (`MidiCh_IterateVolume_Reverse`, `MidiCh_IterateVolume_Forward`, `MidiCh_IterateExpression`,
+`MidiCh_IteratePan_Forward` -- names that predate this reading) pass the tag on as the status of
+`MIDI_DispatchCC`; its table `MidiDispatchCC_HandlerTable` sends 0xB1 to `MidiCC_ChannelDispatch_CtrlFlags`
+(`or a, 0xe0`, `MidiTx_PartTargets_PitchBend`), 0xB2 to `_Ctrl1` (CC 1), 0xB3 to `_Ctrl3` (CC 11) and 0xB4 to
+`_CtrlFlags2` (`or a, 0xd0`, `MidiTx_PartTargets_ChannelPressure`).  Renaming the `Encoder_Process*` /
+`MIDI_CC_*` labels after it is tracker item kn5000-3c7 (not this lane's).  The EXP / AFT signal names are
+the register lane's reading of the service manual; this lane did not re-check the schematic.
+
+Tracker item kn5000-3ei (the website's verbatim figure) is closed with a comment (commit "issues: close
+kn5000-3ei").  The repo-root CLAUDE.md Architecture table still quotes v6 17,159 B and v5 19,978 B (2026-10-29);
+this lane leaves CLAUDE.md to the integrator.
+
+## The KN5000 tone generator's crystal
+
+**Website: CLOSED** (`audio-subsystem.md`, "Clock and Output Rate").  **MAME side: BLOCKED on the MAME
+repository.**  The 48 kHz is not in this repository's `mame_driver/` reference copies (they hold no tone
+generator); it is `kn5000_tonegen.cpp`'s stream rate in the kn7000_mame overlay
+(`src/mame/matsushita/kn5000_tonegen.cpp`: "Create stereo output stream at 48kHz", `SAMPLE_RATE = 48000.0`
+in the envelope-rate law, and `/ 48000.0` in the filter and pitch-step code).  Changing it to 44.1 kHz is
+device work in that repository (and upstream MAME), and every constant derived from 48 kHz there has to be
+re-derived with it.
+
+## Mines: LLVM bugs 10 and 11
+
+**CLOSED** (Mines `5fe280f`).  `../Mines/LLVM_TLCS900_BUGS.md` (until now untracked in Mines) said 2 active.
+Bug 10 is not a bug (llvm-project `116dc9423e53`: the report assumed XBC carries the first argument; the
+convention is XDE first, `CCAssignToReg<[XDE, XBC, XIX, XIY]>`); bug 11 is fixed (`eba2fe6622ee`, EXTS32 /
+EXTZ32 set no flags, squashed into `e90ba8f16b19` on `tlcs900_backend`, an ancestor of the pinned
+`a3a81863f87d`; at that commit `TLCS900InstrInfo.td` keeps them out of `Defs = [SR]`).  Mines `8b1d85e`
+removed both workarounds.  The file now says 9 fixed, 2 not a bug, 0 active, and keeps the original reports
+with a resolution each.  Mines' own CLAUDE.md still lists both under "LLVM Backend Bugs (Active
+Workarounds)"; this lane did not edit that CLAUDE.md (left to the owner).
+
+## BLOCKED rows checked
+
+| id         | outcome                                                                                                                                                                                                                                         |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| N-ff7d2e8d | the owner's decision it waited for is in main: `130735749` ("the Preset Data Destination dispute is resolved (owner confirmed 2026-10-31)") -- CLOSED                                                                                            |
+| N-33949aba | still BLOCKED on the LLVM backend: the pinned llvm-mc (`a3a81863f87d`) rejects `ldcf a, rh3` / `stcf a, rh3` (and `ldcf a, h`); `TLCS900InstrInfo.td` has only the memory forms `LDCFA_m` / `STCFA_m` (`ldcf a, (mem)`), no register form; no later commit on `tlcs900_backend` |
+
+No other BLOCKED row's blocker is in technics-docs or in this repository's notes: the rest wait for a chip,
+hardware, another repository or an owner decision that is not yet taken.
+
+## N-abb7ecb5: the v7 byte-region converters write the tree's spelling
+
+**CLOSED.**  The respelling of step 8 (analysis/v7-harmonize-2026-10-24) is now a function,
+`respell_lines()` in `scripts/tools/respell_v7_new_lines_like_v10.py` (its `main()` calls it on the lines
+`git blame` gives to `--commit`, exactly as before: a dry run at the base reports the same counts, 224
+fallback / 170 v10-match / 7 changed, with the old and the new script).  `v7_byte_region_to_insns.py` (new
+step 5 of its docstring) and `reframe_byte_runs_by_decode.py` (step 7) call it on the lines they write, so
+their output is in the tree's form (tab after the mnemonic, `call cc, (X:24)`, v10's notation where the same
+label's v10 block has the instruction, hex for RAM operands, masks and large constants elsewhere) instead of
+llvm-objdump's.
+
+`probes/v7_converter_rerun_check.py` puts the dump's bytes of a committed block back as `.byte` rows, re-runs
+`v7_byte_region_to_insns.py` on it and compares (output: `probes/v7_converter_rerun_check.out.txt`).  Of the
+seven blocks of two step-5 regions (BitMapOut_CopyExtTable_Check and CmpStepTitle_OnPaint), six come out
+IDENTICAL; in the seventh one operand differs, `(0x8c9b:16)` where the tree says `(PREVIOUS_TITLE:16)`: the
+RAM name a later lane applied with `scripts/tools/name_kn5000_ram.py`, which is that tool's job, not the
+converter's.
+
+The dry run's 7 changes are lines of `v7/maincpu/sequencer/accompaniment_engine.s` blamed to d89e64558 whose RAM
+operands are still decimal (`ld a, (12873:16)`); they were so at the base too and are left for the next run of
+step 8 or of `name_kn5000_ram.py`.
