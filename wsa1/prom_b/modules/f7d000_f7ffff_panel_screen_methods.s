@@ -11041,6 +11041,14 @@ ButtonTable_AdvanceDelay_StageZero_Nop6:
 ButtonTable_AdvanceDelay_StageZero_Nop7:
 	ret	; F7FFFA  ret   <- button table 0xF7DCD8 entry 7 (ADVANCE/DELAY)
 
+; ⚠ THE ONE BRANCH THE JOINT LINK CANNOT RELOCATE.  The `jr` at the end of
+; LcdKeyRow1_AdvanceDelay_StageZero (below) crosses the chip boundary into prom_a,
+; and the tlcs900 backend has no 8-bit PC-relative relocation: left to the linker, llvm-mc relaxes it
+; to the 3-byte `jrl` and the image grows by one byte.  So this one name keeps a local equate, and
+; maincpu/maincpu.ld ASSERTs that prom_a's own AdvanceDelay_SelectField1_Ret (exported in
+; prom_a/exports.syms) is at the same address -- the link still checks the name.
+	.set	AdvanceDelay_SelectField1_Ret, 0xf80019
+
 ; ---------------------------------------------------------------------
 ; LcdKeyRow1_AdvanceDelay_StageZero -- row 1 of the five key pairs flanking the
 ;           LCD, on the AdvanceDelay_StageZero screen
@@ -11077,12 +11085,6 @@ ButtonTable_AdvanceDelay_StageZero_Nop7:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-; ⚠ THE ONE BRANCH THE JOINT LINK CANNOT RELOCATE.  This `jr` crosses the chip boundary into prom_a,
-; and the tlcs900 backend has no 8-bit PC-relative relocation: left to the linker, llvm-mc relaxes it
-; to the 3-byte `jrl` and the image grows by one byte.  So this one name keeps a local equate, and
-; maincpu/maincpu.ld ASSERTs that prom_a's own AdvanceDelay_SelectField1_Ret (exported in
-; prom_a/exports.syms) is at the same address -- the link still checks the name.
-	.set	AdvanceDelay_SelectField1_Ret, 0xf80019
 LcdKeyRow1_AdvanceDelay_StageZero:
 	bit	7, w	; F7FFFB  bit 0x07,W
 	jr	z, AdvanceDelay_SelectField1_Ret - 0xF80000	; F7FFFE  jr Z,0xf80019
