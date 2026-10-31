@@ -84,7 +84,7 @@ def build_ok(tree):
 
 
 # Edits the evidence cannot decide by itself (the probe's UNDECIDED rows that are shifts), read by hand.
-# Each is (label to delete or None, [(old, new) renames]); skipped where `old` is gone already.
+# Each is (trees, label line to delete or None, [(old, new) renames]); skipped where an `old` is gone.
 HAND = [
     # VoiceTable_AdvanceWritePos (v7: `ld xhl, xwa / ld wa, (14568) / inc 1, wa / ld (14568), wa /
     # cp wa, 255 / jr c, RhythmParam_Setup`) is, in v6 and v5, the block the port called
@@ -92,16 +92,57 @@ HAND = [
     # the same counter bump spelled as memory operands), the one VoiceScan_WriteLoop names where v7's
     # names VoiceTable_AdvanceWritePos.  The port had left that name on a `pop xde` inside
     # CmpNcpTtl_TableDispatch_OnToItemNext, which nothing names.
-    ("VoiceTable_AdvanceWritePos", [("VoiceTable_ResolveReadAddr_Skip", "VoiceTable_AdvanceWritePos")]),
+    ("v6 v5", "VoiceTable_AdvanceWritePos", [("VoiceTable_ResolveReadAddr_Skip", "VoiceTable_AdvanceWritePos")]),
+    # v5 only: the SOUND EDIT static-op wrappers (`ld (COLORBLIT_MODE), 0 / push xwa / ld xwa, 0x6ca /
+    # call <op> / pop xwa / ret`).  The one v5 calls SeGfx_StaticOp15_FromBuf calls
+    # SeGfx_StaticOp05_FillBoxMode1 (v7's SeGfx_StaticOp05_FromBuf, whose name the port dropped), and
+    # the one it calls SeGfx_StaticOp09_FromBuf_Entry calls SeGfx_StaticOp15_DottedLine (v7's
+    # SeGfx_StaticOp15_FromBuf).
+    ("v5", None, [("SeGfx_StaticOp15_FromBuf", "SeGfx_StaticOp05_FromBuf"),
+                  ("SeGfx_StaticOp09_FromBuf_Entry", "SeGfx_StaticOp15_FromBuf")]),
 ]
+
+
+# Labels the evidence finds a fixed number of lines off (a table whose label moved while its entries
+# are right by content): (label, the exact line it must stand before).  Only where that line exists.
+HAND_MOVES = [
+    # v5: NoteNameStr_Table_0 (v7: 12 pointers C, C#, D ... B) stood four entries late, on the pointer to
+    # "E "; its first four entries were TODO(port) rows (ptrtab rows NoteNameStr_Table_0[0..10]).
+    ("NoteNameStr_Table_0", "\t.long\tNoteStr0_C"),
+]
+
+
+def hand_moves(tree, dry_run):
+    done = []
+    for lab, before in HAND_MOVES:
+        for p in tree_files(tree):
+            if not p.endswith(".s"):
+                continue
+            s = rd(p)
+            if not re.search(r"^%s:[ \t]*$" % re.escape(lab), s, re.M):
+                continue
+            if "\n%s:\n%s\n" % (lab, before) in s or "\n" + before + "\n" not in s:
+                break
+            s2 = re.sub(r"^%s:[ \t]*\n" % re.escape(lab), "", s, count=1, flags=re.M)
+            s2 = s2.replace("\n" + before + "\n", "\n%s:\n%s\n" % (lab, before), 1)
+            done.append((p, s))
+            if not dry_run:
+                wr(p, s2)
+            print("hand: %s moved before %r" % (lab, before.strip()))
+            break
+    return done
 
 
 def hand(tree):
     """-> (deletions, renames) still to do in the tree"""
     txt = "".join(rd(p) for p in tree_files(tree) if p.endswith(".s"))
     dels, ren = [], {}
-    for d, rs in HAND:
-        todo = [(o, n) for o, n in rs if re.search(r"^%s:" % re.escape(o), txt, re.M)]
+    for trees, d, rs in HAND:
+        if tree not in trees.split():
+            continue
+        if any(not re.search(r"^%s:" % re.escape(o), txt, re.M) for o, n in rs):
+            continue                            # done already (the renames go together)
+        todo = rs
         if todo:
             if d:
                 dels.append(d)
@@ -309,6 +350,13 @@ def main():
     if not ok:
         sys.exit("%s does not build byte-identical before any edit\n%s" % (a.tree, err))
     total_r = total_i = 0
+    moved = hand_moves(a.tree, a.dry_run)
+    if moved and not a.dry_run:
+        ok, err = build_ok(a.tree)
+        if not ok:
+            for p, s in moved:
+                wr(p, s)
+            sys.exit("hand moves: not byte-identical; files restored\n%s" % err)
     dels, ren = hand(a.tree)
     if dels or ren:
         for d in dels:
