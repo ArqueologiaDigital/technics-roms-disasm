@@ -39,3 +39,39 @@
 0x4C3F7793  KernelStart                  ; sp := (KernelRamLayout + 0x14), jmp KernelInit: the kernel's start
 0x4C3F779E  KernelInitHook               ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
 ;
+;
+; ---- zlib 1.0.4's data tables (lane mn10300-formats, 2026-10-31): found by their contents, which are
+;      the zlib sources' own, and laid out in the sources' order (deflate.c, trees.c, infblock.c,
+;      inftrees.c, then infutil.c's inflate_mask and zutil.c's z_errmsg after the copyright strings);
+;      kn7000/notes/mn10300-formats-probes/zlib_tables.py finds them in every build ----------------
+0x50004BF4  configuration_table     ; zlib 1.0.4 deflate.c: per-level {good_length, max_lazy, nice_length, max_chain, func} (10 x 12 bytes) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004C6C  extra_lbits             ; zlib 1.0.4 trees.c: extra bits of each length code (29 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004CE0  extra_dbits             ; zlib 1.0.4 trees.c: extra bits of each distance code (30 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004D58  extra_blbits            ; zlib 1.0.4 trees.c: extra bits of each bit-length code (19 ints) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004DA4  bl_order                ; zlib 1.0.4 trees.c: the order the bit-length code lengths are sent in (19 bytes) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004DB8  static_l_desc           ; zlib 1.0.4 trees.c: {tree, extra_lbits, 257, 286, 15} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004DCC  static_d_desc           ; zlib 1.0.4 trees.c: {tree, extra_dbits, 0, 30, 15} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004DE0  static_bl_desc          ; zlib 1.0.4 trees.c: {tree, extra_blbits, 0, 19, 7} (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004DF4  static_init_done        ; zlib 1.0.4 trees.c: non-zero once tr_static_init has run (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004DF8  border                  ; zlib 1.0.4 infblock.c: the order of the bit-length code lengths (19 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004E44  cplens                  ; zlib 1.0.4 inftrees.c: copy lengths for literal codes 257..285 (31 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004EC0  cplext                  ; zlib 1.0.4 inftrees.c: extra bits for literal codes 257..285; 192 = invalid (31 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004F3C  cpdist                  ; zlib 1.0.4 inftrees.c: copy offsets for distance codes 0..29 (30 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50004FB4  cpdext                  ; zlib 1.0.4 inftrees.c: extra bits for distance codes (30 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x5000502C  fixed_built             ; zlib 1.0.4 inftrees.c: non-zero once inflate_trees_fixed has built the fixed tables (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50005CB8  deflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50005CF0  inflate_copyright       ; zlib 1.0.4 the copyright string the zlib sources keep in the binary (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50005D20  inflate_mask            ; zlib 1.0.4 infutil.c: masks of the low n bits, n = 0..16 (17 uInts) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+0x50005D64  z_errmsg                ; zlib 1.0.4 zutil.c: the error texts, indexed 2 - err (10 pointers) (found by contents: kn7000/notes/mn10300-formats-probes/zlib_tables.py)
+;
+; ---- the built-in sound tables' hash lookups (lane mn10300-formats, 2026-10-31;
+;      kn7000/notes/mn10300-formats/README.md, src/include/data_tables.inc TONE_KEY_PAYLOAD ...) ----
+0x4C09ACF3  ToneKeyFind             ; (d0 = bank MSB, d1 = LSB, (0x10, sp) = program, a0 = &source byte) -> a0 = the ToneKeyHash payload of the sound, trying the voice archive first (func_4C09B170: source 2) and then, through ToneKeyLookup, the exact key and a chain of fallbacks (MSB 0x28..0x2F as 0x20..0x27, LSB rounded to 8, program 0x7F7F ...)
+0x4C09AFB0  SoundSwNoGet            ; (d0 = MSB, d1 = LSB, program, a0 = &state, a1 = &group, (0x44, sp) = &number) -> the sound's panel switch {group, number} for state 0..3 from its ToneKeyHash payload: {swgroup01, swno0}, {swgroup01, swno1}, {swgroup23, swno2}, {swgroup23, swno3}
+0x4C09B03B  SoundIconGet            ; (d0 = MSB, d1 = LSB, program, a0 = &icon) -> the payload's +2, the sound's icon (MainGetSoundName answers it for MT_GetSoundIcon)
+0x4C09B065  SoundToneIndexGet       ; (d0 = MSB, d1 = LSB, program, a0 = &u16) -> the payload's +0, the tone record's index (func_4C07BA76 names the sound from it)
+0x4C09B08C  ToneKeyLookup           ; (d0 = key MSB << 16 | LSB << 8 | program) -> a0 = entry + 8 of the key's ToneKeyHash entry, or 0; the voice archive's table when func_4C07B982 answers 1 or 2
+0x4C09B200  SoundSwNoBankGet        ; (d0 = switch kind 0..7, d1 = number, a0 = &MSB, a1 = &LSB, (0x34, sp) = &program) -> the bank MSB, LSB and program a panel switch selects: the ShortKeyHash payload's +0 / +1 / +2 (or the archive's two tables)
+0x4C09B2AE  ShortKeyLookup          ; (d0 = key group << 8 | number) -> a0 = entry + 6 of the key's ShortKeyHash entry, or 0
+0x4C09BCFA  SoundBankIndexGet       ; (d0 = MSB, d1 = LSB, (0x10, sp) = program, a0 = &u16, a1 = &source) -> the BankKeyHash payload's u16, with fallbacks
+0x4C09BDB2  BankKeyLookup           ; (d0 = key MSB << 16 | LSB << 8 | program) -> a0 = entry + 8 of the key's BankKeyHash entry, or 0
