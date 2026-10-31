@@ -15676,7 +15676,7 @@ SystemTest_SplitNotesForDisplay_DL3:
 	push 0x00                                            ; FA50D3  09 00
 	push	(0x2737:16)                          ; FA50D5  c1 37 27 04
 	push 0x00                                            ; FA50D9  09 00
-	push	(LoadSingle_BankB:16)                          ; FA50DB  c1 36 27 04
+	push	(LoadSingle_DestBank:16)                          ; FA50DB  c1 36 27 04
 	calr UserSoundBank_RemoteGroupAddr_Copy                                      ; FA50DF  1e ab 01
 	ld XIX,XIY                                           ; FA50E2  ed 8c
 	ld bc, (LoadSingle_SelectedItem:16)                                 ; FA50E4  d1 38 27 21
@@ -15691,7 +15691,7 @@ SystemTest_SplitNotesForDisplay_DL3:
 	jrl .LFA5287                                         ; FA5100  78 84 01
 	pushw hl                                             ; FA5103  2b
 	push 0x00                                            ; FA5104  09 00
-	push	(LoadSingle_BankA:16)                          ; FA5106  c1 28 27 04
+	push	(LoadSingle_SourceBank:16)                          ; FA5106  c1 28 27 04
 	calr UserSoundBank_RemoteGroupAddr_Copy                                      ; FA510A  1e 80 01
 	ld XIX,XIY                                           ; FA510D  ed 8c
 	ld C,D                                               ; FA510F  cc 8b
@@ -15704,7 +15704,7 @@ SystemTest_SplitNotesForDisplay_DL3:
 	push 0x00                                            ; FA511F  09 00
 	push	(0x2737:16)                          ; FA5121  c1 37 27 04
 	push 0x00                                            ; FA5125  09 00
-	push	(LoadSingle_BankB:16)                          ; FA5127  c1 36 27 04
+	push	(LoadSingle_DestBank:16)                          ; FA5127  c1 36 27 04
 	calr UserSoundBank_RemoteGroupAddr_Copy                                      ; FA512B  1e 5f 01
 	ld XIX,XIY                                           ; FA512E  ed 8c
 	ld bc, (LoadSingle_SelectedItem:16)                                 ; FA5130  d1 38 27 21

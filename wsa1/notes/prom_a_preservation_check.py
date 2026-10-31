@@ -47,6 +47,10 @@ LABEL = re.compile(r'^([A-Za-z_.][A-Za-z0-9_.]*):')
 # that asked it would forgive every loss the moment the work was done.  A
 # declaration has to survive the thing it declares.
 RENAMES = {
+    "ToneEditPage_A0_Op0": "ToneEditPage_A0_SetLayerOnOff",   # 2026-10-31 lane open4/wsa1-c: the MODELING top ON/OFF key (FINDINGS-l7a1429-field-editors.md 2a)
+    "ToneEditPage_A0_Op1": "ToneEditPage_A0_StepDriverGroup",   # 2026-10-31: the DRIVER group key
+    "ToneEditPage_A0_Op2": "ToneEditPage_A0_StepDriver",   # 2026-10-31: the DRIVER key
+    "ToneEditPage_A0_Op12": "ToneEditPage_A0_SelectLayer4",   # 2026-10-31: LCD row 5 selects layer 4
     "CombiEditMixer_DirtySound": "CombiEdit_DirtySound",   # 2026-10-05: shared by MIXER and CONFIGURE
     "NoteRouting_ListChannel": "NoteRouting_SingleChannel",   # 2026-10-04: the Reference Guide's SINGLE CHANNEL
     "NoteRouting_PreviousListChannel": "NoteRouting_PreviousSingleChannel",   # 2026-10-04: with it
@@ -237,14 +241,14 @@ RENAMES = {
     "sub_F7FD8A": "Transp0se_StageZero_Button21",
     "sub_FA7531": "MidiOut_Param70",
     "sub_FA7584": "MidiOut_Param98",
-    "sub_FD3FE0": "ToneEditPage_A0_Op0",
-    "sub_FD4039": "ToneEditPage_A0_Op1",
-    "sub_FD40D4": "ToneEditPage_A0_Op2",
+    "sub_FD3FE0": "ToneEditPage_A0_SetLayerOnOff",
+    "sub_FD4039": "ToneEditPage_A0_StepDriverGroup",
+    "sub_FD40D4": "ToneEditPage_A0_StepDriver",
     "sub_FD43C6": "ToneEditPage_A0_Op8",
     "sub_FD43E4": "ToneEditPage_A0_Op9",
     "sub_FD440A": "ToneEditPage_A0_Op10",
     "sub_FD4430": "ToneEditPage_A0_Op11",
-    "sub_FD4468": "ToneEditPage_A0_Op12",
+    "sub_FD4468": "ToneEditPage_A0_SelectLayer4",
     "sub_FD4493": "ToneEditPage_A0_Op15",
     "sub_FD4712": "ToneEditPage_A3_Op8",
     "sub_FD4730": "ToneEditPage_A3_Op9",
@@ -3443,7 +3447,7 @@ RENAMES = {
     "sub_FD3955": "SoftKeyCol4_SoundEditAmpEnvelope2",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
     "sub_FD3A40": "SoftKeyCol5_SoundEditAmpEnvelope2",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
     "sub_FD3AE1": "SoftKeyCol7_SoundEditAmpEnvelope2",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
-    "sub_FD400D": "ToneEditPage_A0_Op0",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
+    "sub_FD400D": "ToneEditPage_A0_SetLayerOnOff",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
     "sub_FD42A5": "ToneEditField_A0_Group",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
     "sub_FD469B": "ToneEditField_A3_Formant",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)
     "sub_FD4CBB": "ToneEditField_A5_Muting",   # 2026-10-04: a stray mid-routine label, removed (notes/prom_a_stray_label_removal.py)

@@ -9370,7 +9370,7 @@ Vel0cityChange_FormatSignedValue:
 	call	T_Value_ToSignedAsciiDigits3_RightJustified	; F7F93E  call 0xf41af8
 	ldw	bc, 4	; F7F942  ld BC,0x0004
 	xor	hl, hl	; F7F945  xor HL,HL
-	ld	xiy, 9824	; F7F947  ld XIY,0x00002660
+	ld	xiy, Value_AsciiSign	; F7F947  ld XIY,0x00002660
 	ld	a, 7:opc	; F7F94C  ld A,0x07
 	ret	; F7F94E  ret
 

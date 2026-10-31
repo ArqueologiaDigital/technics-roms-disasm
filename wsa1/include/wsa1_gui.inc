@@ -521,7 +521,7 @@
 	.equ KEY_Code0E,	0x0e	; TODO: nothing on this panel raises code 0x0E (no template emits it)
 	.equ KEY_Exit,		0x0f	; EXIT (position 1 only); the one slot all 32 prom_b ButtonTable_* maps fill, with an ExitKey_* handler
 	.equ KEY_Page,		0x10	; the PAGE v / PAGE ^ pair; position 0 = v, 1 = ^
-	.equ KEY_SoftKeyCol1Alt,	0x11	; the soft-key column's SECOND event: PanelEvent_ToFieldIndex (prom_a) folds codes 0x11-0x18 onto ops 0-7, the codes of KEY_SoftKeyCol1-8, and sets bit 7 of its flag byte; in the 87 key maps 182 of these slots repeat the column's own handler, 41 differ.  TODO: which physical action raises it -- no prom_a panel template emits it
+	.equ KEY_SoftKeyCol1Alt,	0x11	; the soft-key column's SECOND event: PanelEvent_ToFieldIndex (prom_a) folds codes 0x11-0x18 onto ops 0-7, the codes of KEY_SoftKeyCol1-8, and sets bit 7 of its flag byte; in the 87 key maps 182 of these slots repeat the column's own handler, 41 differ.  Raised only on VARIANT 1 ((0xC4) = 1, not the SX-WSA1R), whose soft-key columns are wired twice (groups 3/4 and 5/6): PanelAction_PairPos0/1_HeldMaskAltCode deliver a press of the second wire while the first is held, and its release, as code + 0x11 (notes/open4-c-probes/key_alt_code_census.py C1-C4)
 	.equ KEY_SoftKeyCol2Alt,	0x12	; as KEY_SoftKeyCol1Alt, for column 2
 	.equ KEY_SoftKeyCol3Alt,	0x13	; as KEY_SoftKeyCol1Alt, for column 3
 	.equ KEY_SoftKeyCol4Alt,	0x14	; as KEY_SoftKeyCol1Alt, for column 4
@@ -529,7 +529,7 @@
 	.equ KEY_SoftKeyCol6Alt,	0x16	; as KEY_SoftKeyCol1Alt, for column 6
 	.equ KEY_SoftKeyCol7Alt,	0x17	; as KEY_SoftKeyCol1Alt, for column 7
 	.equ KEY_SoftKeyCol8Alt,	0x18	; as KEY_SoftKeyCol1Alt, for column 8
-	.equ KEY_PageAlt,	0x19	; PAGE's second event: PanelEvent_ToFieldIndex folds code 0x19 onto op 0x10, KEY_Page's.  TODO: as KEY_SoftKeyCol1Alt
+	.equ KEY_PageAlt,	0x19	; PAGE's second event: PanelEvent_ToFieldIndex folds code 0x19 onto op 0x10, KEY_Page's.  Nothing raises it in this ROM: the alt-code handlers write 0x19 only for a base code >= 0x0F and the pool routes them bases 0x00-0x07 alone (notes/open4-c-probes/key_alt_code_census.py C4)
 	.equ KEY_Code1A,	0x1a	; TODO: no template emits this code and no control is known for it
 	.equ KEY_NumberPad,	0x1b	; the number pad, the whole field
 	.equ KEY_Code1C,	0x1c	; TODO: no template emits this code and no control is known for it

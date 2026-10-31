@@ -2121,7 +2121,7 @@ BStore_RewriteTrackForPart_Loop:
 	jr	z, BStore_RewriteTrackForPart_Loop3	; F63D50  jr Z,0xf63d83
 	cp	a, 211	; F63D52  cp A,0xd3
 	jr	z, BStore_RewriteTrackForPart_Loop3	; F63D55  jr Z,0xf63d83
-	ld	(4696:16), a	; F63D57  ld (0x1258),A
+	ld	(SongEvent_Byte0:16), a	; F63D57  ld (0x1258),A
 	ld	w, 240:opc	; F63D5B  ld W,0xf0
 	and	w, a	; F63D5D  and W,A
 	cp	w, 144	; F63D5F  cp W,0x90
@@ -2255,19 +2255,19 @@ sub_F63CE0_Skip6:
 	cp	c, 2:i3	; F63EA6  cp C,2
 	jr	nz, sub_F63CE0_Skip14	; F63EA8  jr NZ,0xf63f12
 	ld	a, (3396:16)	; F63EAA  ld A,(0x0d44)
-	cp	(0x1258:16), 0xb5	; F63EAE  cp (0x1258),0xb5
+	cp	(SongEvent_Byte0:16), 0xb5	; F63EAE  cp (0x1258),0xb5
 	jr	z, sub_F63CE0_Skip7	; F63EB3  jr Z,0xf63ee1
-	cp	(0x1258:16), 0xbc	; F63EB5  cp (0x1258),0xbc
+	cp	(SongEvent_Byte0:16), 0xbc	; F63EB5  cp (0x1258),0xbc
 	jr	z, sub_F63CE0_Skip8	; F63EBA  jr Z,0xf63ee8
-	cp	(0x1258:16), 0xbd	; F63EBC  cp (0x1258),0xbd
+	cp	(SongEvent_Byte0:16), 0xbd	; F63EBC  cp (0x1258),0xbd
 	jr	z, sub_F63CE0_Skip9	; F63EC1  jr Z,0xf63eef
-	cp	(0x1258:16), 0xb8	; F63EC3  cp (0x1258),0xb8
+	cp	(SongEvent_Byte0:16), 0xb8	; F63EC3  cp (0x1258),0xb8
 	jr	z, sub_F63CE0_Skip10	; F63EC8  jr Z,0xf63ef6
-	cp	(0x1258:16), 0xb9	; F63ECA  cp (0x1258),0xb9
+	cp	(SongEvent_Byte0:16), 0xb9	; F63ECA  cp (0x1258),0xb9
 	jr	z, sub_F63CE0_Skip11	; F63ECF  jr Z,0xf63efd
-	cp	(0x1258:16), 0xba	; F63ED1  cp (0x1258),0xba
+	cp	(SongEvent_Byte0:16), 0xba	; F63ED1  cp (0x1258),0xba
 	jr	z, sub_F63CE0_Skip12	; F63ED6  jr Z,0xf63f04
-	cp	(0x1258:16), 0xbb	; F63ED8  cp (0x1258),0xbb
+	cp	(SongEvent_Byte0:16), 0xbb	; F63ED8  cp (0x1258),0xbb
 	jr	z, sub_F63CE0_Skip13	; F63EDD  jr Z,0xf63f0b
 	jr	sub_F63CE0_Join3	; F63EDF  jr T,0xf63f2b
 sub_F63CE0_Skip7:
@@ -2369,26 +2369,26 @@ sub_F63F90:
 	ld	l, (3078:16)	; F63FCA  ld L,(0x0c06)
 	push	xde	; F63FCE  push XDE
 	ld	e, a	; F63FCF  ld E,A
-	ld	d, (4696:16)	; F63FD1  ld D,(0x1258)
+	ld	d, (SongEvent_Byte0:16)	; F63FD1  ld D,(0x1258)
 	and	d, 4	; F63FD5  and D,0x04
 	sla	d, 5	; F63FD8  sla 0x05,D
 	or	e, d	; F63FDB  or E,D
-	ld	(4696:16), e	; F63FDD  ld (0x1258),E
+	ld	(SongEvent_Byte0:16), e	; F63FDD  ld (0x1258),E
 	ld	a, e	; F63FE1  ld A,E
 	pop	xde	; F63FE3  pop XDE
-	cp	(0x1258:16), 0xb5	; F63FE4  cp (0x1258),0xb5
+	cp	(SongEvent_Byte0:16), 0xb5	; F63FE4  cp (0x1258),0xb5
 	jr	z, sub_F63F90_Skip	; F63FE9  jr Z,0xf64015
-	cp	(0x1258:16), 0xbc	; F63FEB  cp (0x1258),0xbc
+	cp	(SongEvent_Byte0:16), 0xbc	; F63FEB  cp (0x1258),0xbc
 	jr	z, sub_F63F90_Skip	; F63FF0  jr Z,0xf64015
-	cp	(0x1258:16), 0xbd	; F63FF2  cp (0x1258),0xbd
+	cp	(SongEvent_Byte0:16), 0xbd	; F63FF2  cp (0x1258),0xbd
 	jr	z, sub_F63F90_Skip	; F63FF7  jr Z,0xf64015
-	cp	(0x1258:16), 0xb8	; F63FF9  cp (0x1258),0xb8
+	cp	(SongEvent_Byte0:16), 0xb8	; F63FF9  cp (0x1258),0xb8
 	jr	z, sub_F63F90_Skip	; F63FFE  jr Z,0xf64015
-	cp	(0x1258:16), 0xb9	; F64000  cp (0x1258),0xb9
+	cp	(SongEvent_Byte0:16), 0xb9	; F64000  cp (0x1258),0xb9
 	jr	z, sub_F63F90_Skip	; F64005  jr Z,0xf64015
-	cp	(0x1258:16), 0xba	; F64007  cp (0x1258),0xba
+	cp	(SongEvent_Byte0:16), 0xba	; F64007  cp (0x1258),0xba
 	jr	z, sub_F63F90_Skip	; F6400C  jr Z,0xf64015
-	cp	(0x1258:16), 0xbb	; F6400E  cp (0x1258),0xbb
+	cp	(SongEvent_Byte0:16), 0xbb	; F6400E  cp (0x1258),0xbb
 	jr	nz, sub_F63F90_Skip2	; F64013  jr NZ,0xf64038
 sub_F63F90_Skip:
 	xor	hl, hl	; F64015  xor HL,HL
@@ -2569,7 +2569,7 @@ sub_F6418E_Loop:
 	ld	xde, (BStore_CursorBlockAddr:16)	; F641FB  ld XDE,(0x126e)
 	ld	a, (xde+iy)	; F641FF  ld A,(XDE+IY)
 	pop	xde	; F64204  pop XDE
-	ld	(4696:16), a	; F64205  ld (0x1258),A
+	ld	(SongEvent_Byte0:16), a	; F64205  ld (0x1258),A
 	cp	a, 130	; F64209  cp A,0x82
 	jrl	z, sub_F6418E_Skip17	; F6420C  jrl Z,0xf644cb
 	cp	a, 129	; F6420F  cp A,0x81
@@ -2739,19 +2739,19 @@ sub_F6418E_Skip5:
 	cp	(0x0d47:16), 0x02	; F6439A  cp (0x0d47),0x02
 	jr	nz, sub_F6418E_Skip13	; F6439F  jr NZ,0xf64409
 	ld	a, (3396:16)	; F643A1  ld A,(0x0d44)
-	cp	(0x1258:16), 0xb5	; F643A5  cp (0x1258),0xb5
+	cp	(SongEvent_Byte0:16), 0xb5	; F643A5  cp (0x1258),0xb5
 	jr	z, sub_F6418E_Skip6	; F643AA  jr Z,0xf643d8
-	cp	(0x1258:16), 0xbc	; F643AC  cp (0x1258),0xbc
+	cp	(SongEvent_Byte0:16), 0xbc	; F643AC  cp (0x1258),0xbc
 	jr	z, sub_F6418E_Skip7	; F643B1  jr Z,0xf643df
-	cp	(0x1258:16), 0xbd	; F643B3  cp (0x1258),0xbd
+	cp	(SongEvent_Byte0:16), 0xbd	; F643B3  cp (0x1258),0xbd
 	jr	z, sub_F6418E_Skip8	; F643B8  jr Z,0xf643e6
-	cp	(0x1258:16), 0xb8	; F643BA  cp (0x1258),0xb8
+	cp	(SongEvent_Byte0:16), 0xb8	; F643BA  cp (0x1258),0xb8
 	jr	z, sub_F6418E_Skip9	; F643BF  jr Z,0xf643ed
-	cp	(0x1258:16), 0xb9	; F643C1  cp (0x1258),0xb9
+	cp	(SongEvent_Byte0:16), 0xb9	; F643C1  cp (0x1258),0xb9
 	jr	z, sub_F6418E_Skip10	; F643C6  jr Z,0xf643f4
-	cp	(0x1258:16), 0xba	; F643C8  cp (0x1258),0xba
+	cp	(SongEvent_Byte0:16), 0xba	; F643C8  cp (0x1258),0xba
 	jr	z, sub_F6418E_Skip11	; F643CD  jr Z,0xf643fb
-	cp	(0x1258:16), 0xbb	; F643CF  cp (0x1258),0xbb
+	cp	(SongEvent_Byte0:16), 0xbb	; F643CF  cp (0x1258),0xbb
 	jr	z, sub_F6418E_Skip12	; F643D4  jr Z,0xf64402
 	jr	sub_F6418E_Join5	; F643D6  jr T,0xf64428
 sub_F6418E_Skip6:

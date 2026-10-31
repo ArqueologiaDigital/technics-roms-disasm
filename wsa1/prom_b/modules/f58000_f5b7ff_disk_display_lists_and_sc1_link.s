@@ -520,7 +520,7 @@ DL_F58999:
 DL_F589A3:
 	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16, table=DiskSave_Password, width=2, x=136, y=69
 DL_F589B2:
-	dlb_rect_entry	var=DiskSave_Cell272A, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTab_F589BD
+	dlb_rect_entry	var=DiskSave_PasswordCursor, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTab_F589BD
 
 ; --------------------------------------------------------------------------
 ; DLTab_F589BD -- 0xF589BD-0xF589CC, 2 rows x 8 bytes
@@ -538,7 +538,7 @@ DLTab_F589BD:
 ;    table below.
 ; --------------------------------------------------------------------------
 DL_F589CD:
-	dlb_area_entry	var=DiskSave_Cell272A, mask=0x01, shift=0, svc=LCDSVC_ClearColumns, table=DLTab_F589D8
+	dlb_area_entry	var=DiskSave_PasswordCursor, mask=0x01, shift=0, svc=LCDSVC_ClearColumns, table=DLTab_F589D8
 
 ; --------------------------------------------------------------------------
 ; DLTab_F589D8 -- 0xF589D8-0xF589E3, 2 rows x 6 bytes
@@ -927,8 +927,8 @@ DL_F590DD:
 DL_F590E7:
 	dl_fill_rect	x0=256, y0=34, x1=304, y1=45
 DL_F590F1:
-	dlb_string	var=LoadSingle_BankA, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F59128, width=10, x=40, y=124
-	dlb_string	var=LoadSingle_BankB, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=DLText_F59128, width=10, x=200, y=59
+	dlb_string	var=LoadSingle_SourceBank, mask=0x03, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_F59128, width=10, x=40, y=124
+	dlb_string	var=LoadSingle_DestBank, mask=0x03, shift=0, svc=LCDSVC_DrawText8x16, table=DLText_F59128, width=10, x=200, y=59
 DL_F5910F:
 	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch, width=9, x=40, y=84
 	dlb_number	var=DiskScreen_RowOption, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x14, x=40, y=164, digits=2

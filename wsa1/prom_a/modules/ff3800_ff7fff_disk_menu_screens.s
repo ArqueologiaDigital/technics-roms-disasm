@@ -7168,7 +7168,7 @@ ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first 
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF6781  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6785  1d 04 76 ff
 	ld c, 0x02:opc                                          ; FF6789  23 02
-	mul	bc, (LoadSingle_BankB:16)                              ; FF678B  c1 36 27 43
+	mul	bc, (LoadSingle_DestBank:16)                              ; FF678B  c1 36 27 43
 	extz XBC                                             ; FF678F  e9 12
 	add XBC,Table_FF4039                                 ; FF6791  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF6797  91 21
@@ -7365,7 +7365,7 @@ SoftKeyCol1_L0adSingle_AllPages:   ; entry: named by 8 `.long` operands, first a
 SoftKeyCol2_L0adSingleS0und_Page1:   ; entry: named by 2 `.long` operands, first at 0xFF40CD
 	link XIZ,0x0000                                      ; FF6924  ee 0c 00 00
 	push XIX                                             ; FF6928  3c
-	lda xix, (LoadSingle_BankA:16)                                ; FF6929  f1 28 27 34
+	lda xix, (LoadSingle_SourceBank:16)                                ; FF6929  f1 28 27 34
 	pushw 0x81                                           ; FF692D  0b 81 00
 	pushw 0x01                                           ; FF6930  0b 01 00
 	calr PanelDial_SetButtonPair                                      ; FF6933  1e f4 07
@@ -7472,7 +7472,7 @@ SoftKeyCols3_4_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 SoftKeyCols5_6_L0adSingleS0und_Page1:   ; entry: named by 4 `.long` operands, first at 0xFF40D9
 	link XIZ,0x0000                                      ; FF6A17  ee 0c 00 00
 	push XIX                                             ; FF6A1B  3c
-	lda xix, (LoadSingle_BankB:16)                                ; FF6A1C  f1 36 27 34
+	lda xix, (LoadSingle_DestBank:16)                                ; FF6A1C  f1 36 27 34
 	pushw 0x84                                           ; FF6A20  0b 84 00
 	pushw 0x04                                           ; FF6A23  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF6A26  1e 01 07
@@ -7626,7 +7626,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	link XIZ,0x0000                                      ; FF6B35  ee 0c 00 00
 	pushw hl                                             ; FF6B39  2b
 	push XIX                                             ; FF6B3A  3c
-	lda xix, (LoadSingle_BankA:16)                                ; FF6B3B  f1 28 27 34
+	lda xix, (LoadSingle_SourceBank:16)                                ; FF6B3B  f1 28 27 34
 	ld h, 0x00:opc                                          ; FF6B3F  26 00
 	pushw 0x81                                           ; FF6B41  0b 81 00
 	pushw 0x01                                           ; FF6B44  0b 01 00
@@ -7643,7 +7643,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	ld C,(XIX)                                           ; FF6B5C  84 23
 	cp c, 0x01:i3                                          ; FF6B5E  cb d9
 	jr nz, .LFF6B7E                                      ; FF6B60  6e 1c
-	ld (LoadSingle_BankB:16), 0x01                                 ; FF6B62  f1 36 27 00 01
+	ld (LoadSingle_DestBank:16), 0x01                                 ; FF6B62  f1 36 27 00 01
 	jr .LFF6B7C                                          ; FF6B67  68 13
 .LFF6B69:
 	ld C,(XIX)                                           ; FF6B69  84 23
@@ -7654,7 +7654,7 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	ld C,(XIX)                                           ; FF6B71  84 23
 	cp c, 0x02:i3                                          ; FF6B73  cb da
 	jr nz, .LFF6B7E                                      ; FF6B75  6e 07
-	ld (LoadSingle_BankB:16), 0x02                                 ; FF6B77  f1 36 27 00 02
+	ld (LoadSingle_DestBank:16), 0x02                                 ; FF6B77  f1 36 27 00 02
 .LFF6B7C:
 	ld h, 0x01:opc                                          ; FF6B7C  26 01
 .LFF6B7E:
@@ -7740,7 +7740,7 @@ SoftKeyCol5_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	link XIZ,0x0000                                      ; FF6C24  ee 0c 00 00
 	pushw hl                                             ; FF6C28  2b
 	push XIX                                             ; FF6C29  3c
-	lda xix, (LoadSingle_BankB:16)                                ; FF6C2A  f1 36 27 34
+	lda xix, (LoadSingle_DestBank:16)                                ; FF6C2A  f1 36 27 34
 	pushw 0x84                                           ; FF6C2E  0b 84 00
 	pushw 0x04                                           ; FF6C31  0b 04 00
 	calr PanelDial_SetButtonPair                                      ; FF6C34  1e f3 04
@@ -7838,7 +7838,7 @@ SoftKeyCols7_8_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, fi
 	push XIX                                             ; FF6CF5  3c
 	lda xix, (LoadSingle_SelectedItem:16)                                ; FF6CF6  f1 38 27 34
 	ld c, 0x02:opc                                          ; FF6CFA  23 02
-	mul	bc, (LoadSingle_BankB:16)                              ; FF6CFC  c1 36 27 43
+	mul	bc, (LoadSingle_DestBank:16)                              ; FF6CFC  c1 36 27 43
 	extz XBC                                             ; FF6D00  e9 12
 	add XBC,Table_FF4039                                 ; FF6D02  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF6D08  91 21
@@ -8066,8 +8066,8 @@ ScreenEnter_L0adSingleC0mbination_Page0:   ; entry: named by 1 `.long` operand, 
 ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, first at 0xFF414D
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF6E95  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6E99  1d 04 76 ff
-	ld (LoadSingle_BankB:16), 0x00                                 ; FF6E9D  f1 36 27 00 00
-	ld (LoadSingle_BankA:16), 0x00                                 ; FF6EA2  f1 28 27 00 00
+	ld (LoadSingle_DestBank:16), 0x00                                 ; FF6E9D  f1 36 27 00 00
+	ld (LoadSingle_SourceBank:16), 0x00                                 ; FF6EA2  f1 28 27 00 00
 	pushw 0x00                                           ; FF6EA7  0b 00 00
 	lda xbc, (DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1C0mbi:24) ; FF6EAA  f2 55 8f f5 31
 	push XBC                                             ; FF6EAF  39
@@ -8249,7 +8249,7 @@ SoftKeyCols7_8_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operan
 	push XIX                                             ; FF6FC5  3c
 	lda xix, (LoadSingle_SelectedItem:16)                                ; FF6FC6  f1 38 27 34
 	ld c, 0x02:opc                                          ; FF6FCA  23 02
-	mul	bc, (LoadSingle_BankB:16)                              ; FF6FCC  c1 36 27 43
+	mul	bc, (LoadSingle_DestBank:16)                              ; FF6FCC  c1 36 27 43
 	extz XBC                                             ; FF6FD0  e9 12
 	add XBC,Table_FF4039                                 ; FF6FD2  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF6FD8  91 21
@@ -8518,7 +8518,7 @@ L0adSingleS0und_DrawGroupList:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF7161  f1 40 29 31
 	push XBC                                             ; FF7165  39
 	ld a, 0x02:opc                                          ; FF7166  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF7168  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF7168  c1 36 27 41
 	extz XWA                                             ; FF716C  e8 12
 	add XWA,Table_FF4039                                 ; FF716E  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7174  90 20
@@ -8558,7 +8558,7 @@ L0adSingleS0und_DrawGroupList:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF71CE  f1 40 29 31
 	push XBC                                             ; FF71D2  39
 	ld a, 0x02:opc                                          ; FF71D3  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF71D5  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF71D5  c1 36 27 41
 	extz XWA                                             ; FF71D9  e8 12
 	add XWA,Table_FF4039                                 ; FF71DB  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF71E1  90 20
@@ -8593,7 +8593,7 @@ L0adSingleS0und_DrawGroupName:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF7224  f1 40 29 31
 	push XBC                                             ; FF7228  39
 	ld a, 0x02:opc                                          ; FF7229  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF722B  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF722B  c1 36 27 41
 	extz XWA                                             ; FF722F  e8 12
 	add XWA,Table_FF4039                                 ; FF7231  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7237  90 20
@@ -8614,7 +8614,7 @@ L0adSingleC0mbination_DrawGroupName:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF725D  f1 40 29 31
 	push XBC                                             ; FF7261  39
 	ld a, 0x02:opc                                          ; FF7262  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF7264  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF7264  c1 36 27 41
 	extz XWA                                             ; FF7268  e8 12
 	add XWA,Table_FF4039                                 ; FF726A  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7270  90 20
@@ -8658,7 +8658,7 @@ L0adSingleS0und_DrawGroupSounds:
 	pushw de                                             ; FF729B  2a
 	pushw ix                                             ; FF729C  2c
 	ld c, 0x02:opc                                          ; FF729D  23 02
-	mul	bc, (LoadSingle_BankB:16)                              ; FF729F  c1 36 27 43
+	mul	bc, (LoadSingle_DestBank:16)                              ; FF729F  c1 36 27 43
 	extz XBC                                             ; FF72A3  e9 12
 	add XBC,Table_FF4039                                 ; FF72A5  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF72AB  91 21
@@ -8687,7 +8687,7 @@ L0adSingleS0und_DrawGroupSounds:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF72E1  f1 40 29 31
 	push XBC                                             ; FF72E5  39
 	ld a, 0x02:opc                                          ; FF72E6  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF72E8  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF72E8  c1 36 27 41
 	extz XWA                                             ; FF72EC  e8 12
 	add XWA,Table_FF4039                                 ; FF72EE  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF72F4  90 20
@@ -8736,7 +8736,7 @@ L0adSingleC0mbination_DrawGroupList:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF7343  f1 40 29 31
 	push XBC                                             ; FF7347  39
 	ld a, 0x02:opc                                          ; FF7348  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF734A  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF734A  c1 36 27 41
 	extz XWA                                             ; FF734E  e8 12
 	add XWA,Table_FF4039                                 ; FF7350  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF7356  90 20
@@ -8789,7 +8789,7 @@ L0adSingleC0mbination_DrawGroupCombinations:
 	pushw de                                             ; FF739E  2a
 	pushw ix                                             ; FF739F  2c
 	ld c, 0x02:opc                                          ; FF73A0  23 02
-	mul	bc, (LoadSingle_BankB:16)                              ; FF73A2  c1 36 27 43
+	mul	bc, (LoadSingle_DestBank:16)                              ; FF73A2  c1 36 27 43
 	extz XBC                                             ; FF73A6  e9 12
 	add XBC,Table_FF4039                                 ; FF73A8  e9 c8 39 40 ff 00
 	ld BC,(XBC)                                          ; FF73AE  91 21
@@ -8818,7 +8818,7 @@ L0adSingleC0mbination_DrawGroupCombinations:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF73E4  f1 40 29 31
 	push XBC                                             ; FF73E8  39
 	ld a, 0x02:opc                                          ; FF73E9  21 02
-	mul	wa, (LoadSingle_BankB:16)                              ; FF73EB  c1 36 27 41
+	mul	wa, (LoadSingle_DestBank:16)                              ; FF73EB  c1 36 27 41
 	extz XWA                                             ; FF73EF  e8 12
 	add XWA,Table_FF4039                                 ; FF73F1  e8 c8 39 40 ff 00
 	ld WA,(XWA)                                          ; FF73F7  90 20
@@ -8881,7 +8881,7 @@ L0adSingle_DrawBankAndNumber:
 	ld L,(XIZ+0x08)                                      ; FF7440  8e 08 27
 	pushw 0x04                                           ; FF7443  0b 04 00
 	ld c, 0x04:opc                                          ; FF7446  23 04
-	mul	bc, (LoadSingle_BankA:16)                              ; FF7448  c1 28 27 43
+	mul	bc, (LoadSingle_SourceBank:16)                              ; FF7448  c1 28 27 43
 	extz XBC                                             ; FF744C  e9 12
 	add XBC,Text_UserBankAbbrevs                                  ; FF744E  e9 c8 a1 42 ff 00
 	push XBC                                             ; FF7454  39
@@ -8974,9 +8974,9 @@ L0adSingle_DrawBankAndNumber:
 	ret                                                  ; FF7524  0e
 ; Var2728_Is2or3: WA = 1 when (0x2728) is 2 or 3, else 0.
 Var2728_Is2or3:
-	cp	(LoadSingle_BankA:16), 0x02                            ; FF7525  c1 28 27 3f 02
+	cp	(LoadSingle_SourceBank:16), 0x02                            ; FF7525  c1 28 27 3f 02
 	jr z, .LFF7533                                       ; FF752A  66 07
-	cp	(LoadSingle_BankA:16), 0x03                            ; FF752C  c1 28 27 3f 03
+	cp	(LoadSingle_SourceBank:16), 0x03                            ; FF752C  c1 28 27 3f 03
 	jr nz, .LFF7538                                      ; FF7531  6e 05
 .LFF7533:
 	ldw wa, 0x01                                         ; FF7533  30 01 00

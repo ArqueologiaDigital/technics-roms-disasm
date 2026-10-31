@@ -973,7 +973,7 @@ DLTable_F0D530:
 	.short 0x0008, 0x00AB, 0x0078, 0x00B6	; [8]
 
 	dlb_rect_entry_op08	var=MidiOutPgm_SendShown, mask=0xff, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F0D58E
-	dlb_rect_entry	var=MidiOutPgm_Cell2742, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F0D58E
+	dlb_rect_entry	var=MidiOutPgm_FilledBox, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F0D58E
 
 DLTable_F0D58E:
 	.short 0x0048, 0x00E2, 0x00A2, 0x00EC	; [0]

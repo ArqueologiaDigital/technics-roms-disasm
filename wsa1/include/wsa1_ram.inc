@@ -607,7 +607,7 @@
 	.equ UI_CursorBox,				0x2721	; the index of the box a screen draws its cursor highlight in -- Paint_MidiTotalMode, MidiFileSave_MoveNameCursor, S0ngSelectName_CursorLeft/Right
 	.equ MidiScreen_SubPage,			0x2740	; which page / key row a MIDI settings screen shows -- LcdKeyRow1_GeneralMidiMode_Page0 sets 1 (YES/NO); ScreenButton_GeneralMidiMode_Entry reads it
 	.equ MidiOutPgm_SendShown,			0x2741	; 1 while the SEND box is drawn -- MidiOutProgramChange_Send sets it; Paint_MidiOutProgramChange erases the box
-	.equ MidiOutPgm_Cell2742,			0x2742	; TODO: drawn by MidiOutPgm_SendShown's box table; no writer under any spelling -- DLTable_F0D530 only
+	.equ MidiOutPgm_FilledBox,			0x2742	; which of DLTable_F0D58E's two bottom-row boxes the SEND list fills; nothing on CPU 1 writes it and RESET zeroes 0x0080-0x51FF, so it is always box 0 -- display-only -- the record after MidiOutPgm_SendShown's erase in DLTable_F0D530; notes/open4-c-probes/ram_cell_writer_census.py
 	.equ CombiEdit_DrawnPage,			0x2768	; the COMBINATION EDIT page last drawn -- Draw_ReverbDepth, CombiEditMixer_ShowOtherParts: := CombiEdit_Page
 	.equ CombiEdit_DrawnRow,			0x276a	; the COMBINATION EDIT row last drawn -- CombiEditMixer_DrawPartBoxRow: := CombiEdit_Row; CombiEditMixer_ResetRowForPage
 	.equ ToneEdit_TouchCurveSlot,			0x27a3	; the touch-curve slot 1..4 -- Var27A3_SetSlot: (0x27A3) = n when 1 <= n <= 4, else 1
@@ -616,16 +616,43 @@
 	.equ MessageScreen_Arg,				0x2881	; a byte the message screen draws with its message -- MessageScreen_Paint copies (0x0C12) here for message 0x1A
 
 ; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.2 The disk and MIDI-file screens"
-	.equ LoadSingle_BankA,				0x2728	; a USER bank of the LOAD SINGLE screens, drawn at the left; TODO source or destination -- L0adSingle_DrawBankAndNumber: Text_UserBankAbbrevs[(0x2728)]
+	.equ LoadSingle_SourceBank,			0x2728	; the USER bank of the LOAD SINGLE screens drawn at the left: the SOURCE, the bank inside the loaded file the sound is copied from -- DiskFile_BuildLinkCopyRecords puts UserSoundBank_RemoteGroupAddr((0x2728), (0x2727)) in each copy record's +0 source field; L0adSingle_DrawBankAndNumber: Text_UserBankAbbrevs[(0x2728)]
 	.equ NameEdit_CharBox,				0x2729	; the character cell the name-entry grid highlights -- MidiFileSave_MoveNameCursor: (0x2729) := NameEdit_CharIndex
-	.equ DiskSave_Cell272A,				0x272a	; TODO: bit 0 picks a fill or a clear by the password field; no writer under any spelling -- DL_F589B2, DL_F589CD only
+	.equ DiskSave_PasswordCursor,			0x272a	; bit 0: which of the DISK SAVE password's two 16x16 characters is highlighted (the two rects of DLTab_F589BD/F589D8 are the cells of the width-2 string at x 136); nothing on CPU 1 writes it and RESET zeroes 0x0080-0x51FF, so it is always the first -- display-only -- DL_F589B2 fills and DL_F589CD clears by it; notes/open4-c-probes/ram_cell_writer_census.py
 	.equ MidiFile_ListCursorRow,			0x272d	; the MIDI FILE screens' list cursor row -- 0 on Paint_MidiFileDirectPlay / _L0ad; MidiFile_LcdKeyRow4 decrements it
 	.equ DiskScreen_RowOption,			0x2730	; the option the last LCD-row key chose; each row key writes its own number -- LcdKeyRow1..5_MidiFileSave_Page1 write 0, 0, 1, 2, 3
 	.equ MidiFileSave_Options,			0x2731	; two one-bit options of MIDI FILE SAVE page 1, each drawn OFF / ON -- ScreenEnter_MidiFileSave_Page1
 	.equ DiskLoad_SongNumber,			0x2733	; the song number the row-4 / row-5 keys step -- LcdKeyRow4/5_DiskL0adFile, LcdKeyRow4/5_MidiFileL0ad
-	.equ LoadSingle_BankB,				0x2736	; the other USER bank, drawn at the right; page 1 lists its groups -- SoftKeyCol2_L0adSingleS0und_Page0 writes 1 / 2; L0adSingleS0und_DrawGroupList
+	.equ LoadSingle_DestBank,			0x2736	; the other USER bank, drawn at the right: the DESTINATION in the machine's memory; page 1 lists its groups -- DiskFile_BuildLinkCopyRecords puts it in each copy record's +6 destination field; SoftKeyCol2_L0adSingleS0und_Page0 writes 1 / 2; L0adSingleS0und_DrawGroupList
 	.equ LoadSingle_SelectedItem,			0x2738	; the item selected on LOAD SINGLE page 0 -- ScreenEnter_L0adSingleS0und_Page0, SoftKeyCol5_L0adSingleS0und_Page0
 	.equ LoadSingle_ListCursorRow,			0x2739	; page 1's cursor row 0..7 -- SoftKeyCols7_8_L0adSingle_Page1
+
+; ---- wsa1/notes/FINDINGS-prom_b-graphics-veneers.md -- "Open: (0x27A2), (0x27A4), (0x27F5) -- named 2026-10-31"
+	.equ ToneEdit_SoloOn,				0x27a2	; 1 while the MODELING top's SOLO is on (the selected layer heard alone); UiPaint_Solo draws its indicator from it -- Var27A2_ToggleWithP23 (LCD row 1, right key of ToneEditPage_A0) toggles it and sends p23 for one layer (on) or all four (off); sub_FDACBD clears it
+	.equ ToneEdit_LayerOnBits,			0x27a4	; the layers' ON/OFF: bit 2n-2 set while layer n (1..4) sounds -- SoundEdit_SetSlotEnabled sets / clears the bit and sends the byte as tone parameter 0x11 (0x0D for a drum kit); Var27A4_SlotEnabled tests it; SoundEditMenu_ReadBackTone stores CPU 2's reply
+	.equ SoundEdit_SoundKind,			0x27f5	; what the sound being edited is: 0 a tone, 1 a drum kit, 2 a drawbar sound -- the SOUND EDIT MENU entry: tone record byte & 0xC0 = 0x80 -> 1 (drum), 0x40 -> 2 and screen 0xA3 (ScreenEnter_DrawbarScreen), else 0; 117 readers, e.g. SoundEditMenu_ReadBackDrum vs _ReadBackTone
+
+; ---- wsa1/notes/FINDINGS-prom_b-message-line.md -- "2.5 Which RAM variable supplies each value (2026-10-31)"
+	.equ StepRecord_Tempo,				0x100c	; the tempo the TEMPO message lines print, 3 digits -- MsgLine_PutTempoDigits reads it; StepRecord_StepTempo writes it
+	.equ StepRecord_TrackVolume,			0x1011	; STEP RECORD sub-screen 9's VOLUME, 0..127, of the current track's part -- SoftKeyCol5_StepRecordSub09 steps it and sends it as part parameter 3; MsgLine_Volume prints it
+	.equ SongEvent_Byte0,				0x1258	; the first byte of the song event being decoded: the event's status in the block-store walkers (0x80/0x81/0x82/0x9n/0xCn/0xDn compares), its part / type byte in STEP RECORD's decoder (bit 7 from (0x0ECA) bit 2) -- the part P 1..P32 of a part-parameter event -- BStore_RewriteTrackForPart, sub_F6418E, sub_F73664 store the status; sub_F6BC89 reads it from the block store; MsgLine_PartVolume / _Panpot / _Sustain / ... index the P 1..P32 table with it
+	.equ SongEvent_Byte1,				0x1259	; the event's next byte -- the part of a MODULATION2 / CTRL.PEDAL / HOLD / R.T. event -- sub_F6BC89; MsgLine_PartModulation2 .. _PartRtCtrlY index the 3-character P table with it
+	.equ SongEvent_Byte2,				0x125a	; the event's third byte, bit 7 from (0x0ECA) bit 0 -- the value printed after the caption -- sub_F6BC89; the MsgLine_Part* writers print it (MsgLine_PartSustain tests bit 3, MsgLine_NoteName its low nibble)
+	.equ SongEvent_Byte3,				0x1264	; the event's fourth byte, bit 7 from (0x0ECA) bit 1; bit 6 picks EFFECT over SUSTAIN / DSP EFFECT -- sub_F6BC89; MsgLine_PartVolume_Call
+	.equ StepRecord_Length,				0x12ac	; STEP RECORD's LENGTH, a note-value index (low 4 bits) -- SoftKeyCol4_StepRecordSub00 steps it, StepRecord_BeginSession sets it; MsgLine_FormatLengthAndPhrasing prints it
+	.equ StepRecord_TieLength,			0x12ad	; the '+' tie value added to LENGTH (low 4 bits) -- SoftKeyCol5_StepRecordSub00, StepRecord_BeginSession; MsgLine_FormatLengthAndPhrasing
+	.equ StepRecord_Phrasing,			0x12ae	; PHRS: 0 TENU, 1 NORM, 2 STAC, 3 CUTT -- SoftKeyCol6_StepRecordSub00, StepRecord_BeginSession; MsgLine_FormatLengthAndPhrasing
+	.equ StepEvent_Velocity,			0x12af	; the velocity of the note event at the cursor; 0xFF = no note -- sub_F6BC89 reads it after the note; MsgLine_FormatNoteAndVelocity prints V<n> or blanks the field
+	.equ StepEvent_NoteNumber,			0x12b0	; the note number of the note event at the cursor -- sub_F6BC89, StepRecord_StepNoteNumber; MsgLine_FormatNoteAndVelocity prints name + octave
+	.equ StepRecord_Measure,			0x12b2	; the step cursor's measure, a word; >= 1000 prints as --- -- StepRecord_LoadMeasureBeat, StepRecord_ResetSessionState; MsgLine_MeasureNumber / _PutMeasureDigits
+	.equ MsgLine_MeasureSuffix,			0x12b4	; the character MsgLine_MeasureNumber writes after the measure digits; its two writers store only 0x20 -- StepRecord_ResetSessionState, sub_F6C736
+	.equ StepEvent_ControlType,			0x12b8	; the controller event's type, low 3 bits: 0 none, 1 P.BEND, 2 MOD.1, 3 EXP., 4 P.MEM, 5 AFT. -- sub_F6BC89 and the CONTROL soft keys write it; MsgLine_ControlTypeAndValue indexes Text_PBendMod1ExpPMemAftOnoff with it
+	.equ StepEvent_ControlValue,			0x12b9	; its value; bit 7 an ON/OFF value; the LSB of a pitch bend -- StepRecord_AdjustEvent14BitValue; MsgLine_ControlTypeAndValue, MsgLine_PutPitchBendValue
+	.equ StepEvent_RhythmControl,			0x12c0	; the rhythm-control event's index into Text_StartStopFillIn1fillIn2intro1CountInending1 (START, STOP, FILL IN1, ...) -- nine writers in the step_record module; MsgLine_TransportState_Plus4 / _Plus10 / _Plus14
+	.equ StepEvent_PitchBendMsb,			0x12eb	; the MSB of the pitch bend at the cursor (with StepEvent_ControlValue the LSB) -- MsgLine_PutPitchBendValue: ((0x12EB) & 0x7F) << 7 | ((0x12B9) & 0x7F)
+	.equ StepRecord_PartParamSelect,		0x12ec	; which part parameter the line shows: 0 PAN, 1 KEY SHIFT, 2 TUNING, 3 BEND SENS -- MsgLine_PanKeyShiftTuningBendSens indexes Text_PanKeyShiftTuningBendSens with it; 1 and 2 print signed about 64, 2 about 128
+	.equ StepRecord_PartParamValue,			0x12ed	; that parameter's value -- MsgLine_PanKeyShiftTuningBendSens; its stepping keys write it
+	.equ Value_AsciiSign,				0x2660	; the sign character ('-', '+' or ' ') the signed digit services put before Value_AsciiDigits -- Value_OffsetToSignAndMagnitude stores 0x2D / 0x2B / 0x20 (0xF8BD5F-0xF8BD6D)
 
 ; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.3 Text buffers the records draw as string tables"
 	.equ StepRecord_PrevRowText,			0x1012	; STEP RECORD's previous-measure row, 30 characters -- StepRecord_BuildPrevMeasureRow (ld XIX,0x1012), StepRecord_BlankPrevRowText
