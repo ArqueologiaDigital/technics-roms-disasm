@@ -122,3 +122,25 @@ comments on all 37 lane issues were applied from `tracker-spec.json` (this direc
 | kn5000-1gu | kn5000-rlb | Main-CPU sender of sub-CPU system sub-command 0x09 (voice allocation mode A/B)                                          |
 | kn5000-3qp | kn5000-98j | Accompaniment: transposition of rhythm-ROM pattern notes to the recognized chord (root shift, chord-type note rule)     |
 | kn5000-rzg | kn5000-98j | Accompaniment: SYNCHRO & BREAK while running (break) and synchro stop                                                   |
+
+## Gates and censuses (merged tree, 2026-10-31)
+
+- `make gate`: exit 0 (every image assembles, every rebuilt ROM byte-identical, every update image
+  decompresses to its payload, every symbol reference file matches its build).  `make gate-wsa1`:
+  exit 0 (naming touched WSA1 prom_b).
+- Dispatch census, read-only (`DISPATCH_CENSUS_DIR` set to the lane's own scratch, because the
+  default scratch path is shared between lanes and a concurrent run crashes `build_maps.py`):
+  "compared with docs/coverage/dispatch-census-2026-10-31-02.json: nothing rose".
+- Doc-quality census, read-only, against `doc-quality-2026-10-31-02`: routine headers, numeric
+  operands and fall-through `.byte` RUNS fell in every maincpu tree; 12 figures ROSE, all in
+  rule (d):
+  - `.byte` runs after a terminator, v10/v9/v8: +1 run, +36 B.  midi respelled
+    `SqStep_ButtonRhythmModeBytes` from `.ascii` to `.byte`; the `.ascii` line used to split one
+    data run, so the neighbouring `.byte` tables now count as one run.  No byte changed.
+  - bytes of `.byte` runs after fall-through: v10/v9/v8 +8 B, v7/v6/v5 +10 B, while the RUNS
+    fell (v10 61 -> 55).  [INFERENCE, not attributed per file] This is data that was spelled as
+    instructions and is now spelled `.byte`, so its bytes moved into this counter: engine's
+    `CmpStep_RecPartToward{Bass,Drums}_Map` and naming's black-key and bar-length tables.
+  - The v5/v6 "routines without a header" rise that hdae saw against the snapshot is already
+    present at base 130735749 (display and midi measured 7832 there).  The merged tree is below
+    base.
