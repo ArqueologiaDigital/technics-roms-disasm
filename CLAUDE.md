@@ -897,12 +897,14 @@ what each script answers. The ledger is `docs/coverage/`, holding dated `.txt` +
 2026-10-05 at the owner's request: *"establish a longterm policy to keep track of that kind of info, so
 that we can have strong evidence whenever we reach true full code-coverage"*.
 
-1. **What it tracks.** For every image of both models (KN5000 v10/v9/v7, v142, subboot, table data,
-   custom data, HD-AE5000; WSA1 prom_a/b/c), each jump/call table is tracked: `.long` tables, jump-vector
-   runs, offset tables, the prom_b directory, and unframed pointer runs. **Not yet covered:** KN5000 maincpu
-   v6 and v5 (trees ported from v7 and v6, added 2026-10-24), v8 (v9's source) and sub-CPU v1.41 (generated
-   from v1.42). Adding them changes the image set of `data_range_census.py`, and so the semantic score's
-   totals, so it is left to a commit of its own. Until then no coverage claim covers those images.
+1. **What it tracks.** For every image of both models (KN5000 maincpu v10/v9/v8/v7/v6/v5, sub-CPU
+   v142/v141/v140, subboot, table data, custom data, HD-AE5000 v2.06i/v2.01i/v1.15i/v1.10i; WSA1
+   prom_a/b/c), each jump/call table is tracked: `.long` tables, jump-vector runs, offset tables, the prom_b
+   directory, and unframed pointer runs. v141 joined on 2026-10-24; v8 (v9's source with
+   `FW_VERSION_BYTE=0x08`), v6, v5, v140 and the three older HD-AE5000 versions (keys `hdae_v201`,
+   `hdae_v115`, `hdae_v110`) on 2026-10-31, in a commit of their own because they change the image set of
+   `data_range_census.py` and so the semantic score's totals (rules 5). Every gated KN5000 and WSA1 image
+   is now covered except WSA1 prom_d, which is data only.
    For each table the ledger records:
    - whether every entry that points into code lands on a labelled, disassembled instruction and is
      spelled symbolically;
@@ -1006,7 +1008,8 @@ component). It writes `docs/badges/*.svg`, `semantic-score.json` and appends a r
 `semantic-score-history.csv`. Re-run it after a change that moves the semantics noticeably, and always after
 committing a new dispatch-census snapshot. Commit `docs/badges/` in the same commit as the change, and quote the
 figures from the script's output, never by hand. The score is a summary for the badge; claims about coverage
-still go through the ledger above. Since rules 3 (2026-10-24) it rates all three models: the SX-KN7000's
+still go through the ledger above. Since rules 5 (2026-10-31) the KN5000 model also rates v8, v6, v5, v140 and
+the older HD-AE5000 ROMs. Since rules 3 (2026-10-24) it rates all three models: the SX-KN7000's
 program, table and Style Convert converters have their own bytes and names definitions, read from the sources
 (the docstring's "THE SX-KN7000 MODEL"), and need `make kn7000` built first.
 

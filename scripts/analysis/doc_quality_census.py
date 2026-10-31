@@ -6,7 +6,8 @@ QUESTION IT ANSWERS
    of it worse?"  Byte identity says nothing about this, and the dispatch census (dispatch_table_census/) only
    covers entry points.  This census counts five debts in the committed sources of every image:
 
-  KN5000   v10 v9 v7 v142 v141 subboot tabledata customdata hdae5000   (TLCS-900, llvm-mc dialect, `;` comments)
+  KN5000   v10 v9 v8 v7 v6 v5 v142 v141 v140 subboot tabledata customdata (TLCS-900, llvm-mc dialect, `;`
+           hdae5000 hdae_v201 hdae_v115 hdae_v110                         comments)
   SX-WSA1R prom_a prom_b prom_c prom_d                                  (TLCS-900, llvm-mc dialect, `;` comments)
   SX-KN7000 program table cnv program942                                (MN10300, kn7asm dialect, `#` / `;` comments)
   MN10300 siblings kn2400 kn6000 kn6500 hdsx3                           (MN10300, kn7asm dialect, `#` / `;` comments)
@@ -15,6 +16,10 @@ QUESTION IT ANSWERS
   SX-KN2400/2600, SX-KN6000 and SX-KN6500 program flashes and the HD-SX3 plug-in image, generated with the
   kn7000 tools (kn7000/tools/gen_image_s.py); model `mn10300-siblings`.  v141, program942 and the siblings were
   added on 2026-10-24 (wave2/metrics-2); a --compare against an older snapshot lists them as `new`, not as rises.
+  v8, v6, v5, v140 and the three older HD-AE5000 versions (hdae_v201, hdae_v115, hdae_v110) were added on
+  2026-10-31 (lane hdae-ledgers).  v8 has no tree of its own: it is v9's files (the Makefile assembles them with
+  --defsym FW_VERSION_BYTE=0x08), so its counts equal v9's by construction.  The HD-AE5000 version trees take
+  hdae5000/'s shared/ through a second -I, as the Makefile builds them (v1.10i also v1.15i's).
 
   An image's files are its root source(s) plus everything they `.include`, resolved the way the build resolves
   them (the including file's directory, then each -I directory, then the assembler's working directory).  Only
@@ -105,7 +110,7 @@ RULES (each count is re-derivable from these definitions)
 
   The image address ranges used by (b) are in IMAGES below (from the linked ELFs' LOAD segments; kn7000 from
   `.mnbase` and the image size; kn2400 also has its work-RAM link window).  prom_d (data at 0x0) has no range,
-  so its (b) in/other split is not computed.  imm_in_image is not computed for v142 / v141 either: their range
+  so its (b) in/other split is not computed.  imm_in_image is not computed for v142 / v141 / v140 either: their range
   starts at 0x400, so masks and counts such as 0xffff and 0x2710 would land in it.  kn7000 program and
   program942 use the flash range only: code linked for the library window at 0x4C000000 counts as elsewhere.
 
@@ -146,13 +151,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 IMAGES = collections.OrderedDict([
     ("v10", ("kn5000", "tlcs", ".", ["v10/maincpu"], ["v10/maincpu/kn5000_v10_program.s"], (0xE00000, 0x1000000))),
     ("v9", ("kn5000", "tlcs", ".", ["v9/maincpu"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
+    ("v8", ("kn5000", "tlcs", ".", ["v9/maincpu"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
     ("v7", ("kn5000", "tlcs", ".", ["v7/maincpu"], ["v7/maincpu/kn5000_v7_program.s"], (0xE00000, 0x1000000))),
+    ("v6", ("kn5000", "tlcs", ".", ["v6/maincpu"], ["v6/maincpu/kn5000_v6_program.s"], (0xE00000, 0x1000000))),
+    ("v5", ("kn5000", "tlcs", ".", ["v5/maincpu"], ["v5/maincpu/kn5000_v5_program.s"], (0xE00000, 0x1000000))),
     ("v142", ("kn5000", "tlcs", ".", ["v142/subcpu"], ["v142/subcpu/kn5000_subprogram_v142.s"], (0x400, 0x3EF00))),
     ("v141", ("kn5000", "tlcs", ".", ["v141/subcpu"], ["v141/subcpu/kn5000_subprogram_v141.s"], (0x400, 0x3EF00))),
+    ("v140", ("kn5000", "tlcs", ".", ["v140/subcpu"], ["v140/subcpu/kn5000_subprogram_v140.s"], (0x400, 0x3EF00))),
     ("subboot", ("kn5000", "tlcs", ".", ["subcpu/boot"], ["subcpu/boot/kn5000_subcpu_boot.s"], (0xFE0000, 0x1000000))),
     ("tabledata", ("kn5000", "tlcs", ".", ["table_data"], ["table_data/kn5000_table_data.s"], (0x800000, 0xA00000))),
     ("customdata", ("kn5000", "tlcs", ".", ["custom_data"], ["custom_data/kn5000_custom_data.s"], (0x300000, 0x400000))),
     ("hdae5000", ("kn5000", "tlcs", ".", ["hdae5000"], ["hdae5000/hd-ae5000_v2_06i.s"], (0x280000, 0x300000))),
+    ("hdae_v201", ("kn5000", "tlcs", ".", ["hdae5000_v2_01i", "hdae5000"], ["hdae5000_v2_01i/hd-ae5000_v2_01i.s"],
+                   (0x280000, 0x300000))),
+    ("hdae_v115", ("kn5000", "tlcs", ".", ["hdae5000_v1_15i", "hdae5000"], ["hdae5000_v1_15i/hd-ae5000_v1_15i.s"],
+                   (0x280000, 0x300000))),
+    ("hdae_v110", ("kn5000", "tlcs", ".", ["hdae5000_v1_10i", "hdae5000_v1_15i", "hdae5000"],
+                   ["hdae5000_v1_10i/hd-ae5000_v1_10i.s"], (0x280000, 0x300000))),
     ("prom_a", ("wsa1", "tlcs", "wsa1", ["wsa1", "wsa1/prom_a"], ["wsa1/prom_a/wsa1_prom_a.s"], (0xF80000, 0x1000000))),
     ("prom_b", ("wsa1", "tlcs", "wsa1", ["wsa1", "wsa1/prom_b"], ["wsa1/prom_b/wsa1_prom_b.s"], (0xF00000, 0xF80000))),
     ("prom_c", ("wsa1", "tlcs", "wsa1", ["wsa1", "wsa1/prom_c"], ["wsa1/prom_c/wsa1_prom_c.s"], (0xF80000, 0x1000000))),
