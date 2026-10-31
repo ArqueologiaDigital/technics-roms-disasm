@@ -245,10 +245,11 @@ service table's entry 12 is not a pointer: it holds its stub's address AND 0xfff
   that nothing reads (HDAE5000_RAM_FrameCount) [08, 13].
 - The unreferenced VarInt codec, the SMF header reader and HDAE5000_StrUpr of v2.x are absent [04d].
 - Every version's ROM header holds, after "XAPR", a pointer to the end of its .data image
-  (v2.06i 0x2fa134, v2.01i 0x2f95e6, v1.15i 0x2e198a, v1.10i 0x2e17fa); the v1 trees spell it
-  `.long HDAE5000_Init_Data_End` (the v2.x trees still spell it as text and bytes) [13].
+  (v2.06i 0x2fa134, v2.01i 0x2f95e6, v1.15i 0x2e198a, v1.10i 0x2e17fa); every tree spells it
+  `.long HDAE5000_Init_Data_End` (the v2.x trees since b3b788b14, 2026-10-31) [13].
 - The naming keyboard's two character tables end with a pointer to an empty string right after
-  them (the v2.x trees spell that word as bytes and a "." string) [05e].
+  them, `.long HDAE5000_Str_Empty_AtoSPC[_2]` in every tree (the v2.x trees spelled that word as
+  bytes and a "." string until b3b788b14) [05e].
 
 **v1.10i against v1.15i** (`routine-diff-v1_10i.txt`: 538 routines each, 533 the same, 5 changed):
 
@@ -290,21 +291,53 @@ each folder's README gives the order.
 
 Review tools, each run against the tree the port came from (`--base`):
 
-| tool                                                   | v1.15i (base v2.01i)                                     | v1.10i (base v1.15i)                                     |
-|--------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
-| `hdae5000_version_label_check.py`                      | 0 piles, 0 orphans, 117 moved, 6 rename suggestions      | 0 piles, 0 orphans, 55 moved, 1 rename suggestion        |
-| `hdae5000_version_stale_comments.py`                   | 0 in every check, 0 left                                 | 0 in every check, 0 left                                 |
-| `hdae5000_obj_constants_check.py` (in `make gate`)     | 758 constants, 0 errors                                  | 755 constants, 0 errors                                  |
-| `port_hdae5000_version.py farptrs`                     | 0 pairs to respell                                       | 0 pairs to respell                                       |
+| tool                                               | v1.15i (base v2.01i)                                | v1.10i (base v1.15i)                               |
+|----------------------------------------------------|-----------------------------------------------------|----------------------------------------------------|
+| `hdae5000_version_label_check.py`                  | 0 piles, 0 orphans, 107 moved, 0 rename suggestions | 0 piles, 0 orphans, 55 moved, 0 rename suggestions |
+| `hdae5000_version_stale_comments.py`               | 0 in every check, 0 left                            | 0 in every check, 0 left                           |
+| `hdae5000_obj_constants_check.py` (in `make gate`) | 758 constants, 0 errors                             | 755 constants, 0 errors                            |
+| `port_hdae5000_version.py farptrs`                 | 0 pairs to respell                                  | 0 pairs to respell                                 |
 
 The label check now leaves out the GUI's macro-made labels (the converter checks the GUI against
 the ROM), and its marker build skips `.macro` bodies (since the GUI became a macro tree the
 v2.06i tree had not assembled in it). Its "moved" rows are code that really changed, as for
-v2.01i. The 7 rename suggestions are left for a review: 3 in the part-bit chain of
-HDAE5000_PPORT_Cmd09_SendFilesToPc, whose eight look-alike blocks still carry v2.x's
-`.Lsfsb_bit<k>` labels one block off (`HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip` / `_Skip2` /
-`_Skip3` name the right instructions), 1 in SaveOptSwEventCatch, 2 in CopyFdSongToHd_Pmt and,
-in v1.10i, `.Lrfsb_exit`.
+v2.01i. Its 7 rename suggestions of 2026-10-30 (6 in v1.15i, 1 in v1.10i) were reviewed on
+2026-10-31; see "v1.x label review" below.
+
+### v1.x label review (2026-10-31)
+
+Lane `open2/hdae-ledgers`. `hdae5000_version_label_check.py` listed 6 rename suggestions on v1.15i
+(base v2.01i) and 1 on v1.10i (base v1.15i). `scripts/renaming/rename_hdae5000_v1_label_review.sed`
+makes the renames, run once per tree by `port-edits-v1_15i/98b_label_review.py` (which also fixes
+the comments around them; its docstring says why it runs once):
+
+| suggestion (2026-10-30)                                         | what it was                                                                                                       | done                                                                            |
+|-----------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip` / `_Skip2` / `_Skip3` | v1.x has 8 part blocks; the port left v2.x's `.Lsfsb_bit<k>` one block off                                        | block k (mask 1 << k) is `.Lsfsb_bit<k>`; two unreferenced in-block labels gone |
+| `HDAE5000_SaveOptSwEventCatch_Skip7`                            | v2.x's `_Skip3` (case 0x0a, every part; mask 0x00ff in v1.x, 0x01ff in v2.x)                                      | renamed `_Skip3`                                                                |
+| `HDAE5000_CopyFdSongToHd_Pmt_Skip3`                             | v1.x reads 64 KiB per pass and writes the first chunk before a read-and-append loop                               | `.Lts925_1` / `_loop` / `_4` / `_5` / `_close`, by meaning                      |
+| `HDAE5000_CopyFdSongToHd_Pmt_Skip` -> `.Lec_process`            | not a rename: `.Lec_process` belongs to HDAE5000_Smf_ReadHeader, which v1.x lacks (three generic workspace loads) | the check now requires the same routine on both sides                           |
+| v1.10i `.Lrfsb_exit` -> `.Lrfsb_flag2_bit0`                     | v1.10i was right; v1.15i's `.Lrfsb_flag2_bit0` is the exit (v1.x has no flag-byte-2 block)                        | v1.15i's renamed `.Lrfsb_exit`                                                  |
+
+Found on the way: `HDAE5000_RAM_PportPartMaskHi` was a second name of the part mask (both
+0x23c4e4; v1.x has no second mask byte); its `.equ` is gone and its uses name the part mask. The
+`(0x23c4e4:24)` reads of the Cmd09 chain are spelled by that name too.
+
+The "moved" rows (107 in v1.15i, 55 in v1.10i; 117 and 55 before): 87 and 47 of them are data whose
+first 8 bytes are pointers or object ids that moved. Of the 20 code rows of v1.15i, five were v2.x
+ninth-part labels on v1.x code with no ninth part, renamed by the same sed (`.LHD_Data_Copy__bit8`,
+`.Ltco_slot8`, `.Lcv_bit8`, `.Lir_flag2_bit0` to `__done`, `_none`, `_validate`, `_done`;
+`.Ltl_chk8`, unreferenced, removed), with the "nine parts" prose of HDAE5000_Song_IsUsed and
+HDAE5000_DeleteDirectory (v1.x: 8 slots, 8 DeleteSongPart_* calls). The rest are real
+differences: code that changed (`.Lhbi_skip6` returns where v2.x branches; HDAE5000_CopyToHDScreen,
+`.Lfbs_evt_*` and HDAE5000_PPORT_Svc13_SendInfosAboutSong save one register fewer;
+HDAE5000_Frame_Handler counts frames first; `.LHD_AppendFile_Worker_Skip2`; `.Lts925_4` is `jr`
+where v2.x has `jrl`), epilogues whose 3-instruction window runs into a routine that differs, the
+message handler HDAE5000_FILE_LOAD_Screen_Ev01EA000C (0x01ea000c is MT_SelectDelFile in v1.x), and
+tables and strings decoded as code (the ROM header, the PC-link tables, a status string).
+
+    python3 scripts/analysis/hdae5000_version_label_check.py v1_15i --base v2_01i
+    python3 scripts/analysis/hdae5000_version_label_check.py v1_10i --base v1_15i
 
 ### Website page draft (technics-docs `hdae5000.md`, section "Versions")
 
@@ -319,17 +352,90 @@ in v1.10i, `.Lrfsb_exit`.
 > pointer, so that service cannot run. v1.10i differs from v1.15i in five routines, one language
 > message (the evaluation date) and its overwrite query, which is German-only.
 
+## Ledger: the seven images the censuses gained (2026-10-31)
+
+Lane `open2/hdae-ledgers` made KN5000 maincpu v8, v6 and v5, sub-CPU payload v1.40 and the
+HD-AE5000 v2.01i, v1.15i and v1.10i images of the data census (`data_range_census.py`, 13 -> 20
+images), the dispatch census (`scripts/analysis/dispatch_table_census/`, 12 -> 19), the
+doc-quality census and the semantic score (rules 5), in a commit of its own (cf8b62847). Keys:
+`v8`, `v6`, `v5`, `v140`, `hdae_v201`, `hdae_v115`, `hdae_v110`. v8 is v9's tree assembled with
+`--defsym FW_VERSION_BYTE=0x08` (one byte differs), so every figure of it repeats v9's. The
+HD-AE5000 version trees are mapped with the directories they take through `-I` (`xmirrors`).
+
+Dispatch census, `census.py --report` on scratch maps (`build_maps.py`), compared with
+`docs/coverage/dispatch-census-2026-10-30-03.json` (`--compare`: the seven are `new`, nothing rose).
+No snapshot is written here; the integrator writes it after merging.
+
+| image       | framed / used | NOT | newT | newT(x) | spellT | stale | U  | U-NOT | U-newT | null | D-unres |
+|-------------|---------------|-----|------|---------|--------|-------|----|-------|--------|------|---------|
+| `v8`        | 684 / 684     | 0   | 0    | 0       | 0      | 0     | 27 | 0     | 0      | 3    | 0       |
+| `v6`        | 685 / 685     | 0   | 0    | 0       | 0      | 0     | 28 | 0     | 0      | 2    | 0       |
+| `v5`        | 685 / 685     | 0   | 0    | 0       | 0      | 0     | 28 | 0     | 0      | 2    | 0       |
+| `v140`      | 44 / 44       | 0   | 0    | 0       | 0      | 0     | 0  | 0     | 0      | 0    | 0       |
+| `hdae_v201` | 66 / 66       | 0   | 0    | 0       | 0      | 0     | 0  | 0     | 0      | 0    | 0       |
+| `hdae_v115` | 57 / 57       | 0   | 0    | 0       | 0      | 0     | 0  | 0     | 0      | 0    | 0       |
+| `hdae_v110` | 57 / 57       | 0   | 0    | 0       | 0      | 0     | 0  | 0     | 0      | 0    | 0       |
+
+So all seven meet the census half of the full-coverage criterion (NOT = newT = newT(x) = spellT =
+U-NOT = U-newT = D-unres = 0), with no stale tables. When they were added, v6 and v5 showed
+682 / 682 framed, U 31, U-NOT 5 (v5 also U-newT 1): five code-pointer tables spelled as numbers.
+d44487651 and 3783cef9c fixed them (`scripts/tools/port_symbolize_pointers.py`; v5's Yoko
+language checks also carried their names one procedure late, `scripts/renaming/rename_v5_langcheck_shift.sed`).
+The three tables that were `.byte` rows are framed `.long` tables now, hence 682 -> 685 and U 31 -> 28.
+
+Data census (bytes; `data_range_census.py --images ...`, every mirror inert, reconciled) and the
+semantic score's names component (`semantic_score.py`'s `names()`, ELF `.text` symbols):
+
+| image       | CODE    | KNOWN-A | KNOWN-B | UNKNOWN | FILLER  | bytes understood | semantic names         |
+|-------------|---------|---------|---------|---------|---------|------------------|------------------------|
+| `v8`        | 996,474 | 963,640 | 75,067  | 3,524   | 58,447  | 96.25%           | 43,350 / 45,007 96.32% |
+| `v6`        | 992,858 | 945,775 | 94,122  | 3,750   | 60,647  | 95.33%           | 42,750 / 44,894 95.22% |
+| `v5`        | 991,846 | 944,153 | 95,648  | 3,750   | 61,755  | 95.26%           | 42,710 / 44,852 95.22% |
+| `v140`      | 128,832 | 66,348  | 1,136   | 30      | 262     | 99.41%           | 4,042 / 4,066 99.41%   |
+| `hdae_v201` | 110,476 | 335,325 | 45,285  | 0       | 33,202  | 91.36%           | 6,071 / 6,071 100.00%  |
+| `hdae_v115` | 95,884  | 255,022 | 42,946  | 0       | 130,436 | 91.81%           | 5,734 / 5,734 100.00%  |
+| `hdae_v110` | 95,632  | 254,947 | 42,873  | 0       | 130,836 | 91.82%           | 5,720 / 5,720 100.00%  |
+
+Doc-quality census (`doc_quality_census.py --compare` vs `doc-quality-2026-10-30-03`: the seven are
+`new`, nothing rose): routines without a header / call targets without one, numeric operands
+(in-image memory, in-image immediates, numeric branch targets), `.Lc_<hex>` locals, `.byte` runs
+after a fall-through:
+
+| image       | routines | no header | call, no header | mem / imm / branch numeric | `.Lc_` locals | byte runs |
+|-------------|----------|-----------|-----------------|----------------------------|---------------|-----------|
+| `v8`        | 8,732    | 7,275     | 4,485           | 0 / 0 / 4                  | 0             | 64        |
+| `v6`        | 8,906    | 7,827     | 4,777           | 1 / 1 / 11                 | 634           | 186       |
+| `v5`        | 8,907    | 7,829     | 4,775           | 1 / 1 / 10                 | 632           | 186       |
+| `v140`      | 957      | 155       | 90              | 632 / - / 0                | 0             | 12        |
+| `hdae_v201` | 598      | 187       | 0               | 0 / 0 / 0                  | 0             | 0         |
+| `hdae_v115` | 539      | 167       | 0               | 0 / 0 / 0                  | 0             | 0         |
+| `hdae_v110` | 539      | 167       | 0               | 0 / 0 / 0                  | 0             | 0         |
+
+(v140's in-image immediates are not counted: its range starts at 0x400, as for v141 and v142.)
+
+Reproduce (scratch only; the maps are about 0.5 GB):
+
+    DISPATCH_CENSUS_DIR=~/compartilhado/tmp/<scratch> python3 scripts/analysis/dispatch_table_census/build_maps.py
+    DISPATCH_CENSUS_DIR=~/compartilhado/tmp/<scratch> python3 scripts/analysis/dispatch_table_census/census.py \
+        --compare $(git ls-files 'docs/coverage/dispatch-census-*.json' | sort | tail -1)
+    python3 scripts/analysis/data_range_census.py --images v8,v6,v5,v140,hdae_v201,hdae_v115,hdae_v110
+    python3 scripts/analysis/doc_quality_census.py --compare
+
 ## Follow-ups
 
-- **Dispatch census and semantic score.** `hd-ae5000_v2_01i` is not yet an image of
-  `scripts/analysis/dispatch_table_census/` or `scripts/analysis/semantic_score.py`, and neither
-  are wave 1's `maincpu v8` and `subcpu v141`. Until it is, the Code-Coverage Evidence Ledger's
-  full-coverage criterion cannot cover it. Adding it means a new snapshot (`make dispatch-census`),
-  which the coordinator runs after merging.
+- **Dispatch census, semantic score, doc-quality.** Done (2026-10-31, lane `open2/hdae-ledgers`):
+  the three older HD-AE5000 versions, and KN5000 v8, v6, v5 and v1.40, are images of all three and
+  of the data census; see "Ledger" above. The first snapshots with them are the integrator's
+  (`make dispatch-census`, `make doc-quality`, `make semantic-score`).
 - **Documentation website.** Done: technics-docs 944d566 (2026-10-30) gives `hdae5000.md` the section
   "Four byte-exact source trees" (v2.06i, v2.01i, v1.15i, v1.10i and what differs between them).
-- **v1.x review.** The label check's 7 rename suggestions (above) and its "moved" rows.
-- **v2.x header and terminator.** The v2.x trees could spell the ROM header's image-end pointer and
-  the naming tables' empty-string pointer as the v1 trees now do (byte-neutral).
-- **Dispatch census, semantic score, doc-quality.** Not one of them measures the v2.01i tree, so
-  the v1 trees were not added either; adding the HD-AE5000 versions is one decision for all three.
+- **v1.x review.** Done (2026-10-31): 0 rename suggestions in either v1 tree; see "v1.x label review".
+- **v2.x header and terminator.** Done (b3b788b14): both v2.x trees spell the header's image-end
+  pointer and the naming tables' empty-string pointers by symbol, as the v1 trees do.
+- **Open.** v5 has a second unlabelled `cp xbc, 0x1e0009f` procedure, after AttAreYouSureCheck_Skip,
+  that may carry the same one-off label shift as the Yoko checks had; the census does not flag it.
+  `style_ui/ctlonly_link.ld` names four Scoop_* addresses that no tree (v7, v6, v5) has at those
+  names; the C data holds the values, so they may not be pointers at all. The HD-AE5000 v1 prose
+  blocks still quote v2.x facts in places (for example the header of
+  HDAE5000_PPORT_Svc13_SendInfosAboutSong describes the lyrics part, HDAE5000_TlxPart_Describe,
+  which v1.x lacks), as the banner of each v1 tree warns.
