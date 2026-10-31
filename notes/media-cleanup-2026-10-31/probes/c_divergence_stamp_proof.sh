@@ -13,6 +13,8 @@
 #      the patch step must recompile exactly those, and the ROMs stay byte-identical
 #   4  delete EVERY stamp (what `git pull` of this change does in an older checkout, whose bins are patched):
 #      the patch steps recompile all and the ROMs stay byte-identical
+#   5  negative control: the patcher as it was at 43242446d, run on a patched bin whose stamp is missing,
+#      changes that bin (the double patch this change prevents); the current patcher then heals it
 set -u
 SCRATCH=${1:?usage: c_divergence_stamp_proof.sh SCRATCH [BRANCH]}
 HERE=$(cd "$(dirname "$0")/../../.." && pwd)
@@ -56,6 +58,16 @@ rm -f -- v7/maincpu/includes/generated/*.bin.patched v6/maincpu/includes/generat
   v5/maincpu/includes/generated/*.bin.patched
 steps | sed 's/^/   /'
 make -s $ROMS > /dev/null 2>&1; same 4
+echo "== 5 negative control: the old patcher"
+B=v6/maincpu/includes/generated/naka_style_bitmaps.bin
+before=$(sha256sum < $B)
+git show 43242446d:scripts/build/apply_c_divergence.py > "$SCRATCH/apply_c_divergence_old.py"
+rm -f -- "$B.patched"
+python3 "$SCRATCH/apply_c_divergence_old.py" v6 | sed 's/^/   old: /'
+[ "$(sha256sum < $B)" != "$before" ] && echo "   old patcher changed $B: patched twice" || fail "5: the control saw no double patch"
+steps | grep -a ' v6:' | sed 's/^/   new: /'
+[ "$(sha256sum < $B)" = "$before" ] || fail "5: the current patcher did not restore $B"
+make -s $ROMS > /dev/null 2>&1; same 5
 st=$(git status --porcelain); [ -z "$st" ] || { echo "$st" | head; fail "git status not clean"; }
 echo "   git status --porcelain: empty"
 echo "PASS"
