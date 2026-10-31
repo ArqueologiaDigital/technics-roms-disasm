@@ -47,6 +47,7 @@ import argparse
 import collections
 import os
 import re
+import struct
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -103,12 +104,15 @@ for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E
 # it has no ToneRecordDirectory, so tones() finds nothing
 PROFILES["kn6500"]["tones"] = True
 PROFILES["kn6000"]["hash_tables"] = [
-    ("ToneKeyHash", 0x4C3E8680, 4, 12, "func_4C09B08C", 8,
-     "Key: bank MSB << 16 | LSB << 8 | program (func_4C09ACF3 builds it from the part's sound triple)."),
-    ("ShortKeyHash", 0x4C3E9850, 2, 6, "func_4C09B2AE", 6,
-     "Key: a u16 (func_4C09B200 builds it as byte << 8 | byte); the caller reads the payload's first byte."),
-    ("BankKeyHash", 0x4C3EC6A0, 4, 4, "func_4C09BDB2", 8,
-     "Key: MSB << 16 | LSB << 8 | program (func_4C09BCFA); the caller reads the payload's u16 (`movhu (a0), d0`)."),
+    ("ToneKeyHash", 0x4C3E8680, 4, 12, "ToneKeyLookup", 8,
+     "Key: bank MSB << 16 | LSB << 8 | program (ToneKeyFind builds it from the part's sound triple); payload: "
+     "the tone index, the icon and the panel switch numbers (TONE_KEY_PAYLOAD, src/include/data_tables.inc)."),
+    ("ShortKeyHash", 0x4C3E9850, 2, 6, "ShortKeyLookup", 6,
+     "Key: a panel switch, group << 8 | number (SoundSwNoBankGet builds it); payload: the bank MSB, LSB and program "
+     "it selects (SHORT_KEY_PAYLOAD)."),
+    ("BankKeyHash", 0x4C3EC6A0, 4, 4, "BankKeyLookup", 8,
+     "Key: MSB << 16 | LSB << 8 | program (SoundBankIndexGet); payload: the u16 SoundBankIndexGet answers (`movhu (a0), d0`; "
+     "BANK_KEY_PAYLOAD)."),
 ]
 # The SX-KN2400 / SX-KN2600 (program v1.1): the KN7000's registry layout (16 slots
 # per block) and alphabet; data first in the image (file 0x0F, after the boot
@@ -127,6 +131,8 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           inflate="func_486D4A2A",
                           # lane siblings-final: the built-in Music Stylist setups' one-touch settings (KN7000 layout)
                           style_panels=("StyleRecordTable", 0, 0xA0),
+                          # lane mn10300-formats: the DSP effects' descriptors (FxDescTable, kn2400_manual.sym)
+                          fx_descriptors=260,
                           # the application's code is after the data (Makefile CODE: file 0x1E427C..0x3285BE),
                           # and the part linked for RAM 0x50120000 (file 0x3285BE..0x3965B8)
                           code_cpu=[(0x485E427C, 0x487285BE), (0x50120000, 0x5018DFFA)])
@@ -160,7 +166,13 @@ PROFILES["sp7001plugin"] = dict(rom="baserom/kn7000_table_sp7001.rom", src="src/
                                 text_strict=True, string_arrays=True, string_arrays_min=4, header_funcs=True, residue=True,
                                 raminit=(0x483FA104, 0x50298000, 0x1498),
                                 # func_483E803E's first loop clears 0xA48 bytes from 0x50299498
-                                bss=(0x50299498, 0xA48, "KssWorkRam"), raminit_label="KssRamImage")
+                                bss=(0x50299498, 0xA48, "KssWorkRam"), raminit_label="KssRamImage",
+                                # lane mn10300-formats: KssBgScreen's own fields (kn7000/notes/mn10300-formats/README.md)
+                                field_notes={
+                                    ("KssBgScreen", "icon"): "icon {v}: the host's ResIconTable[{v}] (table flash, "
+                                    "src/table/gui/icon_{v:03d}.png), drawn by 942's DrawTitleBar -> DrawIcons for MT_GetIcon",
+                                    ("KssBgScreen", "image_id"): "image_id 0x{v:X}: no routine of the plug-in reads it "
+                                    "(942's Screen ends at +0x28); not a resource-trie id"})
 # lane generic-zero: the bytes an instruction reads that no pass typed are rows of the reads' widths
 # (reader_rows), not a generic .incbin_range, in the program builds and the siblings
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
@@ -548,8 +560,10 @@ class Gen:
         if v in self.label_at:
             return self.label_at[v]
         if v in self.extern:
-            if self.in_code(v) and self.extern[v] == f"loc_{v:08X}":
-                self.code_targets.add(v)      # a label only because the data names it: keep it so
+            if self.in_code(v) and self.extern[v] in (f"loc_{v:08X}", f"func_{v:08X}"):
+                # a label only because the data names it (gen_program_s.py names a prologue the data points
+                # at func_<ADDR>, any other target loc_<ADDR>): keep it so
+                self.code_targets.add(v)
             return self.extern[v]
         if self.in_code(v):
             # gen_program_s.py labels it loc_<ADDR> (code_refs.txt)
@@ -1006,6 +1020,11 @@ class Gen:
             if v == 0 and f.sig not in ("]", "e"):
                 continue
             args.append(f"{p}={self.fmt(f, v, comments)}")
+            # (profile `field_notes`, lane mn10300-formats) what a field's value names, where the
+            # generator cannot spell it as a symbol: {(class, field): comment format of v}
+            note = P.get("field_notes", {}).get((k.name, f.name))
+            if note:
+                comments.append(note.format(v=v))
         line = "\t" * (1 + self.obj_depth[(slot, i)]) + f"{self.macro[k.id]}\t" + ", ".join(args)
         out = []
         if comments:
@@ -1501,11 +1520,214 @@ class Gen:
             done += 1
         print(f"gen_data_s: style panels, {done} of {g.count} typed")
 
+    # (lane mn10300-formats) SoundAlphaListGet (941 0x485831BA) answers SoundAlphaListTable[2 * kind +
+    # variant] (kind 0..2, variant 0..1, each clamped to 0 when out of range); its callers choose the
+    # kind from the sound group 0x5006B7EC: 0x19 / 0x1A (the drum kits) kind 2, 0x13..0x1E but 0x1F
+    # kind 1, the rest kind 0 (941 0x48498681..0x484986BB)
+    SOUND_ALPHA_LISTS = ("SoundAlphaList_Groups00_12", "SoundAlphaList_Groups00_12_Var1",
+                         "SoundAlphaList_Groups13_1E", None, "SoundAlphaList_DrumKits", None)
+
+    def sound_alpha_lists(self):
+        """SoundAlphaListTable (a manual-symbol name; the KN7000 program builds): 6 pointers to the
+        alphabetical sound lists, each a run of 4-byte entries {char initial; u8 msb, lsb, program}
+        ended by an entry whose initial is 0 (SoundAlphaIndexBuild 0x485831DC reads +0 of every
+        entry, `asl2` / `movbu (d1, a0), d2`, while it is above 0; SoundAlphaInitialGet 0x485834C0
+        compares +1 / +2 / +3 with a sound's bank MSB, LSB and program and answers +0).  Written one
+        SOUND_ALPHA line an entry (src/include/data_tables.inc)."""
+        a = self.m.sym_by_name.get("SoundAlphaListTable")
+        if a is None or not self.in_data(a) or not self.free(a, 24):
+            return
+        ptrs = [self.m.u32(a + 4 * i) for i in range(6)]
+        if not all(self.in_data(p) for p in ptrs):
+            print("gen_data_s: SoundAlphaListTable does not point into the data region; not typed")
+            return
+        names = {}
+        for i, p in enumerate(ptrs):
+            if p not in names and self.SOUND_ALPHA_LISTS[i]:
+                names[p] = self.SOUND_ALPHA_LISTS[i]
+        lists = []
+        for p, nm in names.items():
+            o, n = self.off(p), 0
+            while 0 < self.rom[o + 4 * n] < 0x80:
+                n += 1
+            if self.rom[o + 4 * n:o + 4 * n + 4] != b"\0\0\0\0" or not self.free(p, 4 * n + 4):
+                print(f"gen_data_s: sound list {nm} at {p:#x} does not end as expected or overlaps; not typed")
+                return
+            lists.append((p, nm, n))
+        for p, nm, n in lists:
+            lab = self.rename_at(p, nm)
+
+            def render(g, it, n=n):
+                o = g.off(it.start)
+                out = [f"{it.label}:\t# {n} sounds by initial {{initial, bank MSB, bank LSB, program}} and the end entry"
+                       " (SoundAlphaIndexBuild, SoundAlphaInitialGet)"]
+                for k in range(n + 1):
+                    c, msb, lsb, pg = g.rom[o + 4 * k:o + 4 * k + 4]
+                    ini = '"' + g.c_escape(bytes([c])) + '"'          # (the end entry's 0 as "\x00")
+                    out.append(f"\tSOUND_ALPHA\t{ini}, {msb}, {lsb}, {pg}" + ("\t# end" if k == n else ""))
+                return out
+            self.add(p, 4 * n + 4, lab, "sound list", render)
+        tl = self.name_at(a, "SoundAlphaListTable")      # (the symbol files' name)
+        self.add(a, 24, tl, "sound list",
+                 lambda g, it, ptrs=ptrs: [f"{it.label}:\t# SoundAlphaListGet: [2 * kind + variant]"] +
+                 [f"\t.long\t{g.ref(v)}\t# kind {i // 2}, variant {i % 2}" for i, v in enumerate(ptrs)])
+        print(f"gen_data_s: sound lists: {', '.join(f'{nm} {n}' for _p, nm, n in lists)} entries")
+
+    def fx_descriptors(self):
+        """(profile `fx_descriptors` = its entry count, the KN2400) FxDescTable (a manual-symbol name): FxDescGet
+        0x4863CDEF answers FxDescTable[FxDescIndexGet(code)], a 16-byte descriptor (FX_DESC) whose
+        `count` 36-byte parameter records (FX_PARAM) lie right before it; FxParamGet 0x4863D4F1 and
+        the Fx*Get routines read their fields (src/include/data_tables.inc has each reader).  The
+        descriptors and their records tile 0x48439000..0x48440898 (probe kn2400_fx_desc.py)."""
+        if not P.get("fx_descriptors"):
+            return
+        ta = self.m.sym_by_name.get("FxDescTable")
+        if ta is None or not self.in_data(ta):
+            return
+        import struct
+        n = P["fx_descriptors"]          # FxDescTable's entries (FxDescIndexGet's range)
+        ents = [self.m.u32(ta + 4 * i) for i in range(n)]
+        if not all(self.in_data(a) for a in ents):
+            print("gen_data_s: FxDescTable does not point into the data region; not typed")
+            return
+        descs, first = [], {}
+        for i, a in enumerate(ents):
+            first.setdefault(a, i)
+        for a in sorted(first):
+            cnt, p = self.rom[self.off(a)], self.m.u32(a + 4)
+            # (FxDesc_000 has count 0 but points at the one record right before it: typed too, its
+            # FxDescGet answers never read it)
+            nrec = cnt or (1 if p + 36 == a else 0)
+            span = (p, a + 16) if nrec else (a, a + 16)
+            if self.rom[self.off(a) + 2:self.off(a) + 4] != b"\0\0" or not self.in_data(p) or \
+                    (cnt and p + 36 * cnt != a) or self.rom[self.off(a) + 13:self.off(a) + 16] != b"\0\0\0":
+                print(f"gen_data_s: fx descriptor at {a:#x} does not check; FxDescTable not typed")
+                return
+            descs.append((a, cnt, p, span, nrec))
+        for a, cnt, p, (lo, hi), nrec in descs:
+            for k in range(nrec):
+                r = self.off(p) + 36 * k
+                nm = self.rom[r:r + 20]
+                z = nm.find(b"\0")
+                if z <= 0 or nm[z:] != bytes(20 - z) or self.rom[r + 30:r + 32] != b"\0\0":
+                    print(f"gen_data_s: fx parameter at {p + 36 * k:#x} does not check; FxDescTable not typed")
+                    return
+            if not self.free(lo, hi - lo):
+                print(f"gen_data_s: fx descriptor at {a:#x} overlaps a typed item; FxDescTable not typed")
+                return
+        if not self.free(ta, 4 * n):
+            return
+        lab = {}
+        for a, cnt, p, _sp, nrec in descs:
+            k = first[a]
+            lab[a] = self.rename_at(a, f"FxDesc_{k:03d}")
+            if nrec:
+                self.rename_at(p, f"FxDesc_{k:03d}_Params")
+        for a, cnt, p, _sp, nrec in descs:
+            if nrec:
+                def rparams(g, it, cnt=nrec, k=first[a], zero=not cnt):
+                    out = [f"{it.label}:\t# the {cnt} parameter records of FxDesc_{k:03d} (FX_PARAM; FxParamGet)" +
+                           (" -- its count is 0: no routine reads this one" if zero else "")]
+                    for j in range(cnt):
+                        r = g.off(it.start) + 36 * j
+                        nm = g.rom[r:r + 20]
+                        z = nm.find(b"\0")
+                        num, mn, mx = struct.unpack_from("<Hhh", g.rom, r + 20)
+                        band, sub, var, x29 = g.rom[r + 26:r + 30]
+                        vals = int.from_bytes(g.rom[r + 32:r + 36], "little")
+                        args = [f'"{g.c_escape(nm[:z])}"', str(20 - z)]
+                        for fn, v, dflt in (("number", num, 0), ("min", mn, 0), ("max", mx, 0), ("band", band, 0xFF),
+                                            ("sub", sub, 0), ("variant", var, 0xFF), ("x29", x29, 0xFF)):
+                            if v != dflt:
+                                args.append(f"{fn}={v if fn in ('number', 'min', 'max', 'band', 'sub') else f'0x{v:02X}'}")
+                        if vals:
+                            args.append(f"values={g.ref(vals)}")
+                        out.append("\tFX_PARAM\t" + ", ".join(args))
+                    return out
+                self.add(p, 36 * nrec, self.name_at(p, f"FxDesc_{first[a]:03d}_Params"), "fx descriptor", rparams)
+
+            def rdesc(g, it, cnt=cnt, p=p, idx=sorted(i for i, e in enumerate(ents) if e == a)):
+                o = g.off(it.start)
+                s8 = [x - 256 if x >= 0x80 else x for x in g.rom[o + 8:o + 13]]
+                args = [g.ref(p) if cnt else g.ref(p), f"count={cnt}", f"nparams={g.rom[o + 1]}"]
+                for fn, v, dflt in zip(("mode", "pnum9", "pnum10", "pnum11", "send_param"), s8, (0, -1, -1, -1, -1)):
+                    if v != dflt:
+                        args.append(f"{fn}={v}")
+                return [f"{it.label}:\t# FxDescTable[{', '.join(map(str, idx[:8]))}{', ...' if len(idx) > 8 else ''}]",
+                        "\tFX_DESC\t" + ", ".join(args)]
+            self.add(a, 16, lab[a], "fx descriptor", rdesc)
+        self.add(ta, 4 * n, self.name_at(ta, "FxDescTable"), "fx descriptor",
+                 lambda g, it, ents=ents: [f"{it.label}:\t# FxDescGet: [FxDescIndexGet(effect code)]"] +
+                 [f"\t.long\t{g.ref(v)}\t# [{i}]" for i, v in enumerate(ents)])
+        print(f"gen_data_s: fx descriptors: {len(descs)} descriptors, {sum(c for _a, c, _p, _s, _n in descs)} parameter"
+              f" records, FxDescTable {n} entries")
+
+    # (lane mn10300-formats) zlib 1.0.4's static tables, named in the symbol files where their contents
+    # are found (notes/mn10300-formats-probes/zlib_tables.py): name -> (element, count, source)
+    ZLIB_TABLES = {
+        "configuration_table": ("config", 10, "deflate.c: per level {good_length, max_lazy, nice_length, max_chain; func}"),
+        "extra_lbits": (4, 29, "trees.c: the extra bits of each length code"),
+        "extra_dbits": (4, 30, "trees.c: the extra bits of each distance code"),
+        "extra_blbits": (4, 19, "trees.c: the extra bits of each bit-length code"),
+        "bl_order": (1, 19, "trees.c: the order the bit-length code lengths are sent in"),
+        "static_l_desc": ("desc", 1, "trees.c: {static_tree, extra_bits, extra_base, elems, max_length}"),
+        "static_d_desc": ("desc", 1, "trees.c: {static_tree, extra_bits, extra_base, elems, max_length}"),
+        "static_bl_desc": ("desc", 1, "trees.c: {static_tree, extra_bits, extra_base, elems, max_length}"),
+        "border": (4, 19, "infblock.c: the order of the bit-length code lengths"),
+        "cplens": (4, 31, "inftrees.c: the copy lengths of literal codes 257..285"),
+        "cplext": (4, 31, "inftrees.c: the extra bits of literal codes 257..285 (192: invalid)"),
+        "cpdist": (4, 30, "inftrees.c: the copy offsets of distance codes 0..29"),
+        "cpdext": (4, 30, "inftrees.c: the extra bits of distance codes 0..29"),
+        "inflate_mask": (4, 17, "infutil.c: the masks of the low n bits, n = 0..16"),
+    }
+
+    def zlib_tables(self):
+        """zlib 1.0.4's static tables (ZLIB_TABLES, the names the symbol files give them): each one that
+        no earlier pass typed, as rows of its element type (the configuration table and the tree
+        descriptors as their records), with the zlib source it comes from."""
+        for name, (el, n, what) in self.ZLIB_TABLES.items():
+            a = self.m.sym_by_name.get(name)
+            if a is None or not self.in_data(a):
+                continue
+            size = {"config": 12, "desc": 20}.get(el, el) * n
+            if not self.free(a, size):
+                continue
+
+            def render(g, it, el=el, n=n, what=what, name=name):
+                o = g.off(it.start)
+                out = [f"{it.label}:\t# zlib 1.0.4 {what} ({n} x {el if isinstance(el, str) else 8 * el}"
+                       f"{'' if isinstance(el, str) else '-bit'}; found by its contents, zlib_tables.py)"]
+                if el == "config":
+                    for k in range(n):
+                        w = struct.unpack_from("<4H", g.rom, o + 12 * k)
+                        out.append(f"\t.word\t{w[0]}, {w[1]}, {w[2]}, {w[3]}\t# level {k}")
+                        out.append(f"\t.long\t{g.ref(int.from_bytes(g.rom[o + 12 * k + 8:o + 12 * k + 12], 'little'))}")
+                elif el == "desc":
+                    t, eb, base_, elems, ml = struct.unpack_from("<5I", g.rom, o)
+                    out += [f"\t.long\t{g.ref(t) if t else 0}, {g.ref(eb)}", f"\t.long\t{base_}, {elems}, {ml}"]
+                else:
+                    vals = [int.from_bytes(g.rom[o + el * k:o + el * k + el], "little") for k in range(n)]
+                    fmt = (lambda v: f"0x{v:x}") if name == "inflate_mask" else str
+                    for k in range(0, n, 16):
+                        out.append(f"\ttab_u{8 * el}\t" + ", ".join(fmt(v) for v in vals[k:k + 16]) + f"\t# [{k}]")
+                return out
+            self.add(a, size, self.name_at(a, name), "zlib table", render)
+
+    # (lane mn10300-formats) the payload layouts of the KN6000's hash tables, from their readers
+    # (src/include/data_tables.inc has the macros and each field's reader): table name -> (macro,
+    # [(payload offset, width, field)], bytes at the end no routine reads)
+    HASH_PAYLOADS = {
+        "ToneKeyHash": ("TONE_KEY_PAYLOAD", [(0, 2, "tone"), (2, 1, "icon"), (3, 1, "swgroup01"), (4, 1, "swgroup23"),
+                                             (5, 1, "swno0"), (6, 1, "swno1"), (7, 1, "swno2"), (8, 1, "swno3")], 3),
+        "ShortKeyHash": ("SHORT_KEY_PAYLOAD", [(0, 1, "msb"), (1, 1, "lsb"), (2, 1, "program")], 3),
+        "BankKeyHash": ("BANK_KEY_PAYLOAD", [(0, 2, "index")], 2),
+    }
+
     def hash_tables(self):
         """(profile `hash_tables`: [(name, descriptor address, key bytes, payload bytes, reader,
         payload offset, what)]) Multiplicative hash tables: a descriptor {u16 mult, u16 nbuckets}
         right before nbuckets bucket pointers, each the head of a chain {u32 next, key, payload}.
-        The reader (KN6000: func_4C09B08C / func_4C09B2AE / func_4C09BDB2) takes key * mult mod
+        The reader (KN6000: ToneKeyLookup / ShortKeyLookup / BankKeyLookup) takes key * mult mod
         nbuckets (func_4C09B1EC: `mulu`, `divu`, mdr), walks the chain comparing +4 with the key
         and answers entry + 8 (u32 key) or + 6 (u16 key).  The entries lie back to back, one
         size per table; each is typed with its key, and the payload as rows."""
@@ -1548,20 +1770,38 @@ class Gen:
                          f"\t.long\t{g.ref(g.m.u32(ba + 4 * i)) if g.m.u32(ba + 4 * i) else 0}\t# [{i}]"
                          for i in range(nb)])
 
-            def render(g, it, kb=kb, pb=pb, head=None):
+            # (lane mn10300-formats) the payload's fields, from the routines that read it (HASH_PAYLOADS):
+            # used when every entry's unread bytes are 0, as the macro writes them
+            spec = self.HASH_PAYLOADS.get(name)
+            if spec:
+                mac, flds, pad = spec
+                if any(self.rom[self.off(p) + 4 + kb + pb - pad:self.off(p) + 4 + kb + pb] != bytes(pad) for p in ents):
+                    print(f"gen_data_s: hash table {name}: unread payload bytes not all 0; payload as rows")
+                    spec = None
+
+            def render(g, it, kb=kb, pb=pb, head=None, spec=spec):
                 p = it.start
                 nx, k = g.m.u32(p), (g.m.u32(p + 4) if kb == 4 else g.m.u16(p + 4))
                 o = g.off(p) + 4 + kb
                 kc = (f"MSB 0x{k >> 16:02x}, LSB 0x{(k >> 8) & 0xFF:02x}, program {k & 0xFF}" if kb == 4
                       else f"0x{k >> 8:02x}, {k & 0xFF}")
+                if spec:
+                    args = []
+                    for fo, fw, fn in spec[1]:
+                        v = int.from_bytes(g.rom[o + fo:o + fo + fw], "little")
+                        if v:
+                            args.append(f"{fn}={v}")
+                    pl = f"\t{spec[0]}\t" + ", ".join(args)
+                else:
+                    pl = "\t.byte\t" + ", ".join(f"0x{x:02x}" for x in g.rom[o:o + pb])
                 return ([head] if head else []) + [
                     f"{it.label}:\thash_ent{8 * kb}\t{g.ref(nx) if nx else 0}, 0x{k:0{2 * kb}x}\t# key: {kc}",
-                    "\t.byte\t" + ", ".join(f"0x{x:02x}" for x in g.rom[o:o + pb])]
+                    pl.rstrip()]
             head = (f"# {name}: {len(ents)} chain entries {{next, {8 * kb}-bit key, {pb}-byte payload}};"
                     f" {reader} answers the payload (entry + {poff}).  {what}")
             for n_, p in enumerate(ents):
                 self.add(p, size, lab[p], "hash table",
-                         lambda g, it, kb=kb, pb=pb, h=(head if n_ == 0 else None): render(g, it, kb, pb, h))
+                         lambda g, it, kb=kb, pb=pb, h=(head if n_ == 0 else None), r=render: r(g, it, kb, pb, h))
             print(f"gen_data_s: hash table {name}: {nb} buckets, {len(ents)} entries")
 
     def render_style_panel(self, it, r, k, name, setup, tlab):
@@ -1818,7 +2058,8 @@ class Gen:
                     not gaps_ or (self.readers_ext and any(room[t] < collections.Counter(gaps_).most_common(1)[0][0]
                                                            for t in ts))):
                 # (readers_ext: also when a common distance would leave the shorter records out: the
-                # demo-song streams func_485831BA's table points at, 4,948 / 4,864 / ... bytes)
+                # alphabetical sound lists SoundAlphaListGet's table points at, 4,948 / 4,864 / ... bytes,
+                # before sound_alpha_lists() typed them)
                 # records of varying size: the fields, then the rest of each record's room as rows of
                 # the width its computed-offset reads use (the code indexes into it)
                 stride = need
@@ -3967,6 +4208,9 @@ class Gen:
                 self.support_classes()
                 self.resource_trie()
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
+            self.sound_alpha_lists()
+            self.fx_descriptors()
+            self.zlib_tables()
             self.hash_tables()
             self.name_value_tables()
             self.panel_memories()

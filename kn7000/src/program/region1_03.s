@@ -5770,7 +5770,7 @@ loc_48473C5B:
     bne     loc_48473D3D
 loc_48473D29:
     mov     (0x20, sp), a0
-    mov     (inflate_blocks_Table_2+92), d0
+    mov     (deflateInit2__Var), d0
     mov     d0, (a0)
     mov     (0x40, sp), a0
     call    deflateEnd_entry, [d2,d3,a2,a3], 0x20
@@ -6047,7 +6047,7 @@ loc_48473F22:
     bra     loc_48473F8D
 loc_48473F26:
     mov     (0x10, sp), a3
-    mov     deflateParams_Records, d1
+    mov     configuration_table, d1
     add     0x78, a3
     mov     (a3), d0
     mov     0xc, d2
@@ -6222,7 +6222,7 @@ loc_48474054:
     beq     loc_48474076
 loc_48474066:
     mov     (0x44, sp), a1
-    mov     (inflate_blocks_Table_2+84), a0
+    mov     (ptrs_50007B58), a0
     mov     -2, d0
     mov     a0, (0x18, a1)
     ret     [d2,d3,a2,a3], 0x3c
@@ -6235,7 +6235,7 @@ loc_48474076:
     cmp     0, d0
     bne     loc_48474093
     mov     (0x44, sp), a1
-    mov     (inflate_blocks_Table_2+96), a0
+    mov     (ptrs_50007B64), a0
     mov     -5, d0
     mov     a0, (0x18, a1)
     ret     [d2,d3,a2,a3], 0x3c
@@ -6342,7 +6342,7 @@ loc_48474143:
     cmp     4, a3
     beq     loc_48474166
     mov     (0x44, sp), a1
-    mov     (inflate_blocks_Table_2+96), a0
+    mov     (ptrs_50007B64), a0
     mov     -5, d0
     mov     a0, (0x18, a1)
     ret     [d2,d3,a2,a3], 0x3c
@@ -6356,7 +6356,7 @@ loc_48474166:
     cmp     0, d0
     beq     loc_48474188
     mov     (0x44, sp), a1
-    mov     (inflate_blocks_Table_2+96), a0
+    mov     (ptrs_50007B64), a0
     mov     -5, d0
     mov     a0, (0x18, a1)
     ret     [d2,d3,a2,a3], 0x3c
@@ -6385,7 +6385,7 @@ loc_484741AD:
     nop
     nop
     mul     d1, d0
-    add     deflateParams_Records, d0
+    add     configuration_table, d0
     mov     d0, a0
     mov     (8, a0), a1
     mov     d3, a0
@@ -6686,7 +6686,7 @@ lm_init_entry:
     mov     0x78, a1
     add     a3, a1
     mov     (a1), d0
-    mov     deflateParams_Records, a2
+    mov     configuration_table, a2
     mov     0xc, d1
     nop
     nop
@@ -8105,7 +8105,7 @@ tr_static_init:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x3c, sp
 tr_static_init_entry:
-    mov     (tr_static_init_Var), d0
+    mov     (static_init_done), d0
     cmp     0, d0
     beq     loc_48474DB7
     ret     [d2,d3,a2,a3], 0x4c
@@ -8120,7 +8120,7 @@ loc_48474DC1:
     mov     d3, (d0, a0)
     clr     d1
     mov     a1, a0
-    add     tr_static_init_Table, a0
+    add     extra_lbits, a0
     mov     (a0), d0
     mov     d3, (0x14, sp)
     mov     1, d3
@@ -8161,7 +8161,7 @@ loc_48474E0C:
     mov     d3, (d0, a0)
     clr     d1
     mov     a1, a0
-    add     _tr_tally_Table, a0
+    add     extra_dbits, a0
     mov     (a0), d0
     mov     d3, (0x18, sp)
     mov     1, d3
@@ -8207,7 +8207,7 @@ loc_48474E60:
     mov     0x5004d2e0, a0
     mov     a3, (d0, a0)
     mov     a2, a0
-    add     _tr_tally_Table, a0
+    add     extra_dbits, a0
     mov     (a0), d0
     clr     d1
     add     -7, d0
@@ -8333,7 +8333,7 @@ loc_48474F3F:
     cmp     0x1e, a3
     blt     loc_48474F3F
     mov     1, d0
-    mov     d0, (tr_static_init_Var)
+    mov     d0, (static_init_done)
     ret     [d2,d3,a2,a3], 0x4c
 # _tr_init  (CPU 0x48474f60)
 _tr_init:
@@ -8349,21 +8349,21 @@ _tr_init_entry:
     mov     0x88, d0
     add     a2, d0
     mov     d0, (a1)
-    mov     data_50000F24, d0
+    mov     static_l_desc, d0
     mov     d0, (8, a1)
     mov     0xb18, a1
     add     a2, a1
     mov     0x97c, d0
     add     a2, d0
     mov     d0, (a1)
-    mov     data_50000F38, d0
+    mov     static_d_desc, d0
     mov     d0, (8, a1)
     mov     0xb24, a1
     add     a2, a1
     mov     0xa70, d0
     add     a2, d0
     mov     d0, (a1)
-    mov     data_50000F4C, d0
+    mov     static_bl_desc, d0
     mov     d0, (8, a1)
     clr     d0
     movhu   d0, (0x16b0, a2)
@@ -9920,7 +9920,7 @@ build_bl_tree_entry:
     mov     0x12, d1
     mov     0xa70, a3
     add     a2, a3
-    mov     build_bl_tree_Table, a1
+    mov     bl_order+18, a1
     setlb
     movbu   (a1), d0
     asl2    d0
@@ -10147,7 +10147,7 @@ loc_48475BD9:
     jmp     loc_48475C8B
 loc_48475BE2:
     mov     (0x48, sp), d1
-    mov     send_all_trees_Table, d0
+    mov     bl_order, d0
     add     0xa70, d1
     mov     d1, (0x20, sp)
     mov     (0x48, sp), d1
@@ -10947,7 +10947,7 @@ loc_48476199:
     clr     d1
     setlb
     movhu   (d1, a1), d2
-    mov     _tr_tally_Table, a0
+    mov     extra_dbits, a0
     mov     (d1, a0), d0
     mov     5, a0
     add     d0, a0
@@ -11178,7 +11178,7 @@ loc_4847634A:
     mov     d0, (a2)
 loc_4847635B:
     mov     (4, sp), d0
-    mov     tr_static_init_Table, a0
+    mov     extra_lbits, a0
     mov     (d0, a0), a3
     cmp     0, a3
     beq     loc_484763D3
@@ -11326,7 +11326,7 @@ loc_48476453:
     mov     d0, (a2)
 loc_48476462:
     mov     (8, sp), d0
-    mov     _tr_tally_Table, a0
+    mov     extra_dbits, a0
     mov     (d0, a0), a3
     cmp     0, a3
     beq     loc_484764DB
@@ -13628,7 +13628,7 @@ loc_48477430:
     mov     (a1), d0
     mov     (8, a0), a0
     asl2    d0
-    mov     inflate_blocks_Table, a1
+    mov     border, a1
     mov     (d0, a1), d1
     mov     a2, d0
     asl2    d1
@@ -13663,7 +13663,7 @@ loc_4847746A:
     mov     (a1), d0
     mov     (8, a0), a0
     asl2    d0
-    mov     inflate_blocks_Table, a1
+    mov     border, a1
     mov     (d0, a1), d0
     clr     d1
     asl2    d0
@@ -13810,7 +13810,7 @@ loc_48477578:
     mov     (0x38, sp), a0
     asl2    d1
     mov     (0x10, a0), a0
-    mov     inflate_blocks_Table_2, a1
+    mov     inflate_mask, a1
     mov     (d1, a1), d0
     mov     a2, d1
     and     d1, d0
@@ -13914,7 +13914,7 @@ loc_48477619:
     cmp     d1, d3
     lcs
 loc_4847763A:
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     a1, d0
     mov     a2, d1
     lsr     d0, d1
@@ -15044,7 +15044,7 @@ inflate_trees_dynamic:
 inflate_trees_dynamic_entry:
     mov     d1, (0x44, sp)
     mov     d0, d2
-    mov     huft_build_Table_3, d0
+    mov     cplext, d0
     mov     d0, (0x18, sp)
     mov     (0x54, sp), d0
     mov     a0, d3
@@ -15054,7 +15054,7 @@ inflate_trees_dynamic_entry:
     mov     d2, d0
     mov     a2, (0x24, sp)
     mov     0x101, d1
-    mov     huft_build_Table, a1
+    mov     cplens, a1
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d1
     cmp     0, d0
@@ -15079,7 +15079,7 @@ loc_48477E7A:
     mov     d1, d0
     bra     loc_48477EDC
 loc_48477E7D:
-    mov     huft_build_Table_4, d0
+    mov     cpdext, d0
     mov     d0, (0x18, sp)
     mov     (0x58, sp), a3
     asl2    d2
@@ -15091,7 +15091,7 @@ loc_48477E7D:
     mov     d3, a0
     mov     (0x44, sp), d0
     clr     d1
-    mov     huft_build_Table_2, a1
+    mov     cpdist, a1
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d2
     cmp     0, d0
@@ -15143,7 +15143,7 @@ inflate_trees_fixed_entry:
     mov     a0, a3
     mov     d1, (0x508, sp)
     mov     d0, (0x504, sp)
-    mov     (inflate_trees_fixed_Var), d0
+    mov     (fixed_built), d0
     mov     a1, (0x500, sp)
     cmp     0, d0
     beq     loc_48477F18
@@ -15224,7 +15224,7 @@ loc_48477F8F:
     mov     d0, (0x5004e3e8)
     mov     sp, a2
     add     0x64, a2
-    mov     huft_build_Table_3, d0
+    mov     cplext, d0
     mov     d0, (0x18, sp)
     mov     0x5004e3f0, d0
     mov     d0, (0x1c, sp)
@@ -15234,7 +15234,7 @@ loc_48477F8F:
     mov     a2, a0
     mov     0x120, d0
     mov     0x101, d1
-    mov     huft_build_Table, a1
+    mov     cplens, a1
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x78, a1
@@ -15246,7 +15246,7 @@ loc_48477F8F:
     cmp     a1, a0
     lcs
     mov     d0, (0x5004e3ec)
-    mov     huft_build_Table_4, d0
+    mov     cpdext, d0
     mov     d0, (0x18, sp)
     mov     0x5004e3f4, d0
     mov     d0, (0x1c, sp)
@@ -15255,11 +15255,11 @@ loc_48477F8F:
     mov     d3, (0x24, sp)
     mov     0x1e, d0
     clr     d1
-    mov     huft_build_Table_2, a1
+    mov     cpdist, a1
     mov     a2, a0
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     1, d0
-    mov     d0, (inflate_trees_fixed_Var)
+    mov     d0, (fixed_built)
 loc_48478009:
     mov     (0x5004e3e8), d0
     mov     d0, (a3)
@@ -15586,7 +15586,7 @@ loc_48478256:
     mov     a0, d0
     mov     (a1), d1
     asl2    d0
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     (d0, a0), d0
     and     d3, d0
     asl     3, d0
@@ -15719,7 +15719,7 @@ loc_48478342:
     lcs
 loc_48478352:
     mov     a0, d0
-    mov     inflate_blocks_Table_2, a1
+    mov     inflate_mask, a1
     asl2    d0
     mov     (d0, a1), d0
     mov     (0x54, sp), a1
@@ -15796,7 +15796,7 @@ loc_484783D6:
     mov     a0, d0
     mov     (a1), d1
     asl2    d0
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     (d0, a0), d0
     and     d3, d0
     asl     3, d0
@@ -15910,7 +15910,7 @@ loc_484784A1:
     cmp     a0, d2
     lcs
 loc_484784B1:
-    mov     inflate_blocks_Table_2, a1
+    mov     inflate_mask, a1
     mov     a0, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -16621,7 +16621,7 @@ loc_4847894C:
 loc_48478953:
     asl2    d1
     mov     d0, (0xc, sp)
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     (d1, a0), d0
     asl2    d2
     mov     d0, (0x24, sp)
@@ -16694,7 +16694,7 @@ loc_484789D8:
     and     0x0f, d1
     mov     d1, d0
     asl2    d0
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     (d0, a0), d0
     mov     (4, a1), d2
     mov     d3, (0x2c, sp)
@@ -16769,7 +16769,7 @@ loc_48478A44:
     cmp     d2, d3
     lcs
 loc_48478A69:
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -16853,7 +16853,7 @@ loc_48478AF4:
     bne     loc_48478B12
     mov     (4, a1), d2
     asl2    d0
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     (d0, a0), d0
     mov     a2, d1
     and     d1, d0
@@ -16900,7 +16900,7 @@ loc_48478B50:
     bne     loc_48478B8F
     asl2    d1
     mov     (4, a1), d2
-    mov     inflate_blocks_Table_2, a0
+    mov     inflate_mask, a0
     mov     (d1, a0), d0
     mov     a2, d1
     and     d1, d0

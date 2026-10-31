@@ -11329,9 +11329,9 @@ Str_Technics_Pads:	.asciz "Technics Pads   "
 	.space	7, 0x00
 
 LoadU24BE_ArgA0_0:	# REC_LoadU24BE_ArgA0 (3 bytes): the layout LoadU24BE 0x48440352 reads through its argument a0 (passed by StyleBuiltinNameTableInit 0x484332E8 `call LoadU24BE, 0, 0`, +3 more calls)
-	REC_LoadU24BE_ArgA0	f2=33
+	REC_LoadU24BE_ArgA0	index__=33
 LoadU24BE_ArgA0_1:	# REC_LoadU24BE_ArgA0 (3 bytes): the layout LoadU24BE 0x48440352 reads through its argument a0 (passed by StyleBuiltinNameTableInit 0x484332E8 `call LoadU24BE, 0, 0`, +3 more calls)
-	REC_LoadU24BE_ArgA0	f2=43
+	REC_LoadU24BE_ArgA0	index__=43
 
 LoadU24BE_Var:	# u8, a constant; read / written by LoadU24BE 0x48440352: `movbu (a0), d1`
 	.byte	0
@@ -11566,9 +11566,9 @@ func_4843CAE8_Block_2:	# 2 bytes, copied whole by func_4843CAE8 0x4843CAE8: memc
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x332416, 0x3324DC
 
 MemStyleAreaVarStreamsInit_Selected_0:	# REC_MemStyleAreaVarStreamsInit_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
 MemStyleAreaVarStreamsInit_Selected_1:	# REC_MemStyleAreaVarStreamsInit_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	REC_MemStyleAreaVarStreamsInit_Selected	s0="\x00", index__=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
 	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_Selected_1
 
 ptrs_487324F8:
@@ -11676,18 +11676,18 @@ func_48449451_Table:	# 128 x u8, 0..112; read by func_48449451_entry 0x48448C34:
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 
 func_4C0216FD_Selected_0:	# REC_func_4C0216FD_Selected (12 bytes)
-	REC_func_4C0216FD_Selected	f0=65280, f4=53248, p8=TempoSyncSetDispatch
+	REC_func_4C0216FD_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
 	.space	12, 0x00
 func_4C0216FD_Selected_1:	# REC_func_4C0216FD_Selected (12 bytes)
 	REC_func_4C0216FD_Selected	
 func_4C0216FD_Selected_2:	# REC_func_4C0216FD_Selected (12 bytes)
 	REC_func_4C0216FD_Selected	
 func_4C0216FD_Selected_3:	# REC_func_4C0216FD_Selected (12 bytes)
-	REC_func_4C0216FD_Selected	f0=0xFF0000, f4=0x700000, p8=PlugInCallSlot10
+	REC_func_4C0216FD_Selected	key=0xFF0000, key_=0x700000, proc=PlugInCallSlot10
 # census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x332EA4, 0x332F04
 func_4C0216FD_Selected_4:	# REC_func_4C0216FD_Selected (12 bytes)
-	REC_func_4C0216FD_Selected	f0=255, f4=121, p8=func_4C01D056
+	REC_func_4C0216FD_Selected	key=255, key_=121, proc=func_4C01D056
 	.space	12, 0x00
 func_4C0216FD_Selected_5:	# REC_func_4C0216FD_Selected (12 bytes)
 	REC_func_4C0216FD_Selected	
@@ -11696,30 +11696,30 @@ func_4C0216FD_Selected_6:	# REC_func_4C0216FD_Selected (12 bytes)
 func_4C0216FD_Selected_7:	# REC_func_4C0216FD_Selected (12 bytes)
 	REC_func_4C0216FD_Selected	
 func_4C0217BB_Selected_0:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFFFF00, f4=8192, p8=TempoSyncParamDispatch
+	REC_func_4C0217BB_Selected	key=0xFFFF00, key_=8192, proc=TempoSyncParamDispatch
 # census: opaque -- unknown-dump: 144 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x332F4C, 0x332FDC
 func_4C0217BB_Selected_1:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFFFF00, f4=0x204000, p8=func_4C01E884
+	REC_func_4C0217BB_Selected	key=0xFFFF00, key_=0x204000, proc=func_4C01E884
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x332FE8, 0x33300C
 func_4C0217BB_Selected_2:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFF0000, f4=0x600000, p8=func_4C01E884
+	REC_func_4C0217BB_Selected	key=0xFF0000, key_=0x600000, proc=func_4C01E884
 # census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x333018, 0x333084
 func_4C0217BB_Selected_3:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFF0000, f4=0x700000, p8=func_484A283D
+	REC_func_4C0217BB_Selected	key=0xFF0000, key_=0x700000, proc=func_484A283D
 # census: opaque -- unknown-dump: 312 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x333090, 0x3331C8
 func_4C0217BB_Selected_4:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFFFFFF, f4=0x900000, p8=func_484A2BCC
+	REC_func_4C0217BB_Selected	key=0xFFFFFF, key_=0x900000, proc=func_484A2BCC
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x3331D4, 0x3331F8
 func_4C0217BB_Selected_5:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFFFFFF, f4=0xB0007E, p8=func_484517E5
+	REC_func_4C0217BB_Selected	key=0xFFFFFF, key_=0xB0007E, proc=func_484517E5
 	.space	12, 0x00
 func_4C0217BB_Selected_6:	# REC_func_4C0217BB_Selected (12 bytes)
-	REC_func_4C0217BB_Selected	f0=0xFFFFFF, f4=0xC00000, p8=SoundEditSelEventHandler
+	REC_func_4C0217BB_Selected	key=0xFFFFFF, key_=0xC00000, proc=SoundEditSelEventHandler
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33321C, 0x333234
 func_4C0217BB_Selected_7:	# REC_func_4C0217BB_Selected (12 bytes)
@@ -11748,11 +11748,11 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=6, f1=144
+	REC_func_4844D0E7_Table	f0=6, index=144
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=3, f1=128	# [24]
+	REC_func_4844D0E7_Table	f0=3, index=128	# [24]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11762,13 +11762,13 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table		# [32]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=13, f1=96
+	REC_func_4844D0E7_Table	f0=13, index=96
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=20, f1=96
+	REC_func_4844D0E7_Table	f0=20, index=96
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=2, f1=128	# [40]
+	REC_func_4844D0E7_Table	f0=2, index=128	# [40]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11794,13 +11794,13 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table		# [64]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=23, f1=80
+	REC_func_4844D0E7_Table	f0=23, index=80
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=1, f1=80
+	REC_func_4844D0E7_Table	f0=1, index=80
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=5, f1=80	# [72]
+	REC_func_4844D0E7_Table	f0=5, index=80	# [72]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11812,11 +11812,11 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	f0=10
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=40, f1=80
+	REC_func_4844D0E7_Table	f0=40, index=80
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=41, f1=80	# [88]
+	REC_func_4844D0E7_Table	f0=41, index=80	# [88]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11826,9 +11826,9 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table		# [96]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=25, f1=96
+	REC_func_4844D0E7_Table	f0=25, index=96
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=27, f1=96
+	REC_func_4844D0E7_Table	f0=27, index=96
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11860,15 +11860,15 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	f0=3
 	REC_func_4844D0E7_Table	f0=2
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=5, f1=144
-	REC_func_4844D0E7_Table	f0=41, f1=144
+	REC_func_4844D0E7_Table	f0=5, index=144
+	REC_func_4844D0E7_Table	f0=41, index=144
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	f0=4	# [136]
 	REC_func_4844D0E7_Table	f0=26
 	REC_func_4844D0E7_Table	f0=12
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=9, f1=144
+	REC_func_4844D0E7_Table	f0=9, index=144
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11876,11 +11876,11 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	f0=3
 	REC_func_4844D0E7_Table	f0=2
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=11, f1=1
+	REC_func_4844D0E7_Table	f0=11, index=1
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=26, f1=128	# [152]
+	REC_func_4844D0E7_Table	f0=26, index=128	# [152]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11892,11 +11892,11 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	f0=25
 	REC_func_4844D0E7_Table	f0=14
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=8, f1=96
+	REC_func_4844D0E7_Table	f0=8, index=96
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=12, f1=128	# [168]
+	REC_func_4844D0E7_Table	f0=12, index=128	# [168]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11924,11 +11924,11 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=3, f1=80
+	REC_func_4844D0E7_Table	f0=3, index=80
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=9, f1=80	# [200]
+	REC_func_4844D0E7_Table	f0=9, index=80	# [200]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -11988,15 +11988,15 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	f0=6
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=20, f1=144
+	REC_func_4844D0E7_Table	f0=20, index=144
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=1, f1=128	# [264]
+	REC_func_4844D0E7_Table	f0=1, index=128	# [264]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=40, f1=128
+	REC_func_4844D0E7_Table	f0=40, index=128
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=27, f1=144
+	REC_func_4844D0E7_Table	f0=27, index=144
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12004,11 +12004,11 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	f0=9
 	REC_func_4844D0E7_Table	f0=6
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=19, f1=1
+	REC_func_4844D0E7_Table	f0=19, index=1
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=3, f1=128	# [280]
+	REC_func_4844D0E7_Table	f0=3, index=128	# [280]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12024,7 +12024,7 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=2, f1=128	# [296]
+	REC_func_4844D0E7_Table	f0=2, index=128	# [296]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12050,13 +12050,13 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table		# [320]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=10, f1=80
+	REC_func_4844D0E7_Table	f0=10, index=80
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=2, f1=80
+	REC_func_4844D0E7_Table	f0=2, index=80
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=6, f1=80	# [328]
+	REC_func_4844D0E7_Table	f0=6, index=80	# [328]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12120,7 +12120,7 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=26, f1=64	# [392]
+	REC_func_4844D0E7_Table	f0=26, index=64	# [392]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12248,7 +12248,7 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=13, f1=128	# [520]
+	REC_func_4844D0E7_Table	f0=13, index=128	# [520]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12256,15 +12256,15 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=23, f1=112	# [528]
+	REC_func_4844D0E7_Table	f0=23, index=112	# [528]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=10, f1=32
+	REC_func_4844D0E7_Table	f0=10, index=32
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=25, f1=128	# [536]
+	REC_func_4844D0E7_Table	f0=25, index=128	# [536]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12272,15 +12272,15 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=2, f1=32	# [544]
+	REC_func_4844D0E7_Table	f0=2, index=32	# [544]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=12, f1=32
+	REC_func_4844D0E7_Table	f0=12, index=32
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=2, f1=32
+	REC_func_4844D0E7_Table	f0=2, index=32
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=14, f1=128	# [552]
+	REC_func_4844D0E7_Table	f0=14, index=128	# [552]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12304,23 +12304,23 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=6, f1=32	# [576]
+	REC_func_4844D0E7_Table	f0=6, index=32	# [576]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=40, f1=160
+	REC_func_4844D0E7_Table	f0=40, index=160
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=6, f1=32
-	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=8, f1=32	# [584]
+	REC_func_4844D0E7_Table	f0=6, index=32
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	f0=8, index=32	# [584]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=10, f1=112	# [592]
+	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	f0=10, index=112	# [592]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12376,7 +12376,7 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=12, f1=64	# [648]
+	REC_func_4844D0E7_Table	f0=12, index=64	# [648]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12816,23 +12816,23 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=3, f1=16	# [1088]
+	REC_func_4844D0E7_Table	f0=3, index=16	# [1088]
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=41, f1=160
+	REC_func_4844D0E7_Table	f0=41, index=160
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=26, f1=16
-	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=3, f1=16	# [1096]
+	REC_func_4844D0E7_Table	f0=26, index=16
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	f0=3, index=16	# [1096]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=25, f1=16	# [1104]
+	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	
+	REC_func_4844D0E7_Table	f0=25, index=16	# [1104]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12888,7 +12888,7 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=9, f1=16	# [1160]
+	REC_func_4844D0E7_Table	f0=9, index=16	# [1160]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -12896,7 +12896,7 @@ func_4844D0E7_Table:	# 2048 x REC_func_4844D0E7_Table (2 bytes each); read by fu
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
-	REC_func_4844D0E7_Table	f0=27, f1=16	# [1168]
+	REC_func_4844D0E7_Table	f0=27, index=16	# [1168]
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
 	REC_func_4844D0E7_Table	
@@ -14348,22 +14348,22 @@ StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435B22
 	tab_u16	33400, 33145, 33146, 33146, 33916, 33533, 33918, 2573	# [2040]
 
 GenreStyleTable:	# 16 x REC_GenreStyleTable (24 bytes each); read by GetGenreName 0x48435A8E `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AC8 `movbu (0x11, a0), d0`; func_48435AEE 0x48435AEE `mov (0x14, a0), a0` (+3)
-	REC_GenreStyleTable	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", p20=func_4844D793_Records+256	# [0]
-	REC_GenreStyleTable	s0="   ROCK & POP   ", x16="\x00", f17=16, x18="\x00\x00", p20=func_4844D793_Records+296
-	REC_GenreStyleTable	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", p20=func_4844D793_Records+360
-	REC_GenreStyleTable	s0="  JAZZ & SWING  ", x16="\x00", f17=20, x18="\x00\x00", p20=func_4844D793_Records+424
-	REC_GenreStyleTable	s0="    BALLROOM    ", x16="\x00", f17=16, x18="\x00\x00", p20=func_4844D793_Records+504
-	REC_GenreStyleTable	s0="  MOVIE & SHOW  ", x16="\x00", f17=20, x18="\x00\x00", p20=func_4844D793_Records+568
-	REC_GenreStyleTable	s0="  ENTERTAINER   ", x16="\x00", f17=14, x18="\x00\x00", p20=func_4844D793_Records+648
-	REC_GenreStyleTable	s0="    ORGANIST    ", x16="\x00", f17=10, x18="\x00\x00", p20=func_4844D793_Records+704
-	REC_GenreStyleTable	s0="   60s & 70s    ", x16="\x00", f17=13, x18="\x00\x00", p20=func_4844D793_Records+744	# [8]
-	REC_GenreStyleTable	s0="  MODERN DANCE  ", x16="\x00", f17=14, x18="\x00\x00", p20=func_4844D793_Records+796
-	REC_GenreStyleTable	s0="   SOUL & R&B   ", x16="\x00", f17=19, x18="\x00\x00", p20=func_4844D793_Records+852
-	REC_GenreStyleTable	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", p20=func_4844D793_Records+928
-	REC_GenreStyleTable	s0=" MARCH & WALTZ  ", x16="\x00", f17=12, x18="\x00\x00", p20=func_4844D793_Records+984
-	REC_GenreStyleTable	s0=" LATIN & WORLD  ", x16="\x00", f17=26, x18="\x00\x00", p20=func_4844D793_Records+1032
-	REC_GenreStyleTable	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", p20=func_4844D793_Records+1136
-	REC_GenreStyleTable	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", p20=func_4844D793_Records+1216
+	REC_GenreStyleTable	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D793_Records+256	# [0]
+	REC_GenreStyleTable	s0="   ROCK & POP   ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D793_Records+296
+	REC_GenreStyleTable	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D793_Records+360
+	REC_GenreStyleTable	s0="  JAZZ & SWING  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D793_Records+424
+	REC_GenreStyleTable	s0="    BALLROOM    ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D793_Records+504
+	REC_GenreStyleTable	s0="  MOVIE & SHOW  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D793_Records+568
+	REC_GenreStyleTable	s0="  ENTERTAINER   ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D793_Records+648
+	REC_GenreStyleTable	s0="    ORGANIST    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D793_Records+704
+	REC_GenreStyleTable	s0="   60s & 70s    ", x16="\x00", f17=13, x18="\x00\x00", index=func_4844D793_Records+744	# [8]
+	REC_GenreStyleTable	s0="  MODERN DANCE  ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D793_Records+796
+	REC_GenreStyleTable	s0="   SOUL & R&B   ", x16="\x00", f17=19, x18="\x00\x00", index=func_4844D793_Records+852
+	REC_GenreStyleTable	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D793_Records+928
+	REC_GenreStyleTable	s0=" MARCH & WALTZ  ", x16="\x00", f17=12, x18="\x00\x00", index=func_4844D793_Records+984
+	REC_GenreStyleTable	s0=" LATIN & WORLD  ", x16="\x00", f17=26, x18="\x00\x00", index=func_4844D793_Records+1032
+	REC_GenreStyleTable	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D793_Records+1136
+	REC_GenreStyleTable	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", index=func_4844D793_Records+1216
 
 GenreCount:	# u16, a constant; read / written by GetGenreName 0x48435A8E: `movhu (GenreCount), d3`; GetGenreStyleCount 0x48435AC8: `movhu (GenreCount), d2` ...
 	.word	16
@@ -14423,21 +14423,21 @@ func_48470A65_Block:	# 3 bytes, copied whole by func_48470A65 0x48470A65: memcpy
 	.align	4, 0xFF	# pad after func_48470A65_Block
 
 func_484361C7_Records:	# 128 x REC_func_484361C7_Records (8 bytes each); read by func_484361C7 0x484361C7 `movbu (1, a0), d0`; func_484361E2 0x484361E2 `movbu (2, a0), d0`; func_484361FD 0x484361FD `movbu (3, a0), d0` (+4)
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1	# [0]
+	REC_func_484361C7_Records	f0=1, f2=1, key=1	# [0]
 	REC_func_484361C7_Records	f0=1, f2=1, p4=func_484361C7_Records_p4_0
 	REC_func_484361C7_Records	f0=1, f1=1, f2=1, p4=func_484361C7_Records_p4_0
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1	# [8]
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
-	REC_func_484361C7_Records	f0=1, f2=1, f3=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1	# [8]
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
+	REC_func_484361C7_Records	f0=1, f2=1, key=1
 	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_1
 	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_2	# [16]
 	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
@@ -14852,7 +14852,7 @@ func_4848385F_Table:
 	.long	func_48483607
 
 TgGlobalRegsA0LoadA_Var_5:	# REC_TgGlobalRegsA0LoadA_ArgA0 (20 bytes): the layout TgGlobalRegsA0LoadA 0x4C037FAF reads through its argument a0 (passed by func_4848385F 0x4848385F `call TgGlobalRegsA0LoadA_entry, [a2], 0x18`, +2 more calls)
-	REC_TgGlobalRegsA0LoadA_ArgA0	f0=32768, f4=512, f8=512, f12=512, f16=32, x18="\x00\x00"
+	REC_TgGlobalRegsA0LoadA_ArgA0	TgVoiceRegWrite_d0=32768, TgVoiceRegWrite_d0_=512, TgVoiceRegWrite_d0__=512, TgVoiceRegWrite_d0___=512, TgVoiceRegWrite_d0____=32, x18="\x00\x00"
 
 func_48485B41_Block:	# 160 bytes, copied whole by func_48485B41 0x48485B41: memcpy(.., 160)
 	tab_u8	0, 1, 32, 127, 21, 2, 50, 80, 60, 40, 0, 108, 64, 28, 64, 64	# [0]
@@ -16567,39 +16567,39 @@ func_4847C996_Records_p4_28:	# REC_func_4847C996_Records_p4 (2 bytes), then 2 x 
 	tab_u16	65535, 65535	# [0]
 
 func_4847C996_Records:	# 34 x REC_func_4847C996_Records (8 bytes each); read by func_4847C996 0x4847C996 `call func_4847C966, 0, 0`; func_4847C996 0x4847C996 `mov (4, a0), a0`; func_4847C996 0x4847C996 `mov (d2, a2), a1` (+6)
-	REC_func_4847C996_Records	p0=Str_1_38, p4=func_4847C996_Records_p4_0	# [0]
-	REC_func_4847C996_Records	p0=Str_2_42, p4=func_4847C996_Records_p4_1
-	REC_func_4847C996_Records	p0=Str_3_32, p4=func_4847C996_Records_p4_2
-	REC_func_4847C996_Records	p0=Str_5_29, p4=func_4847C996_Records_p4_3
-	REC_func_4847C996_Records	p0=Str_6_26, p4=func_4847C996_Records_p4_4
-	REC_func_4847C996_Records	p0=Str_7_16, p4=func_4847C996_Records_p4_5
-	REC_func_4847C996_Records	p0=Str_8_17, p4=Str_9_6
-	REC_func_4847C996_Records	p0=Str_9_16, p4=func_4847C996_Records_p4_6
-	REC_func_4847C996_Records	p0=Str_A_30, p4=func_4847C996_Records_p4_7	# [8]
-	REC_func_4847C996_Records	p0=Str_B_18, p4=Str_empty_273
-	REC_func_4847C996_Records	p0=Str_C_27, p4=func_4847C996_Records_p4_8
-	REC_func_4847C996_Records	p0=Str_D_15, p4=func_4847C996_Records_p4_9
-	REC_func_4847C996_Records	p0=Str_E_14, p4=func_4847C996_Records_p4_10
-	REC_func_4847C996_Records	p0=Str_F_19, p4=func_4847C996_Records_p4_11
-	REC_func_4847C996_Records	p0=Str_G_14, p4=func_4847C996_Records_p4_12
-	REC_func_4847C996_Records	p0=Str_H_6, p4=func_4847C996_Records_p4_13
-	REC_func_4847C996_Records	p0=Str_I_6, p4=Str_t	# [16]
-	REC_func_4847C996_Records	p0=Str_J_5, p4=func_4847C996_Records_p4_14
-	REC_func_4847C996_Records	p0=Str_K_5, p4=func_4847C996_Records_p4_15
-	REC_func_4847C996_Records	p0=Str_L_6, p4=func_4847C996_Records_p4_16
-	REC_func_4847C996_Records	p0=Str_M_5, p4=func_4847C996_Records_p4_17
-	REC_func_4847C996_Records	p0=Str_N_6, p4=Str_6_15
-	REC_func_4847C996_Records	p0=Str_O_5, p4=func_4847C996_Records_p4_18
-	REC_func_4847C996_Records	p0=Str_P_14, p4=func_4847C996_Records_p4_19
-	REC_func_4847C996_Records	p0=Str_Q_8, p4=func_4847C996_Records_p4_20	# [24]
-	REC_func_4847C996_Records	p0=Str_R_5, p4=func_4847C996_Records_p4_21
-	REC_func_4847C996_Records	p0=Str_S_6, p4=func_4847C996_Records_p4_22
-	REC_func_4847C996_Records	p0=Str_T_6, p4=func_4847C996_Records_p4_23
-	REC_func_4847C996_Records	p0=Str_U_5, p4=func_4847C996_Records_p4_24
-	REC_func_4847C996_Records	p0=Str_V_5, p4=func_4847C996_Records_p4_25
-	REC_func_4847C996_Records	p0=Str_W_5, p4=func_4847C996_Records_p4_26
-	REC_func_4847C996_Records	p0=Str_Y_6, p4=func_4847C996_Records_p4_27
-	REC_func_4847C996_Records	p0=Str_Z_5, p4=func_4847C996_Records_p4_28	# [32]
+	REC_func_4847C996_Records	text=Str_1_38, p4=func_4847C996_Records_p4_0	# [0]
+	REC_func_4847C996_Records	text=Str_2_42, p4=func_4847C996_Records_p4_1
+	REC_func_4847C996_Records	text=Str_3_32, p4=func_4847C996_Records_p4_2
+	REC_func_4847C996_Records	text=Str_5_29, p4=func_4847C996_Records_p4_3
+	REC_func_4847C996_Records	text=Str_6_26, p4=func_4847C996_Records_p4_4
+	REC_func_4847C996_Records	text=Str_7_16, p4=func_4847C996_Records_p4_5
+	REC_func_4847C996_Records	text=Str_8_17, p4=Str_9_6
+	REC_func_4847C996_Records	text=Str_9_16, p4=func_4847C996_Records_p4_6
+	REC_func_4847C996_Records	text=Str_A_30, p4=func_4847C996_Records_p4_7	# [8]
+	REC_func_4847C996_Records	text=Str_B_18, p4=Str_empty_273
+	REC_func_4847C996_Records	text=Str_C_27, p4=func_4847C996_Records_p4_8
+	REC_func_4847C996_Records	text=Str_D_15, p4=func_4847C996_Records_p4_9
+	REC_func_4847C996_Records	text=Str_E_14, p4=func_4847C996_Records_p4_10
+	REC_func_4847C996_Records	text=Str_F_19, p4=func_4847C996_Records_p4_11
+	REC_func_4847C996_Records	text=Str_G_14, p4=func_4847C996_Records_p4_12
+	REC_func_4847C996_Records	text=Str_H_6, p4=func_4847C996_Records_p4_13
+	REC_func_4847C996_Records	text=Str_I_6, p4=Str_t	# [16]
+	REC_func_4847C996_Records	text=Str_J_5, p4=func_4847C996_Records_p4_14
+	REC_func_4847C996_Records	text=Str_K_5, p4=func_4847C996_Records_p4_15
+	REC_func_4847C996_Records	text=Str_L_6, p4=func_4847C996_Records_p4_16
+	REC_func_4847C996_Records	text=Str_M_5, p4=func_4847C996_Records_p4_17
+	REC_func_4847C996_Records	text=Str_N_6, p4=Str_6_15
+	REC_func_4847C996_Records	text=Str_O_5, p4=func_4847C996_Records_p4_18
+	REC_func_4847C996_Records	text=Str_P_14, p4=func_4847C996_Records_p4_19
+	REC_func_4847C996_Records	text=Str_Q_8, p4=func_4847C996_Records_p4_20	# [24]
+	REC_func_4847C996_Records	text=Str_R_5, p4=func_4847C996_Records_p4_21
+	REC_func_4847C996_Records	text=Str_S_6, p4=func_4847C996_Records_p4_22
+	REC_func_4847C996_Records	text=Str_T_6, p4=func_4847C996_Records_p4_23
+	REC_func_4847C996_Records	text=Str_U_5, p4=func_4847C996_Records_p4_24
+	REC_func_4847C996_Records	text=Str_V_5, p4=func_4847C996_Records_p4_25
+	REC_func_4847C996_Records	text=Str_W_5, p4=func_4847C996_Records_p4_26
+	REC_func_4847C996_Records	text=Str_Y_6, p4=func_4847C996_Records_p4_27
+	REC_func_4847C996_Records	text=Str_Z_5, p4=func_4847C996_Records_p4_28	# [32]
 	REC_func_4847C996_Records	
 
 PostEvent_Records_p4_0:	# REC_PostEvent_Records_p4 (410 bytes)
@@ -17706,15 +17706,15 @@ StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedP
 	MusicStylistSetup	panel=StyleRecordTable_p0_326, name=Text_Disco_Hustling+18326, genre=10, style=26, setup=2, era=4, era_pos=55, letter=15, letter_pos=2, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_327, name=Text_Disco_Hustling+18343, genre=10, style=26, setup=3, era=4, era_pos=12, letter=9, letter_pos=6, x22="\x00\x00"
 PostEvent_Records:	# 10 x REC_PostEvent_Records (12 bytes each); read by PostEvent 0x484293AD `call func_48414A4D_entry, [a2], 4`; func_4847D633 0x4847D633 `mov (4, a0), a0`; func_4847D633 0x4847D633 `mov (d1, a2), d1` (+16)
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18360, p4=PostEvent_Records_p4_s58_0, f8=7, x10="\x00\x00"	# [0]
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18377, p4=PostEvent_Records_p4_s74_0, f8=6, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18394, p4=PostEvent_Records_p4_s68_0, f8=8, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18411, p4=PostEvent_Records_p4_s138_0, f8=5, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18428, p4=PostEvent_Records_p4_s258_0, f8=4, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18445, p4=PostEvent_Records_p4_s322_0, f8=1, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18462, p4=PostEvent_Records_p4_0, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18479, p4=Str_N, f8=3, x10="\x00\x00"
-	REC_PostEvent_Records	p0=Text_Disco_Hustling+18496, p4=PostEvent_Records_p4_s386_0, f8=2, x10="\x00\x00"	# [8]
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, p4=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, p4=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, p4=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, p4=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, p4=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, p4=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, p4=PostEvent_Records_p4_0, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, p4=Str_N, key=3, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, p4=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
 	REC_PostEvent_Records	x10="\x00\x00"
 
 # 13 classes; a class id is (0x14 << 16) | its index here (ClassProc 0x4842A804 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -27457,7 +27457,7 @@ CMPMSPCMN_ResNames:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x351F5C, 0x351F60
 
 func_484FFF63_Table_p4_0:	# REC_func_484FFF63_Table_p4 (12 bytes)
-	REC_func_484FFF63_Table_p4	f0=16, x1="\x00\x00\x00", p4=Str_Basic, x8="\x11\x00\x00\x00"
+	REC_func_484FFF63_Table_p4	f0=16, x1="\x00\x00\x00", text=Str_Basic, x8="\x11\x00\x00\x00"
 
 func_484FFF63_Table_p4_0_Tail:	# 1 pointers after func_484FFF63_Table_p4_0: the array its kind's computed-offset read indexes (AcChdModTypDrawBoxProc 0x484FF59D `call SendEvent_entry, [d2,d3], 0x24`; AcChdModTypDrawBoxProc 0x484FF59D `mov (4, a1), d0` (+21)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
 	.long	Str_In_7th_G_8dB_a0

@@ -25742,9 +25742,9 @@ Jpeg_4C3BD104:	# a JPG file, 9399 bytes, 300 x 190
 	.align	4, 0xFF	# pad after Jpeg_4C3BD104
 
 func_4C16B5D7_Records:	# 1 x REC_func_4C16B5D7_Records (20 bytes each); read by func_4C16B5D7 0x4C16B5D7 `movhu (d1, a0), d1`
-	REC_func_4C16B5D7_Records	f0=4095, x2="***** dummy ****\x00\x00"
+	REC_func_4C16B5D7_Records	key=4095, x2="***** dummy ****\x00\x00"
 func_4C16B607_Records:	# 1 x REC_func_4C16B607_Records (20 bytes each); read by func_4C16B607 0x4C16B607 `movhu (d1, a0), d1`
-	REC_func_4C16B607_Records	f0=4095, x2="***** dummy ****\x00\x00"
+	REC_func_4C16B607_Records	key=4095, x2="***** dummy ****\x00\x00"
 
 func_4C16B743_Table:	# 40 x u32, 0..4278255487; read by func_4C16B743_L20 0x4C16B763: `mov	(a1), d0`; func_4C16B8A3_L20 0x4C16B8C3: `mov	(a1), d0`
 	tab_u32	16744448, 0, 2692784255, 2130771839, 4278255487, 2130706432, 2130706432, 0	# [0]
