@@ -184,45 +184,45 @@ HDAE5000_Record_AcLanguageText1:	; class 'AcLanguageText1'
 ; string pool referenced by NamePtr/SigPtr above, in reverse record order
 ; ---------------------------------------------------------------------------
 ClassSig_AcLanguageText1:
-	.byte 0x00			; 0x29D16E (SigPtr target of AcLanguageText1, empty signature)
+	.byte 0x00			; 0x299666 (SigPtr target of AcLanguageText1, empty signature)
 	.zero 1			; 0x29D8CF (unreferenced pad)
 ClassName_AcLanguageText1:
 	.asciz "AcLanguageText1"			; 0x29D074
 ClassSig_IvScreenR2:
-	.byte 0x00			; 0x29D180 (SigPtr target of IvScreenR2, empty signature)
+	.byte 0x00			; 0x299678 (SigPtr target of IvScreenR2, empty signature)
 	.zero 1			; 0x29D8E1 (unreferenced pad)
 ClassName_IvScreenR2:
-	.asciz "IvScreenR2"			; 0x29D182
+	.asciz "IvScreenR2"			; 0x299776
 	.zero 1			; 0x29D8ED (unreferenced pad)
 ClassSig_AcWindowPage1:
 	.byte 0x00			; 0x29D8EE (SigPtr target of AcWindowPage1, empty signature)
 	.zero 1			; 0x29D8EF (unreferenced pad)
 ClassName_AcWindowPage1:
-	.asciz "AcWindowPage1"			; 0x29D190
+	.asciz "AcWindowPage1"			; 0x299784
 ClassSig_TtlScreenR2:
-	.byte 0x00			; 0x29D1AC (SigPtr target of TtlScreenR2, empty signature)
+	.byte 0x00			; 0x299696 (SigPtr target of TtlScreenR2, empty signature)
 	.zero 1			; 0x29D90D (unreferenced pad)
 ClassName_TtlScreenR2:
-	.asciz "TtlScreenR2"			; 0x29D1AE
+	.asciz "TtlScreenR2"			; 0x299698
 ClassSig_HDTitleMenu:
-	.byte 0x00			; 0x29D1BA (SigPtr target of HDTitleMenu, empty signature)
+	.byte 0x00			; 0x2996A4 (SigPtr target of HDTitleMenu, empty signature)
 	.zero 1			; 0x29D91B (unreferenced pad)
 ClassName_HDTitleMenu:
-	.asciz "HDTitleMenu"			; 0x29D1BC
+	.asciz "HDTitleMenu"			; 0x2996A6
 ClassSig_IvHddNaming:
-	.asciz "j"			; 0x29D1C8
+	.asciz "j"			; 0x2996B2
 ClassName_IvHddNaming:
-	.asciz "IvHddNaming"			; 0x29D1CA
+	.asciz "IvHddNaming"			; 0x2996B4
 ClassSig_AcHddNamingWindow:
-	.byte 0x00			; 0x29D1D6 (SigPtr target of AcHddNamingWindow, empty signature)
+	.byte 0x00			; 0x2996C0 (SigPtr target of AcHddNamingWindow, empty signature)
 	.zero 1			; 0x29D937 (unreferenced pad)
 ClassName_AcHddNamingWindow:
-	.asciz "AcHddNamingWindow"			; 0x29D1D8
+	.asciz "AcHddNamingWindow"			; 0x2996C2
 ClassSig_TtlScreenR:
-	.byte 0x00			; 0x29D1EA (SigPtr target of TtlScreenR, empty signature)
+	.byte 0x00			; 0x2996D4 (SigPtr target of TtlScreenR, empty signature)
 	.zero 1			; 0x29D94B (unreferenced pad)
 ClassName_TtlScreenR:
-	.asciz "TtlScreenR"			; 0x29D1EC
+	.asciz "TtlScreenR"			; 0x2996D6
 	.zero 1			; 0x29D957 (unreferenced pad)
 ClassSig_DbMemoCl:
 	.asciz "^^"			; 0x29D958
@@ -231,9 +231,9 @@ ClassName_DbMemoCl:
 	.asciz "DbMemoCl"			; 0x29D100
 	.zero 1			; 0x29D965 (unreferenced pad)
 ClassSig_SelectList:
-	.asciz "c^ksAAnGGmA"			; 0x29D206
+	.asciz "c^ksAAnGGmA"			; 0x2996F0
 ClassName_SelectList:
-	.asciz "SelectList"			; 0x29D212
+	.asciz "SelectList"			; 0x2996FC
 	.zero 1			; 0x29D97D (unreferenced pad)
 HDAE5000_RECORD_COUNT:
 	; Record count data
@@ -311,7 +311,7 @@ HDAE5000_Str_DbMemoClProc:
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_SelectListProc:
 	.asciz "SelectListProc"
-	.balign 2, 0x00                       ; word-align pad to the pool boundary 0x29D4B2 (see the
+	.balign 2, 0x00                       ; word-align pad to the pool boundary 0x299890 (see the
 	                                       ; "HD-AE5000 UI OBJECT DESCRIPTOR POOL" header just below)
 
 	.include	"hdae5000_ui_tree.s"	; the GUI: objects, object / name tables, names
@@ -380,45 +380,45 @@ HDAE5000_GFX_INIT_PARAMS:
 	;   0x2F9FAE -> 0x2A851C   0x2F9FB2 -> 0x2A850E   0x2F9FB6 -> 0x2A84FE
 	;   0x2F9FBA -> 0x2A84EC   0x2F9FBE -> 0x2A84DC   0x2F9FC2 -> 0x2A84C6
 	;   0x2F9FC6 -> 0x2A84B6   0x2F9FCA -> 0x2A84A6   0x2F9FCE -> 0x2A84A4
-	.asciz "TT_HDDEXT"		; 0x2A7CA8  (from 0x2802E4)
+	.asciz "TT_HDDEXT"		; 0x2A3AC4  (from 0x2802E4)
 HDAE5000_Str_End_ScreenNames:
-	.byte 0x00			; 0x2A7CB2  empty name, target of 0x2F9FCE
+	.byte 0x00			; 0x2A3ACE  empty name, target of 0x2F9FCE
 	.byte 0x00			; 0x2A84A5  pad
 HDAE5000_Str_FileLoadSwCatch:
-	.asciz "FileLoadSwCatch"	; 0x2A7CB4
+	.asciz "FileLoadSwCatch"	; 0x2A3AD0
 HDAE5000_Str_HDDTitleSwCatch:
-	.asciz "HDDTitleSwCatch"	; 0x2A7CC4
+	.asciz "HDDTitleSwCatch"	; 0x2A3AE0
 HDAE5000_Str_CopyToHDDirSelScreen:
-	.asciz "CopyToHDDirSelScreen"	; 0x2A7CD4
+	.asciz "CopyToHDDirSelScreen"	; 0x2A3AF0
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_CopyToHDScreen:
-	.asciz "CopyToHDScreen"	; 0x2A7CEA
+	.asciz "CopyToHDScreen"	; 0x2A3B06
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_FlsFileSelScreen:
-	.asciz "FlsFileSelScreen"	; 0x2A7CFA
+	.asciz "FlsFileSelScreen"	; 0x2A3B16
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_FlsDirSelScreen:
-	.asciz "FlsDirSelScreen"	; 0x2A7D0C
+	.asciz "FlsDirSelScreen"	; 0x2A3B28
 HDAE5000_Str_FlsEditScreen:
-	.asciz "FlsEditScreen"		; 0x2A7D1C
+	.asciz "FlsEditScreen"		; 0x2A3B38
 HDAE5000_Str_FlsLoadScreen:
-	.asciz "FlsLoadScreen"		; 0x2A7D2A
+	.asciz "FlsLoadScreen"		; 0x2A3B46
 HDAE5000_Str_SelectFlsScreen:
-	.asciz "SelectFlsScreen"	; 0x2A7D38
+	.asciz "SelectFlsScreen"	; 0x2A3B54
 HDAE5000_Str_SetupP2SwCatch:
-	.asciz "SetupP2SwCatch"	; 0x2A7D48
+	.asciz "SetupP2SwCatch"	; 0x2A3B64
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_FILE_Naming_Screen:
-	.asciz "FILE_Naming_Screen"	; 0x2A7D58
+	.asciz "FILE_Naming_Screen"	; 0x2A3B74
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_FILE_LOAD_Screen:
-	.asciz "FILE_LOAD_Screen"	; 0x2A7D6C
+	.asciz "FILE_LOAD_Screen"	; 0x2A3B88
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_SEL_DIR_Screen:
-	.asciz "SEL_DIR_Screen"	; 0x2A7D7E
+	.asciz "SEL_DIR_Screen"	; 0x2A3B9A
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_HDAETitleFunc:
-	.asciz "HDAETitleFunc"		; 0x2A7D8E
+	.asciz "HDAETitleFunc"		; 0x2A3BAA
 
 HDAE5000_Str_V110i:
 	; the version, read by CopyVersionString at 0x28B20D (ld #, pushed operand)
@@ -456,20 +456,6 @@ HDAE5000_Bitmap_DriveMech:
 	; Built from images/HDAE5000_Hands.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 133729, 76800
 	.incbin "includes/generated/HDAE5000_Hands.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Hands.png
-
-HDAE5000_Palette_FilePanel:
-	; v2.01i's own palette for its own backdrop below (v2.06i's differs in
-	; 326 of the 1,024 bytes).  Built from
-	; hdae5000_v2_01i/images/HDAE5000_Palette_FilePanel_v2_01i.txt by
-	; scripts/build/hdae5000_images.py.
-
-HDAE5000_Bitmap_FilePanel:
-	; 320 x 240 @ 8bpp.  The file-selection panel background, as v2.01i draws
-	; it: the same three sunken list wells as v2.06i's, but over a magenta
-	; marble fill instead of a plain dark one, and with five buttons in the
-	; grey strip along the bottom where v2.06i has three.  Built from
-	; hdae5000_v2_01i/images/HDAE5000_FilePanel_v2_01i.png by
-	; scripts/build/hdae5000_images.py.
 
 HDAE5000_Palette_HddIcon:
 	; 0x400 B = 256 RGBX entries, all 256 distinct -- the Windows halftone

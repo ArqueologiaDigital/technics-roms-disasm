@@ -526,7 +526,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x3f	; entry count = 67 (v2.06i: 0x45 = 69)
+	ldw (xsp + 8), 0x3f	; entry count = 63 (v2.06i: 0x45 = 69)
 	lda	xwa, (0x23c914:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -544,7 +544,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x3f	; entry count = 67 (v2.06i: 0x45 = 69)
+	ldw (xsp + 8), 0x3f	; entry count = 63 (v2.06i: 0x45 = 69)
 	lda	xwa, (0x23ca14:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -562,7 +562,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
+	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 10 bytes
 	lda	xwa, (0x23cbc0:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -580,7 +580,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
+	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 10 bytes
 	lda	xwa, (0x23cbec:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -4077,7 +4077,7 @@ HDAE5000_HardTest_HddIdRead:
 	lda xwa, (xsp + 20)
 	call HDAE5000_ULongToFloat
 	lda xbc, (xsp + 20)
-	lda xde, (HDAE5000_Float_100_HddIdRead:24); 0x2E1AB8
+	lda xde, (HDAE5000_Float_100_HddIdRead:24); 0x2CA8D4
 	lda xwa, (xsp + 20)
 	call HDAE5000_FloatDiv
 	lda xbc, (xsp + 20)
@@ -4098,13 +4098,13 @@ HDAE5000_HardTest_HddIdRead:
 	; Transfer results
 	lda xwa, (xsp + 24)
 	calr HDAE5000_HardTest_Print
-	lda xwa, (HDAE5000_Str_Empty:24); 0x2E1A94
+	lda xwa, (HDAE5000_Str_Empty:24); 0x2CA8B0
 	calr HDAE5000_HardTest_Print
-	lda xwa, (HDAE5000_Str_HDDOK:24); 0x2E1A96
+	lda xwa, (HDAE5000_Str_HDDOK:24); 0x2CA8B2
 	calr HDAE5000_HardTest_Print
 	jr t, .Lpws_done
 .Lpws_error:
-	lda xwa, (HDAE5000_Str_HDDNG:24); 0x2E1AA6
+	lda xwa, (HDAE5000_Str_HDDNG:24); 0x2CA8C2
 	calr HDAE5000_HardTest_Print
 .Lpws_done:
 	lda xsp, (xsp + 124)		; deallocate stack frame

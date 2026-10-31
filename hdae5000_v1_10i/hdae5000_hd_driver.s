@@ -2562,7 +2562,7 @@ HDAE5000_PC_DATA_LINK_PAGE:
 	ld xhl, (xhl + WS_RootFnTable)             ; (XHL+0x0E0A)
 	ld_sril xhl, (xhl + RootFn_InheritedProc)             ; (XHL+0x00DC) — callback
 	call (xhl)
-	lda xwa, (HDAE5000_Str_PCLK:24); 0x2E1E72 — status buffer
+	lda xwa, (HDAE5000_Str_PCLK:24); 0x2CAC70 — status buffer
 	ld xbc, xwa
 	ld xwa, (xsp + 8)
 	ld xde, xbc
@@ -2591,13 +2591,13 @@ HDAE5000_PC_DATA_LINK_PAGE:
 	or xhl, xhl			; sub-code 0?
 	jr nz, .Lhd_cleanup
 .Lhd_err7_minor:
-	lda xwa, (HDAE5000_Str_PORTISACTIVE:24); 0x2E1E78 — error string
+	lda xwa, (HDAE5000_Str_PORTISACTIVE:24); 0x2CAC76 — error string
 	calr HDAE5000_PcLink_ShowStatus	; recursive: display error
 	call HDAE5000_PPORT_StartLink
 	jr .Lhd_cleanup
 .Lhd_err7_display:
 	call HDAE5000_PPORT_Reset
-	lda xwa, (HDAE5000_Str_Blank14:24); 0x2E1E88 — error string
+	lda xwa, (HDAE5000_Str_Blank14:24); 0x2CAC86 — error string
 	calr HDAE5000_PcLink_ShowStatus	; recursive: display error
 	; Reinit display handler
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -3115,7 +3115,7 @@ HDAE5000_SaveOptNameCheck:
 	add xwa, xwa			; index * 2 (table has 16-bit entries)
 	add xwa, HDAE5000_SaveOptNameCheck_CaseTable		; jump table base
 	ld wa, (xwa + 0)		; load offset from table
-	lda xix, (.Lhbi_case0:24); base of case handlers (0x284FF7)
+	lda xix, (.Lhbi_case0:24); base of case handlers (0x284E54)
 	jp	t, (xix+wa)
 .Lhbi_case0:
 	; Case 0: PPI block copy from device
