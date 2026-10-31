@@ -120,6 +120,17 @@ write no pixels, and their anchors are no longer in `wsa1_prom_a.s`.
 `notes/media-build-2026-10-31/clean_checkout_proof.sh` no longer leaves anything writable in phase D:
 `git ls-files -z | xargs -0 chmod a-w`.  Result: see "Clean-checkout proof result" below.
 
+## Gates and censuses in the lane worktree
+
+At 898af4ead, after deleting `kn7000/build/*.labels`, with the absolute romset overrides of the brief: `make gate`
+("PASS: every rebuilt ROM is byte-identical."), `make gate-wsa1` (the same), `make gate-floppy` ("All 6 kn7000
+floppies reproduced byte-for-byte."), `make gate-kn7000` ("All 9 factory custom-style banks reproduced
+byte-for-byte."), `make gate-kn6000`, `gate-kn6500`, `gate-kn2400`, `gate-hdsx3` and `make -C kn7000
+symbols-check`: all exit 0.  Read-only censuses: `data_incbin_census.py` prints a table identical to
+`docs/coverage/data-incbin-2026-10-31-02.txt`, and `doc_quality_census.py` figures identical to
+`doc-quality-2026-10-31-02.txt`: nothing rose.  The dispatch census was not rerun: no change here touches a
+table, a label or an instruction (the source edits are comment-only).
+
 ## Regeneration order (for the integrator)
 
 Nothing here is a generated output that has to be regenerated after merging.  `make gallery` now also writes
