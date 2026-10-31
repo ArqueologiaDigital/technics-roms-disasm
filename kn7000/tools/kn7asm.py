@@ -47,6 +47,14 @@
 #                                  last parameter may be `name:vararg`, which
 #                                  takes every remaining argument (with their
 #                                  commas; empty when there is none).
+#                                  A positional or keyword argument (or a
+#                                  default) that is one quoted string is
+#                                  passed WITHOUT its quotes, as GNU as and
+#                                  llvm-mc do: the body writes `"\name"` to
+#                                  get a string back (`.ascii "\name"`), so
+#                                  one macro serves both assemblers.  A
+#                                  vararg keeps its quotes (GNU as does too).
+#                                  Until 2026-10-31 kn7asm kept them.
 #   .zlib LEVEL                    the bytes of the lines up to `.endzlib`,
 #   ...                            compressed as one zlib stream (header,
 #   .endzlib                       deflate, Adler-32) at LEVEL with Python's
@@ -410,10 +418,31 @@ class Assembler:
             self.parsed[path] = out
         return self.parsed[path]
 
+    @staticmethod
+    def macro_arg_text(arg):
+        """A macro argument as the body sees it: one quoted string loses its
+        quotes (escapes inside stay as written), as in GNU as; anything else is
+        passed unchanged."""
+        if len(arg) < 2 or arg[0] != '"' or arg[-1] != '"':
+            return arg
+        i, esc = 1, False
+        while i < len(arg):
+            ch = arg[i]
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                break
+            i += 1
+        return arg[1:-1] if i == len(arg) - 1 else arg
+
     def bind_args(self, name, rest):
         """The argument text of each parameter of macro `name`, in order:
         positional arguments first, then `param=value` keywords in any order;
-        a parameter left out takes its default (an error if it has none)."""
+        a parameter left out takes its default (an error if it has none).
+        A quoted-string argument or default loses its quotes (macro_arg_text),
+        except the vararg."""
         params, _body = self.macros[name]
         defaults = self.macro_defaults.get(name, {})
         values, pos = {}, 0
@@ -433,13 +462,15 @@ class Assembler:
                 values[params[pos]] = arg
                 pos += 1
         out = []
+        vararg = params[-1] if name in self.macro_vararg and params else None
         for p in params:
             if p in values:
-                out.append(values[p])
+                v = values[p]
             elif p in defaults:
-                out.append(defaults[p])
+                v = defaults[p]
             else:
                 raise AsmError(f"macro {name}: argument {p} missing (it has no default)")
+            out.append(v if p == vararg else self.macro_arg_text(v))
         return out
 
     def expand_macro(self, name, rest):

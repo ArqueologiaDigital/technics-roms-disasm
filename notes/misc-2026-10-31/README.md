@@ -156,3 +156,33 @@ converter's.
 The dry run's 7 changes are lines of `v7/maincpu/sequencer/accompaniment_engine.s` blamed to d89e64558 whose RAM
 operands are still decimal (`ld a, (12873:16)`); they were so at the base too and are left for the next run of
 step 8 or of `name_kn5000_ram.py`.
+
+## N-a23b8d58: kn7asm passes quoted macro arguments as GNU as and llvm-mc do
+
+**CLOSED** for the assembler and the macro bodies; the fold of the names into the shared callers is split off
+(below).  `kn7000/tools/kn7asm.py`: a positional or keyword argument, or a default, that is one quoted string
+reaches the body without its quotes (`macro_arg_text`, called by `bind_args`); a vararg keeps them.  That is
+what GNU as and llvm-mc do: `probes/kn7asm_macro_quotes.py` assembles `probes/kn7asm_macro_quotes.s` with all
+three and gets the same 23 bytes (the base's kn7asm stops on it: "macro Q takes 1 arguments, got more").
+
+Every kn7asm macro body that wrote `.ascii \p` now writes `.ascii "\p"` (1,321 operands,
+`probes/quote_macro_string_params.py --apply`): the generated `data_structs.inc` of kn7000 program 941 / 942 /
+935 / 893, kn2400, kn6000, kn6500 and hdsx3 (generator `kn7000/tools/data_structs.py`, changed to write the
+quoted form; the rewrite gives the text it writes), and the hand-written `kn7000/src/customdata/customdata.inc`,
+`src/include/data_tables.inc`, `user_settings.inc` and `voice_record.inc`.  No other kn7asm macro body passes a
+string parameter on (checked: every `\p` use in a kn7asm macro body is `.byte` / `.word` / `.long` / `.be16` /
+`.be24` / `.space` / `.equ` / a label, apart from these `.ascii` lines).  Bytes unchanged: the MN10300 gates
+(below).  To regenerate the `data_structs.inc` files from the generator instead: `make -C kn7000 data-src`,
+`data-src-sp7001`, `data-src-935`, `data-src-893`, and for the siblings `make -C <tree> program-src` (needs
+UNIDASM).  The rewrite changes exactly the lines `macro_lines()` writes as `.ascii "\name"` now (not
+re-checked by a full regeneration in this lane).
+
+**Split off, not done here: moving the shared callers to name-carrying macros.**  With both assemblers stripping
+quotes, `VOICE_HEAD name, ...` (already in `voice_record.inc`) works in both, and SOUND_HEAD and PMR_NAME_HEAD /
+_TAIL could take the name too.  Their callers are generated: `kn7000/tools/gen_data_s.py` (`SOUND_HEAD`,
+`VOICE_HEAD_TAIL`; four program builds), `gen_table_voices.py` (table 84 and the SP7001 archive),
+`gen_ic21own_s.py` (`PMR_NAME_*`), `floppy/tools/kd/kn_soundram.py` and `kn_panel.py` (the floppy trees, built
+by llvm-mc).  Switching them is a regeneration of every one of those trees and of the floppy sources, with their
+gates; it changes no byte and no field meaning, and is left as an ordinary ACTIONABLE follow-up (no blocker).  The
+include comments that said the two assemblers disagree (`voice_record.inc`, `panel_memory.inc` and its generator
+`floppy/tools/kd/gen_panel_macros.py`) now say they agree.
