@@ -43,3 +43,31 @@ slices carry bytes past the end of their stream: `demo_preset_17_compressed.orig
 stream (header size 0x1700) is 3,357 B, and preset 18's is 27,956 B for a 27,881-byte stream.
 `scripts/build/compress_lzss.py` could therefore also drop its reference for the stream part; the slices'
 tails would still need a source of their own.  Not done here: listed as a follow-up below.
+
+## N-77efbd0e: the semantic score and the doc-quality census rate KN7000 builds 935 and 893
+
+**CLOSED** (commit "semantic score rules 6, doc-quality census: rate KN7000 program builds 935 and 893").
+`scripts/analysis/semantic_score.py` (RULES = 6) and `scripts/analysis/doc_quality_census.py` list
+`program935` (`kn7000/src/b935/program.s`, `build/kn7000_program_b935.rom`) and `program893`
+(`src/b893/...`) beside `program942`, rated by the same rules.  At the base `130735749`:
+
+| image      | bytes (source / image)          | names (semantic / rated)  | local labels left out |
+|------------|---------------------------------|---------------------------|-----------------------|
+| program935 | 4,148,024 / 4,194,304 (98.90 %) | 12,540 / 19,328 (64.88 %) | 321                   |
+| program893 | 4,149,297 / 4,194,304 (98.93 %) | 12,534 / 19,318 (64.88 %) | 320                   |
+
+`doc_quality_census.py --compare` against `doc-quality-2026-10-31-02` lists both as `new`.  It also reports
+`v6` (a) 7,827 -> 7,828 and `v5` 7,829 -> 7,832 routines without a header as ROSE: this lane touches no v6 /
+v5 source, so the rise is in the base (the wave-3 merges after that snapshot).  The badges and the ledger
+snapshots are the integrator's.
+
+## N-6a782984: name_kn5000_ram.py's block-delta fallback reviewed, now off by default
+
+**CLOSED.**  The fallback placed a v9 / v7 RAM name that had no vote by the common delta of its voted
+neighbours.  `probes/ram_block_delta_review.py` (output: `probes/ram_block_delta_review.out.txt`) lists the
+names only it places: 24 in v9 and 25 in v7.  No code line of either tree spells any of them, and each is at
+v10's address in the tree or has no `.equ` there (the six BOOTSERIAL_* names, RHYTHM_PATTERN_SEL_A / _TYPE);
+the only non-zero guesses are v7's RHYTHM_PATTERN_SEL_A / _TYPE (-0x9C).  So the fallback had changed no
+source line, and a guess from layout is not evidence: the script now applies it only with
+`--infer-block-delta` (which keeps the old cascading behaviour) and otherwise prints the guesses with their
+addresses.  `notes/ram-naming-2026-10-24/README.md` follow-up 4 is closed.
