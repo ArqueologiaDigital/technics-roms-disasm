@@ -235,7 +235,11 @@ def line_addresses(img, lines):
         obj, elf, raw = (os.path.join(td, x) for x in ("m.o", "m.elf", "m.bin"))
         run([os.path.join(LLVM, "llvm-mc"), "-triple=tlcs900", "-filetype=obj", "-I", ROOT,
              "-I", os.path.join(ROOT, img), "-o", obj, src])
-        run([os.path.join(LLVM, "ld.lld"), "-e", "0", "-T", os.path.join(ROOT, cfg["ld"]), "-o", elf, obj])
+        # since 2026-10-31 the two images are one link (maincpu/maincpu.ld): the other image's names
+        # are undefined here and come, as absolute values, from the built joint ELF
+        joint = os.path.join(ROOT, "rebuilt_ROMs", "wsa1_maincpu.llvm.elf")
+        run([os.path.join(LLVM, "ld.lld"), "-e", "0", "-T", os.path.join(ROOT, cfg["ld"]),
+             "--just-symbols=" + joint, "-o", elf, obj])
         run([os.path.join(LLVM, "llvm-objcopy"), "-O", "binary", elf, raw])
         if open(raw, "rb").read() != open(os.path.join(ROOT, cfg["rom"]), "rb").read():
             sys.exit("%s: the marked listing does not rebuild the ROM -- refusing to believe its "
