@@ -176,13 +176,13 @@ Rhythm_SetupChannel_D6:
 RhythmEvt_ProcessNote:
 	cp (ACC_STYLE_NUMBER:16), 0xf0
 	jr c, RhythmEvt_AlternateProcess
-	ld a, (0x327a:16)
-	or a, (0x327b:16)
-	or a, (0x327c:16)
-	or a, (0x3276:16)
-	or a, (0x3277:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_INTRO2:16)
+	or a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, (ACC_PART_BIT:16)
 	jr nz, RhythmEvt_AlternateProcess
 	ld a, (0x3243:16)
@@ -384,9 +384,9 @@ Rhythm_CrossVoiceCorrect:
 	jr nz, .Lc_f54bfa
 	bit 1, (0x323b:16)
 	jr nz, .Lc_f54bfa
-	ld w, (0x327a:16)
-	or w, (0x327b:16)
-	or w, (0x327c:16)
+	ld w, (ACC_LANES_INTRO1:16)
+	or w, (ACC_LANES_COUNTIN:16)
+	or w, (ACC_LANES_INTRO2:16)
 	and W,0x3f
 	jr nz, .Lc_f54c26
 	bit 5, (0x3257:16)
@@ -866,13 +866,13 @@ Rhythm_SendByte:
 Rhythm_ValidateAndSend:
 	cp (ACC_STYLE_NUMBER:16), 0xf0
 	jr c, Rhythm_Validate_Mismatch
-	ld a, (0x327a:16)
-	or a, (0x327b:16)
-	or a, (0x327c:16)
-	or a, (0x3276:16)
-	or a, (0x3277:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_INTRO2:16)
+	or a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, (ACC_PART_BIT:16)
 	jr nz, Rhythm_Validate_Mismatch
 	ld a, (0x3243:16)
@@ -1169,13 +1169,13 @@ Rhythm_SaveState:
 	ld	(12892:16), a
 	ld	a, (12893:16)
 	ld	(12894:16), a
-	ld	a, (12895:16)
-	ld	(12896:16), a
-	ld	a, (12899:16)
-	ld	(12900:16), a
-	ld	a, (12897:16)
-	ld	(12898:16), a
-	ld	a, (12901:16)
+	ld	a, (ACC_REQ_FILLIN:16)
+	ld	(ACC_REQ_FILLIN_PREV:16), a
+	ld	a, (ACC_REQ_INTRO:16)
+	ld	(ACC_REQ_INTRO_PREV:16), a
+	ld	a, (ACC_REQ_ENDING:16)
+	ld	(ACC_REQ_ENDING_PREV:16), a
+	ld	a, (ACC_STYLE_ARRANGER_ON:16)
 	ld	(12902:16), a
 	ld	a, (12903:16)
 	ld	(12904:16), a
@@ -1183,7 +1183,7 @@ Rhythm_SaveState:
 	ld	(12906:16), a
 	ld	a, (12907:16)
 	ld	(12908:16), a
-	ld	a, (13268:16)
+	ld	a, (ACC_SECTION_BUTTONS_HELD:16)
 	ld	(12773:16), a
 	ld	a, (CURRENT_MODE:16)
 	ld	(12885:16), a
@@ -1205,106 +1205,106 @@ Rhythm_SaveState_StoreBits:
 	jr c, Rhythm_SaveState_CheckFx
 	and (0x328d:16), 0xc0
 Rhythm_SaveState_CheckFx:
-	ld a, (0x326f:16)
+	ld a, (ACC_PENDING_ENDING:16)
 	and a, 3
 	jr nz, Rhythm_SaveState_FxActive
 	bit 0, (0x3270:16)
 	jr z, Rhythm_SaveState_ClearFx
 Rhythm_SaveState_FxActive:
-	ld a, (0x328a:16)
+	ld a, (ACC_DEFER_ENDING_LANES:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckFx2
-	and (0x326f:16), 0xfc
+	and (ACC_PENDING_ENDING:16), 0xfc
 	and (0x3270:16), 0xfe
 	jr Rhythm_SaveState_CheckFx2
 Rhythm_SaveState_ClearFx:
-	and (0x328a:16), 0xc0	; anddi8 (0x3326), 192 (v7 patched)
+	and (ACC_DEFER_ENDING_LANES:16), 0xc0	; anddi8 (0x3326), 192 (v7 patched)
 
 
 
 Rhythm_SaveState_CheckFx2:
-	ld	a, (12909:16)
+	ld	a, (ACC_PENDING_FILLIN:16)
 	and	a, 3
 	jr	nz, Rhythm_SaveState_Fx2Active
-	ld	a, (12910:16)
+	ld	a, (ACC_PENDING_INTRO:16)
 	and	a, 13
 	jr	z, Rhythm_SaveState_ClearFx2
 Rhythm_SaveState_Fx2Active:
-	ld	a, (12939:16)
+	ld	a, (ACC_DEFER_SECTION_LANES:16)
 	and	a, 63
 	jr	nz, Rhythm_SaveState_CheckFillIn1Done
 	and	a, 252
 	and	a, 242
 	jr	Rhythm_SaveState_CheckFillIn1Done
 Rhythm_SaveState_ClearFx2:
-	and (0x328b:16), 0xc0	; anddi8 (0x3327), 192 (v7 patched)
+	and (ACC_DEFER_SECTION_LANES:16), 0xc0	; anddi8 (0x3327), 192 (v7 patched)
 
 
 
 Rhythm_SaveState_CheckFillIn1Done:
-	ld a, (0x3276:16)
+	ld a, (ACC_LANES_FILLIN1:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckFillIn2Done
 	ld a, (0x327d:16)
 	and a, 63
 	jr z, Rhythm_SaveState_CheckFillIn2Done
 	and (PANEL_STYLE+5:16), 0xbf
-	ld a, (0x3277:16)
+	ld a, (ACC_LANES_FILLIN2:16)
 	and a, 63
 	jr z, Rhythm_SaveState_FillIn1Done
 	or (PANEL_STYLE+5:16), 0x80
-	or (0x3260:16), 0x02
+	or (ACC_REQ_FILLIN_PREV:16), 0x02
 Rhythm_SaveState_FillIn1Done:
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3260:16), 0xfe
+	and (ACC_REQ_FILLIN_PREV:16), 0xfe
 	and (0x328f:16), 0xfd
-	ld a, (0x3277:16)
-	or a, (0x327a:16)
-	or a, (0x327b:16)
-	or a, (0x327c:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_INTRO2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckFillIn2Done
 	or (0x31e8:16), 0x10
 	or (0x31e8:16), 0x04
 Rhythm_SaveState_CheckFillIn2Done:
-	ld a, (0x3277:16)
+	ld a, (ACC_LANES_FILLIN2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckIntro1Done
 	ld a, (0x327e:16)
 	and a, 63
 	jr z, Rhythm_SaveState_CheckIntro1Done
 	and (PANEL_STYLE+5:16), 0x7f
-	ld a, (0x3276:16)
+	ld a, (ACC_LANES_FILLIN1:16)
 	and a, 63
 	jr z, Rhythm_SaveState_FillIn2Done
 	or (PANEL_STYLE+5:16), 0x40
-	or (0x3260:16), 0x01
+	or (ACC_REQ_FILLIN_PREV:16), 0x01
 Rhythm_SaveState_FillIn2Done:
 	ld e, 72:opc
 	ld d, 5:opc
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3260:16), 0xfd
+	and (ACC_REQ_FILLIN_PREV:16), 0xfd
 	and (0x328f:16), 0xfb
-	ld a, (0x3276:16)
-	or a, (0x327a:16)
-	or a, (0x327b:16)
-	or a, (0x327c:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	ld a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_INTRO2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckIntro1Done
 	or (0x31e8:16), 0x10
 	or (0x31e8:16), 0x04
 Rhythm_SaveState_CheckIntro1Done:
-	ld a, (0x327a:16)
+	ld a, (ACC_LANES_INTRO1:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckCountInDone
 	ld a, (0x3281:16)
@@ -1316,18 +1316,18 @@ Rhythm_SaveState_CheckIntro1Done:
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3264:16), 0xfe
-	ld a, (0x327b:16)
-	or a, (0x327c:16)
-	or a, (0x3276:16)
-	or a, (0x3277:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	and (ACC_REQ_INTRO_PREV:16), 0xfe
+	ld a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_INTRO2:16)
+	or a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckCountInDone
 	or (0x31e8:16), 0x08
 Rhythm_SaveState_CheckCountInDone:
-	ld a, (0x327b:16)
+	ld a, (ACC_LANES_COUNTIN:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckIntro2Done
 	ld a, (0x3282:16)
@@ -1339,18 +1339,18 @@ Rhythm_SaveState_CheckCountInDone:
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3264:16), 0xfd
-	ld a, (0x327a:16)
-	or a, (0x327c:16)
-	or a, (0x3276:16)
-	or a, (0x3277:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	and (ACC_REQ_INTRO_PREV:16), 0xfd
+	ld a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_INTRO2:16)
+	or a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckIntro2Done
 	or (0x31e8:16), 0x08
 Rhythm_SaveState_CheckIntro2Done:
-	ld a, (0x327c:16)
+	ld a, (ACC_LANES_INTRO2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckEnding1Done
 	ld a, (0x3283:16)
@@ -1362,18 +1362,18 @@ Rhythm_SaveState_CheckIntro2Done:
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3264:16), 0xfb
-	ld a, (0x327a:16)
-	or a, (0x327b:16)
-	or a, (0x3276:16)
-	or a, (0x3277:16)
-	or a, (0x3278:16)
-	or a, (0x3279:16)
+	and (ACC_REQ_INTRO_PREV:16), 0xfb
+	ld a, (ACC_LANES_INTRO1:16)
+	or a, (ACC_LANES_COUNTIN:16)
+	or a, (ACC_LANES_FILLIN1:16)
+	or a, (ACC_LANES_FILLIN2:16)
+	or a, (ACC_LANES_ENDING1:16)
+	or a, (ACC_LANES_ENDING2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckEnding1Done
 	or (0x31e8:16), 0x08
 Rhythm_SaveState_CheckEnding1Done:
-	ld a, (0x3278:16)
+	ld a, (ACC_LANES_ENDING1:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_CheckEnding2Done
 	ld a, (0x327f:16)
@@ -1385,10 +1385,10 @@ Rhythm_SaveState_CheckEnding1Done:
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3261:16), 0xfe
+	and (ACC_REQ_ENDING:16), 0xfe
 	or (0x31e8:16), 0x04
 Rhythm_SaveState_CheckEnding2Done:
-	ld a, (0x3279:16)
+	ld a, (ACC_LANES_ENDING2:16)
 	and a, 63
 	jr nz, Rhythm_SaveState_SaveLaneShadows
 	ld a, (0x3280:16)
@@ -1400,22 +1400,22 @@ Rhythm_SaveState_CheckEnding2Done:
 	ld a, 0:opc
 	ld w, 0:opc
 	calr Rhythm_QueuePartChangeEvent
-	and (0x3261:16), 0xfd
+	and (ACC_REQ_ENDING:16), 0xfd
 	or (0x31e8:16), 0x04
 Rhythm_SaveState_SaveLaneShadows:
-	ld	a, (12918:16)
+	ld	a, (ACC_LANES_FILLIN1:16)
 	ld	(12925:16), a
-	ld	a, (12919:16)
+	ld	a, (ACC_LANES_FILLIN2:16)
 	ld	(12926:16), a
-	ld	a, (12922:16)
+	ld	a, (ACC_LANES_INTRO1:16)
 	ld	(12929:16), a
-	ld	a, (12923:16)
+	ld	a, (ACC_LANES_COUNTIN:16)
 	ld	(12930:16), a
-	ld	a, (12924:16)
+	ld	a, (ACC_LANES_INTRO2:16)
 	ld	(12931:16), a
-	ld	a, (12920:16)
+	ld	a, (ACC_LANES_ENDING1:16)
 	ld	(12927:16), a
-	ld	a, (12921:16)
+	ld	a, (ACC_LANES_ENDING2:16)
 	ld	(12928:16), a
 	ld	a, (ACC_STYLE_NUMBER:16)
 	ld	(13012:16), a

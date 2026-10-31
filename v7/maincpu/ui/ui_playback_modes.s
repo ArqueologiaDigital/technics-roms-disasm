@@ -1236,7 +1236,7 @@ SQTR_DISPATCH_TABLE_2:
 	set	0, (0x8ec0:16)
 	ldw	wa, 0x60
 	call	CtrlPanel_SetIndicatorBit
-	ld	(0x21082:24), (0x2873)
+	ld	(0x21082:24), (TRACK_ASSIGN_EDIT_VALUE)
 	jr	CDlikeSwTtl_ReturnZero2
 SQTR_DISPATCH_TABLE_2_CASE1:
 	push xde

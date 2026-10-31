@@ -132,7 +132,28 @@
 	.equ ACC_SCAN_BAD_EVENT_COUNT,		0x32ee	; the same count for AccSeq_FourChannelScan's pattern scanner (AccSeq_Scanner_Unknown)
 	.equ ACC_PENDING_STYLE,			0x32f5	; style number sampled from PANEL_STYLE, applied by AccStyle_ApplyChanges; 0xff forces a reload (the bad-event watchdogs store it)
 	.equ ACC_PENDING_GROUP,			0x32f7	; group sampled from PANEL_STYLE+1 (low 3 bits used)
+	.equ ACC_REQ_FILLIN,			0x32fb	; FILL IN requests, bit 0 = FILL IN 1, bit 1 = FILL IN 2: PANEL_STYLE+5 bits 6 / 7, copied every tick (SeqTick_ReadControlState); AccSection_LatchFillInRequests latches a newly set bit
+	.equ ACC_REQ_FILLIN_PREV,		0x32fc	; ACC_REQ_FILLIN of the previous tick (Rhythm_SaveState); Rhythm_SaveState also moves bit 0 / 1 when one fill hands over to the other
+	.equ ACC_REQ_ENDING,			0x32fd	; ENDING requests, bit 0 = ENDING 1, bit 1 = ENDING 2: PANEL_STYLE+5 bits 4 / 5 (SeqTick_ReadControlState); AccSection_LatchEndingRequests latches a newly set bit
+	.equ ACC_REQ_ENDING_PREV,		0x32fe	; ACC_REQ_ENDING of the previous tick (Rhythm_SaveState)
+	.equ ACC_REQ_INTRO,			0x32ff	; intro requests, bit 0 = INTRO 1, bit 1 = COUNT IN, bit 2 = INTRO 2: PANEL_STYLE+5 bits 2 / 3 and PANEL_STYLE+6 bit 2 (SeqTick_ReadControlState); AccSection_LatchIntroRequests latches a newly set bit
+	.equ ACC_REQ_INTRO_PREV,		0x3300	; ACC_REQ_INTRO of the previous tick (Rhythm_SaveState)
+	.equ ACC_STYLE_ARRANGER_ON,		0x3301	; bit 0 = MUSIC STYLE ARRANGER on (PANEL_REC_98+3 bit 0, SeqTick_ReadControlState): then FILL IN 1 / 2 step the variation down / up (AccSection_SwitchNow, AccVoice_SetChordChangeFlags)
 	.equ ACC_VARIATION_REQUEST,		0x3305	; the VARIATION 1-4 request, 0..3 = (PANEL_STYLE+7 & 0x30) >> 4, copied every tick (SeqTick_ReadControlState); AccentVoice_DetectAndMarkChange flags a change for the bar line
+	.equ ACC_PENDING_FILLIN,		0x3309	; latched fill-in waiting to start, bit 0 = FILL IN 1, bit 1 = FILL IN 2 (AccSection_LatchFillInRequests sets it, AccSection_StartFillIn clears it)
+	.equ ACC_PENDING_INTRO,			0x330a	; latched intro waiting to start, bit 0 = INTRO 1, bit 2 = COUNT IN, bit 3 = INTRO 2 (AccSection_LatchIntroRequests sets it, AccSection_StartIntro clears it)
+	.equ ACC_PENDING_ENDING,		0x330b	; latched ending waiting to start, bit 0 = ENDING 1, bit 1 = ENDING 2 (AccSection_LatchEndingRequests sets it, AccSection_StartEnding clears it)
+	.equ ACC_VARIATION_CHANGE_PENDING,	0x330d	; bit 0: ACC_VARIATION_REQUEST moved to a variation not playing (AccentVoice_DetectAndMarkChange); the lanes raise the switch at their bar end and AccSection_SwitchAtBarLine loads it
+	.equ ACC_LANES_FILLIN1,			0x3312	; the lanes (bits 0-5) still playing FILL IN 1: AccSection_StartFillIn sets 0x3f, a lane clears its bit at the section's end marker, Rhythm_SaveState retires the section when the byte reaches 0
+	.equ ACC_LANES_FILLIN2,			0x3313	; the lanes still playing FILL IN 2 (as ACC_LANES_FILLIN1)
+	.equ ACC_LANES_ENDING1,			0x3314	; the lanes still playing ENDING 1 (AccSection_StartEnding sets 0x3f)
+	.equ ACC_LANES_ENDING2,			0x3315	; the lanes still playing ENDING 2
+	.equ ACC_LANES_INTRO1,			0x3316	; the lanes still playing INTRO 1 (AccSection_StartIntro sets 0x3f)
+	.equ ACC_LANES_COUNTIN,			0x3317	; the lanes still playing the COUNT IN
+	.equ ACC_LANES_INTRO2,			0x3318	; the lanes still playing INTRO 2
+	.equ ACC_DEFER_ENDING_LANES,		0x3326	; lanes whose pending ending (or style change) waits for their bar line: AccSection_DeferToBarUnlessFirstBeat sets bits 0-5 unless the engine beat is 0; AccSection_SwitchAtBarLine clears it
+	.equ ACC_DEFER_SECTION_LANES,		0x3327	; lanes whose pending intro / fill-in waits for their bar line: AccSection_DeferToBarIfLastBeat sets bits 0-5 when the press comes on the last beat; AccSection_SwitchAtBarLine clears it
+	.equ ACC_VARIATION_NEXT,		0x333a	; the variation index 0..3 to load: ACC_VARIATION_REQUEST & 3 (AccentVoice_DetectAndMarkChange), stepped -1 / +1 (clamped) by FILL IN 1 / 2 under the arranger (AccSection_SwitchNow)
 	.equ SNDARG_PART_SELECT,		0x338e	; the Sound Arranger part being edited, one-hot: 1 DRUM, 2 BASS, 4 / 8 / 16 ACCOMP1-3 (AcSndArgGridBoxProc sets it; cleared entering and leaving MD_SND_ARG); AccStyle_Process copies changed sounds while it is set
 	.equ SNDARG_LAST_SOUNDS,		0x3395	; [10 bytes] the sound (part record bytes +0, +1 & 0x7f) of DRUM, BASS, ACCOMP1-3 the Sound Arranger last saw (AccVoiceState_Snapshot); SndArg_Store*Sound compare with it
 	.equ ACC_PART_BIT,			0x33d4	; the accompaniment part being set up or played, one-hot: 1, 2, 4, 8, 16, 32 (AccVoice_SetupKbd1, _SetupKbd2, _SetupAcc1 .. _SetupAcc4); AccStyle_ReadParamOffset picks that part's field of a style record by it
@@ -143,6 +164,10 @@
 	.equ ACC_EVENT,				0x342d	; [6 bytes] the pattern event being decoded or built (docs/accompaniment-style-reader.md): +0 status, +1 position in the beat, +2 note, +3 velocity, +4/+5 duration; AccBuf_WriteNoteEvent copies all but +1 into a ring buffer, a zero duration as 1.  SqStep_ComputeStepAndGateTime keeps the step and gate lengths in +0..+3
 	.equ ACC_READ_OFFSET,			0x3449	; word: offset in ACC_READ_BLOCK
 	.equ ACC_READ_BLOCK,			0x346b	; word: block of the pattern read position (AccPlayback_SaveReadPosition saves it with ACC_READ_OFFSET)
+	.equ ACC_SECTION_BUTTONS_HELD,		0x3470	; section buttons held: bit 0 INTRO 2, 2 INTRO 1, 3 COUNT IN, 4 ENDING 1, 5 ENDING 2, 6 FILL IN 1, 7 FILL IN 2 (AccSection_Request* set them, AccSection_Release* clear them); a held FILL IN restarts the fill at an arranger step
+	.equ ACC_CTL_EVENT_VALUE,		0x347e	; new value of the style-record (0x48) field-5 / 6 switch event being handled (AccStyleCtl_OnSwitchEvent)
+	.equ ACC_CTL_EVENT_MASK,		0x347f	; its mask of changed bits (0xff read as 0); a button is pressed when its bit is set in both, released when set only here
+	.equ ACC_CTL_EVENT_FIELD,		0x348a	; its field of record 0x48: 5 or 6 (AccStyleCtl_OnSwitchEvent; AccPedal_RawHandler stores 3)
 	.equ STYLE_FREE_BLOCKS,			0x34d4	; word: free pattern blocks of the style image (190 when AccDemo_Init starts it; AccPatch_LinkNewPatternBlock takes one)
 	.equ STYLE_SECTION,			0x34d6	; the style section being played or edited, 0..29 (variations 0-11, intros / fill-ins / endings 12-29); its 0x60-byte record is RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * n (AccPatch_GetCurrentSlotAddr)
 	.equ STYLE_SECTION_LAST_MEASURE,	0x34d7	; last measure index of STYLE_SECTION (its record's +13, RhythmPatInit_LoadParams)
@@ -248,6 +273,7 @@
 	.equ SWBTWR_WRITE_INDEX,		0x90de	; word: write index of the parameter-event output buffer that MIDI_WriteCommandToBuffer, AssswbWr and the SwbtWr_* appenders fill (Audio_InitAllDefaults zeroes it)
 	.equ PART_RECORD_PTRS,			0x90f2	; address of the part-record pointer table: entry p = part p's RAM record, 0xffffffff = none (Audio_InitAllDefaults stores it; MIDI_WriteVoiceParam* index it)
 	.equ PROGRAM_CHANGE_PART,		0x90f7	; the part a program change or sound selection is for: 0..31, 16-20 from the accompaniment chains (AccPatch_UpdateChain_*), 72 = the rhythm part
+	.equ PANEL_EVENT_SOURCE,		0x90f8	; source of the switch event being applied: 127 = the front panel (Audio_InitAllDefaults and the queue drain store it), 0xff = the switch-write path, else the event's own byte (VoiceMode_ParamDispatch); the INTRO & ENDING buttons choose intro or ending by the transport only for 127
 	.equ EXTDATA_TLV_OFFSET,		0x912f	; byte offset in the panel record (tag MIDI_MSG_STATUS) the ExtData_* handlers change
 	.equ EXTDATA_VALUE,			0x9130	; the received value; with EXTDATA_MASK a two-byte value for ExtData_SetTempoIfChanged
 	.equ EXTDATA_MASK,			0x9131	; the bits of the record byte EXTDATA_VALUE may change (ExtData_SetTlvField)

@@ -2871,14 +2871,14 @@ MainTitleCtrl_OnMainLoopCount:
 	ld (TITLE_FLAGS_LATCHED:24), wa
 
 MainTitleCtrl_CountOtherPartLedDelay:
-	ld wa, (160942:24)
+	ld wa, (OTHER_PART_LED_DELAY:24)
 	cp wa, 0:i3
 	jr z, UIWidget_ReturnZero
 	dec 1, wa
-	ld (160942:24), wa
+	ld (OTHER_PART_LED_DELAY:24), wa
 	cp wa, 0:i3
 	jr nz, UIWidget_ReturnZero
-	cpw (160940:24), 0
+	cpw (OTHER_PART_LED_PENDING:24), 0
 	jr z, MainTitleCtrl_OtherPartLedOff
 	set 0, (36544:16)
 	jr MainTitleCtrl_RequestOtherPartLed

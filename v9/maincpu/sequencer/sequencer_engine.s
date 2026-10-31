@@ -2611,8 +2611,8 @@ SeqPlay_HandleEvent_SyncTiming:
 	ld a, (0x347a:16)
 	bit 2, a
 	jr z, SeqPlay_CheckSilentAndStop
-	ld e, (0x3314:16)
-	ld c, (0x3315:16)
+	ld e, (ACC_LANES_ENDING1:16)
+	ld c, (ACC_LANES_ENDING2:16)
 	ld a, (0x3328:16)
 	cp e, 0:i3
 	jr nz, SeqPlay_HandleEvent_ClearAccFlag

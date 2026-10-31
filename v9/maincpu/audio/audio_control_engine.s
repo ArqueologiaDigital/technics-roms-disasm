@@ -4054,7 +4054,7 @@ Audio_InitAllDefaults:
 	ld (0x91ad:16), 255
 	ld (0x91b5:16), 255
 	ld (0x91d2:16), 255
-	ld (0x90f8:16), 127
+	ld (PANEL_EVENT_SOURCE:16), 127
 	ld (0x8f63:16), 255
 	lda xwa, (PanelTlv_PayloadByTag:24)
 	ld (PART_RECORD_PTRS:16), xwa
@@ -4987,7 +4987,7 @@ FileIO_ProcessRemainingOps:
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff
-	ld (0x90f8:16), 127
+	ld (PANEL_EVENT_SOURCE:16), 127
 	ret
 
 ExtData_ToneParam_DispatchHandler:
@@ -9264,7 +9264,7 @@ TempoRingBuf_ProcessEntry:
 	call TempoRingBuf_WriteBytes
 	inc 6, xsp
 	ei 0
-	cp (0x90f8:16), 255
+	cp (PANEL_EVENT_SOURCE:16), 255
 	jr nz, TempoRingBuf_ClearEntryType
 	call AudioCtrl_SaveAllRegs
 	call SeqPlay_CheckAndStartPlayback
@@ -9485,7 +9485,7 @@ AudioSeq_ReadNextEvent:
 VoiceMode_ParamDispatch:
 	ld (xiy), 0xff
 	ld a, (0x91b6:16)
-	ld (0x90f8:16), a
+	ld (PANEL_EVENT_SOURCE:16), a
 	extz hl
 	ld l, (0x91b5:16)
 	and l, 0x70
@@ -9976,7 +9976,7 @@ VoiceMode3_EvType3:
 	ld	(MIDIRX_PART_EVENT+2:16), wa
 	call	MidiCC_ResetAllControllers
 	ldb_d8	a, (0x91b6)
-	stb_d8	(0x90f8), a
+	stb_d8	(PANEL_EVENT_SOURCE), a
 VoiceMode3_EvType3_Skip2:
 	extz	hl
 	ldb_d8	l, (MIDI_CUR_PART)
@@ -11065,7 +11065,7 @@ MidiStream_PartEventMapTable:
 ;   -- the only caller MidiCC_Handler_BitManipulation is CC function 18 <- CC83, taken only for part 25 with bit 2 of
 ;   (0xFD51) set, E from MidiCC_CC83_ValueMap (value 0/1/2 -> 0x00/0x80/0x40).
 MidiCC_RxCC83_SetParamBitsAndQueue:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	a, (PANEL_REC_98+11:16)
 	and	a, 63
 	ld	w, e
@@ -11077,7 +11077,7 @@ MidiCC_RxCC83_SetParamBitsAndQueue:
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 	ret
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -11088,7 +11088,7 @@ MidiCC_RxCC83_SetParamBitsAndQueue:
 MidiStream_ApplyPendingParams:
 	cp (CURRENT_MODE:16), 14
 	jr z, MidiStream_ApplyDone
-	ld (0x90f8:16), 255
+	ld (PANEL_EVENT_SOURCE:16), 255
 	and d, 0x7
 	jr z, MidiStream_ApplyDone
 	call MIDI_WriteVoiceParamCC
@@ -11114,7 +11114,7 @@ MidiStream_DispatchData:
 ;   Basis: callers + body -- reached only from MidiCC_Helper_ConditionalESetup, the on/off tail (value >= 0x40) shared
 ;   by CC64 Sustain, CC94 and CC91's target 0x60.
 MidiCC_Switch_WritePartParamAndQueue:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	call	MIDI_WriteVoiceParamDirect
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 	ret
@@ -11135,7 +11135,7 @@ MidiCC_SetPendingPartVolume:
 	ld	(xix+c), e
 	jr MidiCC_SetPendingPartVolume_Return
 MidiCC_SetPendingPartVolume_Skip:
-	ld (37112:16), 255
+	ld (PANEL_EVENT_SOURCE:16), 255
 	ld	(ANALOG_MAIN_VOLUME_PENDING:16), e
 	call	Audio_WriteBankSelectParams
 MidiCC_SetPendingPartVolume_Return:
@@ -11195,7 +11195,7 @@ MidiCC_SetPendingPartModulation:
 ;   queues the event on the SwbtWr queue and marks (0x90F8) = 0xFF. Basis: callers + body -- the only callers are the
 ;   CC6 and CC38 data-entry handlers.
 MidiCC_DataEntry_WritePartParamAndQueue:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (MIDIRX_PART_EVENT+2:16)
 	call	MIDI_WriteVoiceParamCC
@@ -11208,7 +11208,7 @@ MidiCC_DataEntry_WritePartParamAndQueue:
 ;   into the part block; marks (0x90F8) = 0xFF. Basis: callers + body -- only MidiCC_RxFunc08/09 call it (no
 ;   controller maps to those functions).
 MidiCC_RxFunc08_QueuePartParam:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	wa, (MIDIRX_PART_EVENT:16)
 	ld	(MIDI_MSG_STATUS:16), wa
 	ld	wa, (MIDIRX_PART_EVENT+2:16)
@@ -11221,7 +11221,7 @@ MidiCC_RxFunc08_QueuePartParam:
 ;   (0x9646) value/mask) on the SwbtWr event queue WITHOUT writing it into the part's parameter block; marks (0x90F8)
 ;   = 0xFF. Basis: callers + body -- CC functions 12-15 and Channel Pressure.
 MidiCC_QueuePartParam:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	wa, (MIDIRX_PART_EVENT:16)
 	ld	(MIDI_MSG_STATUS:16), wa
 	ld	wa, (MIDIRX_PART_EVENT+2:16)
@@ -11238,7 +11238,7 @@ MidiCC_QueuePartParam:
 MidiCC_ResetAllControllers:
 	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (MIDIRX_PART_EVENT+2:16)
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -11282,7 +11282,7 @@ MidiCC_ResetAllControllers:
 MidiCC_AllSoundOff_QueuePartParam:
 	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (MIDIRX_PART_EVENT+2:16)
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -11293,7 +11293,7 @@ MidiCC_AllSoundOff_QueuePartParam:
 ;   D (MIDI_WriteVoiceParamCC on (0x9644)/(0x9646)) and queues the same 4-byte event on the SwbtWr queue; marks
 ;   (0x90F8) = 0xFF. Basis: callers + body -- Pan, Chorus and Reverb receive handlers.
 MidiCC_WritePartParamAndQueue:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (MIDIRX_PART_EVENT+2:16)
 	call	MIDI_WriteVoiceParamCC
@@ -11323,7 +11323,7 @@ MidiStream_LoadVoiceLoop:
 	jr z, MidiStream_LoadVoiceNext
 	res 7, a
 	ld	(xiy+hl), a
-	ld (0x90f8:16), 255
+	ld (PANEL_EVENT_SOURCE:16), 255
 	ld (MIDI_MSG_STATUS:16), w
 	ld (MIDI_MSG_DATA1:16), l
 	ld (MIDI_MSG_DATA2:16), a
@@ -11345,7 +11345,7 @@ MidiStream_LoadBankSelect:
 	ld (xiy), a
 	ld (ANALOG_EXPRESSION_PEDAL_PENDING:16), a
 	call Audio_WriteBankSelectParams
-	ld (0x90f8:16), 255
+	ld (PANEL_EVENT_SOURCE:16), 255
 	ld (MIDI_MSG_STATUS:16), 176
 	ld (MIDI_MSG_DATA1:16), 1
 	ld (MIDI_MSG_DATA2:16), a
@@ -11366,7 +11366,7 @@ MidiStream_LoadMultiLoop:
 	jr z, MidiStream_LoadMultiNext
 	res 7, a
 	ld	(xiy+hl), wa
-	ld (0x90f8:16), 255
+	ld (PANEL_EVENT_SOURCE:16), 255
 	ld c, 0xb1:opc
 	ld (MIDI_MSG_STATUS:16), bc
 	ld (MIDI_MSG_DATA2:16), wa
@@ -11389,7 +11389,7 @@ MidiStream_LoadPedalLoop:
 	jr z, MidiStream_LoadPedalNext
 	res 7, a
 	ld	(xiy+hl), a
-	ld (0x90f8:16), 255
+	ld (PANEL_EVENT_SOURCE:16), 255
 	ld c, l
 	ld b, 0x3:opc
 	ld e, a
@@ -11745,7 +11745,7 @@ MidiRx_ApplyProgramChange_Skip9:
 	cp	c, 72
 	jr	z, MidiRx_ApplyProgramChange_Return4
 MidiRx_ApplyProgramChange_Skip10:
-	ld	(0x90f8:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	cp	c, 0:i3
 	jr	nz, MidiRx_ApplyProgramChange_Skip11
 	bit	3, (PANEL_MIDI:16)
