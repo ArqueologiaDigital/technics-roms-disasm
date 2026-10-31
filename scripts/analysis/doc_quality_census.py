@@ -128,6 +128,7 @@ RUN (repository root; reads sources only, needs no build)
   python3 scripts/analysis/doc_quality_census.py --json F.json       # also write every count as JSON
   python3 scripts/analysis/doc_quality_census.py --files v10         # per-file breakdown of one image
   python3 scripts/analysis/doc_quality_census.py --routines v10      # every routine: file:line, name, reason, header
+  python3 scripts/analysis/doc_quality_census.py --byte-runs v10     # every (d) run: file:line, lines, bytes, kind
   python3 scripts/analysis/doc_quality_census.py --compare           # vs the newest COMMITTED snapshot; exit 1 if
                                                                      # any debt count rose, or an image of the old
                                                                      # snapshot is missing from this run
@@ -490,6 +491,7 @@ def measure(key, cache, tracked, per_file=False):
     placeholders = set(equ_ph)
     ph_files = collections.Counter()
     rlist = []                      # (file, line, name, reason, has_header) for --routines
+    blist = []                      # (file, line, lines, bytes, after_*) for --byte-runs
     for p in parsed:
         u = unit_of[p.path]
         ks, st, L = kinds[p.path], p.stmts, p.lines
@@ -648,6 +650,7 @@ def measure(key, cache, tracked, per_file=False):
                 term = ks[pk] == "ins" and (MN_TERM if mn else TLCS_TERM).match(st[pk][3])
                 w = "byte_runs.after_terminator" if term else "byte_runs.after_fallthrough"
                 fc[w + ".runs"] += 1
+                blist.append((p.path, st[k][0] + 1, lines_, vals, w.split(".")[1]))
                 fc[w + ".lines"] += lines_
                 fc[w + ".bytes"] += vals
             k = j
@@ -684,6 +687,7 @@ def measure(key, cache, tracked, per_file=False):
     if per_file:
         res["per_file"] = {f: dict(c) for f, c in pf.items()}
         res["routine_list"] = rlist
+        res["byte_run_list"] = blist
     return res
 
 
@@ -804,6 +808,13 @@ def snapshot(res, outdir):
 def main():
     args = sys.argv[1:]
     rk = args[args.index("--routines") + 1] if "--routines" in args else None
+    bk = args[args.index("--byte-runs") + 1] if "--byte-runs" in args else None
+    if bk:
+        if bk not in IMAGES:
+            sys.exit("unknown image %s; one of %s" % (bk, " ".join(IMAGES)))
+        for f, ln, nl, nb, w in measure(bk, {}, git_tracked(), per_file=True)["byte_run_list"]:
+            print("%s:%d\t%d lines\t%d B\t%s" % (f, ln, nl, nb, w))
+        return
     pfk = args[args.index("--files") + 1] if "--files" in args else rk
     if pfk and pfk not in IMAGES:
         sys.exit("unknown image %s; one of %s" % (pfk, " ".join(IMAGES)))

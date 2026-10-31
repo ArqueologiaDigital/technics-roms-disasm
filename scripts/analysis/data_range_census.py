@@ -57,6 +57,7 @@ RUN
 """
 import argparse
 import bisect
+import hashlib
 import json
 import os
 import re
@@ -729,6 +730,34 @@ def clip_to_rom(a, b, img):
     return out
 
 
+def _mirror_fingerprint(dirs):
+    """sha1 over each tree's absolute path, every file name in it and every .s file's bytes (the
+    files mirror_tree copies; the others it links by absolute path, so their names suffice)."""
+    h = hashlib.sha1()
+    for d in dirs:
+        d = os.path.abspath(d)
+        h.update(d.encode() + b"\0")
+        for dp, dn, fn in os.walk(d):
+            dn.sort()
+            for f in sorted(fn):
+                p = os.path.join(dp, f)
+                h.update(os.path.relpath(p, d).encode("utf-8", "surrogateescape") + b"\0")
+                if f.endswith(".s"):
+                    with open(p, "rb") as fh:
+                        h.update(hashlib.sha1(fh.read()).digest())
+    return h.hexdigest()
+
+
+def _remove_inside(root, path):
+    """Remove path (file or tree) only if it lies strictly inside root."""
+    root, path = os.path.abspath(root), os.path.abspath(path)
+    assert os.path.commonpath([root, path]) == root and path != root, (root, path)
+    if os.path.isdir(path) and not os.path.islink(path):
+        shutil.rmtree(path)
+    elif os.path.lexists(path):
+        os.remove(path)
+
+
 def census_image(img, tmp, verbose=True):
     srcroot = os.path.join(ROOT, img["mirror"])
     rom = open(os.path.join(ROOT, img["rom"]), "rb").read()
@@ -736,19 +765,37 @@ def census_image(img, tmp, verbose=True):
         img["key"], len(rom), img["size"])
 
     xm = img.get("xmirrors", [])
+    # ⚠ A MIRROR IS REUSED ONLY WHILE IT IS STILL THE SOURCE.  The marks are line indices
+    # into the files the assembler read; Sources() reads the CURRENT repository files.  Until
+    # 2026-10-31 (lane ledger-fix) a mirror was reused whenever its directory existed, and the
+    # HD-AE5000 version trees' mirrors (fixed names) outlived edits to their sources: a mark
+    # pointed past the end of a shortened file (build_maps.py IndexError on hdae_v110) or at the
+    # wrong line of an edited one (labels read from the wrong line, targets counted as
+    # unlabelled).  The other images' names held str hash(), randomised per process, so they
+    # were never reused and one new mirror per run piled up in the scratch.  Now every mirror has
+    # a deterministic name and a fingerprint of the trees it copies (their absolute paths, every
+    # file name, every .s file's bytes); a mirror whose fingerprint differs is rebuilt.
     if xm:
         # the tree and its extra -I directories keep their repository layout under one root
         top = os.path.join(tmp, "mirror_" + img["key"])
         mdir = os.path.join(top, img["mirror"])
     else:
-        mdir = os.path.join(tmp, "mirror_" + os.path.basename(img["mirror"]) + "_"
-                            + str(abs(hash(img["mirror"])) % 10 ** 6))
-    if not os.path.isdir(mdir):
+        top = mdir = os.path.join(tmp, "mirror_" + img["mirror"].replace("/", "_"))
+    fp = _mirror_fingerprint([srcroot] + [os.path.join(ROOT, x) for x in xm])
+    fpfile = top + ".fingerprint"
+    stale = not (os.path.isdir(mdir) and os.path.exists(mdir + ".marks.json")
+                 and os.path.exists(fpfile) and open(fpfile).read() == fp)
+    if stale:
+        _remove_inside(tmp, top)
+        _remove_inside(tmp, mdir + ".marks.json")
+        _remove_inside(tmp, fpfile)
         marks = mirror_tree(srcroot, mdir)
         for x in xm:
             mirror_tree(os.path.join(ROOT, x), os.path.join(top, x), marks, srcroot)
         with open(mdir + ".marks.json", "w") as fh:
             json.dump(marks, fh)
+        with open(fpfile, "w") as fh:
+            fh.write(fp)
     else:
         marks = json.load(open(mdir + ".marks.json"))
 
