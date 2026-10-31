@@ -15,7 +15,7 @@ f = "hdae5000_filesystem.s"
 s = read(f)
 s, n = re.subn(rb"(HDAE5000_CopyToHDScreen:\n[^\n]*\n)\tpushw iz[^\n]*\n", rb"\1", s)
 assert n == 1, "push"
-s, n = re.subn(rb"\tjr z, \.Lfbs_evt_0006[^\n]*\n\tcp xbc, EVT_HDAE_SELECT_ALL[^\n]*\n(?:.*\n)*?(?=\t; Event 0x01EA0006)",
+s, n = re.subn(rb"\tjr z, \.Lfbs_evt_0006[^\n]*\n\tcp xbc, EVT_HDAE_SELECT_ALL[^\n]*\n(?:.*\n)*?(?=\t; MT_SelectOK \(0x01EA0006\))",
                b"\tjrl nz, .Lfbs_evt_done\n\n", s)
 assert n == 1, "select all"
 s, n = re.subn(rb"(\.Lfbs_evt_done:\n(?:\t;[^\n]*\n)?[^\n]*\n)\tpopw iz[^\n]*\n", rb"\1", s)

@@ -2113,7 +2113,7 @@ FDC_CmdSetDiskChanged__clear:
 ; FDC_CmdSenseDriveStatus - command 11: SENSE DRIVE STATUS (0x04)
 ; Reads ST3 and raises: bit 7 fault -> 0x32, bit 5 ready clear -> 0x31,
 ; bit 6 write-protect -> 0x2F.
-; Twin: maincpu FDC_INTERRUPT_HANDLER (fdc_routines.s:2122)
+; Twin: maincpu FDC_CmdSenseDriveStatus (storage/fdc_routines.s)
 ; -----------------------------------------------------------------------------
 FDC_CmdSenseDriveStatus:
 	pushw_erp 0xfa	; push QIZ - cmd 11 entry

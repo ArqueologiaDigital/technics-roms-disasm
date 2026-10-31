@@ -74,7 +74,7 @@ ToneGen_DispatchAndLinkBlock:
 	ret
 
 ; Stores the data-entry byte A for MIDI channel IY and combines it with the other half of the
-; pair: with (0xfac) = 6 the byte goes to the table at 0x10c3 and the partner comes from 0x10d3,
+; pair: with (SEQ_EVT_DATA1) = 6 the byte goes to the table at 0x10c3 and the partner comes from 0x10d3,
 ; otherwise the reverse.
 ;   Out: A = (0x10c3 byte) * 2 + bit 6 of the 0x10d3 byte.
 VoiceChannel_GetCombinedStatus:
@@ -867,12 +867,12 @@ SeqPlay_StartWithDisplay:
 	call SeqPlay_CheckStartConditions
 	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SeqPlay_SetFlagAndMode
-	and (PANEL_REC_91+3:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SeqPlay_QueueDisplayEvent
 
 SeqPlay_SetFlagAndMode:
-	or (PANEL_REC_91+3:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SeqPlay_QueueDisplayEvent:
@@ -937,7 +937,7 @@ SMF_FoundActiveChannel:
 	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld (4325:16), wa
 	ld (4324:16), 255
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SMF_InitChannelScan
 	ld (4324:16), 0
 
@@ -5213,7 +5213,7 @@ Fat_AllocateClusters_Skip4:
 	calr	SeqStep_FileBufferFinal
 	inc	8, xsp
 	ldw	hl, 15
-	jrl	SeqStep_FileSectorPopReturn_Epilogue2
+	jrl	NakaData_PerfStyleCode_Epilogue2
 Fat_AllocateClusters_Skip5:
 	ld	xwa, (xsp+20)
 	ld	xwa, (xwa+30)
@@ -5253,14 +5253,14 @@ Fat_AllocateClusters_Skip7:
 	ldw (xsp+10), 0
 Fat_AllocateClusters_Join:
 	cpw	(xsp+8), 0
-	jr	nz, SeqStep_FileSectorPopReturn_Skip8
+	jr	nz, Fat_AllocateClusters_Skip9
 	ld	xwa, (xsp+20)
 	ld	(xwa+42), iz
 	ld	(xsp+8), iz
 	ld	(xsp+10), iz
 	ld	xwa, (xsp+20)
 	ldw	(xwa+44), 1
-SeqStep_FileSectorPopReturn_Skip8:
+Fat_AllocateClusters_Skip9:
 	ld	wa, (xsp+26)
 	decm	1, (xsp+26)
 	cp	wa, 0:i3
@@ -5280,7 +5280,7 @@ Fat_AllocateClusters_Join2:
 	add	xwa, xhl
 	ld	(xsp+8), xwa
 	ld	xiz, xwa
-	jr	SeqStep_FileSectorPopReturn_Join
+	jr	NakaData_PerfStyleCode_Join4
 SeqStep_FileSectorPopReturn_Loop4:
 	pushw	34
 	ld	xwa, 0:i3
@@ -5294,12 +5294,12 @@ NakaData_PerfStyleCode:
 	or	xhl, xhl
 	jr	nz, NakaData_PerfStyleCode_Skip2
 	ldw	hl, 10
-	jr	SeqStep_FileSectorPopReturn_Epilogue2
+	jr	NakaData_PerfStyleCode_Epilogue2
 NakaData_PerfStyleCode_Skip2:
 	cpw	(xhl+20), 0
 	jr	z, NakaData_PerfStyleCode_Skip3
 	ld	hl, (xhl+20)
-	jr	SeqStep_FileSectorPopReturn_Epilogue2
+	jr	NakaData_PerfStyleCode_Epilogue2
 NakaData_PerfStyleCode_Skip3:
 	pushw	512
 	pushw	0
@@ -5308,7 +5308,7 @@ NakaData_PerfStyleCode_Skip3:
 	call	Memset
 	inc	8, xsp
 	inc	1, xiz
-SeqStep_FileSectorPopReturn_Join:
+NakaData_PerfStyleCode_Join4:
 	ld	xbc, (xsp+8)
 	ld	xwa, (xsp+12)
 	add	xbc, (xwa+32)
@@ -5316,7 +5316,7 @@ SeqStep_FileSectorPopReturn_Join:
 	jr	c, SeqStep_FileSectorPopReturn_Loop4
 NakaData_PerfStyleCode_Skip4:
 	ld	hl, 0:i3
-SeqStep_FileSectorPopReturn_Epilogue2:
+NakaData_PerfStyleCode_Epilogue2:
 	pop	xiz
 	lda	xsp, (xsp+12)
 	ret
@@ -5454,39 +5454,39 @@ Fat_LookupPath:
 	call	(xwa)
 	inc	4, xsp
 	cp	hl, 0:i3
-	jr	z, SeqByteBlock_PathNormalize_Skip5
+	jr	z, Fat_LookupPath_Skip22
 	lda	xwa, (0x2121a:24)
 	ld	(xsp+16), xwa
 	ld	iz, 0:i3
 	cp	iz, 10
-	jr	ge, SeqByteBlock_PathNormalize_Skip4
-SeqByteBlock_PathNormalize_Loop:
+	jr	ge, Fat_LookupPath_Skip21
+Fat_LookupPath_Loop8:
 	ld	xwa, (xsp+38)
 	ld	xbc, (xwa+18)
 	ld	xwa, (xsp+16)
 	cp	xbc, (xwa)
-	jr	nz, SeqByteBlock_PathNormalize_Skip3
+	jr	nz, Fat_LookupPath_Skip20
 	ld	xwa, (xsp+16)
 	ld	a, (xwa+22)
 	and	a, 3
 	cp	a, 3:i3
-	jr	nz, SeqByteBlock_PathNormalize_Skip2
+	jr	nz, Fat_LookupPath_Skip19
 	ld	hl, 6:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip2:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip19:
 	ld	xwa, (xsp+16)
 	andmi8	(xwa+22), 246
-SeqByteBlock_PathNormalize_Skip3:
+Fat_LookupPath_Skip20:
 	inc	1, iz
 	ld	xwa, 538
 	add	(xsp+16), xwa
 	cp	iz, 10
-	jr	lt, SeqByteBlock_PathNormalize_Loop
-SeqByteBlock_PathNormalize_Skip4:
+	jr	lt, Fat_LookupPath_Loop8
+Fat_LookupPath_Skip21:
 	ld	xwa, (xsp+38)
 	ld	xwa, (xwa+18)
 	setm	1, (xwa+2)
-SeqByteBlock_PathNormalize_Skip5:
+Fat_LookupPath_Skip22:
 	ld	xwa, (xsp+38)
 	ld	xwa, (xwa+18)
 	ld	xwa, (xwa+26)
@@ -5499,16 +5499,16 @@ SeqByteBlock_PathNormalize_Skip5:
 	inc	8, xsp
 	ld	(xsp+20), hl
 	cpw	(xsp+20), 65535
-	jr	nz, SeqByteBlock_PathNormalize_Skip34
+	jr	nz, Fat_LookupPath_Skip23
 	ldw	hl, 11
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip34:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip23:
 	cp	(xsp+22), 32
-	jrl	nz, SeqByteBlock_PathNormalize_Skip39
+	jrl	nz, Fat_LookupPath_Skip29
 	ld	xwa, (xsp+38)
 	bitm	6, (xwa+3)
-	jrl	z, SeqByteBlock_PathNormalize_Skip39
-SeqByteBlock_PathNormalize_Join13:
+	jrl	z, Fat_LookupPath_Skip29
+Fat_LookupPath_Join8:
 	ld	xwa, (xsp+4)
 	ld	bc, (xwa+44)
 	sll	bc, 5
@@ -5521,21 +5521,21 @@ SeqByteBlock_PathNormalize_Join13:
 	ld	xbc, 0:i3
 	ld	(xwa+26), xbc
 	ld	hl, 0:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Loop2:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Loop9:
 	ld	xwa, (xsp+16)
 	cpw	(xwa+20), 0
-	jr	z, SeqByteBlock_PathNormalize_Skip35
+	jr	z, Fat_LookupPath_Skip24
 	ld	xwa, (xsp+16)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip35:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip24:
 	ld	xwa, (xsp+16)
 	lda	xwa, (xwa+26)
 	ld	(xsp+8), xwa
 	ld	iz, 0:i3
-	jrl	SeqByteBlock_PathNormalize_Join14
-SeqByteBlock_PathNormalize_Loop3:
+	jrl	Fat_LookupPath_Join9
+Fat_LookupPath_Loop10:
 	ld	xwa, (xsp+8)
 	cp	(xwa), 0
 	jrl	z, Fat_LookupPath_Join
@@ -5547,7 +5547,7 @@ SeqByteBlock_PathNormalize_Loop3:
 	call	String_Compare
 	add	xsp, 10
 	cp	hl, 0:i3
-	jr	nz, SeqByteBlock_PathNormalize_Skip6
+	jr	nz, Fat_LookupPath_Skip25
 	ldto_berp c, 248
 	ld xwa, (xsp+38)
 	ld (xwa+51), c
@@ -5575,11 +5575,11 @@ SeqByteBlock_PathNormalize_Loop3:
 	ld	xwa, (xsp+16)
 	resm	3, (xwa+22)
 	cpw	(xsp+20), 0
-	jrl	z, SeqByteBlock_PathNormalize_Skip48
-SeqByteBlock_PathNormalize_Loop13:
+	jrl	z, Fat_LookupPath_Skip40
+Fat_LookupPath_Loop11:
 	ld	xwa, (xsp+38)
 	bitm	4, (xwa+64)
-	jrl	z, SeqByteBlock_PathNormalize_Skip45
+	jrl	z, Fat_LookupPath_Skip37
 	lda	xwa, (xsp+42)
 	push	xwa
 	lda	xwa, (xsp+26)
@@ -5588,41 +5588,41 @@ SeqByteBlock_PathNormalize_Loop13:
 	inc	8, xsp
 	ld	(xsp+20), hl
 	cpw	(xsp+20), 65535
-	jr	nz, SeqByteBlock_PathNormalize_Skip38
+	jr	nz, Fat_LookupPath_Skip28
 	ldw	hl, 11
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip6:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip25:
 	inc	1, iz
 	ld	xwa, 32
 	add	(xsp+8), xwa
-SeqByteBlock_PathNormalize_Join14:
+Fat_LookupPath_Join9:
 	ldw	wa, 16
 	cpw	(xsp+2), 16
-	jr	gt, SeqByteBlock_PathNormalize_Skip36
+	jr	gt, Fat_LookupPath_Skip26
 	ld	wa, (xsp+2)
-SeqByteBlock_PathNormalize_Skip36:
+Fat_LookupPath_Skip26:
 	cp	iz, wa
-	jrl	lt, SeqByteBlock_PathNormalize_Loop3
+	jrl	lt, Fat_LookupPath_Loop10
 	ld	xwa, (xsp+16)
 	resm	3, (xwa+22)
 	ld	xwa, (xsp+12)
 	ld	xbc, 1:i3
 	add	(xwa), xbc
 	submi16	(xsp+2), 16
-	jr	gt, SeqByteBlock_PathNormalize_Skip40
-SeqByteBlock_PathNormalize_Loop14:
+	jr	gt, Fat_LookupPath_Skip30
+Fat_LookupPath_Loop12:
 	cpw	(xsp+20), 0
-	jr	z, SeqByteBlock_PathNormalize_Skip37
+	jr	z, Fat_LookupPath_Skip27
 	ld	hl, 7:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip37:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip27:
 	ld	hl, 5:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip38:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip28:
 	ldw	(xsp+12), 1
 	cpw	(xsp+14), 0
-	jrl	nz, SeqByteBlock_PathNormalize_Skip44
-SeqByteBlock_PathNormalize_Skip39:
+	jrl	nz, Fat_LookupPath_Skip36
+Fat_LookupPath_Skip29:
 	ld	xwa, (xsp+38)
 	ldw (xwa+48), 0
 	ld	xwa, (xsp+38)
@@ -5636,8 +5636,8 @@ SeqByteBlock_PathNormalize_Skip39:
 	ld	wa, (xwa+44)
 	ld	(xsp+2), wa
 	cpw	(xsp+2), 0
-	jr	le, SeqByteBlock_PathNormalize_Loop14
-SeqByteBlock_PathNormalize_Skip40:
+	jr	le, Fat_LookupPath_Loop12
+Fat_LookupPath_Skip30:
 	pushw	8
 	ld	xwa, 0:i3
 	push	xwa
@@ -5651,11 +5651,11 @@ SeqByteBlock_PathNormalize_Skip40:
 	ld	(xsp+16), xhl
 	ld	xwa, (xsp+16)
 	or	xwa, xwa
-	jrl	nz, SeqByteBlock_PathNormalize_Loop2
+	jrl	nz, Fat_LookupPath_Loop9
 	ld	xwa, (xsp+38)
 	ld	hl, (xwa+6)
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Loop4:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Loop13:
 	pushw	8
 	ld	xwa, 0:i3
 	push	xwa
@@ -5669,18 +5669,18 @@ SeqByteBlock_PathNormalize_Loop4:
 	ld	(xsp+16), xhl
 	ld	xwa, (xsp+16)
 	or	xwa, xwa
-	jr	nz, SeqByteBlock_PathNormalize_Skip41
+	jr	nz, Fat_LookupPath_Skip31
 	ld	xwa, (xsp+38)
 	ld	hl, (xwa+6)
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip41:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip31:
 	ld	xwa, (xsp+16)
 	cpw	(xwa+20), 0
-	jr	z, SeqByteBlock_PathNormalize_Skip42
+	jr	z, Fat_LookupPath_Skip32
 	ld	xwa, (xsp+16)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip42:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip32:
 	ld	xwa, (xsp+16)
 	lda	xwa, (xwa+26)
 	ld	(xsp+8), xwa
@@ -5688,8 +5688,8 @@ SeqByteBlock_PathNormalize_Skip42:
 	ld	(xwa+51), 0
 	ld	xwa, (xsp+38)
 	cp	(xwa+51), 16
-	jrl	nc, SeqByteBlock_PathNormalize_Skip43
-SeqByteBlock_PathNormalize_Loop15:
+	jrl	nc, Fat_LookupPath_Skip35
+Fat_LookupPath_Loop14:
 	ld	xwa, (xsp+8)
 	cp	(xwa), 0
 	jr	z, Fat_LookupPath_Join
@@ -5701,7 +5701,7 @@ SeqByteBlock_PathNormalize_Loop15:
 	call	String_Compare
 	add	xsp, 10
 	cp	hl, 0:i3
-	jr	nz, SeqByteBlock_PathNormalize_Skip7
+	jr	nz, Fat_LookupPath_Skip34
 	ldw (xsp+12), 0
 	ld	xwa, (xsp+8)
 	push	xwa
@@ -5727,39 +5727,39 @@ SeqByteBlock_PathNormalize_Loop15:
 	ld	(xwa+34), xbc
 Fat_LookupPath_Loop:
 	cpw	(xsp+12), 0
-	jrl	z, SeqByteBlock_PathNormalize_Skip47
+	jrl	z, Fat_LookupPath_Skip39
 Fat_LookupPath_Join:
 	cpw	(xsp+20), 0
-	jrl	z, SeqByteBlock_PathNormalize_Skip46
+	jrl	z, Fat_LookupPath_Skip38
 	ld	hl, 7:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip7:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip34:
 	ld	xwa, (xsp+38)
 	incm8	1, (xwa+51)
 	ld	xwa, 32
 	add	(xsp+8), xwa
 	ld	xwa, (xsp+38)
 	cp	(xwa+51), 16
-	jrl	c, SeqByteBlock_PathNormalize_Loop15
-SeqByteBlock_PathNormalize_Skip43:
+	jrl	c, Fat_LookupPath_Loop14
+Fat_LookupPath_Skip35:
 	ld	xwa, (xsp+16)
 	resm	3, (xwa+22)
 	ld	xwa, (xsp+38)
 	ld	xbc, 1:i3
 	add	(xwa+26), xbc
 	incw	1, (xsp+2)
-SeqByteBlock_PathNormalize_Join15:
+Fat_LookupPath_Join10:
 	ld	xwa, (xsp+4)
 	ld	xwa, (xwa+32)
 	cp	(xsp+2), wa
-	jrl	lt, SeqByteBlock_PathNormalize_Loop4
+	jrl	lt, Fat_LookupPath_Loop13
 	pushm	(xsp+14)
 	ld	xwa, (xsp+40)
 	push	xwa
 	calr	Fat_ReadEntry
 	inc	6, xsp
 	ld	(xsp+14), hl
-SeqByteBlock_PathNormalize_Skip44:
+Fat_LookupPath_Skip36:
 	ld	xwa, (xsp+4)
 	ld	wa, (xwa+36)
 	dec	8, wa
@@ -5778,30 +5778,30 @@ SeqByteBlock_PathNormalize_Skip44:
 	ld	xwa, (xsp+38)
 	ld	(xwa+26), xbc
 	ldw (xsp+2), 0
-	jr	SeqByteBlock_PathNormalize_Join15
-SeqByteBlock_PathNormalize_Skip45:
+	jr	Fat_LookupPath_Join10
+Fat_LookupPath_Skip37:
 	ldw	hl, 12
-	jrl	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip46:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip38:
 	ld	hl, 5:i3
-	jr	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip47:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip39:
 	cpw	(xsp+20), 0
-	jrl	nz, SeqByteBlock_PathNormalize_Loop13
-SeqByteBlock_PathNormalize_Skip48:
+	jrl	nz, Fat_LookupPath_Loop11
+Fat_LookupPath_Skip40:
 	ld	xwa, (xsp+38)
 	bitm	6, (xwa+3)
-	jr	z, SeqByteBlock_PathNormalize_Skip51
+	jr	z, Fat_LookupPath_Skip43
 	ld	xwa, (xsp+38)
 	bitm	4, (xwa+64)
-	jr	nz, SeqByteBlock_PathNormalize_Skip49
+	jr	nz, Fat_LookupPath_Skip41
 	ldw	hl, 13
-	jr	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip49:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip41:
 	cpw	(xsp+14), 0
-	jr	nz, SeqByteBlock_PathNormalize_Skip50
-	jrl	SeqByteBlock_PathNormalize_Join13
-SeqByteBlock_PathNormalize_Loop5:
+	jr	nz, Fat_LookupPath_Skip42
+	jrl	Fat_LookupPath_Join8
+Fat_LookupPath_Loop16:
 	ld	xwa, (xsp+4)
 	ld	bc, (xwa+40)
 	extz	xbc
@@ -5813,33 +5813,33 @@ SeqByteBlock_PathNormalize_Loop5:
 	calr	Fat_ReadEntry
 	inc	6, xsp
 	ld	(xsp+14), hl
-SeqByteBlock_PathNormalize_Skip50:
+Fat_LookupPath_Skip42:
 	ld	xwa, (xsp+4)
 	ld	wa, (xwa+36)
 	dec	8, wa
 	cp	(xsp+14), wa
-	jr	ule, SeqByteBlock_PathNormalize_Loop5
+	jr	ule, Fat_LookupPath_Loop16
 	ld	hl, 0:i3
-	jr	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip51:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip43:
 	ld	xwa, (xsp+38)
 	ld	a, (xwa+64)
 	and	a, 24
-	jr	z, SeqByteBlock_PathNormalize_Skip52
+	jr	z, Fat_LookupPath_Skip44
 	ldw	hl, 13
-	jr	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip52:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip44:
 	ld	xwa, (xsp+38)
 	bitm	0, (xwa+64)
-	jr	z, SeqByteBlock_PathNormalize_Skip53
+	jr	z, Fat_LookupPath_Skip45
 	ld	xwa, (xsp+38)
 	bitm	1, (xwa+3)
-	jr	z, SeqByteBlock_PathNormalize_Skip53
+	jr	z, Fat_LookupPath_Skip45
 	ldw	hl, 14
-	jr	SeqByteBlock_PathNormalize_Epilogue
-SeqByteBlock_PathNormalize_Skip53:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip45:
 	ld	hl, 0:i3
-SeqByteBlock_PathNormalize_Epilogue:
+Fat_LookupPath_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+32)
 	ret
@@ -5892,27 +5892,27 @@ Fat_CreateDirEntry_Loop:
 	or	xwa, xwa
 	jr	nz, Fat_CreateDirEntry_Skip
 	ld	hl, (xiz+6)
-	jrl	SeqByteBlock_PathNormalize_Epilogue2
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip:
 	ld	xwa, (xsp+18)
 	cpw	(xwa+20), 0
 	jr	z, Fat_CreateDirEntry_Skip2
 	ld	xwa, (xsp+18)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_PathNormalize_Epilogue2
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip2:
 	ld	xwa, (xsp+18)
 	lda	xwa, (xwa+26)
 	ld	(xsp+10), xwa
 	ld	hl, 0:i3
 	jr	Fat_CreateDirEntry_Join
-SeqByteBlock_PathNormalize_Loop6:
+Fat_CreateDirEntry_Loop18:
 	ld	xwa, (xsp+10)
 	cp	(xwa), 229
 	jr	z, Fat_CreateDirEntry_Skip3
 	ld	xwa, (xsp+10)
 	cp	(xwa), 0
-	jr	nz, SeqByteBlock_PathNormalize_Skip8
+	jr	nz, Fat_CreateDirEntry_Skip49
 Fat_CreateDirEntry_Skip3:
 	ld	(xiz+51), l
 Fat_CreateDirEntry_Loop2:
@@ -5949,19 +5949,19 @@ Fat_CreateDirEntry_Loop2:
 	push	xwa
 	calr	SeqStep_FileBufferSetup
 	lda	xsp, (xsp+26)
-	jrl	SeqByteBlock_PathNormalize_Epilogue2
-SeqByteBlock_PathNormalize_Skip8:
+	jrl	Fat_CreateDirEntry_Epilogue5
+Fat_CreateDirEntry_Skip49:
 	inc	1, hl
 	ld	xwa, 32
 	add	(xsp+10), xwa
 Fat_CreateDirEntry_Join:
 	ldw	wa, 16
 	cpw	(xsp+4), 16
-	jr	gt, SeqByteBlock_PathNormalize_Skip9
+	jr	gt, Fat_CreateDirEntry_Skip50
 	ld	wa, (xsp+4)
-SeqByteBlock_PathNormalize_Skip9:
+Fat_CreateDirEntry_Skip50:
 	cp	hl, wa
-	jrl	lt, SeqByteBlock_PathNormalize_Loop6
+	jrl	lt, Fat_CreateDirEntry_Loop18
 	ld	xwa, (xsp+18)
 	andmi8	(xwa+22), 231
 	submi16	(xsp+4), 16
@@ -5972,7 +5972,7 @@ SeqByteBlock_PathNormalize_Skip9:
 	jrl	ge, Fat_CreateDirEntry_Loop
 Fat_CreateDirEntry_Skip4:
 	ldw	hl, 16
-	jrl	SeqByteBlock_PathNormalize_Epilogue2
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip5:
 	ld	wa, (xiz+69)
 	ld	(xiz+48), wa
@@ -5983,8 +5983,8 @@ Fat_CreateDirEntry_Skip5:
 	calr	FatPath_Next83Component
 	inc	8, xsp
 	cp	hl, 0:i3
-	jrl	z, SeqByteBlock_PathNormalize_Join2
-SeqByteBlock_PathNormalize_Loop7:
+	jrl	z, Fat_CreateDirEntry_Join13
+Fat_CreateDirEntry_Loop20:
 	lda	xwa, (xsp+42)
 	push	xwa
 	lda	xwa, (xsp+26)
@@ -5992,9 +5992,9 @@ SeqByteBlock_PathNormalize_Loop7:
 	calr	FatPath_Next83Component
 	inc	8, xsp
 	cp	hl, 0:i3
-	jr	nz, SeqByteBlock_PathNormalize_Loop7
-	jrl	SeqByteBlock_PathNormalize_Join2
-SeqByteBlock_PathNormalize_Loop8:
+	jr	nz, Fat_CreateDirEntry_Loop20
+	jrl	Fat_CreateDirEntry_Join13
+Fat_CreateDirEntry_Loop21:
 	ld	xwa, (xsp+6)
 	lda	xbc, (xwa+32)
 	ld	wa, (xiz+42)
@@ -6008,7 +6008,7 @@ SeqByteBlock_PathNormalize_Loop8:
 	ld	(xiz+26), xwa
 	ldw	(xsp+4), 0
 	jr	Fat_CreateDirEntry_Join2
-SeqByteBlock_PathNormalize_Loop9:
+Fat_CreateDirEntry_Loop22:
 	pushw	24
 	ld	xwa, 0:i3
 	push	xwa
@@ -6022,14 +6022,14 @@ SeqByteBlock_PathNormalize_Loop9:
 	or	xwa, xwa
 	jr	nz, Fat_CreateDirEntry_Skip6
 	ld	hl, (xiz+6)
-	jrl	SeqByteBlock_PathNormalize_Epilogue2
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip6:
 	ld	xwa, (xsp+18)
 	cpw	(xwa+20), 0
 	jr	z, Fat_CreateDirEntry_Skip7
 	ld	xwa, (xsp+18)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_PathNormalize_Epilogue2
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip7:
 	ld	xwa, (xsp+18)
 	lda	xwa, (xwa+26)
@@ -6059,7 +6059,7 @@ Fat_CreateDirEntry_Join2:
 	ld	xwa, (xsp+6)
 	ld	xwa, (xwa+32)
 	cp	(xsp+4), wa
-	jrl	lt, SeqByteBlock_PathNormalize_Loop9
+	jrl	lt, Fat_CreateDirEntry_Loop22
 	ld	wa, (xiz+42)
 	ld	(xsp+20), wa
 	pushm	(xiz+42)
@@ -6067,12 +6067,12 @@ Fat_CreateDirEntry_Join2:
 	calr	Fat_ReadEntry
 	inc	6, xsp
 	ld	(xiz+42), hl
-SeqByteBlock_PathNormalize_Join2:
+Fat_CreateDirEntry_Join13:
 	ld	xwa, (xsp+6)
 	ld	wa, (xwa+36)
 	dec	8, wa
 	cp	(xiz+42), wa
-	jrl	ule, SeqByteBlock_PathNormalize_Loop8
+	jrl	ule, Fat_CreateDirEntry_Loop21
 	ld	(xiz+51), 0
 	ld	wa, (xsp+20)
 	ld	(xiz+42), wa
@@ -6083,8 +6083,8 @@ SeqByteBlock_PathNormalize_Join2:
 	inc	8, xsp
 	ld	wa, hl
 	cp	wa, 0:i3
-	jrl	z, SeqByteBlock_PathNormalize_Loop8
-SeqByteBlock_PathNormalize_Epilogue2:
+	jrl	z, Fat_CreateDirEntry_Loop21
+Fat_CreateDirEntry_Epilogue5:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	ret
@@ -6116,10 +6116,10 @@ Fat_WriteDirEntry:
 	ld	(xsp+4), xhl
 	ld	xwa, (xsp+4)
 	or	xwa, xwa
-	jr	nz, SeqByteBlock_PathNormalize_Skip10
+	jr	nz, Fat_WriteDirEntry_Skip
 	ldw	hl, 10
-	jr	SeqByteBlock_PathNormalize_Epilogue3
-SeqByteBlock_PathNormalize_Skip10:
+	jr	Fat_WriteDirEntry_Epilogue
+Fat_WriteDirEntry_Skip:
 	ld	a, (xiz+51)
 	extz	wa
 	sla	wa, 5
@@ -6135,7 +6135,7 @@ SeqByteBlock_PathNormalize_Skip10:
 	ld	xwa, (xsp+4)
 	andmi8	(xwa+22), 231
 	ld	hl, 0:i3
-SeqByteBlock_PathNormalize_Epilogue3:
+Fat_WriteDirEntry_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
@@ -6149,10 +6149,10 @@ Fat_FreeFileClusters:
 	ld	xwa, (xsp+8)
 	ld	iz, (xwa+69)
 	cp	iz, 0:i3
-	jr	nz, SeqByteBlock_PathNormalize_Join3
+	jr	nz, Fat_FreeFileClusters_Join
 	ld qiz, 0
-	jr	SeqByteBlock_PathNormalize_Join3
-SeqByteBlock_PathNormalize_Loop10:
+	jr	Fat_FreeFileClusters_Join
+Fat_FreeFileClusters_Loop:
 	pushw	iz
 	ld	xwa, (xsp+10)
 	push	xwa
@@ -6165,16 +6165,16 @@ SeqByteBlock_PathNormalize_Loop10:
 	calr	SeqStep_FileSectorPopReturn
 	lda	xsp, (xsp+14)
 	ld iz, qiz
-SeqByteBlock_PathNormalize_Join3:
+Fat_FreeFileClusters_Join:
 	cp iz, 0:i3
-	jr	z, SeqByteBlock_PathNormalize_Skip11
+	jr	z, Fat_FreeFileClusters_Skip2
 	ld	xwa, (xsp+8)
 	ld	xwa, (xwa+30)
 	ld	wa, (xwa+36)
 	dec	8, wa
 	cp	iz, wa
-	jr	ule, SeqByteBlock_PathNormalize_Loop10
-SeqByteBlock_PathNormalize_Skip11:
+	jr	ule, Fat_FreeFileClusters_Loop
+Fat_FreeFileClusters_Skip2:
 	ld	xwa, (xsp+8)
 	bitm	5, (xwa+3)
 	jr	nz, Fat_FreeFileClusters_Epilogue
@@ -6221,7 +6221,7 @@ Fat_MountVolume:
 	or	xwa, xwa
 	jr	nz, Fat_MountVolume_Skip
 	ld	hl, 3:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue4
+	jrl	Fat_MountVolume_Epilogue
 Fat_MountVolume_Skip:
 	ld	xwa, (xsp+8)
 	ld	xbc, (xsp+42)
@@ -6250,7 +6250,7 @@ Fat_MountVolume_Loop:
 	inc	8, xsp
 	ld	iz, hl
 	cp	iz, 0:i3
-	jr	nz, SeqByteBlock_PathNormalize_Loop11
+	jr	nz, Fat_MountVolume_Loop2
 	ld	xwa, (xsp+8)
 	cp	(xwa+536), 85
 	jr	nz, SeqByteBlock_PathNormalize_Skip12
@@ -6259,13 +6259,13 @@ Fat_MountVolume_Loop:
 	jr	z, SeqByteBlock_PathNormalize_Skip13
 SeqByteBlock_PathNormalize_Skip12:
 	ldw	iz, 22
-SeqByteBlock_PathNormalize_Loop11:
+Fat_MountVolume_Loop2:
 	ld	xwa, (xsp+8)
 	push	xwa
 	call	SeqStep_FreeMemory
 	inc	4, xsp
 	ld	hl, iz
-	jrl	SeqByteBlock_PathNormalize_Epilogue4
+	jrl	Fat_MountVolume_Epilogue
 SeqByteBlock_PathNormalize_Skip13:
 	ld	xwa, (xsp+8)
 	lda	xwa, (xwa+472)
@@ -6311,7 +6311,7 @@ SeqByteBlock_PathNormalize_Skip13:
 	cp	(xwa+4), 5
 	jr	z, Fat_MountVolume_Skip2
 	ldw	iz, 23
-	jrl	SeqByteBlock_PathNormalize_Loop11
+	jrl	Fat_MountVolume_Loop2
 Fat_MountVolume_Skip2:
 	ld	xwa, (xsp+12)
 	ld	a, (xwa+2)
@@ -6359,7 +6359,7 @@ Fat_MountVolume_Skip3:
 	call	(xwa)
 	inc	8, xsp
 	ld	iz, hl
-	jr	SeqByteBlock_PathNormalize_Join4
+	jr	Fat_MountVolume_Join2
 Fat_MountVolume_Skip4:
 	ld	xwa, (xsp+8)
 	lda	xwa, (xwa+26)
@@ -6376,9 +6376,9 @@ Fat_MountVolume_Skip4:
 	call	(xwa)
 	lda	xsp, (xsp+16)
 	ld	iz, hl
-SeqByteBlock_PathNormalize_Join4:
+Fat_MountVolume_Join2:
 	cp	iz, 9
-	jr	nz, SeqByteBlock_PathNormalize_Skip15
+	jr	nz, Fat_MountVolume_Skip13
 	pushw	538
 	call	SeqStep_MemAllocWrapper
 	ld	xiz, xhl
@@ -6387,10 +6387,10 @@ SeqByteBlock_PathNormalize_Join4:
 	call	SeqStep_FreeMemory
 	inc	6, xsp
 	or	xiz, xiz
-	jr	nz, SeqByteBlock_PathNormalize_Skip14
+	jr	nz, Fat_MountVolume_Skip12
 	ld	hl, 3:i3
-	jrl	SeqByteBlock_PathNormalize_Epilogue4
-SeqByteBlock_PathNormalize_Skip14:
+	jrl	Fat_MountVolume_Epilogue
+Fat_MountVolume_Skip12:
 	ld	(xsp+8), xiz
 	ld	xwa, xiz
 	ld	xbc, (xsp+42)
@@ -6413,9 +6413,9 @@ SeqByteBlock_PathNormalize_Skip14:
 	call	(xwa)
 	lda	xsp, (xsp+16)
 	ld	iz, hl
-SeqByteBlock_PathNormalize_Skip15:
+Fat_MountVolume_Skip13:
 	cp	iz, 6:i3
-	jr	nz, SeqByteBlock_PathNormalize_Join5
+	jr	nz, Fat_MountVolume_Join3
 	ld	xwa, (xsp+42)
 	bitm	7, (xwa+4)
 	jr	z, Fat_MountVolume_Skip5
@@ -6429,7 +6429,7 @@ SeqByteBlock_PathNormalize_Skip15:
 	call	(xwa)
 	inc	8, xsp
 	ld	iz, hl
-	jr	SeqByteBlock_PathNormalize_Join5
+	jr	Fat_MountVolume_Join3
 Fat_MountVolume_Skip5:
 	ld	xwa, (xsp+8)
 	lda	xwa, (xwa+26)
@@ -6446,9 +6446,9 @@ Fat_MountVolume_Skip5:
 	call	(xwa)
 	lda	xsp, (xsp+16)
 	ld	iz, hl
-SeqByteBlock_PathNormalize_Join5:
+Fat_MountVolume_Join3:
 	cp	iz, 0:i3
-	jrl	nz, SeqByteBlock_PathNormalize_Loop11
+	jrl	nz, Fat_MountVolume_Loop2
 	ld	xwa, (xsp+8)
 	lda	xwa, (xwa+37)
 	ld	(xsp+34), xwa
@@ -6475,7 +6475,7 @@ SeqByteBlock_PathNormalize_Join5:
 	jr	nz, Fat_MountVolume_Skip7
 Fat_MountVolume_Skip6:
 	ldw	iz, 40
-	jrl	SeqByteBlock_PathNormalize_Loop11
+	jrl	Fat_MountVolume_Loop2
 Fat_MountVolume_Skip7:
 	lda	xwa, (xsp+34)
 	push	xwa
@@ -6628,7 +6628,7 @@ Fat_MountVolume_Skip8:
 	call	SeqStep_FreeMemory
 	inc	4, xsp
 	ld	hl, 0:i3
-SeqByteBlock_PathNormalize_Epilogue4:
+Fat_MountVolume_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+34)
 	ret
@@ -9347,7 +9347,7 @@ FdcOp_Epilogue20:
 GetMediaType:
 	lda xsp, (xsp - 20)
 	pushw_erp 0xfa
-	call Reset_Floppy_Disk_Controller
+	call FDC_PulseResetLine
 	pushw 0x400
 	call Malloc
 	inc 2, xsp
@@ -10922,12 +10922,12 @@ Rhythm_LookupTempoVelocity_Wrap:
 	pop xiz
 	ret
 
-; Calls AccStyle_LookupVelocityTable with XIZ preserved.
+; Calls AccStyle_LookupPanelRhythm with XIZ preserved.
 ; Called from SndParam_FetchCheckRhythm, SndParamResolve_CheckRhythm, SndBuf_WriteParamEntries_Skip,
 ; MainGetRhythmName, RhythmROM_PatternDisp_Check91, BitMapOut_ApplyPatch_Return and 1 more site.
 Rhythm_DispatchNote_Finalize:
 	push xiz
-	call AccStyle_LookupVelocityTable
+	call AccStyle_LookupPanelRhythm
 	pop xiz
 	ret
 
@@ -11025,7 +11025,7 @@ SeqCtl_CheckBit3:
 
 SeqTick_ReadControlState_StoreIntroBits:
 	ld (ACC_REQ_INTRO:16), a
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	and a, 0x1
 	ld (ACC_STYLE_ARRANGER_ON:16), a
 	ld a, (PANEL_STYLE+4:16)
@@ -11038,7 +11038,7 @@ SeqTick_ReadControlState_StoreIntroBits:
 	srl a, 4
 	ld (ACC_VARIATION_REQUEST:16), a
 	xor a, a
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SeqCtl_StoreKeyMask
 	or a, 0x3f
 

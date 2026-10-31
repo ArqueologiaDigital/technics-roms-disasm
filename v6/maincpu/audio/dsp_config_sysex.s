@@ -21,7 +21,7 @@ SysEx_ApplyVoiceParam_4B_128_ReadSub:
 	ldfr_werp	HL, 0xfa
 	cpiw_erp	0xfa, 0
 	jr	ge, SysEx_ApplyVoiceParam_4B_128_IterateSlots
-	lda	xbc, (0xfc8e:16)
+	lda	xbc, (PANEL_DIGITAL_REVERB:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_4B_128_SkipRestore
 	ld	a, (xsp + 4)
@@ -55,7 +55,7 @@ SysEx_ApplyVoiceParam_4B_128_SlotNext:
 	cpw_erp	IZ, 0xfa
 	jr	lt, SysEx_ApplyVoiceParam_4B_128_SlotLoop
 SysEx_ApplyVoiceParam_4B_128_RestoreSlotId:
-	lda	xbc, (0xfc8e:16)
+	lda	xbc, (PANEL_DIGITAL_REVERB:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_4B_128_Return
 	ld	a, (xsp + 4)
@@ -69,7 +69,7 @@ SysEx_ApplyVoiceParam_49:
 	push	xiz
 	ld	(xsp + 6), xbc
 	ld	(xsp + 10), a
-	lda	xwa, (0xfc74:16)
+	lda	xwa, (PANEL_DSP_EFFECT:16)
 	sub	xwa, 0xf980
 	add	(xsp + 6), xwa
 	ld	a, (xsp + 10)
@@ -82,7 +82,7 @@ SysEx_ApplyVoiceParam_49:
 	call	DSPCfg_WriteParamSimple
 	cp	hl, 0:i3
 	jr	lt, SysEx_ApplyVoiceParam_49_Return
-	lda	xwa, (0xfc74:16)
+	lda	xwa, (PANEL_DSP_EFFECT:16)
 	cp	xwa, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_49_ReadSubParams
 	ld	a, (xwa)
@@ -90,14 +90,14 @@ SysEx_ApplyVoiceParam_49:
 	ld	a, (xsp + 10)
 	extz	wa
 	calr	SysEx_ClampVoiceIndex8_49
-	ld	(0xfc74:16), l
+	ld	(PANEL_DSP_EFFECT:16), l
 SysEx_ApplyVoiceParam_49_ReadSubParams:
 	ld	xwa, 0x4904
 	call	DSPCfg_ReadParam_Map0
 	ldfr_werp	HL, 0xfa
 	cpiw_erp	0xfa, 0
 	jr	ge, SysEx_ApplyVoiceParam_49_IterateSlots
-	lda	xbc, (0xfc74:16)
+	lda	xbc, (PANEL_DSP_EFFECT:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_49_SkipRestore
 	ld	a, (xsp + 4)
@@ -127,7 +127,7 @@ SysEx_ApplyVoiceParam_49_SlotNext:
 	cpw_erp	IZ, 0xfa
 	jr	lt, SysEx_ApplyVoiceParam_49_SlotLoop
 SysEx_ApplyVoiceParam_49_RestoreSlotId:
-	lda	xbc, (0xfc74:16)
+	lda	xbc, (PANEL_DSP_EFFECT:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_49_Return
 	ld	a, (xsp + 4)
@@ -141,14 +141,14 @@ SysEx_ApplyVoiceParam_49_128:
 	push	xiz
 	ld	(xsp + 6), xbc
 	ld	(xsp + 10), a
-	lda	xwa, (0xfc74:16)
+	lda	xwa, (PANEL_DSP_EFFECT:16)
 	sub	xwa, 0xf980
 	add	(xsp + 6), xwa
 	ld	a, (xsp + 10)
 	extz	wa
 	calr	SysEx_ClampVoiceIndex128_49
 	ld	(xsp + 10), l
-	lda	xbc, (0xfc74:16)
+	lda	xbc, (PANEL_DSP_EFFECT:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_49_128_ReadSub
 	ld	a, (xbc)
@@ -162,7 +162,7 @@ SysEx_ApplyVoiceParam_49_128_ReadSub:
 	ldfr_werp	HL, 0xfa
 	cpiw_erp	0xfa, 0
 	jr	ge, SysEx_ApplyVoiceParam_49_128_IterateSlots
-	lda	xbc, (0xfc74:16)
+	lda	xbc, (PANEL_DSP_EFFECT:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_49_128_SkipRestore
 	ld	a, (xsp + 4)
@@ -196,7 +196,7 @@ SysEx_ApplyVoiceParam_49_128_SlotNext:
 	cpw_erp	IZ, 0xfa
 	jr	lt, SysEx_ApplyVoiceParam_49_128_SlotLoop
 SysEx_ApplyVoiceParam_49_128_RestoreSlotId:
-	lda	xbc, (0xfc74:16)
+	lda	xbc, (PANEL_DSP_EFFECT:16)
 	cp	xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_49_128_Return
 	ld	a, (xsp + 4)
@@ -629,7 +629,7 @@ VoiceParam_RestoreReverbChorus_Loop:
 	inc	4, xsp
 	ret
 BitMapOut_ComputeRegionDelta:
-	lda	xwa, (0xfda2:16)
+	lda	xwa, (PANEL_PMEM_SETTINGS+12:16)
 	lda	xbc, (0xf980:16)
 	sub	xwa, xbc
 	pushw	wa
@@ -642,7 +642,7 @@ BitMapOut_ComputeRegionDelta:
 BitMapOut_PrepareAndRender:
 	pushw	iz
 	ld	iz, wa
-	call	Audio_ConfigureDSP
+	call	Fade_Cancel
 	ld	wa, iz
 	calr	BitMapOut_RenderDisplay
 	popw	iz
@@ -653,13 +653,13 @@ BitMapOut_RenderDisplay:
 	ld	wa, 2:i3
 	call	BitMapOut_GetRenderMode_CheckBit3
 	call	PanelMemory_BackupLivePanel
-	lda	xbc, (0xfc5a:16)
+	lda	xbc, (PANEL_STYLE:16)
 	ld	a, (xbc + 8)
 	ldfr_berp	A, 0xf9
 	ld	a, (xbc + 9)
 	ldfr_berp	A, 0xfb
 	ldmi16	(xsp + 4), 0x8c82
-	lda	xbc, (0xfd96:16)
+	lda	xbc, (PANEL_PMEM_SETTINGS:16)
 	ld	a, (xbc + 1)
 	ld	(xsp + 6), a
 	ld	a, (xbc + 11)
@@ -716,7 +716,7 @@ BitMapOut_CopyRegion_Done:
 BitMapOut_SkipRestore:
 	calr	VoiceParam_RestoreReverbChorus
 BitMapOut_MergeOutputFields:
-	lda	xix, (0xfd96:16)
+	lda	xix, (PANEL_PMEM_SETTINGS:16)
 	lda	xbc, (xix + 1)
 	lda	xhl, (0xf980:16)
 	ld	xwa, xbc
@@ -744,7 +744,7 @@ BitMapOut_MergeOutputFields:
 	ldfr_berp	A, 0xe2
 	orb_erp	W, 0xe2
 	ld	(xbc), w
-	lda	xbc, (0xfc5a:16)
+	lda	xbc, (PANEL_STYLE:16)
 	ld	a, (xbc + 5)
 	ldfr_berp	A, 0xf8
 	ld	a, (xbc + 6)
@@ -774,7 +774,7 @@ BitMapOut_MergeOutputFields:
 	call	AddswbWr
 	ld	w, (xsp + 6)
 	and	w, 0x80
-	lda	xbc, (0xfd97:16)
+	lda	xbc, (PANEL_PMEM_SETTINGS+1:16)
 	ld	a, (xbc)
 	res	7, a
 	ld	(xbc), a
@@ -786,7 +786,7 @@ BitMapOut_MergeOutputFields:
 	ldw	wa, 0x98
 	ld	bc, 1:i3
 	call	AddswbWr
-	ld	e, (0xfda1:16)
+	ld	e, (PANEL_PMEM_SETTINGS+11:16)
 	ld	c, e
 	and	c, 0xc0
 	ld	a, (xsp + 8)
@@ -798,7 +798,7 @@ BitMapOut_MergeOutputFields:
 	ldw	wa, 0x98
 	ldw	bc, 0xb
 	call	AddswbWr
-	lda	xbc, (0xfc5a:16)
+	lda	xbc, (PANEL_STYLE:16)
 	ldto_berp	A, 0xf8
 	and	a, 0x3f
 	ld	(xbc + 5), a
@@ -1130,17 +1130,20 @@ MIDI_BroadcastCC_CommLoop:
 	popw_erp	0xfa
 	inc	8, xsp
 	ret
-CompIface_SendActiveSensing:
+; CompIface_SendPortTypeByte: Sends the computer-interface port-type byte through sendCOMM channel 4 (the sub CPU's TO
+;   HOST port, SC1): CompIface_PortByte_F5 for COM SELECT = MAC or PC1, CompIface_PortByte_F4 for PC2, nothing for
+;   MIDI. Called once, by SC0_InitSerialPort; it sends no active sensing (0xFE). Basis: caller + body + data.
+CompIface_SendPortTypeByte:
 	ld	a, (COM_SELECT:16)
 	cp	a, 0:i3	; MIDI
 	ret	z
 	cp	a, 3:i3	;  PC2
-	jr	z, CompIface_SendActiveSensing_PC2
+	jr	z, CompIface_SendPortTypeByte_PC2
 	cp	a, 2:i3	;  PC1
-	jr	z, CompIface_SendActiveSensing_PC1MAC
+	jr	z, CompIface_SendPortTypeByte_PC1Mac
 	cp	a, 1:i3	;  MAC
 	ret	nz
-CompIface_SendActiveSensing_PC1MAC:
+CompIface_SendPortTypeByte_PC1Mac:
 	push	sr
 	ei	0
 	ld	wa, 4:i3
@@ -1149,7 +1152,7 @@ CompIface_SendActiveSensing_PC1MAC:
 	call	sendCOMM
 	pop	sr
 	ret
-CompIface_SendActiveSensing_PC2:
+CompIface_SendPortTypeByte_PC2:
 	push	sr
 	ei	0
 	ld	wa, 4:i3
@@ -1185,7 +1188,7 @@ MidiOut_SerializeRealtimeLoop:
 	bit	0, (1065:16)
 	jr	z, MidiOut_CheckStart
 	res	0, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, MidiOut_SerializeRealtimeLoop
 	ld	wa, iz
 	inc	1, iz
@@ -1199,7 +1202,7 @@ MidiOut_CheckStart:
 	bit	1, (1065:16)
 	jr	z, MidiOut_CheckContinue
 	res	1, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, MidiOut_SerializeRealtimeLoop
 	ld	bc, iz
 	inc	1, iz
@@ -1211,7 +1214,7 @@ MidiOut_CheckContinue:
 	bit	2, (1065:16)
 	jr	z, MidiOut_CheckStop
 	res	2, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jr	nz, MidiOut_SerializeRealtimeLoop
 	ld	bc, iz
 	inc	1, iz
@@ -1223,7 +1226,7 @@ MidiOut_CheckStop:
 	bit	3, (1065:16)
 	jr	z, MidiOut_SerializeRealtimeLoop
 	res	3, (1065:16)
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	jrl	nz, MidiOut_SerializeRealtimeLoop
 	ld	bc, iz
 	inc	1, iz
@@ -1254,71 +1257,81 @@ MidiOut_FlushBuffer:
 MidiOut_SerializeAndSend_Exit:
 	popw	iz
 	ret
-MidiThru_Disable:
+; Clears bit 6 of 0xb722: MIDI_SYSTEM_MESSAGE_HANDLER takes received clock and transport bytes
+; (0xf8..0xfc) again.  The opposite of MidiIn_IgnoreClockTransport.
+MidiIn_AcceptClockTransport:
 	res	6, (0xb722:16)
 	ret
-MidiThru_Enable:
+; Sets bit 6 of 0xb722: while it is set MIDI_SYSTEM_MESSAGE_HANDLER ignores received clock and
+; transport bytes (0xf8..0xfc; active sensing is still taken).  Called by InitializeOperationState
+; before a disk operation; CancelOperationCleanup ends with MidiIn_AcceptClockTransport.
+MidiIn_IgnoreClockTransport:
 	set	6, (0xb722:16)
 	ret
 GET_COMPUTER_INTERFACE_SELECTION:
 	ld	l, (COM_SELECT:16)
 	ret
-CompIface_ProcessInput:
+; Fade_Tick: FADE IN/OUT engine, once per input pass of the main loop (Encoder_TimingAndOutput tail-jumps here): while
+;   no fade-out has finished (0xC1F0 bit 3 clear) it steps the level ramp (Fade_Tick_Ramp); once one has, it applies
+;   the FADE OUT "Rhythm Auto stop" / "SEQ Auto stop" settings (0xC1F0 bits 4/5) to a playing rhythm / sequencer and,
+;   with "Auto reset" (bit 6), puts FADE OUT (key 0x40C1) off when (0xC1FC) ticks have passed since the level reached
+;   0. Basis: caller + body + the settings Fade_ParamListener copies into 0xC1F0.
+Fade_Tick:
 	bit	3, (0xc130:16)
-	jrl	z, CompIface_RampControl
+	jrl	z, Fade_Tick_Ramp
 	bit	2, (1054:16)
-	jr	z, CompIface_FilterBySource
+	jr	z, Fade_Tick_NotBothPlaying
 	bit	2, (SEQ_TRANSPORT_STATE:16)
-	jr	z, CompIface_FilterBySource
+	jr	z, Fade_Tick_NotBothPlaying
 	bit	4, (0xc130:16)
-	jr	z, CompIface_CheckUpDown
+	jr	z, Fade_Tick_BothPlaying_RhythmStop
 	bit	5, (0xc130:16)
-	jr	z, CompIface_CheckUpDown
+	jr	z, Fade_Tick_BothPlaying_RhythmStop
 	cpw	(0x288c:16), 0
-	jr	nz, CompIface_SetPedalBit
-	jr	CompIface_CallFilterA
-CompIface_CheckUpDown:
+	jr	nz, Fade_Tick_StopAll_SetFlag
+	jr	Fade_Tick_StopAll
+Fade_Tick_BothPlaying_RhythmStop:
 	bit	4, (0xc130:16)
-	jr	z, CompIface_RampDown
+	jr	z, Fade_Tick_BothPlaying_SeqStop
 	call	AccWrap_PlayModeStartPlay
 	set	7, (0x3415:16)
-	jr	CompIface_PostProcess
-CompIface_RampDown:
+	jr	Fade_Tick_AutoReset
+Fade_Tick_BothPlaying_SeqStop:
 	bit	5, (0xc130:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	cpw	(0x288c:16), 0
-	jr	z, CompIface_RampDown_Start
+	jr	z, Fade_Tick_BothPlaying_SeqStop_Join
 	set	1, (9808:16)
-CompIface_RampDown_Start:
+Fade_Tick_BothPlaying_SeqStop_Join:
 	call	AccWrap_PlayModeStopExpr
-	jr	CompIface_CallSync
-CompIface_FilterBySource:
+	jr	Fade_Tick_StopSequencer
+Fade_Tick_NotBothPlaying:
 	bit	2, (1054:16)
-	jr	z, CompIface_FromSource2
+	jr	z, Fade_Tick_SeqOnly
 	bit	4, (0xc130:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	call	AccWrap_PlayModeDispatch
-	jr	CompIface_PostProcess
-CompIface_FromSource2:
+	jr	Fade_Tick_AutoReset
+Fade_Tick_SeqOnly:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	bit	5, (0xc130:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	call	SeqState_GetFlags
 	and	hl, 0x7
-	jr	z, CompIface_Source2_ZeroCheck
+	jr	z, Fade_Tick_SeqOnly_Stop
 	call	SqTrSel_CaseG
-	jr	CompIface_PostProcess
-CompIface_Source2_ZeroCheck:
+	jr	Fade_Tick_AutoReset
+Fade_Tick_SeqOnly_Stop:
 	cpw	(0x288c:16), 0
-	jr	z, CompIface_CallFilterA
-CompIface_SetPedalBit:
+	jr	z, Fade_Tick_StopAll
+Fade_Tick_StopAll_SetFlag:
 	set	1, (9808:16)
-CompIface_CallFilterA:
+Fade_Tick_StopAll:
 	call	AccWrap_PlayModeDispatch
-CompIface_CallSync:
+Fade_Tick_StopSequencer:
 	call	SeqPlay_StopAndResetAll
-CompIface_PostProcess:
+Fade_Tick_AutoReset:
 	call	AccompSeq_StopSequence
 	bit	6, (0xc130:16)
 	ret	z
@@ -1334,12 +1347,12 @@ CompIface_PostProcess:
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
 	ret
-CompIface_RampControl:
+Fade_Tick_Ramp:
 	ld	wa, (SYSTEM_TIMESTAMP:16)
 	ld	bc, wa
 	sub	bc, (0xc12a:16)
 	bit	0, (0xc130:16)
-	jr	z, CompIface_RampDown_Apply
+	jr	z, Fade_Tick_FadeOut
 	cp	bc, 0xf
 	ret	c
 	ld	(0xc12a:16), wa
@@ -1349,9 +1362,9 @@ CompIface_RampControl:
 	extz	xwa
 	add	xbc, xwa
 	cp	xbc, 0x7f00
-	jr	le, CompIface_RampUp_Clamp
+	jr	le, Fade_Tick_FadeInStore
 	ld	xbc, 0x7f00
-CompIface_RampUp_Clamp:
+Fade_Tick_FadeInStore:
 	ld	(0xc12e:16), bc
 	srl	bc, 8
 	ld	(0xc12c:16), c
@@ -1367,7 +1380,7 @@ CompIface_RampUp_Clamp:
 	ld	de, 1:i3
 	call	SoundParam_NotifyChange
 	ret
-CompIface_RampDown_Apply:
+Fade_Tick_FadeOut:
 	bit	1, (0xc130:16)
 	ret	z
 	cp	bc, 0xf
@@ -1378,9 +1391,9 @@ CompIface_RampDown_Apply:
 	ld	wa, (0xc13a:16)
 	extz	xwa
 	sub	xbc, xwa
-	jr	ge, CompIface_RampDown_Clamp
+	jr	ge, Fade_Tick_FadeOutStore
 	ld	xbc, 0:i3
-CompIface_RampDown_Clamp:
+Fade_Tick_FadeOutStore:
 	ld	(0xc12e:16), bc
 	srl	bc, 8
 	ld	(0xc12c:16), c
@@ -1397,7 +1410,12 @@ CompIface_RampDown_Clamp:
 	ld	de, 0:i3
 	call	CtrlPanel_IndicatorDispatch
 	ret
-CompIface_ResetPedal:
+; Fade_StartArmedFadeIn: Starts an armed FADE IN: if 0xC1F0 bit 2 is set (FADE IN switched on while no fade ran: level
+;   0, FADE IN LED flashing), clears it, makes the LED steady (0x4D) and sets bit 0 so Fade_Tick ramps the level up.
+;   Called when playing starts: the keyboard / accompaniment note-on paths, chord changes, AccAutoPlay_NoteDispatch,
+;   and the main loop after the timer ISR flags a rhythm or sequencer start (RAM 0x473 bit 0). No pedal is involved.
+;   Basis: callers + body.
+Fade_StartArmedFadeIn:
 	bit	2, (0xc130:16)
 	ret	z
 	res	2, (0xc130:16)
@@ -1405,9 +1423,12 @@ CompIface_ResetPedal:
 	call	CtrlPanel_SetIndicatorLED
 	set	0, (0xc130:16)
 	ret
-CompIface_SetMax:
+; Fade_SetFullLevelAndFlush: Puts the fade level back to 127 (Fade_SetLevel), then runs the queued parameter-write
+;   listeners (SwbtWr_CallProcessAll) and resends both banks (SwbtWr_ReinitBothBanks); the tail of Audio_ReinitToneGen
+;   and Audio_ReinitToneGenAndOutput. Basis: callers + body.
+Fade_SetFullLevelAndFlush:
 	ldw	wa, 0x7f
-	calr	CompIface_WriteVolume
+	calr	Fade_SetLevel
 	push	xde
 	push	xhl
 	push	xix
@@ -1419,7 +1440,10 @@ CompIface_SetMax:
 	pop	xhl
 	pop	xde
 	ret
-CompIface_ScaleValue:
+; Fade_MeasuresToTicks: HL = A * 120000 / BC, BC = the tempo (key 4): the length of A measures in SYSTEM_TIMESTAMP
+;   ticks, on the scale Fade_CalcRampStep uses for the measure-denominated FADE times. Its one caller passes A = 1 and
+;   keeps the result at 0xC1FC, the delay Fade_Tick waits before an Auto reset. Basis: caller + body.
+Fade_MeasuresToTicks:
 	push	xiz
 	ld	iz, bc
 	extz	xiz
@@ -1432,7 +1456,11 @@ CompIface_ScaleValue:
 	call	Math_DivideU32
 	pop	xiz
 	ret
-CompIface_ScaleAndNormalize:
+; Fade_CalcRampStep: HL = 0x7F00 / (A * 7920 / BC): the 8.8 fixed-point level step Fade_Tick adds (fade-in) or
+;   subtracts (fade-out) every 15+ ticks, so that a fade of A measures (FADE IN / FADE OUT time, keys 0x2A00 / 0x2A01,
+;   1..16) at tempo BC (key 4) spans 0..127. The results are kept at 0xC1F8 (in) and 0xC1FA (out). Basis: callers +
+;   body.
+Fade_CalcRampStep:
 	push	xiz
 	ld	iz, bc
 	extz	xiz
@@ -1448,7 +1476,10 @@ CompIface_ScaleAndNormalize:
 	call	Math_DivideU32
 	pop	xiz
 	ret
-CompIface_WriteVolume:
+; Fade_SetLevel: A = fade level 0..127: if it differs from 0xC1EC, stores it there and as 8.8 fixed point at 0xC1EE
+;   (the ramp accumulator), and writes key 0x4005 (SndParam_Fade_Level; the sub CPU's DSP_Set_FadeLevel output-gain
+;   stage). Basis: callers + body.
+Fade_SetLevel:
 	ld	c, (0xc12c:16)
 	cp	c, a
 	ret	z
@@ -1463,7 +1494,11 @@ CompIface_WriteVolume:
 	ld	de, 3:i3
 	call	SoundParam_NotifyChange
 	ret
-Audio_ConfigureDSP:
+; Fade_Cancel: Cancels any fade: clears the fade state bits 0-3 of 0xC1F0, puts FADE IN (key 0x40C0) and FADE OUT
+;   (0x40C1) off and refreshes their LEDs (0x4D, 0x4E), and restores the level to 127 (Fade_SetLevel). Called at song
+;   load / playback start (Acc_LoadAndStartPlayback), demo start (DemoMode_Main_Operation) and by
+;   BitMapOut_PrepareAndRender. It configures no DSP. Basis: callers + body.
+Fade_Cancel:
 	and	(0xc130:16), 243
 	and	(0xc130:16), 252
 	ld	xwa, 0x40c0
@@ -1479,15 +1514,20 @@ Audio_ConfigureDSP:
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
 	ldw	wa, 127
-	jr	CompIface_WriteVolume
-DSPCfg_ProcessInput:
+	jr	Fade_SetLevel
+; Fade_ParamListener: Parameter-write listener of the FADE IN/OUT engine (in the SwbtWr listener lists of records
+;   0x48, 0x70 and 0x98): the tempo (0x48 +8/+9, keys 4/5) and the FADE IN/OUT SETTING values (0x70 +5..+7, keys
+;   0x2A00/0x2A01/0x2A10-0x2A12) recompute the ramp steps and the Auto reset delay; the FADE IN / FADE OUT switches
+;   (0x98 +11 bits 7/6, keys 0x40C0/0x40C1) drive the state in 0xC1F0 (bit 0 fading in, 1 fading out, 2 FADE IN armed,
+;   3 faded out). Basis: listener tables + body.
+Fade_ParamListener:
 	ld	c, (SWBTWR_EVENT_TYPE:16)
 	ld	e, (SWBTWR_PAYLOAD_1:16)
 	cp	c, 0x48
-	jrl	z, DSPCfg_ScaleFactor_Dispatch
+	jrl	z, Fade_ParamListener_Tempo
 	ld	a, (SWBTWR_PAYLOAD_3:16)
 	cp	c, 0x70
-	jrl	z, DSPCfg_FadeSettingDispatch
+	jrl	z, Fade_ParamListener_FadeSettings
 	cp	c, 0x98
 	ret	nz
 	cp	e, 0xb
@@ -1496,115 +1536,115 @@ DSPCfg_ProcessInput:
 	and	a, 0xc0
 	ret	z
 	bit	0, (0xc130:16)
-	jr	z, DSPCfg_Chorus_Active
+	jr	z, Fade_ParamListener_Armed
 	bit	7, c
-	jr	z, DSPCfg_Reverb_CheckSustain
+	jr	z, Fade_ParamListener_FadingIn_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_Reverb_CheckSustain
+	jr	nz, Fade_ParamListener_FadingIn_CheckFadeOut
 	res	0, (0xc130:16)
-DSPCfg_Reverb_CheckSustain:
+Fade_ParamListener_FadingIn_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	res	0, (0xc130:16)
-	jrl	DSPCfg_SetFadeBit
-DSPCfg_Chorus_Active:
+	jrl	Fade_ParamListener_StartFadeOut
+Fade_ParamListener_Armed:
 	bit	2, (0xc130:16)
-	jr	z, DSPCfg_FadeOut_Active
+	jr	z, Fade_ParamListener_FadingOut
 	bit	7, c
-	jr	z, DSPCfg_Chorus_CheckSustain
+	jr	z, Fade_ParamListener_Armed_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_Chorus_CheckSustain
+	jr	nz, Fade_ParamListener_Armed_CheckFadeOut
 	res	2, (0xc130:16)
 	ldw	wa, 0x4d
 	call	CtrlPanel_SetIndicatorLED
-DSPCfg_Chorus_CheckSustain:
+Fade_ParamListener_Armed_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	res	2, (0xc130:16)
 	ldw	wa, 0x4d
 	call	CtrlPanel_SetIndicatorLED
 	set	1, (0xc130:16)
 	ldw	wa, 0x7f
-	calr	CompIface_WriteVolume
-	jrl	DSPCfg_UpdateOutputVolume
-DSPCfg_FadeOut_Active:
+	calr	Fade_SetLevel
+	jrl	Fade_ParamListener_ApplyLevel
+Fade_ParamListener_FadingOut:
 	bit	1, (0xc130:16)
-	jr	z, DSPCfg_EQ_Active
+	jr	z, Fade_ParamListener_FadedOut
 	bit	7, c
-	jr	z, DSPCfg_FadeOut_CheckSustain
+	jr	z, Fade_ParamListener_FadingOut_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_FadeOut_CheckSustain
+	jr	z, Fade_ParamListener_FadingOut_CheckFadeOut
 	set	0, (0xc130:16)
 	res	1, (0xc130:16)
-DSPCfg_FadeOut_CheckSustain:
+Fade_ParamListener_FadingOut_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_UpdateOutputVolume
+	jr	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_UpdateOutputVolume
+	jr	nz, Fade_ParamListener_ApplyLevel
 	res	1, (0xc130:16)
-	jr	DSPCfg_UpdateOutputVolume
-DSPCfg_EQ_Active:
+	jr	Fade_ParamListener_ApplyLevel
+Fade_ParamListener_FadedOut:
 	bit	3, (0xc130:16)
-	jr	z, DSPCfg_Idle_EnableChorus
+	jr	z, Fade_ParamListener_Idle
 	bit	7, c
-	jr	z, DSPCfg_EQ_CheckSustain
+	jr	z, Fade_ParamListener_FadedOut_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_EQ_CheckSustain
+	jr	z, Fade_ParamListener_FadedOut_CheckFadeOut
 	set	0, (0xc130:16)
 	res	3, (0xc130:16)
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
-DSPCfg_EQ_CheckSustain:
+Fade_ParamListener_FadedOut_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_UpdateOutputVolume
+	jr	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_UpdateOutputVolume
+	jr	nz, Fade_ParamListener_ApplyLevel
 	res	3, (0xc130:16)
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
-	jr	DSPCfg_UpdateOutputVolume
-DSPCfg_Idle_EnableChorus:
+	jr	Fade_ParamListener_ApplyLevel
+Fade_ParamListener_Idle:
 	bit	7, c
-	jr	z, DSPCfg_Idle_CheckSustain
+	jr	z, Fade_ParamListener_Idle_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_Idle_CheckSustain
+	jr	z, Fade_ParamListener_Idle_CheckFadeOut
 	set	2, (0xc130:16)
 	ldw	wa, 0x4d
 	ld	bc, 1:i3
 	ld	de, 0:i3
 	call	CtrlPanel_IndicatorDispatch
 	ld	wa, 0:i3
-	calr	CompIface_WriteVolume
-DSPCfg_Idle_CheckSustain:
+	calr	Fade_SetLevel
+Fade_ParamListener_Idle_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_UpdateOutputVolume
+	jr	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_UpdateOutputVolume
-DSPCfg_SetFadeBit:
+	jr	z, Fade_ParamListener_ApplyLevel
+Fade_ParamListener_StartFadeOut:
 	set	1, (0xc130:16)
-DSPCfg_UpdateOutputVolume:
+Fade_ParamListener_ApplyLevel:
 	ld	a, (0xc130:16)
 	and	a, 0x3
-	jr	nz, DSPCfg_CheckChorusMuted
+	jr	nz, Fade_ParamListener_MuteIfArmed
 	ldw	wa, 0x7f
-	calr	CompIface_WriteVolume
-DSPCfg_CheckChorusMuted:
+	calr	Fade_SetLevel
+Fade_ParamListener_MuteIfArmed:
 	bit	2, (0xc130:16)
 	ret	z
 	ld	wa, 0:i3
-	calr	CompIface_WriteVolume
+	calr	Fade_SetLevel
 	ret
-DSPCfg_FadeSettingDispatch:
+Fade_ParamListener_FadeSettings:
 	ld	c, a
 	and	a, 0xff
 	cp	e, 7:i3
-	jr	z, DSPCfg_FadeSetting_Flags
+	jr	z, Fade_ParamListener_RhythmAutoStop
 	cp	e, 6:i3
-	jr	z, DSPCfg_FadeSetting_OutTime
+	jr	z, Fade_ParamListener_FadeOutTime
 	cp	e, 5:i3
 	ret	nz
 	cp	a, 0:i3
@@ -1615,10 +1655,10 @@ DSPCfg_FadeSettingDispatch:
 	extz	hl
 	ld	bc, (0xc136:16)
 	ld	wa, hl
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc138:16), hl
 	ret
-DSPCfg_FadeSetting_OutTime:
+Fade_ParamListener_FadeOutTime:
 	cp	a, 0:i3
 	ret	z
 	ld	xwa, 0x2a01
@@ -1627,30 +1667,30 @@ DSPCfg_FadeSetting_OutTime:
 	extz	hl
 	ld	bc, (0xc136:16)
 	ld	wa, hl
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc13a:16), hl
 	ld	bc, (0xc136:16)
 	ld	wa, 1:i3
-	jrl	DSPCfg_ScaleFactor_StoreResult
-DSPCfg_FadeSetting_Flags:
+	jrl	Fade_ParamListener_StoreResetDelay
+Fade_ParamListener_RhythmAutoStop:
 	bit	0, c
-	jr	z, DSPCfg_FadeSetting_SeqAutoStop
+	jr	z, Fade_ParamListener_SeqAutoStop
 	ld	xwa, 0x2a10
 	call	SndParam_LookupReadOnly
 	and	hl, 0x1
 	sla	hl, 4
 	and	(0xc130:16), 239
 	or	(0xc130:16), hl
-DSPCfg_FadeSetting_SeqAutoStop:
+Fade_ParamListener_SeqAutoStop:
 	bit	1, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_FadeSetting_AutoReset
+	jr	z, Fade_ParamListener_AutoReset
 	ld	xwa, 0x2a11
 	call	SndParam_LookupReadOnly
 	and	hl, 0x1
 	sla	hl, 5
 	and	(0xc130:16), 223
 	or	(0xc130:16), hl
-DSPCfg_FadeSetting_AutoReset:
+Fade_ParamListener_AutoReset:
 	bit	2, (SWBTWR_PAYLOAD_3:16)
 	ret	z
 	ld	xwa, 0x2a12
@@ -1660,29 +1700,29 @@ DSPCfg_FadeSetting_AutoReset:
 	and	(0xc130:16), 191
 	or	(0xc130:16), hl
 	ret
-DSPCfg_ScaleFactor_Dispatch:
+Fade_ParamListener_Tempo:
 	cp	e, 0x9
-	jr	z, DSPCfg_ScaleFactor_Update
+	jr	z, Fade_ParamListener_TempoUpdate
 	cp	e, 0x8
 	ret	nz
-DSPCfg_ScaleFactor_Update:
+Fade_ParamListener_TempoUpdate:
 	ld	xwa, 4:i3
 	call	SndParam_LookupReadOnly
 	ld	(0xc136:16), hl
 	ld	a, (0xc132:16)
 	extz	wa
 	ld	bc, hl
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc138:16), hl
 	ld	a, (0xc134:16)
 	extz	wa
 	ld	bc, (0xc136:16)
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc13a:16), hl
 	ld	bc, (0xc136:16)
 	ld	wa, 1:i3
-DSPCfg_ScaleFactor_StoreResult:
-	calr	CompIface_ScaleValue
+Fade_ParamListener_StoreResetDelay:
+	calr	Fade_MeasuresToTicks
 	ld	(0xc13c:16), hl
 	ret
 DSPCfg_LookupMidiMap:
@@ -4544,7 +4584,7 @@ DSPCfg_ReturnValueTable:
 ScreenGroup_ReInit:
 	call	MidiParam_ForceResync
 	call	Audio_UpdateLEDsAndChannels
-	call	Reset_Floppy_Disk_Controller
+	call	FDC_PulseResetLine
 	call	SndParam_Init
 	call	MainTitle_InitGraphicsAndEvents
 	jp	Xapr_DetectAndCallBootInit
@@ -4783,7 +4823,7 @@ AudioInit_ProcessModeChange:
 	ret	z
 	call	Audio_CheckInitStatus
 	andw	(0xc4d4:16), 0xfffb
-	bit	1, (0xfc67:16)
+	bit	1, (PANEL_CONDUCTOR+1:16)
 	jr	z, AudioModeChange_Handler
 	ld	wa, (0xc4d4:16)
 	bit	4, wa
@@ -4822,7 +4862,7 @@ Audio_CheckSubsystemReady:
 	ld	wa, (0xc4d8:16)
 	and	wa, 0x60
 	call	z, (AudioInit_RefreshToneBank:24)
-	bit	1, (0xfc67:16)
+	bit	1, (PANEL_CONDUCTOR+1:16)
 	jr	z, AudioSubsystem_Callback
 	ld	wa, (0xc4d4:16)
 	bit	4, wa
@@ -4927,7 +4967,7 @@ UIStateEvt_TransposeUpdate:
 	ld	bc, wa
 	add	bc, 228
 	lda_d16	xde, (0xc13f)
-	ldb_d8	a, (0xfc6a)
+	ldb_d8	a, (PANEL_CONDUCTOR+4)
 	and	a, 255
 	sub	a, 64
 	ld	(xde+bc), a
@@ -4965,13 +5005,13 @@ UIStateEvt_TransposeUpdate_Apply_Code:
 	ldw_d16	wa, (0xc4d8)
 	bit	6, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip
-	ldb_d8	a, (0xfc5e)
+	ldb_d8	a, (PANEL_STYLE+4)
 	and	a, 7
 	extz	wa
 	add	wa, wa
 	lda	xbc, (ParamEdit_WordTable:24)
 	ld	iz, (xbc+wa)
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -4984,7 +5024,7 @@ UIStateEvt_ParamEdit_Data_Skip:
 	cp	wa, 32
 	jr	nz, UIStateEvt_ParamEdit_Data_Skip2
 	ld	iz, 2:i3
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -4992,7 +5032,7 @@ UIStateEvt_ParamEdit_Data_Skip:
 	or	iz, (xbc+wa)
 	jr	UIStateEvt_ParamEdit_Data_Join
 UIStateEvt_ParamEdit_Data_Skip2:
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 15
 	extz	wa
 	add	wa, wa
@@ -5065,13 +5105,13 @@ UIStateEvt_ParamEdit_Data_Skip10:
 	ldw_d16	wa, (0xc4d8)
 	bit	6, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip11
-	ldb_d8	a, (0xfc5e)
+	ldb_d8	a, (PANEL_STYLE+4)
 	and	a, 7
 	extz	wa
 	add	wa, wa
 	lda	xbc, (ParamEdit_WordTable:24)
 	ld	iz, (xbc+wa)
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -5083,7 +5123,7 @@ UIStateEvt_ParamEdit_Data_Skip11:
 	bit	5, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip12
 	ld	iz, 2:i3
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -5091,7 +5131,7 @@ UIStateEvt_ParamEdit_Data_Skip11:
 	or	iz, (xbc+wa)
 	jr	UIStateEvt_ParamEdit_Data_Join5
 UIStateEvt_ParamEdit_Data_Skip12:
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 15
 	extz	wa
 	add	wa, wa
@@ -5118,7 +5158,7 @@ UIStateEvt_ParamEdit_Data_Case5:
 	ldw_d16	wa, (0xc4d6)
 	bit	9, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip14
-	ldb_d8	a, (0xfc5f)
+	ldb_d8	a, (PANEL_STYLE+5)
 	and	a, 252
 	jr	nz, UIStateEvt_ParamEdit_Data_Skip14
 UIStateEvt_ParamEdit_Data_Skip14:
@@ -5126,7 +5166,7 @@ UIStateEvt_ParamEdit_Data_Skip14:
 UIStateEvt_ParamEdit_Data_Skip15:
 	bit	1, (SWBTWR_PAYLOAD_3:16)
 	jr	z, UIStateEvt_ParamEdit_Data_Epilogue
-	bit	1, (0xfc5f:16)
+	bit	1, (PANEL_STYLE+5:16)
 	jr	z, UIStateEvt_ParamEdit_Data_Skip16
 	ldw_d16	wa, (0xc4d6)
 	bit	9, wa
@@ -5143,7 +5183,7 @@ UIStateEvt_ParamEdit_Data_Case6:
 	ldw_d16	wa, (0xc4d6)
 	bit	9, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip17
-	ldb_d8	a, (0xfc5f)
+	ldb_d8	a, (PANEL_STYLE+5)
 	and	a, 252
 	jr	nz, UIStateEvt_ParamEdit_Data_Skip17
 UIStateEvt_ParamEdit_Data_Skip17:
@@ -5304,7 +5344,7 @@ UIStateEvt_EffectSelect_Data:
 	jr	z, UIStateEvt_EffectSelect_Data_Skip5
 	cp	a, 0:i3
 	jr	nz, UIStateEvt_EffectSelect_Data_Join
-	ldb_d8	a, (0xfd03)
+	ldb_d8	a, (PANEL_PLAY_SETTINGS+1)
 	res	7, a
 	stb_d8	(0xc4e2), a
 	orw	(0xc4da:16), 0x400
@@ -5328,7 +5368,7 @@ UIStateEvt_EffectSelect_Data_Skip:
 	res	7, a
 	cp	a, 0:i3
 	ret	z
-	ldb_d8	a, (0xfd02)
+	ldb_d8	a, (PANEL_PLAY_SETTINGS)
 	and	a, 3
 	jr	nz, UIStateEvt_EffectSelect_Data_Skip8
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
@@ -5342,7 +5382,7 @@ UIStateEvt_EffectSelect_Data_Skip2:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 255
 	ret	z
-	bit	5, (0xfd50:16)
+	bit	5, (PANEL_MIDI:16)
 	ret	z
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
 	and	a, 255
@@ -5443,7 +5483,7 @@ UIStateEvt_ChannelConfig_Data_Loop2:
 	ld	hl, wa
 	extz	xhl
 	add	xhl, xbc
-	ldb_d8	a, (0xfd04)
+	ldb_d8	a, (PANEL_PLAY_SETTINGS+2)
 	and	a, 255
 	extz	wa
 	lda	xbc, (EffectSelect_StepTable:24)

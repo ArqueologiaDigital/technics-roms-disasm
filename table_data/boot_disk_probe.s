@@ -19,17 +19,19 @@
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
-; Boot_PulsePD0 - pulse Port D bit 0 high for 10 timer ticks, then low
-; Sets PD0, waits 10 ticks (Boot_Delay), clears PD0 and tail-calls a second
-; 10-tick delay.
+; FDC_PulseResetLine - hold the floppy controller in hardware reset for 10 ticks
+; Port D bit 0 is the FDCRST line: service manual p. 32, CPU SECTION (A), IC5
+; TMP94C241F pin 12 PD0 -> FDCRST to the FDC (crop recipe:
+; notes/kn5000-a-2026-10-31/probes/sm_pd0_net.py).  Sets PD0, waits 10 ticks
+; (Boot_Delay), clears PD0 and tail-calls a second 10-tick delay.  The main
+; CPU's twin (storage/fdc_routines.s) has the same name.
 ; Inputs:  none (clobbers WA)
 ; Outputs: none
 ; Callers: NONE FOUND -- no call/calr/jrl/pointer reference anywhere in the
-;          table_data or maincpu ROMs (boot- or run-time address).  Retained
-;          factory/diagnostic code.  The board function of the PD0 line is
-;          not identified yet; TODO: identify what PD0 drives.
+;          table_data ROM (boot- or run-time address).  Retained code; the
+;          main CPU calls its own copy.
 ; -----------------------------------------------------------------------------
-Boot_PulsePD0:
+FDC_PulseResetLine:
 	set	0, (PD:8)			; PD0 = 1
 	ldw	wa, 10
 	calr	Boot_Delay

@@ -125,6 +125,11 @@
 	.equ ACC_LANE_BLOCK,			0x3297	; [12 bytes] per-lane current pattern block (patch entry, 256-byte block) number, a word per lane; AccBuf_Advance replaces it with the block's link word at a 0x87 cell link (AccPatch_LoadTablePointers returns these words)
 	.equ ACC_LANE_SECTION,			0x32a3	; [6 bytes] per-lane section byte (sections are 5 apart; AccStyle_SelectSection writes all six)
 	.equ ACC_LANE_BEAT_POS,			0x32ab	; [6 bytes] per-lane position: low nibble = beat in the measure, high nibble = measure (AccVoice_BarEnd_* step it)
+	.equ ACC_LANE_BAR,			0x32b5	; [6 bytes] per part (bit 1..32): its bar counter; AccVoice_SavePartStateN copies it to ACC_CUR_BAR and back, AccVoice_HandleBarEndEvent increments the working copy when the beat position wraps
+	.equ ACC_CH_TURNOVER,			0x32c3	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the part sound's turnover byte (IC14 part_sound +5), RhythmPartN_LoadAndStore; Rhythm_SetupChannel_Dn copies it to ACC_CUR_TURNOVER
+	.equ ACC_CH_CEILING,			0x32c7	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the part sound's note ceiling (IC14 part_sound +6); Rhythm_SetupChannel_Dn copies it to ACC_CUR_CEILING
+	.equ ACC_CUR_TURNOVER,			0x32cb	; the working channel's turnover: Rhythm_TransposeNote moves a transposition above it an octave down; Rhythm_CrossVoiceCorrect bases 0x332e on it
+	.equ ACC_CUR_CEILING,			0x32cc	; the working channel's note ceiling: Rhythm_TransposeNote folds notes at or above it down by octaves (when it is 12 or more)
 	.equ ACC_STYLE_RECORD,			0x32ce	; the current style record in the rhythm ROM (AccStyle_ApplyExtendedStyle stores it)
 	.equ ACC_STYLE_NUMBER,			0x32e5	; the style playing, 0..127 within ACC_STYLE_GROUP (below 0x80 a rhythm-ROM style; committed from ACC_PENDING_STYLE by AccStyle_ApplyChanges)
 	.equ ACC_STYLE_GROUP,			0x32e6	; its group, 0..6 (the directory has 8 groups x 128 styles)
@@ -138,7 +143,7 @@
 	.equ ACC_REQ_ENDING_PREV,		0x32fe	; ACC_REQ_ENDING of the previous tick (Rhythm_SaveState)
 	.equ ACC_REQ_INTRO,			0x32ff	; intro requests, bit 0 = INTRO 1, bit 1 = COUNT IN, bit 2 = INTRO 2: PANEL_STYLE+5 bits 2 / 3 and PANEL_STYLE+6 bit 2 (SeqTick_ReadControlState); AccSection_LatchIntroRequests latches a newly set bit
 	.equ ACC_REQ_INTRO_PREV,		0x3300	; ACC_REQ_INTRO of the previous tick (Rhythm_SaveState)
-	.equ ACC_STYLE_ARRANGER_ON,		0x3301	; bit 0 = MUSIC STYLE ARRANGER on (PANEL_REC_98+3 bit 0, SeqTick_ReadControlState): then FILL IN 1 / 2 step the variation down / up (AccSection_SwitchNow, AccVoice_SetChordChangeFlags)
+	.equ ACC_STYLE_ARRANGER_ON,		0x3301	; bit 0 = MUSIC STYLE ARRANGER on (PANEL_PMEM_SETTINGS+3 bit 0, SeqTick_ReadControlState): then FILL IN 1 / 2 step the variation down / up (AccSection_SwitchNow, AccVoice_SetChordChangeFlags)
 	.equ ACC_VARIATION_REQUEST,		0x3305	; the VARIATION 1-4 request, 0..3 = (PANEL_STYLE+7 & 0x30) >> 4, copied every tick (SeqTick_ReadControlState); AccentVoice_DetectAndMarkChange flags a change for the bar line
 	.equ ACC_PENDING_FILLIN,		0x3309	; latched fill-in waiting to start, bit 0 = FILL IN 1, bit 1 = FILL IN 2 (AccSection_LatchFillInRequests sets it, AccSection_StartFillIn clears it)
 	.equ ACC_PENDING_INTRO,			0x330a	; latched intro waiting to start, bit 0 = INTRO 1, bit 2 = COUNT IN, bit 3 = INTRO 2 (AccSection_LatchIntroRequests sets it, AccSection_StartIntro clears it)
@@ -153,6 +158,8 @@
 	.equ ACC_LANES_INTRO2,			0x3318	; the lanes still playing INTRO 2
 	.equ ACC_DEFER_ENDING_LANES,		0x3326	; lanes whose pending ending (or style change) waits for their bar line: AccSection_DeferToBarUnlessFirstBeat sets bits 0-5 unless the engine beat is 0; AccSection_SwitchAtBarLine clears it
 	.equ ACC_DEFER_SECTION_LANES,		0x3327	; lanes whose pending intro / fill-in waits for their bar line: AccSection_DeferToBarIfLastBeat sets bits 0-5 when the press comes on the last beat; AccSection_SwitchAtBarLine clears it
+	.equ ACC_CH_CC3,			0x332f	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the last controller-3 value sent (0xdn 0x03 v, AccVoice_SendProgChange from ACC_CUR_CC3); Rhythm_SendVolume_Dn re-sends it, Rhythm_AllNotesOff_Dn sends 0 when it is set
+	.equ ACC_CUR_CC3,			0x3333	; the last 0xD3 (controller selector 3) value AccVoice_ScanInstruments / AccSeq_Scanner_D3Voice found in the working part's pattern, 0 when none
 	.equ ACC_VARIATION_NEXT,		0x333a	; the variation index 0..3 to load: ACC_VARIATION_REQUEST & 3 (AccentVoice_DetectAndMarkChange), stepped -1 / +1 (clamped) by FILL IN 1 / 2 under the arranger (AccSection_SwitchNow)
 	.equ SNDARG_PART_SELECT,		0x338e	; the Sound Arranger part being edited, one-hot: 1 DRUM, 2 BASS, 4 / 8 / 16 ACCOMP1-3 (AcSndArgGridBoxProc sets it; cleared entering and leaving MD_SND_ARG); AccStyle_Process copies changed sounds while it is set
 	.equ SNDARG_LAST_SOUNDS,		0x3395	; [10 bytes] the sound (part record bytes +0, +1 & 0x7f) of DRUM, BASS, ACCOMP1-3 the Sound Arranger last saw (AccVoiceState_Snapshot); SndArg_Store*Sound compare with it
@@ -160,7 +167,10 @@
 	.equ ACC_CUR_SECTION,			0x33d5	; the lane being processed: its ACC_LANE_SECTION (AccVoice_SavePartState1 and its twins copy the lane in, *_RestoreState back)
 	.equ ACC_CUR_BLOCK,			0x33d6	; word: the lane being processed: its ACC_LANE_BLOCK
 	.equ ACC_CUR_READ_POS,			0x33d8	; word: the lane being processed: its ACC_LANE_READ_POS
+	.equ ACC_CUR_BAR,			0x33da	; the working part's bar counter (copy of ACC_LANE_BAR[part]); AccTempo_PositionCompare's bar
 	.equ ACC_CUR_BEAT_POS,			0x33db	; the lane being processed: its ACC_LANE_BEAT_POS
+	.equ ACC_CUR_MEASURE,			0x33ea	; the working part's measure counter (copy of ACC_LANE_MEASURE[part]); AccVoice_IncrementBarCounter wraps it past byte +13 of the record at (0x3426)
+	.equ ACC_LANE_MEASURE,			0x33eb	; [6 bytes] per part: its measure counter; AccVoice_ClearChannelStates clears all six
 	.equ ACC_EVENT,				0x342d	; [6 bytes] the pattern event being decoded or built (docs/accompaniment-style-reader.md): +0 status, +1 position in the beat, +2 note, +3 velocity, +4/+5 duration; AccBuf_WriteNoteEvent copies all but +1 into a ring buffer, a zero duration as 1.  SqStep_ComputeStepAndGateTime keeps the step and gate lengths in +0..+3
 	.equ ACC_READ_OFFSET,			0x3449	; word: offset in ACC_READ_BLOCK
 	.equ ACC_READ_BLOCK,			0x346b	; word: block of the pattern read position (AccPlayback_SaveReadPosition saves it with ACC_READ_OFFSET)
@@ -255,7 +265,7 @@
 	.equ FDC_RETRY_COUNT,			0x8a68	; retries left: 8 for a read or write, 1 for a probe read; at 0 the command fails with error 16 (read) or 32 (write)
 	.equ FDC_DISK_CHANGED,			0x8a6a	; disk-changed flag: command 9 sets 0xff or 0; cleared at initialisation
 	.equ FDC_DRIVE_MODE,			0x8a6c	; drive mode 0-5 (FDC_CONFIG_VERIFY's media cases)
-	.equ FDC_FORMAT_IDS,			0x8a70	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_MODE_CONFIG_Helper2 builds them)
+	.equ FDC_FORMAT_IDS,			0x8a70	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_FormatOneTrack builds them)
 	.equ FDC_CURRENT_CYLINDER,		0x8b04	; the cylinder last sought to, 0xff = unknown (FDC_CmdSeek compares it)
 	.equ FDC_SECTOR_LIMIT,			0x8b0c	; word: one more than the sectors per track (10, 9 or 19 by media type); bounds the sector number in the read and write loops
 	.equ FDC_PROBE_REQUEST,			0x8b24	; [16 bytes] the request FDC_Reset_BuildParams builds for the disk-format probe: {command, drive, head, track, sector, count, buffer}
@@ -378,3 +388,4 @@
 	.equ SDPART_ROW,			0x3e99e	; word: the selected row of the part list (IvSdpart_*, AcLswPartEdit*, PsMixer_*): row * 2 indexes the row's part
 	.equ GFX_BG_COLOR,			0x3efa2	; word: background colour (Display_SetBackgroundColor stores it)
 	.equ GFX_FG_COLOR,			0x3efa4	; word: foreground colour of the drawing primitives (GraphicsRender_ByteData stores it; the SeGfx ops and DrawText_* push it)
+	.equ FONTID_NAME_TABLE,			0x3efac	; the font-name pointer list FontIDProc reads (RAM copy of FontIDProc_FontNameTable, made by Boot_InitWorkRAM; no code writes it after boot: notes/kn5000-a-2026-10-31/probes/fontid_table_writers.py)

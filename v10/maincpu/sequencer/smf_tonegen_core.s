@@ -249,14 +249,14 @@ FloppyIO_ConfigureSwitchboard:
 	cp (4600:16), 0
 	jrl z, FloppyIO_ConfigSwb_Mode0
 	ld c, 0x0:opc
-	and (PANEL_REC_91+3:16), 251
+	and (PANEL_GM+3:16), 251
 	ld (SEQ_SONG_RECORD+189:16), 0
 	jrl FloppyIO_ConfigSwb_QueueEvent
 
 FloppyIO_ConfigSwb_Mode0:
 	or a, 0x4
 	ld c, 0xff:opc
-	or (PANEL_REC_91+3:16), 4
+	or (PANEL_GM+3:16), 4
 	ld (SEQ_SONG_RECORD+189:16), 255
 
 FloppyIO_ConfigSwb_QueueEvent:
@@ -1617,7 +1617,7 @@ SeqTrack_ChannelMapSwap10And16:
 
 ; Computes the address of one 256-byte song-data block.
 ;   In:  HL = block number (1-based).
-;   Out: 0x10fd = (0x1d5a) + (HL-1)*256, the base pointer in 0x1d5a plus the block offset;
+;   Out: 0x10fd = (SEQ_BLOCK_POOL) + (HL-1)*256, the base pointer in 0x1d5a plus the block offset;
 ;        XHL = 0.  Preserves XIY.
 ToneGen_ComputeBlockPtr:
 	push xiy
@@ -4168,8 +4168,8 @@ VoiceChannel_ClearRegisters:
 	pop xix
 	ret
 
-; Copies the 256-byte song-data block at (0x10fd) to XIX (LDIR (XIX+),(XIY+)), runs
-; DispatchHandler_JumpSub with WA = 1 and IY = block (0x28af), restores 0x10fd (kept in XDE3 (bank-3 register, code 0x38)) and returns IY = 5, the first data offset.  Preserves BC, XHL.
+; Copies the 256-byte song-data block at (SEQ_BLOCK_PTR) to XIX (LDIR (XIX+),(XIY+)), runs
+; DispatchHandler_JumpSub with WA = 1 and IY = block (SEQ_DATA_BLOCK), restores 0x10fd (kept in XDE3 (bank-3 register, code 0x38)) and returns IY = 5, the first data offset.  Preserves BC, XHL.
 VoiceChannel_CopyParamBlock:
 	pushw bc
 	push xhl
@@ -4321,7 +4321,7 @@ ToneGen_AdvanceVoiceLoop:
 	ret
 
 ; Copies one event from the first SMF track buffer (0x17fa, offset 0x27d6) into the page at
-; (0x10fd), starting with byte C at offset IX (then 0x27dc unless the buffer already ended),
+; (SEQ_BLOCK_PTR), starting with byte C at offset IX (then 0x27dc unless the buffer already ended),
 ; following with the data bytes up to the next status byte, and steps the buffer
 ; (VoiceChannel_UpdateParamSet).
 VoiceChannel_FindNextValid:
@@ -4409,7 +4409,7 @@ VoiceChannel_StorePosition_Continue:
 	ld (0x27d6:16), iy
 	ret
 
-; Stores A at the playback position: offset (0x2666) & 0xff of block 0x28af.
+; Stores A at the playback position: offset (SEQ_DATA_OFFSET) & 0xff of block 0x28af.
 ToneGen_WriteParamToBlock:
 	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
@@ -5548,7 +5548,7 @@ VoiceParam_ReadUpdate_11_Return:
 	ret
 
 ; Steps the SMF reader offset IY (low byte) one byte forward; past 0xff it follows the block
-; link at XIX+3: 0xffff sets error 2, a block above (0x286d) error 10, a block not in use error
+; link at XIX+3: 0xffff sets error 2, a block above (SEQ_BLOCK_TOTAL) error 10, a block not in use error
 ; 11; otherwise 0x28af = the block and VoiceChannel_CopyParamBlock runs.  The page pointer at
 ; 0x10fd is saved in XDE3 (bank-3 register, code 0x38) and restored.
 ToneGen_ValidateAndSelectVoice:

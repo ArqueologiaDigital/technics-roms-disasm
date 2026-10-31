@@ -1289,7 +1289,7 @@ BmDrEdit_CompareVelocity_Return:
 	ret
 
 ; Saves the playback position (block 0x28af, offset 0x2666) as the write position of the edited
-; part (0x2965) + 1: entry (0x2965) of the 4-byte table at 0x23e0.
+; part (BMDREDIT_CHANNEL) + 1: entry (BMDREDIT_CHANNEL) of the 4-byte table at 0x23e0.
 BmDrEdit_SaveSongPosition:
 	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
@@ -2321,7 +2321,7 @@ BmDrEdit_ValidateSteps_RestoreState:
 	jrl BmDrEdit_RestoreEditState
 
 ; Points the editor at the start of the part being edited and re-inserts its step entries.
-;   The part is (0x2965) + 1; its first data block comes from the voice table of song slot 0
+;   The part is (BMDREDIT_CHANNEL) + 1; its first data block comes from the voice table of song slot 0
 ;   (Part_ReadVoiceWord), returning at once when it is 0xffff.  Sets 0x28af / 0x2666 = block / 5
 ;   (error 0xb7 if an error was pending), counts the measures (BmDrEdit_CountMeasuresAndValidate),
 ;   then repeats EditChannel_LoadVoiceParams + BmDrEdit_InsertStepEntry (0x2782) + 2 times,
@@ -2818,7 +2818,7 @@ BmDrEdit_SendMetronomeNoteOn_Alt:
 Metronome_PlayClick:
 	jr BmDrEdit_WriteNoteOffEntry
 
-; Sends the 5-byte sequencer event 0x90 0x7e (0x2786) (0x2788) (0x2965) from a stack buffer
+; Sends the 5-byte sequencer event 0x90 0x7e (0x2786) (0x2788) (BMDREDIT_CHANNEL) from a stack buffer
 ; (SeqBuf_WriteMidiEvent, BC = 5), then SeqBuf_FlushAndReinit_NoteEvents.
 BmDrEdit_BuildNoteOnEvent:
 	dec 8, xsp
@@ -3498,7 +3498,7 @@ PartCtrl_WriteByte_ZeroExtended:
 	extz de
 	jp PartCtrl_WriteByteToBuf
 
-; Inserts one bar marker (0x81) at the editor position of part (0x2965) + 1:
+; Inserts one bar marker (0x81) at the editor position of part (BMDREDIT_CHANNEL) + 1:
 ; BmDrEdit_SaveSongPosition, then BmDrEdit_ApplyVelocityChange with a one-byte event.
 ; SEQ_ERROR_CODE is cleared first.
 BmDrEdit_InsertStepEntry:
@@ -3515,7 +3515,7 @@ BmDrEdit_InsertStepEntry:
 	inc 2, xsp
 	ret
 
-; Builds a 6-byte note-on at 0x2967 for the cursor position and inserts it into part (0x2965) + 1
+; Builds a 6-byte note-on at 0x2967 for the cursor position and inserts it into part (BMDREDIT_CHANNEL) + 1
 ; (BmDrEdit_ApplyVelocityChange): 0x90, cursor tick mod 96, the bytes 0x2960 / 0x2961, and the
 ; length 0x278e as (mod 96, / 96).  BmDrEdit_WalkToGridPosition positions first.
 BmDrEdit_PrepareAndInsertNote:
@@ -3604,7 +3604,7 @@ BmDrEdit_ValidateVoice_Epilog:
 	ret
 
 ; Copies the editor's target bar (0x2744) to 0x287f, selects the editor channel
-; (BmDrEdit_CheckAndSelectChannel) and seeks part (0x2965) + 1 to it
+; (BmDrEdit_CheckAndSelectChannel) and seeks part (BMDREDIT_CHANNEL) + 1 to it
 ; (BmDrEdit_ValidateAndProcessVoice).  Out: HL = the word that routine returns through its
 ; DE pointer.
 BmDrEdit_SyncChannelAndGetPos:
@@ -3623,7 +3623,7 @@ BmDrEdit_SyncChannelAndGetPos:
 	ret
 
 ; Synchronises the editor channel (BmDrEdit_SyncChannelAndGetPos) and stores its position as
-; the alternate cursor: 0x276a = HL, 0x276c = 0, 0x276e = block (0x28af), 0x2770 = offset.
+; the alternate cursor: 0x276a = HL, 0x276c = 0, 0x276e = block (SEQ_DATA_BLOCK), 0x2770 = offset.
 ; Nothing is stored when SEQ_ERROR_CODE is set.
 BmDrEdit_SelectChannelAndLoadPos:
 	ld (SEQ_ERROR_CODE:16), 0

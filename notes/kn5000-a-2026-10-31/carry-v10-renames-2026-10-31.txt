@@ -1,0 +1,85 @@
+v9: 320 renames, 0 skipped
+    renamed in 25 files
+    note MIDI_CC_MODWHEEL_VALUE                             value 0x8e48, v10's 0x8ee4 (delta 0x9c)
+    note MIDI_CC_EXPRESSION_VALUE                           value 0x8e4a, v10's 0x8ee6 (delta 0x9c)
+    note MIDI_CC_BREATH_VALUE                               value 0x8e4c, v10's 0x8ee8 (delta 0x9c)
+    note MIDI_CC_FOOT_VALUE                                 value 0x8e4e, v10's 0x8eea (delta 0x9c)
+    note MIDI_CC_VOLUME_VALUE                               value 0x8e58, v10's 0x8ef4 (delta 0x9c)
+    note MIDI_CC_MODWHEEL_PENDING                           value 0x8e44, v10's 0x8ee0 (delta 0x9c)
+    note MIDI_CC_EXPRESSION_PENDING                         value 0x8e46, v10's 0x8ee2 (delta 0x9c)
+    note ENCODER_RAW_MODWHEEL                               value 0x8e2e, v10's 0x8eca (delta 0x9c)
+    note ENCODER_RAW_VOLUME                                 value 0x8e30, v10's 0x8ecc (delta 0x9c)
+    note ENCODER_RAW_BREATH                                 value 0x8e38, v10's 0x8ed4 (delta 0x9c)
+    note ENCODER_RAW_FOOT                                   value 0x8e3a, v10's 0x8ed6 (delta 0x9c)
+    note ENCODER_RAW_EXPRESSION                             value 0x8e3c, v10's 0x8ed8 (delta 0x9c)
+    note ENCODER_BREATH_MODE                                value 0x8e3e, v10's 0x8eda (delta 0x9c)
+    note ENCODER_VOLUME_MODE                                value 0x8e40, v10's 0x8edc (delta 0x9c)
+    note ENCODER_RANGE_LIMIT                                value 0x8e42, v10's 0x8ede (delta 0x9c)
+    note ENCODER_STATE_BASE                                 value 0x8e7c, v10's 0x8f18 (delta 0x9c)
+v7: 315 renames, 5 skipped
+    skip ScoopParam_ValueTable_Sub_Helper                   not defined
+    skip VoiceState_DataBlock2_Helper2                      not defined
+    skip SeqLoad_ProcessDataBlock_Helper2                   bytes differ from v10's (d8a8d9ad1d5a15f4cfd9b0fed8a8d9ae1d5a15f4cfdf6605 vs dba8d12ff220d8d8b0f6d88bdb690eef6cb751bf02418f02)
+    skip SeqLoad_ProcessDataBlock_Helper3                   bytes differ from v10's (d7fa04c7fba8c7fb89d8123112011d5a15f4cfd96631c7fb vs d8a8d9ad1d6815f4cfd9b0fed8a8d9ae1d6815f4cfdf6605)
+    skip SeMenu_ApplyPartEdit_Helper                        not defined
+    renamed in 24 files
+    note MIDI_CC_MODWHEEL_VALUE                             value 0x8e24, v10's 0x8ee4 (delta 0xc0)
+    note MIDI_CC_EXPRESSION_VALUE                           value 0x8e26, v10's 0x8ee6 (delta 0xc0)
+    note MIDI_CC_BREATH_VALUE                               value 0x8e28, v10's 0x8ee8 (delta 0xc0)
+    note MIDI_CC_FOOT_VALUE                                 value 0x8e2a, v10's 0x8eea (delta 0xc0)
+    note MIDI_CC_VOLUME_VALUE                               value 0x8e34, v10's 0x8ef4 (delta 0xc0)
+    note MIDI_CC_MODWHEEL_PENDING                           value 0x8e20, v10's 0x8ee0 (delta 0xc0)
+    note MIDI_CC_EXPRESSION_PENDING                         value 0x8e22, v10's 0x8ee2 (delta 0xc0)
+    note ENCODER_RAW_MODWHEEL                               value 0x8e0a, v10's 0x8eca (delta 0xc0)
+    note ENCODER_RAW_VOLUME                                 value 0x8e0c, v10's 0x8ecc (delta 0xc0)
+    note ENCODER_RAW_BREATH                                 value 0x8e14, v10's 0x8ed4 (delta 0xc0)
+    note ENCODER_RAW_FOOT                                   value 0x8e16, v10's 0x8ed6 (delta 0xc0)
+    note ENCODER_RAW_EXPRESSION                             value 0x8e18, v10's 0x8ed8 (delta 0xc0)
+    note ENCODER_BREATH_MODE                                value 0x8e1a, v10's 0x8eda (delta 0xc0)
+    note ENCODER_VOLUME_MODE                                value 0x8e1c, v10's 0x8edc (delta 0xc0)
+    note ENCODER_RANGE_LIMIT                                value 0x8e1e, v10's 0x8ede (delta 0xc0)
+    note ENCODER_STATE_BASE                                 value 0x8e58, v10's 0x8f18 (delta 0xc0)
+v6: 311 renames, 9 skipped
+    skip MemConfig_Handler_4_Helper2                        bytes differ from v10's (f170360000c1570d21f1c10d411d0bb2efc8d0d8ec02d88b vs c1650d3f007e2600c15dfc21c9cc07c9d97e04001bc8b7ef)
+    skip ScoopParam_ValueTable_Sub_Helper                   not defined
+    skip VoiceState_DataBlock2_Helper2                      bytes differ from v10's (c9d11d8ecfef1dbdc0efc9d11de2cfefc1cc0d201d9dbfef vs 44a0f10000d9d123102110c5f0f1760700d91cf71baed6ef)
+    skip VoiceSlot_StatusRet_Helper2                        not defined
+    skip Display_BytecodeBlock_F_Tbl2_Helper2               not defined
+    skip SeqLoad_ProcessDataBlock_Helper2                   bytes differ from v10's (d8a8d9ad1dff10f4cfd9b0fed8a8d9ae1dff10f4cfdf6605 vs dba8d12ff220d8d8b0f6d88bdb690eef6cb751bf02418f02)
+    skip SeqLoad_ProcessDataBlock_Helper3                   bytes differ from v10's (d7fa04c7fba8c7fb89d8123112011dff10f4cfd96631c7fb vs d8a8d9ad1d6815f4cfd9b0fed8a8d9ae1d6815f4cfdf6605)
+    skip SeMenu_ApplyPartEdit_Helper                        not defined
+    skip SeMenu_ApplyPartEdit_Helper9_Helper                not defined
+    renamed in 23 files
+    note MIDI_CC_MODWHEEL_VALUE                             value 0x8e24, v10's 0x8ee4 (delta 0xc0)
+    note MIDI_CC_EXPRESSION_VALUE                           value 0x8e26, v10's 0x8ee6 (delta 0xc0)
+    note MIDI_CC_BREATH_VALUE                               value 0x8e28, v10's 0x8ee8 (delta 0xc0)
+    note MIDI_CC_FOOT_VALUE                                 value 0x8e2a, v10's 0x8eea (delta 0xc0)
+    note MIDI_CC_VOLUME_VALUE                               value 0x8e34, v10's 0x8ef4 (delta 0xc0)
+    note MIDI_CC_MODWHEEL_PENDING                           value 0x8e20, v10's 0x8ee0 (delta 0xc0)
+    note MIDI_CC_EXPRESSION_PENDING                         value 0x8e22, v10's 0x8ee2 (delta 0xc0)
+    note ENCODER_RAW_MODWHEEL                               value 0x8e0a, v10's 0x8eca (delta 0xc0)
+    note ENCODER_RAW_VOLUME                                 value 0x8e0c, v10's 0x8ecc (delta 0xc0)
+    note ENCODER_RAW_BREATH                                 value 0x8e14, v10's 0x8ed4 (delta 0xc0)
+    note ENCODER_RAW_FOOT                                   value 0x8e16, v10's 0x8ed6 (delta 0xc0)
+    note ENCODER_RAW_EXPRESSION                             value 0x8e18, v10's 0x8ed8 (delta 0xc0)
+    note ENCODER_BREATH_MODE                                value 0x8e1a, v10's 0x8eda (delta 0xc0)
+    note ENCODER_VOLUME_MODE                                value 0x8e1c, v10's 0x8edc (delta 0xc0)
+    note ENCODER_RANGE_LIMIT                                value 0x8e1e, v10's 0x8ede (delta 0xc0)
+    note ENCODER_STATE_BASE                                 value 0x8e58, v10's 0x8f18 (delta 0xc0)
+v5: 307 renames, 13 skipped
+    skip MemConfig_Handler_4_Helper2                        bytes differ from v10's (f170360000c1570d21f1c10d411df3b1efc8d0d8ec02d88b vs c1650d3f007e2600c15dfc21c9cc07c9d97e04001bc8b7ef)
+    skip ScoopParam_ValueTable_Sub_Helper                   not defined
+    skip VoiceState_DataBlock2_Helper2                      bytes differ from v10's (c9d11d76cfef1da5c0efc9d11dcacfefc1cc0d201d85bfef vs 44a0f10000d9d123102110c5f0f1760700d91cf71baed6ef)
+    skip VoiceSlot_StatusRet_Helper2                        not defined
+    skip Display_BytecodeBlock_F_Tbl2_Helper2               not defined
+    skip SeqLoad_ProcessDataBlock_Helper2                   bytes differ from v10's (d8a8d9ad1d890ef4cfd9b0fed8a8d9ae1d890ef4cfdf6605 vs dba8d12ff220d8d8b0f6d88bdb690eef6cb751bf02418f02)
+    skip SeqLoad_ProcessDataBlock_Helper3                   not defined
+    skip SeMenu_ApplyPartEdit_Helper                        not defined
+    skip SeMenu_ApplyPartEdit_Helper9_Helper                not defined
+    skip SeScreenData_0x0D24                                not defined
+    skip SeScreenData_0x0D39                                not defined
+    skip SeMenu_DrawTwoPartRadioButtons_Records             bytes differ from v10's (e917f100e917f100fe17f1001318f1001c0b8c0005005049 vs f018f100f018f1000519f1001a19f100030c960cf1009a12)
+    skip SeMenu_DrawTwoPartRadioButtons_Records2            not defined
+    renamed in 23 files
+v10: 320 renames, 0 skipped
+    renamed in 25 files

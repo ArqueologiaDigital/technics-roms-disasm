@@ -196,7 +196,11 @@ and they belong to lane `sys` to delete.
 * honest unknowns: the 64-byte second part-name scheme after Str_TuningEq,
   Str_ExtTabEffectEnDis, Unref_EF6BD3_Tbl / Unref_EFA7C5_Tbl (v10/v9),
   ClockConfig_Select_Table (no reader by name or 32-bit value), and the role of
-  the 0x09 bytes in Tbl_AccompPartNames.
+  the 0x09 bytes in Tbl_AccompPartNames.  (2026-10-31, lane kn5000-a: the first five have no reader -- no instruction operand inside any of them in the
+  linear listing, and every 3-byte occurrence of their addresses in the ROM lies inside other instructions;
+  `notes/kn5000-a-2026-10-31/probes/scoop_unknown_readers.py`.  The 0x09 bytes are copied verbatim into the
+  region-0 text by ParamPopup_AccompPart (16-byte chunks at A * 16, A = bits 7-5 of the value); which glyph the
+  status font draws for code 9 is still open.)
 * `.long OscScope_DrawWaveform` (sequencer/smf_event_processor.s) and
   `.long OscScope_FinalizeRender` (ui/drawbar_panel_ui.s, ui/ui_mode_handlers.s)
   point into the middle of instructions (now `.set NAME, . + k` here): the
@@ -206,7 +210,9 @@ and they belong to lane `sys` to delete.
   arguments that a positional-label pass symbolised by accident. (Resolved: d8e699346, then 695e7284f spells them as NAKA_VIEW_<name> view ids; open-items register 2026-10-31.)
 * naming: handler routines reached through the dispatch tables carry
   `<Table>_Target<k>` names; the sound-editor code (all of
-  scoop_editor_data.s, 3,4xx instructions) has only structural labels.
+  scoop_editor_data.s, 3,4xx instructions) has only structural labels. (Resolved: the sound-editor code is named since 1813072cd; the last 21
+  `<Table>_Target<k>` handlers were named from their table entry and body on 2026-10-31, lane kn5000-a,
+  `scripts/renaming/rename_dispatch_target_handlers.sed`, all five trees.)
 * scoop_editor_data.s is entered through the pointer table
   `EmbeddedPtrTable_v*_gui_display_struct_data_000B00` in
   `kn5000_v*_program.s`: one entry is `.long Scoop_SoundEditorData`, 187 more

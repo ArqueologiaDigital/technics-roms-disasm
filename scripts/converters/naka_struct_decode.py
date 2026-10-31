@@ -135,16 +135,16 @@ DISPATCH_TYPES = {
 }
 
 # Types that can be EITHER dispatch (24B) or full struct depending on context
-AMBIGUOUS_TYPES = {0x34, 0x31}  # CONTAINER and GROUP appear in dispatch arrays too
+AMBIGUOUS_TYPES = {0x34, 0x31}  # TtlScreen and Box appear in dispatch arrays too
 
 # NAKA type name mapping for named constants
-NAMED_TYPE_CODES = {
-    0x16: "NAKA_TYPE_DIAGLIST", 0x1D: "NAKA_TYPE_MENU_ITEM",
-    0x1E: "NAKA_TYPE_PANEL", 0x2B: "NAKA_TYPE_LABEL",
-    0x2E: "NAKA_TYPE_VALUE", 0x2F: "NAKA_TYPE_OPTION",
-    0x30: "NAKA_TYPE_SLIDER", 0x31: "NAKA_TYPE_GROUP",
-    0x34: "NAKA_TYPE_CONTAINER", 0x66: "NAKA_TYPE_LIST",
-    0x6C: "NAKA_TYPE_BITMAP",
+NAMED_TYPE_CODES = {  # the firmware class names (v10/maincpu/shared/macros.s)
+    0x16: "NAKA_TYPE_PsNumEditBox", 0x1D: "NAKA_TYPE_AcTitleMenu",
+    0x1E: "NAKA_TYPE_PsEditSwBox", 0x2B: "NAKA_TYPE_Label",
+    0x2E: "NAKA_TYPE_Line", 0x2F: "NAKA_TYPE_Frame",
+    0x30: "NAKA_TYPE_EditSw", 0x31: "NAKA_TYPE_Box",
+    0x34: "NAKA_TYPE_TtlScreen", 0x66: "NAKA_TYPE_AcLanguageText",
+    0x6C: "NAKA_TYPE_VwUserBitmapByName",
 }
 
 

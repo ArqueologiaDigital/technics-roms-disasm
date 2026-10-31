@@ -827,12 +827,12 @@ SeqPlay_StartWithDisplay:
 	call SeqPlay_CheckStartConditions
 	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SeqPlay_SetFlagAndMode
-	and (PANEL_REC_91+3:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SeqPlay_QueueDisplayEvent
 
 SeqPlay_SetFlagAndMode:
-	or (PANEL_REC_91+3:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SeqPlay_QueueDisplayEvent:
@@ -896,7 +896,7 @@ SMF_FoundActiveChannel:
 	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld (4325:16), wa
 	ld (4324:16), 255
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SMF_InitChannelScan
 	ld (4324:16), 0
 
@@ -9251,7 +9251,7 @@ FdcOp_Epilogue20:
 GetMediaType:
 	lda xsp, (xsp - 0x14)
 	push QIZ
-	call Reset_Floppy_Disk_Controller
+	call FDC_PulseResetLine
 	pushw 0x0400
 	call Malloc
 	inc 2,XSP
@@ -10776,7 +10776,7 @@ Rhythm_LookupTempoVelocity_Wrap:
 
 Rhythm_DispatchNote_Finalize:
 	push xiz
-	call AccStyle_LookupVelocityTable
+	call AccStyle_LookupPanelRhythm
 	pop xiz
 	ret
 
@@ -10869,7 +10869,7 @@ SeqCtl_CheckBit3:
 
 SeqTick_ReadControlState_StoreIntroBits:
 	stb_d8	(ACC_REQ_INTRO), a
-	ldb_d8	a, (PANEL_REC_98+3)
+	ldb_d8	a, (PANEL_PMEM_SETTINGS+3)
 	and	a, 1
 	stb_d8	(ACC_STYLE_ARRANGER_ON), a
 	ldb_d8	a, (PANEL_STYLE+4)
@@ -10882,7 +10882,7 @@ SeqTick_ReadControlState_StoreIntroBits:
 	srl	a, 4
 	stb_d8	(ACC_VARIATION_REQUEST), a
 	xor	a, a
-	bit	2, (PANEL_REC_91+3:16)
+	bit	2, (PANEL_GM+3:16)
 	jr	nz, SeqCtl_StoreKeyMask
 	or	a, 63
 SeqCtl_StoreKeyMask:

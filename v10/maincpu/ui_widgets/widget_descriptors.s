@@ -5393,16 +5393,16 @@ AccStyle_RamImage_1E7800:	.incbin "includes/generated/naka_widget_descriptors.bi
 ; -----------------------------------------------------------------------------
 AccStyle_RamImage_1E7800_Tail:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x178FF, 0xC00
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AccStyle_VelocityTableMain
-; AccStyle_VelocityTableMain -- 128 x 8 u16.
-; AccStyle_LookupVelocityTable (v10/v9 0xf55c4f, v7 0xf5584b), for byte
+; [naka_s_headers] AccStyle_PanelRhythmTable
+; AccStyle_PanelRhythmTable -- 128 x 8 u16.
+; AccStyle_LookupPanelRhythm (v10/v9 0xf55c4f, v7 0xf5584b), for byte
 ; 0x90ea < 128: index = 0x90ea * 8 + (byte 0x90eb & 7); the word goes to
 ; 0x90ee/0x90ef.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
-; AccStyle_VelocityTableMain[128][8].
+; AccStyle_PanelRhythmTable[128][8].
 ; -----------------------------------------------------------------------------
-AccStyle_VelocityTableMain:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x184FF, 0x800
+AccStyle_PanelRhythmTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x184FF, 0x800
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AccStyle_TempoWordTable
 ; AccStyle_TempoWordTable -- 378 u16. AccStyle_LookupTempo_AddAndStore
@@ -5416,37 +5416,37 @@ AccStyle_VelocityTableMain:	.incbin "includes/generated/naka_widget_descriptors.
 ; -----------------------------------------------------------------------------
 AccStyle_TempoWordTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x18CFF, 0x2F4
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AccStyle_VelocityTableExt
-; AccStyle_VelocityTableExt -- 16 x 8 u16. AccStyle_Velocity_ExtClamp
+; [naka_s_headers] AccStyle_PanelRhythmTable_Ext
+; AccStyle_PanelRhythmTable_Ext -- 16 x 8 u16. AccStyle_LookupPanelRhythm_ExtClamp
 ; (v10/v9 0xf55c90, v7 0xf5588c), for 128 <= byte 0x90ea < 240: row =
 ; 0x90ea & 0x7f (0 if above 0x0b), column = byte 0x90eb & 7 -- so rows
 ; 0..11 are reachable.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
-; AccStyle_VelocityTableExt[16][8].
+; AccStyle_PanelRhythmTable_Ext[16][8].
 ; -----------------------------------------------------------------------------
-AccStyle_VelocityTableExt:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x18FF3, 0x100
+AccStyle_PanelRhythmTable_Ext:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x18FF3, 0x100
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AccStyle_VelocityTableHigh
-; AccStyle_VelocityTableHigh -- 5 u16. AccStyle_Velocity_HighClamp
+; [naka_s_headers] AccStyle_PanelRhythmTable_High
+; AccStyle_PanelRhythmTable_High -- 5 u16. AccStyle_LookupPanelRhythm_HighClamp
 ; (v10/v9 0xf55cba, v7 0xf558b6), for byte 0x90ea >= 240: index = 0x90ea
 ; & 0x0f (0 if above 4).
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
-; AccStyle_VelocityTableHigh[5].
+; AccStyle_PanelRhythmTable_High[5].
 ; -----------------------------------------------------------------------------
-AccStyle_VelocityTableHigh:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x190F3, 0xA
+AccStyle_PanelRhythmTable_High:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x190F3, 0xA
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AccStyle_VelocityTableHigh_Tail
-; AccStyle_VelocityTableHigh_Tail -- 23 bytes after
-; AccStyle_VelocityTableHigh that no code reference reaches (searched:
+; [naka_s_headers] AccStyle_PanelRhythmTable_High_Tail
+; AccStyle_PanelRhythmTable_High_Tail -- 23 bytes after
+; AccStyle_PanelRhythmTable_High that no code reference reaches (searched:
 ; every label and positional-label name anchored on the historical
 ; labels of this span, in all v10 .s files). Contents not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; AccStyle_VelocityTableHigh_Tail[23].
+; AccStyle_PanelRhythmTable_High_Tail[23].
 ; -----------------------------------------------------------------------------
-AccStyle_VelocityTableHigh_Tail:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x190FD, 0x17
+AccStyle_PanelRhythmTable_High_Tail:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x190FD, 0x17
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AccTone_ExtendAndDispatch_Body_Table
 ; AccTone_ExtendAndDispatch_Body_Table -- read by

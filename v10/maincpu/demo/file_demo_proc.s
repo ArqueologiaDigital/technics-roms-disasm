@@ -552,7 +552,7 @@ DemoMode_Main_Operation:
 	pushw 0xcf04
 	call Mem_Copy
 	lda xsp, (xsp + 10)
-	call Audio_ConfigureDSP
+	call Fade_Cancel
 	calr Voice_LoadVoiceTable
 	set 4, (PANEL_MIDI:16)
 	res 2, (PANEL_MIDI:16)
@@ -562,7 +562,7 @@ DemoMode_Main_Operation:
 	call AccompSeq_StopSequence
 	calr Voice_CopyPreset
 	call MIDI_BroadcastPitchReset
-	calr Timer7_DisableInterrupt
+	calr Demo_ReleaseGlidePedal
 	call Audio_CheckSubsystemReady
 	set 6, (0xb7e2:16)
 	res 3, (DEMO_CONTROL_FLAGS:16)
@@ -931,8 +931,12 @@ Demo_ResetCountdownTimer:
 	ld (DEMO_TIMER_COUNTDOWN:16), 15
 	ret
 
-Timer7_DisableInterrupt:
-	lda xbc, (PANEL_REC_98+2:16)
+; Demo_ReleaseGlidePedal: Releases the GLIDE pedal at demo start: clears bit 7 of record 0x98 +2 in RAM (0xFD98: key
+;   0x4080, the GLIDE gate) and queues the record write (AddswbWr 0x98, 2, mask 0x80), which SndParam_ApplySystemParam
+;   sends to the sub CPU as system message 0x85 (glide off). Called only by DemoMode_Main_Operation; it touches no
+;   timer. Basis: caller + body + descriptor 0x4080.
+Demo_ReleaseGlidePedal:
+	lda xbc, (PANEL_PMEM_SETTINGS+2:16)
 	ld e, (xbc)
 	res 7, e
 	ld (xbc), e
@@ -1782,7 +1786,7 @@ LoadRegion0_OpenSuccess:
 	call PreLswLoad				; primary display setup
 	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	lda	xbc, (0xffc0:16)
-	ld xde, xwa				; XDE = base (0xf980)
+	ld xde, xwa				; XDE = base (LIVE_PANEL_BLOCK)
 	sub xbc, xde				; XBC = size (0xffc0-0xf980)
 	call FileIO_ReadBlock				; configure memory range
 	lda xwa, (0x1e7800:24); VRAM region base
@@ -8667,7 +8671,7 @@ FileIO_DiskRemoved:
 ;   Calls, in order: SeqBuf_Init, NoteMap_SendAllNotesOff, Part_ReinitAllActive,
 ;   AccWrap_PlayModeDispatch, AccompSeq_StopSequence, AudioInit_RefreshToneBank,
 ;   NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
-;   MIDI_SendAllSoundOff and MidiThru_Enable.
+;   MIDI_SendAllSoundOff and MidiIn_IgnoreClockTransport.
 InitializeOperationState:
 	dec 2, xsp
 	ld (xsp), a
@@ -8687,13 +8691,13 @@ InitOp_SkipSetFlag:
 	call Voice_InitTablePair
 	call Voice_InitTableGroup
 	call MIDI_SendAllSoundOff
-	call MidiThru_Enable
+	call MidiIn_IgnoreClockTransport
 	inc 2, xsp
 	ret
 
 ; Undoes InitializeOperationState after a disk operation: clears bits 2 and 3 of 0x28a7,
-; re-initialises the playback state (SeqAcc_InitPlaybackState) and turns MIDI thru off
-; (MidiThru_Disable, tail jump).
+; re-initialises the playback state (SeqAcc_InitPlaybackState) and accepts received MIDI clock and transport again
+; (MidiIn_AcceptClockTransport, tail jump).
 CancelOperationCleanup:
 	ld a, (SEQ_RTMCFG:16)
 	bit 2, a
@@ -8704,7 +8708,7 @@ CancelOperationCleanup:
 CancelOp_ClearSeq:
 	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
-	jp MidiThru_Disable
+	jp MidiIn_AcceptClockTransport
 
 ; Calls CPanel_InitButtonState_SaveRegs, then tail-jumps to RefreshSwEvent, which clears the
 ; TRANSITION_* state, deletes queued EVT_SW_ON / EVT_SW_IN / EVT_SW_OFF events and posts

@@ -481,7 +481,7 @@ WndScroll_Sym_Exclam:	.incbin "includes/generated/naka_disk_warning.bin", 0x1224
 AcNaming_PageCharLists:	.incbin "includes/generated/naka_disk_warning.bin", 0x1226, 0xC
 ; WndScroll_NamingPageLastIndex -- 2 x 3 uint16_t = {{37,37,31},{36,36,31}}: last selectable entry of each naming
 ; character page (0 = A-Z _ 0-9 SPC, 1 = a-z _ 0-9 SPC, 2 = symbols) per naming mode (EVT_GET_NAMING_MODE, RAM 0x274e2);
-; mode 1 stops at '9', leaving out SPC. Read in ui/ui_window_procs.s at [(0x274e2)*3 + page (0x274da)] to bound the
+; mode 1 stops at '9', leaving out SPC. Read in ui/ui_window_procs.s at [(NAMING_MODE)*3 + page (NAMING_PAGE)] to bound the
 ; drawn/scrolled character index. This slice is element [0][0]; the other 5 words are the unnamed 10 bytes after it.
 WndScroll_NamingPageLastIndex:	.incbin "includes/generated/naka_disk_warning.bin", 0x1232, 0x2
 	.incbin "includes/generated/naka_disk_warning.bin", 0x1234, 0xA	; 10 bytes after WndScroll_NamingPageLastIndex's string; unnamed (they sat under its label until 2026-10-03)
@@ -867,9 +867,9 @@ PsTextBox_Str_LineBreak:			.incbin "includes/generated/naka_disk_warning.bin", 0
 AcTrkSw_Select_HighTrack_Str_PsTextBox:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B7E, 0xA	; "PsTextBox"
 ; [nakarest] naka_disk_warning+0x1b88  +0x1b88..+0x1b98 (0xeaa834, 16 B)
 ; [nakarest] Text (16 B at 0xeaa834), first string "AcLanguageText"; no registered NAKA table
-; [nakarest] points into it; reached through source references AcTrkSw_ShowHide_CheckDirty
-; [nakarest] (ui/ui_widget_defs.s: `lda xhl, (AcTrkSw_ShowHide_CheckDirty_Str_AcLanguageText:24)`).
-AcTrkSw_ShowHide_CheckDirty_Str_AcLanguageText:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B88, 0x10	; "AcLanguageText"
+; [nakarest] points into it; reached through source references AcLanguageTextProc_OnGetStrPtr
+; [nakarest] (ui/ui_widget_defs.s: `lda xhl, (AcLanguageTextProc_ClassName:24)`).
+AcLanguageTextProc_ClassName:	.incbin "includes/generated/naka_disk_warning.bin", 0x1B88, 0x10	; "AcLanguageText"
 ; LanguageCheck_LanguageNames -- 6 x uint32_t + strings: name of each help language, index = language
 ; {"English", "German", "French", "Spanish", "Italian", "Indonesian"} (strings stored in reverse order).
 ; LanguageCheck (ui/ui_widget_defs.s) returns the table for EVT_GET_LANGUAGE_PTR; AcLanguageTextProc draws
@@ -1087,7 +1087,7 @@ BoxStyle13_CalcWidth_Str_Fmts_Fmtd:		.incbin "includes/generated/naka_disk_warni
 EdgeDraw_TopRight_Inner_Str_left:		.incbin "includes/generated/naka_disk_warning.bin", 0x1DC4, 0x6	; ".left"
 EdgeDraw_TopRight_Inner_Str_LBrace:		.incbin "includes/generated/naka_disk_warning.bin", 0x1DCA, 0x2	; "{"
 EdgeDraw_BottomRight_Str_top:			.incbin "includes/generated/naka_disk_warning.bin", 0x1DCC, 0x6	; ".top"
-TabDraw_TopEdge_Str_width:			.incbin "includes/generated/naka_disk_warning.bin", 0x1DD2, 0x8	; ".width"
+RectX2Proc_MemberName:			.incbin "includes/generated/naka_disk_warning.bin", 0x1DD2, 0x8	; ".width"
 RectY2Proc_MemberName:			.incbin "includes/generated/naka_disk_warning.bin", 0x1DDA, 0x8	; ".height"
 RectY2Proc_DumpClose:		.incbin "includes/generated/naka_disk_warning.bin", 0x1DE2, 0x2	; "}"
 PointXProc_MemberName:			.incbin "includes/generated/naka_disk_warning.bin", 0x1DE4, 0x4	; ".x"

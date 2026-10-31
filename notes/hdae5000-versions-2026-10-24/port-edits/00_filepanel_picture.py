@@ -2,6 +2,13 @@
 
 A record of a one-off hand edit of hdae5000_v2_01i/ (see README.md here); it matches
 exact text of the tree as it was then and will not apply again.
+
+old_bmp below quotes the comment the port found, "Already extracted as
+images/HDAE5000_FilePanel.bin." included.  a07054fc3 (2026-10-31) dropped that
+sentence from the v2.06i tree and the v1 trees, once the extraction copy was deleted;
+the v2.01i block this edit wrote never had it.  Nothing replays this directory
+(README.md: "not part of the build"; the replay.sh scripts are the v1 trees'), so the
+quote is kept as the record of what was replaced, not updated.
 """
 import os
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))

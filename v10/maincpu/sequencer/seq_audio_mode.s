@@ -46,7 +46,7 @@ AudioMode_CopyChannelMode:
 	ld (0x3335:16), a
 	ret
 
-; 0x3362 = (0x34f1) & 0x3d.
+; 0x3362 = (CMP_SOLO) & 0x3d.
 AudioMode_CopyAccentFlags:
 	ld a, (CMP_SOLO:16)
 	and a, 0x3d
@@ -177,7 +177,7 @@ AccPedal_ReadBankAndReturn:
 	calr AccVoice_ReadBankAssign
 	ret
 
-; Sets 0x3282 = AccStyle_ApplyExt_SkipClamp_Table[(0x433)] when bit 0 of 0x3283 is set, else 0.
+; Sets 0x3282 = AccStyle_ApplyExt_SkipClamp_Table[(ACC_BEATS_PER_BAR)] when bit 0 of 0x3283 is set, else 0.
 AccVoice_ReadBankAssign:
 	xor wa, wa
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
@@ -643,7 +643,7 @@ AccChord_CompareDone:
 
 ; Sets bit 0 of 0x330d when 0x3305 differs from 0x3306, 0x3314 / 0x3315 have no part bit 0..5,
 ; 0x32e5 is below 0x80, 0x3312 / 0x3313 have no part bit either (checked only with bit 0 of 0x3301)
-; and (0x3305) & 3 differs from 0x3338.  Always 0x333a = (0x3305) & 3.
+; and (ACC_SECTION_REQUEST) & 3 differs from 0x3338.  Always 0x333a = (ACC_SECTION_REQUEST) & 3.
 AccentVoice_DetectAndMarkChange:
 	ld a, (ACC_VARIATION_REQUEST:16)
 	cp a, (0x3306:16)
@@ -678,7 +678,7 @@ AccentVoice_UpdateParamIndex:
 
 ; Returns the address of one style pattern record.
 ;   In:  A = record index (0..0x1d, larger ones read as 0); the bank is the byte at 0x32e6.
-;   Out: XIY = RhythmTiming_OffsetTable[A] + AccVoice_BankBaseTable[(0x32e6)] + 0x60.
+;   Out: XIY = RhythmTiming_OffsetTable[A] + AccVoice_BankBaseTable[(ACC_STYLE_GROUP)] + 0x60.
 ;   Preserves XWA, XIX.
 AccVoice_ResolveParamAddr:
 	push xwa
@@ -710,7 +710,7 @@ AccVoice_ComputeParamOffset:
 ; 0x32E6.
 ; Reader: AccVoice_ComputeParamOffset (0xF53D2E, the tail of
 ; AccVoice_ResolveParamAddr 0xF53D20): `ld xix, AccVoice_BankBaseTable` then
-; `ld xix, (xix+wa)` = ld xix, (xix + wa) with wa = (0x32E6)*4.
+; `ld xix, (xix+wa)` = ld xix, (xix + wa) with wa = (ACC_STYLE_GROUP)*4.
 ; The entry is added to the 32-bit offset the routine first loaded from
 ; RhythmTiming_OffsetTable[A] (A clamped to 0..0x1D), plus 0x60; the sum is
 ; returned in XIY.  So each entry is the base of a bank that those offsets
@@ -758,8 +758,8 @@ AccVoice_LookupWithOffset:
 	ld xiy, xhl
 	ret
 
-; Selects the style's time signature: with (0x32e5) below 0x80 from the style at (0x32ce)
-; (AccStyle_ReadVoiceParam, W also stored in 0x32ef), else AccPatch_SetVoiceParam((0x32e5) &
+; Selects the style's time signature: with (ACC_STYLE_NUMBER) below 0x80 from the style at (ACC_STYLE_RECORD)
+; (AccStyle_ReadVoiceParam, W also stored in 0x32ef), else AccPatch_SetVoiceParam((ACC_STYLE_NUMBER) &
 ; 0x7f).  The value goes to 0x433 and its bar length (AccVoice_LookupTableAddress_Table) to
 ; 0x327b.
 AccVoice_SelectAndApplyPatch:
@@ -1120,9 +1120,9 @@ RhythmPart2_LoadAndStore:
 	ld a, (0x3251:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3252:16)
-	ld (0x32c3:16), a
+	ld (ACC_CH_TURNOVER:16), a
 	ld a, (0x3253:16)
-	ld (0x32c7:16), a
+	ld (ACC_CH_CEILING:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart2_ProcessRingBuf
@@ -1201,9 +1201,9 @@ RhythmPart3_LoadAndStore:
 	ld a, (0x3258:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3259:16)
-	ld (0x32c4:16), a
+	ld (ACC_CH_TURNOVER+1:16), a
 	ld a, (0x325a:16)
-	ld (0x32c8:16), a
+	ld (ACC_CH_CEILING+1:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart3_ProcessRingBuf
@@ -1259,9 +1259,9 @@ RhythmPart4_LoadAndStore:
 	ld a, (0x325f:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3260:16)
-	ld (0x32c5:16), a
+	ld (ACC_CH_TURNOVER+2:16), a
 	ld a, (0x3261:16)
-	ld (0x32c9:16), a
+	ld (ACC_CH_CEILING+2:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart4_ProcessRingBuf
@@ -1317,9 +1317,9 @@ RhythmPart5_LoadAndStore:
 	ld a, (0x3266:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3267:16)
-	ld (0x32c6:16), a
+	ld (ACC_CH_TURNOVER+3:16), a
 	ld a, (0x3268:16)
-	ld (0x32ca:16), a
+	ld (ACC_CH_CEILING+3:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart5_ProcessRingBuf
@@ -1441,10 +1441,10 @@ Rhythm_SendChanPressure:
 	ld e, 0x0:opc
 	calr Rhythm_Send3ByteMsg
 	ld a, 0x0:opc
-	ld (0x332f:16), a
-	ld (0x3330:16), a
-	ld (0x3331:16), a
-	ld (0x3332:16), a
+	ld (ACC_CH_CC3:16), a
+	ld (ACC_CH_CC3+1:16), a
+	ld (ACC_CH_CC3+2:16), a
+	ld (ACC_CH_CC3+3:16), a
 	ret
 
 ; Resets the six accompaniment ring buffers, reads the voice registers back
@@ -1605,7 +1605,7 @@ RhythmROM_CheckDone:
 	ret
 
 ; -----------------------------------------------------------------------------
-; Heap_AllocAndFreeTwoBlocks -- Malloc(0x400) (pointer kept in RAM 0x355C),
+; Heap_AllocAndFreeTwoBlocks -- Malloc(BOOT_STAGE) (pointer kept in RAM 0x355C),
 ; Malloc(0x1000), Free(second), Free(first), return.  A heap round trip with
 ; no lasting effect except RAM 0x355C.  C-compiler shaped (`ld xwa,xhl;
 ; ld xwa,xwa; push xwa`).  NO CALLER FOUND: scripts/analysis/sequi_find_refs.py

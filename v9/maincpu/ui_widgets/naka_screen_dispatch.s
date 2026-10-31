@@ -1843,7 +1843,7 @@ S2cGridCheck_CaseTable:
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 ; PsCmpCpFPtnBox_PatternNameStrPtrs: 27 x u32 string pointers, the accompaniment-pattern names (" Vari1 ", Vari2-4,
 ;   Intro1/2, Ending1/2, V1-V4 FillIn1/2, Vari1-4, Intro1/2, FillIn1/2, Ending1/2, All): PsCmpCpFPtnBoxProc (Composer
-;   copy, source pattern box) Sprintf's entry [(0x34EF)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
+;   copy, source pattern box) Sprintf's entry [(RHYTHM_LOAD_PART)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
 ;   PtrTbl_StylePatternLongNames (entry 1) has no reader. Basis: readers + bytes.
 PsCmpCpFPtnBox_PatternNameStrPtrs:	.byte	0xa8, 0xd9, 0xe1, 0x00
 PtrTbl_StylePatternLongNames:
@@ -1974,7 +1974,7 @@ PsCstmCpSwBox_ReadParam2_Str_CUSTOM:
 	.byte 0x00			; padding
 	.byte 0xff			; padding
 ; AcMemNoBox_SectionNameStrPtrs: 33 x u32 string pointers, the style-section names "A-vari1" .. "C-END2" plus "A-ALL",
-;   "B-ALL", "C-ALL": AcMemNoBoxProc Sprintf's entry [(0x34D6)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
+;   "B-ALL", "C-ALL": AcMemNoBoxProc Sprintf's entry [(STYLE_SECTION)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
 ;   PtrTbl_StyleSectShortNames2 (entry 1) has no reader. Basis: readers + bytes.
 AcMemNoBox_SectionNameStrPtrs:
 	.byte 0x00			; padding

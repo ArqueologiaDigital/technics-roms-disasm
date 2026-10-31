@@ -340,7 +340,7 @@ FDemoText_UpdateVoiceDisplay_CheckSend:
 	ld a, (0x0247ee:24)
 	and a, 0x38
 	jr nz, FDemoText_UpdateVoiceDisplay_Done
-	ld c, (PANEL_REC_44:16)
+	ld c, (PANEL_DRAWBAR_RIGHT1:16)
 	cp (PANEL_DSP_EFFECT:16), c
 	jr z, FDemoText_UpdateVoiceDisplay_Done
 	extz bc
@@ -390,7 +390,7 @@ FDemoText_SyncPreset_NextActive:
 FDemoText_SyncPreset_DirectCopy:
 	ld xwa, (xsp + 2)
 	ld a, (xwa)
-	ld (PANEL_REC_44:16), a
+	ld (PANEL_DRAWBAR_RIGHT1:16), a
 	ldib_erp 0xfb, 0
 
 FDemoText_SyncPreset_DirectLoop:

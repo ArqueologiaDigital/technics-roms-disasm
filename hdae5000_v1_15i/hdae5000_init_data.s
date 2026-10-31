@@ -248,7 +248,7 @@ HDAE5000_EventName_Count:
 
 ; ----------------------------------------------------------------------------
 ; MT_* message names (registration ID 0x01ea, class id 0x0160000d, ResMethodProc)
-;   file-select message vocabulary shared with the main CPU (no MT_SelectAll in v1.x); count in
+;   file-select message vocabulary private to this module (no MT_SelectAll in v1.x; no main-CPU code uses a 0x01EA id); count in
 ;   HDAE5000_MessageName_Count (RAM 0x23cbbe).
 ; ----------------------------------------------------------------------------
 HDAE5000_MessageName_Table:

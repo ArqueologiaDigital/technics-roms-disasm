@@ -19716,7 +19716,7 @@ SeqData_SetErrorCode:
 	ret
 
 SeqStatus_CheckBit2:
-	ld l, (PANEL_REC_91+3:16)
+	ld l, (PANEL_GM+3:16)
 	and l, 0x4
 	ret
 
@@ -19748,7 +19748,7 @@ Seq_ComputePercent_Compute:
 	ret
 
 SeqStatus_SetOrClearBit:
-	lda xde, (PANEL_REC_91+3:16)
+	lda xde, (PANEL_GM+3:16)
 	cp c, 0:i3
 	jr z, SeqStatus_SetOrClear_ClearPath
 	or (xde), a
@@ -19789,7 +19789,7 @@ Part_IsVoiceActive_Return:
 	ret
 
 SeqStatus_ResetAndSendCmd:
-	res 0, (PANEL_REC_91+3:16)
+	res 0, (PANEL_GM+3:16)
 
 	pushw 0x1
 
@@ -20026,7 +20026,7 @@ SeqTimer_BarChangeProcess:
 	ld wa, 0:i3
 	ldw bc, 0xbd
 	calr Part_ReadByteDirect
-	lda xwa, (PANEL_REC_91+3:16)
+	lda xwa, (PANEL_GM+3:16)
 	cp l, 0xff
 	jr nz, SeqTimer_BarChangeLoop
 	bitm 2, (xwa)
@@ -25922,7 +25922,7 @@ SeqLoad_ProcessDataBlock_Skip3:
 	ld	a, (xsp+10)
 	extz	wa
 	call	VoicePreset_LoadAndInitPan
-	calr	SeqLoad_ProcessDataBlock_Helper
+	calr	SeqLoad_RestoreFreeBlockList
 	calr	SeqBar_DataBlock_Code_Sub
 	ld	(xsp+6), hl
 	ldib_erp	251, 1
@@ -26427,7 +26427,12 @@ SeqBar_DataBlock:
 	ldmm16	10698, SEQ_FREE_LIST_HEAD
 	ldmm16	10700, SEQ_FREE_BLOCKS
 	ret
-SeqLoad_ProcessDataBlock_Helper:
+; SeqLoad_RestoreFreeBlockList: Restores the event-memory free list -- head block 0xF22F and free-block count 0xF231
+;   -- from the copies at 0x29CA / 0x29CC. Basis: callers + body -- SingleLoad_FinishSongLoad saves both with
+;   SeqBar_DataBlock (the reverse copy), makes the loaded slot current with VoicePreset_LoadAndInitPan (a 0x800-byte
+;   copy over the current song record 0xF180, which holds these two words) and then calls this; 0xF22F/0xF231 are the
+;   head and count the block allocator PartCtrl_ReadWordRoutine takes from and SetWall_BankInit sets up.
+SeqLoad_RestoreFreeBlockList:
 	ldmm16	SEQ_FREE_LIST_HEAD, 10698
 	ldmm16	SEQ_FREE_BLOCKS, 10700
 	ret
@@ -27642,7 +27647,7 @@ Seq_AdvanceValidateB0Params:
 	jrl z, Seq_AdvanceNoteStep
 	cp w, 0x50
 	jrl ugt, Seq_AdvanceNoteStep
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, Seq_AdvanceNoteStep
 	dec 1, w
 	ld c, w
@@ -27955,7 +27960,7 @@ SeqEvt_SetBit7B0Event:
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	cp l, 0x50
 	jrl ugt, SeqEvt_ReadAndDispatchLoop
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqEvt_ReadAndDispatchLoop
 	extz hl
 	dec 1, hl
@@ -28701,7 +28706,7 @@ SeqSearch_ValidateB0Params:
 	jrl z, SeqSearch_AdvanceToPosition
 	cp e, 0x50
 	jrl ugt, SeqSearch_AdvanceToPosition
-	bit 6, (PANEL_REC_98+1:16)
+	bit 6, (PANEL_PMEM_SETTINGS+1:16)
 	jrl z, SeqSearch_AdvanceToPosition
 	dec 1, e
 	extz de

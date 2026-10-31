@@ -375,8 +375,8 @@ typedef struct __attribute__((packed)) {
     /* element 143 of Viewable slot 0xFD: Label (class id 0x0160002B) */
     naka_cls_Label_t ftdemo22_Label_2;
     char w72_text[4];
-    naka_slider_t w73;  /* NAKA_TYPE_SLIDER */
-    naka_slider_t w74;  /* NAKA_TYPE_SLIDER */
+    naka_slider_t w73;  /* NAKA_TYPE_EditSw */
+    naka_slider_t w74;  /* NAKA_TYPE_EditSw */
     /* element 146 of Viewable slot 0xFD: Label (class id 0x0160002B) */
     naka_cls_Label_t Bank_Label;
     char Bank_text[6];
@@ -4481,7 +4481,7 @@ const naka_perf_style_t naka_perf_style_data
     .w72_text = "~98",
 
     .w73 = {
-        .header       = NAKA_HDR(NAKA_TYPE_SLIDER),
+        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
         .parent_idx     = 0x008A,
         .prev_sibling   = NAKA_NONE,
         .self_idx       = 0x0091,
@@ -4504,7 +4504,7 @@ const naka_perf_style_t naka_perf_style_data
     },
 
     .w74 = {
-        .header       = NAKA_HDR(NAKA_TYPE_SLIDER),
+        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
         .parent_idx     = 0x008A,
         .prev_sibling   = NAKA_NONE,
         .self_idx       = 0x0092,

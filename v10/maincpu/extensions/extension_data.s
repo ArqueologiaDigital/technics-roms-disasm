@@ -2551,9 +2551,9 @@ ENCODER_LUT_MAIN_VOLUME:
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup1Handlers:
 	.short 0x0001
-	.long MIDI_ProcessChangedChannels_Data_Target0
+	.long PanelLed_ShowPartVoiceCategory
 	.short 0x0002
-	.long MIDI_ProcessChangedChannels_Data_Target1
+	.long PanelLed_ShowPartSelect
 	.short 0x0004
 	.long SndParam_TableLookup_Via4100
 	.short 0x0008
@@ -2574,7 +2574,7 @@ PanelLed_PendingGroup1Handlers:
 ;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup2Handlers:
 	.short 0x0001
-	.long MidiChanged_ProcessGroup2_Data_Target0
+	.long PanelLed_ShowVoiceCategory_Via028000
 	.short 0x0002
 	.long SndParam_VoiceEntryLookup_ViaReg8000
 	.short 0x0004
@@ -2615,11 +2615,11 @@ PanelLed_PendingGroup3Handlers:
 	.short 0x0100
 	.long ExtData_VoiceParam_DispatchBytecode
 	.short 0x0400
-	.long MidiChanged_ProcessGroup3_Data_Target7
+	.long SndParam_SetResBit3_Via3390
 	.short 0x1000
-	.long MidiChanged_ProcessGroup3_Data_Target8
+	.long CtrlPanel_SetBit5At8F1E_ViaMode
 	.short 0x2000
-	.long MidiChanged_ProcessGroup3_Data_Target9
+	.long SndParam_SetResBit5_Via40C0
 	.short 0x4000
 	.long CtrlPanel_SetResBit6_ViaLookup
 	.short 0x8000
@@ -2732,12 +2732,12 @@ ExtData_VoiceParam_DispatchBytecode_CaseTable:
 	.short	ExtData_VoiceParam_DispatchBytecode_Epilogue2 - ExtData_VoiceParam_DispatchBytecode_ModeMsp
 	.short	ExtData_VoiceParam_DispatchBytecode_ModeSndArg - ExtData_VoiceParam_DispatchBytecode_ModeMsp
 	.short	ExtData_VoiceParam_DispatchBytecode_ModeOtp - ExtData_VoiceParam_DispatchBytecode_ModeMsp
-; BeatLed_ThreeBeatMasks: START/STOP BEAT LED masks for a three-beat cycle: beat counter (0x416) & 7 -> 1, 2, 4, 1, 2,
-;   4 (BEAT 1-3), used when (0x433) is 3 or 6. Basis: readers + bytes.
+; BeatLed_ThreeBeatMasks: START/STOP BEAT LED masks for a three-beat cycle: beat counter (ACC_BEAT) & 7 -> 1, 2, 4, 1, 2,
+;   4 (BEAT 1-3), used when (ACC_BEATS_PER_BAR) is 3 or 6. Basis: readers + bytes.
 BeatLed_ThreeBeatMasks:
 	.byte 1, 2, 4, 1, 2, 4
-; BeatLed_FourBeatMasks: START/STOP BEAT LED masks for a four-beat cycle: beat counter (0x416) & 3 -> 1, 2, 4, 8 (BEAT
-;   1-4), used when (0x433) is neither 3 nor 6. Basis: readers + bytes.
+; BeatLed_FourBeatMasks: START/STOP BEAT LED masks for a four-beat cycle: beat counter (ACC_BEAT) & 3 -> 1, 2, 4, 8 (BEAT
+;   1-4), used when (ACC_BEATS_PER_BAR) is neither 3 nor 6. Basis: readers + bytes.
 BeatLed_FourBeatMasks:
 	.byte 1, 2, 4, 8, 1, 2, 4, 8
 UIState_ProcessExtendedMode_CaseTable:
@@ -2908,7 +2908,7 @@ CombinedPreset_8:
 ; word is at 0x9133, until the byte at the cursor is 0xFF.  For each 3-byte
 ; record SndParam_FetchSequencerParams (0xFC95CE) moves byte 0 to RAM 0x9127
 ; (the command), byte 1 to 0x9128/0x912F and byte 2 to 0x9130; the
-; dispatcher then does `ld a, (0x9127)` / `sla wa, 2` / `lda xbc,
+; dispatcher then does `ld a, (MIDI_MSG_STATUS)` / `sla wa, 2` / `lda xbc,
 ; (SoundProgram_DispatchTable)` / `ld r, (xrr+rr)` / `call (xhl)`.
 ; Entries: 0x00-0x19 ExtData_ToneParam_DispatchHandler; 0x43-0x48, 0x60,
 ; 0x68, 0x70, 0x72, 0x7A, 0x90, 0x98, 0xA8 and 0xB0 their own handlers;
@@ -3321,7 +3321,7 @@ ExtData_ToneParam_AltBody_CaseTable:
 ExtData_ToneParam_MultiChannel_Data:
 	.byte 1, 1, 2, 3
 	; +0x8D6: 4 bytes, indexed by (RAM 0xFD02) & 3 in ExtData_Voice_MixedHandler.
-; SplitPoint_LedMaskByPreset: SPLIT POINT LED masks by split preset (0xFD02) & 3: 0 -> none, 1 -> 1, 2 -> 2, 3 -> 4,
+; SplitPoint_LedMaskByPreset: SPLIT POINT LED masks by split preset (PANEL_PLAY_SETTINGS) & 3: 0 -> none, 1 -> 1, 2 -> 2, 3 -> 4,
 ;   stored to 0x8F58, whose bits 0-2 SndParam_MaskShiftMerge_8F58 puts into bits 4-6 of LED row 4 (0x8F1C). Basis:
 ;   readers + bytes.
 SplitPoint_LedMaskByPreset:
@@ -3385,7 +3385,7 @@ DataSlot_HeaderTemplate:
 ; from +0x7C) with 0xF9A0 as the destination base, and
 ; SMF_SlotChain (sequencer/smf_config_routines.s) indexes into it.  RAM
 ; 0xF9B6 + 26k are the blocks SoundProgram_DispatchTable + 0x400 points at,
-; so the rows below are the 22-byte head (0xF9A0) and then 26-byte blocks,
+; so the rows below are the 22-byte head (PANEL_RECORDS) and then 26-byte blocks,
 ; each tagged with its RAM address.
 ; ---------------------------------------------------------------------------
 SndParamRam_DefaultImage:

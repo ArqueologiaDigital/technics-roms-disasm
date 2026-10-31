@@ -32,7 +32,7 @@
 ; named from the writer census (python3 scripts/analysis/kn5000_ram_writers.py --tree v10 <addr>)
 	.equ SEQ_ERROR_CODE,		0x287a	; sequencer-data error code: 0 = none; 1..11 / 255 set by the end-mark, overflow and bad-parameter paths (SeqData_HandleEndMark_SetError1, SeqBuf_PageOverflowError, Part_ValidateSetup_ErrorEnd ...); cleared before operations, tested against 0 after
 	.equ GLOBAL_ERROR_CODE,		0x7f42	; set by SetGlobalError and the error / status paths of disk, medley, drum-kit, password ... code (values 1..74, 255); compared against constants
-; MidiSeq_SwapActiveBuffers exchanges (0xBCAC) with (0xBCB0) and (0xBC54) with (0xBC58): two
+; MidiSeq_SwapActiveBuffers exchanges (MIDISEQ_ACTIVE_BUF_PTR) with (MIDISEQ_SPARE_BUF_PTR) and (MIDISEQ_ACTIVE_BLOCK_PTR) with (MIDISEQ_SPARE_BLOCK_PTR): two
 ; active / spare pointer pairs (MidiChan_InitAllBufferPtrs sets them up)
 	.equ MIDISEQ_ACTIVE_BUF_PTR,	0xbcac	; the active buffer; read at 220 sites
 	.equ MIDISEQ_SPARE_BUF_PTR,	0xbcb0	; the one MidiSeq_SwapActiveBuffers exchanges it with
@@ -62,8 +62,8 @@
 	.equ PALETTE_INDEX_CACHED,	0x3ef9e	; current palette index (cached); a pending update is checked here
 	.equ PALETTE_UPDATE_FLAG,	0x30460	; set to 1 to trigger the VRAM palette update
 	.equ DIRTY_BBOX,		0x30456	; dirty bounding box Gfx_BlitDirtyRegions examines
-; ColorBlit / ColorBlit2 (ui/ui_window_procs.s): the caller's (0x3EFA8) is copied to (0x3EFAA) -- or
-; into the deferred draw-queue entry -- and ColorBlit_Impl dispatches on (0x3EFAA): 2 -> ColorBlit_Mode2_Entry,
+; ColorBlit / ColorBlit2 (ui/ui_window_procs.s): the caller's (COLORBLIT_MODE) is copied to (COLORBLIT_MODE_ACTIVE) -- or
+; into the deferred draw-queue entry -- and ColorBlit_Impl dispatches on (COLORBLIT_MODE_ACTIVE): 2 -> ColorBlit_Mode2_Entry,
 ; 1 -> ColorBlit_Mode1_Entry, 0 -> the mode-0 path
 	.equ COLORBLIT_MODE,		0x3efa8	; the blit mode the next ColorBlit uses, 0..2 (set by ~150 drawing sites)
 	.equ COLORBLIT_MODE_ACTIVE,	0x3efaa	; the mode ColorBlit_Impl is running with

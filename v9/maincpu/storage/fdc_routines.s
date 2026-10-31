@@ -24,7 +24,7 @@ FDC_Read_Status:
 
 ; FDC_ReadDataRegister: Reads the uPD72068 data register (0x11000A) into L: result-phase bytes and status bytes.
 ;   Basis: callers + body -- the result-phase readers (FDC_ResultPhase_Read, FDC_SendAuxCmdReadResult,
-;   FDC_INTERRUPT_HANDLER, INT4_ReadResultLoop, FDC_CONFIG_VERIFY) call it after waiting for RQM.
+;   FDC_CmdSenseDriveStatus, INT4_ReadResultLoop, FDC_CONFIG_VERIFY) call it after waiting for RQM.
 FDC_ReadDataRegister:
 	ld l, (0x11000a:24)
 	ret
@@ -1150,8 +1150,8 @@ FDC_SendParams_Specify:
 	or	a, c
 	extz	wa
 	jrl	FDC_SendParameterByte
-; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8A2E & 7), SC (0x8A32), GPL (0x8A33) and filler D
-;   (0x8A34) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
+; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8A2E & 7), SC (FDC_FORMAT_SC), GPL (FDC_FORMAT_GPL) and filler D
+;   (FDC_FORMAT_FILL) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
 ;   (FORMAT TRACK) after the unit/head byte; FDC_MODE_CONFIG fills 0x8A2E/0x8A33/0x8A34 (N, gap 80/108/116, fill
 ;   0xE5); bootloader twin FDC_SendParams_Format.
 FDC_SendParams_Format:
@@ -1175,8 +1175,8 @@ FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
-; FDC_SendParams_ReadWrite: Sends the data-command parameters C (0x8A2B), H (0x8A2C & 1), R (0x8A2D), N (0x8A2E & 7),
-;   EOT (0x8A2F), GPL (0x8A30), then DTL (0x8A31) -- or STP ((0x8A35) & 3) for the scan opcodes 0xD1/0xD9/0xDD --
+; FDC_SendParams_ReadWrite: Sends the data-command parameters C (FDC_PARAM_C), H (0x8A2C & 1), R (FDC_PARAM_R), N (0x8A2E & 7),
+;   EOT (FDC_PARAM_EOT), GPL (FDC_PARAM_GPL), then DTL (FDC_PARAM_DTL) -- or STP ((FDC_PARAM_STP) & 3) for the scan opcodes 0xD1/0xD9/0xDD --
 ;   through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for every opcode not handled
 ;   earlier (READ/WRITE DATA 0xC6/0xC5 among them); bootloader twin FDC_SendParams_ReadWrite.
 FDC_SendParams_ReadWrite:
@@ -1396,15 +1396,15 @@ FDC_InitSequence_Full:
 
 ; --- FDC_CmdRecalibrate (formerly FDC_SeekRecalibrate): recalibrate to track 0 ---
 ; Renamed to match its bootloader twin FDC_CmdRecalibrate (table_data/
-; boot_fdc_driver.s): saves the caller's target track (0x8a36) in QIZH, seeks
+; boot_fdc_driver.s): saves the caller's target track (FDC_TARGET_TRACK) in QIZH, seeks
 ; to track 5 first (head-load settling), then issues RECALIBRATE (0x07) and
-; waits for the result; on failure invalidates the track cache (0x8b04).
+; waits for the result; on failure invalidates the track cache (FDC_CURRENT_CYLINDER).
 ; The raw block below also contains the SEEK command handler at 0xf97696,
 ; reached through the .set alias FDC_CmdSeek (renamed from the misnomer
 ; FDC_STATUS_HANDLER -- it reads and writes no status register).  Verified
 ; instruction-for-instruction against its bootloader twin FDC_CmdSeek in
-; table_data/boot_fdc_driver.s: compare the target track (0x8a36) against
-; the track cache (0x8b04) and return if equal, delay (WA=2), clear the
+; table_data/boot_fdc_driver.s: compare the target track (FDC_TARGET_TRACK) against
+; the track cache (FDC_CURRENT_CYLINDER) and return if equal, delay (WA=2), clear the
 ; result buffer, LD WA,0x000F (= FDC SEEK opcode 0x0F), issue the command,
 ; wait for the result, set the track cache to 0xFF on error, then settle
 ; (WA=0x10; the delay routine busy-waits WA/2 ticks).
@@ -1718,7 +1718,7 @@ FDC_MODE_CONFIG:
 	calr	FDC_PRE_OP_CHECK
 	cp	(FDC_ERROR_CODE:16), 0
 	jrl	nz, FDC_MC_EXIT
-	calr	FDC_INTERRUPT_HANDLER
+	calr	FDC_CmdSenseDriveStatus
 	cp	(FDC_ERROR_CODE:16), 0
 	jrl	nz, FDC_MC_EXIT
 	calr	FDC_CmdRecalibrate
@@ -1755,7 +1755,7 @@ FDC_MODE_CONFIG_Join:
 	jr	FDC_MODE_CONFIG_Join2
 FDC_MODE_CONFIG_Loop:
 	ldmm8	0x8a12, FDC_TARGET_TRACK
-	calr	FDC_MODE_CONFIG_Helper2
+	calr	FDC_FormatOneTrack
 	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_MC_EXIT
 	ld	a, (FDC_HEAD:16)
@@ -1789,7 +1789,13 @@ FDC_MC_EXIT:
 	calr	FDC_CmdRecalibrate
 	ld	(FDC_CURRENT_CYLINDER:16), 255
 	ret
-FDC_MODE_CONFIG_Helper2:
+; FDC_FormatOneTrack: Formats one side of the current track: seeks (FDC_CmdSeek; on an error leaves through
+;   FDC_CONFIG_VERIFY), builds the C/H/R/N ID-field list in the buffer at (FDC_FORMAT_IDS) (FDC_MC_EXIT_Code_Helper2), sets
+;   command 0x4D (MF FORMAT TRACK) in 0x8A28, points the DMA address 0x8A4C at the list and runs the transfer and
+;   command (FDC_Setup_DMA_Mode, FDC_MC_EXIT_Code_Helper, FDC_MC_EXIT_Code_Join2). Basis: callers + body --
+;   FDC_MODE_CONFIG (handler 5, the format command in technics-docs fdc-subsystem.md) calls it once per track and
+;   head; the bootloader's copy of the same code is FDC_FormatOneTrack in table_data/boot_fdc_driver.s.
+FDC_FormatOneTrack:
 	calr	FDC_CmdSeek
 	cp	(FDC_ERROR_CODE:16), 0
 	jrl	nz, FDC_CONFIG_VERIFY
@@ -2014,41 +2020,44 @@ FDC_OUTPUT_CTRL_Skip2:
 FDC_OUTPUT_CTRL_Join:
 	ld	(FDC_DISK_CHANGED:16), 0
 	ret
-; --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
-; Enables interrupts via prevbank (D7 FA 04 = ei 4).
-; Checks FDC status register, reads result data.
-; Tests status bits to determine result type:
-;   bit 7 -> status 0x32 (overrun), bit 5 -> status 0x31 (no data),
-;   bit 6 -> status 0x2f (bad cylinder).
-; Disables interrupts (D7 FA 05 = di 4) before return.
-FDC_INTERRUPT_HANDLER:
+; --- FDC_CmdSenseDriveStatus: FDC command 11, SENSE DRIVE STATUS ---
+; Sends the uPD72068 command byte 0x04 (FDC_CMD_SEND), waits for the result phase
+; (FDC_Wait_Ready_Timeout) and reads ST3 (FDC_ReadDataRegister) into QIZH (previous
+; bank register 0xfb), then raises FDC_Set_Status for each condition, the first one sticking:
+;   ST3 bit 7 (fault)            -> 0x32 equipment check / fault,
+;   ST3 bit 5 (ready) clear      -> 0x31 drive not ready,
+;   ST3 bit 6 (write-protected)  -> 0x2f write-protected.
+; Returns at once if FDC_ERROR_CODE is already set.  No ei / di: QIZ is saved with push qiz.
+; Callers: FDC_MODE_CONFIG (before recalibrating) and FDC_HANDLER_11 (command 11).
+; Twin: table_data FDC_CmdSenseDriveStatus (boot_fdc_driver.s).
+FDC_CmdSenseDriveStatus:
 	push	qiz
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr	nz, FDC_CmdSenseDriveStatus_Done
 	ld	wa, 4:i3
 	calr	FDC_CMD_SEND
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr	nz, FDC_CmdSenseDriveStatus_Done
 	calr	FDC_Wait_Ready_Timeout
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr	nz, FDC_CmdSenseDriveStatus_Done
 	calr	FDC_ReadDataRegister
 	ldfr_berp l, 251
 	bit_erpb 251, 7
-	jr z, FDC_INTERRUPT_HANDLER_Code_Skip
+	jr z, FDC_CmdSenseDriveStatus_CheckReady
 	ldw	wa, 50
 	calr	FDC_Set_Status
-FDC_INTERRUPT_HANDLER_Code_Skip:
+FDC_CmdSenseDriveStatus_CheckReady:
 	bit_erpb 251, 5
-	jr nz, FDC_INTERRUPT_HANDLER_Code_Skip2
+	jr nz, FDC_CmdSenseDriveStatus_CheckWP
 	ldw	wa, 49
 	calr	FDC_Set_Status
-FDC_INTERRUPT_HANDLER_Code_Skip2:
+FDC_CmdSenseDriveStatus_CheckWP:
 	bit_erpb 251, 6
-	jr z, FDC_INTERRUPT_HANDLER_Code_Epilogue
+	jr z, FDC_CmdSenseDriveStatus_Done
 	ldw	wa, 47
 	calr	FDC_Set_Status
-FDC_INTERRUPT_HANDLER_Code_Epilogue:
+FDC_CmdSenseDriveStatus_Done:
 	pop qiz
 	ret
 
@@ -2134,7 +2143,7 @@ FDC_CommandEntry_CopyParams:
 	; (EQU->inline label) FDC_CMD_DISABLE = 0xf97c4b
 	; (EQU->inline label) FDC_STATUS_COPY = 0xf97c54
 	; (EQU->inline label) FDC_OUTPUT_CTRL = 0xf97c5b
-	; (EQU->inline label) FDC_INTERRUPT_HANDLER = 0xf97c7c
+	; (EQU->inline label) FDC_CmdSenseDriveStatus = 0xf97c7c
 
 ; Forward references to helper routines in raw byte sections
 	; (EQU->inline label) FDC_DRIVE_DETECT = 0xf97544
@@ -2205,7 +2214,7 @@ FDC_HANDLER_10:
 
 FDC_HANDLER_11:
 	calr FDC_CMD_ENABLE
-	calr FDC_INTERRUPT_HANDLER
+	calr FDC_CmdSenseDriveStatus
 	jr FDC_Handler_ExitStatus
 
 FDC_Handler_InvalidCommand:
@@ -2353,10 +2362,11 @@ INT4_ExitRestore:
 	reti
 
 
-Reset_Floppy_Disk_Controller:
-; I am not entirely sure yet, but it looks like FDC initialization code...
-
-	; reset FDC by toggling Port D bit 0
+; FDC_PulseResetLine: holds the floppy controller in hardware reset for 10 ticks: Port D bit 0 is the
+;   FDCRST line (service manual p. 32, CPU SECTION (A): IC5 TMP94C241F pin 12 PD0 -> FDCRST to the FDC;
+;   notes/kn5000-a-2026-10-31/probes/sm_pd0_net.py renders the crop), set, SOME_DELAY 10, cleared, SOME_DELAY 10.
+;   Twin of the boot loader's FDC_PulseResetLine (table_data/boot_disk_probe.s).
+FDC_PulseResetLine:
 	set	0, (PD:8)
 	ldw wa, 0xa
 	calr SOME_DELAY
@@ -2364,7 +2374,6 @@ Reset_Floppy_Disk_Controller:
 	ldw wa, 0xa
 	jrl SOME_DELAY
 
-	; then do a lot of other stuff I still don't undertsand:
 
 ; FDTest_ProbeDiskFormat: Main-CPU twin of the bootloader's FDC_ProbeDiskFormat (table_data/boot_disk_probe.s): sets
 ;   PHFC = 0x1E, returns when Port D bit 6 is set (no disk), else submits through FDC_CommandEntry the request block

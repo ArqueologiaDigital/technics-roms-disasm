@@ -1718,7 +1718,7 @@ SLDstBankList_FuncBody_Skip2:
 	ld	a, e
 	ld	c, l
 	add	a, l
-	cp a, (SLDstBankList_FuncBody_Data_3:24)
+	cp a, (SingleLoadDst_PanelMemEntryCount:24)
 	jr	nc, SingleLoadDst_PanelMemListProc_Skip3
 	add	c, e
 	ld	(35146:16), c
@@ -1772,7 +1772,7 @@ SingleLoadDst_PanelMemListProc_Skip5:
 	ld	c, l
 	ld	a, l
 	inc	1, a
-	cp a, (SLDstBankList_FuncBody_Data_3:24)
+	cp a, (SingleLoadDst_PanelMemEntryCount:24)
 	jr	nc, SingleLoadDst_PanelMemListProc_Skip6
 	ld	e, (SingleLoadDst_PanelMemBankSize:24)
 	ld	l, e
@@ -1917,7 +1917,7 @@ SLDstBankList_FuncBody_Helper7:
 	ret
 ; SingleLoadDst_SequencerListProc: Single-load destination list for area 1 SEQUENCER: EVT_PAINT blanks rows 0/3 and
 ;   draws 'SONG: n' + slot label (SLDstBankList_FuncBody_Helper2, BuildSlotLabel); parameter 8 steps the song number
-;   RAM 0x8A04 up to SLDstBankList_FuncBody_Data_6; parameter 10 returns SLDstBankList_FuncBody_Helper8(song); entry
+;   RAM 0x8A04 up to SingleLoadDst_ComposerEntryCount; parameter 10 returns SLDstBankList_FuncBody_Helper8(song); entry
 ;   [1] of SingleLoadDst_AreaListProcs and CmpSingleLoadDst_AreaListProcs, called with XWA = file-name box, XBC =
 ;   event, XDE = parameter
 SingleLoadDst_SequencerListProc:
@@ -1961,7 +1961,7 @@ SLDstBankList_FuncBody_Skip12:
 	ld	c, w
 	ld	a, w
 	inc	1, a
-	cp a, (SLDstBankList_FuncBody_Data_5:24)
+	cp a, (SingleLoadDst_SequencerSongCount:24)
 	jr	nc, SingleLoadDst_SequencerListProc_Skip11
 	inc	1, c
 	ld	(35148:16), c
@@ -2149,7 +2149,7 @@ SLDstBankList_FuncBody_Skip19:
 	ld	a, e
 	ld	c, l
 	add	a, l
-	cp a, (SLDstBankList_FuncBody_Data_6:24)
+	cp a, (SingleLoadDst_ComposerEntryCount:24)
 	jr	nc, SingleLoadDst_ComposerListProc_Skip16
 	add	c, e
 	ld	(35150:16), c
@@ -2203,7 +2203,7 @@ SingleLoadDst_ComposerListProc_Skip18:
 	ld	c, l
 	ld	a, l
 	inc	1, a
-	cp a, (SLDstBankList_FuncBody_Data_6:24)
+	cp a, (SingleLoadDst_ComposerEntryCount:24)
 	jr	nc, SingleLoadDst_ComposerListProc_Skip19
 	ld	e, (SingleLoadDst_ComposerBankSize:24)
 	ld	l, e

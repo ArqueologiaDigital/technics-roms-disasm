@@ -14072,7 +14072,7 @@ SqedtFunc_OnGetFmString:
 	lda xix, (SqedtFunc_FmString_OnTitleSqnotecng:24)
 	jp	t, (xix+hl)
 ; SqedtFunc_FmString_OnTitleSqnotecng: SqedtFunc's EVT_GET_FM_STRING case on title TT_SQNOTECNG (0x9F): formats the
-;   from-measure word 9744 (0x2610) with Sqedt_ParamDispatch_Str. Basis: callers + body -- entry 3 of the title switch
+;   from-measure word 9744 (SQEDT_NOTECNG_FROM) with Sqedt_ParamDispatch_Str. Basis: callers + body -- entry 3 of the title switch
 ;   in SqedtFunc_OnGetFmString; MainExeCall_OnTitleSqnotecng reads the same word as the first measure.
 SqedtFunc_FmString_OnTitleSqnotecng:
 	pushm (SQEDT_NOTECNG_FROM:16)
@@ -14099,7 +14099,7 @@ SqedtFunc_FmString_OnTitleSqvelocng:
 	ld	xwa, Sqedt_ParamDispatch_Str_4
 	jr	SqedtFunc_FmString_OnTitleSqadvdly_Join2
 ; SqedtFunc_FmString_OnTitleSqadvdly: SqedtFunc's EVT_GET_FM_STRING case for TT_SQADVDLY (0xA0), also the switch
-;   default (title 0xA2 SQMCP and titles outside 0x9C..0xA3): formats the from-measure word 9734 (0x2606). Basis:
+;   default (title 0xA2 SQMCP and titles outside 0x9C..0xA3): formats the from-measure word 9734 (SQEDT_ADVDLY_FROM). Basis:
 ;   callers + body -- entries 4 and 6 and the range checks of SqedtFunc_OnGetFmString's title switch;
 ;   MainExeCall_OnTitleSqadvdly reads 9734 as its first measure.
 SqedtFunc_FmString_OnTitleSqadvdly:
@@ -14122,7 +14122,7 @@ SqedtFunc_OnGetLmString:
 	lda xix, (SqedtFunc_LmString_OnTitleSqnotecng:24)
 	jp	t, (xix+hl)
 ; SqedtFunc_LmString_OnTitleSqnotecng: SqedtFunc's EVT_GET_LM_STRING case on title TT_SQNOTECNG (0x9F): formats the
-;   last-measure word 9746 (0x2612) with Sqedt_ParamDispatch_Str_6. Basis: callers + body -- entry 3 of the title
+;   last-measure word 9746 (SQEDT_NOTECNG_LAST) with Sqedt_ParamDispatch_Str_6. Basis: callers + body -- entry 3 of the title
 ;   switch in SqedtFunc_OnGetLmString; MainExeCall_OnTitleSqnotecng reads 9746 as the last measure.
 SqedtFunc_LmString_OnTitleSqnotecng:
 	pushm (SQEDT_NOTECNG_LAST:16)
@@ -14149,7 +14149,7 @@ SqedtFunc_LmString_OnTitleSqvelocng:
 	ld	xwa, Sqedt_ParamDispatch_Str_10
 	jr	SqedtFunc_LmString_OnTitleSqadvdly_Join
 ; SqedtFunc_LmString_OnTitleSqadvdly: SqedtFunc's EVT_GET_LM_STRING case for TT_SQADVDLY (0xA0), also the switch
-;   default (title 0xA2 SQMCP and titles outside 0x9C..0xA3): formats the last-measure word 9736 (0x2608). Basis:
+;   default (title 0xA2 SQMCP and titles outside 0x9C..0xA3): formats the last-measure word 9736 (SQEDT_ADVDLY_LAST). Basis:
 ;   callers + body -- entries 4 and 6 and the range checks of SqedtFunc_OnGetLmString's title switch;
 ;   MainExeCall_OnTitleSqadvdly reads 9736 as its last measure.
 SqedtFunc_LmString_OnTitleSqadvdly:
@@ -14516,7 +14516,7 @@ SqedtFunc_OnGetScpTtrString_Join2:
 	jrl	SqedtFunc_ModeC_Entry
 
 ; SqedtFunc dispatch case 0
-; SqedtFunc_OnGetSclrNoString: EVT_GET_SCLR_NO_STRING: copies the 6-char "SONG n" label of song-clear song (0x2878)
+; SqedtFunc_OnGetSclrNoString: EVT_GET_SCLR_NO_STRING: copies the 6-char "SONG n" label of song-clear song (SEQ_SONG)
 ;   from Sqedt_ParamDispatch_Table_2 (blank for 10).
 SqedtFunc_OnGetSclrNoString:
 	ld xwa, (xsp + 8)
@@ -14863,7 +14863,7 @@ SqedtFunc_OnChkCur2:
 	lda	xix, (SqedtFunc_OnChkCur2_McpTrAFields:24)
 	jp	t, (xix+wa)
 ; SqedtFunc_OnChkCur2_McpTrAFields: Fields 15-17 (measure-copy track A, from measure, last measure): EVT_CHK_CUR2 is
-;   true when side 0x3E2E0 = 0 and the from-cursor (0x3E2DC) = field - 15. Basis: callers + body -- cases 15-17 of
+;   true when side 0x3E2E0 = 0 and the from-cursor (SQEDT_FROM_CURSOR) = field - 15. Basis: callers + body -- cases 15-17 of
 ;   SqedtFunc_OnChkCur2's field switch (siblings McpTrBFields 18-20, MinsTrAFields 21-23, MinsTrBFields 24-26,
 ;   ScpFromFields, ScpToFields).
 SqedtFunc_OnChkCur2_McpTrAFields:
@@ -14872,28 +14872,28 @@ SqedtFunc_OnChkCur2_McpTrAFields:
 	ld	xwa, 15
 	jr	SqedtFunc_OnChkCur2_ScpFromFields_Join2
 ; SqedtFunc_OnChkCur2_McpTrBFields: Fields 18-20 (measure-copy TrB, SM, Rep): true when side 0x3E2E0 = 1 and the to-
-;   cursor (0x3E2DE) = field - 18.
+;   cursor (SQEDT_TO_CURSOR) = field - 18.
 SqedtFunc_OnChkCur2_McpTrBFields:	; cases 18, 19, 20
 	cp	(SQEDT_CURSOR_SIDE:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 18
 	jr	SqedtFunc_OnChkCur2_ScpToFields_Join3
 ; SqedtFunc_OnChkCur2_MinsTrAFields: Fields 21-23 (measure-insert TrA, FM, LM): true when side 0x3E2E0 = 0 and the
-;   from-cursor (0x3E2DC) = field - 21.
+;   from-cursor (SQEDT_FROM_CURSOR) = field - 21.
 SqedtFunc_OnChkCur2_MinsTrAFields:	; cases 21, 22, 23
 	cp	(SQEDT_CURSOR_SIDE:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 21
 	jr	SqedtFunc_OnChkCur2_ScpFromFields_Join2
 ; SqedtFunc_OnChkCur2_MinsTrBFields: Fields 24-26 (measure-insert TrB, SM, Rep): true when side 0x3E2E0 = 1 and the
-;   to-cursor (0x3E2DE) = field - 24.
+;   to-cursor (SQEDT_TO_CURSOR) = field - 24.
 SqedtFunc_OnChkCur2_MinsTrBFields:	; cases 24, 25, 26
 	cp	(SQEDT_CURSOR_SIDE:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp
 	ld	xwa, 24
 	jr	SqedtFunc_OnChkCur2_ScpToFields_Join3
 ; SqedtFunc_OnChkCur2_ScpFromFields: Fields 27-28 (song-copy from-song, from-track): true when side 0x3E2E0 = 0 and
-;   the from-cursor (0x3E2DC) = field - 27.
+;   the from-cursor (SQEDT_FROM_CURSOR) = field - 27.
 SqedtFunc_OnChkCur2_ScpFromFields:	; cases 27, 28
 	cp	(SQEDT_CURSOR_SIDE:24), 0
 	jrl	nz, SeqFunc_ReturnZeroJmp
@@ -14908,7 +14908,7 @@ SqedtFunc_OnChkCur2_ScpFromFields_Join2:
 	extz	xhl
 	jr	SqedtFunc_Epilogue12
 ; SqedtFunc_OnChkCur2_ScpToFields: Fields 29-30 (song-copy to-song, to-track): true when side 0x3E2E0 = 1 and the to-
-;   cursor (0x3E2DE) = field - 29.
+;   cursor (SQEDT_TO_CURSOR) = field - 29.
 SqedtFunc_OnChkCur2_ScpToFields:	; cases 29, 30
 	cp	(SQEDT_CURSOR_SIDE:24), 1
 	jrl	nz, SeqFunc_ReturnZeroJmp

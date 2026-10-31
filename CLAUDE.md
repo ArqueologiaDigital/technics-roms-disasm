@@ -1506,7 +1506,7 @@ All code and data references must use symbolic labels, never raw numeric address
 - **Mid-instruction addresses:** When a pointer targets a byte inside a multi-byte instruction (not an entry point), define it as `.set LABEL, ParentLabel + N` with a comment explaining the mid-structure offset.
 
 ### 2. Lowercase Hex (STRICT)
-All hex values must use lowercase `a-f`. Applies to `.byte`, `.long`, instruction immediates, and hex in comments. Does NOT apply to hex digits in symbol names (e.g., `NAKA_TYPE_0x5D` keeps its case).
+All hex values must use lowercase `a-f`. Applies to `.byte`, `.long`, instruction immediates, and hex in comments. Does NOT apply to hex digits in symbol names (e.g., `Kubo_ResEventCount_1C8` keeps its case).
 
 ### 3. Tab-After-Mnemonic Formatting (STRICT)
 All instruction lines must use tab between mnemonic and operand: `	call	LABEL`, not `	call LABEL`. This ensures cross-version diffs show only semantic differences, not whitespace noise.

@@ -14,12 +14,12 @@
 ;
 ; Reader: MidiStream_DispatchLoop (0xFCC868, audio/audio_control_engine.s),
 ; entered from MidiStream_ProcessRxBuffer (0xFCC856):
-;     ld xix, 0xc039 / ld hl, (0x9133) / ld a, (xix+hl)    record type byte
+;     ld xix, 0xc039 / ld hl, (EXT_RECORD_OFFSET) / ld a, (xix+hl)    record type byte
 ;     cp a, 0xff -> done;  cp a, 0xbf / jr ugt -> skip       types 0x00-0xBF
 ;     extz wa / sll wa, 2 / ld xiy, MidiStream_PanelEventHandlerTable
 ;     ld xiy, (xiy + wa) / cp xiy, 0xffffffff / jr z -> skip
 ;     BC = record word 0 -> (0x915B), DE = record word 1 -> (0x915D)
-;     call (xiy);  then (0x9133) += 4 and loop
+;     call (xiy);  then (EXT_RECORD_OFFSET) += 4 and loop
 ; So the RX buffer at RAM 0xC039 holds 4-byte records, byte 0 is the record
 ; type, and entry <type> of this table is its handler; 0xFFFFFFFF = no
 ; handler, the record is skipped.  Stride 4 = `sll wa, 2`; count 192 = the

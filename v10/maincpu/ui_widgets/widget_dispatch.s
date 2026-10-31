@@ -1144,13 +1144,13 @@ SndParam_WriteHandlers:
 ; (`ldl_da xwa,(<this>+0x120)`).  Entries 0-22 equal PartRecord_RamPtrTable's
 ; (0xF9B6 + 0x1A*i).  256 entries = exactly up to the string that follows.
 SndParam_BlockRamPtrs:
-	.long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04	; 0x00
-	.long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa6c	; 0x04
-	.long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4	; 0x08
-	.long 0x0000faee, 0x0000fb08, 0x0000fb22, 0x0000fb3c	; 0x0C
-	.long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4	; 0x10
-	.long 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, 0x0000fd62	; 0x14
-	.long 0x0000fd7c, 0x0000fc0c, 0x00000000, 0x00000000	; 0x18
+	.long PANEL_PART_RT1, PANEL_PART_RT2, PANEL_PART_LEFT, PANEL_PART_PT4	; 0x00
+	.long PANEL_PART_PT5, PANEL_PART_PT6, PANEL_PART_PT7, PANEL_PART_PT8	; 0x04
+	.long PANEL_PART_PT9, PANEL_PART_PT10, PANEL_PART_PT11, PANEL_PART_PT12	; 0x08
+	.long PANEL_PART_PT13, PANEL_PART_PT14, PANEL_PART_PT15, PANEL_PART_PT16	; 0x0C
+	.long PANEL_PART_ACP1, PANEL_PART_ACP2, PANEL_PART_ACP3, PANEL_PART_BASS	; 0x10
+	.long PANEL_PART_DRUM, PANEL_PART_CHRD, PANEL_PART_RTBS, PANEL_PART_MSP	; 0x14
+	.long PANEL_PART_18, PANEL_PART_CTRL, 0x00000000, 0x00000000	; 0x18
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x1C
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x20
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x24
@@ -1160,34 +1160,34 @@ SndParam_BlockRamPtrs:
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x34
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x38
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x3C
-	.long 0x00000000, 0x00000000, 0x00000000, 0x0000fc54	; 0x40
-	.long 0x0000fc26, 0x0000fc32, 0x0000fc3e, 0x0000fc4a	; 0x44
+	.long 0x00000000, 0x00000000, 0x00000000, PANEL_MIC	; 0x40
+	.long PANEL_DRAWBAR_RIGHT1, PANEL_DRAWBAR_RIGHT2, PANEL_DRAWBAR_LEFT, PANEL_VOCALIST	; 0x44
 ; SndParam_StyleRecordRamPtr: Entry 0x48 of SndParam_BlockRamPtrs = 0xFC5A, the RAM address of panel record 0x48
 ;   (style + tempo). SndParam_GetStyleTempoClamped and SndParam_GetStyleTempoClamped2 load it directly and clamp the record's +8
 ;   word (& 0x1FF) to 40..300: the tempo. Basis: readers + bytes -- `ld xwa, (<this>); ld hl, (xwa+8)`;
 ;   SeqTimer_PostTempoUpdate writes the tempo to 0xFC62 = 0xFC5A + 8 via record 0x48 field 8.
 SndParam_StyleRecordRamPtr:
-	.long 0x0000fc5a, 0x0000ff92, 0x00000000, 0x00000000	; 0x48
+	.long PANEL_STYLE, PANEL_VARI_STYLE, 0x00000000, 0x00000000	; 0x48
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x4C
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x50
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x54
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x58
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x5C
-	.long 0x0000fc6e, 0x0000fc74, 0x00000000, 0x0000fc8e	; 0x60
-	.long 0x0000fca8, 0x0000fcc2, 0x0000fcdc, 0x00000000	; 0x64
-	.long 0x0000fcf6, 0x00000000, 0x00000000, 0x00000000	; 0x68
+	.long PANEL_EFFECT_SWITCHES, PANEL_DSP_EFFECT, 0x00000000, PANEL_DIGITAL_REVERB	; 0x60
+	.long PANEL_EQUALIZER, PANEL_ACOUSTIC_ILLUSION, PANEL_MIC_REVERB, 0x00000000	; 0x64
+	.long PANEL_REC_68, 0x00000000, 0x00000000, 0x00000000	; 0x68
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x6C
-	.long 0x0000fd02, 0x0000fd2c, 0x0000fd0c, 0x00000000	; 0x70
+	.long PANEL_PLAY_SETTINGS, PANEL_PMEMOUT_L, PANEL_MSP, 0x00000000	; 0x70
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x74
-	.long 0x0000f9a2, 0x00000000, 0x00000000, 0x00000000	; 0x78
+	.long PANEL_STYLIST_NAME, 0x00000000, 0x00000000, 0x00000000	; 0x78
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x7C
-	.long 0x0000fd50, 0x00000000, 0x00000000, 0x00000000	; 0x80
+	.long PANEL_MIDI, 0x00000000, 0x00000000, 0x00000000	; 0x80
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x84
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x88
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x8C
-	.long 0x0000fc66, 0x0000fdaa, 0x0000fd1c, 0x0000fdb6	; 0x90
+	.long PANEL_CONDUCTOR, PANEL_GM, PANEL_SCALE_TUNE, PANEL_TOUCH	; 0x90
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x94
-	.long 0x0000fd96, 0x0000fd30, 0x0000ffa4, 0x00000000	; 0x98
+	.long PANEL_PMEM_SETTINGS, PANEL_FOOT_CONTROLLERS, PANEL_REC_9A, 0x00000000	; 0x98
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0x9C
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xA0
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xA4
@@ -1197,13 +1197,13 @@ SndParam_StyleRecordRamPtr:
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xB4
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xB8
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xBC
-	.long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16	; 0xC0
-	.long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66	; 0xC4
-	.long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6	; 0xC8
-	.long 0x0000feca, 0x0000fede, 0x0000fef2, 0x0000ff06	; 0xCC
-	.long 0x0000ff1a, 0x0000ff2e, 0x0000ff42, 0x0000ff56	; 0xD0
-	.long 0x0000ff6a, 0x0000ff1a, 0x0000ff56, 0x0000ff7e	; 0xD4
-	.long 0x0000ff7e, 0x00000000, 0x00000000, 0x00000000	; 0xD8
+	.long PANEL_VARI_RT1, PANEL_VARI_RT2, PANEL_VARI_LEFT, PANEL_VARI_PT4	; 0xC0
+	.long PANEL_VARI_PT5, PANEL_VARI_PT6, PANEL_VARI_PT7, PANEL_VARI_PT8	; 0xC4
+	.long PANEL_VARI_PT9, PANEL_VARI_PT10, PANEL_VARI_PT11, PANEL_VARI_PT12	; 0xC8
+	.long PANEL_VARI_PT13, PANEL_VARI_PT14, PANEL_VARI_PT15, PANEL_VARI_PT16	; 0xCC
+	.long PANEL_VARI_ACP1, PANEL_VARI_ACP2, PANEL_VARI_ACP3, PANEL_VARI_BASS	; 0xD0
+	.long PANEL_VARI_DRUM, PANEL_VARI_ACP1, PANEL_VARI_BASS, PANEL_VARI_MSP	; 0xD4
+	.long PANEL_VARI_MSP, 0x00000000, 0x00000000, 0x00000000	; 0xD8
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xDC
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xE0
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000	; 0xE4
@@ -1964,7 +1964,7 @@ SysEx_Msg_3594:
 ; ld bc,5; call SeqBuf_FlushNoteOffs` queues the first 5 bytes; the rest is 0xFF padding.
 SysEx_Msg_359A:
 	.byte 0xf0, 0x50, 0x24, 0x7e, 0xf7, 0xff
-; MIDI system-exclusive bytes (0xF0 ...) sent by MidiPkt_ArpConfigChain_Data_Helper18 (0xFD7A34): `ld xwa,<this>;
+; MIDI system-exclusive bytes (0xF0 ...) sent by MidiPkt_SendGroupEnd (0xFD7A34): `ld xwa,<this>;
 ; ld bc,5; call SeqBuf_FlushNoteOffs` queues the first 5 bytes; the rest is 0xFF padding.
 SysEx_Msg_35A0:
 	.byte 0xf0, 0x50, 0x27, 0x7e, 0xf7, 0xff
@@ -2009,22 +2009,22 @@ SysEx_GmSystemOff:
 SysEx_Msg_35DC:
 	.byte 0xf0, 0x50, 0x2c, 0x01, 0x28, 0x12
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper2: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_LivePanel: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_35E2:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x20, 0x00, 0x00, 0x00, 0x0c, 0x40
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper3: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_PanelMemories: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_35EE:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x24, 0x00, 0x00, 0x04, 0x59, 0x30
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper5: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_SoundRamId: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_35FA:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x38, 0x00, 0x00, 0x00, 0x00, 0x10
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper6: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_SoundRamData: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_3606:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x38, 0x00, 0x10, 0x00, 0x5a, 0x50
@@ -2059,17 +2059,17 @@ SysEx_TechMsg_3640:
 SysEx_TechMsg_364C:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x61, 0x30, 0x00, 0xff
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper15: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_AccompAreaHeader: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_3656:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x48, 0x00, 0x00, 0x00, 0x00, 0x20
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper16: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_AccompBankTables: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_3662:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x48, 0x00, 0x20, 0x00, 0x01, 0x60
 ; SysEx F0 50 2D 01 28 12 + address/data (9 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper17: `ld xwa,<this>; ldw bc,9;
+; the rest).  MidiPkt_SendBlock_AccompBlockPool: `ld xwa,<this>; ldw bc,9;
 ; call SeqBuf_FlushNoteOffs`; trailing 0xFF is padding.
 SysEx_TechMsg_366E:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x48, 0x02, 0x00, 0xff
@@ -3312,7 +3312,7 @@ SysExRx_TrieRoot:
 MidiRx_ToneParam_ByteMap:
 	.byte 0, 1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 7, 7, 7, 8, 9, 9, 10, 11, 11, 11, 12
 ; 36 x u8 (0x20-0x23, 0x0F, one 0xFF).  MidiPkt_XferShowErrorMessage (0xFD759F):
-; `lda xbc,(<this>); ld (0x7F42),(xbc+hl)` -- copies the indexed byte to RAM.
+; `lda xbc,(<this>); ld (GLOBAL_ERROR_CODE),(xbc+hl)` -- copies the indexed byte to RAM.
 MidiRx_PartLookup_ByteMap:
 	.byte 0x23, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x22, 0x22, 0x22, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21
 	.byte 0x21, 0x21, 0x21, 0x21, 0x0f, 0x21, 0x20, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x20, 0x20, 0x21, 0xff
@@ -3799,11 +3799,11 @@ Midi_BankProgramTemplate:
 ; copies the 7 bytes (`ld xiy,<this>; ld bc,3; ldirw; ldi85`).
 Midi_AllOffTemplate:
 	.byte 0xb0, 0x7b, 0x00, 0x78, 0x00, 0x79, 0x00, 0xff
-; 0xF4 + pad: CompIface_SendActiveSensing_PC2 (0xFDBA28) passes it (`ld xde,<this>`)
+; 0xF4 + pad: CompIface_SendPortTypeByte_PC2 (0xFDBA28) passes it (`ld xde,<this>`)
 ; to the send routine at 0xEF32F4.
 CompIface_PortByte_F4:
 	.byte 0xf4, 0xff
-; 0xF5 + pad: CompIface_SendActiveSensing_PC1MAC (0xFDBA16) passes it the same way.
+; 0xF5 + pad: CompIface_SendPortTypeByte_PC1Mac (0xFDBA16) passes it the same way.
 CompIface_PortByte_F5:
 	.byte 0xf5, 0xff
 ; ToneKit sound parameter blocks (120 labels, 4226 bytes)
@@ -5521,7 +5521,7 @@ Naka_DisplayMode_Table:
 ;   SwbtWr_PostCallback_Loop (0xFDB3BC) then calls every entry of the post
 ;     list.  AssswbWr / SwbtWr_QueueMainEvent / SwbtWr fill the queues.
 ;   Callbacks read the event back from RAM: BitMapOut_ByteData_RenderD
-;     (bank 2, code 0x90) begins `cp (0xc080),0x90`.
+;     (bank 2, code 0x90) begins `cp (SWBTWR_EVENT_TYPE),0x90`.
 ; Pinned by scripts/generators/gen_swbt_listener_banks.py --probe: every list
 ; ends in 0xFFFFFFFF; tables + separators + lists + one trailing 0xFF
 ; partition the span; v9 == v10 byte-for-byte; v7 has the same layout with
@@ -6454,7 +6454,7 @@ SwbtB2_Code48_Listeners:
 	.long NotePool_DataBlock_8BA
 	.long UIState_KeyScan_Dispatch
 	.long BitMapOut_ByteData_RenderE
-	.long DSPCfg_ProcessInput
+	.long Fade_ParamListener
 	.long 0xffffffff
 SwbtB2_Code49_Listeners:	.long 0xffffffff
 SwbtB2_Code50_Listeners:	.long 0xffffffff
@@ -6529,7 +6529,7 @@ SwbtB2_Code70_Listeners:
 	.long HdaeRom_AltReadParam
 	.long PanelTag70_UpdateAudioConfig
 	.long UIState_KeyScan_Dispatch
-	.long DSPCfg_ProcessInput
+	.long Fade_ParamListener
 	.long 0xffffffff
 ; code 0x71: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code71_Listeners:
@@ -6592,7 +6592,7 @@ SwbtB2_Code98_Listeners:
 	.long MidiOut_RealtimeDispatch_Handler
 	.long UIState_KeyScan_Dispatch
 	.long BitMapOut_ByteData_TransitionSeq
-	.long DSPCfg_ProcessInput
+	.long Fade_ParamListener
 	.long 0xffffffff
 ; code 0x99: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code99_Listeners:
@@ -7167,7 +7167,7 @@ Bit16Mask_Table:
 	.short 0x0100, 0x0200, 0x0400, 0x0800, 0x1000, 0x2000, 0x4000, 0x8000
 ; 32 x u32 routine pointers indexed by RAM byte 0x8D34.  AudioModeChange_Handler
 ; (0xFDDE1A), AudioSubsystem_Callback (0xFDDE9A), AudioVoice_Callback (0xFDDF67)
-; and AudioVoiceReset_Handler (0xFDDFC1): `ldb_d8 a,(0x8d34); sla wa,2;
+; and AudioVoiceReset_Handler (0xFDDFC1): `ldb_d8 a,(CURRENT_MODE); sla wa,2;
 ; lda xbc,(<this>); ld_rrl xhl,xbc,wa`, skip (`ret z`) when the entry equals
 ; 0xFDECEF (AudioInit_MixFallbackDefault+5) -- no entry of this table does, so every
 ; entry is called -- else `call (xhl)`.
@@ -8142,27 +8142,27 @@ Harmony_FixedIntervals:
 ; Harmony_OctaveUpDown_Down: s8 12 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
 ;   SoundFX_Handler_9 (entry 10 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note - 12 (an octave
 ;   below) as one of its two harmony notes; its pair is {+12, -12}: an octave above and below. Basis: readers + bytes
-;   -- the only reader is SoundFX_Handler_9's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   -- the only reader is SoundFX_Handler_9's `ld e, (<this>); ld c, (HARMONY_REF_NOTE); sub c, e`.
 Harmony_OctaveUpDown_Down:	.byte	12
 ; Harmony_FourthOctaveDown_Fourth: s8 5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
 ;   SoundFX_Handler_10 (entry 11 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note - 5 (a fourth
 ;   below) as one of its two harmony notes; its pair is {-5, -12}: a fourth and an octave below. Basis: readers +
-;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (HARMONY_REF_NOTE); sub c, e`.
 Harmony_FourthOctaveDown_Fourth:	.byte	5
 ; Harmony_FourthOctaveDown_Octave: s8 12 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
 ;   SoundFX_Handler_10 (entry 11 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note - 12 (an octave
 ;   below) as one of its two harmony notes; its pair is {-5, -12}: a fourth and an octave below. Basis: readers +
-;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   bytes -- the only reader is SoundFX_Handler_10's `ld e, (<this>); ld c, (HARMONY_REF_NOTE); sub c, e`.
 Harmony_FourthOctaveDown_Octave:	.byte	12
 ; Harmony_SeventhFourthUp_Seventh: s8 -10 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
 ;   SoundFX_Handler_11 (entry 12 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note + 10 (a minor
 ;   seventh above) as one of its two harmony notes; its pair is {+10, +5}: a minor seventh and a fourth above. Basis:
-;   readers + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   readers + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (HARMONY_REF_NOTE); sub c, e`.
 Harmony_SeventhFourthUp_Seventh:	.byte	-10
 ; Harmony_SeventhFourthUp_Fourth: s8 -5 of Harmony_FixedIntervals, subtracted from the reference note RAM 0xCEAA:
 ;   SoundFX_Handler_11 (entry 12 of Harmony_HandlerTable, selected by RAM byte 0xE9BE) writes note + 5 (a fourth
 ;   above) as one of its two harmony notes; its pair is {+10, +5}: a minor seventh and a fourth above. Basis: readers
-;   + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (0xceaa); sub c, e`.
+;   + bytes -- the only reader is SoundFX_Handler_11's `ld e, (<this>); ld c, (HARMONY_REF_NOTE); sub c, e`.
 Harmony_SeventhFourthUp_Fourth:	.byte	-5
 ; 16 x u32 routine pointers, indexed by RAM byte 0xE9BE: UIParam_CallbackDispatch
 ; (0xFE8C1B) does `ld c,(0xe9be); sla bc,2; lda xde,(<this>); add xbc,xde;
@@ -9737,7 +9737,7 @@ RamInit_NormalSeventhPtrs:
 	.long StrNormal
 	.long StrSeventh
 ; Initial value of RAM 0x3DA0E: 16 x u32 pointers to the time-signature strings 1/2 .. 4/8.
-; Read from RAM by UI_COMPONENT_DISPATCH_CASE1 (0xF1A7E5): `ldb_d8 a,(0x34D8); sla wa,2; lda xbc,(0x3DA0E); ld_rrl`.
+; Read from RAM by UI_COMPONENT_DISPATCH_CASE1 (0xF1A7E5): `ldb_d8 a,(STYLE_SECTION_TIME_SIG); sla wa,2; lda xbc,(0x3DA0E); ld_rrl`.
 RamInit_TimeSigPtrs:
 	.long StrTimeSig_1_2
 	.long StrTimeSig_2_2

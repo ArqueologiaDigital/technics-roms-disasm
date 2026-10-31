@@ -16,8 +16,8 @@ extern const char NakaData_DescriptorPad1;
 extern const char NakaData_TechnichordBitmap2;
 extern const char NakaData_PerfStyleCode;
 extern const char LED_patterns_firmware_v8_plus;
-extern const char NAKA_TYPE_0x5D;
-extern const char NAKA_TYPE_0x61;
+extern const char NAKA_TYPE_DbMemoryDump;
+extern const char NAKA_TYPE_IvIntComplete;
 extern const char NakaContainer_SoundMenu_Root;
 extern const char NakaData_ModeConfig1;
 extern const char NakaInst_NEXT;
@@ -885,12 +885,12 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcLanguageText_t Other_AcLanguageText;
     /* element 15 of Viewable slot 0xEE "CheckMessage": Window (class id 0x01600035) */
     naka_cls_Window_t CheckMessage;
-    naka_slider_t w91;  /* NAKA_TYPE_SLIDER */
+    naka_slider_t w91;  /* NAKA_TYPE_EditSw */
     /* element 17 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
     naka_cls_AcRamBox_t CheckMessage_AcRamBox;
     /* element 18 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
     naka_cls_AcRamBox_t CheckMessage_AcRamBox_2;
-    naka_slider_t w92;  /* NAKA_TYPE_SLIDER */
+    naka_slider_t w92;  /* NAKA_TYPE_EditSw */
     /* element 20 of Viewable slot 0xEE "NoMessage": Window (class id 0x01600035) */
     naka_cls_Window_t NoMessage;
     /* element 21 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
@@ -6978,7 +6978,7 @@ const naka_technichord_part_t naka_technichord_part_data
     },
 
     .w91 = {
-        .header       = NAKA_HDR(NAKA_TYPE_SLIDER),
+        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
         .parent_idx     = 0x000F,
         .prev_sibling   = NAKA_NONE,
         .self_idx       = 0x0011,
@@ -7037,7 +7037,7 @@ const naka_technichord_part_t naka_technichord_part_data
     },
 
     .w92 = {
-        .header       = NAKA_HDR(NAKA_TYPE_SLIDER),
+        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
         .parent_idx     = 0x000F,
         .prev_sibling   = NAKA_NONE,
         .self_idx       = NAKA_NONE,

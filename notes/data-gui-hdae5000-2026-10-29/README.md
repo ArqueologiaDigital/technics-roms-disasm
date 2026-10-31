@@ -197,7 +197,10 @@ twins in `hdae5000/shared/naka_values.s`, in the same pass from the same v10 tab
    - Each tree line now ends in `; EN "<text>"`, and the menu map shows the text.
    - The generated names come from the texts (`HDDMENU_COPY_FD_TO_HARD_DISK`, `<button>_Text`).
 2. **Fonts / icons.** These are named by their dump names (`idCHARA1`, `idICON_i129`), which are
-   the firmware's own but terse. What each icon looks like is not in this lane's notes.
+   the firmware's own but terse. What each icon looks like is not in this lane's notes.  (Done 2026-10-31, lane kn5000-a: the 9 icons the HD-AE5000 trees use, and the KN5000's, carry a description
+   of what they show in `hdae5000/shared/naka_values.s` and in the menu maps here (generator
+   `scripts/generators/naka_icon_descriptions.json`).  The font names `idCHARA1` .. `idCHARA5W` are the firmware's
+   own font file names (`chara1.fnt` .. `chara5w.fnt`, Font_FileNamePtrTable); nothing better is in the ROM.)
 3. **The 0x0070xxxx words in the state block (explained in the follow-up).** They are the initial
    values of 29 of the 31 `SelectList.str_adr` variables, which are 4 bytes each, not the "8-byte
    records" an older note described. They are inert. Measured with `probes/str_adr_initial_values.py`:

@@ -381,7 +381,7 @@ SetWall_ACSlotChange:
 	jr nz, SetWall_ACSlot_IndexChange
 
 SetWall_ACSlot_CheckPanel:
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_GM+3:16)
 	jr z, SetWall_ACSlot_NoPanel
 	cp (3390:16), 3
 	jr nz, SetWall_ACSlot_PanelChange
@@ -1871,7 +1871,7 @@ SetWall_Replay_Done:
 	ret
 
 SetWall_SendPanelCtrl:
-	and (0xfdad:16), 254
+	and (PANEL_GM+3:16), 254
 
 	xor a, a
 
@@ -2200,16 +2200,16 @@ SetWall_Sync_CheckPanelBit:
 	call SeqTimer_PostTempoUpdate
 	cp (0xf23d:16), 255
 	jr z, SetWall_Sync_PanelOff
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_GM+3:16)
 	jr z, SetWall_Sync_FinalUpdate
-	and (0xfdad:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SetWall_Sync_PostEvent
 
 SetWall_Sync_PanelOff:
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SetWall_Sync_FinalUpdate
-	or (0xfdad:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SetWall_Sync_PostEvent:

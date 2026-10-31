@@ -395,96 +395,96 @@
 /* letter b, IconIDProc (IconIDProc_NameTable) */
 #define idICON_None              0x0000u
 #define idICON_Default           0x0001u
-#define idICON_i0                0x0002u
+#define idICON_i0                0x0002u  /* shows: two blue music-note cards */
 #define idICON_i1                0x0003u
-#define idICON_i2                0x0004u
+#define idICON_i2                0x0004u  /* shows: piano keyboard */
 #define idICON_i3                0x0005u
 #define idICON_i4                0x0006u
-#define idICON_i5                0x0007u
-#define idICON_i6                0x0008u
-#define idICON_i7                0x0009u
-#define idICON_i8                0x000Au
-#define idICON_i9                0x000Bu
-#define idICON_i10               0x000Cu
-#define idICON_i11               0x000Du
-#define idICON_i12               0x000Eu
+#define idICON_i5                0x0007u  /* shows: mixer faders with coloured knobs */
+#define idICON_i6                0x0008u  /* shows: stack of blank white pages */
+#define idICON_i7                0x0009u  /* shows: tuning fork with sound waves */
+#define idICON_i8                0x000Au  /* shows: yellow hand pressing a bar */
+#define idICON_i9                0x000Bu  /* shows: curved bar with a magenta fan sweep */
+#define idICON_i10               0x000Cu  /* shows: music note dissolving into dots */
+#define idICON_i11               0x000Du  /* shows: graph of two crossing curves */
+#define idICON_i12               0x000Eu  /* shows: chip labelled ROM ORIG */
 #define idICON_i13               0x000Fu
 #define idICON_i14               0x0010u
-#define idICON_i15               0x0011u
-#define idICON_i16               0x0012u
+#define idICON_i15               0x0011u  /* shows: drum kit */
+#define idICON_i16               0x0012u  /* shows: hand writing EDIT */
 #define idICON_i17               0x0013u
 #define idICON_i18               0x0014u
-#define idICON_i19               0x0015u
-#define idICON_i20               0x0016u
-#define idICON_i21               0x0017u
+#define idICON_i19               0x0015u  /* shows: two music notes, red and blue */
+#define idICON_i20               0x0016u  /* shows: framed piano-key section */
+#define idICON_i21               0x0017u  /* shows: music note between brackets */
 #define idICON_i22               0x0018u
-#define idICON_i23               0x0019u
-#define idICON_i24               0x001Au
-#define idICON_i25               0x001Bu
+#define idICON_i23               0x0019u  /* shows: MIDI DIN connector */
+#define idICON_i24               0x001Au  /* shows: page with an ON / OFF switch */
+#define idICON_i25               0x001Bu  /* shows: metronome */
 #define idICON_i26               0x001Cu
-#define idICON_i27               0x001Du
-#define idICON_i28               0x001Eu
-#define idICON_i29               0x001Fu
-#define idICON_i30               0x0020u
-#define idICON_i31               0x0021u
+#define idICON_i27               0x001Du  /* shows: guitar and piano split by a diagonal */
+#define idICON_i28               0x001Eu  /* shows: grid labelled PRESET */
+#define idICON_i29               0x001Fu  /* shows: music note with an arrow to a computer */
+#define idICON_i30               0x0020u  /* shows: GENERAL MIDI logo */
+#define idICON_i31               0x0021u  /* shows: sine wave on a screen */
 #define idICON_i32               0x0022u
 #define idICON_i33               0x0023u
 #define idICON_i34               0x0024u
 #define idICON_i35               0x0025u
 #define idICON_i36               0x0026u
-#define idICON_i37               0x0027u
+#define idICON_i37               0x0027u  /* shows: document page with a music note */
 #define idICON_i38               0x0028u
 #define idICON_i39               0x0029u
 #define idICON_i40               0x002Au
 #define idICON_i41               0x002Bu
-#define idICON_i42               0x002Cu
-#define idICON_i43               0x002Du
-#define idICON_i44               0x002Eu
+#define idICON_i42               0x002Cu  /* shows: floppy disk with L and a note (load) */
+#define idICON_i43               0x002Du  /* shows: floppy disk with S and a note (save) */
+#define idICON_i44               0x002Eu  /* shows: floppy disk labelled MIDI */
 #define idICON_i45               0x002Fu
 #define idICON_i46               0x0030u
-#define idICON_i47               0x0031u
-#define idICON_i48               0x0032u
-#define idICON_i49               0x0033u
-#define idICON_i50               0x0034u
-#define idICON_i51               0x0035u
-#define idICON_i52               0x0036u
-#define idICON_i53               0x0037u
+#define idICON_i47               0x0031u  /* shows: boxes NOM and EXP */
+#define idICON_i48               0x0032u  /* shows: yellow hand on a music note */
+#define idICON_i49               0x0033u  /* shows: SEQ. box with notes and signal waves */
+#define idICON_i50               0x0034u  /* shows: stopwatch */
+#define idICON_i51               0x0035u  /* shows: red boxing glove with notes */
+#define idICON_i52               0x0036u  /* shows: two footprints */
+#define idICON_i53               0x0037u  /* shows: treble clef with a 1 */
 #define idICON_i54               0x0038u
-#define idICON_i55               0x0039u
-#define idICON_i56               0x003Au
+#define idICON_i55               0x0039u  /* shows: score with check marks */
+#define idICON_i56               0x003Au  /* shows: SONGS with a loop arrow and a note */
 #define idICON_i57               0x003Bu
-#define idICON_i58               0x003Cu
-#define idICON_i59               0x003Du
-#define idICON_i60               0x003Eu
-#define idICON_i61               0x003Fu
-#define idICON_i62               0x0040u
-#define idICON_i63               0x0041u
-#define idICON_i64               0x0042u
-#define idICON_i65               0x0043u
+#define idICON_i58               0x003Cu  /* shows: spotlight */
+#define idICON_i59               0x003Du  /* shows: row of blue figures */
+#define idICON_i60               0x003Eu  /* shows: notes with diagonal up / down arrows */
+#define idICON_i61               0x003Fu  /* shows: brush sweeping notes */
+#define idICON_i62               0x0040u  /* shows: notes falling into a bin */
+#define idICON_i63               0x0041u  /* shows: note with up and down arrows */
+#define idICON_i64               0x0042u  /* shows: red and blue notes with arrows */
+#define idICON_i65               0x0043u  /* shows: key box C with notes */
 #define idICON_i66               0x0044u
-#define idICON_i67               0x0045u
-#define idICON_i68               0x0046u
-#define idICON_i69               0x0047u
-#define idICON_i70               0x0048u
-#define idICON_i71               0x0049u
-#define idICON_i72               0x004Au
+#define idICON_i67               0x0045u  /* shows: cocktail glass with two straws */
+#define idICON_i68               0x0046u  /* shows: cyan display with dashes */
+#define idICON_i69               0x0047u  /* shows: three linked boxes, the lower one blue */
+#define idICON_i70               0x0048u  /* shows: blue box between two white boxes */
+#define idICON_i71               0x0049u  /* shows: white box with a red arrow to a blue box */
+#define idICON_i72               0x004Au  /* shows: box with a red arrow down into a blue box */
 #define idICON_i73               0x004Bu
 #define idICON_i74               0x004Cu
-#define idICON_i75               0x004Du
-#define idICON_i76               0x004Eu
-#define idICON_i77               0x004Fu
-#define idICON_i78               0x0050u
-#define idICON_i79               0x0051u
-#define idICON_i80               0x0052u
-#define idICON_i81               0x0053u
-#define idICON_i82               0x0054u
-#define idICON_i83               0x0055u
+#define idICON_i75               0x004Du  /* shows: score with a green pencil */
+#define idICON_i76               0x004Eu  /* shows: yellow face with headphones, open mouth */
+#define idICON_i77               0x004Fu  /* shows: yellow face with headphones, frowning */
+#define idICON_i78               0x0050u  /* shows: yellow face with headphones, smiling */
+#define idICON_i79               0x0051u  /* shows: yellow hand holding a sheet with a note */
+#define idICON_i80               0x0052u  /* shows: C, curved arrow, C */
+#define idICON_i81               0x0053u  /* shows: note to C to SEQ. */
+#define idICON_i82               0x0054u  /* shows: floppy disk with 1 and an arrow */
+#define idICON_i83               0x0055u  /* shows: boxes N and E linked */
 #define idICON_i84               0x0056u
 #define idICON_i85               0x0057u
-#define idICON_i86               0x0058u
+#define idICON_i86               0x0058u  /* shows: D B A with arrows to notes */
 #define idICON_i87               0x0059u
 #define idICON_i88               0x005Au
-#define idICON_i89               0x005Bu
+#define idICON_i89               0x005Bu  /* shows: question mark */
 #define idICON_i90               0x005Cu
 #define idICON_i91               0x005Du
 #define idICON_i92               0x005Eu
@@ -496,19 +496,19 @@
 #define idICON_i98               0x0064u
 #define idICON_i99               0x0065u
 #define idICON_i100              0x0066u
-#define idICON_i101              0x0067u
-#define idICON_i102              0x0068u
-#define idICON_i103              0x0069u
+#define idICON_i101              0x0067u  /* shows: MIDI connector with 1~16 */
+#define idICON_i102              0x0068u  /* shows: keyboard with red down and blue up arrows */
+#define idICON_i103              0x0069u  /* shows: numbered boxes 1 2 3 with an arrow */
 #define idICON_i104              0x006Au
 #define idICON_i105              0x006Bu
 #define idICON_i106              0x006Cu
 #define idICON_i107              0x006Du
-#define idICON_i108              0x006Eu
-#define idICON_i109              0x006Fu
+#define idICON_i108              0x006Eu  /* shows: hand pressing slanted piano keys */
+#define idICON_i109              0x006Fu  /* shows: slanted keys numbered 1 2 3 */
 #define idICON_i110              0x0070u
-#define idICON_i111              0x0071u
+#define idICON_i111              0x0071u  /* shows: stack of blue music-note cards */
 #define idICON_i112              0x0072u
-#define idICON_i113              0x0073u
+#define idICON_i113              0x0073u  /* shows: DISK with a floppy disk */
 #define idICON_i114              0x0074u
 #define idICON_i115              0x0075u
 #define idICON_i116              0x0076u
@@ -519,56 +519,56 @@
 #define idICON_i121              0x007Bu
 #define idICON_i122              0x007Cu
 #define idICON_i123              0x007Du
-#define idICON_i124              0x007Eu
-#define idICON_i125              0x007Fu
+#define idICON_i124              0x007Eu  /* shows: green play triangle and note, SEQ. */
+#define idICON_i125              0x007Fu  /* shows: red record dot and note, SEQ. */
 #define idICON_i126              0x0080u
-#define idICON_i127              0x0081u
+#define idICON_i127              0x0081u  /* shows: red sneaker */
 #define idICON_i128              0x0082u
-#define idICON_i129              0x0083u
-#define idICON_i130              0x0084u
-#define idICON_i131              0x0085u
-#define idICON_i132              0x0086u
-#define idICON_i133              0x0087u
-#define idICON_i134              0x0088u
-#define idICON_i135              0x0089u
-#define idICON_i136              0x008Au
-#define idICON_i137              0x008Bu
+#define idICON_i129              0x0083u  /* shows: grey drive with two discs (hard disk) */
+#define idICON_i130              0x0084u  /* shows: piano keys marked with red dots */
+#define idICON_i131              0x0085u  /* shows: circuit board with a green chip */
+#define idICON_i132              0x0086u  /* shows: ON / OFF switch beside a speaker */
+#define idICON_i133              0x0087u  /* shows: computer monitor with in / out arrows */
+#define idICON_i134              0x0088u  /* shows: MIDI connector with in / out arrows */
+#define idICON_i135              0x0089u  /* shows: loop arrows around a note */
+#define idICON_i136              0x008Au  /* shows: notes on a staff with a vertical bar */
+#define idICON_i137              0x008Bu  /* shows: blue funnel with a marker */
 #define idICON_i138              0x008Cu
-#define idICON_i139              0x008Du
-#define idICON_i140              0x008Eu
-#define idICON_i141              0x008Fu
+#define idICON_i139              0x008Du  /* shows: accordion */
+#define idICON_i140              0x008Eu  /* shows: seated player at a stand */
+#define idICON_i141              0x008Fu  /* shows: single red fader */
 #define idICON_i142              0x0090u
-#define idICON_i143              0x0091u
-#define idICON_i144              0x0092u
-#define idICON_i145              0x0093u
-#define idICON_i146              0x0094u
-#define idICON_i147              0x0095u
-#define idICON_i148              0x0096u
-#define idICON_i149              0x0097u
-#define idICON_i150              0x0098u
-#define idICON_i151              0x0099u
-#define idICON_i152              0x009Au
-#define idICON_i153              0x009Bu
-#define idICON_i154              0x009Cu
-#define idICON_i155              0x009Du
-#define idICON_i156              0x009Eu
-#define idICON_i157              0x009Fu
-#define idICON_i158              0x00A0u
-#define idICON_i159              0x00A1u
-#define idICON_i160              0x00A2u
-#define idICON_i161              0x00A3u
-#define idICON_i162              0x00A4u
-#define idICON_i163              0x00A5u
-#define idICON_i164              0x00A6u
-#define idICON_i165              0x00A7u
-#define idICON_i166              0x00A8u
-#define idICON_i167              0x00A9u
-#define idICON_i168              0x00AAu
-#define idICON_i169              0x00ABu
+#define idICON_i143              0x0091u  /* shows: yellow hand above a red wave */
+#define idICON_i144              0x0092u  /* shows: two speakers with sound waves */
+#define idICON_i145              0x0093u  /* shows: keyboard instrument with a screen */
+#define idICON_i146              0x0094u  /* shows: clock with arrows */
+#define idICON_i147              0x0095u  /* shows: floppy disk */
+#define idICON_i148              0x0096u  /* shows: floppy disk with arrows */
+#define idICON_i149              0x0097u  /* shows: floppy disk with a list */
+#define idICON_i150              0x0098u  /* shows: floppy disk with a T */
+#define idICON_i151              0x0099u  /* shows: sheet with a green pencil */
+#define idICON_i152              0x009Au  /* shows: P.M. boxes 5 6 7 8 */
+#define idICON_i153              0x009Bu  /* shows: red microphone */
+#define idICON_i154              0x009Cu  /* shows: red and blue lines spreading */
+#define idICON_i155              0x009Du  /* shows: clef with notes and an 8 */
+#define idICON_i156              0x009Eu  /* shows: piano keys with left / right arrows */
+#define idICON_i157              0x009Fu  /* shows: green pencil over keys and a list */
+#define idICON_i158              0x00A0u  /* shows: green pencil and a blue box with I */
+#define idICON_i159              0x00A1u  /* shows: green pencil, boxes and an arrow */
+#define idICON_i160              0x00A2u  /* shows: world map with notes */
+#define idICON_i161              0x00A3u  /* shows: red book LIST RocK */
+#define idICON_i162              0x00A4u  /* shows: red book LIST A~Z */
+#define idICON_i163              0x00A5u  /* shows: oval pad with up / down arrows */
+#define idICON_i164              0x00A6u  /* shows: oval pad with notes */
+#define idICON_i165              0x00A7u  /* shows: numbered list 1 2 3 with arrows */
+#define idICON_i166              0x00A8u  /* shows: oval pad with a red record dot and a note */
+#define idICON_i167              0x00A9u  /* shows: stage with a red curtain and a speaker */
+#define idICON_i168              0x00AAu  /* shows: treble-clef score */
+#define idICON_i169              0x00ABu  /* shows: keyboard with a green screen */
 #define idICON_i170              0x00ACu
-#define idICON_i171              0x00ADu
-#define idICON_i172              0x00AEu
-#define idICON_i173              0x00AFu
+#define idICON_i171              0x00ADu  /* shows: page with arrows out and in */
+#define idICON_i172              0x00AEu  /* shows: green arrow over 92:08 */
+#define idICON_i173              0x00AFu  /* shows: F.L.S. with a green arrow, 1~120 */
 /* letter c, FontIDProc (FontIDProc_FontNameTable) */
 #define idCHARA1                 0x0000u
 #define idCHARA2                 0x0001u

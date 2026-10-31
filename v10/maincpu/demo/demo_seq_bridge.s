@@ -451,7 +451,7 @@ CDlikeSwTtl_ReturnZeroStub2:
 	ld	xhl, 0:i3
 	ret
 ; Post event 0x8B0004 (XBC = 0x01E0008D) with XDE = 0x10000 + n, where
-; n = (0xCDF) + 2 when bit 0 of (0xCE0) is clear, (0xCDF) - 6 when it is set.
+; n = (TRACK_ASSIGN_CURSOR) + 2 when bit 0 of (0xCE0) is clear, (TRACK_ASSIGN_CURSOR) - 6 when it is set.
 ; Called twice from ui/setwall_routines.s.
 CDlikeSwTtl_SendEvt4:
 	bit	0, (0xce0:16)

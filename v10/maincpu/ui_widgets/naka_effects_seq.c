@@ -26,7 +26,7 @@ extern const char LED_patterns_firmware_v8_plus;
 extern const char MainExeCall;
 extern const char MainPanic;
 extern const char MimeSyori;
-extern const char NAKA_TYPE_0x5D;
+extern const char NAKA_TYPE_DbMemoryDump;
 extern const char NakaInst_NEXT;
 extern const char NakaInst_Param_EndFF;
 extern const char NakaInst_Param_PadEnd;

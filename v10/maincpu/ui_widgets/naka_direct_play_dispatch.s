@@ -5,134 +5,134 @@
 ; Extracted from kn5000_v10_program.s
 ; =============================================================================
 
-	naka_header NAKA_TYPE_0x47
+	naka_header NAKA_TYPE_IvExit
 	.byte 0x16, 0x00, 0x00, 0x00		; padding
 NakaWidgetList_AcModeBoxes:
 	.long NakaBoxName_IvNamingExit
 	.long NakaBoxData_IvNamingExit
 	.long NakaPropTbl_IvNamingExit
 	.long IvNamingExit_ScreenData
-	naka_header NAKA_TYPE_0x11
+	naka_header NAKA_TYPE_VwBox
 	.byte 0x32, 0x00, 0x16, 0x00
 	.long NakaBoxName_PsSongSelBoxProc
 	.long NakaBoxEnc_PsSongSelBox
 	.long NakaPropTbl_SelBox
 	.long AcModeSelBoxProc
-	naka_header NAKA_TYPE_0x15
+	naka_header NAKA_TYPE_PsEditBox
 	.byte 0x34, 0x00, 0x02, 0x00
 	.long NakaBoxName_AcModeSelBox
 	.long NakaBoxData_AcModeSelBox
 	.long NakaPropTbl_Ram
 	.long AcDemoSongBoxProc
-	naka_header NAKA_TYPE_0x15
+	naka_header NAKA_TYPE_PsEditBox
 	.long 0x00040036
 	.long NakaBoxName_AcDemoSongBox
 	.long NakaBoxData_AcDemoSongBox
 	.long NakaPropTbl_Func
 	.long AcCurrentSongBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcCurrentSongBox
 	.long NakaBoxData_AcCurrentSongBox
 	.long NakaPropTbl_CurSongName
 	.long AcCurSongNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcCurSongNameBox
 	.long NakaBoxData_AcCurSongNameBox
 	.long NakaPropTbl_TrAsGrid
 	.long AcTrAsGridBoxProc
-	naka_header NAKA_TYPE_0x54
+	naka_header NAKA_TYPE_PsGridBox
 	.long 0x000C004A
 	.long NakaBoxName_AcTrAsGridBox
 	.long NakaBoxData_AcTrAsGridBox
 	.long NakaPropTbl_Grid
 	.long AcDiskFileNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcDiskFileNameBox
 	.long NakaBoxData_AcDiskFileNameBox
 	.long NakaPropTbl_SmfFileName
 	.long AcSmfFileNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcSmfFileNameBox
 	.long NakaBoxData_AcSmfFileNameBox
 	.long NakaPropTbl_DocFileNo
 	.long AcDocFileNoBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcDocFileNoBox
 	.long NakaBoxData_AcDocFileNoBox
 	.long NakaPropTbl_PdFileNo
 	.long AcPDFileNoBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcPDFileNoBox
 	.long NakaBoxData_AcPDFileNoBox
 	.long NakaPropTbl_SmfSongName
 	.long AcSmfSongNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcSmfSongNameBox
 	.long NakaBoxData_AcSmfSongNameBox
 	.long NakaPropTbl_DocSongName
 	.long AcDocSongNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcDocSongNameBox
 	.long NakaBoxData_AcDocSongNameBox
 	.long NakaPropTbl_PdSongName
 	.long AcPDSongNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcPDSongNameBox
 	.long NakaBoxData_AcPDSongNameBox
 	.long NakaPropTbl_MeasureBox
 	.long MeasureBoxProc
-	naka_header NAKA_TYPE_0x10
+	naka_header NAKA_TYPE_Viewable
 	.long 0x0008001E
 	.long NakaBoxName_MeasureBox
 	.long NakaBoxData_MeasureBox
 	.long NakaPropTbl_MuteToggle
 	.long AcMuteToggleBoxProc
-	naka_header NAKA_TYPE_0x44
+	naka_header NAKA_TYPE_AcFuncToggle
 	.byte 0x2c, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcMuteToggleBox
 	.long AlignedStr_AcMuteToggleBox
 	.long NakaPropTbl_LyricsBox
 	.long LyricsBoxProc
-	naka_header NAKA_TYPE_0x11
+	naka_header NAKA_TYPE_VwBox
 	.long 0x000C0028
 	.long NakaStr_LyricsBox
 	.long NakaBoxData_LyricsBox
 	.long NakaPropTbl_TextLabel
 	.long SongNameBoxProc
-	naka_header NAKA_TYPE_0x11
+	naka_header NAKA_TYPE_VwBox
 	.long 0x000A0026
 	.long NakaBoxName_SongNameBox
 	.long NakaBoxData_SongNameBox
 	.long NakaPropTbl_TextLabel2
 	.long ComporserNameBoxProc
-	naka_header NAKA_TYPE_0x11
+	naka_header NAKA_TYPE_VwBox
 	.long 0x000A0026
 	.long NakaBoxName_ComporserNameBox
 	.long NakaBoxData_ComporserNameBox
 	.long NakaDirectPlay_PropPtrTable
 	.long LyricsBoxFuncProc
-	naka_header NAKA_TYPE_0x27
+	naka_header NAKA_TYPE_PsInvisibleBox
 	.byte 0x16, 0x00, 0x00, 0x00
 	.long NakaBoxName_LyricsBoxFunc
 	.long NakaBoxData_LyricsBoxFunc
 	.long NakaPropTbl_DemoMedleyDisp
 	.long AcDemoMedleyDispBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.byte 0x24, 0x00, 0x00, 0x00
 	.long NakaBoxName_AcDemoMedleyDisp
 	.long NakaBoxData_AcDemoMedleyDisp
 	.long NakaPropTbl_IvExitModeTrSel
 	.long IvExitModeTrSelProc
-	naka_header NAKA_TYPE_0x47
+	naka_header NAKA_TYPE_IvExit
 	.byte 0x16, 0x00, 0x00, 0x00
 	.long NakaBoxName_IvExitModeTrSel
 	.long NakaBoxData_IvExitModeTrSel

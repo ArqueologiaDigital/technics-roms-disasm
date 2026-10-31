@@ -677,7 +677,7 @@ AccVoice_ComputeParamOffset:
 ; 0x32E6.
 ; Reader: AccVoice_ComputeParamOffset (0xF53D2E, the tail of
 ; AccVoice_ResolveParamAddr 0xF53D20): `ld xix, AccVoice_BankBaseTable` then
-; `ld xix, (xix+wa)` = ld xix, (xix + wa) with wa = (0x32E6)*4.
+; `ld xix, (xix+wa)` = ld xix, (xix + wa) with wa = (ACC_STYLE_GROUP)*4.
 ; The entry is added to the 32-bit offset the routine first loaded from
 ; RhythmTiming_OffsetTable[A] (A clamped to 0..0x1D), plus 0x60; the sum is
 ; returned in XIY.  So each entry is the base of a bank that those offsets
@@ -1049,9 +1049,9 @@ RhythmPart2_LoadAndStore:
 	ld a, (0x3251:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3252:16)
-	ld (0x32c3:16), a
+	ld (ACC_CH_TURNOVER:16), a
 	ld a, (0x3253:16)
-	ld (0x32c7:16), a
+	ld (ACC_CH_CEILING:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart2_ProcessRingBuf
@@ -1128,9 +1128,9 @@ RhythmPart3_LoadAndStore:
 	ld a, (0x3258:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3259:16)
-	ld (0x32c4:16), a
+	ld (ACC_CH_TURNOVER+1:16), a
 	ld a, (0x325a:16)
-	ld (0x32c8:16), a
+	ld (ACC_CH_CEILING+1:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart3_ProcessRingBuf
@@ -1186,9 +1186,9 @@ RhythmPart4_LoadAndStore:
 	ld a, (0x325f:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3260:16)
-	ld (0x32c5:16), a
+	ld (ACC_CH_TURNOVER+2:16), a
 	ld a, (0x3261:16)
-	ld (0x32c9:16), a
+	ld (ACC_CH_CEILING+2:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart4_ProcessRingBuf
@@ -1244,9 +1244,9 @@ RhythmPart5_LoadAndStore:
 	ld a, (0x3266:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x3267:16)
-	ld (0x32c6:16), a
+	ld (ACC_CH_TURNOVER+3:16), a
 	ld a, (0x3268:16)
-	ld (0x32ca:16), a
+	ld (ACC_CH_CEILING+3:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x3283:16)
 	jr nz, RhythmPart5_ProcessRingBuf
@@ -1360,10 +1360,10 @@ Rhythm_SendChanPressure:
 	ld e, 0x0:opc
 	calr Rhythm_Send3ByteMsg
 	ld a, 0x0:opc
-	ld (0x332f:16), a
-	ld (0x3330:16), a
-	ld (0x3331:16), a
-	ld (0x3332:16), a
+	ld (ACC_CH_CC3:16), a
+	ld (ACC_CH_CC3+1:16), a
+	ld (ACC_CH_CC3+2:16), a
+	ld (ACC_CH_CC3+3:16), a
 	ret
 
 AccBuf_ResetAndReload:
@@ -1512,7 +1512,7 @@ RhythmROM_CheckDone:
 	ret
 
 ; -----------------------------------------------------------------------------
-; Heap_AllocAndFreeTwoBlocks -- Malloc(0x400) (pointer kept in RAM 0x355C),
+; Heap_AllocAndFreeTwoBlocks -- Malloc(BOOT_STAGE) (pointer kept in RAM 0x355C),
 ; Malloc(0x1000), Free(second), Free(first), return.  A heap round trip with
 ; no lasting effect except RAM 0x355C.  C-compiler shaped (`ld xwa,xhl;
 ; ld xwa,xwa; push xwa`).  NO CALLER FOUND: scripts/analysis/sequi_find_refs.py

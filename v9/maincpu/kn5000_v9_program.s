@@ -1123,7 +1123,7 @@ ToneGen_ParamTable_0x2EE:
 	.short	SeDigEff_OnColumn3_RepeatDelaySustain - SeDigEff_OnColumn3_CelesteChorusDetune
 	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
 	.short	SeDigEff_OnColumn3_Depth - SeDigEff_OnColumn3_CelesteChorusDetune
-; data read by SeMenu_CopyWriteUpdate_Epilogue35+0x46 (0xF0DD22)
+; data read by SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9+0x46 (0xF0DD22)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0dd36`
 ToneGen_ParamTable_0x306:
 	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
@@ -1136,7 +1136,7 @@ ToneGen_ParamTable_0x306:
 	.short	SeDigEff_OnColumn4_DelaySpeed2 - SeDigEff_OnColumn4_DelaySpeed2
 	.short	SeDigEff_OnColumn4_Balance - SeDigEff_OnColumn4_DelaySpeed2
 	.short	SeDigEff_OnColumn4_RepeatDelayRelease - SeDigEff_OnColumn4_DelaySpeed2
-; data read by SeMenu_CopyWriteUpdate_Epilogue36+0x44 (0xF0DDB3)
+; data read by SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10+0x44 (0xF0DDB3)
 ; evidence: `lda xix, (this)` then `ld WA,(XIX+WA) / lda XIX,0xf0ddc7`
 ToneGen_ParamTable_0x31A:
 	.short	SeDigEff_OnColumn5_CelesteChorusBalance - SeDigEff_OnColumn5_CelesteChorusBalance
@@ -2063,7 +2063,7 @@ PlayHalt_SkipSetFlag:
 	call Voice_InitTablePair
 	call Voice_InitTableGroup
 	call MIDI_SendAllSoundOff
-	call MidiThru_Enable
+	call MidiIn_IgnoreClockTransport
 	inc 2, xsp
 	ret
 
@@ -2075,7 +2075,7 @@ PlayStandBy:
 PlayStandBy_SkipClearFlag:
 	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
-	jp MidiThru_Disable
+	jp MidiIn_AcceptClockTransport
 
 EditSwRefresh:
 	call CPanel_InitButtonState_SaveRegs
@@ -2164,7 +2164,12 @@ Voice_RefreshBankData_Wrap:
 	call	Voice_RefreshBankData
 	pop	xiz
 	ret
-SeqChan_UnhandledCmd_Helper:
+; Voice_InitBankTables_Wrap: XIZ-preserving call of Voice_InitBankTables, which re-initialises the accompaniment block
+;   area at 0x1E8800 (header from Voice_BankHeaderDefaults, slot table, compile/user bank name headers, the block pool
+;   from 0x1E8B00). Basis: callers + body -- MidiPkt_PrepareAccompBlocksReceive is its only caller and its header
+;   names this call; X_Wrap convention (Voice_RefreshBankData_Wrap); Voice_InitBankDataSafe is the same shape for
+;   Voice_InitBankData.
+Voice_InitBankTables_Wrap:
 	push	xiz
 	call	Voice_InitBankTables
 	pop	xiz
@@ -3684,24 +3689,24 @@ SubCPU_SendPayloadEnableFlag:	.byte	0xff
 	.set EffSeqScreen_ChordTypePtr_A, ChordTypeStr_Blank_1 + 2
 	.set EffSeqScreen_ChordTypePtr_B, ChordTypeStr_Type55 + 2
 	.set NakaStr_CtrlParam9e9, ChordTypeStr_Flat13_Only + 1
-	.set DrumDetailEdit_Entry_01, SeScreenData_0x5400
-	.set DrumDetailEdit_Entry_02, SeScreenData_0x5422
-	.set DrumDetailEdit_Entry_03, SeScreenData_0x5444
-	.set DrumDetailEdit_Entry_04, SeScreenData_0x5450
-	.set DrumDetailEdit_Entry_05, SeScreenData_0x545D
-	.set DrumDetailEdit_Entry_06, SeScreenData_0x546A
-	.set DrumDetailEdit_Entry_07, SeScreenData_0x548C
-	.set DrumDetailEdit_Entry_08, SeScreenData_0x5498
-	.set DrumDetailEdit_Entry_09, SeScreenData_0x54A5
-	.set Data_Dispatch_Entry, SeScreenData_0x54B2
-	.set EffectParamEdit_Entry_01, SeScreenData_0x5895
-	.set EffectParamEdit_Entry_02, SeScreenData_0x58A0
-	.set EffectParamEdit_Entry_03, SeScreenData_0x58AF
-	.set EffectParamEdit_Entry_04, SeScreenData_0x58BA
-	.set EffectParamEdit_Entry_05, SeScreenData_0x58C5
-	.set EffectParamEdit_Entry_06, SeScreenData_0x58D0
-	.set EffectParamEdit_Entry_07, SeScreenData_0x58DB
-	.set EffectParamEdit_Entry_08, SeScreenData_0x58E6
+	.set DrumDetailEdit_Entry_01, SeUserKit_SelectedNoteFields
+	.set DrumDetailEdit_Entry_02, SeUserKit_Part1ToneFields
+	.set DrumDetailEdit_Entry_03, SeUserKit_Part1LevelField
+	.set DrumDetailEdit_Entry_04, SeUserKit_Part1KeyField
+	.set DrumDetailEdit_Entry_05, SeUserKit_Part1TuneField
+	.set DrumDetailEdit_Entry_06, SeUserKit_Part2ToneFields
+	.set DrumDetailEdit_Entry_07, SeUserKit_Part2LevelField
+	.set DrumDetailEdit_Entry_08, SeUserKit_Part2KeyField
+	.set DrumDetailEdit_Entry_09, SeUserKit_Part2TuneField
+	.set Data_Dispatch_Entry, SeUserKit_ReverbField
+	.set EffectParamEdit_Entry_01, SeEasy_BrillianceField
+	.set EffectParamEdit_Entry_02, SeEasy_VibratoDepthField
+	.set EffectParamEdit_Entry_03, SeEasy_VibratoSpeedField
+	.set EffectParamEdit_Entry_04, SeEasy_VibratoDelayField
+	.set EffectParamEdit_Entry_05, SeEasy_OctaveShiftField
+	.set EffectParamEdit_Entry_06, SeEasy_AttackTimeField
+	.set EffectParamEdit_Entry_07, SeEasy_ReleaseTimeField
+	.set EffectParamEdit_Entry_08, SeEasy_CursorBox
 ; NakaData_RomEnd -- the top of the 24-bit address space.  IvCatchEvent-style dispatch takes a value at or below
 ;          it as a pointer and a value above it as an event code (`cp xwa,NakaData_RomEnd / jr ule` in ui_widget_defs.s).
 	.equ NakaData_RomEnd, 0xffffff

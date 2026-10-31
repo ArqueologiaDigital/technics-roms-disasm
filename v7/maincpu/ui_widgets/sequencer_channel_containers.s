@@ -351,6 +351,7 @@ Display_DrawState:	.incbin "includes/generated/naka_sequencer_channels.bin", 0x1
 ; FontIDProc_FontNameTable -- 32 x uint32_t: name pointers of the font ids (CHARA1, CHARA2, ... CHARA5W, then
 ; "" and 21 NULLs); FontIDProc maps id -> name for EVT_GET_PROP_DATA_SP / EVT_GET_PROPERTY_EX (`sll xwa, 2`)
 ; and name -> id for EVT_SET_PROPERTY_EX by Strcmp until the first NULL; FontIDProc_EntryCount = 10.
+; Boot_InitWorkRAM's copy is FONTID_NAME_TABLE; nothing writes it after boot (notes/kn5000-a-2026-10-31/probes/fontid_table_writers.py).
 FontIDProc_FontNameTable:	.incbin "includes/generated/naka_sequencer_channels.bin", 0x12D8, 0x80
 ; Font_FileNamePtrTable -- 32 x uint32_t: file-name pointers "chara1.fnt" ... "chara5w.fnt", "" and 21 NULLs,
 ; entry for entry parallel to FontIDProc_FontNameTable (CHARA1 <-> chara1.fnt).  No reader of its RAM

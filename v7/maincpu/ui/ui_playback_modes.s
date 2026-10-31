@@ -940,7 +940,7 @@ CDlikeReset_SetTimerFlags:
 
 CDlike_InitModeAndLoadBank:
 	or (0xb746:16), 0x40
-	ld a, (PANEL_REC_91+3:16)
+	ld a, (PANEL_GM+3:16)
 	ld (0x0d42:16), a
 	ld (PLAYBACK_START_ARMED:16), 0x00
 	ld (PLAYBACK_COUNTDOWN:16), 0x00
@@ -1054,16 +1054,16 @@ SongBank_LoadToWorkArea:
 SongBank_CheckAccompanimentMode:
 	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SongBank_EnableAccompaniment
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr z, SongBank_CheckBassMode
-	and (PANEL_REC_91+3:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SongBank_SendAccompEvent
 
 SongBank_EnableAccompaniment:
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SongBank_CheckBassMode
-	or (PANEL_REC_91+3:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SongBank_SendAccompEvent:
@@ -1076,12 +1076,12 @@ SongBank_SendAccompEvent:
 SongBank_CheckBassMode:
 	cp (SEQ_SONG_RECORD+203:16), 255
 	jr z, SongBank_EnableBassMode
-	and (PANEL_REC_91+3:16), 254
+	and (PANEL_GM+3:16), 254
 	xor a, a
 	jr SongBank_SendBassEvent
 
 SongBank_EnableBassMode:
-	or (PANEL_REC_91+3:16), 1
+	or (PANEL_GM+3:16), 1
 	ld a, 0x1:opc
 
 SongBank_SendBassEvent:

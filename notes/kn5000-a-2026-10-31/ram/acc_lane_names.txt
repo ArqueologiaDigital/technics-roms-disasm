@@ -1,0 +1,10 @@
+0x32b5 ACC_LANE_BAR ; [6 bytes] per part (bit 1..32): its bar counter; AccVoice_SavePartStateN copies it to ACC_CUR_BAR and back, AccVoice_HandleBarEndEvent increments the working copy when the beat position wraps
+0x32c3 ACC_CH_TURNOVER ; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the part sound's turnover byte (IC14 part_sound +5), RhythmPartN_LoadAndStore; Rhythm_SetupChannel_Dn copies it to ACC_CUR_TURNOVER
+0x32c7 ACC_CH_CEILING ; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the part sound's note ceiling (IC14 part_sound +6); Rhythm_SetupChannel_Dn copies it to ACC_CUR_CEILING
+0x32cb ACC_CUR_TURNOVER ; the working channel's turnover: Rhythm_TransposeNote moves a transposition above it an octave down; Rhythm_CrossVoiceCorrect bases 0x332e on it
+0x32cc ACC_CUR_CEILING ; the working channel's note ceiling: Rhythm_TransposeNote folds notes at or above it down by octaves (when it is 12 or more)
+0x332f ACC_CH_CC3 ; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the last controller-3 value sent (0xdn 0x03 v, AccVoice_SendProgChange from ACC_CUR_CC3); Rhythm_SendVolume_Dn re-sends it, Rhythm_AllNotesOff_Dn sends 0 when it is set
+0x3333 ACC_CUR_CC3 ; the last 0xD3 (controller selector 3) value AccVoice_ScanInstruments / AccSeq_Scanner_D3Voice found in the working part's pattern, 0 when none
+0x33da ACC_CUR_BAR ; the working part's bar counter (copy of ACC_LANE_BAR[part]); AccTempo_PositionCompare's bar
+0x33ea ACC_CUR_MEASURE ; the working part's measure counter (copy of ACC_LANE_MEASURE[part]); AccVoice_IncrementBarCounter wraps it past byte +13 of the record at (0x3426)
+0x33eb ACC_LANE_MEASURE ; [6 bytes] per part: its measure counter; AccVoice_ClearChannelStates clears all six

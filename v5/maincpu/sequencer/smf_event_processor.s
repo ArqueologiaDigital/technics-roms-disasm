@@ -825,12 +825,12 @@ SeqPlay_StartWithDisplay:
 	call SeqPlay_CheckStartConditions
 	cp (0xf23d:16), 255
 	jr z, SeqPlay_SetFlagAndMode
-	and (0xfdad:16), 251
+	and (PANEL_GM+3:16), 251
 	xor a, a
 	jr SeqPlay_QueueDisplayEvent
 
 SeqPlay_SetFlagAndMode:
-	or (0xfdad:16), 4
+	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
 SeqPlay_QueueDisplayEvent:
@@ -894,7 +894,7 @@ SMF_FoundActiveChannel:
 	ld wa, (0x00ffec:24)
 	ld (4325:16), wa
 	ld (4324:16), 255
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_GM+3:16)
 	jr nz, SMF_InitChannelScan
 	ld (4324:16), 0
 
@@ -976,10 +976,10 @@ SMF_WaitForReady:
 	ld a, 0x8:opc
 	ld (xix+), a
 	ld (4376:16), xix
-	ld l, (0xfc62:16)
+	ld l, (PANEL_STYLE+8:16)
 	xor h, h
 	pushw bc
-	ld b, (0xfc63:16)
+	ld b, (PANEL_STYLE+9:16)
 	and b, 0x1
 	xor c, c
 	or hl, bc
@@ -9239,7 +9239,7 @@ FdcOp_Epilogue20:
 GetMediaType:
 	lda xsp, (xsp - 0x14)
 	push QIZ
-	call Reset_Floppy_Disk_Controller
+	call FDC_PulseResetLine
 	pushw 0x0400
 	call Malloc
 	inc 2,XSP
@@ -10764,7 +10764,7 @@ Rhythm_LookupTempoVelocity_Wrap:
 
 Rhythm_DispatchNote_Finalize:
 	push xiz
-	call AccStyle_LookupVelocityTable
+	call AccStyle_LookupPanelRhythm
 	pop xiz
 	ret
 
@@ -10802,9 +10802,9 @@ Seq_DispatcherTickReturn:
 	ret
 
 SeqTick_ReadControlState:
-	ld	a, (64602:16)
+	ld	a, (PANEL_STYLE:16)
 	ld	(12861:16), a
-	ld	a, (64603:16)
+	ld	a, (PANEL_STYLE+1:16)
 	and	a, 127
 	and	a, 7
 	ld	(12863:16), a
@@ -10813,11 +10813,11 @@ SeqTick_ReadControlState:
 	nop
 	nop
 	nop
-	ld	a, (64605:16)
+	ld	a, (PANEL_STYLE+3:16)
 	or	a, 224
 	srl	a, 5
 	ld	(12865:16), a
-	ld	w, (64607:16)
+	ld	w, (PANEL_STYLE+5:16)
 	xor	a, a
 	bit	6, w
 	jr	z, SeqCtl_CheckBit6
@@ -10850,27 +10850,27 @@ SeqCtl_CheckBit2:
 	or a, 0x2
 
 SeqCtl_CheckBit3:
-	ld w, (0xfc60:16)
+	ld w, (PANEL_STYLE+6:16)
 	bit 2, w
 	jr z, SeqTick_ReadControlState_StoreIntroBits
 	or a, 0x4
 
 SeqTick_ReadControlState_StoreIntroBits:
 	stb_d8	(12871), a
-	ldb_d8	a, (64921)
+	ldb_d8	a, (PANEL_PMEM_SETTINGS+3)
 	and	a, 1
 	stb_d8	(12873), a
-	ldb_d8	a, (64606)
+	ldb_d8	a, (PANEL_STYLE+4)
 	and	a, 16
 	srl	a, 4
 	ld	a, 0:opc
 	stb_d8	(12875), a
-	ldb_d8	a, (64609)
+	ldb_d8	a, (PANEL_STYLE+7)
 	and	a, 48
 	srl	a, 4
 	stb_d8	(12877), a
 	xor	a, a
-	bit	2, (64941:16)
+	bit	2, (PANEL_GM+3:16)
 	jr	nz, SeqCtl_StoreKeyMask
 	or	a, 63
 SeqCtl_StoreKeyMask:
@@ -11121,7 +11121,7 @@ AccChord_CompareNoteC:
 	stb_d8	(8960), a
 	call	Voice_InitSlotData
 	call	Voice_FindAndAllocBestMatch
-	ldb_d8	a, (64605)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 7
 	cp	a, 0:i3
 	jr	z, AccChord_ReadKeysRet
@@ -11134,7 +11134,7 @@ AccChord_ReadKeysRet:
 
 AccDisplay_RefreshIfDiskActive:
 	push xwa
-	ld a, (0xfc5d:16)
+	ld a, (PANEL_STYLE+3:16)
 	and a, 0x7
 	cp a, 0:i3
 	jr z, AccDisplay_RefreshDone

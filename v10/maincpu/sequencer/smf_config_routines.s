@@ -681,7 +681,7 @@ SMF_WriteByte_Done:
 ; Writes one channel event, with its delta time, to the Standard MIDI File being saved.
 ;   In:  A = status byte, W = first data byte, L = second data byte; the delta time is the
 ;        variable-length quantity already built at 0x106e (copied while bit 7 is set).
-;   Out: XIX = output pointer (0x1118).  The second data byte is skipped for program change
+;   Out: XIX = output pointer (SMF_FILE_PTR).  The second data byte is skipped for program change
 ;        (0xc0) and channel pressure (0xd0), whose messages have one data byte.
 ;   Each byte goes through SMF_WriteByte, which flushes the buffer to the file when it fills;
 ;   a negative FILEIO_BLOCK_BYTES (a write error) abandons the rest of the event.
@@ -983,7 +983,7 @@ SMF_DispatchEvent:
 
 SMF_Dispatch_CheckDrumMode:
 	ld (4324:16), 0
-	bit 2, (PANEL_REC_91+3:16)
+	bit 2, (PANEL_GM+3:16)
 	jrl z, SMF_Dispatch_NoDrumMode
 	ld (4324:16), 255
 	push xix
@@ -1496,8 +1496,8 @@ SMF_FileWriteAndClear:
 	call SMF_ClearFileBuffer
 	ret
 
-; Stores A at the playback position: offset (0x2666) of block (0x28af), in the song data at
-; (0x1d5a).
+; Stores A at the playback position: offset (SEQ_DATA_OFFSET) of block (SEQ_DATA_BLOCK), in the song data at
+; (SEQ_BLOCK_POOL).
 SMF_LookupSongBank:
 	ld hl, (SEQ_DATA_BLOCK:16)
 	extz xhl
@@ -2490,7 +2490,7 @@ SMF_AdvanceWrite_Return:
 	ld (SEQ_BLOCK_PTR:16), xwa
 	ret
 
-; Sets 0x10fd = (0x1d5a) + (HL - 1) * 256, the address of song-data block HL; XHL = 0 on return.
+; Sets 0x10fd = (SEQ_BLOCK_POOL) + (HL - 1) * 256, the address of song-data block HL; XHL = 0 on return.
 SMF_CalcPageAddress:
 	dec 1, hl
 	extz xhl

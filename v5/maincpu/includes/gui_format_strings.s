@@ -12,7 +12,7 @@
 ;   now `.short 0, 0, 319, 239`.  v9 and v7 were given the same form by
 ;   scripts/tools/sync_gui_format_strings_head.py (2026-10-03).
 
-	.short	0, 0, 319, 239	; copied as 4 words by Scoop_EventLoop_12Entry_Alt_Data_Target10: the 320x240 screen's corners
+	.short	0, 0, 319, 239	; copied as 4 words by Scoop_BoundOp0A_PrintByte: the 320x240 screen's corners
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d:	.asciz "%1d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d:	.asciz "%2d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d:	.asciz "%3d"
@@ -23,14 +23,14 @@ Scoop_EventLoop_36Entry_Branch3_Str_Fmt4d:	.asciz "%4d"
 ;   op 0x0A, copied with ldirw into its frame and passed to DrawString. Basis: readers + bytes (cf.
 ;   SeGfx_StaticOp06_ClipBox).
 Scoop_BoundOp0A_ClipBox:
-	.short	0, 0, 319, 239	; copied as 4 words by Scoop_EventLoop_12Entry_Alt_Data_Target10: the 320x240 screen's corners
+	.short	0, 0, 319, 239	; copied as 4 words by Scoop_BoundOp0A_PrintByte: the 320x240 screen's corners
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d_2:	.asciz "%1d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_3:	.asciz "%2d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3:	.asciz "%3d"
 ; Scoop_BoundOp07_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (whole 320 x 240 screen) of Scoop bound display op
 ;   7, which draws a string picked from a table by a masked, shifted RAM byte. Basis: readers + bytes (cf.
 ;   SeGfx_StaticOp06_ClipBox).
-Scoop_BoundOp07_ClipBox:	.short	0, 0, 319, 239	; copied as 4 words by Scoop_EventLoop_12Entry_Alt_Data_Target10: the 320x240 screen's corners
+Scoop_BoundOp07_ClipBox:	.short	0, 0, 319, 239	; copied as 4 words by Scoop_BoundOp0A_PrintByte: the 320x240 screen's corners
 ; Scoop_BoundOpHandlerTable: 12 x u32: handler of each op (record byte 0, 0..11) of a Scoop bound display list (values
 ;   read from RAM); Scoop_EventLoop_12Entry_Alt copies it to its frame and calls [op] with XWA = record, byte 1 =
 ;   record length. Same op shape as GraphicsRender_Start_PtrTable: op 3 = ColorBlit_WithPaletteSave, op 10 prints a
@@ -39,14 +39,14 @@ Scoop_BoundOpHandlerTable:	.long Scoop_EnvProcessor_Data
 	.long Scoop_Dispatch_Nop
 	.long Scoop_EnvelopeCalc_Data
 	.long ColorBlit_WithPaletteSave
-	.long Scoop_EventLoop_12Entry_Alt_Data_Target4
-	.long Scoop_EventLoop_12Entry_Alt_Data_Target5
+	.long Scoop_BoundOp04_DrawBoxByField
+	.long Scoop_BoundOp05_PrintFieldAtCell
 	.long Scoop_EventLoop_36Entry
-	.long Scoop_EventLoop_12Entry_Alt_Data_Target7
-	.long Scoop_EventLoop_12Entry_Alt_Data_Target8
+	.long Scoop_BoundOp07_DrawStringByField
+	.long Scoop_BoundOp08_DrawRectByField
 	.long Scoop_EventLoop_36Entry_Data
-	.long Scoop_EventLoop_12Entry_Alt_Data_Target10
-	.long Scoop_EventLoop_12Entry_Alt_Data_Target11
+	.long Scoop_BoundOp0A_PrintByte
+	.long Scoop_BoundOp0B_PrintSignedField
 Scoop_ApFunctionTable_126:	.long 0x00000000
 Scoop_ApFunctionTable_426:	.long Scoop_ApFunctionTable_426_EndName
 Scoop_ApFunctionTable_426_EndName:

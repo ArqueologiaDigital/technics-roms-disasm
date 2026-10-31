@@ -6,7 +6,7 @@ strings, and the FDLoadSaveTest/HamaListProc code into two dedicated include fil
   - maincpu/fd_test_data.s  (data region: widget structures + tables + strings)
   - maincpu/fd_test_code.s  (code region: FDLoadSaveTest + HamaListProc)
 
-Also converts .byte 0x16 headers to naka_header NAKA_TYPE_DIAGLIST.
+Also converts .byte 0x16 headers to naka_header NAKA_TYPE_PsNumEditBox.
 """
 
 import sys
@@ -87,7 +87,7 @@ def main():
     # Combine
     data_content = data_from_main + naka_content
 
-    # Convert .byte 0x16, 0x00, 0x60, 0x01 to naka_header NAKA_TYPE_DIAGLIST
+    # Convert .byte 0x16, 0x00, 0x60, 0x01 to naka_header NAKA_TYPE_PsNumEditBox
     converted = 0
     new_data_content = []
     for line in data_content:
@@ -95,19 +95,19 @@ def main():
         # Pattern 1: .byte 0x16, 0x00, 0x60, 0x01 (header only)
         if stripped == '.byte 0x16, 0x00, 0x60, 0x01':
             indent = line[:len(line) - len(line.lstrip())]
-            new_data_content.append(f'{indent}naka_header NAKA_TYPE_DIAGLIST')
+            new_data_content.append(f'{indent}naka_header NAKA_TYPE_PsNumEditBox')
             converted += 1
         # Pattern 2: .byte 0x16, 0x00, 0x60, 0x01, ... (header + body on same line)
         elif stripped.startswith('.byte 0x16, 0x00, 0x60, 0x01, '):
             indent = line[:len(line) - len(line.lstrip())]
             remaining = stripped[len('.byte 0x16, 0x00, 0x60, 0x01, '):]
-            new_data_content.append(f'{indent}naka_header NAKA_TYPE_DIAGLIST')
+            new_data_content.append(f'{indent}naka_header NAKA_TYPE_PsNumEditBox')
             new_data_content.append(f'{indent}.byte {remaining}')
             converted += 1
         else:
             new_data_content.append(line)
 
-    print(f"Converted {converted} type-0x16 headers to naka_header NAKA_TYPE_DIAGLIST")
+    print(f"Converted {converted} type-0x16 headers to naka_header NAKA_TYPE_PsNumEditBox")
 
     # Write fd_test_data.s
     with open(DATA_OUT, 'w', encoding='latin-1') as f:

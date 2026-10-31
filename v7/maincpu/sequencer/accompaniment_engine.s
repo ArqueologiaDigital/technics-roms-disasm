@@ -75,7 +75,14 @@ AccStyle_TempoMultiplierTable:
 	.byte 0xa0, 0x00, 0xb4, 0x00, 0xc8, 0x00, 0xdc, 0x00
 	.byte 0xf0, 0x00, 0x04, 0x01, 0x18, 0x01, 0x68, 0x01
 
-AccStyle_LookupVelocityTable:
+; AccStyle_LookupPanelRhythm: the panel's (rhythm group, number) of the selected style.
+;   In:  RAM 0x90ea = program, 0x90eb = bank (low 3 bits).
+;   Out: 0x90ee = rhythm group, 0x90ef = number (the low / high byte of the table word), which
+;        RhythmROM_PatternDisp_Handle90 and SndParam_ResolveVoiceEntry pass to AccVoice_DispatchEntry.
+;   Programs 0..127 read AccStyle_PanelRhythmTable[program][bank], 128..239
+;   AccStyle_PanelRhythmTable_Ext[program & 0x7f, 0 above 11][bank], 240.. AccStyle_PanelRhythmTable_High
+;   [program & 0x0f, 0 above 4].
+AccStyle_LookupPanelRhythm:
 	push XHL
 	push XWA
 	cp (0x904e:16), 0x80
@@ -88,42 +95,42 @@ AccStyle_LookupVelocityTable:
 	and A,0x07
 	add XHL,XWA
 	sla XHL, 0x01
-	add XHL,AccStyle_VelocityTableMain
+	add XHL,AccStyle_PanelRhythmTable
 	ld WA,(XHL)
-	jr t, AccStyle_Velocity_StoreResult
-AccStyle_Velocity_ExtendedRange:
+	jr t, AccStyle_LookupPanelRhythm_Store
+AccStyle_LookupPanelRhythm_Ext:
 .Lc_f55875:
 	cp (0x904e:16), 0xf0
-	jr nc, AccStyle_Velocity_HighRange
+	jr nc, AccStyle_LookupPanelRhythm_High
 	xor XHL,XHL
 	ld l, (0x904e:16)
 	and L,0x7f
 	cp L,0x0b
-	jr ule, AccStyle_Velocity_ExtClamp
+	jr ule, AccStyle_LookupPanelRhythm_ExtClamp
 	xor L,L
-AccStyle_Velocity_ExtClamp:
+AccStyle_LookupPanelRhythm_ExtClamp:
 	sla	xhl, 3
 	xor	xwa, xwa
 	ld	a, (36943:16)
 	and	a, 7
 	add	xhl, xwa
 	sla	xhl, 1
-	add	xhl, AccStyle_VelocityTableExt
+	add	xhl, AccStyle_PanelRhythmTable_Ext
 	ld	wa, (xhl)
-	jr	AccStyle_Velocity_StoreResult
-AccStyle_Velocity_HighRange:
+	jr	AccStyle_LookupPanelRhythm_Store
+AccStyle_LookupPanelRhythm_High:
 	xor	xhl, xhl
 	ld	l, (36942:16)
 	and	l, 15
 	cp	l, 4:i3
-	jr	ule, AccStyle_Velocity_HighClamp
+	jr	ule, AccStyle_LookupPanelRhythm_HighClamp
 	xor	l, l
-AccStyle_Velocity_HighClamp:
+AccStyle_LookupPanelRhythm_HighClamp:
 	sla xhl, 1
-	add xhl, AccStyle_VelocityTableHigh
+	add xhl, AccStyle_PanelRhythmTable_High
 	ld wa, (xhl)
 
-AccStyle_Velocity_StoreResult:
+AccStyle_LookupPanelRhythm_Store:
 	ld	(36946:16), a
 	ld	(36947:16), w
 	pop	xwa
@@ -330,13 +337,13 @@ AccStyle_ResetAllVoiceState:
 	ld	(ACC_BAR_COUNT:16), a
 	ld	(ACC_SECTION_BAR:16), a
 	ld	(12824:16), a
-	ld	(12825:16), a
-	ld	(12826:16), a
+	ld	(ACC_LANE_BAR:16), a
+	ld	(ACC_LANE_BAR+1:16), a
 	ld	(12831:16), a
-	ld	(12827:16), a
-	ld	(12828:16), a
-	ld	(12829:16), a
-	ld	(12830:16), a
+	ld	(ACC_LANE_BAR+2:16), a
+	ld	(ACC_LANE_BAR+3:16), a
+	ld	(ACC_LANE_BAR+4:16), a
+	ld	(ACC_LANE_BAR+5:16), a
 	ld	(12977:16), a
 	ld	(12833:16), a
 	ld	(12834:16), a
@@ -1074,28 +1081,28 @@ AccVoice_SavePartState1:
 	ld (ACC_CUR_BLOCK:16), wa
 	ld wa, (ACC_LANE_READ_POS:16)
 	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (0x3219:16)
-	ld (0x333e:16), a
+	ld a, (ACC_LANE_BAR:16)
+	ld (ACC_CUR_BAR:16), a
 	ld a, (ACC_LANE_BEAT_POS:16)
 	ld (ACC_CUR_BEAT_POS:16), a
 	ld a, (ACC_LANE_SECTION:16)
 	ld (ACC_CUR_SECTION:16), a
-	ld a, (0x334f:16)
-	ld (0x334e:16), a
+	ld a, (ACC_LANE_MEASURE:16)
+	ld (ACC_CUR_MEASURE:16), a
 	ret
 AccVoice_RestorePartState1:
 	ld	wa, (ACC_CUR_BLOCK:16)
 	ld	(ACC_LANE_BLOCK:16), wa
 	ld	wa, (ACC_CUR_READ_POS:16)
 	ld	(ACC_LANE_READ_POS:16), wa
-	ld	a, (13118:16)
-	ld	(12825:16), a
+	ld	a, (ACC_CUR_BAR:16)
+	ld	(ACC_LANE_BAR:16), a
 	ld	a, (ACC_CUR_BEAT_POS:16)
 	ld	(ACC_LANE_BEAT_POS:16), a
 	ld	a, (ACC_CUR_SECTION:16)
 	ld	(ACC_LANE_SECTION:16), a
-	ld	a, (13134:16)
-	ld	(13135:16), a
+	ld	a, (ACC_CUR_MEASURE:16)
+	ld	(ACC_LANE_MEASURE:16), a
 	ret
 AccVoice_ProcessEventLoop:
 	bit 0, (0x3258:16)
@@ -1220,7 +1227,7 @@ AccVoice_HandleNoteOnEvent:
 	ld w, (ACC_CUR_BEAT_POS:16)
 	calr AccVoice_LookupTableAddress
 	ld bc, (0x31e1:16)
-	ld w, (0x333e:16)
+	ld w, (ACC_CUR_BAR:16)
 	calr AccTempo_PositionCompare
 	cp A,0x18
 	jr ule, AccVoice_NoteOn_InRange
@@ -1242,7 +1249,7 @@ AccVoice_BarEnd_Process:
 	ld w, (ACC_CUR_BEAT_POS:16)
 	calr AccVoice_LookupExtParamAddr
 	ld bc, (0x31e1:16)
-	ld w, (0x333e:16)
+	ld w, (ACC_CUR_BAR:16)
 	calr AccTempo_PositionCompare
 	cp A,0x18
 	jr ule, .Lc_f56517
@@ -1264,7 +1271,7 @@ AccVoice_BarEnd_NextPage:
 	and	w, 240
 	add	w, 16
 	ld	(ACC_CUR_BEAT_POS:16), w
-	inc	1, (0x333e:16)
+	inc	1, (ACC_CUR_BAR:16)
 	calr	AccBuf_AdvanceNoPage
 	call	AccVoice_IncrementBarWithSave
 	calr	AccPart_Reactivate
@@ -1427,7 +1434,7 @@ AccVoice_ActivatePart_Join:
 	and	(ACC_LANES_COUNTIN:16), a
 	and	(ACC_LANES_INTRO2:16), a
 	ld	(ACC_CUR_BEAT_POS:16), 0
-	ld	(0x334e:16), 0
+	ld	(ACC_CUR_MEASURE:16), 0
 AccVoice_ActivatePart_Return2:
 	ret
 	or	(0x3258:16), 1
@@ -2101,7 +2108,7 @@ AccKbd1_TimingCheck:
 	ld w, (ACC_CUR_BEAT_POS:16)
 	calr AccVoice_LookupTableAddress
 	ld bc, (0x31e1:16)
-	ld w, (0x333e:16)
+	ld w, (ACC_CUR_BAR:16)
 	calr AccTempo_PositionCompare
 	cp A,0x18
 	jr ule, AccKbd1_TimingOK
@@ -2114,7 +2121,7 @@ AccKbd1_TimingOK:
 	dec	1, w
 	calr	AccVoice_LookupTableAddress
 	ld	bc, (12769:16)
-	ld	w, (13118:16)
+	ld	w, (ACC_CUR_BAR:16)
 	dec	1, w
 	calr	AccTempo_PositionCompare
 	ld	(13215:16), a
@@ -2240,7 +2247,7 @@ AccKbd2_CheckActive_Skip:
 	and	(ACC_LANES_INTRO2:16), a
 	and	(12993:16), a
 	and	(12941:16), a
-	ld	(13134:16), 0
+	ld	(ACC_CUR_MEASURE:16), 0
 	ld	(ACC_CUR_BLOCK:16), 254
 	ld	(ACC_CUR_READ_POS:16), 6
 AccKbd2_CheckActive_Return:
@@ -2259,28 +2266,28 @@ AccKbd2_SaveState:
 	ld (ACC_CUR_BLOCK:16), wa
 	ld wa, (ACC_LANE_READ_POS+2:16)
 	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (0x321a:16)
-	ld (0x333e:16), a
+	ld a, (ACC_LANE_BAR+1:16)
+	ld (ACC_CUR_BAR:16), a
 	ld a, (ACC_LANE_BEAT_POS+1:16)
 	ld (ACC_CUR_BEAT_POS:16), a
 	ld a, (ACC_LANE_SECTION+1:16)
 	ld (ACC_CUR_SECTION:16), a
-	ld a, (0x3350:16)
-	ld (0x334e:16), a
+	ld a, (ACC_LANE_MEASURE+1:16)
+	ld (ACC_CUR_MEASURE:16), a
 	ret
 AccKbd2_RestoreState:
 	ld	wa, (ACC_CUR_BLOCK:16)
 	ld	(ACC_LANE_BLOCK+2:16), wa
 	ld	wa, (ACC_CUR_READ_POS:16)
 	ld	(ACC_LANE_READ_POS+2:16), wa
-	ld	a, (13118:16)
-	ld	(12826:16), a
+	ld	a, (ACC_CUR_BAR:16)
+	ld	(ACC_LANE_BAR+1:16), a
 	ld	a, (ACC_CUR_BEAT_POS:16)
 	ld	(ACC_LANE_BEAT_POS+1:16), a
 	ld	a, (ACC_CUR_SECTION:16)
 	ld	(ACC_LANE_SECTION+1:16), a
-	ld	a, (13134:16)
-	ld	(13136:16), a
+	ld	a, (ACC_CUR_MEASURE:16)
+	ld	(ACC_LANE_MEASURE+1:16), a
 	ret
 AccKbd2_RingBufEntry:
 	calr AccKbd2_CheckEligible
@@ -2509,28 +2516,28 @@ AccCh1_SaveState:
 	ld (ACC_CUR_BLOCK:16), wa
 	ld wa, (ACC_LANE_READ_POS+4:16)
 	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (0x321b:16)
-	ld (0x333e:16), a
+	ld a, (ACC_LANE_BAR+2:16)
+	ld (ACC_CUR_BAR:16), a
 	ld a, (ACC_LANE_BEAT_POS+2:16)
 	ld (ACC_CUR_BEAT_POS:16), a
 	ld a, (ACC_LANE_SECTION+2:16)
 	ld (ACC_CUR_SECTION:16), a
-	ld a, (0x3351:16)
-	ld (0x334e:16), a
+	ld a, (ACC_LANE_MEASURE+2:16)
+	ld (ACC_CUR_MEASURE:16), a
 	ret
 AccCh1_RestoreState:
 	ld	wa, (ACC_CUR_BLOCK:16)
 	ld	(ACC_LANE_BLOCK+4:16), wa
 	ld	wa, (ACC_CUR_READ_POS:16)
 	ld	(ACC_LANE_READ_POS+4:16), wa
-	ld	a, (13118:16)
-	ld	(12827:16), a
+	ld	a, (ACC_CUR_BAR:16)
+	ld	(ACC_LANE_BAR+2:16), a
 	ld	a, (ACC_CUR_BEAT_POS:16)
 	ld	(ACC_LANE_BEAT_POS+2:16), a
 	ld	a, (ACC_CUR_SECTION:16)
 	ld	(ACC_LANE_SECTION+2:16), a
-	ld	a, (13134:16)
-	ld	(13137:16), a
+	ld	a, (ACC_CUR_MEASURE:16)
+	ld	(ACC_LANE_MEASURE+2:16), a
 	ret
 AccVoice_AssignPerPart:
 	cp (ACC_PART_BIT:16), 0x01
@@ -2547,7 +2554,7 @@ AccVoice_AssignReturn:
 
 AccVoice_ScanInstruments:
 	ld	e, (12973:16)
-	ld	(12951:16), 0
+	ld	(ACC_CUR_CC3:16), 0
 AccVoice_ScanLoop:
 	cp	e, (ACC_CUR_SECTION:16)
 	jr	z, AccVoice_ScanDone	; -> 0xF571F2
@@ -2569,8 +2576,8 @@ AccVoice_SendProgChange:
 	jr nz, .Lc_f5720c
 	ld A, 0xd7:opc
 	ld W, 0x03:opc
-	ld e, (0x3297:16)
-	ld (0x3293:16), e
+	ld e, (ACC_CUR_CC3:16)
+	ld (ACC_CH_CC3:16), e
 	call Rhythm_Send3ByteMsg
 	jr t, AccCh_ReturnStub
 AccVoice_SendD4:
@@ -2579,8 +2586,8 @@ AccVoice_SendD4:
 	jr nz, .Lc_f57225
 	ld A, 0xd4:opc
 	ld W, 0x03:opc
-	ld e, (0x3297:16)
-	ld (0x3294:16), e
+	ld e, (ACC_CUR_CC3:16)
+	ld (ACC_CH_CC3+1:16), e
 	call Rhythm_Send3ByteMsg
 	jr t, AccCh_ReturnStub
 AccVoice_SendD5:
@@ -2589,15 +2596,15 @@ AccVoice_SendD5:
 	jr nz, AccVoice_SendD6
 	ld A, 0xd5:opc
 	ld W, 0x03:opc
-	ld e, (0x3297:16)
-	ld (0x3295:16), e
+	ld e, (ACC_CUR_CC3:16)
+	ld (ACC_CH_CC3+2:16), e
 	call Rhythm_Send3ByteMsg
 	jr t, AccCh_ReturnStub
 AccVoice_SendD6:
 	ld	a, 214:opc
 	ld	w, 3:opc
-	ld	e, (12951:16)
-	ld	(12950:16), e
+	ld	e, (ACC_CUR_CC3:16)
+	ld	(ACC_CH_CC3+3:16), e
 	call	Rhythm_Send3ByteMsg
 	jr	AccCh_ReturnStub
 AccCh_ReturnStub:
@@ -2624,10 +2631,10 @@ AccCh1_NoteOnEntry:
 	calr AccCh1_CheckEligible
 	bit 0, (0x3345:16)
 	jr z, AccCh1_NoteOnReturn
-	ld a, (0x3227:16)
-	ld (0x322f:16), a
-	ld a, (0x322b:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xfb
 	or (0x3258:16), 0x08
 	ld XHL,0x00002bf8
@@ -2935,37 +2942,37 @@ AccCh2_SaveState:
 	ld (ACC_CUR_BLOCK:16), wa
 	ld wa, (ACC_LANE_READ_POS+6:16)
 	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (0x321c:16)
-	ld (0x333e:16), a
+	ld a, (ACC_LANE_BAR+3:16)
+	ld (ACC_CUR_BAR:16), a
 	ld a, (ACC_LANE_BEAT_POS+3:16)
 	ld (ACC_CUR_BEAT_POS:16), a
 	ld a, (ACC_LANE_SECTION+3:16)
 	ld (ACC_CUR_SECTION:16), a
-	ld a, (0x3352:16)
-	ld (0x334e:16), a
+	ld a, (ACC_LANE_MEASURE+3:16)
+	ld (ACC_CUR_MEASURE:16), a
 	ret
 AccCh2_RestoreState:
 	ld	wa, (ACC_CUR_BLOCK:16)
 	ld	(ACC_LANE_BLOCK+6:16), wa
 	ld	wa, (ACC_CUR_READ_POS:16)
 	ld	(ACC_LANE_READ_POS+6:16), wa
-	ld	a, (13118:16)
-	ld	(12828:16), a
+	ld	a, (ACC_CUR_BAR:16)
+	ld	(ACC_LANE_BAR+3:16), a
 	ld	a, (ACC_CUR_BEAT_POS:16)
 	ld	(ACC_LANE_BEAT_POS+3:16), a
 	ld	a, (ACC_CUR_SECTION:16)
 	ld	(ACC_LANE_SECTION+3:16), a
-	ld	a, (13134:16)
-	ld	(13138:16), a
+	ld	a, (ACC_CUR_MEASURE:16)
+	ld	(ACC_LANE_MEASURE+3:16), a
 	ret
 AccCh2_NoteOnEntry:
 	calr AccCh2_CheckEligible
 	bit 0, (0x3345:16)
 	jr z, AccCh2_NoteOnReturn
-	ld a, (0x3228:16)
-	ld (0x322f:16), a
-	ld a, (0x322c:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+1:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+1:16)
+	ld (ACC_CUR_CEILING:16), a
 	or (0x3258:16), 0x04
 	and (0x3258:16), 0xf7
 	ld XHL,0x00002cf8
@@ -3103,37 +3110,37 @@ AccCh3_SaveState:
 	ld (ACC_CUR_BLOCK:16), wa
 	ld wa, (ACC_LANE_READ_POS+8:16)
 	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (0x321d:16)
-	ld (0x333e:16), a
+	ld a, (ACC_LANE_BAR+4:16)
+	ld (ACC_CUR_BAR:16), a
 	ld a, (ACC_LANE_BEAT_POS+4:16)
 	ld (ACC_CUR_BEAT_POS:16), a
 	ld a, (ACC_LANE_SECTION+4:16)
 	ld (ACC_CUR_SECTION:16), a
-	ld a, (0x3353:16)
-	ld (0x334e:16), a
+	ld a, (ACC_LANE_MEASURE+4:16)
+	ld (ACC_CUR_MEASURE:16), a
 	ret
 AccCh3_RestoreState:
 	ld	wa, (ACC_CUR_BLOCK:16)
 	ld	(ACC_LANE_BLOCK+8:16), wa
 	ld	wa, (ACC_CUR_READ_POS:16)
 	ld	(ACC_LANE_READ_POS+8:16), wa
-	ld	a, (13118:16)
-	ld	(12829:16), a
+	ld	a, (ACC_CUR_BAR:16)
+	ld	(ACC_LANE_BAR+4:16), a
 	ld	a, (ACC_CUR_BEAT_POS:16)
 	ld	(ACC_LANE_BEAT_POS+4:16), a
 	ld	a, (ACC_CUR_SECTION:16)
 	ld	(ACC_LANE_SECTION+4:16), a
-	ld	a, (13134:16)
-	ld	(13139:16), a
+	ld	a, (ACC_CUR_MEASURE:16)
+	ld	(ACC_LANE_MEASURE+4:16), a
 	ret
 AccCh3_NoteOnEntry:
 	calr AccCh3_CheckEligible
 	bit 0, (0x3345:16)
 	jr z, AccCh3_NoteOnReturn
-	ld a, (0x3229:16)
-	ld (0x322f:16), a
-	ld a, (0x322d:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+2:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+2:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xfb
 	and (0x3258:16), 0xf7
 	ld XHL,0x00002df8
@@ -3271,37 +3278,37 @@ AccCh4_SaveState:
 	ld (ACC_CUR_BLOCK:16), wa
 	ld wa, (ACC_LANE_READ_POS+10:16)
 	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (0x321e:16)
-	ld (0x333e:16), a
+	ld a, (ACC_LANE_BAR+5:16)
+	ld (ACC_CUR_BAR:16), a
 	ld a, (ACC_LANE_BEAT_POS+5:16)
 	ld (ACC_CUR_BEAT_POS:16), a
 	ld a, (ACC_LANE_SECTION+5:16)
 	ld (ACC_CUR_SECTION:16), a
-	ld a, (0x3354:16)
-	ld (0x334e:16), a
+	ld a, (ACC_LANE_MEASURE+5:16)
+	ld (ACC_CUR_MEASURE:16), a
 	ret
 AccCh4_RestoreState:
 	ld	wa, (ACC_CUR_BLOCK:16)
 	ld	(ACC_LANE_BLOCK+10:16), wa
 	ld	wa, (ACC_CUR_READ_POS:16)
 	ld	(ACC_LANE_READ_POS+10:16), wa
-	ld	a, (13118:16)
-	ld	(12830:16), a
+	ld	a, (ACC_CUR_BAR:16)
+	ld	(ACC_LANE_BAR+5:16), a
 	ld	a, (ACC_CUR_BEAT_POS:16)
 	ld	(ACC_LANE_BEAT_POS+5:16), a
 	ld	a, (ACC_CUR_SECTION:16)
 	ld	(ACC_LANE_SECTION+5:16), a
-	ld	a, (13134:16)
-	ld	(13140:16), a
+	ld	a, (ACC_CUR_MEASURE:16)
+	ld	(ACC_LANE_MEASURE+5:16), a
 	ret
 AccCh4_NoteOnEntry:
 	calr AccCh4_CheckEligible
 	bit 0, (0x3345:16)
 	jr z, AccCh4_NoteOnReturn
-	ld a, (0x322a:16)
-	ld (0x322f:16), a
-	ld a, (0x322e:16)
-	ld (0x3230:16), a
+	ld a, (ACC_CH_TURNOVER+3:16)
+	ld (ACC_CUR_TURNOVER:16), a
+	ld a, (ACC_CH_CEILING+3:16)
+	ld (ACC_CUR_CEILING:16), a
 	and (0x3258:16), 0xfb
 	and (0x3258:16), 0xf7
 	ld XHL,0x00002ef8
@@ -3517,7 +3524,7 @@ AccPart_Deactivate_ClearMasks:
 	and	(ACC_LANES_COUNTIN:16), a
 	and	(ACC_LANES_INTRO2:16), a
 	ld	(ACC_CUR_BEAT_POS:16), 0
-	ld	(13134:16), 0
+	ld	(ACC_CUR_MEASURE:16), 0
 AccPart_DeactivateReturn:
 	ret
 
@@ -3545,7 +3552,7 @@ AccPart_Reactivate_Inactive:
 	and	(ACC_LANES_INTRO2:16), a
 	and	(12993:16), a
 	and	(12941:16), a
-	ld	(13134:16), 0
+	ld	(ACC_CUR_MEASURE:16), 0
 	ld	(ACC_CUR_BLOCK:16), 254
 	ld	(ACC_CUR_READ_POS:16), 6
 AccPart_ReactivateReturn:
@@ -3667,7 +3674,7 @@ AccVoice_InitCh1_D7:
 	ld	w, 3:opc
 	ld	e, 0:opc
 	call	Rhythm_Send3ByteMsg
-	ld	(12947:16), 0
+	ld	(ACC_CH_CC3:16), 0
 	ld	a, 215:opc
 	ld	w, 5:opc
 	ld	e, 127:opc
@@ -3685,7 +3692,7 @@ AccBuf_WriteD0WithVoice:
 	call RhythmAccent_UpdateRingBufPosition
 	ld	(xhl+iy), 0x03
 	call RingBuf_AdvanceIndex
-	ld a, (0x3297:16)
+	ld a, (ACC_CUR_CC3:16)
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -3707,7 +3714,7 @@ AccVoice_InitCh2_D4:
 	ld	w, 3:opc
 	ld	e, 0:opc
 	call	Rhythm_Send3ByteMsg
-	ld	(12948:16), 0
+	ld	(ACC_CH_CC3+1:16), 0
 	ld	a, 212:opc
 	ld	w, 5:opc
 	ld	e, 127:opc
@@ -3732,7 +3739,7 @@ AccVoice_InitCh3_D5:
 	ld	w, 3:opc
 	ld	e, 0:opc
 	call	Rhythm_Send3ByteMsg
-	ld	(12949:16), 0
+	ld	(ACC_CH_CC3+2:16), 0
 	ld	a, 213:opc
 	ld	w, 5:opc
 	ld	e, 127:opc
@@ -3757,7 +3764,7 @@ AccVoice_InitCh4_D6:
 	ld	w, 3:opc
 	ld	e, 0:opc
 	call	Rhythm_Send3ByteMsg
-	ld	(12950:16), 0
+	ld	(ACC_CH_CC3+3:16), 0
 	ld	a, 214:opc
 	ld	w, 5:opc
 	ld	e, 127:opc
@@ -3869,7 +3876,7 @@ AccTick_ByteData_Join3:
 	or	(0x3290:16), 128
 	ret
 AccTempo_BarCompare:
-	ld w, (0x3219:16)
+	ld w, (ACC_LANE_BAR:16)
 	cp w, (0x3218:16)
 	jr c, .Lc_f57f89
 	jr z, AccTempo_BarEqual
@@ -3910,7 +3917,7 @@ AccTempo_StoreDelta:
 AccSeq_DualPartScan:
 	ld de, (0x3247:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0x00
-	ld (0x3297:16), 0x00
+	ld (ACC_CUR_CC3:16), 0x00
 	ld wa, (ACC_LANE_READ_POS:16)
 	ld (ACC_CUR_READ_POS:16), wa
 	ld a, (ACC_LANE_BEAT_POS:16)
@@ -3930,7 +3937,7 @@ AccSeq_DualPartScan:
 	jr nz, AccSeq_DualPartReturn
 	ld de, (0x3247:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0x00
-	ld (0x3297:16), 0x00
+	ld (ACC_CUR_CC3:16), 0x00
 	ld wa, (ACC_LANE_READ_POS+2:16)
 	ld (ACC_CUR_READ_POS:16), wa
 	ld a, (ACC_LANE_BEAT_POS+1:16)
@@ -4046,7 +4053,7 @@ AccSeq_Scanner_D3Voice:
 	calr	AccBuf_Advance
 	calr	AccBuf_Advance
 	ld	a, (xhl+iy)
-	ld	(12951:16), a
+	ld	(ACC_CUR_CC3:16), a
 	calr	AccBuf_Advance
 	jrl	AccSeq_ScannerLoop	; -> 0xF58072
 AccSeq_Scanner_Unknown:
@@ -4103,7 +4110,7 @@ AccBuf_AdvanceSimpleReturn:
 AccSeq_FourChannelScan:
 	ld de, (0x3247:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0x00
-	ld (0x3297:16), 0x00
+	ld (ACC_CUR_CC3:16), 0x00
 	ld wa, (ACC_LANE_READ_POS+4:16)
 	ld (ACC_CUR_READ_POS:16), wa
 	ld a, (ACC_LANE_BEAT_POS+2:16)
@@ -4125,7 +4132,7 @@ AccSeq_FourChannelScan:
 	jrl nz, AccSeq_FourChannelReturn
 	ld de, (0x3247:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0x00
-	ld (0x3297:16), 0x00
+	ld (ACC_CUR_CC3:16), 0x00
 	ld wa, (ACC_LANE_READ_POS+6:16)
 	ld (ACC_CUR_READ_POS:16), wa
 	ld a, (ACC_LANE_BEAT_POS+3:16)
@@ -4147,7 +4154,7 @@ AccSeq_FourChannelScan:
 	jrl nz, AccSeq_FourChannelReturn
 	ld de, (0x3247:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0x00
-	ld (0x3297:16), 0x00
+	ld (ACC_CUR_CC3:16), 0x00
 	ld wa, (ACC_LANE_READ_POS+8:16)
 	ld (ACC_CUR_READ_POS:16), wa
 	ld a, (ACC_LANE_BEAT_POS+4:16)
@@ -4169,7 +4176,7 @@ AccSeq_FourChannelScan:
 	jr nz, AccSeq_FourChannelReturn
 	ld de, (0x3247:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0x00
-	ld (0x3297:16), 0x00
+	ld (ACC_CUR_CC3:16), 0x00
 	ld wa, (ACC_LANE_READ_POS+10:16)
 	ld (ACC_CUR_READ_POS:16), wa
 	ld a, (ACC_LANE_BEAT_POS+5:16)
@@ -5201,7 +5208,7 @@ AccVoice_ScanForD3:
 	call	AccBuf_Advance
 	call	AccBuf_Advance
 	ld	a, (xhl+iy)
-	ld	(12951:16), a
+	ld	(ACC_CUR_CC3:16), a
 AccVoice_ScanSkip:
 	call AccBuf_Advance
 	jr AccVoice_ScanForD3
@@ -5212,7 +5219,7 @@ AccVoice_ScanDone2:
 AccVoice_SetupByteData:
 	ld	(ACC_PART_BIT:16), 4
 	ld	e, (0x32ad:16)
-	ld	(0x3297:16), 0
+	ld	(ACC_CUR_CC3:16), 0
 AccVoice_SetupByteData_Join:
 	ld	xiy, (ACC_STYLE_RECORD:16)
 	cp	e, (ACC_LANE_SECTION+2:16)
@@ -5230,7 +5237,7 @@ AccVoice_SetupByteData_Return:
 	ret
 	ld	(ACC_PART_BIT:16), 8
 	ld	e, (0x32ad:16)
-	ld	(0x3297:16), 0
+	ld	(ACC_CUR_CC3:16), 0
 AccVoice_SetupByteData_Join2:
 	ld	xiy, (ACC_STYLE_RECORD:16)
 	cp	e, (ACC_LANE_SECTION+3:16)
@@ -5248,7 +5255,7 @@ AccVoice_SetupByteData_Return2:
 	ret
 	ld	(ACC_PART_BIT:16), 8
 	ld	e, (0x32ad:16)
-	ld	(0x3297:16), 0
+	ld	(ACC_CUR_CC3:16), 0
 AccVoice_SetupByteData_Join3:
 	ld	xiy, (ACC_STYLE_RECORD:16)
 	cp	e, (ACC_LANE_SECTION+4:16)
@@ -5266,7 +5273,7 @@ AccVoice_SetupByteData_Return3:
 	ret
 	ld	(ACC_PART_BIT:16), 8
 	ld	e, (0x32ad:16)
-	ld	(0x3297:16), 0
+	ld	(ACC_CUR_CC3:16), 0
 AccVoice_SetupByteData_Join4:
 	ld	xiy, (ACC_STYLE_RECORD:16)
 	cp	e, (ACC_LANE_SECTION+5:16)
@@ -5508,7 +5515,7 @@ AccTempo_CalcPosition:
 	dec	1, w
 	call	AccVoice_LookupTableAddress
 	ld	bc, (12769:16)
-	ld	w, (12825:16)
+	ld	w, (ACC_LANE_BAR:16)
 	dec	1, w
 	call	AccTempo_PositionCompare
 	ld	(12880:16), a
@@ -6099,7 +6106,7 @@ AccStyleCtl_StartStop_CallReset:
 	push XIX
 	push XIY
 	push XIZ
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	pop XIZ
 	pop XIY
 	pop XIX
@@ -7353,7 +7360,7 @@ AccAutoPlay_NoteDispatch:
 	push XIX
 	push XIY
 	push XIZ
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	pop XIZ
 	pop XIY
 	pop XIX
@@ -7640,11 +7647,11 @@ AccAutoPlay_ModeAvail_Padding3:
 	nop
 
 AccAutoPlay_ModeAvail:
-	ld l, (PANEL_REC_70:16)
+	ld l, (PANEL_PLAY_SETTINGS:16)
 	and l, 0x3
 	cp l, 0:i3
 	jr nz, AccAutoPlay_ModeAvail_Process
-	ld l, (PANEL_REC_70+1:16)
+	ld l, (PANEL_PLAY_SETTINGS+1:16)
 	and l, 0x7f
 	dec 1, l
 	cp l, 0xff
@@ -8959,51 +8966,51 @@ AccTiming_MasterTick:
 	ld	(0x32f0:16), 7
 	ld	a, (0x32eb:16)
 	ld	(0x32e8:16), a
-	ld	a, (0x3293:16)
-	ld	(0x3297:16), a
+	ld	a, (ACC_CH_CC3:16)
+	ld	(ACC_CUR_CC3:16), a
 	ld	xhl, 11256
 	ld	xbc, 12376
 	calr	AccAccTiming_ScanRingBuf
 	ld	a, (0x32e8:16)
 	ld	(0x32eb:16), a
-	ld	a, (0x3297:16)
-	ld	(0x3293:16), a
+	ld	a, (ACC_CUR_CC3:16)
+	ld	(ACC_CH_CC3:16), a
 	ld	(0x32f0:16), 4
 	ld	a, (0x32ec:16)
 	ld	(0x32e8:16), a
-	ld	a, (0x3294:16)
-	ld	(0x3297:16), a
+	ld	a, (ACC_CH_CC3+1:16)
+	ld	(ACC_CUR_CC3:16), a
 	ld	xhl, 11512
 	ld	xbc, 12448
 	calr	AccAccTiming_ScanRingBuf
 	ld	a, (0x32e8:16)
 	ld	(0x32ec:16), a
-	ld	a, (0x3297:16)
-	ld	(0x3294:16), a
+	ld	a, (ACC_CUR_CC3:16)
+	ld	(ACC_CH_CC3+1:16), a
 	ld	(0x32f0:16), 5
 	ld	a, (0x32ed:16)
 	ld	(0x32e8:16), a
-	ld	a, (0x3295:16)
-	ld	(0x3297:16), a
+	ld	a, (ACC_CH_CC3+2:16)
+	ld	(ACC_CUR_CC3:16), a
 	ld	xhl, 11768
 	ld	xbc, 12520
 	calr	AccAccTiming_ScanRingBuf
 	ld	a, (0x32e8:16)
 	ld	(0x32ed:16), a
-	ld	a, (0x3297:16)
-	ld	(0x3295:16), a
+	ld	a, (ACC_CUR_CC3:16)
+	ld	(ACC_CH_CC3+2:16), a
 	ld	(0x32f0:16), 6
 	ld	a, (0x32ee:16)
 	ld	(0x32e8:16), a
-	ld	a, (0x3296:16)
-	ld	(0x3297:16), a
+	ld	a, (ACC_CH_CC3+3:16)
+	ld	(ACC_CUR_CC3:16), a
 	ld	xhl, 12024
 	ld	xbc, 12592
 	calr	AccAccTiming_ScanRingBuf
 	ld	a, (0x32e8:16)
 	ld	(0x32ee:16), a
-	ld	a, (0x3297:16)
-	ld	(0x3296:16), a
+	ld	a, (ACC_CUR_CC3:16)
+	ld	(ACC_CH_CC3+3:16), a
 	ld	a, (0x32db:16)
 	ld	(0x32da:16), a
 	jr	AccKbdTiming_Ret
@@ -9205,10 +9212,10 @@ AccKbdTiming_WriteNonNote_Byte3:
 	cp	w, 223
 	jr	nz, AccKbdTiming_WriteNonNote_CheckType
 	ld	a, 0:opc
-	ld	(12947:16), a
-	ld	(12948:16), a
-	ld	(12949:16), a
-	ld	(12950:16), a
+	ld	(ACC_CH_CC3:16), a
+	ld	(ACC_CH_CC3+1:16), a
+	ld	(ACC_CH_CC3+2:16), a
+	ld	(ACC_CH_CC3+3:16), a
 	jr	AccKbdTiming_WriteNonNote_Done
 AccKbdTiming_WriteNonNote_CheckType:
 	cp w, 0x9f
@@ -9670,7 +9677,7 @@ AccAccTiming_WriteNonNote_Byte3:
 	jr	nz, AccAccTiming_WriteNonNote_ExtBytes
 	cp	(0x3298:16), 3
 	jr	nz, AccAccTiming_WriteNonNote_Done
-	ld	(0x3297:16), a
+	ld	(ACC_CUR_CC3:16), a
 	jr	AccAccTiming_WriteNonNote_Done
 AccAccTiming_WriteNonNote_ExtBytes:
 	ld	a, (xhl+ix)
@@ -9877,7 +9884,7 @@ AccDir_ReadState:
 AccDir_ReadState_StoreFlags:
 .Lc_f5b9fa:
 	ld (0x3409:16), a
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	bit 0x00,A
 	jr nz, AccDir_ReadState_Ret
 	and (0x3403:16), 0xf6
@@ -9915,7 +9922,7 @@ AccDir_AdjustDirection:
 	and (0x3403:16), 0xfe
 	cp (0x3408:16), 0x80
 	jr nc, AccDir_Adjust_LeftHand
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and W,0x01
 	ld a, (PANEL_STYLE+7:16)
 	and A,0x30
@@ -9938,7 +9945,7 @@ AccDir_Adjust_LeftHand:
 	and	(0x3403:16), 247
 	cp	(0x3408:16), 128
 	jr	nc, AccDir_Adjust_SetChanged
-	ld	w, (PANEL_REC_98+3:16)
+	ld	w, (PANEL_PMEM_SETTINGS+3:16)
 	and	w, 1
 	ld	a, (PANEL_STYLE+7:16)
 	and	a, 48
@@ -9965,7 +9972,7 @@ AccDir_Padding4:
 	nop
 
 AccDir_DispatchEvent:
-	ld w, (PANEL_REC_98+3:16)
+	ld w, (PANEL_PMEM_SETTINGS+3:16)
 	and W,0x01
 	cp w, 0:i3
 	jr z, AccDir_DispatchEvent_Ret
@@ -9976,7 +9983,7 @@ AccDir_DispatchEvent:
 	ld a, (PANEL_STYLE+7:16)
 	ld W, 0x30:opc
 	call SwbtWr_QueuePostEvent
-	ld a, (PANEL_REC_98+3:16)
+	ld a, (PANEL_PMEM_SETTINGS+3:16)
 	and A,0x70
 	cp A,0x10
 	jr z, AccDir_DispatchEvent_Ret
@@ -10276,7 +10283,7 @@ AccVoice_ROMLookup_OffsetTable:
 AccVoice_ROMLookup_Data:	.byte	0xa0, 0x00, 0x00, 0x00, 0x00, 0x01
 
 
-	naka_header NAKA_TYPE_0x00
+	naka_header NAKA_TYPE_Object
 	.byte 0x00, 0x00, 0xc0, 0x01
 	.byte 0x00, 0x00, 0x20, 0x02, 0x00, 0x00, 0x80, 0x02
 	.byte 0x00, 0x00, 0xe0, 0x02, 0x00, 0x00, 0x40, 0x03
@@ -10742,9 +10749,9 @@ AccStyle_InlinedBlock_Skip2:
 	ld	a, (0x31b5:16)
 	ld	(ACC_EVENT+4:16), a
 	ld	a, (0x31b6:16)
-	ld	(0x3227:16), a
+	ld	(ACC_CH_TURNOVER:16), a
 	ld	a, (0x31b7:16)
-	ld	(0x322b:16), a
+	ld	(ACC_CH_CEILING:16), a
 	call	Rhythm_PackVelocityHighBit
 	ld	xhl, 0x317d
 	call	AccVoiceReg_StoreParamRecord
@@ -10757,9 +10764,9 @@ AccStyle_InlinedBlock_Skip2:
 	ld	a, (0x31bc:16)
 	ld	(ACC_EVENT+4:16), a
 	ld	a, (0x31bd:16)
-	ld	(0x3227:16), a
+	ld	(ACC_CH_TURNOVER:16), a
 	ld	a, (0x31be:16)
-	ld	(0x322b:16), a
+	ld	(ACC_CH_CEILING:16), a
 	call	Rhythm_PackVelocityHighBit
 	ld	xhl, 0x3182
 	call	AccVoiceReg_StoreParamRecord
@@ -10772,9 +10779,9 @@ AccStyle_InlinedBlock_Skip2:
 	ld	a, (0x31c3:16)
 	ld	(ACC_EVENT+4:16), a
 	ld	a, (0x31c4:16)
-	ld	(0x3227:16), a
+	ld	(ACC_CH_TURNOVER:16), a
 	ld	a, (0x31c5:16)
-	ld	(0x322b:16), a
+	ld	(ACC_CH_CEILING:16), a
 	call	Rhythm_PackVelocityHighBit
 	ld	xhl, 0x3187
 	call	AccVoiceReg_StoreParamRecord
@@ -10787,9 +10794,9 @@ AccStyle_InlinedBlock_Skip2:
 	ld	a, (0x31ca:16)
 	ld	(ACC_EVENT+4:16), a
 	ld	a, (0x31cb:16)
-	ld	(0x3227:16), a
+	ld	(ACC_CH_TURNOVER:16), a
 	ld	a, (0x31cc:16)
-	ld	(0x322b:16), a
+	ld	(ACC_CH_CEILING:16), a
 	call	Rhythm_PackVelocityHighBit
 	ld	xhl, 0x318c
 	call	AccVoiceReg_StoreParamRecord
@@ -12444,27 +12451,27 @@ AccPedal_DirectionA_Wrap_Helper2:
 	or	(0x3290:16), a
 	ret
 AccVoice_ClearChannelStates:
-	ld	(13135:16), 0
-	ld	(13136:16), 0
-	ld	(13137:16), 0
-	ld	(13138:16), 0
-	ld	(13139:16), 0
-	ld	(13140:16), 0
+	ld	(ACC_LANE_MEASURE:16), 0
+	ld	(ACC_LANE_MEASURE+1:16), 0
+	ld	(ACC_LANE_MEASURE+2:16), 0
+	ld	(ACC_LANE_MEASURE+3:16), 0
+	ld	(ACC_LANE_MEASURE+4:16), 0
+	ld	(ACC_LANE_MEASURE+5:16), 0
 	ret
 AccVoice_IncrementBarCounter:
-	ld a, (0x334e:16)
+	ld a, (ACC_CUR_MEASURE:16)
 	inc 1,A
-	ld (0x334e:16), a
+	ld (ACC_CUR_MEASURE:16), a
 	ld	xbc, (0x338a:16)
 	cp	a, (xbc+13)
 	ret	ule
-	ld	(0x334e:16), 0
+	ld	(ACC_CUR_MEASURE:16), 0
 	ret
 AccVoice_BarCounterBytecodeData:
 	ld	(0x3344:16), 0
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x334f:16)
+	ld	e, (ACC_LANE_MEASURE:16)
 	extz	de
 	ld	bc, 0:i3
 	calr	AccVoice_GetMeasureStartBlock
@@ -12475,14 +12482,14 @@ AccVoice_BarCounterBytecodeData:
 AccVoice_BarCounterBytecodeData_Skip:
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x334f:16)
+	ld	e, (ACC_LANE_MEASURE:16)
 	extz	de
 	ld	bc, 0:i3
 	calr	AccVoice_BarCounterBytecodeData_Helper2
 	ld	(ACC_LANE_READ_POS:16), hl
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3351:16)
+	ld	e, (ACC_LANE_MEASURE+2:16)
 	extz	de
 	ld	bc, 1:i3
 	calr	AccVoice_GetMeasureStartBlock
@@ -12493,14 +12500,14 @@ AccVoice_BarCounterBytecodeData_Skip:
 AccVoice_BarCounterBytecodeData_Skip2:
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3351:16)
+	ld	e, (ACC_LANE_MEASURE+2:16)
 	extz	de
 	ld	bc, 1:i3
 	calr	AccVoice_BarCounterBytecodeData_Helper2
 	ld	(ACC_LANE_READ_POS+4:16), hl
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3352:16)
+	ld	e, (ACC_LANE_MEASURE+3:16)
 	extz	de
 	ld	bc, 2:i3
 	calr	AccVoice_GetMeasureStartBlock
@@ -12511,14 +12518,14 @@ AccVoice_BarCounterBytecodeData_Skip2:
 AccVoice_BarCounterBytecodeData_Skip3:
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3352:16)
+	ld	e, (ACC_LANE_MEASURE+3:16)
 	extz	de
 	ld	bc, 2:i3
 	calr	AccVoice_BarCounterBytecodeData_Helper2
 	ld	(ACC_LANE_READ_POS+6:16), hl
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3353:16)
+	ld	e, (ACC_LANE_MEASURE+4:16)
 	extz	de
 	ld	bc, 3:i3
 	calr	AccVoice_GetMeasureStartBlock
@@ -12529,14 +12536,14 @@ AccVoice_BarCounterBytecodeData_Skip3:
 AccVoice_BarCounterBytecodeData_Skip4:
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3353:16)
+	ld	e, (ACC_LANE_MEASURE+4:16)
 	extz	de
 	ld	bc, 3:i3
 	calr	AccVoice_BarCounterBytecodeData_Helper2
 	ld	(ACC_LANE_READ_POS+8:16), hl
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3354:16)
+	ld	e, (ACC_LANE_MEASURE+5:16)
 	extz	de
 	ld	bc, 4:i3
 	calr	AccVoice_GetMeasureStartBlock
@@ -12547,7 +12554,7 @@ AccVoice_BarCounterBytecodeData_Skip4:
 AccVoice_BarCounterBytecodeData_Skip5:
 	ld	a, (0x3385:16)
 	extz	wa
-	ld	e, (0x3354:16)
+	ld	e, (ACC_LANE_MEASURE+5:16)
 	extz	de
 	ld	bc, 4:i3
 	calr	AccVoice_BarCounterBytecodeData_Helper2
@@ -13000,7 +13007,7 @@ AccTuning_ComplexBytecodeData_Code_Epilogue:
 	inc	2, xsp
 	ret
 	ld	(0x3344:16), 0
-	ld	e, (0x334f:16)
+	ld	e, (ACC_LANE_MEASURE:16)
 	extz	de
 	sla	de, 2
 	ld	xwa, 0:i3
@@ -13015,7 +13022,7 @@ AccTuning_ComplexBytecodeData_Code_Epilogue:
 	jr	nz, AccTuning_ComplexBytecodeData_Code_Skip2
 	set	0, (0x3344:16)
 AccTuning_ComplexBytecodeData_Code_Skip2:
-	ld	e, (0x334f:16)
+	ld	e, (ACC_LANE_MEASURE:16)
 	extz	de
 	sla	de, 2
 	ld	xwa, 0:i3
@@ -13027,7 +13034,7 @@ AccTuning_ComplexBytecodeData_Code_Skip2:
 	add	xbc, 611392
 	lda	xwa, (xbc+de)
 	ldw	(ACC_LANE_READ_POS), (xwa+2)
-	ld	a, (0x3351:16)
+	ld	a, (ACC_LANE_MEASURE+2:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13044,7 +13051,7 @@ AccTuning_ComplexBytecodeData_Code_Skip2:
 	jr	nz, AccTuning_ComplexBytecodeData_Code_Skip3
 	set	2, (0x3344:16)
 AccTuning_ComplexBytecodeData_Code_Skip3:
-	ld	a, (0x3351:16)
+	ld	a, (ACC_LANE_MEASURE+2:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13058,7 +13065,7 @@ AccTuning_ComplexBytecodeData_Code_Skip3:
 	add	xbc, 611392
 	lda	xwa, (xbc+de)
 	ldw	(ACC_LANE_READ_POS+4), (xwa+2)
-	ld	a, (0x3352:16)
+	ld	a, (ACC_LANE_MEASURE+3:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13075,7 +13082,7 @@ AccTuning_ComplexBytecodeData_Code_Skip3:
 	jr	nz, AccTuning_ComplexBytecodeData_Code_Skip4
 	set	3, (0x3344:16)
 AccTuning_ComplexBytecodeData_Code_Skip4:
-	ld	a, (0x3352:16)
+	ld	a, (ACC_LANE_MEASURE+3:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13089,7 +13096,7 @@ AccTuning_ComplexBytecodeData_Code_Skip4:
 	add	xbc, 611392
 	lda	xwa, (xbc+de)
 	ldw	(ACC_LANE_READ_POS+6), (xwa+2)
-	ld	a, (0x3353:16)
+	ld	a, (ACC_LANE_MEASURE+4:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13106,7 +13113,7 @@ AccTuning_ComplexBytecodeData_Code_Skip4:
 	jr	nz, AccTuning_ComplexBytecodeData_Code_Skip5
 	set	4, (0x3344:16)
 AccTuning_ComplexBytecodeData_Code_Skip5:
-	ld	a, (0x3353:16)
+	ld	a, (ACC_LANE_MEASURE+4:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13120,7 +13127,7 @@ AccTuning_ComplexBytecodeData_Code_Skip5:
 	add	xbc, 611392
 	lda	xwa, (xbc+de)
 	ldw	(ACC_LANE_READ_POS+8), (xwa+2)
-	ld	a, (0x3354:16)
+	ld	a, (ACC_LANE_MEASURE+5:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13137,7 +13144,7 @@ AccTuning_ComplexBytecodeData_Code_Skip5:
 	jr	nz, AccTuning_ComplexBytecodeData_Code_Skip6
 	set	5, (0x3344:16)
 AccTuning_ComplexBytecodeData_Code_Skip6:
-	ld	a, (0x3354:16)
+	ld	a, (ACC_LANE_MEASURE+5:16)
 	extz	wa
 	sla	wa, 2
 	ld	de, wa
@@ -13624,7 +13631,12 @@ AccPatch_ClearModeAndInitSlotChain_Wrap:
 	call	AccPatch_InitSlotChain_WithAddr
 	pop	xiz
 	ret
-AccStyle_TableDataEntry_Helper2:
+; AccPatch_ClearModeFlag_Wrap: XIZ-preserving call of AccPatch_ClearModeFlag (0x35D5 = 0). Basis: callers + body --
+;   SingleLoad_CopyComposerPatternFromFile calls it as its last step when the copy did not fail (0x3950 != 131); the
+;   body is `push xiz / calr AccPatch_ClearModeFlag / pop xiz`; X_Wrap convention (Voice_RefreshBankData_Wrap,
+;   AccPatch_ClearModeAndInitSlotChain_Wrap). What the flag 0x35D5 means is not established, so the name stays
+;   literal.
+AccPatch_ClearModeFlag_Wrap:
 	push	xiz
 	calr	AccPatch_ClearModeFlag
 	pop	xiz
@@ -24149,7 +24161,7 @@ DrumKit_StoreAndSendBank:
 	and (PANEL_STYLE+1:16), 128
 	ld h, 0x0:opc
 	call PartCtrl_WriteProgramChange
-	ld xix, PANEL_REC_49
+	ld xix, PANEL_VARI_STYLE
 	ld	(xix+l), h
 	call DrumKit_PostMidiEvents
 	ret
@@ -25250,7 +25262,7 @@ DrumVoice_Handler7_Code_Helper:
 	ld	(PANEL_STYLE:16), a
 	ld	(RHYTHM_LOAD_PROGRAM:16), a
 	and	a, 127
-	ld	(PANEL_REC_49+15:16), a
+	ld	(PANEL_VARI_STYLE+15:16), a
 	ld	(0xffbf:16), a
 	calr	DrumKit_PostMidiEvents
 DrumVoice_Handler7_Code_Return2:
@@ -25523,7 +25535,7 @@ DrumVoice_Handler7_Code_Skip2:
 	jr	nz, DrumVoice_Handler7_Code_Join3
 	ld	l, 0:opc
 DrumVoice_Handler7_Code_Join3:
-	ld	xix, PANEL_REC_49
+	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld	a, 72:opc
 	ld	(0x905a:16), a
@@ -25769,7 +25781,7 @@ TimeSig_DisplayStrings_Code_Skip3:
 	ld	l, 0:opc
 TimeSig_DisplayStrings_Code_Join:
 	ld	a, l
-	ld	xix, PANEL_REC_49
+	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld	l, a
 	ld	a, 72:opc
@@ -26461,7 +26473,7 @@ TimeSig_DisplayStrings_Code_Helper3_Return:
 	ld	xiy, 14450
 	ldir85
 	ret
-; CmpEsy_PrepareRealtimeRecording: XIZ-preserving call of TimeSig_DisplayStrings_Helper3, run by EASY COMPOSER's EDIT
+; CmpEsy_PrepareRealtimeRecording: XIZ-preserving call of CmpEsy_PrepareRealtimeRecording_Impl, run by EASY COMPOSER's EDIT
 ;   before it changes to TT_CMREAL (0xB5): sets the record part 0x36FF from the EASY part mask 0x372D (AC1/AC2/AC3/BAS
 ;   bits 4/5/6/3 -> 1/2/4/8, else DRM 16), updates the status flags (DrumKit_UpdateStatusFlags), re-dispatches the
 ;   audio state (AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState) and loads the current pattern's parameters
@@ -26469,10 +26481,15 @@ TimeSig_DisplayStrings_Code_Helper3_Return:
 ;   CmEsyTtl_Dispatch2_Helper2 and then posts the title change 0xB5 (TT_CMREAL, the Composer realtime recording).
 CmpEsy_PrepareRealtimeRecording:
 	push XIZ
-	call TimeSig_DisplayStrings_Helper3
+	call CmpEsy_PrepareRealtimeRecording_Impl
 	pop XIZ
 	ret
-TimeSig_DisplayStrings_Helper3:
+; CmpEsy_PrepareRealtimeRecording_Impl: Body of CmpEsy_PrepareRealtimeRecording: sets the record part 0x379B from the
+;   EASY part mask 0x37C9 (TimeSig_DisplayStrings_Code_Helper4: bits 4/5/6/3 -> 1/2/4/8, else 16), then
+;   DrumKit_UpdateStatusFlags, AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState and RhythmPatInit_LoadParams.
+;   Basis: callers + body -- its only caller is the XIZ-preserving wrapper CmpEsy_PrepareRealtimeRecording, whose
+;   header describes exactly these steps; X_Impl convention (CmpSetTtl_StepEntryIndex_Impl).
+CmpEsy_PrepareRealtimeRecording_Impl:
 	calr	TimeSig_DisplayStrings_Code_Helper4
 	calr	DrumKit_UpdateStatusFlags
 	call	AudioInit_SelectAndDispatch
@@ -28291,10 +28308,15 @@ CmpEsy_StepVariPattern_Skip2:
 VoiceSlot_Dispatch_Return_Skip2:
 	dec	1, (STYLE_SECTION:16)
 VoiceSlot_Dispatch_Return_Join2:
-	calr	VoiceSlot_Dispatch_Return_Helper
+	calr	CmpEsy_SetStyleNumberFromPattern
 	calr	DrumParam_BuildActiveMask
 	ret
-VoiceSlot_Dispatch_Return_Helper:
+; CmpEsy_SetStyleNumberFromPattern: Makes the selected composer pattern (0x34D6) the panel's current style: record
+;   0x48 +0 (style number, 0xFC5A) = 0x80 + (index & 31), +1 (0xFC5B) reduced to its bit 7, then queues the
+;   record-0x48 offset-0 change (SwbtWr_QueuePostEvent, E = 0x48, D = 0, W = 0, A = (0xFC5A)). Basis: callers + body
+;   -- CmpEsy_StepVariPattern's header describes exactly this step after moving the pattern index (0-11, the A/B/C
+;   vari 1-4 patterns); record 0x48 +0/+1 are SndParam_Style_Number / SndParam_Style_Bank.
+CmpEsy_SetStyleNumberFromPattern:
 	ld	xhl, 0:i3
 	ld	l, (STYLE_SECTION:16)
 	and	l, 31
@@ -28997,10 +29019,15 @@ DrumParam_ReadMaxCount_Return:
 	ret
 CmpEsy_ApplyEdit:
 	push	xiz
-	call	ExtVoice_ProcessList_Helper
+	call	CmpEsy_ApplyEdit_Impl
 	pop	xiz
 	ret
-ExtVoice_ProcessList_Helper:
+; CmpEsy_ApplyEdit_Impl: Body of CmpEsy_ApplyEdit (EASY COMPOSER SET): stops the accompaniment, rebuilds the pattern
+;   data of every part whose bit is set in 0x37C8 (DrumParam_ReadMaxCount_Helper5), clears 0x37C8 on success or re-
+;   initialises the slot and sets 0x37C8 |= 127 on failure (GLOBAL_ERROR_CODE != 0), then restarts the accompaniment
+;   (AccWrap_PlayModeStartAccPlay) or reports the error (DrumVoice_NotifyEE). Basis: callers + body -- its only caller
+;   is the XIZ-preserving wrapper CmpEsy_ApplyEdit, whose header describes exactly these steps; X_Impl convention.
+CmpEsy_ApplyEdit_Impl:
 	call	AccWrap_PlayModeDispatch
 	calr	DrumParam_ReadMaxCount_Helper2
 	call	Seq_DispatcherEntry
@@ -38779,7 +38806,7 @@ AccStyle_TableDataEntry_Join:
 ;   work buffer 0x69800, accepts the headers 'H',0,'K' / 'G',0,'K' / 'L','K','E' (rewriting an older one to 'H',0,'K'
 ;   and resetting byte 2 of the copied sections' part entries), then copies source A into destination C with
 ;   DualVoice_ParamLoadDone -- one composer pattern, or the ten of a memory bank when both are 30 + bank
-;   (AccStyle_TableDataEntry_Helper2); HL = 0xFF95 when a copy fails (0x38B4 = 131), else 0 (0x38B4 = 130 for an
+;   (AccPatch_ClearModeFlag_Wrap); HL = 0xFF95 when a copy fails (0x38B4 = 131), else 0 (0x38B4 = 130 for an
 ;   unknown header or a pattern / bank mix). Basis: callers + body -- SingleLoad_LoadComposerPattern hands it source
 ;   WA and destination BC after FileIO_ReadAndValidateHeader; its header describes this copy.
 SingleLoad_CopyComposerPatternFromFile:
@@ -38914,7 +38941,7 @@ AccStyle_TableDataEntry_Skip13:
 	extz	wa
 	ld	c, (xsp+34)
 	extz	bc
-	calr	AccStyle_TableDataEntry_Helper
+	calr	SingleLoad_CopyComposerBankFromFile
 AccStyle_TableDataEntry_Join2:
 	ld	a, (0x38b4:16)
 	extz	wa
@@ -39039,14 +39066,20 @@ AccStyle_TableDataEntry_Join3:
 	ldw	hl, 65429
 	jr	AccStyle_TableDataEntry_Epilogue
 AccStyle_TableDataEntry_Skip22:
-	call	AccStyle_TableDataEntry_Helper2
+	call	AccPatch_ClearModeFlag_Wrap
 AccStyle_TableDataEntry_Join4:
 	ld	hl, 0:i3
 AccStyle_TableDataEntry_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+34)
 	ret
-AccStyle_TableDataEntry_Helper:
+; SingleLoad_CopyComposerBankFromFile: Copies the ten composer patterns of memory bank A - 30 of the loaded .CMP image
+;   (read to 0x69800, pointer 0x7AE4) into bank C - 30 of the live style image (pointer 0x7AE8): re-initialises each
+;   destination slot first (AccPatch_InitFromSlotIndex), then copies pattern by pattern with DualVoice_ParamLoadDone
+;   (slots AccStyle_SlotOrderA[3 * i + bank]), stopping with 0x3950 = 131 when a copy fails (0x35B0 bit 0), else
+;   0x3950 = 0. Basis: callers + body -- SingleLoad_CopyComposerPatternFromFile calls it when source and destination
+;   are both above 29 and its header calls it the copy of 'the ten of a memory bank when both are 30 + bank'.
+SingleLoad_CopyComposerBankFromFile:
 	dec	4, xsp
 	push	qiz
 	ld	(xsp+2), c

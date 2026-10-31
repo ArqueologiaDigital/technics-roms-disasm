@@ -4532,7 +4532,7 @@ Handler_INT4__int4_setup_buffer 009FEAF5
 Handler_INT4__int4_read_loop 009FEAFB
 Handler_INT4__int4_check_more 009FEB04
 Handler_INT4__int4_done 009FEB1E
-Boot_PulsePD0 009FEB2B
+FDC_PulseResetLine 009FEB2B
 FDC_ProbeDiskFormat 009FEB3D
 FDC_ProbeDiskFormat__recal_alt 009FEB65
 FDC_ProbeDiskFormat__recal_done 009FEB6B

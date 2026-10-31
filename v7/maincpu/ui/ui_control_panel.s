@@ -2074,7 +2074,7 @@ CtrlPanel_HandleKey10:
 	call	ApPostEvent
 	ret
 PartSelect_UpdateDisplayState:
-	ld	a, (PANEL_REC_90:16)
+	ld	a, (PANEL_CONDUCTOR:16)
 	and	a, 1
 	cp	a, 0:i3
 	scc8	z, e

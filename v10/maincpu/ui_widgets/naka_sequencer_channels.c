@@ -1729,7 +1729,7 @@ typedef struct __attribute__((packed)) {
 } FDTest_ResultCounters_t;
 
 typedef struct __attribute__((packed)) {
-    /* NAKA_TYPE_CONTAINER */
+    /* NAKA_TYPE_TtlScreen */
     /* zero padding */
     /* zero padding */
     /* zero padding */
@@ -1744,11 +1744,11 @@ typedef struct __attribute__((packed)) {
     /* 0x20 */
     /* zero padding */
     /* zero padding */
-    /* NAKA_TYPE_LABEL */
-    /* NAKA_TYPE_MENU_ITEM */
-    /* NAKA_TYPE_MENU_ITEM */
-    /* NAKA_TYPE_MENU_ITEM */
-    /* NAKA_TYPE_MENU_ITEM */
+    /* NAKA_TYPE_Label */
+    /* NAKA_TYPE_AcTitleMenu */
+    /* NAKA_TYPE_AcTitleMenu */
+    /* NAKA_TYPE_AcTitleMenu */
+    /* NAKA_TYPE_AcTitleMenu */
     /* zero padding */
     /* zero padding */
     /* TtlScreen view record "FDD_TEST" kept in work RAM */
@@ -1891,7 +1891,7 @@ typedef struct __attribute__((packed)) {
     uint8_t bytes_0f42[6];  /* 4 pointers */
     /* 9 pointers */
     /* zero padding */
-    /* NAKA_TYPE_MENU_ITEM */
+    /* NAKA_TYPE_AcTitleMenu */
     /* zero padding */
     /* zero padding */
     /* zero padding */

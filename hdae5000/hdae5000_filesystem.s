@@ -3393,7 +3393,7 @@ HDAE5000_CopyToHDScreen:
 	jr c, .Lfbs_evt_0009_loop		; 67 xx
 	jrl t, .Lfbs_evt_done			; 78 xx xx
 
-	; Event 0x01EA0006: format params and check active files
+	; MT_SelectOK (0x01EA0006): rebuild the directory page and count the active files
 .Lfbs_evt_0006:					; 0x2897E6
 	ld xwa, HDAE5000_OBJ_CP_FD_DIRBOX			; 40 e6 00 7f 00
 	calr HDAE5000_DirList_BuildPage		; 1e xx xx
@@ -3909,7 +3909,7 @@ HDAE5000_CopyToHDDirSelScreen:
 	ld xwa, HDAE5000_OBJ_CP_FD_DIRBOX
 	calr HDAE5000_DirList_BuildPage
 	jrl t, .LFSD__hA_exit
-.LFSD__hA_cyl_calc:			; Event 0x01EA0006: cylinder select
+.LFSD__hA_cyl_calc:			; MT_SelectOK (0x01EA0006): the selected directory
 	ld wa, (HDAE5000_RAM_DirPageBase:24)
 	ld bc, iz
 	add bc, wa
@@ -4012,7 +4012,7 @@ HDAE5000_CopyToHDDirSelScreen:
 	ld xde, 0xffffffff
 	call (xhl)
 	jrl t, .LFSD__hA_exit
-.LFSD__hA_sector_info:			; Event 0x01EA0008: sector info display
+.LFSD__hA_sector_info:			; MT_SelectSAVE (0x01EA0008): the selected directory
 	ld wa, (HDAE5000_RAM_DirPageBase:24)
 	ld bc, iz
 	add bc, wa

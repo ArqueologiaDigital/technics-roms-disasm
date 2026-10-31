@@ -73,3 +73,7 @@ like codes, for example the rhythm-ROM header word 0x01008305 and an audio-mixer
   the 0x01C00016 title request; `UI_PostModeChangeEvent` posts a title request; the FDC header's
   `ei 4`/`di 4` comment; HD-AE5000 SEL_DIR arm comments; `NAKA_TYPE_*` in macros.s, whose low
   bytes the firmware's class names contradict for 8 of 11. These go to the Wave 3b lanes.
+  (Done 2026-10-31, lane kn5000-a: the FDC header (`FDC_CmdSenseDriveStatus`), the SEL_DIR arms and the other
+  0x01EA comments in all four HD-AE5000 trees, and every `NAKA_TYPE_*` now carries its firmware class name,
+  all 109 root classes, in v10/v9/v7/v6/v5 `shared/macros.s`, `naka_types.h` and the converters
+  (`scripts/renaming/rename_naka_type_class_names.sed`).)

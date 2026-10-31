@@ -1176,9 +1176,9 @@ RhythmPart2_LoadAndStore:
 	ld a, (0x31b5:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x31b6:16)
-	ld (0x3227:16), a
+	ld (ACC_CH_TURNOVER:16), a
 	ld a, (0x31b7:16)
-	ld (0x322b:16), a
+	ld (ACC_CH_CEILING:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x31e7:16)
 	jr nz, .Lc_f53cb2
@@ -1253,9 +1253,9 @@ RhythmPart3_LoadAndStore:
 	ld a, (0x31bc:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x31bd:16)
-	ld (0x3228:16), a
+	ld (ACC_CH_TURNOVER+1:16), a
 	ld a, (0x31be:16)
-	ld (0x322c:16), a
+	ld (ACC_CH_CEILING+1:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x31e7:16)
 	jr nz, .Lc_f53d8a
@@ -1311,9 +1311,9 @@ RhythmPart4_LoadAndStore:
 	ld a, (0x31c3:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x31c4:16)
-	ld (0x3229:16), a
+	ld (ACC_CH_TURNOVER+2:16), a
 	ld a, (0x31c5:16)
-	ld (0x322d:16), a
+	ld (ACC_CH_CEILING+2:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x31e7:16)
 	jr nz, .Lc_f53e3b
@@ -1369,9 +1369,9 @@ RhythmPart5_LoadAndStore:
 	ld a, (0x31ca:16)
 	ld (ACC_EVENT+4:16), a
 	ld a, (0x31cb:16)
-	ld (0x322a:16), a
+	ld (ACC_CH_TURNOVER+3:16), a
 	ld a, (0x31cc:16)
-	ld (0x322e:16), a
+	ld (ACC_CH_CEILING+3:16), a
 	calr Rhythm_PackVelocityHighBit
 	bit 0, (0x31e7:16)
 	jr nz, .Lc_f53eec
@@ -1481,10 +1481,10 @@ Rhythm_SendChanPressure:
 	ld	e, 0:opc
 	calr	Rhythm_Send3ByteMsg
 	ld	a, 0:opc
-	ld	(12947:16), a
-	ld	(12948:16), a
-	ld	(12949:16), a
-	ld	(12950:16), a
+	ld	(ACC_CH_CC3:16), a
+	ld	(ACC_CH_CC3+1:16), a
+	ld	(ACC_CH_CC3+2:16), a
+	ld	(ACC_CH_CC3+3:16), a
 	ret
 AccBuf_ResetAndReload:
 	call AccBuf_ResetAllPositions

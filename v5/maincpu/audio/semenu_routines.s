@@ -754,17 +754,17 @@ SeWrtMem_SelectMemorySlotSound_Join:
 	ld	c, (xwa+4)
 	cp	(xsp), 1
 	jr	nz, SeWrtMem_SelectMemorySlotSound_Skip2
-	lda	xwa, (63952:16)
+	lda	xwa, (PANEL_PART_RT2:16)
 	ld	(xwa), e
 	jr	SeWrtMem_SelectMemorySlotSound_Join2
 SeWrtMem_SelectMemorySlotSound_Skip2:
 	cp	(xsp), 2
 	jr	nz, SeWrtMem_SelectMemorySlotSound_Skip3
-	lda	xwa, (63978:16)
+	lda	xwa, (PANEL_PART_LEFT:16)
 	ld	(xwa), e
 	jr	SeWrtMem_SelectMemorySlotSound_Join2
 SeWrtMem_SelectMemorySlotSound_Skip3:
-	lda	xwa, (63926:16)
+	lda	xwa, (PANEL_PART_RT1:16)
 	ld	(xwa), e
 SeWrtMem_SelectMemorySlotSound_Join2:
 	ld	(xwa+1), c
@@ -793,18 +793,18 @@ SeMenu_InitTrackInfo:
 	ld C,(XWA+0x04)
 	cp (XSP),0x01
 	jr nz, SeMenu_InitTrackInfo_Part1
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld (XWA),E
 	jr t, SeMenu_InitTrackInfo_Store
 SeMenu_InitTrackInfo_Part1:
 	cp (xsp), 0x2
 	jr nz, SeMenu_InitTrackInfo_Part2
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_LEFT:16)
 	ld (xwa), e
 	jr SeMenu_InitTrackInfo_Store
 
 SeMenu_InitTrackInfo_Part2:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld (xwa), e
 
 SeMenu_InitTrackInfo_Store:
@@ -2297,17 +2297,17 @@ SeWrtMem_ChooseInitialSlot:
 	calr	SeMenu_LoadMasterPtr
 	cp	(xsp+6), 1
 	jr	nz, SeMenu_SetupPartDisplay_End_Skip12
-	lda_d16	xwa, (0xf9d0)
+	lda_d16	xwa, (PANEL_PART_RT2)
 	ld	e, (xwa)
 	jr	SeMenu_SetupPartDisplay_End_Join5
 SeMenu_SetupPartDisplay_End_Skip12:
 	cp	(xsp+6), 2
 	jr	nz, SeMenu_SetupPartDisplay_End_Skip13
-	lda_d16	xwa, (0xf9ea)
+	lda_d16	xwa, (PANEL_PART_LEFT)
 	ld	e, (xwa)
 	jr	SeMenu_SetupPartDisplay_End_Join5
 SeMenu_SetupPartDisplay_End_Skip13:
-	lda_d16	xwa, (0xf9b6)
+	lda_d16	xwa, (PANEL_PART_RT1)
 	ld	e, (xwa)
 SeMenu_SetupPartDisplay_End_Join5:
 	ld	c, (xwa+1)
@@ -2456,7 +2456,11 @@ SeMenu_SwitchToValueStep_Skip8:
 	muls	a, 3
 	ld	(xbc), a
 	ret
-SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7:
+; SeMenu_NameCharIndexToChar: Converts a name-entry character index A to its character code at (XBC):
+;   GUI_DisplayStructData_0x1129[A] for A < 97, else a space. Basis: callers + body -- the WRITE SOUND naming page's
+;   column handlers (SeWrtSnd_OnColumn6 / 8 and the step after them) step page param 1, convert it with this and store
+;   the character with SeMenu_SetNameBufferChar; SeMenu_CharToNameCharIndex's header calls this routine its reverse.
+SeMenu_NameCharIndexToChar:
 	cp	a, 97
 	jr	c, SeMenu_SetupPartDisplay_End_Skip9
 	ld	(xbc), 32
@@ -2470,7 +2474,7 @@ SeMenu_SetupPartDisplay_End_Skip9:
 ; SeMenu_CharToNameCharIndex: Converts character code A to its index in the name-entry character set and stores it at
 ;   (XBC): GUI_DisplayStructData_0x118A[A] for A < 130, 0 (the space) for A >= 130 or a result above 95. The table
 ;   inverts GUI_DisplayStructData_0x1129 (index -> character: ' ', A-Z, a-z, 0-9, punctuation; 96 entries, all
-;   invert), which SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7 reads the other way. Basis: callers + body -- the WRITE
+;   invert), which SeMenu_NameCharIndexToChar reads the other way. Basis: callers + body -- the WRITE
 ;   SOUND name-entry handlers read the character at the cursor (SeMenu_GetNameBufferChar), convert it with this and
 ;   store it as page param 1, the character the dial edits.
 SeMenu_CharToNameCharIndex:
@@ -4093,7 +4097,7 @@ SeMenu_ApplyPartEdit_Skip17:
 	ld	wa, 2:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+22)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc)
 	add	a, 50
@@ -4110,7 +4114,7 @@ SeMenu_ApplyPartEdit_Skip17:
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+23)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+1)
 	add	a, 50
@@ -4163,7 +4167,7 @@ SeMenu_DrawPitFilEnvGraph_Join:
 	ld	wa, 6:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+24)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+2)
 	add	a, 50
@@ -4217,7 +4221,7 @@ SeMenu_DrawPitFilEnvGraph_Join2:
 	ldw	wa, 8
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+25)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+3)
 	add	a, 50
@@ -4271,7 +4275,7 @@ SeMenu_ApplyPartEdit_Join12:
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+26)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+4)
 	add	a, 50
@@ -4422,7 +4426,7 @@ SeMenu_ApplyPartEdit_Skip21:
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+26)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+4)
 	sub	a, (xbc+3)
@@ -4479,7 +4483,11 @@ SeMenu_ApplyPartEdit_Epilogue8:
 	pop	xiz
 	lda	xsp, (xsp+32)
 	ret
-SeMenu_ApplyPartEdit_Helper8:
+; SeMenu_ClampAndScaleEnvLevel: Clamps the signed envelope level byte at XWA to -50..+50 and, unless ACTIVE_TITLE is
+;   0x37 (TT_SEFILENV1), scales it by page param 1: level * param1 / 50. Basis: callers + body --
+;   SeMenu_DrawPitFilEnvGraph runs each of its five levels through it, and its header says the levels are 'clamped to
+;   -50..+50 and, except on TT_SEFILENV1, scaled by param 1' here.
+SeMenu_ClampAndScaleEnvLevel:
 	dec 4,XSP
 	push XIZ
 	ld XIZ,XWA
@@ -6101,9 +6109,9 @@ SeMenu_SetPartRecordBits:
 	calr	SeMenu_LoadMasterPtr
 	ld	a, (xsp+6)
 	extz	wa
-	lda	xix, (0xf9b6:16)
-	lda	xhl, (0xf9d0:16)
-	lda	xde, (0xf9ea:16)
+	lda	xix, (PANEL_PART_RT1:16)
+	lda	xhl, (PANEL_PART_RT2:16)
+	lda	xde, (PANEL_PART_LEFT:16)
 	ld	bc, wa
 	extz	xbc
 	add	xbc, xde
@@ -6474,7 +6482,7 @@ SeMenu_StoreEffectCoeff_Data_Loop3:
 	ret
 
 SeMenu_RefreshPartDisplay:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa
@@ -6483,7 +6491,7 @@ SeMenu_RefreshPartDisplay:
 	pushw bc
 	pushw 0x0
 	call SeMenu_DisplayPartValue
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa
@@ -6492,7 +6500,7 @@ SeMenu_RefreshPartDisplay:
 	pushw bc
 	pushw 0x1
 	call SeMenu_DisplayPartValue
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_LEFT:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa

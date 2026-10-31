@@ -347,7 +347,7 @@ FDemoText_UpdateVoiceDisplay_CheckSend:
 	ld a, (0x0247ee:24)
 	and a, 0x38
 	jr nz, FDemoText_UpdateVoiceDisplay_Done
-	ld c, (PANEL_REC_44:16)
+	ld c, (PANEL_DRAWBAR_RIGHT1:16)
 	cp (PANEL_DSP_EFFECT:16), c
 	jr z, FDemoText_UpdateVoiceDisplay_Done
 	extz bc
@@ -397,7 +397,7 @@ FDemoText_SyncPreset_NextActive:
 FDemoText_SyncPreset_DirectCopy:
 	ld xwa, (xsp + 2)
 	ld a, (xwa)
-	ld (PANEL_REC_44:16), a
+	ld (PANEL_DRAWBAR_RIGHT1:16), a
 	ldib_erp 0xfb, 0
 
 FDemoText_SyncPreset_DirectLoop:
@@ -874,7 +874,7 @@ FDemoText_SendExtAlt_NoteLoop:
 	ret
 
 ; Returns in L the type byte that SndParam_FetchOscTableEntry produces for demo voice A: an 8-byte
-; local record with +2 = A and +3/+4 = the two bytes of A's entry in the table at (0x90f2)
+; local record with +2 = A and +3/+4 = the two bytes of A's entry in the table at (PART_RECORD_PTRS)
 ; (FDemoText_LookupTableEntry); the result is the record's byte 0.
 FDemoText_ProbeVoiceType:
 	dec 8, xsp

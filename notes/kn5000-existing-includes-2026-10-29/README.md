@@ -94,8 +94,13 @@ no control bytes. Topic `t`'s title is `HelpTtlFunc_LookupSlide_PtrTable[(t - 1)
 0xF2E94D, `HelpTtlFunc_LookupSlide` 0xF2E962), so topic 0 is DEMO and topic 1 AUTO PLAY CHORD. The listing shows the
 title after the entry header, as a comment.
 
-`[INFERENCE]` The `- 4 * HELP_LANGUAGE` in the HelpSts* handlers only makes sense if the widget that sends
-`EVT_GET_LANGUAGE_PTR` adds `4 * language` back. That caller was not traced.
+The `- 4 * HELP_LANGUAGE` in the HelpSts* handlers is undone by their caller (confirmed 2026-10-31, lane kn5000-a;
+it was an inference).  The HelpLang* views that name `NAKA_APFUNC_HelpSts*Check` as their function are class
+`AcLanguageText` (`naka_effects_seq.c`), and `AcLanguageTextProc` (`ui/ui_widget_defs.s`), on `EVT_DRAW`, calls
+`ApFuncCall(view +38, EVT_GET_LANGUAGE_PTR)` and draws `(XHL + 4 * HELP_LANGUAGE)` (`ld a, (HELP_LANGUAGE:24) / sla wa, 2
+/ ld xde, (xhl+wa)`, then `EVT_PARA_DRAW`).  So every language reads the same slot, `0x69800 + 4 * (0x296E) + page`:
+the help text in flash is already the chosen language's.  (Its case labels, borrowed `AcTrkSw_ShowHide*`, are now
+`AcLanguageTextProc_OnDraw` / `_OnGetStrPtr` / `_Return`.)
 
 The stale German block (`help_db_german_stale.bin`) is not in this format: it is a truncated remnant whose decoded
 tail is garbage (`table_data/help_databases.s`). It is not a ROM input (only `verify-help-databases` uses it) and
@@ -115,7 +120,7 @@ that the census line is not read as "an encoder exists".
 - **Style-bank fields still unnamed** (see "Follow-up" below): header +0x04..+0x1d, each section record's
   0x34-byte parameter block (+0x0c..+0x3f) and 16-byte tail (+0x50..+0x5f), and the meaning of the five parts.
   They are typed by position and shape, not named. (Resolved 2026-10-31, lane kn5000-style: notes/kn5000-style-2026-10-31/README.md; scripts/build/style_bank_layout.py names every field for both describers.)
-- The HelpSts* caller (see the inference above).
+- The HelpSts* caller: done, AcLanguageTextProc (above).
 - `CLAUDE.md`'s ROM components table still quotes v6 22,289 B (98.9%) and v5 24,927 B (98.8%) of verbatim blob
   (2026-10-24), and its symbols table v6 53,581 rows. Measured after this lane with
   `scripts/analysis/kn5000_source_coverage.py`: v6 17,159 B (99.2% source), v5 19,978 B (99.0%). The drop is exactly

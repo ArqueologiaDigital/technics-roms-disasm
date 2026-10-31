@@ -921,7 +921,7 @@ Root_ClassCount_160:	.incbin "includes/generated/naka_widget_names_charmap.bin",
 ; FontIDProc_EntryCount -- 1 x int16_t = 10: number of font IDs the FontID property offers
 ; FontIDProc (ui/ui_widget_defs.s) answers EVT_GET_PROP_DATA_COUNT_SP with it (sign-extended); the names are the
 ; 10 pointers CHARA1 .. CHARA5W of the font-name list Boot_InitWorkRAM copies from FontIDProc_FontNameTable to
-; RAM 0x3efac, whose 11th pointer is the "" after this word (NakaData_CharaFontTable), not this word.
+; RAM 0x3efa8 (FONTID_NAME_TABLE), whose 11th pointer is the "" after this word (NakaData_CharaFontTable), not this word.
 FontIDProc_EntryCount:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x624, 0x2
 NakaData_CharaFontTable:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x626, 0x2
 ; [nakarest] NakaInst_CHARA5W  +0x628..+0x630 (0xeada98, 8 B)

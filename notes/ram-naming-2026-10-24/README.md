@@ -124,10 +124,16 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
    that analysis starts.
 2. The remaining per-lane arrays of the accompaniment engine: 0x32B5[6], 0x33EB[6], and the D4-D7
    rhythm-channel quads (0x32C3, 0x32C7, 0x332F). Name them once their contents are understood. The lane
-   records named here show the pattern.
+   records named here show the pattern.  (Done 2026-10-31, lane kn5000-a: ACC_LANE_BAR[6] / ACC_CUR_BAR, ACC_LANE_MEASURE[6] / ACC_CUR_MEASURE,
+   ACC_CH_TURNOVER[4] / ACC_CUR_TURNOVER and ACC_CH_CEILING[4] / ACC_CUR_CEILING (the IC14 part_sound bytes +5 / +6),
+   ACC_CH_CC3[4] / ACC_CUR_CC3 (the last controller-3 value per channel); v10 / v9 / v7 via add_kn5000_ram_names.py,
+   names list `notes/kn5000-a-2026-10-31/ram/acc_lane_names.txt`.)
 3. Data lines were out of this lane's scope. `SndParam_BlockRamPtrs` (`ui_widgets/widget_dispatch.s`) could
    become `.long PANEL_PART_RT1, ...`. Many routine headers still quote the addresses as numbers (`0x0D57`
-   where the code now says `SQSTEP_CLOCK`), and a header lane could respell them.
+   where the code now says `SQSTEP_CLOCK`), and a header lane could respell them.  (Done 2026-10-31, lane kn5000-a: `scripts/tools/name_kn5000_panel_records.py` spells the table as
+   `.long PANEL_*` in all five trees (77 entries each; it now also covers v6 / v5, whose table and default image are
+   v7's), and `scripts/tools/respell_ram_quotes_in_comments.py` names 728 / 527 parenthesised RAM quotes in v10 / v9
+   comments; v7 / v6 / v5 comments are left, as they often quote v10's addresses.)
 4. ~~Review `name_kn5000_ram.py`'s block-delta fallback.~~ **CLOSED 2026-10-31**: off by default
    (`--infer-block-delta` restores it); the names it alone placed are listed above and in
    `notes/misc-2026-10-31/probes/ram_block_delta_review.out.txt`.
@@ -135,6 +141,11 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
    `SqedtFunc_StateChainB_On*`) form one table per title, and could be named record by record from those
    switch tables.
 6. `NMI_StorePayloadChecksums`'s routine header (`boot/system_handlers.s`) still describes RAM 0x0400 as
-   "the NMI guard" by number. A header lane could name `BOOT_STAGE` there.
+   "the NMI guard" by number. A header lane could name `BOOT_STAGE` there.  (Done 2026-10-31, lane kn5000-a:
+   the header now says BOOT_STAGE must be 0x80 and names its writers, in v10/v9/v7/v6/v5.)
 7. The panel records named after their tag (`PANEL_REC_90`, `PANEL_REC_60` and the like) are placeholders.
-   Their comments already identify fields, so they could get semantic names in a later batch.
+   Their comments already identify fields, so they could get semantic names in a later batch.  (Done 2026-10-31, lane kn5000-a: 33 of the 35 take names from their keys and from
+   `analysis/disk-format-probes/README-lsw-{nonpart,drawbar}-records.md`: PANEL_STYLIST_NAME, PANEL_DRAWBAR_RIGHT1/2 /
+   _LEFT, PANEL_VARI_<part> (the C0..D7 companion blocks), PANEL_VARI_STYLE, PANEL_EFFECT_SWITCHES, PANEL_PLAY_SETTINGS,
+   PANEL_PMEMOUT_L, PANEL_CONDUCTOR, PANEL_GM, PANEL_PMEM_SETTINGS.  PANEL_REC_68 and PANEL_REC_9A keep their tag: no
+   routine but the generic block walkers reads them (lsw_nonpart_records.py).)

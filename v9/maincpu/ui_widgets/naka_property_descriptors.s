@@ -223,223 +223,223 @@ StrVal_Empty_PsStylCnvVer:	aligned_string ""
 ; = class 0x1600004 (ClassProc), 41 entries (count word at 0xE17322), id 0x164.
 Suna_ClassTable_164:
 	.long AcMemNoBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_AcMemNoBox
 	.long StrEmpty_AcMemNoBox
 	.long StrDesc_Empty_0
 	.long AcCmpRecBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 38, 2
 	.long StrName_AcCmpRecBox
 	.long StrPrefix_AcCmpRecBox
 	.long StrDesc_RecordBits
 	.long PsCmpQtzBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCmpQtzBox
 	.long StrEmpty_PsCmpQtzBox
 	.long StrDesc_Empty_1
 	.long PsCmpMeasBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCmpMeasBox
 	.long StrEmpty_PsCmpMeasBox
 	.long StrDesc_Empty_2
 	.long PsCmpMemBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCmpMemBox
 	.long StrEmpty_PsCmpMemBox
 	.long StrDesc_Empty_3
 	.long AcS2cMemNoBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_AcS2cMemNoBox
 	.long StrEmpty_AcS2cMemNoBox
 	.long StrDesc_Empty_4
 	.long PsS2cFmeasBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsS2cFmeasBox
 	.long StrEmpty_PsS2cFmeasBox
 	.long StrDesc_Empty_5
 	.long PsS2cLmeasBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsS2cLmeasBox
 	.long StrEmpty_PsS2cLmeasBox
 	.long StrDesc_Empty_6
 	.long PsSeqSongNoBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsSeqSongNoBox
 	.long StrEmpty_PsSeqSongNoBox
 	.long StrDesc_Empty_7
 	.long PsS2cTransBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsS2cTransBox
 	.long StrEmpty_PsS2cTransBox
 	.long StrDesc_Empty_8
 	.long PsCstmCpBnkBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 38, 2
 	.long StrName_PsCstmCpBnkBox
 	.long StrPrefix_PsCstmCpBnkBox
 	.long StrDesc_BankPair_0
 	.long PsCstmCpSwBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 38, 2
 	.long StrName_PsCstmCpSwBox
 	.long StrPrefix_PsCstmCpSwBox
 	.long StrDesc_BankPair_1
 	.long PsCtmAttStrBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCtmAttStrBox
 	.long StrEmpty_PsCtmAttStrBox
 	.long StrDesc_RamField
 	.long AcCmpMdBoxProc
-	naka_header NAKA_TYPE_0x15
+	naka_header NAKA_TYPE_PsEditBox
 	.byte 0x34, 0x00, 0x02, 0x00
 	.long StrName_AcCmpMdBox
 	.long StrPrefix_AcCmpMdBox
 	.long StrDesc_RamNamePair
 	.long AcApcMdBoxProc
-	naka_header NAKA_TYPE_0x15
+	naka_header NAKA_TYPE_PsEditBox
 	.byte 0x34, 0x00, 0x02, 0x00
 	.long StrName_AcApcMdBox
 	.long StrPrefix_AcApcMdBox
 	.long StrDesc_ApcDataPair
 	.long AcMspBnkSlBoxProc
-	naka_header NAKA_TYPE_0x15
+	naka_header NAKA_TYPE_PsEditBox
 	.byte 0x34, 0x00, 0x02, 0x00
 	.long StrName_AcMspBnkSlBox
 	.long StrPrefix_AcMspBnkSlBox
 	.long StrDesc_MspBnkPair_0
 	.long PsMspBnkNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 38, 2
 	.long StrName_PsMspBnkNameBox
 	.long StrPrefix_PsMspBnkNameBox
 	.long StrDesc_MspBnkPair_1
 	.long AcCmpTempoBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_AcCmpTempoBox
 	.long StrEmpty_AcCmpTempoBox
 	.long StrDesc_Empty_9
 	.long PsCmpCpFGrpBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCmpCpFGrpBox
 	.long StrEmpty_PsCmpCpFGrpBox
 	.long StrDesc_Empty_10
 	.long PsCmpCpFVariBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCmpCpFVariBox
 	.long StrEmpty_PsCmpCpFVariBox
 	.long StrDesc_Empty_11
 	.long PsCmpCpFPtnBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsCmpCpFPtnBox
 	.long StrEmpty_PsCmpCpFPtnBox
 	.long StrDesc_Empty_12
 	.long PsNameMemBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsNameMemBox
 	.long StrEmpty_PsNameMemBox
 	.long StrDesc_Empty_13
 	.long AcCmpSetGridBoxProc
-	naka_header NAKA_TYPE_0x54
+	naka_header NAKA_TYPE_PsGridBox
 	.byte 0x4a, 0x00, 0x0c, 0x00
 	.long StrName_AcCmpSetGridBox
 	.long StrPrefix_AcCmpSetGrid
 	.long GridProperty_Config_Table
 	.long PsRgpSetBnkBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsRgpSetBnkBox
 	.long StrEmpty_PsRgpSetBnkBox
 	.long StrDesc_Empty_14
 	.long AcEasyCmpGridBoxProc
-	naka_header NAKA_TYPE_0x54
+	naka_header NAKA_TYPE_PsGridBox
 	.byte 0x4a, 0x00, 0x0c, 0x00
 	.long StrName_AcEasyCmpGridBox
 	.long StrPrefix_AcEasyCmpGrid
 	.long GridProperty_AltConfig_Table
 	.long PsMspMeasBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsMspMeasBox
 	.long StrEmpty_PsMspMeasBox
 	.long StrDesc_Empty_15
 	.long PsMspMemBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsMspMemBox
 	.long StrEmpty_PsMspMemBox
 	.long StrDesc_Empty_16
 	.long PsMspRecPadBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsMspRecPadBox
 	.long StrEmpty_PsMspRecPadBox
 	.long StrDesc_Empty_17
 	.long PsMspRecBnkBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsMspRecBnkBox
 	.long StrEmpty_PsMspRecBnkBox
 	.long StrDesc_Empty_18
 	.long PsMspNameBnkProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsMspNameBnk
 	.long StrEmpty_PsMspNameBnk
 	.long StrDesc_Empty_19
 	.long PsCstmCpNameBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 38, 2
 	.long StrName_PsCstmCpNameBox
 	.long NakaInst_AcApcToggle_0x0C
 	.long StrDesc_CstmCpNameBox
 	.long AcApcToggleProc
-	naka_header NAKA_TYPE_0x26
+	naka_header NAKA_TYPE_PsToggleBox
 	.byte 0x30, 0x00, 0x08, 0x00
 	.long NakaInst_AcApcToggle
 	.long StrPrefix_AcApcToggle
 	.long StrDesc_AcApcToggle
 	.long AcSndArgGridBoxProc
-	naka_header NAKA_TYPE_0x54
+	naka_header NAKA_TYPE_PsGridBox
 	.byte 0x4a, 0x00, 0x0c, 0x00
 	.long StrName_AcSndArgGridBox
 	.long StrPrefix_AcSndArgGrid
 	.long StrDesc_AcSndArgGrid
 	.long PsParaListBoxProc
-	naka_header NAKA_TYPE_0x11
+	naka_header NAKA_TYPE_VwBox
 	.byte 0x2a, 0x00, 0x0e, 0x00
 	.long StrName_PsParaListBox
 	.long StrExtra_ParaList_JpChars
 	.long StrDesc_PsParaListBox
 	.long PsSCTxtBoxProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsSCTxtBox
 	.long StrEmpty_PsSCTxtBox
 	.long StrFld_ParaList_Font_0x06
 	.long PsSCTxtBox2Proc
-	naka_header NAKA_TYPE_0x65
+	naka_header NAKA_TYPE_PsTextBox
 	.byte 0x26, 0x00, 0x00, 0x00
 	.long StrName_PsSCTxtBox2
 	.long StrEmpty_PsSCTxtBox2
 	.long StrDesc_PsSCTxtBox2
 	.long VwVariBoxProc
-	naka_header NAKA_TYPE_0x11
+	naka_header NAKA_TYPE_VwBox
 	.byte 0x2c, 0x00
 	.byte 0x10, 0x00
 NakaDesc_VwVariBox_DataPtrs:
@@ -447,28 +447,28 @@ NakaDesc_VwVariBox_DataPtrs:
 	.long StrExtra_Yajirushi_JpChars2
 	.long StrDesc_VwVariBox
 	.long StylCnvStorBnk_ProcDataBlock
-	naka_header NAKA_TYPE_0x10
+	naka_header NAKA_TYPE_Viewable
 	.byte 0x20, 0x00
 	.byte 0x0a, 0x00
 	.long StrName_YajirushiBox
 	.long StrExtra_Yajirushi_JpChars
 	.long StrDesc_YajirushiBox
 	.long CmpNameMenuBoxProc
-	naka_header NAKA_TYPE_0x3D
+	naka_header NAKA_TYPE_VwMenuBox
 	.byte 0x32, 0x00
 	.byte 0x00, 0x00
 	.long StrName_CmpNameMenuBox
 	.long AlignedStr_CmpNameMenuBox
 	.long StrDesc_CmpNameMenuBox
 	.long S2cGridBoxProc
-	naka_header NAKA_TYPE_0x54
+	naka_header NAKA_TYPE_PsGridBox
 	.byte 0x4a, 0x00
 	.byte 0x0c, 0x00
 	.long Str_S2cGridBox
 	.long StrPrefix_S2cGridBox
 	.long StrDesc_S2cGridBox
 	.long PsStylCnvVerProc
-	naka_header NAKA_TYPE_0x12
+	naka_header NAKA_TYPE_PsParaBox
 	.short 36, 0
 	.long StrName_PsStylCnvVer
 	.long StrEmpty_PsStylCnvVer

@@ -92,7 +92,7 @@ NoteOn_AutoPlayCheckCount:
 	extz	wa
 	cp	iz, wa
 	jr	c, NoteOn_AutoPlayVoiceLoop
-	call	CompIface_ResetPedal
+	call	Fade_StartArmedFadeIn
 	ld	wa, (xsp + 6)
 	add	wa, wa
 	add	wa, 0x124
@@ -492,7 +492,7 @@ AccNoteOn_AutoPlayCheck:
 	extz	wa
 	cp	iz, wa
 	jr	c, AccNoteOn_AutoPlayLoop
-	call	CompIface_ResetPedal
+	call	Fade_StartArmedFadeIn
 	cp	(ACTIVE_TITLE:16), 236
 	jr	nz, AccNoteOn_EmitVoiceLoop_Init
 	ld	iz, 0:i3
@@ -731,7 +731,7 @@ AccMidi_DispatchLoop:
 	jr	z, AccNoteOn_ChannelLoop_Body
 	cp	a, 0x90
 	jrl	nz, AccMidi_ReadNextEvent
-	call	CompIface_ResetPedal
+	call	Fade_StartArmedFadeIn
 	ld	a, (xsp + 15)
 	extz	wa
 	add	wa, 0x84
@@ -17283,7 +17283,7 @@ SndParam_ApplySystemParam_Skip7:
 	cp	wa, 129
 	jrl	z, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 	cp	wa, 128
-	jr	z, SndParam_ApplySystemParam_SendEqualizerOnOff_Skip8
+	jr	z, SndParam_ApplySystemParam_SendGlide
 	cp	wa, 6:i3
 	jrl	ugt, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 	add	wa, wa
@@ -17322,7 +17322,7 @@ SndParam_ApplySystemParam_SendEqualizerOnOff:
 	extz	wa
 	call	COMM_SendEqualizerOnOff
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-SndParam_ApplySystemParam_SendEqualizerOnOff_Skip8:
+SndParam_ApplySystemParam_SendGlide:
 	ldto_berp	a, 248
 	extz	wa
 	ld	de, wa
@@ -18613,7 +18613,7 @@ Acc_LoadAndStartPlayback:
 	calr	SongPlayer_ResetState
 	ld	a, (xsp + 6)
 	ld	(0xe91e:16), a
-	call	Audio_ConfigureDSP
+	call	Fade_Cancel
 	ld	xwa, (xsp + 2)
 	calr	NotifyChangeComplete_Prologue
 	ld	iz, hl
@@ -21802,7 +21802,7 @@ SoundParam_InitDefaultBanks:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	set	2, (PANEL_REC_91+3:16)
+	set	2, (PANEL_GM+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 0:i3
 	ld	de, 1:i3
@@ -21841,7 +21841,7 @@ SoundParam_InitDefau_Block:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	2, (PANEL_REC_91+3:16)
+	res	2, (PANEL_GM+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 1:i3
 	ld	de, 1:i3
@@ -21880,7 +21880,7 @@ SoundParam_InitDefau_Block2:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	0, (PANEL_REC_91+3:16)
+	res	0, (PANEL_GM+3:16)
 	ld	xwa, 0xc1
 	ld	bc, 1:i3
 	ld	de, 1:i3

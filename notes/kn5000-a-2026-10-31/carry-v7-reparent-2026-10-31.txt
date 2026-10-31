@@ -1,0 +1,15 @@
+v9: 124 renames, 11 skipped
+    skip Voice_FactoryPresetData_Skip28                     not defined
+    skip Voice_FactoryPresetData_Loop2                      not defined
+    skip Voice_FactoryPresetData_Skip30                     not defined
+    skip Voice_FactoryPresetData_Skip31                     not defined
+    skip Voice_FactoryPresetData_Skip32                     not defined
+    skip Voice_FactoryPresetData_Skip33                     not defined
+    skip Voice_FactoryPresetData_Skip34                     not defined
+    skip Voice_FactoryPresetData_Skip35                     not defined
+    skip Voice_FactoryPresetData_Skip36                     not defined
+    skip Voice_FactoryPresetData_Join9                      not defined
+    skip Voice_FactoryPresetData_Join10                     not defined
+    renamed in 13 files
+v10: 135 renames, 0 skipped
+    renamed in 13 files

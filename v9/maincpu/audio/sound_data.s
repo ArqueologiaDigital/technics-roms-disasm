@@ -30,7 +30,7 @@
 ;   Param_SignExtendRetu_Block (v10/v9 0xFEEBE6, v7 0xFEE417) does
 ;       ld xwa, (SoundData_CategoryDescPtr)  /  ld (RAM), xwa
 ;   with RAM = 0xE14E in v10/v9 and 0xE0B2 in v7.  Every other access goes
-;   through that cell: `ld xr, (0xe14e)` occurs exactly 14 times in v10
+;   through that cell: `ld xr, (SOUND_TABLE_BASE)` occurs exactly 14 times in v10
 ;   (0xFEE467 .. 0xFEEA46), and `ld xr, (0xe0b2)` 14 times in v7, each at
 ;   the v10 address - 0x7CF.  No instruction holds 0xE023B0 (the pointer
 ;   array) or any of its slot addresses directly.

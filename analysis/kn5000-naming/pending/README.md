@@ -1,5 +1,10 @@
 # Pending naming proposals (2026-10-17): written, not applied
 
+**Applied 2026-10-31** (lane kn5000-a): the three `proposals_*.json` files moved to
+`../proposals-2026-10-31-{hbatch-h3,sebatch-se3,corrections-c2}.json` and were applied to all five maincpu trees
+(`notes/NEXT-STEPS-2026-10-17.md`, "Pending work").  The inputs (`hbatch_h3.json`, `sebatch_se3.json`) stay here as
+the agents' input record.
+
 The 2026-10-17 session stopped before these proposals could be applied. The owner ended it to save
 tokens. Each file comes from a read-only naming agent and uses the usual proposal format: `old`,
 `verdict`, `new`, `header`, `basis`, `evidence`. Before applying one, validate it (old label exists,

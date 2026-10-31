@@ -66,6 +66,7 @@
 ; into the deferred draw-queue entry -- and ColorBlit_Impl dispatches on (0x3EFAA): 2 -> ColorBlit_Mode2_Entry,
 ; 1 -> ColorBlit_Mode1_Entry, 0 -> the mode-0 path
 	.equ COLORBLIT_MODE,		0x3efa4	; the blit mode the next ColorBlit uses, 0..2 (set by ~150 drawing sites)	; v7: 0x3efa8
+	.equ FONTID_NAME_TABLE,	0x3efa8	; the font-name pointer list FontIDProc reads (RAM copy of FontIDProc_FontNameTable, made by Boot_InitWorkRAM; no code writes it after boot: notes/kn5000-a-2026-10-31/probes/fontid_table_writers.py)
 	.equ COLORBLIT_MODE_ACTIVE,	0x3efa6	; the mode ColorBlit_Impl is running with	; v7: 0x3efaa
 ; FileIO_ReadBlockToBuffer stores FileIO_ReadBlock's result (it reads 0x400 bytes into 0x13FA) here; the
 ; 113 readers do `ld xwa,(this) / cp xwa,xbc / jr lt, ..._FileUnderflow` -- fewer bytes than they need.
@@ -157,3 +158,5 @@
 ; 0x34100 .. +16376; the probe loops (SndParam_ProbeEntry and its twins) index slot n at +8n,
 ; wrapping modulo 0x7FF.
 	.equ SNDPARAM_HASH_TABLE,	0x34100
+; the live panel records (TLV payloads), named from SndParam_BlockRamPtrs
+	.include "shared/ram_panel_records.s"

@@ -701,7 +701,7 @@ SndParam_SyncDisplayBitmap:
 	sub	xwa, xbc
 	add	xwa, xde
 	xormi8	(xwa), 0x1
-	lda	xwa, (PANEL_REC_98+1:16)
+	lda	xwa, (PANEL_PMEM_SETTINGS+1:16)
 	sub	xwa, xbc
 	add	xwa, xde
 	ormi8	(xwa), 0x7f
@@ -848,7 +848,7 @@ ToneGen_FileIO_SaveAndSync:
 	ldmi16	(xwa), 0xfd50
 	ldmi16	(xwa + 1), 0xfd52
 	ldmi16	(xwa + 2), 0xfd54
-	lda	xwa, (PANEL_REC_98+12:16)
+	lda	xwa, (PANEL_PMEM_SETTINGS+12:16)
 	lda	xbc, (PANEL_RECORDS:16)
 	sub	xwa, xbc
 	pushw	wa

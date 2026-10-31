@@ -95,7 +95,7 @@ NoteOn_AutoPlayCheckCount:
 	extz wa
 	cp iz, wa
 	jr c, NoteOn_AutoPlayVoiceLoop
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	ld wa, (xsp + 6)
 	add wa, wa
 	add wa, 0x124
@@ -525,7 +525,7 @@ AccNoteOn_AutoPlayCheck:
 	extz wa
 	cp iz, wa
 	jr c, AccNoteOn_AutoPlayLoop
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	cp (ACTIVE_TITLE:16), 236
 	jr nz, AccNoteOn_EmitVoiceLoop_Init
 	ld iz, 0:i3
@@ -784,7 +784,7 @@ AccMidi_DispatchLoop:
 	jr z, AccNoteOn_ChannelLoop_Body
 	cp a, 0x90
 	jrl nz, AccMidi_ReadNextEvent
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	ld a, (xsp + 15)
 	extz wa
 	add wa, 0x84
@@ -14088,7 +14088,7 @@ NoteMap_GetVoiceData_Return:
 
 ; Harmony_FindReferenceNote: Finds the harmony reference note: the lowest note (byte +1 of each 2-byte entry from +4)
 ;   of the note list at XWA (word count at +0); kept, with the entry's other byte, in 0xCEAA / 0xCEAB when it lies in
-;   25..102, else both are set to 0xFF; the previous pair is saved in 0xCEAC / 0xCEAD first. Returns L = (0xCEAA).
+;   25..102, else both are set to 0xFF; the previous pair is saved in 0xCEAC / 0xCEAD first. Returns L = (HARMONY_REF_NOTE).
 ;   Basis: callers + body -- VoiceMap_AllocateSlot and NoteMap_FindBestMatch call it on the list at 0xCE22 and, when L
 ;   is not 0xFF, run UIParam_ScanAndCollect, whose UIParam_CallbackDispatch calls the Harmony_HandlerTable entry
 ;   chosen by 0xE9BE; those handlers subtract their intervals from 0xCEAA ("the reference note").
@@ -15280,7 +15280,7 @@ Voice_AdjustTiming_Return:
 ; Chord_RecognizeNowOrDelay: Starts chord recognition for a change in the held chord keys, either at once
 ;   (Voice_CheckAndResetSlotState) or after a 5-tick delay (0xCEB3 = 5 unless already running): immediate when 0xCEDE
 ;   bit 6 is set; when no keys were held before (previous count 0xCF17 = 0) only delayed if 0xC596 bit 1 and 0xCEDE
-;   bit 4 are set and a chord root (0xCEE0) exists; otherwise delayed when 0xCEDE bit 4 is set, unless 0xCEDE bit 7
+;   bit 4 are set and a chord root (CHORD_ROOT) exists; otherwise delayed when 0xCEDE bit 4 is set, unless 0xCEDE bit 7
 ;   and 0xC596 bit 1 are both set. Basis: callers + body -- Voice_DispatchByTimingState calls it when keys are held
 ;   and the count did not drop (or 0xCEDE bit 7 is set), Voice_MatchVoicePairs when a held note is new; a drop goes to
 ;   Voice_SetDecayTimer (0xCEB4 = 6 / 22) instead, and Voice_UpdateNoteState re-runs the recognition when either timer
@@ -15485,9 +15485,9 @@ VoiceSlot_StoreParams_Block:
 ; Chord_CollectHeldNotes: Collects the notes for chord recognition from the held chord keys: walks the held-key list
 ;   at 0xCEFF (DE entries, note = byte +1 of each 2-byte entry from +4) from the newest entry back, keeps each note
 ;   whose pitch class (ChordTables_NoteToPitchClass) is not taken yet (set ChordTables_PitchClassBits in bank register
-;   WA3) until (0xCEE5) notes are kept, then stores the count in 0xCEE5 and the notes, in list order, at 0xCEE6..; DE
+;   WA3) until (CHORD_NOTE_COUNT) notes are kept, then stores the count in 0xCEE5 and the notes, in list order, at 0xCEE6..; DE
 ;   = 0 gives 0xCEE5 = 0. Basis: callers + body -- the two recognition paths of Voice_CheckAndResetSlotState
-;   (PitchCalc_Return_Block and EffectState_Dispatch_Block3) set 0xCEE5 = 4 and DE = (0xCEFF), call it, then classify
+;   (PitchCalc_Return_Block and EffectState_Dispatch_Block3) set 0xCEE5 = 4 and DE = (CHORD_HELD_KEY_COUNT), call it, then classify
 ;   0xCEE5 / 0xCEE6.. into chord type and root.
 Chord_CollectHeldNotes:
 	ldw (0x00cf2f:24), 0x0000
@@ -16784,7 +16784,7 @@ VoiceSlot_CheckAndApply_Return:
 ;   +0x000   1 B   0x00, never read (index 0 is not a root)
 ;   +0x001  12 B   ROOT -> BASS NOTE: note 0x24..0x2C, 0x21..0x23 (C2..G#2,
 ;                  A1..B1) for roots 1..12.  Reader VoiceSlot_SetPitchParams_LoadReg
-;                  (0xFEA171): W = table[(0xCEE0), or (0xCEE1) when bit 1 of
+;                  (0xFEA171): W = table[(CHORD_ROOT), or (CHORD_BASS_ROOT) when bit 1 of
 ;                  0xCEDE is set], A = 0x40, (0xCF7B) = WA, (0xCF77) = 1.
 ;   +0x00D 132 B   NOTE -> PITCH CLASS: 11 rows of 1..12, so entry n = n mod 12
 ;                  + 1 for notes 0-131.  Readers: every `ld xiz, _Data_0xD` /
@@ -16793,7 +16793,7 @@ VoiceSlot_CheckAndApply_Return:
 ;                  (12 load sites between 0xFE9753 and 0xFE9F81).
 ;   +0x091  41 B   CHORD TYPE -> NOTE COUNT (3 or 4).  Reader
 ;                  InitPartAllocState_TestBit242 (0xFEA0C7): A = table[type-1]
-;                  -> (0xCEE5); also loaded at 0xFEA19A, 0xFEA20A, 0xFEA24C.
+;                  -> (CHORD_NOTE_COUNT); also loaded at 0xFEA19A, 0xFEA20A, 0xFEA24C.
 ;   +0x0BA 164 B   CHORD TYPE -> 4 INTERVALS in semitones above the root,
 ;                  41 x 4 (e.g. 0,4,7,0 / 0,4,7,10 / 0,3,7,0).  Same readers:
 ;                  BC, DE = record[type-1] (`sla hl, 2`), each + (root - 1);
@@ -18513,7 +18513,7 @@ SndParam_ApplySystemParam_Skip7:
 	cp	wa, 129
 	jrl	z, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 	cp	wa, 128
-	jr	z, SndParam_ApplySystemParam_SendEqualizerOnOff_Skip8
+	jr	z, SndParam_ApplySystemParam_SendGlide
 	cp	wa, 6:i3
 	jrl	ugt, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 	add	wa, wa
@@ -18561,7 +18561,7 @@ SndParam_ApplySystemParam_SendEqualizerOnOff:
 	extz	wa
 	call	COMM_SendEqualizerOnOff
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-SndParam_ApplySystemParam_SendEqualizerOnOff_Skip8:
+SndParam_ApplySystemParam_SendGlide:
 	ldto_berp	a, 248
 	extz	wa
 	ld	de, wa
@@ -19925,7 +19925,7 @@ Acc_LoadAndStartPlayback:
 	calr SongPlayer_ResetState
 	ld a, (xsp + 6)
 	ld (0xe9e4:16), a
-	call Audio_ConfigureDSP
+	call Fade_Cancel
 	ld xwa, (xsp + 2)
 	calr NotifyChangeComplete_Prologue
 	ld iz, hl
@@ -23459,7 +23459,7 @@ SoundParam_InitDefaultBanks:
 	push xiz
 	call SwbtWr_ReinitBothBanks
 	pop xiz
-	set 2, (PANEL_REC_91+3:16)
+	set 2, (PANEL_GM+3:16)
 	ld xwa, 0xc0
 	ld bc, 0:i3
 	ld de, 1:i3
@@ -23500,7 +23500,7 @@ SoundParam_InitDefau_Block:
 	push xiz
 	call SwbtWr_ReinitBothBanks
 	pop xiz
-	res 2, (PANEL_REC_91+3:16)
+	res 2, (PANEL_GM+3:16)
 	ld xwa, 0xc0
 	ld bc, 1:i3
 	ld de, 1:i3
@@ -23541,7 +23541,7 @@ SoundParam_InitDefau_Block2:
 	push xiz
 	call SwbtWr_ReinitBothBanks
 	pop xiz
-	res 0, (PANEL_REC_91+3:16)
+	res 0, (PANEL_GM+3:16)
 	ld xwa, 0xc1
 	ld bc, 1:i3
 	ld de, 1:i3

@@ -9,7 +9,7 @@
 
 EffectMode_CopyVoiceParams:
 	pushw iz
-	lda xbc, (PANEL_REC_70+3:16)
+	lda xbc, (PANEL_PLAY_SETTINGS+3:16)
 	lda xhl, (PANEL_RECORDS:16)
 	sub xbc, xhl
 	lda xde, (0x03c2c4:24)
@@ -512,7 +512,7 @@ EffectMode_DisplayName_DefaultLookup:
 	push xwa
 
 EffectMode_DisplayName_Render:
-	lda xwa, (PANEL_REC_78:16)
+	lda xwa, (PANEL_STYLIST_NAME:16)
 	push xwa
 	call Strncpy
 	lda xsp, (xsp + 10)
@@ -644,7 +644,7 @@ EffectMode_UpdateBitFlags:
 	and l, 0x20
 	ld xwa, (xsp + 16)
 	ld (xwa), l
-	lda xwa, (PANEL_REC_70:16)
+	lda xwa, (PANEL_PLAY_SETTINGS:16)
 	sub xwa, xde
 	ld (xsp + 28), xwa
 	add (xsp + 28), xbc
@@ -652,7 +652,7 @@ EffectMode_UpdateBitFlags:
 	ld a, (xwa)
 	and a, 0x3b
 	ld (xsp + 4), a
-	lda xhl, (PANEL_REC_60+1:16)
+	lda xhl, (PANEL_EFFECT_SWITCHES+1:16)
 	sub xhl, xde
 	add xhl, xbc
 	ld a, (xhl)
@@ -797,7 +797,7 @@ EffectMode_SetRegion_Apply:
 	or a, h
 	ld (xbc), a
 	set	1, (xiz+5)
-	lda xbc, (PANEL_REC_70:16)
+	lda xbc, (PANEL_PLAY_SETTINGS:16)
 	ld h, (xbc)
 	and h, 0x3
 	sub xbc, 0xf9a0
@@ -2604,9 +2604,9 @@ AcMstStyleAlpGridBoxProc:
 	cp xwa, EVT_GET_FIXED_COL_STR
 	jrl z, MasterSetup_GetNameA
 	cp xwa, EVT_SW_IN
-	jrl z, MasterSetup_HandleDialTurn
+	jrl z, AcMstStyleAlp_Boundary_OnSwIn
 	cp xwa, EVT_HIDE
-	jrl z, MasterSetup_HandleDialStop
+	jrl z, AcMstStyleAlp_Boundary_OnHide
 	cp xwa, EVT_SHOW
 	jr z, MasterSetup_EventDispatch
 	sub xbc, EVT_INDEXSW_UP
@@ -2689,7 +2689,7 @@ MasterSetup_EventDispatch:
 	ld xbc, EVT_OTP_CNT_SET
 	jr MasterSetup_CallMainFunc
 
-MasterSetup_HandleDialStop:
+AcMstStyleAlp_Boundary_OnHide:
 	ld xwa, (xsp + 74)
 	ld xbc, (xsp + 70)
 	ld xde, (xsp + 66)
@@ -2702,7 +2702,7 @@ MasterSetup_CallMainFunc:
 	call MainFuncCall
 	jrl SeqFile_ReturnZeroJmp2
 
-MasterSetup_HandleDialTurn:
+AcMstStyleAlp_Boundary_OnSwIn:
 	ld xwa, (xsp + 74)
 	ld xbc, (xsp + 70)
 	ld xde, (xsp + 66)
@@ -9517,9 +9517,9 @@ DispTimeSet_EventDispatch_Skip3:
 	jrl	FSWAss_RefreshAllVoices_Join2
 DispTimeSet_EventDispatch_Skip:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Skip14
+	jr	nz, DispTimeSet_EventDispatch_Skip2
 	cp	de, 4:i3
-	jr	nz, FSWAss_RefreshAllVoices_Skip14
+	jr	nz, DispTimeSet_EventDispatch_Skip2
 	lda	xwa, (xsp+8)
 	lda	xbc, (SURE_CONFIRM:24)
 	ld	(xwa), xbc
@@ -9531,11 +9531,11 @@ DispTimeSet_EventDispatch_Skip:
 	ld	xbc, 0:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Skip14:
+DispTimeSet_EventDispatch_Skip2:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Skip15
+	jr	nz, DispTimeSet_EventDispatch_Skip4
 	cp	de, 5:i3
-	jr	nz, FSWAss_RefreshAllVoices_Skip15
+	jr	nz, DispTimeSet_EventDispatch_Skip4
 	lda	xwa, (xsp+8)
 	lda	xbc, (0x0340ec:24)
 	ld	(xwa), xbc
@@ -9547,11 +9547,11 @@ FSWAss_RefreshAllVoices_Skip14:
 	ld	xbc, 1:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Skip15:
+DispTimeSet_EventDispatch_Skip4:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Skip16
+	jr	nz, DispTimeSet_EventDispatch_Skip5
 	cp	de, 6:i3
-	jr	nz, FSWAss_RefreshAllVoices_Skip16
+	jr	nz, DispTimeSet_EventDispatch_Skip5
 	lda	xwa, (xsp+8)
 	lda	xbc, (0x0340ee:24)
 	ld	(xwa), xbc
@@ -9563,7 +9563,7 @@ FSWAss_RefreshAllVoices_Skip15:
 	ld	xbc, 1:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Skip16:
+DispTimeSet_EventDispatch_Skip5:
 	cpw	(xwa), 1
 	jrl	nz, DispTimeSet_ReturnZero
 	cp	de, 7:i3

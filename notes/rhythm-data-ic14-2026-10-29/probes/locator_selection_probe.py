@@ -4,7 +4,7 @@
 QUESTION: how do the program ROMs' RhythmROM_BankProgramLocators (8 banks x 128 programs x {u16 hi, u16 lo},
 record = (hi & 0xff) << 16 | lo) map onto IC14's records, which pairs VoiceParam_BankProgramWords (the remap
 VoiceParam_ClampAndStore applies) can reach, what the panel calls each record, and is the table the same in
-v5..v10?  The panel name: AccStyle_VelocityTableMain[program][bank] = number << 8 | group (a misnamed table),
+v5..v10?  The panel name: AccStyle_PanelRhythmTable[program][bank] = number << 8 | group (a misnamed table),
 AccVoice_RomRecords16[group] = group name, AccVoice_RomRecords13[group * 20 + number] = style name, the indexing
 of AccVoice_ComputedCopy.  [Measured 2026-10-29: 201 non-zero locators; the zero locator of (bank 0, program 90),
 which the remap targets for (0, 89) and (0, 90), addresses the record at 0x000000, 8br86d = STANDARD ROCK 0
@@ -42,7 +42,7 @@ print("records the remap reaches no pair of:", sorted(d[o + 0x3db:o + 0x3e1].dec
                                                      if not any(k in remap for k in v)))
 for o, v in sorted(list(sel.items()) + [(0, [(0, 90)])]):
     for b, p in v:
-        w = u16(v10, A("AccStyle_VelocityTableMain") + (p * 8 + b) * 2)
+        w = u16(v10, A("AccStyle_PanelRhythmTable") + (p * 8 + b) * 2)
         g, n = w & 0xff, w >> 8
         print("  0x%06X %s  bank %d program %3d  panel %-16s %2d %s" % (
             o, d[o + 0x3db:o + 0x3e1].decode(), b, p,

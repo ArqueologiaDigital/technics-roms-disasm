@@ -64,8 +64,8 @@ EDITS = {
          b"; Show the eight delete-option flags (HDAE5000_RAM_DeleteOptions+2..+9) as the\n"),
     ],
     "hdae5000_init_data.s": [
-        (b";   Lyrics/file-select message vocabulary shared with the main CPU; count in\n",
-         b";   file-select message vocabulary shared with the main CPU (no MT_SelectAll in v1.x); count in\n"),
+        (b";   Lyrics/file-select message vocabulary private to this module (no main-CPU code uses a 0x01EA id; ResMethodProc only names them); count in\n",
+         b";   file-select message vocabulary private to this module (no MT_SelectAll in v1.x; no main-CPU code uses a 0x01EA id); count in\n"),
     ],
     "hdae5000_ui_display.s": [
         (b"; a constant lookup, the fifth of five alike -- Logo, DriveMech, FilePanel,\n"

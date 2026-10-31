@@ -118,7 +118,7 @@ StyleUI_ParamBlockPtrTable:
 ; StyleUI_ParamBlockEndPtrTable: 19 x u32: the END pointers of the display lists that StyleUI_ParamBlockPtrTable's
 ;   entries start (the second of the 4 x 19 tables): Scoop_InitPartDisplay loads xiy = StyleUI_ParamBlockPtrTable[k]
 ;   and xix = this[k] and draws [xiy, xix) with the Scoop static interpreter (UIRender_TwoTableGeneral) on the step-
-;   record screen, unless the display mode (0x0D65) is 2 (CONTROL track). Basis: readers + bytes -- each entry is the
+;   record screen, unless the display mode (SQSTEP_DISPLAY_MODE) is 2 (CONTROL track). Basis: readers + bytes -- each entry is the
 ;   object that follows (or the one after) the matching start block, as in Scoop_InitDisplayFull's AltE /
 ;   StyleUI_ParamBlockPtrTable pair.
 StyleUI_ParamBlockEndPtrTable:
@@ -142,7 +142,7 @@ StyleUI_ParamBlockEndPtrTable:
 	.long StyleUI_ParamBlock_AltB
 	.long StyleUI_ParamBlock_AltE
 ; StyleUI_ControlTrackParamBlockPtrTable: 19 x u32: the START pointers Scoop_InitPartDisplay uses instead of
-;   StyleUI_ParamBlockPtrTable when the step-record display mode (0x0D65) is 2, the CONTROL track (third of the 4 x 19
+;   StyleUI_ParamBlockPtrTable when the step-record display mode (SQSTEP_DISPLAY_MODE) is 2, the CONTROL track (third of the 4 x 19
 ;   tables); identical to it except entry 1 (ParamBlock_Common instead of ScreenData_MeasCursor). Basis: readers +
 ;   bytes.
 StyleUI_ControlTrackParamBlockPtrTable:
@@ -167,7 +167,7 @@ StyleUI_ControlTrackParamBlockPtrTable:
 	.long StyleUI_ParamBlock_AltD
 ; StyleUI_ControlTrackParamBlockEndPtrTable: 19 x u32: the END pointers paired with
 ;   StyleUI_ControlTrackParamBlockPtrTable (fourth of the 4 x 19 tables), used when the step-record display mode
-;   (0x0D65) is 2 (CONTROL track); entry 1 is ParamBlock_Short where the default end table has ScreenData_YesCtl.
+;   (SQSTEP_DISPLAY_MODE) is 2 (CONTROL track); entry 1 is ParamBlock_Short where the default end table has ScreenData_YesCtl.
 ;   Basis: readers + bytes.
 StyleUI_ControlTrackParamBlockEndPtrTable:
 	.long StyleUI_ParamBlock_VALUE
@@ -392,15 +392,15 @@ Scoop_EventLoop_12Entry_Process_Str_Fmt1d:		.incbin "includes/generated/style_ui
 Scoop_EventLoop_12Entry_Process_Str_Fmt2d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1D7, 0x4
 Scoop_EventLoop_12Entry_Process_Str_Fmt3d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DB, 0x4
 ; Scoop_BoundOp05_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display
-;   op 05: Scoop_EventLoop_12Entry_Alt_Data_Target5 copies it with ldirw into its frame and passes the copy to
+;   op 05: Scoop_BoundOp05_PrintFieldAtCell copies it with ldirw into its frame and passes the copy to
 ;   DrawString. Basis: readers + bytes (cf. Scoop_BoundOp07_ClipBox, Scoop_BoundOp0A_ClipBox).
 Scoop_BoundOp05_ClipBox:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DF, 0x8
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt1d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1E7, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EB, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EF, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F3, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F7, 0x4
-Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt4d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FB, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt1d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1E7, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EB, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EF, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt2d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F3, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt3d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F7, 0x4
+Scoop_BoundOp05_PrintFieldAtCell_Str_Fmt4d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FB, 0x4
 ; Scoop_BoundOp06_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display
 ;   op 06, which prints a RAM word with %1d / %2d / %3d: Scoop_EventLoop_36Entry copies it with ldirw into its frame
 ;   and passes the copy to DrawString. Basis: readers + bytes.

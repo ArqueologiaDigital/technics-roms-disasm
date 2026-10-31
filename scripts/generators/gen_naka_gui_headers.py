@@ -34,6 +34,7 @@ RUN (repository root; needs rebuilt_ROMs/kn5000_v10_program.llvm.elf)
     python3 scripts/generators/gen_naka_gui_headers.py            # write all five trees' copies
     python3 scripts/generators/gen_naka_gui_headers.py --check    # exit 1 if any copy is stale
 """
+import json
 import os
 import re
 import sys
@@ -207,6 +208,15 @@ def value_names(m):
 NO_OBJECT = ('NAKA_NO_OBJECT', 0xFFFFFFFF, 'an object-id field that names no object')
 
 
+# What each used icon shows (open items N-b0077010 / N-94c35266): the firmware names them only iNN.
+ICON_SHOWS = {k: v for k, v in json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+              'naka_icon_descriptions.json'))).items() if not k.startswith('_')}
+
+
+def icon_shows(name):
+    return ICON_SHOWS.get(name[len('idICON_'):]) if name.startswith('idICON_') else None
+
+
 def prop_value_names(m):
     out = ['/* Property values by the firmware\'s own names.  A class field\'s propdata letter L selects',
            ' * entry L - \'A\' of SupportClass_PropTypeRecords (registered by InitializeObjectTable as',
@@ -219,7 +229,8 @@ def prop_value_names(m):
     for ch, proc, src, vals in value_names(m):
         out.append('/* letter %s, %s (%s) */' % (ch, proc, src))
         for name, v in vals:
-            out.append('#define %-24s 0x%04Xu' % (name, v))
+            shows = icon_shows(name)
+            out.append('#define %-24s 0x%04Xu' % (name, v) + ('  /* shows: %s */' % shows if shows else ''))
     return out
 
 
@@ -240,7 +251,8 @@ def values_s(m):
         out.append('')
         out.append('; letter %s, %s (%s)' % (ch, proc, src))
         for name, v in vals:
-            out.append('\t.equ\t%s, 0x%x' % (name, v))
+            shows = icon_shows(name)
+            out.append('\t.equ\t%s, 0x%x' % (name, v) + ('\t; shows: %s' % shows if shows else ''))
     return '\n'.join(out) + '\n'
 
 

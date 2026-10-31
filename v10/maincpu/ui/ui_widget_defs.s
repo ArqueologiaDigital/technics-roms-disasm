@@ -8370,14 +8370,14 @@ AcLanguageTextProc:
 	push xiz
 	ld xiz, xwa
 	cp xbc, EVT_GET_STR_PTR
-	jr z, AcTrkSw_ShowHide_CheckDirty
+	jr z, AcLanguageTextProc_OnGetStrPtr
 	cp xbc, EVT_DRAW
-	jr z, AcTrkSw_ShowHide
+	jr z, AcLanguageTextProc_OnDraw
 	ld xwa, xiz
 	calr PsTextBoxProc
-	jr AcTrkSw_ShowHide_Refresh
+	jr AcLanguageTextProc_Return
 
-AcTrkSw_ShowHide:
+AcLanguageTextProc_OnDraw:
 	ld xwa, xiz
 	calr PsTextBoxProc
 	ld xwa, xiz
@@ -8394,12 +8394,12 @@ AcTrkSw_ShowHide:
 	ld xbc, EVT_PARA_DRAW
 	call SendEvent
 	ld xhl, 0:i3
-	jr AcTrkSw_ShowHide_Refresh
+	jr AcLanguageTextProc_Return
 
-AcTrkSw_ShowHide_CheckDirty:
-	lda xhl, (AcTrkSw_ShowHide_CheckDirty_Str_AcLanguageText:24)
+AcLanguageTextProc_OnGetStrPtr:
+	lda xhl, (AcLanguageTextProc_ClassName:24)
 
-AcTrkSw_ShowHide_Refresh:
+AcLanguageTextProc_Return:
 	pop xiz
 	ret
 
@@ -13776,27 +13776,27 @@ RectX2Proc:
 	ld xiz, xbc
 	ld (xsp + 12), xwa
 	cp xiz, EVT_SET_PROPERTY_EX
-	jr z, TabDraw_TopEdge_Done
+	jr z, RectX2Proc_OnSetPropertyEx
 	cp xiz, EVT_GET_PROPERTY_EX
-	jr z, TabDraw_TopEdge_CalcHeight
+	jr z, RectX2Proc_OnGetPropertyEx
 	cp xiz, EVT_DUMP_PROPERTY_EX
-	jr z, TabDraw_TopEdge_Inner
+	jr z, RectX2Proc_OnDumpPropertyEx
 	cp xiz, EVT_GET_PROP_MEMBER
-	jr z, TabDraw_TopEdge
+	jr z, RectX2Proc_OnGetPropMember
 	cp xiz, EVT_CHECK_PROP_STRING
-	jr nz, TabDraw_TopEdge_CalcWidth
-	jr TabDraw_TopEdge_Execute
+	jr nz, RectX2Proc_ForwardToCommon
+	jr RectX2Proc_ReturnZero
 
-TabDraw_TopEdge:
-	pushw TabDraw_TopEdge_Str_width@hi16
-	pushw TabDraw_TopEdge_Str_width@lo16
+RectX2Proc_OnGetPropMember:
+	pushw RectX2Proc_MemberName@hi16
+	pushw RectX2Proc_MemberName@lo16
 	ld xwa, (xsp + 12)
 	push xwa
 	call Strcat
 	inc 8, xsp
-	jr TabDraw_TopEdge_Execute
+	jr RectX2Proc_ReturnZero
 
-TabDraw_TopEdge_Inner:
+RectX2Proc_OnDumpPropertyEx:
 	ld xwa, (xsp + 8)
 	calr IDCursorAdvance
 	ld bc, (xhl)
@@ -13804,14 +13804,14 @@ TabDraw_TopEdge_Inner:
 	ld xwa, (xsp + 8)
 	ld (xwa), xbc
 
-TabDraw_TopEdge_CalcWidth:
+RectX2Proc_ForwardToCommon:
 	ld xwa, (xsp + 12)
 	ld xbc, xiz
 	ld xde, (xsp + 8)
 	calr CommonIDProc
-	jr TabDraw_BottomEdge_Prologue
+	jr RectX2Proc_Epilogue
 
-TabDraw_TopEdge_CalcHeight:
+RectX2Proc_OnGetPropertyEx:
 	ld xwa, (xsp + 8)
 	calr IDCursorAdvance
 	lda xbc, (xhl - 4)
@@ -13826,11 +13826,11 @@ TabDraw_TopEdge_CalcHeight:
 	call Itoa_Safe
 	inc 8, xsp
 
-TabDraw_TopEdge_Execute:
+RectX2Proc_ReturnZero:
 	ld xhl, 0:i3
-	jr TabDraw_BottomEdge_Prologue
+	jr RectX2Proc_Epilogue
 
-TabDraw_TopEdge_Done:
+RectX2Proc_OnSetPropertyEx:
 	ld xwa, (xsp + 12)
 	ld xbc, xiz
 	ld xde, (xsp + 8)
@@ -13838,7 +13838,7 @@ TabDraw_TopEdge_Done:
 	ld (xsp + 4), xhl
 	ld xwa, (xsp + 4)
 	or xwa, xwa
-	jr nz, TabDraw_BottomEdge
+	jr nz, RectX2Proc_ReturnResult
 	ld xwa, (xsp + 8)
 	calr IDCursorAdvance
 	lda xbc, (xhl - 4)
@@ -13848,10 +13848,10 @@ TabDraw_TopEdge_Done:
 	dec 1, wa
 	ld (xhl), wa
 
-TabDraw_BottomEdge:
+RectX2Proc_ReturnResult:
 	ld xhl, (xsp + 4)
 
-TabDraw_BottomEdge_Prologue:
+RectX2Proc_Epilogue:
 	pop xiz
 	lda xsp, (xsp + 12)
 	ret
@@ -15140,7 +15140,7 @@ FontIDProc:
 	ld XWA, (xsp + 0x0108)
 	ld xwa, (xwa + 8)
 	sll xwa, 2
-	ld xbc, 0x3efac
+	ld xbc, FONTID_NAME_TABLE
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
@@ -15177,7 +15177,7 @@ FontIDProc_OnGetOrDumpPropertyEx:
 	ld (xwa), xbc
 	ld xwa, (xwa)
 	sll xwa, 2
-	ld xbc, 0x3efac
+	ld xbc, FONTID_NAME_TABLE
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
@@ -15218,7 +15218,7 @@ FontIDProc_SetProp_NextIndex:
 FontIDProc_SetProp_LoopHead:
 	ld xbc, xiz
 	sll xbc, 2
-	ld xwa, 0x3efac
+	ld xwa, FONTID_NAME_TABLE
 	add xwa, xbc
 	ld xwa, (xwa)
 	or xwa, xwa

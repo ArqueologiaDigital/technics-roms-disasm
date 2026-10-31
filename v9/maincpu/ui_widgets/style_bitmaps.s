@@ -630,7 +630,7 @@ Bitmap_FadeOutText:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2A66,
 ;
 ; An alphabetical list of 1000 titles, each with an id. Readers
 ; (ui/ui_mode_handlers.s): the MasterSetup dial handlers
-; (MasterSetup_HandleDialTurn, MasterSetup_DialTurn_ScrollUp,
+; (AcMstStyleAlp_Boundary_OnSwIn, MasterSetup_DialTurn_ScrollUp,
 ; MasterSetup_DialDown_*) index it with 6*k (`muls wa, 0x6`), load +0
 ; and Strcpy the title into the view, and search it with String_Compare;
 ; their bounds are 0x3e8 (1000) -- an index of 1000 wraps to 0 and an
@@ -3549,7 +3549,7 @@ MstStyle_GenreTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AE
 ; [nakarest] 80 bytes are here or later).
 ; MstStyle_GenreTable_GroupColumn: +4 of MstStyle_GenreTable: the style-group-table column of the 10 x {u32 genre
 ;   name, u32 group table} genre records (stride 8). MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and
-;   MstStyle1Page_EventDispatch load the group table of genre (0x340C4) through this label and store it at 0x340D2;
+;   MstStyle1Page_EventDispatch load the group table of genre (MUSIC_STYLIST_GENRE) through this label and store it at 0x340D2;
 ;   entry 0's table is Easy Listening's, not Latin Dance's. Basis: readers + bytes.
 MstStyle_GenreTable_GroupColumn:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AEA, 0x4C
 ; [nakarest] NakaInst_Latin_World  +0x18b36..+0x18b48 (0xecfcf4, 18 B)

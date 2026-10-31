@@ -9,14 +9,14 @@
 
 EffectMode_CopyVoiceParams:
 	pushw iz
-	lda xbc, (0xfd05:16)
-	lda xhl, (0xf9a0:16)
+	lda xbc, (PANEL_PLAY_SETTINGS+3:16)
+	lda xhl, (PANEL_RECORDS:16)
 	sub xbc, xhl
 	lda xde, (0x03c2c4:24)
 	add xbc, xde
 	cp (xbc), 0x3
 	jr nz, EffectMode_CopyVoiceParams_Done
-	lda xix, (0xfa04:16)
+	lda xix, (PANEL_PART_PT4:16)
 	ld xbc, xix
 	sub xbc, xhl
 	ld xiy, xbc
@@ -360,7 +360,7 @@ EffectMode_ProcessPresetChange_Apply:
 	ld	xwa, xhl
 	ld	(0x8ca8:16), xwa
 	calr	EffectMode_UpdateDisplay
-	lda	xwa, (0xfc5a:16)
+	lda	xwa, (PANEL_STYLE:16)
 	ld	(xsp+4), xwa
 	sub	xwa, 63904
 	lda	xbc, (0x03c2c4:24)
@@ -374,7 +374,7 @@ EffectMode_ProcessPresetChange_Apply:
 	calr	EffectMode_SetRegionAndHold
 	ld	xwa, xiz
 	calr	EffectMode_Nop
-	lda	xwa, (0xf9ef:16)
+	lda	xwa, (PANEL_PART_LEFT+5:16)
 	sub	xwa, 63904
 	lda	xbc, (0x03c2c4:24)
 	add	xwa, xbc
@@ -395,13 +395,13 @@ EffectMode_ProcessPresetChange_Done:
 
 
 EffectMode_CopyParamByte:
-	lda	xwa, (0xfa07:16)
-	lda	xde, (0xf9a0:16)
+	lda	xwa, (PANEL_PART_PT4+3:16)
+	lda	xde, (PANEL_RECORDS:16)
 	sub	xwa, xde
 	lda	xbc, (0x3c2c4:24)
 	ld	xhl, xwa
 	add	xhl, xbc
-	lda	xwa, (0xfba7:16)
+	lda	xwa, (PANEL_PART_BASS+3:16)
 	sub	xwa, xde
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -496,7 +496,7 @@ EffectMode_DisplayName_DefaultLookup:
 	push xwa
 
 EffectMode_DisplayName_Render:
-	lda	xwa, (63906:16)
+	lda	xwa, (PANEL_STYLIST_NAME:16)
 	push	xwa
 	call	Strncpy
 	lda	xsp, (xsp+10)
@@ -582,8 +582,8 @@ EffectMode_UpdateBitFlags:
 	push	xiz
 	lda	xwa, (xsp+48)
 	ld	(xsp+12), xwa
-	lda	xwa, (63930:16)
-	lda	xde, (63904:16)
+	lda	xwa, (PANEL_PART_RT1+4:16)
+	lda	xde, (PANEL_RECORDS:16)
 	sub	xwa, xde
 	lda	xbc, (246468:24)
 	ld	(xsp+32), xwa
@@ -595,7 +595,7 @@ EffectMode_UpdateBitFlags:
 	ld	(xix), l
 	lda	xwa, (xix+1)
 	ld	(xsp+24), xwa
-	lda	xwa, (63956:16)
+	lda	xwa, (PANEL_PART_RT2+4:16)
 	sub	xwa, xde
 	ld	(xsp+36), xwa
 	add	(xsp+36), xbc
@@ -606,7 +606,7 @@ EffectMode_UpdateBitFlags:
 	ld	(xwa), l
 	lda	xwa, (xix+2)
 	ld	(xsp+20), xwa
-	lda	xwa, (63982:16)
+	lda	xwa, (PANEL_PART_LEFT+4:16)
 	sub	xwa, xde
 	ld	(xsp+40), xwa
 	add	(xsp+40), xbc
@@ -617,7 +617,7 @@ EffectMode_UpdateBitFlags:
 	ld	(xwa), l
 	lda	xwa, (xix+3)
 	ld	(xsp+16), xwa
-	lda	xwa, (64008:16)
+	lda	xwa, (PANEL_PART_PT4+4:16)
 	sub	xwa, xde
 	ld	(xsp+44), xwa
 	add	(xsp+44), xbc
@@ -626,7 +626,7 @@ EffectMode_UpdateBitFlags:
 	and	l, 32
 	ld	xwa, (xsp+16)
 	ld	(xwa), l
-	lda	xwa, (64770:16)
+	lda	xwa, (PANEL_PLAY_SETTINGS:16)
 	sub	xwa, xde
 	ld	(xsp+28), xwa
 	add	(xsp+28), xbc
@@ -634,7 +634,7 @@ EffectMode_UpdateBitFlags:
 	ld	a, (xwa)
 	and	a, 59
 	ld	(xsp+4), a
-	lda	xhl, (64623:16)
+	lda	xhl, (PANEL_EFFECT_SWITCHES+1:16)
 	sub	xhl, xde
 	add	xhl, xbc
 	ld	a, (xhl)
@@ -723,7 +723,7 @@ EffectMode_UpdateBitFlags_Loop:
 	ret
 
 EffectMode_BackupParamBlock:
-	lda	xbc, (63904:16)
+	lda	xbc, (PANEL_RECORDS:16)
 	lda	xwa, (64862:16)
 	sub	xwa, xbc
 	inc	2, xwa
@@ -797,7 +797,7 @@ EffectMode_SetRegion_Apply:
 	or	a, h
 	ld	(xbc), a
 	set	1, (xiz+5)
-	lda	xbc, (64770:16)
+	lda	xbc, (PANEL_PLAY_SETTINGS:16)
 	ld	h, (xbc)
 	and	h, 3
 	sub	xbc, 63904
@@ -1788,13 +1788,13 @@ EffectMode_DispatchUpdate:
 	calr	EffectMode_RunDiagSequence
 	ret
 EffectMode_InitSwbWr_DiagMode:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 
 	ld (xwa+), 0x00
 
 	andmi8 (xwa), 0x80
 
-	lda xbc, (0xfdb6:16)
+	lda xbc, (PANEL_TOUCH:16)
 
 	andmi8 (xbc), 0xf0
 
@@ -1837,13 +1837,13 @@ EffectMode_InitSwbWr_DiagMode:
 
 
 EffectMode_RestoreSwbWr_NormalMode:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 
 	ld (xwa+), 0x40
 
 	andmi8 (xwa), 0x80
 
-	and (0xfdb6:16), 240
+	and (PANEL_TOUCH:16), 240
 
 	ld e, (xwa)
 
