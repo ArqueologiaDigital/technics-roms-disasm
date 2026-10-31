@@ -2067,7 +2067,10 @@ class Gen:
         pat = struct.pack("<dd", 1.0, 10.0)
         o = self.rom.find(pat, R1_END, DATA_END)
         while o >= 0:
-            if all(self.rom[o + 8 * k:o + 8 * k + 8] == struct.pack("<d", float(f"1e{k}")) for k in range(309)):
+            # (the firmware's values above 1e22 are one or two ulps off the nearest double: built by
+            # repeated multiplication, not exact; every one within a relative 1e-14)
+            if all(abs(struct.unpack_from("<d", self.rom, o + 8 * k)[0] / float(f"1e{k}") - 1) < 1e-14
+                   for k in range(309)):
                 break
             o = self.rom.find(pat, o + 1, DATA_END)
         if o < 0:
@@ -2078,8 +2081,9 @@ class Gen:
             return
 
         def render(g, it):
-            out = [f"{it.label}:\t# the powers of ten 1e0 .. 1e308 (309 IEEE-754 doubles, lo word, hi word): "
-                   "PfDoubleToDecimal reads base +- 8 x the decimal exponent (found by its contents)"]
+            out = [f"{it.label}:\t# the powers of ten 1e0 .. 1e308 (309 IEEE-754 doubles, lo word, hi word; each "
+                   "within 1e-14 of 10^k): PfDoubleToDecimal reads base +- 8 x the decimal exponent (found by its "
+                   "contents)"]
             for k in range(309):
                 lo, hi = struct.unpack_from("<II", g.rom, g.off(it.start) + 8 * k)
                 out.append(f"\t.long\t0x{lo:08X}, 0x{hi:08X}\t# 1e{k}")
