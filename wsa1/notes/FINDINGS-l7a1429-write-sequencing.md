@@ -521,13 +521,13 @@ copy when part word +0x04 bit 0 is set — and switches on the same byte at 0xFB
 five 32-bit stores into the array are element sub-record pointers (+0x88, +0x8C, +0x90+4k).
 So "part-record byte +0x10" is **tone-head byte +0x10**, prom_d's `kind`:
 
-| kind (+0x10) | tone heads | bits 7:6 | arm                                                 |
-|--------------|------------|----------|-----------------------------------------------------|
-| 0x10         | 248        | 00       | melodic: `VoiceParams_Compute_A`, Stage_A           |
-| 0x00         | 6          | 00       | melodic (Square Guitar, the vocal pads)             |
-| 0x71         | 2          | 01       | DRAWBAR: `Compute_B`, `VoiceRegs_Stage_B` ROM image |
-| 0x80         | 18         | 10       | drum kit: `Compute_C`, Stage_C                      |
-| —            | 0          | 11       | arm 0xC0, §10.3                                     |
+| kind (+0x10) | tone heads | bits 7:6 | arm                                                             |
+|--------------|------------|----------|-----------------------------------------------------------------|
+| 0x10         | 248        | 00       | melodic: `VoiceParams_Compute_A`, Stage_A                       |
+| 0x00         | 6          | 00       | melodic (Square Guitar, the vocal pads)                         |
+| 0x71         | 2          | 01       | DRAWBAR: `VoiceParams_Compute_B`, `VoiceRegs_Stage_B` ROM image |
+| 0x80         | 18         | 10       | drum kit: `VoiceParams_Compute_C`, Stage_C                      |
+| —            | 0          | 11       | arm 0xC0, §10.3                                                 |
 
 Probe: `part_mode_kind.py`.  So the Stage_B / ROM-image path is selected by the tone being one of
 the two `<<< Drawbar >>>` records, exactly the complement of prom_d's "0x80 is the drum path".
@@ -548,7 +548,7 @@ with `MemCopyWords(…, 68)` (0xFB1DE7 for A).  Its low bits are a tag of the bu
 
 `layer` is `VelSplit_LayerFromVelocity`'s result.  **Bit 1 is D's alone** — D is C's tag plus
 bit 1 — and 0xFB393A is the only test of that bit anywhere in prom_c.  In the mode-0x00 arm every
-voice tested was rebuilt by `Compute_A` a few instructions earlier: its copy loop runs k = 10..13
+voice tested was rebuilt by `VoiceParams_Compute_A` a few instructions earlier: its copy loop runs k = 10..13
 over the request buffer's voice list (0xFB1DA9 / 0xFB1DB4) and the arm walks the same list[10..13]
 (0xFB38D1 / 0xFB395A), and nothing called in between (`Pack104_SetInputs_PartRecord`,
 `Pack104_SetInputs_SubRecordPair`, `Dev104_WriteChanReg0` and their callees) names a voice record

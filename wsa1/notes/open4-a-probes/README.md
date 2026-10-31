@@ -34,7 +34,7 @@ non-zero on drift.  The findings are written up in `notes/FINDINGS-l7a1429-write
   & 0x3F).  PASS = names POSITION / POS.DEPTH / SUB GAIN and the census {CC02a: 119, CC02b: 33}.
 * `second_burst_stores.py`: every store in the closure of the routines run between the bursts,
   classified frame / absolute / register-based; PASS = no absolute in 0x00D7A2..0x00D7C7 and every
-  register base explained in `REG_BASES`.
+  register base explained in the probe's REG_BASES table.
 * `isr_reach_param_dispatch.py`: vector table rows in `boot/reset_and_vectors.s`; PASS = neither the
   dispatcher nor its 18 transitive callers in the ISR closure, MAIN the only caller root.
 * `detune_writer_order.py`: call order of `Pack104_LoadElementWaveSelRec` and
