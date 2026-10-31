@@ -439,3 +439,12 @@ Reproduce (scratch only; the maps are about 0.5 GB):
   blocks still quote v2.x facts in places (for example the header of
   HDAE5000_PPORT_Svc13_SendInfosAboutSong describes the lyrics part, HDAE5000_TlxPart_Describe,
   which v1.x lacks), as the banner of each v1 tree warns.
+- **Replays (2026-10-31).** At 203396a2c, `port-edits-v1_15i/replay.sh` (after `make all`) rebuilds
+  `hdae5000_v1_15i/` equal to the committed tree, byte for byte and line for line.
+  `port-edits-v1_10i/replay.sh` then rebuilds a byte-identical v1.10i that differs from the
+  committed `hdae5000_v1_10i/` in 5 files (108 lines added, 122 removed): quoted addresses and
+  counts in comments, where the replay's are v1.10i's and the committed tree's are v2.01i's or
+  v1.15i's (`entry count = 67` for 0x3f), and the replay drops the committed tree's labels
+  HDAE5000_Palette_FilePanel / HDAE5000_Bitmap_FilePanel (v1.x has no FilePanel picture). So the
+  committed v1.10i is older than its recipe; regenerating it is left to a lane of its own (it moves
+  symbols and the label check's baseline).
