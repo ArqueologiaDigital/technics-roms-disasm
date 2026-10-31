@@ -7,9 +7,9 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 	.long	0x4c1760a8
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	text=Str_C_20, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	text=Str_C_19, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_989, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_977, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -19,46 +19,316 @@ PfDoubleToDecimal_entry_L3a3_Table:	# 2 x u32, 0..1075052544; read by PfDoubleTo
 PfDoubleToDecimal_entry_L1e1_Table:	# 2 x u32, 1070810131..1352628735; read by PfDoubleToDecimal_entry : `mov	(a0), d0`; PfDoubleToDecimal_entry : `mov	(a0), d2`
 	tab_u32	1352628735, 1070810131
 
-func_4C002A49_entry_L3d_Table:	# 1 x REC_func_4C002A49_entry_L3d_Table (8 bytes each); read by func_4C002A49_entry_L49 0x4C002A97 `mov (-0x7c, a0), d1`; func_4C002A49_entry_L49 0x4C002A97 `mov (-0x80, a0), d0`; func_4C002A49_entry_Ldf 0x4C002B2D `mov (0x80, a0), d1` (+12)
-	REC_func_4C002A49_entry_L3d_Table	f4=0x3FF00000
-
-PfDoubleToDecimal_Table_2:	# 30 x u32, 0..3892314112; read by PfDoubleToDecimal_entry : `mov	(a0), d0`
-	tab_u32	0, 1076101120, 0, 1079574528, 0, 1083129856, 0, 1086556160	# [0]
-	tab_u32	0, 1090021888, 0, 1093567616, 0, 1097011920, 0, 1100470148	# [8]
-	tab_u32	0, 1104006501, 536870912, 1107468383, 3892314112, 1110919286, 2717908992, 1114446484	# [16]
-	tab_u32	3846176768, 1117925532, 512753664, 1121369284, 640942080, 1124887541	# [24]
-func_4C002A49_entry_L127_Table:	# 202 x u32, 105764246..4209432352; read by func_4C002A49_entry : `mov	(a0), d1`
-	tab_u32	937459712, 1128383353, 2245566464, 1131820119, 1733216256, 1135329645, 1620131072, 1138841828	# [0]
-	tab_u32	2025163840, 1142271773, 3605196624, 1145772772, 105764246, 1149300943, 3353430778, 1152724226	# [8]
-	tab_u32	2044304820, 1156216899, 740819600, 1159760682, 3073508148, 1163177460, 3841885184, 1166662001	# [16]
-	tab_u32	790565504, 1170221031, 4209432352, 1173631456, 966823144, 1177108057, 2282270756, 1180667375	# [24]
-	tab_u32	3037031962, 1184086197, 575064476, 1187555043, 3940056070, 1191104667, 1925664134, 1194541665	# [32]
-	tab_u32	3480821990, 1198002937, 1129802014, 1201543096, 706126256, 1204997843, 4103883292, 1208451719	# [40]
-	tab_u32	4056112292, 1211982633, 924457450, 1215454714, 3303055456, 1218901368, 4128819320, 1222423254	# [48]
-	tab_u32	1506770254, 1225912262, 4030946466, 1229351863, 3964941258, 1232864933, 3014959198, 1236370471	# [56]
-	tab_u32	2694957174, 1239803185, 147470994, 1243307646, 3313394840, 1246829326, 1994259904, 1250255314	# [64]
-	tab_u32	345341232, 1253751367, 1826451010, 1257288812, 2283063756, 1260708231, 1780087872, 1264196073	# [72]
-	tab_u32	3796909480, 1267748913, 1524911382, 1271161918, 4053622874, 1274641741, 1845803116, 1278205089	# [80]
-	tab_u32	3837981508, 1281616356, 502509588, 1285088350, 2775620638, 1288641909, 2271633808, 1292071529	# [88]
-	tab_u32	3913284084, 1295535875, 3817863286, 1299079876, 238680906, 1302527419, 3519576600, 1305984297	# [96]
-	tab_u32	1178245282, 1309518964, 2883886950, 1312984008, 3604858684, 1316433594, 2358589710, 1319959145	# [104]
-	tab_u32	4158473130, 1323441281, 1976865936, 1326883746, 323598772, 1330400395, 3960345616, 1333899222	# [112]
-	tab_u32	2802948372, 1337334732, 3503685470, 1340842687, 3800416152, 1344357815, 3676778370, 1347786533	# [120]
-	tab_u32	1374747490, 1351285999, 2469829918, 1354817045, 4161029222, 1358239130, 3053802878, 1361730305	# [128]
-	tab_u32	298014060, 1365276897, 1446259402, 1368692505, 2881566072, 1372175583, 3411591532, 1375737355	# [136]
-	tab_u32	3190747594, 1379146638, 1840950840, 1382621810, 153704906, 1386179343, 1706678300, 1389601513	# [144]
-	tab_u32	3207089702, 1393068963, 2935120300, 1396616844, 3981933838, 1400057111, 3903675474, 1403517021	# [152]
-	tab_u32	1658368870, 1407055477, 1573351452, 1410513417, 3040431140, 1413965963, 2726797106, 1417495214	# [160]
-	tab_u32	630506364, 1420970413, 1861874780, 1424415768, 2327343478, 1427936030, 380847850, 1431428083	# [168]
-	tab_u32	3697285280, 1434866415, 3547864782, 1438377899, 1680544578, 1441886411, 1026938898, 1445317886	# [176]
-	tab_u32	3431157264, 1448820797, 2681344206, 1452345382, 1204196604, 1455770160, 1505245756, 1459264700	# [184]
-	tab_u32	3088262250, 1462804981, 639102338, 1466223219, 4020103394, 1469709583, 4123177358, 1473265193	# [192]
-	tab_u32	1932746226, 1476677044	# [200]
-
-Str_n5:	.asciz "n5"
-Str_a9X_B:	.asciz "\x90!a9X\xC4B"
-# census: opaque -- unknown-dump: 1525 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x327307, 0x3278FC
+Pow10Table:	# the powers of ten 1e0 .. 1e308 (309 IEEE-754 doubles, lo word, hi word; each within 1e-14 of 10^k): PfDoubleToDecimal reads base +- 8 x the decimal exponent (found by its contents)
+	.long	0x00000000, 0x3FF00000	# 1e0
+	.long	0x00000000, 0x40240000	# 1e1
+	.long	0x00000000, 0x40590000	# 1e2
+	.long	0x00000000, 0x408F4000	# 1e3
+	.long	0x00000000, 0x40C38800	# 1e4
+	.long	0x00000000, 0x40F86A00	# 1e5
+	.long	0x00000000, 0x412E8480	# 1e6
+	.long	0x00000000, 0x416312D0	# 1e7
+	.long	0x00000000, 0x4197D784	# 1e8
+	.long	0x00000000, 0x41CDCD65	# 1e9
+	.long	0x20000000, 0x4202A05F	# 1e10
+	.long	0xE8000000, 0x42374876	# 1e11
+	.long	0xA2000000, 0x426D1A94	# 1e12
+	.long	0xE5400000, 0x42A2309C	# 1e13
+	.long	0x1E900000, 0x42D6BCC4	# 1e14
+	.long	0x26340000, 0x430C6BF5	# 1e15
+	.long	0x37E08000, 0x4341C379	# 1e16
+	.long	0x85D8A000, 0x43763457	# 1e17
+	.long	0x674EC800, 0x43ABC16D	# 1e18
+	.long	0x60913D00, 0x43E158E4	# 1e19
+	.long	0x78B58C40, 0x4415AF1D	# 1e20
+	.long	0xD6E2EF50, 0x444B1AE4	# 1e21
+	.long	0x064DD596, 0x4480F0CF	# 1e22
+	.long	0xC7E14AFA, 0x44B52D02	# 1e23
+	.long	0x79D99DB4, 0x44EA7843	# 1e24
+	.long	0x2C280290, 0x45208B2A	# 1e25
+	.long	0xB7320334, 0x4554ADF4	# 1e26
+	.long	0xE4FE8400, 0x4589D971	# 1e27
+	.long	0x2F1F1280, 0x45C027E7	# 1e28
+	.long	0xFAE6D720, 0x45F431E0	# 1e29
+	.long	0x39A08CE8, 0x46293E59	# 1e30
+	.long	0x8808B024, 0x465F8DEF	# 1e31
+	.long	0xB5056E1A, 0x4693B8B5	# 1e32
+	.long	0x2246C99C, 0x46C8A6E3	# 1e33
+	.long	0xEAD87C06, 0x46FED09B	# 1e34
+	.long	0x72C74D86, 0x47334261	# 1e35
+	.long	0xCF7920E6, 0x476812F9	# 1e36
+	.long	0x4357691E, 0x479E17B8	# 1e37
+	.long	0x2A16A1B0, 0x47D2CED3	# 1e38
+	.long	0xF49C4A1C, 0x48078287	# 1e39
+	.long	0xF1C35CA4, 0x483D6329	# 1e40
+	.long	0x371A19EA, 0x48725DFA	# 1e41
+	.long	0xC4E0A060, 0x48A6F578	# 1e42
+	.long	0xF618C878, 0x48DCB2D6	# 1e43
+	.long	0x59CF7D4E, 0x4911EFC6	# 1e44
+	.long	0xF0435CA2, 0x49466BB7	# 1e45
+	.long	0xEC5433CA, 0x497C06A5	# 1e46
+	.long	0xB3B4A05E, 0x49B18427	# 1e47
+	.long	0xA0A1C876, 0x49E5E531	# 1e48
+	.long	0x08CA3A92, 0x4A1B5E7E	# 1e49
+	.long	0xC57E6498, 0x4A511B0E	# 1e50
+	.long	0x76DDFDC0, 0x4A8561D2	# 1e51
+	.long	0x14957D30, 0x4ABABA47	# 1e52
+	.long	0x6CDD6E42, 0x4AF0B46C	# 1e53
+	.long	0x8814C9CC, 0x4B24E187	# 1e54
+	.long	0x6A19FC40, 0x4B5A19E9	# 1e55
+	.long	0xE2503DA8, 0x4B905031	# 1e56
+	.long	0x5AE44D16, 0x4BC4643E	# 1e57
+	.long	0xF19D605A, 0x4BF97D4D	# 1e58
+	.long	0x6E04B86C, 0x4C2FDCA1	# 1e59
+	.long	0xE4C2F344, 0x4C63E9E4	# 1e60
+	.long	0x1DF3B014, 0x4C98E45E	# 1e61
+	.long	0xA5709C1E, 0x4CCF1D75	# 1e62
+	.long	0x87666190, 0x4D037269	# 1e63
+	.long	0xE93FF9F4, 0x4D384F03	# 1e64
+	.long	0xE38FF876, 0x4D6E62C4	# 1e65
+	.long	0x0E39FB4A, 0x4DA2FDBB	# 1e66
+	.long	0xD1C87A18, 0x4DD7BD29	# 1e67
+	.long	0x463A98A2, 0x4E0DAC74	# 1e68
+	.long	0xABE49F66, 0x4E428BC8	# 1e69
+	.long	0xD6DDC73C, 0x4E772EBA	# 1e70
+	.long	0x8C95390E, 0x4EACFA69	# 1e71
+	.long	0xF7DD43AA, 0x4EE21C81	# 1e72
+	.long	0x75D49490, 0x4F16A3A2	# 1e73
+	.long	0x1349B9B4, 0x4F4C4C8B	# 1e74
+	.long	0xEC0E1410, 0x4F81AFD6	# 1e75
+	.long	0xA7119914, 0x4FB61BCC	# 1e76
+	.long	0xD0D5FF5E, 0x4FEBA2BF	# 1e77
+	.long	0xE285BF98, 0x502145B7	# 1e78
+	.long	0xDB272F82, 0x50559725	# 1e79
+	.long	0x51F0FB62, 0x508AFCEF	# 1e80
+	.long	0x93369D1E, 0x50C0DE15	# 1e81
+	.long	0xF8044466, 0x50F5159A	# 1e82
+	.long	0xB605557E, 0x512A5B01	# 1e83
+	.long	0x11C3556C, 0x516078E1	# 1e84
+	.long	0x56342ACA, 0x51949719	# 1e85
+	.long	0xABC13578, 0x51C9BCDF	# 1e86
+	.long	0xCB58C16C, 0x5200160B	# 1e87
+	.long	0xBE2EF1CA, 0x52341B8E	# 1e88
+	.long	0x6DBAAE38, 0x52692272	# 1e89
+	.long	0x092959CA, 0x529F6B0F	# 1e90
+	.long	0x65B9D81C, 0x52D3A2E9	# 1e91
+	.long	0xBF284E26, 0x53088BA3	# 1e92
+	.long	0xAEF261AC, 0x533EAE8C	# 1e93
+	.long	0xED577D0E, 0x53732D17	# 1e94
+	.long	0xE8AD5C52, 0x53A7F85D	# 1e95
+	.long	0x62D8B366, 0x53DDF675	# 1e96
+	.long	0x5DC7701C, 0x5412BA09	# 1e97
+	.long	0xB5394C24, 0x5447688B	# 1e98
+	.long	0xA2879F32, 0x547D42AE	# 1e99
+	.long	0x2594C37C, 0x54B249AD	# 1e100
+	.long	0x6EF9F45C, 0x54E6DC18	# 1e101
+	.long	0x8AB87176, 0x551C931E	# 1e102
+	.long	0x16B346EA, 0x5551DBF3	# 1e103
+	.long	0xDC6018A0, 0x558652EF	# 1e104
+	.long	0xD3781ECE, 0x55BBE7AB	# 1e105
+	.long	0x642B1342, 0x55F170CB	# 1e106
+	.long	0x3D35D812, 0x5625CCFE	# 1e107
+	.long	0xCC834E10, 0x565B403D	# 1e108
+	.long	0x9FD210CE, 0x56910826	# 1e109
+	.long	0x47C694FC, 0x56C54A30	# 1e110
+	.long	0x59B83A3C, 0x56FA9CBC	# 1e111
+	.long	0xB813246A, 0x5730A1F5	# 1e112
+	.long	0x2617ED82, 0x5764CA73	# 1e113
+	.long	0xEF9DE8E2, 0x5799FD0F	# 1e114
+	.long	0xF5C2B18E, 0x57D03E29	# 1e115
+	.long	0x73335DF2, 0x58044DB4	# 1e116
+	.long	0x9000356E, 0x58396121	# 1e117
+	.long	0xF40042C4, 0x586FB969	# 1e118
+	.long	0x388029BE, 0x58A3D3E2	# 1e119
+	.long	0xC6A0342E, 0x58D8C8DA	# 1e120
+	.long	0x78484134, 0x590EFB11	# 1e121
+	.long	0xEB2D28C0, 0x59435CEA	# 1e122
+	.long	0xA5F872F0, 0x59783425	# 1e123
+	.long	0x0F768FAC, 0x59AE412F	# 1e124
+	.long	0x69AA19CC, 0x59E2E8BD	# 1e125
+	.long	0xC414A042, 0x5A17A2EC	# 1e126
+	.long	0xF519C852, 0x5A4D8BA7	# 1e127
+	.long	0xF9301D30, 0x5A827748	# 1e128
+	.long	0x377C2482, 0x5AB7151B	# 1e129
+	.long	0x055B2D9C, 0x5AECDA62	# 1e130
+	.long	0x4358FC86, 0x5B22087D	# 1e131
+	.long	0x942F3BA6, 0x5B568A9C	# 1e132
+	.long	0xB93B0A8E, 0x5B8C2D43	# 1e133
+	.long	0x53C4E69A, 0x5BC19C4A	# 1e134
+	.long	0xE8B6203C, 0x5BF6035C	# 1e135
+	.long	0x22E3A84C, 0x5C2B8434	# 1e136
+	.long	0x95CE4932, 0x5C6132A0	# 1e137
+	.long	0xBB41DB7E, 0x5C957F48	# 1e138
+	.long	0xEA12525E, 0x5CCADF1A	# 1e139
+	.long	0xD24B7378, 0x5D00CB70	# 1e140
+	.long	0x06DE505A, 0x5D34FE4D	# 1e141
+	.long	0x4895E46C, 0x5D6A3DE0	# 1e142
+	.long	0x2D5DAEC6, 0x5DA066AC	# 1e143
+	.long	0x38B51A74, 0x5DD48057	# 1e144
+	.long	0x06E26116, 0x5E09A06D	# 1e145
+	.long	0x244D7CAE, 0x5E400444	# 1e146
+	.long	0x2D60DBDA, 0x5E740555	# 1e147
+	.long	0x78B912CE, 0x5EA906AA	# 1e148
+	.long	0x16E75782, 0x5EDF4855	# 1e149
+	.long	0x2E5096B2, 0x5F138D35	# 1e150
+	.long	0x79E4BC5E, 0x5F487082	# 1e151
+	.long	0x185DEB70, 0x5F7E8CA3	# 1e152
+	.long	0xEF3AB32A, 0x5FB317E5	# 1e153
+	.long	0x6B095FF0, 0x5FE7DDDF	# 1e154
+	.long	0x45CBB7EC, 0x601DD557	# 1e155
+	.long	0x8B9F52F4, 0x6052A556	# 1e156
+	.long	0x2E8727B0, 0x60874EAC	# 1e157
+	.long	0x3A28F19C, 0x60BD2257	# 1e158
+	.long	0x84599706, 0x60F23576	# 1e159
+	.long	0x256FFCC6, 0x6126C2D4	# 1e160
+	.long	0x2ECBFBF6, 0x615C7389	# 1e161
+	.long	0xBD3F7D78, 0x6191C835	# 1e162
+	.long	0x2C8F5CDA, 0x61C63A43	# 1e163
+	.long	0xF7B3340E, 0x61FBC8D3	# 1e164
+	.long	0x7AD0008A, 0x62315D84	# 1e165
+	.long	0x998400A8, 0x6265B4E5	# 1e166
+	.long	0xFFE500D6, 0x629B221E	# 1e167
+	.long	0x5FEF2084, 0x62D0F553	# 1e168
+	.long	0x37EAE8A4, 0x630532A8	# 1e169
+	.long	0x45E5A2D2, 0x633A7F52	# 1e170
+	.long	0x6BAF85C0, 0x63708F93	# 1e171
+	.long	0x469B6730, 0x63A4B378	# 1e172
+	.long	0x584240FC, 0x63D9E056	# 1e173
+	.long	0xF72968A2, 0x64102C35	# 1e174
+	.long	0x74F3C2CA, 0x64443743	# 1e175
+	.long	0x5230B37A, 0x64794514	# 1e176
+	.long	0x66BCE054, 0x64AF9659	# 1e177
+	.long	0xE0360C34, 0x64E3BDF7	# 1e178
+	.long	0xD8438F46, 0x6518AD75	# 1e179
+	.long	0x4E547316, 0x654ED8D3	# 1e180
+	.long	0x10F4C7EC, 0x65834784	# 1e181
+	.long	0x1531F9EA, 0x65B81965	# 1e182
+	.long	0x5A7E7860, 0x65EE1FBE	# 1e183
+	.long	0xF88F0B3C, 0x6622D3D6	# 1e184
+	.long	0xB6B2CE0C, 0x665788CC	# 1e185
+	.long	0xE45F8192, 0x668D6AFF	# 1e186
+	.long	0xEEBBB0F8, 0x66C262DF	# 1e187
+	.long	0xEA6A9D3A, 0x66F6FB97	# 1e188
+	.long	0xE5054484, 0x672CBA7D	# 1e189
+	.long	0xAF234AD6, 0x6761F48E	# 1e190
+	.long	0x5AEC1D88, 0x679671B2	# 1e191
+	.long	0xF1A724EE, 0x67CC0E1E	# 1e192
+	.long	0x57087716, 0x680188D3	# 1e193
+	.long	0x2CCA94DA, 0x6835EB08	# 1e194
+	.long	0x37FD3A0C, 0x686B65CA	# 1e195
+	.long	0x62FE4448, 0x68A11F9E	# 1e196
+	.long	0xFBBDD55E, 0x68D56785	# 1e197
+	.long	0x7AAD4AB0, 0x690AC167	# 1e198
+	.long	0xACAC4EB2, 0x6940B8E0	# 1e199
+	.long	0xD7D7625E, 0x6974E718	# 1e200
+	.long	0x0DCD3AF0, 0x69AA20DF	# 1e201
+	.long	0x68A044DA, 0x69E0548B	# 1e202
+	.long	0x42C8560C, 0x6A1469AE	# 1e203
+	.long	0xD37A6B92, 0x6A498419	# 1e204
+	.long	0x48590676, 0x6A7FE520	# 1e205
+	.long	0x2D37A40A, 0x6AB3EF34	# 1e206
+	.long	0x38858D08, 0x6AE8EB01	# 1e207
+	.long	0x86A6F04C, 0x6B1F25C1	# 1e208
+	.long	0xF4285632, 0x6B537798	# 1e209
+	.long	0x31326BBE, 0x6B88557F	# 1e210
+	.long	0xFD7F06AE, 0x6BBE6ADE	# 1e211
+	.long	0x5E6F642E, 0x6BF302CB	# 1e212
+	.long	0x360B3D34, 0x6C27C37E	# 1e213
+	.long	0xC38E0C86, 0x6C5DB45D	# 1e214
+	.long	0x9A38C7D0, 0x6C9290BA	# 1e215
+	.long	0x40C6F9C4, 0x6CC734E9	# 1e216
+	.long	0x90F8B83A, 0x6CFD0223	# 1e217
+	.long	0x3A9B7326, 0x6D322156	# 1e218
+	.long	0xC9424FEE, 0x6D66A9AB	# 1e219
+	.long	0xBB92E3EA, 0x6D9C5416	# 1e220
+	.long	0x353BCE72, 0x6DD1B48E	# 1e221
+	.long	0xC28AC20E, 0x6E0621B1	# 1e222
+	.long	0x332D7292, 0x6E3BAA1E	# 1e223
+	.long	0xDFFC6798, 0x6E714A52	# 1e224
+	.long	0x97FB8182, 0x6EA59CE7	# 1e225
+	.long	0x7DFA61E2, 0x6EDB0421	# 1e226
+	.long	0xEEBC7D2E, 0x6F10E294	# 1e227
+	.long	0x2A6B9C7A, 0x6F451B3A	# 1e228
+	.long	0xB5068394, 0x6F7A6208	# 1e229
+	.long	0x7124123C, 0x6FB07D45	# 1e230
+	.long	0xCD6D16CE, 0x6FE49C96	# 1e231
+	.long	0x80C85C82, 0x7019C3BC	# 1e232
+	.long	0xD07D39D2, 0x70501A55	# 1e233
+	.long	0x449C8846, 0x708420EB	# 1e234
+	.long	0x15C3AA56, 0x70B92926	# 1e235
+	.long	0x9B3494E8, 0x70EF736F	# 1e236
+	.long	0xC100DD10, 0x7123A825	# 1e237
+	.long	0x31411454, 0x7158922F	# 1e238
+	.long	0xFD91596E, 0x718EB6BA	# 1e239
+	.long	0xDE7AD7E6, 0x71C33234	# 1e240
+	.long	0x16198DDE, 0x71F7FEC2	# 1e241
+	.long	0x9B9FF156, 0x722DFE72	# 1e242
+	.long	0xA143F6D6, 0x7262BF07	# 1e243
+	.long	0x8994F488, 0x72976EC9	# 1e244
+	.long	0xEBFA31AE, 0x72CD4A7B	# 1e245
+	.long	0x737C5F0E, 0x73024E8D	# 1e246
+	.long	0xD05B76CC, 0x7336E230	# 1e247
+	.long	0x04725480, 0x736C9ABD	# 1e248
+	.long	0x22C774D0, 0x73A1E0B6	# 1e249
+	.long	0xAB795204, 0x73D658E3	# 1e250
+	.long	0x9657A684, 0x740BEF1C	# 1e251
+	.long	0xDDF6C816, 0x74417571	# 1e252
+	.long	0x55747A18, 0x7475D2CE	# 1e253
+	.long	0xEAD198A2, 0x74AB4781	# 1e254
+	.long	0x32C2FF66, 0x74E10CB1	# 1e255
+	.long	0x7F73BF3E, 0x75154FDD	# 1e256
+	.long	0xDF50AF0E, 0x754AA3D4	# 1e257
+	.long	0x0B926D6A, 0x7580A665	# 1e258
+	.long	0x4E7708C0, 0x75B4CFFE	# 1e259
+	.long	0xE214CAF0, 0x75EA03FD	# 1e260
+	.long	0xAD4CFEDA, 0x7620427E	# 1e261
+	.long	0x58A03E8E, 0x7654531E	# 1e262
+	.long	0xEEC84E32, 0x768967E5	# 1e263
+	.long	0x6A7A61BE, 0x76BFC1DF	# 1e264
+	.long	0xA28C7D14, 0x76F3D92B	# 1e265
+	.long	0x8B2F9C58, 0x7728CF76	# 1e266
+	.long	0x2DFB8370, 0x775F0354	# 1e267
+	.long	0x9CBD322A, 0x77936214	# 1e268
+	.long	0xC3EC7EB2, 0x77C83A99	# 1e269
+	.long	0x34E79E5E, 0x77FE4940	# 1e270
+	.long	0x2110C2F8, 0x7832EDC8	# 1e271
+	.long	0x2954F3BA, 0x7867A93A	# 1e272
+	.long	0xB3AA30A4, 0x789D9388	# 1e273
+	.long	0x704A5E6A, 0x78D27C35	# 1e274
+	.long	0xCC5CF600, 0x79071B42	# 1e275
+	.long	0x7F743380, 0x793CE213	# 1e276
+	.long	0x2FA8A030, 0x79720D4C	# 1e277
+	.long	0x3B92C83C, 0x79A6909F	# 1e278
+	.long	0x0A777A4C, 0x79DC34C7	# 1e279
+	.long	0x668AAC72, 0x7A11A0FC	# 1e280
+	.long	0x802D578E, 0x7A46093B	# 1e281
+	.long	0x6038AD72, 0x7A7B8B8A	# 1e282
+	.long	0x7C236C64, 0x7AB13736	# 1e283
+	.long	0x1B2C4782, 0x7AE58504	# 1e284
+	.long	0x21F75962, 0x7B1AE645	# 1e285
+	.long	0x353A97DE, 0x7B50CFEB	# 1e286
+	.long	0x02893DD0, 0x7B8503E6	# 1e287
+	.long	0x832B8D44, 0x7BBA44DF	# 1e288
+	.long	0xB1FB384E, 0x7BF06B0B	# 1e289
+	.long	0x9E7A0662, 0x7C2485CE	# 1e290
+	.long	0x461887FA, 0x7C59A742	# 1e291
+	.long	0x6BCF54F8, 0x7C900889	# 1e292
+	.long	0xC6C32A38, 0x7CC40AAB	# 1e293
+	.long	0xB873F4CA, 0x7CF90D56	# 1e294
+	.long	0x6690F1F8, 0x7D2F50AC	# 1e295
+	.long	0xC01A973E, 0x7D63926B	# 1e296
+	.long	0xB0213D08, 0x7D987706	# 1e297
+	.long	0x5C298C4C, 0x7DCE94C8	# 1e298
+	.long	0x3999F7B2, 0x7E031CFD	# 1e299
+	.long	0x8800759E, 0x7E37E43C	# 1e300
+	.long	0xAA009306, 0x7E6DDD4B	# 1e301
+	.long	0x4A405BE0, 0x7EA2AA4F	# 1e302
+	.long	0x1CD072D8, 0x7ED754E3	# 1e303
+	.long	0xE4048F90, 0x7F0D2A1B	# 1e304
+	.long	0x6E82D9BE, 0x7F423A51	# 1e305
+	.long	0xCA239028, 0x7F76C8E5	# 1e306
+	.long	0x3CAC7436, 0x7FAC7B1F	# 1e307
+	.long	0x85EBC8A2, 0x7FE1CCF3	# 1e308
 
 func_4C004EA1_Table:	# 64 x u8, 0..63; read by func_4C004EA1_entry : `movbu	(a1), d0`; func_4C00534E_entry : `movbu	(a2), d0`
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
@@ -7487,7 +7757,7 @@ func_4C0506C7_entry_L4_Records:	# 3 x REC_func_4C0506C7_entry_L4_Records (12 byt
 	REC_func_4C0506C7_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
 	REC_func_4C0506C7_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
 func_4C050787_entry_L4_Records:	# 1 x REC_func_4C050787_entry_L4_Records (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
-	REC_func_4C050787_entry_L4_Records	f0=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
+	REC_func_4C050787_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
 ptrs_4C35992C:
 	.long	loc_4C05A425
@@ -15711,9 +15981,9 @@ func_4C05E846_Block_2:	# 2 bytes, copied whole by func_4C05E846 0x4C05E846: memc
 .incbin_range "baserom/kn6000_program.rom", 0x36152A, 0x3615F0
 
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
 MemStyleAreaVarStreamsInit_entry_L3a_Selected_1:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
-	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", index__=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
 	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_entry_L3a_Selected_1
 
 ptrs_4C36160C:
@@ -19163,14 +19433,14 @@ func_4C085A64_Table:	# 123 x u16, 65281..65534; read by func_4C085A64 0x4C085A64
 .incbin_range "baserom/kn6000_program.rom", 0x36B1A4, 0x36B1AE
 
 func_4C09948D_Records:	# 8 x REC_func_4C09948D_Records (6 bytes each); read by func_4C09948D 0x4C09948D `movbu (d1, a0), d0`; func_4C099573 0x4C099573 `movbu (1, a0), d3`; func_4C099658 0x4C099658 `movbu (4, a0), d3` (+1)
-	REC_func_4C09948D_Records	a0="\x01\x02\x00\x00", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x01\x03\x00\x00", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x01\x04\x00\x00", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x01\x03\x00\x01", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\x00\x00\x00\x03", f4=255, index=255
-	REC_func_4C09948D_Records	a0="\xFF\xFF\xFF\xFF", index=3
-	REC_func_4C09948D_Records	a0="\x00\x05\x00\x06", index=5
+	REC_func_4C09948D_Records	index="\x01\x02\x00\x00", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x01\x03\x00\x00", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x01\x04\x00\x00", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x01\x03\x00\x01", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x00\x00\x00\x03", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\x00\x00\x00\x03", f4=255, index_=255
+	REC_func_4C09948D_Records	index="\xFF\xFF\xFF\xFF", index_=3
+	REC_func_4C09948D_Records	index="\x00\x05\x00\x06", index_=5
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36B1DE, 0x36B202
 func_4C099573_entry_L46_Records:	# 8 x REC_func_4C099573_entry_L46_Records (102 bytes each); read by func_4C099573_entry_L46 0x4C0995BB `movhu (d1, a0), d0`; func_4C099573_entry_L8c 0x4C099601 `movhu (d0, a0), d0`; func_4C0996D3_entry_L23 0x4C0996F8 `movhu (d1, a0), d0`
@@ -19227,134 +19497,134 @@ func_4C09248D_entry_L7d_Table_3:	# 35 x u16, 0..65532; read by func_4C09248D_ent
 	.align	4, 0xFF	# pad after func_4C09248D_entry_L7d_Table_3
 
 func_4C081D83_entry_L37_Records:	# 128 x REC_func_4C081D83_entry_L37_Records (12 bytes each); read by func_4C081D83_entry_L37 0x4C081DBF `mov (4, a0), d1`; func_4C081D83_entry_L37 0x4C081DBF `mov (a0), d0`; func_4C081D83_entry_L320 0x4C0820A8 `movhu (8, a0), d0` (+18)
-	REC_func_4C081D83_entry_L37_Records	f0=0xC8E33341, f4=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
-	REC_func_4C081D83_entry_L37_Records	f0=0x48A30701, f4=0x4078964D, f8=183, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x56F8345A, f4=0x406526FF, f8=79, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x66574CF, f4=0x405B10E0, f8=51, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xCC3CAF08, f4=0x40523287, f8=34, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x79C8180, f4=0x404BD6E2, f8=26, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2A3E6CF8, f4=0x40462855, f8=21, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE752342A, f4=0x404317B8, f8=18, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x1B27CEA6, f4=0x404073A4, f8=16, x10="\x00\x00"	# [8]
-	REC_func_4C081D83_entry_L37_Records	f0=0xB343B9BE, f4=0x403E1780, f8=14, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2DB6F270, f4=0x403A3025, f8=13, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDFB30378, f4=0x40373F66, f8=11, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x48205535, f4=0x40350D18, f8=10, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x51C39719, f4=0x4033A366, f8=10, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x970D2252, f4=0x40330FEA, f8=9, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x31B30073, f4=0x4031C865, f8=9, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x78C69048, f4=0x4030EBFF, f8=8, x10="\x00\x00"	# [16]
-	REC_func_4C081D83_entry_L37_Records	f0=0x38DD4139, f4=0x40303010, f8=8, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x5AD69045, f4=0x402EF890, f8=8, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x93BA5C88, f4=0x402DA099, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDE7FA7AB, f4=0x402C578E, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8198F1D4, f4=0x402B1CCA, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF398BE7D, f4=0x4029EFAD, f8=7, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8C015596, f4=0x4028CFA1, f8=6, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x37199CB4, f4=0x4027BC14, f8=6, x10="\x00\x00"	# [24]
-	REC_func_4C081D83_entry_L37_Records	f0=0x2B19893E, f4=0x4026B47B, f8=6, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA50E41E2, f4=0x4025B851, f8=6, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA3BADAB2, f4=0x4024C718, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA860E551, f4=0x4023E056, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x79BFF0AD, f4=0x40230397, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE9548F46, f4=0x4022306B, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x9B7A1977, f4=0x40216669, f8=5, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD1A1032C, f4=0x4020A52A, f8=4, x10="\x00\x00"	# [32]
-	REC_func_4C081D83_entry_L37_Records	f0=0x6E9C5115, f4=0x401FD89C, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x61C2BDAA, f4=0x401E76ED, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x59AF5A06, f4=0x401D2496, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xEDCBED4B, f4=0x401BE0EC, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x19FA8E37, f4=0x401AAB4E, f8=4, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xEC93D650, f4=0x4019831D, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x37E26F76, f4=0x401867C7, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x470ACDDC, f4=0x401758BB, f8=3, x10="\x00\x00"	# [40]
-	REC_func_4C081D83_entry_L37_Records	f0=0x95E6D401, f4=0x40165571, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8CB4B760, f4=0x40155D67, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x3DC94A72, f4=0x40147020, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2749118E, f4=0x40138D24, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF638F0A6, f4=0x4012B400, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x4D8475CF, f4=0x4011E449, f8=3, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8EC2D0F5, f4=0x40111D94, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA532BB24, f4=0x40105F7E, f8=2, x10="\x00\x00"	# [48]
-	REC_func_4C081D83_entry_L37_Records	f0=0xA776EBB4, f4=0x400F534F, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8F1DAE8, f4=0x400DF769, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x35A962C3, f4=0x400CAA9A, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8E0F6694, f4=0x400B6C3B, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xB8741413, f4=0x400A3BAC, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x4FF49B2E, f4=0x40091854, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x974E5491, f4=0x4008019F, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2EEA8A5E, f4=0x4006F702, f8=2, x10="\x00\x00"	# [56]
-	REC_func_4C081D83_entry_L37_Records	f0=0xCE22E32F, f4=0x4005F7F5, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xFFBE6F45, f4=0x400503F9, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE0FB8B85, f4=0x40041A93, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE45BD70E, f4=0x40033B4D, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x953E515B, f4=0x400265B7, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x609323F0, f4=0x40019965, f8=2, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x5D8F6C08, f4=0x4000D5F0, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x1A67CF0B, f4=0x40001AF6, f8=1, x10="\x00\x00"	# [64]
-	REC_func_4C081D83_entry_L37_Records	f0=0xD5D830A6, f4=0x3FFED030, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x713997EB, f4=0x3FFD79FA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xAADFD6DA, f4=0x3FFC329C, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xA0A8CEE3, f4=0x3FFAF972, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x98C9876A, f4=0x3FF9CDDE, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xAFEEBD04, f4=0x3FF8AF49, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8EE195EE, f4=0x3FF79D23, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x220D5FD4, f4=0x3FF696E2, f8=1, x10="\x00\x00"	# [72]
-	REC_func_4C081D83_entry_L37_Records	f0=0x52E656E2, f4=0x3FF59C01, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xC557379F, f4=0x3FF4AC02, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x99BF0BF8, f4=0x3FF3C66D, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2DDC177F, f4=0x3FF2EACE, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE46CC061, f4=0x3FF218B5, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xEC4707F4, f4=0x3FF14FBA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBBB863A, f4=0x3FF08F78, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD98D1BFF, f4=0x3FEFAF18, f8=1, x10="\x00\x00"	# [80]
-	REC_func_4C081D83_entry_L37_Records	f0=0xDA903779, f4=0x3FEE4F36, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE09D4A64, f4=0x3FECFE98, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x5FD6B2DD, f4=0x3FEBBC95, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x2952F966, f4=0x3FEA888A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x16D2E67E, f4=0x3FE961DC, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBCE8DCAB, f4=0x3FE847F6, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x20E24526, f4=0x3FE73A4C, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x704D4D99, f4=0x3FE63854, f8=1, x10="\x00\x00"	# [88]
-	REC_func_4C081D83_entry_L37_Records	f0=0xBDDD09A0, f4=0x3FE5418D, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBED704A3, f4=0x3FE4557B, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8CCC56B0, f4=0x3FE373A7, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x6A01EB2B, f4=0x3FE29B9F, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x8887F95E, f4=0x3FE1CCF6, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD0C80CA7, f4=0x3FE10744, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xB24663BD, f4=0x3FE04A26, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xD685B333, f4=0x3FDF2A79, f8=1, x10="\x00\x00"	# [96]
-	REC_func_4C081D83_entry_L37_Records	f0=0xBC9E7032, f4=0x3FDDD058, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xC0C2CAB8, f4=0x3FDC853B, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x1DE64D85, f4=0x3FDB487C, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x4D56A88C, f4=0x3FDA197A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xAEAFB3EB, f4=0x3FD8F79D, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x476EC346, f4=0x3FD7E254, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x6D0C6A3E, f4=0x3FD6D912, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x85A2B088, f4=0x3FD5DB52, f8=1, x10="\x00\x00"	# [104]
-	REC_func_4C081D83_entry_L37_Records	f0=0xC447C30D, f4=0x3FD4E894, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE67B85C4, f4=0x3FD4005E, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF8066A05, f4=0x3FD3223B, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x16D844E1, f4=0x3FD24DBC, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x3B32A86B, f4=0x3FD18274, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x41EC001, f4=0x3FD0BFFE, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7E84C8DB, f4=0x3FD005F7, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xF24C270F, f4=0x3FCEA805, f8=1, x10="\x00\x00"	# [112]
-	REC_func_4C081D83_entry_L37_Records	f0=0xC88E687D, f4=0x3FCCE251, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDB10EE76, f4=0x3FCAADEA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7D5C439A, f4=0x3FC8A498, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xE3747B74, f4=0x3FC6C310, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x80F170E0, f4=0x3FC5064A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x78D6AB73, f4=0x3FC2D99F, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x919A3590, f4=0x3FC0917E, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xBCEBE1C4, f4=0x3FBEE9A4, f8=1, x10="\x00\x00"	# [120]
-	REC_func_4C081D83_entry_L37_Records	f0=0xF252CBDD, f4=0x3FBB2BB7, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7BF8851E, f4=0x3FB81EBA, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x44088FE9, f4=0x3FB42C8A, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x7A6DC920, f4=0x3FB0DF9E, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xDD8F1A6D, f4=0x3FA7D7FB, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0x47A8FACF, f4=0x3FA35B99, f8=1, x10="\x00\x00"
-	REC_func_4C081D83_entry_L37_Records	f0=0xCFD84D92, f4=0x3F95C579, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC8E33341, LibF64Mul_d1=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x48A30701, LibF64Mul_d1=0x4078964D, f8=183, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x56F8345A, LibF64Mul_d1=0x406526FF, f8=79, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x66574CF, LibF64Mul_d1=0x405B10E0, f8=51, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xCC3CAF08, LibF64Mul_d1=0x40523287, f8=34, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x79C8180, LibF64Mul_d1=0x404BD6E2, f8=26, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2A3E6CF8, LibF64Mul_d1=0x40462855, f8=21, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE752342A, LibF64Mul_d1=0x404317B8, f8=18, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x1B27CEA6, LibF64Mul_d1=0x404073A4, f8=16, x10="\x00\x00"	# [8]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xB343B9BE, LibF64Mul_d1=0x403E1780, f8=14, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2DB6F270, LibF64Mul_d1=0x403A3025, f8=13, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDFB30378, LibF64Mul_d1=0x40373F66, f8=11, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x48205535, LibF64Mul_d1=0x40350D18, f8=10, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x51C39719, LibF64Mul_d1=0x4033A366, f8=10, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x970D2252, LibF64Mul_d1=0x40330FEA, f8=9, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x31B30073, LibF64Mul_d1=0x4031C865, f8=9, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x78C69048, LibF64Mul_d1=0x4030EBFF, f8=8, x10="\x00\x00"	# [16]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x38DD4139, LibF64Mul_d1=0x40303010, f8=8, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x5AD69045, LibF64Mul_d1=0x402EF890, f8=8, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x93BA5C88, LibF64Mul_d1=0x402DA099, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDE7FA7AB, LibF64Mul_d1=0x402C578E, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8198F1D4, LibF64Mul_d1=0x402B1CCA, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF398BE7D, LibF64Mul_d1=0x4029EFAD, f8=7, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8C015596, LibF64Mul_d1=0x4028CFA1, f8=6, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x37199CB4, LibF64Mul_d1=0x4027BC14, f8=6, x10="\x00\x00"	# [24]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2B19893E, LibF64Mul_d1=0x4026B47B, f8=6, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA50E41E2, LibF64Mul_d1=0x4025B851, f8=6, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA3BADAB2, LibF64Mul_d1=0x4024C718, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA860E551, LibF64Mul_d1=0x4023E056, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x79BFF0AD, LibF64Mul_d1=0x40230397, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE9548F46, LibF64Mul_d1=0x4022306B, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x9B7A1977, LibF64Mul_d1=0x40216669, f8=5, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD1A1032C, LibF64Mul_d1=0x4020A52A, f8=4, x10="\x00\x00"	# [32]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x6E9C5115, LibF64Mul_d1=0x401FD89C, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x61C2BDAA, LibF64Mul_d1=0x401E76ED, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x59AF5A06, LibF64Mul_d1=0x401D2496, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xEDCBED4B, LibF64Mul_d1=0x401BE0EC, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x19FA8E37, LibF64Mul_d1=0x401AAB4E, f8=4, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xEC93D650, LibF64Mul_d1=0x4019831D, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x37E26F76, LibF64Mul_d1=0x401867C7, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x470ACDDC, LibF64Mul_d1=0x401758BB, f8=3, x10="\x00\x00"	# [40]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x95E6D401, LibF64Mul_d1=0x40165571, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8CB4B760, LibF64Mul_d1=0x40155D67, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x3DC94A72, LibF64Mul_d1=0x40147020, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2749118E, LibF64Mul_d1=0x40138D24, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF638F0A6, LibF64Mul_d1=0x4012B400, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x4D8475CF, LibF64Mul_d1=0x4011E449, f8=3, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8EC2D0F5, LibF64Mul_d1=0x40111D94, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA532BB24, LibF64Mul_d1=0x40105F7E, f8=2, x10="\x00\x00"	# [48]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA776EBB4, LibF64Mul_d1=0x400F534F, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8F1DAE8, LibF64Mul_d1=0x400DF769, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x35A962C3, LibF64Mul_d1=0x400CAA9A, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8E0F6694, LibF64Mul_d1=0x400B6C3B, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xB8741413, LibF64Mul_d1=0x400A3BAC, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x4FF49B2E, LibF64Mul_d1=0x40091854, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x974E5491, LibF64Mul_d1=0x4008019F, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2EEA8A5E, LibF64Mul_d1=0x4006F702, f8=2, x10="\x00\x00"	# [56]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xCE22E32F, LibF64Mul_d1=0x4005F7F5, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xFFBE6F45, LibF64Mul_d1=0x400503F9, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE0FB8B85, LibF64Mul_d1=0x40041A93, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE45BD70E, LibF64Mul_d1=0x40033B4D, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x953E515B, LibF64Mul_d1=0x400265B7, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x609323F0, LibF64Mul_d1=0x40019965, f8=2, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x5D8F6C08, LibF64Mul_d1=0x4000D5F0, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x1A67CF0B, LibF64Mul_d1=0x40001AF6, f8=1, x10="\x00\x00"	# [64]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD5D830A6, LibF64Mul_d1=0x3FFED030, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x713997EB, LibF64Mul_d1=0x3FFD79FA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xAADFD6DA, LibF64Mul_d1=0x3FFC329C, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xA0A8CEE3, LibF64Mul_d1=0x3FFAF972, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x98C9876A, LibF64Mul_d1=0x3FF9CDDE, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xAFEEBD04, LibF64Mul_d1=0x3FF8AF49, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8EE195EE, LibF64Mul_d1=0x3FF79D23, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x220D5FD4, LibF64Mul_d1=0x3FF696E2, f8=1, x10="\x00\x00"	# [72]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x52E656E2, LibF64Mul_d1=0x3FF59C01, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC557379F, LibF64Mul_d1=0x3FF4AC02, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x99BF0BF8, LibF64Mul_d1=0x3FF3C66D, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2DDC177F, LibF64Mul_d1=0x3FF2EACE, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE46CC061, LibF64Mul_d1=0x3FF218B5, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xEC4707F4, LibF64Mul_d1=0x3FF14FBA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBBB863A, LibF64Mul_d1=0x3FF08F78, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD98D1BFF, LibF64Mul_d1=0x3FEFAF18, f8=1, x10="\x00\x00"	# [80]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDA903779, LibF64Mul_d1=0x3FEE4F36, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE09D4A64, LibF64Mul_d1=0x3FECFE98, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x5FD6B2DD, LibF64Mul_d1=0x3FEBBC95, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x2952F966, LibF64Mul_d1=0x3FEA888A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x16D2E67E, LibF64Mul_d1=0x3FE961DC, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBCE8DCAB, LibF64Mul_d1=0x3FE847F6, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x20E24526, LibF64Mul_d1=0x3FE73A4C, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x704D4D99, LibF64Mul_d1=0x3FE63854, f8=1, x10="\x00\x00"	# [88]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBDDD09A0, LibF64Mul_d1=0x3FE5418D, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBED704A3, LibF64Mul_d1=0x3FE4557B, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8CCC56B0, LibF64Mul_d1=0x3FE373A7, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x6A01EB2B, LibF64Mul_d1=0x3FE29B9F, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x8887F95E, LibF64Mul_d1=0x3FE1CCF6, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD0C80CA7, LibF64Mul_d1=0x3FE10744, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xB24663BD, LibF64Mul_d1=0x3FE04A26, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xD685B333, LibF64Mul_d1=0x3FDF2A79, f8=1, x10="\x00\x00"	# [96]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBC9E7032, LibF64Mul_d1=0x3FDDD058, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC0C2CAB8, LibF64Mul_d1=0x3FDC853B, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x1DE64D85, LibF64Mul_d1=0x3FDB487C, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x4D56A88C, LibF64Mul_d1=0x3FDA197A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xAEAFB3EB, LibF64Mul_d1=0x3FD8F79D, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x476EC346, LibF64Mul_d1=0x3FD7E254, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x6D0C6A3E, LibF64Mul_d1=0x3FD6D912, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x85A2B088, LibF64Mul_d1=0x3FD5DB52, f8=1, x10="\x00\x00"	# [104]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC447C30D, LibF64Mul_d1=0x3FD4E894, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE67B85C4, LibF64Mul_d1=0x3FD4005E, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF8066A05, LibF64Mul_d1=0x3FD3223B, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x16D844E1, LibF64Mul_d1=0x3FD24DBC, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x3B32A86B, LibF64Mul_d1=0x3FD18274, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x41EC001, LibF64Mul_d1=0x3FD0BFFE, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7E84C8DB, LibF64Mul_d1=0x3FD005F7, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF24C270F, LibF64Mul_d1=0x3FCEA805, f8=1, x10="\x00\x00"	# [112]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xC88E687D, LibF64Mul_d1=0x3FCCE251, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDB10EE76, LibF64Mul_d1=0x3FCAADEA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7D5C439A, LibF64Mul_d1=0x3FC8A498, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xE3747B74, LibF64Mul_d1=0x3FC6C310, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x80F170E0, LibF64Mul_d1=0x3FC5064A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x78D6AB73, LibF64Mul_d1=0x3FC2D99F, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x919A3590, LibF64Mul_d1=0x3FC0917E, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xBCEBE1C4, LibF64Mul_d1=0x3FBEE9A4, f8=1, x10="\x00\x00"	# [120]
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xF252CBDD, LibF64Mul_d1=0x3FBB2BB7, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7BF8851E, LibF64Mul_d1=0x3FB81EBA, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x44088FE9, LibF64Mul_d1=0x3FB42C8A, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x7A6DC920, LibF64Mul_d1=0x3FB0DF9E, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xDD8F1A6D, LibF64Mul_d1=0x3FA7D7FB, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0x47A8FACF, LibF64Mul_d1=0x3FA35B99, f8=1, x10="\x00\x00"
+	REC_func_4C081D83_entry_L37_Records	LibF64Mul_d0=0xCFD84D92, LibF64Mul_d1=0x3F95C579, f8=1, x10="\x00\x00"
 
 func_4C09A372_entry_L2a_Table:	# 20 x u8, 0..255; read by func_4C09A372_entry : `movbu	(d0, a0), d1`
 	tab_u8	16, 16, 8, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -19369,33 +19639,33 @@ func_4C09A60C_Table:	# 8 x u8, 0..255; read by func_4C09A60C : `movbu	(a1), d0`
 	tab_u8	6, 5, 2, 4, 3, 1, 0, 255
 
 func_4C09A63A_entry_L65_Records_p0_0:	# REC_func_4C09A63A_entry_L65_Records_p0 (29 bytes)
-	REC_func_4C09A63A_entry_L65_Records_p0	f0=134, count=133, x2="\x06\x05", key=33668, x6="\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
+	REC_func_4C09A63A_entry_L65_Records_p0	key=134, key_=133, x2="\x06\x05", key__=33668, x6="\x82\x04\x03\x02\x81\x80\x01\x00\xFF\x86\x85\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
 data_4C36C089:
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C089, 0x36C094
 data_4C36C094:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C094, 0x36C0A0
-func_4C03CC6E_entry_L8c_Selected_0:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
+func_4C03CC6E_entry_L8c_Selected_0:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
 	.space	12, 0x00
-func_4C03CC6E_entry_L8c_Selected_1:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_2:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_3:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=func_4C173C25
+func_4C03CC6E_entry_L8c_Selected_1:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_2:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_3:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=XaprCallM3Hook
 # census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36C0DC, 0x36C124
-func_4C03CC6E_entry_L8c_Selected_4:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DD38
+func_4C03CC6E_entry_L8c_Selected_4:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DD38
 	.space	12, 0x00
-func_4C03CC6E_entry_L8c_Selected_5:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_6:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_7:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
-	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_5:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_6:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_7:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
+	REC_M3HookDispatch_entry_L8c_Selected	
 func_4C03CD2C_entry_L9d_Selected_0:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
 	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFF00, key_=8192, proc=loc_4C066D29
 # census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -24474,34 +24744,34 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table		# [16]
-	REC_func_4C09D886_entry_L6e_Table	f0=21, f1=145
+	REC_func_4C09D886_entry_L6e_Table	f0=21, index=145
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=6, f1=144
-	REC_func_4C09D886_entry_L6e_Table	f0=35, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=6, index=144
+	REC_func_4C09D886_entry_L6e_Table	f0=35, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=3, f1=128	# [24]
-	REC_func_4C09D886_entry_L6e_Table	f0=36, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=32, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=3, index=128	# [24]
+	REC_func_4C09D886_entry_L6e_Table	f0=36, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=32, index=1
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table		# [32]
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=33
-	REC_func_4C09D886_entry_L6e_Table	f0=15, f1=129
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=33
+	REC_func_4C09D886_entry_L6e_Table	f0=15, index=129
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=2, f1=33
-	REC_func_4C09D886_entry_L6e_Table	f0=22, f1=144
+	REC_func_4C09D886_entry_L6e_Table	f0=2, index=33
+	REC_func_4C09D886_entry_L6e_Table	f0=22, index=144
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=2, f1=128	# [40]
-	REC_func_4C09D886_entry_L6e_Table	f0=24, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=2, index=128	# [40]
+	REC_func_4C09D886_entry_L6e_Table	f0=24, index=128
 	REC_func_4C09D886_entry_L6e_Table	f0=39
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=16, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=16, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24523,17 +24793,17 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table		# [64]
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=18, f1=129
+	REC_func_4C09D886_entry_L6e_Table	f0=18, index=129
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=1, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=1, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=5, f1=80	# [72]
+	REC_func_4C09D886_entry_L6e_Table	f0=5, index=80	# [72]
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=18, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=18, index=128
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=24, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=24, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24541,31 +24811,31 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	f0=10
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=40, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=40, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=41, f1=80	# [88]
+	REC_func_4C09D886_entry_L6e_Table	f0=41, index=80	# [88]
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=35, f1=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
+	REC_func_4C09D886_entry_L6e_Table	f0=35, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=128	# [96]
-	REC_func_4C09D886_entry_L6e_Table	f0=31, f1=128
-	REC_func_4C09D886_entry_L6e_Table	f0=25, f1=96
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=27, f1=96
-	REC_func_4C09D886_entry_L6e_Table	f0=31, f1=32
-	REC_func_4C09D886_entry_L6e_Table	f0=34, f1=32
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=128	# [104]
-	REC_func_4C09D886_entry_L6e_Table	f0=31, f1=128
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128	# [96]
+	REC_func_4C09D886_entry_L6e_Table	f0=31, index=128
+	REC_func_4C09D886_entry_L6e_Table	f0=25, index=96
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=30, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=27, index=96
+	REC_func_4C09D886_entry_L6e_Table	f0=31, index=32
+	REC_func_4C09D886_entry_L6e_Table	f0=34, index=32
+	REC_func_4C09D886_entry_L6e_Table	
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128	# [104]
+	REC_func_4C09D886_entry_L6e_Table	f0=31, index=128
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128
+	REC_func_4C09D886_entry_L6e_Table	
+	REC_func_4C09D886_entry_L6e_Table	f0=30, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24589,15 +24859,15 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	f0=3
 	REC_func_4C09D886_entry_L6e_Table	f0=2
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=5, f1=144
+	REC_func_4C09D886_entry_L6e_Table	f0=5, index=144
 	REC_func_4C09D886_entry_L6e_Table	f0=35
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	f0=4	# [136]
 	REC_func_4C09D886_entry_L6e_Table	f0=26
 	REC_func_4C09D886_entry_L6e_Table	f0=12
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=9, f1=144
+	REC_func_4C09D886_entry_L6e_Table	f0=9, index=144
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24605,31 +24875,31 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	f0=3
 	REC_func_4C09D886_entry_L6e_Table	f0=2
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=11, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=35, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=11, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=35, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=26, f1=128	# [152]
-	REC_func_4C09D886_entry_L6e_Table	f0=36, f1=1
-	REC_func_4C09D886_entry_L6e_Table	f0=32, f1=1
+	REC_func_4C09D886_entry_L6e_Table	f0=26, index=128	# [152]
+	REC_func_4C09D886_entry_L6e_Table	f0=36, index=1
+	REC_func_4C09D886_entry_L6e_Table	f0=32, index=1
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	f0=13	# [160]
-	REC_func_4C09D886_entry_L6e_Table	f0=28, f1=33
+	REC_func_4C09D886_entry_L6e_Table	f0=28, index=33
 	REC_func_4C09D886_entry_L6e_Table	f0=14
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=8, f1=96
-	REC_func_4C09D886_entry_L6e_Table	f0=22, f1=144
-	REC_func_4C09D886_entry_L6e_Table	f0=32, f1=32
+	REC_func_4C09D886_entry_L6e_Table	f0=8, index=96
+	REC_func_4C09D886_entry_L6e_Table	f0=22, index=144
+	REC_func_4C09D886_entry_L6e_Table	f0=32, index=32
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=12, f1=128	# [168]
-	REC_func_4C09D886_entry_L6e_Table	f0=34, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=12, index=128	# [168]
+	REC_func_4C09D886_entry_L6e_Table	f0=34, index=128
 	REC_func_4C09D886_entry_L6e_Table	f0=39
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=33, f1=128
+	REC_func_4C09D886_entry_L6e_Table	f0=33, index=128
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24653,11 +24923,11 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=3, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=3, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=9, f1=80	# [200]
+	REC_func_4C09D886_entry_L6e_Table	f0=9, index=80	# [200]
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -24669,7 +24939,7 @@ func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 byte
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=17, f1=80
+	REC_func_4C09D886_entry_L6e_Table	f0=17, index=80
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
 	REC_func_4C09D886_entry_L6e_Table	
@@ -31840,17 +32110,17 @@ func_4C0BB259_entry_L56_Table:	# 9 x u32, 0..1278720192; read by func_4C0BB259_e
 
 MainCMP_CmpEasyCopy_Table:	# 12 x REC_MainCMP_CmpEasyCopy_Table (2 bytes each); read by MainCMP_CmpEasyCopy 0x4C0B1046 `movbu (1, a2), d1`; MainCMP_CmpEasyCopy 0x4C0B1046 `movbu (d0, a2), d1`; MainCMP_CmpCompileCopy 0x4C0B10C4 `movbu (1, a2), d1` (+16)
 	REC_MainCMP_CmpEasyCopy_Table		# [0]
-	REC_MainCMP_CmpEasyCopy_Table	f1=3
-	REC_MainCMP_CmpEasyCopy_Table	f1=6
-	REC_MainCMP_CmpEasyCopy_Table	f1=9
-	REC_MainCMP_CmpEasyCopy_Table	f0=1
-	REC_MainCMP_CmpEasyCopy_Table	f0=1, f1=3
-	REC_MainCMP_CmpEasyCopy_Table	f0=1, f1=6
-	REC_MainCMP_CmpEasyCopy_Table	f0=1, f1=9
-	REC_MainCMP_CmpEasyCopy_Table	f0=2	# [8]
-	REC_MainCMP_CmpEasyCopy_Table	f0=2, f1=3
-	REC_MainCMP_CmpEasyCopy_Table	f0=2, f1=6
-	REC_MainCMP_CmpEasyCopy_Table	f0=2, f1=9
+	REC_MainCMP_CmpEasyCopy_Table	key=3
+	REC_MainCMP_CmpEasyCopy_Table	key=6
+	REC_MainCMP_CmpEasyCopy_Table	key=9
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=3
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=6
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=9
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2	# [8]
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=3
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=6
+	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=9
 
 # 287 ApFunction procedures; a function id is (0x12f << 16) | its index (the names are the parallel table at slot 0x32f)
 User15_ApFunctions:
@@ -39790,224 +40060,3 @@ NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_4C05800B_L9 0x4
 	NoteConvRule	table=NoteConvRules_p4_11
 	NoteConvRule	table=NoteConvRules_p4_11
 	NoteConvRule	table=NoteConvRules_p4_11
-
-func_4C05C2C0_entry_L1a5_Table:	# 256 x u8, 0..2; read by func_4C05C2C0_entry : `movbu	(d0, a0), d0`
-	tab_u8	2, 2, 0, 2, 2, 2, 1, 0, 0, 2, 0, 0, 2, 2, 2, 2	# [0]
-	tab_u8	2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2	# [16]
-	tab_u8	2, 2, 2, 0, 0, 0, 0, 2, 0, 2, 1, 2, 1, 2, 1, 2	# [32]
-	tab_u8	2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2	# [48]
-	tab_u8	2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [64]
-	tab_u8	2, 2, 1, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2	# [80]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2	# [96]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [112]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [128]
-	tab_u8	2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 1, 2, 1, 2, 2, 0	# [144]
-	tab_u8	0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1	# [160]
-	tab_u8	1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [176]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [192]
-	tab_u8	2, 2, 2, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 1, 1, 2	# [208]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2	# [224]
-	tab_u8	2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [240]
-EasyCompGrid_La6_Table:	# 2 x u16, 0..10; read by EasyCompGrid_La6 0x4C0C0B51: `movhu (EasyCompGrid_La6_Table), d3`
-	tab_u16	10, 0
-
-func_4C05D626_entry_L2c_Var:	# u32, a constant; read / written by func_4C05D626_entry_L2c 0x4C05D657: `mov (func_4C05D626_entry_L2c_Var), a0`; func_4C05D626_entry_L71 0x4C05D69C: `mov (func_4C05D626_entry_L2c_Var), a0` ...
-	.long	0x4c2580f8
-
-ptrs_4C3855C4:
-	.long	InsertOptionText
-	.long	TypePriorityText
-	.long	JumpInsertFunc
-	.long	FilePriorityFunc
-
-# 31 ApFunction procedures; a function id is (0x130 << 16) | its index (the names are the parallel table at slot 0x330)
-User16_ApFunctions:
-	IDNAME	FN_InsertOptionText, SetupOkFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_TypePriorityText, SetupExitFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_JumpInsertFunc, DiskAttention, User16_ApFunctions, 0x130
-	IDNAME	FN_FilePriorityFunc, DiskSure, User16_ApFunctions, 0x130
-	IDNAME	FN_SetupOkFunc, FormatText, User16_ApFunctions, 0x130
-	IDNAME	FN_SetupExitFunc, DeleteText, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskAttention, DeleteYes, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskSure, DeleteNo, User16_ApFunctions, 0x130
-	IDNAME	FN_FormatText, SaveText, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteText, SaveYes, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteYes, SaveNo, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteNo, WaitingFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveText, TechnicsFileNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveYes, TechFileNamingCustom, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveNo, TechnicsFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_WaitingFunc, SmfFileNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_TechnicsFileNaming, SmfFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_TechFileNamingCustom, CstFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_TechnicsFileRename, FormatDiskNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_SmfFileNaming, DiskMedleyShowHideFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_SmfFileRename, WakeUpPassword, User16_ApFunctions, 0x130
-	IDNAME	FN_CstFileRename, PasswordOk, User16_ApFunctions, 0x130
-	IDNAME	FN_FormatDiskNaming, PasswordNo, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskMedleyShowHideFunc, PasswordText, User16_ApFunctions, 0x130
-	IDNAME	FN_WakeUpPassword, CheckPasswordText, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordOk, CheckPasswordOk, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordNo, CheckPasswordNo, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordText, loc_4C150D0C, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordText, loc_4C150D20, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordOk, func_4C150F41, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordNo, loc_4C1510A7, User16_ApFunctions, 0x130
-	.space	4, 0x00
-
-User16_ApFunctionNames:
-	.long	FnName_InsertOptionText
-	.long	FnName_TypePriorityText
-	.long	FnName_JumpInsertFunc
-	.long	FnName_FilePriorityFunc
-	.long	FnName_SetupOkFunc
-	.long	FnName_SetupExitFunc
-	.long	FnName_DiskAttention
-	.long	FnName_DiskSure
-	.long	FnName_FormatText
-	.long	FnName_DeleteText
-	.long	FnName_DeleteYes
-	.long	FnName_DeleteNo
-	.long	FnName_SaveText
-	.long	FnName_SaveYes
-	.long	FnName_SaveNo
-	.long	FnName_WaitingFunc
-	.long	FnName_TechnicsFileNaming
-	.long	FnName_TechFileNamingCustom
-	.long	FnName_TechnicsFileRename
-	.long	FnName_SmfFileNaming
-	.long	FnName_SmfFileRename
-	.long	FnName_CstFileRename
-	.long	FnName_FormatDiskNaming
-	.long	FnName_DiskMedleyShowHideFunc
-	.long	FnName_WakeUpPassword
-	.long	FnName_PasswordOk
-	.long	FnName_PasswordNo
-	.long	FnName_PasswordText
-	.long	FnName_CheckPasswordText
-	.long	FnName_CheckPasswordOk
-	.long	FnName_CheckPasswordNo
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3856D0, 0x3856D4
-
-ClassFields_PsFileNameBox:
-	.long	Field_PsFileNameBox_font
-	.long	Field_PsFileNameBox_fontcolor
-	.long	Field_PsFileNameBox_main_func
-	.long	Field_PsFileNameBox_column
-	.long	Field_PsFileNameBox_row
-	.long	Field_PsFileNameBox_sel_num
-	.long	Field_PsFileNameBox_dial
-	.long	Field_PsFileNameBox_auto_inc
-	.long	Field_PsFileNameBox_paintok
-	.long	Field_PsFileNameBox_aicok
-	.long	Field_PsFileNameBox_end
-ClassFields_PsFileNmTwoBox:
-	.long	Field_PsFileNmTwoBox_font
-	.long	Field_PsFileNmTwoBox_fontcolor
-	.long	Field_PsFileNmTwoBox_boxborder
-	.long	Field_PsFileNmTwoBox_main_func
-	.long	Field_PsFileNmTwoBox_row
-	.long	Field_PsFileNmTwoBox_spacewidth
-	.long	Field_PsFileNmTwoBox_topdown
-	.long	Field_PsFileNmTwoBox_bottomup
-	.long	Field_PsFileNmTwoBox_auto_inc
-	.long	Field_PsFileNmTwoBox_paintok
-	.long	Field_PsFileNmTwoBox_aicok
-	.long	Field_PsFileNmTwoBox_end
-ClassFields_PsOptionTwoBox:
-	.long	Field_PsOptionTwoBox_font
-	.long	Field_PsOptionTwoBox_fontcolor
-	.long	Field_PsOptionTwoBox_boxborder
-	.long	Field_PsOptionTwoBox_main_func
-	.long	Field_PsOptionTwoBox_row
-	.long	Field_PsOptionTwoBox_spacewidth
-	.long	Field_PsOptionTwoBox_stroffset
-	.long	Field_PsOptionTwoBox_auto_inc
-	.long	Field_PsOptionTwoBox_paintok
-	.long	Field_PsOptionTwoBox_aicok
-	.long	Field_PsOptionTwoBox_end
-ClassFields_PsPlayFileNameBox:
-	.long	Field_PsPlayFileNameBox_font
-	.long	Field_PsPlayFileNameBox_font2
-	.long	Field_PsPlayFileNameBox_fontcolor
-	.long	Field_PsPlayFileNameBox_fontcolor2
-	.long	Field_PsPlayFileNameBox_main_func
-	.long	Field_PsPlayFileNameBox_sel_num
-	.long	Field_PsPlayFileNameBox_row
-	.long	Field_PsPlayFileNameBox_column
-	.long	Field_PsPlayFileNameBox_stroffset
-	.long	Field_PsPlayFileNameBox_dial
-	.long	Field_PsPlayFileNameBox_auto_inc
-	.long	Field_PsPlayFileNameBox_paintok
-	.long	Field_PsPlayFileNameBox_aicok
-	.long	Field_PsPlayFileNameBox_end
-ClassFields_PsWindowToggle:
-	.long	Field_PsWindowToggle_onwin
-	.long	Field_PsWindowToggle_offwin
-	.long	Field_PsWindowToggle_main_func
-	.long	Field_PsWindowToggle_end
-ClassFields_AcTtlJgBox:
-	.long	Field_AcTtlJgBox_main_func
-	.long	Field_AcTtlJgBox_end
-ClassFields_AcParaStrBox:
-	.long	Field_AcParaStrBox_main_func
-	.long	Field_AcParaStrBox_paintok
-	.long	Field_AcParaStrBox_end
-ClassFields_PsIndexParaStrBox:
-	.long	Field_PsIndexParaStrBox_main_func
-	.long	Field_PsIndexParaStrBox_paintok
-	.long	Field_PsIndexParaStrBox_end
-ClassFields_AcFileSfxBox:
-	.long	Field_AcFileSfxBox_font
-	.long	Field_AcFileSfxBox_main_func
-	.long	Field_AcFileSfxBox_paintok
-	.long	Field_AcFileSfxBox_end
-ClassFields_AcMonoIndexToggle:
-	.long	Field_AcMonoIndexToggle_index
-	.long	Field_AcMonoIndexToggle_end
-ClassFields_IvOneShotTimer:
-	.long	Field_IvOneShotTimer_main_func
-	.long	Field_IvOneShotTimer_end
-ClassFields_VwScreenTitle:
-	.long	Field_VwScreenTitle_title
-	.long	Field_VwScreenTitle_icon
-	.long	Field_VwScreenTitle_page
-	.long	Field_VwScreenTitle_end
-ClassFields_VwOwScreenTitle:
-	.long	Field_VwOwScreenTitle_title
-	.long	Field_VwOwScreenTitle_icon
-	.long	Field_VwOwScreenTitle_page
-	.long	Field_VwOwScreenTitle_end
-ClassFields_Arrow:
-	.long	Field_Arrow_color
-	.long	Field_Arrow_frame_only
-	.long	Field_Arrow_dir
-	.long	Field_Arrow_tail_x_rate
-	.long	Field_Arrow_tail_y_rate
-	.long	Field_Arrow_end
-ClassFields_IvIndexSwCtrl:
-	.long	Field_IvIndexSwCtrl_index_min
-	.long	Field_IvIndexSwCtrl_index_max
-	.long	Field_IvIndexSwCtrl_dial
-	.long	Field_IvIndexSwCtrl_dial_inv
-	.long	Field_IvIndexSwCtrl_auto_inc
-	.long	Field_IvIndexSwCtrl_end
-ClassFields_AcRotStrBox:
-	.long	Field_AcRotStrBox_func
-	.long	Field_AcRotStrBox_interval
-	.long	Field_AcRotStrBox_length
-	.long	Field_AcRotStrBox_paintok
-	.long	Field_AcRotStrBox_end
-ClassFields_IvIndexSwDelay:
-	.long	Field_IvIndexSwDelay_index_min
-	.long	Field_IvIndexSwDelay_index_max
-	.long	Field_IvIndexSwDelay_interval
-	.long	Field_IvIndexSwDelay_send_index
-	.long	Field_IvIndexSwDelay_end
-ClassFields_IvWaitWinCtl:
-	.long	Field_IvWaitWinCtl_win
-	.long	Field_IvWaitWinCtl_end
-ClassFields_IvMainEditIndex:
-	.long	Field_IvMainEditIndex_main_func
-	.long	Field_IvMainEditIndex_end

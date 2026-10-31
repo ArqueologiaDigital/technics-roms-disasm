@@ -16,10 +16,10 @@
 .endm
 
 # REC_func_5012AD4E_entry_L18_Records: 8-byte records (func_5012AD4E_entry_L18_Records, 128 records); fields, and what reads them:
-#   +0   f0           u32            func_5012AD4E_entry_L18 0x5012AD6B `mov (a0), d0`; func_5012AD4E_entry_L41 0x5012AD94 `mov (a0), d0`
+#   +0   key          u32            func_5012AD4E_entry_L18 0x5012AD6B `mov (a0), d0`; func_5012AD4E_entry_L41 0x5012AD94 `mov (a0), d0`
 #   +4   proc         ptr            func_5012AD4E_entry_L44 0x5012AD97 `mov (4, a0), a0`
-.macro REC_func_5012AD4E_entry_L18_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5012AD4E_entry_L18_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -40,18 +40,18 @@
 .endm
 
 # REC_TgPartProgramHandlerDispatch_Records: 8-byte records (TgPartProgramHandlerDispatch_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TgPartProgramHandlerDispatch 0x50140CEB `mov (a0), d0`; TgPartProgramHandlerDispatch_L48 0x50140D33 `mov (a0), d0`
+#   +0   key          u32            TgPartProgramHandlerDispatch 0x50140CEB `mov (a0), d0`; TgPartProgramHandlerDispatch_L48 0x50140D33 `mov (a0), d0`
 #   +4   proc         ptr            TgPartProgramHandlerDispatch_L4b 0x50140D36 `mov (4, a0), a0`
-.macro REC_TgPartProgramHandlerDispatch_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TgPartProgramHandlerDispatch_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TgPartProgramApply_entry_L15_Records: 8-byte records (TgPartProgramApply_entry_L15_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TgPartProgramApply_entry_L15 0x50140D8F `mov (a0), d0`; TgPartProgramApply_entry_L45 0x50140DBF `mov (a0), d0`
+#   +0   key          u32            TgPartProgramApply_entry_L15 0x50140D8F `mov (a0), d0`; TgPartProgramApply_entry_L45 0x50140DBF `mov (a0), d0`
 #   +4   proc         ptr            TgPartProgramApply_entry_L48 0x50140DC2 `mov (4, a0), a0`
-.macro REC_TgPartProgramApply_entry_L15_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TgPartProgramApply_entry_L15_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -63,71 +63,59 @@
 	.ascii	"\x4"
 .endm
 
-# REC_func_5014A95C_Records: 8-byte records (func_5014A95C_Records, 229 records); fields, and what reads them:
-#   +0   p0           ptr            func_5014A95C 0x5014A95C `mov (a1), d1`; func_5014A95C_entry_L20 0x5014A97E `mov (a1), a0` (+1)
-#   +4   f4           u8             func_5014A95C_entry_L20 0x5014A97E `movbu (4, a1), d1`
-#   +5   f5           u8             func_5014A95C_entry_L3b 0x5014A999 `movbu (5, a1), d1`
-#   +6   x6           u8[2]          no reader seen
-.macro REC_func_5014A95C_Records p0=0, f4=0, f5=0, x6
-	.long	\p0
-	.byte	\f4
-	.byte	\f5
-	.ascii	"\x6"
-.endm
-
 # REC_func_5014A783_entry_L10_Records: 8-byte records (func_5014A783_entry_L10_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_5014A783_entry_L10 0x5014A795 `mov (a1), d0`
+#   +0   key          u32            func_5014A783_entry_L10 0x5014A795 `mov (a1), d0`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_5014A783_entry_L10_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5014A783_entry_L10_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5014AF95_entry_L1a_Records: 8-byte records (func_5014AF95_entry_L1a_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_5014AF95_entry_L1a 0x5014AFB4 `mov (a0), d1`; func_5014AF95_entry_L42 0x5014AFDC `mov (a0), d1`
+#   +0   key          u32            func_5014AF95_entry_L1a 0x5014AFB4 `mov (a0), d1`; func_5014AF95_entry_L42 0x5014AFDC `mov (a0), d1`
 #   +4   proc         ptr            func_5014AF95_entry_L45 0x5014AFDF `mov (4, a0), a0`
-.macro REC_func_5014AF95_entry_L1a_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5014AF95_entry_L1a_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5014BED0_entry_L44_Records: 8-byte records (func_5014BED0_entry_L44_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5014BED0_entry_L44 0x5014BF19 `mov (a0), d0`; func_5014BED0_entry_L66 0x5014BF3B `mov (a0), d0`
+#   +0   key          u32            func_5014BED0_entry_L44 0x5014BF19 `mov (a0), d0`; func_5014BED0_entry_L66 0x5014BF3B `mov (a0), d0`
 #   +4   proc         ptr            func_5014BED0_entry_L69 0x5014BF3E `mov (4, a0), a0`
-.macro REC_func_5014BED0_entry_L44_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5014BED0_entry_L44_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5014CCDF_Records: 8-byte records (func_5014CCDF_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5014CCDF 0x5014CCDF `mov (a0), d1`; func_5014CCDF_entry_L35 0x5014CD16 `mov (a0), d1`
+#   +0   key          u32            func_5014CCDF 0x5014CCDF `mov (a0), d1`; func_5014CCDF_entry_L35 0x5014CD16 `mov (a0), d1`
 #   +4   proc         ptr            func_5014CCDF_entry_L38 0x5014CD19 `mov (4, a0), a0`
-.macro REC_func_5014CCDF_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5014CCDF_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5014CD3B_Records: 8-byte records (func_5014CD3B_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5014CD3B 0x5014CD3B `mov (a0), d1`; func_5014CD3B_entry_L33 0x5014CD70 `mov (a0), d1`
+#   +0   key          u32            func_5014CD3B 0x5014CD3B `mov (a0), d1`; func_5014CD3B_entry_L33 0x5014CD70 `mov (a0), d1`
 #   +4   proc         ptr            func_5014CD3B_entry_L36 0x5014CD73 `mov (4, a0), a0`
-.macro REC_func_5014CD3B_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5014CD3B_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5014D4C5_L25_Records: 8-byte records (func_5014D4C5_L25_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5014D4C5_L25 0x5014D4EA `mov (a0), d0`; func_5014D4C5_L52 0x5014D517 `mov (a0), d0`
+#   +0   key          u32            func_5014D4C5_L25 0x5014D4EA `mov (a0), d0`; func_5014D4C5_L52 0x5014D517 `mov (a0), d0`
 #   +4   proc         ptr            func_5014D4C5_L55 0x5014D51A `mov (4, a0), a0`
-.macro REC_func_5014D4C5_L25_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5014D4C5_L25_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_50150302_entry_L16_Records: 8-byte records (func_50150302_entry_L16_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_50150302_entry_L16 0x5015031D `mov (a0), d0`; func_50150302_entry_L42 0x50150349 `mov (a0), d0`
+#   +0   key          u32            func_50150302_entry_L16 0x5015031D `mov (a0), d0`; func_50150302_entry_L42 0x50150349 `mov (a0), d0`
 #   +4   proc         ptr            func_50150302_entry_L45 0x5015034C `mov (4, a0), a0`
-.macro REC_func_50150302_entry_L16_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_50150302_entry_L16_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -140,110 +128,110 @@
 .endm
 
 # REC_func_5015350E_entry_Lb62_Records: 8-byte records (func_5015350E_entry_Lb62_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_5015350E_entry_Lb62 0x50154075 `mov (a0), d0`; func_5015350E_entry_Lb90 0x501540A3 `mov (a0), d0`
+#   +0   key          u32            func_5015350E_entry_Lb62 0x50154075 `mov (a0), d0`; func_5015350E_entry_Lb90 0x501540A3 `mov (a0), d0`
 #   +4   proc         ptr            func_5015350E_entry_Lb93 0x501540A6 `mov (4, a0), a0`
-.macro REC_func_5015350E_entry_Lb62_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5015350E_entry_Lb62_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5015350E_entry_L50a_Records: 8-byte records (func_5015350E_entry_L50a_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_5015350E_entry_L50a 0x50153A1D `mov (a0), d0`; func_5015350E_entry_L538 0x50153A4B `mov (a0), d0`
+#   +0   key          u32            func_5015350E_entry_L50a 0x50153A1D `mov (a0), d0`; func_5015350E_entry_L538 0x50153A4B `mov (a0), d0`
 #   +4   proc         ptr            func_5015350E_entry_L53b 0x50153A4E `mov (4, a0), a0`
-.macro REC_func_5015350E_entry_L50a_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5015350E_entry_L50a_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5015350E_entry_L30a_Records: 8-byte records (func_5015350E_entry_L30a_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_5015350E_entry_L30a 0x5015381D `mov (a0), d0`; func_5015350E_entry_L337 0x5015384A `mov (a0), d0`
+#   +0   key          u32            func_5015350E_entry_L30a 0x5015381D `mov (a0), d0`; func_5015350E_entry_L337 0x5015384A `mov (a0), d0`
 #   +4   proc         ptr            func_5015350E_entry_L33a 0x5015384D `mov (4, a0), a0`
-.macro REC_func_5015350E_entry_L30a_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5015350E_entry_L30a_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5015350E_entry_L6c_Records: 8-byte records (func_5015350E_entry_L6c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5015350E_entry_L6c 0x5015357F `mov (a0), d0`; func_5015350E_entry_L95 0x501535A8 `mov (a0), d0`
+#   +0   key          u32            func_5015350E_entry_L6c 0x5015357F `mov (a0), d0`; func_5015350E_entry_L95 0x501535A8 `mov (a0), d0`
 #   +4   proc         ptr            func_5015350E_entry_L98 0x501535AB `mov (4, a0), a0`
-.macro REC_func_5015350E_entry_L6c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5015350E_entry_L6c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_5015350E_entry_L21_Records: 8-byte records (func_5015350E_entry_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5015350E_entry_L21 0x50153534 `mov (a0), d0`; func_5015350E_entry_L4a 0x5015355D `mov (a0), d0`
+#   +0   key          u32            func_5015350E_entry_L21 0x50153534 `mov (a0), d0`; func_5015350E_entry_L4a 0x5015355D `mov (a0), d0`
 #   +4   proc         ptr            func_5015350E_entry_L4d 0x50153560 `mov (4, a0), a0`
-.macro REC_func_5015350E_entry_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5015350E_entry_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_50156A88_entry_L21_Records: 8-byte records (func_50156A88_entry_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_50156A88_entry_L21 0x50156AAE `mov (a0), d0`; func_50156A88_entry_L50 0x50156ADD `mov (a0), d0`
+#   +0   key          u32            func_50156A88_entry_L21 0x50156AAE `mov (a0), d0`; func_50156A88_entry_L50 0x50156ADD `mov (a0), d0`
 #   +4   proc         ptr            func_50156A88_entry_L53 0x50156AE0 `mov (4, a0), a0`
-.macro REC_func_50156A88_entry_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_50156A88_entry_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_50157736_Table: 3-byte records (func_50157736_Table, 27 records); fields, and what reads them:
-#   +0   f0           u8             func_50157736_entry_L10 0x5015774B `movbu (a1), d0`; func_50157736_entry_L10 0x5015774B `movbu (a1), d2` (+5)
-#   +1   index        u8             func_50157736_entry_L10 0x5015774B `movbu (1, a1), d0`; func_50157736_entry_L6b 0x501577A6 `movbu (1, a1), d0`
+#   +0   index        u8             func_50157736_entry_L10 0x5015774B `movbu (a1), d0`; func_50157736_entry_L10 0x5015774B `movbu (a1), d2` (+5)
+#   +1   index_       u8             func_50157736_entry_L10 0x5015774B `movbu (1, a1), d0`; func_50157736_entry_L6b 0x501577A6 `movbu (1, a1), d0`
 #   +2   f2           u8             func_50157736_entry_L10 0x5015774B `movbu (a0), d0`; func_50157736_entry_L6b 0x501577A6 `movbu (a0), d0`
-.macro REC_func_50157736_Table f0=0, index=0, f2=0
-	.byte	\f0
+.macro REC_func_50157736_Table index=0, index_=0, f2=0
 	.byte	\index
+	.byte	\index_
 	.byte	\f2
 .endm
 
 # REC_func_50157736_Table_2: 3-byte records (func_50157736_Table_2, 7 records); fields, and what reads them:
-#   +0   f0           u8             func_50157736_entry_Le4 0x5015781F `movbu (a1), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a1), d2`
-#   +1   index        u8             func_50157736_entry_Le4 0x5015781F `movbu (1, a1), d0`
+#   +0   index        u8             func_50157736_entry_Le4 0x5015781F `movbu (a1), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a1), d2`
+#   +1   index_       u8             func_50157736_entry_Le4 0x5015781F `movbu (1, a1), d0`
 #   +2   f2           u8             func_50157736_entry_Le4 0x5015781F `movbu (a0), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d2`
-.macro REC_func_50157736_Table_2 f0=0, index=0, f2=0
-	.byte	\f0
+.macro REC_func_50157736_Table_2 index=0, index_=0, f2=0
 	.byte	\index
+	.byte	\index_
 	.byte	\f2
 .endm
 
 # REC_func_50157736_Table_3: 3-byte records (func_50157736_Table_3, 3 records); fields, and what reads them:
-#   +0   f0           u8             func_50157736_entry_L12f 0x5015786A `movbu (a1), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a1), d1` (+1)
-#   +1   index        u8             func_50157736_entry_L12f 0x5015786A `movbu (1, a1), d0`
+#   +0   index        u8             func_50157736_entry_L12f 0x5015786A `movbu (a1), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a1), d1` (+1)
+#   +1   index_       u8             func_50157736_entry_L12f 0x5015786A `movbu (1, a1), d0`
 #   +2   f2           u8             func_50157736_entry_L12f 0x5015786A `movbu (a0), d0`
-.macro REC_func_50157736_Table_3 f0=0, index=0, f2=0
-	.byte	\f0
+.macro REC_func_50157736_Table_3 index=0, index_=0, f2=0
 	.byte	\index
+	.byte	\index_
 	.byte	\f2
 .endm
 
 # REC_func_50157736_Table_4: 3-byte records (func_50157736_Table_4, 14 records); fields, and what reads them:
-#   +0   f0           u8             func_50157736_entry_L181 0x501578BC `movbu (a1), d0`; func_50157736_entry_L181 0x501578BC `movbu (a1), d1`
-#   +1   index        u8             func_50157736_entry_L181 0x501578BC `movbu (1, a1), d0`
+#   +0   index        u8             func_50157736_entry_L181 0x501578BC `movbu (a1), d0`; func_50157736_entry_L181 0x501578BC `movbu (a1), d1`
+#   +1   index_       u8             func_50157736_entry_L181 0x501578BC `movbu (1, a1), d0`
 #   +2   f2           u8             func_50157736_entry_L181 0x501578BC `movbu (a0), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d2`
-.macro REC_func_50157736_Table_4 f0=0, index=0, f2=0
-	.byte	\f0
+.macro REC_func_50157736_Table_4 index=0, index_=0, f2=0
 	.byte	\index
+	.byte	\index_
 	.byte	\f2
 .endm
 
 # REC_func_50157736_Table_5: 3-byte records (func_50157736_Table_5, 4 records); fields, and what reads them:
-#   +0   f0           u8             func_50157736_entry_L1d2 0x5015790D `movbu (a1), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a1), d1`
-#   +1   index        u8             func_50157736_entry_L1d2 0x5015790D `movbu (1, a1), d0`
+#   +0   index        u8             func_50157736_entry_L1d2 0x5015790D `movbu (a1), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a1), d1`
+#   +1   index_       u8             func_50157736_entry_L1d2 0x5015790D `movbu (1, a1), d0`
 #   +2   f2           u8             func_50157736_entry_L1d2 0x5015790D `movbu (a0), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d2`
-.macro REC_func_50157736_Table_5 f0=0, index=0, f2=0
-	.byte	\f0
+.macro REC_func_50157736_Table_5 index=0, index_=0, f2=0
 	.byte	\index
+	.byte	\index_
 	.byte	\f2
 .endm
 
 # REC_func_50157736_Table_6: 3-byte records (func_50157736_Table_6, 3 records); fields, and what reads them:
-#   +0   f0           u8             func_50157736_entry_L222 0x5015795D `movbu (a1), d0`; func_50157736_entry_L222 0x5015795D `movbu (a1), d1` (+2)
-#   +1   index        u8             func_50157736_entry_L222 0x5015795D `movbu (1, a1), d0`
+#   +0   index        u8             func_50157736_entry_L222 0x5015795D `movbu (a1), d0`; func_50157736_entry_L222 0x5015795D `movbu (a1), d1` (+2)
+#   +1   index_       u8             func_50157736_entry_L222 0x5015795D `movbu (1, a1), d0`
 #   +2   f2           u8             func_50157736_entry_L222 0x5015795D `movbu (a0), d0`
-.macro REC_func_50157736_Table_6 f0=0, index=0, f2=0
-	.byte	\f0
+.macro REC_func_50157736_Table_6 index=0, index_=0, f2=0
 	.byte	\index
+	.byte	\index_
 	.byte	\f2
 .endm
 
@@ -276,81 +264,81 @@
 .endm
 
 # REC_func_50157CF2_Table: 8-byte records (func_50157CF2_Table, 5 records); fields, and what reads them:
-#   +0   f0           u32            func_50157CF2 0x50157CF2 `mov (a1), a0`; func_50157CF2 0x50157CF2 `mov (a1), a3`
+#   +0   addr         u32            func_50157CF2 0x50157CF2 `mov (a1), a0`; func_50157CF2 0x50157CF2 `mov (a1), a3`
 #   +4   f4           u8             func_50157CF2 0x50157CF2 `movbu (4, a1), d0`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50157CF2_Table f0=0, f4=0, x5
-	.long	\f0
+.macro REC_func_50157CF2_Table addr=0, f4=0, x5
+	.long	\addr
 	.byte	\f4
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table: 8-byte records (func_50158AE6_Table, 3 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_L5 0x50158AF0 `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_L5 0x50158AF0 `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_L1f 0x50158B0A `movbu (4, a0), d1`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table_2: 8-byte records (func_50158AE6_Table_2, 2 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_L4a 0x50158B35 `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_L4a 0x50158B35 `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_L64 0x50158B4F `movbu (4, a0), d1`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table_2 f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table_2 addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table_3: 8-byte records (func_50158AE6_Table_3, 2 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_L8f 0x50158B7A `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_L8f 0x50158B7A `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_La9 0x50158B94 `movbu (4, a0), d0`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table_3 f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table_3 addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table_4: 8-byte records (func_50158AE6_Table_4, 2 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_Ld4 0x50158BBF `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_Ld4 0x50158BBF `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_Lee 0x50158BD9 `movbu (4, a0), d1`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table_4 f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table_4 addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table_5: 8-byte records (func_50158AE6_Table_5, 2 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_L119 0x50158C04 `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_L119 0x50158C04 `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_L133 0x50158C1E `movbu (4, a0), d1`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table_5 f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table_5 addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table_6: 8-byte records (func_50158AE6_Table_6, 2 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_L15e 0x50158C49 `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_L15e 0x50158C49 `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_L177 0x50158C62 `movbu (4, a0), d1`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table_6 f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table_6 addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
 
 # REC_func_50158AE6_Table_7: 8-byte records (func_50158AE6_Table_7, 2 records); fields, and what reads them:
-#   +0   f0           u32            func_50158AE6_entry_L1a2 0x50158C8D `mov (d0, a0), a0`
+#   +0   addr         u32            func_50158AE6_entry_L1a2 0x50158C8D `mov (d0, a0), a0`
 #   +4   key          u8             func_50158AE6_entry_L1bb 0x50158CA6 `movbu (4, a0), d1`
 #   +5   x5           u8[3]          no reader seen
-.macro REC_func_50158AE6_Table_7 f0=0, key=0, x5
-	.long	\f0
+.macro REC_func_50158AE6_Table_7 addr=0, key=0, x5
+	.long	\addr
 	.byte	\key
 	.ascii	"\x5"
 .endm
@@ -370,34 +358,34 @@
 .endm
 
 # REC_func_5017285F_entry_L1e_Records: 8-byte records (func_5017285F_entry_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5017285F_entry_L1e 0x50172882 `mov (a0), d0`; func_5017285F_entry_L4a 0x501728AE `mov (a0), d0`
+#   +0   key          u32            func_5017285F_entry_L1e 0x50172882 `mov (a0), d0`; func_5017285F_entry_L4a 0x501728AE `mov (a0), d0`
 #   +4   proc         ptr            func_5017285F_entry_L4d 0x501728B1 `mov (4, a0), a0`
-.macro REC_func_5017285F_entry_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5017285F_entry_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_50172AEA_Table: 8-byte records (func_50172AEA_Table, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_50172AEA_entry_Le5 0x50172BD4 `mov (a0), d0`; func_50172AEA_entry_L10f 0x50172BFE `mov (a0), d0`
+#   +0   key          u32            func_50172AEA_entry_Le5 0x50172BD4 `mov (a0), d0`; func_50172AEA_entry_L10f 0x50172BFE `mov (a0), d0`
 #   +4   proc         ptr            func_50172AEA_entry_L112 0x50172C01 `mov (4, a0), a0`
-.macro REC_func_50172AEA_Table f0=0, proc=0
-	.long	\f0
+.macro REC_func_50172AEA_Table key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_50173BF4_entry_L54_Records: 8-byte records (func_50173BF4_entry_L54_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_50173BF4_entry_L54 0x50173C4D `mov (a0), d0`; func_50173BF4_entry_L7f 0x50173C78 `mov (a0), d0`
+#   +0   key          u32            func_50173BF4_entry_L54 0x50173C4D `mov (a0), d0`; func_50173BF4_entry_L7f 0x50173C78 `mov (a0), d0`
 #   +4   proc         ptr            func_50173BF4_entry_L82 0x50173C7B `mov (4, a0), a0`
-.macro REC_func_50173BF4_entry_L54_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_50173BF4_entry_L54_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_50175A42_Table: 8-byte records (func_50175A42_Table, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_50175A42_entry_Lb6 0x50175AFD `mov (a0), d0`; func_50175A42_entry_Le7 0x50175B2E `mov (a0), d0`
+#   +0   key          u32            func_50175A42_entry_Lb6 0x50175AFD `mov (a0), d0`; func_50175A42_entry_Le7 0x50175B2E `mov (a0), d0`
 #   +4   proc         ptr            func_50175A42_entry_Lea 0x50175B31 `mov (4, a0), a0`
-.macro REC_func_50175A42_Table f0=0, proc=0
-	.long	\f0
+.macro REC_func_50175A42_Table key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -408,10 +396,10 @@
 .endm
 
 # REC_func_5017C9E5_entry_Lb6_Records: 8-byte records (func_5017C9E5_entry_Lb6_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5017C9E5_entry_Lb6 0x5017CAA0 `mov (a0), d0`; func_5017C9E5_entry_Lde 0x5017CAC8 `mov (a0), d0`
+#   +0   key          u32            func_5017C9E5_entry_Lb6 0x5017CAA0 `mov (a0), d0`; func_5017C9E5_entry_Lde 0x5017CAC8 `mov (a0), d0`
 #   +4   proc         ptr            func_5017C9E5_entry_Le1 0x5017CACB `mov (4, a0), a0`
-.macro REC_func_5017C9E5_entry_Lb6_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_5017C9E5_entry_Lb6_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -420,15 +408,15 @@
 #   +1   f1           u8             func_5017D71D_entry_L25 0x5017D744 `movbu (1, a0), d1`
 #   +2   f2           u8             func_5017D6C1_entry_L29 0x5017D6EF `movbu (a0), d2`; func_5017D6C1_entry_L37 0x5017D6FD `movbu (a0), d2`
 #   +3   x3           u8[1]          no reader seen
-#   +4   p4           ptr            func_5017D6C1_entry_L9 0x5017D6CF `mov (a1), d1`; func_5017D6C1_entry_L37 0x5017D6FD `mov (a1), a1`
-#   +8   p8           ptr            func_5017D71D_entry_La 0x5017D729 `mov (a1), d0`; func_5017D71D_entry_L2e 0x5017D74D `mov (a1), a0`
-.macro REC_func_5017D6C1_entry_L9_Records f0=0, f1=0, f2=0, x3, p4=0, p8=0
+#   +4   index        ptr            func_5017D6C1_entry_L9 0x5017D6CF `mov (a1), d1`; func_5017D6C1_entry_L37 0x5017D6FD `mov (a1), a1`
+#   +8   index_       ptr            func_5017D71D_entry_La 0x5017D729 `mov (a1), d0`; func_5017D71D_entry_L2e 0x5017D74D `mov (a1), a0`
+.macro REC_func_5017D6C1_entry_L9_Records f0=0, f1=0, f2=0, x3, index=0, index_=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
 	.ascii	"\x3"
-	.long	\p4
-	.long	\p8
+	.long	\index
+	.long	\index_
 .endm
 
 # REC_func_5017D671_entry_L37_Records: 48-byte records (func_5017D671_entry_L37_Records, 2 records); fields, and what reads them:
@@ -460,27 +448,27 @@
 .endm
 
 # REC_func_5017DF39_Table: 8-byte records (func_5017DF39_Table, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_5017DF39_entry_Ld3 0x5017E011 `mov (a0), d0`; func_5017DF39_entry_L100 0x5017E03E `mov (a0), d0`
+#   +0   key          u32            func_5017DF39_entry_Ld3 0x5017E011 `mov (a0), d0`; func_5017DF39_entry_L100 0x5017E03E `mov (a0), d0`
 #   +4   proc         ptr            func_5017DF39_entry_L103 0x5017E041 `mov (4, a0), a0`
-.macro REC_func_5017DF39_Table f0=0, proc=0
-	.long	\f0
+.macro REC_func_5017DF39_Table key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TempoSyncSetDispatch_L5c_Records: 8-byte records (TempoSyncSetDispatch_L5c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TempoSyncSetDispatch_L5c 0x50184BAB `mov (a0), d0`; TempoSyncSetDispatch_L8a 0x50184BD9 `mov (a0), d0`
+#   +0   key          u32            TempoSyncSetDispatch_L5c 0x50184BAB `mov (a0), d0`; TempoSyncSetDispatch_L8a 0x50184BD9 `mov (a0), d0`
 #   +4   proc         ptr            TempoSyncSetDispatch_L8d 0x50184BDC `mov (4, a0), a0`
-.macro REC_TempoSyncSetDispatch_L5c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TempoSyncSetDispatch_L5c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_485EC6C8_Table: 8-byte records (func_485EC6C8_Table, 4 records); fields, and what reads them:
 #   +0   f0           u32            func_485EC6C8_entry_L20 0x485EC6ED `mov (d1, a0), d2`; func_485EC6C8_entry_L1c0 0x485EC88D `mov (d0, a0), d2`
-#   +4   f4           u32            func_485EC6C8_entry_L20 0x485EC6ED `mov (4, a0), d2`; func_485EC6C8_entry_L1c0 0x485EC88D `mov (4, a0), d3`
-.macro REC_func_485EC6C8_Table f0=0, f4=0
+#   +4   y            u32            func_485EC6C8_entry_L20 0x485EC6ED `mov (4, a0), d2`; func_485EC6C8_entry_L1c0 0x485EC88D `mov (4, a0), d3`
+.macro REC_func_485EC6C8_Table f0=0, y=0
 	.long	\f0
-	.long	\f4
+	.long	\y
 .endm
 
 # REC_func_485ECA02_Table: 8-byte records (func_485ECA02_Table, 4 records); fields, and what reads them:
@@ -509,101 +497,101 @@
 
 # REC_AcMixerVolProc_Table: 16-byte records (AcMixerVolProc_Table, 39 records); fields, and what reads them:
 #   +0   text         ptr            AcMixerVolProc_L754 0x485F785D `mov (d0, a1), a1`
-#   +4   f4           u32            AcMixerVolProc_L51 0x485F715A `mov (4, a0), d1`; AcMixerVolProc_L17b 0x485F7284 `mov (4, a0), d1` (+5)
-#   +8   f8           u32            AcMixerVolProc_L51 0x485F715A `mov (8, a2), d0`; AcMixerVolProc_L17b 0x485F7284 `mov (8, a0), d0` (+4)
-#   +12  f12          u32            AcMixerVolProc_L51 0x485F715A `mov (0xc, a0), d0`; AcMixerVolProc_L412 0x485F751B `mov (0xc, a1), d0` (+3)
-.macro REC_AcMixerVolProc_Table text=0, f4=0, f8=0, f12=0
+#   +4   param_key    u32            AcMixerVolProc_L51 0x485F715A `mov (4, a0), d1`; AcMixerVolProc_L17b 0x485F7284 `mov (4, a0), d1` (+5)
+#   +8   param_key_   u32            AcMixerVolProc_L51 0x485F715A `mov (8, a2), d0`; AcMixerVolProc_L17b 0x485F7284 `mov (8, a0), d0` (+4)
+#   +12  key          u32            AcMixerVolProc_L51 0x485F715A `mov (0xc, a0), d0`; AcMixerVolProc_L412 0x485F751B `mov (0xc, a1), d0` (+3)
+.macro REC_AcMixerVolProc_Table text=0, param_key=0, param_key_=0, key=0
 	.long	\text
-	.long	\f4
-	.long	\f8
-	.long	\f12
+	.long	\param_key
+	.long	\param_key_
+	.long	\key
 .endm
 
 # REC_GetClientBox2_entry_L36_Records: 8-byte records (GetClientBox2_entry_L36_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            GetClientBox2_entry_L36 0x485EE4C1 `mov (a0), d0`; GetClientBox2_entry_L5f 0x485EE4EA `mov (a0), d0`
+#   +0   key          u32            GetClientBox2_entry_L36 0x485EE4C1 `mov (a0), d0`; GetClientBox2_entry_L5f 0x485EE4EA `mov (a0), d0`
 #   +4   proc         ptr            GetClientBox2_entry_L62 0x485EE4ED `mov (4, a0), a0`
-.macro REC_GetClientBox2_entry_L36_Records f0=0, proc=0
-	.long	\f0
+.macro REC_GetClientBox2_entry_L36_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_GroupBoxProc_L1e_Records: 8-byte records (GroupBoxProc_L1e_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            GroupBoxProc_L1e 0x485EE886 `mov (a0), d0`; GroupBoxProc_L4d 0x485EE8B5 `mov (a0), d0`
+#   +0   key          u32            GroupBoxProc_L1e 0x485EE886 `mov (a0), d0`; GroupBoxProc_L4d 0x485EE8B5 `mov (a0), d0`
 #   +4   proc         ptr            GroupBoxProc_L50 0x485EE8B8 `mov (4, a0), a0`
-.macro REC_GroupBoxProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_GroupBoxProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ScreenProc_L1d_Records: 8-byte records (ScreenProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ScreenProc_L1d 0x485EF350 `mov (a0), d0`; ScreenProc_L4c 0x485EF37F `mov (a0), d0`
+#   +0   key          u32            ScreenProc_L1d 0x485EF350 `mov (a0), d0`; ScreenProc_L4c 0x485EF37F `mov (a0), d0`
 #   +4   proc         ptr            ScreenProc_L4f 0x485EF382 `mov (4, a0), a0`
-.macro REC_ScreenProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ScreenProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_WindowProc_L20_Records: 8-byte records (WindowProc_L20_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            WindowProc_L20 0x485EFBF4 `mov (a0), d0`; WindowProc_L4f 0x485EFC23 `mov (a0), d0`
+#   +0   key          u32            WindowProc_L20 0x485EFBF4 `mov (a0), d0`; WindowProc_L4f 0x485EFC23 `mov (a0), d0`
 #   +4   proc         ptr            WindowProc_L52 0x485EFC26 `mov (4, a0), a0`
-.macro REC_WindowProc_L20_Records f0=0, proc=0
-	.long	\f0
+.macro REC_WindowProc_L20_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsRadioBoxProc_L1d_Records: 8-byte records (PsRadioBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsRadioBoxProc_L1d 0x485F0F81 `mov (a0), d0`; PsRadioBoxProc_L4b 0x485F0FAF `mov (a0), d0`
+#   +0   key          u32            PsRadioBoxProc_L1d 0x485F0F81 `mov (a0), d0`; PsRadioBoxProc_L4b 0x485F0FAF `mov (a0), d0`
 #   +4   proc         ptr            PsRadioBoxProc_L4e 0x485F0FB2 `mov (4, a0), a0`
-.macro REC_PsRadioBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsRadioBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsListBoxProc_L1d_Records: 8-byte records (PsListBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsListBoxProc_L1d 0x485F13A1 `mov (a0), d0`; PsListBoxProc_L4c 0x485F13D0 `mov (a0), d0`
+#   +0   key          u32            PsListBoxProc_L1d 0x485F13A1 `mov (a0), d0`; PsListBoxProc_L4c 0x485F13D0 `mov (a0), d0`
 #   +4   proc         ptr            PsListBoxProc_L4f 0x485F13D3 `mov (4, a0), a0`
-.macro REC_PsListBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsListBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsGridBoxProc_L28_Records: 8-byte records (PsGridBoxProc_L28_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            PsGridBoxProc_L28 0x485F1B75 `mov (a0), d0`; PsGridBoxProc_L5a 0x485F1BA7 `mov (a0), d0`
+#   +0   key          u32            PsGridBoxProc_L28 0x485F1B75 `mov (a0), d0`; PsGridBoxProc_L5a 0x485F1BA7 `mov (a0), d0`
 #   +4   proc         ptr            PsGridBoxProc_L5d 0x485F1BAA `mov (4, a0), a0`
-.macro REC_PsGridBoxProc_L28_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsGridBoxProc_L28_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcGridBoxProc_L1d_Records: 8-byte records (AcGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcGridBoxProc_L1d 0x485F2907 `mov (a0), d0`; AcGridBoxProc_L4b 0x485F2935 `mov (a0), d0`
+#   +0   key          u32            AcGridBoxProc_L1d 0x485F2907 `mov (a0), d0`; AcGridBoxProc_L4b 0x485F2935 `mov (a0), d0`
 #   +4   proc         ptr            AcGridBoxProc_L4e 0x485F2938 `mov (4, a0), a0`
-.macro REC_AcGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsEditBoxProc_L1e_Records: 8-byte records (PsEditBoxProc_L1e_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            PsEditBoxProc_L1e 0x485F2CC1 `mov (a0), d0`; PsEditBoxProc_L4d 0x485F2CF0 `mov (a0), d0`
+#   +0   key          u32            PsEditBoxProc_L1e 0x485F2CC1 `mov (a0), d0`; PsEditBoxProc_L4d 0x485F2CF0 `mov (a0), d0`
 #   +4   proc         ptr            PsEditBoxProc_L50 0x485F2CF3 `mov (4, a0), a0`
-.macro REC_PsEditBoxProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsEditBoxProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcNumEditBoxProc_L1c_Records: 8-byte records (AcNumEditBoxProc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcNumEditBoxProc_L1c 0x485F3647 `mov (a0), d0`; AcNumEditBoxProc_L4a 0x485F3675 `mov (a0), d0`
+#   +0   key          u32            AcNumEditBoxProc_L1c 0x485F3647 `mov (a0), d0`; AcNumEditBoxProc_L4a 0x485F3675 `mov (a0), d0`
 #   +4   proc         ptr            AcNumEditBoxProc_L4d 0x485F3678 `mov (4, a0), a0`
-.macro REC_AcNumEditBoxProc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcNumEditBoxProc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMmmEditBoxProc_L1d_Records: 8-byte records (AcMmmEditBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMmmEditBoxProc_L1d 0x485F3991 `mov (a0), d0`; AcMmmEditBoxProc_L4c 0x485F39C0 `mov (a0), d0`
+#   +0   key          u32            AcMmmEditBoxProc_L1d 0x485F3991 `mov (a0), d0`; AcMmmEditBoxProc_L4c 0x485F39C0 `mov (a0), d0`
 #   +4   proc         ptr            AcMmmEditBoxProc_L4f 0x485F39C3 `mov (4, a0), a0`
-.macro REC_AcMmmEditBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMmmEditBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -616,42 +604,42 @@
 .endm
 
 # REC_PsEditSwBoxProc_L1d_Records: 8-byte records (PsEditSwBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsEditSwBoxProc_L1d 0x485F4DD7 `mov (a0), d0`; PsEditSwBoxProc_L4b 0x485F4E05 `mov (a0), d0`
+#   +0   key          u32            PsEditSwBoxProc_L1d 0x485F4DD7 `mov (a0), d0`; PsEditSwBoxProc_L4b 0x485F4E05 `mov (a0), d0`
 #   +4   proc         ptr            PsEditSwBoxProc_L4e 0x485F4E08 `mov (4, a0), a0`
-.macro REC_PsEditSwBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsEditSwBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsToggleBoxProc_L1c_Records: 8-byte records (PsToggleBoxProc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsToggleBoxProc_L1c 0x485F5CE8 `mov (a0), d0`; PsToggleBoxProc_L4b 0x485F5D17 `mov (a0), d0`
+#   +0   key          u32            PsToggleBoxProc_L1c 0x485F5CE8 `mov (a0), d0`; PsToggleBoxProc_L4b 0x485F5D17 `mov (a0), d0`
 #   +4   proc         ptr            PsToggleBoxProc_L4e 0x485F5D1A `mov (4, a0), a0`
-.macro REC_PsToggleBoxProc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsToggleBoxProc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMixerVolProc_L1f_Records: 8-byte records (AcMixerVolProc_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMixerVolProc_L1f 0x485F7128 `mov (a0), d0`; AcMixerVolProc_L4e 0x485F7157 `mov (a0), d0`
+#   +0   key          u32            AcMixerVolProc_L1f 0x485F7128 `mov (a0), d0`; AcMixerVolProc_L4e 0x485F7157 `mov (a0), d0`
 #   +4   proc         ptr            AcMixerVolProc_L51 0x485F715A `mov (4, a0), a0`
-.macro REC_AcMixerVolProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMixerVolProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_VwIconListProc_L1c_Records: 8-byte records (VwIconListProc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            VwIconListProc_L1c 0x485F8606 `mov (a0), d0`; VwIconListProc_L4b 0x485F8635 `mov (a0), d0`
+#   +0   key          u32            VwIconListProc_L1c 0x485F8606 `mov (a0), d0`; VwIconListProc_L4b 0x485F8635 `mov (a0), d0`
 #   +4   proc         ptr            VwIconListProc_L4e 0x485F8638 `mov (4, a0), a0`
-.macro REC_VwIconListProc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_VwIconListProc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsVariSelectProc_L1d_Records: 8-byte records (PsVariSelectProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsVariSelectProc_L1d 0x485F8940 `mov (a0), d0`; PsVariSelectProc_L4c 0x485F896F `mov (a0), d0`
+#   +0   key          u32            PsVariSelectProc_L1d 0x485F8940 `mov (a0), d0`; PsVariSelectProc_L4c 0x485F896F `mov (a0), d0`
 #   +4   proc         ptr            PsVariSelectProc_L4f 0x485F8972 `mov (4, a0), a0`
-.macro REC_PsVariSelectProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsVariSelectProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -680,170 +668,170 @@
 .endm
 
 # REC_func_485FDD4C_entry_L554_Records: 8-byte records (func_485FDD4C_entry_L554_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_485FDD4C_entry_L554 0x485FE2A5 `mov (a0), d0`; func_485FDD4C_entry_L5aa 0x485FE2FB `mov (a0), d0`
+#   +0   key          u32            func_485FDD4C_entry_L554 0x485FE2A5 `mov (a0), d0`; func_485FDD4C_entry_L5aa 0x485FE2FB `mov (a0), d0`
 #   +4   proc         ptr            func_485FDD4C_entry_L5ad 0x485FE2FE `mov (4, a0), a0`
-.macro REC_func_485FDD4C_entry_L554_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_485FDD4C_entry_L554_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_485FDD4C_Records: 8-byte records (func_485FDD4C_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_485FDD4C 0x485FDD4C `mov (a0), d0`; func_485FDD4C_entry_L4e 0x485FDD9F `mov (a0), d0`
+#   +0   key          u32            func_485FDD4C 0x485FDD4C `mov (a0), d0`; func_485FDD4C_entry_L4e 0x485FDD9F `mov (a0), d0`
 #   +4   proc         ptr            func_485FDD4C_entry_L51 0x485FDDA2 `mov (4, a0), a0`
-.macro REC_func_485FDD4C_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_485FDD4C_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ModeProc_L41_Records: 8-byte records (ModeProc_L41_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ModeProc_L41 0x486025DC `mov (a0), d0`; ModeProc_L6f 0x4860260A `mov (a0), d0`
+#   +0   key          u32            ModeProc_L41 0x486025DC `mov (a0), d0`; ModeProc_L6f 0x4860260A `mov (a0), d0`
 #   +4   proc         ptr            ModeProc_L72 0x4860260D `mov (4, a0), a0`
-.macro REC_ModeProc_L41_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ModeProc_L41_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MainTitleControl_L28_Records: 8-byte records (MainTitleControl_L28_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MainTitleControl_L28 0x48602E03 `mov (a0), d0`; MainTitleControl_L56 0x48602E31 `mov (a0), d0`
+#   +0   key          u32            MainTitleControl_L28 0x48602E03 `mov (a0), d0`; MainTitleControl_L56 0x48602E31 `mov (a0), d0`
 #   +4   proc         ptr            MainTitleControl_L59 0x48602E34 `mov (4, a0), a0`
-.macro REC_MainTitleControl_L28_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MainTitleControl_L28_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TitleProc_L43_Records: 8-byte records (TitleProc_L43_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            TitleProc_L43 0x486031CA `mov (a0), d0`; TitleProc_L72 0x486031F9 `mov (a0), d0`
+#   +0   key          u32            TitleProc_L43 0x486031CA `mov (a0), d0`; TitleProc_L72 0x486031F9 `mov (a0), d0`
 #   +4   proc         ptr            TitleProc_L75 0x486031FC `mov (4, a0), a0`
-.macro REC_TitleProc_L43_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TitleProc_L43_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ViewableProc_entry_L19_Records: 8-byte records (ViewableProc_entry_L19_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            ViewableProc_entry_L19 0x4860431B `mov (a0), d0`; ViewableProc_entry_L48 0x4860434A `mov (a0), d0`
+#   +0   key          u32            ViewableProc_entry_L19 0x4860431B `mov (a0), d0`; ViewableProc_entry_L48 0x4860434A `mov (a0), d0`
 #   +4   proc         ptr            ViewableProc_entry_L4b 0x4860434D `mov (4, a0), a0`
-.macro REC_ViewableProc_entry_L19_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ViewableProc_entry_L19_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A351_Records: 8-byte records (func_4860A351_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A351 0x4860A351 `mov (a0), d0`; func_4860A351_entry_L3d 0x4860A393 `mov (a0), d0`
+#   +0   key          u32            func_4860A351 0x4860A351 `mov (a0), d0`; func_4860A351_entry_L3d 0x4860A393 `mov (a0), d0`
 #   +4   proc         ptr            func_4860A351_entry_L40 0x4860A396 `mov (4, a0), a0`
-.macro REC_func_4860A351_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A351_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A461_Records: 8-byte records (func_4860A461_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A461 0x4860A461 `mov (a0), d0`; func_4860A461_entry_L3d 0x4860A4A3 `mov (a0), d0`
+#   +0   key          u32            func_4860A461 0x4860A461 `mov (a0), d0`; func_4860A461_entry_L3d 0x4860A4A3 `mov (a0), d0`
 #   +4   proc         ptr            func_4860A461_entry_L40 0x4860A4A6 `mov (4, a0), a0`
-.macro REC_func_4860A461_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A461_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A530_Records: 8-byte records (func_4860A530_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A530 0x4860A530 `mov (a0), d0`; func_4860A530_L43 0x4860A573 `mov (a0), d0`
+#   +0   key          u32            func_4860A530 0x4860A530 `mov (a0), d0`; func_4860A530_L43 0x4860A573 `mov (a0), d0`
 #   +4   proc         ptr            func_4860A530_L46 0x4860A576 `mov (4, a0), a0`
-.macro REC_func_4860A530_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A530_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A588_Records: 8-byte records (func_4860A588_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A588 0x4860A588 `mov (a0), d0`; func_4860A588_L43 0x4860A5CB `mov (a0), d0`
+#   +0   key          u32            func_4860A588 0x4860A588 `mov (a0), d0`; func_4860A588_L43 0x4860A5CB `mov (a0), d0`
 #   +4   proc         ptr            func_4860A588_L46 0x4860A5CE `mov (4, a0), a0`
-.macro REC_func_4860A588_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A588_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A5E1_Records: 8-byte records (func_4860A5E1_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A5E1 0x4860A5E1 `mov (a0), d0`; func_4860A5E1_L42 0x4860A623 `mov (a0), d0`
+#   +0   key          u32            func_4860A5E1 0x4860A5E1 `mov (a0), d0`; func_4860A5E1_L42 0x4860A623 `mov (a0), d0`
 #   +4   proc         ptr            func_4860A5E1_L45 0x4860A626 `mov (4, a0), a0`
-.macro REC_func_4860A5E1_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A5E1_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A640_Records: 8-byte records (func_4860A640_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A640 0x4860A640 `mov (a0), d1`; func_4860A640_entry_L33 0x4860A678 `mov (a0), d1`
+#   +0   key          u32            func_4860A640 0x4860A640 `mov (a0), d1`; func_4860A640_entry_L33 0x4860A678 `mov (a0), d1`
 #   +4   proc         ptr            func_4860A640_entry_L36 0x4860A67B `mov (4, a0), a0`
-.macro REC_func_4860A640_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A640_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A6EA_Records: 8-byte records (func_4860A6EA_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A6EA 0x4860A6EA `mov (a0), d0`; func_4860A6EA_entry_L3e 0x4860A72D `mov (a0), d0`
+#   +0   key          u32            func_4860A6EA 0x4860A6EA `mov (a0), d0`; func_4860A6EA_entry_L3e 0x4860A72D `mov (a0), d0`
 #   +4   proc         ptr            func_4860A6EA_entry_L41 0x4860A730 `mov (4, a0), a0`
-.macro REC_func_4860A6EA_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A6EA_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860A75C_Records: 8-byte records (func_4860A75C_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_4860A75C 0x4860A75C `mov (a0), d1`; func_4860A75C_L2f 0x4860A78B `mov (a0), d1`
+#   +0   key          u32            func_4860A75C 0x4860A75C `mov (a0), d1`; func_4860A75C_L2f 0x4860A78B `mov (a0), d1`
 #   +4   proc         ptr            func_4860A75C_L32 0x4860A78E `mov (4, a0), a0`
-.macro REC_func_4860A75C_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860A75C_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860D94F_Records: 8-byte records (func_4860D94F_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4860D94F 0x4860D94F `mov (a0), d0`; func_4860D94F_entry_L32 0x4860D983 `mov (a0), d0`
+#   +0   key          u32            func_4860D94F 0x4860D94F `mov (a0), d0`; func_4860D94F_entry_L32 0x4860D983 `mov (a0), d0`
 #   +4   proc         ptr            func_4860D94F_entry_L35 0x4860D986 `mov (4, a0), a0`
-.macro REC_func_4860D94F_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860D94F_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860E7A9_entry_L1b_Records: 8-byte records (func_4860E7A9_entry_L1b_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4860E7A9_entry_L1b 0x4860E7C9 `mov (a0), d0`; func_4860E7A9_entry_L42 0x4860E7F0 `mov (a0), d0`
+#   +0   key          u32            func_4860E7A9_entry_L1b 0x4860E7C9 `mov (a0), d0`; func_4860E7A9_entry_L42 0x4860E7F0 `mov (a0), d0`
 #   +4   proc         ptr            func_4860E7A9_entry_L45 0x4860E7F3 `mov (4, a0), a0`
-.macro REC_func_4860E7A9_entry_L1b_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4860E7A9_entry_L1b_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48612AD1_L3d_Records: 8-byte records (func_48612AD1_L3d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_48612AD1_L3d 0x48612B0E `mov (a0), d1`; func_48612AD1_L69 0x48612B3A `mov (a0), d1`
+#   +0   key          u32            func_48612AD1_L3d 0x48612B0E `mov (a0), d1`; func_48612AD1_L69 0x48612B3A `mov (a0), d1`
 #   +4   proc         ptr            func_48612AD1_L6c 0x48612B3D `mov (4, a0), a0`
-.macro REC_func_48612AD1_L3d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48612AD1_L3d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48615F2D_entry_L5b_Records: 8-byte records (func_48615F2D_entry_L5b_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_48615F2D_entry_L5b 0x48615F8B `mov (a0), d1`; func_48615F2D_entry_L94 0x48615FC4 `mov (a0), d1`
+#   +0   key          u32            func_48615F2D_entry_L5b 0x48615F8B `mov (a0), d1`; func_48615F2D_entry_L94 0x48615FC4 `mov (a0), d1`
 #   +4   proc         ptr            func_48615F2D_entry_L97 0x48615FC7 `mov (4, a0), a0`
-.macro REC_func_48615F2D_entry_L5b_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48615F2D_entry_L5b_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4861932D_entry_L20_Records: 8-byte records (func_4861932D_entry_L20_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4861932D_entry_L20 0x48619352 `mov (a0), d0`; func_4861932D_entry_L48 0x4861937A `mov (a0), d0`
+#   +0   key          u32            func_4861932D_entry_L20 0x48619352 `mov (a0), d0`; func_4861932D_entry_L48 0x4861937A `mov (a0), d0`
 #   +4   proc         ptr            func_4861932D_entry_L4b 0x4861937D `mov (4, a0), a0`
-.macro REC_func_4861932D_entry_L20_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4861932D_entry_L20_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48619B24_Records: 8-byte records (func_48619B24_Records, 4 records); fields, and what reads them:
-#   +0   f0           u32            func_48619B24 0x48619B24 `mov (a0), d1`; func_48619B24_entry_L34 0x48619B5A `mov (a0), d1`
+#   +0   key          u32            func_48619B24 0x48619B24 `mov (a0), d1`; func_48619B24_entry_L34 0x48619B5A `mov (a0), d1`
 #   +4   proc         ptr            func_48619B24_entry_L37 0x48619B5D `mov (4, a0), a0`
-.macro REC_func_48619B24_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48619B24_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4862246A_entry_L23_Records: 8-byte records (func_4862246A_entry_L23_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4862246A_entry_L23 0x48622490 `mov (a0), d1`; func_4862246A_entry_L4c 0x486224B9 `mov (a0), d1`
+#   +0   key          u32            func_4862246A_entry_L23 0x48622490 `mov (a0), d1`; func_4862246A_entry_L4c 0x486224B9 `mov (a0), d1`
 #   +4   proc         ptr            func_4862246A_entry_L4f 0x486224BC `mov (4, a0), a0`
-.macro REC_func_4862246A_entry_L23_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4862246A_entry_L23_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -860,42 +848,42 @@
 .endm
 
 # REC_func_48627EB3_entry_L1b_Records: 8-byte records (func_48627EB3_entry_L1b_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_48627EB3_entry_L1b 0x48627ED0 `mov (a0), d1`; func_48627EB3_entry_L44 0x48627EF9 `mov (a0), d1`
+#   +0   key          u32            func_48627EB3_entry_L1b 0x48627ED0 `mov (a0), d1`; func_48627EB3_entry_L44 0x48627EF9 `mov (a0), d1`
 #   +4   proc         ptr            func_48627EB3_entry_L47 0x48627EFC `mov (4, a0), a0`
-.macro REC_func_48627EB3_entry_L1b_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48627EB3_entry_L1b_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48627FB2_Records: 8-byte records (func_48627FB2_Records, 4 records); fields, and what reads them:
-#   +0   f0           u32            func_48627FB2 0x48627FB2 `mov (a0), d1`; func_48627FB2_entry_L3a 0x48627FEE `mov (a0), d1`
+#   +0   key          u32            func_48627FB2 0x48627FB2 `mov (a0), d1`; func_48627FB2_entry_L3a 0x48627FEE `mov (a0), d1`
 #   +4   proc         ptr            func_48627FB2_entry_L3d 0x48627FF1 `mov (4, a0), a0`
-.macro REC_func_48627FB2_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48627FB2_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48628025_Records: 8-byte records (func_48628025_Records, 4 records); fields, and what reads them:
-#   +0   f0           u32            func_48628025 0x48628025 `mov (a0), d0`; func_48628025_entry_L47 0x48628071 `mov (a0), d0`
+#   +0   key          u32            func_48628025 0x48628025 `mov (a0), d0`; func_48628025_entry_L47 0x48628071 `mov (a0), d0`
 #   +4   proc         ptr            func_48628025_entry_L4a 0x48628074 `mov (4, a0), a0`
-.macro REC_func_48628025_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48628025_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486280AA_Records: 8-byte records (func_486280AA_Records, 4 records); fields, and what reads them:
-#   +0   f0           u32            func_486280AA 0x486280AA `mov (a0), d1`; func_486280AA_entry_L3a 0x486280E6 `mov (a0), d1`
+#   +0   key          u32            func_486280AA 0x486280AA `mov (a0), d1`; func_486280AA_entry_L3a 0x486280E6 `mov (a0), d1`
 #   +4   proc         ptr            func_486280AA_entry_L3d 0x486280E9 `mov (4, a0), a0`
-.macro REC_func_486280AA_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486280AA_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48629232_entry_L24_Records: 8-byte records (func_48629232_entry_L24_Records, 4 records); fields, and what reads them:
-#   +0   f0           u32            func_48629232_entry_L24 0x4862925B `mov (a0), d0`; func_48629232_entry_L5e 0x48629295 `mov (a0), d0`
+#   +0   key          u32            func_48629232_entry_L24 0x4862925B `mov (a0), d0`; func_48629232_entry_L5e 0x48629295 `mov (a0), d0`
 #   +4   proc         ptr            func_48629232_entry_L61 0x48629298 `mov (4, a0), a0`
-.macro REC_func_48629232_entry_L24_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48629232_entry_L24_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -960,18 +948,18 @@
 .endm
 
 # REC_func_4863AC46_entry_L24_Records: 8-byte records (func_4863AC46_entry_L24_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4863AC46_entry_L24 0x4863AC6F `mov (a0), d1`; func_4863AC46_entry_L4b 0x4863AC96 `mov (a0), d1`
+#   +0   key          u32            func_4863AC46_entry_L24 0x4863AC6F `mov (a0), d1`; func_4863AC46_entry_L4b 0x4863AC96 `mov (a0), d1`
 #   +4   proc         ptr            func_4863AC46_entry_L4e 0x4863AC99 `mov (4, a0), a0`
-.macro REC_func_4863AC46_entry_L24_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4863AC46_entry_L24_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4863DC81_Ld_Records: 8-byte records (func_4863DC81_Ld_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FxCategoryGet_Ld 0x4863DC8E `mov (a0), d1`; FxCategoryGet_L3e 0x4863DCBF `mov (a0), d1`
+#   +0   key          u32            FxCategoryGet_Ld 0x4863DC8E `mov (a0), d1`; FxCategoryGet_L3e 0x4863DCBF `mov (a0), d1`
 #   +4   proc         ptr            FxCategoryGet_L41 0x4863DCC2 `mov (4, a0), a0`
-.macro REC_func_4863DC81_Ld_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4863DC81_Ld_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -984,42 +972,42 @@
 .endm
 
 # REC_AcCategoryStrBoxProc_L1d_Records: 8-byte records (AcCategoryStrBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcCategoryStrBoxProc_L1d 0x4863EDA6 `mov (a0), d0`; AcCategoryStrBoxProc_L4c 0x4863EDD5 `mov (a0), d0`
+#   +0   key          u32            AcCategoryStrBoxProc_L1d 0x4863EDA6 `mov (a0), d0`; AcCategoryStrBoxProc_L4c 0x4863EDD5 `mov (a0), d0`
 #   +4   proc         ptr            AcCategoryStrBoxProc_L4f 0x4863EDD8 `mov (4, a0), a0`
-.macro REC_AcCategoryStrBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcCategoryStrBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcAlpStyleListBoxProc_L1d_Records: 8-byte records (AcAlpStyleListBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcAlpStyleListBoxProc_L1d 0x4863F9EA `mov (a0), d0`; AcAlpStyleListBoxProc_L4c 0x4863FA19 `mov (a0), d0`
+#   +0   key          u32            AcAlpStyleListBoxProc_L1d 0x4863F9EA `mov (a0), d0`; AcAlpStyleListBoxProc_L4c 0x4863FA19 `mov (a0), d0`
 #   +4   proc         ptr            AcAlpStyleListBoxProc_L4f 0x4863FA1C `mov (4, a0), a0`
-.macro REC_AcAlpStyleListBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcAlpStyleListBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcEraStyleListBoxProc_L1d_Records: 8-byte records (AcEraStyleListBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEraStyleListBoxProc_L1d 0x48640362 `mov (a0), d0`; AcEraStyleListBoxProc_L4c 0x48640391 `mov (a0), d0`
+#   +0   key          u32            AcEraStyleListBoxProc_L1d 0x48640362 `mov (a0), d0`; AcEraStyleListBoxProc_L4c 0x48640391 `mov (a0), d0`
 #   +4   proc         ptr            AcEraStyleListBoxProc_L4f 0x48640394 `mov (4, a0), a0`
-.macro REC_AcEraStyleListBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEraStyleListBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcCustomListBoxProc_L1c_Records: 8-byte records (AcCustomListBoxProc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcCustomListBoxProc_L1c 0x48640894 `mov (a0), d0`; AcCustomListBoxProc_L4a 0x486408C2 `mov (a0), d0`
+#   +0   key          u32            AcCustomListBoxProc_L1c 0x48640894 `mov (a0), d0`; AcCustomListBoxProc_L4a 0x486408C2 `mov (a0), d0`
 #   +4   proc         ptr            AcCustomListBoxProc_L4d 0x486408C5 `mov (4, a0), a0`
-.macro REC_AcCustomListBoxProc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcCustomListBoxProc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcCustomStyleListBoxProc_L1f_Records: 8-byte records (AcCustomStyleListBoxProc_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcCustomStyleListBoxProc_L1f 0x48640C8F `mov (a0), d0`; AcCustomStyleListBoxProc_L4f 0x48640CBF `mov (a0), d0`
+#   +0   key          u32            AcCustomStyleListBoxProc_L1f 0x48640C8F `mov (a0), d0`; AcCustomStyleListBoxProc_L4f 0x48640CBF `mov (a0), d0`
 #   +4   proc         ptr            AcCustomStyleListBoxProc_L52 0x48640CC2 `mov (4, a0), a0`
-.macro REC_AcCustomStyleListBoxProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcCustomStyleListBoxProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -1041,15 +1029,15 @@
 
 # REC_func_4864D035_Records: 28-byte records (func_4864D035_Records, 68 records); fields, and what reads them:
 #   +0   proc         ptr            func_4864D0C6 0x4864D0C6 `mov (d0, a0), a1`
-#   +4   p4           ptr            func_4864D035 0x4864D035 `mov (4, a0), a0`; func_4864D035_entry_L4c 0x4864D083 `mov (4, a0), a0` (+6)
+#   +4   key          ptr            func_4864D035 0x4864D035 `mov (4, a0), a0`; func_4864D035_entry_L4c 0x4864D083 `mov (4, a0), a0` (+6)
 #   +8   p8           ptr            func_4864D035_entry_L4c 0x4864D083 `mov (8, a0), d2`
 #   +12  p12          ptr            func_4864D035 0x4864D035 `mov (0xc, a0), d2`
 #   +16  f16          u32            func_4864D0EC_entry_L4f 0x4864D140 `mov (0x10, a0), a2`; func_4864D7AC_entry_L42 0x4864D7F3 `mov (0x10, a0), d2`
 #   +20  f20          u32            func_4864D0EC_entry_L14f 0x4864D240 `mov (0x14, a0), a2`; func_4864D0EC_entry_L14f 0x4864D240 `mov (0x14, a0), d0`
 #   +24  text         ptr            func_4864D0EC_entry_L4f 0x4864D140 `mov (0x18, a0), d0`; func_4864D0EC_entry_L4f 0x4864D140 `mov (0x18, a1), a1` (+3)
-.macro REC_func_4864D035_Records proc=0, p4=0, p8=0, p12=0, f16=0, f20=0, text=0
+.macro REC_func_4864D035_Records proc=0, key=0, p8=0, p12=0, f16=0, f20=0, text=0
 	.long	\proc
-	.long	\p4
+	.long	\key
 	.long	\p8
 	.long	\p12
 	.long	\f16
@@ -1072,50 +1060,50 @@
 .endm
 
 # REC_IvOtherPartProc_L1d_Records: 8-byte records (IvOtherPartProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            IvOtherPartProc_L1d 0x4864CE43 `mov (a0), d0`; IvOtherPartProc_L4b 0x4864CE71 `mov (a0), d0`
+#   +0   key          u32            IvOtherPartProc_L1d 0x4864CE43 `mov (a0), d0`; IvOtherPartProc_L4b 0x4864CE71 `mov (a0), d0`
 #   +4   proc         ptr            IvOtherPartProc_L4e 0x4864CE74 `mov (4, a0), a0`
-.macro REC_IvOtherPartProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_IvOtherPartProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4864D0EC_entry_L1e_Records: 8-byte records (func_4864D0EC_entry_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4864D0EC_entry_L1e 0x4864D10F `mov (a0), d0`; func_4864D0EC_entry_L4c 0x4864D13D `mov (a0), d0`
+#   +0   key          u32            func_4864D0EC_entry_L1e 0x4864D10F `mov (a0), d0`; func_4864D0EC_entry_L4c 0x4864D13D `mov (a0), d0`
 #   +4   proc         ptr            func_4864D0EC_entry_L4f 0x4864D140 `mov (4, a0), a0`
-.macro REC_func_4864D0EC_entry_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4864D0EC_entry_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MmmMtune_L1d_Records: 8-byte records (MmmMtune_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MmmMtune_L1d 0x4864E392 `mov (a0), d0`; MmmMtune_L4b 0x4864E3C0 `mov (a0), d0`
+#   +0   key          u32            MmmMtune_L1d 0x4864E392 `mov (a0), d0`; MmmMtune_L4b 0x4864E3C0 `mov (a0), d0`
 #   +4   proc         ptr            MmmMtune_L4e 0x4864E3C3 `mov (4, a0), a0`
-.macro REC_MmmMtune_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MmmMtune_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcTechniChordProc_L1d_Records: 8-byte records (AcTechniChordProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcTechniChordProc_L1d 0x4864E4D7 `mov (a0), d0`; AcTechniChordProc_L4c 0x4864E506 `mov (a0), d0`
+#   +0   key          u32            AcTechniChordProc_L1d 0x4864E4D7 `mov (a0), d0`; AcTechniChordProc_L4c 0x4864E506 `mov (a0), d0`
 #   +4   proc         ptr            AcTechniChordProc_L4f 0x4864E509 `mov (4, a0), a0`
-.macro REC_AcTechniChordProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcTechniChordProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_IvSdpartProc_L21_Records: 8-byte records (IvSdpartProc_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            IvSdpartProc_L21 0x4864EC05 `mov (a0), d0`; IvSdpartProc_L50 0x4864EC34 `mov (a0), d0`
+#   +0   key          u32            IvSdpartProc_L21 0x4864EC05 `mov (a0), d0`; IvSdpartProc_L50 0x4864EC34 `mov (a0), d0`
 #   +4   proc         ptr            IvSdpartProc_L53 0x4864EC37 `mov (4, a0), a0`
-.macro REC_IvSdpartProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_IvSdpartProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSpsMmmEditProc_L21_Records: 8-byte records (AcSpsMmmEditProc_L21_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            AcSpsMmmEditProc_L21 0x4864F1DB `mov (a0), d0`; AcSpsMmmEditProc_L51 0x4864F20B `mov (a0), d0`
+#   +0   key          u32            AcSpsMmmEditProc_L21 0x4864F1DB `mov (a0), d0`; AcSpsMmmEditProc_L51 0x4864F20B `mov (a0), d0`
 #   +4   proc         ptr            AcSpsMmmEditProc_L54 0x4864F20E `mov (4, a0), a0`
-.macro REC_AcSpsMmmEditProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSpsMmmEditProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -1128,256 +1116,256 @@
 .endm
 
 # REC_AcMixerScreenProc_L21_Records: 8-byte records (AcMixerScreenProc_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMixerScreenProc_L21 0x4864FECA `mov (a0), d0`; AcMixerScreenProc_L50 0x4864FEF9 `mov (a0), d0`
+#   +0   key          u32            AcMixerScreenProc_L21 0x4864FECA `mov (a0), d0`; AcMixerScreenProc_L50 0x4864FEF9 `mov (a0), d0`
 #   +4   proc         ptr            AcMixerScreenProc_L53 0x4864FEFC `mov (4, a0), a0`
-.macro REC_AcMixerScreenProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMixerScreenProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMixerProc_L1e_Records: 8-byte records (AcMixerProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMixerProc_L1e 0x4865061F `mov (a0), d0`; AcMixerProc_L4d 0x4865064E `mov (a0), d0`
+#   +0   key          u32            AcMixerProc_L1e 0x4865061F `mov (a0), d0`; AcMixerProc_L4d 0x4865064E `mov (a0), d0`
 #   +4   proc         ptr            AcMixerProc_L50 0x48650651 `mov (4, a0), a0`
-.macro REC_AcMixerProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMixerProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSpsKsclPartProc_L1e_Records: 8-byte records (AcSpsKsclPartProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcSpsKsclPartProc_L1e 0x48652B92 `mov (a0), d0`; AcSpsKsclPartProc_L4d 0x48652BC1 `mov (a0), d0`
+#   +0   key          u32            AcSpsKsclPartProc_L1e 0x48652B92 `mov (a0), d0`; AcSpsKsclPartProc_L4d 0x48652BC1 `mov (a0), d0`
 #   +4   proc         ptr            AcSpsKsclPartProc_L50 0x48652BC4 `mov (4, a0), a0`
-.macro REC_AcSpsKsclPartProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSpsKsclPartProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcKsclTypeEditProc_L1e_Records: 8-byte records (AcKsclTypeEditProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcKsclTypeEditProc_L1e 0x48653043 `mov (a0), d0`; AcKsclTypeEditProc_L4e 0x48653073 `mov (a0), d0`
+#   +0   key          u32            AcKsclTypeEditProc_L1e 0x48653043 `mov (a0), d0`; AcKsclTypeEditProc_L4e 0x48653073 `mov (a0), d0`
 #   +4   proc         ptr            AcKsclTypeEditProc_L51 0x48653076 `mov (4, a0), a0`
-.macro REC_AcKsclTypeEditProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcKsclTypeEditProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcKsclShiftEditProc_L1e_Records: 8-byte records (AcKsclShiftEditProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcKsclShiftEditProc_L1e 0x48653206 `mov (a0), d0`; AcKsclShiftEditProc_L4e 0x48653236 `mov (a0), d0`
+#   +0   key          u32            AcKsclShiftEditProc_L1e 0x48653206 `mov (a0), d0`; AcKsclShiftEditProc_L4e 0x48653236 `mov (a0), d0`
 #   +4   proc         ptr            AcKsclShiftEditProc_L51 0x48653239 `mov (4, a0), a0`
-.macro REC_AcKsclShiftEditProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcKsclShiftEditProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcKsclCopyEditProc_L1e_Records: 8-byte records (AcKsclCopyEditProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcKsclCopyEditProc_L1e 0x4865344A `mov (a0), d0`; AcKsclCopyEditProc_L4d 0x48653479 `mov (a0), d0`
+#   +0   key          u32            AcKsclCopyEditProc_L1e 0x4865344A `mov (a0), d0`; AcKsclCopyEditProc_L4d 0x48653479 `mov (a0), d0`
 #   +4   proc         ptr            AcKsclCopyEditProc_L50 0x4865347C `mov (4, a0), a0`
-.macro REC_AcKsclCopyEditProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcKsclCopyEditProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcKsclKeyEditProc_L1e_Records: 8-byte records (AcKsclKeyEditProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcKsclKeyEditProc_L1e 0x48653787 `mov (a0), d0`; AcKsclKeyEditProc_L4e 0x486537B7 `mov (a0), d0`
+#   +0   key          u32            AcKsclKeyEditProc_L1e 0x48653787 `mov (a0), d0`; AcKsclKeyEditProc_L4e 0x486537B7 `mov (a0), d0`
 #   +4   proc         ptr            AcKsclKeyEditProc_L51 0x486537BA `mov (4, a0), a0`
-.macro REC_AcKsclKeyEditProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcKsclKeyEditProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_SpPartMono_L1d_Records: 8-byte records (SpPartMono_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            SpPartMono_L1d 0x486545B5 `mov (a0), d0`; SpPartMono_L4b 0x486545E3 `mov (a0), d0`
+#   +0   key          u32            SpPartMono_L1d 0x486545B5 `mov (a0), d0`; SpPartMono_L4b 0x486545E3 `mov (a0), d0`
 #   +4   proc         ptr            SpPartMono_L4e 0x486545E6 `mov (4, a0), a0`
-.macro REC_SpPartMono_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_SpPartMono_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ApcRevFunc_L1d_Records: 8-byte records (ApcRevFunc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ApcRevFunc_L1d 0x4865488F `mov (a0), d0`; ApcRevFunc_L4b 0x486548BD `mov (a0), d0`
+#   +0   key          u32            ApcRevFunc_L1d 0x4865488F `mov (a0), d0`; ApcRevFunc_L4b 0x486548BD `mov (a0), d0`
 #   +4   proc         ptr            ApcRevFunc_L4e 0x486548C0 `mov (4, a0), a0`
-.macro REC_ApcRevFunc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ApcRevFunc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ApcRevCheck_L1d_Records: 8-byte records (ApcRevCheck_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ApcRevCheck_L1d 0x48654C09 `mov (a0), d0`; ApcRevCheck_L4a 0x48654C36 `mov (a0), d0`
+#   +0   key          u32            ApcRevCheck_L1d 0x48654C09 `mov (a0), d0`; ApcRevCheck_L4a 0x48654C36 `mov (a0), d0`
 #   +4   proc         ptr            ApcRevCheck_L4d 0x48654C39 `mov (4, a0), a0`
-.macro REC_ApcRevCheck_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ApcRevCheck_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TsRight1Func_L1d_Records: 8-byte records (TsRight1Func_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TsRight1Func_L1d 0x48654D62 `mov (a0), d0`; TsRight1Func_L4b 0x48654D90 `mov (a0), d0`
+#   +0   key          u32            TsRight1Func_L1d 0x48654D62 `mov (a0), d0`; TsRight1Func_L4b 0x48654D90 `mov (a0), d0`
 #   +4   proc         ptr            TsRight1Func_L4e 0x48654D93 `mov (4, a0), a0`
-.macro REC_TsRight1Func_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TsRight1Func_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TsPart1Func_L1d_Records: 8-byte records (TsPart1Func_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TsPart1Func_L1d 0x4865507C `mov (a0), d0`; TsPart1Func_L4a 0x486550A9 `mov (a0), d0`
+#   +0   key          u32            TsPart1Func_L1d 0x4865507C `mov (a0), d0`; TsPart1Func_L4a 0x486550A9 `mov (a0), d0`
 #   +4   proc         ptr            TsPart1Func_L4d 0x486550AC `mov (4, a0), a0`
-.macro REC_TsPart1Func_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TsPart1Func_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TsPart9Func_L1d_Records: 8-byte records (TsPart9Func_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TsPart9Func_L1d 0x4865529A `mov (a0), d0`; TsPart9Func_L4a 0x486552C7 `mov (a0), d0`
+#   +0   key          u32            TsPart9Func_L1d 0x4865529A `mov (a0), d0`; TsPart9Func_L4a 0x486552C7 `mov (a0), d0`
 #   +4   proc         ptr            TsPart9Func_L4d 0x486552CA `mov (4, a0), a0`
-.macro REC_TsPart9Func_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TsPart9Func_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TsAccomp1Func_L1d_Records: 8-byte records (TsAccomp1Func_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TsAccomp1Func_L1d 0x486554B8 `mov (a0), d0`; TsAccomp1Func_L4a 0x486554E5 `mov (a0), d0`
+#   +0   key          u32            TsAccomp1Func_L1d 0x486554B8 `mov (a0), d0`; TsAccomp1Func_L4a 0x486554E5 `mov (a0), d0`
 #   +4   proc         ptr            TsAccomp1Func_L4d 0x486554E8 `mov (4, a0), a0`
-.macro REC_TsAccomp1Func_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TsAccomp1Func_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcVolBoxProc_Table: 16-byte records (AcVolBoxProc_Table, 36 records); fields, and what reads them:
 #   +0   text         ptr            AcVolBoxProc_Le5 0x4865613A `mov (d2, a0), d0`; AcVolBoxProc_L150 0x486561A5 `mov (d2, a2), d1`
-#   +4   f4           u32            AcVolBoxProc_L55 0x486560AA `mov (4, a0), d1`; AcVolBoxProc_L150 0x486561A5 `mov (4, a0), d0` (+1)
-#   +8   f8           u32            AcVolBoxProc_L55 0x486560AA `mov (8, a2), d0`; AcVolBoxProc_L23d 0x48656292 `mov (8, a0), d2` (+1)
+#   +4   param_key    u32            AcVolBoxProc_L55 0x486560AA `mov (4, a0), d1`; AcVolBoxProc_L150 0x486561A5 `mov (4, a0), d0` (+1)
+#   +8   param_key_   u32            AcVolBoxProc_L55 0x486560AA `mov (8, a2), d0`; AcVolBoxProc_L23d 0x48656292 `mov (8, a0), d2` (+1)
 #   +12  f12          u32            AcVolBoxProc_L131 0x48656186 `mov (0xc, a0), d0`; AcVolBoxProc_L281 0x486562D6 `mov (0xc, a1), d0` (+1)
-.macro REC_AcVolBoxProc_Table text=0, f4=0, f8=0, f12=0
+.macro REC_AcVolBoxProc_Table text=0, param_key=0, param_key_=0, f12=0
 	.long	\text
-	.long	\f4
-	.long	\f8
+	.long	\param_key
+	.long	\param_key_
 	.long	\f12
 .endm
 
 # REC_AcFootSwProc_Table: 8-byte records (AcFootSwProc_Table, 43 records); fields, and what reads them:
-#   +0   f0           s16            AcFootSwProc_L83 0x48657438 `movhu (d1, a1), d1`
+#   +0   key          s16            AcFootSwProc_L83 0x48657438 `movhu (d1, a1), d1`
 #   +2   x2           u8[2]          no reader seen
 #   +4   text         ptr            AcFootSwProc_Ldc 0x48657491 `mov (4, a1), a0`
-.macro REC_AcFootSwProc_Table f0=0, x2, text=0
-	.word	\f0
+.macro REC_AcFootSwProc_Table key=0, x2, text=0
+	.word	\key
 	.ascii	"\x2"
 	.long	\text
 .endm
 
 # REC_AcFootSwProc_Table_2: 8-byte records (AcFootSwProc_Table_2, 7 records); fields, and what reads them:
-#   +0   f0           u32            AcFootSwProc_L2d 0x486573E2 `mov (d0, a0), d0`; AcFootSwProc_L83 0x48657438 `mov (d0, a3), d0` (+1)
+#   +0   param_key    u32            AcFootSwProc_L2d 0x486573E2 `mov (d0, a0), d0`; AcFootSwProc_L83 0x48657438 `mov (d0, a3), d0` (+1)
 #   +4   text         ptr            AcFootSwProc_Ldc 0x48657491 `mov (4, a3), a0`
-.macro REC_AcFootSwProc_Table_2 f0=0, text=0
-	.long	\f0
+.macro REC_AcFootSwProc_Table_2 param_key=0, text=0
+	.long	\param_key
 	.long	\text
 .endm
 
 # REC_AcSndLdOptProc_L2d_Records: 8-byte records (AcSndLdOptProc_L2d_Records, 5 records); fields, and what reads them:
-#   +0   f0           u32            AcSndLdOptProc_L2d 0x4865779F `mov (d0, a0), d0`; AcSndLdOptProc_L7b 0x486577ED `mov (d0, a2), d0` (+1)
+#   +0   param_key    u32            AcSndLdOptProc_L2d 0x4865779F `mov (d0, a0), d0`; AcSndLdOptProc_L7b 0x486577ED `mov (d0, a2), d0` (+1)
 #   +4   text         ptr            AcSndLdOptProc_L7b 0x486577ED `mov (4, a1), a1`
-.macro REC_AcSndLdOptProc_L2d_Records f0=0, text=0
-	.long	\f0
+.macro REC_AcSndLdOptProc_L2d_Records param_key=0, text=0
+	.long	\param_key
 	.long	\text
 .endm
 
 # REC_AcEffectTypeProc_Table: 12-byte records (AcEffectTypeProc_Table, 8 records); fields, and what reads them:
-#   +0   f0           u32            AcEffectTypeProc_L2d 0x48657985 `mov (d0, a0), d0`; AcEffectTypeProc_L7e 0x486579D6 `mov (d0, a2), d0` (+1)
-#   +4   f4           u16            AcEffectTypeProc_L7e 0x486579D6 `movhu (4, a0), d2`; AcEffectTypeProc_L7e 0x486579D6 `movhu (4, a2), d0`
+#   +0   param_key    u32            AcEffectTypeProc_L2d 0x48657985 `mov (d0, a0), d0`; AcEffectTypeProc_L7e 0x486579D6 `mov (d0, a2), d0` (+1)
+#   +4   kind         u16            AcEffectTypeProc_L7e 0x486579D6 `movhu (4, a0), d2`; AcEffectTypeProc_L7e 0x486579D6 `movhu (4, a2), d0`
 #   +6   x6           u8[2]          no reader seen
 #   +8   text         ptr            AcEffectTypeProc_L7e 0x486579D6 `mov (8, a0), a0`
-.macro REC_AcEffectTypeProc_Table f0=0, f4=0, x6, text=0
-	.long	\f0
-	.word	\f4
+.macro REC_AcEffectTypeProc_Table param_key=0, kind=0, x6, text=0
+	.long	\param_key
+	.word	\kind
 	.ascii	"\x6"
 	.long	\text
 .endm
 
 # REC_AcSeqMixerVolProc_Table: 16-byte records (AcSeqMixerVolProc_Table, 39 records); fields, and what reads them:
 #   +0   text         ptr            AcSeqMixerVolProc_L7f8 0x48658733 `mov (d0, a1), a1`
-#   +4   f4           u32            AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a1), d0`; AcSeqMixerVolProc_L1ab 0x486580E6 `mov (4, a0), d0` (+5)
-#   +8   f8           u32            AcSeqMixerVolProc_L51 0x48657F8C `mov (8, a2), d0`; AcSeqMixerVolProc_L1ab 0x486580E6 `mov (8, a0), d0` (+3)
-#   +12  f12          u32            AcSeqMixerVolProc_L172 0x486580AD `mov (0xc, a0), d1`; AcSeqMixerVolProc_L46f 0x486583AA `mov (0xc, a1), d0` (+3)
-.macro REC_AcSeqMixerVolProc_Table text=0, f4=0, f8=0, f12=0
+#   +4   param_key    u32            AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a1), d0`; AcSeqMixerVolProc_L1ab 0x486580E6 `mov (4, a0), d0` (+5)
+#   +8   param_key_   u32            AcSeqMixerVolProc_L51 0x48657F8C `mov (8, a2), d0`; AcSeqMixerVolProc_L1ab 0x486580E6 `mov (8, a0), d0` (+3)
+#   +12  key          u32            AcSeqMixerVolProc_L172 0x486580AD `mov (0xc, a0), d1`; AcSeqMixerVolProc_L46f 0x486583AA `mov (0xc, a1), d0` (+3)
+.macro REC_AcSeqMixerVolProc_Table text=0, param_key=0, param_key_=0, key=0
 	.long	\text
-	.long	\f4
-	.long	\f8
-	.long	\f12
+	.long	\param_key
+	.long	\param_key_
+	.long	\key
 .endm
 
 # REC_IvRstOtherPartProc_L1d_Records: 8-byte records (IvRstOtherPartProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            IvRstOtherPartProc_L1d 0x48655B08 `mov (a0), d0`; IvRstOtherPartProc_L4c 0x48655B37 `mov (a0), d0`
+#   +0   key          u32            IvRstOtherPartProc_L1d 0x48655B08 `mov (a0), d0`; IvRstOtherPartProc_L4c 0x48655B37 `mov (a0), d0`
 #   +4   proc         ptr            IvRstOtherPartProc_L4f 0x48655B3A `mov (4, a0), a0`
-.macro REC_IvRstOtherPartProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_IvRstOtherPartProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSndCtrlXProc_Lae_Records: 8-byte records (AcSndCtrlXProc_Lae_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcSndCtrlXProc_Lae 0x4865707F `mov (a0), d1`; AcSndCtrlXProc_Ld4 0x486570A5 `mov (a0), d1`
+#   +0   key          u32            AcSndCtrlXProc_Lae 0x4865707F `mov (a0), d1`; AcSndCtrlXProc_Ld4 0x486570A5 `mov (a0), d1`
 #   +4   proc         ptr            AcSndCtrlXProc_Ld7 0x486570A8 `mov (4, a0), a0`
-.macro REC_AcSndCtrlXProc_Lae_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSndCtrlXProc_Lae_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSeqMixerVolProc_L1f_Records: 8-byte records (AcSeqMixerVolProc_L1f_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            AcSeqMixerVolProc_L1f 0x48657F5A `mov (a0), d0`; AcSeqMixerVolProc_L4e 0x48657F89 `mov (a0), d0`
+#   +0   key          u32            AcSeqMixerVolProc_L1f 0x48657F5A `mov (a0), d0`; AcSeqMixerVolProc_L4e 0x48657F89 `mov (a0), d0`
 #   +4   proc         ptr            AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a0), a0`
-.macro REC_AcSeqMixerVolProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSeqMixerVolProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcAcdnTabProc_L21_Records: 8-byte records (AcAcdnTabProc_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcAcdnTabProc_L21 0x4865AE50 `mov (a0), d0`; AcAcdnTabProc_L51 0x4865AE80 `mov (a0), d0`
+#   +0   key          u32            AcAcdnTabProc_L21 0x4865AE50 `mov (a0), d0`; AcAcdnTabProc_L51 0x4865AE80 `mov (a0), d0`
 #   +4   proc         ptr            AcAcdnTabProc_L54 0x4865AE83 `mov (4, a0), a0`
-.macro REC_AcAcdnTabProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcAcdnTabProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsDrawEditProc_L1e_Records: 8-byte records (PsDrawEditProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsDrawEditProc_L1e 0x4865BC58 `mov (a0), d0`; PsDrawEditProc_L4d 0x4865BC87 `mov (a0), d0`
+#   +0   key          u32            PsDrawEditProc_L1e 0x4865BC58 `mov (a0), d0`; PsDrawEditProc_L4d 0x4865BC87 `mov (a0), d0`
 #   +4   proc         ptr            PsDrawEditProc_L50 0x4865BC8A `mov (4, a0), a0`
-.macro REC_PsDrawEditProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsDrawEditProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSndExpGroupProc_L1e_Records: 8-byte records (AcSndExpGroupProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcSndExpGroupProc_L1e 0x4865C212 `mov (a0), d0`; AcSndExpGroupProc_L4c 0x4865C240 `mov (a0), d0`
+#   +0   key          u32            AcSndExpGroupProc_L1e 0x4865C212 `mov (a0), d0`; AcSndExpGroupProc_L4c 0x4865C240 `mov (a0), d0`
 #   +4   proc         ptr            AcSndExpGroupProc_L4f 0x4865C243 `mov (4, a0), a0`
-.macro REC_AcSndExpGroupProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSndExpGroupProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_SVariR12OctaveFunc_L1c_Records: 8-byte records (SVariR12OctaveFunc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            SVariR12OctaveFunc_L1c 0x4865D02B `mov (a0), d0`; SVariR12OctaveFunc_L4a 0x4865D059 `mov (a0), d0`
+#   +0   key          u32            SVariR12OctaveFunc_L1c 0x4865D02B `mov (a0), d0`; SVariR12OctaveFunc_L4a 0x4865D059 `mov (a0), d0`
 #   +4   proc         ptr            SVariR12OctaveFunc_L4d 0x4865D05C `mov (4, a0), a0`
-.macro REC_SVariR12OctaveFunc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_SVariR12OctaveFunc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E476_Table: 24-byte records (func_4865E476_Table, 98 records); fields, and what reads them:
 #   +0   text         ptr            func_4865E476_L18f 0x4865E605 `mov (d0, a1), a1`
 #   +4   f4           u32            func_4865E476_L18f 0x4865E605 `mov (4, a0), d0`
-#   +8   f8           u32            func_4865E476_L104 0x4865E57A `mov (a0), d0`; func_4865E476_L104 0x4865E57A `mov (a0), d1` (+2)
-#   +12  f12          u32            TtFavorite_L20c 0x4865D5CE `mov (0xc, a0), d0`; func_4865E476_L11e 0x4865E594 `mov (0xc, a3), d0` (+2)
+#   +8   key          u32            func_4865E476_L104 0x4865E57A `mov (a0), d0`; func_4865E476_L104 0x4865E57A `mov (a0), d1` (+2)
+#   +12  title        u32            TtFavorite_L20c 0x4865D5CE `mov (0xc, a0), d0`; func_4865E476_L11e 0x4865E594 `mov (0xc, a3), d0` (+2)
 #   +16  event        u32            func_4865E476_Ld5 0x4865E54B `mov (0x10, a3), d0`
-#   +20  f20          u32            func_4865E476_L11e 0x4865E594 `mov (0x14, a3), d1`; func_4865E476_L173 0x4865E5E9 `mov (0x14, a3), d1` (+1)
-.macro REC_func_4865E476_Table text=0, f4=0, f8=0, f12=0, event=0, f20=0
+#   +20  ChangeTitle_d1 u32            func_4865E476_L11e 0x4865E594 `mov (0x14, a3), d1`; func_4865E476_L173 0x4865E5E9 `mov (0x14, a3), d1` (+1)
+.macro REC_func_4865E476_Table text=0, f4=0, key=0, title=0, event=0, ChangeTitle_d1=0
 	.long	\text
 	.long	\f4
-	.long	\f8
-	.long	\f12
+	.long	\key
+	.long	\title
 	.long	\event
-	.long	\f20
+	.long	\ChangeTitle_d1
 .endm
 
 # REC_AcFavItemProc_L60_Records: 8-byte records (AcFavItemProc_L60_Records, 18 records); fields, and what reads them:
-#   +0   p0           ptr            AcFavItemProc_L60 0x4865F0AA `mov (a1), d1`
+#   +0   SetMmmFilter_d1 ptr            AcFavItemProc_L60 0x4865F0AA `mov (a1), d1`
 #   +4   p4           ptr            AcFavItemProc_L60 0x4865F0AA `mov (4, a1), d2`
-.macro REC_AcFavItemProc_L60_Records p0=0, p4=0
-	.long	\p0
+.macro REC_AcFavItemProc_L60_Records SetMmmFilter_d1=0, p4=0
+	.long	\SetMmmFilter_d1
 	.long	\p4
 .endm
 
@@ -1390,82 +1378,82 @@
 .endm
 
 # REC_AcFavoriteProc_L1d_Records: 8-byte records (AcFavoriteProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcFavoriteProc_L1d 0x4865D82A `mov (a0), d0`; AcFavoriteProc_L4c 0x4865D859 `mov (a0), d0`
+#   +0   key          u32            AcFavoriteProc_L1d 0x4865D82A `mov (a0), d0`; AcFavoriteProc_L4c 0x4865D859 `mov (a0), d0`
 #   +4   proc         ptr            AcFavoriteProc_L4f 0x4865D85C `mov (4, a0), a0`
-.macro REC_AcFavoriteProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcFavoriteProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865DAE8_L1d_Records: 8-byte records (func_4865DAE8_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4865DAE8_L1d 0x4865DB05 `mov (a0), d0`; func_4865DAE8_L49 0x4865DB31 `mov (a0), d0`
+#   +0   key          u32            func_4865DAE8_L1d 0x4865DB05 `mov (a0), d0`; func_4865DAE8_L49 0x4865DB31 `mov (a0), d0`
 #   +4   proc         ptr            func_4865DAE8_L4c 0x4865DB34 `mov (4, a0), a0`
-.macro REC_func_4865DAE8_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865DAE8_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865DB89_L1c_Records: 8-byte records (func_4865DB89_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4865DB89_L1c 0x4865DBA5 `mov (a0), d0`; func_4865DB89_L4a 0x4865DBD3 `mov (a0), d0`
+#   +0   key          u32            func_4865DB89_L1c 0x4865DBA5 `mov (a0), d0`; func_4865DB89_L4a 0x4865DBD3 `mov (a0), d0`
 #   +4   proc         ptr            func_4865DB89_L4d 0x4865DBD6 `mov (4, a0), a0`
-.macro REC_func_4865DB89_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865DB89_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865DCBC_entry_L17_Records: 8-byte records (func_4865DCBC_entry_L17_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4865DCBC_entry_L17 0x4865DCD8 `mov (a0), d0`; func_4865DCBC_entry_L46 0x4865DD07 `mov (a0), d0`
+#   +0   key          u32            func_4865DCBC_entry_L17 0x4865DCD8 `mov (a0), d0`; func_4865DCBC_entry_L46 0x4865DD07 `mov (a0), d0`
 #   +4   proc         ptr            func_4865DCBC_entry_L49 0x4865DD0A `mov (4, a0), a0`
-.macro REC_func_4865DCBC_entry_L17_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865DCBC_entry_L17_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E0C3_entry_L17_Records: 8-byte records (func_4865E0C3_entry_L17_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4865E0C3_entry_L17 0x4865E0DF `mov (a0), d0`; func_4865E0C3_entry_L46 0x4865E10E `mov (a0), d0`
+#   +0   key          u32            func_4865E0C3_entry_L17 0x4865E0DF `mov (a0), d0`; func_4865E0C3_entry_L46 0x4865E10E `mov (a0), d0`
 #   +4   proc         ptr            func_4865E0C3_entry_L49 0x4865E111 `mov (4, a0), a0`
-.macro REC_func_4865E0C3_entry_L17_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865E0C3_entry_L17_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E30D_entry_L18_Records: 8-byte records (func_4865E30D_entry_L18_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4865E30D_entry_L18 0x4865E32A `mov (a0), d0`; func_4865E30D_entry_L47 0x4865E359 `mov (a0), d0`
+#   +0   key          u32            func_4865E30D_entry_L18 0x4865E32A `mov (a0), d0`; func_4865E30D_entry_L47 0x4865E359 `mov (a0), d0`
 #   +4   proc         ptr            func_4865E30D_entry_L4a 0x4865E35C `mov (4, a0), a0`
-.macro REC_func_4865E30D_entry_L18_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865E30D_entry_L18_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E476_L1d_Records: 8-byte records (func_4865E476_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4865E476_L1d 0x4865E493 `mov (a0), d0`; func_4865E476_L4b 0x4865E4C1 `mov (a0), d0`
+#   +0   key          u32            func_4865E476_L1d 0x4865E493 `mov (a0), d0`; func_4865E476_L4b 0x4865E4C1 `mov (a0), d0`
 #   +4   proc         ptr            func_4865E476_L4e 0x4865E4C4 `mov (4, a0), a0`
-.macro REC_func_4865E476_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865E476_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E6D5_L1c_Records: 8-byte records (func_4865E6D5_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4865E6D5_L1c 0x4865E6F1 `mov (a0), d0`; func_4865E6D5_L48 0x4865E71D `mov (a0), d0`
+#   +0   key          u32            func_4865E6D5_L1c 0x4865E6F1 `mov (a0), d0`; func_4865E6D5_L48 0x4865E71D `mov (a0), d0`
 #   +4   proc         ptr            func_4865E6D5_L4b 0x4865E720 `mov (4, a0), a0`
-.macro REC_func_4865E6D5_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865E6D5_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E786_L1d_Records: 8-byte records (func_4865E786_L1d_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_4865E786_L1d 0x4865E7A3 `mov (a0), d0`; func_4865E786_L4c 0x4865E7D2 `mov (a0), d0`
+#   +0   key          u32            func_4865E786_L1d 0x4865E7A3 `mov (a0), d0`; func_4865E786_L4c 0x4865E7D2 `mov (a0), d0`
 #   +4   proc         ptr            func_4865E786_L4f 0x4865E7D5 `mov (4, a0), a0`
-.macro REC_func_4865E786_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865E786_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4865E8F4_L1d_Records: 8-byte records (func_4865E8F4_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4865E8F4_L1d 0x4865E911 `mov (a0), d0`; func_4865E8F4_L4c 0x4865E940 `mov (a0), d0`
+#   +0   key          u32            func_4865E8F4_L1d 0x4865E911 `mov (a0), d0`; func_4865E8F4_L4c 0x4865E940 `mov (a0), d0`
 #   +4   proc         ptr            func_4865E8F4_L4f 0x4865E943 `mov (4, a0), a0`
-.macro REC_func_4865E8F4_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_4865E8F4_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -1486,562 +1474,562 @@
 .endm
 
 # REC_InOutTestWindowProc_L5f_Records: 8-byte records (InOutTestWindowProc_L5f_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            InOutTestWindowProc_L5f 0x48661604 `mov (a0), d0`; InOutTestWindowProc_L8d 0x48661632 `mov (a0), d0`
+#   +0   key          u32            InOutTestWindowProc_L5f 0x48661604 `mov (a0), d0`; InOutTestWindowProc_L8d 0x48661632 `mov (a0), d0`
 #   +4   proc         ptr            InOutTestWindowProc_L90 0x48661635 `mov (4, a0), a0`
-.macro REC_InOutTestWindowProc_L5f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_InOutTestWindowProc_L5f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcDispTimeSetGridBoxProc_L1d_Records: 8-byte records (AcDispTimeSetGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcDispTimeSetGridBoxProc_L1d 0x486647B1 `mov (a0), d0`; AcDispTimeSetGridBoxProc_L4c 0x486647E0 `mov (a0), d0`
+#   +0   key          u32            AcDispTimeSetGridBoxProc_L1d 0x486647B1 `mov (a0), d0`; AcDispTimeSetGridBoxProc_L4c 0x486647E0 `mov (a0), d0`
 #   +4   proc         ptr            AcDispTimeSetGridBoxProc_L4f 0x486647E3 `mov (4, a0), a0`
-.macro REC_AcDispTimeSetGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcDispTimeSetGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcParaLoadOptGridBoxProc_L1e_Records: 8-byte records (AcParaLoadOptGridBoxProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcParaLoadOptGridBoxProc_L1e 0x48665809 `mov (a0), d0`; AcParaLoadOptGridBoxProc_L4d 0x48665838 `mov (a0), d0`
+#   +0   key          u32            AcParaLoadOptGridBoxProc_L1e 0x48665809 `mov (a0), d0`; AcParaLoadOptGridBoxProc_L4d 0x48665838 `mov (a0), d0`
 #   +4   proc         ptr            AcParaLoadOptGridBoxProc_L50 0x4866583B `mov (4, a0), a0`
-.macro REC_AcParaLoadOptGridBoxProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcParaLoadOptGridBoxProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcTchSensGridBoxProc_L1d_Records: 8-byte records (AcTchSensGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcTchSensGridBoxProc_L1d 0x48668510 `mov (a0), d0`; AcTchSensGridBoxProc_L4b 0x4866853E `mov (a0), d0`
+#   +0   key          u32            AcTchSensGridBoxProc_L1d 0x48668510 `mov (a0), d0`; AcTchSensGridBoxProc_L4b 0x4866853E `mov (a0), d0`
 #   +4   proc         ptr            AcTchSensGridBoxProc_L4e 0x48668541 `mov (4, a0), a0`
-.macro REC_AcTchSensGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcTchSensGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcFSWAssGridBoxProc_L1d_Records: 8-byte records (AcFSWAssGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcFSWAssGridBoxProc_L1d 0x48668AFA `mov (a0), d0`; AcFSWAssGridBoxProc_L4c 0x48668B29 `mov (a0), d0`
+#   +0   key          u32            AcFSWAssGridBoxProc_L1d 0x48668AFA `mov (a0), d0`; AcFSWAssGridBoxProc_L4c 0x48668B29 `mov (a0), d0`
 #   +4   proc         ptr            AcFSWAssGridBoxProc_L4f 0x48668B2C `mov (4, a0), a0`
-.macro REC_AcFSWAssGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcFSWAssGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcPmExpFilterGridBoxProc_L33_Records: 8-byte records (AcPmExpFilterGridBoxProc_L33_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcPmExpFilterGridBoxProc_L33 0x48669D33 `mov (a0), d0`; AcPmExpFilterGridBoxProc_L61 0x48669D61 `mov (a0), d0`
+#   +0   key          u32            AcPmExpFilterGridBoxProc_L33 0x48669D33 `mov (a0), d0`; AcPmExpFilterGridBoxProc_L61 0x48669D61 `mov (a0), d0`
 #   +4   proc         ptr            AcPmExpFilterGridBoxProc_L64 0x48669D64 `mov (4, a0), a0`
-.macro REC_AcPmExpFilterGridBoxProc_L33_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcPmExpFilterGridBoxProc_L33_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcFadeSetGridBoxProc_L1d_Records: 8-byte records (AcFadeSetGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcFadeSetGridBoxProc_L1d 0x4866AE70 `mov (a0), d0`; AcFadeSetGridBoxProc_L4b 0x4866AE9E `mov (a0), d0`
+#   +0   key          u32            AcFadeSetGridBoxProc_L1d 0x4866AE70 `mov (a0), d0`; AcFadeSetGridBoxProc_L4b 0x4866AE9E `mov (a0), d0`
 #   +4   proc         ptr            AcFadeSetGridBoxProc_L4e 0x4866AEA1 `mov (4, a0), a0`
-.macro REC_AcFadeSetGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcFadeSetGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48674283_entry_L2a_Records: 8-byte records (func_48674283_entry_L2a_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_48674283_entry_L2a 0x486742B2 `mov (a0), d0`; func_48674283_entry_L52 0x486742DA `mov (a0), d0`
+#   +0   key          u32            func_48674283_entry_L2a 0x486742B2 `mov (a0), d0`; func_48674283_entry_L52 0x486742DA `mov (a0), d0`
 #   +4   proc         ptr            func_48674283_entry_L55 0x486742DD `mov (4, a0), a0`
-.macro REC_func_48674283_entry_L2a_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48674283_entry_L2a_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48674EB2_entry_L2a_Records: 8-byte records (func_48674EB2_entry_L2a_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_48674EB2_entry_L2a 0x48674EE1 `mov (a0), d0`; func_48674EB2_entry_L53 0x48674F0A `mov (a0), d0`
+#   +0   key          u32            func_48674EB2_entry_L2a 0x48674EE1 `mov (a0), d0`; func_48674EB2_entry_L53 0x48674F0A `mov (a0), d0`
 #   +4   proc         ptr            func_48674EB2_entry_L56 0x48674F0D `mov (4, a0), a0`
-.macro REC_func_48674EB2_entry_L2a_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48674EB2_entry_L2a_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48675A56_entry_L28_Records: 8-byte records (func_48675A56_entry_L28_Records, 64 records); fields, and what reads them:
-#   +0   f0           u32            func_48675A56_entry_L28 0x48675A83 `mov (a0), d0`; func_48675A56_entry_L50 0x48675AAB `mov (a0), d0`
+#   +0   key          u32            func_48675A56_entry_L28 0x48675A83 `mov (a0), d0`; func_48675A56_entry_L50 0x48675AAB `mov (a0), d0`
 #   +4   proc         ptr            func_48675A56_entry_L53 0x48675AAE `mov (4, a0), a0`
-.macro REC_func_48675A56_entry_L28_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48675A56_entry_L28_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MainPutM3Em_Records: 10-byte records (MainPutM3Em_Records, 4 records); fields, and what reads them:
-#   +0   a0           2 x 1 (u8)     AcMidiPartGridBoxProc_L30f 0x486774FA `movbu (d1, a0), d1`; AcMidiPartGridBoxProc_L30f 0x486774FA `movbu (d1, a2), d1` (+14)
+#   +0   key          2 x 1 (u8)     AcMidiPartGridBoxProc_L30f 0x486774FA `movbu (d1, a0), d1`; AcMidiPartGridBoxProc_L30f 0x486774FA `movbu (d1, a2), d1` (+14)
 #   +2   MainPutM3Em_d1 u8             AcMidiPartGridBoxProc_L196 0x48677381 `movbu (2, a0), d1`; AcMidiPartGridBoxProc_L196 0x48677381 `movbu (2, a2), d1` (+4)
 #   +3   x3           u8[7]          no reader seen
-.macro REC_MainPutM3Em_Records a0, MainPutM3Em_d1=0, x3
-	.ascii	"\a0"
+.macro REC_MainPutM3Em_Records key, MainPutM3Em_d1=0, x3
+	.ascii	"\key"
 	.byte	\MainPutM3Em_d1
 	.ascii	"\x3"
 .endm
 
 # REC_MainAddM3Em_Records: 36-byte records (MainAddM3Em_Records, 3 records); fields, and what reads them:
-#   +0   a0           9 x 4 (u32)    MidiControlGrid_L81 0x4867879A `mov (d0, a0), d0`; MidiControlGrid_Ldd 0x486787F6 `mov (d0, a0), d0` (+3)
-.macro REC_MainAddM3Em_Records a0:vararg
-	.long	\a0
+#   +0   param_key    9 x 4 (u32)    MidiControlGrid_L81 0x4867879A `mov (d0, a0), d0`; MidiControlGrid_Ldd 0x486787F6 `mov (d0, a0), d0` (+3)
+.macro REC_MainAddM3Em_Records param_key:vararg
+	.long	\param_key
 .endm
 
 # REC_AcMidiPartGridBoxProc_L37_Records: 8-byte records (AcMidiPartGridBoxProc_L37_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMidiPartGridBoxProc_L37 0x48677222 `mov (a0), d0`; AcMidiPartGridBoxProc_L67 0x48677252 `mov (a0), d0`
+#   +0   key          u32            AcMidiPartGridBoxProc_L37 0x48677222 `mov (a0), d0`; AcMidiPartGridBoxProc_L67 0x48677252 `mov (a0), d0`
 #   +4   proc         ptr            AcMidiPartGridBoxProc_L6a 0x48677255 `mov (4, a0), a0`
-.macro REC_AcMidiPartGridBoxProc_L37_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMidiPartGridBoxProc_L37_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMidiControlGridBoxProc_L31_Records: 8-byte records (AcMidiControlGridBoxProc_L31_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMidiControlGridBoxProc_L31 0x48678248 `mov (a0), d0`; AcMidiControlGridBoxProc_L60 0x48678277 `mov (a0), d0`
+#   +0   key          u32            AcMidiControlGridBoxProc_L31 0x48678248 `mov (a0), d0`; AcMidiControlGridBoxProc_L60 0x48678277 `mov (a0), d0`
 #   +4   proc         ptr            AcMidiControlGridBoxProc_L63 0x4867827A `mov (4, a0), a0`
-.macro REC_AcMidiControlGridBoxProc_L31_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMidiControlGridBoxProc_L31_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MidiCommonGrid_L369_Records: 8-byte records (MidiCommonGrid_L369_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MidiCommonGrid_L369 0x48678EEA `mov (a0), d0`; MidiCommonGrid_L394 0x48678F15 `mov (a0), d0`
+#   +0   key          u32            MidiCommonGrid_L369 0x48678EEA `mov (a0), d0`; MidiCommonGrid_L394 0x48678F15 `mov (a0), d0`
 #   +4   proc         ptr            MidiCommonGrid_L397 0x48678F18 `mov (4, a0), a0`
-.macro REC_MidiCommonGrid_L369_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MidiCommonGrid_L369_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MidiCommonGrid_L15d_Records: 8-byte records (MidiCommonGrid_L15d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MidiCommonGrid_L15d 0x48678CDE `mov (a0), d0`; MidiCommonGrid_L189 0x48678D0A `mov (a0), d0`
+#   +0   key          u32            MidiCommonGrid_L15d 0x48678CDE `mov (a0), d0`; MidiCommonGrid_L189 0x48678D0A `mov (a0), d0`
 #   +4   proc         ptr            MidiCommonGrid_L18c 0x48678D0D `mov (4, a0), a0`
-.macro REC_MidiCommonGrid_L15d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MidiCommonGrid_L15d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMidiInputGridBoxProc_L1e_Records: 8-byte records (AcMidiInputGridBoxProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMidiInputGridBoxProc_L1e 0x4867912D `mov (a0), d0`; AcMidiInputGridBoxProc_L4e 0x4867915D `mov (a0), d0`
+#   +0   key          u32            AcMidiInputGridBoxProc_L1e 0x4867912D `mov (a0), d0`; AcMidiInputGridBoxProc_L4e 0x4867915D `mov (a0), d0`
 #   +4   proc         ptr            AcMidiInputGridBoxProc_L51 0x48679160 `mov (4, a0), a0`
-.macro REC_AcMidiInputGridBoxProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMidiInputGridBoxProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MidiInputGrid_L318_Records: 8-byte records (MidiInputGrid_L318_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MidiInputGrid_L318 0x48679793 `mov (a0), d0`; MidiInputGrid_L343 0x486797BE `mov (a0), d0`
+#   +0   key          u32            MidiInputGrid_L318 0x48679793 `mov (a0), d0`; MidiInputGrid_L343 0x486797BE `mov (a0), d0`
 #   +4   proc         ptr            MidiInputGrid_L346 0x486797C1 `mov (4, a0), a0`
-.macro REC_MidiInputGrid_L318_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MidiInputGrid_L318_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MidiPresetSw_L182_Records: 8-byte records (MidiPresetSw_L182_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MidiPresetSw_L182 0x4867A17F `mov (a0), d0`; MidiPresetSw_L1ad 0x4867A1AA `mov (a0), d0`
+#   +0   key          u32            MidiPresetSw_L182 0x4867A17F `mov (a0), d0`; MidiPresetSw_L1ad 0x4867A1AA `mov (a0), d0`
 #   +4   proc         ptr            MidiPresetSw_L1b1 0x4867A1AE `mov (4, a0), a0`
-.macro REC_MidiPresetSw_L182_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MidiPresetSw_L182_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MidiPresetSw_L52_Records: 8-byte records (MidiPresetSw_L52_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MidiPresetSw_L52 0x4867A04F `mov (a0), d0`; MidiPresetSw_L7c 0x4867A079 `mov (a0), d0`
+#   +0   key          u32            MidiPresetSw_L52 0x4867A04F `mov (a0), d0`; MidiPresetSw_L7c 0x4867A079 `mov (a0), d0`
 #   +4   proc         ptr            MidiPresetSw_L7f 0x4867A07C `mov (4, a0), a0`
-.macro REC_MidiPresetSw_L52_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MidiPresetSw_L52_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMidiPcgOutGridBoxProc_L1d_Records: 8-byte records (AcMidiPcgOutGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMidiPcgOutGridBoxProc_L1d 0x4867AC36 `mov (a0), d0`; AcMidiPcgOutGridBoxProc_L4b 0x4867AC64 `mov (a0), d0`
+#   +0   key          u32            AcMidiPcgOutGridBoxProc_L1d 0x4867AC36 `mov (a0), d0`; AcMidiPcgOutGridBoxProc_L4b 0x4867AC64 `mov (a0), d0`
 #   +4   proc         ptr            AcMidiPcgOutGridBoxProc_L4e 0x4867AC67 `mov (4, a0), a0`
-.macro REC_AcMidiPcgOutGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMidiPcgOutGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMidiPmemOutLGridBoxProc_L1d_Records: 8-byte records (AcMidiPmemOutLGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMidiPmemOutLGridBoxProc_L1d 0x4867B7D5 `mov (a0), d0`; AcMidiPmemOutLGridBoxProc_L4c 0x4867B804 `mov (a0), d0`
+#   +0   key          u32            AcMidiPmemOutLGridBoxProc_L1d 0x4867B7D5 `mov (a0), d0`; AcMidiPmemOutLGridBoxProc_L4c 0x4867B804 `mov (a0), d0`
 #   +4   proc         ptr            AcMidiPmemOutLGridBoxProc_L4f 0x4867B807 `mov (4, a0), a0`
-.macro REC_AcMidiPmemOutLGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMidiPmemOutLGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcMidiPmemOutRGridBoxProc_L1d_Records: 8-byte records (AcMidiPmemOutRGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcMidiPmemOutRGridBoxProc_L1d 0x4867BB95 `mov (a0), d0`; AcMidiPmemOutRGridBoxProc_L4b 0x4867BBC3 `mov (a0), d0`
+#   +0   key          u32            AcMidiPmemOutRGridBoxProc_L1d 0x4867BB95 `mov (a0), d0`; AcMidiPmemOutRGridBoxProc_L4b 0x4867BBC3 `mov (a0), d0`
 #   +4   proc         ptr            AcMidiPmemOutRGridBoxProc_L4e 0x4867BBC6 `mov (4, a0), a0`
-.macro REC_AcMidiPmemOutRGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcMidiPmemOutRGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcEditBoxSeProc_L1d_Records: 8-byte records (AcEditBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEditBoxSeProc_L1d 0x4867EA32 `mov (a0), d0`; AcEditBoxSeProc_L4b 0x4867EA60 `mov (a0), d0`
+#   +0   key          u32            AcEditBoxSeProc_L1d 0x4867EA32 `mov (a0), d0`; AcEditBoxSeProc_L4b 0x4867EA60 `mov (a0), d0`
 #   +4   proc         ptr            AcEditBoxSeProc_L4e 0x4867EA63 `mov (4, a0), a0`
-.macro REC_AcEditBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEditBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcChEditBoxSeProc_L1d_Records: 8-byte records (AcChEditBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcChEditBoxSeProc_L1d 0x48682EA3 `mov (a0), d0`; AcChEditBoxSeProc_L4c 0x48682ED2 `mov (a0), d0`
+#   +0   key          u32            AcChEditBoxSeProc_L1d 0x48682EA3 `mov (a0), d0`; AcChEditBoxSeProc_L4c 0x48682ED2 `mov (a0), d0`
 #   +4   proc         ptr            AcChEditBoxSeProc_L4f 0x48682ED5 `mov (4, a0), a0`
-.macro REC_AcChEditBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcChEditBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcGridBoxSeProc_L1d_Records: 8-byte records (AcGridBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcGridBoxSeProc_L1d 0x48685657 `mov (a0), d0`; AcGridBoxSeProc_L4c 0x48685686 `mov (a0), d0`
+#   +0   key          u32            AcGridBoxSeProc_L1d 0x48685657 `mov (a0), d0`; AcGridBoxSeProc_L4c 0x48685686 `mov (a0), d0`
 #   +4   proc         ptr            AcGridBoxSeProc_L4f 0x48685689 `mov (4, a0), a0`
-.macro REC_AcGridBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcGridBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcGridBoxSe3Proc_L1d_Records: 8-byte records (AcGridBoxSe3Proc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcGridBoxSe3Proc_L1d 0x48685BB1 `mov (a0), d0`; AcGridBoxSe3Proc_L4b 0x48685BDF `mov (a0), d0`
+#   +0   key          u32            AcGridBoxSe3Proc_L1d 0x48685BB1 `mov (a0), d0`; AcGridBoxSe3Proc_L4b 0x48685BDF `mov (a0), d0`
 #   +4   proc         ptr            AcGridBoxSe3Proc_L4e 0x48685BE2 `mov (4, a0), a0`
-.macro REC_AcGridBoxSe3Proc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcGridBoxSe3Proc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ToneSelGridSe_L1d_Records: 8-byte records (ToneSelGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ToneSelGridSe_L1d 0x48685F91 `mov (a0), d0`; ToneSelGridSe_L4b 0x48685FBF `mov (a0), d0`
+#   +0   key          u32            ToneSelGridSe_L1d 0x48685F91 `mov (a0), d0`; ToneSelGridSe_L4b 0x48685FBF `mov (a0), d0`
 #   +4   proc         ptr            ToneSelGridSe_L4e 0x48685FC2 `mov (4, a0), a0`
-.macro REC_ToneSelGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ToneSelGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ToneGridSe1_L1d_Records: 8-byte records (ToneGridSe1_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ToneGridSe1_L1d 0x48686DCD `mov (a0), d0`; ToneGridSe1_L4a 0x48686DFA `mov (a0), d0`
+#   +0   key          u32            ToneGridSe1_L1d 0x48686DCD `mov (a0), d0`; ToneGridSe1_L4a 0x48686DFA `mov (a0), d0`
 #   +4   proc         ptr            ToneGridSe1_L4d 0x48686DFD `mov (4, a0), a0`
-.macro REC_ToneGridSe1_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ToneGridSe1_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LayerGridSe1_L1d_Records: 8-byte records (LayerGridSe1_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LayerGridSe1_L1d 0x48687350 `mov (a0), d0`; LayerGridSe1_L4b 0x4868737E `mov (a0), d0`
+#   +0   key          u32            LayerGridSe1_L1d 0x48687350 `mov (a0), d0`; LayerGridSe1_L4b 0x4868737E `mov (a0), d0`
 #   +4   proc         ptr            LayerGridSe1_L4e 0x48687381 `mov (4, a0), a0`
-.macro REC_LayerGridSe1_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LayerGridSe1_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LayerGridSe2_L1d_Records: 8-byte records (LayerGridSe2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LayerGridSe2_L1d 0x48687828 `mov (a0), d0`; LayerGridSe2_L4a 0x48687855 `mov (a0), d0`
+#   +0   key          u32            LayerGridSe2_L1d 0x48687828 `mov (a0), d0`; LayerGridSe2_L4a 0x48687855 `mov (a0), d0`
 #   +4   proc         ptr            LayerGridSe2_L4d 0x48687858 `mov (4, a0), a0`
-.macro REC_LayerGridSe2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LayerGridSe2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PitchGridSe_L1d_Records: 8-byte records (PitchGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PitchGridSe_L1d 0x48687CEB `mov (a0), d0`; PitchGridSe_L4b 0x48687D19 `mov (a0), d0`
+#   +0   key          u32            PitchGridSe_L1d 0x48687CEB `mov (a0), d0`; PitchGridSe_L4b 0x48687D19 `mov (a0), d0`
 #   +4   proc         ptr            PitchGridSe_L4e 0x48687D1C `mov (4, a0), a0`
-.macro REC_PitchGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PitchGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PitchGridSe2_L1d_Records: 8-byte records (PitchGridSe2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PitchGridSe2_L1d 0x48688036 `mov (a0), d0`; PitchGridSe2_L4b 0x48688064 `mov (a0), d0`
+#   +0   key          u32            PitchGridSe2_L1d 0x48688036 `mov (a0), d0`; PitchGridSe2_L4b 0x48688064 `mov (a0), d0`
 #   +4   proc         ptr            PitchGridSe2_L4e 0x48688067 `mov (4, a0), a0`
-.macro REC_PitchGridSe2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PitchGridSe2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PitchGridSe3_L1d_Records: 8-byte records (PitchGridSe3_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PitchGridSe3_L1d 0x48688777 `mov (a0), d0`; PitchGridSe3_L4a 0x486887A4 `mov (a0), d0`
+#   +0   key          u32            PitchGridSe3_L1d 0x48688777 `mov (a0), d0`; PitchGridSe3_L4a 0x486887A4 `mov (a0), d0`
 #   +4   proc         ptr            PitchGridSe3_L4d 0x486887A7 `mov (4, a0), a0`
-.macro REC_PitchGridSe3_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PitchGridSe3_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AmpGridSe1_L1d_Records: 8-byte records (AmpGridSe1_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AmpGridSe1_L1d 0x48688CC3 `mov (a0), d0`; AmpGridSe1_L4a 0x48688CF0 `mov (a0), d0`
+#   +0   key          u32            AmpGridSe1_L1d 0x48688CC3 `mov (a0), d0`; AmpGridSe1_L4a 0x48688CF0 `mov (a0), d0`
 #   +4   proc         ptr            AmpGridSe1_L4d 0x48688CF3 `mov (4, a0), a0`
-.macro REC_AmpGridSe1_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AmpGridSe1_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AmpGridSe2_L1d_Records: 8-byte records (AmpGridSe2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AmpGridSe2_L1d 0x486893CE `mov (a0), d0`; AmpGridSe2_L4a 0x486893FB `mov (a0), d0`
+#   +0   key          u32            AmpGridSe2_L1d 0x486893CE `mov (a0), d0`; AmpGridSe2_L4a 0x486893FB `mov (a0), d0`
 #   +4   proc         ptr            AmpGridSe2_L4d 0x486893FE `mov (4, a0), a0`
-.macro REC_AmpGridSe2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AmpGridSe2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AmpGridSe3_L1d_Records: 8-byte records (AmpGridSe3_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AmpGridSe3_L1d 0x486899E7 `mov (a0), d0`; AmpGridSe3_L4a 0x48689A14 `mov (a0), d0`
+#   +0   key          u32            AmpGridSe3_L1d 0x486899E7 `mov (a0), d0`; AmpGridSe3_L4a 0x48689A14 `mov (a0), d0`
 #   +4   proc         ptr            AmpGridSe3_L4d 0x48689A17 `mov (4, a0), a0`
-.macro REC_AmpGridSe3_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AmpGridSe3_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FilterGridSe1_L1d_Records: 8-byte records (FilterGridSe1_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FilterGridSe1_L1d 0x4868A0C0 `mov (a0), d0`; FilterGridSe1_L4a 0x4868A0ED `mov (a0), d0`
+#   +0   key          u32            FilterGridSe1_L1d 0x4868A0C0 `mov (a0), d0`; FilterGridSe1_L4a 0x4868A0ED `mov (a0), d0`
 #   +4   proc         ptr            FilterGridSe1_L4d 0x4868A0F0 `mov (4, a0), a0`
-.macro REC_FilterGridSe1_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FilterGridSe1_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FilterGridSe2_L1d_Records: 8-byte records (FilterGridSe2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FilterGridSe2_L1d 0x4868AC9C `mov (a0), d0`; FilterGridSe2_L4a 0x4868ACC9 `mov (a0), d0`
+#   +0   key          u32            FilterGridSe2_L1d 0x4868AC9C `mov (a0), d0`; FilterGridSe2_L4a 0x4868ACC9 `mov (a0), d0`
 #   +4   proc         ptr            FilterGridSe2_L4d 0x4868ACCC `mov (4, a0), a0`
-.macro REC_FilterGridSe2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FilterGridSe2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FilterGridSe3_L1d_Records: 8-byte records (FilterGridSe3_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FilterGridSe3_L1d 0x4868B2D6 `mov (a0), d0`; FilterGridSe3_L4b 0x4868B304 `mov (a0), d0`
+#   +0   key          u32            FilterGridSe3_L1d 0x4868B2D6 `mov (a0), d0`; FilterGridSe3_L4b 0x4868B304 `mov (a0), d0`
 #   +4   proc         ptr            FilterGridSe3_L4e 0x4868B307 `mov (4, a0), a0`
-.macro REC_FilterGridSe3_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FilterGridSe3_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FilterGridSe4_L1d_Records: 8-byte records (FilterGridSe4_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FilterGridSe4_L1d 0x4868BA17 `mov (a0), d0`; FilterGridSe4_L4a 0x4868BA44 `mov (a0), d0`
+#   +0   key          u32            FilterGridSe4_L1d 0x4868BA17 `mov (a0), d0`; FilterGridSe4_L4a 0x4868BA44 `mov (a0), d0`
 #   +4   proc         ptr            FilterGridSe4_L4d 0x4868BA47 `mov (4, a0), a0`
-.macro REC_FilterGridSe4_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FilterGridSe4_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LfoGridSe1_L1d_Records: 8-byte records (LfoGridSe1_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LfoGridSe1_L1d 0x4868BFFE `mov (a0), d0`; LfoGridSe1_L4b 0x4868C02C `mov (a0), d0`
+#   +0   key          u32            LfoGridSe1_L1d 0x4868BFFE `mov (a0), d0`; LfoGridSe1_L4b 0x4868C02C `mov (a0), d0`
 #   +4   proc         ptr            LfoGridSe1_L4e 0x4868C02F `mov (4, a0), a0`
-.macro REC_LfoGridSe1_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LfoGridSe1_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LfoGridSe2_L1d_Records: 8-byte records (LfoGridSe2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LfoGridSe2_L1d 0x4868C8D6 `mov (a0), d0`; LfoGridSe2_L4b 0x4868C904 `mov (a0), d0`
+#   +0   key          u32            LfoGridSe2_L1d 0x4868C8D6 `mov (a0), d0`; LfoGridSe2_L4b 0x4868C904 `mov (a0), d0`
 #   +4   proc         ptr            LfoGridSe2_L4e 0x4868C907 `mov (4, a0), a0`
-.macro REC_LfoGridSe2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LfoGridSe2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LfoGridSe3_L1d_Records: 8-byte records (LfoGridSe3_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LfoGridSe3_L1d 0x4868D1BA `mov (a0), d0`; LfoGridSe3_L4b 0x4868D1E8 `mov (a0), d0`
+#   +0   key          u32            LfoGridSe3_L1d 0x4868D1BA `mov (a0), d0`; LfoGridSe3_L4b 0x4868D1E8 `mov (a0), d0`
 #   +4   proc         ptr            LfoGridSe3_L4e 0x4868D1EB `mov (4, a0), a0`
-.macro REC_LfoGridSe3_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LfoGridSe3_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LfoGridSe4_L1d_Records: 8-byte records (LfoGridSe4_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LfoGridSe4_L1d 0x4868DA9E `mov (a0), d0`; LfoGridSe4_L4b 0x4868DACC `mov (a0), d0`
+#   +0   key          u32            LfoGridSe4_L1d 0x4868DA9E `mov (a0), d0`; LfoGridSe4_L4b 0x4868DACC `mov (a0), d0`
 #   +4   proc         ptr            LfoGridSe4_L4e 0x4868DACF `mov (4, a0), a0`
-.macro REC_LfoGridSe4_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LfoGridSe4_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcGridBoxSe2Proc_L1d_Records: 8-byte records (AcGridBoxSe2Proc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcGridBoxSe2Proc_L1d 0x4868E382 `mov (a0), d0`; AcGridBoxSe2Proc_L4c 0x4868E3B1 `mov (a0), d0`
+#   +0   key          u32            AcGridBoxSe2Proc_L1d 0x4868E382 `mov (a0), d0`; AcGridBoxSe2Proc_L4c 0x4868E3B1 `mov (a0), d0`
 #   +4   proc         ptr            AcGridBoxSe2Proc_L4f 0x4868E3B4 `mov (4, a0), a0`
-.macro REC_AcGridBoxSe2Proc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcGridBoxSe2Proc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ToneGridSe2_L1d_Records: 8-byte records (ToneGridSe2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ToneGridSe2_L1d 0x4868E72F `mov (a0), d0`; ToneGridSe2_L4b 0x4868E75D `mov (a0), d0`
+#   +0   key          u32            ToneGridSe2_L1d 0x4868E72F `mov (a0), d0`; ToneGridSe2_L4b 0x4868E75D `mov (a0), d0`
 #   +4   proc         ptr            ToneGridSe2_L4e 0x4868E760 `mov (4, a0), a0`
-.macro REC_ToneGridSe2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ToneGridSe2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcCtrlGridBoxSeProc_L1d_Records: 8-byte records (AcCtrlGridBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcCtrlGridBoxSeProc_L1d 0x4868EFEA `mov (a0), d0`; AcCtrlGridBoxSeProc_L4c 0x4868F019 `mov (a0), d0`
+#   +0   key          u32            AcCtrlGridBoxSeProc_L1d 0x4868EFEA `mov (a0), d0`; AcCtrlGridBoxSeProc_L4c 0x4868F019 `mov (a0), d0`
 #   +4   proc         ptr            AcCtrlGridBoxSeProc_L4f 0x4868F01C `mov (4, a0), a0`
-.macro REC_AcCtrlGridBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcCtrlGridBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_CtrlGridSe1_L1d_Records: 8-byte records (CtrlGridSe1_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            CtrlGridSe1_L1d 0x4868F471 `mov (a0), d0`; CtrlGridSe1_L4a 0x4868F49E `mov (a0), d0`
+#   +0   key          u32            CtrlGridSe1_L1d 0x4868F471 `mov (a0), d0`; CtrlGridSe1_L4a 0x4868F49E `mov (a0), d0`
 #   +4   proc         ptr            CtrlGridSe1_L4d 0x4868F4A1 `mov (4, a0), a0`
-.macro REC_CtrlGridSe1_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_CtrlGridSe1_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_DrumAcCtrlGridBoxSeProc_L1d_Records: 8-byte records (DrumAcCtrlGridBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            DrumAcCtrlGridBoxSeProc_L1d 0x48690965 `mov (a0), d0`; DrumAcCtrlGridBoxSeProc_L4c 0x48690994 `mov (a0), d0`
+#   +0   key          u32            DrumAcCtrlGridBoxSeProc_L1d 0x48690965 `mov (a0), d0`; DrumAcCtrlGridBoxSeProc_L4c 0x48690994 `mov (a0), d0`
 #   +4   proc         ptr            DrumAcCtrlGridBoxSeProc_L4f 0x48690997 `mov (4, a0), a0`
-.macro REC_DrumAcCtrlGridBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_DrumAcCtrlGridBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_DrumCtrlGridSe_L1d_Records: 8-byte records (DrumCtrlGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            DrumCtrlGridSe_L1d 0x48690CDE `mov (a0), d0`; DrumCtrlGridSe_L4b 0x48690D0C `mov (a0), d0`
+#   +0   key          u32            DrumCtrlGridSe_L1d 0x48690CDE `mov (a0), d0`; DrumCtrlGridSe_L4b 0x48690D0C `mov (a0), d0`
 #   +4   proc         ptr            DrumCtrlGridSe_L4e 0x48690D0F `mov (4, a0), a0`
-.macro REC_DrumCtrlGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_DrumCtrlGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcTsetGridBoxSeProc_L1d_Records: 8-byte records (AcTsetGridBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcTsetGridBoxSeProc_L1d 0x4869126E `mov (a0), d0`; AcTsetGridBoxSeProc_L4c 0x4869129D `mov (a0), d0`
+#   +0   key          u32            AcTsetGridBoxSeProc_L1d 0x4869126E `mov (a0), d0`; AcTsetGridBoxSeProc_L4c 0x4869129D `mov (a0), d0`
 #   +4   proc         ptr            AcTsetGridBoxSeProc_L4f 0x486912A0 `mov (4, a0), a0`
-.macro REC_AcTsetGridBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcTsetGridBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcGridBoxScrlSeProc_L1e_Records: 8-byte records (AcGridBoxScrlSeProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcGridBoxScrlSeProc_L1e 0x48692F3E `mov (a0), d0`; AcGridBoxScrlSeProc_L4d 0x48692F6D `mov (a0), d0`
+#   +0   key          u32            AcGridBoxScrlSeProc_L1e 0x48692F3E `mov (a0), d0`; AcGridBoxScrlSeProc_L4d 0x48692F6D `mov (a0), d0`
 #   +4   proc         ptr            AcGridBoxScrlSeProc_L50 0x48692F70 `mov (4, a0), a0`
-.macro REC_AcGridBoxScrlSeProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcGridBoxScrlSeProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LfoViewSe_L1d_Records: 8-byte records (LfoViewSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LfoViewSe_L1d 0x48693359 `mov (a0), d0`; LfoViewSe_L4a 0x48693386 `mov (a0), d0`
+#   +0   key          u32            LfoViewSe_L1d 0x48693359 `mov (a0), d0`; LfoViewSe_L4a 0x48693386 `mov (a0), d0`
 #   +4   proc         ptr            LfoViewSe_L4d 0x48693389 `mov (4, a0), a0`
-.macro REC_LfoViewSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LfoViewSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcDrumGridBoxSeProc_L1d_Records: 8-byte records (AcDrumGridBoxSeProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcDrumGridBoxSeProc_L1d 0x486995DF `mov (a0), d0`; AcDrumGridBoxSeProc_L4c 0x4869960E `mov (a0), d0`
+#   +0   key          u32            AcDrumGridBoxSeProc_L1d 0x486995DF `mov (a0), d0`; AcDrumGridBoxSeProc_L4c 0x4869960E `mov (a0), d0`
 #   +4   proc         ptr            AcDrumGridBoxSeProc_L4f 0x48699611 `mov (4, a0), a0`
-.macro REC_AcDrumGridBoxSeProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcDrumGridBoxSeProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_DrumMainGridSe_L1d_Records: 8-byte records (DrumMainGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            DrumMainGridSe_L1d 0x486999FA `mov (a0), d0`; DrumMainGridSe_L4a 0x48699A27 `mov (a0), d0`
+#   +0   key          u32            DrumMainGridSe_L1d 0x486999FA `mov (a0), d0`; DrumMainGridSe_L4a 0x48699A27 `mov (a0), d0`
 #   +4   proc         ptr            DrumMainGridSe_L4d 0x48699A2A `mov (4, a0), a0`
-.macro REC_DrumMainGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_DrumMainGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_DrumFilterGridSe_L1d_Records: 8-byte records (DrumFilterGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            DrumFilterGridSe_L1d 0x4869A92E `mov (a0), d0`; DrumFilterGridSe_L4a 0x4869A95B `mov (a0), d0`
+#   +0   key          u32            DrumFilterGridSe_L1d 0x4869A92E `mov (a0), d0`; DrumFilterGridSe_L4a 0x4869A95B `mov (a0), d0`
 #   +4   proc         ptr            DrumFilterGridSe_L4d 0x4869A95E `mov (4, a0), a0`
-.macro REC_DrumFilterGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_DrumFilterGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcDrumGridBoxSe2Proc_L1d_Records: 8-byte records (AcDrumGridBoxSe2Proc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcDrumGridBoxSe2Proc_L1d 0x4869B9AA `mov (a0), d0`; AcDrumGridBoxSe2Proc_L4c 0x4869B9D9 `mov (a0), d0`
+#   +0   key          u32            AcDrumGridBoxSe2Proc_L1d 0x4869B9AA `mov (a0), d0`; AcDrumGridBoxSe2Proc_L4c 0x4869B9D9 `mov (a0), d0`
 #   +4   proc         ptr            AcDrumGridBoxSe2Proc_L4f 0x4869B9DC `mov (4, a0), a0`
-.macro REC_AcDrumGridBoxSe2Proc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcDrumGridBoxSe2Proc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_DrumAmpGridSe_L1d_Records: 8-byte records (DrumAmpGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            DrumAmpGridSe_L1d 0x4869BDC5 `mov (a0), d0`; DrumAmpGridSe_L4a 0x4869BDF2 `mov (a0), d0`
+#   +0   key          u32            DrumAmpGridSe_L1d 0x4869BDC5 `mov (a0), d0`; DrumAmpGridSe_L4a 0x4869BDF2 `mov (a0), d0`
 #   +4   proc         ptr            DrumAmpGridSe_L4d 0x4869BDF5 `mov (4, a0), a0`
-.macro REC_DrumAmpGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_DrumAmpGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_DrumLfoGridSe_L1d_Records: 8-byte records (DrumLfoGridSe_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            DrumLfoGridSe_L1d 0x4869C603 `mov (a0), d0`; DrumLfoGridSe_L4a 0x4869C630 `mov (a0), d0`
+#   +0   key          u32            DrumLfoGridSe_L1d 0x4869C603 `mov (a0), d0`; DrumLfoGridSe_L4a 0x4869C630 `mov (a0), d0`
 #   +4   proc         ptr            DrumLfoGridSe_L4d 0x4869C633 `mov (4, a0), a0`
-.macro REC_DrumLfoGridSe_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_DrumLfoGridSe_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_LyricsBoxProc_L1d_Records: 8-byte records (LyricsBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            LyricsBoxProc_L1d 0x4869F517 `mov (a0), d0`; LyricsBoxProc_L4c 0x4869F546 `mov (a0), d0`
+#   +0   key          u32            LyricsBoxProc_L1d 0x4869F517 `mov (a0), d0`; LyricsBoxProc_L4c 0x4869F546 `mov (a0), d0`
 #   +4   proc         ptr            LyricsBoxProc_L4f 0x4869F549 `mov (4, a0), a0`
-.macro REC_LyricsBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_LyricsBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486A0F8E_Records: 8-byte records (func_486A0F8E_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486A0F8E 0x486A0F8E `mov (a0), d1`; func_486A0F8E_entry_L3b 0x486A0FCC `mov (a0), d1`
+#   +0   key          u32            func_486A0F8E 0x486A0F8E `mov (a0), d1`; func_486A0F8E_entry_L3b 0x486A0FCC `mov (a0), d1`
 #   +4   proc         ptr            func_486A0F8E_entry_L3e 0x486A0FCF `mov (4, a0), a0`
-.macro REC_func_486A0F8E_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486A0F8E_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsMuteTrBoxProc_L1d_Records: 8-byte records (PsMuteTrBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsMuteTrBoxProc_L1d 0x486A32D0 `mov (a0), d0`; PsMuteTrBoxProc_L4c 0x486A32FF `mov (a0), d0`
+#   +0   key          u32            PsMuteTrBoxProc_L1d 0x486A32D0 `mov (a0), d0`; PsMuteTrBoxProc_L4c 0x486A32FF `mov (a0), d0`
 #   +4   proc         ptr            PsMuteTrBoxProc_L4f 0x486A3302 `mov (4, a0), a0`
-.macro REC_PsMuteTrBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsMuteTrBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcFuncEditBoxProc_L1d_Records: 8-byte records (AcFuncEditBoxProc_L1d_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            AcFuncEditBoxProc_L1d 0x486A3A5E `mov (a0), d0`; AcFuncEditBoxProc_L4b 0x486A3A8C `mov (a0), d0`
+#   +0   key          u32            AcFuncEditBoxProc_L1d 0x486A3A5E `mov (a0), d0`; AcFuncEditBoxProc_L4b 0x486A3A8C `mov (a0), d0`
 #   +4   proc         ptr            AcFuncEditBoxProc_L4e 0x486A3A8F `mov (4, a0), a0`
-.macro REC_AcFuncEditBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcFuncEditBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_Dummy_L1d_Records: 8-byte records (FE_Dummy_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_Dummy_L1d 0x486A4026 `mov (a0), d0`; FE_Dummy_L4a 0x486A4053 `mov (a0), d0`
+#   +0   key          u32            FE_Dummy_L1d 0x486A4026 `mov (a0), d0`; FE_Dummy_L4a 0x486A4053 `mov (a0), d0`
 #   +4   proc         ptr            FE_Dummy_L4d 0x486A4056 `mov (4, a0), a0`
-.macro REC_FE_Dummy_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_Dummy_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcGridBoxDeluxProc_L20_Records: 8-byte records (AcGridBoxDeluxProc_L20_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcGridBoxDeluxProc_L20 0x486A468E `mov (a0), d0`; AcGridBoxDeluxProc_L4f 0x486A46BD `mov (a0), d0`
+#   +0   key          u32            AcGridBoxDeluxProc_L20 0x486A468E `mov (a0), d0`; AcGridBoxDeluxProc_L4f 0x486A46BD `mov (a0), d0`
 #   +4   proc         ptr            AcGridBoxDeluxProc_L52 0x486A46C0 `mov (4, a0), a0`
-.macro REC_AcGridBoxDeluxProc_L20_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcGridBoxDeluxProc_L20_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_StepCommandCatch_L20_Records: 8-byte records (StepCommandCatch_L20_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            StepCommandCatch_L20 0x486A560E `mov (a0), d0`; StepCommandCatch_L4f 0x486A563D `mov (a0), d0`
+#   +0   key          u32            StepCommandCatch_L20 0x486A560E `mov (a0), d0`; StepCommandCatch_L4f 0x486A563D `mov (a0), d0`
 #   +4   proc         ptr            StepCommandCatch_L52 0x486A5640 `mov (4, a0), a0`
-.macro REC_StepCommandCatch_L20_Records f0=0, proc=0
-	.long	\f0
+.macro REC_StepCommandCatch_L20_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486A675D_entry_L2e_Records: 8-byte records (func_486A675D_entry_L2e_Records, 128 records); fields, and what reads them:
-#   +0   f0           u32            func_486A675D_entry_L2e 0x486A6791 `mov (a0), d0`; func_486A675D_entry_L5b 0x486A67BE `mov (a0), d0`
+#   +0   key          u32            func_486A675D_entry_L2e 0x486A6791 `mov (a0), d0`; func_486A675D_entry_L5b 0x486A67BE `mov (a0), d0`
 #   +4   proc         ptr            func_486A675D_entry_L5e 0x486A67C1 `mov (4, a0), a0`
-.macro REC_func_486A675D_entry_L2e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486A675D_entry_L2e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TtCmStep_L11d_Records: 8-byte records (TtCmStep_L11d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TtCmStep_L11d 0x486A86C4 `mov (a0), d0`; TtCmStep_L14b 0x486A86F2 `mov (a0), d0`
+#   +0   key          u32            TtCmStep_L11d 0x486A86C4 `mov (a0), d0`; TtCmStep_L14b 0x486A86F2 `mov (a0), d0`
 #   +4   proc         ptr            TtCmStep_L14e 0x486A86F5 `mov (4, a0), a0`
-.macro REC_TtCmStep_L11d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TtCmStep_L11d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TtMspStep_L1f5_Records: 8-byte records (TtMspStep_L1f5_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TtMspStep_L1f5 0x486A89A0 `mov (a0), d0`; TtMspStep_L223 0x486A89CE `mov (a0), d0`
+#   +0   key          u32            TtMspStep_L1f5 0x486A89A0 `mov (a0), d0`; TtMspStep_L223 0x486A89CE `mov (a0), d0`
 #   +4   proc         ptr            TtMspStep_L226 0x486A89D1 `mov (4, a0), a0`
-.macro REC_TtMspStep_L1f5_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TtMspStep_L1f5_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -2088,42 +2076,42 @@
 .endm
 
 # REC_func_486A9BA1_entry_L1c3_Records: 8-byte records (func_486A9BA1_entry_L1c3_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486A9BA1_entry_L1c3 0x486A9D69 `mov (a0), d0`; func_486A9BA1_entry_L1e9 0x486A9D8F `mov (a0), d0`
+#   +0   key          u32            func_486A9BA1_entry_L1c3 0x486A9D69 `mov (a0), d0`; func_486A9BA1_entry_L1e9 0x486A9D8F `mov (a0), d0`
 #   +4   proc         ptr            func_486A9BA1_entry_L1ec 0x486A9D92 `mov (4, a0), a0`
-.macro REC_func_486A9BA1_entry_L1c3_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486A9BA1_entry_L1c3_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486AA0BD_entry_L62_Records: 8-byte records (func_486AA0BD_entry_L62_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486AA0BD_entry_L62 0x486AA124 `mov (a0), d0`; func_486AA0BD_entry_L89 0x486AA14B `mov (a0), d0`
+#   +0   key          u32            func_486AA0BD_entry_L62 0x486AA124 `mov (a0), d0`; func_486AA0BD_entry_L89 0x486AA14B `mov (a0), d0`
 #   +4   proc         ptr            func_486AA0BD_entry_L8c 0x486AA14E `mov (4, a0), a0`
-.macro REC_func_486AA0BD_entry_L62_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486AA0BD_entry_L62_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486AA374_entry_Lda_Records: 8-byte records (func_486AA374_entry_Lda_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486AA374_entry_Lda 0x486AA453 `mov (a0), d0`; func_486AA374_entry_L102 0x486AA47B `mov (a0), d0`
+#   +0   key          u32            func_486AA374_entry_Lda 0x486AA453 `mov (a0), d0`; func_486AA374_entry_L102 0x486AA47B `mov (a0), d0`
 #   +4   proc         ptr            func_486AA374_entry_L105 0x486AA47E `mov (4, a0), a0`
-.macro REC_func_486AA374_entry_Lda_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486AA374_entry_Lda_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486AA53E_entry_L3c2_Records: 8-byte records (func_486AA53E_entry_L3c2_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486AA53E_entry_L3c2 0x486AA905 `mov (a0), d0`; func_486AA53E_entry_L3e9 0x486AA92C `mov (a0), d0`
+#   +0   key          u32            func_486AA53E_entry_L3c2 0x486AA905 `mov (a0), d0`; func_486AA53E_entry_L3e9 0x486AA92C `mov (a0), d0`
 #   +4   proc         ptr            func_486AA53E_entry_L3ec 0x486AA92F `mov (4, a0), a0`
-.macro REC_func_486AA53E_entry_L3c2_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486AA53E_entry_L3c2_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486AA53E_entry_L22c_Records: 8-byte records (func_486AA53E_entry_L22c_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            func_486AA53E_entry_L22c 0x486AA76F `mov (a0), d0`; func_486AA53E_entry_L255 0x486AA798 `mov (a0), d0`
+#   +0   key          u32            func_486AA53E_entry_L22c 0x486AA76F `mov (a0), d0`; func_486AA53E_entry_L255 0x486AA798 `mov (a0), d0`
 #   +4   proc         ptr            func_486AA53E_entry_L258 0x486AA79B `mov (4, a0), a0`
-.macro REC_func_486AA53E_entry_L22c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486AA53E_entry_L22c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -2150,18 +2138,18 @@
 .endm
 
 # REC_func_486AB964_entry_L1ba_Records: 8-byte records (func_486AB964_entry_L1ba_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486AB964_entry_L1ba 0x486ABB23 `mov (a0), d0`; func_486AB964_entry_L1e3 0x486ABB4C `mov (a0), d0`
+#   +0   key          u32            func_486AB964_entry_L1ba 0x486ABB23 `mov (a0), d0`; func_486AB964_entry_L1e3 0x486ABB4C `mov (a0), d0`
 #   +4   proc         ptr            func_486AB964_entry_L1e6 0x486ABB4F `mov (4, a0), a0`
-.macro REC_func_486AB964_entry_L1ba_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486AB964_entry_L1ba_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_SndArgGridCheck_L1d_Records: 8-byte records (SndArgGridCheck_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            SndArgGridCheck_L1d 0x486AC470 `mov (a0), d0`; SndArgGridCheck_L4b 0x486AC49E `mov (a0), d0`
+#   +0   key          u32            SndArgGridCheck_L1d 0x486AC470 `mov (a0), d0`; SndArgGridCheck_L4b 0x486AC49E `mov (a0), d0`
 #   +4   proc         ptr            SndArgGridCheck_L4e 0x486AC4A1 `mov (4, a0), a0`
-.macro REC_SndArgGridCheck_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_SndArgGridCheck_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -2172,384 +2160,384 @@
 .endm
 
 # REC_FE_CmpRecTS_entry_L18_Records: 8-byte records (FE_CmpRecTS_entry_L18_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpRecTS_entry_L18 0x486AD7D7 `mov (a0), d0`; FE_CmpRecTS_entry_L45 0x486AD804 `mov (a0), d0`
+#   +0   key          u32            FE_CmpRecTS_entry_L18 0x486AD7D7 `mov (a0), d0`; FE_CmpRecTS_entry_L45 0x486AD804 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpRecTS_entry_L48 0x486AD807 `mov (4, a0), a0`
-.macro REC_FE_CmpRecTS_entry_L18_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpRecTS_entry_L18_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_CmpPartSel_L39_Records: 8-byte records (CmpPartSel_L39_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            CmpPartSel_L39 0x486ADB8D `mov (a0), d1`; CmpPartSel_L64 0x486ADBB8 `mov (a0), d1`
+#   +0   key          u32            CmpPartSel_L39 0x486ADB8D `mov (a0), d1`; CmpPartSel_L64 0x486ADBB8 `mov (a0), d1`
 #   +4   proc         ptr            CmpPartSel_L67 0x486ADBBB `mov (4, a0), a0`
-.macro REC_CmpPartSel_L39_Records f0=0, proc=0
-	.long	\f0
+.macro REC_CmpPartSel_L39_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpRecQtz_L1d_Records: 8-byte records (FE_CmpRecQtz_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpRecQtz_L1d 0x486AE24A `mov (a0), d0`; FE_CmpRecQtz_L4b 0x486AE278 `mov (a0), d0`
+#   +0   key          u32            FE_CmpRecQtz_L1d 0x486AE24A `mov (a0), d0`; FE_CmpRecQtz_L4b 0x486AE278 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpRecQtz_L4e 0x486AE27B `mov (4, a0), a0`
-.macro REC_FE_CmpRecQtz_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpRecQtz_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FuncEdit_rhyDstPart2_L1d_Records: 8-byte records (FuncEdit_rhyDstPart2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FuncEdit_rhyDstPart2_L1d 0x486AEA9F `mov (a0), d0`; FuncEdit_rhyDstPart2_L4a 0x486AEACC `mov (a0), d0`
+#   +0   key          u32            FuncEdit_rhyDstPart2_L1d 0x486AEA9F `mov (a0), d0`; FuncEdit_rhyDstPart2_L4a 0x486AEACC `mov (a0), d0`
 #   +4   proc         ptr            FuncEdit_rhyDstPart2_L4d 0x486AEACF `mov (4, a0), a0`
-.macro REC_FuncEdit_rhyDstPart2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FuncEdit_rhyDstPart2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FuncEdit_rhyPart2_L1d_Records: 8-byte records (FuncEdit_rhyPart2_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FuncEdit_rhyPart2_L1d 0x486AF638 `mov (a0), d0`; FuncEdit_rhyPart2_L4a 0x486AF665 `mov (a0), d0`
+#   +0   key          u32            FuncEdit_rhyPart2_L1d 0x486AF638 `mov (a0), d0`; FuncEdit_rhyPart2_L4a 0x486AF665 `mov (a0), d0`
 #   +4   proc         ptr            FuncEdit_rhyPart2_L4d 0x486AF668 `mov (4, a0), a0`
-.macro REC_FuncEdit_rhyPart2_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FuncEdit_rhyPart2_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CompPartCopyMem_L1d_Records: 8-byte records (FE_CompPartCopyMem_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CompPartCopyMem_L1d 0x486AFB54 `mov (a0), d0`; FE_CompPartCopyMem_L4b 0x486AFB82 `mov (a0), d0`
+#   +0   key          u32            FE_CompPartCopyMem_L1d 0x486AFB54 `mov (a0), d0`; FE_CompPartCopyMem_L4b 0x486AFB82 `mov (a0), d0`
 #   +4   proc         ptr            FE_CompPartCopyMem_L4e 0x486AFB85 `mov (4, a0), a0`
-.macro REC_FE_CompPartCopyMem_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CompPartCopyMem_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CompPartCopyVari_L1d_Records: 8-byte records (FE_CompPartCopyVari_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CompPartCopyVari_L1d 0x486AFD3E `mov (a0), d0`; FE_CompPartCopyVari_L4a 0x486AFD6B `mov (a0), d0`
+#   +0   key          u32            FE_CompPartCopyVari_L1d 0x486AFD3E `mov (a0), d0`; FE_CompPartCopyVari_L4a 0x486AFD6B `mov (a0), d0`
 #   +4   proc         ptr            FE_CompPartCopyVari_L4d 0x486AFD6E `mov (4, a0), a0`
-.macro REC_FE_CompPartCopyVari_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CompPartCopyVari_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToCmpFstMeas_L1d_Records: 8-byte records (FE_SeqToCmpFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToCmpFstMeas_L1d 0x486B02C8 `mov (a0), d0`; FE_SeqToCmpFstMeas_L4b 0x486B02F6 `mov (a0), d0`
+#   +0   key          u32            FE_SeqToCmpFstMeas_L1d 0x486B02C8 `mov (a0), d0`; FE_SeqToCmpFstMeas_L4b 0x486B02F6 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToCmpFstMeas_L4e 0x486B02F9 `mov (4, a0), a0`
-.macro REC_FE_SeqToCmpFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToCmpFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToCmpLstMeas_L1d_Records: 8-byte records (FE_SeqToCmpLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToCmpLstMeas_L1d 0x486B03A2 `mov (a0), d0`; FE_SeqToCmpLstMeas_L4b 0x486B03D0 `mov (a0), d0`
+#   +0   key          u32            FE_SeqToCmpLstMeas_L1d 0x486B03A2 `mov (a0), d0`; FE_SeqToCmpLstMeas_L4b 0x486B03D0 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToCmpLstMeas_L4e 0x486B03D3 `mov (4, a0), a0`
-.macro REC_FE_SeqToCmpLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToCmpLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToCmpTrans_L1d_Records: 8-byte records (FE_SeqToCmpTrans_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToCmpTrans_L1d 0x486B075E `mov (a0), d0`; FE_SeqToCmpTrans_L4b 0x486B078C `mov (a0), d0`
+#   +0   key          u32            FE_SeqToCmpTrans_L1d 0x486B075E `mov (a0), d0`; FE_SeqToCmpTrans_L4b 0x486B078C `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToCmpTrans_L4e 0x486B078F `mov (4, a0), a0`
-.macro REC_FE_SeqToCmpTrans_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToCmpTrans_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToCmpMemory_L1d_Records: 8-byte records (FE_SeqToCmpMemory_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToCmpMemory_L1d 0x486B084E `mov (a0), d0`; FE_SeqToCmpMemory_L4b 0x486B087C `mov (a0), d0`
+#   +0   key          u32            FE_SeqToCmpMemory_L1d 0x486B084E `mov (a0), d0`; FE_SeqToCmpMemory_L4b 0x486B087C `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToCmpMemory_L4e 0x486B087F `mov (4, a0), a0`
-.macro REC_FE_SeqToCmpMemory_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToCmpMemory_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToCmpPattern_L1d_Records: 8-byte records (FE_SeqToCmpPattern_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToCmpPattern_L1d 0x486B094C `mov (a0), d0`; FE_SeqToCmpPattern_L4a 0x486B0979 `mov (a0), d0`
+#   +0   key          u32            FE_SeqToCmpPattern_L1d 0x486B094C `mov (a0), d0`; FE_SeqToCmpPattern_L4a 0x486B0979 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToCmpPattern_L4d 0x486B097C `mov (4, a0), a0`
-.macro REC_FE_SeqToCmpPattern_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToCmpPattern_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_CmpPartSetGrid3_L1f_Records: 8-byte records (CmpPartSetGrid3_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            CmpPartSetGrid3_L1f 0x486B1E9D `mov (a0), d0`; CmpPartSetGrid3_L4c 0x486B1ECA `mov (a0), d0`
+#   +0   key          u32            CmpPartSetGrid3_L1f 0x486B1E9D `mov (a0), d0`; CmpPartSetGrid3_L4c 0x486B1ECA `mov (a0), d0`
 #   +4   proc         ptr            CmpPartSetGrid3_L4f 0x486B1ECD `mov (4, a0), a0`
-.macro REC_CmpPartSetGrid3_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_CmpPartSetGrid3_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMCopySPart_L1d_Records: 8-byte records (FE_CmpMCopySPart_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMCopySPart_L1d 0x486B2370 `mov (a0), d0`; FE_CmpMCopySPart_L4b 0x486B239E `mov (a0), d0`
+#   +0   key          u32            FE_CmpMCopySPart_L1d 0x486B2370 `mov (a0), d0`; FE_CmpMCopySPart_L4b 0x486B239E `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMCopySPart_L4e 0x486B23A1 `mov (4, a0), a0`
-.macro REC_FE_CmpMCopySPart_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMCopySPart_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMCopyFstMeas_L1d_Records: 8-byte records (FE_CmpMCopyFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMCopyFstMeas_L1d 0x486B2444 `mov (a0), d0`; FE_CmpMCopyFstMeas_L4b 0x486B2472 `mov (a0), d0`
+#   +0   key          u32            FE_CmpMCopyFstMeas_L1d 0x486B2444 `mov (a0), d0`; FE_CmpMCopyFstMeas_L4b 0x486B2472 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMCopyFstMeas_L4e 0x486B2475 `mov (4, a0), a0`
-.macro REC_FE_CmpMCopyFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMCopyFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMCopyLstMeas_L1d_Records: 8-byte records (FE_CmpMCopyLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMCopyLstMeas_L1d 0x486B251E `mov (a0), d0`; FE_CmpMCopyLstMeas_L4b 0x486B254C `mov (a0), d0`
+#   +0   key          u32            FE_CmpMCopyLstMeas_L1d 0x486B251E `mov (a0), d0`; FE_CmpMCopyLstMeas_L4b 0x486B254C `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMCopyLstMeas_L4e 0x486B254F `mov (4, a0), a0`
-.macro REC_FE_CmpMCopyLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMCopyLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMCopyDPart_L1d_Records: 8-byte records (FE_CmpMCopyDPart_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMCopyDPart_L1d 0x486B25F1 `mov (a0), d0`; FE_CmpMCopyDPart_L4b 0x486B261F `mov (a0), d0`
+#   +0   key          u32            FE_CmpMCopyDPart_L1d 0x486B25F1 `mov (a0), d0`; FE_CmpMCopyDPart_L4b 0x486B261F `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMCopyDPart_L4e 0x486B2622 `mov (4, a0), a0`
-.macro REC_FE_CmpMCopyDPart_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMCopyDPart_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMCopySrtMeas_L1d_Records: 8-byte records (FE_CmpMCopySrtMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMCopySrtMeas_L1d 0x486B26C5 `mov (a0), d0`; FE_CmpMCopySrtMeas_L4b 0x486B26F3 `mov (a0), d0`
+#   +0   key          u32            FE_CmpMCopySrtMeas_L1d 0x486B26C5 `mov (a0), d0`; FE_CmpMCopySrtMeas_L4b 0x486B26F3 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMCopySrtMeas_L4e 0x486B26F6 `mov (4, a0), a0`
-.macro REC_FE_CmpMCopySrtMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMCopySrtMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMDelFstMeas_L1d_Records: 8-byte records (FE_CmpMDelFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMDelFstMeas_L1d 0x486B2D0A `mov (a0), d0`; FE_CmpMDelFstMeas_L4b 0x486B2D38 `mov (a0), d0`
+#   +0   key          u32            FE_CmpMDelFstMeas_L1d 0x486B2D0A `mov (a0), d0`; FE_CmpMDelFstMeas_L4b 0x486B2D38 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMDelFstMeas_L4e 0x486B2D3B `mov (4, a0), a0`
-.macro REC_FE_CmpMDelFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMDelFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMDelLstMeas_L1d_Records: 8-byte records (FE_CmpMDelLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMDelLstMeas_L1d 0x486B2DE4 `mov (a0), d0`; FE_CmpMDelLstMeas_L4b 0x486B2E12 `mov (a0), d0`
+#   +0   key          u32            FE_CmpMDelLstMeas_L1d 0x486B2DE4 `mov (a0), d0`; FE_CmpMDelLstMeas_L4b 0x486B2E12 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMDelLstMeas_L4e 0x486B2E15 `mov (4, a0), a0`
-.macro REC_FE_CmpMDelLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMDelLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMErsSPart_L1d_Records: 8-byte records (FE_CmpMErsSPart_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMErsSPart_L1d 0x486B329F `mov (a0), d0`; FE_CmpMErsSPart_L4b 0x486B32CD `mov (a0), d0`
+#   +0   key          u32            FE_CmpMErsSPart_L1d 0x486B329F `mov (a0), d0`; FE_CmpMErsSPart_L4b 0x486B32CD `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMErsSPart_L4e 0x486B32D0 `mov (4, a0), a0`
-.macro REC_FE_CmpMErsSPart_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMErsSPart_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMErsFstMeas_L1d_Records: 8-byte records (FE_CmpMErsFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMErsFstMeas_L1d 0x486B3373 `mov (a0), d0`; FE_CmpMErsFstMeas_L4b 0x486B33A1 `mov (a0), d0`
+#   +0   key          u32            FE_CmpMErsFstMeas_L1d 0x486B3373 `mov (a0), d0`; FE_CmpMErsFstMeas_L4b 0x486B33A1 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMErsFstMeas_L4e 0x486B33A4 `mov (4, a0), a0`
-.macro REC_FE_CmpMErsFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMErsFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMErsLstMeas_L1d_Records: 8-byte records (FE_CmpMErsLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMErsLstMeas_L1d 0x486B344D `mov (a0), d0`; FE_CmpMErsLstMeas_L4b 0x486B347B `mov (a0), d0`
+#   +0   key          u32            FE_CmpMErsLstMeas_L1d 0x486B344D `mov (a0), d0`; FE_CmpMErsLstMeas_L4b 0x486B347B `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMErsLstMeas_L4e 0x486B347E `mov (4, a0), a0`
-.macro REC_FE_CmpMErsLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMErsLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMInsFstMeas_L1d_Records: 8-byte records (FE_CmpMInsFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMInsFstMeas_L1d 0x486B375C `mov (a0), d0`; FE_CmpMInsFstMeas_L4b 0x486B378A `mov (a0), d0`
+#   +0   key          u32            FE_CmpMInsFstMeas_L1d 0x486B375C `mov (a0), d0`; FE_CmpMInsFstMeas_L4b 0x486B378A `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMInsFstMeas_L4e 0x486B378D `mov (4, a0), a0`
-.macro REC_FE_CmpMInsFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMInsFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpMInsMeasNum_L1d_Records: 8-byte records (FE_CmpMInsMeasNum_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpMInsMeasNum_L1d 0x486B3836 `mov (a0), d0`; FE_CmpMInsMeasNum_L4b 0x486B3864 `mov (a0), d0`
+#   +0   key          u32            FE_CmpMInsMeasNum_L1d 0x486B3836 `mov (a0), d0`; FE_CmpMInsMeasNum_L4b 0x486B3864 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpMInsMeasNum_L4e 0x486B3867 `mov (4, a0), a0`
-.macro REC_FE_CmpMInsMeasNum_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpMInsMeasNum_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpRecChdModGrp_L1d_Records: 8-byte records (FE_CmpRecChdModGrp_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpRecChdModGrp_L1d 0x486B3BA1 `mov (a0), d0`; FE_CmpRecChdModGrp_L4a 0x486B3BCE `mov (a0), d0`
+#   +0   key          u32            FE_CmpRecChdModGrp_L1d 0x486B3BA1 `mov (a0), d0`; FE_CmpRecChdModGrp_L4a 0x486B3BCE `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpRecChdModGrp_L4d 0x486B3BD1 `mov (4, a0), a0`
-.macro REC_FE_CmpRecChdModGrp_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpRecChdModGrp_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_CmpRecChdModTyp_entry_L18_Records: 8-byte records (FE_CmpRecChdModTyp_entry_L18_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_CmpRecChdModTyp_entry_L18 0x486B3E29 `mov (a0), d0`; FE_CmpRecChdModTyp_entry_L46 0x486B3E57 `mov (a0), d0`
+#   +0   key          u32            FE_CmpRecChdModTyp_entry_L18 0x486B3E29 `mov (a0), d0`; FE_CmpRecChdModTyp_entry_L46 0x486B3E57 `mov (a0), d0`
 #   +4   proc         ptr            FE_CmpRecChdModTyp_entry_L49 0x486B3E5A `mov (4, a0), a0`
-.macro REC_FE_CmpRecChdModTyp_entry_L18_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_CmpRecChdModTyp_entry_L18_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_PadRecQtz_L1d_Records: 8-byte records (FE_PadRecQtz_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_PadRecQtz_L1d 0x486B65AB `mov (a0), d0`; FE_PadRecQtz_L4b 0x486B65D9 `mov (a0), d0`
+#   +0   key          u32            FE_PadRecQtz_L1d 0x486B65AB `mov (a0), d0`; FE_PadRecQtz_L4b 0x486B65D9 `mov (a0), d0`
 #   +4   proc         ptr            FE_PadRecQtz_L4e 0x486B65DC `mov (4, a0), a0`
-.macro REC_FE_PadRecQtz_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_PadRecQtz_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_PadRecChdModGrp_L1d_Records: 8-byte records (FE_PadRecChdModGrp_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_PadRecChdModGrp_L1d 0x486B6710 `mov (a0), d0`; FE_PadRecChdModGrp_L4b 0x486B673E `mov (a0), d0`
+#   +0   key          u32            FE_PadRecChdModGrp_L1d 0x486B6710 `mov (a0), d0`; FE_PadRecChdModGrp_L4b 0x486B673E `mov (a0), d0`
 #   +4   proc         ptr            FE_PadRecChdModGrp_L4e 0x486B6741 `mov (4, a0), a0`
-.macro REC_FE_PadRecChdModGrp_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_PadRecChdModGrp_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_PadRecChdModTyp_entry_L18_Records: 8-byte records (FE_PadRecChdModTyp_entry_L18_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_PadRecChdModTyp_entry_L18 0x486B692E `mov (a0), d0`; FE_PadRecChdModTyp_entry_L45 0x486B695B `mov (a0), d0`
+#   +0   key          u32            FE_PadRecChdModTyp_entry_L18 0x486B692E `mov (a0), d0`; FE_PadRecChdModTyp_entry_L45 0x486B695B `mov (a0), d0`
 #   +4   proc         ptr            FE_PadRecChdModTyp_entry_L48 0x486B695E `mov (4, a0), a0`
-.macro REC_FE_PadRecChdModTyp_entry_L18_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_PadRecChdModTyp_entry_L18_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PadPartSetGrid3_L1f_Records: 8-byte records (PadPartSetGrid3_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PadPartSetGrid3_L1f 0x486B8F05 `mov (a0), d0`; PadPartSetGrid3_L4c 0x486B8F32 `mov (a0), d0`
+#   +0   key          u32            PadPartSetGrid3_L1f 0x486B8F05 `mov (a0), d0`; PadPartSetGrid3_L4c 0x486B8F32 `mov (a0), d0`
 #   +4   proc         ptr            PadPartSetGrid3_L4f 0x486B8F35 `mov (4, a0), a0`
-.macro REC_PadPartSetGrid3_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PadPartSetGrid3_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_PadRecTS_entry_L18_Records: 8-byte records (FE_PadRecTS_entry_L18_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_PadRecTS_entry_L18 0x486B95C3 `mov (a0), d0`; FE_PadRecTS_entry_L46 0x486B95F1 `mov (a0), d0`
+#   +0   key          u32            FE_PadRecTS_entry_L18 0x486B95C3 `mov (a0), d0`; FE_PadRecTS_entry_L46 0x486B95F1 `mov (a0), d0`
 #   +4   proc         ptr            FE_PadRecTS_entry_L49 0x486B95F4 `mov (4, a0), a0`
-.macro REC_FE_PadRecTS_entry_L18_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_PadRecTS_entry_L18_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToPadFstMeas_L1d_Records: 8-byte records (FE_SeqToPadFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToPadFstMeas_L1d 0x486B9C3D `mov (a0), d0`; FE_SeqToPadFstMeas_L4b 0x486B9C6B `mov (a0), d0`
+#   +0   key          u32            FE_SeqToPadFstMeas_L1d 0x486B9C3D `mov (a0), d0`; FE_SeqToPadFstMeas_L4b 0x486B9C6B `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToPadFstMeas_L4e 0x486B9C6E `mov (4, a0), a0`
-.macro REC_FE_SeqToPadFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToPadFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToPadLstMeas_L1d_Records: 8-byte records (FE_SeqToPadLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToPadLstMeas_L1d 0x486B9D10 `mov (a0), d0`; FE_SeqToPadLstMeas_L4b 0x486B9D3E `mov (a0), d0`
+#   +0   key          u32            FE_SeqToPadLstMeas_L1d 0x486B9D10 `mov (a0), d0`; FE_SeqToPadLstMeas_L4b 0x486B9D3E `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToPadLstMeas_L4e 0x486B9D41 `mov (4, a0), a0`
-.macro REC_FE_SeqToPadLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToPadLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToPadTrans_L1d_Records: 8-byte records (FE_SeqToPadTrans_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToPadTrans_L1d 0x486B9DE3 `mov (a0), d0`; FE_SeqToPadTrans_L4b 0x486B9E11 `mov (a0), d0`
+#   +0   key          u32            FE_SeqToPadTrans_L1d 0x486B9DE3 `mov (a0), d0`; FE_SeqToPadTrans_L4b 0x486B9E11 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToPadTrans_L4e 0x486B9E14 `mov (4, a0), a0`
-.macro REC_FE_SeqToPadTrans_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToPadTrans_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToPadMemory_L1d_Records: 8-byte records (FE_SeqToPadMemory_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToPadMemory_L1d 0x486B9ED3 `mov (a0), d0`; FE_SeqToPadMemory_L4b 0x486B9F01 `mov (a0), d0`
+#   +0   key          u32            FE_SeqToPadMemory_L1d 0x486B9ED3 `mov (a0), d0`; FE_SeqToPadMemory_L4b 0x486B9F01 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToPadMemory_L4e 0x486B9F04 `mov (4, a0), a0`
-.macro REC_FE_SeqToPadMemory_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToPadMemory_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqToPadPattern_L1d_Records: 8-byte records (FE_SeqToPadPattern_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqToPadPattern_L1d 0x486B9FD1 `mov (a0), d0`; FE_SeqToPadPattern_L4b 0x486B9FFF `mov (a0), d0`
+#   +0   key          u32            FE_SeqToPadPattern_L1d 0x486B9FD1 `mov (a0), d0`; FE_SeqToPadPattern_L4b 0x486B9FFF `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqToPadPattern_L4e 0x486BA002 `mov (4, a0), a0`
-.macro REC_FE_SeqToPadPattern_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqToPadPattern_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsFileNameBoxProc_L1f_Records: 8-byte records (PsFileNameBoxProc_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsFileNameBoxProc_L1f 0x486BC6E2 `mov (a0), d0`; PsFileNameBoxProc_L4e 0x486BC711 `mov (a0), d0`
+#   +0   key          u32            PsFileNameBoxProc_L1f 0x486BC6E2 `mov (a0), d0`; PsFileNameBoxProc_L4e 0x486BC711 `mov (a0), d0`
 #   +4   proc         ptr            PsFileNameBoxProc_L51 0x486BC714 `mov (4, a0), a0`
-.macro REC_PsFileNameBoxProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsFileNameBoxProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsFileNmTwoBoxProc_L21_Records: 8-byte records (PsFileNmTwoBoxProc_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsFileNmTwoBoxProc_L21 0x486BCCEF `mov (a0), d0`; PsFileNmTwoBoxProc_L51 0x486BCD1F `mov (a0), d0`
+#   +0   key          u32            PsFileNmTwoBoxProc_L21 0x486BCCEF `mov (a0), d0`; PsFileNmTwoBoxProc_L51 0x486BCD1F `mov (a0), d0`
 #   +4   proc         ptr            PsFileNmTwoBoxProc_L54 0x486BCD22 `mov (4, a0), a0`
-.macro REC_PsFileNmTwoBoxProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsFileNmTwoBoxProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsOptionTwoBoxProc_L21_Records: 8-byte records (PsOptionTwoBoxProc_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsOptionTwoBoxProc_L21 0x486BD164 `mov (a0), d0`; PsOptionTwoBoxProc_L50 0x486BD193 `mov (a0), d0`
+#   +0   key          u32            PsOptionTwoBoxProc_L21 0x486BD164 `mov (a0), d0`; PsOptionTwoBoxProc_L50 0x486BD193 `mov (a0), d0`
 #   +4   proc         ptr            PsOptionTwoBoxProc_L53 0x486BD196 `mov (4, a0), a0`
-.macro REC_PsOptionTwoBoxProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsOptionTwoBoxProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsOptionBoxProc_L1e_Records: 8-byte records (PsOptionBoxProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsOptionBoxProc_L1e 0x486BD5A2 `mov (a0), d0`; PsOptionBoxProc_L4d 0x486BD5D1 `mov (a0), d0`
+#   +0   key          u32            PsOptionBoxProc_L1e 0x486BD5A2 `mov (a0), d0`; PsOptionBoxProc_L4d 0x486BD5D1 `mov (a0), d0`
 #   +4   proc         ptr            PsOptionBoxProc_L50 0x486BD5D4 `mov (4, a0), a0`
-.macro REC_PsOptionBoxProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsOptionBoxProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsPlayFileNameBoxProc_L1f_Records: 8-byte records (PsPlayFileNameBoxProc_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsPlayFileNameBoxProc_L1f 0x486BD8D9 `mov (a0), d0`; PsPlayFileNameBoxProc_L4e 0x486BD908 `mov (a0), d0`
+#   +0   key          u32            PsPlayFileNameBoxProc_L1f 0x486BD8D9 `mov (a0), d0`; PsPlayFileNameBoxProc_L4e 0x486BD908 `mov (a0), d0`
 #   +4   proc         ptr            PsPlayFileNameBoxProc_L51 0x486BD90B `mov (4, a0), a0`
-.macro REC_PsPlayFileNameBoxProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsPlayFileNameBoxProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_IvIndexSwCtrlProc_L1d_Records: 8-byte records (IvIndexSwCtrlProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            IvIndexSwCtrlProc_L1d 0x486BEF5A `mov (a0), d0`; IvIndexSwCtrlProc_L4c 0x486BEF89 `mov (a0), d0`
+#   +0   key          u32            IvIndexSwCtrlProc_L1d 0x486BEF5A `mov (a0), d0`; IvIndexSwCtrlProc_L4c 0x486BEF89 `mov (a0), d0`
 #   +4   proc         ptr            IvIndexSwCtrlProc_L4f 0x486BEF8C `mov (4, a0), a0`
-.macro REC_IvIndexSwCtrlProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_IvIndexSwCtrlProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486BFBDA_entry_L19_Table: 4-byte records (func_486BFBDA_entry_L19_Table, 15 records); fields, and what reads them:
-#   +0   f0           s16            func_486BFBDA_entry_L19 0x486BFBF5 `movhu (d0, a0), d0`
+#   +0   key          s16            func_486BFBDA_entry_L19 0x486BFBF5 `movhu (d0, a0), d0`
 #   +2   f2           u8             func_486BFBDA_entry_L47 0x486BFC23 `movbu (2, a0), d0`; func_486BFBDA_entry_L47 0x486BFC23 `movbu (2, a1), d1`
 #   +3   x3           u8[1]          no reader seen
-.macro REC_func_486BFBDA_entry_L19_Table f0=0, f2=0, x3
-	.word	\f0
+.macro REC_func_486BFBDA_entry_L19_Table key=0, f2=0, x3
+	.word	\key
 	.byte	\f2
 	.ascii	"\x3"
 .endm
 
 # REC_FmmSmfMedleyFunc_entry_L19_Records: 8-byte records (FmmSmfMedleyFunc_entry_L19_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FmmSmfMedleyFunc_entry_L19 0x486CB1D9 `mov (a0), d0`; FmmSmfMedleyFunc_entry_L47 0x486CB207 `mov (a0), d0`
+#   +0   key          u32            FmmSmfMedleyFunc_entry_L19 0x486CB1D9 `mov (a0), d0`; FmmSmfMedleyFunc_entry_L47 0x486CB207 `mov (a0), d0`
 #   +4   proc         ptr            FmmSmfMedleyFunc_entry_L4a 0x486CB20A `mov (4, a0), a0`
-.macro REC_FmmSmfMedleyFunc_entry_L19_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FmmSmfMedleyFunc_entry_L19_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486CD429_Records: 8-byte records (func_486CD429_Records, 5 records); fields, and what reads them:
 #   +0   index        ptr            func_486CD429_entry_L34 0x486CD462 `mov (a3), a0`
 #   +4   fmmseek_d0   u16            func_486CD429 0x486CD429 `movhu (4, a3), d0`
-#   +6   f6           u16            func_486CD429 0x486CD429 `movhu (a2), d1`; func_486CD429_entry_L40 0x486CD46E `movhu (a2), d0`
-.macro REC_func_486CD429_Records index=0, fmmseek_d0=0, f6=0
+#   +6   count        u16            func_486CD429 0x486CD429 `movhu (a2), d1`; func_486CD429_entry_L40 0x486CD46E `movhu (a2), d0`
+.macro REC_func_486CD429_Records index=0, fmmseek_d0=0, count=0
 	.long	\index
 	.word	\fmmseek_d0
-	.word	\f6
+	.word	\count
 .endm
 
 # REC_func_486CD274_Table: 8-byte records (func_486CD274_Table, 7 records); fields, and what reads them:
-#   +0   f0           u16            func_486CD274_entry_L62 0x486CD2DB `movhu (d3, a0), d0`; func_486CD8D9_entry_Lb 0x486CD8E9 `movhu (a3), d0` (+1)
+#   +0   fmmseek_d0   u16            func_486CD274_entry_L62 0x486CD2DB `movhu (d3, a0), d0`; func_486CD8D9_entry_Lb 0x486CD8E9 `movhu (a3), d0` (+1)
 #   +2   index        u16            func_486CEBEF_entry_L14 0x486CEC08 `movhu (2, a0), d1`
 #   +4   index_       u16            func_486CD8D9_entry_Lb 0x486CD8E9 `movhu (4, a3), d0`; func_486CEBEF_entry_L74 0x486CEC68 `movhu (4, a0), d0`
 #   +6   index__      u16            func_486CEBEF_entry_L89 0x486CEC7D `movhu (6, a2), d1`
-.macro REC_func_486CD274_Table f0=0, index=0, index_=0, index__=0
-	.word	\f0
+.macro REC_func_486CD274_Table fmmseek_d0=0, index=0, index_=0, index__=0
+	.word	\fmmseek_d0
 	.word	\index
 	.word	\index_
 	.word	\index__
@@ -2566,564 +2554,564 @@
 .endm
 
 # REC_func_486CF41A_Table_2: 8-byte records (func_486CF41A_Table_2, 8 records); fields, and what reads them:
-#   +0   f0           u8             func_486CF41A_entry_L89 0x486CF4A8 `movbu (d0, a2), d0`; func_486CF41A_entry_Ld9 0x486CF4F8 `movbu (d0, a3), d0`
+#   +0   index        u8             func_486CF41A_entry_L89 0x486CF4A8 `movbu (d0, a2), d0`; func_486CF41A_entry_Ld9 0x486CF4F8 `movbu (d0, a3), d0`
 #   +1   x1           u8[3]          no reader seen
 #   +4   proc         ptr            func_486CF41A_entry_L89 0x486CF4A8 `mov (4, a0), a1`
-.macro REC_func_486CF41A_Table_2 f0=0, x1, proc=0
-	.byte	\f0
+.macro REC_func_486CF41A_Table_2 index=0, x1, proc=0
+	.byte	\index
 	.ascii	"\x1"
 	.long	\proc
 .endm
 
 # REC_FE_SeqMenuSongSel_L1f_Records: 8-byte records (FE_SeqMenuSongSel_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMenuSongSel_L1f 0x486D5E78 `mov (a0), d0`; FE_SeqMenuSongSel_L49 0x486D5EA2 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMenuSongSel_L1f 0x486D5E78 `mov (a0), d0`; FE_SeqMenuSongSel_L49 0x486D5EA2 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMenuSongSel_L4c 0x486D5EA5 `mov (4, a0), a0`
-.macro REC_FE_SeqMenuSongSel_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMenuSongSel_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqPlaySongSel_L1d_Records: 8-byte records (FE_SeqPlaySongSel_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqPlaySongSel_L1d 0x486D6724 `mov (a0), d0`; FE_SeqPlaySongSel_L4b 0x486D6752 `mov (a0), d0`
+#   +0   key          u32            FE_SeqPlaySongSel_L1d 0x486D6724 `mov (a0), d0`; FE_SeqPlaySongSel_L4b 0x486D6752 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqPlaySongSel_L4e 0x486D6755 `mov (4, a0), a0`
-.macro REC_FE_SeqPlaySongSel_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqPlaySongSel_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqCycPlySrt_L1d_Records: 8-byte records (FE_SeqCycPlySrt_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqCycPlySrt_L1d 0x486D67FE `mov (a0), d0`; FE_SeqCycPlySrt_L4b 0x486D682C `mov (a0), d0`
+#   +0   key          u32            FE_SeqCycPlySrt_L1d 0x486D67FE `mov (a0), d0`; FE_SeqCycPlySrt_L4b 0x486D682C `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqCycPlySrt_L4e 0x486D682F `mov (4, a0), a0`
-.macro REC_FE_SeqCycPlySrt_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqCycPlySrt_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqCycPlyEnd_L1d_Records: 8-byte records (FE_SeqCycPlyEnd_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqCycPlyEnd_L1d 0x486D68DC `mov (a0), d0`; FE_SeqCycPlyEnd_L4b 0x486D690A `mov (a0), d0`
+#   +0   key          u32            FE_SeqCycPlyEnd_L1d 0x486D68DC `mov (a0), d0`; FE_SeqCycPlyEnd_L4b 0x486D690A `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqCycPlyEnd_L4e 0x486D690D `mov (4, a0), a0`
-.macro REC_FE_SeqCycPlyEnd_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqCycPlyEnd_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqCycRecSrt_L1d_Records: 8-byte records (FE_SeqCycRecSrt_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqCycRecSrt_L1d 0x486D6DF4 `mov (a0), d0`; FE_SeqCycRecSrt_L4b 0x486D6E22 `mov (a0), d0`
+#   +0   key          u32            FE_SeqCycRecSrt_L1d 0x486D6DF4 `mov (a0), d0`; FE_SeqCycRecSrt_L4b 0x486D6E22 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqCycRecSrt_L4e 0x486D6E25 `mov (4, a0), a0`
-.macro REC_FE_SeqCycRecSrt_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqCycRecSrt_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqCycRecEnd_L1d_Records: 8-byte records (FE_SeqCycRecEnd_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqCycRecEnd_L1d 0x486D6ED2 `mov (a0), d0`; FE_SeqCycRecEnd_L4b 0x486D6F00 `mov (a0), d0`
+#   +0   key          u32            FE_SeqCycRecEnd_L1d 0x486D6ED2 `mov (a0), d0`; FE_SeqCycRecEnd_L4b 0x486D6F00 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqCycRecEnd_L4e 0x486D6F03 `mov (4, a0), a0`
-.macro REC_FE_SeqCycRecEnd_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqCycRecEnd_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqSongClearSel_L1d_Records: 8-byte records (FE_SeqSongClearSel_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqSongClearSel_L1d 0x486D7311 `mov (a0), d0`; FE_SeqSongClearSel_L4a 0x486D733E `mov (a0), d0`
+#   +0   key          u32            FE_SeqSongClearSel_L1d 0x486D7311 `mov (a0), d0`; FE_SeqSongClearSel_L4a 0x486D733E `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqSongClearSel_L4d 0x486D7341 `mov (4, a0), a0`
-.macro REC_FE_SeqSongClearSel_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqSongClearSel_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSongSelBoxProc_L1d_Records: 8-byte records (AcSongSelBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcSongSelBoxProc_L1d 0x486D74D9 `mov (a0), d0`; AcSongSelBoxProc_L4c 0x486D7508 `mov (a0), d0`
+#   +0   key          u32            AcSongSelBoxProc_L1d 0x486D74D9 `mov (a0), d0`; AcSongSelBoxProc_L4c 0x486D7508 `mov (a0), d0`
 #   +4   proc         ptr            AcSongSelBoxProc_L4f 0x486D750B `mov (4, a0), a0`
-.macro REC_AcSongSelBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSongSelBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAutoPunchSrt_L1d_Records: 8-byte records (FE_SeqAutoPunchSrt_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAutoPunchSrt_L1d 0x486D7C0F `mov (a0), d0`; FE_SeqAutoPunchSrt_L4b 0x486D7C3D `mov (a0), d0`
+#   +0   key          u32            FE_SeqAutoPunchSrt_L1d 0x486D7C0F `mov (a0), d0`; FE_SeqAutoPunchSrt_L4b 0x486D7C3D `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAutoPunchSrt_L4e 0x486D7C40 `mov (4, a0), a0`
-.macro REC_FE_SeqAutoPunchSrt_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAutoPunchSrt_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAutoPunchEnd_L1d_Records: 8-byte records (FE_SeqAutoPunchEnd_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAutoPunchEnd_L1d 0x486D7CED `mov (a0), d0`; FE_SeqAutoPunchEnd_L4b 0x486D7D1B `mov (a0), d0`
+#   +0   key          u32            FE_SeqAutoPunchEnd_L1d 0x486D7CED `mov (a0), d0`; FE_SeqAutoPunchEnd_L4b 0x486D7D1B `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAutoPunchEnd_L4e 0x486D7D1E `mov (4, a0), a0`
-.macro REC_FE_SeqAutoPunchEnd_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAutoPunchEnd_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAutoPunchCIn_L1d_Records: 8-byte records (FE_SeqAutoPunchCIn_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAutoPunchCIn_L1d 0x486D7DCB `mov (a0), d0`; FE_SeqAutoPunchCIn_L4b 0x486D7DF9 `mov (a0), d0`
+#   +0   key          u32            FE_SeqAutoPunchCIn_L1d 0x486D7DCB `mov (a0), d0`; FE_SeqAutoPunchCIn_L4b 0x486D7DF9 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAutoPunchCIn_L4e 0x486D7DFC `mov (4, a0), a0`
-.macro REC_FE_SeqAutoPunchCIn_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAutoPunchCIn_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqQtzTrack_L1d_Records: 8-byte records (FE_SeqQtzTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqQtzTrack_L1d 0x486D8007 `mov (a0), d0`; FE_SeqQtzTrack_L4b 0x486D8035 `mov (a0), d0`
+#   +0   key          u32            FE_SeqQtzTrack_L1d 0x486D8007 `mov (a0), d0`; FE_SeqQtzTrack_L4b 0x486D8035 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqQtzTrack_L4e 0x486D8038 `mov (4, a0), a0`
-.macro REC_FE_SeqQtzTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqQtzTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqQtzFstMeas_L1d_Records: 8-byte records (FE_SeqQtzFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqQtzFstMeas_L1d 0x486D80F0 `mov (a0), d0`; FE_SeqQtzFstMeas_L4b 0x486D811E `mov (a0), d0`
+#   +0   key          u32            FE_SeqQtzFstMeas_L1d 0x486D80F0 `mov (a0), d0`; FE_SeqQtzFstMeas_L4b 0x486D811E `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqQtzFstMeas_L4e 0x486D8121 `mov (4, a0), a0`
-.macro REC_FE_SeqQtzFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqQtzFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqQtzLstMeas_L1d_Records: 8-byte records (FE_SeqQtzLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqQtzLstMeas_L1d 0x486D81C3 `mov (a0), d0`; FE_SeqQtzLstMeas_L4b 0x486D81F1 `mov (a0), d0`
+#   +0   key          u32            FE_SeqQtzLstMeas_L1d 0x486D81C3 `mov (a0), d0`; FE_SeqQtzLstMeas_L4b 0x486D81F1 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqQtzLstMeas_L4e 0x486D81F4 `mov (4, a0), a0`
-.macro REC_FE_SeqQtzLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqQtzLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqQtzValue_L1d_Records: 8-byte records (FE_SeqQtzValue_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqQtzValue_L1d 0x486D8296 `mov (a0), d0`; FE_SeqQtzValue_L4a 0x486D82C3 `mov (a0), d0`
+#   +0   key          u32            FE_SeqQtzValue_L1d 0x486D8296 `mov (a0), d0`; FE_SeqQtzValue_L4a 0x486D82C3 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqQtzValue_L4d 0x486D82C6 `mov (4, a0), a0`
-.macro REC_FE_SeqQtzValue_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqQtzValue_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqQtzStrength_L1d_Records: 8-byte records (FE_SeqQtzStrength_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqQtzStrength_L1d 0x486D83FD `mov (a0), d0`; FE_SeqQtzStrength_L4b 0x486D842B `mov (a0), d0`
+#   +0   key          u32            FE_SeqQtzStrength_L1d 0x486D83FD `mov (a0), d0`; FE_SeqQtzStrength_L4b 0x486D842B `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqQtzStrength_L4e 0x486D842E `mov (4, a0), a0`
-.macro REC_FE_SeqQtzStrength_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqQtzStrength_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqQtzWindow_L1d_Records: 8-byte records (FE_SeqQtzWindow_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqQtzWindow_L1d 0x486D84D5 `mov (a0), d0`; FE_SeqQtzWindow_L4b 0x486D8503 `mov (a0), d0`
+#   +0   key          u32            FE_SeqQtzWindow_L1d 0x486D84D5 `mov (a0), d0`; FE_SeqQtzWindow_L4b 0x486D8503 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqQtzWindow_L4e 0x486D8506 `mov (4, a0), a0`
-.macro REC_FE_SeqQtzWindow_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqQtzWindow_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_SeqTrAsGridCheck_entry_L1a_Records: 8-byte records (SeqTrAsGridCheck_entry_L1a_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            SeqTrAsGridCheck_entry_L1a 0x486D87D8 `mov (a0), d0`; SeqTrAsGridCheck_entry_L48 0x486D8806 `mov (a0), d0`
+#   +0   key          u32            SeqTrAsGridCheck_entry_L1a 0x486D87D8 `mov (a0), d0`; SeqTrAsGridCheck_entry_L48 0x486D8806 `mov (a0), d0`
 #   +4   proc         ptr            SeqTrAsGridCheck_entry_L4b 0x486D8809 `mov (4, a0), a0`
-.macro REC_SeqTrAsGridCheck_entry_L1a_Records f0=0, proc=0
-	.long	\f0
+.macro REC_SeqTrAsGridCheck_entry_L1a_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTrAsPSongSel_L1d_Records: 8-byte records (FE_SeqTrAsPSongSel_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTrAsPSongSel_L1d 0x486D9153 `mov (a0), d0`; FE_SeqTrAsPSongSel_L4b 0x486D9181 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTrAsPSongSel_L1d 0x486D9153 `mov (a0), d0`; FE_SeqTrAsPSongSel_L4b 0x486D9181 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTrAsPSongSel_L4e 0x486D9184 `mov (4, a0), a0`
-.macro REC_FE_SeqTrAsPSongSel_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTrAsPSongSel_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTrackCopyFTrack_L1d_Records: 8-byte records (FE_SeqTrackCopyFTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTrackCopyFTrack_L1d 0x486D95B8 `mov (a0), d0`; FE_SeqTrackCopyFTrack_L4b 0x486D95E6 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTrackCopyFTrack_L1d 0x486D95B8 `mov (a0), d0`; FE_SeqTrackCopyFTrack_L4b 0x486D95E6 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTrackCopyFTrack_L4e 0x486D95E9 `mov (4, a0), a0`
-.macro REC_FE_SeqTrackCopyFTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTrackCopyFTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTrackCopyTTrack_L1d_Records: 8-byte records (FE_SeqTrackCopyTTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTrackCopyTTrack_L1d 0x486D96A1 `mov (a0), d0`; FE_SeqTrackCopyTTrack_L4b 0x486D96CF `mov (a0), d0`
+#   +0   key          u32            FE_SeqTrackCopyTTrack_L1d 0x486D96A1 `mov (a0), d0`; FE_SeqTrackCopyTTrack_L4b 0x486D96CF `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTrackCopyTTrack_L4e 0x486D96D2 `mov (4, a0), a0`
-.macro REC_FE_SeqTrackCopyTTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTrackCopyTTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTrackCopyFSong_L1d_Records: 8-byte records (FE_SeqTrackCopyFSong_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTrackCopyFSong_L1d 0x486D978A `mov (a0), d0`; FE_SeqTrackCopyFSong_L4a 0x486D97B7 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTrackCopyFSong_L1d 0x486D978A `mov (a0), d0`; FE_SeqTrackCopyFSong_L4a 0x486D97B7 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTrackCopyFSong_L4d 0x486D97BA `mov (4, a0), a0`
-.macro REC_FE_SeqTrackCopyFSong_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTrackCopyFSong_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTrackCopyTSong_L1d_Records: 8-byte records (FE_SeqTrackCopyTSong_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTrackCopyTSong_L1d 0x486D985E `mov (a0), d0`; FE_SeqTrackCopyTSong_L4a 0x486D988B `mov (a0), d0`
+#   +0   key          u32            FE_SeqTrackCopyTSong_L1d 0x486D985E `mov (a0), d0`; FE_SeqTrackCopyTSong_L4a 0x486D988B `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTrackCopyTSong_L4d 0x486D988E `mov (4, a0), a0`
-.macro REC_FE_SeqTrackCopyTSong_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTrackCopyTSong_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqSongCopyFSong_L1d_Records: 8-byte records (FE_SeqSongCopyFSong_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqSongCopyFSong_L1d 0x486D9B27 `mov (a0), d0`; FE_SeqSongCopyFSong_L4a 0x486D9B54 `mov (a0), d0`
+#   +0   key          u32            FE_SeqSongCopyFSong_L1d 0x486D9B27 `mov (a0), d0`; FE_SeqSongCopyFSong_L4a 0x486D9B54 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqSongCopyFSong_L4d 0x486D9B57 `mov (4, a0), a0`
-.macro REC_FE_SeqSongCopyFSong_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqSongCopyFSong_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqSongCopyTSong_L1d_Records: 8-byte records (FE_SeqSongCopyTSong_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqSongCopyTSong_L1d 0x486D9BFB `mov (a0), d0`; FE_SeqSongCopyTSong_L4a 0x486D9C28 `mov (a0), d0`
+#   +0   key          u32            FE_SeqSongCopyTSong_L1d 0x486D9BFB `mov (a0), d0`; FE_SeqSongCopyTSong_L4a 0x486D9C28 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqSongCopyTSong_L4d 0x486D9C2B `mov (4, a0), a0`
-.macro REC_FE_SeqSongCopyTSong_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqSongCopyTSong_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTrkMrgTrack_L60_Records: 8-byte records (FE_SeqTrkMrgTrack_L60_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTrkMrgTrack_L60 0x486D9E16 `mov (a0), d0`; FE_SeqTrkMrgTrack_L8e 0x486D9E44 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTrkMrgTrack_L60 0x486D9E16 `mov (a0), d0`; FE_SeqTrkMrgTrack_L8e 0x486D9E44 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTrkMrgTrack_L91 0x486D9E47 `mov (4, a0), a0`
-.macro REC_FE_SeqTrkMrgTrack_L60_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTrkMrgTrack_L60_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsCpFTrack_L1d_Records: 8-byte records (FE_SeqMsCpFTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsCpFTrack_L1d 0x486DA048 `mov (a0), d0`; FE_SeqMsCpFTrack_L4b 0x486DA076 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsCpFTrack_L1d 0x486DA048 `mov (a0), d0`; FE_SeqMsCpFTrack_L4b 0x486DA076 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsCpFTrack_L4e 0x486DA079 `mov (4, a0), a0`
-.macro REC_FE_SeqMsCpFTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsCpFTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsCpTTrack_L1d_Records: 8-byte records (FE_SeqMsCpTTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsCpTTrack_L1d 0x486DA131 `mov (a0), d0`; FE_SeqMsCpTTrack_L4b 0x486DA15F `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsCpTTrack_L1d 0x486DA131 `mov (a0), d0`; FE_SeqMsCpTTrack_L4b 0x486DA15F `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsCpTTrack_L4e 0x486DA162 `mov (4, a0), a0`
-.macro REC_FE_SeqMsCpTTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsCpTTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsCpFFstMeas_L1d_Records: 8-byte records (FE_SeqMsCpFFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsCpFFstMeas_L1d 0x486DA21A `mov (a0), d0`; FE_SeqMsCpFFstMeas_L4b 0x486DA248 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsCpFFstMeas_L1d 0x486DA21A `mov (a0), d0`; FE_SeqMsCpFFstMeas_L4b 0x486DA248 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsCpFFstMeas_L4e 0x486DA24B `mov (4, a0), a0`
-.macro REC_FE_SeqMsCpFFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsCpFFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsCpFLstMeas_L1d_Records: 8-byte records (FE_SeqMsCpFLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsCpFLstMeas_L1d 0x486DA2ED `mov (a0), d0`; FE_SeqMsCpFLstMeas_L4b 0x486DA31B `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsCpFLstMeas_L1d 0x486DA2ED `mov (a0), d0`; FE_SeqMsCpFLstMeas_L4b 0x486DA31B `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsCpFLstMeas_L4e 0x486DA31E `mov (4, a0), a0`
-.macro REC_FE_SeqMsCpFLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsCpFLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsCpTSrtMeas_L1d_Records: 8-byte records (FE_SeqMsCpTSrtMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsCpTSrtMeas_L1d 0x486DA3C0 `mov (a0), d0`; FE_SeqMsCpTSrtMeas_L4b 0x486DA3EE `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsCpTSrtMeas_L1d 0x486DA3C0 `mov (a0), d0`; FE_SeqMsCpTSrtMeas_L4b 0x486DA3EE `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsCpTSrtMeas_L4e 0x486DA3F1 `mov (4, a0), a0`
-.macro REC_FE_SeqMsCpTSrtMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsCpTSrtMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsCpTRep_L1d_Records: 8-byte records (FE_SeqMsCpTRep_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsCpTRep_L1d 0x486DA493 `mov (a0), d0`; FE_SeqMsCpTRep_L4b 0x486DA4C1 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsCpTRep_L1d 0x486DA493 `mov (a0), d0`; FE_SeqMsCpTRep_L4b 0x486DA4C1 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsCpTRep_L4e 0x486DA4C4 `mov (4, a0), a0`
-.macro REC_FE_SeqMsCpTRep_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsCpTRep_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsErsTrack_L1d_Records: 8-byte records (FE_SeqMsErsTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsErsTrack_L1d 0x486DA80A `mov (a0), d0`; FE_SeqMsErsTrack_L4b 0x486DA838 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsErsTrack_L1d 0x486DA80A `mov (a0), d0`; FE_SeqMsErsTrack_L4b 0x486DA838 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsErsTrack_L4e 0x486DA83B `mov (4, a0), a0`
-.macro REC_FE_SeqMsErsTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsErsTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsErsFstMeas_L1d_Records: 8-byte records (FE_SeqMsErsFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsErsFstMeas_L1d 0x486DA8F3 `mov (a0), d0`; FE_SeqMsErsFstMeas_L4b 0x486DA921 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsErsFstMeas_L1d 0x486DA8F3 `mov (a0), d0`; FE_SeqMsErsFstMeas_L4b 0x486DA921 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsErsFstMeas_L4e 0x486DA924 `mov (4, a0), a0`
-.macro REC_FE_SeqMsErsFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsErsFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsErsLstMeas_L1d_Records: 8-byte records (FE_SeqMsErsLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsErsLstMeas_L1d 0x486DA9C6 `mov (a0), d0`; FE_SeqMsErsLstMeas_L4b 0x486DA9F4 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsErsLstMeas_L1d 0x486DA9C6 `mov (a0), d0`; FE_SeqMsErsLstMeas_L4b 0x486DA9F4 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsErsLstMeas_L4e 0x486DA9F7 `mov (4, a0), a0`
-.macro REC_FE_SeqMsErsLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsErsLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsErsData_L1d_Records: 8-byte records (FE_SeqMsErsData_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsErsData_L1d 0x486DAA99 `mov (a0), d0`; FE_SeqMsErsData_L4a 0x486DAAC6 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsErsData_L1d 0x486DAA99 `mov (a0), d0`; FE_SeqMsErsData_L4a 0x486DAAC6 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsErsData_L4d 0x486DAAC9 `mov (4, a0), a0`
-.macro REC_FE_SeqMsErsData_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsErsData_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsDelTrack_L1d_Records: 8-byte records (FE_SeqMsDelTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsDelTrack_L1d 0x486DAD47 `mov (a0), d0`; FE_SeqMsDelTrack_L4b 0x486DAD75 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsDelTrack_L1d 0x486DAD47 `mov (a0), d0`; FE_SeqMsDelTrack_L4b 0x486DAD75 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsDelTrack_L4e 0x486DAD78 `mov (4, a0), a0`
-.macro REC_FE_SeqMsDelTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsDelTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsDelFstMeas_L1d_Records: 8-byte records (FE_SeqMsDelFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsDelFstMeas_L1d 0x486DAE30 `mov (a0), d0`; FE_SeqMsDelFstMeas_L4b 0x486DAE5E `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsDelFstMeas_L1d 0x486DAE30 `mov (a0), d0`; FE_SeqMsDelFstMeas_L4b 0x486DAE5E `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsDelFstMeas_L4e 0x486DAE61 `mov (4, a0), a0`
-.macro REC_FE_SeqMsDelFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsDelFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsDelLstMeas_L1d_Records: 8-byte records (FE_SeqMsDelLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsDelLstMeas_L1d 0x486DAF03 `mov (a0), d0`; FE_SeqMsDelLstMeas_L4b 0x486DAF31 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsDelLstMeas_L1d 0x486DAF03 `mov (a0), d0`; FE_SeqMsDelLstMeas_L4b 0x486DAF31 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsDelLstMeas_L4e 0x486DAF34 `mov (4, a0), a0`
-.macro REC_FE_SeqMsDelLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsDelLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsInsFTrack_L1d_Records: 8-byte records (FE_SeqMsInsFTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsInsFTrack_L1d 0x486DB152 `mov (a0), d0`; FE_SeqMsInsFTrack_L4b 0x486DB180 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsInsFTrack_L1d 0x486DB152 `mov (a0), d0`; FE_SeqMsInsFTrack_L4b 0x486DB180 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsInsFTrack_L4e 0x486DB183 `mov (4, a0), a0`
-.macro REC_FE_SeqMsInsFTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsInsFTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsInsTTrack_L1d_Records: 8-byte records (FE_SeqMsInsTTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsInsTTrack_L1d 0x486DB23B `mov (a0), d0`; FE_SeqMsInsTTrack_L4b 0x486DB269 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsInsTTrack_L1d 0x486DB23B `mov (a0), d0`; FE_SeqMsInsTTrack_L4b 0x486DB269 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsInsTTrack_L4e 0x486DB26C `mov (4, a0), a0`
-.macro REC_FE_SeqMsInsTTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsInsTTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsInsFFstMeas_L1d_Records: 8-byte records (FE_SeqMsInsFFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsInsFFstMeas_L1d 0x486DB324 `mov (a0), d0`; FE_SeqMsInsFFstMeas_L4b 0x486DB352 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsInsFFstMeas_L1d 0x486DB324 `mov (a0), d0`; FE_SeqMsInsFFstMeas_L4b 0x486DB352 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsInsFFstMeas_L4e 0x486DB355 `mov (4, a0), a0`
-.macro REC_FE_SeqMsInsFFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsInsFFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsInsFLstMeas_L1d_Records: 8-byte records (FE_SeqMsInsFLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsInsFLstMeas_L1d 0x486DB3F7 `mov (a0), d0`; FE_SeqMsInsFLstMeas_L4b 0x486DB425 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsInsFLstMeas_L1d 0x486DB3F7 `mov (a0), d0`; FE_SeqMsInsFLstMeas_L4b 0x486DB425 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsInsFLstMeas_L4e 0x486DB428 `mov (4, a0), a0`
-.macro REC_FE_SeqMsInsFLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsInsFLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsInsTSrtMeas_L1d_Records: 8-byte records (FE_SeqMsInsTSrtMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsInsTSrtMeas_L1d 0x486DB4CA `mov (a0), d0`; FE_SeqMsInsTSrtMeas_L4b 0x486DB4F8 `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsInsTSrtMeas_L1d 0x486DB4CA `mov (a0), d0`; FE_SeqMsInsTSrtMeas_L4b 0x486DB4F8 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsInsTSrtMeas_L4e 0x486DB4FB `mov (4, a0), a0`
-.macro REC_FE_SeqMsInsTSrtMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsInsTSrtMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqMsInsTRep_L1d_Records: 8-byte records (FE_SeqMsInsTRep_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqMsInsTRep_L1d 0x486DB59D `mov (a0), d0`; FE_SeqMsInsTRep_L4b 0x486DB5CB `mov (a0), d0`
+#   +0   key          u32            FE_SeqMsInsTRep_L1d 0x486DB59D `mov (a0), d0`; FE_SeqMsInsTRep_L4b 0x486DB5CB `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqMsInsTRep_L4e 0x486DB5CE `mov (4, a0), a0`
-.macro REC_FE_SeqMsInsTRep_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqMsInsTRep_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqNoteChangeTrack_L1d_Records: 8-byte records (FE_SeqNoteChangeTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqNoteChangeTrack_L1d 0x486DBE2E `mov (a0), d0`; FE_SeqNoteChangeTrack_L4b 0x486DBE5C `mov (a0), d0`
+#   +0   key          u32            FE_SeqNoteChangeTrack_L1d 0x486DBE2E `mov (a0), d0`; FE_SeqNoteChangeTrack_L4b 0x486DBE5C `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqNoteChangeTrack_L4e 0x486DBE5F `mov (4, a0), a0`
-.macro REC_FE_SeqNoteChangeTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqNoteChangeTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqNoteChangeFstMeas_L1d_Records: 8-byte records (FE_SeqNoteChangeFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqNoteChangeFstMeas_L1d 0x486DBF17 `mov (a0), d0`; FE_SeqNoteChangeFstMeas_L4b 0x486DBF45 `mov (a0), d0`
+#   +0   key          u32            FE_SeqNoteChangeFstMeas_L1d 0x486DBF17 `mov (a0), d0`; FE_SeqNoteChangeFstMeas_L4b 0x486DBF45 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqNoteChangeFstMeas_L4e 0x486DBF48 `mov (4, a0), a0`
-.macro REC_FE_SeqNoteChangeFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqNoteChangeFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqNoteChangeLstMeas_L1d_Records: 8-byte records (FE_SeqNoteChangeLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqNoteChangeLstMeas_L1d 0x486DBFEA `mov (a0), d0`; FE_SeqNoteChangeLstMeas_L4b 0x486DC018 `mov (a0), d0`
+#   +0   key          u32            FE_SeqNoteChangeLstMeas_L1d 0x486DBFEA `mov (a0), d0`; FE_SeqNoteChangeLstMeas_L4b 0x486DC018 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqNoteChangeLstMeas_L4e 0x486DC01B `mov (4, a0), a0`
-.macro REC_FE_SeqNoteChangeLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqNoteChangeLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqNoteChangeSrcNt_L1d_Records: 8-byte records (FE_SeqNoteChangeSrcNt_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqNoteChangeSrcNt_L1d 0x486DC0BD `mov (a0), d0`; FE_SeqNoteChangeSrcNt_L4b 0x486DC0EB `mov (a0), d0`
+#   +0   key          u32            FE_SeqNoteChangeSrcNt_L1d 0x486DC0BD `mov (a0), d0`; FE_SeqNoteChangeSrcNt_L4b 0x486DC0EB `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqNoteChangeSrcNt_L4e 0x486DC0EE `mov (4, a0), a0`
-.macro REC_FE_SeqNoteChangeSrcNt_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqNoteChangeSrcNt_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqNoteChangeDstNt_L1d_Records: 8-byte records (FE_SeqNoteChangeDstNt_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqNoteChangeDstNt_L1d 0x486DC19F `mov (a0), d0`; FE_SeqNoteChangeDstNt_L4b 0x486DC1CD `mov (a0), d0`
+#   +0   key          u32            FE_SeqNoteChangeDstNt_L1d 0x486DC19F `mov (a0), d0`; FE_SeqNoteChangeDstNt_L4b 0x486DC1CD `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqNoteChangeDstNt_L4e 0x486DC1D0 `mov (4, a0), a0`
-.macro REC_FE_SeqNoteChangeDstNt_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqNoteChangeDstNt_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqVeloCngTrack_L1d_Records: 8-byte records (FE_SeqVeloCngTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqVeloCngTrack_L1d 0x486DC45F `mov (a0), d0`; FE_SeqVeloCngTrack_L4b 0x486DC48D `mov (a0), d0`
+#   +0   key          u32            FE_SeqVeloCngTrack_L1d 0x486DC45F `mov (a0), d0`; FE_SeqVeloCngTrack_L4b 0x486DC48D `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqVeloCngTrack_L4e 0x486DC490 `mov (4, a0), a0`
-.macro REC_FE_SeqVeloCngTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqVeloCngTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqVeloCngFstMeas_L1d_Records: 8-byte records (FE_SeqVeloCngFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqVeloCngFstMeas_L1d 0x486DC548 `mov (a0), d0`; FE_SeqVeloCngFstMeas_L4b 0x486DC576 `mov (a0), d0`
+#   +0   key          u32            FE_SeqVeloCngFstMeas_L1d 0x486DC548 `mov (a0), d0`; FE_SeqVeloCngFstMeas_L4b 0x486DC576 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqVeloCngFstMeas_L4e 0x486DC579 `mov (4, a0), a0`
-.macro REC_FE_SeqVeloCngFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqVeloCngFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqVeloCngLstMeas_L1d_Records: 8-byte records (FE_SeqVeloCngLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqVeloCngLstMeas_L1d 0x486DC61B `mov (a0), d0`; FE_SeqVeloCngLstMeas_L4b 0x486DC649 `mov (a0), d0`
+#   +0   key          u32            FE_SeqVeloCngLstMeas_L1d 0x486DC61B `mov (a0), d0`; FE_SeqVeloCngLstMeas_L4b 0x486DC649 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqVeloCngLstMeas_L4e 0x486DC64C `mov (4, a0), a0`
-.macro REC_FE_SeqVeloCngLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqVeloCngLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqVeloCngVelo_L1d_Records: 8-byte records (FE_SeqVeloCngVelo_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqVeloCngVelo_L1d 0x486DC6EE `mov (a0), d0`; FE_SeqVeloCngVelo_L4b 0x486DC71C `mov (a0), d0`
+#   +0   key          u32            FE_SeqVeloCngVelo_L1d 0x486DC6EE `mov (a0), d0`; FE_SeqVeloCngVelo_L4b 0x486DC71C `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqVeloCngVelo_L4e 0x486DC71F `mov (4, a0), a0`
-.macro REC_FE_SeqVeloCngVelo_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqVeloCngVelo_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTransTrack_L1d_Records: 8-byte records (FE_SeqTransTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTransTrack_L1d 0x486DC98A `mov (a0), d0`; FE_SeqTransTrack_L4b 0x486DC9B8 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTransTrack_L1d 0x486DC98A `mov (a0), d0`; FE_SeqTransTrack_L4b 0x486DC9B8 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTransTrack_L4e 0x486DC9BB `mov (4, a0), a0`
-.macro REC_FE_SeqTransTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTransTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTransFstMeas_L1d_Records: 8-byte records (FE_SeqTransFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTransFstMeas_L1d 0x486DCA73 `mov (a0), d0`; FE_SeqTransFstMeas_L4b 0x486DCAA1 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTransFstMeas_L1d 0x486DCA73 `mov (a0), d0`; FE_SeqTransFstMeas_L4b 0x486DCAA1 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTransFstMeas_L4e 0x486DCAA4 `mov (4, a0), a0`
-.macro REC_FE_SeqTransFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTransFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTransLstMeas_L1d_Records: 8-byte records (FE_SeqTransLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTransLstMeas_L1d 0x486DCB46 `mov (a0), d0`; FE_SeqTransLstMeas_L4b 0x486DCB74 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTransLstMeas_L1d 0x486DCB46 `mov (a0), d0`; FE_SeqTransLstMeas_L4b 0x486DCB74 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTransLstMeas_L4e 0x486DCB77 `mov (4, a0), a0`
-.macro REC_FE_SeqTransLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTransLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTransTrans_L1d_Records: 8-byte records (FE_SeqTransTrans_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTransTrans_L1d 0x486DCC19 `mov (a0), d0`; FE_SeqTransTrans_L4b 0x486DCC47 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTransTrans_L1d 0x486DCC19 `mov (a0), d0`; FE_SeqTransTrans_L4b 0x486DCC47 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTransTrans_L4e 0x486DCC4A `mov (4, a0), a0`
-.macro REC_FE_SeqTransTrans_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTransTrans_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAdvDlyTrack_L1d_Records: 8-byte records (FE_SeqAdvDlyTrack_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAdvDlyTrack_L1d 0x486DCEB5 `mov (a0), d0`; FE_SeqAdvDlyTrack_L4b 0x486DCEE3 `mov (a0), d0`
+#   +0   key          u32            FE_SeqAdvDlyTrack_L1d 0x486DCEB5 `mov (a0), d0`; FE_SeqAdvDlyTrack_L4b 0x486DCEE3 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAdvDlyTrack_L4e 0x486DCEE6 `mov (4, a0), a0`
-.macro REC_FE_SeqAdvDlyTrack_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAdvDlyTrack_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAdvDlyFstMeas_L1d_Records: 8-byte records (FE_SeqAdvDlyFstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAdvDlyFstMeas_L1d 0x486DCF9E `mov (a0), d0`; FE_SeqAdvDlyFstMeas_L4b 0x486DCFCC `mov (a0), d0`
+#   +0   key          u32            FE_SeqAdvDlyFstMeas_L1d 0x486DCF9E `mov (a0), d0`; FE_SeqAdvDlyFstMeas_L4b 0x486DCFCC `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAdvDlyFstMeas_L4e 0x486DCFCF `mov (4, a0), a0`
-.macro REC_FE_SeqAdvDlyFstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAdvDlyFstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAdvDlyLstMeas_L1d_Records: 8-byte records (FE_SeqAdvDlyLstMeas_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAdvDlyLstMeas_L1d 0x486DD071 `mov (a0), d0`; FE_SeqAdvDlyLstMeas_L4b 0x486DD09F `mov (a0), d0`
+#   +0   key          u32            FE_SeqAdvDlyLstMeas_L1d 0x486DD071 `mov (a0), d0`; FE_SeqAdvDlyLstMeas_L4b 0x486DD09F `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAdvDlyLstMeas_L4e 0x486DD0A2 `mov (4, a0), a0`
-.macro REC_FE_SeqAdvDlyLstMeas_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAdvDlyLstMeas_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqAdvDlyAdvDly_L1d_Records: 8-byte records (FE_SeqAdvDlyAdvDly_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqAdvDlyAdvDly_L1d 0x486DD144 `mov (a0), d0`; FE_SeqAdvDlyAdvDly_L4b 0x486DD172 `mov (a0), d0`
+#   +0   key          u32            FE_SeqAdvDlyAdvDly_L1d 0x486DD144 `mov (a0), d0`; FE_SeqAdvDlyAdvDly_L4b 0x486DD172 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqAdvDlyAdvDly_L4e 0x486DD175 `mov (4, a0), a0`
-.macro REC_FE_SeqAdvDlyAdvDly_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqAdvDlyAdvDly_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcNoteEditBoxProc_L5c_Records: 8-byte records (AcNoteEditBoxProc_L5c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcNoteEditBoxProc_L5c 0x486DD441 `mov (a0), d0`; AcNoteEditBoxProc_L8b 0x486DD470 `mov (a0), d0`
+#   +0   key          u32            AcNoteEditBoxProc_L5c 0x486DD441 `mov (a0), d0`; AcNoteEditBoxProc_L8b 0x486DD470 `mov (a0), d0`
 #   +4   proc         ptr            AcNoteEditBoxProc_L8e 0x486DD473 `mov (4, a0), a0`
-.macro REC_AcNoteEditBoxProc_L5c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcNoteEditBoxProc_L5c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcDrumEditBoxProc_L21_Records: 8-byte records (AcDrumEditBoxProc_L21_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            AcDrumEditBoxProc_L21 0x486DE33B `mov (a0), d0`; AcDrumEditBoxProc_L50 0x486DE36A `mov (a0), d0`
+#   +0   key          u32            AcDrumEditBoxProc_L21 0x486DE33B `mov (a0), d0`; AcDrumEditBoxProc_L50 0x486DE36A `mov (a0), d0`
 #   +4   proc         ptr            AcDrumEditBoxProc_L53 0x486DE36D `mov (4, a0), a0`
-.macro REC_AcDrumEditBoxProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcDrumEditBoxProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcStepRecBoxProc_L22_Records: 8-byte records (AcStepRecBoxProc_L22_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            AcStepRecBoxProc_L22 0x486DF048 `mov (a0), d0`; AcStepRecBoxProc_L50 0x486DF076 `mov (a0), d0`
+#   +0   key          u32            AcStepRecBoxProc_L22 0x486DF048 `mov (a0), d0`; AcStepRecBoxProc_L50 0x486DF076 `mov (a0), d0`
 #   +4   proc         ptr            AcStepRecBoxProc_L53 0x486DF079 `mov (4, a0), a0`
-.macro REC_AcStepRecBoxProc_L22_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcStepRecBoxProc_L22_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqPlaylistSetting_L1f_Records: 8-byte records (FE_SeqPlaylistSetting_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqPlaylistSetting_L1f 0x486E01EA `mov (a0), d0`; FE_SeqPlaylistSetting_L4b 0x486E0216 `mov (a0), d0`
+#   +0   key          u32            FE_SeqPlaylistSetting_L1f 0x486E01EA `mov (a0), d0`; FE_SeqPlaylistSetting_L4b 0x486E0216 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqPlaylistSetting_L4e 0x486E0219 `mov (4, a0), a0`
-.macro REC_FE_SeqPlaylistSetting_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqPlaylistSetting_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_FE_SeqTempoAdjust_L1f_Records: 8-byte records (FE_SeqTempoAdjust_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            FE_SeqTempoAdjust_L1f 0x486E0868 `mov (a0), d0`; FE_SeqTempoAdjust_L4b 0x486E0894 `mov (a0), d0`
+#   +0   key          u32            FE_SeqTempoAdjust_L1f 0x486E0868 `mov (a0), d0`; FE_SeqTempoAdjust_L4b 0x486E0894 `mov (a0), d0`
 #   +4   proc         ptr            FE_SeqTempoAdjust_L4e 0x486E0897 `mov (4, a0), a0`
-.macro REC_FE_SeqTempoAdjust_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_FE_SeqTempoAdjust_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_SeqLyricsBoxProc_L1d_Records: 8-byte records (SeqLyricsBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            SeqLyricsBoxProc_L1d 0x486E63FB `mov (a0), d0`; SeqLyricsBoxProc_L4c 0x486E642A `mov (a0), d0`
+#   +0   key          u32            SeqLyricsBoxProc_L1d 0x486E63FB `mov (a0), d0`; SeqLyricsBoxProc_L4c 0x486E642A `mov (a0), d0`
 #   +4   proc         ptr            SeqLyricsBoxProc_L4f 0x486E642D `mov (4, a0), a0`
-.macro REC_SeqLyricsBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_SeqLyricsBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486EBD41_entry_Ld3_Records: 8-byte records (func_486EBD41_entry_Ld3_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_486EBD41_entry_Ld3 0x486EBE19 `mov (a0), d0`; func_486EBD41_entry_Lf7 0x486EBE3D `mov (a0), d0`
+#   +0   key          u32            func_486EBD41_entry_Ld3 0x486EBE19 `mov (a0), d0`; func_486EBD41_entry_Lf7 0x486EBE3D `mov (a0), d0`
 #   +4   proc         ptr            func_486EBD41_entry_Lfa 0x486EBE40 `mov (4, a0), a0`
-.macro REC_func_486EBD41_entry_Ld3_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_486EBD41_entry_Ld3_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -3131,145 +3119,145 @@
 #   +0   f0           u8             ToneControlProc_L36 0x486F6107 `movbu (d0, a1), d0`; ToneControlProc_La7 0x486F6178 `movbu (d0, a1), d0`
 #   +1   f1           u8             ToneControlProc_L36 0x486F6107 `movbu (1, a0), d1`; ToneControlProc_La7 0x486F6178 `movbu (1, a0), d1`
 #   +2   f2           u8             ToneControlProc_L36 0x486F6107 `movbu (2, a0), d1`; ToneControlProc_La7 0x486F6178 `movbu (2, a0), d0`
-#   +3   f3           u8             ToneControlProc_L36 0x486F6107 `movbu (3, a1), d0`; ToneControlProc_La7 0x486F6178 `movbu (3, a1), d0`
-.macro REC_ToneControlProc_Table f0=0, f1=0, f2=0, f3=0
+#   +3   DrawLine_d0  u8             ToneControlProc_L36 0x486F6107 `movbu (3, a1), d0`; ToneControlProc_La7 0x486F6178 `movbu (3, a1), d0`
+.macro REC_ToneControlProc_Table f0=0, f1=0, f2=0, DrawLine_d0=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
-	.byte	\f3
+	.byte	\DrawLine_d0
 .endm
 
 # REC_AcEffExpGroupProc_L1f_Records: 8-byte records (AcEffExpGroupProc_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEffExpGroupProc_L1f 0x486F10B7 `mov (a0), d0`; AcEffExpGroupProc_L4f 0x486F10E7 `mov (a0), d0`
+#   +0   key          u32            AcEffExpGroupProc_L1f 0x486F10B7 `mov (a0), d0`; AcEffExpGroupProc_L4f 0x486F10E7 `mov (a0), d0`
 #   +4   proc         ptr            AcEffExpGroupProc_L52 0x486F10EA `mov (4, a0), a0`
-.macro REC_AcEffExpGroupProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEffExpGroupProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcEffEditGridBoxProc_L1f_Records: 8-byte records (AcEffEditGridBoxProc_L1f_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEffEditGridBoxProc_L1f 0x486F14CA `mov (a0), d0`; AcEffEditGridBoxProc_L4f 0x486F14FA `mov (a0), d0`
+#   +0   key          u32            AcEffEditGridBoxProc_L1f 0x486F14CA `mov (a0), d0`; AcEffEditGridBoxProc_L4f 0x486F14FA `mov (a0), d0`
 #   +4   proc         ptr            AcEffEditGridBoxProc_L52 0x486F14FD `mov (4, a0), a0`
-.macro REC_AcEffEditGridBoxProc_L1f_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEffEditGridBoxProc_L1f_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcEffEditGridBox2Proc_L1e_Records: 8-byte records (AcEffEditGridBox2Proc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEffEditGridBox2Proc_L1e 0x486F1933 `mov (a0), d0`; AcEffEditGridBox2Proc_L4e 0x486F1963 `mov (a0), d0`
+#   +0   key          u32            AcEffEditGridBox2Proc_L1e 0x486F1933 `mov (a0), d0`; AcEffEditGridBox2Proc_L4e 0x486F1963 `mov (a0), d0`
 #   +4   proc         ptr            AcEffEditGridBox2Proc_L51 0x486F1966 `mov (4, a0), a0`
-.macro REC_AcEffEditGridBox2Proc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEffEditGridBox2Proc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcEffEditGridBox3Proc_L1e_Records: 8-byte records (AcEffEditGridBox3Proc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEffEditGridBox3Proc_L1e 0x486F1BD0 `mov (a0), d0`; AcEffEditGridBox3Proc_L4d 0x486F1BFF `mov (a0), d0`
+#   +0   key          u32            AcEffEditGridBox3Proc_L1e 0x486F1BD0 `mov (a0), d0`; AcEffEditGridBox3Proc_L4d 0x486F1BFF `mov (a0), d0`
 #   +4   proc         ptr            AcEffEditGridBox3Proc_L50 0x486F1C02 `mov (4, a0), a0`
-.macro REC_AcEffEditGridBox3Proc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEffEditGridBox3Proc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcEffDispGridBoxProc_L1d_Records: 8-byte records (AcEffDispGridBoxProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcEffDispGridBoxProc_L1d 0x486F3AB7 `mov (a0), d0`; AcEffDispGridBoxProc_L4b 0x486F3AE5 `mov (a0), d0`
+#   +0   key          u32            AcEffDispGridBoxProc_L1d 0x486F3AB7 `mov (a0), d0`; AcEffDispGridBoxProc_L4b 0x486F3AE5 `mov (a0), d0`
 #   +4   proc         ptr            AcEffDispGridBoxProc_L4e 0x486F3AE8 `mov (4, a0), a0`
-.macro REC_AcEffDispGridBoxProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcEffDispGridBoxProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_EffDispGrid_L804_Records: 8-byte records (EffDispGrid_L804_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            EffDispGrid_L804 0x486F454F `mov (a0), d0`; EffDispGrid_L832 0x486F457D `mov (a0), d0`
+#   +0   key          u32            EffDispGrid_L804 0x486F454F `mov (a0), d0`; EffDispGrid_L832 0x486F457D `mov (a0), d0`
 #   +4   proc         ptr            EffDispGrid_L835 0x486F4580 `mov (4, a0), a0`
-.macro REC_EffDispGrid_L804_Records f0=0, proc=0
-	.long	\f0
+.macro REC_EffDispGrid_L804_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_MicSelFunc_La9_Records: 8-byte records (MicSelFunc_La9_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            MicSelFunc_La9 0x486F52E1 `mov (a0), d0`; MicSelFunc_Ld7 0x486F530F `mov (a0), d0`
+#   +0   key          u32            MicSelFunc_La9 0x486F52E1 `mov (a0), d0`; MicSelFunc_Ld7 0x486F530F `mov (a0), d0`
 #   +4   proc         ptr            MicSelFunc_Lda 0x486F5312 `mov (4, a0), a0`
-.macro REC_MicSelFunc_La9_Records f0=0, proc=0
-	.long	\f0
+.macro REC_MicSelFunc_La9_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_486F8E3D_entry_L49_Records: 16-byte records (func_486F8E3D_entry_L49_Records, 53 records); fields, and what reads them:
 #   +0   x0           u8[4]          no reader seen
 #   +4   f4           u32            func_486F8E3D_entry_L49 0x486F8E8B `mov (4, a0), d0`; func_486F8E3D_entry_Lb4 0x486F8EF6 `mov (4, a0), d0` (+1)
-#   +8   f8           u32            func_486F8E3D_entry_L49 0x486F8E8B `mov (8, a0), d0`; func_486F8E3D_entry_Lb4 0x486F8EF6 `mov (8, a0), d1` (+1)
+#   +8   DrawBox_d0   u32            func_486F8E3D_entry_L49 0x486F8E8B `mov (8, a0), d0`; func_486F8E3D_entry_Lb4 0x486F8EF6 `mov (8, a0), d1` (+1)
 #   +12  f12          s16            func_486F8E3D_entry_L49 0x486F8E8B `movhu (0xc, a0), d0`; func_486F8F85_entry_L52 0x486F8FDC `movhu (0xc, a0), d0`
 #   +14  x14          u8[2]          no reader seen
-.macro REC_func_486F8E3D_entry_L49_Records x0, f4=0, f8=0, f12=0, x14
+.macro REC_func_486F8E3D_entry_L49_Records x0, f4=0, DrawBox_d0=0, f12=0, x14
 	.ascii	"\x0"
 	.long	\f4
-	.long	\f8
+	.long	\DrawBox_d0
 	.word	\f12
 	.ascii	"\x14"
 .endm
 
 # REC_R12OctaveFunc_L1c_Records: 8-byte records (R12OctaveFunc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            R12OctaveFunc_L1c 0x486F6C50 `mov (a0), d0`; R12OctaveFunc_L4a 0x486F6C7E `mov (a0), d0`
+#   +0   key          u32            R12OctaveFunc_L1c 0x486F6C50 `mov (a0), d0`; R12OctaveFunc_L4a 0x486F6C7E `mov (a0), d0`
 #   +4   proc         ptr            R12OctaveFunc_L4d 0x486F6C81 `mov (4, a0), a0`
-.macro REC_R12OctaveFunc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_R12OctaveFunc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsToggleBox2Proc_L1c_Records: 8-byte records (PsToggleBox2Proc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsToggleBox2Proc_L1c 0x486F6DAE `mov (a0), d0`; PsToggleBox2Proc_L4a 0x486F6DDC `mov (a0), d0`
+#   +0   key          u32            PsToggleBox2Proc_L1c 0x486F6DAE `mov (a0), d0`; PsToggleBox2Proc_L4a 0x486F6DDC `mov (a0), d0`
 #   +4   proc         ptr            PsToggleBox2Proc_L4d 0x486F6DDF `mov (4, a0), a0`
-.macro REC_PsToggleBox2Proc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsToggleBox2Proc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_ChordFinderROOT_L1c_Records: 8-byte records (ChordFinderROOT_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            ChordFinderROOT_L1c 0x486F8BD4 `mov (a0), d0`; ChordFinderROOT_L47 0x486F8BFF `mov (a0), d0`
+#   +0   key          u32            ChordFinderROOT_L1c 0x486F8BD4 `mov (a0), d0`; ChordFinderROOT_L47 0x486F8BFF `mov (a0), d0`
 #   +4   proc         ptr            ChordFinderROOT_L4a 0x486F8C02 `mov (4, a0), a0`
-.macro REC_ChordFinderROOT_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_ChordFinderROOT_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_INVERSION_L30_Records: 8-byte records (INVERSION_L30_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            INVERSION_L30 0x486F9179 `mov (a0), d0`; INVERSION_L5e 0x486F91A7 `mov (a0), d0`
+#   +0   key          u32            INVERSION_L30 0x486F9179 `mov (a0), d0`; INVERSION_L5e 0x486F91A7 `mov (a0), d0`
 #   +4   proc         ptr            INVERSION_L61 0x486F91AA `mov (4, a0), a0`
-.macro REC_INVERSION_L30_Records f0=0, proc=0
-	.long	\f0
+.macro REC_INVERSION_L30_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcChordFinderBoxProc_L35_Records: 8-byte records (AcChordFinderBoxProc_L35_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcChordFinderBoxProc_L35 0x486F926A `mov (a0), d0`; AcChordFinderBoxProc_L65 0x486F929A `mov (a0), d0`
+#   +0   key          u32            AcChordFinderBoxProc_L35 0x486F926A `mov (a0), d0`; AcChordFinderBoxProc_L65 0x486F929A `mov (a0), d0`
 #   +4   proc         ptr            AcChordFinderBoxProc_L68 0x486F929D `mov (4, a0), a0`
-.macro REC_AcChordFinderBoxProc_L35_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcChordFinderBoxProc_L35_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_TtSswRun_entry_L8d_Records: 8-byte records (TtSswRun_entry_L8d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            TtSswRun_entry_L8d 0x486FDB21 `mov (a0), d1`; TtSswRun_entry_Lbf 0x486FDB53 `mov (a0), d1`
+#   +0   key          u32            TtSswRun_entry_L8d 0x486FDB21 `mov (a0), d1`; TtSswRun_entry_Lbf 0x486FDB53 `mov (a0), d1`
 #   +4   proc         ptr            TtSswRun_entry_Lc2 0x486FDB56 `mov (4, a0), a0`
-.macro REC_TtSswRun_entry_L8d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_TtSswRun_entry_L8d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSswScreenProc_L1e_Records: 8-byte records (AcSswScreenProc_L1e_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcSswScreenProc_L1e 0x486FDBE4 `mov (a0), d0`; AcSswScreenProc_L4d 0x486FDC13 `mov (a0), d0`
+#   +0   key          u32            AcSswScreenProc_L1e 0x486FDBE4 `mov (a0), d0`; AcSswScreenProc_L4d 0x486FDC13 `mov (a0), d0`
 #   +4   proc         ptr            AcSswScreenProc_L50 0x486FDC16 `mov (4, a0), a0`
-.macro REC_AcSswScreenProc_L1e_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSswScreenProc_L1e_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_AcSswImgListProc_L1d_Records: 8-byte records (AcSswImgListProc_L1d_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            AcSswImgListProc_L1d 0x486FE4B5 `mov (a0), d0`; AcSswImgListProc_L4b 0x486FE4E3 `mov (a0), d0`
+#   +0   key          u32            AcSswImgListProc_L1d 0x486FE4B5 `mov (a0), d0`; AcSswImgListProc_L4b 0x486FE4E3 `mov (a0), d0`
 #   +4   proc         ptr            AcSswImgListProc_L4e 0x486FE4E6 `mov (4, a0), a0`
-.macro REC_AcSswImgListProc_L1d_Records f0=0, proc=0
-	.long	\f0
+.macro REC_AcSswImgListProc_L1d_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -3282,42 +3270,42 @@
 .endm
 
 # REC_HelpTtlSwCatchFunc_L38_Records: 8-byte records (HelpTtlSwCatchFunc_L38_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            HelpTtlSwCatchFunc_L38 0x48703318 `mov (a0), d0`; HelpTtlSwCatchFunc_L62 0x48703342 `mov (a0), d0`
+#   +0   key          u32            HelpTtlSwCatchFunc_L38 0x48703318 `mov (a0), d0`; HelpTtlSwCatchFunc_L62 0x48703342 `mov (a0), d0`
 #   +4   proc         ptr            HelpTtlSwCatchFunc_L65 0x48703345 `mov (4, a0), a0`
-.macro REC_HelpTtlSwCatchFunc_L38_Records f0=0, proc=0
-	.long	\f0
+.macro REC_HelpTtlSwCatchFunc_L38_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_48703E2C_Lc6_Records: 8-byte records (func_48703E2C_Lc6_Records, 128 records); fields, and what reads them:
-#   +0   f0           u32            func_48703E2C_Lc6 0x48703EF2 `mov (a0), d0`; func_48703E2C_Lf3 0x48703F1F `mov (a0), d0`
+#   +0   key          u32            func_48703E2C_Lc6 0x48703EF2 `mov (a0), d0`; func_48703E2C_Lf3 0x48703F1F `mov (a0), d0`
 #   +4   proc         ptr            func_48703E2C_Lf6 0x48703F22 `mov (4, a0), a0`
-.macro REC_func_48703E2C_Lc6_Records f0=0, proc=0
-	.long	\f0
+.macro REC_func_48703E2C_Lc6_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsFolderFileListBoxProc_L21_Records: 8-byte records (PsFolderFileListBoxProc_L21_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            PsFolderFileListBoxProc_L21 0x487074D7 `mov (a0), d0`; PsFolderFileListBoxProc_L51 0x48707507 `mov (a0), d0`
+#   +0   key          u32            PsFolderFileListBoxProc_L21 0x487074D7 `mov (a0), d0`; PsFolderFileListBoxProc_L51 0x48707507 `mov (a0), d0`
 #   +4   proc         ptr            PsFolderFileListBoxProc_L54 0x4870750A `mov (4, a0), a0`
-.macro REC_PsFolderFileListBoxProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsFolderFileListBoxProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsFolderListBoxProc_L21_Records: 8-byte records (PsFolderListBoxProc_L21_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            PsFolderListBoxProc_L21 0x48707B2C `mov (a0), d0`; PsFolderListBoxProc_L50 0x48707B5B `mov (a0), d0`
+#   +0   key          u32            PsFolderListBoxProc_L21 0x48707B2C `mov (a0), d0`; PsFolderListBoxProc_L50 0x48707B5B `mov (a0), d0`
 #   +4   proc         ptr            PsFolderListBoxProc_L53 0x48707B5E `mov (4, a0), a0`
-.macro REC_PsFolderListBoxProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsFolderListBoxProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_PsFileListBoxProc_L21_Records: 8-byte records (PsFileListBoxProc_L21_Records, 32 records); fields, and what reads them:
-#   +0   f0           u32            PsFileListBoxProc_L21 0x48707ED5 `mov (a0), d0`; PsFileListBoxProc_L51 0x48707F05 `mov (a0), d0`
+#   +0   key          u32            PsFileListBoxProc_L21 0x48707ED5 `mov (a0), d0`; PsFileListBoxProc_L51 0x48707F05 `mov (a0), d0`
 #   +4   proc         ptr            PsFileListBoxProc_L54 0x48707F08 `mov (4, a0), a0`
-.macro REC_PsFileListBoxProc_L21_Records f0=0, proc=0
-	.long	\f0
+.macro REC_PsFileListBoxProc_L21_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -3332,30 +3320,30 @@
 .endm
 
 # REC_func_4870CAE5_Table_2: 8-byte records (func_4870CAE5_Table_2, 8 records); fields, and what reads them:
-#   +0   f0           u8             func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0`
+#   +0   index        u8             func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0`
 #   +1   x1           u8[3]          no reader seen
 #   +4   proc         ptr            func_4870CAE5_entry_L1a8 0x4870CC93 `mov (4, a0), a1`
-.macro REC_func_4870CAE5_Table_2 f0=0, x1, proc=0
-	.byte	\f0
+.macro REC_func_4870CAE5_Table_2 index=0, x1, proc=0
+	.byte	\index
 	.ascii	"\x1"
 	.long	\proc
 .endm
 
 # REC_func_4870FD81_entry_L19_Table: 4-byte records (func_4870FD81_entry_L19_Table, 15 records); fields, and what reads them:
-#   +0   f0           s16            func_4870FD81_entry_L19 0x4870FD9C `movhu (d0, a0), d0`
+#   +0   key          s16            func_4870FD81_entry_L19 0x4870FD9C `movhu (d0, a0), d0`
 #   +2   f2           u8             func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a0), d0`; func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a1), d1`
 #   +3   x3           u8[1]          no reader seen
-.macro REC_func_4870FD81_entry_L19_Table f0=0, f2=0, x3
-	.word	\f0
+.macro REC_func_4870FD81_entry_L19_Table key=0, f2=0, x3
+	.word	\key
 	.byte	\f2
 	.ascii	"\x3"
 .endm
 
 # REC_SdcFmmFileNameFunc_L1c_Records: 8-byte records (SdcFmmFileNameFunc_L1c_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            SdcFmmFileNameFunc_L1c 0x48712FD1 `mov (a0), d0`; SdcFmmFileNameFunc_L4b 0x48713000 `mov (a0), d0`
+#   +0   key          u32            SdcFmmFileNameFunc_L1c 0x48712FD1 `mov (a0), d0`; SdcFmmFileNameFunc_L4b 0x48713000 `mov (a0), d0`
 #   +4   proc         ptr            SdcFmmFileNameFunc_L4e 0x48713003 `mov (4, a0), a0`
-.macro REC_SdcFmmFileNameFunc_L1c_Records f0=0, proc=0
-	.long	\f0
+.macro REC_SdcFmmFileNameFunc_L1c_Records key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
@@ -3407,14 +3395,6 @@
 	.long	\p12
 .endm
 
-# REC_PfDoubleToDecimal_entry_L290_Records: 8-byte records (PfDoubleToDecimal_entry_L290_Records, 1 records); fields, and what reads them:
-#   +0   f0           u32            PfDoubleToDecimal_entry_L290 0x50122E45 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x50122E81 `mov (-8, a0), d0`
-#   +4   f4           u32            PfDoubleToDecimal_entry_L290 0x50122E45 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L2cc 0x50122E81 `mov (-4, a0), d1`
-.macro REC_PfDoubleToDecimal_entry_L290_Records f0=0, f4=0
-	.long	\f0
-	.long	\f4
-.endm
-
 # REC_func_5012FE46_entry_L23_Records: 256-byte records (func_5012FE46_entry_L23_Records, 7 records); fields, and what reads them:
 #   +0   index        256 x 1 (u8)   func_5012FE46_entry_L23 0x5012FE6E `movbu (d1, a0), d1`; func_5012FE46_entry_L65 0x5012FEB0 `movbu (d1, a0), d1` (+2)
 .macro REC_func_5012FE46_entry_L23_Records index:vararg
@@ -3428,13 +3408,13 @@
 .endm
 
 # REC_TgPartEgRampBuild_entry_L27_Records: 6-byte records (TgPartEgRampBuild_entry_L27_Records, 8 records); fields, and what reads them:
-#   +0   a0           2 x 2 (u8)     TgPartEgRampBuild_entry_L27 0x501421B2 `movbu (d0, a0), d3`; TgPartEgRampBuild_entry_L12a 0x501422B5 `movbu (1, a0), d3`
+#   +0   index        2 x 2 (u8)     TgPartEgRampBuild_entry_L27 0x501421B2 `movbu (d0, a0), d3`; TgPartEgRampBuild_entry_L12a 0x501422B5 `movbu (1, a0), d3`
 #   +4   f4           u8             TgPartEgRampBuild_entry_L215 0x501423A0 `movbu (4, a0), d1`
-#   +5   index        u8             TgPartEgRampBuild_entry_L2d3 0x5014245E `movbu (5, a0), d2`
-.macro REC_TgPartEgRampBuild_entry_L27_Records a0, f4=0, index=0
-	.ascii	"\a0"
+#   +5   index_       u8             TgPartEgRampBuild_entry_L2d3 0x5014245E `movbu (5, a0), d2`
+.macro REC_TgPartEgRampBuild_entry_L27_Records index, f4=0, index_=0
+	.ascii	"\index"
 	.byte	\f4
-	.byte	\index
+	.byte	\index_
 .endm
 
 # REC_TgPartEgRampBuild_entry_L1ba_Table: 102-byte records (TgPartEgRampBuild_entry_L1ba_Table, 8 records); fields, and what reads them:
@@ -3512,22 +3492,22 @@
 .endm
 
 # REC_TgPartGlidePlan_entry_L3b_Records: 12-byte records (TgPartGlidePlan_entry_L3b_Records, 128 records); fields, and what reads them:
-#   +0   f0           u32            TgPartGlidePlan_entry_L3b 0x501259C6 `mov (a0), d0`
-#   +4   f4           u32            TgPartGlidePlan_entry_L3b 0x501259C6 `mov (4, a0), d1`
+#   +0   LibF64Mul_d0 u32            TgPartGlidePlan_entry_L3b 0x501259C6 `mov (a0), d0`
+#   +4   LibF64Mul_d1 u32            TgPartGlidePlan_entry_L3b 0x501259C6 `mov (4, a0), d1`
 #   +8   x8           u8[4]          no reader seen
-.macro REC_TgPartGlidePlan_entry_L3b_Records f0=0, f4=0, x8
-	.long	\f0
-	.long	\f4
+.macro REC_TgPartGlidePlan_entry_L3b_Records LibF64Mul_d0=0, LibF64Mul_d1=0, x8
+	.long	\LibF64Mul_d0
+	.long	\LibF64Mul_d1
 	.ascii	"\x8"
 .endm
 
-# REC_func_501866EE_Table: 12-byte records (func_501866EE_Table, 12 records); fields, and what reads them:
+# REC_FxUnitCoefBase: 12-byte records (FxUnitCoefBase, 12 records); fields, and what reads them:
 #   +0   f0           s16            func_501866EE 0x501866EE `movhu (d0, a0), d1`
 #   +2   f2           s16            func_501867D0 0x501867D0 `movhu (2, a0), d1`
 #   +4   f4           s16            func_50186829 0x50186829 `movhu (4, a0), d1`
 #   +6   f6           s16            func_501868B2 0x501868B2 `movhu (6, a0), d1`
 #   +8   f8           u32            func_5018685A 0x5018685A `mov (8, a0), d0`
-.macro REC_func_501866EE_Table f0=0, f2=0, f4=0, f6=0, f8=0
+.macro REC_FxUnitCoefBase f0=0, f2=0, f4=0, f6=0, f8=0
 	.word	\f0
 	.word	\f2
 	.word	\f4
@@ -3544,10 +3524,10 @@
 .endm
 
 # REC_func_485E9AA7_entry_L6e_Records: 16-byte records (func_485E9AA7_entry_L6e_Records, 2 records); fields, and what reads them:
-#   +0   f0           u8             func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485E9AA7_entry_L163 0x485E9C0F `movbu (a2), d0` (+2)
+#   +0   count        u8             func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485E9AA7_entry_L163 0x485E9C0F `movbu (a2), d0` (+2)
 #   +1   x1           u8[15]         no reader seen
-.macro REC_func_485E9AA7_entry_L6e_Records f0=0, x1
-	.byte	\f0
+.macro REC_func_485E9AA7_entry_L6e_Records count=0, x1
+	.byte	\count
 	.ascii	"\x1"
 .endm
 
@@ -3569,10 +3549,10 @@
 
 # REC_func_4860E29C_Table: 2-byte records (func_4860E29C_Table, 256 records); fields, and what reads them:
 #   +0   f0           u8             func_4860E29C_entry_L6e 0x4860E30F `movbu (d0, a3), d0`; func_4860E29C_entry_Ldd 0x4860E37E `movbu (d0, a0), d0` (+3)
-#   +1   f1           u8             func_4860E29C_entry_L2d 0x4860E2CE `movbu (1, a0), d0`; func_4860E29C_entry_L8b 0x4860E32C `movbu (1, a0), d0` (+3)
-.macro REC_func_4860E29C_Table f0=0, f1=0
+#   +1   index        u8             func_4860E29C_entry_L2d 0x4860E2CE `movbu (1, a0), d0`; func_4860E29C_entry_L8b 0x4860E32C `movbu (1, a0), d0` (+3)
+.macro REC_func_4860E29C_Table f0=0, index=0
 	.byte	\f0
-	.byte	\f1
+	.byte	\index
 .endm
 
 # REC_func_501750B7_entry_L66_Records: 44-byte records (func_501750B7_entry_L66_Records, 26 records); fields, and what reads them:
@@ -3768,10 +3748,10 @@
 .endm
 
 # REC_FE_EasyCompMem_Table: 2-byte records (FE_EasyCompMem_Table, 12 records); fields, and what reads them:
-#   +0   f0           u8             FE_EasyCompMem_La4 0x486B0E5E `movbu (d0, a3), d0`; FE_EasyCompMem_La4 0x486B0E5E `movbu (d0, a3), d1` (+2)
+#   +0   sprintf_d0   u8             FE_EasyCompMem_La4 0x486B0E5E `movbu (d0, a3), d0`; FE_EasyCompMem_La4 0x486B0E5E `movbu (d0, a3), d1` (+2)
 #   +1   f1           u8             FE_EasyCompMem_La4 0x486B0E5E `movbu (1, a3), d0`; CmpEasyCompEditFunc_L17 0x486B0F67 `movbu (1, a2), d0` (+1)
-.macro REC_FE_EasyCompMem_Table f0=0, f1=0
-	.byte	\f0
+.macro REC_FE_EasyCompMem_Table sprintf_d0=0, f1=0
+	.byte	\sprintf_d0
 	.byte	\f1
 .endm
 
@@ -3782,35 +3762,35 @@
 .endm
 
 # REC_KernelServiceHash: 8-byte records (KernelServiceHash, 16 records); fields, and what reads them:
-#   +0   f0           u32            KernelWaitRelease_entry_L29 0x4872844A `mov (a0), d0`; KernelWaitRelease_entry_L54 0x48728475 `mov (a0), d0`
+#   +0   key          u32            KernelWaitRelease_entry_L29 0x4872844A `mov (a0), d0`; KernelWaitRelease_entry_L54 0x48728475 `mov (a0), d0`
 #   +4   proc         ptr            KernelWaitRelease_entry_L57 0x48728478 `mov (4, a0), a0`
-.macro REC_KernelServiceHash f0=0, proc=0
-	.long	\f0
+.macro REC_KernelServiceHash key=0, proc=0
+	.long	\key
 	.long	\proc
 .endm
 
 # REC_func_4860EC57_Records: 2-byte records (func_4860EC57_Records, 3 records); fields, and what reads them:
-#   +0   f0           u8             func_4860EC57_entry_L51 0x4860ECAD `movbu (func_4860EC57_Records), d0`; func_4860EEAA 0x4860EEAA `movbu d0, (func_4860EC57_Records)` (+10)
-#   +1   f1           u8             func_4860EC57_entry_L76 0x4860ECD2 `movbu (func_4860EC57_Records+1), d0`; func_4860EEAA 0x4860EEAA `movbu d0, (func_4860EC57_Records+1)` (+10)
-.macro REC_func_4860EC57_Records f0=0, f1=0
-	.byte	\f0
-	.byte	\f1
+#   +0   index        u8             func_4860EC57_entry_L51 0x4860ECAD `movbu (func_4860EC57_Records), d0`; func_4860EEAA 0x4860EEAA `movbu d0, (func_4860EC57_Records)` (+10)
+#   +1   key          u8             func_4860EC57_entry_L76 0x4860ECD2 `movbu (func_4860EC57_Records+1), d0`; func_4860EEAA 0x4860EEAA `movbu d0, (func_4860EC57_Records+1)` (+10)
+.macro REC_func_4860EC57_Records index=0, key=0
+	.byte	\index
+	.byte	\key
 .endm
 
 # REC_func_4860EC57_Records_2: 2-byte records (func_4860EC57_Records_2, 3 records); fields, and what reads them:
-#   +0   f0           u8             func_4860EC57_entry_L76 0x4860ECD2 `movbu d0, (func_4860EC57_Records_2)`; func_4860EC57_entry_Lb0 0x4860ED0C `movbu (func_4860EC57_Records_2), d0` (+10)
-#   +1   f1           u8             func_4860EC57_entry_L76 0x4860ECD2 `movbu d0, (func_4860EC57_Records_2+1)`; func_4860EC57_entry_Lb0 0x4860ED0C `movbu (func_4860EC57_Records_2+1), d0` (+7)
-.macro REC_func_4860EC57_Records_2 f0=0, f1=0
-	.byte	\f0
-	.byte	\f1
+#   +0   key          u8             func_4860EC57_entry_L76 0x4860ECD2 `movbu d0, (func_4860EC57_Records_2)`; func_4860EC57_entry_Lb0 0x4860ED0C `movbu (func_4860EC57_Records_2), d0` (+10)
+#   +1   key_         u8             func_4860EC57_entry_L76 0x4860ECD2 `movbu d0, (func_4860EC57_Records_2+1)`; func_4860EC57_entry_Lb0 0x4860ED0C `movbu (func_4860EC57_Records_2+1), d0` (+7)
+.macro REC_func_4860EC57_Records_2 key=0, key_=0
+	.byte	\key
+	.byte	\key_
 .endm
 
 # REC_AcFavScreenProc_Table: 8-byte records (AcFavScreenProc_Table, 18 records); fields, and what reads them:
-#   +0   f0           u32            AcFavScreenProc_Ld8 0x4865EB8E `mov (d0, a0), a1`; AcFavCategoryProc_L2ad 0x4865EFF8 `mov (8, a0), a0` (+4)
-#   +4   p4           ptr            AcFavCategoryProc_L10f 0x4865EE5A `mov (4, a0), a0`; AcFavCategoryProc_L2ad 0x4865EFF8 `mov (4, a0), a1` (+2)
-.macro REC_AcFavScreenProc_Table f0=0, p4=0
-	.long	\f0
-	.long	\p4
+#   +0   index        u32            AcFavScreenProc_Ld8 0x4865EB8E `mov (d0, a0), a1`; AcFavCategoryProc_L2ad 0x4865EFF8 `mov (8, a0), a0` (+4)
+#   +4   strcat_a1    ptr            AcFavCategoryProc_L10f 0x4865EE5A `mov (4, a0), a0`; AcFavCategoryProc_L2ad 0x4865EFF8 `mov (4, a0), a1` (+2)
+.macro REC_AcFavScreenProc_Table index=0, strcat_a1=0
+	.long	\index
+	.long	\strcat_a1
 .endm
 
 # REC_MainFuncCall_Records: 4-byte records (MainFuncCall_Records, 16 records); fields, and what reads them:
@@ -3839,8 +3819,8 @@
 #   +0   key          s16            func_485FFD4C 0x485FFD4C `movhu (d0, a3), d2`; func_485FFEFA 0x485FFEFA `movhu (d0, a2), d2` (+8)
 #   +2   key_         s16            func_485FFD4C 0x485FFD4C `movhu (2, a0), d3`; func_485FFD4C_entry_L99 0x485FFDEA `movhu (2, a0), d3` (+12)
 #   +4   key__        s16            func_485FFD4C 0x485FFD4C `movhu (4, a0), d0`; func_485FFD4C_entry_Lce 0x485FFE1F `movhu (4, a0), d0` (+2)
-#   +6   f6           s16            func_485EBDAE_L56 0x485EBE04 `movhu (6, a0), d0`; func_485EBE7F_L3f 0x485EBEBE `movhu (6, a0), d0` (+8)
-#   +8   f8           s16            func_485F942F 0x485F942F `movhu (8, a0), d0`; func_485F942F 0x485F942F `movhu (8, a2), d0` (+24)
+#   +6   flag         s16            func_485EBDAE_L56 0x485EBE04 `movhu (6, a0), d0`; func_485EBE7F_L3f 0x485EBEBE `movhu (6, a0), d0` (+8)
+#   +8   flag_        s16            func_485F942F 0x485F942F `movhu (8, a0), d0`; func_485F942F 0x485F942F `movhu (8, a2), d0` (+24)
 #   +10  x10          u8[2]          no reader seen
 #   +12  index        u32            ProcCall_entry_L28 0x48600C26 `mov (0xc, a0), d0`; ProcCall_entry_L28 0x48600C26 `mov (0xc, a0), d1` (+7)
 #   +16  f16          u32            func_485FFCBD 0x485FFCBD `mov (0x10, a0), d0`; func_485FFEFA_entry_L5c 0x485FFF5B `mov (0x10, a0), d0` (+3)
@@ -3850,16 +3830,16 @@
 #   +32  f32          u32            func_485FFCBD_entry_L22 0x485FFCE4 `mov (0x20, a0), a3`; func_485FFCBD_entry_L22 0x485FFCE4 `mov a3, (0x20, a0)` (+3)
 #   +36  f36          u32            func_485FFCBD_entry_L22 0x485FFCE4 `mov (0x24, a0), a2`; func_485FFCBD_entry_L22 0x485FFCE4 `mov a2, (0x24, a0)` (+3)
 #   +40  f40          u32            func_485FFCBD_entry_L22 0x485FFCE4 `mov (0x28, a1), a0`; func_485FFCBD_entry_L22 0x485FFCE4 `mov d0, (0x28, a0)` (+3)
-#   +44  f44          u32            func_485FFD4C_entry_Lce 0x485FFE1F `mov (0x2c, a0), a0`; func_485FFD4C_entry_Lce 0x485FFE1F `mov (0x2c, a0), d0` (+6)
-#   +48  f48          s16            InitializeTaskTimer 0x486010B9 `movhu d0, (0x30, a0)`; ApTimer 0x4860115E `movhu (0x30, a0), d0` (+22)
-#   +50  f50          s16            InitializeTaskTimer 0x486010B9 `movhu (0x32, a0), d1`; InitializeTaskTimer 0x486010B9 `movhu (a1), d0` (+3)
-#   +52  f52          u32            InitializeTaskTimer 0x486010B9 `mov (a0), a0`; InitializeTaskTimer 0x486010B9 `mov (a3), a0` (+28)
-.macro REC_func_48600019_Table key=0, key_=0, key__=0, f6=0, f8=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, f44=0, f48=0, f50=0, f52=0
+#   +44  index_       u32            func_485FFD4C_entry_Lce 0x485FFE1F `mov (0x2c, a0), a0`; func_485FFD4C_entry_Lce 0x485FFE1F `mov (0x2c, a0), d0` (+6)
+#   +48  key___       s16            InitializeTaskTimer 0x486010B9 `movhu d0, (0x30, a0)`; ApTimer 0x4860115E `movhu (0x30, a0), d0` (+22)
+#   +50  count        s16            InitializeTaskTimer 0x486010B9 `movhu (0x32, a0), d1`; InitializeTaskTimer 0x486010B9 `movhu (a1), d0` (+3)
+#   +52  index__      u32            InitializeTaskTimer 0x486010B9 `mov (a0), a0`; InitializeTaskTimer 0x486010B9 `mov (a3), a0` (+28)
+.macro REC_func_48600019_Table key=0, key_=0, key__=0, flag=0, flag_=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, index_=0, key___=0, count=0, index__=0
 	.word	\key
 	.word	\key_
 	.word	\key__
-	.word	\f6
-	.word	\f8
+	.word	\flag
+	.word	\flag_
 	.ascii	"\x10"
 	.long	\index
 	.long	\f16
@@ -3869,10 +3849,10 @@
 	.long	\f32
 	.long	\f36
 	.long	\f40
-	.long	\f44
-	.word	\f48
-	.word	\f50
-	.long	\f52
+	.long	\index_
+	.word	\key___
+	.word	\count
+	.long	\index__
 .endm
 
 # REC_func_4860AA20_entry_L35_Records: 8-byte records (func_4860AA20_entry_L35_Records, 7 records); fields, and what reads them:
@@ -3920,42 +3900,42 @@
 .endm
 
 # REC_func_4863A91F_Table: 19-byte records (func_4863A91F_Table, 20 records); fields, and what reads them:
-#   +0   f0           u8             func_4863A91F_entry_Ld0 0x4863A9F4 `movbu (a2), d3`
+#   +0   flags        u8             func_4863A91F_entry_Ld0 0x4863A9F4 `movbu (a2), d3`
 #   +1   index        u8             func_4863A91F_entry_Ld0 0x4863A9F4 `movbu (1, a2), d1`
 #   +2   x2           u8[17]         no reader seen
-.macro REC_func_4863A91F_Table f0=0, index=0, x2
-	.byte	\f0
+.macro REC_func_4863A91F_Table flags=0, index=0, x2
+	.byte	\flags
 	.byte	\index
 	.ascii	"\x2"
 .endm
 
 # REC_func_4863A91F_Table_2: 19-byte records (func_4863A91F_Table_2, 10 records); fields, and what reads them:
-#   +0   f0           u8             func_4863A91F_entry_L91 0x4863A9B5 `movbu (a2), d3`
+#   +0   flags        u8             func_4863A91F_entry_L91 0x4863A9B5 `movbu (a2), d3`
 #   +1   index        u8             func_4863A91F_entry_L91 0x4863A9B5 `movbu (1, a2), d1`
 #   +2   x2           u8[17]         no reader seen
-.macro REC_func_4863A91F_Table_2 f0=0, index=0, x2
-	.byte	\f0
+.macro REC_func_4863A91F_Table_2 flags=0, index=0, x2
+	.byte	\flags
 	.byte	\index
 	.ascii	"\x2"
 .endm
 
 # REC_func_4863A91F_Table_3: 19-byte records (func_4863A91F_Table_3, 10 records); fields, and what reads them:
-#   +0   f0           u8             func_4863A91F_entry_L52 0x4863A976 `movbu (a2), d3`
+#   +0   flags        u8             func_4863A91F_entry_L52 0x4863A976 `movbu (a2), d3`
 #   +1   index        u8             func_4863A91F_entry_L52 0x4863A976 `movbu (1, a2), d1`
 #   +2   x2           u8[17]         no reader seen
-.macro REC_func_4863A91F_Table_3 f0=0, index=0, x2
-	.byte	\f0
+.macro REC_func_4863A91F_Table_3 flags=0, index=0, x2
+	.byte	\flags
 	.byte	\index
 	.ascii	"\x2"
 .endm
 
 # REC_func_4863A91F_Table_4: 19-byte records (func_4863A91F_Table_4, 10 records); fields, and what reads them:
 #   (ends at +190, where func_4863A91F_entry_L13 0x4863A937's loop stops (`cmp data_50006AF2, a2`))
-#   +0   f0           u8             func_4863A91F_entry_L13 0x4863A937 `movbu (a2), d3`
+#   +0   flags        u8             func_4863A91F_entry_L13 0x4863A937 `movbu (a2), d3`
 #   +1   index        u8             func_4863A91F_entry_L13 0x4863A937 `movbu (1, a2), d1`
 #   +2   x2           u8[17]         no reader seen
-.macro REC_func_4863A91F_Table_4 f0=0, index=0, x2
-	.byte	\f0
+.macro REC_func_4863A91F_Table_4 flags=0, index=0, x2
+	.byte	\flags
 	.byte	\index
 	.ascii	"\x2"
 .endm
@@ -3966,74 +3946,16 @@
 	.ascii	"\x0"
 .endm
 
-# REC_func_50144C7D_Selected: 16-byte records (func_50144C7D_Selected, 126 records); fields, and what reads them:
-#   +0   key          u32            func_5014A95C_entry_L20 0x5014A97E `mov (a0), d1`
-#   +4   x4           u8[8]          no reader seen
-#   +12  f12          u8             func_50144C7D 0x50144C7D `movbu (a3), d0`; func_50144C7D_entry_L49 0x50144CCB `movbu (a3), d0` (+2)
-#   +13  f13          u8             func_50144C7D 0x50144C7D `movbu (a2), d1`; func_50144C7D_entry_L49 0x50144CCB `movbu (a2), d1` (+3)
-#   +14  f14          u8             func_501464C6 0x501464C6 `movbu (a3), d1`; func_501464C6 0x501464C6 `movbu (a3), d2`
-#   +15  x15          u8[1]          no reader seen
-.macro REC_func_50144C7D_Selected key=0, x4, f12=0, f13=0, f14=0, x15
-	.long	\key
-	.ascii	"\x4"
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.ascii	"\x15"
-.endm
-
-# REC_data_48402E94_p0: 20-byte records (data_48402E94_p0, 1 records); fields, and what reads them:
-#   +0   f0           u32            func_50149247_entry_L21 0x5014926D `mov (a0), d0`; func_50149247_entry_L58 0x501492A4 `mov (a0), d0`
-#   +4   x4           u8[8]          no reader seen
-#   +12  f12          u32            func_50149247_entry_L21 0x5014926D `mov (0xc, a0), a3`
-#   +16  f16          u16            func_50149247_entry_L21 0x5014926D `movhu (a2), d0`; func_50149247_entry_L58 0x501492A4 `movhu (a2), d0` (+1)
-#   +18  x18          u8[1]          no reader seen
-#   +19  f19          u8             func_50149247_entry_L21 0x5014926D `movbu (0x13, a0), d0`
-.macro REC_data_48402E94_p0 f0=0, x4, f12=0, f16=0, x18, f19=0
-	.long	\f0
-	.ascii	"\x4"
-	.long	\f12
-	.word	\f16
-	.ascii	"\x18"
-	.byte	\f19
-.endm
-
-# REC_func_50145183_Selected: 20-byte records (func_50145183_Selected, 3 records); fields, and what reads them:
-#   +0   index        u32            func_50145183 0x50145183 `mov (a0), d0`; func_50147890 0x50147890 `mov (a2), d3`
-#   +4   x4           u8[4]          no reader seen
-#   +8   index_       s16            func_50147890_entry_L24 0x501478B9 `movhu (a0), d0`; func_50147890_entry_L24 0x501478B9 `movhu (a0), d1`
-#   +10  index__      s16            func_50147890 0x50147890 `movhu (a0), d0`; func_50147890 0x50147890 `movhu (a0), d1`
-#   +12  index___     u32            func_50145183 0x50145183 `mov (0xc, a0), a2`; func_50147890 0x50147890 `mov (0xc, a2), d0`
-#   +16  f16          u16            func_50145183 0x50145183 `movhu (0x10, a0), d1`; func_50147890_entry_L30 0x501478C5 `movhu (a1), d0` (+1)
-#   +18  x18          u8[1]          no reader seen
-#   +19  f19          u8             func_50145183 0x50145183 `movbu (0x13, a0), d1`; func_50147890_entry_L30 0x501478C5 `movbu (0x13, a2), d0`
-.macro REC_func_50145183_Selected index=0, x4, index_=0, index__=0, index___=0, f16=0, x18, f19=0
-	.long	\index
-	.ascii	"\x4"
-	.word	\index_
-	.word	\index__
-	.long	\index___
-	.word	\f16
-	.ascii	"\x18"
-	.byte	\f19
-.endm
-
-# REC_data_48402DAC_p0: 4-byte records (data_48402DAC_p0, 1 records); fields, and what reads them:
-#   +0   f0           u32            func_5014906F_entry_L68 0x501490DC `mov (a2), d0`
-.macro REC_data_48402DAC_p0 f0=0
-	.long	\f0
-.endm
-
 # REC_func_50157E10_entry_L3_Records_p4: 113-byte records (func_50157E10_entry_L3_Records_p4, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_50157E37 0x50157E37 `movbu (a2), d0`; func_50157E5F 0x50157E5F `movbu (a1), d0`
+#   +0   key          u8             func_50157E37 0x50157E37 `movbu (a2), d0`; func_50157E5F 0x50157E5F `movbu (a1), d0`
 #   +1   index        u8             func_50157EB8 0x50157EB8 `movbu (a1), d0`; func_50157EB8 0x50157EB8 `movbu (a1), d2` (+8)
 #   +2   f2           u8             func_50157EB8 0x50157EB8 `movbu (2, a2), d0`; func_50157ECE 0x50157ECE `movbu (2, a2), d0` (+5)
 #   +3   f3           u8             func_50157EFC 0x50157EFC `movbu (3, a1), d2`; func_50157F37 0x50157F37 `movbu (3, a1), d2`
 #   +4   f4           u8             func_50157EFC 0x50157EFC `movbu (4, a1), d2`; func_50157F37 0x50157F37 `movbu (4, a1), d2`
 #   +5   f5           u8             func_50157EFC_entry_L22 0x50157F20 `movbu (5, a1), d0`; func_50157F37 0x50157F37 `movbu (5, a1), d0`
 #   +6   x6           u8[107]        no reader seen
-.macro REC_func_50157E10_entry_L3_Records_p4 f0=0, index=0, f2=0, f3=0, f4=0, f5=0, x6
-	.byte	\f0
+.macro REC_func_50157E10_entry_L3_Records_p4 key=0, index=0, f2=0, f3=0, f4=0, f5=0, x6
+	.byte	\key
 	.byte	\index
 	.byte	\f2
 	.byte	\f3
@@ -4043,14 +3965,14 @@
 .endm
 
 # REC_func_50157E37_Records_p4: 6-byte records (func_50157E37_Records_p4, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_50157E37 0x50157E37 `movbu (a2), d0`; func_50157E5F 0x50157E5F `movbu (a1), d0`
+#   +0   key          u8             func_50157E37 0x50157E37 `movbu (a2), d0`; func_50157E5F 0x50157E5F `movbu (a1), d0`
 #   +1   index        u8             func_50157EB8 0x50157EB8 `movbu (a1), d0`; func_50157EB8 0x50157EB8 `movbu (a1), d2` (+8)
 #   +2   f2           u8             func_50157EB8 0x50157EB8 `movbu (2, a2), d0`; func_50157ECE 0x50157ECE `movbu (2, a2), d0` (+5)
 #   +3   f3           u8             func_50157EFC 0x50157EFC `movbu (3, a1), d2`; func_50157F37 0x50157F37 `movbu (3, a1), d2`
 #   +4   f4           u8             func_50157EFC 0x50157EFC `movbu (4, a1), d2`; func_50157F37 0x50157F37 `movbu (4, a1), d2`
 #   +5   f5           u8             func_50157EFC_entry_L22 0x50157F20 `movbu (5, a1), d0`; func_50157F37 0x50157F37 `movbu (5, a1), d0`
-.macro REC_func_50157E37_Records_p4 f0=0, index=0, f2=0, f3=0, f4=0, f5=0
-	.byte	\f0
+.macro REC_func_50157E37_Records_p4 key=0, index=0, f2=0, f3=0, f4=0, f5=0
+	.byte	\key
 	.byte	\index
 	.byte	\f2
 	.byte	\f3
@@ -4060,32 +3982,32 @@
 
 # REC_func_5015ADAF_Result: 8-byte records (func_5015ADAF_Result, 42 records); fields, and what reads them:
 #   +0   f0           u32            func_5015AC16_entry_Lac 0x5015ACC7 `mov (a0), d0`; func_5015AC16_entry_L118 0x5015AD33 `mov (a0), d0` (+1)
-#   +4   f4           u8             func_5015AC16_entry_L7e 0x5015AC99 `movbu (4, a0), d1`
-#   +5   index        u8             func_5015AC16_entry_Lac 0x5015ACC7 `movbu (5, a0), d2`; func_5015AC16_entry_L118 0x5015AD33 `movbu (5, a0), d3` (+1)
+#   +4   index        u8             func_5015AC16_entry_L7e 0x5015AC99 `movbu (4, a0), d1`
+#   +5   index_       u8             func_5015AC16_entry_Lac 0x5015ACC7 `movbu (5, a0), d2`; func_5015AC16_entry_L118 0x5015AD33 `movbu (5, a0), d3` (+1)
 #   +6   f6           u8             func_5015AC16_entry_L91 0x5015ACAC `movbu (6, a0), d1`; func_5015AC16_entry_Lea 0x5015AD05 `movbu (6, a0), d1`
 #   +7   x7           u8[1]          no reader seen
-.macro REC_func_5015ADAF_Result f0=0, f4=0, index=0, f6=0, x7
+.macro REC_func_5015ADAF_Result f0=0, index=0, index_=0, f6=0, x7
 	.long	\f0
-	.byte	\f4
 	.byte	\index
+	.byte	\index_
 	.byte	\f6
 	.ascii	"\x7"
 .endm
 
 # REC_func_5016B726_Result: 18-byte records (func_5016B726_Result, 166 records); fields, and what reads them:
-#   +0   f0           u32            func_5016594F_entry_L41 0x50165995 `mov (a0), d1`; func_5016594F_entry_Le5 0x50165A39 `mov (a0), d1` (+78)
+#   +0   GetM3Em_d1   u32            func_5016594F_entry_L41 0x50165995 `mov (a0), d1`; func_5016594F_entry_Le5 0x50165A39 `mov (a0), d1` (+78)
 #   +4   f4           s16            func_50165414_L1a 0x5016542E `movhu (4, a0), d1`; func_50165498_entry_L1a 0x501654B5 `movhu (4, a0), d1`
 #   +6   f6           s16            func_50165498_entry_L30 0x501654CB `movhu (6, a0), d1`; func_50165498_entry_L199 0x50165634 `movhu (6, a0), d1` (+5)
 #   +8   memcpy_a1    ptr            func_5016594F_entry_L63 0x501659B7 `mov (8, a1), a1`; func_50165BF7_entry_L63 0x50165C5F `mov (8, a1), a1` (+31)
-#   +12  flags        u16            func_5016594F_entry_L30 0x50165984 `movhu (0xc, a0), d1`; func_5016594F_entry_Lc4 0x50165A18 `movhu (0xc, a0), d1` (+98)
+#   +12  memcpy_d1    u16            func_5016594F_entry_L30 0x50165984 `movhu (0xc, a0), d1`; func_5016594F_entry_Lc4 0x50165A18 `movhu (0xc, a0), d1` (+98)
 #   +14  f14          s16            func_5016594F_entry_Le5 0x50165A39 `movhu (0xe, a0), d2`; func_50165BF7_entry_Le9 0x50165CE5 `movhu (0xe, a0), d2` (+31)
 #   +16  f16          s16            func_5016594F_entry_L104 0x50165A58 `movhu (0x10, a0), d2`; func_50165BF7_entry_L108 0x50165D04 `movhu (0x10, a0), d2` (+31)
-.macro REC_func_5016B726_Result f0=0, f4=0, f6=0, memcpy_a1=0, flags=0, f14=0, f16=0
-	.long	\f0
+.macro REC_func_5016B726_Result GetM3Em_d1=0, f4=0, f6=0, memcpy_a1=0, memcpy_d1=0, f14=0, f16=0
+	.long	\GetM3Em_d1
 	.word	\f4
 	.word	\f6
 	.long	\memcpy_a1
-	.word	\flags
+	.word	\memcpy_d1
 	.word	\f14
 	.word	\f16
 .endm
@@ -4121,11 +4043,11 @@
 .endm
 
 # REC_PsTrackSwitchProc_L3d7_Table_p0: 3-byte records (PsTrackSwitchProc_L3d7_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             ConvertStrings_entry_L12 0x4860572A `movbu (a2), d0`; ConvertStrings_entry_L32 0x4860574A `movbu (a2), d0` (+4)
+#   +0   index        u8             ConvertStrings_entry_L12 0x4860572A `movbu (a2), d0`; ConvertStrings_entry_L32 0x4860574A `movbu (a2), d0` (+4)
 #   +1   f1           u8             ConvertStrings_entry_L3e 0x48605756 `movbu (a2), d0`
 #   +2   f2           u8             ConvertStrings_entry_L3e 0x48605756 `movbu (a2), d0`
-.macro REC_PsTrackSwitchProc_L3d7_Table_p0 f0=0, f1=0, f2=0
-	.byte	\f0
+.macro REC_PsTrackSwitchProc_L3d7_Table_p0 index=0, f1=0, f2=0
+	.byte	\index
 	.byte	\f1
 	.byte	\f2
 .endm
@@ -4184,16 +4106,6 @@
 	.ascii	"\x1"
 .endm
 
-# REC_AcPleaseWaitProc_L135_Table_p0: 4-byte records (AcPleaseWaitProc_L135_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           s8             LibStrlen 0x501232B7 `movbu (a1), d1`
-#   +1   f1           s8             LibStrlen 0x501232B7 `movbu (a1), d1`
-#   +2   x2           u8[2]          no reader seen
-.macro REC_AcPleaseWaitProc_L135_Table_p0 f0=0, f1=0, x2
-	.byte	\f0
-	.byte	\f1
-	.ascii	"\x2"
-.endm
-
 # REC_func_4864D035_Records_p4_p0: 36-byte records (func_4864D035_Records_p4_p0, 27 records); fields, and what reads them:
 #   +0   x0           u8[36]         no reader seen
 .macro REC_func_4864D035_Records_p4_p0 x0
@@ -4207,12 +4119,12 @@
 .endm
 
 # REC_names_50001910_p0: 4-byte records (names_50001910_p0, 4 records); fields, and what reads them:
-#   +0   f0           u8             ConvertStrings_entry_L12 0x4860572A `movbu (a2), d0`; ConvertStrings_entry_L32 0x4860574A `movbu (a2), d0` (+4)
+#   +0   index        u8             ConvertStrings_entry_L12 0x4860572A `movbu (a2), d0`; ConvertStrings_entry_L32 0x4860574A `movbu (a2), d0` (+4)
 #   +1   f1           u8             ConvertStrings_entry_L3e 0x48605756 `movbu (a2), d0`
 #   +2   f2           u8             ConvertStrings_entry_L3e 0x48605756 `movbu (a2), d0`
 #   +3   x3           u8[1]          no reader seen
-.macro REC_names_50001910_p0 f0=0, f1=0, f2=0, x3
-	.byte	\f0
+.macro REC_names_50001910_p0 index=0, f1=0, f2=0, x3
+	.byte	\index
 	.byte	\f1
 	.byte	\f2
 	.ascii	"\x3"
@@ -4353,68 +4265,68 @@
 .endm
 
 # REC_func_486FF0F2_L49_Table_p0: 1-byte records (func_486FF0F2_L49_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF0F2_L32 0x486FF124 `movbu (a0), d1`; func_486FF0F2_La2 0x486FF194 `movbu (a0), d0`
-.macro REC_func_486FF0F2_L49_Table_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF0F2_L32 0x486FF124 `movbu (a0), d1`; func_486FF0F2_La2 0x486FF194 `movbu (a0), d0`
+.macro REC_func_486FF0F2_L49_Table_p0 key=0
+	.byte	\key
 .endm
 
 # REC_func_486FF242_L44_Table_p0: 1-byte records (func_486FF242_L44_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF242_L2e 0x486FF270 `movbu (a0), d1`; func_486FF242_L64 0x486FF2A6 `movbu (a0), d0`
-.macro REC_func_486FF242_L44_Table_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF242_L2e 0x486FF270 `movbu (a0), d1`; func_486FF242_L64 0x486FF2A6 `movbu (a0), d0`
+.macro REC_func_486FF242_L44_Table_p0 key=0
+	.byte	\key
 .endm
 
 # REC_func_486FF3BA_L63_Table_p0: 1-byte records (func_486FF3BA_L63_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF3BA_L4d 0x486FF407 `movbu (a0), d0`; func_486FF3BA_Lb3 0x486FF46D `movbu (a0), d0`
-.macro REC_func_486FF3BA_L63_Table_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF3BA_L4d 0x486FF407 `movbu (a0), d0`; func_486FF3BA_Lb3 0x486FF46D `movbu (a0), d0`
+.macro REC_func_486FF3BA_L63_Table_p0 key=0
+	.byte	\key
 .endm
 
 # REC_names_4850E1E0_p0: 1-byte records (names_4850E1E0_p0, 5 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF583_L59 0x486FF5DC `movbu (a0), d0`; func_486FF583_Lae 0x486FF631 `movbu (a0), d0`
-.macro REC_names_4850E1E0_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF583_L59 0x486FF5DC `movbu (a0), d0`; func_486FF583_Lae 0x486FF631 `movbu (a0), d0`
+.macro REC_names_4850E1E0_p0 key=0
+	.byte	\key
 .endm
 
 # REC_func_486FF68D_L54_Table_p0: 4-byte records (func_486FF68D_L54_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF68D_L3e 0x486FF6CB `movbu (a0), d1`; func_486FF68D_L74 0x486FF701 `movbu (a0), d0`
+#   +0   key          u8             func_486FF68D_L3e 0x486FF6CB `movbu (a0), d1`; func_486FF68D_L74 0x486FF701 `movbu (a0), d0`
 #   +1   x1           u8[3]          no reader seen
-.macro REC_func_486FF68D_L54_Table_p0 f0=0, x1
-	.byte	\f0
+.macro REC_func_486FF68D_L54_Table_p0 key=0, x1
+	.byte	\key
 	.ascii	"\x1"
 .endm
 
 # REC_func_486FF754_L59_Table_p0: 1-byte records (func_486FF754_L59_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF754_L43 0x486FF797 `movbu (a0), d1`; func_486FF754_L8c 0x486FF7E0 `movbu (a0), d0`
-.macro REC_func_486FF754_L59_Table_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF754_L43 0x486FF797 `movbu (a0), d1`; func_486FF754_L8c 0x486FF7E0 `movbu (a0), d0`
+.macro REC_func_486FF754_L59_Table_p0 key=0
+	.byte	\key
 .endm
 
 # REC_func_486FF85A_L44_Table_p0: 1-byte records (func_486FF85A_L44_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF85A_L2e 0x486FF888 `movbu (a0), d1`; func_486FF85A_L64 0x486FF8BE `movbu (a0), d0`
-.macro REC_func_486FF85A_L44_Table_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF85A_L2e 0x486FF888 `movbu (a0), d1`; func_486FF85A_L64 0x486FF8BE `movbu (a0), d0`
+.macro REC_func_486FF85A_L44_Table_p0 key=0
+	.byte	\key
 .endm
 
 # REC_func_486FF9AC_L78_Table_p0: 1-byte records (func_486FF9AC_L78_Table_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_486FF9AC_L5a 0x486FFA06 `movbu (a0), d0`; func_486FF9AC_Lf5 0x486FFAA1 `movbu (a0), d0`
-.macro REC_func_486FF9AC_L78_Table_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FF9AC_L5a 0x486FFA06 `movbu (a0), d0`; func_486FF9AC_Lf5 0x486FFAA1 `movbu (a0), d0`
+.macro REC_func_486FF9AC_L78_Table_p0 key=0
+	.byte	\key
 .endm
 
 # REC_names_4850E528_p0: 1-byte records (names_4850E528_p0, 4 records); fields, and what reads them:
-#   +0   f0           u8             func_486FFB68_L74 0x486FFBDC `movbu (a0), d0`; func_486FFB68_L11e 0x486FFC86 `movbu (a0), d0`
-.macro REC_names_4850E528_p0 f0=0
-	.byte	\f0
+#   +0   key          u8             func_486FFB68_L74 0x486FFBDC `movbu (a0), d0`; func_486FFB68_L11e 0x486FFC86 `movbu (a0), d0`
+.macro REC_names_4850E528_p0 key=0
+	.byte	\key
 .endm
 
 # REC_func_5014320B_entry_L83_Records_p0: 29-byte records (func_5014320B_entry_L83_Records_p0, 1 records); fields, and what reads them:
-#   +0   f0           u8             func_501430C5_entry_Le 0x501430D5 `movbu (a1), d0`; func_501430C5_entry_Le 0x501430D5 `movbu (a1), d1` (+1)
-#   +1   count        u8             func_501430C5_entry_L4d 0x50143114 `movbu (a1), d0`
+#   +0   key          u8             func_501430C5_entry_Le 0x501430D5 `movbu (a1), d0`; func_501430C5_entry_Le 0x501430D5 `movbu (a1), d1` (+1)
+#   +1   key_         u8             func_501430C5_entry_L4d 0x50143114 `movbu (a1), d0`
 #   +2   x2           u8[27]         no reader seen
-.macro REC_func_5014320B_entry_L83_Records_p0 f0=0, count=0, x2
-	.byte	\f0
-	.byte	\count
+.macro REC_func_5014320B_entry_L83_Records_p0 key=0, key_=0, x2
+	.byte	\key
+	.byte	\key_
 	.ascii	"\x2"
 .endm
 
@@ -4422,13 +4334,13 @@
 #   +0   s0           char[1]        MemStyleAreaVarStreamsInit_entry_L3a 0x5017323D `call memcpy_entry, [a2,a3], 8`
 #   +1   index        u8             LoadU24BE 0x5017D7CD `movbu (a0), d1`
 #   +2   index_       u8             LoadU24BE 0x5017D7CD `movbu (a0), d0`
-#   +3   index__      u8             LoadU24BE 0x5017D7CD `movbu (a0), d0`
+#   +3   f3           u8             LoadU24BE 0x5017D7CD `movbu (a0), d0`
 #   +4   x4           u8[9]          no reader seen
-.macro REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected s0, index=0, index_=0, index__=0, x4
+.macro REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected s0, index=0, index_=0, f3=0, x4
 	.ascii	"\s0"
 	.byte	\index
 	.byte	\index_
-	.byte	\index__
+	.byte	\f3
 	.ascii	"\x4"
 .endm
 
@@ -4556,51 +4468,6 @@
 	.long	\f8
 .endm
 
-# REC_func_5014474E_ArgA0: 16-byte records (func_5014474E_ArgA0, 1 records); fields, and what reads them:
-#   (the layout func_5014474E 0x5014474E reads through its argument a0 (passed by func_5014542B_entry_L7f 0x501454AF `call func_5014474E_entry, [d2,d3,a2,a3], 0x28`, +7 more calls))
-#   (the layout func_5014542B 0x5014542B reads through its argument a0 (passed by func_50145EB5 0x50145EB5 `call func_5014542B_entry, [d2,d3,a2,a3], 0x30`, +13 more calls))
-#   (+2 more routines)
-#   +0   x0           u8[8]          no reader seen
-#   +8   index        s16            func_5014542B_entry_L19 0x50145449 `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449 `movhu (a0), d2` (+2)
-#   +10  index_       s16            func_5014542B 0x5014542B `movhu (a0), d0`; func_5014542B 0x5014542B `movhu (a0), d2` (+2)
-#   +12  f12          u8             func_5014474E 0x5014474E `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455 `movbu (0xc, a3), d1`
-#   +13  f13          u8             func_5014474E_entry_L1e 0x50144771 `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481 `movbu (0xd, a3), d2`
-#   +14  f14          u8             func_5014474E_entry_L1e 0x50144771 `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793 `movbu (a2), d1` (+3)
-#   +15  f15          u8             func_5014474E_entry_L40 0x50144793 `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455 `movbu (0xf, a3), d1` (+1)
-.macro REC_func_5014474E_ArgA0 x0, index=0, index_=0, f12=0, f13=0, f14=0, f15=0
-	.ascii	"\x0"
-	.word	\index
-	.word	\index_
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.byte	\f15
-.endm
-
-# REC_func_5014509B_ArgA0: 56-byte records (func_5014509B_ArgA0, 1 records); fields, and what reads them:
-#   (the layout func_5014509B 0x5014509B reads through its argument a0 (passed by func_50147586_entry_L155 0x501476E0 `call func_5014509B_entry, [d2,d3,a2,a3], 0x1c`, +2 more calls))
-#   (the layout func_50147586 0x50147586 reads through its argument a0 (passed by func_5014AF95_entry_L85 0x5014B01F `call func_50147586_entry, [d2,d3,a2,a3], 0x2c`, +13 more calls))
-#   +0   f0           u32            func_50149247_entry_L21 0x5014926D `mov (a0), d0`; func_50149247_entry_L58 0x501492A4 `mov (a0), d0`
-#   +4   x4           u8[4]          no reader seen
-#   +8   index        s16            func_50147586_entry_L26 0x501475B1 `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1 `movhu (a0), d1` (+2)
-#   +10  index_       s16            func_50147586_entry_L10 0x5014759B `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B `movhu (a0), d1` (+2)
-#   +12  f12          u32            func_5014509B 0x5014509B `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8 `mov (0xc, a3), a2` (+3)
-#   +16  f16          u16            func_5014509B_entry_L3b 0x501450DB `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127 `movhu (0x10, a3), d1` (+11)
-#   +18  f18          u8             func_5014509B 0x5014509B `movbu (0x12, a3), d1`; func_50147586 0x50147586 `movbu (0x12, a0), d0`
-#   +19  f19          u8             func_5014509B_entry_L3b 0x501450DB `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127 `movbu (0x13, a3), d1` (+3)
-#   +20  x20          u8[36]         no reader seen
-.macro REC_func_5014509B_ArgA0 f0=0, x4, index=0, index_=0, f12=0, f16=0, f18=0, f19=0, x20
-	.long	\f0
-	.ascii	"\x4"
-	.word	\index
-	.word	\index_
-	.long	\f12
-	.word	\f16
-	.byte	\f18
-	.byte	\f19
-	.ascii	"\x20"
-.endm
-
 # REC_func_50180F38_ArgA0: 8-byte records (func_50180F38_ArgA0, 1 records); fields, and what reads them:
 #   (the layout func_50180F38 0x50180F38 reads through its argument a0 (passed by func_501812D5_entry_L3f 0x50181319 `call func_50180F38, 0, 0`))
 #   +0   x0           u8[3]          no reader seen
@@ -4654,11 +4521,11 @@
 # REC_Draw2BpFile_ArgA0: 4-byte records (Draw2BpFile_ArgA0, 1 records); fields, and what reads them:
 #   (the layout Draw2BpFile 0x485FFA0C reads through its argument a0 (passed by DbBitmapLoadProc_Lb4 0x4864A083 `call Draw2BpFile_entry, [a2,a3], 0x18`))
 #   (the layout Draw2BpFile_Impl 0x485FFA72 reads through its argument a0 (passed by Draw2BpFile 0x485FFA0C `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`))
-#   +0   SetChangeRect_d1 s16            Draw2BpFile_entry_L1e 0x485FFA2F `movhu (a2), d0`; Draw2BpFile_Impl_entry_L98 0x485FFB0C `movhu (a0), d2` (+2)
-#   +2   f2           s16            Draw2BpFile_entry_L1e 0x485FFA2F `movhu (2, a2), d0`; Draw2BpFile_Impl_entry_L98 0x485FFB0C `movhu (a0), d0` (+2)
-.macro REC_Draw2BpFile_ArgA0 SetChangeRect_d1=0, f2=0
-	.word	\SetChangeRect_d1
-	.word	\f2
+#   +0   f0           s16            Draw2BpFile_entry_L1e 0x485FFA2F `movhu (a2), d0`; Draw2BpFile_Impl_entry_L98 0x485FFB0C `movhu (a0), d2` (+2)
+#   +2   DrawRing_Post_d0 s16            Draw2BpFile_entry_L1e 0x485FFA2F `movhu (2, a2), d0`; Draw2BpFile_Impl_entry_L98 0x485FFB0C `movhu (a0), d0` (+2)
+.macro REC_Draw2BpFile_ArgA0 f0=0, DrawRing_Post_d0=0
+	.word	\f0
+	.word	\DrawRing_Post_d0
 .endm
 
 # REC_DrawBitmapSP2_ArgA0: 4-byte records (DrawBitmapSP2_ArgA0, 1 records); fields, and what reads them:
@@ -4666,10 +4533,10 @@
 #   (the layout DrawBitmapSP2_Impl 0x485FC4B6 reads through its argument a0 (passed by DrawBitmapSP2 0x485FC413 `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`))
 #   (+3 more routines)
 #   +0   f0           s16            DrawIcons_entry_L1e 0x485FB925 `movhu (a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981 `movhu (a0), d2` (+7)
-#   +2   f2           s16            DrawIcons_entry_L1e 0x485FB925 `movhu (2, a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981 `movhu (a0), d0` (+6)
-.macro REC_DrawBitmapSP2_ArgA0 f0=0, f2=0
+#   +2   SetChangeRect_d0 s16            DrawIcons_entry_L1e 0x485FB925 `movhu (2, a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981 `movhu (a0), d0` (+6)
+.macro REC_DrawBitmapSP2_ArgA0 f0=0, SetChangeRect_d0=0
 	.word	\f0
-	.word	\f2
+	.word	\SetChangeRect_d0
 .endm
 
 # REC_DrawStringCentered_ArgA1: 4-byte records (DrawStringCentered_ArgA1, 3 records); fields, and what reads them:
@@ -4752,12 +4619,12 @@
 
 # REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 4 records); fields, and what reads them:
 #   (the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls))
-#   +0   f0           u16            SdCommandSend 0x486EDF52 `movhu (a3), d0`; SdCommandSend_entry_L23 0x486EDF7A `movhu (a3), d0` (+2)
+#   +0   kind         u16            SdCommandSend 0x486EDF52 `movhu (a3), d0`; SdCommandSend_entry_L23 0x486EDF7A `movhu (a3), d0` (+2)
 #   +2   SdResponseScan_d0 u16            SdCommandSend_entry_L4e 0x486EDFA5 `movhu (2, a3), d0`
 #   +4   x4           u8[5]          no reader seen
 #   +9   f9           u8             SdCommandSend_entry_L23 0x486EDF7A `movbu d0, (5, a2)`
-.macro REC_SdCommandSend_ArgA0 f0=0, SdResponseScan_d0=0, x4, f9=0
-	.word	\f0
+.macro REC_SdCommandSend_ArgA0 kind=0, SdResponseScan_d0=0, x4, f9=0
+	.word	\kind
 	.word	\SdResponseScan_d0
 	.ascii	"\x4"
 	.byte	\f9
