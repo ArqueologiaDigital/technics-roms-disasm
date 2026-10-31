@@ -1181,7 +1181,7 @@ MainLoop_AfterSeqBuf_DspSysEx:
 MainLoop_AfterAccWrap:
 	tset_dd16 0, 0x73, 0x04
 	jr nz, MainLoop_AfterPedalReset
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 
 MainLoop_AfterPedalReset:
 	calr Seq_EventProcessingTick

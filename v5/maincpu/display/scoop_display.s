@@ -7032,7 +7032,7 @@ PerfMode_Handler_EvtB_Helper2:
 	res 7, (0x0d54:16)
 	call TempoRingBuf_DiscardAll
 	call SeqBuf_Init
-	call PortConfig_Handler_0_Helper
+	call SqStep_RewindCursorToTrackStart
 	call PerfMode_Handler_EvtB_Helper2_Helper9
 	call BitMapOut_ComputeRegionDelta
 	call Timer_ModeHandler_0_Helper2
@@ -7474,7 +7474,13 @@ PortConfig_Handler_0_Skip3:
 	call Timer_ParamCompareAlt_Helper6
 PortConfig_Handler_0_Return2:
 	ret
-PortConfig_Handler_0_Helper:
+; SqStep_RewindCursorToTrackStart: Puts the song-data cursor of the cursor track (0x0EEE) on the track's first event:
+;   block word (0x0C9E)[track] = the start block from the track's 3-byte entry in the track directory 0xF250 (+1), or
+;   0xFFFF when the entry's bit 7 (track present) is clear; offset byte (0x0CBE)[track] = 5, the first event after the
+;   5-byte block header. Basis: callers + body -- SqStep_SetupCursorTrack calls it right after SeqBuf_Init in its
+;   cursor set-up; VoiceSlot_CheckCursorAtTrackStart's header defines 'track start' by exactly this block/offset pair,
+;   and SerialPort_ModeHandler_0_Helper inlines the same rewind before walking each track.
+SqStep_RewindCursorToTrackStart:
 	call	VoiceSlot_ComputeIndex
 	push	xde
 	ld	xde, 62032
@@ -11312,7 +11318,7 @@ VoiceSlot_StatusRet_Skip70:
 	jp	VoiceSlot_StatusRet_Return
 	call	VoiceSlot_StatusRet_Helper8
 	jp	VoiceSlot_StatusRet_Return
-	call	VoiceSlot_StatusRet_Helper9
+	call	ParamPopup_RotarySpeedNullRet
 	jp	VoiceSlot_StatusRet_Return
 	jp	VoiceSlot_StatusRet_Loop3
 VoiceSlot_StatusRet_Skip71:
@@ -11368,7 +11374,7 @@ VoiceSlot_StatusRet_Code_Skip41:
 VoiceSlot_StatusRet_Skip75:
 	ld	(0x0def:16), 17
 	call	Display_UpdateRegion0
-	call	VoiceSlot_StatusRet_Helper3
+	call	DisplayStr_WriteTempoLine_RhythmTrack
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip43:
 	ld	(xiy), 1
@@ -14866,7 +14872,13 @@ DisplayStr_WriteTempoValue_Skip9:
 	ld	w, (xiy+2)
 	ld	(xix+2), w
 	ret
-VoiceSlot_StatusRet_Helper3:
+; DisplayStr_WriteTempoLine_RhythmTrack: TEMPO line of the RHYTHM-track display (display mode 3) for a tempo event
+;   stored at the song-data cursor: copies 26 bytes of the ' TEMPO <glyph>=' template (Display_BytecodeBlock_F_Tbl3,
+;   or Display_BytecodeBlock_F_Tbl4 with glyph 0x93 when (0xFC5A) = 7 and (0xFC5B) = 2) to 0x0ECF without blanking the
+;   line, writes the tempo (DisplayStr_WriteTempoValue) and marks region 3. Basis: callers + body --
+;   VoiceSlot_StatusRet calls it instead of VoiceSlot_StatusRet_Helper2 when (0x0D65) = 3 (the RHYTHM track, technics-
+;   docs display-subsystem.md), after setting pop-up 17 and redrawing region 0.
+DisplayStr_WriteTempoLine_RhythmTrack:
 	ld	xiy, Display_BytecodeBlock_F_Tbl2
 	ld	xix, 3791
 	cp	(64602:16), 7
@@ -16085,7 +16097,13 @@ VoiceSlot_StatusRet_Helper8:
 	; ROM; the text sits where the three `ret` stubs 0xF0026F-0xF00272 end.
 Str_ExtTabEffectEnDis:
 	.ascii	"EXT.TAB EFFECT:EN  DIS "
-VoiceSlot_StatusRet_Helper9:
+; ParamPopup_RotarySpeedNullRet: Empty routine (`ret`): the ROTARY SPEED arm of the step-record event display --
+;   VoiceSlot_StatusRet calls it for a stored parameter event on panel record 0x70, offset 0, whose mask byte (0x10F5)
+;   has bit 2 set (SndParam_RotarySpeedSwitch), so that change shows no pop-up in this build. Basis: callers + body --
+;   the only call is VoiceSlot_StatusRet_Skip39 (tag (0x10F1) = 112, offset (0x10F2) = 0, bit 2 of (0x10F5)); the
+;   namespace map gives record 0x70 +0 mask 0x04 as SndParam_RotarySpeedSwitch; the ParamPopup_TotalReverb test after
+;   it is unreachable; X_NullRet convention (SqStep_TrackSetupNullRet).
+ParamPopup_RotarySpeedNullRet:
 	ret
 	; ParamPopup_TotalReverb -- LCD parameter pop-up.
 	; Pop-up id 1.  Str_TotalReverb (13 chars at 0x0ED1), then 4 chars of

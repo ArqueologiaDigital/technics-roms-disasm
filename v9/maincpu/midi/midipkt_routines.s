@@ -296,7 +296,7 @@ MidiPkt_BuildFromConstant:
 	ld (xde), c
 	ld c, (xwa + 7)
 	ld (xde + 1), c
-	ld c, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld c, (EXPRESSION_PEDAL_VALUE:16)
 	ld (xde + 2), c
 	ld c, (xwa + 8)
 	ld (xde + 3), c

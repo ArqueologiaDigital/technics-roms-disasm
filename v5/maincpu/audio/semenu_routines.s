@@ -2456,7 +2456,11 @@ SeMenu_SwitchToValueStep_Skip8:
 	muls	a, 3
 	ld	(xbc), a
 	ret
-SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7:
+; SeMenu_NameCharIndexToChar: Converts a name-entry character index A to its character code at (XBC):
+;   GUI_DisplayStructData_0x1129[A] for A < 97, else a space. Basis: callers + body -- the WRITE SOUND naming page's
+;   column handlers (SeWrtSnd_OnColumn6 / 8 and the step after them) step page param 1, convert it with this and store
+;   the character with SeMenu_SetNameBufferChar; SeMenu_CharToNameCharIndex's header calls this routine its reverse.
+SeMenu_NameCharIndexToChar:
 	cp	a, 97
 	jr	c, SeMenu_SetupPartDisplay_End_Skip9
 	ld	(xbc), 32
@@ -2470,7 +2474,7 @@ SeMenu_SetupPartDisplay_End_Skip9:
 ; SeMenu_CharToNameCharIndex: Converts character code A to its index in the name-entry character set and stores it at
 ;   (XBC): GUI_DisplayStructData_0x118A[A] for A < 130, 0 (the space) for A >= 130 or a result above 95. The table
 ;   inverts GUI_DisplayStructData_0x1129 (index -> character: ' ', A-Z, a-z, 0-9, punctuation; 96 entries, all
-;   invert), which SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7 reads the other way. Basis: callers + body -- the WRITE
+;   invert), which SeMenu_NameCharIndexToChar reads the other way. Basis: callers + body -- the WRITE
 ;   SOUND name-entry handlers read the character at the cursor (SeMenu_GetNameBufferChar), convert it with this and
 ;   store it as page param 1, the character the dial edits.
 SeMenu_CharToNameCharIndex:
@@ -4093,7 +4097,7 @@ SeMenu_ApplyPartEdit_Skip17:
 	ld	wa, 2:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+22)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc)
 	add	a, 50
@@ -4110,7 +4114,7 @@ SeMenu_ApplyPartEdit_Skip17:
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+23)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+1)
 	add	a, 50
@@ -4163,7 +4167,7 @@ SeMenu_DrawPitFilEnvGraph_Join:
 	ld	wa, 6:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+24)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+2)
 	add	a, 50
@@ -4217,7 +4221,7 @@ SeMenu_DrawPitFilEnvGraph_Join2:
 	ldw	wa, 8
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+25)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+3)
 	add	a, 50
@@ -4271,7 +4275,7 @@ SeMenu_ApplyPartEdit_Join12:
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+26)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+4)
 	add	a, 50
@@ -4422,7 +4426,7 @@ SeMenu_ApplyPartEdit_Skip21:
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+26)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+4)
 	sub	a, (xbc+3)
@@ -4479,7 +4483,11 @@ SeMenu_ApplyPartEdit_Epilogue8:
 	pop	xiz
 	lda	xsp, (xsp+32)
 	ret
-SeMenu_ApplyPartEdit_Helper8:
+; SeMenu_ClampAndScaleEnvLevel: Clamps the signed envelope level byte at XWA to -50..+50 and, unless ACTIVE_TITLE is
+;   0x37 (TT_SEFILENV1), scales it by page param 1: level * param1 / 50. Basis: callers + body --
+;   SeMenu_DrawPitFilEnvGraph runs each of its five levels through it, and its header says the levels are 'clamped to
+;   -50..+50 and, except on TT_SEFILENV1, scaled by param 1' here.
+SeMenu_ClampAndScaleEnvLevel:
 	dec 4,XSP
 	push XIZ
 	ld XIZ,XWA

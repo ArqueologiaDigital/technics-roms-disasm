@@ -1127,12 +1127,14 @@ PanelInput_InitFuncTable:	.incbin "includes/generated/naka_extension_device.bin"
 ; ui_widgets/naka_extension_device.c (scripts/converters/naka_byte_tables_retype.py).
 PanelInput_EventIndexByHeader:	.incbin "includes/generated/naka_extension_device.bin", 0x3870, 0x80
 ; ENCODER_HANDLER_TABLE -- 32 x pointer: handler of each control-panel analog/encoder id (packet id bits 0-2 | bits 6-7 >> 3)
-; CPanel_EncoderDispatch jumps to entry [id] with the raw value in A: 2 Encoder_ProcessModwheel, 5 Encoder_ProcessVolume,
-; 25 Encoder_ProcessBreath, 26 Encoder_ProcessFoot, 27 Encoder_ProcessExpression, 31 Encoder_PassthroughIdentity,
+; CPanel_EncoderDispatch jumps to entry [id] with the raw value in A: 2 Encoder_ProcessExpressionPedal, 5 Encoder_ProcessAfterTouch,
+; 25 Encoder_ProcessPitchBend, 26 Encoder_ProcessModulation, 27 Encoder_ProcessMainVolume, 31 Encoder_PassthroughIdentity,
 ; the other 26 Encoder_ReturnDefaultConstant.
 ENCODER_HANDLER_TABLE:	.incbin "includes/generated/naka_extension_device.bin", 0x38F0, 0x80
-; ENCODER_LUT_MODWHEEL -- 36 x u8: entries 0..35 of the 128-entry modulation-wheel curve (raw position -> CC value)
-; Encoder_ProcessModwheel indexes it with (~raw) >> 1 and stores the byte in MIDI_CC_MODWHEEL_VALUE.
+; ENCODER_LUT_EXPRESSION_PEDAL -- 36 x u8: entries 0..35 of the 128-entry modulation-wheel curve (raw position -> CC value)
+; Encoder_ProcessExpressionPedal indexes it with (~raw) >> 1 and stores the byte in EXPRESSION_PEDAL_VALUE.
 ; Entries 36..127 are the `.byte` rows after this blob in extensions/extension_data.s; the curve is non-decreasing.
-ENCODER_LUT_MODWHEEL:	.incbin "includes/generated/naka_extension_device.bin", 0x3970, 0x24
+; ENCODER_LUT_EXPRESSION_PEDAL: The 128-byte curve of the expression pedal (A/D channel 0); read only by
+;   Encoder_ProcessExpressionPedal. Basis: reader (the analog ID it serves, see that handler).
+ENCODER_LUT_EXPRESSION_PEDAL:	.incbin "includes/generated/naka_extension_device.bin", 0x3970, 0x24
 ; External label offsets within the binary blob above.

@@ -1970,7 +1970,7 @@ SysEx_Msg_3594:
 ; ld bc,5; call SeqBuf_FlushNoteOffs` queues the first 5 bytes; the rest is 0xFF padding.
 SysEx_Msg_359A:
 	.byte 0xf0, 0x50, 0x24, 0x7e, 0xf7, 0xff
-; MIDI system-exclusive bytes (0xF0 ...) sent by MidiPkt_ArpConfigChain_Data_Helper18 (0xFD7A34): `ld xwa,<this>;
+; MIDI system-exclusive bytes (0xF0 ...) sent by MidiPkt_SendGroupEnd (0xFD7A34): `ld xwa,<this>;
 ; ld bc,5; call SeqBuf_FlushNoteOffs` queues the first 5 bytes; the rest is 0xFF padding.
 SysEx_Msg_35A0:
 	.byte 0xf0, 0x50, 0x27, 0x7e, 0xf7, 0xff
@@ -2015,22 +2015,22 @@ SysEx_GmSystemOff:
 SysEx_Msg_35DC:
 	.byte 0xf0, 0x50, 0x2c, 0x01, 0x28, 0x12
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper2: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_LivePanel: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_35E2:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x20, 0x00, 0x00, 0x00, 0x0c, 0x40
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper3: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_PanelMemories: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_35EE:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x24, 0x00, 0x00, 0x04, 0x59, 0x30
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper5: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_SoundRamId: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_35FA:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x38, 0x00, 0x00, 0x00, 0x00, 0x10
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper6: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_SoundRamData: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_3606:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x38, 0x00, 0x10, 0x00, 0x5a, 0x50
@@ -2065,17 +2065,17 @@ SysEx_TechMsg_3640:
 SysEx_TechMsg_364C:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x61, 0x30, 0x00, 0xff
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper15: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_AccompAreaHeader: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_3656:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x48, 0x00, 0x00, 0x00, 0x00, 0x20
 ; SysEx F0 50 2D 01 28 12 + address/data (12 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper16: `ld xwa,<this>; ldw bc,12;
+; the rest).  MidiPkt_SendBlock_AccompBankTables: `ld xwa,<this>; ldw bc,12;
 ; call SeqBuf_FlushNoteOffs`.
 SysEx_TechMsg_3662:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x48, 0x00, 0x20, 0x00, 0x01, 0x60
 ; SysEx F0 50 2D 01 28 12 + address/data (9 bytes, no F7: the sender appends
-; the rest).  MidiPkt_ArpConfigChain_Data_Helper17: `ld xwa,<this>; ldw bc,9;
+; the rest).  MidiPkt_SendBlock_AccompBlockPool: `ld xwa,<this>; ldw bc,9;
 ; call SeqBuf_FlushNoteOffs`; trailing 0xFF is padding.
 SysEx_TechMsg_366E:
 	.byte 0xf0, 0x50, 0x2d, 0x01, 0x28, 0x12, 0x48, 0x02, 0x00, 0xff
@@ -3805,11 +3805,11 @@ Midi_BankProgramTemplate:
 ; copies the 7 bytes (`ld xiy,<this>; ld bc,3; ldirw; ldi85`).
 Midi_AllOffTemplate:
 	.byte 0xb0, 0x7b, 0x00, 0x78, 0x00, 0x79, 0x00, 0xff
-; 0xF4 + pad: CompIface_SendActiveSensing_PC2 (0xFDBA28) passes it (`ld xde,<this>`)
+; 0xF4 + pad: CompIface_SendPortTypeByte_PC2 (0xFDBA28) passes it (`ld xde,<this>`)
 ; to the send routine at 0xEF32F4.
 CompIface_PortByte_F4:
 	.byte 0xf4, 0xff
-; 0xF5 + pad: CompIface_SendActiveSensing_PC1MAC (0xFDBA16) passes it the same way.
+; 0xF5 + pad: CompIface_SendPortTypeByte_PC1Mac (0xFDBA16) passes it the same way.
 CompIface_PortByte_F5:
 	.byte 0xf5, 0xff
 ; ToneKit sound parameter blocks (120 labels, 4226 bytes)
@@ -6460,7 +6460,7 @@ SwbtB2_Code48_Listeners:
 	.long NotePool_DataBlock_8BA
 	.long UIState_KeyScan_Dispatch
 	.long BitMapOut_ByteData_RenderE
-	.long DSPCfg_ProcessInput
+	.long Fade_ParamListener
 	.long 0xffffffff
 SwbtB2_Code49_Listeners:	.long 0xffffffff
 SwbtB2_Code50_Listeners:	.long 0xffffffff
@@ -6535,7 +6535,7 @@ SwbtB2_Code70_Listeners:
 	.long HdaeRom_AltReadParam
 	.long PanelTag70_UpdateAudioConfig
 	.long UIState_KeyScan_Dispatch
-	.long DSPCfg_ProcessInput
+	.long Fade_ParamListener
 	.long 0xffffffff
 ; code 0x71: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code71_Listeners:
@@ -6586,7 +6586,7 @@ SwbtB2_Code93_Listeners:
 	.long SwbtB2_Code93_NopListener
 	.long CharMap_ActivePreamb_LoadDRAM
 	.long UIState_KeyScan_Dispatch
-	.long Encoder_ApplySystemModeSettings
+	.long Encoder_TouchSettingsListener
 	.long 0xffffffff
 ; code 0x98: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code98_Listeners:
@@ -6598,7 +6598,7 @@ SwbtB2_Code98_Listeners:
 	.long MidiOut_RealtimeDispatch_Handler
 	.long UIState_KeyScan_Dispatch
 	.long BitMapOut_ByteData_TransitionSeq
-	.long DSPCfg_ProcessInput
+	.long Fade_ParamListener
 	.long 0xffffffff
 ; code 0x99: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code99_Listeners:

@@ -230,7 +230,7 @@
 	.equ FDC_RETRY_COUNT,			0x8a68	; retries left: 8 for a read or write, 1 for a probe read; at 0 the command fails with error 16 (read) or 32 (write)
 	.equ FDC_DISK_CHANGED,			0x8a6a	; disk-changed flag: command 9 sets 0xff or 0; cleared at initialisation
 	.equ FDC_DRIVE_MODE,			0x8a6c	; drive mode 0-5 (FDC_CONFIG_VERIFY's media cases)
-	.equ FDC_FORMAT_IDS,			0x8a70	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_MODE_CONFIG_Helper2 builds them)
+	.equ FDC_FORMAT_IDS,			0x8a70	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_FormatOneTrack builds them)
 	.equ FDC_CURRENT_CYLINDER,		0x8b04	; the cylinder last sought to, 0xff = unknown (FDC_CmdSeek compares it)
 	.equ FDC_SECTOR_LIMIT,			0x8b0c	; word: one more than the sectors per track (10, 9 or 19 by media type); bounds the sector number in the read and write loops
 	.equ FDC_PROBE_REQUEST,			0x8b24	; [16 bytes] the request FDC_Reset_BuildParams builds for the disk-format probe: {command, drive, head, track, sector, count, buffer}

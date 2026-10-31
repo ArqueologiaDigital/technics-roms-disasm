@@ -24,7 +24,7 @@ The masks fall exactly on the buttons the MAME driver names per segment and bit
 with mask 0x0F, the eight sound-group buttons one with 0xFF, UP n / DOWN n / LEFT n / RIGHT n one each.  That
 agreement is the evidence for the reading, and it names the handlers: a handler used by one button group is named
 after it (PanelButton_Variation), a generic one by what it does (PanelAction_PostUnlessDemo), the ones behind
-events 22..30, which have no MAME button, by event index (PanelAction_ModWheel).
+events 22..30, which have no MAME button, by what the event is (PanelAction_ExpressionPedal, PanelAction_PitchBend).
 
 This script, for v10/v9/v7 (each tree's own handler addresses, read from its own blob):
   --labels   places a label at each handler (39, two of which already had one), renames the handler-local
@@ -94,10 +94,10 @@ NAMES = {
     0xFC626F: "PanelAction_FootController2",
     0xFC628D: "PanelAction_FootController3",
     0xFC62AB: "PanelAction_FootController4",
-    0xFC62C9: "PanelAction_Event22",
-    0xFC62F7: "PanelAction_ModWheel",
-    0xFC6328: "PanelAction_Event23",
-    0xFC6332: "PanelAction_Volume",
+    0xFC62C9: "PanelAction_PitchBend",
+    0xFC62F7: "PanelAction_ExpressionPedal",
+    0xFC6328: "PanelAction_Modulation",
+    0xFC6332: "PanelAction_AfterTouch",
     0xFC68F6: "PanelButton_HelpMode",
 }
 HEADERS = {
@@ -109,10 +109,10 @@ HEADERS = {
     "PanelAction_FootController2": "foot controller FC2 (PG.5; event 29 bit 1): acts per panel parameter 0x288C (tag 0x99 payload byte 7)",
     "PanelAction_FootController3": "foot controller FC3 (PG.6; event 29 bit 2): acts per panel parameter 0x288E (tag 0x99 payload byte 8)",
     "PanelAction_FootController4": "foot controller FC4 (PG.7; event 29 bit 3): acts per panel parameter 0x2890 (tag 0x99 payload byte 9)",
-    "PanelAction_Event22": "event 22 (left-panel header 0xD1): the byte as two 7-bit values ((b & 1) << 6, b >> 1)",
-    "PanelAction_ModWheel": "modulation wheel (ENCODER_0_OUTPUT, event 26, queued by PanelInput_QueueWheelChanges): depends on panel parameter 0x2880 (tag 0x99 payload byte 2) being 182 or 183",
-    "PanelAction_Event23": "event 23 (left-panel header 0xD2): post unless MD_DEMO",
-    "PanelAction_Volume": "volume slider (ENCODER_1_OUTPUT, event 27, queued by PanelInput_QueueWheelChanges): post when panel parameter 0x104 (tag 0x93 payload byte 6 bit 7) is set",
+    "PanelAction_PitchBend": "event 22 (left-panel header 0xD1): the byte as two 7-bit values ((b & 1) << 6, b >> 1)",
+    "PanelAction_ExpressionPedal": "expression pedal (A/D channel 0, ENCODER_0_OUTPUT, event 26, queued by PanelInput_QueueWheelChanges): TOTAL / PART EXPRESSION when its FOOT CONTROLLERS function, panel parameter 0x2880 (tag 0x99 payload byte 2), is 182 / 183 (proposals-2026-10-31-corrections-c2.json)",
+    "PanelAction_Modulation": "event 23 (left-panel header 0xD2): post unless MD_DEMO",
+    "PanelAction_AfterTouch": "after touch (ENCODER_1_OUTPUT, event 27, queued by PanelInput_QueueWheelChanges): post when panel parameter 0x104 (tag 0x93 payload byte 6 bit 7) is set (proposals-2026-10-31-corrections-c2.json)",
     "PanelButton_HelpMode": "every button but the LCD ones and HELP, in MD_HELP (PanelButton_HelpModeActionLists)",
 }
 LOCAL = re.compile(r'^FileIO_BytecodeData_Code_(Skip|Join|Epilogue|Loop)(\d*):')

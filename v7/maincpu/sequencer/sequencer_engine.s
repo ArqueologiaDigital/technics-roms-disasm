@@ -8546,7 +8546,7 @@ PartVoiceStatus_ShiftDone:
 	ld	(xbc), 211
 	ld	(xbc+1), 0
 	lda	xde, (xbc+2)
-	ld	a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld	a, (EXPRESSION_PEDAL_VALUE:16)
 	ld	(xde), a
 	res	7, a
 	ld	(xde), a
@@ -25924,7 +25924,7 @@ SeqLoad_ProcessDataBlock_Skip3:
 	ld	a, (xsp+10)
 	extz	wa
 	call	VoicePreset_LoadAndInitPan
-	calr	SeqLoad_ProcessDataBlock_Helper
+	calr	SeqLoad_RestoreFreeBlockList
 	calr	SeqBar_DataBlock_Code_Sub
 	ld	(xsp+6), hl
 	ldib_erp	251, 1
@@ -26429,7 +26429,12 @@ SeqBar_DataBlock:
 	ldmm16	10698, SEQ_FREE_LIST_HEAD
 	ldmm16	10700, SEQ_FREE_BLOCKS
 	ret
-SeqLoad_ProcessDataBlock_Helper:
+; SeqLoad_RestoreFreeBlockList: Restores the event-memory free list -- head block 0xF22F and free-block count 0xF231
+;   -- from the copies at 0x29CA / 0x29CC. Basis: callers + body -- SingleLoad_FinishSongLoad saves both with
+;   SeqBar_DataBlock (the reverse copy), makes the loaded slot current with VoicePreset_LoadAndInitPan (a 0x800-byte
+;   copy over the current song record 0xF180, which holds these two words) and then calls this; 0xF22F/0xF231 are the
+;   head and count the block allocator PartCtrl_ReadWordRoutine takes from and SetWall_BankInit sets up.
+SeqLoad_RestoreFreeBlockList:
 	ldmm16	SEQ_FREE_LIST_HEAD, 10698
 	ldmm16	SEQ_FREE_BLOCKS, 10700
 	ret

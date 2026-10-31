@@ -37,6 +37,14 @@ C identifiers.
 
 ## Pending work (inputs saved, not applied)
 
+**Done 2026-10-31 (lane kn5000-a).**  The three files below were re-validated (every old label still defined in
+v10, no new name used anywhere in the five maincpu trees; 1,362 of the 1,422 evidence quotes still match the v10
+source word for word, the rest moved with later renames) and applied as
+`analysis/kn5000-naming/proposals-2026-10-31-{hbatch-h3,sebatch-se3,corrections-c2}.json`: 320 names in v10 and v9,
+315 / 311 / 307 in v7 / v6 / v5, by `scripts/renaming/carry_v10_renames.py` (byte proof per label; rules in
+`scripts/renaming/rename_kn5000_naming_w4_<tree>.sed`).  Not carried, because the code there differs:
+`notes/kn5000-a-2026-10-31/README.md`.
+
 The three naming agents running when the session stopped were asked to write out their finished
 records and mark the rest "not reviewed". Their outputs are copied into `analysis/kn5000-naming/pending/`
 (see the README there). Validate them, spot-check the evidence, copy each into

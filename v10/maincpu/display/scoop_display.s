@@ -6857,7 +6857,7 @@ TempoRingBuf_OnModulationEvent_Return5:
 ; TempoRingBuf_OnPitchBendEvent: Pitch-bend event (status 0xD2) from TempoRingBuf: except in display mode 3 (then it
 ;   only consumes one byte), consumes the event into 0x0D8F, value bytes +2 -> 0x3721 and +3 -> 0x1112, record length
 ;   (0x0DD2) = 4, control-name index (0x3720) = 1 ("P.BEND=") and shows the CONTROL line with the bend value
-;   (Display_BytecodeBlock_F_Tbl2_Helper2 reads 0x3721 and 0x1112). Basis: callers + body --
+;   (DisplayStr_WritePitchBendValue reads 0x3721 and 0x1112). Basis: callers + body --
 ;   TempoRingBuf_DispatchEvents sends status 0xD2 here; VoiceSlot_StatusRet maps a stored 0xD2 event to the same index
 ;   1.
 TempoRingBuf_OnPitchBendEvent:
@@ -7230,8 +7230,8 @@ SqStep_SetupCursorTrack_Skip:
 	res	7, (0x0d54:16)
 	call	TempoRingBuf_DiscardAll
 	call	SeqBuf_Init
-	call	PortConfig_Handler_0_Helper
-	call	MemConfig_Handler_4_Helper2
+	call	SqStep_RewindCursorToTrackStart
+	call	SqStep_SetApcFingeredOnChordTrack
 	call	BitMapOut_ComputeRegionDelta
 	call	MemConfig_Handler_4_Helper
 	call	PortConfig_SetupBytecode
@@ -7293,7 +7293,7 @@ SqStep_SetupCursorTrack_Skip:
 	jrl	z, SerialPort_ModeHandler_0_Skip14
 	call	SqStep_WriteClockWrapMarker
 	call	VoiceSlot_CompareAndBranch
-	call	ScoopParam_ValueTable_Sub_Helper
+	call	SqStep_WriteCurrentStyleEvents
 	jp	SerialPort_ModeHandler_0_Join3
 SerialPort_ModeHandler_0_Skip14:
 	call	MemConfig_Handler_2_Sub
@@ -7305,7 +7305,7 @@ SerialPort_ModeHandler_0_Join3:
 SqStep_SetupCursorTrack_Join:
 	and	(0x346e:16), 239
 	and	(0x045b:16), 252
-	call	VoiceState_DataBlock2_Helper2
+	call	SqStep_FindRhythmTrack
 	or	(SEQ_RTMCFG:16), 4
 	ld	xiy, 3411
 	ormi8	(xiy), 8
@@ -7684,7 +7684,13 @@ PortConfig_Handler_0_Skip3:
 	call	Timer_ParamCompareAlt_Helper4
 PortConfig_Handler_0_Return2:
 	ret
-PortConfig_Handler_0_Helper:
+; SqStep_RewindCursorToTrackStart: Puts the song-data cursor of the cursor track (0x0EEE) on the track's first event:
+;   block word (0x0C9E)[track] = the start block from the track's 3-byte entry in the track directory 0xF250 (+1), or
+;   0xFFFF when the entry's bit 7 (track present) is clear; offset byte (0x0CBE)[track] = 5, the first event after the
+;   5-byte block header. Basis: callers + body -- SqStep_SetupCursorTrack calls it right after SeqBuf_Init in its
+;   cursor set-up; VoiceSlot_CheckCursorAtTrackStart's header defines 'track start' by exactly this block/offset pair,
+;   and SerialPort_ModeHandler_0_Helper inlines the same rewind before walking each track.
+SqStep_RewindCursorToTrackStart:
 	call	VoiceSlot_ComputeIndex
 	push	xde
 	ld	xde, 0xf250
@@ -7834,7 +7840,15 @@ SqStep_TrackSetupNullRet:
 	; scripts/analysis/scoop_data_headers.py); purpose not established.
 Unref_EFA7C5_Tbl:
 	.byte	0x04, 0x02, 0x02, 0x04
-ScoopParam_ValueTable_Sub_Helper:
+; SqStep_WriteCurrentStyleEvents: On a RHYTHM track (display mode 0x0D65 = 3) writes the panel's current style at the
+;   song-data cursor as two 6-byte events (SystemInit_StepHandler_0_Helper2): a program change {0xC0 | style bit 7,
+;   clock 0, part 0x48, 0, style 0xFC5A & 0x7F, bank 0xFC5B & 0x7F} and, after setting VARIATION (0xFC61 bits 4-5) to
+;   (style & 0x7F) mod 4 for style numbers 0x80-0xEF and posting it {0x48, +7, mask 0x30}, a parameter event {0xB0, 0,
+;   0x48, 7, 0xFC61 & 0x7F, 0x30}. Basis: callers + body -- SqStep_SetupCursorTrack calls it only when the cursor
+;   track holds no data (SqStep_CheckCursorTrackUsed W != 0), after writing the first 0x81 marker and stepping the
+;   cursor back, so an empty RHYTHM track starts with the current style; 0xC0 with part 72 is the stored RHYTHM
+;   program change (TempoRingBuf_OnProgramChangeEvent) and record 0x48 +7 mask 0x30 is SndParam_Style_Variation.
+SqStep_WriteCurrentStyleEvents:
 	cp	(SQSTEP_DISPLAY_MODE:16), 3
 	jrl	nz, ScoopParam_ValueTable_Sub_Helper_Return
 	ld	bc, 6:i3
@@ -7888,7 +7902,7 @@ ScoopParam_ValueTable_Sub_Helper_Skip:
 	call	SystemInit_StepHandler_0_Helper2
 ScoopParam_ValueTable_Sub_Helper_Return:
 	ret
-	; 6-byte template, copied (`ldir`, BC = 6) to RAM 0x0D8F by ScoopParam_ValueTable_Sub_Helper
+	; 6-byte template, copied (`ldir`, BC = 6) to RAM 0x0D8F by SqStep_WriteCurrentStyleEvents
 	; (display mode 3), which fills bytes +0/+4/+5 from 0xFC5A/0xFC5B and passes the six
 	; bytes to SystemInit_StepHandler_0_Helper2 (W = 6).
 ClockConfig_Handler_0_Tbl:
@@ -9350,7 +9364,14 @@ MemConfig_Handler_4_Helper:
 	pop	xhl
 	pop	xwa
 	ret
-MemConfig_Handler_4_Helper2:
+; SqStep_SetApcFingeredOnChordTrack: On a chord/APC track (step-record display mode 0x0D65 = 0): unless the AUTO PLAY
+;   CHORD mode (bits 0-2 of panel record 0x48 byte +3, 0xFC5D) is already 1 (ONE FINGER), sets it to 2 (FINGERED) and
+;   queues the change {0x48, +3, 2, 2} on the SwbtWr post queue (PortConfig_DataTable_A_Helper). Basis: callers + body
+;   -- SqStep_SetupCursorTrack calls it in its set-up; SqStep_InitOnEnter saves (0xFC5D) and in display mode 0 clears
+;   its bit 3 (APC MEMORY) and posts it, and SqStep_RestoreOnLeave restores and posts it, so the step-record screen
+;   sets up the APC state for a chord track and undoes it on leaving; the namespace map gives +3 mask 0x07 as
+;   SndParam_Apc_Mode (0 off, 1 ONE FINGER, 2 FINGERED, 3 PIANIST).
+SqStep_SetApcFingeredOnChordTrack:
 	cp	(SQSTEP_DISPLAY_MODE:16), 0
 	jrl	nz, MemConfig_Handler_4_Helper2_Return
 	ld	a, (PANEL_STYLE+3:16)
@@ -11431,7 +11452,7 @@ VoiceSlot_StatusRet_Skip24:
 VoiceSlot_StatusRet_Skip39:
 	bit	2, (0x10f5:16)
 	jrl	z, VoiceSlot_StatusRet_Code_Loop
-	call	VoiceSlot_StatusRet_Helper9
+	call	ParamPopup_RotarySpeedNullRet
 	jp	VoiceSlot_StatusRet_Return
 	bit	7, (0x10f5:16)
 	jrl	z, VoiceSlot_StatusRet_Code_Loop
@@ -11684,12 +11705,12 @@ VoiceSlot_StatusRet_Code_Skip41:
 	cp	(SQSTEP_DISPLAY_MODE:16), 3
 	jrl	z, VoiceSlot_StatusRet_Code_Skip42
 	ld	(STATUS_POPUP_ID:16), 7
-	call	VoiceSlot_StatusRet_Helper2
+	call	DisplayStr_RedrawStatusAndTempoLine
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip42:
 	ld	(STATUS_POPUP_ID:16), 17
 	call	Display_UpdateRegion0
-	call	VoiceSlot_StatusRet_Helper3
+	call	DisplayStr_WriteTempoLine_RhythmTrack
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Code_Skip43:
 	ld	(xiy), 1
@@ -12438,7 +12459,14 @@ VoiceState_DataBlock2_Code_Skip15:
 	ld	(SQSTEP_CURSOR_STEP:16), h
 	call	Display_UpdateRegion2_Wrap
 	ret
-VoiceState_DataBlock2_Helper2:
+; SqStep_FindRhythmTrack: Finds the RHYTHM track for the step-record screen: the first of the 16 tracks whose TRACK
+;   ASSIGN value (0xF1A0[t]) is 16; when its bit is set in the track mask word 0xFFEC (VoiceState_DataBlock2_Tbl = 1
+;   << t) and the track holds data (bit 7 of 0xF250[3t]), returns W = t + 1, stores it in 0x0D56 and sets 0x0D54 bit 0
+;   and 0x287B bit 2; otherwise clears both and returns W = 0. Basis: callers + body -- SqStep_SetupCursorTrack calls
+;   it just before AccPedal_CheckBitAndUpdate, the pairing Seq_FindRhythmTrack's header describes (the flags make the
+;   measure lengths come from that track); it is Seq_FindRhythmTrack with the mask taken from 0xFFEC instead of 0xF19E
+;   (SqStep_RestoreOnLeave writes both).
+SqStep_FindRhythmTrack:
 	ld	xix, SEQ_TRACK_ASSIGN
 	xor	bc, bc
 	ld	c, 16:opc
@@ -14808,7 +14836,14 @@ DisplayStr_BytecodeBlock_C_Tbl:
 	.ascii	"  TEMPO  "
 	.byte	0x93
 	.ascii	"=              "
-VoiceSlot_StatusRet_Helper2:
+; DisplayStr_RedrawStatusAndTempoLine: TEMPO line for a tempo event stored at the song-data cursor: marks the status
+;   bar (region 0) for redraw, blanks the text line, copies the 25-character ' TEMPO <glyph>=' template to 0x0ECF
+;   (DisplayStr_TempoString, or DisplayStr_BytecodeBlock_C_Tbl2 with glyph 0x93 when (0xFC5A) = 7 and (0xFC5B) = 2),
+;   marks region 5, writes the tempo (DisplayStr_WriteTempoValue) and marks region 3: DisplayStr_ShowTempoLine with
+;   the region-0 redraw in front. Basis: callers + body -- VoiceSlot_StatusRet (the step-record display of the event
+;   under the cursor) calls it for a 0x80 tempo event outside display mode 3, after storing the tempo word at 0x0EF2
+;   (3826) and setting pop-up 7; named like DisplayStr_RedrawStatusAndControlLine.
+DisplayStr_RedrawStatusAndTempoLine:
 	call	Display_UpdateRegion0
 	call	DisplayStr_BlankLineBuffer
 	ld	xiy, DisplayStr_TempoString
@@ -15122,7 +15157,7 @@ DisplayStr_ShowPartSoundLine:
 	ret
 ; DisplayStr_WriteControlNameValue: Writes the control event's name and value into the TT_SQSTEP text line: the
 ;   8-character cell (0x3720 & 7) of Str_PBendModExpEq (blank / P.BEND= / MOD. = / EXP. = / P.MEM = / AFT. =) at
-;   0x0ED8, then at 0x0EDF nothing for kind 0, the pitch-bend value (Display_BytecodeBlock_F_Tbl2_Helper2) for kind 1,
+;   0x0ED8, then at 0x0EDF nothing for kind 0, the pitch-bend value (DisplayStr_WritePitchBendValue) for kind 1,
 ;   else ON/OFF when (0x3721) bit 7 is set or the value in digits. Basis: callers + body --
 ;   DisplayStr_WriteIncomingControlLine and DisplayStr_WriteStoredControlLine call it after writing "CONTROL" and
 ;   describe it as the control name/value of kind 0x3720.
@@ -15146,7 +15181,7 @@ DisplayStr_WriteControlNameValue:
 	jrl	z, Display_BytecodeBlock_F_Return2
 	cp	(CONTROL_LINE_KIND:16), 1
 	jrl	nz, Display_BytecodeBlock_F_Skip6
-	call	Display_BytecodeBlock_F_Tbl2_Helper2
+	call	DisplayStr_WritePitchBendValue
 	jp	Display_BytecodeBlock_F_Return2
 Display_BytecodeBlock_F_Skip6:
 	ld	xix, 3807
@@ -15187,7 +15222,12 @@ Str_On2:
 	; reader Display_BytecodeBlock_F: `ld xiy, Str_Off2`
 Str_Off2:
 	.ascii	"OFF"
-Display_BytecodeBlock_F_Tbl2_Helper2:
+; DisplayStr_WritePitchBendValue: Writes the pitch-bend value of a control event as five characters at 0x0EDF: the
+;   14-bit value (0x1112 & 0x7F) << 7 | (0x3721 & 0x7F), divided by 1000 -- the quotient as two digits
+;   (ParamDigit_ExtractAndFormat, from 0x1182) and the remainder as three (ParamDigit_DivideValue, from 0x1181).
+;   Basis: callers + body -- DisplayStr_WriteControlNameValue calls it for kind 1 (the 'P.BEND=' cell of
+;   Str_PBendModExpEq) and its header names it 'the pitch-bend value'.
+DisplayStr_WritePitchBendValue:
 	xor	xwa, xwa
 	ldb_d8	a, (CONTROL_LINE_VALUE)
 	ldb_d8	w, (0x1112)
@@ -15218,7 +15258,7 @@ Display_BytecodeBlock_F_Tbl2_Helper2:
 ; DisplayStr_WriteTempoValue: Writes the tempo (word 0x0EF2) as three digits at 0x0EDA, the value field of the TEMPO
 ;   line; when (0xFC5A) = 7 and (0xFC5B) = 2 -- the case where the line shows the 0x93 note glyph instead of 0x15 --
 ;   it writes tempo * 2 / 3. Basis: callers + body -- DisplayStr_ShowTempoLine calls it after copying the 'TEMPO
-;   <glyph>=' template (choosing the template on the same (0xFC5A, 0xFC5B) test), as do VoiceSlot_StatusRet_Helper2/3;
+;   <glyph>=' template (choosing the template on the same (0xFC5A, 0xFC5B) test), as do DisplayStr_RedrawStatusAndTempoLine/3;
 ;   TempoRingBuf_OnTempoEvent stores the tempo in 0x0EF2.
 DisplayStr_WriteTempoValue:
 	ld	wa, (3826:16)
@@ -15241,7 +15281,13 @@ DisplayStr_WriteTempoValue_Skip9:
 	ld	w, (xiy+2)
 	ld	(xix+2), w
 	ret
-VoiceSlot_StatusRet_Helper3:
+; DisplayStr_WriteTempoLine_RhythmTrack: TEMPO line of the RHYTHM-track display (display mode 3) for a tempo event
+;   stored at the song-data cursor: copies 26 bytes of the ' TEMPO <glyph>=' template (Display_BytecodeBlock_F_Tbl3,
+;   or Display_BytecodeBlock_F_Tbl4 with glyph 0x93 when (0xFC5A) = 7 and (0xFC5B) = 2) to 0x0ECF without blanking the
+;   line, writes the tempo (DisplayStr_WriteTempoValue) and marks region 3. Basis: callers + body --
+;   VoiceSlot_StatusRet calls it instead of DisplayStr_RedrawStatusAndTempoLine when (0x0D65) = 3 (the RHYTHM track, technics-
+;   docs display-subsystem.md), after setting pop-up 17 and redrawing region 0.
+DisplayStr_WriteTempoLine_RhythmTrack:
 	ld	xiy, Display_BytecodeBlock_F_Tbl3
 	ld	xix, 3791
 	cp	(PANEL_STYLE:16), 7
@@ -16518,7 +16564,13 @@ ParamPopup_TotalReverb_Skip2:
 	; reader ParamPopup_TotalReverb: `ld xiy, Str_TotalReverb` then `ld bc, 13` + ldir (13 bytes copied)
 Str_TotalReverb:
 	.ascii	"TOTAL REVERB "
-VoiceSlot_StatusRet_Helper9:
+; ParamPopup_RotarySpeedNullRet: Empty routine (`ret`): the ROTARY SPEED arm of the step-record event display --
+;   VoiceSlot_StatusRet calls it for a stored parameter event on panel record 0x70, offset 0, whose mask byte (0x10F5)
+;   has bit 2 set (SndParam_RotarySpeedSwitch), so that change shows no pop-up in this build. Basis: callers + body --
+;   the only call is VoiceSlot_StatusRet_Skip39 (tag (0x10F1) = 112, offset (0x10F2) = 0, bit 2 of (0x10F5)); the
+;   namespace map gives record 0x70 +0 mask 0x04 as SndParam_RotarySpeedSwitch; the ParamPopup_TotalReverb test after
+;   it is unreachable; X_NullRet convention (SqStep_TrackSetupNullRet).
+ParamPopup_RotarySpeedNullRet:
 	ret
 	; ParamPopup_PartTimbre -- LCD parameter pop-up.
 	; Pop-up id 1.  part name = StringData_PartNames[(0x10f1)*4], 4 chars at 0x0ED1, then 6 chars of

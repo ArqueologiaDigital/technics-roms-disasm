@@ -11,34 +11,39 @@
 
 ; list-boundary table, 12 x {u32 start, u32 end} of bound record lists; the code reads XIY = (T+8i), XIX = (T+8i+4)
 ; evidence: SeDigEff_DrawStaticScreen_Join3+0x19 (0xF100A1)
-SeScreenData_ListBounds:
-	.long	SeScreenData_0x4D01
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D01
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D01
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D01
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D4C
+; SeDigEff_TypeFieldListBounds: DIGITAL EFFECT page: (start, end) pairs of the bound field list of each of the 12
+;   effect types. Basis: indexer.
+SeDigEff_TypeFieldListBounds:
+	.long	SeDigEff_CelesteChorusFields
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_CelesteChorusFields
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_CelesteChorusFields
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_CelesteChorusFields
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_EnsembleFields
 	.long	SeDigEff_DrawField_Records
-	.long	SeScreenData_0x4D4C
+	.long	SeDigEff_EnsembleFields
 	.long	SeDigEff_DrawField_Records
-	.long	SeScreenData_0x4DAD
-	.long	SeScreenData_0x4DDA
-	.long	SeScreenData_0x4DEE
-	.long	SeScreenData_0x4E16
-	.long	SeScreenData_0x4E2A
-	.long	SeScreenData_0x4E54
-	.long	SeScreenData_0x4DEE
-	.long	SeScreenData_0x4E16
-	.long	SeScreenData_0x4E68
-	.long	SeScreenData_0x4E8B
-	.long	SeScreenData_0x4E68
-	.long	SeScreenData_0x4E8B
+	.long	SeDigEff_TremoloFields
+	.long	SeDigEff_TremoloFieldPtrs
+	.long	SeDigEff_OrganTremoloRepeatDelayFields
+	.long	SeDigEff_OrganTremoloRepeatDelayFieldPtrs
+	.long	SeDigEff_SingleDelayFields
+	.long	SeDigEff_SingleDelayFieldPtrs
+	.long	SeDigEff_OrganTremoloRepeatDelayFields
+	.long	SeDigEff_OrganTremoloRepeatDelayFieldPtrs
+	.long	SeDigEff_SoloEffectFields
+	.long	SeDigEff_SoloEffectFieldPtrs
+	.long	SeDigEff_SoloEffectFields
+	.long	SeDigEff_SoloEffectFieldPtrs
 ; bound record list (5 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15910
 ; evidence: pairs table 0xF1587D
-SeScreenData_0x4D01:
+; SeDigEff_CelesteChorusFields: DIGITAL EFFECT page: bound field list of effect type 0-3 (CELESTE 1/2, CHORUS 1/2) --
+;   DEPTH, SPEED, DETUNE (signed), DELAY, BALANCE (3 digits) = RAM 0x661-0x665 at rows y 70-130; the static screen
+;   draws it whole from SeDigEff_TypeFieldListBounds[type]. Basis: indexer + bytes + captions.
+SeDigEff_CelesteChorusFields:
 ; [v10] F15907..F1593A  [flags:u8][len:u8][payload] records
 ; [v10] F15907 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x61, 0x06, 0xff, 0x00, 0x20, 0x0c, 0x0b, 0x02
@@ -52,67 +57,87 @@ SeScreenData_0x4D01:
 	.byte	0x00, 0x0a, 0x65, 0x06, 0xff, 0x00, 0x20, 0x6b, 0x14, 0x03
 ; table of 6 pointers to the records of the list at 0xF158DD (entry 0 repeated); entry 0 of the per-variant table at 0xF15A77, drawn one record at a time by SeGfx_DrawIndexedBoundRecord (XIY = (XIY + 4*WA))
 ; evidence: SeDigEff_DrawField (0xF1011C)
-SeScreenData_0x4D34:
+; SeDigEff_CelesteChorusFieldPtrs: DIGITAL EFFECT page: record-pointer table of effect type(s) 0-3 (entry A = field
+;   A's record, entry 0 repeated), selected from SeDigEff_TypeFieldPtrTables by the type (RAM 0x670) and drawn one
+;   record at a time by SeDigEff_DrawField; it also ends that type's list in SeDigEff_TypeFieldListBounds. Basis: indexer +
+;   bytes.
+SeDigEff_CelesteChorusFieldPtrs:
 ; [v10] F1593A..F15952  6 x u32 pointer
-	.long	SeScreenData_0x4D01
-	.long	SeScreenData_0x4D01
-	.long	SeScreenData_0x4D01 + 0xa
-	.long	SeScreenData_0x4D01 + 0x14
-	.long	SeScreenData_0x4D01 + 0x1f
-	.long	SeScreenData_0x4D01 + 0x29
+	.long	SeDigEff_CelesteChorusFields
+	.long	SeDigEff_CelesteChorusFields
+	.long	SeDigEff_CelesteChorusFields + 0xa
+	.long	SeDigEff_CelesteChorusFields + 0x14
+	.long	SeDigEff_CelesteChorusFields + 0x1f
+	.long	SeDigEff_CelesteChorusFields + 0x29
 ; bound record list (6 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15965
 ; evidence: pairs table 0xF1587D
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-SeScreenData_0x4D4C:
+; SeDigEff_EnsembleFields: DIGITAL EFFECT page: bound field list of effect type 4-5 (ENSEMBLE 1/2) -- DEPTH1, SPEED1,
+;   DEPTH2, SPEED2, DETUNE (signed), DELAY = RAM 0x661-0x666; the label is also field 1's (DEPTH1) record; the static
+;   screen draws it whole from SeDigEff_TypeFieldListBounds[type]. Basis: indexer + bytes + captions.
+SeDigEff_EnsembleFields:
 ; [v10] F15952..F1598F  [flags:u8][len:u8][payload] records
 ; [v10] F15952 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x61, 0x06, 0xff, 0x00, 0x20, 0x0c, 0x0b, 0x02
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-SeScreenData_0x4D56:
+; SeDigEff_EnsembleSpeed1Field: DIGITAL EFFECT page, ENSEMBLE 1/2: SPEED1: RAM 0x662 at y 85; entry 2 of
+;   SeDigEff_DrawField_Records (the ENSEMBLE record table, types 4-5). Basis: indexer + bytes + captions.
+SeDigEff_EnsembleSpeed1Field:
 ; [v10] F1595C flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x62, 0x06, 0xff, 0x00, 0x20, 0x64, 0x0d, 0x02
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-SeScreenData_0x4D60:
+; SeDigEff_EnsembleDepth2Field: DIGITAL EFFECT page, ENSEMBLE 1/2: DEPTH2: RAM 0x663 at y 100; entry 3 of
+;   SeDigEff_DrawField_Records (the ENSEMBLE record table, types 4-5). Basis: indexer + bytes + captions.
+SeDigEff_EnsembleDepth2Field:
 ; [v10] F15966 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x63, 0x06, 0xff, 0x00, 0x20, 0xbc, 0x0f, 0x02
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-SeScreenData_0x4D6A:
+; SeDigEff_EnsembleSpeed2Field: DIGITAL EFFECT page, ENSEMBLE 1/2: SPEED2: RAM 0x664 at y 115; entry 4 of
+;   SeDigEff_DrawField_Records (the ENSEMBLE record table, types 4-5). Basis: indexer + bytes + captions.
+SeDigEff_EnsembleSpeed2Field:
 ; [v10] F15970 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x64, 0x06, 0xff, 0x00, 0x20, 0x14, 0x12, 0x02
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-SeScreenData_0x4D74:
+; SeDigEff_EnsembleDetuneField: DIGITAL EFFECT page, ENSEMBLE 1/2: DETUNE: signed RAM 0x665 at y 130; entry 5 of
+;   SeDigEff_DrawField_Records (the ENSEMBLE record table, types 4-5). Basis: indexer + bytes + captions.
+SeDigEff_EnsembleDetuneField:
 ; [v10] F1597A flags=0x05 len=11
 	.byte	0x05, 0x0b, 0x65, 0x06, 0xff, 0x00, 0x20, 0x6b, 0x14, 0x02, 0x00
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF15965
-SeScreenData_0x4D7F:
+; SeDigEff_EnsembleDelayField: DIGITAL EFFECT page, ENSEMBLE 1/2: DELAY: RAM 0x666 at y 145; entry 6 of
+;   SeDigEff_DrawField_Records (the ENSEMBLE record table, types 4-5). Basis: indexer + bytes + captions.
+SeDigEff_EnsembleDelayField:
 ; [v10] F15985 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x66, 0x06, 0xff, 0x00, 0x20, 0xc4, 0x16, 0x02
 ; table of 9 pointers, entry = A (0..8; entry 0 repeated): entries 1-6 -> the records
-; SeScreenData_0x4D56.., entries 7/8 -> FlashRead_BlockData_Field7/_Field8.  The code loads it
+; SeDigEff_EnsembleSpeed1Field.., entries 7/8 -> SeDigEff_IntensityField/_Field8.  The code loads it
 ; into XIY only on SeDigEff_DrawField's `cp a, 7 / jr nc` path, and
 ; SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA)) -- so the entries that reader
 ; uses are 7 and 8 (corrected 2026-10-02 from "table of 7", Wave 2 claims review)
 ; evidence: SeDigEff_DrawField_Join+0x6 (0xF10154)
 ; (name SeDigEff_DrawField_Records kept: other files use it; the object is ScreenData, see above)
 SeDigEff_DrawField_Records:
-	.long	SeScreenData_0x4D4C
-	.long	SeScreenData_0x4D4C
-	.long	SeScreenData_0x4D56
-	.long	SeScreenData_0x4D60
-	.long	SeScreenData_0x4D6A
-	.long	SeScreenData_0x4D74
-	.long	SeScreenData_0x4D7F
-	.long	FlashRead_BlockData_Field7
-	.long	FlashRead_BlockData_Field8
+	.long	SeDigEff_EnsembleFields
+	.long	SeDigEff_EnsembleFields
+	.long	SeDigEff_EnsembleSpeed1Field
+	.long	SeDigEff_EnsembleDepth2Field
+	.long	SeDigEff_EnsembleSpeed2Field
+	.long	SeDigEff_EnsembleDetuneField
+	.long	SeDigEff_EnsembleDelayField
+	.long	SeDigEff_IntensityField
+	.long	SeDigEff_ReverbDepthField
 ; bound record list (4 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF159B6
 ; evidence: pairs table 0xF1587D
-SeScreenData_0x4DAD:
+; SeDigEff_TremoloFields: DIGITAL EFFECT page: bound field list of effect type 6 (TREMOLO) -- DEPTH, SPEED, WAVE (RAM
+;   0x663 & 0x0F -> SIN/TRI/SQR/SAW), BALANCE; the static screen draws it whole from SeDigEff_TypeFieldListBounds[type].
+;   Basis: indexer + bytes + captions.
+SeDigEff_TremoloFields:
 ; [v10] F159B3..F159E0  [flags:u8][len:u8][payload] records
 ; [v10] F159B3 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x61, 0x06, 0xff, 0x00, 0x20, 0x0c, 0x0b, 0x02
@@ -120,24 +145,30 @@ SeScreenData_0x4DAD:
 	.byte	0x00, 0x0a, 0x62, 0x06, 0xff, 0x00, 0x20, 0x64, 0x0d, 0x02
 ; [v10] F159C7 flags=0x02 len=15
 	.byte	0x02, 0x0f, 0x63, 0x06, 0x0f, 0x00, 0x20
-	.long	SeMenu_DrawLfoPartSwitches_Records + 0x10
+	.long	SeLfo1_PartSignFieldPtrs + 0x10
 	.byte	0x03, 0x00, 0xbb, 0x0f
 ; [v10] F159D6 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x64, 0x06, 0xff, 0x00, 0x20, 0x13, 0x12, 0x03
 ; table of 5 pointers to the records of the list at 0xF15989 (entry 0 repeated); entry 6 of the per-variant table at 0xF15A77, drawn one record at a time by SeGfx_DrawIndexedBoundRecord (XIY = (XIY + 4*WA))
 ; evidence: SeDigEff_DrawField (0xF1011C)
-SeScreenData_0x4DDA:
+; SeDigEff_TremoloFieldPtrs: DIGITAL EFFECT page: record-pointer table of effect type(s) 6 (entry A = field A's
+;   record, entry 0 repeated), selected from SeDigEff_TypeFieldPtrTables by the type (RAM 0x670) and drawn one record
+;   at a time by SeDigEff_DrawField; it also ends that type's list in SeDigEff_TypeFieldListBounds. Basis: indexer + bytes.
+SeDigEff_TremoloFieldPtrs:
 ; (was .incbin "includes/romslices/v7_transplant_FlashWrite_BlockRef_Type3.bin")
 ; [v10] F1593A..F15952  6 x u32 pointer
 ; [v10] F159E0..F159F4  5 x u32 pointer
-	.long	SeScreenData_0x4DAD
-	.long	SeScreenData_0x4DAD
-	.long	SeScreenData_0x4DAD + 0xa
-	.long	SeScreenData_0x4DAD + 0x14
-	.long	SeScreenData_0x4DAD + 0x23
+	.long	SeDigEff_TremoloFields
+	.long	SeDigEff_TremoloFields
+	.long	SeDigEff_TremoloFields + 0xa
+	.long	SeDigEff_TremoloFields + 0x14
+	.long	SeDigEff_TremoloFields + 0x23
 ; bound record list (4 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF159F2
 ; evidence: pairs table 0xF1587D
-SeScreenData_0x4DEE:
+; SeDigEff_OrganTremoloRepeatDelayFields: DIGITAL EFFECT page: bound field list of effect type 7 (ORGAN TREMOLO) and 9
+;   (REPEAT DELAY) -- four 2-digit values RAM 0x661-0x664 (DEPTH1 SPEED1 DEPTH2 SPEED2 / SPEED DECAY SUSTAIN RELEASE);
+;   the static screen draws it whole from SeDigEff_TypeFieldListBounds[type]. Basis: indexer + bytes + captions.
+SeDigEff_OrganTremoloRepeatDelayFields:
 ; [v10] F159F4..F15A1C  [flags:u8][len:u8][payload] records
 ; [v10] F159F4 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x61, 0x06, 0xff, 0x00, 0x20, 0x0c, 0x0b, 0x02
@@ -149,17 +180,24 @@ SeScreenData_0x4DEE:
 	.byte	0x00, 0x0a, 0x64, 0x06, 0xff, 0x00, 0x20, 0x14, 0x12, 0x02
 ; table of 5 pointers to the records of the list at 0xF159CA (entry 0 repeated); entry 7 of the per-variant table at 0xF15A77, drawn one record at a time by SeGfx_DrawIndexedBoundRecord (XIY = (XIY + 4*WA))
 ; evidence: SeDigEff_DrawField (0xF1011C)
-SeScreenData_0x4E16:
+; SeDigEff_OrganTremoloRepeatDelayFieldPtrs: DIGITAL EFFECT page: record-pointer table of effect type(s) 7 and 9
+;   (entry A = field A's record, entry 0 repeated), selected from SeDigEff_TypeFieldPtrTables by the type (RAM 0x670)
+;   and drawn one record at a time by SeDigEff_DrawField; it also ends that type's list in SeDigEff_TypeFieldListBounds.
+;   Basis: indexer + bytes.
+SeDigEff_OrganTremoloRepeatDelayFieldPtrs:
 ; (was .incbin "includes/romslices/v7_transplant_FlashWrite_BlockRef_Type4.bin")
 ; [v10] F15A1C..F15A30  5 x u32 pointer
-	.long	SeScreenData_0x4DEE
-	.long	SeScreenData_0x4DEE
-	.long	SeScreenData_0x4DEE + 0xa
-	.long	SeScreenData_0x4DEE + 0x14
-	.long	SeScreenData_0x4DEE + 0x1e
+	.long	SeDigEff_OrganTremoloRepeatDelayFields
+	.long	SeDigEff_OrganTremoloRepeatDelayFields
+	.long	SeDigEff_OrganTremoloRepeatDelayFields + 0xa
+	.long	SeDigEff_OrganTremoloRepeatDelayFields + 0x14
+	.long	SeDigEff_OrganTremoloRepeatDelayFields + 0x1e
 ; bound record list (4 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15A30
 ; evidence: pairs table 0xF1587D
-SeScreenData_0x4E2A:
+; SeDigEff_SingleDelayFields: DIGITAL EFFECT page: bound field list of effect type 8 (SINGLE DELAY) -- DELAY, DETUNE
+;   (signed), KEY SHIFT (signed), BALANCE (3 digits); the static screen draws it whole from
+;   SeDigEff_TypeFieldListBounds[type]. Basis: indexer + bytes + captions.
+SeDigEff_SingleDelayFields:
 ; [v10] F15A30..F15A5A  [flags:u8][len:u8][payload] records
 ; [v10] F15A30 flags=0x00 len=10
 	.byte	0x00, 0x0a, 0x61, 0x06, 0xff, 0x00, 0x20, 0x0c, 0x0b, 0x02
@@ -171,20 +209,26 @@ SeScreenData_0x4E2A:
 	.byte	0x00, 0x0a, 0x64, 0x06, 0xff, 0x00, 0x20, 0x13, 0x12, 0x03
 ; table of 5 pointers to the records of the list at 0xF15A06 (entry 0 repeated); entry 8 of the per-variant table at 0xF15A77, drawn one record at a time by SeGfx_DrawIndexedBoundRecord (XIY = (XIY + 4*WA))
 ; evidence: SeDigEff_DrawField (0xF1011C)
-SeScreenData_0x4E54:
+; SeDigEff_SingleDelayFieldPtrs: DIGITAL EFFECT page: record-pointer table of effect type(s) 8 (entry A = field A's
+;   record, entry 0 repeated), selected from SeDigEff_TypeFieldPtrTables by the type (RAM 0x670) and drawn one record
+;   at a time by SeDigEff_DrawField; it also ends that type's list in SeDigEff_TypeFieldListBounds. Basis: indexer + bytes.
+SeDigEff_SingleDelayFieldPtrs:
 ; [v10] F15A5A..F15A6E  5 x u32 pointer
-	.long	SeScreenData_0x4E2A
-	.long	SeScreenData_0x4E2A
-	.long	SeScreenData_0x4E2A + 0xa
-	.long	SeScreenData_0x4E2A + 0x15
-	.long	SeScreenData_0x4E2A + 0x20
+	.long	SeDigEff_SingleDelayFields
+	.long	SeDigEff_SingleDelayFields
+	.long	SeDigEff_SingleDelayFields + 0xa
+	.long	SeDigEff_SingleDelayFields + 0x15
+	.long	SeDigEff_SingleDelayFields + 0x20
 ; bound record list (3 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF15A67
 ; evidence: pairs table 0xF1587D
-SeScreenData_0x4E68:
+; SeDigEff_SoloEffectFields: DIGITAL EFFECT page: bound field list of effect type 10-11 (SOLO EFFECT 1/2) --
+;   DISTORTION (RAM 0x661 bit 0 -> OFF/ON), TOUCH DEPTH, DEPTH (3 digits); the static screen draws it whole from
+;   SeDigEff_TypeFieldListBounds[type]. Basis: indexer + bytes + captions.
+SeDigEff_SoloEffectFields:
 ; [v10] F15A6E..F15A91  [flags:u8][len:u8][payload] records
 ; [v10] F15A6E flags=0x02 len=15
 	.byte	0x02, 0x0f, 0x61, 0x06, 0x01, 0x00, 0x20
-	.long	SeMenu_DrawPartSelector_Records3 + 0x53
+	.long	SeMenu_DrawPartSelector_SelectBox + 0x53
 	.byte	0x03, 0x00, 0x0b, 0x0b
 ; -> 0xF15A5D
 ; [v10] F15A7D flags=0x00 len=10
@@ -194,28 +238,33 @@ SeScreenData_0x4E68:
 	.byte	0x00, 0x0a, 0x63, 0x06, 0xff, 0x00, 0x20, 0xbb, 0x0f, 0x03
 ; table of 4 pointers to the records of the list at 0xF15A44 (entry 0 repeated); entry 10 of the per-variant table at 0xF15A77, drawn one record at a time by SeGfx_DrawIndexedBoundRecord (XIY = (XIY + 4*WA))
 ; evidence: SeDigEff_DrawField (0xF1011C)
-; (name SeScreenData_0x4E8B kept: other files use it; the object is ScreenData, see above)
-SeScreenData_0x4E8B:
+; (name SeDigEff_SoloEffectFieldPtrs kept: other files use it; the object is ScreenData, see above)
+; SeDigEff_SoloEffectFieldPtrs: DIGITAL EFFECT page: record-pointer table of effect type(s) 10-11 (entry A = field A's
+;   record, entry 0 repeated), selected from SeDigEff_TypeFieldPtrTables by the type (RAM 0x670) and drawn one record
+;   at a time by SeDigEff_DrawField; it also ends that type's list in SeDigEff_TypeFieldListBounds. Basis: indexer + bytes.
+SeDigEff_SoloEffectFieldPtrs:
 ; [v10] F15A91..F15AA1  4 x u32 pointer
-	.long	SeScreenData_0x4E68
-	.long	SeScreenData_0x4E68
-	.long	SeScreenData_0x4E68 + 0xf
-	.long	SeScreenData_0x4E68 + 0x19
+	.long	SeDigEff_SoloEffectFields
+	.long	SeDigEff_SoloEffectFields
+	.long	SeDigEff_SoloEffectFields + 0xf
+	.long	SeDigEff_SoloEffectFields + 0x19
 ; 12 pointers to record-pointer tables, one per screen variant = the byte at RAM 0x670; entry -> SeGfx_DrawIndexedBoundRecord
 ; evidence: SeDigEff_DrawField (0xF1011C)
-SeDigEff_DrawField_Records2:
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D34
-	.long	SeScreenData_0x4D34
+; SeDigEff_TypeFieldPtrTables: DIGITAL EFFECT page: per effect type (RAM 0x670), the record-pointer table
+;   SeDigEff_DrawField uses for fields 1-6. Basis: indexer.
+SeDigEff_TypeFieldPtrTables:
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_CelesteChorusFieldPtrs
+	.long	SeDigEff_CelesteChorusFieldPtrs
 	.long	SeDigEff_DrawField_Records
 	.long	SeDigEff_DrawField_Records
-	.long	SeScreenData_0x4DDA
-	.long	SeScreenData_0x4E16
-	.long	SeScreenData_0x4E54
-	.long	SeScreenData_0x4E16
-	.long	SeScreenData_0x4E8B
-	.long	SeScreenData_0x4E8B
+	.long	SeDigEff_TremoloFieldPtrs
+	.long	SeDigEff_OrganTremoloRepeatDelayFieldPtrs
+	.long	SeDigEff_SingleDelayFieldPtrs
+	.long	SeDigEff_OrganTremoloRepeatDelayFieldPtrs
+	.long	SeDigEff_SoloEffectFieldPtrs
+	.long	SeDigEff_SoloEffectFieldPtrs
 ; 12 list END pointers, one per screen variant = the byte at RAM 0x670, for the static list the code starts with `ld xiy, <start>`
 ; evidence: SeDigEff_DrawStaticScreen (0xF0FFF6)
 SeDigEff_DrawStaticScreen_Records9:
@@ -247,7 +296,9 @@ SeValText_DigEffTypes:
 	.ascii	"REPEAT DELAY "
 	.ascii	"SOLO EFFECT 1"
 	.ascii	"SOLO EFFECT 2"
-TuningSys_Param_01_Data:
+; SeValText_Mono_Stereo: 6-character value text "MONO " "STEREO" read by the DIGITAL EFFECT field-0 record (RAM 0x660
+;   bit 6). Basis: reader + bytes.
+SeValText_Mono_Stereo:
 	.ascii	"MONO  STEREO"
 ; static record list (37 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF15CFC
 ; evidence: SeEasy_DrawStaticScreen+0xA (0xF100B0)
@@ -537,7 +588,11 @@ SeMenuTitle_Records2:
 ; evidence: SeMenuTitle_DrawStaticScreen+0x4A (0xF0F556), SeMenuTitle_DrawField+0x85 (0xF0F663)
 ; single bound record (op 0x07, 17 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x5400:
+; SeUserKit_SelectedNoteFields: USER KIT menu (title 0x20, drum-kit mode): the edited note: RAM 0x661 & 0x7F as a note
+;   name (SeValText_NoteNames) at (61,53) and the 13-char name cached at RAM 0x20BF3 at (105,53); also the start of
+;   the 16-record list the static screen and field 1 draw (through the cursor box); entries 1-2 of
+;   SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_SelectedNoteFields:
 ; [v10] F16006 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x61, 0x06, 0x7f, 0x00, 0x1c
 	.long	SeMenu_NameEditor_HighlightChar_Records2 + 0xc
@@ -550,10 +605,13 @@ SeScreenData_0x5400:
 ; evidence: SeMenuTitle_DrawField+0xA5 (0xF0F683)
 ; single bound record (op 0x07, 17 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x5422:
+; SeUserKit_Part1ToneFields: USER KIT menu (title 0x20, drum-kit mode): part 1's TONE: group letter RAM 0x66F & 0x1F
+;   ("A:"..) at (61,122) and the 13-char tone name at RAM 0x20C03; entries 15 of SeUserKit_FieldRecordPtrs. Basis: indexer +
+;   bytes + captions.
+SeUserKit_Part1ToneFields:
 ; [v10] F16028 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x6f, 0x06, 0x1f, 0x00, 0x17
-	.long	SeScreenData_0x1F80 + 0x149
+	.long	SeTonHyb1_Row1Records + 0x149
 	.byte	0x02, 0x00, 0x3d, 0x00, 0x7a, 0x00
 ; [v10] F16039 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x00, 0x00, 0x00, 0x00, 0x17
@@ -561,27 +619,36 @@ SeScreenData_0x5422:
 	.byte	0x0d, 0x00, 0x49, 0x00, 0x7a, 0x00
 ; single bound record (op 0x09, 12 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x5444:
+; SeUserKit_Part1LevelField: USER KIT menu (title 0x20, drum-kit mode): part 1's LEVEL: RAM 0x663 & 0x7F at (165,122);
+;   entries 3 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_Part1LevelField:
 ; [v10] F1604A flags=0x09 len=12
 	.byte	0x09, 0x0c, 0x63, 0x06, 0x7f, 0x00, 0x17, 0xa5, 0x00, 0x7a, 0x00, 0x03
 ; single bound record (op 0x0B, 13 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x5450:
+; SeUserKit_Part1KeyField: USER KIT menu (title 0x20, drum-kit mode): part 1's KEY: signed RAM 0x665 at (195,122);
+;   entries 5 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_Part1KeyField:
 ; [v10] F16056 flags=0x0b len=13
 	.byte	0x0b, 0x0d, 0x65, 0x06, 0xff, 0x00, 0x17, 0xc3, 0x00, 0x7a, 0x00, 0x02, 0x00
 ; single bound record (op 0x0B, 13 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x545D:
+; SeUserKit_Part1TuneField: USER KIT menu (title 0x20, drum-kit mode): part 1's TUNE: signed RAM 0x667 at (225,122);
+;   entries 7 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_Part1TuneField:
 ; [v10] F16063 flags=0x0b len=13
 	.byte	0x0b, 0x0d, 0x67, 0x06, 0xff, 0x00, 0x17, 0xe1, 0x00, 0x7a, 0x00, 0x02, 0x00
 ; bound record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF16068
 ; evidence: SeMenu_PresetManager_Init_Code_Skip+0x10 (0xF0F699)
 ; single bound record (op 0x07, 17 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x546A:
+; SeUserKit_Part2ToneFields: USER KIT menu (title 0x20, drum-kit mode): part 2's TONE: group letter RAM 0x670 & 0x1F
+;   at (61,152) and the tone name at RAM 0x20C13; entries 16 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes +
+;   captions.
+SeUserKit_Part2ToneFields:
 ; [v10] F16070 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x70, 0x06, 0x1f, 0x00, 0x17
-	.long	SeScreenData_0x1F80 + 0x149
+	.long	SeTonHyb1_Row1Records + 0x149
 	.byte	0x02, 0x00, 0x3d, 0x00, 0x98, 0x00
 ; [v10] F16081 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x00, 0x00, 0x00, 0x00, 0x17
@@ -589,55 +656,77 @@ SeScreenData_0x546A:
 	.byte	0x0d, 0x00, 0x49, 0x00, 0x98, 0x00
 ; single bound record (op 0x09, 12 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x548C:
+; SeUserKit_Part2LevelField: USER KIT menu (title 0x20, drum-kit mode): part 2's LEVEL: RAM 0x664 & 0x7F at (165,152);
+;   entries 4 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_Part2LevelField:
 ; [v10] F16092 flags=0x09 len=12
 	.byte	0x09, 0x0c, 0x64, 0x06, 0x7f, 0x00, 0x17, 0xa5, 0x00, 0x98, 0x00, 0x03
 ; single bound record (op 0x0B, 13 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x5498:
+; SeUserKit_Part2KeyField: USER KIT menu (title 0x20, drum-kit mode): part 2's KEY: signed RAM 0x666 at (195,152);
+;   entries 6 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_Part2KeyField:
 ; [v10] F1609E flags=0x0b len=13
 	.byte	0x0b, 0x0d, 0x66, 0x06, 0xff, 0x00, 0x17, 0xc3, 0x00, 0x98, 0x00, 0x02, 0x00
 ; single bound record (op 0x0B, 13 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x54A5:
+; SeUserKit_Part2TuneField: USER KIT menu (title 0x20, drum-kit mode): part 2's TUNE: signed RAM 0x668 at (225,152);
+;   entries 8 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_Part2TuneField:
 ; [v10] F160AB flags=0x0b len=13
 	.byte	0x0b, 0x0d, 0x68, 0x06, 0xff, 0x00, 0x17, 0xe1, 0x00, 0x98, 0x00, 0x02, 0x00
 ; single bound record (op 0x09, 12 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x54B2:
+; SeUserKit_ReverbField: USER KIT menu (title 0x20, drum-kit mode): REV: RAM 0x66B & 0x7F, one value at (284,137)
+;   between the two rows; entries 9-11 of SeUserKit_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeUserKit_ReverbField:
 ; [v10] F160B8 flags=0x09 len=12
 	.byte	0x09, 0x0c, 0x6b, 0x06, 0x7f, 0x00, 0x17, 0x1c, 0x01, 0x89, 0x00, 0x03
 ; bound record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF160BC
 ; evidence: SeMenuTitle_DrawField+0x3B (0xF0F619)
-SeMenuTitle_DrawField_Records:
+; SeUserKit_PanSideFields: USER KIT menu: the two parts' PAN side (RAM 0x66C bits 1-0 / 3-2 -> SeValText_Ctr_L_R at
+;   (259,122)/(259,152)), drawn for fields 13-14. Basis: reader + bytes.
+SeUserKit_PanSideFields:
 ; [v10] F160C4 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x6c, 0x06, 0x03, 0x00, 0x17
-	.long	SeScreenData_0x39BE + 0x94
+	.long	SeTonTon2_FieldRecordPtrs + 0x94
 	.byte	0x03, 0x00, 0x03, 0x01, 0x7a, 0x00
 ; [v10] F160D5 flags=0x07 len=17
 	.byte	0x07, 0x11, 0x6c, 0x06, 0x0c, 0x02, 0x17
-	.long	SeScreenData_0x39BE + 0x94
+	.long	SeTonTon2_FieldRecordPtrs + 0x94
 	.byte	0x03, 0x00, 0x03, 0x01, 0x98, 0x00
 ; single bound record (op 0x03, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeMenuTitle_DrawField_Records2:
-; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF160F0-0xF16106 (22 B), unreached CODE-territory, was disassembled as 10 plausible-but-dead instruction lines; per=80% dist=11 near SeMenuTitle_DrawField_Records2+10
+; SeUserKit_PartCursorBox: USER KIT menu field 0: bound op-03 cursor box, RAM 0x660 & 3 -> SeUserKit_PartCursorBoxes. Basis:
+;   reader + bytes.
+SeUserKit_PartCursorBox:
+; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF160F0-0xF16106 (22 B), unreached CODE-territory, was disassembled as 10 plausible-but-dead instruction lines; per=80% dist=11 near SeUserKit_PartCursorBox+10
 ; [v10] F160E6 flags=0x03 len=11
 	.byte	0x03, 0x0b, 0x60, 0x06, 0x03, 0x00, 0x05
-	.long	SeScreenData_0x5503
+	.long	SeUserKit_PartCursorBoxes
 ; single bound record (op 0x09, 12 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x54EB:
+; SeUserKit_Part1PanAmountField: USER KIT menu: part 1's PAN amount: RAM 0x66D & 0x7F at (265,122), after the side
+;   letter (SeUserKit_PanSideFields); drawn only when non-zero; entries 12-13 of SeUserKit_FieldRecordPtrs
+;   (SeMenu_WaveformSelect_Apply_Helper3 draws entries 13-14 when RAM 0x660+A is non-zero). Basis: indexers + bytes +
+;   captions.
+SeUserKit_Part1PanAmountField:
 ; [v10] F160F1 flags=0x09 len=12
 	.byte	0x09, 0x0c, 0x6d, 0x06, 0x7f, 0x00, 0x17, 0x09, 0x01, 0x7a, 0x00, 0x02
 ; single bound record (op 0x09, 12 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16101
-SeScreenData_0x54F7:
+; SeUserKit_Part2PanAmountField: USER KIT menu: part 2's PAN amount: RAM 0x66E & 0x7F at (265,152); drawn only when
+;   non-zero; entries 14 of SeUserKit_FieldRecordPtrs (SeMenu_WaveformSelect_Apply_Helper3 draws entries 13-14 when RAM
+;   0x660+A is non-zero). Basis: indexers + bytes + captions.
+SeUserKit_Part2PanAmountField:
 ; [v10] F160FD flags=0x09 len=12
 	.byte	0x09, 0x0c, 0x6e, 0x06, 0x7f, 0x00, 0x17, 0x09, 0x01, 0x98, 0x00, 0x02
 ; table of 3 boxes {u16 x1, y1, x2, y2}, indexed by the masked value of a bound op03/04/08 record (its +7 pointer)
 ; evidence: bound op03 record 0xF160BC
-SeScreenData_0x5503:
+; SeUserKit_PartCursorBoxes: USER KIT menu: box table of the row cursor, (13,113)-(280,138) for part 1 and
+;   (13,141)-(280,168) for part 2, entry 0 = entry 1, indexed by RAM 0x660 & 3 through the op-03 record
+;   SeUserKit_PartCursorBox (field 0). Basis: reader + bytes.
+SeUserKit_PartCursorBoxes:
 ; [v10] F16109..F1612F  the length byte at F16109 is 0, so the [flags][len] framing above does NOT continue here.
 ; [v10] HYPOTHESIS ONLY (it closes exactly on the u32 below, but is not otherwise corroborated):
 ; [v10] three 8-byte entries, then one len-10 record. Left as untyped .byte rather than guessed at.
@@ -654,27 +743,31 @@ SeMenuTitle_DrawField_Records3:
 	.byte	0x1b, 0x0a, 0x0d, 0x00, 0x71, 0x00, 0x18, 0x01, 0xa8, 0x00
 ; table of 17 pointers to bound records; the code loads it into XIY and SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA))
 ; evidence: SeMenu_WaveformSelect_Apply_Helper3+0x1E (0xF0F5D9), SeMenuTitle_DrawField+0x61 (0xF0F63F), SeMenu_PresetManager_Init_Code_Skip2+0xB (0xF0F6AA)
-SeScreenData_0x5525:
+; SeUserKit_FieldRecordPtrs: USER KIT menu: record-pointer table of the 17 fields (0 cursor box, 1-2 note, 3-8
+;   LEVEL/KEY/TUNE of parts 1-2, 9-11 REV, 12-14 pan amounts, 15-16 the parts' TONE), entry A drawn by
+;   SeMenuTitle_DrawField and its helpers; entry 0 is spelled as bytes, entries 1-16 carry the label
+;   DrumDetailEdit_Menu_Table. Basis: indexers + bytes.
+SeUserKit_FieldRecordPtrs:
 ; [v10] F1612B -- a u32 pointer to the record at F160E6; DrumDetailEdit_Menu_Table's label may be one entry late
 	.byte	0xbd, 0x5f, 0xf1, 0x00
 DrumDetailEdit_Menu_Table:
 ; (was .incbin "includes/romslices/v7_fix_drumdetailedit_menu_table.bin")
-	.long	SeScreenData_0x5400
-	.long	SeScreenData_0x5400
-	.long	SeScreenData_0x5444
-	.long	SeScreenData_0x548C
-	.long	SeScreenData_0x5450
-	.long	SeScreenData_0x5498
-	.long	SeScreenData_0x545D
-	.long	SeScreenData_0x54A5
-	.long	SeScreenData_0x54B2
-	.long	SeScreenData_0x54B2
-	.long	SeScreenData_0x54B2
-	.long	SeScreenData_0x54EB
-	.long	SeScreenData_0x54EB
-	.long	SeScreenData_0x54F7
-	.long	SeScreenData_0x5422
-	.long	SeScreenData_0x546A
+	.long	SeUserKit_SelectedNoteFields
+	.long	SeUserKit_SelectedNoteFields
+	.long	SeUserKit_Part1LevelField
+	.long	SeUserKit_Part2LevelField
+	.long	SeUserKit_Part1KeyField
+	.long	SeUserKit_Part2KeyField
+	.long	SeUserKit_Part1TuneField
+	.long	SeUserKit_Part2TuneField
+	.long	SeUserKit_ReverbField
+	.long	SeUserKit_ReverbField
+	.long	SeUserKit_ReverbField
+	.long	SeUserKit_Part1PanAmountField
+	.long	SeUserKit_Part1PanAmountField
+	.long	SeUserKit_Part2PanAmountField
+	.long	SeUserKit_Part1ToneFields
+	.long	SeUserKit_Part2ToneFields
 ; static record list (20 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF1620F
 ; evidence: SeCopy_DrawStaticScreen+0x17 (0xF0F6C6)
 SeCopy_DrawStaticScreen_Records:
@@ -813,7 +906,7 @@ SeAmpAmp1_DrawField_Records4:
 ; evidence: recptrs table 0xF1642F
 SeAmpEnv1_DrawStaticScreen_Records2:
 	.byte	0x02, 0x0f, 0x60, 0x06, 0x20, 0x05, 0x20
-	.long	SeMenu_DrawPartSelector_Records3 + 0x53
+	.long	SeMenu_DrawPartSelector_SelectBox + 0x53
 	.byte	0x03, 0x00, 0x70, 0x1d
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
@@ -865,42 +958,61 @@ SeMenu_DrawEnvKeyOffFields_Records3:
 ; evidence: SeEasy_DrawStaticScreen+0x18 (0xF100BE)
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x5895:
+; SeEasy_BrillianceField: EASY EDIT page (0x21): BRILLIANCE: signed RAM 0x661 at y 68, x 128; field(s) 1 of
+;   SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_BrillianceField:
 	.byte	0x05, 0x0b, 0x61, 0x06, 0xff, 0x00, 0x20, 0xb0, 0x0a, 0x02, 0x00
 ; single bound record (op 0x02, 15 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58A0:
+; SeEasy_VibratoDepthField: EASY EDIT page (0x21): VIBRATO DEPTH: RAM 0x662 & 0x1F -> OFF/-10..+10 text at y 107, x
+;   128; field(s) 2 of SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_VibratoDepthField:
 	.byte	0x02, 0x0f, 0x62, 0x06, 0x1f, 0x00, 0x20
 	.long	SeEasy_DrawField_SetupPath_Records2
 	.byte	0x03, 0x00, 0xc8, 0x10
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58AF:
+; SeEasy_VibratoSpeedField: EASY EDIT page (0x21): VIBRATO SPEED: signed RAM 0x663 at y 148, x 128; field(s) 3 of
+;   SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_VibratoSpeedField:
 	.byte	0x05, 0x0b, 0x63, 0x06, 0xff, 0x00, 0x20, 0x30, 0x17, 0x02, 0x00
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58BA:
+; SeEasy_VibratoDelayField: EASY EDIT page (0x21): VIBRATO DELAY: signed RAM 0x664 at y 188, x 128; field(s) 4-5 of
+;   SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_VibratoDelayField:
 	.byte	0x05, 0x0b, 0x64, 0x06, 0xff, 0x00, 0x20, 0x70, 0x1d, 0x02, 0x00
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58C5:
+; SeEasy_OctaveShiftField: EASY EDIT page (0x21): OCTAVE SHIFT: RAM 0x669 & 0x0F shown minus 8 at y 67, x 280;
+;   field(s) 9 of SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_OctaveShiftField:
 	.byte	0x05, 0x0b, 0x69, 0x06, 0x0f, 0x00, 0x20, 0x9b, 0x0a, 0x02, 0x08
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58D0:
+; SeEasy_AttackTimeField: EASY EDIT page (0x21): ATTACK TIME: signed RAM 0x666 at y 106, x 280; field(s) 6 of
+;   SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_AttackTimeField:
 	.byte	0x05, 0x0b, 0x66, 0x06, 0xff, 0x00, 0x20, 0xb3, 0x10, 0x02, 0x00
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58DB:
+; SeEasy_ReleaseTimeField: EASY EDIT page (0x21): RELEASE TIME: signed RAM 0x667 at y 147, x 280; field(s) 7-8 of
+;   SeEasy_FieldRecordPtrs. Basis: indexer + bytes + captions.
+SeEasy_ReleaseTimeField:
 	.byte	0x05, 0x0b, 0x67, 0x06, 0xff, 0x00, 0x20, 0x1b, 0x17, 0x02, 0x00
 ; single bound record (op 0x03, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF16505
-SeScreenData_0x58E6:
+; SeEasy_CursorBox: EASY EDIT page field 0: the bound op-03 cursor box, RAM 0x660 & 0x0F indexes SeEasy_CursorBoxes
+;   (four boxes per column). Basis: indexer + bytes.
+SeEasy_CursorBox:
 	.byte	0x03, 0x0b, 0x60, 0x06, 0x0f, 0x00, 0x05
-	.long	SeScreenData_0x5951
+	.long	SeEasy_CursorBoxes
 ; single bound record (op 0x02, 15 B), read by GraphicsRender_Start
 ; evidence: SeMenu_NameEdit_HandleInput (0xF10117)
-SeScreenData_0x58F1:
+; SeEasy_DigEffTypeField: EASY EDIT page: the DIGITAL EFFECT type name (RAM 0x66A & 0x0F -> SeValText_DigEffTypes, 13
+;   chars at y 195, x 176), drawn by SeMenu_NameEdit_CheckBit7 when bit 7 of 0x66A (effect on) is set, "OFF"
+;   otherwise. Basis: reader + bytes + caption.
+SeEasy_DigEffTypeField:
 	.byte	0x02, 0x0f, 0x6a, 0x06, 0x0f, 0x00, 0x20
 	.long	SeValText_DigEffTypes
 	.byte	0x0d, 0x00, 0x8e, 0x1e
@@ -917,22 +1029,28 @@ SeValText_Off_Off:
 	.ascii	"OFF          "
 ; table of 10 pointers to bound records; the code loads it into XIY and SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA))
 ; evidence: SeEasy_DrawField_DefaultPath+0xB (0xF100F7)
-; (name EffectParam_Edit_Table kept: other files use it; the object is ScreenData, see above)
-EffectParam_Edit_Table:
+; (name SeEasy_FieldRecordPtrs kept: other files use it; the object is ScreenData, see above)
+; SeEasy_FieldRecordPtrs: EASY EDIT page: record-pointer table of its fields (0 cursor box, 1 BRILLIANCE, 2-4 VIBRATO
+;   DEPTH/SPEED/DELAY, 6 ATTACK, 7 RELEASE, 9 OCTAVE SHIFT), entry A drawn by SeEasy_DrawField. Basis: indexer.
+SeEasy_FieldRecordPtrs:
 ; (was .incbin "includes/romslices/v7_fix_effectparam_edit_table.bin")
-	.long	SeScreenData_0x58E6
-	.long	SeScreenData_0x5895
-	.long	SeScreenData_0x58A0
-	.long	SeScreenData_0x58AF
-	.long	SeScreenData_0x58BA
-	.long	SeScreenData_0x58BA
-	.long	SeScreenData_0x58D0
-	.long	SeScreenData_0x58DB
-	.long	SeScreenData_0x58DB
-	.long	SeScreenData_0x58C5
+	.long	SeEasy_CursorBox
+	.long	SeEasy_BrillianceField
+	.long	SeEasy_VibratoDepthField
+	.long	SeEasy_VibratoSpeedField
+	.long	SeEasy_VibratoDelayField
+	.long	SeEasy_VibratoDelayField
+	.long	SeEasy_AttackTimeField
+	.long	SeEasy_ReleaseTimeField
+	.long	SeEasy_ReleaseTimeField
+	.long	SeEasy_OctaveShiftField
 ; table of 9 boxes {u16 x1, y1, x2, y2}, indexed by the masked value of a bound op03/04/08 record (its +7 pointer)
 ; evidence: bound op03 record 0xF164C2
-SeScreenData_0x5951:
+; SeEasy_CursorBoxes: EASY EDIT page: box table of the cursor, entry 0 = entry 1, entries 1-4 the left column
+;   (12,59)-(155,88) .. (12,179)-(155,208) (BRILLIANCE, VIBRATO DEPTH/SPEED/DELAY), 5-8 the right column (OCTAVE
+;   SHIFT, ATTACK, RELEASE, DIGITAL EFFECT), indexed by RAM 0x660 & 0x0F through SeEasy_CursorBox. Basis: reader +
+;   bytes.
+SeEasy_CursorBoxes:
 	.short	12, 59, 155, 88
 	.short	12, 59, 155, 88
 	.short	12, 98, 155, 127

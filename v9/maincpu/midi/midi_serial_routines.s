@@ -893,7 +893,7 @@ SC0_InitSerialPort:
 	calr SC0Init_ClearContextSlots
 	calr SC0Init_StandardBaudTable
 	calr READ_COM_SELECT_SWITCH
-	call CompIface_SendActiveSensing
+	call CompIface_SendPortTypeByte
 	calr SC0Init_EnableRegisters
 	ret
 

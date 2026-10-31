@@ -2,7 +2,7 @@
 """name_kn5000_ram.py -- KN5000 main-CPU RAM variables the tree already names (.equ) take their names in the code.
 
 QUESTION THIS ANSWERS / JOB IT DOES
-  The maincpu trees define RAM variables -- CPANEL_RX_READ_PTR, ENCODER_0_STATUS, MIDI_CC_MODWHEEL_VALUE,
+  The maincpu trees define RAM variables -- CPANEL_RX_READ_PTR, ENCODER_0_STATUS, EXPRESSION_PEDAL_VALUE,
   SYSTEM_TIMESTAMP ... (cpanel_constants.s, midi_encoder_constants.s, the program file; documented in
   technics-docs memory-map.md) -- but the code spells them by number: `ld (0x8d8c:16), a`.  This rewrites
   the numeric memory operands `(N)` / `(N:8|16|24)`, a pointer loaded into an index register

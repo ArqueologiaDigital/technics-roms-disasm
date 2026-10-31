@@ -1761,7 +1761,7 @@ FDC_MODE_CONFIG_Join:
 	jr	FDC_MODE_CONFIG_Join2
 FDC_MODE_CONFIG_Loop:
 	ldmm8	0x8976, FDC_TARGET_TRACK
-	calr	FDC_MODE_CONFIG_Helper2
+	calr	FDC_FormatOneTrack
 	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_MC_EXIT
 	ld	a, (FDC_HEAD:16)
@@ -1796,7 +1796,13 @@ FDC_MC_EXIT:
 	calr	FDC_CmdRecalibrate
 	ld	(FDC_CURRENT_CYLINDER:16), 255
 	ret
-FDC_MODE_CONFIG_Helper2:
+; FDC_FormatOneTrack: Formats one side of the current track: seeks (FDC_CmdSeek; on an error leaves through
+;   FDC_CONFIG_VERIFY), builds the C/H/R/N ID-field list in the buffer at (0x8A70) (FDC_MC_EXIT_Code_Helper2), sets
+;   command 0x4D (MF FORMAT TRACK) in 0x8A28, points the DMA address 0x8A4C at the list and runs the transfer and
+;   command (FDC_Setup_DMA_Mode, FDC_MC_EXIT_Code_Helper, FDC_MC_EXIT_Code_Join2). Basis: callers + body --
+;   FDC_MODE_CONFIG (handler 5, the format command in technics-docs fdc-subsystem.md) calls it once per track and
+;   head; the bootloader's copy of the same code is FDC_FormatOneTrack in table_data/boot_fdc_driver.s.
+FDC_FormatOneTrack:
 	calr	FDC_CmdSeek
 	cp	(FDC_ERROR_CODE:16), 0
 	jrl	nz, FDC_CONFIG_VERIFY

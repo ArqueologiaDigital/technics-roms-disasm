@@ -642,7 +642,7 @@ BitMapOut_ComputeRegionDelta:
 BitMapOut_PrepareAndRender:
 	pushw	iz
 	ld	iz, wa
-	call	Audio_ConfigureDSP
+	call	Fade_Cancel
 	ld	wa, iz
 	calr	BitMapOut_RenderDisplay
 	popw	iz
@@ -1130,17 +1130,20 @@ MIDI_BroadcastCC_CommLoop:
 	popw_erp	0xfa
 	inc	8, xsp
 	ret
-CompIface_SendActiveSensing:
+; CompIface_SendPortTypeByte: Sends the computer-interface port-type byte through sendCOMM channel 4 (the sub CPU's TO
+;   HOST port, SC1): CompIface_PortByte_F5 for COM SELECT = MAC or PC1, CompIface_PortByte_F4 for PC2, nothing for
+;   MIDI. Called once, by SC0_InitSerialPort; it sends no active sensing (0xFE). Basis: caller + body + data.
+CompIface_SendPortTypeByte:
 	ld	a, (COM_SELECT:16)
 	cp	a, 0:i3	; MIDI
 	ret	z
 	cp	a, 3:i3	;  PC2
-	jr	z, CompIface_SendActiveSensing_PC2
+	jr	z, CompIface_SendPortTypeByte_PC2
 	cp	a, 2:i3	;  PC1
-	jr	z, CompIface_SendActiveSensing_PC1MAC
+	jr	z, CompIface_SendPortTypeByte_PC1Mac
 	cp	a, 1:i3	;  MAC
 	ret	nz
-CompIface_SendActiveSensing_PC1MAC:
+CompIface_SendPortTypeByte_PC1Mac:
 	push	sr
 	ei	0
 	ld	wa, 4:i3
@@ -1149,7 +1152,7 @@ CompIface_SendActiveSensing_PC1MAC:
 	call	sendCOMM
 	pop	sr
 	ret
-CompIface_SendActiveSensing_PC2:
+CompIface_SendPortTypeByte_PC2:
 	push	sr
 	ei	0
 	ld	wa, 4:i3
@@ -1268,62 +1271,67 @@ MidiIn_IgnoreClockTransport:
 GET_COMPUTER_INTERFACE_SELECTION:
 	ld	l, (COM_SELECT:16)
 	ret
-CompIface_ProcessInput:
+; Fade_Tick: FADE IN/OUT engine, once per input pass of the main loop (Encoder_TimingAndOutput tail-jumps here): while
+;   no fade-out has finished (0xC1F0 bit 3 clear) it steps the level ramp (Fade_Tick_Ramp); once one has, it applies
+;   the FADE OUT "Rhythm Auto stop" / "SEQ Auto stop" settings (0xC1F0 bits 4/5) to a playing rhythm / sequencer and,
+;   with "Auto reset" (bit 6), puts FADE OUT (key 0x40C1) off when (0xC1FC) ticks have passed since the level reached
+;   0. Basis: caller + body + the settings Fade_ParamListener copies into 0xC1F0.
+Fade_Tick:
 	bit	3, (0xc130:16)
-	jrl	z, CompIface_RampControl
+	jrl	z, Fade_Tick_Ramp
 	bit	2, (1054:16)
-	jr	z, CompIface_FilterBySource
+	jr	z, Fade_Tick_NotBothPlaying
 	bit	2, (SEQ_TRANSPORT_STATE:16)
-	jr	z, CompIface_FilterBySource
+	jr	z, Fade_Tick_NotBothPlaying
 	bit	4, (0xc130:16)
-	jr	z, CompIface_CheckUpDown
+	jr	z, Fade_Tick_BothPlaying_RhythmStop
 	bit	5, (0xc130:16)
-	jr	z, CompIface_CheckUpDown
+	jr	z, Fade_Tick_BothPlaying_RhythmStop
 	cpw	(0x288c:16), 0
-	jr	nz, CompIface_SetPedalBit
-	jr	CompIface_CallFilterA
-CompIface_CheckUpDown:
+	jr	nz, Fade_Tick_StopAll_SetFlag
+	jr	Fade_Tick_StopAll
+Fade_Tick_BothPlaying_RhythmStop:
 	bit	4, (0xc130:16)
-	jr	z, CompIface_RampDown
+	jr	z, Fade_Tick_BothPlaying_SeqStop
 	call	AccWrap_PlayModeStartPlay
 	set	7, (0x3415:16)
-	jr	CompIface_PostProcess
-CompIface_RampDown:
+	jr	Fade_Tick_AutoReset
+Fade_Tick_BothPlaying_SeqStop:
 	bit	5, (0xc130:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	cpw	(0x288c:16), 0
-	jr	z, CompIface_RampDown_Start
+	jr	z, Fade_Tick_BothPlaying_SeqStop_Join
 	set	1, (9808:16)
-CompIface_RampDown_Start:
+Fade_Tick_BothPlaying_SeqStop_Join:
 	call	AccWrap_PlayModeStopExpr
-	jr	CompIface_CallSync
-CompIface_FilterBySource:
+	jr	Fade_Tick_StopSequencer
+Fade_Tick_NotBothPlaying:
 	bit	2, (1054:16)
-	jr	z, CompIface_FromSource2
+	jr	z, Fade_Tick_SeqOnly
 	bit	4, (0xc130:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	call	AccWrap_PlayModeDispatch
-	jr	CompIface_PostProcess
-CompIface_FromSource2:
+	jr	Fade_Tick_AutoReset
+Fade_Tick_SeqOnly:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	bit	5, (0xc130:16)
-	jr	z, CompIface_PostProcess
+	jr	z, Fade_Tick_AutoReset
 	call	SeqState_GetFlags
 	and	hl, 0x7
-	jr	z, CompIface_Source2_ZeroCheck
+	jr	z, Fade_Tick_SeqOnly_Stop
 	call	SqTrSel_CaseG
-	jr	CompIface_PostProcess
-CompIface_Source2_ZeroCheck:
+	jr	Fade_Tick_AutoReset
+Fade_Tick_SeqOnly_Stop:
 	cpw	(0x288c:16), 0
-	jr	z, CompIface_CallFilterA
-CompIface_SetPedalBit:
+	jr	z, Fade_Tick_StopAll
+Fade_Tick_StopAll_SetFlag:
 	set	1, (9808:16)
-CompIface_CallFilterA:
+Fade_Tick_StopAll:
 	call	AccWrap_PlayModeDispatch
-CompIface_CallSync:
+Fade_Tick_StopSequencer:
 	call	SeqPlay_StopAndResetAll
-CompIface_PostProcess:
+Fade_Tick_AutoReset:
 	call	AccompSeq_StopSequence
 	bit	6, (0xc130:16)
 	ret	z
@@ -1339,12 +1347,12 @@ CompIface_PostProcess:
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
 	ret
-CompIface_RampControl:
+Fade_Tick_Ramp:
 	ld	wa, (SYSTEM_TIMESTAMP:16)
 	ld	bc, wa
 	sub	bc, (0xc12a:16)
 	bit	0, (0xc130:16)
-	jr	z, CompIface_RampDown_Apply
+	jr	z, Fade_Tick_FadeOut
 	cp	bc, 0xf
 	ret	c
 	ld	(0xc12a:16), wa
@@ -1354,9 +1362,9 @@ CompIface_RampControl:
 	extz	xwa
 	add	xbc, xwa
 	cp	xbc, 0x7f00
-	jr	le, CompIface_RampUp_Clamp
+	jr	le, Fade_Tick_FadeInStore
 	ld	xbc, 0x7f00
-CompIface_RampUp_Clamp:
+Fade_Tick_FadeInStore:
 	ld	(0xc12e:16), bc
 	srl	bc, 8
 	ld	(0xc12c:16), c
@@ -1372,7 +1380,7 @@ CompIface_RampUp_Clamp:
 	ld	de, 1:i3
 	call	SoundParam_NotifyChange
 	ret
-CompIface_RampDown_Apply:
+Fade_Tick_FadeOut:
 	bit	1, (0xc130:16)
 	ret	z
 	cp	bc, 0xf
@@ -1383,9 +1391,9 @@ CompIface_RampDown_Apply:
 	ld	wa, (0xc13a:16)
 	extz	xwa
 	sub	xbc, xwa
-	jr	ge, CompIface_RampDown_Clamp
+	jr	ge, Fade_Tick_FadeOutStore
 	ld	xbc, 0:i3
-CompIface_RampDown_Clamp:
+Fade_Tick_FadeOutStore:
 	ld	(0xc12e:16), bc
 	srl	bc, 8
 	ld	(0xc12c:16), c
@@ -1402,7 +1410,12 @@ CompIface_RampDown_Clamp:
 	ld	de, 0:i3
 	call	CtrlPanel_IndicatorDispatch
 	ret
-CompIface_ResetPedal:
+; Fade_StartArmedFadeIn: Starts an armed FADE IN: if 0xC1F0 bit 2 is set (FADE IN switched on while no fade ran: level
+;   0, FADE IN LED flashing), clears it, makes the LED steady (0x4D) and sets bit 0 so Fade_Tick ramps the level up.
+;   Called when playing starts: the keyboard / accompaniment note-on paths, chord changes, AccAutoPlay_NoteDispatch,
+;   and the main loop after the timer ISR flags a rhythm or sequencer start (RAM 0x473 bit 0). No pedal is involved.
+;   Basis: callers + body.
+Fade_StartArmedFadeIn:
 	bit	2, (0xc130:16)
 	ret	z
 	res	2, (0xc130:16)
@@ -1410,9 +1423,12 @@ CompIface_ResetPedal:
 	call	CtrlPanel_SetIndicatorLED
 	set	0, (0xc130:16)
 	ret
-CompIface_SetMax:
+; Fade_SetFullLevelAndFlush: Puts the fade level back to 127 (Fade_SetLevel), then runs the queued parameter-write
+;   listeners (SwbtWr_CallProcessAll) and resends both banks (SwbtWr_ReinitBothBanks); the tail of Audio_ReinitToneGen
+;   and Audio_ReinitToneGenAndOutput. Basis: callers + body.
+Fade_SetFullLevelAndFlush:
 	ldw	wa, 0x7f
-	calr	CompIface_WriteVolume
+	calr	Fade_SetLevel
 	push	xde
 	push	xhl
 	push	xix
@@ -1424,7 +1440,10 @@ CompIface_SetMax:
 	pop	xhl
 	pop	xde
 	ret
-CompIface_ScaleValue:
+; Fade_MeasuresToTicks: HL = A * 120000 / BC, BC = the tempo (key 4): the length of A measures in SYSTEM_TIMESTAMP
+;   ticks, on the scale Fade_CalcRampStep uses for the measure-denominated FADE times. Its one caller passes A = 1 and
+;   keeps the result at 0xC1FC, the delay Fade_Tick waits before an Auto reset. Basis: caller + body.
+Fade_MeasuresToTicks:
 	push	xiz
 	ld	iz, bc
 	extz	xiz
@@ -1437,7 +1456,11 @@ CompIface_ScaleValue:
 	call	Math_DivideU32
 	pop	xiz
 	ret
-CompIface_ScaleAndNormalize:
+; Fade_CalcRampStep: HL = 0x7F00 / (A * 7920 / BC): the 8.8 fixed-point level step Fade_Tick adds (fade-in) or
+;   subtracts (fade-out) every 15+ ticks, so that a fade of A measures (FADE IN / FADE OUT time, keys 0x2A00 / 0x2A01,
+;   1..16) at tempo BC (key 4) spans 0..127. The results are kept at 0xC1F8 (in) and 0xC1FA (out). Basis: callers +
+;   body.
+Fade_CalcRampStep:
 	push	xiz
 	ld	iz, bc
 	extz	xiz
@@ -1453,7 +1476,10 @@ CompIface_ScaleAndNormalize:
 	call	Math_DivideU32
 	pop	xiz
 	ret
-CompIface_WriteVolume:
+; Fade_SetLevel: A = fade level 0..127: if it differs from 0xC1EC, stores it there and as 8.8 fixed point at 0xC1EE
+;   (the ramp accumulator), and writes key 0x4005 (SndParam_Fade_Level; the sub CPU's DSP_Set_FadeLevel output-gain
+;   stage). Basis: callers + body.
+Fade_SetLevel:
 	ld	c, (0xc12c:16)
 	cp	c, a
 	ret	z
@@ -1468,7 +1494,11 @@ CompIface_WriteVolume:
 	ld	de, 3:i3
 	call	SoundParam_NotifyChange
 	ret
-Audio_ConfigureDSP:
+; Fade_Cancel: Cancels any fade: clears the fade state bits 0-3 of 0xC1F0, puts FADE IN (key 0x40C0) and FADE OUT
+;   (0x40C1) off and refreshes their LEDs (0x4D, 0x4E), and restores the level to 127 (Fade_SetLevel). Called at song
+;   load / playback start (Acc_LoadAndStartPlayback), demo start (DemoMode_Main_Operation) and by
+;   BitMapOut_PrepareAndRender. It configures no DSP. Basis: callers + body.
+Fade_Cancel:
 	and	(0xc130:16), 243
 	and	(0xc130:16), 252
 	ld	xwa, 0x40c0
@@ -1484,15 +1514,20 @@ Audio_ConfigureDSP:
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
 	ldw	wa, 127
-	jr	CompIface_WriteVolume
-DSPCfg_ProcessInput:
+	jr	Fade_SetLevel
+; Fade_ParamListener: Parameter-write listener of the FADE IN/OUT engine (in the SwbtWr listener lists of records
+;   0x48, 0x70 and 0x98): the tempo (0x48 +8/+9, keys 4/5) and the FADE IN/OUT SETTING values (0x70 +5..+7, keys
+;   0x2A00/0x2A01/0x2A10-0x2A12) recompute the ramp steps and the Auto reset delay; the FADE IN / FADE OUT switches
+;   (0x98 +11 bits 7/6, keys 0x40C0/0x40C1) drive the state in 0xC1F0 (bit 0 fading in, 1 fading out, 2 FADE IN armed,
+;   3 faded out). Basis: listener tables + body.
+Fade_ParamListener:
 	ld	c, (SWBTWR_EVENT_TYPE:16)
 	ld	e, (SWBTWR_PAYLOAD_1:16)
 	cp	c, 0x48
-	jrl	z, DSPCfg_ScaleFactor_Dispatch
+	jrl	z, Fade_ParamListener_Tempo
 	ld	a, (SWBTWR_PAYLOAD_3:16)
 	cp	c, 0x70
-	jrl	z, DSPCfg_FadeSettingDispatch
+	jrl	z, Fade_ParamListener_FadeSettings
 	cp	c, 0x98
 	ret	nz
 	cp	e, 0xb
@@ -1501,115 +1536,115 @@ DSPCfg_ProcessInput:
 	and	a, 0xc0
 	ret	z
 	bit	0, (0xc130:16)
-	jr	z, DSPCfg_Chorus_Active
+	jr	z, Fade_ParamListener_Armed
 	bit	7, c
-	jr	z, DSPCfg_Reverb_CheckSustain
+	jr	z, Fade_ParamListener_FadingIn_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_Reverb_CheckSustain
+	jr	nz, Fade_ParamListener_FadingIn_CheckFadeOut
 	res	0, (0xc130:16)
-DSPCfg_Reverb_CheckSustain:
+Fade_ParamListener_FadingIn_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	res	0, (0xc130:16)
-	jrl	DSPCfg_SetFadeBit
-DSPCfg_Chorus_Active:
+	jrl	Fade_ParamListener_StartFadeOut
+Fade_ParamListener_Armed:
 	bit	2, (0xc130:16)
-	jr	z, DSPCfg_FadeOut_Active
+	jr	z, Fade_ParamListener_FadingOut
 	bit	7, c
-	jr	z, DSPCfg_Chorus_CheckSustain
+	jr	z, Fade_ParamListener_Armed_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_Chorus_CheckSustain
+	jr	nz, Fade_ParamListener_Armed_CheckFadeOut
 	res	2, (0xc130:16)
 	ldw	wa, 0x4d
 	call	CtrlPanel_SetIndicatorLED
-DSPCfg_Chorus_CheckSustain:
+Fade_ParamListener_Armed_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jrl	z, DSPCfg_UpdateOutputVolume
+	jrl	z, Fade_ParamListener_ApplyLevel
 	res	2, (0xc130:16)
 	ldw	wa, 0x4d
 	call	CtrlPanel_SetIndicatorLED
 	set	1, (0xc130:16)
 	ldw	wa, 0x7f
-	calr	CompIface_WriteVolume
-	jrl	DSPCfg_UpdateOutputVolume
-DSPCfg_FadeOut_Active:
+	calr	Fade_SetLevel
+	jrl	Fade_ParamListener_ApplyLevel
+Fade_ParamListener_FadingOut:
 	bit	1, (0xc130:16)
-	jr	z, DSPCfg_EQ_Active
+	jr	z, Fade_ParamListener_FadedOut
 	bit	7, c
-	jr	z, DSPCfg_FadeOut_CheckSustain
+	jr	z, Fade_ParamListener_FadingOut_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_FadeOut_CheckSustain
+	jr	z, Fade_ParamListener_FadingOut_CheckFadeOut
 	set	0, (0xc130:16)
 	res	1, (0xc130:16)
-DSPCfg_FadeOut_CheckSustain:
+Fade_ParamListener_FadingOut_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_UpdateOutputVolume
+	jr	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_UpdateOutputVolume
+	jr	nz, Fade_ParamListener_ApplyLevel
 	res	1, (0xc130:16)
-	jr	DSPCfg_UpdateOutputVolume
-DSPCfg_EQ_Active:
+	jr	Fade_ParamListener_ApplyLevel
+Fade_ParamListener_FadedOut:
 	bit	3, (0xc130:16)
-	jr	z, DSPCfg_Idle_EnableChorus
+	jr	z, Fade_ParamListener_Idle
 	bit	7, c
-	jr	z, DSPCfg_EQ_CheckSustain
+	jr	z, Fade_ParamListener_FadedOut_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_EQ_CheckSustain
+	jr	z, Fade_ParamListener_FadedOut_CheckFadeOut
 	set	0, (0xc130:16)
 	res	3, (0xc130:16)
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
-DSPCfg_EQ_CheckSustain:
+Fade_ParamListener_FadedOut_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_UpdateOutputVolume
+	jr	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jr	nz, DSPCfg_UpdateOutputVolume
+	jr	nz, Fade_ParamListener_ApplyLevel
 	res	3, (0xc130:16)
 	ldw	wa, 0x4e
 	call	CtrlPanel_SetIndicatorLED
-	jr	DSPCfg_UpdateOutputVolume
-DSPCfg_Idle_EnableChorus:
+	jr	Fade_ParamListener_ApplyLevel
+Fade_ParamListener_Idle:
 	bit	7, c
-	jr	z, DSPCfg_Idle_CheckSustain
+	jr	z, Fade_ParamListener_Idle_CheckFadeOut
 	bit	7, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_Idle_CheckSustain
+	jr	z, Fade_ParamListener_Idle_CheckFadeOut
 	set	2, (0xc130:16)
 	ldw	wa, 0x4d
 	ld	bc, 1:i3
 	ld	de, 0:i3
 	call	CtrlPanel_IndicatorDispatch
 	ld	wa, 0:i3
-	calr	CompIface_WriteVolume
-DSPCfg_Idle_CheckSustain:
+	calr	Fade_SetLevel
+Fade_ParamListener_Idle_CheckFadeOut:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_UpdateOutputVolume
+	jr	z, Fade_ParamListener_ApplyLevel
 	bit	6, (SWBTWR_PAYLOAD_2:16)
-	jr	z, DSPCfg_UpdateOutputVolume
-DSPCfg_SetFadeBit:
+	jr	z, Fade_ParamListener_ApplyLevel
+Fade_ParamListener_StartFadeOut:
 	set	1, (0xc130:16)
-DSPCfg_UpdateOutputVolume:
+Fade_ParamListener_ApplyLevel:
 	ld	a, (0xc130:16)
 	and	a, 0x3
-	jr	nz, DSPCfg_CheckChorusMuted
+	jr	nz, Fade_ParamListener_MuteIfArmed
 	ldw	wa, 0x7f
-	calr	CompIface_WriteVolume
-DSPCfg_CheckChorusMuted:
+	calr	Fade_SetLevel
+Fade_ParamListener_MuteIfArmed:
 	bit	2, (0xc130:16)
 	ret	z
 	ld	wa, 0:i3
-	calr	CompIface_WriteVolume
+	calr	Fade_SetLevel
 	ret
-DSPCfg_FadeSettingDispatch:
+Fade_ParamListener_FadeSettings:
 	ld	c, a
 	and	a, 0xff
 	cp	e, 7:i3
-	jr	z, DSPCfg_FadeSetting_Flags
+	jr	z, Fade_ParamListener_RhythmAutoStop
 	cp	e, 6:i3
-	jr	z, DSPCfg_FadeSetting_OutTime
+	jr	z, Fade_ParamListener_FadeOutTime
 	cp	e, 5:i3
 	ret	nz
 	cp	a, 0:i3
@@ -1620,10 +1655,10 @@ DSPCfg_FadeSettingDispatch:
 	extz	hl
 	ld	bc, (0xc136:16)
 	ld	wa, hl
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc138:16), hl
 	ret
-DSPCfg_FadeSetting_OutTime:
+Fade_ParamListener_FadeOutTime:
 	cp	a, 0:i3
 	ret	z
 	ld	xwa, 0x2a01
@@ -1632,30 +1667,30 @@ DSPCfg_FadeSetting_OutTime:
 	extz	hl
 	ld	bc, (0xc136:16)
 	ld	wa, hl
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc13a:16), hl
 	ld	bc, (0xc136:16)
 	ld	wa, 1:i3
-	jrl	DSPCfg_ScaleFactor_StoreResult
-DSPCfg_FadeSetting_Flags:
+	jrl	Fade_ParamListener_StoreResetDelay
+Fade_ParamListener_RhythmAutoStop:
 	bit	0, c
-	jr	z, DSPCfg_FadeSetting_SeqAutoStop
+	jr	z, Fade_ParamListener_SeqAutoStop
 	ld	xwa, 0x2a10
 	call	SndParam_LookupReadOnly
 	and	hl, 0x1
 	sla	hl, 4
 	and	(0xc130:16), 239
 	or	(0xc130:16), hl
-DSPCfg_FadeSetting_SeqAutoStop:
+Fade_ParamListener_SeqAutoStop:
 	bit	1, (SWBTWR_PAYLOAD_3:16)
-	jr	z, DSPCfg_FadeSetting_AutoReset
+	jr	z, Fade_ParamListener_AutoReset
 	ld	xwa, 0x2a11
 	call	SndParam_LookupReadOnly
 	and	hl, 0x1
 	sla	hl, 5
 	and	(0xc130:16), 223
 	or	(0xc130:16), hl
-DSPCfg_FadeSetting_AutoReset:
+Fade_ParamListener_AutoReset:
 	bit	2, (SWBTWR_PAYLOAD_3:16)
 	ret	z
 	ld	xwa, 0x2a12
@@ -1665,29 +1700,29 @@ DSPCfg_FadeSetting_AutoReset:
 	and	(0xc130:16), 191
 	or	(0xc130:16), hl
 	ret
-DSPCfg_ScaleFactor_Dispatch:
+Fade_ParamListener_Tempo:
 	cp	e, 0x9
-	jr	z, DSPCfg_ScaleFactor_Update
+	jr	z, Fade_ParamListener_TempoUpdate
 	cp	e, 0x8
 	ret	nz
-DSPCfg_ScaleFactor_Update:
+Fade_ParamListener_TempoUpdate:
 	ld	xwa, 4:i3
 	call	SndParam_LookupReadOnly
 	ld	(0xc136:16), hl
 	ld	a, (0xc132:16)
 	extz	wa
 	ld	bc, hl
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc138:16), hl
 	ld	a, (0xc134:16)
 	extz	wa
 	ld	bc, (0xc136:16)
-	calr	CompIface_ScaleAndNormalize
+	calr	Fade_CalcRampStep
 	ld	(0xc13a:16), hl
 	ld	bc, (0xc136:16)
 	ld	wa, 1:i3
-DSPCfg_ScaleFactor_StoreResult:
-	calr	CompIface_ScaleValue
+Fade_ParamListener_StoreResetDelay:
+	calr	Fade_MeasuresToTicks
 	ld	(0xc13c:16), hl
 	ret
 DSPCfg_LookupMidiMap:

@@ -1754,7 +1754,7 @@ AccompSeq_ProcessChordChange:
 	push xix
 	push xiy
 	push xiz
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	pop xiz
 	pop xiy
 	pop xix
@@ -1773,7 +1773,7 @@ AccompSeq_ChordChange_Reinit:
 	push xix
 	push xiy
 	push xiz
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	pop xiz
 	pop xiy
 	pop xix

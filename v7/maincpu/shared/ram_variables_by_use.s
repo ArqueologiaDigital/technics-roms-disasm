@@ -230,7 +230,7 @@
 	.equ FDC_RETRY_COUNT,			0x89cc	; retries left: 8 for a read or write, 1 for a probe read; at 0 the command fails with error 16 (read) or 32 (write)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a68
 	.equ FDC_DISK_CHANGED,			0x89ce	; disk-changed flag: command 9 sets 0xff or 0; cleared at initialisation	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a6a
 	.equ FDC_DRIVE_MODE,			0x89d0	; drive mode 0-5 (FDC_CONFIG_VERIFY's media cases)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a6c
-	.equ FDC_FORMAT_IDS,			0x89d4	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_MODE_CONFIG_Helper2 builds them)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a70
+	.equ FDC_FORMAT_IDS,			0x89d4	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_FormatOneTrack builds them)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a70
 	.equ FDC_CURRENT_CYLINDER,		0x8a68	; the cylinder last sought to, 0xff = unknown (FDC_CmdSeek compares it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8b04
 	.equ FDC_SECTOR_LIMIT,			0x8a70	; word: one more than the sectors per track (10, 9 or 19 by media type); bounds the sector number in the read and write loops	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8b0c
 	.equ FDC_PROBE_REQUEST,			0x8a88	; [16 bytes] the request FDC_Reset_BuildParams builds for the disk-format probe: {command, drive, head, track, sector, count, buffer}	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8b24

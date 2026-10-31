@@ -2479,7 +2479,11 @@ SeMenu_SwitchToValueStep_Skip8:
 	muls	a, 3
 	ld	(xbc), a
 	ret
-SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7:
+; SeMenu_NameCharIndexToChar: Converts a name-entry character index A to its character code at (XBC):
+;   GUI_DisplayStructData_0x1129[A] for A < 97, else a space. Basis: callers + body -- the WRITE SOUND naming page's
+;   column handlers (SeWrtSnd_OnColumn6 / 8 and the step after them) step page param 1, convert it with this and store
+;   the character with SeMenu_SetNameBufferChar; SeMenu_CharToNameCharIndex's header calls this routine its reverse.
+SeMenu_NameCharIndexToChar:
 	cp	a, 97
 	jr	c, SeMenu_SetupPartDisplay_End_Skip9
 	ld	(xbc), 32
@@ -2493,7 +2497,7 @@ SeMenu_SetupPartDisplay_End_Skip9:
 ; SeMenu_CharToNameCharIndex: Converts character code A to its index in the name-entry character set and stores it at
 ;   (XBC): GUI_DisplayStructData_0x118A[A] for A < 130, 0 (the space) for A >= 130 or a result above 95. The table
 ;   inverts GUI_DisplayStructData_0x1129 (index -> character: ' ', A-Z, a-z, 0-9, punctuation; 96 entries, all
-;   invert), which SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7 reads the other way. Basis: callers + body -- the WRITE
+;   invert), which SeMenu_NameCharIndexToChar reads the other way. Basis: callers + body -- the WRITE
 ;   SOUND name-entry handlers read the character at the cursor (SeMenu_GetNameBufferChar), convert it with this and
 ;   store it as page param 1, the character the dial edits.
 SeMenu_CharToNameCharIndex:
@@ -4089,7 +4093,7 @@ SeMenu_DrawClippedEnvSegment_Skip16:
 	retd	0x0002
 ; SeMenu_DrawPitFilEnvGraph: Clears the box (51,59)-(256,144) and draws the envelope graph of the pitch / filter
 ;   envelope page 1 from the current part's params: five levels (params 2, 4, 6, 8, 10; clamped to -50..+50 and,
-;   except on TT_SEFILENV1, scaled by param 1 in SeMenu_ApplyPartEdit_Helper8) joined by four times (params 3, 5, 7,
+;   except on TT_SEFILENV1, scaled by param 1 in SeMenu_ClampAndScaleEnvLevel) joined by four times (params 3, 5, 7,
 ;   9, clamped 0..100) through SeMenu_DrawClippedEnvSegment, release from x 214. Basis: callers + body -- the
 ;   TT_SEPITENV1 (0x28) and TT_SEFILENV1 (0x37) page draws call it after SeTitle_DrawStaticScreen, and the
 ;   TT_SEFILENV1 column handlers after each SeMenu_StepParamFieldAndSend(0x37, ...); sibling of
@@ -4133,7 +4137,7 @@ SeMenu_ApplyPartEdit_Skip17:
 	ld	wa, 2:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+22)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc)
 	add	a, 50
@@ -4150,7 +4154,7 @@ SeMenu_ApplyPartEdit_Skip17:
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+23)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+1)
 	add	a, 50
@@ -4203,7 +4207,7 @@ SeMenu_DrawPitFilEnvGraph_Join:
 	ld	wa, 6:i3
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+24)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+2)
 	add	a, 50
@@ -4257,7 +4261,7 @@ SeMenu_DrawPitFilEnvGraph_Join2:
 	ldw	wa, 8
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+25)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+3)
 	add	a, 50
@@ -4311,7 +4315,7 @@ SeMenu_ApplyPartEdit_Join12:
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+26)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+4)
 	add	a, 50
@@ -4462,7 +4466,7 @@ SeMenu_ApplyPartEdit_Skip21:
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
 	lda	xwa, (xsp+26)
-	calr	SeMenu_ApplyPartEdit_Helper8
+	calr	SeMenu_ClampAndScaleEnvLevel
 	lda	xbc, (xsp+22)
 	ld	a, (xbc+4)
 	sub	a, (xbc+3)
@@ -4519,7 +4523,11 @@ SeMenu_ApplyPartEdit_Epilogue8:
 	pop	xiz
 	lda	xsp, (xsp+32)
 	ret
-SeMenu_ApplyPartEdit_Helper8:
+; SeMenu_ClampAndScaleEnvLevel: Clamps the signed envelope level byte at XWA to -50..+50 and, unless ACTIVE_TITLE is
+;   0x37 (TT_SEFILENV1), scales it by page param 1: level * param1 / 50. Basis: callers + body --
+;   SeMenu_DrawPitFilEnvGraph runs each of its five levels through it, and its header says the levels are 'clamped to
+;   -50..+50 and, except on TT_SEFILENV1, scaled by param 1' here.
+SeMenu_ClampAndScaleEnvLevel:
 	dec 4,XSP
 	push XIZ
 	ld XIZ,XWA
@@ -4638,7 +4646,7 @@ SeMenu_DrawEnvGraphLine_Skip4:
 	sub	bc, (xsp+8)
 	ld	de, iz
 	sub	de, (xsp+8)
-	calr	SeMenu_ApplyPartEdit_Helper9_Helper
+	calr	SeMenu_InterpolateEdgeX
 	ld	wa, (xsp+10)
 	add	wa, hl
 	ld	(xsp+6), wa
@@ -4652,7 +4660,7 @@ SeMenu_DrawEnvGraphLine_Skip5:
 	sub	bc, (xsp+8)
 	ld	de, iz
 	sub	de, (xsp+8)
-	calr	SeMenu_ApplyPartEdit_Helper9_Helper
+	calr	SeMenu_InterpolateEdgeX
 	add	(xsp+10), hl
 	ldw	(xsp+8), 59
 	jr	SeMenu_ApplyPartEdit_Join16
@@ -4663,7 +4671,7 @@ SeMenu_DrawEnvGraphLine_Skip6:
 	sub	bc, 59
 	ld	de, (xsp+8)
 	sub	de, iz
-	calr	SeMenu_ApplyPartEdit_Helper9_Helper
+	calr	SeMenu_InterpolateEdgeX
 	ld	wa, (xsp+10)
 	add	wa, hl
 	ld	(xsp+6), wa
@@ -4677,7 +4685,7 @@ SeMenu_DrawEnvGraphLine_Skip7:
 	sub	bc, 146
 	ld	de, (xsp+8)
 	sub	de, iz
-	calr	SeMenu_ApplyPartEdit_Helper9_Helper
+	calr	SeMenu_InterpolateEdgeX
 	add	(xsp+10), hl
 	ldw	(xsp+8), 146
 SeMenu_ApplyPartEdit_Join16:
@@ -4691,7 +4699,12 @@ SeMenu_DrawEnvGraphLine_Epilogue:
 	popw	iz
 	lda	xsp, (xsp+10)
 	retd	0x0002
-SeMenu_ApplyPartEdit_Helper9_Helper:
+; SeMenu_InterpolateEdgeX: Returns HL = WA * BC / DE (16-bit product, unsigned divide): with WA = the line's x extent,
+;   BC = the distance from the start y to a clip edge and DE = the line's y extent, the x offset at which the line
+;   crosses that edge. Basis: callers + body -- SeMenu_DrawEnvGraphLine calls it four times when it cuts a sloped line
+;   at the band edge y 59 or 146 and adds HL to the start x; its header: 'a sloped one cut at the band edge with
+;   interpolated x'.
+SeMenu_InterpolateEdgeX:
 	mul xwa, bc
 	extz XWA
 	div xwa, de

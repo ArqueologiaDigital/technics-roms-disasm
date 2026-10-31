@@ -6106,7 +6106,7 @@ AccPedal_Sustain_CallReset:
 	push XIX
 	push XIY
 	push XIZ
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	pop XIZ
 	pop XIY
 	pop XIX
@@ -7360,7 +7360,7 @@ AccAutoPlay_NoteDispatch:
 	push XIX
 	push XIY
 	push XIZ
-	call CompIface_ResetPedal
+	call Fade_StartArmedFadeIn
 	pop XIZ
 	pop XIY
 	pop XIX
@@ -13631,7 +13631,12 @@ AccPatch_ClearModeAndInitSlotChain_Wrap:
 	call	AccPatch_InitSlotChain_WithAddr
 	pop	xiz
 	ret
-AccStyle_TableDataEntry_Helper2:
+; AccPatch_ClearModeFlag_Wrap: XIZ-preserving call of AccPatch_ClearModeFlag (0x35D5 = 0). Basis: callers + body --
+;   SingleLoad_CopyComposerPatternFromFile calls it as its last step when the copy did not fail (0x3950 != 131); the
+;   body is `push xiz / calr AccPatch_ClearModeFlag / pop xiz`; X_Wrap convention (Voice_RefreshBankData_Wrap,
+;   AccPatch_ClearModeAndInitSlotChain_Wrap). What the flag 0x35D5 means is not established, so the name stays
+;   literal.
+AccPatch_ClearModeFlag_Wrap:
 	push	xiz
 	calr	AccPatch_ClearModeFlag
 	pop	xiz
@@ -26491,7 +26496,7 @@ TimeSig_DisplayStrings_Code_Helper3_Return:
 	ld	xiy, 14450
 	ldir85
 	ret
-; CmpEsy_PrepareRealtimeRecording: XIZ-preserving call of TimeSig_DisplayStrings_Helper3, run by EASY COMPOSER's EDIT
+; CmpEsy_PrepareRealtimeRecording: XIZ-preserving call of CmpEsy_PrepareRealtimeRecording_Impl, run by EASY COMPOSER's EDIT
 ;   before it changes to TT_CMREAL (0xB5): sets the record part 0x36FF from the EASY part mask 0x372D (AC1/AC2/AC3/BAS
 ;   bits 4/5/6/3 -> 1/2/4/8, else DRM 16), updates the status flags (DrumKit_UpdateStatusFlags), re-dispatches the
 ;   audio state (AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState) and loads the current pattern's parameters
@@ -26499,10 +26504,15 @@ TimeSig_DisplayStrings_Code_Helper3_Return:
 ;   CmEsyTtl_Dispatch2_Helper2 and then posts the title change 0xB5 (TT_CMREAL, the Composer realtime recording).
 CmpEsy_PrepareRealtimeRecording:
 	push XIZ
-	call TimeSig_DisplayStrings_Helper3
+	call CmpEsy_PrepareRealtimeRecording_Impl
 	pop XIZ
 	ret
-TimeSig_DisplayStrings_Helper3:
+; CmpEsy_PrepareRealtimeRecording_Impl: Body of CmpEsy_PrepareRealtimeRecording: sets the record part 0x379B from the
+;   EASY part mask 0x37C9 (TimeSig_DisplayStrings_Code_Helper4: bits 4/5/6/3 -> 1/2/4/8, else 16), then
+;   DrumKit_UpdateStatusFlags, AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState and RhythmPatInit_LoadParams.
+;   Basis: callers + body -- its only caller is the XIZ-preserving wrapper CmpEsy_PrepareRealtimeRecording, whose
+;   header describes exactly these steps; X_Impl convention (CmpSetTtl_StepEntryIndex_Impl).
+CmpEsy_PrepareRealtimeRecording_Impl:
 	calr	TimeSig_DisplayStrings_Code_Helper4
 	calr	DrumKit_UpdateStatusFlags
 	call	AudioInit_SelectAndDispatch
@@ -28312,10 +28322,15 @@ CmpEsy_StepVariPattern_Skip2:
 VoiceSlot_Dispatch_Return_Skip2:
 	dec	1, (STYLE_SECTION:16)
 VoiceSlot_Dispatch_Return_Join2:
-	calr	VoiceSlot_Dispatch_Return_Helper
+	calr	CmpEsy_SetStyleNumberFromPattern
 	calr	DrumParam_BuildActiveMask
 	ret
-VoiceSlot_Dispatch_Return_Helper:
+; CmpEsy_SetStyleNumberFromPattern: Makes the selected composer pattern (0x34D6) the panel's current style: record
+;   0x48 +0 (style number, 0xFC5A) = 0x80 + (index & 31), +1 (0xFC5B) reduced to its bit 7, then queues the
+;   record-0x48 offset-0 change (SwbtWr_QueuePostEvent, E = 0x48, D = 0, W = 0, A = (0xFC5A)). Basis: callers + body
+;   -- CmpEsy_StepVariPattern's header describes exactly this step after moving the pattern index (0-11, the A/B/C
+;   vari 1-4 patterns); record 0x48 +0/+1 are SndParam_Style_Number / SndParam_Style_Bank.
+CmpEsy_SetStyleNumberFromPattern:
 	ld	xhl, 0:i3
 	ld	l, (STYLE_SECTION:16)
 	and	l, 31
@@ -29018,10 +29033,15 @@ DrumParam_ReadMaxCount_Return:
 	ret
 CmpEsy_ApplyEdit:
 	push	xiz
-	call	ExtVoice_ProcessList_Helper
+	call	CmpEsy_ApplyEdit_Impl
 	pop	xiz
 	ret
-ExtVoice_ProcessList_Helper:
+; CmpEsy_ApplyEdit_Impl: Body of CmpEsy_ApplyEdit (EASY COMPOSER SET): stops the accompaniment, rebuilds the pattern
+;   data of every part whose bit is set in 0x37C8 (DrumParam_ReadMaxCount_Helper5), clears 0x37C8 on success or re-
+;   initialises the slot and sets 0x37C8 |= 127 on failure (GLOBAL_ERROR_CODE != 0), then restarts the accompaniment
+;   (AccWrap_PlayModeStartAccPlay) or reports the error (DrumVoice_NotifyEE). Basis: callers + body -- its only caller
+;   is the XIZ-preserving wrapper CmpEsy_ApplyEdit, whose header describes exactly these steps; X_Impl convention.
+CmpEsy_ApplyEdit_Impl:
 	call	AccWrap_PlayModeDispatch
 	calr	DrumParam_ReadMaxCount_Helper2
 	call	Seq_DispatcherEntry
@@ -38802,7 +38822,7 @@ AccStyle_TableDataEntry_Join:
 ;   work buffer 0x69800, accepts the headers 'H',0,'K' / 'G',0,'K' / 'L','K','E' (rewriting an older one to 'H',0,'K'
 ;   and resetting byte 2 of the copied sections' part entries), then copies source A into destination C with
 ;   DualVoice_ParamLoadDone -- one composer pattern, or the ten of a memory bank when both are 30 + bank
-;   (AccStyle_TableDataEntry_Helper2); HL = 0xFF95 when a copy fails (0x38B4 = 131), else 0 (0x38B4 = 130 for an
+;   (AccPatch_ClearModeFlag_Wrap); HL = 0xFF95 when a copy fails (0x38B4 = 131), else 0 (0x38B4 = 130 for an
 ;   unknown header or a pattern / bank mix). Basis: callers + body -- SingleLoad_LoadComposerPattern hands it source
 ;   WA and destination BC after FileIO_ReadAndValidateHeader; its header describes this copy.
 SingleLoad_CopyComposerPatternFromFile:
@@ -38937,7 +38957,7 @@ AccStyle_TableDataEntry_Skip13:
 	extz	wa
 	ld	c, (xsp+34)
 	extz	bc
-	calr	AccStyle_TableDataEntry_Helper
+	calr	SingleLoad_CopyComposerBankFromFile
 AccStyle_TableDataEntry_Join2:
 	ld	a, (0x38b4:16)
 	extz	wa
@@ -39062,14 +39082,20 @@ AccStyle_TableDataEntry_Join3:
 	ldw	hl, 65429
 	jr	AccStyle_TableDataEntry_Epilogue
 AccStyle_TableDataEntry_Skip22:
-	call	AccStyle_TableDataEntry_Helper2
+	call	AccPatch_ClearModeFlag_Wrap
 AccStyle_TableDataEntry_Join4:
 	ld	hl, 0:i3
 AccStyle_TableDataEntry_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+34)
 	ret
-AccStyle_TableDataEntry_Helper:
+; SingleLoad_CopyComposerBankFromFile: Copies the ten composer patterns of memory bank A - 30 of the loaded .CMP image
+;   (read to 0x69800, pointer 0x7AE4) into bank C - 30 of the live style image (pointer 0x7AE8): re-initialises each
+;   destination slot first (AccPatch_InitFromSlotIndex), then copies pattern by pattern with DualVoice_ParamLoadDone
+;   (slots AccStyle_SlotOrderA[3 * i + bank]), stopping with 0x3950 = 131 when a copy fails (0x35B0 bit 0), else
+;   0x3950 = 0. Basis: callers + body -- SingleLoad_CopyComposerPatternFromFile calls it when source and destination
+;   are both above 29 and its header calls it the copy of 'the ten of a memory bank when both are 30 + bank'.
+SingleLoad_CopyComposerBankFromFile:
 	dec	4, xsp
 	push	qiz
 	ld	(xsp+2), c

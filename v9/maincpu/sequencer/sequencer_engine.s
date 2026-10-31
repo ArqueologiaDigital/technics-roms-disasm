@@ -8508,7 +8508,7 @@ PartVoiceStatus_ShiftDone:
 	ld (xbc), 0xd3
 	ld (xbc + 1), 0x0
 	lda xde, (xbc + 2)
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (EXPRESSION_PEDAL_VALUE:16)
 	ld (xde), a
 	res 7, a
 	ld (xde), a
@@ -25939,8 +25939,8 @@ SeqLoad_ProcessDataBlock_Skip3:
 	ld	a, (xsp+10)
 	extz	wa
 	call	VoicePreset_LoadAndInitPan
-	calr	SeqLoad_ProcessDataBlock_Helper
-	calr	SeqLoad_ProcessDataBlock_Helper2
+	calr	SeqLoad_RestoreFreeBlockList
+	calr	SeqLoad_GetBlockRelocationOffset
 	ld	(xsp+6), hl
 	ldib_erp 251, 1
 SeqLoad_ProcessDataBlock_Loop4:
@@ -26016,7 +26016,7 @@ SeqLoad_ProcessDataBlock_Skip4:
 SeqLoad_ProcessDataBlock_Skip7:
 	calr	SeqBar_ComputeAndSetPositions
 	ldw	(SEQ_START_MEASURE:16), 1
-	calr	SeqLoad_ProcessDataBlock_Helper3
+	calr	SeqLoad_ApplySongTempo
 	calr	SeqLoad_CheckAutoAccompFlag
 	ld	a, (xsp+10)
 	extz	wa
@@ -26442,11 +26442,20 @@ SeqBar_DataBlock:
 	ldmm16	10698, SEQ_FREE_LIST_HEAD
 	ldmm16	10700, SEQ_FREE_BLOCKS
 	ret
-SeqLoad_ProcessDataBlock_Helper:
+; SeqLoad_RestoreFreeBlockList: Restores the event-memory free list -- head block 0xF22F and free-block count 0xF231
+;   -- from the copies at 0x29CA / 0x29CC. Basis: callers + body -- SingleLoad_FinishSongLoad saves both with
+;   SeqBar_DataBlock (the reverse copy), makes the loaded slot current with VoicePreset_LoadAndInitPan (a 0x800-byte
+;   copy over the current song record 0xF180, which holds these two words) and then calls this; 0xF22F/0xF231 are the
+;   head and count the block allocator PartCtrl_ReadWordRoutine takes from and SetWall_BankInit sets up.
+SeqLoad_RestoreFreeBlockList:
 	ldmm16	SEQ_FREE_LIST_HEAD, 10698
 	ldmm16	SEQ_FREE_BLOCKS, 10700
 	ret
-SeqLoad_ProcessDataBlock_Helper2:
+; SeqLoad_GetBlockRelocationOffset: Returns HL = (0xF22F) - 1, the free-list head minus one, or 0 when the head word
+;   is 0. Basis: callers + body -- SingleLoad_FinishSongLoad stores HL at (xsp+6) and adds it to every block number of
+;   the loaded song that is not 0 / 0xFFFF (the 16 part-chain head/tail words, every block's link words); its header
+;   calls this the free-block base '(0xF22F) - 1'.
+SeqLoad_GetBlockRelocationOffset:
 	ld	hl, 0:i3
 	ld	wa, (SEQ_FREE_LIST_HEAD:16)
 	cp	wa, 0:i3
@@ -26477,7 +26486,13 @@ SeqBar_DataBlock_Skip:
 SeqBar_DataBlock_Code_Epilogue:
 	inc	4, xsp
 	ret
-SeqLoad_ProcessDataBlock_Helper3:
+; SeqLoad_ApplySongTempo: For a song of format version 1.07 or 1.08 (bytes 5/6 of the current song record = 1 and 7/8)
+;   sets the live tempo, record 0x48 bytes +8/+9 (0xFC62/0xFC63), from the same two bytes of the song's panel copy at
+;   0xF460 (0xF460 + (0xFC62 - 0xF980)). Basis: callers + body -- SingleLoad_FinishSongLoad calls it after recomputing
+;   positions, next to SeqLoad_CheckAutoAccompFlag, which tests the same header bytes; SeqLoad_ValidateFormat accepts
+;   byte 5 = 1 with byte 6 = 3/6/7/8 and Part_InitVoiceDefaults writes 1 and 8 there; BitMapOut_ComputeRegionDelta
+;   copies the live panel from 0xF980 to 0xF460; record 0x48 +8/+9 is SndParam_Tempo / SndParam_Tempo_Bit8.
+SeqLoad_ApplySongTempo:
 	ld	wa, 0:i3
 	ld	bc, 5:i3
 	call	Part_ReadByteDirect

@@ -7,10 +7,14 @@ QUESTION IT ANSWERS / JOB IT DOES
   most old labels of a batch under the SAME name, so the rename can be made by name -- provided the label sits on
   the same thing.  For each record of the proposal files (verdict "name") and each tree in --trees:
     * the old name must be defined in the tree and the new one must not;
-    * PROOF, labels: the 12 ROM bytes at the old label's address in the tree's linked ELF equal the 12 bytes at
-      the old label's address in v10's ELF, except where a 3-byte run is a ROM address (0xE00000-0xFFFFFF) in both
-      (a call target or pointer the two builds place differently).  Anything else skips the label.
-    * PROOF, absolute symbols (.equ / .set): the same value in both ELFs.
+    * PROOF, labels: the 24 ROM bytes at the old label's address in the tree's linked ELF match the 24 bytes at
+      the old label's address in v10's ELF: at least half the bytes equal; any byte may differ inside a 3-byte run that
+      is a ROM address (0xE00000-0xFFFFFF) in both (a call target or pointer the two builds place differently),
+      and at most 4 other runs of at most 2 bytes may differ (16-bit RAM operands: v7, v6 and v5 place many RAM
+      variables 0x9c lower, e.g. 0xc154 for v10's 0xc1f0).  Anything else skips the label.
+    * absolute symbols (.equ / .set): renamed by name.  The RAM-naming lanes gave each tree's .equ to that tree's
+      own address from its uses (v7 / v6 / v5 place many variables 0x9c lower), so a shared name is already the
+      correspondence; a value that differs from v10's is reported, not refused.
   Run it BEFORE the v10 rename (it reads v10's ELF under the old names), after `make all`.
   The header of each record goes above the label line, as in apply_kn5000_naming_proposals.py.  The rules are
   written to scripts/renaming/rename_kn5000_naming_<tag>_<tree>.sed and applied to the tree's *.s, *.ld, *.h
@@ -54,22 +58,28 @@ def rom(tree):
 
 
 def same_bytes(a, b):
-    """12 bytes equal, except 3-byte runs that are ROM addresses in both."""
-    if len(a) != len(b):
+    """24 bytes match: at least half the bytes equal; differing bytes inside 3-byte ROM addresses in both, plus at most 4 runs
+    of at most 2 bytes (RAM operands)."""
+    if len(a) != len(b) or sum(x == y for x, y in zip(a, b)) < len(a) // 2:
         return False
-    i = 0
+    runs, i = 0, 0
     while i < len(a):
         if a[i] == b[i]:
             i += 1
             continue
-        # a differing byte: accept if it is inside a 3-byte little-endian ROM address in both
         for s in (i - 2, i - 1, i):
             if s >= 0 and s + 3 <= len(a) and 0xE0 <= a[s + 2] <= 0xFF and 0xE0 <= b[s + 2] <= 0xFF:
                 i = s + 3
                 break
         else:
-            return False
-    return True
+            j = i
+            while j < len(a) and a[j] != b[j]:
+                j += 1
+            if j - i > 2:
+                return False
+            runs += 1
+            i = j
+    return runs <= 4
 
 
 def main():
@@ -108,10 +118,9 @@ def main():
             k10, a10 = s10[o]
             if kt in "aA" or k10 in "aA":
                 if (kt, at) != (k10, a10):
-                    skipped.append((o, "value 0x%x differs from v10's 0x%x" % (at, a10)))
-                    continue
+                    print("    note %-50s value 0x%x, v10's 0x%x (delta 0x%x)" % (o, at, a10, a10 - at))
             else:
-                bt, b10 = rt[at - BASE:at - BASE + 12], r10[a10 - BASE:a10 - BASE + 12]
+                bt, b10 = rt[at - BASE:at - BASE + 24], r10[a10 - BASE:a10 - BASE + 24]
                 if not same_bytes(bt, b10):
                     skipped.append((o, "bytes differ from v10's (%s vs %s)" % (bt.hex(), b10.hex())))
                     continue

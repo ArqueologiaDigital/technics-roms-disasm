@@ -1212,67 +1212,80 @@ PanelAction_FootController4_Epilogue:
 	pop	xiz
 	ret
 ; event 22 (left-panel header 0xD1): the byte as two 7-bit values ((b & 1) << 6, b >> 1)
-PanelAction_Event22:
+; PanelAction_PitchBend: Panel event 22, the pitch-bend wheel (left-panel analog header 0xD1, ID 25): posts record
+;   0xB1 (part pitch bend) with the byte split into the 14-bit pair ((b & 1) << 6, b >> 1), 0xFF = full up (127, 127);
+;   not in MD_DEMO. Basis: event table + body.
+PanelAction_PitchBend:
 	cp	(CURRENT_MODE:16), 19
 	ret	z
 	lda	xhl, (xwa+2)
 	lda	xix, (xwa+3)
 	ld	e, (xhl)
 	cp	e, 255
-	jr	nz, PanelAction_Event22_Skip
+	jr	nz, PanelAction_PitchBend_Split
 	ld	(xhl), 127
 	ld	(xix), 127
-	jr	PanelAction_Event22_Join
-PanelAction_Event22_Skip:
+	jr	PanelAction_PitchBend_Post
+PanelAction_PitchBend_Split:
 	ld	c, e
 	and	c, 1
 	sll	c, 6
 	ld	(xhl), c
 	srl	e, 1
 	ld	(xix), e
-PanelAction_Event22_Join:
+PanelAction_PitchBend_Post:
 	jrl	PanelEvent_Post
 ; modulation wheel (ENCODER_0_OUTPUT, event 26, queued by PanelInput_QueueWheelChanges): depends on panel parameter 0x2880 (tag 0x99 payload byte 2) being 182 or 183
-PanelAction_ModWheel:
+; PanelAction_ExpressionPedal: Panel event 26, the expression pedal (main-CPU A/D channel 0, ADREG04, queued by
+;   PanelInput_QueueWheelChanges from ENCODER_0_OUTPUT): posts it as record 0xB0 +1 (TOTAL EXPRESSION, key 0x4001)
+;   when the pedal's FOOT CONTROLLERS function (key 0x2880) is 182 TOTAL EXPRESSION, re-targets it to record 0xB3
+;   (part expression) for 183 PART EXPRESSION (not in MD_DEMO), and drops it for any other function. Basis: event
+;   table + body + FswAssign_FunctionCodes.
+PanelAction_ExpressionPedal:
 	push	xiz
 	ld	xiz, xwa
 	ld	xwa, 10368
 	call	SndParam_LookupReadOnly
 	cp	hl, 183
-	jr	z, PanelAction_ModWheel_Skip
+	jr	z, PanelAction_ExpressionPedal_PartExpr
 	cp	hl, 182
-	jr	nz, PanelAction_ModWheel_Epilogue
+	jr	nz, PanelAction_ExpressionPedal_Epilogue
 	ld	xwa, xiz
-	jr	PanelAction_ModWheel_Join
-PanelAction_ModWheel_Skip:
+	jr	PanelAction_ExpressionPedal_Post
+PanelAction_ExpressionPedal_PartExpr:
 	cp	(CURRENT_MODE:16), 19
-	jr	z, PanelAction_ModWheel_Epilogue
+	jr	z, PanelAction_ExpressionPedal_Epilogue
 	ld	(xiz), 179
 	ld	(xiz+1), 0
 	ld	xwa, xiz
-PanelAction_ModWheel_Join:
+PanelAction_ExpressionPedal_Post:
 	calr	PanelEvent_Post
-PanelAction_ModWheel_Epilogue:
+PanelAction_ExpressionPedal_Epilogue:
 	pop	xiz
 	ret
 ; event 23 (left-panel header 0xD2): post unless MD_DEMO
-PanelAction_Event23:
+; PanelAction_Modulation: Panel event 23, the modulation wheel (left-panel analog header 0xD2, ID 26): posts record
+;   0xB2 (part modulation) unless MD_DEMO. Basis: event table + body.
+PanelAction_Modulation:
 	cp	(CURRENT_MODE:16), 19
 	ret	z
 	jrl	PanelEvent_Post
 ; volume slider (ENCODER_1_OUTPUT, event 27, queued by PanelInput_QueueWheelChanges): post when panel parameter 0x104 (tag 0x93 payload byte 6 bit 7) is set
-PanelAction_Volume:
+; PanelAction_AfterTouch: Panel event 27, the after-touch sensor (main-CPU A/D channel 1, ADREG15, queued from
+;   ENCODER_1_OUTPUT): posts it as record 0xB4 (part channel pressure) when AFTER TOUCH is on (key 0x104,
+;   SndParam_AfterTouch_OnOff), not in MD_DEMO. Basis: event table + body.
+PanelAction_AfterTouch:
 	push	xiz
 	ld	xiz, xwa
 	cp	(CURRENT_MODE:16), 19
-	jr	z, PanelAction_Volume_Epilogue
+	jr	z, PanelAction_AfterTouch_Epilogue
 	ld	xwa, 260
 	call	SndParam_LookupReadOnly
 	cp	hl, 0:i3
-	jr	z, PanelAction_Volume_Epilogue
+	jr	z, PanelAction_AfterTouch_Epilogue
 	ld	xwa, xiz
 	calr	PanelEvent_Post
-PanelAction_Volume_Epilogue:
+PanelAction_AfterTouch_Epilogue:
 	pop	xiz
 	ret
 ; PanelEvent_FillSelectedPart: If byte 0 of the panel event at XWA is 0 and byte 1 is not 3, writes the selected part
@@ -2021,7 +2034,7 @@ Encoder_IncrementAndDispatch:
 	ei 6
 	call MidiOut_SerializeAndSend
 	pop	sr
-	jp CompIface_ProcessInput
+	jp Fade_Tick
 
 ; Each periodic tick (unless CURRENT_TITLE 247): drain the control-panel RX queue into change records, scan the
 ; pedal ports, queue the wheel encoders' changes.  The records go to PanelInput_ChangeQueue (RAM 0x8E94, 3 bytes
@@ -2346,9 +2359,9 @@ MidiParam_ForceResync:
 	ld a, l
 	ld bc, 2:i3
 	call CPanel_EncoderDispatch
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (EXPRESSION_PEDAL_VALUE:16)
 	cpl a
-	ld (MIDI_CC_MODWHEEL_VALUE:16), a
+	ld (EXPRESSION_PEDAL_VALUE:16), a
 	ld wa, 0:i3
 	calr MidiChannel_GetParamByIndex
 	ld a, l
@@ -2362,9 +2375,9 @@ MidiParam_ForceResync:
 	ld a, l
 	ld bc, 5:i3
 	call CPanel_EncoderDispatch
-	ld a, (MIDI_CC_VOLUME_VALUE:16)
+	ld a, (AFTERTOUCH_VALUE:16)
 	cpl a
-	ld (MIDI_CC_VOLUME_VALUE:16), a
+	ld (AFTERTOUCH_VALUE:16), a
 	ld wa, 1:i3
 	calr MidiChannel_GetParamByIndex
 	ld a, l
@@ -2693,7 +2706,7 @@ BitmaskDispatch_Return:
 CtrlPanel_UpdateLEDState:
 	dec 8, xsp
 	pushw_erp 0xfa
-	lda xwa, (ENCODER_STATE_BASE:16)
+	lda xwa, (PANEL_LED_IMAGE:16)
 	ld (xsp + 2), xwa
 	lda xwa, (0x8f28:16)
 	ld (xsp + 6), xwa
@@ -2752,7 +2765,7 @@ Set_LEDs:
 SndParam_SetResBit0_Via028100:
 	; --- Routine 1: call FCD437(0x028100), set/res bit 0 at (xwa) (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00028100
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+4)
@@ -2768,7 +2781,7 @@ SndParam028100_Done:
 SndParam_SetResBit1_ViaRegs0100_0101:
 	; --- Routine 2: 2x FCD437, set/res bit 1 at (xiz+4) (41 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00028100
 	call SndParam_LookupReadOnly
 	cp	hl, 2:i3
@@ -2788,7 +2801,7 @@ SndParam028101_Done:
 SndParam_SetResBit2_ViaRegs0101_0102:
 	; --- Routine 3: 2x FCD437, set/res bit 2 at (xiz+4) (41 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00028101
 	call SndParam_LookupReadOnly
 	cp	hl, 2:i3
@@ -2810,7 +2823,7 @@ SndParam028102_Done:
 SndParam_SetResBit3_ViaRegs0101_0102:
 	; --- Routine 1: 2x FCD437, set/res bit 3 at (xiz+4) (41 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00028101
 	call SndParam_LookupReadOnly
 	cp	hl, 3:i3
@@ -2830,7 +2843,7 @@ SndParam028102_Done2:
 SndParam_SetResBit3_Via4002:
 	; --- Routine 2: FCD437(0x4002), set/res bit 3 at (xwa) via xiz+6 (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00004002
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+6)
@@ -2846,7 +2859,7 @@ SndParam4002_Done:
 SndParam_SetResBit4_Via4004:
 	; --- Routine 3: FCD437(0x4004), set/res bit 4 at (xwa) via xiz+6 (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00004004
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+6)
@@ -2864,7 +2877,7 @@ SndParam4004_Done:
 SndParam_TableLookup_Via4100:
 	; --- Routine 1: FCD437(0x4100), table lookup at 0xeda626, nibble merge (39 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00004100
 	call SndParam_LookupReadOnly
 	lda xwa, (AudioCtl_SmallTables:24)
@@ -2878,7 +2891,7 @@ SndParam_TableLookup_Via4100:
 SndParam_SetResBit1_ViaPartCC5E:
 	; --- Routine 2: F9945E+FCD4F7(0x5e), set/res bit 1 at (xwa) via xiz+6 (37 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	call GetCurrentPartSelect
 	extz	hl
 	ld	wa, hl
@@ -2899,7 +2912,7 @@ SndParamCC5E_Done:
 SndParam_SetResBit2_ViaPartCC5D:
 	; --- Routine 1: 2x F9945E+FCD4F7(0x5d), set/res bit 2 at (xiz+6) (55 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	call GetCurrentPartSelect
 	extz	hl
 	ld	wa, hl
@@ -2925,7 +2938,7 @@ SndParamCC5D_Done:
 SndParam_SetResBit0_ViaPartCC40:
 	; --- Routine 2: F9945E+FCD4F7(0x40), cp 0x7f, set/res bit 0 at (xwa) (37 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	call GetCurrentPartSelect
 	extz	hl
 	ld	wa, hl
@@ -2944,7 +2957,7 @@ SndParamCC40_Done:
 SndParam_GuardedNibbleSet_ViaReg0103:
 	; --- Routine 3: complex bit checks, and (xiz+0x0e), set 0 in A (59 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr nz, MidiCtrl_PopIzRet
 	ld xwa, 0x00028103
@@ -2969,7 +2982,7 @@ MidiCtrl_PopIzRet:
 SndParam_SetResBit0_Via028103:
 	; --- Routine 4: FCD437(0x028103), set/res bit 0 at (xwa) via xiz+0x0d (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00028103
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+13)
@@ -2985,7 +2998,7 @@ SndParam028103_Done:
 SndParam_SetResBit5_Via028080:
 	; --- Routine 5: FCD437(0x028080), set/res bit 5 at (xwa) via xiz+3 (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00028080
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+3)
@@ -3004,7 +3017,7 @@ SndParam_VoiceEntryLookup_ViaReg8000:
 	; --- Routine 1: stack frame, 3x FCD437 lookup, nibble merge (91 bytes) ---
 	dec 6, xsp
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld (xsp+6), 0x48
 	ld xwa, 0x00028000
 	call SndParam_LookupReadOnly
@@ -3037,7 +3050,7 @@ SndParam028000_LookupAndMerge:
 SndParam_SetResBit7_Via4200:
 	; --- Routine 2: FCD437(0x4200), set/res bit 7 at (xwa) via xiz+0x0a (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00004200
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+10)
@@ -3061,7 +3074,7 @@ SndParam_MaskShiftMerge_8F58:
 SndParam_DecrLookup_Via0300:
 	; --- Routine 4: FCD437(0x300), decrement+mask+lookup via FC7C23 (40 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00000300
 	call SndParam_LookupReadOnly
 	cp	hl, 0:i3
@@ -3083,7 +3096,7 @@ SndParam0300_StoreLookup:
 SndParam_SetResBit4_Via0400:
 	; --- Routine 1: call FCD437, set/res bit 4 based on HL (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x00000400
 	call SndParam_LookupReadOnly
 	lda	xwa, (xiz+3)
@@ -3099,7 +3112,7 @@ SndParam0400_Done:
 SndParam_SetResBit7_ViaSelection:
 	; --- Routine 2: call F99439, 3-way cp HL, set/res bit 7 (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	call CtrlPanel_GetSelectionState
 	cp	hl, 2:i3
 	jr z, CtrlPanel_SetResBit7_Ret
@@ -3117,7 +3130,7 @@ CtrlPanel_SetResBit7_Ret:
 SndParam_SetResBit7_ViaF9A541:
 	; --- Routine 3: call F9A541, set/res bit 7 based on HL (24 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	call GetDialEnableState
 	lda	xwa, (xiz+4)
 	cp	hl, 0:i3
@@ -3131,7 +3144,7 @@ SndParamF9A541_Done:
 	ret
 ExtData_VoiceParam_DispatchBytecode:
 	push	xiz
-	lda_d16	xiz, (ENCODER_STATE_BASE)
+	lda_d16	xiz, (PANEL_LED_IMAGE)
 	lda	xbc, (xiz+0x2)
 	resm	7, (xbc)
 	resm	1, (xiz)
@@ -3219,7 +3232,7 @@ ExtData_VoiceParam_DispatchBytecode_Epilogue2:
 	pop	xiz
 	ret
 SndParam_SetResBit3_Via3390:
-	lda_d16	xwa, (ENCODER_STATE_BASE)
+	lda_d16	xwa, (PANEL_LED_IMAGE)
 	cp	(0x3390:16), 0
 	jr	z, SndParam_SetResBit3_Via3390_Skip
 	setm	3, (xwa)
@@ -3248,7 +3261,7 @@ CtrlPanel_SetBit5At8F1E_ViaMode:
 PanelLed_ShowPartVoiceCategory:
 	lda	xsp, (xsp-10)
 	push	xiz
-	lda	xwa, (ENCODER_STATE_BASE:16)
+	lda	xwa, (PANEL_LED_IMAGE:16)
 	ld	(xsp+4), xwa
 	ld	(xwa+7), 0
 	ld	xwa, (xsp+4)
@@ -3312,7 +3325,7 @@ ExtData_VoiceParam_DispatchBytecode_Entry_Code_Epilogue:
 PanelLed_ShowVoiceCategory_Via028000:
 	dec	6, xsp
 	push	xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	res	0, (xiz)
 	ld	(xiz+1), 0
 	and	(xiz+2), 128
@@ -3361,7 +3374,7 @@ ExtData_VoiceParam_DispatchBytecode_Epilogue:
 	ret
 PanelLed_ShowPartSelect:
 	push	xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	call	GetCurrentPartSelect
 	lda	xbc, (xiz+10)
 	ld	a, (xbc)
@@ -3392,7 +3405,7 @@ ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue:
 	ret
 SndParam_SetResBit5_Via40C0:
 	push	xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	xwa, 0x40c0
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
@@ -3407,7 +3420,7 @@ SndParam_SetResBit5_Via40C0_Epilogue:
 CtrlPanel_SetResBit6_ViaLookup:
 	; --- Sub 1: set/res bit 6 of (XIZ) via FCD437 lookup (26 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x000040c1
 	call SndParam_LookupReadOnly
 	cp	hl, 1:i3
@@ -3422,7 +3435,7 @@ CtrlPanel_Bit6Done:
 CtrlPanel_MultiWayBitManip_ViaE0:
 	; --- Sub 2: multi-way HL compare, and/set bits at (XBC+0x0d) (74 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld xwa, 0x000040e0
 	call SndParam_LookupReadOnly
 	lda	xbc, (xiz+13)
@@ -3481,7 +3494,7 @@ CtrlPanel_SetBit3:
 CtrlPanel_SetResBit0_ViaLookup4:
 	; --- Sub 5: set/res bit 0 at (XIZ+4) via FC7C23 + (0x8f54) lookup (34 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f54:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3499,7 +3512,7 @@ CtrlPanelLookup4_Done:
 CtrlPanel_SetResBit1_ViaLookup56:
 	; --- Sub 6: set/res bit 1 at (XIZ+4) via FC7C23 + (0x8f56) lookup (34 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f56:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3517,7 +3530,7 @@ CtrlPanelLookup56_Done:
 CtrlPanel_SetResBit2_ViaLookup50:
 	; --- Sub 7: set/res bit 2 at (XIZ+4) via FC7C23 + (0x8f50) lookup (34 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f50:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3535,7 +3548,7 @@ CtrlPanelLookup50_Done:
 CtrlPanel_SetResBit3_ViaLookup52:
 	; --- Sub 8: set/res bit 3 at (XIZ+4) via FC7C23 + (0x8f52) lookup (34 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f52:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3553,7 +3566,7 @@ CtrlPanelLookup52_Done:
 CtrlPanel_GuardedNibbleSet_8F4E:
 	; --- Sub 9: guarded nibble set/res at (XIZ+0x0e) via (0x8f4e) lookup (76 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr nz, CtrlPanel_BitOp_Cleanup
 	ld xwa, 0x00028103
@@ -3587,7 +3600,7 @@ CtrlPanel_BitOp_Cleanup:
 CtrlPanel_SetResBit0_ViaLookup4C:
 	; --- Sub 10: set/res bit 0 at (XIZ+0x0d) via FC7C23 + (0x8f4c) lookup (34 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f4c:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3605,7 +3618,7 @@ CtrlPanelLookup4C_Done:
 CtrlPanel_SetResBit7_ViaLookup4C:
 	; --- Sub 11: set/res bit 7 of (XIZ) via FC7C23 + (0x8f4c) lookup (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f4c:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3621,7 +3634,7 @@ CtrlPanelBit7_Done:
 CtrlPanel_SetResBit5_ViaLookup4C:
 	; --- Sub 12: set/res bit 5 of (XIZ) via FC7C23 + (0x8f4c) lookup (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f4c:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3637,7 +3650,7 @@ CtrlPanelBit5_Done:
 CtrlPanel_SetResBit6_ViaLookup4C:
 	; --- Sub 13: set/res bit 6 of (XIZ) via FC7C23 + (0x8f4c) lookup (29 bytes) ---
 	push xiz
-	lda	xiz, (ENCODER_STATE_BASE:16)
+	lda	xiz, (PANEL_LED_IMAGE:16)
 	ld	a, (0x8f4c:16)
 	extz wa
 	call CtrlPanel_LookupIndicatorEntry
@@ -3762,7 +3775,7 @@ MidiChOutState_Return:
 
 MidiChannel_ProcessOutputState:
 	push xiz
-	lda xiz, (ENCODER_STATE_BASE:16)
+	lda xiz, (PANEL_LED_IMAGE:16)
 	calr MidiChOut_DetectChanges
 	lda xde, (xiz + 14)
 	ld c, (0x8e76:16)
@@ -3831,7 +3844,7 @@ MidiChOut_DetectChanges:
 
 MidiChannel_ScanPending:
 	push xiz
-	lda xiz, (ENCODER_STATE_BASE:16)
+	lda xiz, (PANEL_LED_IMAGE:16)
 	ld wa, (LED_REQUEST_HOLD_2:16)
 	bit 2, wa
 	jr nz, MidiScan_PopIzRet
@@ -4113,7 +4126,7 @@ Audio_ReinitToneGen:
 	calr Audio_InitAllChannelParams
 	call SeqTimer_UpdateTempoReg
 	calr Audio_FillParamBuffer
-	jp CompIface_SetMax
+	jp Fade_SetFullLevelAndFlush
 
 Audio_FillParamBuffer:
 	lda xbc, (0x918d:16)
@@ -4162,7 +4175,7 @@ Audio_ReinitToneGenAndOutput:
 
 Audio_UpdateTempoAndReturn:
 	call SeqTimer_UpdateTempoReg
-	jp CompIface_SetMax
+	jp Fade_SetFullLevelAndFlush
 
 Audio_FullReinitWithPreset:
 	lda xwa, (PanelTlv_PayloadByTag:24)
@@ -5890,9 +5903,9 @@ ExtData_Voice_CompareAndDispatch_Skip:
 	calr	ExtData_Voice_CompareAndDispatch_Helper
 	ret
 ExtData_Voice_CompareAndDispatch_Helper:
-	ld	a, (MIDI_CC_EXPRESSION_VALUE:16)
+	ld	a, (MAIN_VOLUME_VALUE:16)
 	set	7, a
-	ld	(MIDI_CC_EXPRESSION_PENDING:16), a
+	ld	(MAIN_VOLUME_PENDING:16), a
 	calr	Audio_FlushPendingBankSelects
 	ld	(0x917e:16), 176
 	ld	(0x917f:16), 0
@@ -5902,15 +5915,15 @@ ExtData_Voice_CompareAndDispatch_Helper:
 
 MidiChannel_ResetAndConfigure:
 	res 7, (0x28ae:16)
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (EXPRESSION_PEDAL_VALUE:16)
 	set 7, a
-	ld (MIDI_CC_MODWHEEL_PENDING:16), a
-	bit 7, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld (TOTAL_EXPRESSION_PENDING:16), a
+	bit 7, (EXPRESSION_PEDAL_VALUE:16)
 	ret z
 	calr Audio_FlushPendingBankSelects
 	ld (MIDI_MSG_STATUS:16), 176
 	ld (MIDI_MSG_DATA1:16), 1
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (EXPRESSION_PEDAL_VALUE:16)
 	res 7, a
 	ld (MIDI_MSG_DATA2:16), a
 	ld (MIDI_MSG_DATA3:16), 127
@@ -5928,10 +5941,10 @@ MidiChannel_ResetAndConfigure:
 	ret
 
 MidiCh_ConfigVoiceAndParts:
-	ld	a, (MIDI_CC_MODWHEEL_PENDING:16)
+	ld	a, (TOTAL_EXPRESSION_PENDING:16)
 	res	7, a
-	ld	(MIDI_CC_MODWHEEL_PENDING:16), a
-	ld	c, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld	(TOTAL_EXPRESSION_PENDING:16), a
+	ld	c, (EXPRESSION_PEDAL_VALUE:16)
 	cp	c, a
 	ret	z
 	ld	a, (0x28ae:16)
@@ -5954,15 +5967,15 @@ MidiCh_ConfigVoiceAndParts_Join:
 	res	7, e
 	ld	(0x28ae:16), e
 MidiCh_ConfigVoiceAndParts_Join2:
-	ld	(MIDI_CC_MODWHEEL_PENDING), (MIDI_CC_MODWHEEL_VALUE:16)
-	set	7, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld	(TOTAL_EXPRESSION_PENDING), (EXPRESSION_PEDAL_VALUE:16)
+	set	7, (EXPRESSION_PEDAL_VALUE:16)
 MidiChannel_ResetAndConfigure_Skip2:
-	bit	7, (MIDI_CC_MODWHEEL_VALUE:16)
+	bit	7, (EXPRESSION_PEDAL_VALUE:16)
 	ret	z
 	calr	Audio_FlushPendingBankSelects
 	ld	(MIDI_MSG_STATUS:16), 176
 	ld	(MIDI_MSG_DATA1:16), 1
-	ld	a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld	a, (EXPRESSION_PEDAL_VALUE:16)
 	res	7, a
 	ld	(MIDI_MSG_DATA2:16), a
 	ld	(MIDI_MSG_DATA3:16), 127
@@ -6235,20 +6248,20 @@ CtrlPanelRefresh_ProcessRemoved:
 	xor xwa, xiz
 	and xwa, (xsp + 4)
 	calr Part_BitmaskToIndexList
-	ld a, (MIDI_CC_BREATH_VALUE:16)
+	ld a, (PITCH_BEND_VALUE:16)
 	extz wa
 	ld XBC, (xsp + 0x0172)
 	ld c, (xbc + 1)
 	extz bc
 	calr Audio_IteratePartsWithExpression
-	ld a, (MIDI_CC_FOOT_VALUE:16)
+	ld a, (MODULATION_VALUE:16)
 	res 7, a
 	extz wa
 	ld XBC, (xsp + 0x0172)
 	ld c, (xbc + 1)
 	extz bc
 	calr Audio_IteratePartsWithVolume
-	ld a, (MIDI_CC_VOLUME_VALUE:16)
+	ld a, (AFTERTOUCH_VALUE:16)
 	extz wa
 	ld XBC, (xsp + 0x0172)
 	ld c, (xbc + 1)
@@ -6263,7 +6276,7 @@ CtrlPanelRefresh_ProcessRemoved:
 	jr nz, CtrlPanelRefresh_CheckMigration
 
 CtrlPanelRefresh_DispatchVoiceCC:
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (EXPRESSION_PEDAL_VALUE:16)
 	res 7, a
 	extz wa
 	ld c, (xbc)
@@ -6298,7 +6311,7 @@ CtrlPanelRefresh_CheckMigration:
 	xor xwa, xiz
 	and xwa, (xsp + 4)
 	calr Part_BitmaskToIndexList
-	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
+	ld a, (EXPRESSION_PEDAL_VALUE:16)
 	res 7, a
 	extz wa
 	ld XBC, (xsp + 0x0172)
@@ -7143,11 +7156,11 @@ SwbtWr_NullRet:
 	ret
 
 Audio_FlushPendingBankSelects:
-	ld a, (MIDI_CC_EXPRESSION_PENDING:16)
+	ld a, (MAIN_VOLUME_PENDING:16)
 	bit 7, a
 	jr z, BankFlush_CheckChannel1
 	res 7, a
-	ld (MIDI_CC_EXPRESSION_PENDING:16), a
+	ld (MAIN_VOLUME_PENDING:16), a
 	ld (MIDI_MSG_STATUS:16), 176
 	ld (MIDI_MSG_DATA1:16), 0
 	ld (MIDI_MSG_DATA2:16), a
@@ -7155,11 +7168,11 @@ Audio_FlushPendingBankSelects:
 	calr SwbtWr_FlushAndAppendParams
 
 BankFlush_CheckChannel1:
-	ld a, (MIDI_CC_MODWHEEL_PENDING:16)
+	ld a, (TOTAL_EXPRESSION_PENDING:16)
 	bit 7, a
 	ret z
 	res 7, a
-	ld (MIDI_CC_MODWHEEL_PENDING:16), a
+	ld (TOTAL_EXPRESSION_PENDING:16), a
 	ld (MIDI_MSG_STATUS:16), 176
 	ld (MIDI_MSG_DATA1:16), 1
 	ld (MIDI_MSG_DATA2:16), a
@@ -8273,21 +8286,21 @@ MIDI_SetupChannelParams:
 
 Audio_WriteBankSelectParams:
 	pushw de
-	bit 7, (MIDI_CC_EXPRESSION_PENDING:16)
+	bit 7, (MAIN_VOLUME_PENDING:16)
 	jr z, BankSelect_CheckChannel1
-	and (MIDI_CC_EXPRESSION_PENDING:16), 127
+	and (MAIN_VOLUME_PENDING:16), 127
 	ldw (MIDI_MSG_STATUS:16), 176
-	ld e, (MIDI_CC_EXPRESSION_PENDING:16)
+	ld e, (MAIN_VOLUME_PENDING:16)
 	ld d, 0x7f:opc
 	ld (MIDI_MSG_DATA2:16), de
 	calr SwbtWr_WriteVoiceParam_PreserveRegs
 
 BankSelect_CheckChannel1:
-	bit 7, (MIDI_CC_MODWHEEL_PENDING:16)
+	bit 7, (TOTAL_EXPRESSION_PENDING:16)
 	jr z, BankSelect_Done
-	and (MIDI_CC_MODWHEEL_PENDING:16), 127
+	and (TOTAL_EXPRESSION_PENDING:16), 127
 	ldw (MIDI_MSG_STATUS:16), 432
-	ld e, (MIDI_CC_MODWHEEL_PENDING:16)
+	ld e, (TOTAL_EXPRESSION_PENDING:16)
 	ld d, 0x7f:opc
 	ld (MIDI_MSG_DATA2:16), de
 	calr SwbtWr_WriteVoiceParam_PreserveRegs
@@ -10322,7 +10335,7 @@ VoiceNote_CheckBankSelect:
 VoiceNote_ApplyBankSelect:
 	ld a, (0x915d:16)
 	set 7, a
-	ld (MIDI_CC_MODWHEEL_PENDING:16), a
+	ld (TOTAL_EXPRESSION_PENDING:16), a
 	call Audio_WriteBankSelectParams
 	bit 7, (DEMO_CONTROL_FLAGS:16)
 	jr z, MIDI_VoiceNote_CtrlExit
@@ -11117,7 +11130,7 @@ MidiCC_Switch_WritePartParamAndQueue:
 	calr	MidiStream_ExtendedDispatch
 	ret
 ; MidiCC_SetPendingPartVolume: Queues a part volume: for target BC with part C <= 31 it stores E | 0x80 in the
-;   pending-volume byte 0x94B2[C]; target BC = 0x00B0 instead marks 0x90F8, stores E in MIDI_CC_EXPRESSION_PENDING and
+;   pending-volume byte 0x94B2[C]; target BC = 0x00B0 instead marks 0x90F8, stores E in MAIN_VOLUME_PENDING and
 ;   calls Audio_WriteBankSelectParams at once. Basis: callers + body -- MidiCC_RxCC7_Volume passes its CC7 target
 ;   (function 3, the part) and PerfMode_Evt04_VolumeHandler passes C = PART_SELECT, B = 3; the scanners send each
 ;   flagged byte as function 3.
@@ -11132,7 +11145,7 @@ MidiCC_SetPendingPartVolume:
 	jr MidiCC_SetPendingPartVolume_Return
 MidiCC_SetPendingPartVolume_Skip:
 	ld (37112:16), 255
-	ld	(MIDI_CC_EXPRESSION_PENDING:16), e
+	ld	(MAIN_VOLUME_PENDING:16), e
 	call	Audio_WriteBankSelectParams
 MidiCC_SetPendingPartVolume_Return:
 	ret
@@ -11339,7 +11352,7 @@ MidiStream_LoadBankSelect:
 	jr z, MidiStream_LoadBankDone
 	res 7, a
 	ld (xiy), a
-	ld (MIDI_CC_MODWHEEL_PENDING:16), a
+	ld (TOTAL_EXPRESSION_PENDING:16), a
 	call Audio_WriteBankSelectParams
 	ld (0x90f8:16), 255
 	ld (MIDI_MSG_STATUS:16), 176

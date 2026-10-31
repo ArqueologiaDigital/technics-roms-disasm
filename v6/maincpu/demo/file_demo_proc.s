@@ -558,7 +558,7 @@ DemoMode_Main_Operation:
 	pushw 0xcf04
 	call Mem_Copy
 	lda xsp, (xsp + 0x0a)
-	call Audio_ConfigureDSP
+	call Fade_Cancel
 	calr Voice_LoadVoiceTable
 	set 4, (0xfd50:16)
 	res 2, (0xfd50:16)
@@ -568,7 +568,7 @@ DemoMode_Main_Operation:
 	call AccompSeq_StopSequence
 	calr Voice_CopyPreset
 	call MIDI_BroadcastPitchReset
-	calr Timer7_DisableInterrupt
+	calr Demo_ReleaseGlidePedal
 	call Audio_CheckSubsystemReady
 	set	6, (0xb722:16)
 	res 3, (DEMO_CONTROL_FLAGS:16)
@@ -941,7 +941,11 @@ Demo_ResetCountdownTimer:
 	ld (DEMO_TIMER_COUNTDOWN:16), 15
 	ret
 
-Timer7_DisableInterrupt:
+; Demo_ReleaseGlidePedal: Releases the GLIDE pedal at demo start: clears bit 7 of record 0x98 +2 in RAM (0xFD98: key
+;   0x4080, the GLIDE gate) and queues the record write (AddswbWr 0x98, 2, mask 0x80), which SndParam_ApplySystemParam
+;   sends to the sub CPU as system message 0x85 (glide off). Called only by DemoMode_Main_Operation; it touches no
+;   timer. Basis: caller + body + descriptor 0x4080.
+Demo_ReleaseGlidePedal:
 	lda	xbc, (64920:16)
 	ld	e, (xbc)
 	res	7, e

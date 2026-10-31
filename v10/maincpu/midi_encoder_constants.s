@@ -23,33 +23,33 @@
 ; These store the current MIDI CC values. Bit 7 is used as a "pending change"
 ; flag for active sensing / change detection.
 
-.equ MIDI_CC_MODWHEEL_PENDING, 0x8ee0	; Modulation value with change flag (bit 7)
-.equ MIDI_CC_EXPRESSION_PENDING, 0x8ee2	; Expression value with change flag (bit 7)
-.equ MIDI_CC_MODWHEEL_VALUE, 0x8ee4	; Current modulation wheel value (CC#1)
-.equ MIDI_CC_EXPRESSION_VALUE, 0x8ee6	; Current expression value (CC#0)
-.equ MIDI_CC_BREATH_VALUE, 0x8ee8	; Breath controller value (CC#2?)
-.equ MIDI_CC_FOOT_VALUE, 0x8eea	; Foot controller value (CC#4?)
-.equ MIDI_CC_VOLUME_VALUE, 0x8ef4	; Volume controller value
+.equ TOTAL_EXPRESSION_PENDING, 0x8ee0	; Modulation value with change flag (bit 7)
+.equ MAIN_VOLUME_PENDING, 0x8ee2	; Expression value with change flag (bit 7)
+.equ EXPRESSION_PEDAL_VALUE, 0x8ee4	; Current modulation wheel value (CC#1)
+.equ MAIN_VOLUME_VALUE, 0x8ee6	; Current expression value (CC#0)
+.equ PITCH_BEND_VALUE, 0x8ee8	; Breath controller value (CC#2?)
+.equ MODULATION_VALUE, 0x8eea	; Foot controller value (CC#4?)
+.equ AFTERTOUCH_VALUE, 0x8ef4	; Volume controller value
 
 ; =============================================================================
 ; Encoder Raw Input Storage (RAM at 0x8exxh)
 ; =============================================================================
 ; Raw ADC values from encoders before lookup table processing
 
-.equ ENCODER_RAW_MODWHEEL, 0x8eca	; Raw modulation wheel input
-.equ ENCODER_RAW_VOLUME, 0x8ecc	; Raw volume input
-.equ ENCODER_RAW_BREATH, 0x8ed4	; Raw breath controller input
-.equ ENCODER_RAW_FOOT, 0x8ed6	; Raw foot controller input
-.equ ENCODER_RAW_EXPRESSION, 0x8ed8	; Raw expression input
+.equ ENCODER_RAW_EXPRESSION_PEDAL, 0x8eca	; Raw modulation wheel input
+.equ ENCODER_RAW_AFTERTOUCH, 0x8ecc	; Raw volume input
+.equ ENCODER_RAW_PITCH_BEND, 0x8ed4	; Raw breath controller input
+.equ ENCODER_RAW_MODULATION, 0x8ed6	; Raw foot controller input
+.equ ENCODER_RAW_MAIN_VOLUME, 0x8ed8	; Raw expression input
 
 ; =============================================================================
 ; Encoder Configuration/Mode Values (RAM at 0x8exxh)
 ; =============================================================================
 ; Configuration values that control encoder behavior
 
-.equ ENCODER_BREATH_MODE, 0x8eda	; Breath controller mode/enable
-.equ ENCODER_VOLUME_MODE, 0x8edc	; Volume mode value
-.equ ENCODER_RANGE_LIMIT, 0x8ede	; Encoder range limit value
+.equ COMPOSER_BEND_RANGE, 0x8eda	; Breath controller mode/enable
+.equ AFTERTOUCH_CURVE, 0x8edc	; Volume mode value
+.equ AFTERTOUCH_THRESHOLD, 0x8ede	; Encoder range limit value
 
 ; =============================================================================
 ; Encoder Lookup Tables (ROM at 0xedaxxxh)
@@ -57,14 +57,14 @@
 ; These tables convert raw encoder values to MIDI CC values.
 ; Each table is 128 bytes (one entry per raw value 0-127).
 
-	; (EQU->inline label) ENCODER_LUT_MODWHEEL = 0xeda13c
-	; (EQU->inline label) ENCODER_LUT_VOLUME = 0xeda1bc
-	; (EQU->inline label) ENCODER_LUT_BREATH_INDEX = 0xeda2bc
-	; (EQU->inline label) ENCODER_LUT_BREATH_VALUE = 0xeda2d2
-	; (EQU->inline label) ENCODER_LUT_BREATH_MULT = 0xeda3d2
-	; (EQU->inline label) ENCODER_LUT_BREATH_OFFSET = 0xeda3ea
-	; (EQU->inline label) ENCODER_LUT_FOOT = 0xeda402
-	; (EQU->inline label) ENCODER_LUT_EXPRESSION = 0xeda482
+	; (EQU->inline label) ENCODER_LUT_EXPRESSION_PEDAL = 0xeda13c
+	; (EQU->inline label) ENCODER_LUT_AFTERTOUCH = 0xeda1bc
+	; (EQU->inline label) ENCODER_LUT_AFTERTOUCH_CURVE = 0xeda2bc
+	; (EQU->inline label) ENCODER_LUT_PITCH_BEND = 0xeda2d2
+	; (EQU->inline label) ENCODER_LUT_BEND_RANGE_MULT = 0xeda3d2
+	; (EQU->inline label) ENCODER_LUT_BEND_RANGE_OFFSET = 0xeda3ea
+	; (EQU->inline label) ENCODER_LUT_MODULATION = 0xeda402
+	; (EQU->inline label) ENCODER_LUT_MAIN_VOLUME = 0xeda482
 
 ; =============================================================================
 ; Encoder State Tracking (RAM at 0x8fxxh)
@@ -77,7 +77,7 @@
 .equ ENCODER_1_STATUS, 0x8f06	; Encoder 1 status flags (bit 3 = changed)
 .equ ENCODER_0_OUTPUT, 0x8f10	; Encoder 0 output buffer (2 bytes: value + flags)
 .equ ENCODER_1_OUTPUT, 0x8f16	; Encoder 1 output buffer (2 bytes: value + flags)
-.equ ENCODER_STATE_BASE, 0x8f18	; Base of encoder state structure
+.equ PANEL_LED_IMAGE, 0x8f18	; Base of encoder state structure
 
 ; =============================================================================
 ; Encoder Handler Jump Table (ROM at 0xeda0bch)
