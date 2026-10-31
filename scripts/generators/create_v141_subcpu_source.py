@@ -40,6 +40,26 @@ DST = os.path.join(ROOT, "v141/subcpu")
 COPY = ["subcpu_data_tables.s", "subcpu_fp_math.s", "subcpu_vectors.s", "subcpu.ld",
         "shared/sfr_tmp94c241.s"]
 MAIN_SRC, MAIN_DST = "kn5000_subprogram_v142.s", "kn5000_subprogram_v141.s"
+# The core code is split into core/*.s (scripts/tools/split_v142_subcpu_core.py, 2026-10-31).  Every
+# file there is copied, and an EDIT addressed to MAIN_DST is applied in whichever of the main file and
+# core/*.s holds its text (exactly one must).
+CORE = "core"
+
+
+def core_files(src):
+    d = os.path.join(src, CORE)
+    return sorted(os.path.join(CORE, f) for f in os.listdir(d) if f.endswith(".s")) if os.path.isdir(d) else []
+
+
+def resolve(texts, f, needle):
+    """The file an EDIT for `f` applies to: `f` itself, or for MAIN_DST the one main-family file
+    (MAIN_DST or core/*.s) that contains `needle` exactly once."""
+    if f != MAIN_DST:
+        return f
+    hits = [k for k in [MAIN_DST] + [k for k in texts if k.startswith(CORE + "/")] if texts[k].count(needle)]
+    if len(hits) != 1:
+        sys.exit("EDIT for %s: text found in %d main-family files (want 1): %r" % (f, len(hits), needle[:80]))
+    return hits[0]
 
 BANNER = (b"; =============================================================================\n"
           b"; KN5000 Sub-CPU Payload ROM v1.41 (192KB)\n"
@@ -94,11 +114,13 @@ EDITS = [
 
 def generate(dst):
     os.makedirs(os.path.join(dst, "shared"), exist_ok=True)
+    os.makedirs(os.path.join(dst, CORE), exist_ok=True)
     texts = {}
-    for f in COPY:
+    for f in COPY + core_files(SRC):
         texts[f] = open(os.path.join(SRC, f), "rb").read()
     texts[MAIN_DST] = open(os.path.join(SRC, MAIN_SRC), "rb").read()
     for f, old, new in EDITS:
+        f = resolve(texts, f, old)
         n = texts[f].count(old)
         if n != 1:
             sys.exit("EDIT for %s matches %d times (want 1): %r" % (f, n, old[:80]))
@@ -117,7 +139,12 @@ def main():
         try:
             generate(d)
             drift = 0
-            for f in COPY + [MAIN_DST]:
+            if core_files(DST) != core_files(d):
+                drift += 1
+                print("DRIFT core/: %r vs generated %r" % (core_files(DST), core_files(d)))
+            for f in COPY + [MAIN_DST] + core_files(d):
+                if not os.path.exists(os.path.join(DST, f)):
+                    continue
                 a = open(os.path.join(DST, f), "rb").read()
                 b = open(os.path.join(d, f), "rb").read()
                 if a != b:

@@ -54,6 +54,24 @@ DST = os.path.join(ROOT, "v140/subcpu")
 COPY = ["subcpu_data_tables.s", "subcpu_fp_math.s", "subcpu_vectors.s", "subcpu.ld",
         "shared/sfr_tmp94c241.s"]
 MAIN_SRC, MAIN_DST = "kn5000_subprogram_v141.s", "kn5000_subprogram_v140.s"
+# The core code is split into core/*.s (scripts/tools/split_v142_subcpu_core.py, 2026-10-31).  Every
+# file there is copied, and an EDIT or SPAN addressed to MAIN_DST is applied in whichever of the main
+# file and core/*.s holds its text (exactly one must).
+CORE = "core"
+
+
+def core_files(src):
+    d = os.path.join(src, CORE)
+    return sorted(os.path.join(CORE, f) for f in os.listdir(d) if f.endswith(".s")) if os.path.isdir(d) else []
+
+
+def resolve(texts, f, needle):
+    if f != MAIN_DST:
+        return f
+    hits = [k for k in [MAIN_DST] + [k for k in texts if k.startswith(CORE + "/")] if texts[k].count(needle)]
+    if len(hits) != 1:
+        sys.exit("EDIT for %s: text found in %d main-family files (want 1): %r" % (f, len(hits), needle[:80]))
+    return hits[0]
 
 V141_BANNER = (
     b"; =============================================================================\n"
@@ -263,6 +281,7 @@ EDITS = [
 def apply_edit(texts, e):
     if e[0] == "SPAN":
         _, f, first, last, sha1, new = e
+        f = resolve(texts, f, first)
         t = texts[f]
         if t.count(first) != 1 or t.count(last) != 1:
             sys.exit("SPAN for %s: first/last line match %d/%d times (want 1/1)"
@@ -277,6 +296,7 @@ def apply_edit(texts, e):
         texts[f] = t[:i] + new + t[j:]
         return
     f, old, new = e
+    f = resolve(texts, f, old)
     n = texts[f].count(old)
     if n != 1:
         sys.exit("EDIT for %s matches %d times (want 1): %r" % (f, n, old[:80]))
@@ -285,8 +305,9 @@ def apply_edit(texts, e):
 
 def generate(dst):
     os.makedirs(os.path.join(dst, "shared"), exist_ok=True)
+    os.makedirs(os.path.join(dst, CORE), exist_ok=True)
     texts = {}
-    for f in COPY:
+    for f in COPY + core_files(SRC):
         texts[f] = open(os.path.join(SRC, f), "rb").read()
     texts[MAIN_DST] = open(os.path.join(SRC, MAIN_SRC), "rb").read()
     for e in EDITS:
@@ -302,7 +323,10 @@ def main():
         try:
             generate(d)
             drift = 0
-            for f in COPY + [MAIN_DST]:
+            if core_files(DST) != core_files(d):
+                drift += 1
+                print("DRIFT core/: %r vs generated %r" % (core_files(DST), core_files(d)))
+            for f in COPY + [MAIN_DST] + core_files(d):
                 p = os.path.join(DST, f)
                 a = open(p, "rb").read() if os.path.exists(p) else b""
                 b = open(os.path.join(d, f), "rb").read()
