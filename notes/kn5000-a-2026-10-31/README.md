@@ -72,18 +72,18 @@ and respelled 1,022 / 1,018 memory operands and 17 pointer loads there.  It now 
 
 33 of the 35 `PANEL_REC_<tag>` placeholders take names (`rename_panel_rec_placeholders.sed` for their uses):
 
-| tag(s)            | name                       | evidence                                                                                   |
-|-------------------|----------------------------|--------------------------------------------------------------------------------------------|
-| 0x78              | `PANEL_STYLIST_NAME`       | README-lsw-nonpart-records.md [CODE]: EffectMode_DisplayName_Render copies the 16-char name |
-| 0x44 / 0x45 / 0x46| `PANEL_DRAWBAR_RIGHT1/2`, `_LEFT` | README-lsw-drawbar-records.md: 48 parameter ids 0x82nn / 0x86nn / 0x8Ann                |
-| 0xC0..0xD4, 0xD7  | `PANEL_VARI_<part>`        | PanelTlv_CompanionOfPart's table maps part T to block 0xC0+T; MainVariSet writes it        |
-| 0x49              | `PANEL_VARI_STYLE`         | PanelTlv_CompanionOfPart_Style returns it for the style record 0x48                        |
-| 0x60              | `PANEL_EFFECT_SWITCHES`    | key table: acoustic illusion / equalizer / reverb on/off (+1)                              |
-| 0x70              | `PANEL_PLAY_SETTINGS`      | key table: rotary speed, split point, transpose, orchestrator, TechniChord type, fade times |
-| 0x71              | `PANEL_PMEMOUT_L`          | README-lsw-drawbar-records.md: bit 1 is the ON/OFF cell PmemOutLGridCheck draws            |
-| 0x90              | `PANEL_CONDUCTOR`          | key table: conductor (+0), APC on bass / left hold (+3), R1R2 octave (+4)                  |
-| 0x91              | `PANEL_GM`                 | key table: GM on/off (+3)                                                                  |
-| 0x98              | `PANEL_PMEM_SETTINGS`      | key table: panel memory mode / number, music style arranger, metronome, memory filter      |
+| tag(s)             | name                              | evidence                                                                                    |
+|--------------------|-----------------------------------|---------------------------------------------------------------------------------------------|
+| 0x78               | `PANEL_STYLIST_NAME`              | README-lsw-nonpart-records.md [CODE]: EffectMode_DisplayName_Render copies the 16-char name |
+| 0x44 / 0x45 / 0x46 | `PANEL_DRAWBAR_RIGHT1/2`, `_LEFT` | README-lsw-drawbar-records.md: 48 parameter ids 0x82nn / 0x86nn / 0x8Ann                    |
+| 0xC0..0xD4, 0xD7   | `PANEL_VARI_<part>`               | PanelTlv_CompanionOfPart's table maps part T to block 0xC0+T; MainVariSet writes it         |
+| 0x49               | `PANEL_VARI_STYLE`                | PanelTlv_CompanionOfPart_Style returns it for the style record 0x48                         |
+| 0x60               | `PANEL_EFFECT_SWITCHES`           | key table: acoustic illusion / equalizer / reverb on/off (+1)                               |
+| 0x70               | `PANEL_PLAY_SETTINGS`             | key table: rotary speed, split point, transpose, orchestrator, TechniChord type, fade times |
+| 0x71               | `PANEL_PMEMOUT_L`                 | README-lsw-drawbar-records.md: bit 1 is the ON/OFF cell PmemOutLGridCheck draws             |
+| 0x90               | `PANEL_CONDUCTOR`                 | key table: conductor (+0), APC on bass / left hold (+3), R1R2 octave (+4)                   |
+| 0x91               | `PANEL_GM`                        | key table: GM on/off (+3)                                                                   |
+| 0x98               | `PANEL_PMEM_SETTINGS`             | key table: panel memory mode / number, music style arranger, metronome, memory filter       |
 
 `PANEL_REC_68` and `PANEL_REC_9A` keep their tag: README-lsw-nonpart-records.md records that nothing but the
 generic block walkers (`PanelTlv_ValidateBlock1`, `BitMapOut_CopyAuxTable_*`) reads them, and its probe
@@ -121,15 +121,15 @@ with headers saying so (`rename_fdc_pulse_reset_line.sed`).
 
 ## Smaller renames and answers
 
-| item                       | what                                                                                                       |
-|----------------------------|------------------------------------------------------------------------------------------------------------|
-| N-ec33691a                 | `AccStyle_VelocityTable*` -> `AccStyle_PanelRhythmTable*`, `AccStyle_LookupPanelRhythm` with a header      |
-| N-830904fd                 | RectX2Proc's `TabDraw_*` locals take RectY2Proc's case names                                              |
-| T-kn5000-v10-todo-the-name | `MidiThru_Enable/Disable` -> `MidiIn_IgnoreClockTransport` / `MidiIn_AcceptClockTransport`                |
-| N-bc8cf677                 | the last 21 `<Table>_Target<k>` handlers named (Scoop bound ops, panel-LED handlers, display events)      |
-| N-d4782271                 | FONTID_NAME_TABLE is never written after boot (`probes/fontid_table_writers.py`)                           |
-| N-ef0b5633                 | `TEST3.fontcolor = 0x0043` has no firmware name and is never read; the C says so                          |
-| N-94f26143                 | AcLanguageTextProc adds `4 * HELP_LANGUAGE` back; its borrowed `AcTrkSw_ShowHide*` labels renamed          |
+| item                       | what                                                                                                  |
+|----------------------------|-------------------------------------------------------------------------------------------------------|
+| N-ec33691a                 | `AccStyle_VelocityTable*` -> `AccStyle_PanelRhythmTable*`, `AccStyle_LookupPanelRhythm` with a header |
+| N-830904fd                 | RectX2Proc's `TabDraw_*` locals take RectY2Proc's case names                                          |
+| T-kn5000-v10-todo-the-name | `MidiThru_Enable/Disable` -> `MidiIn_IgnoreClockTransport` / `MidiIn_AcceptClockTransport`            |
+| N-bc8cf677                 | the last 21 `<Table>_Target<k>` handlers named (Scoop bound ops, panel-LED handlers, display events)  |
+| N-d4782271                 | FONTID_NAME_TABLE is never written after boot (`probes/fontid_table_writers.py`)                      |
+| N-ef0b5633                 | `TEST3.fontcolor = 0x0043` has no firmware name and is never read (gui-kn5000 README)                 |
+| N-94f26143                 | AcLanguageTextProc adds `4 * HELP_LANGUAGE` back; its borrowed `AcTrkSw_ShowHide*` labels renamed     |
 
 ## Website page draft
 
@@ -194,3 +194,21 @@ linear listing, and every 3-byte occurrence of their addresses lies inside other
 copies exactly 7 bytes.  No reader: closed for these five.  Left: the 0x09 bytes of Tbl_AccompPartNames are
 printed as character code 9 by ParamPopup_AccompPart; what glyph the status font has at 9 was not looked up
 (the region-0 renderer's font must be traced first).
+
+## Not done by this lane (for the integrator)
+
+The lane ran alone (the sub-lane split it planned could not start: the session's agent limit was reached), so
+these items of its list were not worked; nothing in this branch changes them:
+
+| item                   | why not, and the first step                                                                                                                                                                                                                                                                                                                                          |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| T-kn5000-v6-todo-port  | port debt v6 13,756 B (3,403 TODO(port) rows + 10,353 json raw bytes, 25 bins); needs per-version C, biggest naka_style_bitmaps                                                                                                                                                                                                                                      |
+| T-kn5000-v5-todo-port  | port debt v5 15,910 B (4,284 rows + 11,626 json raw bytes, 29 bins); same work, after v6                                                                                                                                                                                                                                                                             |
+| N-d8cf1242             | 525 field_XX members; trace the base-pointer readers of naka_sequencer_channels.c first                                                                                                                                                                                                                                                                              |
+| N-2f640c1d             | 65 Viewable elements untyped (20 straddling members, 13 DRAM records, 32 skipped by naka_asm_records.py)                                                                                                                                                                                                                                                             |
+| N-45db7885             | 73 numeric ROM addresses in the NAKA C; split the target slices, then NAKA_ADDR(label)                                                                                                                                                                                                                                                                               |
+| N-c49a6232             | about 66 *_Strings char[] members to split into one member per string                                                                                                                                                                                                                                                                                                |
+| N-7c99f0f2             | 81 titles without a menu path; trace the Scoop sound-editor openers of TITLE_SE*                                                                                                                                                                                                                                                                                     |
+| N-51b2e19c             | per-bit naming of the busiest flag bytes (kn5000_ram_bit_usage.py)                                                                                                                                                                                                                                                                                                   |
+| N-e40b7174             | the per-title RAM address tables (AppEvtHandler_Branch_002_RamPtrs / AppEvent_SubDispatch_RamPtrs in naka_widget_descriptors.c) hold 0xF1F1, 0x261C ...: they need the SQEDT_* names in a C header (gen_naka_gui_headers.py does not export RAM names yet); 0x2640 / 0x2642 / 0x263a (SeqPart_VelZoneLookup, SeqPart_VelExprClamp) are the only numeric .s uses left |
+| N-52dcf02a, N-d352b868 | IC307 sequence words / unselected entries; owned in effect by kn5000-b (tracker kn5000-d38)                                                                                                                                                                                                                                                                          |

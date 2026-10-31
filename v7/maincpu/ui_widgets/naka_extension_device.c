@@ -2087,7 +2087,7 @@ const naka_extension_device_t naka_extension_device_data
         .window = RAM_TEST3_Window,
         .func = NAKA_APFUNC_DefaultFunction,
         .font = idCHARA1,
-        .fontcolor = 0x0043,  /* no firmware colour name: ColorIDProc names no 0x43, and SineWaveScreenProc never reads +42 (it draws with 0xff / 0xf5) */
+        .fontcolor = 0x0043,
         .nowswno = RAM_TEST3_Nowswno,
         .oldswno = RAM_TEST3_Oldswno,
     },

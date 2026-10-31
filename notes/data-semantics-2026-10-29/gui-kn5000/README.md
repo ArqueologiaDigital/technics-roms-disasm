@@ -230,8 +230,9 @@ ids are named in every GUI C file.
   needs the routines that reach them through a base pointer. The rest are spread over 15 files.
 - **1 property value has no name**: `TEST3.fontcolor = 0x0043`.  (Settled 2026-10-31, lane kn5000-a: it cannot have a
   firmware name.  ColorIDProc's name table names no 0x43, the boot palette's entry 0x43 is 0x000000, and
-  `SineWaveScreenProc` never reads its fontcolor field, +42: it draws with the fixed colours 0xff / 0xf5.  The C says so
-  beside the value; naka_gui_census.py's 'unnamed prop' stays 1 for that reason.)
+  `SineWaveScreenProc` never reads its fontcolor field, +42: it draws with the fixed colours 0xff / 0xf5.  (A comment in
+  the record would break naka_gui_model.py / naka_gui_symbolize.py, which parse the initializers, so the note lives
+  here.)  naka_gui_census.py's 'unnamed prop' stays 1 for that reason.)
 - **81 titles have no path.** No traced code opens 108 of the 130 title names that the asm never spells. That
   includes most sound-edit (`TITLE_SE*`) pages, which the Scoop module's sound-editor screens open through their own
   data, not NAKA records.
