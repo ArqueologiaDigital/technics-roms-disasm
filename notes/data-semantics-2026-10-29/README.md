@@ -61,8 +61,9 @@ The dumps with no tree at all are not in that table:
    private romsets with a SHA-1 check in the Makefile: kn7000's convention, also used for KN5000 v8/v6/v5. A
    payload with no better form is an `.incbin` with skip and count, or an `.incbin_range`, of that reference.
    It is labelled per item, and its comment says what the item is. Typed tables in the source follow the
-   precedent of the committed disassembly. Felipe's own instrument data (the IC21 read of his KN7000) stays out
-   of the trees.
+   precedent of the committed disassembly. Felipe's own instrument data (the IC21 read of his KN7000) stayed out
+   of the trees until 2026-10-31, when the owner decided to add it: `kn7000/src/ic21own/` (lane ic21-own,
+   `kn7000/notes/ic21-own/README.md`), its reference copied git-ignored like the others.
 3. **Byte identity.** Every new image is rebuilt and gated, and wired into its model's gate and `make gate-all`.
 4. **Evidence.** Every claim about a field's meaning cites the firmware code that reads it (address and label),
    or the probe that measured it. Probes are committed beside the notes they back, with a README.

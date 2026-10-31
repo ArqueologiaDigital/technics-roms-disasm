@@ -956,3 +956,51 @@ customdata-src: tools/gen_customdata_s.py $(CD_REFS)
 	    --title 'Technics SX-KN7000 factory CUSTOM STYLE memory "$(n)" (IC21, bank 0x96820000) - byte-exact.' \
 	    --title 'Reference: $(n).ic21, the 0x1E0000-byte bank inflated from $(shell echo $(n) | tr a-z A-Z).AST' \
 	    --title 'of the MAME softlist kn7000_flop floppy $(CD_DISK_$(n)) (tools/ast_file.py).' && ) true
+
+# ---- Felipe's own IC21: the whole 2 MB custom-data flash of his KN7000 -----
+# The owner's decision (2026-10-31): "Yes, lets add IC21 as well." The reference is
+# pass 1 of the ROM dumper on his instrument (PROGRAM 893, TABLE 80), 2026-10-19,
+# read twice with identical results; it is private, so it is copied here, git-ignored
+# and SHA-1 checked, like the other references. src/ic21own/ic21.s types the whole chip
+# (CPU 0x96800000-0x969FFFFF): the USER MIDI SETTING image at 0x4000, the flash-test
+# pattern at 0x6000, FAVORITES at 0x10000, HOME PAGE at 0x11000 and the CUSTOM STYLE
+# bank at 0x20000 (src/ic21own/custom.s, made by tools/gen_customdata_s.py --base).
+# See notes/ic21-own/README.md.
+IC21_OWN      ?= $(HOME)/compartilhado/technics_roms/roms/kn7000/real_dump_v1.3_b893/pass1-run1/IC21.BIN
+IC21_OWN_SHA1 := 33b988ec7f63e5fe3c8299f1db2e3b5955a71ff2
+IC21_OWN_REF  := baserom/kn7000_ic21_own.bin
+.PHONY: verify-ic21-own ic21-own-src ic21-own-probes
+$(IC21_OWN_REF):
+	@mkdir -p baserom
+	echo "$(IC21_OWN_SHA1)  $(IC21_OWN)" | sha1sum --quiet -c
+	cp "$(IC21_OWN)" $@.tmp
+	echo "$(IC21_OWN_SHA1)  $@.tmp" | sha1sum --quiet -c
+	mv $@.tmp $@
+
+build/ic21own/kn7000_ic21_own.bin: src/ic21own/ic21.s $(wildcard src/ic21own/*.inc src/ic21own/custom/*.inc) \
+		src/ic21own/custom.s src/include/user_settings.inc src/customdata/customdata.inc \
+		src/include/panel_memory.inc src/include/voice_record.inc src/b893/program/data/media/Bmp_48743E5C.bmp \
+		tools/kn7asm.py $(IC21_OWN_REF)
+	@mkdir -p build/ic21own
+	$(ASM) $< -I . -o $@
+
+verify-ic21-own: build/ic21own/kn7000_ic21_own.bin $(IC21_OWN_REF)
+	@if cmp -s $< $(IC21_OWN_REF); then \
+	  echo "OK    src/ic21own/ic21.s rebuilds the 2 MB IC21 read byte-for-byte ($(IC21_OWN_SHA1))"; \
+	else echo "FAIL  $< differs:"; cmp $< $(IC21_OWN_REF) || true; exit 1; fi
+
+# Regenerate the typed sources from the reference. The committed files are the result;
+# the corpus that types the CUSTOM bank's residue is the nine factory sets plus this bank.
+ic21-own-src: tools/gen_ic21own_s.py tools/gen_customdata_s.py $(IC21_OWN_REF) $(CD_REFS)
+	$(PYTHON) tools/gen_ic21own_s.py --rom $(IC21_OWN_REF) --ref $(IC21_OWN_REF) --out-dir src/ic21own
+	$(PYTHON) tools/gen_customdata_s.py --rom $(IC21_OWN_REF) --base 0x20000 --part \
+	    --corpus $(foreach m,$(CUSTOMDATA),$(m)=baserom/customdata/$(m).ic21) \
+	    --ref $(IC21_OWN_REF) --out src/ic21own/custom.s --inc-dir src/ic21own/custom --model kn7000 \
+	    --include src/customdata/customdata.inc \
+	    --opaque-why "unknown-dump: residue of an earlier write that no typed record of the nine factory sets or of this bank holds (no 32-byte match at any offset) and that does not parse as events (probe residue_cover.py)" \
+	    --title "Felipe's KN7000 IC21, the CUSTOM STYLE bank at chip 0x20000 (CPU 0x96820000); part of src/ic21own/ic21.s."
+
+# The probes behind the figures in src/ic21own/ic21.s and notes/ic21-own/README.md.
+ic21-own-probes: $(IC21_OWN_REF) $(CD_REFS) baserom/idd7000.img
+	@for p in regions regions2 templates custom names_kn5000 name_fields marker; do \
+	  echo "==== notes/ic21-own-probes/$$p.py"; $(PYTHON) -I notes/ic21-own-probes/$$p.py || exit 1; done
