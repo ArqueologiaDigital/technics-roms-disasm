@@ -13,5 +13,9 @@
 | 5    | `../port-edits-v1_15i/` `92`, `93`, `96`-`98` with `PORT_TREE`, then `95`   | the shared clean-ups, then this tree's banner and version label      |
 | 6    | `../port-edits-v1_15i/99_tail_fill.py` with `PORT_TREE`                     | the zero tail to 0x300000                                            |
 
+Step 5 leaves out `../port-edits-v1_15i/98b_label_review.py`: the v1.15i tree this replay
+starts from already carries its renames.  The committed v1.10i tree got them from one run of it
+with `PORT_TREE=hdae5000_v1_10i` (2026-10-31).
+
 `_edit.py` here loads `../port-edits-v1_15i/_edit.py` with `PORT_TREE=hdae5000_v1_10i`.
 `../README.md` ("v1.10i against v1.15i") lists what differs.
