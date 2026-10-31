@@ -27,6 +27,11 @@ From the schematics (render recipe in `probes/README.md`):
 | main CPU AN0, pin 150 | `EXP` (expression-pedal jack)                        | R71 100 Ω series, C79 0.1 µF                 |
 | main CPU AN1, pin 151 | `AFT` (after-touch sensor)                           | D1/D2 MA110 clamps, R18 1 kΩ, C80/C16 0.1 µF |
 
+The wheels themselves are on the HB board (sheet II-26, PDF page 40, which also carries the PHONE jack JK1): VR2
+50 kΩ (B) "BEND" with its wiper on CN2 pin 2, where R1 1 kΩ (to +5D) and R2 1 kΩ (to ground) also meet, and VR1
+10 kΩ "MODULATION" with its wiper on CN2 pin 4; CN2 pin 1 +5D, pin 3 ground.  (Pointed out by the hwaudio
+sub-lane; checked on the page.)
+
 The old reading of the source (IDs 2 and 5 = modulation wheel and volume slider, IDs 25-27 = breath, foot and
 expression) matched none of this.
 
@@ -352,13 +357,13 @@ kn5000-bq4 above, from "The main CPU has no lamp test" to the end of the table, 
 
 Replace the rows `AD0-AD3`, `BEND`, `MOD0, MOD1`, `MAIN VOLUME` with:
 
-| Pin/Signal                   | Function                                                              |
-|------------------------------|-----------------------------------------------------------------------|
-| `AD0` (pin 11)               | grounded, unused                                                      |
-| `AD1` (pin 12)               | `BEND`, pitch bend wheel from the HB board (CN3 pin 2), 1 kΩ + 0.1 µF |
-| `AD2` (pin 13)               | `MOD`, modulation wheel from the HB board (CN3 pin 4), 1 kΩ + 0.1 µF  |
-| `AD3` (pin 14)               | `MAIN VOLUME`, VR1 20 kΩ (B) on the CPL board, 1 kΩ + 0.1 µF          |
-| `ROTA`, `ROTB` (pins 30, 31) | SW101 TEMPO/PROGRAM encoder, see below                                |
+| Pin/Signal                   | Function                                                                          |
+|------------------------------|-----------------------------------------------------------------------------------|
+| `AD0` (pin 11)               | grounded, unused                                                                  |
+| `AD1` (pin 12)               | `BEND`, pitch bend wheel VR2 50 kΩ (B) on the HB board (CN3 pin 2), 1 kΩ + 0.1 µF |
+| `AD2` (pin 13)               | `MOD`, modulation wheel VR1 10 kΩ on the HB board (CN3 pin 4), 1 kΩ + 0.1 µF      |
+| `AD3` (pin 14)               | `MAIN VOLUME`, VR1 20 kΩ (B) on the CPL board, 1 kΩ + 0.1 µF                      |
+| `ROTA`, `ROTB` (pins 30, 31) | SW101 TEMPO/PROGRAM encoder, see below                                            |
 
 and add a subsection "Data-wheel encoder (SW101)" with the SW101 table and RC paragraph of section kn5000-xhi.
 Under "Main CPU", add "Analog inputs: AN0 (pin 150) = `EXP`, expression-pedal jack (R71 100 Ω, C79 0.1 µF);
