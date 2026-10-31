@@ -7,21 +7,24 @@
     "size": 2,
     "name": "w_0x0e",
     "evidence": "medley.s SetCurrentSlotIndex / GetCurrentSlotIndex (4146, 4151) use RAM 0x9480e as the current medley slot -- RAM shared with the style image while the medley runs [INFERENCE]; 0 in 75/75 files",
-    "inference": true
+    "inference": true,
+    "verified": "CORRECTED: password, u16. FmmPasswordFunc's EVT_SET_PASSWORD path writes the entered password with SetCurrentSlotIndex (file_io/medley.s, a misnomer) and the same word into +0x1c of all ten song slots; not a medley slot."
    },
    {
     "off": 16,
     "size": 1,
     "name": "composer_mode",
     "evidence": "AcCmpMdBox (flash_floppy_handlers.s:5880-5934): the composer MODE grid box reads 0x94810 (MainRamGet) and CmpSetP1_TtlDispatch stores the selection there; AccPatch_ConvertLegacyStyleImage tests (image+0x10) and AccPatch_ConvertLegacySectionLayout copies header byte +16. 1 in 72 files, 0 in 3",
-    "inference": true
+    "inference": true,
+    "verified": "VERIFIED, no longer an inference: 0 NORMAL MODE / 1 EXPAND MODE, the two AcCmpMdBox boxes (.ram 0 / 1) of the COMPOSER MODE screen."
    },
    {
     "off": 46,
     "size": 2,
     "name": "used_size16",
     "evidence": "already in the docstring; measured: value*16 == CMP file size in 75/75",
-    "inference": false
+    "inference": false,
+    "verified": "VERIFIED (MidiPkt_GetUsedSize_StyleImage also reads it)."
    }
   ],
   "record": [
@@ -30,42 +33,48 @@
     "size": 1,
     "name": "time_signature_code",
     "evidence": "Part_LoadAndIndexVoiceTable (accompaniment_engine.s:29693) stores (rec+12) - 3 in STYLE_SECTION_BEATS; AccTone_LookupByProgram maps (rec+12) through AccTone_LookupByProgram_Table to beats per measure; Tempo_DisplayBPMReturn writes (0x3986)+3 there. Values 7 (2069), 9, 6, 0x0b, 4, 8, 5",
-    "inference": false
+    "inference": false,
+    "verified": "VERIFIED: time_sig, the TIME SIGNATURE string index (RamInit_TimeSigPtrs, 7 = 4/4). RhythmPatInit_LoadParams copies it to STYLE_SECTION_TIME_SIG and RhythmPatInit_KitIndexTable gives the beats."
    },
    {
     "off": 13,
     "size": 1,
     "name": "section_last_measure",
     "evidence": "Part_LoadAndIndexVoiceTable copies (rec+13) to STYLE_SECTION_LAST_MEASURE; Tempo_DisplayMeasureRange writes (0x398c)-(0x398a) there. Values 0..7",
-    "inference": true
+    "inference": true,
+    "verified": "VERIFIED: last_measure = MEASURE - 1 (the MEASURE row prints it + 1; DrumVoice_Handler0 steps it 0..7)."
    },
    {
     "off": 14,
     "size": 1,
     "name": "b_0x0e",
     "evidence": "00 / 0x20 / 0x60 (bit field by values); template AccPatch_SlotRecordTemplate has 0x20",
-    "inference": true
+    "inference": true,
+    "verified": "NAMED: rec_chord, the RECORD SETTING rows of CmSetP1Grid: bits 0-3 KEY, bit 4 CHORD MINOR, bit 5 ACCOMP TYPE 7th, bit 6 BASS TYPE 7th (RhythmPatInit_LoadParams, RhythmProc_CheckConfigBits, UI_COMPONENT_DISPATCH_CASE2..5)."
    },
    {
     "off": 15,
     "size": 1,
     "name": "section_flags",
     "evidence": "Tempo_DisplayMeasureRange clears bit 7 (resm 7,(xiz+15)); template 0x80; 0x80 in 431 records",
-    "inference": true
+    "inference": true,
+    "verified": "NAMED: edit_flags; bit 7 = MEASURE / TIME SIGNATURE still changeable (shown '(ENABLE)'; DrumVoice_Handler0/1 refuse with error 19 when clear)."
    },
    {
     "off": 16,
     "size": 2,
     "name": "tone_pair",
     "evidence": "AccTone (accompaniment_engine.s:12940-12960, 13161, 13252, 14078): c = (rec+16), e = (rec+17) are stored as the two bytes of a PANEL_STYLE-like {number, bank} pair and compared as a word with 0x208 / 0x318; 0x58 0x02 in most records",
-    "inference": true
+    "inference": true,
+    "verified": "CORRECTED: style_number / style_group, a PANEL_STYLE-format pair, not a tone: DrumVoice_Handler7_Helper_Helper stores PANEL_STYLE there, RhythmVariation_Select_Entry_Data puts it back, AccTone_CheckBit3Flag sends it on PROGRAM_CHANGE_PART 72 (the rhythm part); defaults per time signature from AccPatch_VoiceStrideTable."
    },
    {
     "off": 18,
     "size": 6,
     "name": "zero_12",
     "evidence": "0 in 2250/2250 records",
-    "inference": false
+    "inference": false,
+    "verified": "VERIFIED: reserved_12, no reader."
    },
    {
     "off": 24,
@@ -76,7 +85,8 @@
      "stride": 8
     },
     "evidence": "MainCmpSetFunc (accompaniment_engine.s:35011..): part record = rec + 16 + 8*part (part 1..5 -> +0x18..+0x38). Inside a group: +0 u16 sound number (wide variety, high byte 0..7) [INFERENCE]; +2 pan: EVT_PAN_UP / EVT_PAN_DN (MT_PanUp/Dn) step it 0..127, AccPatch_ResetSectionPartByte2Defaults rewrites it 64,12,116,64 at +0x22/+0x2a/+0x32/+0x3a on every legacy-format load (which is why those bytes are constant in the files); +3 flag 0/1; +4 0x50 mostly (0x40/0x44/0x45) unknown; +5 range limit: EVT_RLMT_UP / _DN (MT_RLmtUp/Dn) step it 0..11, default 6; +6 0x7f or 0xff (bit 7 + 0x7f) unknown; +7 0. Group 0 (+0x18) is zero in the template and holds small values 0..0x0e at +0x18",
-    "inference": true
+    "inference": true,
+    "verified": "CORRECTED numbering: the five groups are DRUM, BASS, ACCOMP1-3 at +0x18 + 8*i (MainCmpSetFunc's row r = i + 1 addresses rec + 16 + 8*r; AccPedal_DirectionA_Wrap_Helper2 uses rec + 24 + 8*i). Bytes: +0 sound, +1 bank (AccPatch_SyncVoice_*, established), +2 pan, +3 reverb (bit 6 of the panel part's +4), +4 pc_byte4 [INFERENCE], +5 pitch_point (PITCH POINT, Rhythm_TransposeNote), +6 high_key (Rhythm_Transp_WrapCheck), +7 reserved_7."
    }
   ],
   "after_directory": [
@@ -85,16 +95,19 @@
     "size": 160,
     "name": "chord_map_records",
     "evidence": "AccDemo_LoadVariation_DataBlock copies 5 x 32 B here (index 0..4, ff ff ff, 12 zero, 16-char name 'chord map n'); NoteEvent_LoadSoundGenParams zeroes the same 5 x 32 B; accompaniment_engine.s:28316 reads a 32-byte record at +0xba0 + 32*(0x390a). Zero in every file bank (docstring)",
-    "inference": true
+    "inference": true,
+    "verified": "VERIFIED and named chord_map[5]: +0..+3 the four variations (0..11, 0xff none) of COMPOSER CHORD MAP n (CmpNcp_StepSlotInGroup2), +4 12 zero bytes, +16 name. Zero in the IC19 banks; in this shape in 69 of the 75 floppy CMPs, zero in 3, and in 3 (ca5010 04LATIN and 14}DEMO, mix5000 06STMMIX) the whole +0xba0..+0x13bf area holds stale cell-shaped bytes instead (typed as bytes)."
    },
    {
     "off": 3136,
     "size": 1920,
     "name": "measure_start_table",
     "evidence": "accompaniment_engine.s:13098 / 15113 comments and code: word at +0xc40 + 160*slot + 32*part + 4*measure (12 slots x 5 parts x 8 measures x 4 B); NoteEvent_LoadSoundGenParams writes the 12 x 160 B groups (outer loop to +0xc40+1760); the AccDemo default writes {u16 index, u16 6} per entry. Ends at +0x13c0 where the fill-in cell starts",
-    "inference": true
+    "inference": true,
+    "verified": "VERIFIED and named measure_start[12][5][8] of {cell, offset} (AccVoice_GetMeasureStartBlock / _Helper2, AccPatch_StoreMeasureCursor)."
    }
   ],
-  "probe": "~/compartilhado/tmp/data-floppy-kn5000/agentB/scripts/cmp_var.py <extracted dir> hdr|rec LO HI (scratch; promote before quoting)"
+  "probe": "notes/floppy-kn5000-2026-10-29/probes/cmp_var.py <extracted dir> hdr|rec|pre LO HI (committed); the readers: notes/kn5000-style-2026-10-31/probes/style_bank_readers.py",
+  "adopted": "2026-10-31, owner's decision (lane kn5000-style): adopted in both describers at once, through the shared module scripts/build/style_bank_layout.py that scripts/build/style_events.py (IC19 listings, format 3) and floppy/kn5000/formats.py both import. Every field was checked against the v10 code that reads it (notes/kn5000-style-2026-10-31/README.md); 'verified' below says what the check found, and where the verified reading differs from the proposal the module's name wins."
  }
 }

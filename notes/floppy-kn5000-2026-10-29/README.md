@@ -182,9 +182,17 @@ hex flags and text.
     size;
   - `data_ba0` and the 64-byte fill-in cell at +0x13c0 (`AccDemo_LoadFillIn`) are typed too.
 
-  `specs/style_bank_extra.json` holds further readings not yet adopted, so that both lanes can
-  rename together: +0x0c time-signature code, part-group byte 2 pan, byte 5 range limit, the
-  +0xba0 chord-map records.
+  `specs/style_bank_extra.json` held further readings, not adopted until both lanes could rename
+  together. **Adopted 2026-10-31** (owner's decision; lane kn5000-style,
+  `notes/kn5000-style-2026-10-31/README.md`): both describers now import one field layout,
+  `scripts/build/style_bank_layout.py`, and every field was checked against the v10 code that reads
+  it. The bank header names `password` and `composer_mode`; each section record names its part cells,
+  `time_sig`, `last_measure`, `rec_chord`, `edit_flags`, the section's style pair and five
+  `style_part` settings (DRUM, BASS, ACCOMP1-3: sound, bank, pan, reverb, pitch point, high key);
+  +0xba0 is typed as the five COMPOSER CHORD MAPs (`style_chord_map`) and +0xc40 as the
+  measure-start table (`style_measure_starts`). Three of the json's readings were corrected on the
+  way (+0x0e of the header is a password, +0x10/+0x11 of a record a style pair, and the five part
+  groups are DRUM..ACCOMP3 from +0x18).
 - **RCM**: the header words, and section 7's slot store (owner maps, 40 small and 4 large slots,
   erased on the factory disk).
 
@@ -199,8 +207,9 @@ Census `kn5000-floppy` after this pass: **generic 0**.
   - the LSW's 0x800 bytes from RAM 0x1e7800, which nothing has been mapped to (63 files);
   - the body of `ca5000r/03FOLKS2.TM`, a "KN3000 SOUND RAM" image in another model's layout.
 - **media 58 / 2,303,264 B**: BMP palettes and pixels, as `.incbin`s of the extracted `.bmp`.
-- **Typed but unnamed**: fields named `f<offset>`, `b_<offset>`, `p<n>`, `r0c_*`, `gN_*`, `t*`,
-  `hdr_04` and `hdr_30` carry a TODO saying what was tried. Long unnamed stretches are `.byte`
+- **Typed but unnamed**: fields named `f<offset>`, `b_<offset>`, `p<n>` carry a TODO saying what
+  was tried. (The style bank's `r0c_*`, `gN_*`, `t*`, `hdr_04` and `hdr_30` are named since
+  2026-10-31: `scripts/build/style_bank_layout.py`.) Long unnamed stretches are `.byte`
   rows under a neutral name. Examples: SQT slot +0x113..+0x2df (461 B, zeroed by the song init,
   no reader) and +0x702..+0x7ff (stale RAM).
 
@@ -214,7 +223,8 @@ Census `kn5000-floppy` after this pass: **generic 0**.
 4. Which firmware revision wrote the 43-record panel blocks? A v1-v4 dump would settle it.
 5. Are envelope pairs 2/3 of the sound record target-then-rate or the reverse? Which UI caption
    is each LFO byte, and what are the controller groups (`specs/tm_sound_record.json` notes)?
-6. Should `style_bank_extra.json`'s readings be adopted, in both lanes at once?
+6. Should `style_bank_extra.json`'s readings be adopted, in both lanes at once? (Resolved: the owner decided on 2026-10-31 to adopt them, verified against v10; both
+   describers import `scripts/build/style_bank_layout.py`; notes/kn5000-style-2026-10-31/README.md.)
 
 ## Website page draft (for technics-docs, "KN5000 disk files")
 
