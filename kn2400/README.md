@@ -155,9 +155,11 @@ evidence and what is still binary.
 
 ## Open work
 
-- Names: 11,993 entries are still `func_<ADDR>`. `make ported-names` carries unique,
-  non-trivial matches with a KN7000 routine, exact or, with `--fuzzy`, near-exact; most of
-  what is left has no KN7000 name either (`../kn7000/notes/function-naming-2026-10-24/`).
+- Names: 11,678 entries are still `func_<ADDR>` (2026-11-02). `make ported-names` carries
+  unique, non-trivial matches from the KN7000 (exact, or with `--fuzzy` near-exact), then
+  from the two other siblings' reflection and hand names (`--also-a`, lane mn10300-names:
+  KN6000 1, KN6500 0 more names; what the siblings name and this image does not is their own code).
+  What is left is per-subsystem naming (callers, strings, MILK messages).
 - (settled 2026-11-02, lane mn10300-names) No reflection table names a procedure in the
   RAM-linked range: `../kn7000/notes/mn10300-names-probes/names_kn2400_ram_tables.py` finds no
   name run with RAM-linked code pointers before it, and no identifier string there that a
@@ -165,8 +167,10 @@ evidence and what is still binary.
   (`--code-range 0x3285be:0x3965b8:0x50120000`, the `LO:HI:LINK` form of `gen_image_s.py
   --code`) and writes the same `kn2400.sym`; the 133 names at `0x50120000` and above come from
   `kn2400_ported.sym`.
-- RAM and I/O addresses outside the initialised RAM image are still numbers in the code; data
-  addresses are labels (`src/program/data/labels.sym`).
+- RAM addresses: the on-chip registers and board latches are names
+  (`../kn7000/src/include/mn103002a_sfr.inc`), and a `kn2400_manual.sym` name of a RAM
+  address is spelled in the code; 22,483 RAM operands over 3,521 addresses are still numbers
+  (`../kn7000/notes/mn10300-names/README.md`, "RAM addresses").
 - The data region's remaining binary pieces (`notes/data-region/README.md`, "What is left"): generic 0; the
   census-opaque pieces fell from 2,885 / 61,226 to 1,192 / 27,313 bytes with lane mn10300-data's passes
   (2026-11-02; what is left and why: `../kn7000/notes/mn10300-data/README.md` section 4).

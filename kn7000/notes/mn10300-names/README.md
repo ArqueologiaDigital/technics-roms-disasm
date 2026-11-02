@@ -137,7 +137,7 @@ Every on-chip register operand is now a name in the four sibling trees and the f
 builds; what stays a number in I/O space is chip-select base addresses (`0x36900000`,
 `0x38000000`, `0x38100000`) and float constants.  RAM is another matter: the sibling sources
 still hold 19,019 (KN6000), 19,055 (KN6500) and 22,483 (KN2400) numeric RAM operands, over
-3,185 / 3,195 / 3,797 distinct addresses (HD-SX3: none).  The KN7000 itself names only a few
+2,944 / 2,954 / 3,521 distinct addresses (HD-SX3: none; counted after merging lane mn10300-data).  The KN7000 itself names only a few
 dozen RAM variables (`kn7000_manual.sym`; work-ram-map.md's census has 4,130 addresses), so
 there is little to port yet.  The mechanism is in place: `gen_image_s.py` spells any
 `--sym` name of an address outside the image, as `gen_program_s.py` already did, so a RAM
