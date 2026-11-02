@@ -363,6 +363,291 @@ extern const char swordProc;
 extern const char ucharProc;
 extern const char ulongProc;
 extern const char uwordProc;
+extern const char NakaInst_DeleteEvent;
+extern const char NakaInst_DeleteSpecificEvent;
+extern const char NakaInst_DrawBitmapFast;
+extern const char NakaInst_FuncCall;
+extern const char NakaInst_InitPaletteRGB;
+extern const char NakaInst_IvIntWelcomeProc;
+extern const char NakaInst_SetPaletteRGB;
+extern const char NakaInst_SetWallColor;
+extern const char NakaInst_SetWallPaper;
+extern const char NakaInst_SleepMainTask;
+extern const char NakaInst_WakeUpMainTask;
+extern const char Str_AcBitEditBoxProc;
+extern const char Str_AcFuncEditSwProc;
+extern const char Str_AcFuncToggleProc;
+extern const char Str_AcGridBoxProc;
+extern const char Str_AcIndexEditSwProc;
+extern const char Str_AcIndexToggleProc;
+extern const char Str_AcLanguageTextProc;
+extern const char Str_AcListBoxProc;
+extern const char Str_AcLswBoxProc;
+extern const char Str_AcLswEditBoxProc;
+extern const char Str_AcMixerVolProc;
+extern const char Str_AcNamingWindowProc;
+extern const char Str_AcNumEditBoxProc;
+extern const char Str_AcOnOffBoxProc;
+extern const char Str_AcPmemNameProc;
+extern const char Str_AcRamBoxProc;
+extern const char Str_AcRamEditBoxProc;
+extern const char Str_AcRhythmNameProc;
+extern const char Str_AcSoundNameProc;
+extern const char Str_AcStrRadioBoxProc;
+extern const char Str_AcTempoBoxProc;
+extern const char Str_AcTitleMenuProc;
+extern const char Str_AcTrackSwitchProc;
+extern const char Str_AcWindowPageProc;
+extern const char Str_AlignmentIDProc;
+extern const char Str_ApFuncCall;
+extern const char Str_ApFuncIDProc;
+extern const char Str_ApFunctionProc;
+extern const char Str_ApTimer;
+extern const char Str_BitmapIDProc;
+extern const char Str_BitmapProc;
+extern const char Str_BorderIDProc;
+extern const char Str_BoxLeftCheck;
+extern const char Str_BoxProc;
+extern const char Str_BoxRightCheck;
+extern const char Str_CaptureLcd;
+extern const char Str_ChangeWallPalette;
+extern const char Str_CheckNotDrawFlag;
+extern const char Str_CheckViewObject;
+extern const char Str_ClassIDProc;
+extern const char Str_ColorIDProc;
+extern const char Str_ConstFlagProc;
+extern const char Str_ConvertStringsEx;
+extern const char Str_CountObject;
+extern const char Str_DbDebugMenuProc;
+extern const char Str_DbMemoProc;
+extern const char Str_DbMemoryDumpProc;
+extern const char Str_DirmdEmulator;
+extern const char Str_DispatchEvent;
+extern const char Str_DrawBitmap;
+extern const char Str_DrawBitmapSP;
+extern const char Str_DrawBitmapSPFast;
+extern const char Str_DrawBox;
+extern const char Str_DrawDesignBox;
+extern const char Str_DrawDesignFrame;
+extern const char Str_DrawEditSw;
+extern const char Str_DrawFrame;
+extern const char Str_DrawFrameEx;
+extern const char Str_DrawFrameSP;
+extern const char Str_DrawIcons;
+extern const char Str_DrawLine;
+extern const char Str_DrawLineEx;
+extern const char Str_DrawString;
+extern const char Str_DrawStringAlignment;
+extern const char Str_DrawStringCentered;
+extern const char Str_DrawStringLeftJustify;
+extern const char Str_DrawStringReverse;
+extern const char Str_DrawStringRightJustify;
+extern const char Str_DrawTitleBar;
+extern const char Str_DrawWall;
+extern const char Str_EditSwIDProc;
+extern const char Str_EditSwProc;
+extern const char Str_EditSwStyleIDProc;
+extern const char Str_EventIDProc;
+extern const char Str_FontIDProc;
+extern const char Str_FrameIDProc;
+extern const char Str_FrameProc;
+extern const char Str_FunctionProc;
+extern const char Str_GetBox;
+extern const char Str_GetBoxCenter;
+extern const char Str_GetChange;
+extern const char Str_GetClientBox;
+extern const char Str_GetClientBox2;
+extern const char Str_GetClientFrame;
+extern const char Str_GetClientFrame2;
+extern const char Str_GetConst;
+extern const char Str_GetCurrentTarget;
+extern const char Str_GetDialFocus;
+extern const char Str_GetDirmdFlag;
+extern const char Str_GetEditSwPoint;
+extern const char Str_GetEvent;
+extern const char Str_GetFocusEvent;
+extern const char Str_GetFocusObject;
+extern const char Str_GetFocusParam;
+extern const char Str_GetFrameColor;
+extern const char Str_GetLinkView;
+extern const char Str_GetModeNow;
+extern const char Str_GetModeOld;
+extern const char Str_GetMovable;
+extern const char Str_GetNamingWindowID;
+extern const char Str_GetPartSelect;
+extern const char Str_GetRootEvent;
+extern const char Str_GetRootObject;
+extern const char Str_GetRootParam;
+extern const char Str_GetTitleNow;
+extern const char Str_GetTitleOld;
+extern const char Str_GetViewInstance;
+extern const char Str_GetVisible;
+extern const char Str_GetWallPaletteRGB;
+extern const char Str_GroupBoxProc;
+extern const char Str_IconIDProc;
+extern const char Str_IconProc;
+extern const char Str_InheritedProc;
+extern const char Str_InitializeEventQueue;
+extern const char Str_InitializeGraphics;
+extern const char Str_InitializeObjectTable;
+extern const char Str_InitializeTimer;
+extern const char Str_InitializeUser20;
+extern const char Str_InitializeUser21;
+extern const char Str_InitializeUser22;
+extern const char Str_InitializeUser23;
+extern const char Str_InitializeUser24;
+extern const char Str_InitializeUser25;
+extern const char Str_InitializeUser26;
+extern const char Str_InitializeUser27;
+extern const char Str_InitializeUser28;
+extern const char Str_InitializeUser29;
+extern const char Str_InitializeUser30;
+extern const char Str_InitializeUser31;
+extern const char Str_IntTimeIDProc;
+extern const char Str_IvCatchEventProc;
+extern const char Str_IvDirmdScreenProc;
+extern const char Str_IvExitModeProc;
+extern const char Str_IvExitProc;
+extern const char Str_IvExitScreenProc;
+extern const char Str_IvExitWindowProc;
+extern const char Str_IvFixWinProc;
+extern const char Str_IvIntCompleteProc;
+extern const char Str_IvIntEasySetProc;
+extern const char Str_IvIntErrorProc;
+extern const char Str_IvIntReminderProc;
+extern const char Str_IvIntVariProc;
+extern const char Str_IvInterruptProc;
+extern const char Str_IvMainEditSwProc;
+extern const char Str_IvNamingProc;
+extern const char Str_IvPageControlProc;
+extern const char Str_IvScreenProc;
+extern const char Str_IvShowHideProc;
+extern const char Str_IvTrackSwitchProc;
+extern const char Str_KillApTimer;
+extern const char Str_LabelProc;
+extern const char Str_LineModeIDProc;
+extern const char Str_LineProc;
+extern const char Str_Link;
+extern const char Str_MainBitGet;
+extern const char Str_MainBitPut;
+extern const char Str_MainFuncCall;
+extern const char Str_MainFuncIDProc;
+extern const char Str_MainFunctionProc;
+extern const char Str_MainLswAdd;
+extern const char Str_MainLswGet;
+extern const char Str_MainLswPartAdd;
+extern const char Str_MainLswPartGet;
+extern const char Str_MainLswPartPut;
+extern const char Str_MainLswPut;
+extern const char Str_MainRamAdd;
+extern const char Str_MainRamGet;
+extern const char Str_MainRamPut;
+extern const char Str_ModeEditProc;
+extern const char Str_ModeIDProc;
+extern const char Str_ModeProc;
+extern const char Str_ModifyPixel;
+extern const char Str_ModifyPixelEx;
+extern const char Str_MovePixels;
+extern const char Str_NameProc;
+extern const char Str_NextView;
+extern const char Str_ObjectIDProc;
+extern const char Str_ObjectProc;
+extern const char Str_POINTWProc;
+extern const char Str_PartIDProc;
+extern const char Str_PointXProc;
+extern const char Str_PointYProc;
+extern const char Str_PostEvent;
+extern const char Str_PrevView;
+extern const char Str_PsCursorBoxProc;
+extern const char Str_PsEditBoxProc;
+extern const char Str_PsEditSwBoxProc;
+extern const char Str_PsGridBoxProc;
+extern const char Str_PsInvisibleBoxProc;
+extern const char Str_PsListBoxProc;
+extern const char Str_PsMenuBoxProc;
+extern const char Str_PsNumEditBoxProc;
+extern const char Str_PsPageBoxProc;
+extern const char Str_PsParaBoxProc;
+extern const char Str_PsRadioBoxProc;
+extern const char Str_PsTblEditBoxProc;
+extern const char Str_PsTextBoxProc;
+extern const char Str_PsToggleBoxProc;
+extern const char Str_PsTrackSwitchProc;
+extern const char Str_PsWideESBoxProc;
+extern const char Str_PsWideToggleProc;
+extern const char Str_RECTWProc;
+extern const char Str_ReadPixel;
+extern const char Str_RectX1Proc;
+extern const char Str_RectX2Proc;
+extern const char Str_RectY1Proc;
+extern const char Str_RectY2Proc;
+extern const char Str_RegisterMode;
+extern const char Str_RegisterObject;
+extern const char Str_RegisterObjectTable;
+extern const char Str_RegisterTitle;
+extern const char Str_ResetApTimer;
+extern const char Str_ResetLswFilter;
+extern const char Str_ScreenIDProc;
+extern const char Str_ScreenProc;
+extern const char Str_SendEvent;
+extern const char Str_SetApTimer;
+extern const char Str_SetAutoInc;
+extern const char Str_SetAutoIncDefault;
+extern const char Str_SetBox;
+extern const char Str_SetChange;
+extern const char Str_SetChangeRect;
+extern const char Str_SetConst;
+extern const char Str_SetCurrentTarget;
+extern const char Str_SetDialDown;
+extern const char Str_SetDialEnable;
+extern const char Str_SetDialFocus;
+extern const char Str_SetDialUp;
+extern const char Str_SetInterruptTime;
+extern const char Str_SetLswFilter;
+extern const char Str_SetMovable;
+extern const char Str_SetNeedUpdate;
+extern const char Str_SetNotDrawFlag;
+extern const char Str_SetRootObject;
+extern const char Str_SetSuperView;
+extern const char Str_SetVariFlag;
+extern const char Str_SetVisible;
+extern const char Str_SleepApTask;
+extern const char Str_StringBoxProc;
+extern const char Str_StringProc;
+extern const char Str_SubView;
+extern const char Str_SuperView;
+extern const char Str_TextBoxProc;
+extern const char Str_TitleEditProc;
+extern const char Str_TitleIDProc;
+extern const char Str_TitleProc;
+extern const char Str_TrChordBoxProc;
+extern const char Str_TrTransposeBoxProc;
+extern const char Str_TrackIDProc;
+extern const char Str_TtlScreenProc;
+extern const char Str_UnRegisterObject;
+extern const char Str_Unlink;
+extern const char Str_UnregisteredMode;
+extern const char Str_UnregisteredTitle;
+extern const char Str_UpdateScreen;
+extern const char Str_UserIDProc;
+extern const char Str_ViewFlagProc;
+extern const char Str_ViewIDProc;
+extern const char Str_ViewableProc;
+extern const char Str_VwBoxProc;
+extern const char Str_VwEditSwBoxProc;
+extern const char Str_VwMenuBoxProc;
+extern const char Str_VwUserBitmapProc;
+extern const char Str_WindowIDProc;
+extern const char Str_WindowProc;
+extern const char Str_pFuncProc;
+extern const char Str_pProcProc;
+extern const char Str_pPropProc;
+extern const char Str_pScharProc;
+extern const char Str_pSlongProc;
+extern const char Str_pStringProc;
+extern const char Str_pUcharProc;
+extern const char Str_pUlongProc;
+extern const char Str_pUwordProc;
 
 #define BASE  0x00EAD35Cu
 
@@ -4131,58 +4416,58 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
         SELF(InitializeUser31_str),
         SELF(InitializeGraphics_str),
         SELF(UpdateScreen_str),
-        SELF(SetNeedUpdate_str),
-        SELF(SetChangeRect_name),
-        SELF(ReadPixel_code),
-        SELF(ModifyPixel_str),
-        SELF(ModifyPixelEx_str),
-        SELF(DrawLine_name),
-        SELF(DrawLineEx_code),
-        SELF(DrawBox_name),
-        SELF(DrawFrame_code),
-        SELF(DrawFrameEx_str),
-        SELF(MovePixels_name),
-        SELF(DrawWall_code),
-        SELF(DrawBitmap_name),
-        SELF(DrawIcons_code),
-        SELF(DrawFrameSP_name),
-        SELF(DrawString_code),
-        SELF(DrawStringCentered_str),
-        SELF(DrawStringLeftJustify_str),
-        SELF(DrawStringRightJustify_str),
+        NAKA_ADDR(Str_InitializeUser20),
+        NAKA_ADDR(Str_InitializeUser21),
+        NAKA_ADDR(Str_InitializeUser22),
+        NAKA_ADDR(Str_InitializeUser23),
+        NAKA_ADDR(Str_InitializeUser24),
+        NAKA_ADDR(Str_InitializeUser25),
+        NAKA_ADDR(Str_InitializeUser26),
+        NAKA_ADDR(Str_InitializeUser27),
+        NAKA_ADDR(Str_InitializeUser28),
+        NAKA_ADDR(Str_InitializeUser29),
+        NAKA_ADDR(Str_InitializeUser30),
+        NAKA_ADDR(Str_InitializeUser31),
+        NAKA_ADDR(Str_InitializeGraphics),
+        NAKA_ADDR(Str_UpdateScreen),
+        NAKA_ADDR(Str_SetNeedUpdate),
+        NAKA_ADDR(Str_SetChangeRect),
+        NAKA_ADDR(Str_ReadPixel),
+        NAKA_ADDR(Str_ModifyPixel),
+        NAKA_ADDR(Str_ModifyPixelEx),
     },
 
     .WidgetName_PtrBlock_I2 = {
-        SELF(DrawStringAlignment_name),
-        SELF(ObjectProc_code),
-        SELF(InheritedProc_str),
-        SELF(InitializeObjectTable_str),
-        SELF(RegisterObjectTable_str),
-        SELF(RegisterObject_str),
-        SELF(UnRegisterObject_str),
-        SELF(CountObject_str),
-        SELF(CheckViewObject_str),
-        SELF(InitializeEventQueue_str),
-        SELF(DispatchEvent_name),
-        SELF(SendEvent_code),
-        SELF(PostEvent_name),
-        SELF(GetEvent_code),
-        SELF(GetCurrentTarget_str),
-        SELF(SetCurrentTarget_str),
-        SELF(MainDispatchEvent_str),
-        SELF(MainSendEvent_str),
-        SELF(MainPostEvent_str),
-        SELF(MainGetEvent_str),
-        SELF(ApPostEvent_str),
-        SELF(ResourceProc_str),
-        SELF(ResBitmapProc_str),
-        SELF(ResFrameProc_str),
-        SELF(ResIconProc_str),
-        SELF(ResFontProc_str),
-        SELF(ResEventProc_str),
-        SELF(ResMethodProc_str),
-        SELF(ResStringProc_str),
-        SELF(ResNameProc_str),
+        NAKA_ADDR(Str_DrawLine),
+        NAKA_ADDR(Str_DrawLineEx),
+        NAKA_ADDR(Str_DrawBox),
+        NAKA_ADDR(Str_DrawFrame),
+        NAKA_ADDR(Str_DrawFrameEx),
+        NAKA_ADDR(Str_MovePixels),
+        NAKA_ADDR(Str_DrawWall),
+        NAKA_ADDR(Str_DrawBitmap),
+        NAKA_ADDR(Str_DrawIcons),
+        NAKA_ADDR(Str_DrawFrameSP),
+        NAKA_ADDR(Str_DrawString),
+        NAKA_ADDR(Str_DrawStringCentered),
+        NAKA_ADDR(Str_DrawStringLeftJustify),
+        NAKA_ADDR(Str_DrawStringRightJustify),
+        NAKA_ADDR(Str_DrawStringAlignment),
+        NAKA_ADDR(Str_ObjectProc),
+        NAKA_ADDR(Str_InheritedProc),
+        NAKA_ADDR(Str_InitializeObjectTable),
+        NAKA_ADDR(Str_RegisterObjectTable),
+        NAKA_ADDR(Str_RegisterObject),
+        NAKA_ADDR(Str_UnRegisterObject),
+        NAKA_ADDR(Str_CountObject),
+        NAKA_ADDR(Str_CheckViewObject),
+        NAKA_ADDR(Str_InitializeEventQueue),
+        NAKA_ADDR(Str_DispatchEvent),
+        NAKA_ADDR(Str_SendEvent),
+        NAKA_ADDR(Str_PostEvent),
+        NAKA_ADDR(Str_GetEvent),
+        NAKA_ADDR(Str_GetCurrentTarget),
+        NAKA_ADDR(Str_SetCurrentTarget),
         SELF(GetFrameSPSize_str),
         SELF(GetCharHeight_str),
         SELF(GetCharDescent_str),
@@ -4220,242 +4505,242 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
     },
 
     .WidgetName_PtrBlock_O = {
-        SELF(RectY1Proc_name),
-        SELF(RectX2Proc_code),
-        SELF(RectY2Proc_name),
-        SELF(POINTWProc_code),
-        SELF(PointXProc_name),
-        SELF(PointYProc_code),
-        SELF(StringProc_name),
-        SELF(NameProc_code),
-        SELF(ConstFlagProc_name),
-        SELF(ViewIDProc_code),
-        SELF(ViewFlagProc_str),
-        SELF(ColorIDProc_str),
-        SELF(BorderIDProc_name),
-        SELF(ModeIDProc_code),
-        SELF(TitleIDProc_str),
-        SELF(IconIDProc_name),
-        SELF(FontIDProc_code),
-        SELF(AlignmentIDProc_str),
-        SELF(EditSwIDProc_str),
-        SELF(EditSwStyleIDProc_str),
-        SELF(LineModeIDProc_str),
-        SELF(FrameIDProc_str),
-        SELF(BitmapIDProc_str),
-        SELF(ApFuncIDProc_str),
-        SELF(MainFuncIDProc_str),
-        SELF(UserIDProc_name),
-        SELF(PartIDProc_code),
-        SELF(TrackIDProc_str),
-        SELF(FunctionProc_str),
-        SELF(ApFunctionProc_str),
-        SELF(MainFunctionProc_name),
-        SELF(ApFuncCall_code),
-        SELF(MainFuncCall_name),
-        SELF(ModeProc_code),
-        SELF(RegisterMode_str),
-        SELF(UnregisteredMode_name),
-        SELF(GetModeNow_code),
-        SELF(GetModeOld_name),
-        SELF(TitleProc_code),
-        SELF(RegisterTitle_str),
-        SELF(UnregisteredTitle_str),
-        SELF(GetTitleNow_str),
-        SELF(GetTitleOld_str),
-        SELF(ViewableProc_str),
-        SELF(SetConst_name),
-        SELF(GetConst_code),
-        SELF(SetChange_name),
-        SELF(GetChange_code),
-        SELF(SetVisible_name),
-        SELF(GetVisible_code),
-        SELF(SetMovable_name),
-        SELF(GetMovable_code),
-        SELF(NextView_name),
-        SELF(PrevView_code),
-        SELF(SuperView_name),
-        SELF(SubView_code),
-        SELF(Link_name),
-        SELF(Unlink_code),
-        SELF(SetSuperView_str),
-        SELF(GetLinkView_str),
-        SELF(GetViewInstance_name),
-        SELF(GetBox_code),
-        SELF(SetBox_name),
-        SELF(BoxProc_code),
-        SELF(GetClientBox_str),
-        SELF(GetClientBox2_str),
-        SELF(DrawDesignBox_str),
-        SELF(GetFrameColor_str),
-        SELF(BoxLeftCheck_str),
-        SELF(BoxRightCheck_name),
-        SELF(ScreenProc_code),
-        SELF(GetEditSwPoint_name),
-        SELF(FrameProc_code),
-        SELF(GetClientFrame_str),
-        SELF(GetClientFrame2_str),
-        SELF(DrawDesignFrame_str),
-        SELF(TtlScreenProc_str),
-        SELF(DrawTitleBar_name),
-        SELF(EditSwProc_code),
-        SELF(DrawEditSw_name),
-        SELF(MainLswPut_code),
-        SELF(MainLswPartPut_name),
-        SELF(MainLswAdd_code),
-        SELF(MainLswPartAdd_name),
-        SELF(MainLswGet_code),
-        SELF(MainLswPartGet_str),
-        SELF(SetLswFilter_str),
-        SELF(ResetLswFilter_name),
-        SELF(MainRamPut_code),
-        SELF(MainRamAdd_name),
-        SELF(MainRamGet_code),
-        SELF(ModeEditProc_str),
-        SELF(TitleEditProc_str),
-        SELF(GroupBoxProc_name),
-        SELF(WindowProc_code),
-        SELF(StringBoxProc_str),
-        SELF(LabelProc_name),
-        SELF(BitmapProc_code),
-        SELF(IconProc_name),
-        SELF(LineProc_code),
-        SELF(TextBoxProc_name),
-        SELF(VwBoxProc_code),
-        SELF(PsParaBoxProc_str),
-        SELF(AcLswBoxProc_str),
-        SELF(AcTempoBoxProc_str),
-        SELF(PsEditBoxProc_str),
-        SELF(PsNumEditBoxProc_str),
-        SELF(PsTblEditBoxProc_str),
-        SELF(AcOnOffBoxProc_str),
-        SELF(AcNumEditBoxProc_str),
-        SELF(AcLswEditBoxProc_str),
-        SELF(AcRamEditBoxProc_str),
-        SELF(PsMenuBoxProc_str),
-        SELF(AcTitleMenuProc_str),
-        SELF(PsEditSwBoxProc_str),
-        SELF(PsWideESBoxProc_str),
-        SELF(AcIndexEditSwProc_str),
-        SELF(AcFuncEditSwProc_str),
-        SELF(PsPageBoxProc_str),
-        SELF(AcWindowPageProc_str),
-        SELF(PsToggleBoxProc_str),
-        SELF(PsInvisibleBoxProc_str),
-        SELF(IvPageControlProc_str),
-        SELF(IvMainEditSwProc_str),
-        SELF(SetDialEnable_name),
-        SELF(SetDialUp_code),
-        SELF(SetDialDown_str),
-        SELF(ChangeWallPalette_str),
-        SELF(GetWallPaletteRGB_str),
-        SELF(AcSoundNameProc_str),
-        SELF(AcRhythmNameProc_str),
-        SELF(AcPmemNameProc_str),
-        SELF(AcMixerVolProc_str),
-        SELF(VwMenuBoxProc_str),
-        SELF(VwEditSwBoxProc_str),
-        SELF(AcBitEditBoxProc_str),
-        SELF(MainBitPut_name),
-        SELF(MainBitGet_code),
-        SELF(AcFuncToggleProc_str),
-        SELF(PsWideToggleProc_name),
-        SELF(DbMemoProc_code),
-        SELF(InitializeTimer_str),
-        SELF(ApTimer_name),
-        SELF(SetApTimer_code),
-        SELF(ResetApTimer_str),
-        SELF(KillApTimer_str),
-        SELF(GetRootObject_str),
-        SELF(GetRootEvent_str),
-        SELF(GetRootParam_str),
-        SELF(SetAutoIncDefault_name),
-        SELF(SetAutoInc_code),
-        SELF(SetRootObject_str),
-        SELF(GetFocusObject_str),
-        SELF(GetFocusEvent_str),
-        SELF(GetFocusParam_name),
-        SELF(IvExitProc_code),
-        SELF(IvExitModeProc_str),
-        SELF(IvExitScreenProc_str),
-        SELF(DrawStringReverse_str),
-        SELF(GetBoxCenter_str),
-        SELF(IvFixWinProc_str),
-        SELF(AcNamingWindowProc_str),
-        SELF(PsCursorBoxProc_str),
-        SELF(IvNamingProc_str),
-        SELF(AcIndexToggleProc_str),
-        SELF(AcRamBoxProc_str),
-        SELF(PsRadioBoxProc_str),
-        SELF(AcStrRadioBoxProc_str),
-        SELF(IvCatchEventProc_str),
-        SELF(SetDialFocus_str),
-        SELF(GetDialFocus_str),
-        SELF(PsListBoxProc_str),
-        SELF(PsGridBoxProc_str),
-        SELF(AcListBoxProc_str),
-        SELF(AcGridBoxProc_str),
-        SELF(DbDebugMenuProc_str),
-        SELF(PsTrackSwitchProc_str),
-        SELF(AcTrackSwitchProc_str),
-        SELF(IvDirmdScreenProc_str),
-        SELF(DirmdEmulator_str),
-        SELF(GetDirmdFlag_str),
-        SELF(IvTrackSwitchProc_str),
-        SELF(IvExitWindowProc_str),
-        SELF(DbMemoryDumpProc_str),
-        SELF(IntTimeIDProc_str),
-        SELF(IvInterruptProc_str),
-        SELF(SetInterruptTime_str),
-        SELF(CheckNotDrawFlag_str),
-        SELF(IvIntReminderProc_str),
-        SELF(IvIntErrorProc_str),
-        SELF(IvIntCompleteProc_str),
-        SELF(IvIntVariProc_str),
-        SELF(IvIntEasySetProc_str),
-        SELF(SetVariFlag_str),
-        SELF(ConvertStringsEx_str),
-        SELF(SetNotDrawFlag_str),
-        SELF(IvShowHideProc_str),
-        SELF(PsTextBoxProc_str),
-        SELF(AcLanguageTextProc_str),
-        SELF(TrTransposeBoxProc_str),
-        SELF(TrChordBoxProc_str),
-        SELF(GetPartSelect_str),
-        SELF(DrawBitmapSP_str),
-        SELF(VwUserBitmapProc_name),
-        SELF(CaptureLcd_code),
-        SELF(IvScreenProc_str),
-        SELF(GetNamingWindowID_str),
-        SELF(DrawBitmapSPFast_str),
-        SELF(DrawBitmapFast_str),
-        SELF(SetPaletteRGB_str),
-        SELF(InitPaletteRGB_str),
-        SELF(SetWallPaper_str),
-        SELF(SetWallColor_str),
-        SELF(IvIntWelcomeProc_name),
-        SELF(FuncCall_code),
-        SELF(DeleteSpecificEvent_str),
-        SELF(DeleteEvent_str),
-        SELF(SleepMainTask_str),
-        SELF(WakeUpMainTask_str),
-        SELF(SleepApTask_str),
-        SELF(WakeUpApTask_str),
-        SELF(RefreshApTask_str),
-        SELF(ApDeliveryEvent_str),
-        SELF(VwUserBitmapByNameProc_str),
-        SELF(DrawBitmapFile_str),
-        SELF(LcdOff_name),
-        SELF(LcdOn_code),
-        SELF(RefreshSwEvent_str),
-        SELF(InitDrawTask_str),
-        SELF(SetRootEvent_str),
-        SELF(SetRootParam_name),
-        SELF(DrawFunc_code),
-        SELF(MainDeleteSpecificEvent_str),
-        SELF(MainDeleteEvent_str),
-        SELF(DrawBitmapSP2_name),
-        SELF(w132_code),
+        NAKA_ADDR(Str_pUwordProc),
+        NAKA_ADDR(Str_pScharProc),
+        NAKA_ADDR(Str_pUcharProc),
+        NAKA_ADDR(Str_pSlongProc),
+        NAKA_ADDR(Str_pUlongProc),
+        NAKA_ADDR(Str_ObjectIDProc),
+        NAKA_ADDR(Str_pFuncProc),
+        NAKA_ADDR(Str_pProcProc),
+        NAKA_ADDR(Str_pPropProc),
+        NAKA_ADDR(Str_pStringProc),
+        NAKA_ADDR(Str_ClassIDProc),
+        NAKA_ADDR(Str_ScreenIDProc),
+        NAKA_ADDR(Str_WindowIDProc),
+        NAKA_ADDR(Str_EventIDProc),
+        NAKA_ADDR(Str_RECTWProc),
+        NAKA_ADDR(Str_RectX1Proc),
+        NAKA_ADDR(Str_RectY1Proc),
+        NAKA_ADDR(Str_RectX2Proc),
+        NAKA_ADDR(Str_RectY2Proc),
+        NAKA_ADDR(Str_POINTWProc),
+        NAKA_ADDR(Str_PointXProc),
+        NAKA_ADDR(Str_PointYProc),
+        NAKA_ADDR(Str_StringProc),
+        NAKA_ADDR(Str_NameProc),
+        NAKA_ADDR(Str_ConstFlagProc),
+        NAKA_ADDR(Str_ViewIDProc),
+        NAKA_ADDR(Str_ViewFlagProc),
+        NAKA_ADDR(Str_ColorIDProc),
+        NAKA_ADDR(Str_BorderIDProc),
+        NAKA_ADDR(Str_ModeIDProc),
+        NAKA_ADDR(Str_TitleIDProc),
+        NAKA_ADDR(Str_IconIDProc),
+        NAKA_ADDR(Str_FontIDProc),
+        NAKA_ADDR(Str_AlignmentIDProc),
+        NAKA_ADDR(Str_EditSwIDProc),
+        NAKA_ADDR(Str_EditSwStyleIDProc),
+        NAKA_ADDR(Str_LineModeIDProc),
+        NAKA_ADDR(Str_FrameIDProc),
+        NAKA_ADDR(Str_BitmapIDProc),
+        NAKA_ADDR(Str_ApFuncIDProc),
+        NAKA_ADDR(Str_MainFuncIDProc),
+        NAKA_ADDR(Str_UserIDProc),
+        NAKA_ADDR(Str_PartIDProc),
+        NAKA_ADDR(Str_TrackIDProc),
+        NAKA_ADDR(Str_FunctionProc),
+        NAKA_ADDR(Str_ApFunctionProc),
+        NAKA_ADDR(Str_MainFunctionProc),
+        NAKA_ADDR(Str_ApFuncCall),
+        NAKA_ADDR(Str_MainFuncCall),
+        NAKA_ADDR(Str_ModeProc),
+        NAKA_ADDR(Str_RegisterMode),
+        NAKA_ADDR(Str_UnregisteredMode),
+        NAKA_ADDR(Str_GetModeNow),
+        NAKA_ADDR(Str_GetModeOld),
+        NAKA_ADDR(Str_TitleProc),
+        NAKA_ADDR(Str_RegisterTitle),
+        NAKA_ADDR(Str_UnregisteredTitle),
+        NAKA_ADDR(Str_GetTitleNow),
+        NAKA_ADDR(Str_GetTitleOld),
+        NAKA_ADDR(Str_ViewableProc),
+        NAKA_ADDR(Str_SetConst),
+        NAKA_ADDR(Str_GetConst),
+        NAKA_ADDR(Str_SetChange),
+        NAKA_ADDR(Str_GetChange),
+        NAKA_ADDR(Str_SetVisible),
+        NAKA_ADDR(Str_GetVisible),
+        NAKA_ADDR(Str_SetMovable),
+        NAKA_ADDR(Str_GetMovable),
+        NAKA_ADDR(Str_NextView),
+        NAKA_ADDR(Str_PrevView),
+        NAKA_ADDR(Str_SuperView),
+        NAKA_ADDR(Str_SubView),
+        NAKA_ADDR(Str_Link),
+        NAKA_ADDR(Str_Unlink),
+        NAKA_ADDR(Str_SetSuperView),
+        NAKA_ADDR(Str_GetLinkView),
+        NAKA_ADDR(Str_GetViewInstance),
+        NAKA_ADDR(Str_GetBox),
+        NAKA_ADDR(Str_SetBox),
+        NAKA_ADDR(Str_BoxProc),
+        NAKA_ADDR(Str_GetClientBox),
+        NAKA_ADDR(Str_GetClientBox2),
+        NAKA_ADDR(Str_DrawDesignBox),
+        NAKA_ADDR(Str_GetFrameColor),
+        NAKA_ADDR(Str_BoxLeftCheck),
+        NAKA_ADDR(Str_BoxRightCheck),
+        NAKA_ADDR(Str_ScreenProc),
+        NAKA_ADDR(Str_GetEditSwPoint),
+        NAKA_ADDR(Str_FrameProc),
+        NAKA_ADDR(Str_GetClientFrame),
+        NAKA_ADDR(Str_GetClientFrame2),
+        NAKA_ADDR(Str_DrawDesignFrame),
+        NAKA_ADDR(Str_TtlScreenProc),
+        NAKA_ADDR(Str_DrawTitleBar),
+        NAKA_ADDR(Str_EditSwProc),
+        NAKA_ADDR(Str_DrawEditSw),
+        NAKA_ADDR(Str_MainLswPut),
+        NAKA_ADDR(Str_MainLswPartPut),
+        NAKA_ADDR(Str_MainLswAdd),
+        NAKA_ADDR(Str_MainLswPartAdd),
+        NAKA_ADDR(Str_MainLswGet),
+        NAKA_ADDR(Str_MainLswPartGet),
+        NAKA_ADDR(Str_SetLswFilter),
+        NAKA_ADDR(Str_ResetLswFilter),
+        NAKA_ADDR(Str_MainRamPut),
+        NAKA_ADDR(Str_MainRamAdd),
+        NAKA_ADDR(Str_MainRamGet),
+        NAKA_ADDR(Str_ModeEditProc),
+        NAKA_ADDR(Str_TitleEditProc),
+        NAKA_ADDR(Str_GroupBoxProc),
+        NAKA_ADDR(Str_WindowProc),
+        NAKA_ADDR(Str_StringBoxProc),
+        NAKA_ADDR(Str_LabelProc),
+        NAKA_ADDR(Str_BitmapProc),
+        NAKA_ADDR(Str_IconProc),
+        NAKA_ADDR(Str_LineProc),
+        NAKA_ADDR(Str_TextBoxProc),
+        NAKA_ADDR(Str_VwBoxProc),
+        NAKA_ADDR(Str_PsParaBoxProc),
+        NAKA_ADDR(Str_AcLswBoxProc),
+        NAKA_ADDR(Str_AcTempoBoxProc),
+        NAKA_ADDR(Str_PsEditBoxProc),
+        NAKA_ADDR(Str_PsNumEditBoxProc),
+        NAKA_ADDR(Str_PsTblEditBoxProc),
+        NAKA_ADDR(Str_AcOnOffBoxProc),
+        NAKA_ADDR(Str_AcNumEditBoxProc),
+        NAKA_ADDR(Str_AcLswEditBoxProc),
+        NAKA_ADDR(Str_AcRamEditBoxProc),
+        NAKA_ADDR(Str_PsMenuBoxProc),
+        NAKA_ADDR(Str_AcTitleMenuProc),
+        NAKA_ADDR(Str_PsEditSwBoxProc),
+        NAKA_ADDR(Str_PsWideESBoxProc),
+        NAKA_ADDR(Str_AcIndexEditSwProc),
+        NAKA_ADDR(Str_AcFuncEditSwProc),
+        NAKA_ADDR(Str_PsPageBoxProc),
+        NAKA_ADDR(Str_AcWindowPageProc),
+        NAKA_ADDR(Str_PsToggleBoxProc),
+        NAKA_ADDR(Str_PsInvisibleBoxProc),
+        NAKA_ADDR(Str_IvPageControlProc),
+        NAKA_ADDR(Str_IvMainEditSwProc),
+        NAKA_ADDR(Str_SetDialEnable),
+        NAKA_ADDR(Str_SetDialUp),
+        NAKA_ADDR(Str_SetDialDown),
+        NAKA_ADDR(Str_ChangeWallPalette),
+        NAKA_ADDR(Str_GetWallPaletteRGB),
+        NAKA_ADDR(Str_AcSoundNameProc),
+        NAKA_ADDR(Str_AcRhythmNameProc),
+        NAKA_ADDR(Str_AcPmemNameProc),
+        NAKA_ADDR(Str_AcMixerVolProc),
+        NAKA_ADDR(Str_VwMenuBoxProc),
+        NAKA_ADDR(Str_VwEditSwBoxProc),
+        NAKA_ADDR(Str_AcBitEditBoxProc),
+        NAKA_ADDR(Str_MainBitPut),
+        NAKA_ADDR(Str_MainBitGet),
+        NAKA_ADDR(Str_AcFuncToggleProc),
+        NAKA_ADDR(Str_PsWideToggleProc),
+        NAKA_ADDR(Str_DbMemoProc),
+        NAKA_ADDR(Str_InitializeTimer),
+        NAKA_ADDR(Str_ApTimer),
+        NAKA_ADDR(Str_SetApTimer),
+        NAKA_ADDR(Str_ResetApTimer),
+        NAKA_ADDR(Str_KillApTimer),
+        NAKA_ADDR(Str_GetRootObject),
+        NAKA_ADDR(Str_GetRootEvent),
+        NAKA_ADDR(Str_GetRootParam),
+        NAKA_ADDR(Str_SetAutoIncDefault),
+        NAKA_ADDR(Str_SetAutoInc),
+        NAKA_ADDR(Str_SetRootObject),
+        NAKA_ADDR(Str_GetFocusObject),
+        NAKA_ADDR(Str_GetFocusEvent),
+        NAKA_ADDR(Str_GetFocusParam),
+        NAKA_ADDR(Str_IvExitProc),
+        NAKA_ADDR(Str_IvExitModeProc),
+        NAKA_ADDR(Str_IvExitScreenProc),
+        NAKA_ADDR(Str_DrawStringReverse),
+        NAKA_ADDR(Str_GetBoxCenter),
+        NAKA_ADDR(Str_IvFixWinProc),
+        NAKA_ADDR(Str_AcNamingWindowProc),
+        NAKA_ADDR(Str_PsCursorBoxProc),
+        NAKA_ADDR(Str_IvNamingProc),
+        NAKA_ADDR(Str_AcIndexToggleProc),
+        NAKA_ADDR(Str_AcRamBoxProc),
+        NAKA_ADDR(Str_PsRadioBoxProc),
+        NAKA_ADDR(Str_AcStrRadioBoxProc),
+        NAKA_ADDR(Str_IvCatchEventProc),
+        NAKA_ADDR(Str_SetDialFocus),
+        NAKA_ADDR(Str_GetDialFocus),
+        NAKA_ADDR(Str_PsListBoxProc),
+        NAKA_ADDR(Str_PsGridBoxProc),
+        NAKA_ADDR(Str_AcListBoxProc),
+        NAKA_ADDR(Str_AcGridBoxProc),
+        NAKA_ADDR(Str_DbDebugMenuProc),
+        NAKA_ADDR(Str_PsTrackSwitchProc),
+        NAKA_ADDR(Str_AcTrackSwitchProc),
+        NAKA_ADDR(Str_IvDirmdScreenProc),
+        NAKA_ADDR(Str_DirmdEmulator),
+        NAKA_ADDR(Str_GetDirmdFlag),
+        NAKA_ADDR(Str_IvTrackSwitchProc),
+        NAKA_ADDR(Str_IvExitWindowProc),
+        NAKA_ADDR(Str_DbMemoryDumpProc),
+        NAKA_ADDR(Str_IntTimeIDProc),
+        NAKA_ADDR(Str_IvInterruptProc),
+        NAKA_ADDR(Str_SetInterruptTime),
+        NAKA_ADDR(Str_CheckNotDrawFlag),
+        NAKA_ADDR(Str_IvIntReminderProc),
+        NAKA_ADDR(Str_IvIntErrorProc),
+        NAKA_ADDR(Str_IvIntCompleteProc),
+        NAKA_ADDR(Str_IvIntVariProc),
+        NAKA_ADDR(Str_IvIntEasySetProc),
+        NAKA_ADDR(Str_SetVariFlag),
+        NAKA_ADDR(Str_ConvertStringsEx),
+        NAKA_ADDR(Str_SetNotDrawFlag),
+        NAKA_ADDR(Str_IvShowHideProc),
+        NAKA_ADDR(Str_PsTextBoxProc),
+        NAKA_ADDR(Str_AcLanguageTextProc),
+        NAKA_ADDR(Str_TrTransposeBoxProc),
+        NAKA_ADDR(Str_TrChordBoxProc),
+        NAKA_ADDR(Str_GetPartSelect),
+        NAKA_ADDR(Str_DrawBitmapSP),
+        NAKA_ADDR(Str_VwUserBitmapProc),
+        NAKA_ADDR(Str_CaptureLcd),
+        NAKA_ADDR(Str_IvScreenProc),
+        NAKA_ADDR(Str_GetNamingWindowID),
+        NAKA_ADDR(Str_DrawBitmapSPFast),
+        NAKA_ADDR(NakaInst_DrawBitmapFast),
+        NAKA_ADDR(NakaInst_SetPaletteRGB),
+        NAKA_ADDR(NakaInst_InitPaletteRGB),
+        NAKA_ADDR(NakaInst_SetWallPaper),
+        NAKA_ADDR(NakaInst_SetWallColor),
+        NAKA_ADDR(NakaInst_IvIntWelcomeProc),
+        NAKA_ADDR(NakaInst_FuncCall),
+        NAKA_ADDR(NakaInst_DeleteSpecificEvent),
+        NAKA_ADDR(NakaInst_DeleteEvent),
+        NAKA_ADDR(NakaInst_SleepMainTask),
+        NAKA_ADDR(NakaInst_WakeUpMainTask),
+        NAKA_ADDR(Str_SleepApTask),
     },
 
     .w132_code = ALIGNED_STRING(""),
