@@ -207,17 +207,20 @@ orphans, not a second link convention.
 
 ## Left open (with the next step)
 
-- **N-b64487fc** (sound record: envelope pair order, LFO captions, controller groups): not settled. The sub-CPU
-  source records that its two readers of the envelope pairs disagree (`Voice_Level_ComputeTriplet` treats the
-  second byte as signed and scales it with `Detune_ScaleSymmetric`; the type-1/2 path indexes
-  `Voice_EnvelopeRate_Table` with it). The way to settle it in this repository is the SOUND EDIT pages: each page's
-  object entries carry the record offset and bit field (`SeMenu_StepParamFieldAndSend` reads entry +3, +6, +7), so
-  mapping the pages' captions (ATTACK TIME / LEVEL ...) to offsets names both bytes of each pair.
-- **125 panel bytes** keep `f<offset>` (see the table above): most are in the companion records 0xC0..0xD7, which
-  `PanelTlv_ResolvePartCompanions` fills from the part's sound through `SndParam_ResolveVoiceEntry`; tracing that
-  routine's frame offsets would name them.
-- **DSP slot packing** for 16 effects (reverbs 18-27, GEQ, ROOM, PEQ+S.DELAY, EXCITER, CHORUS's 40 odd records,
-  NO OPERATION): the parameter names are attached, the byte packing is not; `DSPCfg_ExtractPairFromStruct` /
-  `DSPCfg_ExtractFieldPair` are the readers to follow.
+- **N-b64487fc** (sound record: envelope pair order, LFO captions, controller groups): envelopes and LFOs settled
+  2026-11-02 (sub-lane open6-kn5000-d/panel, notes/open6-kn5000-d/panel/README.md section 3): the SOUND EDIT page
+  handlers send each caption's value with the byte's offset as the element, so PITCH / AMPLITUDE / FILTER ENV are named
+  byte by byte (time first, then level: ATK, PEAK, DECAY1, SUST1 ...), the twelve LFO entries are DEPTH, SPEED,
+  TOUCH + KEYSYNC, WAVE + DELAY, and block +0x06 / +0x26 / +0x38 are the tones' LFO switches. The sub-CPU disagreement
+  is two record kinds (tone block vs drum-kit instrument). Still open: the controller groups +0x14..+0x28 (next step:
+  the SeCtr2 / SeCtr3 handlers, there).
+- **125 panel bytes** keep `f<offset>`: 62 named 2026-11-02 (notes/open6-kn5000-d/panel/README.md section 1): the
+  companion records 0xC0..0xD7 and 0x49 are the per-group "last sound / style" memory (`ptlv_part_vari`,
+  `ptlv_style_vari`), the descriptor pattern no longer drops 11 descriptors, MSP bank and Composer bend range are
+  named from their readers. 63 remain, each listed there with what is known.
+- **DSP slot packing**: established 2026-11-02 for every effect (notes/open6-kn5000-d/panel/README.md section 2):
+  `DSPCfg_ReadMultiField` / `DSPCfg_ReadField` give each parameter a width by its op letter (big-endian words, packed
+  5/6-bit fields, bytes); every typed DSP slot record of the floppies decodes in range, and each is spelled with a
+  per-effect macro.
 - Renames this lane found but did not make (v10 / v9 / v7 / v6 / v5, a sed script each): the table under "Names
   in the firmware that this changes".
