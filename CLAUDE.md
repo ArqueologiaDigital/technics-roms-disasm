@@ -212,7 +212,7 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,063   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt`     | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
-| `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
+| `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,762   | 0x800000 - 0x9FFEF0                                        |
 | `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,197   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 | `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 7,099   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 | `symbols/hdae5000_v1_15i_symbols_reference.txt` | HDAE5000 expansion v1.15i                         | 6,709   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
@@ -1242,9 +1242,9 @@ The KN5000 firmware uses LZSS compression (SLIDE4K format) for embedded data. Wh
 
 **Compressed Data Inventory:**
 
-| ROM | Label | Address Range | Compressed | Decompressed | Content |
-|-----|-------|---------------|------------|--------------|---------|
-| table_data | `Compressed_Preset_Data_LZSS` | `0x08E0000` - `0x08E6D3E` | 27,967 bytes (11B header + 27,956B payload) | 38,144 bytes (0x9500) | Parameter-like data (Feature Demo preset, `DemoSongPreset18`) |
+| ROM        | Label              | Address Range             | Compressed                                                     | Decompressed          | Content                                                 |
+|------------|--------------------|---------------------------|----------------------------------------------------------------|-----------------------|---------------------------------------------------------|
+| table_data | `DemoSongPreset18` | `0x08E0000` - `0x08E6D3E` | 27,967 bytes (11 B header + 27,881 B stream + 75 B stale tail) | 38,144 bytes (0x9500) | Demo song 18, the Feature Demo (demo song image "ZZZZ") |
 
 **✅ RESOLVED:** The 0x3E0000 address mystery is now understood:
 - Address `0x3E0000` = **Custom Data Flash** (firmware update staging area)
@@ -1383,7 +1383,7 @@ delivers to Sub CPU `0x400` / `0xF000+` (`../technics-docs/subcpu-payload-proven
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu payload v140 | `v140/subcpu/kn5000_subprogram_v140.s` (generated: v141 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`                               | 100.00%    | 100.0%                | 0 B           |
-| table_data          | `table_data/kn5000_table_data.s`                                 | 100.00%    | 100.0%                | 0 B           |
+| table_data          | `table_data/kn5000_table_data.s`                                 | 100.00%    | 99.3%                 | 15,634 B      |
 | custom_data (IC19)  | `custom_data/kn5000_custom_data.s`                               | 100.00%    | 100.0%                | 0 B           |
 | hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`                                    | 100.00%    | 100.0%                | 0 B           |
 | hdae5000 v2.01i     | `hdae5000_v2_01i/hd-ae5000_v2_01i.s` (ported from v2.06i)        | 100.00%    | 100.0%                | 0 B           |
@@ -1431,9 +1431,14 @@ in `make gate`. **maincpu v5** was made the same way from `v6/maincpu`
 **Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
 measured 2026-10-24 (the v7 row re-measured 2026-10-29, after the data-semantics lane
 kn5000-existing; the v6 and v5 rows 2026-10-31, lane open3/kn5000-ports, after
-`scripts/converters/port_todo_typed.py`): the script splits every ROM byte into assembly, typed data (including
+`scripts/converters/port_todo_typed.py`; the table_data row 2026-11-02, lane open6/misc2): the script splits every ROM byte into assembly, typed data (including
 `.incbin`s that a committed generator rebuilds from checked-in source), clang-compiled C and
 verbatim blob (an `.incbin` nothing regenerates); "source" is everything but the blob.
+The table_data row's 15,634 B are the stale ends of an older SLIDE4K stream after demo songs 17 and 18
+(`DemoSongPreset17_StaleStreamTail`, `DemoSongPreset18_StaleStreamTail`, declared `census: opaque --
+compressed`; `notes/misc2-2026-11-02/`).  Until 2026-11-02 they rode inside the two demo payloads that
+`compress_lzss.py --reference` copied from the factory slices, which the script counted as generated, so
+the row's earlier 0 B undercounted.
 (Until 2026-10 this column was "Not `.incbin`", measured 2026-08-21, when maincpu v10 still
 held 855,100 B of recompiled C behind `.incbin`; the same script now counts 9,270 B of C
 there.) Two further caveats: on 2026-08-21 the v7 row was flattered by

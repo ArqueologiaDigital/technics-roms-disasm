@@ -124,7 +124,8 @@ and index 7 = `DSP_Op_0x68_InterpDiv0xB4`:
 
 **dsp-bytecode-interpreter.md**: in the Level 2 table, row 0x67's Purpose becomes "ms x 44100 / 1000 + base ->
 DRAM word count (WriteOscParam_Offset)", row 0x68's "value / 180 (0xB4) -> degrees"; in the paragraph at line 148
-"`0x68` ms->DRAM" becomes "`0x67` ms->DRAM".
+"`0x68` ms->DRAM" becomes "`0x67` ms->DRAM", and the same sentence's "`0x69` degrees" becomes "`0x68` degrees"
+(added 2026-11-02; the draft missed it).
 
 **Renamed labels quoted on the website** (replace the old name with the new one):
 

@@ -19,7 +19,7 @@ environment variable `GEN_DATA_S_OFF`), so `rest_stats.py` measures each against
 | 4    | the KN7000 'Tone' hash payload's readers                        | CLOSED: ToneKeyFind and its family; payload typed `jk_tone_key`; "Dir1" is the switch-key hash                                                                                                                                              |
 | 5    | loops that test before stepping; memory-slot following          | CLOSED: both rules added and measured; what they cannot reach is a run-time dispatch (section 3)                                                                                                                                            |
 | 6    | offset-named fields                                             | CLOSED for the uses the code shows: 630 -> 256 in 941, the siblings alike (section 4)                                                                                                                                                       |
-| 7    | HD-SX3 entry vectors, the 2,625 `calls (aN)`, run-time pointers | CLOSED (section 5)                                                                                                                                                                                                                          |
+| 7    | HD-SX3 entry vectors, the 2,630 `calls (aN)`, run-time pointers | CLOSED (section 5)                                                                                                                                                                                                                          |
 | 8    | the zone side bits 0x400 / 0x800; the notes' other open items   | CLOSED: 0x400 MAIN, 0x800 SUB; the rest in section 6                                                                                                                                                                                        |
 | 9    | the opaque `unknown-dump` blocks                                | PARTLY CLOSED: every group searched, readers found for most; 173,555 formerly opaque bytes typed over the eight trees by new passes; the groups with a reader but no typing pass yet, and what stays opaque and why, are listed (section 7) |
 
@@ -177,7 +177,8 @@ used as one: 73), and fields read through `memcpy` / `strcpy` (12, their bytes a
   close, remove, getc, putc, read, write, seek, rewind, tell). Header +0x04: `XaprBoardDetect` accepts the
   board only when the word it points at also reads "XAPR". Names in `hdsx3_manual.sym`, the host's side in
   `kn6000_manual.sym` / `kn6500_manual.sym`.
-- **Indirect calls** (probe `hdsx3_indirect_calls.py`): 2,630, all resolved: 2,444 through registry slot
+- **Indirect calls** (probe `hdsx3_indirect_calls.py`): 2,630 (also `command grep -c 'calls\s*(a[0-3])'
+  hdsx3/src/program.s`; the item table above said 2,625 until 2026-11-02), all resolved: 2,444 through registry slot
   0x100 (block 0), 183 through slot 0x107 (block 7), 3 through the tag table of func_97834719. Every host
   call in `hdsx3/src/program.s` now carries the routine's name (`gen_image_s.py --host-calls`, from the
   `host_calls.tsv` gen_data_s.py writes). `milk_model.py` read slot-0x107 calls as block-0 routines
@@ -213,7 +214,8 @@ stepping, copies into RAM, the initialised RAM image (`opaque_groups.py`, `opaqu
 0x486D06DC, 942 0x486D1700, 935 0x486BCEFC, 893 0x486BB6A4, KN6000 0x4C326F54, KN6500 0x4C2B276C, KN2400
 0x485288D8, HD-SX3 0x978AFD98; PfDoubleToDecimal reads base +- 8 x the exponent), the EUC-JP strings of the
 language tables (AcLanguageTextProc `cmp 6, d0` / `mov (d0, a3), a0`), the siblings' parameter-id tries
-(`ResourceIdTrie`, the KN7000's design: KN6000 func_4C02CA6A, KN2400 func_5014A95C), the KN7000 builds' own
+(`ResourceIdTrie`, the KN7000's design, read by `ResourceIdFind`: KN6000 0x4C02CA6A, KN2400 0x5014A95C; these
+were `func_4C02CA6A` / `func_5014A95C` when this lane wrote it), the KN7000 builds' own
 "Technics Pads" copy, the KN2400's alphabetical sound lists (both strap sets).
 
 Opaque bytes per tree (main -> this branch, the table under "Measurements"): 941 45,394 -> 33,741, 942 43,654 ->
@@ -266,7 +268,8 @@ than the opaque bytes this lane typed (941: 11,653).
 
 **Bytes typed before and not after** (`rest_stats.py`'s "typed in the off run only"): 0 in the four KN7000
 builds and the HD-SX3. KN6000 962, KN2400 894 (KN6500 the same shape): the over-long struct arrays
-`func_4C02CA6A_Records` (244 x 8) / `func_5014A95C_Records` (229 x 8) that ran from the parameter-id trie's
+`func_4C02CA6A_Records` (244 x 8) / `func_5014A95C_Records` (229 x 8), named after the reader now called
+`ResourceIdFind` (the generated record labels keep the old stem, e.g. `func_4C02CA6A_Records_p0_86`), that ran from the parameter-id trie's
 root over what follows it (the root has 16 entries; ResourceIdFind never reads past them), one reader table at
 their end, and the KN2400's `func_50144C7D_Selected_1`, a "record" inside a leaf. They are what an over-long
 item held, as in lane mn10300-typer.

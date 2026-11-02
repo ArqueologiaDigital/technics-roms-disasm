@@ -51,10 +51,12 @@
 #   +0x00  0x54-byte head, the 16-character name first (SOUND_HEAD after the name)
 #   +0x54  four 0x7A-byte units, SOUND_MOD (TgPartAuxModRecPtr 0x4C00C25B)
 #   +0x23C four 0x23-byte elements, VOICE_ELEM (TgPartAuxElemRecPtr 0x4C00C28D; 0x54 + 4*0x7A + 4*0x23 = 0x2C8)
-# The 16-character name is not a parameter: until 2026-10-31 llvm-mc stripped a quoted macro argument's quotes
-# and kn7asm kept them, so no one spelling worked for both assemblers.  Both strip them now, and VOICE_HEAD's
-# `.ascii "\name"` serves both; the callers still write `.ascii "<name>"` and then SOUND_HEAD, and
-# VOICE_HEAD_TAIL (VOICE_HEAD without its name) is kept for them.
+# The 16-character name is a quoted string argument: llvm-mc and kn7asm both strip its quotes (since
+# 2026-10-31), so `.ascii "\name"` serves both.  SOUND_NAME_HEAD is the head with its name; the table flash's
+# archive (tools/gen_table_voices.py) and the KN6000 .TM files (floppy/tools/kd/kn_soundram.py) write it, and
+# VOICE_HEAD.  SOUND_HEAD (the head without its name, after an `.ascii "<name>"`) and VOICE_HEAD_TAIL (VOICE_HEAD
+# without its name) are what the program builds' data sources still write (tools/gen_data_s.py; moving them is
+# register row N-f67b155c's rest).
 .macro VOICE_HEAD_TAIL h0d, h0e, h0f
 	.byte	\h0d, \h0e, \h0f
 .endm
@@ -69,6 +71,13 @@
 #                     it with TgPartAuxHdr45Get/Set 0x4C00C318 / 0x4C00C475
 #   h46, h47          SOUND EDIT fields (TgPartAuxHdr46/47Get/Set); meaning not traced
 .macro SOUND_HEAD tone_class, h11, mod_src, h13, h14, h15, h16, h17, h18, h19, h1a, h1b, h1c, h1d, h1e, h1f, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h2a, h2b, h2c, h2d, h2e, h2f, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h3a, h3b, h3c, h3d, h3e, h3f, h40, h41, h42, h43, tone_type, eg_flag, h46, h47, h48, h49, h4a, h4b, h4c, h4d, h4e, h4f, h50, h51, h52, h53
+	.byte	\tone_class, \h11, \mod_src, \h13, \h14, \h15, \h16, \h17, \h18, \h19, \h1a, \h1b, \h1c, \h1d, \h1e, \h1f, \h20, \h21
+	.byte	\h22, \h23, \h24, \h25, \h26, \h27, \h28, \h29, \h2a, \h2b, \h2c, \h2d, \h2e, \h2f, \h30, \h31, \h32, \h33
+	.byte	\h34, \h35, \h36, \h37, \h38, \h39, \h3a, \h3b, \h3c, \h3d, \h3e, \h3f, \h40, \h41, \h42, \h43, \tone_type, \eg_flag
+	.byte	\h46, \h47, \h48, \h49, \h4a, \h4b, \h4c, \h4d, \h4e, \h4f, \h50, \h51, \h52, \h53
+.endm
+.macro SOUND_NAME_HEAD name, tone_class, h11, mod_src, h13, h14, h15, h16, h17, h18, h19, h1a, h1b, h1c, h1d, h1e, h1f, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h2a, h2b, h2c, h2d, h2e, h2f, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h3a, h3b, h3c, h3d, h3e, h3f, h40, h41, h42, h43, tone_type, eg_flag, h46, h47, h48, h49, h4a, h4b, h4c, h4d, h4e, h4f, h50, h51, h52, h53
+	.ascii	"\name"
 	.byte	\tone_class, \h11, \mod_src, \h13, \h14, \h15, \h16, \h17, \h18, \h19, \h1a, \h1b, \h1c, \h1d, \h1e, \h1f, \h20, \h21
 	.byte	\h22, \h23, \h24, \h25, \h26, \h27, \h28, \h29, \h2a, \h2b, \h2c, \h2d, \h2e, \h2f, \h30, \h31, \h32, \h33
 	.byte	\h34, \h35, \h36, \h37, \h38, \h39, \h3a, \h3b, \h3c, \h3d, \h3e, \h3f, \h40, \h41, \h42, \h43, \tone_type, \eg_flag

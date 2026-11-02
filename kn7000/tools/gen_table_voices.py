@@ -97,9 +97,9 @@ def vals(bs):
     return ", ".join(f"0x{x:02x}" for x in bs)
 
 
-def sound_head(c, o):
-    """The tone head after its name, +0x10..+0x53 (SOUND_HEAD, src/include/voice_record.inc)."""
-    return f"    SOUND_HEAD\t{vals(c[o + 0x10:o + 0x54])}"
+def sound_head(c, o, comment=""):
+    """The tone head with its 16-character name, +0x00..+0x53 (SOUND_NAME_HEAD, src/include/voice_record.inc)."""
+    return f"    SOUND_NAME_HEAD\t{asc(c[o:o + 16])}, {vals(c[o + 0x10:o + 0x54])}" + (f"\t# {comment}" if comment else "")
 
 
 def sound_mod(c, q, k):
@@ -239,8 +239,8 @@ def internal_voice_archive(d, s, e, label, ref):
         size = (vs[i + 1] - o) if i + 1 < len(vs) else 0x10 + 0x1C
         if (size - 0x10) % 0x1C or size > 0x10 + 0x1C * 4:
             raise SystemExit(f"{label}: voice record 0x{o:x} size {size}")
-        vl = [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 13])}",
-              f"    VOICE_HEAD_TAIL\t{vals(c[o + 13:o + 16])}\t# +0x0D: VoiceSubRecFetch's selector byte"]
+        vl = [f"{labels[o]}:",
+              f"    VOICE_HEAD\t{asc(c[o:o + 13])}, {vals(c[o + 13:o + 16])}\t# +0x0D: VoiceSubRecFetch's selector byte"]
         for k in range((size - 0x10) // 0x1C):
             r = o + 0x10 + 0x1C * k
             vl.append(f"    VOICE_SUB\t{vals(c[r:r + 0x1C])}\t# sub-record {k}")
@@ -316,7 +316,7 @@ def internal_voice_archive(d, s, e, label, ref):
                 q = o + 0x27 + 3 * k
                 tl.append(f"    tone_note\t0x{c[q]:02x}, 0x{c[q + 1]:02x}, 0x{c[q + 2]:02x}\t# note {k}")
         elif size >= 0x54 and ((size - 0x54) % 0x7A == 0 or size < 0x54 + 0x7A):
-            tl.append(sound_head(c, o))
+            tl[-1] = sound_head(c, o)                   # the name moves into the head macro
             for k in range((size - 0x54) // 0x7A):
                 q = o + 0x54 + 0x7A * k
                 tl.append(f"{labels[o]}_Unit{k}:")
@@ -351,7 +351,7 @@ def internal_voice_archive(d, s, e, label, ref):
     t = lambda k: u32(c, T + k)                                        # noqa: E731
     # T + 0x00: a tone record outside the directory, "Initial" (0x54 + 4 x 0x7A)
     o = t(0x00)
-    tl = [f"    .ascii\t{asc(c[o:o + 16])}", sound_head(c, o)]
+    tl = [sound_head(c, o)]
     nu = (t(0x04) - o - 0x54) // 0x7A
     for k in range(nu):
         q = o + 0x54 + 0x7A * k
@@ -363,7 +363,7 @@ def internal_voice_archive(d, s, e, label, ref):
     o = t(0x04)
     labels[o] = "JkDefaultVoice"
     put(o, 0x2C, ["JkDefaultVoice:\t\t# bank block +0x04 (VoiceRecDefaultPtr 0x484497E0)",
-                  f"    .ascii\t{asc(c[o:o + 13])}", f"    VOICE_HEAD_TAIL\t{vals(c[o + 13:o + 16])}",
+                  f"    VOICE_HEAD\t{asc(c[o:o + 13])}, {vals(c[o + 13:o + 16])}",
                   f"    VOICE_SUB\t{vals(c[o + 16:o + 0x2C])}\t# sub-record 0"])
     # the sound directory's +0x10 / +0x14: 128 sixteen-character names and a 128-byte table
     o = u32(c, D + 0x10)
@@ -413,7 +413,7 @@ def internal_voice_archive(d, s, e, label, ref):
           "a tone head, four units and four elements (src/include/voice_record.inc)"]
     for k in range(n_se):
         q = o + 0x2C8 * k
-        sl += [f"    .ascii\t{asc(c[q:q + 16])}\t# record {k}", sound_head(c, q)]
+        sl += [sound_head(c, q, f"record {k}")]
         sl += [sound_mod(c, q + 0x54 + 0x7A * u, u) for u in range(4)]
         sl += [f"    VOICE_ELEM\t{vals(c[q + 0x23C + 0x23 * e:q + 0x23C + 0x23 * (e + 1)])}\t# element {e}" for e in range(4)]
     if (t(0x00) - o) % 0x2C8:
