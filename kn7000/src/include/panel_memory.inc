@@ -233,12 +233,14 @@
 	.byte	\tag, 4, \volume, \tg_bits, \midi_octave_local, \midi_channel
 .endm
 # tag 0x41 fields:
-#   +0x00 m008040           bits 0-2 0x008040, 0..5
-#   +0x03 m00c084           bit 0 0x00C084, bit 1 0x00C083 (ApcSelFunc)
+#   +0x00 conductor         bits 0-2 0x008040 CONDUCTOR, 0..5 (the KN5000 tag 0x90 SndParam_Conductor; KN6000
+#                           func_4C02EDD9 / func_4C02F302 pick the RIGHT1 / RIGHT2 / left-zone parts from it)
+#   +0x03 left_hold_on_bass bit 0 0x00C084 LEFT HOLD (LeftholdToggleFunc), bit 1 0x00C083 ON BASS
+#                           (OnbassToggleFunc); ApcSelFunc
 #   +0x04 r_octave          0x008038, 40..88 (AcRightOctProc; the PANEL MEMORY filter row "R1/R2 OCTAVE")
-.macro PMR_41_8 m008040, x01, x02, m00c084, r_octave, x05, x06, x07
+.macro PMR_41_8 conductor, x01, x02, left_hold_on_bass, r_octave, x05, x06, x07
 	.byte	0x41, 8
-	.byte	\m008040, \x01, \x02, \m00c084, \r_octave, \x05, \x06, \x07
+	.byte	\conductor, \x01, \x02, \left_hold_on_bass, \r_octave, \x05, \x06, \x07
 .endm
 # tag 0x42 fields:
 #   +0x00 rhythm_lo         0x00C000 the rhythm: kind 6, a 24-bit style id over +0..+2 (MainGetRhythmName,
@@ -296,11 +298,12 @@
 	.byte	\m005040, \x01
 .endm
 # tag 0x46 fields:
-#   +0x00 m00e001           bits 0-6 0x00E001, bit 7 0x00E002
+#   +0x00 pad_volume        bits 0-6 0x00E001, bit 7 0x00E002: sent as controller 7 / code 0x90 to parts 0x1D /
+#                           0x1E, "PAD PART1" / "PAD PART2" (KN6000 func_4C0484C7, ApcToSMFConvGrid)
 #   +0x01 pad_bank          0x00E005 the PAD BANK (AcPadBankProc, MainPAD_GetPadName)
-.macro PMR_46_4 m00e001, pad_bank, x02, x03
+.macro PMR_46_4 pad_volume, pad_bank, x02, x03
 	.byte	0x46, 4
-	.byte	\m00e001, \pad_bank, \x02, \x03
+	.byte	\pad_volume, \pad_bank, \x02, \x03
 .endm
 # tag 0x47 fields:
 #   +0x00 midi_bits0        MIDI message flags, bits 0x002021 (0-1), 0x002020, 0x002022, 0x002023, 0x002013,
