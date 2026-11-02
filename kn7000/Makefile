@@ -759,6 +759,7 @@ symbols-$(1): $$(REFS) $$(B$(1)_TABLE) baserom/kn7000_program_b$(1).rom
 
 program-src-$(1): tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py tools/offset_map.py \
 		kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym $$(wildcard kn7000_b$(1)_bycode.sym) \
+		$$(wildcard kn7000_b$(1)_own.sym) \
 		$$(wildcard annotations/*.ann) $$(REFS) $$(B$(1)_TABLE) baserom/kn7000_program_b$(1).rom
 	UNIDASM=$$(UNIDASM) $$(PYTHON) tools/gen_program_s.py --profile b$(1)
 
@@ -767,7 +768,7 @@ ported-names-$(1): tools/port_names_by_code.py tools/gen_image_s.py src/b$(1)/pr
 	$$(PYTHON) tools/port_names_by_code.py --a-rom baserom/kn7000_program.rom \
 	    $$(B941_CODE:%=--a-code %) --a-sym kn7000_manual.sym kn7000_exports_from_942.sym kn7000.sym \
 	    --b-rom baserom/kn7000_program_b$(1).rom --b-base 0x48400000 $$(B$(1)_CODE:%=--b-code %) \
-	    --b-sym kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym \
+	    --b-sym kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym $$(wildcard kn7000_b$(1)_own.sym) \
 	    --b-src src/b$(1)/program.s $$(wildcard src/b$(1)/program/*.s) \
 	    --out kn7000_b$(1)_bycode.sym --unidasm $$(UNIDASM) \
 	    --title "KN7000 program $(1): names carried from program 941 by code (routines the offset map cannot place)"

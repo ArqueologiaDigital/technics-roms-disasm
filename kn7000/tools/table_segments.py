@@ -98,12 +98,12 @@ DEMO = [
 # segment, the format and, for 2-bpp items, each item's row length in bytes (by the
 # number of the first slot that points at it).
 #  57: AcUserHpMenuProc draws item d0 with DrawBitmapSPFast4 (2 bpp, colours 0x485FA224)
-#      in a box GetBox takes from the item's view (table 0x485F921C, 12-byte rows: view
-#      id, item); the box sizes are in the view resources, not traced.  The row lengths
-#      below are an INFERENCE: heights a multiple of the 13-pixel text line, the row
-#      length whose rows repeat most, checked by eye (all 47 pictures show coherent
-#      panels, notes/table-semantics-2026-10-29.md); slot 47 overridden to 40 (at 80 it
-#      shows two half-panels side by side).  Any row length gives the same bytes back.
+#      in half the box of its HOME PAGE part's view (GetBox, func_484968E2 halves it):
+#      a picture is ceil(W/2) x ceil(H/2) of the view, so a row is ceil(W/2) / 4 bytes.
+#      The row lengths below are those (slot 47's 40 included), checked against every
+#      item by notes/mn10300-names-probes/ramgui_userhp_boxes.py (lane mn10300-names,
+#      2026-11-02; notes/table-semantics-2026-10-29.md).  Any row length gives the same
+#      bytes back.
 #  58: AcTcdImageProc draws the item with DrawBitmapSP2(width 240, height 80): 1 bpp.
 PNG_GROUPS = {
     57: ("p2", {0: 80, 1: 80, 2: 80, 3: 80, 4: 80, 5: 80, 6: 80, 7: 80, 8: 80, 9: 80, 10: 80,

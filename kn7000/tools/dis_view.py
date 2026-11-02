@@ -43,7 +43,7 @@ def main():
     delta = G.LIB_DELTA if mode == "lib" else G.BASE
     d = open(G.ROM, "rb").read()
     names = {}
-    for path in (G.SYM, G.MANUAL_SYM):
+    for path in [G.SYM] + ([G.MANUAL_SYM] if isinstance(G.MANUAL_SYM, str) else list(G.MANUAL_SYM)):
         if os.path.exists(path):
             for ln in open(path):
                 p = ln.split()

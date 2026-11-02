@@ -30,8 +30,10 @@ import struct
 PART_NAMES = ["Drum", "Bass", "Acc1", "Acc2", "Acc3", "Acc4", "Acc5", "Perc"]
 SLOT_NAMES = ["Var1", "Var1Fill1", "Var1Fill2", "Var2", "Var2Fill1", "Var2Fill2",
               "Var3", "Var3Fill1", "Var3Fill2", "Var4", "Var4Fill1", "Var4Fill2",
-              "Intro1A", "Intro1B", "Intro2A", "Intro2B",
-              "Ending1A", "Ending1B", "Ending2A", "Ending2B"]
+              # slots 12..19: INTRO 1 = 12 + major/minor, ENDING 1 = 14, INTRO 2 = 16, ENDING 2 = 18
+              # (func_484437DA / func_484439EB; the half is ChordTypeIsMinor; notes/ic18-rhythm-rom.md)
+              "Intro1Major", "Intro1Minor", "Ending1Major", "Ending1Minor",
+              "Intro2Major", "Intro2Minor", "Ending2Major", "Ending2Minor"]
 MACROS = "src/table/style_macros.inc"
 STYLE_DIR = "styles"            # under the --jpg-dir (src/table)
 

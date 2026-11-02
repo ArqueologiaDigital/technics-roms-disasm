@@ -247,13 +247,13 @@ CONVERT = {
     #      resource WINDOW PROBE and the table-ROM segment accessors
     #      (notes/sequenced-playback-and-style-data-rootcause.md 2a) ----------
     "StyleBuiltinNameTableInit", "StyleNameSourceSet", "StyleNameCommit",
-    "StyleNameCommitMem", "StyleNameCommitCustom", "StyleVariationNameGet",
+    "StyleNameCommitMem", "StyleNameCommitCustom", "StyleCountInRecordGet",
     "StyleRecordSlotSelect", "StyleRecordBindBuiltin", "StyleRecordBindMem",
     "StyleRecordBindCustom", "StyleNameModuleBoot", "StyleResourceVerify",
     "StyleNameSelectCommit", "StyleSlotRecordDiffers", "StyleRecordSelectBind",
     "StyleNameAndRecordSelect", "StyleNameBufCopy", "StyleBoundRecByteCfGet",
     "StyleBoundRecByteCeInc", "StyleBoundRecByteCfLow3",
-    "StyleVariationNameFlagGet", "StyleBuiltinNameResolve",
+    "StyleCountInBoundGet", "StyleBuiltinNameResolve",
     "StyleResourceWindowProbe", "TableRomStyleSubTablePtr",
     "TableRomStyleResourcePtr", "TableRomSeg04Ptr", "TableRomNullPtr",
     "TableRomSeg01PtrSize", "TableRomSeg02PtrSize", "TableRomSeg03PtrSize",
@@ -415,8 +415,9 @@ DATA_ISLANDS = {
     # notes/kn2400-boot.md) and that payload, `retf 0, 0`
     0x3F6EE6: (0x3F6F01, [
         (0x3F6EE6, "byte", 3, "the last record's payload: `retf 0, 0`, copied to 0x4C03FFF0"),
-        (0x3F6EE9, "half", 2, "record 1: flags 0x0001, length 0xDF15 (the copy runs to the next"
-                              " record's src), src LibRomImageBase, dest 0x4C000000"),
+        (0x3F6EE9, "half", 2, "record 1: flags 0x0001, then the low half of the copy length,"
+                              " which the loader ignores (the copy runs to the next record's src),"
+                              " src LibRomImageBase, dest 0x4C000000"),
         (0x3F6EED, "ptr", 1, None),
         (0x3F6EF1, "word", 1, None),
         (0x3F6EF5, "half", 2, "record 2, the last: flags 0x8003, length 3, src LibLoadSentinel,"
@@ -2963,20 +2964,38 @@ def load_syms(data):
     return sorted(syms)
 
 
+OWN_SYM = None          # an older build's own names (select_ported_build): they win
+
+
+def _sym_rows(path):
+    out = []
+    for line in open(path):
+        if line.lstrip().startswith(";"):
+            continue
+        m = re.match(r"0x([0-9A-Fa-f]+)\s+(\S+)", line)
+        if m:
+            out.append((int(m.group(1), 16), m.group(2)))
+    return out
+
+
 def load_manual_syms():
     """Hand-recovered names from kn7000_manual.sym (uncommented entries only).
     Names ending in `_entry` mark the MN10300 register-save-`call` entry a few
     bytes after a function's movm prologue: they become equates + in-code
-    comment markers, but NOT function-split boundaries."""
+    comment markers, but NOT function-split boundaries.
+    With OWN_SYM (an older build's kn7000_<b>_own.sym), a row of the other
+    files at one of its addresses, or named like one of its names (X and
+    X_entry count as one), is dropped: the build's own names correct ported ones."""
+    own = _sym_rows(OWN_SYM) if OWN_SYM else []
+    own_at = {a for a, _ in own}
+    stem = lambda nm: nm[:-6] if nm.endswith("_entry") else nm
+    own_nm = {stem(n) for _, n in own}
     syms = []
     for path in ([MANUAL_SYM] if isinstance(MANUAL_SYM, str) else MANUAL_SYM):
-        for line in open(path):
-            if line.lstrip().startswith(";"):
-                continue
-            m = re.match(r"0x([0-9A-Fa-f]+)\s+(\S+)", line)
-            if m:
-                syms.append((int(m.group(1), 16), m.group(2)))
-    return syms
+        if path == OWN_SYM:
+            continue
+        syms += [(a, n) for a, n in _sym_rows(path) if a not in own_at and stem(n) not in own_nm]
+    return syms + own
 
 
 def discover_functions(d):
@@ -3789,9 +3808,11 @@ PORTED_BUILDS = {
         # data islands of this build alone (its file offsets), added to the ported ones
         islands={
             0x3F55CE: (0x3F55CF, [
-                (0x3F55CE, "byte", 1, "one byte after the library loader descriptor's last record,"
-                                     " before the erased flash; 941 and 935 end at that record"
-                                     " (TODO: purpose unknown)"),
+                (0x3F55CE, "byte", 1, "0xF0, one byte after the library loader descriptor's last"
+                                     " record, before the erased flash. The loader (called by"
+                                     " ResetEntry) stops at the record whose flags have bit 15 set"
+                                     " and no code reads past it; 941, 935 and 929 end at that"
+                                     " record. [INFERENCE] left by the tool that built the image"),
             ]),
         },
         title=[
@@ -3823,7 +3844,7 @@ MAP_CACHE = "build/offset-maps"     # offset_map.cached(): the maps the Makefile
 def select_ported_build(key):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
     global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA, DATA_SRC
-    global FUNC_END, LIB_CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS, FUNC_DOC
+    global FUNC_END, LIB_CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS, FUNC_DOC, OWN_SYM
     cfg = PORTED_BUILDS[key]
     code941 = [(0x80, R1_END, BASE), (LIB_FILE_BASE, IMAGE_END, LIB_CPU_BASE - LIB_FILE_BASE)]
     from port_symbols import Porter
@@ -3857,6 +3878,12 @@ def select_ported_build(key):
     MANUAL_SYM = [f"kn7000_{key}_manual.sym", f"kn7000_{key}_exports.sym"]
     if os.path.exists(f"kn7000_{key}_bycode.sym"):
         MANUAL_SYM.append(f"kn7000_{key}_bycode.sym")
+    # names written for this build alone (hand-curated): code 941 rewrote, and
+    # corrections where a ported name sits on the wrong routine; load_manual_syms
+    # lets them replace the ported rows they collide with
+    if os.path.exists(f"kn7000_{key}_own.sym"):
+        OWN_SYM = f"kn7000_{key}_own.sym"
+        MANUAL_SYM.append(OWN_SYM)
     INHERIT_SYMS = (f"kn7000_{key}_exports.sym",)
     OUT = cfg["out"]
     SYMBOLS_INC = os.path.join(os.path.dirname(OUT), "symbols.inc")
@@ -3945,11 +3972,13 @@ def mark_edited_docs(key, start941, code941, code_new):
         return img
     a, b = image("baserom/kn7000_program.rom", code941), image(ROM, code_new)
     here = {}
-    for path in [SYM] + MANUAL_SYM:
+    for path in [SYM]:
         for line in open(path):
             m = re.match(r"0x([0-9A-Fa-f]{8})\s+(\S+)", line)
             if m and not line.lstrip().startswith(";"):
                 here.setdefault(m.group(2), int(m.group(1), 16))
+    for cpu, nm in load_manual_syms():         # the own names' corrections apply here too
+        here.setdefault(nm, cpu)
     build = key.lstrip("b")
     note = ("(This note was written for build 941. This build's routine is different",
             f" code -- make check-names-{build} lists it -- so check the note against it.)")
