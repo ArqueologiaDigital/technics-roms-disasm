@@ -128,10 +128,15 @@
 .macro PMR_END
 	.byte	0xff, 0xff
 .endm
-# 0x40, 18 bytes: the memory's 16-character name, then n10, n11.  The name is not a parameter: until
-# 2026-10-31 llvm-mc stripped a quoted argument's quotes and kn7asm kept them.  Both strip them now, so
-# the name could become one (`.ascii "\name"`); the callers still write PMR_NAME_HEAD, .ascii "<name>",
-# PMR_NAME_TAIL.
+# 0x40, 18 bytes: the memory's 16-character name, then n10, n11.  The name is a quoted string argument
+# (llvm-mc and kn7asm both strip its quotes, so `.ascii "\name"` serves both, as VOICE_HEAD does).
+.macro PMR_NAME name, n10, n11
+	.byte	0x40, 18
+	.ascii	"\name"
+	.byte	\n10, \n11
+.endm
+# The same record in three lines, PMR_NAME_HEAD, `.ascii "<name>"`, PMR_NAME_TAIL: what the program builds'
+# data sources still write (kn7000/tools/gen_data_s.py; moving them is register row N-f67b155c's rest).
 .macro PMR_NAME_HEAD
 	.byte	0x40, 18
 .endm

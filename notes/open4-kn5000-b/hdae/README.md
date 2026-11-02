@@ -268,9 +268,12 @@ connection on two sheets:
 
 - **WIRING CONNECTION diagram** (sheet II-1/II-2, PDF page 27): the MAIN board's **CN6**, a two-row connector
   "1 ... 34 / 35 ... 68", with the arrow "FOR HSO (OPTION)".  No cable is drawn to it.  **W3 (QEXGZA34060B) is a
-  different cable**: it runs from MAIN's CN5 (17 pins), through a ferrite core, to another board.  hdae5000.md's
-  "cable W3 (part number QEX0ZA34008) ... labeled HSQ(OPTION)" is wrong on both counts: the label reads **HSO**,
-  and W3 is not the option's cable.
+  different cable**: it runs from MAIN's CN5 (17 pins), through a ferrite core, to another board.  hdae5000.md
+  said the HD-AE5000 connects "via cable W3 (part number QEX0ZA34008)", and that the connector is labeled
+  "HSQ(OPTION)" on the block diagram (II-3) and "FOR H.D. (OPTION)" on the wiring diagram (II-1).  Against the
+  wiring sheet: W3 is not the option's cable, and the arrow there reads **"FOR HSO (OPTION)"**.  The block
+  diagram's label (II-3) was not re-read here; "HSQ" there is [INFERENCE] the same "HSO" misread.  (Corrected
+  2026-11-02: this paragraph used to misquote the page as calling W3 itself "labeled HSQ(OPTION)".)
 - **MAIN P.C. diagram** (sheet II-8, PDF page 30) lists CN6 pin by pin, 70 pins (the wiring sheet's "68" counts
   without the last two ground pins, 69 and 70):
 
@@ -329,7 +332,9 @@ then crop x 0.585-0.70, y 0.13-0.95 of the page; the wiring sheet is PDF page 27
 > supplies (+15M, +15A, -15A, +5A), which the HD-AE5000 does not use.  The board side is not documented: the
 > KN5000 service manual has no HD-AE5000 sheet.
 
-and in "Main CPU Bus Signals" rename PPPCS to PPIFCS and HDOCS to HDDCS.
+and in "Main CPU Bus Signals" rename PPPCS to PPIFCS, HDOCS to HDDCS and HSQRAM to HSORAM (the SRAM chip
+select, not an "address space qualifier"; the page's "HD control signals (HDOCS, HDDRDY, HSQRAM)" line too).
+(HSQRAM added 2026-11-02; the draft had missed it.)
 
 ## kn5000-qnf: HD-TechManager5000
 
@@ -345,9 +350,12 @@ Basic 5 program, 1,353,728 bytes, importing only `MSVBVM50.DLL`), `ppkn50.dll` (
 0x72AA bytes beginning "KN5000 SOUND RAM").  Its install notes (in the script) call it "Version 1.40", from
 keysoftservice.ch.
 
-- **The DLL interface.**  The program declares the 23 `PP50*` functions; ppkn50.dll exports them plus four more
-  (`AskTheConvMem`, `OpenThisFile`, `SaveThisFile`, `PP50TestParallelModus`) that send nothing.  Which command each
-  sends (`probes/ppkn50_command_map.py`, from the `push <command>; push <port>; call 0x10002810` before each link
+- **The DLL interface.**  ppkn50.dll exports 26 functions: 23 named `PP50*`, and `AskTheConvMem`,
+  `OpenThisFile`, `SaveThisFile`.  19 of the `PP50*` send a PC-link command (the table).  The other four,
+  `PP50OpenThePortNumber`, `PP50CloseThePort`, `PP50InitializeTheDll` and `PP50TestParallelModus`, send none,
+  and nor do the three others.  (Corrected 2026-11-02 from a re-run of the probe: this said the program declares
+  23 `PP50*` functions and the DLL exports "four more"; how many the VB program declares was not counted.)
+  Which command each sends (`probes/ppkn50_command_map.py`, from the `push <command>; push <port>; call 0x10002810` before each link
   transaction):
 
 | Export                           | Commands | Export                            | Commands |
@@ -387,8 +395,8 @@ either disk set).  It is out of this repository's scope beyond this identificati
 
 > The archived disks are Wise installers.  `setup.EXE` / `setup.W02` install **HD-TechManager5000 v1.40**, a
 > Visual Basic 5 program (`HD-TechManager5000.exe`) over `ppkn50.dll`, with German and English help, `Fls.ini` and
-> sample songs.  The DLL's 23 `PP50*` functions map onto the HD-AE5000's PC-link commands as follows: (table
-> above).  Commands 12, 15, 19 and 20 are never sent: this software cannot use the v2.x XAP flash command.  The
+> sample songs.  19 of the DLL's 23 `PP50*` functions send one of the HD-AE5000's PC-link commands, as follows
+> (table above); port open / close, initialisation and `PP50TestParallelModus` send none.  Commands 12, 15, 19 and 20 are never sent: this software cannot use the v2.x XAP flash command.  The
 > program keeps the three table blocks on the PC as `Dirblk.dat`, `Fileblk.dat` and `Flsblk.dat` and backs up
 > songs part by part with a `.TTX` long-name file each.  `HDTMD120.EXE` / `.W02` is a different, 16-bit program
 > for the KN3000's hard disk (`Kn30pp16.dll`), not for the HD-AE5000.
@@ -430,7 +438,9 @@ switch tables were also reached through `.set` aliases `COMM_InitFuncTable + 540
 | `HDAE5000_PPORT_Svc29_MainHook0538`   | `HDAE5000_PPORT_Svc29_SleepMainTask`                                                        | kn5000-e7f (`RootFn_SleepMainTask`), v2.x                  |
 | `HDAE5000_PPORT_Svc30_MainHook053C`   | `HDAE5000_PPORT_Svc30_WakeUpMainTask`                                                       | kn5000-e7f (`RootFn_WakeUpMainTask`), v2.x                 |
 
-The technics-docs pages that quote old names: boot-sequence.md and hdae5000.md (`HDAE5000_Get_Status_Byte`).
+The technics-docs pages that quote old names: boot-sequence.md and hdae5000.md (`HDAE5000_Get_Status_Byte`), and
+hdae5000.md (line 554) and hdae5000-filesystem.md (line 361) (`HDAE5000_PPORT_Svc30_MainHook053C`, added
+2026-11-02).
 
 ## Outcomes
 

@@ -105,7 +105,7 @@ TITLE_MDEXC) and `SeqData_Handlers` (`SeqData_DispatchHandler`, parameter and un
 
 ### Bulk transfer
 
-The data-dump block headers (`SysEx_TechMsg_*`, sent by `MidiPkt_ArpConfigChain_Data_Helper*`, and recognised as
+The data-dump block headers (`SysEx_TechMsg_*`, sent by `MidiPkt_SendBlock_*`, and recognised as
 ids 11-25) give each group's blocks; the receive handlers' headers give where each lands:
 
 | id | header after `2D 01 28 12` | group / block                      | lands at (receive side)                          |

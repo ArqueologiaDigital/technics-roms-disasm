@@ -232,7 +232,7 @@ Renames (v10/v9/v7/v6/v5): `AccPedalConfig_ApplyTempo` -> `SeqEvt_ApplyTempoEven
 > blocks whose first block is in the song record's track table (+0xD0, 16 x {flags, u16 block}).  The
 > record also keeps each track's tail block (+0x78) and write offset there (+0x98), the free-block list
 > (+0xAF) and the free count (+0xB1).  An .SQT file is these records and blocks
-> ([Floppy Disk Formats]({{ site.baseurl }}/floppy-disk-formats/#songs-sqt)).
+> ([Floppy Disk Formats]({{ site.baseurl }}/floppy-disk-formats/#kn5000-disk-files)).
 >
 > ## Events
 >
@@ -279,8 +279,8 @@ The 41 chord types (`ChordTables_TypeIntervals`, row names now in the source; th
 
 | type | intervals | name   | type | intervals | name    | type  | intervals | name       |
 |------|-----------|--------|------|-----------|---------|-------|-----------|------------|
-| 1    | 0 4 7     | M      | 15   | 4 7 10 2  | 9       | 29    | 0 4 8 10  | 7(#5)      |
-| 2    | 0 4 7 10  | 7      | 16   | 4 7 10 1  | 7(b9)   | 30    | 0 4 9 10  | 7(13)      |
+| 1    | 0 4 7     | M      | 15   | 4 7 10 2  | 9       | 29    | 0 4 8 10  | 9(#5) *    |
+| 2    | 0 4 7 10  | 7      | 16   | 4 7 10 1  | 7(b9)   | 30    | 0 4 9 10  | 7(b9,13) * |
 | 3    | 0 4 7 11  | M7     | 17   | 4 7 11 2  | M7(9)   | 31-39 | (zero)    | no voicing |
 | 4    | 0 4 8     | aug    | 18   | 4 7 9 2   | 6(9)    | 40    | 0 4 7 2   | add9       |
 | 5    | 0 3 7     | m      | 19   | 0 3 7 9   | m6      | 41    | 0 3 7 2   | madd9      |
@@ -293,6 +293,14 @@ The 41 chord types (`ChordTables_TypeIntervals`, row names now in the source; th
 | 12   | 0 4 8 10  | 7(#5)  | 26   | 0 4 8 11  | M7(#5)  |       |           |            |
 | 13   | 0 4 6     | (b5)   | 27   | 0 3 6 11  | mM7(b5) |       |           |            |
 | 14   | 0 4 6 10  | 7(b5)  | 28   | 0 4 9 10  | 7(13)   |       |           |            |
+
+\* Types 29 and 30 have the same voicing rows as 12 and 28 (checked against the ROM: the records at
+`ChordTables_TypeIntervals` + 4 x 28 and + 4 x 29 are `00 04 08 0A` and `00 04 09 0A`).  What tells them apart
+is recognition: `ChordRecog_IntervalMaskTable` gives type 29 for held sets with a 9th, e.g. 0 2 4 8 10, and
+type 30 for held sets with a flat 9th, e.g. 0 1 4 9 10 (`probes/chord_table_check.py`; every entry of the four types is listed by
+`notes/misc2-2026-11-02/probes/chord_types_29_30.py`).  A four-note record has no room for the fifth tone, so the
+names are the recognised chords, voiced as 7(#5) and 7(13).  (Corrected 2026-11-02: this table named them
+7(#5) and 7(13), the same as 12 and 28.)
 
 Types 15-18, 21, 22 and 24 are voiced without the root (four tension notes).  Types 31-39 are recognized
 (103 table entries, e.g. held 0 5 6 11) but their voicing rows are zero; where they get their notes was

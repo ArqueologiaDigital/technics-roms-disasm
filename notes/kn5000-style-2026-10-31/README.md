@@ -114,7 +114,7 @@ BEND RANGE and two bytes of MIDI / keyboard bit fields. So the part bytes the ol
 **DSP slot records** (tags 0x61 0x63 0x64 0x65 0x66): +0 is the DSP effect number; the record's other bytes are
 that effect's parameters in order, from the v10 tables `DspFxParamCountTable` (count), `DSPCfg_LookupAndExtract_
 PtrTable` ({min, max, param id}, big-endian) and `DspParamName_Table` (`probes/dsp_slot_params.py`, committed as
-`specs/dsp_effect_params.json`). A parameter whose range passes 255 takes two bytes, big-endian; one with a
+`notes/floppy-kn5000-2026-10-29/specs/dsp_effect_params.json`). A parameter whose range passes 255 takes two bytes, big-endian; one with a
 negative minimum is a signed byte. Measured over the 23,487 DSP slot records of the floppies, that layout decodes
 every saved record of 28 of the 44 effects used; it fails in some records of CHORUS (1,640 of 1,680 fit),
 CONCERT REVERB 1 (1,613 of 1,719), WAVE REVERB 2, EXCITER and NO OPERATION, and in every record of the reverbs 18,
@@ -133,7 +133,7 @@ bit 7 of the DRUM bank byte = arranged. `AccVoiceState_Snapshot` writes them fro
 `AccStyle_InlinedBlock_Skip2` sets. `describe_lsw` types the area with the `sndarg` macro; the census
 `unknown-dump` opaque group of 63 files is gone.
 
-### SQT slot header (`specs/sqt_slot_header.json`, generator `probes/write_sqt_spec.py`)
+### SQT slot header (`notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json`, generator `notes/floppy-kn5000-2026-10-29/probes/write_sqt_spec.py`)
 
 `probes/sqt_field_refs.py` searches every field of the song record in v5..v10 in four spellings (absolute address
 or `SEQ_SONG_RECORD+n` or any `.equ` name in the record; displacements after a song-record base; the slot accessors
@@ -154,7 +154,7 @@ with a constant BC). Results:
 The old "count" names came from an analogy; the "password" name also corrects the json's "no writer of a non-zero
 value found".
 
-### TM sound record (`specs/tm_sound_record.json`, generator `probes/gen_tm_spec.py`)
+### TM sound record (`notes/floppy-kn5000-2026-10-29/specs/tm_sound_record.json`, generator `notes/floppy-kn5000-2026-10-29/probes/gen_tm_spec.py`)
 
 `probes/tm_subcpu_refs.py` lists sub-CPU v1.42 reads through a tone-record pointer (Part_PatchRecord_Ptr, voice
 slot +0x13) or a partial-block pointer (voice slot +0x17). Results: +0x12 = `partial_flag_codes`, four 2-bit codes

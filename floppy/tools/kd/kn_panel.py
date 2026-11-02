@@ -49,7 +49,7 @@ def block_lines(p, recs, what):
         pay = p[q + 2:q + 2 + n]
         v = ', '.join(str(x) for x in pay)
         if t == 0x40 and n == 18:
-            L += ['\tPMR_NAME_HEAD', '\t.ascii\t%s' % s_esc(pay[:16]), '\tPMR_NAME_TAIL\t%d, %d' % (pay[16], pay[17])]
+            L.append('\tPMR_NAME\t%s, %d, %d' % (s_esc(pay[:16]), pay[16], pay[17]))
         elif t in PARTS and n == 72:
             L.append('\tPMR_PART\t0x%02x, %s' % (t, v))
         elif 0x13 <= t <= 0x1A and n == 4:

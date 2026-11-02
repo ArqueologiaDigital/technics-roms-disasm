@@ -51448,9 +51448,11 @@ F_01WORKS__SEQ:
 	seq_block	0x5f, 0, 839	; block 838: in no chain
 ; events of an earlier song, in the song grammar where they parse (not reached: in no chain)
 	sq_ev	0x82	; +5: an end of track, as every free block that held a song starts (measured)
-; the rest (250 bytes) does not parse as events of the song grammar (stopped at status 0xdf)
-	; census: opaque -- unknown-dump: free-block bytes that are not song events (left over in the store)
-	.incbin	"qsdisk.img", 0x50f06, 250
+; the rest (250 bytes) is the 2-byte pattern DF F7 repeated, not events: [INFERENCE] RAM nothing wrote
+; after the 0x82 (notes/misc2-2026-11-02/probes/wsa1_f7df_runs.py)
+	.rept	125
+	.byte	0xdf, 0xf7
+	.endr
 	seq_block	0x7f, 838, 840	; block 839: in no chain
 ; bytes of an earlier use of this RAM: combination records (cmb_*, as a .CMB holds them) cut by the
 ; 5-byte block headers the free-chain set-up wrote over them
