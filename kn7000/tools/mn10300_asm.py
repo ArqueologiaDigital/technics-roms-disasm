@@ -358,10 +358,17 @@ def enc_move(mnem, ops, pc):
         return enc_ldst(mnem, mem(dst), reg(src), store=True)
 
     # special-register moves (mdr / psw)
+    # (data registers only: the encoding has no address-register form, and an An would come out as the Dn)
     if mnem == "mov" and src in ("mdr", "psw"):
-        _, di = reg(dst); return b"\xf2" + u8((0xE0 if src == "mdr" else 0xE4) | di)
+        k, di = reg(dst)
+        if k != "d":
+            raise EncError(f"mov {src}, {dst}: only a data register")
+        return b"\xf2" + u8((0xE0 if src == "mdr" else 0xE4) | di)
     if mnem == "mov" and dst in ("mdr", "psw"):
-        _, si = reg(src); return b"\xf2" + u8(0xF0 | (si << 2) | (2 if dst == "mdr" else 3))
+        k, si = reg(src)
+        if k != "d":
+            raise EncError(f"mov {src}, {dst}: only a data register")
+        return b"\xf2" + u8(0xF0 | (si << 2) | (2 if dst == "mdr" else 3))
 
     # reg <- reg (mov only)
     if mnem == "mov" and is_reg_tok(src) and is_reg_tok(dst):
